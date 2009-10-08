@@ -68,7 +68,8 @@ $ARTICLES_LANG = array(
 	'written_by' => 'Written by',
 	'page_prompt' => 'New page title',
 	'articles_add' =>  'Add an article',
-	'article_icon' => 'Icon category',
+	'article_icon' => 'Icon article',
+	'cat_icon' => 'Icon category',
 	'articles_date' =>'Article date <span class="text_small">(dd/mm/yy)</span> <br />
 <span class="text_small">(Leave empty to set today date)</span>',
 	'explain_page' => 'Insert a new page',

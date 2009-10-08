@@ -291,7 +291,7 @@ else
 			//define('TITLE', $ARTICLES_LANG['edit_articles'] . ' : ' . addslashes($articles['title']));
 			$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->remove_last();
-			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
+			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'].'&amp;cat='.$articles['idcat'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
 			$Bread_crumb->add($ARTICLES_LANG['edit_articles'], url('management.php?edit=' . $articles['id']));
 			
 			// Calendrier.

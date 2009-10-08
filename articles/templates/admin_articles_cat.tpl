@@ -1,6 +1,4 @@
-		<link href="{MODULE_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
-
-
+	<link href="{MODULE_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
 	{ADMIN_MENU}
 		<div id="admin_contents">
 		# IF C_ERROR_HANDLER #
@@ -87,6 +85,15 @@
 					show_div("hide_special_auth");
 				global_auth = !global_auth;
 			}
+			var articles_tpl = {edition_interface.JS_SPECIAL_ARTICLES_TPL};
+			function change_articles_tpl()
+			{
+				if( articles_tpl )
+					hide_div("hide_articles_tpl");
+				else
+					show_div("hide_articles_tpl");
+				articles_tpl = !articles_tpl;
+			}
 			-->
 			</script>
 			<form action="admin_articles_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -113,8 +120,7 @@
 							{edition_interface.CATEGORIES_TREE}
 						</dd>
 					</dl>
-<dl>
-					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
+					<dt><label for="icon">* {L_CAT_ICON}</label></dt>
 						<dd><label>
 							<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
 								{edition_interface.IMG_LIST}
@@ -130,7 +136,45 @@
 					{KERNEL_EDITOR}
 					<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
 				</fieldset>
-
+				<fieldset>
+					<legend>
+						{L_TPL}
+					</legend>
+					<dl>
+						<dt><label for="special_auth">{L_TPL}</label>
+						<br />
+						<span class="text_small">{L_ARTICLES_TPL_EXPLAIN}</span></dt>
+						<dd>
+							<input type="checkbox" name="articles_tpl_checkbox" id="articles_tpl_checkbox" onclick="javascript: change_articles_tpl();" {edition_interface.ARTICLES_TPL_CHECKED} />
+						</dd>					
+					</dl>
+					<div id="hide_articles_tpl" style="display:{edition_interface.DISPLAY_ARTICLES_TPL};">
+						<dl>
+							<dt>
+								<label for="name">
+									* {L_ARTICLES_TPL}
+								</label>
+							</dt>
+							<dd>
+								<select name="tpl_articles">
+									{edition_interface.TPL_ARTICLES_LIST}
+								</select>
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="name">
+									* {L_CAT_TPL}
+								</label>
+							</dt>
+							<dd>
+								<select name="tpl_cat">
+									{edition_interface.TPL_CAT_LIST}
+								</select>
+							</dd>
+						</dl>
+					</div>
+				</fieldset>
 				<fieldset>
 					<legend>
 						{L_SPECIAL_AUTH}
@@ -178,7 +222,6 @@
 						</dl>
 					</div>
 				</fieldset>
-
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />

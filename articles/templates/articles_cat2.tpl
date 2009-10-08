@@ -95,45 +95,6 @@
 				</div>
 				<div class="spacer">&nbsp;</div>
 					# START articles #
-						<div class="block_container" style="margin-bottom:20px;">
-							<div class="block_contents">
-								<div style="float:left;width:70%">
-									<p style="margin-bottom:10px">
-										<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
-										# IF C_WRITE #
-											<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
-												<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
-											</a>
-											<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
-												<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
-											</a>
-										# ENDIF #
-									</p>
-									<div class="text_small">
-										{L_DATE} : {articles.DATE}
-										<br />
-										{L_VIEW} : {articles.COMPT}
-										<br />
-										{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
-										<br />
-										{L_NOTE} {articles.NOTE}
-													<br />
-									{L_WRITTEN} : {articles.U_ARTICLES_PSEUDO}
-									</div>
-								</div>
-								<div class="float:right;">	
-									<div style="text-align:right;margin-top:15px;">								
-										<a href="../articles/articles{articles.U_ARTICLES_LINK}">
-											{articles.ICON}
-										</a>	
-							
-									</div>
-								</div>
-								<div class="spacer"></div>		
-							</div>
-						</div>
-					# END articles #
-					# START articles #
 					<div class="block_container">
 					<div class="block_contents" style="height:80px">
 						<div style="float:left;">			
@@ -142,12 +103,13 @@
 							</a>	
 								&nbsp;
 						</div>
-						<div class="float:right;">								
+						<div class="float:right;">			
+							<div style="float:left;">	
 								<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
-	<div class="text_small">	
-							Si la Radeon HD 5870 est la pionnière du DirectX 11, son prix élevé en limite les ambitions. Une contrainte que ne devrait pas subir un Radeon HD 5850 résolument plus accessible.
-								</div>
-								# IF NOT C_WRITE #
+							</div>
+							<div class="float:right;">
+								# IF C_WRITE #
+								&nbsp;&nbsp;&nbsp;
 									<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>
@@ -155,6 +117,10 @@
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
 									</a>
 								# ENDIF #
+							</div>
+								<div class="text_small">	
+									Si la Radeon HD 5870 est la pionnière du DirectX 11, son prix élevé en limite les ambitions. Une contrainte que ne devrait pas subir un Radeon HD 5850 résolument plus accessible.
+								</div>
 								
 								<hr style="margin-left:0px;margin-top:9px;width:500px"/>
 								Publié le : {articles.DATE} - {L_WRITTEN} : {articles.U_ARTICLES_PSEUDO} - {L_NOTE} {articles.NOTE} - {L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
