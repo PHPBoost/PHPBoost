@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)
 {
-    exit;
+	exit;
 }
 
 import('core/environment/site_display_graphical_environment');
@@ -38,11 +38,53 @@ Environment::set_graphical_environment($env);
 
 if (!defined('TITLE'))
 {
-    define('TITLE', $LANG['unknow']);
+	define('TITLE', $LANG['unknow']);
+}
+
+//DEPRECATED PROCESSUS
+if (defined('ALTERNATIVE_CSS'))
+{
+	$alternative = null;
+	$styles = @unserialize(ALTERNATIVE_CSS);
+	if (is_array($styles))
+	{
+		foreach ($styles as $module => $style)
+		{
+			$base 	= '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+			$file = $base . $style . '.css';
+			if (file_exists(PATH_TO_ROOT . $file))
+			{
+				$env->add_css_file($file);
+			}
+			else
+			{
+				$env->add_css_file('/' . $module . '/templates/' . $style .
+							'.css');
+			}
+		}
+	}
+	else
+	{
+		$array_alternative_css = explode(',', str_replace(' ', '', ALTERNATIVE_CSS));
+		$module = $array_alternative_css[0];
+		$base = '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+		foreach ($array_alternative_css as $alternative)
+		{
+			$file = $base . $alternative . '.css';
+			if (file_exists(PATH_TO_ROOT . $file))
+			{
+				$env->add_css_file($file);
+			}
+			else
+			{
+				$env->add_css_file('/' . $module . '/templates/' . $alternative . '.css');
+			}
+		}
+	}
 }
 
 Environment::set_page_title(TITLE);
-
+//TODO what to do with that?
 EnvironmentServices::get_session()->check(TITLE);
 
 Environment::display_header();

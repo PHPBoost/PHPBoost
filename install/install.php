@@ -75,11 +75,6 @@ import('db/mysql');
 //Template d'installation
 $template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
-$template->assign_vars(array(
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
-	'TOTO' => 'ee'
-));
-
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
 {

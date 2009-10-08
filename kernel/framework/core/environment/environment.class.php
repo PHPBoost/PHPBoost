@@ -84,8 +84,8 @@ class Environment
 		import('members/groups_service');
 		import('members/session');
 		import('members/user');
-        import('util/bench');
-        import('util/debug');
+		import('util/bench');
+		import('util/debug');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class Environment
 	 */
 	public static function init()
 	{
-        self::fit_to_php_configuration();
+		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();
 		self::write_http_headers();
@@ -117,9 +117,9 @@ class Environment
 
 	public static function fit_to_php_configuration()
 	{
-        define('ERROR_REPORTING',   E_ALL | E_NOTICE);
-        @error_reporting(ERROR_REPORTING);
-        
+		define('ERROR_REPORTING',   E_ALL | E_NOTICE);
+		@error_reporting(ERROR_REPORTING);
+
 		@ini_set('open_basedir', NULL);
 
 		//Disabling magic quotes if possible
@@ -585,7 +585,7 @@ class Environment
 	 * @desc Returns the full phpboost version with its build number
 	 * @return string the full phpboost version with its build number
 	 */
-	static function phpboost_version() 
+	static function phpboost_version()
 	{
 		global $CONFIG;
 		import('io/filesystem/file');
@@ -594,7 +594,7 @@ class Environment
 		$file->close();
 		return $CONFIG['version'] . '.' . trim($build);
 	}
-	
+
 	/**
 	 * Displays the top of the page.
 	 */
@@ -632,6 +632,9 @@ class Environment
 
 	public static function destroy()
 	{
+		EnvironmentServices::close_sql_querier();
+
+		ob_end_flush();
 	}
 }
 
