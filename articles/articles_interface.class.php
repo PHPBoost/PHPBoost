@@ -50,7 +50,7 @@ class ArticlesInterface extends ModuleInterface
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -65,7 +65,9 @@ class ArticlesInterface extends ModuleInterface
 					'visible' => (bool)$row['visible'],
 					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
 					'description' => $row['description'],
-					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth']
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth'],
+					'tpl_articles'=>$row['tpl_articles'],
+					'tpl_cat'=>$row['tpl_cat'],
 				), true) . ';' . "\n\n";
 		}
 		return $string;
@@ -277,7 +279,7 @@ class ArticlesInterface extends ModuleInterface
 		global $idartcat, $Session,$User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
-		$tpl = new Template('articles/articles_cat.tpl');
+		
 		
 		if ($idartcat > 0)
 		{
@@ -299,6 +301,8 @@ class ArticlesInterface extends ModuleInterface
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
 
+		$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
+		
 		//Niveau d'autorisation de la catégorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 			$Errorh->handler('e_auth', E_USER_REDIRECT);

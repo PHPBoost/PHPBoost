@@ -111,6 +111,11 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name'],
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
+		'L_ARTICLES_TPL'=>$ARTICLES_LANG['articles_tpl'],
+		'L_CAT_TPL'=>$ARTICLES_LANG['cat_tpl'],
+		'L_CAT_ICON'=>$ARTICLES_LANG['cat_icon'],
+		'L_TPL'=>$ARTICLES_LANG['tpl'],
+		'L_ARTICLES_TPL_EXPLAIN'=>$ARTICLES_LANG['tpl_explain'],
 	));
 		
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))	
@@ -121,7 +126,6 @@ elseif ($new_cat XOR $id_edit > 0)
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 		import('io/filesystem/folder');
-		$image_list = '<option value="">--</option>';
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -130,12 +134,34 @@ elseif ($new_cat XOR $id_edit > 0)
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
 		
+
+		$tpl_articles_list = '';
+		$tpl_folder_path = new Folder('./templates');
+		foreach ($tpl_folder_path->get_files('`^articles.*\.tpl$`') as $tpl_articles)
+		{
+			$tpl_articles = $tpl_articles->get_name();
+			$selected = $tpl_articles == $ARTICLES_CAT[$id_edit]['tpl_articles'] ? ' selected="selected"' : '';
+			if($tpl_articles != 'articles_cat.tpl')
+			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
+		}
+		
+		$tpl_cat_list = '';
+		$tpl_folder_path = new Folder('./templates');
+		foreach ($tpl_folder_path->get_files('`^articles_cat.*\.tpl$`') as $tpl_cat)
+		{
+			$tpl_cat = $tpl_cat->get_name();
+			$selected = $tpl_cat == $ARTICLES_CAT[$id_edit]['tpl_cat'] ? ' selected="selected"' : '';
+			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
+		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
 			'IMG_PATH' => $img_direct_path ? $ARTICLES_CAT[$id_edit]['image'] : '',
 			'IMG_ICON' => !empty($ARTICLES_CAT[$id_edit]['image']) ? '<img src="' . $ARTICLES_CAT[$id_edit]['image'] . '" alt="" class="valign_middle" />' : '',		
 			'IMG_LIST'=>$image_list,
+			'TPL_ARTICLES_LIST'=>$tpl_articles_list,
+			'TPL_CAT_LIST'=>$tpl_cat_list,
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($ARTICLES_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
@@ -145,6 +171,9 @@ elseif ($new_cat XOR $id_edit > 0)
 			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $ARTICLES_CAT[$id_edit]['auth']),
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $ARTICLES_CAT[$id_edit]['auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $ARTICLES_CAT[$id_edit]['auth']),
+			'ARTICLES_TPL_CHECKED'=>$ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl' || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'checked="checked"' : '',
+			'DISPLAY_ARTICLES_TPL' => $ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl'  || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'block' : 'none',
+			'JS_SPECIAL_ARTICLES_TPL' => $ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl'  || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'true' : 'false',
 		));
 	}
 	else
@@ -158,16 +187,37 @@ elseif ($new_cat XOR $id_edit > 0)
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
 			$image = $images->get_name();
-			if($image != $img_default_name){
-			$image_list .= '<option value="' . $image . '">' . $image . '</option>';}
+			if($image != $img_default_name)
+			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
 		}
 	
+		$tpl_default_name = 'articles.tpl';
+		$tpl_articles_list = '<option value=""' . ($tpl_default_name ? ' selected="selected"' : '') . '>'.$tpl_default_name.'</option>';
+		$tpl_folder_path = new Folder('./templates');
+		foreach ($tpl_folder_path->get_files('`^articles.*\.tpl$`') as $tpl_articles)
+		{
+			$tpl_articles = $tpl_articles->get_name();
+			if($tpl_articles != $tpl_default_name & $tpl_articles != 'articles_cat.tpl' )
+			$tpl_articles_list.= '<option value="' . $tpl_articles . '">' . $tpl_articles. '</option>';
+		}
+		
+		$tpl_default_name = 'articles_cat.tpl';
+		$tpl_cat_list = '<option value=""' . ($tpl_default_name ? ' selected="selected"' : '') . '>'.$tpl_default_name.'</option>';
+		$tpl_folder_path = new Folder('./templates');
+		foreach ($tpl_folder_path->get_files('`^articles_cat.*\.tpl$`') as $tpl_cat)
+		{
+			$tpl_cat = $tpl_cat->get_name();
+			if($tpl_cat != $tpl_default_name)
+			$tpl_cat_list.= '<option value="' . $tpl_cat . '">' . $tpl_cat. '</option>';
+		}
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMG_PATH' => '',
 			'IMG_ICON' => '',	
 			'IMG_LIST' => $image_list,
+			'TPL_ARTICLES_LIST'=>$tpl_articles_list,
+			'TPL_CAT_LIST'=>$tpl_cat_list,
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
@@ -201,6 +251,8 @@ elseif (retrieve(POST,'submit',false))
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');
 		$icon=retrieve(POST, 'icon', '', TSTRING);
+		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
+		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
 		
 		if(retrieve(POST,'icon_path',false))
 			$icon=retrieve(POST,'icon_path','');
@@ -211,9 +263,9 @@ elseif (retrieve(POST,'submit',false))
 		if (empty($name))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');		
 		if ($id_cat > 0)
-			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth);
+			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
 		else
-			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth);
+			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
 	}
 	
 	// Feeds Regeneration

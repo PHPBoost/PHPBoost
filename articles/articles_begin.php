@@ -39,6 +39,8 @@ if (empty($idartcat))//Racine.
    $ARTICLES_CAT[0]['name'] = $LANG['root'];
    $ARTICLES_CAT[0]['order'] = -1;
    $ARTICLES_CAT[0]['id_parent'] = 0;
+   $ARTICLES_CAT[0]['tpl_articles'] = 'articles.tpl';
+    $ARTICLES_CAT[0]['tpl_cat'] = 'articles_cat.tpl';
    $idartcat=0;
 }
 

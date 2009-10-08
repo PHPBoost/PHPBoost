@@ -66,6 +66,7 @@ $ARTICLES_LANG = array(
 	'page_prompt' => 'Titre de la nouvelle page',
 	'articles_add' => 'Ajouter un article',
 	'article_icon' => 'Icône de l\'article',
+	'cat_icon' => 'Icône de la catégorie',
 	'articles_date' => 'Date de l\'article <span class="text_small">(jj/mm/aa)</span> <br />
 	<span class="text_small">(Laisser vide pour mettre la date d\'aujourd\'hui)',
 	'explain_page' => 'Insérer une nouvelle page',
@@ -118,9 +119,10 @@ $ARTICLES_LANG = array(
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
 	
-	'me'=>'Moi',
-	'all'=>'Tous',
-	'all_waiting_articles'=>'Tous les articles en attentes'
+	'cat_tpl' => 'Templates de la catégorie',
+	'articles_tpl' => 'Templates des articles',
+	'tpl_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles et la catégories courante.',
+	'tpl'=>'Templates personnalisés',
 	);
 
 ?>

@@ -3,7 +3,7 @@
  *                               articles.php
  *                            -------------------
  *   begin                : July 17, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis & (C) 2009 Maurel Nicolas
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -49,9 +49,9 @@ if (!empty($idart) && isset($cat) )
 	$Sql->query_close($result);
 	
 	if (empty($articles['id']))
-		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT); 
-	
-	$tpl = new Template('articles/articles.tpl');
+		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
+
+	$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_articles']);
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -217,8 +217,7 @@ elseif ($user && isset($cat))
 			$selected_fields['asc'] = ' selected="selected"';
 		else
 			$selected_fields['desc'] = ' selected="selected"';
-
-			
+		
 		$result = $Sql->query_while("SELECT a.contents, a.note,a.views,a.nbr_com,a.title, a.id, a.idcat, a.timestamp, a.user_id, a.icon, a.nbr_com,a.start,a.visible, m.login, m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -266,7 +265,6 @@ elseif ($user && isset($cat))
 				'C_ARTICLES_LINK' =>true,
 				'C_WAITING'=> true,
 				'L_NO_ARTICLES'=>$i == 0 ? $ARTICLES_LANG['no_articles_available']: '',
-				'L_ALL'=>$ARTICLES_LANG['all'],
 				'L_WRITTEN' =>  $LANG['written_by'],
 				'L_CATEGORY' => $LANG['categories'],
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
@@ -274,8 +272,6 @@ elseif ($user && isset($cat))
 				'L_DELETE' => $LANG['delete'],
 				'L_EDIT' => $LANG['edit'],
 				'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
-				'L_ALL'=>$ARTICLES_LANG['all'],
-				'L_ME'=>$ARTICLES_LANG['me'],
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_DATE' => $LANG['date'],
 				'L_VIEW' => $LANG['views'],
@@ -295,8 +291,7 @@ elseif ($user && isset($cat))
 				'SELECTED_NOTE' => $selected_fields['note'],
 				'SELECTED_ASC' => $selected_fields['asc'],
 				'SELECTED_DESC' => $selected_fields['desc'],
-				'TARGET_ON_CHANGE_ORDER' => url('articles.php?user=1&amp;cat=' . $idartcat ),
-				
+				'TARGET_ON_CHANGE_ORDER' => url('articles.php?user=1&amp;cat=' . $idartcat ),			
 			));
 				
 		$tpl->parse();
