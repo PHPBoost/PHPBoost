@@ -155,7 +155,7 @@ class Pagination
 	* @param string $var_page The var name used to get the page in the adress (in most case "p" is used).
 	* @return int Return the value of the var page
 	*/
-	private function get_var_page($var_page)
+	public function get_var_page($var_page)
 	{
 		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
 		if (!empty($_GET[$var_page]))

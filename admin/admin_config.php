@@ -244,6 +244,17 @@ else //Sinon on rempli le formulaire
 	$start_page = '';
 	//Pages de démarrage
 	$i = 0;
+	$modules_config = array();
+	foreach ($MODULES as $name => $array)
+	{
+		$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
+		if (is_array($array_info))
+		{
+			$array_info['module_name'] = $name;
+			$modules_config[$array_info['name']] = $array_info;
+		}
+	}
+	
 	foreach ($modules_config as $name => $array_info)
 	{
 		if (!empty($array_info['starteable_page']))

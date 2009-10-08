@@ -26,49 +26,13 @@
  *
 ###################################################*/
 
-
-########################admin_body_footer.tpl#######################
-
-$Template->set_filenames(array(
-	'admin_footer'=> 'admin/admin_footer.tpl'
-));
-
-//On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
-	
-$Template->assign_vars(array(
-	'HOST' => HOST,
-	'DIR' => DIR,
-	'VERSION' => $CONFIG['version'],
-	'THEME' => get_utheme(),
-	'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
-	'L_POWERED_BY' => $LANG['powered_by'],
-	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
-	'L_THEME' => $LANG['theme'],
-	'L_THEME_NAME' => $THEME['name'],
-	'L_BY' => strtolower($LANG['by']),
-	'L_THEME_AUTHOR' => $THEME['author'],
-	'U_THEME_AUTHOR_LINK' => $THEME['author_link'],
-    'PHPBOOST_VERSION' => $CONFIG['version']
-));
-
-if ($CONFIG['bench'])
+if (defined('PHPBOOST') !== true)
 {
-	$Template->assign_vars(array(
-		'C_DISPLAY_BENCH' => true,
-		'BENCH' => EnvironmentServices::get_bench()->to_string(), //Fin du benchmark
-		'REQ' => $Sql->get_executed_requests_number(),
-		'L_UNIT_SECOND' => HOST,
-		'L_REQ' => $LANG['sql_req'],
-		'L_ACHIEVED' => $LANG['achieved'],
-		'L_UNIT_SECOND' => $LANG['unit_seconds_short']
-	));
+    exit;
 }
 
-$Template->pparse('admin_footer'); // traitement du modele
+Environment::display_footer();
 
-EnvironmentServices::close_sql_querier();
-
-ob_end_flush();
+Environment::destroy();
 
 ?>

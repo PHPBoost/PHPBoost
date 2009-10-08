@@ -632,7 +632,7 @@ class Environment
 
 	public static function destroy()
 	{
-		EnvironmentServices::close_sql_querier();
+		EnvironmentServices::close_db_connection();
 
 		ob_end_flush();
 	}
