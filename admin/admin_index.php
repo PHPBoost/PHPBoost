@@ -94,6 +94,7 @@ $Template->assign_vars(array(
 	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],
 	'L_UNREAD_ALERT' => $LANG['unread_alerts'],
 	'L_DISPLAY_ALL_ALERTS' => $LANG['display_all_alerts'],
+	'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
 	'L_QUICK_LINKS' => $LANG['quick_links'],
 	'L_USERS_MANAGMENT' => $LANG['members_managment'],
 	'L_MENUS_MANAGMENT' => $LANG['menus_managment'],

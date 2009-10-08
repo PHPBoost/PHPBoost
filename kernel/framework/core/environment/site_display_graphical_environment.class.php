@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       graphical_environment.class.php
+ *                 site_display_graphical_environment.class.php
  *                            -------------------
  *   begin                : October 01, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -70,6 +70,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->assign_vars(array(
 			'SERVER_NAME' => $CONFIG['site_name'],
 			'SITE_NAME' => $CONFIG['site_name'],
+			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()
+				->get_attribute('user_editor') == 'tinymce',
 			'TITLE' => Environment::get_page_title(),
 			'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 			'SITE_KEYWORD' => $CONFIG['site_keyword'],
