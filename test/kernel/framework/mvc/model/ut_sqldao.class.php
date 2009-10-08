@@ -72,7 +72,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 		$this->model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 
-		$this->querier->inject("drop table if exists :table;",
+		$this->querier->inject("DROP TABLE IF EXISTS :table;",
 		array('table' => $this->model->get_table_name()));
 		$this->querier->inject("CREATE TABLE :table (
 				  :id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -91,8 +91,8 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 	            'user_id' => $field_user_id->get_db_field_name(),
 		));
 
-		$this->querier->inject("insert into :table (:id, :title, :description, :user_id)
-		     values(:id_value, ':title_value', ':description_value', :user_id_value);", array(
+		$this->querier->inject("INSERT INTO :table (:id, :title, :description, :user_id)
+		     VALUES(:id_value, ':title_value', ':description_value', :user_id_value);", array(
              'table' => $this->model->get_table_name(),
              'id' => $primary_key->get_db_field_name(),
              'title' => $field_title->get_db_field_name(),
@@ -109,7 +109,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function tearDown()
 	{
-		$this->querier->inject("drop table if exists :table;",
+		$this->querier->inject("DROP TABLE IF EXISTS :table;",
 		array('table' => $this->model->get_table_name()));
 	}
 
