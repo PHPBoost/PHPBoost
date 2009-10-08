@@ -49,7 +49,6 @@ class SQL2MySQLQueryTranslator
 		 
 		self::translate_operators();
 		self::translate_functions();
-		self::translate_clause();
 
 		return self::$query;
 	}
@@ -63,20 +62,15 @@ class SQL2MySQLQueryTranslator
 	private static function translate_functions()
 	{
 		self::$query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'match($1) against($2)', self::$query);
+        'MATCH($1) AGAINST($2)', self::$query);
 		self::$query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'match($1) against($2)', self::$query);
-	}
-
-	private static function translate_clause()
-	{
-		
+        'MATCH($1) AGAINST($2)', self::$query);
 	}
 
 	private static function concat_callback($matches)
 	{
 		$parameters = explode('||', $matches[0]);
-		return 'concat(' . implode(',', $parameters) .')';
+		return 'CONCAT(' . implode(',', $parameters) .')';
 	}
 }
 

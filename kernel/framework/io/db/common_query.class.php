@@ -39,8 +39,8 @@ class CommonQuery
 	public static function insert($table_name, $columns)
 	{
 		$columns_names = array_keys($columns);
-		$query = 'insert into ' . $table_name . ' (' . implode(', ', $columns_names) .
-		  ') values (\':' . implode(', :', $columns_names) . '\');';
+		$query = 'INSERT INTO ' . $table_name . ' (' . implode(', ', $columns_names) .
+		  ') VALUES (\':' . implode(', :', $columns_names) . '\');';
 		EnvironmentServices::get_sql_querier()->inject($query, $columns);
 	}
 
@@ -60,8 +60,8 @@ class CommonQuery
 		{
 			$columns[] = $column . '=\'' . $column . '\'';
 		}
-		$query = 'update ' . $table_name . ' set ' . implode(', ', $columns) .
-            ' where ' . $condition . ';';
+		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
+            ' WHERE ' . $condition . ';';
 		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
@@ -75,7 +75,7 @@ class CommonQuery
 	 */
 	public static function delete($table_name, $condition, $parameters = array())
 	{
-		$query = 'delete from ' . $table_name . ' where ' . $condition . ';';
+		$query = 'DELETE FROM ' . $table_name . ' WHERE ' . $condition . ';';
 		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
@@ -118,7 +118,7 @@ class CommonQuery
 	public static function select_rows($table_name, $columns, $condition = '1',
 	$parameters = array())
 	{
-		$query = 'select ' . implode(', ', $columns) . ' from ' . $table_name . ' where ' .
+		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' WHERE ' .
 		$condition;
 		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
 	}
@@ -136,10 +136,10 @@ class CommonQuery
 	public static function count($table_name, $condition = '', $count_column = '*',
 	$parameters = array())
 	{
-		$query = 'select count(' . $count_column . ') from ' . $table_name;
+		$query = 'SELECT COUNT(' . $count_column . ') FROM ' . $table_name;
 		if (!empty($condition))
 		{
-			$query .= ' where ' . $condition;
+			$query .= ' WHERE ' . $condition;
 		}
 		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
 	}

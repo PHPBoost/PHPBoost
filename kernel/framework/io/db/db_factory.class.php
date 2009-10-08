@@ -34,39 +34,51 @@
  */
 class DBFactory
 {
-    /**
-     * @desc returns a new <code>DBConnection</code> instance
-     * @return DBConnection a new <code>DBConnection</code> instance
-     */
-    public static function new_db_connection()
-    {
-    	//Configuration file
-        include PATH_TO_ROOT . '/kernel/db/config.php';
+	/**
+	 * @var DBConnection
+	 */
+	private static $db_connection;
 
-        //If PHPBoost is not installed, we redirect the user to the installation page
-        if (!defined('PHPBOOST_INSTALLED'))
-        {
-            import('util/unusual_functions', INC_IMPORT);
-            redirect(get_server_url_page('install/install.php'));
-        }
+	/**
+	 * @desc returns a new <code>DBConnection</code> instance
+	 * @return DBConnection a new <code>DBConnection</code> instance
+	 */
+	public static function get_db_connection()
+	{
+		if (self::$db_connection == null)
+		{
+			//Configuration file
+			include PATH_TO_ROOT . '/kernel/db/config.php';
+
+			//If PHPBoost is not installed, we redirect the user to the installation page
+			if (!defined('PHPBOOST_INSTALLED'))
+			{
+				import('util/unusual_functions', INC_IMPORT);
+				redirect(get_server_url_page('install/install.php'));
+			}
+
+			import('io/db/mysql/mysql_db_connection');
+			self::$db_connection = new MySQLDBConnection($host, $login, $password);
+		}
         
-        import('io/db/mysql/mysql_db_connection');
-        $db_connection = new MySQLDBConnection($host, $login, $password, $database);
-        $db_connection->connect();
-        $db_connection->select_database($database);
-        return $db_connection;
-    }
-    
-    /**
-     * @desc returns a new <code>SQLQuerier</code> instance
-     * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
-     * @return SQLQuerier a new <code>SQLQuerier</code> instance
-     */
-    public static function new_sql_querier(DBConnection $db_connection)
-    {
-        import('io/db/mysql/mysql_querier');
-        return new MySQLQuerier($db_connection);
-    }
+		if (!self::$db_connection->is_connected())
+		{
+			self::$db_connection->connect();
+			self::$db_connection->select_database($database);
+		}
+		return self::$db_connection;
+	}
+
+	/**
+	 * @desc returns a new <code>SQLQuerier</code> instance
+	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
+	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
+	 */
+	public static function new_sql_querier(DBConnection $db_connection)
+	{
+		import('io/db/mysql/mysql_querier');
+		return new MySQLQuerier($db_connection);
+	}
 }
 
 ?>

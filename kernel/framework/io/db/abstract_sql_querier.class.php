@@ -36,8 +36,25 @@ import('io/db/sql_querier');
  */
 abstract class AbstractSQLQuerier implements SQLQuerier
 {
-	private $parameters;
-	
+    /**
+     * @var DBConnection
+     */
+    protected $connection;
+    
+    /**
+     * @var mixed[string]
+     */
+    private $parameters;
+    
+    public function __construct(DBConnection $connection)
+    {
+        if (!$connection->is_connected())
+        {
+            $connection->connect();
+        }
+        $this->connection = $connection;
+    }
+    
 	protected function replace_query_vars(&$query, &$parameters)
 	{
 		$this->parameters = $parameters;

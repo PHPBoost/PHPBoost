@@ -6,13 +6,12 @@ require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.clas
 Environment::load_imports();
 EnvironmentServices::init_sql_querier();
 
-
 req('/test/PHPUnit/Framework.php');
 mimport('test/util/phpboost_unit_test_case');
 if (!empty($_REQUEST['params'])) {
     // Fake command line environment
     $argv = $_REQUEST['params'];
-    $_SERVER['argv'] = explode(' ', $argv);
+    $_SERVER['argv'] = explode(' ', '--configuration ./phpunit.cfg.xml ' . $argv);
 } else {
     $_SERVER['argv'] = array();
 }
@@ -24,5 +23,6 @@ req('/test/phpunit.php');
 if (!empty($_REQUEST['is_html'])) {
     echo '</pre>';
 }
+EnvironmentServices::close_db_connection();
     
 ?>

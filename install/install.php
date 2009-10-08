@@ -334,7 +334,7 @@ switch($step)
 					import('core/errors');
 					$Errorh = new Errors;
 					import('io/db/mysql/mysql_querier');
-					$db_connection = new MySQLDBConnection($host, $login, $password, $database);
+					$db_connection = new MySQLDBConnection($host, $login, $password);
 					$db_connection->connect();
 					$db_connection->select_database($database);
 					$Sql = new Sql($db_connection, $database);
