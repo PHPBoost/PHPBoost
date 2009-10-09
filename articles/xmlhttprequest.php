@@ -58,7 +58,6 @@ elseif (retrieve(POST,'preview',false))
 	//loading module language
 	load_module_lang('articles');
 	
-
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -68,8 +67,8 @@ elseif (retrieve(POST,'preview',false))
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
 		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
 		'min' => retrieve(POST, 'min', 0, TINTEGER),
+		'description' => retrieve(POST, 'description', '', TSTRING),
 	);
-
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
@@ -89,6 +88,7 @@ elseif (retrieve(POST,'preview',false))
 		'L_ON' => $LANG['on'],
 		'ID' => $articles['id'],
 		'IDCAT' => $articles['idcat'],
+		'DESCRIPTION'=>$articles['description'],
 		'NAME' => stripslashes($articles['title']),
 		'CONTENTS' => stripslashes(second_parse($articles['desc'])),
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],

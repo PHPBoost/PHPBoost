@@ -39,6 +39,28 @@ if (retrieve(POST,'valid',false))
 {
 	$Cache->load('articles');
 
+
+	$mini = array();
+	$mini['nbr_articles']=retrieve(POST, 'nbr_articles_mini', 5,TINTEGER);
+	
+	switch (retrieve(POST, 'mini_type', 'date',TSTRING))
+	{
+		case 'note' :
+			$mini['type'] = 'note';		
+			break;
+		case 'com' :
+			$mini['type'] = 'com';
+			break;
+		case 'date' :
+			$mini['type'] = 'date';
+		case 'view' :
+			$mini['type']= 'view';
+			break;
+		default :
+			$mini['type'] = 'date';
+			break;
+	}
+	
 	$config_articles = array(
 		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
@@ -46,6 +68,7 @@ if (retrieve(POST,'valid',false))
 		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
 		'tab'=>retrieve(POST, 'tab', 0),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
+		'mini'=>serialize($mini),
 	);
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
@@ -55,7 +78,6 @@ if (retrieve(POST,'valid',false))
 
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
-
 	redirect(HOST . SCRIPT);
 }
 elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
@@ -102,7 +124,6 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 	$Sql->query_close($result);
 
 	$Cache->Generate_module_file('articles');
-
 	redirect(HOST . DIR . '/articles/admin_articles_config.php');
 }
 //Sinon on rempli le formulaire
@@ -112,6 +133,8 @@ else
 	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
 	$Cache->load('articles');
+		
+	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
 
 	$tpl->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
@@ -122,8 +145,13 @@ else
 		'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
-		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? 'checked="checked"' : '',
-		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? 'checked="checked"' : '',
+		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' selected="selected"' : '',
+		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
+		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
+		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',
+		'SELECTED_NOTE' => $mini_conf['type'] == 'note' ? ' selected="selected"' : '',
+		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
 		'L_REQUIRE' => $LANG['require'],		
 		'L_NBR_ARTICLES_MAX' => $ARTICLES_LANG['nbr_articles_max'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
@@ -142,7 +170,16 @@ else
 		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
 		'L_ENABLED'=>$LANG['enabled'],
 		'L_DISABLED'=>$LANG['disabled'],
-		'L_USE_TAB'=>$ARTICLES_LANG['use_tab']
+		'L_USE_TAB'=>$ARTICLES_LANG['use_tab'],
+		'L_ARTICLES_MINI_CONFIG'=>$ARTICLES_LANG['articles_mini_config'],
+		'L_NBR_ARTICLES_MINI'=>$ARTICLES_LANG['nbr_articles_mini'],
+		'L_MINI_TYPE'=>$ARTICLES_LANG['mini_type'],
+		'L_ARTICLES_BEST_NOTE'=>$ARTICLES_LANG['articles_best_note'],
+		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
+		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
+		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],
+
+		
 	));
 	$tpl->parse();
 }

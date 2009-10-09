@@ -279,24 +279,17 @@ class ArticlesInterface extends ModuleInterface
 		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
-
-
 		if ($idartcat > 0)
 		{
-
 			if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 			$cat_links = '';
-				
 			$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
-				
-			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "'  AND ac.visible = 1";
-				
+			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "'  AND ac.visible = 1";		
 		}
 		else //Racine.
-		{
-				
+		{	
 			$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
@@ -313,7 +306,6 @@ class ArticlesInterface extends ModuleInterface
 			
 		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
-
 		$get_sort = retrieve(GET, 'sort', '');
 		$get_mode = retrieve(GET, 'mode', '');
 		$selected_fields = array(
@@ -326,185 +318,184 @@ class ArticlesInterface extends ModuleInterface
 			'desc' => ''
 			);
 				
-			switch ($get_sort)
-			{
-				case 'alpha' :
-					$sort = 'title';
-					$selected_fields['alpha'] = ' selected="selected"';
-					break;
-				case 'com' :
-					$sort = 'nbr_com';
-					$selected_fields['com'] = ' selected="selected"';
-					break;
-				case 'date' :
-					$sort = 'timestamp';
-					$selected_fields['date'] = ' selected="selected"';
-					break;
-				case 'view' :
-					$sort = 'views';
-					$selected_fields['view'] = ' selected="selected"';
-					break;
-				case 'note' :
-					$sort = 'note';
-					$selected_fields['note'] = ' selected="selected"';
-					break;
-				default :
-					$sort = 'timestamp';
-					$selected_fields['date'] = ' selected="selected"';
-			}
+		switch ($get_sort)
+		{
+			case 'alpha' :
+				$sort = 'title';
+				$selected_fields['alpha'] = ' selected="selected"';
+				break;
+			case 'com' :
+				$sort = 'nbr_com';
+				$selected_fields['com'] = ' selected="selected"';
+				break;
+			case 'date' :
+				$sort = 'timestamp';
+				$selected_fields['date'] = ' selected="selected"';
+				break;
+			case 'view' :
+				$sort = 'views';
+				$selected_fields['view'] = ' selected="selected"';
+				break;
+			case 'note' :
+				$sort = 'note';
+				$selected_fields['note'] = ' selected="selected"';
+				break;
+			default :
+				$sort = 'timestamp';
+				$selected_fields['date'] = ' selected="selected"';
+		}
 
-			$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-			if ($mode == 'ASC')
-			$selected_fields['asc'] = ' selected="selected"';
-			else
-			$selected_fields['desc'] = ' selected="selected"';
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		if ($mode == 'ASC')
+		$selected_fields['asc'] = ' selected="selected"';
+		else
+		$selected_fields['desc'] = ' selected="selected"';
 
-			//Colonnes des catégories.
-			$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
-			$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-			$column_width_cats = floor(100/$nbr_column_cats);
+		//Colonnes des catégories.
+		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
+		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+		$column_width_cats = floor(100/$nbr_column_cats);
 
-			$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
-			$array_class = array('member', 'modo', 'admin');
-				
-			$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
+		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
+		$array_class = array('member', 'modo', 'admin');
+			
+		$tpl->assign_vars(array(
+		'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
+		'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
+		'IDCAT' => $idartcat,
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL) ? true : false,
+		'COLUMN_WIDTH_CAT' => $column_width_cats,
+		'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
+		'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
+		'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
+		'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
+		'L_ARTICLES' => $ARTICLES_LANG['articles'],
+		'L_DATE' => $LANG['date'],
+		'L_VIEW' => $LANG['views'],
+		'L_NOTE' => $LANG['note'],
+		'L_COM' => $LANG['com'],
+		'L_DESC' => $LANG['desc'],
+		'L_ASC' => $LANG['asc'],
+		'L_TITLE'=>$LANG['title'],
+		'L_WRITTEN' =>  $LANG['written_by'],
+		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
+		'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
+		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
+		'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+		'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
+		'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
+		'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
+		'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
+		'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
+		'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=asc'),
+		'U_ARTICLES_VIEW_TOP' => url('.php?sort=view&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=desc'),
+		'U_ARTICLES_VIEW_BOTTOM' => url('.php?sort=view&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=asc'),
+		'U_ARTICLES_NOTE_TOP' => url('.php?sort=note&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=desc'),
+		'U_ARTICLES_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=asc'),
+		'U_ARTICLES_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=desc'),
+		'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc'),
+		'SELECTED_ALPHA' => $selected_fields['alpha'],
+		'SELECTED_COM' => $selected_fields['com'],
+		'SELECTED_DATE' => $selected_fields['date'],
+		'SELECTED_VIEW' => $selected_fields['view'],
+		'SELECTED_NOTE' => $selected_fields['note'],
+		'SELECTED_ASC' => $selected_fields['asc'],
+		'SELECTED_DESC' => $selected_fields['desc'],
+		'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&'
+		));
+
+		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+
+		//On crée une pagination si le nombre de fichiers est trop important.
+		import('util/pagination');
+		$Pagination = new Pagination();
+
+		//Catégories non autorisées.
+		$unauth_cats_sql = array();
+		foreach ($ARTICLES_CAT as $id => $key)
+		{
+			if (!$User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
+			$unauth_cats_sql[] = $id;
+		}
+		$nbr_unauth_cats = count($unauth_cats_sql);
+		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
+
+		##### Catégories disponibles #####
+		if ($total_cat > 0)
+		{
 			$tpl->assign_vars(array(
-			'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
-			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
-			'IDCAT' => $idartcat,
-			'C_IS_ADMIN' => $is_admin,
-			'COLUMN_WIDTH_CAT' => $column_width_cats,
-			'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
-			'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
-			'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
-			'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
-			'L_ARTICLES' => $ARTICLES_LANG['articles'],
-			'L_DATE' => $LANG['date'],
-			'L_VIEW' => $LANG['views'],
-			'L_NOTE' => $LANG['note'],
-			'L_COM' => $LANG['com'],
-			'L_DESC' => $LANG['desc'],
-			'L_ASC' => $LANG['asc'],
-			'L_TITLE'=>$LANG['title'],
-			'L_WRITTEN' =>  $LANG['written_by'],
-			'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
-			'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
-			'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
-			'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
-			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
-			'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
-			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
-			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
-			'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
-			'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=asc'),
-			'U_ARTICLES_VIEW_TOP' => url('.php?sort=view&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=desc'),
-			'U_ARTICLES_VIEW_BOTTOM' => url('.php?sort=view&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=asc'),
-			'U_ARTICLES_NOTE_TOP' => url('.php?sort=note&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=desc'),
-			'U_ARTICLES_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=asc'),
-			'U_ARTICLES_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=desc'),
-			'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc'),
-			'SELECTED_ALPHA' => $selected_fields['alpha'],
-			'SELECTED_COM' => $selected_fields['com'],
-			'SELECTED_DATE' => $selected_fields['date'],
-			'SELECTED_VIEW' => $selected_fields['view'],
-			'SELECTED_NOTE' => $selected_fields['note'],
-			'SELECTED_ASC' => $selected_fields['asc'],
-			'SELECTED_DESC' => $selected_fields['desc'],
-			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&'
+			'C_ARTICLES_CAT' => true,
+			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
 
-
-			$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
-
-			//On crée une pagination si le nombre de fichiers est trop important.
-			import('util/pagination');
-			$Pagination = new Pagination();
-
-			//Catégories non autorisées.
-			$unauth_cats_sql = array();
-			foreach ($ARTICLES_CAT as $id => $key)
-			{
-				if (!$User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
-				$unauth_cats_sql[] = $id;
-			}
-			$nbr_unauth_cats = count($unauth_cats_sql);
-			$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
-
-			##### Catégories disponibles #####
-			if ($total_cat > 0)
-			{
-				$tpl->assign_vars(array(
-				'C_ARTICLES_CAT' => true,
-				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
-				));
-
-				$i = 0;
-				$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
+			$i = 0;
+			$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
 			" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-				while ($row = $this->sql_querier->fetch_assoc($result))
-				{
-					$tpl->assign_block_vars('cat_list', array(
-					'IDCAT' => $row['id'],
-					'CAT' => $row['name'],
-					'DESC' => $row['description'],
-					'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
-					'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
-					'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
-					));
-				}
-				$this->sql_querier->query_close($result);
-			}
-
-			##### Affichage des articles #####
-
-			if ($nbr_articles > 0 ||  $invisible)
+			
+			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				$tpl->assign_vars(array(
-				'C_ARTICLES_LINK' => true,
-				'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
-				'CAT' => $ARTICLES_CAT[$idartcat]['name']
+				$tpl->assign_block_vars('cat_list', array(
+				'IDCAT' => $row['id'],
+				'CAT' => $row['name'],
+				'DESC' => $row['description'],
+				'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
+				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
+				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 				));
+			}
+			$this->sql_querier->query_close($result);
+		}
 
-				import('content/note');
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+		##### Affichage des articles #####
+
+		if ($nbr_articles > 0 ||  $invisible)
+		{
+			$tpl->assign_vars(array(
+			'C_ARTICLES_LINK' => true,
+			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
+			'CAT' => $ARTICLES_CAT[$idartcat]['name']
+			));
+
+			import('content/note');
+			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"'
 			ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-				while ($row = $this->sql_querier->fetch_assoc($result))
-				{
-					//On reccourci le lien si il est trop long.
-					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+			
+			while ($row = $this->sql_querier->fetch_assoc($result))
+			{
+				//On reccourci le lien si il est trop long.
+				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
-					$tpl->assign_block_vars('articles', array(
-					'NAME' => $row['title'],
-					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
-					'CAT' => $ARTICLES_CAT[$idartcat]['name'],
-					'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-					'COMPT' => $row['views'],
-					'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
-					'COM' => $row['nbr_com'],
-					'U_ARTICLES_PSEUDO'=>'<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
-					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
-					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
-					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
-					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					));
-
-				}
-					
-				if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
-				{
-
-					$tpl->assign_vars(array(
-				'C_INVISIBLE'=>true,
-				'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : '',
-				'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
-				'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : ''
+				$tpl->assign_block_vars('articles', array(
+				'NAME' => $row['title'],
+				'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
+				'CAT' => $ARTICLES_CAT[$idartcat]['name'],
+				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'COMPT' => $row['views'],
+				'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+				'COM' => $row['nbr_com'],
+				'DESCRIPTION'=>$row['description'],
+				'U_ARTICLES_PSEUDO'=>'<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
+				'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
+				'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
+				'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
+				'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+				));
+			}
+				
+			if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
+			{
+				$tpl->assign_vars(array(
+					'C_INVISIBLE'=>true,
+					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : '',
+					'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
+					'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : ''
 				));
 
 				import('content/note');
@@ -514,6 +505,7 @@ class ArticlesInterface extends ModuleInterface
 				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+				
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//On reccourci le lien si il est trop long.
@@ -532,16 +524,12 @@ class ArticlesInterface extends ModuleInterface
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					));
-						
+					));		
 				}
-
-
-				}
-				$this->sql_querier->query_close($result);
 			}
-				
-			return $tpl->parse(TRUE);
+			$this->sql_querier->query_close($result);
+		}			
+		return $tpl->parse(TRUE);
 	}
 }
 

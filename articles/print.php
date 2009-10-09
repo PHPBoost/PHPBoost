@@ -47,7 +47,22 @@ if ($idart > 0)
 }
 
 if (empty($articles['title']))
-exit;
+redirect(url('articles.php'));
+
+$array_sources = unserialize($articles['sources']);
+$sources='';
+if(count($array_sources) != 0)
+{
+	$i = 0;
+	$sources = "<br /><br /><hr /><div><b> sources : </b>";
+	foreach ($array_sources as $value)
+	{	
+		$url=substr($value['url'],0,7) != "http://" ? "http://".$value['url'] : $value['url'];
+		$sources .='<a href="'.$url.'">'.$value['sources'].'</a>&nbsp;'.(($i < (count($array_sources)-1) )? '-' : ''.'');
+		$i++;
+	}	
+	$sources .="</div>";
+}
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $tpl = new Template('framework/content/print.tpl');
@@ -58,7 +73,7 @@ $tpl->assign_vars(array(
 	'PAGE_TITLE' => $articles['title'] . ' - ' . $CONFIG['site_name'],
 	'TITLE' => $articles['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENT' => second_parse($contents)
+	'CONTENT' => second_parse($contents).$sources,
 ));
 
 $tpl->parse();

@@ -118,7 +118,8 @@ $ARTICLES_LANG = array(
 	'or_direct_path' => 'Ou chemin direct',
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
-
+	
+	'article_description'=>"Desciprion de l'article",
 	'no_articles_waiting'=>'Aucun articles en attente disponible pour le moment',
 	'publicate_articles'=>'Articles publiés',
 	'cat_tpl' => 'Templates de la catégorie',
@@ -129,6 +130,15 @@ $ARTICLES_LANG = array(
 	'add_source'=>'Ajouter une source',
 	'source_link'=>'URL de la source',
 	'special_auth_explain_articles' => 'Par défaut l\'article aura la configuration générale de sa catégorie. Vous pouvez lui appliquer des permissions particulières.',
+
+	'articles_mini_config'=> 'Configuration du mini module',
+	'nbr_articles_mini'=> 'Nombre d\'articles à afficher',		
+	'mini_type'=> 'Type de classement',	
+	'articles_best_note' => 'Articles les mieux notés',
+	'articles_more_com' => 'Articles ayant le plus de commentaire',
+	'articles_by_date' => 'Derniers articles',
+	'articles_most_popular' => 'Articles les plus populaires',
+
 );
 
 ?>

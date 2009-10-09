@@ -150,6 +150,8 @@ if (!empty($idart) && isset($cat) )
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . url_encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
+		'U_ARTICLES_EDIT' =>url('management.php?edit=' . $idart),
+		'U_ARTICLES_DEL' =>url('management.php?del=' . $idart . '&amp;token=' . $Session->get_token()),
 		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
 		'L_SUMMARY' => $ARTICLES_LANG['summary'],
 		'L_DELETE' => $LANG['delete'],

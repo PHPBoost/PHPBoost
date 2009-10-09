@@ -57,6 +57,7 @@
 							date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
 							hour: document.getElementById('release_hour').value,
 							min: document.getElementById('release_min').value,
+							description: document.getElementById('description').value,
 						 },
 						onSuccess: function(response)
 						{
@@ -115,8 +116,7 @@
 				global_auth = !global_auth;
 			}
 		-->
-		</script>
-		
+		</script>		
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
 				<legend>{L_ARTICLES_ADD}</legend>
@@ -150,8 +150,11 @@
 						</dd>
 				</dl>
 				<div id="preview">
-
 				</div>
+				<label for="description" id="scroll_contents">{L_ARTICLE_DESCRIPTION}</label>
+				<br /><br />
+				<label><textarea rows="4" cols="86" id="description" name="description">{DESCRIPTION}</textarea></label>
+				<br />
 				<label for="contents" id="scroll_contents">* {L_TEXT}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
@@ -172,15 +175,13 @@
 					</tr>
 					<tr>
 						<td class="row2" style="text-align:center;">	
-
 							# START sources #
 							<label><input type="text" size="40" name="a{sources.I}" id="a{sources.I}" value="{sources.SOURCE}" class="text" /></label><br />
 							# END sources #
 							<span id="a{NB_SOURCE}"></span>
 						</td>
 						<td class="row2" style="text-align:center;">	
-							# START sources #
-						
+							# START sources #					
 							<label><input type="text" size="40" name="v{sources.I}" id="v{sources.I}" value="{sources.URL}" class="text" /> </label><br />
 							# END sources #
 							<span id="v{NB_SOURCE}"></span>
@@ -188,8 +189,7 @@
 					</tr>
 					<tr>
 						<td style="text-align:center;" colspan="2">
-								<div id="s{NB_SOURCE}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_field({NB_SOURCE}, 100)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></div>	
-									
+							<div id="s{NB_SOURCE}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_field({NB_SOURCE}, 100)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></div>								
 						</td>
 					</tr>
 				</table>
@@ -214,30 +214,6 @@
 							</dt>
 							<dd>
 								{AUTH_READ}
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<label for="auth_contribution">{L_AUTH_CONTRIBUTION}</label>
-							</dt>
-							<dd>
-								{AUTH_CONTRIBUTION}
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<label for="auth_write">{L_AUTH_WRITE}</label>
-							</dt>
-							<dd>
-								{AUTH_WRITE}
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<label for="auth_moderation">{L_AUTH_MODERATION}</label>
-							</dt>
-							<dd>
-								{AUTH_MODERATION}
 							</dd>
 						</dl>
 					</div>
@@ -280,10 +256,7 @@
 						# ENDIF #
 					</dd>
 				</dl>
-			</fieldset>	
-			
-	
-			
+			</fieldset>		
 			# IF C_CONTRIBUTION #
 			<fieldset>
 				<legend>{L_CONTRIBUTION_LEGEND}</legend>
@@ -296,10 +269,7 @@
 				<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
 				<br />
 			</fieldset>
-			# ENDIF #
-			
-			
-			
+			# ENDIF #		
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" id="id" name="id" value="{IDARTICLES}" class="submit" />

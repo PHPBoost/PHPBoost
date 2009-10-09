@@ -105,7 +105,7 @@
 								# ENDIF #
 							</div>
 								<div class="text_small">	
-									Si la Radeon HD 5870 est la pionnière du DirectX 11, son prix élevé en limite les ambitions. Une contrainte que ne devrait pas subir un Radeon HD 5850 résolument plus accessible.
+									{articles_invisible.DESCRIPTION}
 								</div>
 								
 								<hr style="margin-left:0px;margin-top:9px;width:500px"/>
@@ -142,8 +142,8 @@
 									</a>
 								# ENDIF #
 							</div>
-								<div class="text_small">	
-									Si la Radeon HD 5870 est la pionnière du DirectX 11, son prix élevé en limite les ambitions. Une contrainte que ne devrait pas subir un Radeon HD 5850 résolument plus accessible.
+								<div>	
+									{articles.DESCRIPTION}
 								</div>
 								
 								<hr style="margin-left:0px;margin-top:9px;width:500px"/>
