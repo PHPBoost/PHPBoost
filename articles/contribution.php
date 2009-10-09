@@ -7,13 +7,13 @@
  *   email                : crunchfamily@free.fr
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../kernel/begin.php');
 
@@ -31,7 +31,7 @@ require_once('../kernel/begin.php');
 require_once 'articles_begin.php';
 
 if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $Bread_crumb->add($ARTICLES_LANG['contribution_confirmation'], url('contribution.php'));
 
@@ -48,6 +48,6 @@ $tpl->assign_vars(array(
 
 $tpl->parse();
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

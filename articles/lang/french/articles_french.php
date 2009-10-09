@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 
 ####################################################
@@ -35,7 +35,7 @@ $LANG['e_unexist_articles'] = 'L\'article que vous avez demandé n\'existe pas';
 
 //Ajout article.
 $MAIL['new_article_website'] = 'Nouvel article sur votre site web';
-$MAIL['new_article'] = 'Un nouvel article a été ajouté sur votre site web ' . HOST . ', 
+$MAIL['new_article'] = 'Un nouvel article a été ajouté sur votre site web ' . HOST . ',
 il devra être approuvé avant d\'être visible sur le site par tout le monde.
 
 Titre de l\'article: %s
@@ -125,6 +125,9 @@ $ARTICLES_LANG = array(
 	'articles_tpl' => 'Templates des articles',
 	'tpl_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles et la catégories courante.',
 	'tpl'=>'Templates personnalisés',
-	);
+	'source'=>'Sources',
+	'add_source'=>'Ajouter une source',
+	'source_link'=>'URL de la source',
+);
 
 ?>

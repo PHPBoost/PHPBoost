@@ -42,7 +42,7 @@ if (!empty($idart) && isset($cat) )
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
@@ -107,6 +107,20 @@ if (!empty($idart) && isset($cat) )
 		
 	}
 	
+
+			$array_sources = unserialize($articles['sources']);
+			$i = 0;
+			foreach ($array_sources as $sources)
+			{	
+				$tpl->assign_block_vars('sources', array(
+					'I' => $i,
+					'SOURCE' => $sources['sources'],
+					'URL' => substr($sources['url'],0,7) != "http://" ? "http://".$sources['url'] : $sources['url'],
+					'INDENT'=> $i < (count($array_sources)-1) ? '-' : '',
+				));
+				$i++;
+			}	
+	
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -143,6 +157,7 @@ if (!empty($idart) && isset($cat) )
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'L_PRINTABLE_VERSION' => $LANG['printable_version'],
+		'L_SOURCE'=>$ARTICLES_LANG['source'],
 
 	));
 

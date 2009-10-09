@@ -6,15 +6,15 @@
  *   copyright          : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
  *
-###################################################
+ *
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 define('NO_SESSION_LOCATION', true); // Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
@@ -34,16 +34,16 @@ require_once('../kernel/header_no_display.php');
 $note=retrieve(GET,'note',0);
 //Notation.
 if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
-{	
+{
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
 
 	// intialize management system class
 	import('content/note');
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
-	
+
 	if (!empty($note) && !empty($id))
-		echo $Note->add($note); //add a note
+	echo $Note->add($note); //add a note
 }
 elseif (retrieve(GET,'img_preview',false)) // image preview
 {
@@ -72,13 +72,13 @@ elseif (retrieve(POST,'preview',false))
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
 	if (!empty($articles['date']))
-		$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $articles['date'], $LANG['date_format_short']);
+	$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $articles['date'], $LANG['date_format_short']);
 	else
-		$date = new Date(DATE_NOW, TIMEZONE_AUTO);
+	$date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 	if (!empty($articles['date']) && !empty($articles['hour']) && !empty($articles['min']))
-		$date->set_hours($articles['hour']);
-		$date->set_minutes($articles['min']);
+	$date->set_hours($articles['hour']);
+	$date->set_minutes($articles['min']);
 
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,
@@ -97,6 +97,6 @@ elseif (retrieve(POST,'preview',false))
 	echo $preview->parse(TEMPLATE_STRING_MODE);
 }
 else
-	echo -2;
+echo -2;
 
 ?>
