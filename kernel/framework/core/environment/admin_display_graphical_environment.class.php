@@ -383,7 +383,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$tpl->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => EnvironmentServices::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => $Sql->get_executed_requests_number(),
+				'REQ' => EnvironmentServices::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],
