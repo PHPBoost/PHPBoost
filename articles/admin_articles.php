@@ -8,7 +8,7 @@
  *
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
@@ -98,8 +98,8 @@ switch ($get_sort)
 $get_mode = retrieve(GET, 'mode', '');
 $mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 
-		
-$result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
+
+$result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login
 FROM " . DB_TABLE_ARTICLES . " a
 LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON a.user_id = m.user_id
@@ -108,23 +108,23 @@ $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	if ($row['visible'] == 2)
-		$aprob = $LANG['waiting'];
+	$aprob = $LANG['waiting'];
 	elseif ($row['visible'] == 1)
-		$aprob = $LANG['yes'];
+	$aprob = $LANG['yes'];
 	else
-		$aprob = $LANG['no'];
+	$aprob = $LANG['no'];
 
 	//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 	$title = strlen($row['title']) > 45 ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
 
 	$visible = '';
 	if ($row['start'] > 0)
-		$visible .= gmdate_format('date_format_short', $row['start']);
+	$visible .= gmdate_format('date_format_short', $row['start']);
 	if ($row['end'] > 0 && $row['start'] > 0)
-		$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
+	$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
 	elseif ($row['end'] > 0)
-		$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
-	
+	$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
+
 	$tpl->assign_block_vars('list.articles', array(
 		'TITLE' => $title,
 		'IDCAT' => $row['idcat'],
@@ -134,7 +134,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'APROBATION' => $aprob,
 		'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
 		'U_CAT' => '<a href="../articles/articles' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
-	));
+		));
 }
 $Sql->query_close($result);
 

@@ -171,7 +171,7 @@
 				
 				<p style="text-align:center;padding-top:10px;" class="text_small">
 					{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
-				
+				</p>
 				&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		

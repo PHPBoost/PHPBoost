@@ -7,7 +7,7 @@
  *   email                : crowkait@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,14 +23,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-require_once('articles_constants.php');	
-	
+require_once('articles_constants.php');
+
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
@@ -117,12 +117,12 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_TPL'=>$ARTICLES_LANG['tpl'],
 		'L_ARTICLES_TPL_EXPLAIN'=>$ARTICLES_LANG['tpl_explain'],
 	));
-		
-	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))	
+
+	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
 	{
 		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $CONFIG_ARTICLES['global_auth'] ? true : false;
 		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $CONFIG_ARTICLES['global_auth'];
-		
+
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 		import('io/filesystem/folder');
@@ -133,7 +133,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
-		
+
 
 		$tpl_articles_list = '';
 		$tpl_folder_path = new Folder('./templates');
@@ -144,7 +144,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($tpl_articles != 'articles_cat.tpl')
 			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
 		}
-		
+
 		$tpl_cat_list = '';
 		$tpl_folder_path = new Folder('./templates');
 		foreach ($tpl_folder_path->get_files('`^articles_cat.*\.tpl$`') as $tpl_cat)
@@ -153,7 +153,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			$selected = $tpl_cat == $ARTICLES_CAT[$id_edit]['tpl_cat'] ? ' selected="selected"' : '';
 			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 		}
-		
+
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -190,7 +190,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($image != $img_default_name)
 			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
 		}
-	
+
 		$tpl_default_name = 'articles.tpl';
 		$tpl_articles_list = '<option value=""' . ($tpl_default_name ? ' selected="selected"' : '') . '>'.$tpl_default_name.'</option>';
 		$tpl_folder_path = new Folder('./templates');
@@ -200,7 +200,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($tpl_articles != $tpl_default_name & $tpl_articles != 'articles_cat.tpl' )
 			$tpl_articles_list.= '<option value="' . $tpl_articles . '">' . $tpl_articles. '</option>';
 		}
-		
+
 		$tpl_default_name = 'articles_cat.tpl';
 		$tpl_cat_list = '<option value=""' . ($tpl_default_name ? ' selected="selected"' : '') . '>'.$tpl_default_name.'</option>';
 		$tpl_folder_path = new Folder('./templates');
@@ -239,11 +239,11 @@ elseif (retrieve(POST,'submit',false))
 	{
 		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
-		
+
 		if ($delete_content)
-			$articles_categories->delete_category_recursively($cat_to_del_post);
+		$articles_categories->delete_category_recursively($cat_to_del_post);
 		else
-			$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
+		$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
 	}
 	else
 	{
@@ -253,27 +253,27 @@ elseif (retrieve(POST,'submit',false))
 		$icon=retrieve(POST, 'icon', '', TSTRING);
 		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
-		
+
 		if(retrieve(POST,'icon_path',false))
-			$icon=retrieve(POST,'icon_path','');
+		$icon=retrieve(POST,'icon_path','');
 			
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');		
+		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		if ($id_cat > 0)
-			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
+		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
 		else
-			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
+		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
 	}
-	
+
 	// Feeds Regeneration
 	import('content/syndication/feed');
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');
-	
+
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 else
@@ -306,10 +306,10 @@ else
 		'url' => array(
 			'unrewrited' => 'articles.php?cat=%d',
 			'rewrited' => 'articles-%d+%s.php'),
-		);
-		
+	);
+
 	$articles_categories->set_display_config($cat_config);
-	
+
 	$tpl->assign_block_vars('categories_management', array(
 		'L_CATS_MANAGEMENT' => $ARTICLES_LANG['category_articles'],
 		'CATEGORIES' => $articles_categories->build_administration_interface()

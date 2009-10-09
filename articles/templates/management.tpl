@@ -91,6 +91,19 @@
 			return true;
 		}
 		# ENDIF #
+		function add_field(i, i_max) 
+		{
+			var i2 = i + 1;
+
+			if( document.getElementById('a'+i) )
+				document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" class="text" /></label><br /><span id="a'+i2+'"></span>';	
+			if( document.getElementById('v'+i) )
+				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="40" name="v'+i+'" value="" class="text" /></label><br /><span id="v'+i2+'"></span>';	
+			if( document.getElementById('s'+i) )
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';
+	
+						
+	}
 		-->
 		</script>
 		
@@ -115,27 +128,61 @@
 				</dl>
 				<dl>
 					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
-						<dd><label>
-							<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
-								{IMG_LIST}
-							</select>
-							<span id="icon_img">{IMG_ICON}</span>
-							<br />
-							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input size="40" type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
-						</label></dd>
-					</dl>
+						<dd>
+							<label>
+								<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
+									{IMG_LIST}
+								</select>
+								<span id="icon_img">{IMG_ICON}</span>
+								<br />
+								<span class="text_small">{L_OR_DIRECT_PATH}</span> <input size="40" type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
+							</label>
+						</dd>
+				</dl>
 				<div id="preview">
 
 				</div>
 				<label for="contents" id="scroll_contents">* {L_TEXT}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
-					<p class="text_center" style="margin-top:8px;">
-							<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>
-						</p>
-						<p class="text_center" style="margin-top:-15px;">
-							<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
-						</p>
+				<p class="text_center" style="margin-top:8px;">
+					<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>
+				</p>
+				<p class="text_center" style="margin-top:-15px;">
+					<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
+				</p>	
+				<table style="margin:auto;text-align:center;border:none;border-spacing:0;">
+					<tr>
+						<th style="text-align:center;">
+							{L_SOURCE}
+						</th>
+						<th style="text-align:center;">
+							{L_SOURCE_LINK}
+						</th>
+					</tr>
+					<tr>
+						<td class="row2" style="text-align:center;">	
+
+							# START sources #
+							<label><input type="text" size="40" name="a{sources.I}" id="a{sources.I}" value="{sources.SOURCE}" class="text" /></label><br />
+							# END sources #
+							<span id="a{NB_SOURCE}"></span>
+						</td>
+						<td class="row2" style="text-align:center;">	
+							# START sources #
+						
+							<label><input type="text" size="40" name="v{sources.I}" value="{sources.URL}" class="text" /> </label><br />
+							# END sources #
+							<span id="v{NB_SOURCE}"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;" colspan="2">
+								<div id="s{NB_SOURCE}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_field({NB_SOURCE}, 100)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></div>	
+									
+						</td>
+					</tr>
+				</table>
 				<br /><br />
 				# IF NOT C_CONTRIBUTION #
 				
