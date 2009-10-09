@@ -128,6 +128,7 @@ $ARTICLES_LANG = array(
 	'source'=>'Sources',
 	'add_source'=>'Ajouter une source',
 	'source_link'=>'URL de la source',
+	'special_auth_explain_articles' => 'Par défaut l\'article aura la configuration générale de sa catégorie. Vous pouvez lui appliquer des permissions particulières.',
 );
 
 ?>

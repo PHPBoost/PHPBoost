@@ -104,7 +104,16 @@
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';
 	
 						
-	}
+		}
+		var global_auth = {JS_SPECIAL_AUTH};
+			function change_status_global_auth()
+			{
+				if( global_auth )
+					hide_div("hide_special_auth");
+				else
+					show_div("hide_special_auth");
+				global_auth = !global_auth;
+			}
 		-->
 		</script>
 		
@@ -186,7 +195,53 @@
 				</table>
 				<br /><br />
 				# IF NOT C_CONTRIBUTION #
-				
+				<fieldset>
+					<legend>
+						{L_SPECIAL_AUTH}
+					</legend>
+					<dl>
+						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
+						<br />
+						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN_ARTICLES}</span></dt>
+						<dd>
+							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED} />
+						</dd>					
+					</dl>
+					<div id="hide_special_auth" style="display:{DISPLAY_SPECIAL_AUTH};">
+						<dl>
+							<dt>
+								<label for="auth_read">{L_AUTH_READ}</label>
+							</dt>
+							<dd>
+								{AUTH_READ}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_contribution">{L_AUTH_CONTRIBUTION}</label>
+							</dt>
+							<dd>
+								{AUTH_CONTRIBUTION}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_write">{L_AUTH_WRITE}</label>
+							</dt>
+							<dd>
+								{AUTH_WRITE}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_moderation">{L_AUTH_MODERATION}</label>
+							</dt>
+							<dd>
+								{AUTH_MODERATION}
+							</dd>
+						</dl>
+					</div>
+				</fieldset>
 				<dl class="overflow_visible">
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>

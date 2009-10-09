@@ -20,6 +20,7 @@ CREATE TABLE `phpboost_articles` (
   `note` float NOT NULL default '0',
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
+   `auth` text,
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),
