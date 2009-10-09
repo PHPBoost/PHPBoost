@@ -37,16 +37,18 @@ $idart = retrieve(GET, 'id', 0);
 
 
 if (!empty($idart) && isset($cat) )
-{
-	//Niveau d'autorisation de la catégorie
-	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+{	
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
+	
+	$special_auth = (unserialize($articles['auth']) !== $ARTICLES_CAT[$articles['idcat']]['auth']) && ($articles['auth'] != '')  ? true : false;
+	$articles['auth'] = $special_auth ? unserialize($articles['auth']) : $ARTICLES_CAT[$articles['idcat']]['auth'];
+	//Niveau d'autorisation de la catégorie
+	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
@@ -88,23 +90,22 @@ if (!empty($idart) && isset($cat) )
 	{
 		if($c_tab && $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS) )
 		{	
-				$c_tab=true;
-				$tpl->assign_block_vars('tab', array(
-					'CONTENTS_TAB'=>isset($array_contents[$i]) ? second_parse($array_contents[$i]) : '',
-					'ID_TAB' =>$i,
-					'DISPLAY' => ( $i == 1 )? "yes" : "none",
-					'STYLE' => ($i == 1)? 'style="margin-left: 1px"' : '',
-					'ID_TAB_ACT' =>($i == 1)?'Active' : $i,
-					'TOTAL_TAB'=> count($array_page[1]),
-					'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : Trim($page_name),
-				));
+			$c_tab=true;
+			$tpl->assign_block_vars('tab', array(
+				'CONTENTS_TAB'=>isset($array_contents[$i]) ? second_parse($array_contents[$i]) : '',
+				'ID_TAB' =>$i,
+				'DISPLAY' => ( $i == 1 )? "yes" : "none",
+				'STYLE' => ($i == 1)? 'style="margin-left: 1px"' : '',
+				'ID_TAB_ACT' =>($i == 1)?'Active' : $i,
+				'TOTAL_TAB'=> count($array_page[1]),
+				'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : Trim($page_name),
+			));
 		}
 		else
 			$c_tab=false;
 			
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
-		
 	}
 	
 	$array_sources = unserialize($articles['sources']);
@@ -173,7 +174,6 @@ if (!empty($idart) && isset($cat) )
 }
 else
 {
-
 	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'articles';
