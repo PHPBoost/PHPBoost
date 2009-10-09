@@ -98,13 +98,13 @@ switch ($get_sort)
 $get_mode = retrieve(GET, 'mode', '');
 $mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 
-
 $result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login
 FROM " . DB_TABLE_ARTICLES . " a
 LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON a.user_id = m.user_id
 ORDER BY " . $sort . " " . $mode .
 $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
+
 while ($row = $Sql->fetch_assoc($result))
 {
 	if ($row['visible'] == 2)
@@ -139,7 +139,6 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 
 $tpl->parse();
-
 
 require_once('../admin/admin_footer.php');
 

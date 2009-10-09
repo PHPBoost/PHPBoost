@@ -51,46 +51,7 @@ $Errorh->set_template($tpl);
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
-if ($id_up > 0)
-{
-	$Session->csrf_get_protect();
-	$articles_categories->move($id_up, MOVE_CATEGORY_UP);
-	redirect(url('admin_articles_cat.php'));
-}
-elseif ($id_down > 0)
-{
-	$Session->csrf_get_protect();
-	$articles_categories->move($id_down, MOVE_CATEGORY_DOWN);
-	redirect(url('admin_articles_cat.php'));
-}
-elseif ($id_show > 0)
-{
-	$Session->csrf_get_protect();
-	$articles_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
-	redirect(url('admin_articles_cat.php'));
-}
-elseif ($id_hide > 0)
-{
-	$Session->csrf_get_protect();
-	$articles_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	redirect(url('admin_articles_cat.php'));
-}
-elseif ($cat_to_del > 0)
-{
-	$tpl->assign_vars(array(
-		'L_REMOVING_CATEGORY' => $ARTICLES_LANG['removing_category'],
-		'L_EXPLAIN_REMOVING' => $ARTICLES_LANG['explain_removing_category'],
-		'L_DELETE_CATEGORY_AND_CONTENT' => $ARTICLES_LANG['delete_category_and_its_content'],
-		'L_MOVE_CONTENT' => $ARTICLES_LANG['move_category_content'],
-		'L_SUBMIT' => $LANG['delete']
-	));
-
-	$tpl->assign_block_vars('removing_interface', array(
-		'CATEGORY_TREE' => $articles_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
-		'IDCAT' => $cat_to_del,
-	));
-}
-elseif ($new_cat XOR $id_edit > 0)
+if ($new_cat XOR $id_edit > 0)
 {
 	$tpl->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
@@ -133,7 +94,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
-
 
 		$tpl_articles_list = '';
 		$tpl_folder_path = new Folder('./templates');
@@ -210,6 +170,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($tpl_cat != $tpl_default_name)
 			$tpl_cat_list.= '<option value="' . $tpl_cat . '">' . $tpl_cat. '</option>';
 		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
@@ -273,7 +234,6 @@ elseif (retrieve(POST,'submit',false))
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');
-
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 else

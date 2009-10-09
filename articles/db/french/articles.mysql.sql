@@ -1,13 +1,12 @@
 DROP TABLE IF EXISTS phpboost_articles, phpboost_articles_cats;
 
-
 CREATE TABLE `phpboost_articles` (
   `id` int(11) NOT NULL auto_increment,
   `idcat` int(11) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
   `description` text,
-  `sources` text,
   `contents` mediumtext NOT NULL,
+  `sources` text NOT NULL default '',
   `icon` varchar(255) NOT NULL default '',
   `timestamp` int(11) NOT NULL default '0',
   `visible` tinyint(1) NOT NULL default '0',

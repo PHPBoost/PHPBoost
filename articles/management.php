@@ -44,7 +44,7 @@ $file_approved = retrieve(POST, 'visible', false);
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
-	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
 	if (empty($articles['id']))
 	$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
@@ -55,6 +55,7 @@ if ($delete > 0)
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 	$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
+	
 	if($articles['visible'] == 1)
 	{
 		$nb=$articles_cat_info['nbr_articles_visible'] - 1;
@@ -88,7 +89,6 @@ elseif(retrieve(POST,'submit',false))
 	if(retrieve(POST,'icon_path',false))
 	$icon=retrieve(POST,'icon_path','');
 
-
 	$sources = array();
 	for ($i = 0;$i < 100; $i++)
 	{	
@@ -119,6 +119,7 @@ elseif(retrieve(POST,'submit',false))
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'icon' => $icon,		
 		'sources'=>serialize($sources),
+		'description'=>retrieve(POST, 'description', '', TSTRING),
 		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
 	);
 
@@ -183,7 +184,7 @@ elseif(retrieve(POST,'submit',false))
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
@@ -214,8 +215,8 @@ elseif(retrieve(POST,'submit',false))
 			
 				$auth = $articles['auth'];
 					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -268,7 +269,6 @@ elseif(retrieve(POST,'submit',false))
 					AUTH_ARTICLES_MODERATE, CONTRIBUTION_AUTH_BIT
 					)
 					);
-
 					//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
 					ContributionService::save_contribution($articles_contribution);
 
@@ -303,7 +303,6 @@ else
 
 		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 		{
-
 			$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->remove_last();
 			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'].'&amp;cat='.$articles['idcat'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
@@ -364,7 +363,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => unparse($articles['contents']),
-				'EXTEND_CONTENTS' => unparse($articles['extend_contents']),
+				'DESCRIPTION' => $articles['description'],
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
 				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'VISIBLE_UNAPROB' => !$articles['visible'],
@@ -404,6 +403,7 @@ else
 			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);
 				
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
+			
 			//Images disponibles
 			$image_list = '<option value="" selected="selected">--</option>';
 			import('io/filesystem/folder');
@@ -432,6 +432,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => '',
 				'CONTENTS' => '',
+				'DESCRIPTION'=>'',
 				'EXTEND_CONTENTS' => '',
 				'VISIBLE_WAITING' => 0,
 				'VISIBLE_ENABLED' => 1,
@@ -496,6 +497,7 @@ else
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
 		'L_TEXT' => $LANG['content'],
+		'L_ARTICLE_DESCRIPTION'=>$ARTICLES_LANG['article_description'],
 		'L_EXPLAIN_PAGE' => $ARTICLES_LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
