@@ -40,7 +40,8 @@
 			if( check_form() )
 			{
 				document.getElementById('preview').innerHTML = '<img src="{PHP_PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-
+			
+							
 				new Ajax.Request(
 					'xmlhttprequest.php',
 					{
@@ -55,7 +56,7 @@
 							user_id: document.getElementById('user_id').value,
 							date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
 							hour: document.getElementById('release_hour').value,
-							min: document.getElementById('release_min').value
+							min: document.getElementById('release_min').value,
 						 },
 						onSuccess: function(response)
 						{
@@ -171,7 +172,7 @@
 						<td class="row2" style="text-align:center;">	
 							# START sources #
 						
-							<label><input type="text" size="40" name="v{sources.I}" value="{sources.URL}" class="text" /> </label><br />
+							<label><input type="text" size="40" name="v{sources.I}" id="v{sources.I}" value="{sources.URL}" class="text" /> </label><br />
 							# END sources #
 							<span id="v{NB_SOURCE}"></span>
 						</td>

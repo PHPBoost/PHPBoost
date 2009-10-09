@@ -340,7 +340,16 @@ else
 					'URL' => $sources['url'],
 				));
 				$i++;
-			}		
+			}	
+			
+			if($i==0)
+			{
+				$tpl->assign_block_vars('sources', array(
+						'I' => 0,
+						'SOURCE' => '',
+						'URL' => '',
+					));
+			}
 			
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
@@ -367,7 +376,7 @@ else
 				'IMG_LIST'=>$image_list,
 				'IDARTICLES' => $articles['id'],
 				'USER_ID' => $articles['user_id'],
-				'NB_SOURCE'=>$i,
+				'NB_SOURCE'=>$i == 0 ? 1 : $i,
 			));
 
 			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);

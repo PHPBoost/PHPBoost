@@ -57,6 +57,7 @@ elseif (retrieve(POST,'preview',false))
 	$Cache->load('articles');
 	//loading module language
 	load_module_lang('articles');
+	
 
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
@@ -68,6 +69,7 @@ elseif (retrieve(POST,'preview',false))
 		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
 		'min' => retrieve(POST, 'min', 0, TINTEGER),
 	);
+
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
@@ -83,6 +85,7 @@ elseif (retrieve(POST,'preview',false))
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,
 		'C_TAB'=>false,
+		'C_SOURCES'=> $i >0 ? true : false,
 		'L_WRITTEN' =>  $ARTICLES_LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'ID' => $articles['id'],
