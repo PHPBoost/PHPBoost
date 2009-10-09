@@ -234,8 +234,10 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
+				# IF C_SOURCES #
 				<div><b> {L_SOURCE} : </b># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a>&nbsp;{sources.INDENT} # END sources #</div>
 				<div class="spacer">&nbsp;</div>
+				# ENDIF #
 				<div style="float:left" class="text_small">
 					{KERNEL_NOTATION}
 				</div>

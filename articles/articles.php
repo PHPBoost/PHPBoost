@@ -107,20 +107,19 @@ if (!empty($idart) && isset($cat) )
 		
 	}
 	
+	$array_sources = unserialize($articles['sources']);
+	$i = 0;
+	foreach ($array_sources as $sources)
+	{	
+		$tpl->assign_block_vars('sources', array(
+			'I' => $i,
+			'SOURCE' => $sources['sources'],
+			'URL' => substr($sources['url'],0,7) != "http://" ? "http://".$sources['url'] : $sources['url'],
+			'INDENT'=> $i < (count($array_sources)-1) ? '-' : '',
+		));
+		$i++;
+	}	
 
-			$array_sources = unserialize($articles['sources']);
-			$i = 0;
-			foreach ($array_sources as $sources)
-			{	
-				$tpl->assign_block_vars('sources', array(
-					'I' => $i,
-					'SOURCE' => $sources['sources'],
-					'URL' => substr($sources['url'],0,7) != "http://" ? "http://".$sources['url'] : $sources['url'],
-					'INDENT'=> $i < (count($array_sources)-1) ? '-' : '',
-				));
-				$i++;
-			}	
-	
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -131,6 +130,7 @@ if (!empty($idart) && isset($cat) )
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_PRINT' => true,
+		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
