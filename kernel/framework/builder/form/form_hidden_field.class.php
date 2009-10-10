@@ -34,18 +34,17 @@ import('builder/form/form_field');
  */
 class FormHiddenField extends FormField
 {
-	public function __construct($name, $value, $id = '')
+	public function __construct($name, $value)
 	{
 		$this->name = $name;
+		$this->id = $name;
 		$this->value = $value;
-		$this->id = $id;
 	}
 	
 	public function display()
 	{
 		$field = '<input type="hidden" ';
 		$field .= 'name="' . $this->name . '" ';
-		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
 		$field .= '/>';
 		
