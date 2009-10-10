@@ -62,8 +62,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->assign_vars(array(
 			'SERVER_NAME' => $CONFIG['site_name'],
 			'SITE_NAME' => $CONFIG['site_name'],
-			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()
-		->get_attribute('user_editor') == 'tinymce',
+			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()->get_attribute('user_editor') == 'tinymce',
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 			'SITE_KEYWORD' => $CONFIG['site_keyword'],
