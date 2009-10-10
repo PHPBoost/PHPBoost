@@ -30,7 +30,6 @@ if (defined('PHPBOOST') !== true)
     exit;
 }
 
-EnvironmentServices::close_sql_querier();
+Environment::destroy();
 
-ob_end_flush();
 ?>
