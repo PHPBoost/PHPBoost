@@ -135,7 +135,7 @@ else
 	$Cache->load('articles');
 		
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-
+	
 	$tpl->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
@@ -145,8 +145,8 @@ else
 		'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
-		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' selected="selected"' : '',
-		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' selected="selected"' : '',
+		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' checked ' : '',
+		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' checked ' : '',
 		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
 		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
 		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',

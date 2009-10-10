@@ -314,8 +314,9 @@ class ArticlesInterface extends ModuleInterface
 			'date' => '',
 			'com' => '',
 			'note' => '',
+			'author'=>'',
 			'asc' => '',
-			'desc' => ''
+			'desc' => '',
 			);
 				
 		switch ($get_sort)
@@ -339,6 +340,10 @@ class ArticlesInterface extends ModuleInterface
 			case 'note' :
 				$sort = 'note';
 				$selected_fields['note'] = ' selected="selected"';
+				break;
+			case 'author' :
+				$sort = 'a.user_id';
+				$selected_fields['author'] = ' selected="selected"';
 				break;
 			default :
 				$sort = 'timestamp';
@@ -374,6 +379,7 @@ class ArticlesInterface extends ModuleInterface
 		'L_VIEW' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],
 		'L_COM' => $LANG['com'],
+		'L_AUTHOR' => $ARTICLES_LANG['author'],
 		'L_DESC' => $LANG['desc'],
 		'L_ASC' => $LANG['asc'],
 		'L_TITLE'=>$LANG['title'],
@@ -399,6 +405,7 @@ class ArticlesInterface extends ModuleInterface
 		'SELECTED_DATE' => $selected_fields['date'],
 		'SELECTED_VIEW' => $selected_fields['view'],
 		'SELECTED_NOTE' => $selected_fields['note'],
+		'SELECTED_AUTHOR' => $selected_fields['author'],
 		'SELECTED_ASC' => $selected_fields['asc'],
 		'SELECTED_DESC' => $selected_fields['desc'],
 		'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&'

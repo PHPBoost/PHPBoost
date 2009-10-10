@@ -70,6 +70,7 @@
 							<option value="date"{SELECTED_DATE}>{L_DATE}</option>
 							<option value="com"{SELECTED_COM}>{L_COM}</option>
 							<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
+							<option value="author"{SELECTED_AUTHOR}>{L_AUTHOR}</option>
 						</select>
 						<select name="mode" id="mode" class="nav" onchange="change_order()">
 							<option value="asc"{SELECTED_ASC}>{L_ASC}</option>

@@ -119,7 +119,7 @@ $ARTICLES_LANG = array(
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
 	
-	'article_description'=>"Desciprion de l'article",
+	'article_description'=>"Description de l'article",
 	'no_articles_waiting'=>'Aucun articles en attente disponible pour le moment',
 	'publicate_articles'=>'Articles publiés',
 	'cat_tpl' => 'Templates de la catégorie',
@@ -138,6 +138,7 @@ $ARTICLES_LANG = array(
 	'articles_more_com' => 'Articles ayant le plus de commentaire',
 	'articles_by_date' => 'Derniers articles',
 	'articles_most_popular' => 'Articles les plus populaires',
+	'author' => 'Auteur',
 
 );
 
