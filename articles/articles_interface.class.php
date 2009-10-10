@@ -32,6 +32,7 @@ import('modules/module_interface');
 
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
 require_once PATH_TO_ROOT . '/articles/articles_constants.php';
+
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ArticlesInterface extends ModuleInterface
 {
