@@ -131,82 +131,12 @@ class ArticlesInterface extends ModuleInterface
 	             return $request;
 	}
 
-	/**
-	 * @desc Returns an ordered tree with all categories informations
-	 * @return array[] an ordered tree with all categories informations
-	 */
-	function _get_cats_tree()
+    function get_feeds_list()
 	{
-		global $LANG, $ARTICLES_CAT,$ARTICLES_LANG;
-		$Cache->load('articles');
-
-		if (!(isset($ARTICLES_CAT) && is_array($ARTICLES_CAT)))
-		$ARTICLES_CAT = array();
-
-		$ordered_cats = array();
-		foreach ($ARTICLES_CAT as $id => $cat)
-		{   // Sort by id_left
-			$cat['id'] = $id;
-			$ordered_cats[numeric($cat['id_parent'])] = array('this' => $cat, 'children' => array());
-		}
-
-		$level = 0;
-		$cats_tree = array(array('this' => array('id' => 0, 'name' => $LANG['root']), 'children' => array()));
-		$parent =& $cats_tree[0]['children'];
-		$nb_cats = count($ARTICLES_CAT);
-		foreach ($ordered_cats as $cat)
-		{
-			if (($cat['this']['c_order'] == $level + 1) && count($parent) > 0)
-			{   // The new parent is the previous cat
-				$parent =& $parent[count($parent) - 1]['children'];
-			}
-			elseif ($cat['this']['c_order'] < $level)
-			{   // Find the new parent (an ancestor)
-				$j = 0;
-				$parent =& $cats_tree[0]['children'];
-				while ($j < $cat['this']['c_order'])
-				{
-					$parent =& $parent[count($parent) - 1]['children'];
-					$j++;
-				}
-			}
-
-			// Add the current cat at the good level
-			$parent[] = $cat;
-			$level = $cat['this']['c_order'];
-		}
-		return $cats_tree[0];
+        require_once PATH_TO_ROOT . '/articles/articles_cats.class.php';
+        $articles_cats = new ArticlesCats();
+        return $articles_cats->get_feeds_list();
 	}
-
-	function _feeds_add_category(&$cat_tree, &$category)
-	{
-		$child = new FeedsCat('articles', $category['this']['id'], $category['this']['name']);
-		foreach ($category['children'] as $sub_category)
-		{
-			ArticlesInterface::_feeds_add_category($child, $sub_category);
-		}
-		$cat_tree->add_child($child);
-	}
-
-	function get_feeds_list()
-	{
-		global $LANG ,$ARTICLES_LANG;
-		$feed = array();
-		$categories = $this->_get_cats_tree();
-
-		import('content/syndication/feeds_list');
-
-		$cat_tree = new FeedsCat('articles', 0, $LANG['root']);
-
-		ArticlesInterface::_feeds_add_category($cat_tree, $categories);
-
-		$children = $cat_tree->get_children();
-		$feeds = new FeedsList();
-		if (count($children) > 0)
-		$feeds->add_feed($children[0], DEFAULT_FEED_NAME);
-		return $feeds;
-	}
-
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
 

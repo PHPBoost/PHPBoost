@@ -139,6 +139,7 @@ $ARTICLES_LANG = array(
 	'articles_by_date' => 'Derniers articles',
 	'articles_most_popular' => 'Articles les plus populaires',
 	'author' => 'Auteur',
+	'more_article' => 'Plus d\'article',
 
 );
 
