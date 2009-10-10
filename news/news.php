@@ -46,8 +46,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
-		FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-		WHERE n.id = '" . $idnews . "'", __LINE__, __FILE__);
+	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+	WHERE n.id = '" . $idnews . "'", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
@@ -81,61 +81,59 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		// Suggestion de news.
 		$nbr_suggested = 0;
 		$result = $Sql->query_while("SELECT id, idcat, title, 
-			((2 * MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-			+ (MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-			+ MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) / 2) / 3) AS relevance
-			FROM " . DB_TABLE_NEWS . "
-			WHERE (MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-			OR MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-			OR MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) 
-			AND id <> '" . $news['id'] . "'
-			ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
-
+		((2 * MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+		+ (MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+		+ MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) / 2) / 3) AS relevance
+		FROM " . DB_TABLE_NEWS . "
+		WHERE (MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+		OR MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+		OR MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) 
+		AND id <> '" . $news['id'] . "'
+		ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('suggested', array(
 				'TITLE' => $row['title'],
 				'URL' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
-
 			$nbr_suggested++;
 		}
 
 		$tpl->assign_vars(array(
-			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
-			'ID' => $news['id'],
-			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
-			'L_SYNDICATION' => $LANG['syndication'],
-			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
-			'TITLE' => $news['title'],
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
+			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'),
-			'L_EDIT' => $LANG['edit'],
 			'C_DELETE' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE),
-			'L_DELETE' => $LANG['delete'],
-			'C_IMG' => !empty($news['img']),
-			'IMG' => second_parse_url($news['img']),
-			'IMG_DESC' => $news['alt'],
-			'C_ICON' => $NEWS_CONFIG['activ_icon'],
-			'ICON' => second_parse_url($NEWS_CAT[$news['idcat']]['image']),
-			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
-			'CONTENTS' => second_parse($news['contents']),
-			'EXTEND_CONTENTS' => second_parse($news['extend_contents']),
-			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
-			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
-			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'C_NEWS_NAVIGATION_LINKS' => !empty($previous_news['id']) || !empty($next_news['id']),
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
-			'PREVIOUS_NEWS' => $previous_news['title'],
-			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php'),
-			'C_NEXT_NEWS' => !empty($next_news['id']),
-			'NEXT_NEWS' => $next_news['title'],
-			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php'),
-			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s')) : '',
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
-			'L_NEWS_SUGGESTED' => $NEWS_LANG['news_suggested'],
-			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat'])
+			'C_IMG' => !empty($news['img']),
+			'C_ICON' => $NEWS_CONFIG['activ_icon'],
+			'ID' => $news['id'],
+			'TITLE' => $news['title'],
+			'CONTENTS' => second_parse($news['contents']),
+			'EXTEND_CONTENTS' => second_parse($news['extend_contents']),
+			'IMG' => second_parse_url($news['img']),
+			'IMG_DESC' => $news['alt'],
+			'ICON' => second_parse_url($NEWS_CAT[$news['idcat']]['image']),
+			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
+			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
+			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
+			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s')) : '',
+			'NEXT_NEWS' => $next_news['title'],
+			'PREVIOUS_NEWS' => $previous_news['title'],
+			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
+			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
+			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
+			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
+			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php'),
+			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php'),
+			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
+			'L_EDIT' => $LANG['edit'],
+			'L_DELETE' => $LANG['delete'],
+			'L_SYNDICATION' => $LANG['syndication'],
+			'L_NEWS_SUGGESTED' => $NEWS_LANG['news_suggested']
 		));
 
 		$tpl->parse();
@@ -165,11 +163,10 @@ elseif ($user)
 	if (!empty($array_cat))
 	{
 		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
-			FROM " . DB_TABLE_NEWS . " n
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-			WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "' AND idcat IN (" . implode(', ', $array_cat) . ")
-			ORDER BY n.timestamp DESC", __LINE__, __FILE__);
-
+		FROM " . DB_TABLE_NEWS . " n
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+		WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "' AND idcat IN (" . implode(', ', $array_cat) . ")
+		ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
@@ -233,8 +230,6 @@ else
 	if ($module->has_functionality('get_home_page'))
 	{
 		echo $module->functionality('get_home_page', $idcat);
-		require_once('../kernel/footer.php');
-		exit;
 	}
 	elseif (!$no_alert_on_error)
 	{
