@@ -32,6 +32,7 @@ require_once('articles_constants.php');
 load_module_lang('articles');
 
 $Cache->load('articles');
+
 if (empty($idartcat))//Racine.
 {
 	$ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];

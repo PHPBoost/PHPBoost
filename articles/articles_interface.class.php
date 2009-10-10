@@ -121,12 +121,12 @@ class ArticlesInterface extends ModuleInterface
 	             a.title AS title,
 	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
 	             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
-            FROM " . PREFIX . "articles a
-            LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
-            WHERE
-            	a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
-            	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
-            ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
+				FROM " . PREFIX . "articles a
+				LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
+				WHERE
+					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
+					AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
+				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
 	             return $request;
 	}
@@ -137,6 +137,7 @@ class ArticlesInterface extends ModuleInterface
         $articles_cats = new ArticlesCats();
         return $articles_cats->get_feeds_list();
 	}
+	
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
 
@@ -296,31 +297,25 @@ class ArticlesInterface extends ModuleInterface
 		$array_class = array('member', 'modo', 'admin');
 			
 		$tpl->assign_vars(array(
-		'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
-		'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
-		'IDCAT' => $idartcat,
+		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL) ? true : false,
-		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
-		'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
 		'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
+		'IDCAT' => $idartcat,
+		'COLUMN_WIDTH_CAT' => $column_width_cats,
+		'SELECTED_ALPHA' => $selected_fields['alpha'],
+		'SELECTED_COM' => $selected_fields['com'],
+		'SELECTED_DATE' => $selected_fields['date'],
+		'SELECTED_VIEW' => $selected_fields['view'],
+		'SELECTED_NOTE' => $selected_fields['note'],
+		'SELECTED_AUTHOR' => $selected_fields['author'],
+		'SELECTED_ASC' => $selected_fields['asc'],
+		'SELECTED_DESC' => $selected_fields['desc'],
+		'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&',
+		'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
 		'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
-		'L_ARTICLES' => $ARTICLES_LANG['articles'],
-		'L_DATE' => $LANG['date'],
-		'L_VIEW' => $LANG['views'],
-		'L_NOTE' => $LANG['note'],
-		'L_COM' => $LANG['com'],
-		'L_AUTHOR' => $ARTICLES_LANG['author'],
-		'L_DESC' => $LANG['desc'],
-		'L_ASC' => $LANG['asc'],
-		'L_TITLE'=>$LANG['title'],
-		'L_WRITTEN' =>  $LANG['written_by'],
-		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
-		'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
-		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
-		'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
-		'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 		'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
+		'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 		'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 		'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
 		'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
@@ -330,16 +325,22 @@ class ArticlesInterface extends ModuleInterface
 		'U_ARTICLES_NOTE_TOP' => url('.php?sort=note&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=desc'),
 		'U_ARTICLES_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=asc'),
 		'U_ARTICLES_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=desc'),
-		'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc'),
-		'SELECTED_ALPHA' => $selected_fields['alpha'],
-		'SELECTED_COM' => $selected_fields['com'],
-		'SELECTED_DATE' => $selected_fields['date'],
-		'SELECTED_VIEW' => $selected_fields['view'],
-		'SELECTED_NOTE' => $selected_fields['note'],
-		'SELECTED_AUTHOR' => $selected_fields['author'],
-		'SELECTED_ASC' => $selected_fields['asc'],
-		'SELECTED_DESC' => $selected_fields['desc'],
-		'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&'
+		'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc'),	
+		'L_DATE' => $LANG['date'],
+		'L_VIEW' => $LANG['views'],
+		'L_NOTE' => $LANG['note'],
+		'L_COM' => $LANG['com'],
+		'L_DESC' => $LANG['desc'],
+		'L_ASC' => $LANG['asc'],
+		'L_TITLE'=> $LANG['title'],
+		'L_WRITTEN' => $LANG['written_by'],
+		'L_ARTICLES' => $ARTICLES_LANG['articles'],
+		'L_AUTHOR' => $ARTICLES_LANG['author'],
+		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
+		'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
+		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
+		'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+		'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 		));
 
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
@@ -380,8 +381,8 @@ class ArticlesInterface extends ModuleInterface
 				'CAT' => $row['name'],
 				'DESC' => $row['description'],
 				'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
+				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'),
 				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
-				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 				));
 			}
 			$this->sql_querier->query_close($result);

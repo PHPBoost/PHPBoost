@@ -465,6 +465,7 @@ else
 				'SOURCE'=>'',
 				'URL'=>'',
 			));
+			
 			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
 			$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
@@ -480,31 +481,18 @@ else
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),
 		'VISIBLE_ENABLED' => 'checked="checked"',
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $ARTICLES_LANG['require_cat'],
 		'L_PAGE_PROMPT' => $ARTICLES_LANG['page_prompt'],
-		'L_PREVIEW' => $LANG['preview'],
+		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
 		'L_ARTICLES_ADD' => $ARTICLES_LANG['articles_add'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
-		'L_CATEGORY' => $LANG['categories'],
-		'L_TITLE' => $LANG['title'],
 		'L_ARTICLE_ICON' => $ARTICLES_LANG['article_icon'],
-		'L_UNTIL' => $LANG['until'],
 		'L_RELEASE_DATE' => $ARTICLES_LANG['release_date'],
-		'L_IMMEDIATE' => $LANG['now'],
-		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
-		'L_TEXT' => $LANG['content'],
 		'L_ARTICLE_DESCRIPTION'=>$ARTICLES_LANG['article_description'],
 		'L_EXPLAIN_PAGE' => $ARTICLES_LANG['explain_page'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_RESET' => $LANG['reset'],
-		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
 		'L_NOTICE_CONTRIBUTION' => $ARTICLES_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $ARTICLES_LANG['contribution_counterpart'],
-		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],
+		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],	
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
 		'L_SOURCE'=>$ARTICLES_LANG['source'],
 		'L_ADD_SOURCE'=>$ARTICLES_LANG['add_source'],
@@ -512,6 +500,20 @@ else
 		'L_SPECIAL_AUTH' => $ARTICLES_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN_ARTICLES' => $ARTICLES_LANG['special_auth_explain_articles'],
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
+		'L_REQUIRE' => $LANG['require'],
+		'L_PREVIEW' => $LANG['preview'],
+		'L_CATEGORY' => $LANG['categories'],
+		'L_TITLE' => $LANG['title'],
+		'L_UNTIL' => $LANG['until'],
+		'L_IMMEDIATE' => $LANG['now'],
+		'L_UNAPROB' => $LANG['unaprob'],
+		'L_TEXT' => $LANG['content'],
+		'L_SUBMIT' => $LANG['submit'],
+		'L_RESET' => $LANG['reset'],
+		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'L_REQUIRE_TEXT' => $LANG['require_text'],
+		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+
 	));
 
 	//Gestion erreur.
