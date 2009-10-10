@@ -39,7 +39,6 @@ if (retrieve(POST,'valid',false))
 {
 	$Cache->load('articles');
 
-
 	$mini = array();
 	$mini['nbr_articles']=retrieve(POST, 'nbr_articles_mini', 5,TINTEGER);
 	
@@ -136,31 +135,38 @@ else
 		
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
 	
+	$array_ranks =
+		array(
+			'-1' => $LANG['guest'],
+			'0' => $LANG['member'],
+			'1' => $LANG['modo'],
+			'2' => $LANG['admin']
+		);
+			
 	$tpl->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
 		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
-		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
-		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
 		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' checked ' : '',
 		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' checked ' : '',
+		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
 		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
 		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
 		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',
 		'SELECTED_NOTE' => $mini_conf['type'] == 'note' ? ' selected="selected"' : '',
-		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
-		'L_REQUIRE' => $LANG['require'],		
-		'L_NBR_ARTICLES_MAX' => $ARTICLES_LANG['nbr_articles_max'],
+		'L_REQUIRE' => $LANG['require'],	
+		'L_ENABLED'=>$LANG['enabled'],
+		'L_DISABLED'=>$LANG['disabled'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
-		'L_NOTE_MAX' => $LANG['note_max'],
-		'L_EXPLAIN_ARTICLES_COUNT' => $ARTICLES_LANG['explain_articles_count'],
-		'L_RECOUNT' => $ARTICLES_LANG['recount'],
+		'L_NOTE_MAX' => $LANG['note_max'],		
+		'L_NBR_ARTICLES_MAX' => $ARTICLES_LANG['nbr_articles_max'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
+		'L_EXPLAIN_ARTICLES_COUNT' => $ARTICLES_LANG['explain_articles_count'],
+		'L_RECOUNT' => $ARTICLES_LANG['recount'],
 		'L_GLOBAL_AUTH' => $ARTICLES_LANG['global_auth'],
 		'L_GLOBAL_AUTH_EXPLAIN' => $ARTICLES_LANG['global_auth_explain'],
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
@@ -168,8 +174,6 @@ else
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
 		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
-		'L_ENABLED'=>$LANG['enabled'],
-		'L_DISABLED'=>$LANG['disabled'],
 		'L_USE_TAB'=>$ARTICLES_LANG['use_tab'],
 		'L_ARTICLES_MINI_CONFIG'=>$ARTICLES_LANG['articles_mini_config'],
 		'L_NBR_ARTICLES_MINI'=>$ARTICLES_LANG['nbr_articles_mini'],
@@ -177,10 +181,22 @@ else
 		'L_ARTICLES_BEST_NOTE'=>$ARTICLES_LANG['articles_best_note'],
 		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
 		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
-		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],
-
-		
+		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],		
 	));
+	
+	$array_ranks =
+	array(
+		'0' => $LANG['member'],
+		'1' => $LANG['modo'],
+		'2' => $LANG['admin']
+	);
+			
+	$tpl->assign_vars(array(
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$CONFIG_ARTICLES['global_auth']),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$CONFIG_ARTICLES['global_auth']),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$CONFIG_ARTICLES['global_auth']),
+		));
+		
 	$tpl->parse();
 }
 

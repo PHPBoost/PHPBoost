@@ -31,12 +31,10 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
 function articles_mini($position, $block)
 {
-    global $Cache, $LANG, $CONFIG_ARTICLES;
+    global $Cache, $LANG, $CONFIG_ARTICLES,$ARTICLES_LANG;
    
 	$Cache->load('articles'); 
-
 	load_module_lang('articles');
-	global $ARTICLES_LANG;
 	
 	$tpl = new Template('articles/articles_mini.tpl');
 	import('core/menu_service');
@@ -72,16 +70,17 @@ function articles_mini($position, $block)
 			break;
 	}
 	
-	//echo "sort : ".$sort."   - nbr : ".$mini_conf['nbr_articles'];
 	import('content/note');
 	$result = EnvironmentServices::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
 	FROM " . DB_TABLE_ARTICLES . " a	
 	WHERE a.visible = 1 
 	ORDER BY " . $sort . " DESC ".
 	EnvironmentServices::get_sql()->limit(0, $mini_conf['nbr_articles']), __LINE__, __FILE__);
+	
 	while ($row = EnvironmentServices::get_sql()->fetch_assoc($result))
 	{		
 		$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+		
 		$tpl->assign_block_vars('articles', array(
 			'ID' => $row['id'],
 			'TITLE' => $row['title'],
@@ -90,8 +89,7 @@ function articles_mini($position, $block)
 			'DATE' => $date ? ($LANG['date']. " : ". gmdate_format('date_format_short', $row['timestamp'])) : '',
 			'VIEW'=> $view ? ($LANG['views']." : ".$row['views']) : '',
 			'COM'=> $com ? ($LANG['com']. " : ".$row['nbr_com']) : '',
-	));
-
+		));
 	}
 	
 	$tpl->assign_vars(array(

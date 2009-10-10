@@ -84,8 +84,6 @@ elseif (retrieve(POST,'preview',false))
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,
 		'C_TAB'=>false,
-		'L_WRITTEN' =>  $ARTICLES_LANG['written_by'],
-		'L_ON' => $LANG['on'],
 		'ID' => $articles['id'],
 		'IDCAT' => $articles['idcat'],
 		'DESCRIPTION'=>$articles['description'],
@@ -94,6 +92,8 @@ elseif (retrieve(POST,'preview',false))
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'DATE' =>   $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
+		'L_WRITTEN' =>  $ARTICLES_LANG['written_by'],
+		'L_ON' => $LANG['on'],
 	));
 
 	echo $preview->parse(TEMPLATE_STRING_MODE);
