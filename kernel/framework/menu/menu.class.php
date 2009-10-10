@@ -154,7 +154,7 @@ abstract class Menu
 	 * @desc Check the user authorization to see the LinksMenuElement
 	 * @return bool true if the user is authorised, false otherwise
 	 */
-    private function _check_auth()
+    protected function _check_auth()
     {
         global $User;
         return empty($this->auth) || $User->check_auth($this->auth, MENU_AUTH_BIT);
