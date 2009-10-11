@@ -49,14 +49,14 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 	$idpic = 0;
 	if (is_writable($dir))
 	{
-		if ($_FILES['gallery']['size'] > 0)
+		if (Upload->get_size() > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
 				redirect('/gallery/admin_gallery_add.php?error=' . $Upload->get_error() . '#errorh');
 			else
 			{
-				$path = $dir . $Upload->filename['gallery'];
+				$path = $dir . $Upload->get_filename();
 				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect('/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
@@ -68,7 +68,7 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 						redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#errorh');
 					
 					$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $User->get_attribute('user_id'));
+					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), $User->get_attribute('user_id'));
 					if ($Gallery->get_error() != '')
 						redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#errorh');
 					

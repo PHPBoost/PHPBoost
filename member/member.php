@@ -475,14 +475,14 @@ if (!empty($id_get)) //Espace membre
 			
 			if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
 			{
-				if ($_FILES['avatars']['size'] > 0)
+				if (Upload->get_size() > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if ($Upload->get_error() != '') //Erreur, on arrête ici
 						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
 					else
 					{
-						$path = $dir . $Upload->filename['avatars'];
+						$path = $dir . $Upload->get_filename();
 						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
 							redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');

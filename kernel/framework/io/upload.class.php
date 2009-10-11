@@ -39,10 +39,12 @@ define('NO_UNIQ_NAME', 			false);
  */
 class Upload
 {
-	private $error = ''; //Gestion des erreurs
-	private $base_directory; //Répertoire de destination des fichiers.
-	private $extension = array(); //Extension des fichiers.
-	private $filename = array(); //Nom des fichiers.
+	private $error = ''; 
+	private $base_directory;
+	private $extension = '';
+	private $filename = '';
+	private $original_filename = '';
+	private $size = 0;
 	
 	/**
 	 * @desc constructor
@@ -67,20 +69,23 @@ class Upload
 		global $LANG;
 		
 		$file = $_FILES[$filepostname];
-		if (!empty($file) && $file['size'] > 0)
+		$this->size = $file['size'];
+		$this->original_filename = $file['name'];
+		
+		if (!empty($file) && $this->size > 0)
 		{	
-			if (($file['size']/1024) <= $weight_max)
+			if (($this->size/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$this->generate_file_info($file['name'], $filepostname, $uniq_name);
-				if ($this->check_file($file['name'], $regexp))
+				$this->generate_file_info($this->original_filename, $uniq_name);
+				if ($this->check_file($this->original_filename, $regexp))
 				{					
-					if (!$check_exist || !file_exists($this->base_directory . $this->filename[$filepostname])) //Autorisation d'écraser le fichier?
+					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
 					{
 						$this->error = self::error_manager($file['error']);
 						if (empty($this->error))
 						{
-							if (empty($this->filename[$filepostname]) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename[$filepostname]))
+							if (empty($this->filename) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename))
 								$this->error = 'e_upload_error';
 							else
 								return true;
@@ -159,12 +164,11 @@ class Upload
 	/**
 	 * @desc Generates a unique file name. Completes informations on the file.
 	 * @param string $filename The filename
-	 * @param string $filepostname The filename in the input file formular
 	 * @param boolean $uniq_name
 	 */
-	private function generate_file_info($filename, $filepostname, $uniq_name)
+	private function generate_file_info($filename, $uniq_name)
 	{
-		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
+		$this->extension = strtolower(substr(strrchr($filename, '.'), 1));
 		if (strrpos($filename, '.') !== FALSE)
 		{
 			$filename = substr($filename, 0, strrpos($filename, '.'));
@@ -175,22 +179,22 @@ class Upload
 		if ($uniq_name)
 		{
 			$filename_tmp = $filename;
-			if (!empty($this->extension[$filepostname]))
-				$filename_tmp .= '.' . $this->extension[$filepostname];
+			if (!empty($this->extension))
+				$filename_tmp .= '.' . $this->extension;
 			$filename1 = $filename;
 			while (file_exists($this->base_directory . $filename_tmp))
 			{
 				$filename1 = $filename . '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
 				$filename_tmp = $filename1;
-				if (!empty($this->extension[$filepostname]))
-					$filename_tmp .= '.' . $this->extension[$filepostname];
+				if (!empty($this->extension))
+					$filename_tmp .= '.' . $this->extension;
 			}
 			$filename = $filename1;
 		}
 
-		if (!empty($this->extension[$filepostname]))
-			$filename .= '.' . $this->extension[$filepostname];
-		$this->filename[$filepostname] = $filename;
+		if (!empty($this->extension))
+			$filename .= '.' . $this->extension;
+		$this->filename = $filename;
 	}
 	
 	/**
@@ -220,7 +224,21 @@ class Upload
 		}
 	}
 	
+	/**
+	 * @desc Returns filesize in human readable representation.
+	 * @param int $round The number of decimal points
+	 * @return float filesize
+	 */
+	public function get_human_readable_size($round = 1) 
+	{ 
+		return (float)number_round($this->size/1024, $round); 
+	}
+	
 	public function get_error() { return $this->error; }
+	public function get_extention() { return $this->extention; }
+	public function get_original_filename() { return $this->original_filename; }
+	public function get_filename() { return $this->filename; }
+	public function get_size() { return $this->size; }
 }
 
 ?>

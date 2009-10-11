@@ -87,7 +87,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				
 				if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
 				{
-					if ($_FILES['avatars']['size'] > 0)
+					if (Upload->get_size() > 0)
 					{
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 						
@@ -95,7 +95,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 						else
 						{
-							$path = $dir . $Upload->filename['avatars'];
+							$path = $dir . $Upload->get_filename();
 							$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 							if (!empty($error)) //Erreur, on arrête ici
 								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');

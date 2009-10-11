@@ -83,15 +83,15 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
-				$archive_path = '../templates/' . $Upload->filename['upload_theme'];
+				$archive_path = '../templates/' . $Upload->get_filename();
 				//Place à la décompression.
-				if ($Upload->extension['upload_theme'] == 'gzip')
+				if ($Upload->get_extension() == 'gzip')
 				{
 					import('lib/pcl/pcltar', LIB_IMPORT);
-					if (!$zip_files = PclTarExtract($Upload->filename['upload_theme'], '../templates/'))
+					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../templates/'))
 						$error = $Upload->get_error();
 				}
-				elseif ($Upload->extension['upload_theme'] == 'zip')
+				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);

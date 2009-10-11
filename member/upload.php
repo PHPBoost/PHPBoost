@@ -155,7 +155,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $User->get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $User->get_attribute('user_id') . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
 			}
 		}
 		else

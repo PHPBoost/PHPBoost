@@ -83,15 +83,15 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
-				$archive_path = '../' . $Upload->filename['upload_module'];
+				$archive_path = '../' . $Upload->get_filename();
 				//Place à la décompression.
-				if ($Upload->extension['upload_module'] == 'gzip')
+				if ($Upload->get_extension() == 'gzip')
 				{
 					import('lib/pcl/pcltar', LIB_IMPORT);
-					if (!$zip_files = PclTarExtract($Upload->filename['upload_module'], '../'))
+					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../'))
 						$error = $Upload->get_error();
 				}
-				elseif ($Upload->extension['upload_module'] == 'zip')
+				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);

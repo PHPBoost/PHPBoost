@@ -146,14 +146,14 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			
 			if (is_writable($dir))
 			{
-				if ($_FILES['avatars']['size'] > 0)
+				if ($Upload->get_size() > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if ($Upload->get_error() != '') //Erreur, on arrête ici
 						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#errorh');
 					else
 					{
-						$path = $dir . $Upload->filename['avatars'];
+						$path = $dir . $Upload->get_filename();
 						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
 							redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
