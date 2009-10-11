@@ -106,8 +106,8 @@ elseif (isset($_FILES['gallery'])) //Upload
 		if ($_FILES['gallery']['size'] > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
-			if (!empty($Upload->error)) //Erreur, on arrête ici
-				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
+			if (!empty($Upload->get_error())) //Erreur, on arrête ici
+				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
@@ -118,12 +118,12 @@ elseif (isset($_FILES['gallery'])) //Upload
 				{
 					//Enregistrement de l'image dans la bdd.
 					$Gallery->Resize_pics($path);
-					if (!empty($Gallery->error))
-						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
+					if (!empty($Gallery->get_error()))
+						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 					
 					$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->filename['gallery'], $User->get_attribute('user_id'));
-					if (!empty($Gallery->error))
-						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
+					if (!empty($Gallery->get_error()))
+						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
 					$Cache->Generate_module_file('gallery');

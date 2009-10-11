@@ -315,7 +315,6 @@ class StatsSaver
 		return $stats_array;
 	}
 	
-	## Private Methods ##
     /**
 	 * @desc Save stats to file
 	 */

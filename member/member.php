@@ -478,8 +478,8 @@ if (!empty($id_get)) //Espace membre
 				if ($_FILES['avatars']['size'] > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-					if (!empty($Upload->error)) //Erreur, on arrête ici
-						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
+					if (!empty($Upload->get_error())) //Erreur, on arrête ici
+						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];

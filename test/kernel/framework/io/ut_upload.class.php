@@ -39,22 +39,22 @@ class UTupload extends PHPBoostUnitTestCase {
 		$_FILES['userfile']['size'] = 0;
 		$ret = $up->file('userfile');
 		$this->assertFalse($ret);
-		$this->assertEqual($up->error, 'e_upload_error');
+		$this->assertEqual($up->get_error(), 'e_upload_error');
 
 		$_FILES['userfile']['size'] = 1024*10;
 		
 		$_FILES['userfile']['error'] = 0;
 		$ret = $up->file('userfile', '', FALSE, 1);
 		$this->assertFalse($ret);
-		$this->assertEqual($up->error, 'e_upload_max_weight');
+		$this->assertEqual($up->get_error(), 'e_upload_max_weight');
 		
 		$ret = $up->file('userfile', '/bidon/', FALSE, 200);
 		$this->assertFalse($ret);
-		$this->assertEqual($up->error, 'e_upload_invalid_format');
+		$this->assertEqual($up->get_error(), 'e_upload_invalid_format');
 		
 		$ret = $up->file('userfile', '', FALSE, 200, TRUE);
 		$this->assertFalse($ret);
-		$this->assertEqual($up->error, 'e_upload_error');
+		$this->assertEqual($up->get_error(), 'e_upload_error');
 		
 		echo '<br />TODO Faire un test avec tout OK<br />';
 	}

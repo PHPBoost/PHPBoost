@@ -149,8 +149,8 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				if ($_FILES['avatars']['size'] > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-					if (!empty($Upload->error)) //Erreur, on arrête ici
-						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
+					if (!empty($Upload->get_error())) //Erreur, on arrête ici
+						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];

@@ -19,13 +19,13 @@ class UTmodule_interface extends PHPBoostUnitTestCase {
 	{
 		$ret = new ModuleInterface('news', 1);
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->id, 'news');
+		$this->assertEqual($ret->get_id(), 'news');
 		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
-		$this->assertTrue($ret->errors != 0);
+		$this->assertTrue($ret->get_errors() != 0);
 		
 		$ret = new ModuleInterface('news');
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->id, 'news');
+		$this->assertEqual($ret->get_id(), 'news');
 		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities) > 0);
 	}
 
