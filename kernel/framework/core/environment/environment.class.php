@@ -562,7 +562,7 @@ class Environment
 	 * @desc Returns the full phpboost version with its build number
 	 * @return string the full phpboost version with its build number
 	 */
-	static function phpboost_version()
+	static function get_phpboost_version()
 	{
 		global $CONFIG;
 		import('io/filesystem/file');

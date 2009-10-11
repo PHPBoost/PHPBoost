@@ -43,7 +43,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 <body><br /><br /><br />';
 
 //Récupération de l'erreur dans les logs.
-$errinfo = $Errorh->get_last__error_log();
+$errinfo = Errors::get_last_error_log();
 if (empty($errinfo))
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
@@ -51,7 +51,7 @@ $Template->set_filenames(array(
 	'error'=> 'member/error.tpl'
 ));
 
-$class = $Errorh->get_errno_class($errinfo['errno']);
+$class = Errors::get_errno_class($errinfo['errno']);
 	
 $Template->assign_vars(array(
 	'THEME' => get_utheme(),
@@ -59,7 +59,7 @@ $Template->assign_vars(array(
 	'ERRORH_CLASS' => $class,
 	'C_ERRORH_CONNEXION' => false,
 	'C_ERRORH' => true,
-	'L_ERRORH' => sprintf($LANG[$class], $errinfo['errstr'], $errinfo['errline'], basename($errinfo['errfile'])),
+	'L_ERRORH' => sprintf($LANG[$class], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']),
 	'L_ERROR' => $LANG['error'],
 	'U_BACK' => '<a href="' . get_start_page() . '">' . $LANG['home'] . '</a>' . (!empty($_SERVER['HTTP_REFERER']) ? ' &raquo; <a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : ' &raquo; <a href="javascript:history.back(1)">' . $LANG['back'] . '</a>'),
 ));

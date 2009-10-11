@@ -550,6 +550,16 @@ function get_module_name()
 }
 
 /**
+* @desc Returns the full path's file from the root installation.
+* @param string $errfile the filepath
+*/
+function get_root_path_from_file($errfile)
+{
+	$local_path = str_replace('/kernel/framework/functions.inc.php', '', str_replace('\\', '/', __FILE__));
+	return ltrim(str_replace($local_path, '', str_replace('\\', '/', $errfile)), '/');
+}
+
+/**
  * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
  * @param string $url URL at which you want to redirect the user.
  */

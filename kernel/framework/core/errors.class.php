@@ -34,9 +34,6 @@ define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
-if (!defined('E_STRICT')) //A virer après passage PHP5
-define('E_STRICT', 2048);
-
 /**
  * @deprecated user ErrorsManager
  * @author Viarre Régis crowkait@phpboost.com
@@ -45,24 +42,29 @@ define('E_STRICT', 2048);
  */
 class Errors
 {
-	## Public Methods ##
+	private $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
+	private $redirect;
+	private $template; //Template used by the error handler.
+	private $personal_tpl = false; //Template used by the error handler.
+	
 	/**
-	* @desc constructor
 	* @param boolean $archive_all TRUE archive all events FALSE if not
 	*/
-	function Errors($archive_all = false)
+	public function __construct($archive_all = false)
 	{
 		$this->archive_all = $archive_all;
 
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)
-		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 		$server_path = trim(dirname($server_path));
 
 		$nbr_occur = substr_count(PATH_TO_ROOT, '..'); //On supprime les x dossiers par rapport au PATH_TO_ROOT
 		for ($i = 0; $i < $nbr_occur; $i++)
-		$server_path = str_replace(substr(strrchr($server_path, '/'), 0), '', $server_path);
+		{
+			$server_path = str_replace(substr(strrchr($server_path, '/'), 0), '', $server_path);
+		}
 		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . $server_path;
 
 		//On utilise notre propre handler pour la gestion des erreurs php
@@ -79,10 +81,10 @@ class Errors
 	 * @param string $errfile file name
 	 * @param  string $errline line number
 	 */
-	function handler_php($errno, $errstr, $errfile, $errline)
+	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
-		// print_stacktrace(); echo $errstr . ' ' . $errfile . ':' . $errline . '<br />'; // Prints all errors
+		
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
 			return true;
@@ -130,16 +132,16 @@ class Errors
 		<span id="errorh"></span>
 		<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
-			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . get_root_path_from_file($errfile) . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />
 		</div>';
 
 		//Et on l'archive
-		$this->_error_log($errfile, $errline, $errno, $errstr, true);
+		self::log_error($errfile, $errline, $errno, $errstr, true);
 
 		//Dans le cas d'un E_USER_ERROR on arrête l'exécution
 		if ($errno == E_USER_ERROR)
-		exit;
+			exit;
 
 		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
 		return true;
@@ -155,7 +157,7 @@ class Errors
 	 * @param boolean $archive (optional) Backup the error in the error.log file
 	 * @param boolean $stop Avoid redirect loop.
 	 */
-	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
+	public function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
 		global $LANG;
 		$_err_stop = retrieve(GET, '_err_stop', false);
@@ -166,11 +168,11 @@ class Errors
 			switch ($errno)
 			{
 				case E_TOKEN:
-					$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+					self::log_error($errfile, $errline, $errno, $errstr, $archive);
 					break;
 					//Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
-					$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+					self::log_error($errfile, $errline, $errno, $errstr, $archive);
 					if (!$_err_stop)
 					redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
 					else
@@ -213,7 +215,7 @@ class Errors
 				case E_ERROR:
 				case E_RECOVERABLE_ERROR:
 					//Enregistrement de l'erreur fatale dans tout les cas.
-					$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
+					$error_id = self::log_error($errfile, $errline, $errno, $errstr, true);
 
 					if ($stop)
 					{
@@ -224,7 +226,7 @@ class Errors
 							exit;
 						}
 						else
-						die($errstr);
+							die($errstr);
 					}
 			}
 
@@ -234,7 +236,7 @@ class Errors
 				
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
-			return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+				return self::log_error($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
 	}
@@ -248,7 +250,7 @@ class Errors
 	 * @param boolean $archive (optional) Backup the error in the error.log file
 	 * @return string The formated error.
 	 */
-	function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
+	public function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
 	{
 		global $LANG;
 
@@ -292,7 +294,7 @@ class Errors
 				
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
-			$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+				self::log_error($errfile, $errline, $errno, $errstr, $archive);
 		}
 		return '';
 	}
@@ -300,7 +302,7 @@ class Errors
 	/**
 	 * @desc Set a personnal template for the handler methods.
 	 */
-	function set_template(&$template)
+	public function set_template(&$template)
 	{
 		$this->template = &$template;
 		$this->personal_tpl = true;
@@ -309,7 +311,7 @@ class Errors
 	/**
 	 * @desc Set default template for the handler methods.
 	 */
-	function set_default_template()
+	public function set_default_template()
 	{
 		global $Template;
 
@@ -320,7 +322,7 @@ class Errors
 	/**
 	 * @desc Get last error informations
 	 */
-	function get_last__error_log()
+	public static function get_last_error_log()
 	{
 		$errinfo = '';
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
@@ -351,53 +353,45 @@ class Errors
 	/**
 	 * @desc Get Error type
 	 */
-	function get_errno_class($errno)
+	public static function get_errno_class($errno)
 	{
 		switch ($errno)
 		{
 			//Redirection utilisateur.
 			case E_USER_REDIRECT:
-				$class = 'error_fatal';
-				break;
-				//Notice utilisateur.
+				return 'error_fatal';
+			//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
-				$class = 'error_notice';
-				break;
-				//Warning utilisateur.
+				return 'error_notice';
+			//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
-				$class = 'error_warning';
-				break;
-				//Erreur fatale.
+				return 'error_warning';
+			//Erreur fatale.
 			case E_USER_ERROR:
 			case E_ERROR:
 			case E_RECOVERABLE_ERROR:
-				$class = 'error_fatal';
-				break;
-				//Erreur inconnue.
-			default:
-				$class = 'error_unknow';
+				return 'error_fatal';
+			default: //Erreur inconnue.
+				return 'error_unknow';
 		}
-		return $class;
 	}
 
-
-	## Private Methods ##
 	/**
 	* @desc Save error in log file
 	*/
-	function _error_log($errfile, $errline, $errno, $errstr, $archive)
+	private static function log_error($errfile, $errline, $errno, $errstr, $archive)
 	{
 		if ($archive || $this->archive_all)
 		{
 			//Nettoyage de la chaîne avant enregistrement.
-			$errstr = $this->_clean_error_string($errstr);
-				
+			$errstr = self::clean_error_string($errstr);
+			
 			$error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
 			$error .= $errno . "\n";
 			$error .= $errstr . "\n";
-			$error .= basename($errfile) . "\n";
+			$error .= get_root_path_from_file($errfile) . "\n";
 			$error .= $errline . "\n";
 			 
 			$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+'); //On crée le fichier avec droit d'écriture et lecture.
@@ -407,23 +401,16 @@ class Errors
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @desc Clean Error String
 	 */
-	function _clean_error_string($errstr)
+	private static function clean_error_string($errstr)
 	{
 		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
 		$errstr = preg_replace("`(\n){1,}`", '<br />', $errstr);
 		return $errstr;
 	}
-
-
-	## Private Attribute ##
-	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
-	var $redirect;
-	var $template; //Template used by the error handler.
-	var $personal_tpl = false; //Template used by the error handler.
 }
 
 ?>
