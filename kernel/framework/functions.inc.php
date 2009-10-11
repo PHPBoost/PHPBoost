@@ -1004,7 +1004,7 @@ function pages_displayed($no_update = false)
 /**
  * @desc Rounds a number
  * @param mixed $number Number to round
- * @param int $dec The number of decilam points
+ * @param int $dec The number of decimal points
  * @return string The rounded number.
  */
 function number_round($number, $dec)

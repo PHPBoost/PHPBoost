@@ -103,14 +103,14 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	if (is_writable($dir))
 	{
-		if ($_FILES['gallery']['size'] > 0)
+		if (Upload->get_size() > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
 				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 			else
 			{
-				$path = $dir . $Upload->filename['gallery'];
+				$path = $dir . $Upload->get_filename();
 				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
@@ -121,7 +121,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 					if ($Gallery->get_error() != '')
 						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 					
-					$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->filename['gallery'], $User->get_attribute('user_id'));
+					$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
 					if ($Gallery->get_error() != '')
 						redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 					

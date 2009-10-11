@@ -77,15 +77,15 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
-				$archive_path = '../lang/' . $Upload->filename['upload_lang'];
+				$archive_path = '../lang/' . $Upload->get_filename();
 				//Place à la décompression.
-				if ($Upload->extension['upload_lang'] == 'gzip')
+				if ($Upload->get_extension() == 'gzip')
 				{
 					import('lib/pcl/pcltar', LIB_IMPORT);
-					if (!$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/'))
+					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../lang/'))
 						$error = $Upload->get_error();
 				}
-				elseif ($Upload->extension['upload_lang'] == 'zip')
+				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
