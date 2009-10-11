@@ -20,6 +20,7 @@
 [*] Meilleur détection des robots d'indexation, ajout de la prise en compte de Bing.
 [*] Ajout d'un défilement vertical dans l'administration pour la visualisation de la liste des utilisateurs connectées.
 [*] Possibilité de trier les membres par date de dernière connexion dans l'administration.
+[*] Récupération du chemin complet du fichier dans les logs d'erreurs.
 
 [b]Galerie:[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.

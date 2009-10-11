@@ -67,7 +67,7 @@ class Updates
             
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::phpboost_version(), PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
             if ($checks & CHECK_MODULES)

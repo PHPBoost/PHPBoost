@@ -101,7 +101,7 @@ site path                : " . $server_path  . "
 
 PHPBOOST CONFIGURATION---------------------------------------------------------
 
-phpboost version         : " . Environment::phpboost_version() . "
+phpboost version         : " . Environment::get_phpboost_version() . "
 server url               : " . $CONFIG['server_name'] . "
 site path                : " . $CONFIG['server_path']  . "
 default theme            : " . $template_ini_file['name'] . "
@@ -127,7 +127,7 @@ $template->assign_vars(array(
 	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
 	'SERV_SERV_URL' => $server_name,
 	'SERV_SITE_PATH' => $server_path,
-	'KERNEL_VERSION' => Environment::phpboost_version(),
+	'KERNEL_VERSION' => Environment::get_phpboost_version(),
 	'KERNEL_SERV_URL' => $CONFIG['server_name'],
 	'KERNEL_SITE_PATH' => $CONFIG['server_path'],
 	'KERNEL_DEFAULT_THEME' => $template_ini_file['name'],

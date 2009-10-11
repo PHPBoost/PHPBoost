@@ -24,6 +24,7 @@ Implémenter tous les setters sur la classe Date
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+- Déplacer la gestion des posts dans la config vers l'admin des contenus
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 
 - Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
