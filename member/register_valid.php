@@ -91,8 +91,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					{
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 						
-						if (!empty($Upload->error)) //Erreur, on arrête ici
-							redirect('/member/register' . url('.php?erroru=' . $Upload->error) . '#errorh');
+						if (!empty($Upload->get_error())) //Erreur, on arrête ici
+							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->filename['avatars'];

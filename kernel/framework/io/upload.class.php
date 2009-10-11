@@ -39,16 +39,16 @@ define('NO_UNIQ_NAME', 			false);
  */
 class Upload
 {
-	## Public Attributes ##
-	var $error = ''; //Gestion des erreurs
+	private $error = ''; //Gestion des erreurs
+	private $base_directory; //Répertoire de destination des fichiers.
+	private $extension = array(); //Extension des fichiers.
+	private $filename = array(); //Nom des fichiers.
 	
-	
-	## Public Methods ##	
 	/**
 	 * @desc constructor
 	 * @param string $base_directory Set the directory to upload the files.
 	 */
-	function Upload($base_directory = 'upload')
+	public function __construct($base_directory = 'upload')
 	{
 		$this->base_directory = $base_directory;
 	}
@@ -62,7 +62,7 @@ class Upload
 	 * @param boolean $check_exist If true verify if a file with the same name exist on the ftp. Otherwise previous file is overwrite.
 	 * @return boolean True if the file has been succefully uploaded. Error code if an error occured.
 	 */
-	function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
+	public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{		
 		global $LANG;
 		
@@ -72,12 +72,12 @@ class Upload
 			if (($file['size']/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$this->_generate_file_info($file['name'], $filepostname, $uniq_name);
-				if ($this->_check_file($file['name'], $regexp))
+				$this->generate_file_info($file['name'], $filepostname, $uniq_name);
+				if ($this->check_file($file['name'], $regexp))
 				{					
 					if (!$check_exist || !file_exists($this->base_directory . $this->filename[$filepostname])) //Autorisation d'écraser le fichier?
 					{
-						$this->error = $this->_error_manager($file['error']);
+						$this->error = self::error_manager($file['error']);
 						if (empty($this->error))
 						{
 							if (empty($this->filename[$filepostname]) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename[$filepostname]))
@@ -109,7 +109,7 @@ class Upload
 	 * @param boolean $delete
 	 * @return string Error code.
 	 */
-	function validate_img($filepath, $width_max, $height_max, $delete = true)
+	public function validate_img($filepath, $width_max, $height_max, $delete = true)
 	{
 		$error = '';		
 		list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
@@ -123,14 +123,13 @@ class Upload
 	}
 	
 	
-	## Private Methods ##	
 	/**
 	 * @desc Checks the validity of a file with regular expression.
 	 * @param string $filename The file name
 	 * @param string $regexp Regular expression
 	 * @return boolean The result of the regular expression test.
 	 */
-	function _check_file($filename, $regexp)
+	private function check_file($filename, $regexp)
 	{
 		if (!empty($regexp))
 		{
@@ -146,7 +145,7 @@ class Upload
 	 * @param string The file name.
 	 * @return string The cleaned file name.
 	 */
-	function _clean_filename($string)
+	private function clean_filename($string)
 	{
 		$string = strtolower($string);
 		$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
@@ -163,7 +162,7 @@ class Upload
 	 * @param string $filepostname The filename in the input file formular
 	 * @param boolean $uniq_name
 	 */
-	function _generate_file_info($filename, $filepostname, $uniq_name)
+	private function generate_file_info($filename, $filepostname, $uniq_name)
 	{
 		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
 		if (strrpos($filename, '.') !== FALSE)
@@ -171,7 +170,7 @@ class Upload
 			$filename = substr($filename, 0, strrpos($filename, '.'));
 		}
 		$filename = str_replace('.', '_', $filename);
-		$filename = $this->_clean_filename($filename);
+		$filename = $this->clean_filename($filename);
 
 		if ($uniq_name)
 		{
@@ -199,34 +198,29 @@ class Upload
 	 * @param string $error
 	 * @return string Error code.
 	 */
-	function _error_manager($error)
+	private static function error_manager($error)
 	{
 		switch ($error)
 		{
 			//Ok
 			case 0:
-				$error = '';
+				return '';
 			break;
 			//Fichier trop volumineux.
 			case 1:
 			case 2: 
-				$error = 'e_upload_max_weight';
+				return 'e_upload_max_weight';
 			break;
 			//Upload partiel.
 			case 3: 
-				$error = 'e_upload_error';
+				return 'e_upload_error';
 			break;
 			default:
-				$error = 'e_upload_error';
+				return 'e_upload_error';
 		}
-		return $error;
 	}
-
-
-	## Private Attributes ##
-	var $base_directory; //Répertoire de destination des fichiers.
-	var $extension = array(); //Extension des fichiers.
-	var $filename = array(); //Nom des fichiers.
+	
+	public function get_error() { return $this->error; }
 }
 
 ?>

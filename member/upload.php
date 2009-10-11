@@ -146,11 +146,11 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
-			if (!empty($Upload->error)) //Erreur, on arrête ici
+			if (!empty($Upload->get_error())) //Erreur, on arrête ici
 			{
-				if ($Upload->error == 'e_upload_max_weight')
-					$Upload->error = 'e_max_data_reach';
-				redirect('/member/upload.php?f=' . $folder . '&erroru=' . $Upload->error . '&' . $popup_noamp . '#errorh');
+				if ($Upload->get_error() == 'e_upload_max_weight')
+					$Upload->get_error() = 'e_max_data_reach';
+				redirect('/member/upload.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '&' . $popup_noamp . '#errorh');
 			}
 			else //Insertion dans la bdd
 			{

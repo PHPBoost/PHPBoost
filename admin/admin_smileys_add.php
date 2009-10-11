@@ -69,7 +69,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 		import('io/upload');
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_smiley', '`[a-z0-9_ -]+\.(jpg|gif|png|bmp)+$`i'))
-			$error = $Upload->error;
+			$error = $Upload->get_error();
 	}
 	else
 		$error = 'e_upload_failed_unwritable';

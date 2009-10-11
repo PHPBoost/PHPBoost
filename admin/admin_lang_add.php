@@ -83,14 +83,14 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 				{
 					import('lib/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/'))
-						$error = $Upload->error;
+						$error = $Upload->get_error();
 				}
 				elseif ($Upload->extension['upload_lang'] == 'zip')
 				{
 					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
-						$error = $Upload->error;
+						$error = $Upload->get_error();
 				}
 				else
 					$error = 'e_upload_invalid_format';

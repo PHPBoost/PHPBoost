@@ -89,14 +89,14 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 				{
 					import('lib/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->filename['upload_theme'], '../templates/'))
-						$error = $Upload->error;
+						$error = $Upload->get_error();
 				}
 				elseif ($Upload->extension['upload_theme'] == 'zip')
 				{
 					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../templates/', PCLZIP_OPT_SET_CHMOD, 0666))
-						$error = $Upload->error;
+						$error = $Upload->get_error();
 				}
 				else
 					$error = 'e_upload_invalid_format';

@@ -27,18 +27,15 @@
 
 class Gallery
 {	
-	## Public Attribute ##
-	var $error = ''; //Gestion des erreurs.
+	private $error = ''; //Gestion des erreurs.
 	
-	
-	## Public Methods ##
 	//Constructeur
-	function Gallery() 
+	public function __construct() 
 	{
 	}
 	
 	//Redimensionnement
-	function Resize_pics($path, $width_max = 0, $height_max = 0)
+	public function Resize_pics($path, $width_max = 0, $height_max = 0)
 	{
 		global $LANG;
 			
@@ -118,7 +115,7 @@ class Gallery
 	}
 	
 	//Création de l'image.
-	function Create_pics($thumbnail, $source, $path, $ext)
+	public function Create_pics($thumbnail, $source, $path, $ext)
 	{
 		global $CONFIG_GALLERY;
 		
@@ -154,7 +151,7 @@ class Gallery
 	}
 
 	//Incrustation du logo (possible en transparent si jpg).
-	function Incrust_pics($path)
+	public function Incrust_pics($path)
 	{
 		global $CONFIG_GALLERY, $LANG;
 		
@@ -244,7 +241,7 @@ class Gallery
 	}
 	
 	//Insertion base de donnée
-	function Add_pics($idcat, $name, $path, $user_id)
+	public function Add_pics($idcat, $name, $path, $user_id)
 	{
 		global $CAT_GALLERY, $Sql;
 		
@@ -277,7 +274,7 @@ class Gallery
 	}
 	
 	//Supprime une image
-	function Del_pics($id_pics)
+	public function Del_pics($id_pics)
 	{
 		global $CAT_GALLERY, $Sql;
 		
@@ -318,7 +315,7 @@ class Gallery
 	}
 	
 	//Renomme une image.
-	function Rename_pics($id_pics, $name, $previous_name)
+	public function Rename_pics($id_pics, $name, $previous_name)
 	{
 		global $Sql;
 		
@@ -327,7 +324,7 @@ class Gallery
 	}
 	
 	//Approuve une image.
-	function Aprob_pics($id_pics)
+	public function Aprob_pics($id_pics)
 	{
 		global $CAT_GALLERY, $Sql;
 		
@@ -368,7 +365,7 @@ class Gallery
 	}
 	
 	//Déplacement d'une image.
-	function Move_pics($id_pics, $id_move)
+	public function Move_pics($id_pics, $id_move)
 	{
 		global $CAT_GALLERY, $Sql;
 		
@@ -428,7 +425,7 @@ class Gallery
 	}
 	
 	//Vérifie si le membre peut uploader une image
-	function Auth_upload_pics($user_id, $level)
+	public function Auth_upload_pics($user_id, $level)
 	{
 		global $CONFIG_GALLERY;
 		
@@ -451,7 +448,7 @@ class Gallery
 	}
 	
 	//Arguments de l'image, hauteur, largeur, extension.
-	function Arg_pics($path)
+	public function Arg_pics($path)
 	{
 		global $Errorh, $LANG;
 		
@@ -477,7 +474,7 @@ class Gallery
 	}
 		
 	//Compte le nombre d'images uploadée par un membre.
-	function get_nbr_upload_pics($user_id)
+	public function get_nbr_upload_pics($user_id)
 	{
 		global $Sql;
 		
@@ -485,7 +482,7 @@ class Gallery
 	}
 	
 	//Calcul des dimensions avec respect des proportions.
-	function get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
+	public function get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
 	{
 		global $CONFIG_GALLERY;
 		
@@ -516,7 +513,7 @@ class Gallery
 	}
 	
 	//Header image.
-	function Send_header($ext)
+	public function Send_header($ext)
 	{
 		global $LANG;
 		
@@ -540,7 +537,7 @@ class Gallery
 	}
 	
 	//Recompte le nombre d'images de chaque catégories
-	function Count_cat_pics()
+	public function Count_cat_pics()
 	{
 		global $CAT_GALLERY, $Sql;
 		
@@ -584,7 +581,7 @@ class Gallery
 	}
 	
 	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..
-	function Clear_cache()
+	public function Clear_cache()
 	{
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 		import('io/filesystem/folder');
@@ -593,9 +590,20 @@ class Gallery
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
 	
-	## Private Methods ##
+	//Suppression d'une image.
+	public function delete_file($path)
+	{
+		if (function_exists('unlink'))
+			return @unlink($path); //On supprime le fichier.
+		else //Fonction désactivée.	
+		{	
+			$this->error = 'e_delete_thumbnails';
+			return false;
+		}		
+	}
+	
 	//Création de l'image d'erreur
-	function _create_pics_error($path, $width, $height)
+	private function _create_pics_error($path, $width, $height)
 	{
 		global $CONFIG_GALLERY, $LANG; 
 		
@@ -623,16 +631,6 @@ class Gallery
 		@imagejpeg($thumbnail, $path, 75);
 	}
 	
-	//Suppression d'une image.
-	function delete_file($path)
-	{
-		if (function_exists('unlink'))
-			return @unlink($path); //On supprime le fichier.
-		else //Fonction désactivée.	
-		{	
-			$this->error = 'e_delete_thumbnails';
-			return false;
-		}		
-	}
+	public function get_error() { return $this->error; }
 }
 ?>

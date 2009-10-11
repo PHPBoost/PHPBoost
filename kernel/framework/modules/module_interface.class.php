@@ -241,7 +241,7 @@ class ModuleInterface
      * @param string $functionality the name of the method you want to check the availability
      * @return bool true if the functionality exists, false otherwise
      */
-    function has_functionality($functionality)
+    public function has_functionality($functionality)
     {
         return in_array(strtolower($functionality), $this->functionalities);
     }
