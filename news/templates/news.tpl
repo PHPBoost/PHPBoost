@@ -11,14 +11,13 @@
 			<div class="news_top_l"></div>
 			<div class="news_top_r"></div>
             <div class="news_top">
-               	<div class="float_left">
+               	<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
                		<a href="{U_LINK}" class="big_link">{TITLE}</a>
                	</div>
-               	<div class="float_right">
-					# IF U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {U_COM}# ENDIF #
+               	<div style="float:right">
 					# IF C_EDIT #
 					<a href="management.php?edit={ID}" title="{L_EDIT}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
@@ -44,8 +43,8 @@
 			<div class="news_bottom_l"></div>
            	<div class="news_bottom_r"></div>
            	<div class="news_bottom">
-               	<div class="float_left"># IF PSEUDO #<a href="{U_USER_ID}"{LEVEL}>{PSEUDO}</a># ENDIF #</div>
-               	<div class="float_right">{DATE}</div>
+               	<div style="float:left"># IF PSEUDO #<a class="small_link{LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
+               	<div style="float:right"># IF U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {U_COM}# ENDIF #</div>
 				<div class="spacer"></div>
            	</div>
 		</div>
@@ -64,13 +63,13 @@
 		# IF C_NEWS_NAVIGATION_LINKS #
        	<div class="navigation_link">
 			# IF C_PREVIOUS_NEWS #
-			<span class="float_left">
+			<span style="float:left">
 				<a href="{U_PREVIOUS_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign_middle" /></a>
 				<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
 			</span>
 			# ENDIF #
           	# IF C_NEXT_NEWS #
-			<span class="float_right">
+			<span style="float:right">
 				<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
 				<a href="{U_NEXT_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
 			</span>

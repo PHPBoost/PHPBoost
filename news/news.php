@@ -39,7 +39,7 @@ $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $arch = retrieve(GET, 'arch', false);
 $user = retrieve(GET, 'user', false, TBOOL);
-$level = array('', ' class="modo"', ' class="admin"');
+$level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.

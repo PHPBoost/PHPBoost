@@ -306,7 +306,7 @@ class NewsInterface extends ModuleInterface
 
 		// Variables.
 		$arch = retrieve(GET, 'arch', false);
-		$level = array('', ' class="modo"', ' class="admin"');
+		$level = array('', ' modo', ' admin');
 
 		// Gestion du tpl en fonction du type d'affichage.
 		$tpl_path = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' : 'news/news_list.tpl';

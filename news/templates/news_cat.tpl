@@ -8,7 +8,7 @@
 		</script>
 		
 		# IF C_ADD_OR_WRITER #
-		<div class="float_right" style="margin:0 10px 15px;">
+		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
 			# IF C_ADD #
 			<a href="{U_ADD}" title="{L_ADD}">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
@@ -29,13 +29,13 @@
     		<div class="news_top_l"></div>
     		<div class="news_top_r"></div>
     		<div class="news_top">
-        		<div class="float_left">
+        		<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
 					<h3 class="title">{EDITO_NAME}</h3>
 				</div>
-        		<div class="float_right">
+        		<div style="float:right">
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -60,13 +60,13 @@
     		<div class="news_top_l"></div>
     		<div class="news_top_r"></div>
     		<div class="news_top">
-        		<div class="float_left">
+        		<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
 					<h3 class="title">{L_LAST_NEWS}</h3>
 				</div>
-        		<div class="float_right">
+        		<div style="float:right">
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -89,14 +89,13 @@
 	    		<div class="news_top_l"></div>
 				<div class="news_top_r"></div>
 	    		<div class="news_top">
-	        		<div class="float_left">
+	        		<div style="float:left;">
 						<a href="{news.U_SYNDICATION}" title="{L_SYNDICATION}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 						</a>
 	        			<a href="{news.U_LINK}" class="big_link">{news.TITLE}</a>
 	        		</div>
-	        		<div class="float_right">
-						# IF news.U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}# ENDIF #
+	        		<div style="float:right">
 						# IF news.C_EDIT #
 						<a href="management.php?edit={news.ID}" title="{L_EDIT}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
@@ -122,8 +121,8 @@
 	    		<div class="news_bottom_l"></div>
 	    		<div class="news_bottom_r"></div>
 	    		<div class="news_bottom">
-					<div style="float:left"># IF news.PSEUDO #<a href="{news.U_USER_ID}"{news.LEVEL}>{news.PSEUDO}</a># ENDIF #</div>
-					<div style="float:right">{news.DATE}</div>
+					<div style="float:left"># IF news.PSEUDO #<a class="small_link{news.LEVEL}" href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
+					<div style="float:right"># IF news.U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}# ENDIF #</div>
 					<div class="spacer"></div>
 	    		</div>
 			</div>
