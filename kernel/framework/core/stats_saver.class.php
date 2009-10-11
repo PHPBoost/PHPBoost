@@ -35,11 +35,10 @@ include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
   */
 class StatsSaver
 {	
-	## Public Methods ##
     /**
 	 * @desc Compute Stats of Site Referers
 	 */
-	function compute_referer()
+	public static function compute_referer()
 	{
 		$referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
 		if (!empty($referer))
@@ -99,7 +98,7 @@ class StatsSaver
     /**
 	 * @desc Compute Stats of Site Users
 	 */
-	function compute_users()
+	public static function compute_users()
 	{
 		global $stats_array_lang;
 		
@@ -156,7 +155,7 @@ class StatsSaver
 					break;
 				}
 			}
-			StatsSaver::_write_stats('browsers', $browser);
+			self::write_stats('browsers', $browser);
 		}
 		
 		########### Détection des systèmes d'exploitation ###########
@@ -196,7 +195,7 @@ class StatsSaver
 					break;
 				}
 			}		
-			StatsSaver::_write_stats('os', $os);
+			self::write_stats('os', $os);
 		}		
 		
 		########### Détection de la langue utilisateur ###########
@@ -216,7 +215,7 @@ class StatsSaver
 				elseif (isset($stats_array_lang[substr($lang, 0, 2)]))
 					$wlang = substr($lang, 0, 2);
 
-				StatsSaver::_write_stats('lang', $wlang);
+				self::write_stats('lang', $wlang);
 			}
 		}
 	}
@@ -227,7 +226,7 @@ class StatsSaver
 	 * @param string [optional] User ip
 	 * @return mixed The name of the bot if detected, false if it's a normal user.
 	 */
-	function check_bot($user_ip = '')
+	public static function check_bot($user_ip = '')
 	{
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
@@ -238,17 +237,17 @@ class StatsSaver
 		}
 		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
 		{
-			StatsSaver::_write_stats('robots', 'Google bot');
+			self::write_stats('robots', 'Google bot');
 			return 'Google bot';
 		}
 		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Bing') !== false)
 		{
-			StatsSaver::_write_stats('robots', 'Bing bot');
+			self::write_stats('robots', 'Bing bot');
 			return 'Bing bot';
 		}
 		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yahoo') !== false)
 		{
-			StatsSaver::_write_stats('robots', 'Yahoo Slurp');
+			self::write_stats('robots', 'Yahoo Slurp');
 			return 'Yahoo Slurp';
 		}
 		
@@ -294,7 +293,7 @@ class StatsSaver
 			//Comparaison pour chaque partie de l'ip, si l'une d'entre elle est fausse l'instruction est stopée.
 			if ($user_ip >= $start_ip && $user_ip <= $end_ip)
 			{
-				StatsSaver::_write_stats('robots', $array_robots[$r]);
+				self::write_stats('robots', $array_robots[$r]);
 				return $array_robots[$r]; //On retourne le nom du robot d'exploration.
 			}
 			$r++;
@@ -306,7 +305,7 @@ class StatsSaver
 	 * @desc Retrieve stats from file
 	 * @param string $file_path The path to the stats file.
 	 */
-	function retrieve_stats($file_path)
+	public static function retrieve_stats($file_path)
 	{
 		$file = @fopen(PATH_TO_ROOT . '/cache/' . $file_path . '.txt', 'r');
 		$stats_array = @fgets($file);
@@ -320,7 +319,7 @@ class StatsSaver
     /**
 	 * @desc Save stats to file
 	 */
-	function _write_stats($file_path, $stats_item)
+	private static function write_stats($file_path, $stats_item)
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
 		if (!file_exists($file_path)) 
@@ -343,9 +342,6 @@ class StatsSaver
 			fclose($file);
 		}
 	}
-	
-	
-	## Private Attribute ##
 }
 
 ?>
