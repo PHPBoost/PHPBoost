@@ -235,7 +235,7 @@ class Upload
 	}
 	
 	public function get_error() { return $this->error; }
-	public function get_extention() { return $this->extention; }
+	public function get_extension() { return $this->extension; }
 	public function get_original_filename() { return $this->original_filename; }
 	public function get_filename() { return $this->filename; }
 	public function get_size() { return $this->size; }
