@@ -8,7 +8,7 @@
 		</script>
 
 		# IF C_ADD_OR_WRITER #
-		<div class="float_right" style="margin:0 10px 15px;">
+		<div style="float:right" style="margin:0 10px 15px;">
 			# IF C_ADD #
 			<a href="{U_ADD}" title="{L_ADD}">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
@@ -29,13 +29,13 @@
 			<div class="news_top_l"></div>
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div class="float_left">
+				<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
 					<h3 class="title">{EDITO_NAME}</h3>
 				</div>
-				<div class="float_right">
+				<div style="float:right">
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -60,7 +60,7 @@
 			<div class="news_top_l"></div>
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div class="float_left">
+				<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
@@ -69,7 +69,7 @@
 						# IF C_CAT # : {EDITO_NAME}# ENDIF #
 					</h3>
 				</div>
-				<div class="float_right">
+				<div style="float:right">
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -90,7 +90,7 @@
 			<div class="news_top_l"></div>
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div class="float_left">
+				<div style="float:left">
 					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
@@ -99,7 +99,7 @@
 						# IF C_CAT # : {EDITO_NAME}# ENDIF #
 					</h3>
 				</div>
-				<div class="float_right">
+				<div style="float:right">
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />

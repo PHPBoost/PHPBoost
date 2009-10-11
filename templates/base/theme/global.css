@@ -129,19 +129,16 @@ a.com:hover {
 /* Lien des utilisateurs => ne pas changer le nom de ces classes! */
 a.admin {
     color:#FFA34F;
-    font-size:11px;
     font-weight:bold;
 }
 
 a.modo {
     color:#006699;
-    font-size:11px;
     font-weight:bold;
 }
 
 a.membre {
     color:#000000;
-    font-size:11px;
     font-weight:bold;
 }
 
