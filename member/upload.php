@@ -146,7 +146,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
-			if (!empty($Upload->get_error())) //Erreur, on arrête ici
+			if ($Upload->get_error() != '') //Erreur, on arrête ici
 			{
 				if ($Upload->get_error() == 'e_upload_max_weight')
 					$Upload->get_error() = 'e_max_data_reach';

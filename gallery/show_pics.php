@@ -62,7 +62,7 @@ if (!empty($g_idpics))
 		
 	list($width_s, $height_s, $weight_s, $ext) = $Gallery->Arg_pics('pics/' . $path);
 	$Gallery->Send_header($ext); //Header image.
-	if (!empty($Gallery->get_error()))
+	if ($Gallery->get_error() != '')
 		die($Gallery->get_error());
 	$Gallery->incrust_pics('pics/' . $path); // => logo.
 }

@@ -78,7 +78,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
-		if (!empty($Upload->get_error())) //Erreur, on arrête ici
+		if ($Upload->get_error() != '') //Erreur, on arrête ici
 			redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#errorh');
 		else //Insertion dans la bdd
 		{
