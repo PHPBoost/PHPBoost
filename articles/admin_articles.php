@@ -47,16 +47,6 @@ $tpl->assign_vars(array(
 	'LANG' => get_ulang(),
 	'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 	'CHEMIN' => SCRIPT,
-	'U_ARTICLES_TITLE_TOP' => url('.php?sort=title&amp;mode=desc'),
-	'U_ARTICLES_TITLE_BOTTOM' => url('.php?sort=title&amp;mode=asc'),
-	'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc'),
-	'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc'),
-	'U_ARTICLES_CAT_TOP' => url('.php?sort=cat&amp;mode=desc'),
-	'U_ARTICLES_CAT_BOTTOM' => url('.php?sort=cat&amp;mode=asc'),
-	'U_ARTICLES_PSEUDO_TOP' => url('.php?sort=user_id&amp;mode=desc'),
-	'U_ARTICLES_PSEUDO_BOTTOM' => url('.php?sort=user_id&amp;mode=asc'),
-	'U_ARTICLES_APPROB_TOP' => url('.php?sort=visible&amp;mode=desc'),
-	'U_ARTICLES_APPROB_BOTTOM' => url('.php?sort=visible&amp;mode=asc'),
 	'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
 	'L_NAME' => $LANG['name'],
 	'L_TITLE' => $LANG['title'],
@@ -68,6 +58,16 @@ $tpl->assign_vars(array(
 	'L_DELETE' => $LANG['delete'],
 	'L_SHOW' => $LANG['show'],
 	'L_ARTICLES_MANAGEMENT' => $ARTICLES_LANG['articles_management'],
+	'U_ARTICLES_TITLE_TOP' => url('.php?sort=title&amp;mode=desc'),
+	'U_ARTICLES_TITLE_BOTTOM' => url('.php?sort=title&amp;mode=asc'),
+	'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc'),
+	'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc'),
+	'U_ARTICLES_CAT_TOP' => url('.php?sort=cat&amp;mode=desc'),
+	'U_ARTICLES_CAT_BOTTOM' => url('.php?sort=cat&amp;mode=asc'),
+	'U_ARTICLES_PSEUDO_TOP' => url('.php?sort=user_id&amp;mode=desc'),
+	'U_ARTICLES_PSEUDO_BOTTOM' => url('.php?sort=user_id&amp;mode=asc'),
+	'U_ARTICLES_APPROB_TOP' => url('.php?sort=visible&amp;mode=desc'),
+	'U_ARTICLES_APPROB_BOTTOM' => url('.php?sort=visible&amp;mode=asc')
 ));
 
 $tpl->assign_block_vars('list', array(
