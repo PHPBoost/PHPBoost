@@ -84,11 +84,11 @@ function articles_mini($position, $block)
 		$tpl->assign_block_vars('articles', array(
 			'ID' => $row['id'],
 			'TITLE' => $row['title'],
-			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
 			'NOTE' => $note ? (($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>') : '',
 			'DATE' => $date ? ($LANG['date']. " : ". gmdate_format('date_format_short', $row['timestamp'])) : '',
 			'VIEW'=> $view ? ($LANG['views']." : ".$row['views']) : '',
 			'COM'=> $com ? ($LANG['com']. " : ".$row['nbr_com']) : '',
+			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
 		));
 	}
 	

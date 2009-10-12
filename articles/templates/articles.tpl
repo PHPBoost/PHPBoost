@@ -134,6 +134,8 @@
 			border-left:1px #5D7C94 solid;
 			border-right:1px #5D7C94 solid;
 			border-bottom:1px #5D7C94 solid;
+
+
 		}
 	</style>
 	# ENDIF #
@@ -173,8 +175,8 @@
 				</div>
 			</ul>
 		</div>	
-		<div class="module_contents">				
-			<div id="tabscontent">
+		<div class="module_contents">
+			<div id="tabcontent">
 				# START tab #
 					<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
 						<br /><div>{tab.CONTENTS_TAB}</div>
