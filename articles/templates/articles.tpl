@@ -147,7 +147,9 @@
 				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>	
 			</div>
 			<div style="float:right">
+				# IF C_COM #
 				{COM}
+				# ENDIF #
 				# IF C_IS_ADMIN #
 				&nbsp;&nbsp;<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
 				&nbsp;&nbsp;<a href="{U_ARTICLES_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
@@ -230,16 +232,25 @@
 			<div><b> {L_SOURCE} : </b># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a>&nbsp;{sources.INDENT} # END sources #</div>
 			<div class="spacer">&nbsp;</div>
 			# ENDIF #
+			# IF C_NOTE #
 			<div style="float:left" class="text_small">
 				{KERNEL_NOTATION}
 			</div>
+			# ENDIF #
 			<div style="float:right" class="text_small">
-				{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
+			# IF C_AUTHOR #
+				{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>
+			# ENDIF #
+			# IF C_DATE #
+				{L_ON}: {DATE}
+			# ENDIF #
 			</div>
 			<div class="spacer"></div>
 		</div>
 	</div>
 	<br /><br />
+	# IF C_COM #
 	{COMMENTS}
+	# ENDIF #
 # ENDIF #
 	

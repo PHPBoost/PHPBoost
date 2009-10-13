@@ -130,7 +130,8 @@ $ARTICLES_LANG = array(
 	'add_source'=>'Ajouter une source',
 	'source_link'=>'URL de la source',
 	'special_auth_explain_articles' => 'Par défaut l\'article aura la configuration générale de sa catégorie. Vous pouvez lui appliquer des permissions particulières.',
-
+	'special_option_explain' => 'Par défaut l\'article aura la configuration générale de sa catégorie. Vous pouvez lui appliquer des options particulères.',
+	'special_option' => 'Options spéciales',
 	'articles_mini_config'=> 'Configuration du mini module',
 	'nbr_articles_mini'=> 'Nombre d\'articles à afficher',		
 	'mini_type'=> 'Type de classement',	
@@ -140,6 +141,9 @@ $ARTICLES_LANG = array(
 	'articles_most_popular' => 'Articles les plus populaires',
 	'author' => 'Auteur',
 	'more_article' => 'Plus d\'article',
+	'hide'=>'Cacher',
+	'enable'=>'Activer',
+	'desable'=>'Désactiver',
 
 );
 

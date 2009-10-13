@@ -98,7 +98,21 @@ elseif(retrieve(POST,'submit',false))
 			$sources[$i]['url'] = retrieve(POST, 'v'.$i, '');
 		}
 	}
-		
+	if(retrieve(POST,'special_option',false,TBOOL))
+	{
+		$options = array (
+			'note'=>retrieve(POST, 'note', true, TBOOL),
+			'com'=>retrieve(POST, 'com', true, TBOOL),
+			'impr'=>retrieve(POST, 'impr', true, TBOOL),
+			'date'=>retrieve(POST, 'date', true, TBOOL),
+			'author'=>retrieve(POST, 'author', true, TBOOL)
+			);
+	}
+	else
+	{
+		$options = array();	
+	}
+	
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0),
@@ -121,6 +135,7 @@ elseif(retrieve(POST,'submit',false))
 		'sources'=>serialize($sources),
 		'description'=>retrieve(POST, 'description', '', TSTRING),
 		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
+		'options'=>serialize($options),
 	);
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -184,7 +199,7 @@ elseif(retrieve(POST,'submit',false))
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',options='".$articles['options']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
@@ -215,8 +230,8 @@ elseif(retrieve(POST,'submit',false))
 			
 				$auth = $articles['auth'];
 					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,options)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['options']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -356,6 +371,25 @@ else
 					));
 			}
 			
+			//Options
+			
+			$options=unserialize($articles['options']);
+			if(isset($options['note']))
+			{
+				$special_option = ($options['note'] != true || $options['com']  != true || $options['impr']  != true  || $options['date']  != true || $options['author'] != true) ? true : false;
+			}
+			else
+			{
+				$options = array (
+					'note'=>1,
+					'com'=>1,
+					'impr'=>1,
+					'date'=>1,
+					'author'=>1,
+					);
+				$special_option=false;
+			}
+
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
@@ -386,6 +420,19 @@ else
 				'DISPLAY_SPECIAL_AUTH' => $special_auth ? 'block' : 'none',
 				'SPECIAL_CHECKED' => $special_auth ? 'checked="checked"' : '',
 				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $articles['auth']),
+				'JS_SPECIAL_OPTION' => $special_option ? 'true' : 'false' ,
+				'DISPLAY_SPECIAL_OPTION'=> $special_option ? 'block' : 'none',
+				'OPTION_CHECKED' => $special_option ? 'checked="checked"' : '',
+				'SELECTED_NOTATION_HIDE'=> $options['note'] ? '' : ' selected="selected"',
+				'SELECTED_COM_HIDE'=> $options['com'] ? '' : ' selected="selected"',
+				'SELECTED_DATE_HIDE'=> $options['date'] ? '' : ' selected="selected"',
+				'SELECTED_AUTHOR_HIDE'=> $options['author'] ? '' : ' selected="selected"',
+				'SELECTED_IMPR_HIDE'=> $options['impr'] ? '' : ' selected="selected"',
+				'SELECTED_NOTATION_DISPLAY'=> $options['note'] ? ' selected="selected"' : '',
+				'SELECTED_COM_DISPLAY'=>$options['com'] ? ' selected="selected"' : '',
+				'SELECTED_DATE_DISPLAY'=>$options['date'] ? ' selected="selected"' : '',
+				'SELECTED_AUTHOR_DISPLAY'=>$options['author'] ? ' selected="selected"' : '',
+				'SELECTED_IMPR_DISPLAY'=>$options['impr'] ? ' selected="selected"' : '',
 			));
 
 			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
@@ -458,6 +505,19 @@ else
 				'DISPLAY_SPECIAL_AUTH' => 'none',
 				'SPECIAL_CHECKED' => '',
 				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $ARTICLES_CAT[$cat]['auth']),
+				'JS_SPECIAL_OPTION' => 'false',
+				'DISPLAY_SPECIAL_OPTION'=>'none',
+				'OPTION_CHECKED' => '',
+				'SELECTED_NOTATION_HIDE'=> '',
+				'SELECTED_COM_HIDE'=> '',
+				'SELECTED_DATE_HIDE'=> '',
+				'SELECTED_AUTHOR_HIDE'=> '',
+				'SELECTED_IMPR_HIDE'=> '',
+				'SELECTED_NOTATION_DISPLAY'=>' selected="selected"',
+				'SELECTED_COM_DISPLAY'=>' selected="selected"',
+				'SELECTED_DATE_DISPLAY'=> ' selected="selected"',
+				'SELECTED_AUTHOR_DISPLAY'=>' selected="selected"',
+				'SELECTED_IMPR_DISPLAY'=>' selected="selected"',
 			));
 				
 			$tpl->assign_block_vars('sources', array(
@@ -499,6 +559,8 @@ else
 		'L_SOURCE_LINK'=>$ARTICLES_LANG['source_link'],
 		'L_SPECIAL_AUTH' => $ARTICLES_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN_ARTICLES' => $ARTICLES_LANG['special_auth_explain_articles'],
+		'L_SPECIAL_OPTION' => $ARTICLES_LANG['special_option'],
+		'L_SPECIAL_OPTION_EXPLAIN' => $ARTICLES_LANG['special_option_explain'],
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_PREVIEW' => $LANG['preview'],
@@ -513,6 +575,15 @@ else
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+		'L_HIDE'=>$ARTICLES_LANG['hide'],
+		'L_DISPLAY'=>$LANG['display'],
+		'L_ENABLE'=>$ARTICLES_LANG['enable'],
+		'L_DESABLE'=>$ARTICLES_LANG['desable'],
+		'L_AUTHOR'=>$ARTICLES_LANG['author'],
+		'L_COM'=>$LANG['title_com'],
+		'L_NOTE'=>$LANG['notes'],
+		'L_PRINTABLE'=>$LANG['printable_version'],
+		'L_DATE'=>$LANG['date'],
 
 	));
 

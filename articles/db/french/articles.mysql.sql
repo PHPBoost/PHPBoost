@@ -21,6 +21,7 @@ CREATE TABLE `phpboost_articles` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   `auth` text,
+  `options` text,
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),
