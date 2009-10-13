@@ -38,7 +38,7 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {	
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com,a.options, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
@@ -121,6 +121,11 @@ if (!empty($idart) && isset($cat) )
 		$i++;
 	}	
 
+	
+	// options
+	
+	$options=unserialize($articles['options']);
+
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -130,9 +135,13 @@ if (!empty($idart) && isset($cat) )
 	$tpl->assign_vars(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
-		'C_PRINT' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
+		'C_NOTE'=> (!isset($options['note']) || $options['note'] != false) ? true : false,
+		'C_PRINT'=>(!isset($options['impr']) || $options['impr'] != false) ? true : false,
+		'C_COM'=>(!isset($options['com']) || $options['com'] != false) ? true : false,
+		'C_AUTHOR'=>(!isset($options['author']) || $options['author'] != false) ? true : false,
+		'C_DATE'=>(!isset($options['date']) || $options['date'] != false) ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
