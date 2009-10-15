@@ -3,7 +3,7 @@
  *                               footer_no_display.php
  *                            -------------------
  *   begin                : March 27, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -30,6 +30,7 @@ if (defined('PHPBOOST') !== true)
     exit;
 }
 
+Environment::display_footer();
 Environment::destroy();
 
 ?>
