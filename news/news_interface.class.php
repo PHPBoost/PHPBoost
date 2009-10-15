@@ -174,7 +174,7 @@ class NewsInterface extends ModuleInterface
 	            $item->set_title($row['title']);
 	            $item->set_link($link);
 	            $item->set_guid($link);
-	            $item->set_desc(second_parse($row['contents']) . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
+	            $item->set_desc($row['contents'] . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
 	            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
 	            $item->set_image_url($row['img']);
             	$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, AUTH_PARENT_PRIORITY));
