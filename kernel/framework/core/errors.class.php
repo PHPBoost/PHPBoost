@@ -232,9 +232,9 @@ class Errors
 						die($errstr);
 					}
 					break;
-                case E_TOKEN:
-                    $errno = E_WARNING;
-                    break;
+				case E_TOKEN:
+					$errno = E_WARNING;
+					break;
 			}
 
 			//On remet le template par défaut.
@@ -396,19 +396,11 @@ class Errors
 	 */
 	private static function log_error($errfile, $errline, $errno, $errstr, $archive)
 	{
-		echo $errstr . '<hr />';
-		Debug::print_stacktrace();
-		static $i =0;
-		if ($i++ > 0)
-		{
-			exit;
-		}
-
 		if ($archive || $this->archive_all)
 		{
 			//Nettoyage de la chaîne avant enregistrement.
 			$errstr = self::clean_error_string($errstr);
-				
+
 			$error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
 			$error .= $errno . "\n";
 			$error .= $errstr . "\n";
