@@ -1,4 +1,4 @@
-<link href="{MODULE_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
+<link href="{PICTURES_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
 {ADMIN_MENU}
 <div id="admin_contents">
 # IF C_ERROR_HANDLER #

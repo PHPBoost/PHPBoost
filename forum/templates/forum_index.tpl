@@ -21,7 +21,7 @@
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
 					<span style="float:right">
-						<a href="unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" /></a>
+						<a href="unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" /></a>
 					</span>
 				</div>
 				<div class="module_contents forum_contents">
@@ -43,7 +43,7 @@
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/weblink.png" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
@@ -52,7 +52,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>

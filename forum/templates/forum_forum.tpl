@@ -33,7 +33,7 @@
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/weblink.png" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
@@ -42,7 +42,7 @@
 							</td>	
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
@@ -85,7 +85,7 @@
 				</span>
 				<span style="float:right;">
 					# IF IDCAT #
-					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a> 
+					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a> 
 					# ENDIF #
 					{PAGINATION}
 				</span>
@@ -122,15 +122,15 @@
 						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
 							# IF NOT topics.C_HOT_TOPIC # 
-							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
+							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 							# ELSE #
-							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
-							# IF topics.C_DISPLAY_MSG # <img src="{MODULE_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF # 
-							# IF topics.C_IMG_POLL # <img src="{MODULE_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF # 
-							# IF topics.C_IMG_TRACK # <img src="{MODULE_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
+							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF # 
+							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF # 
+							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>

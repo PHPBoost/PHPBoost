@@ -63,7 +63,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/msg_display2.png' : '{MODULE_DATA_PATH}/images/msg_display.png';
+						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/msg_display2.png' : '{PICTURES_DATA_PATH}/images/msg_display.png';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}

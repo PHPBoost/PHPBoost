@@ -1,4 +1,4 @@
-		<link href="{MODULE_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
+		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--

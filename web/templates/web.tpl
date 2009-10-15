@@ -142,7 +142,7 @@
 					<span class="spacer">&nbsp;</span>
 				</p>
 				<p class="text_center">					
-					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
+					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		

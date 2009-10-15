@@ -28,7 +28,7 @@
 			function img_change(id, url)
 			{
 				if( document.images )
-					document.images[id].src = "{MODULE_DATA_PATH}/images/" + url;
+					document.images[id].src = "{PICTURES_DATA_PATH}/images/" + url;
 			}
 		-->
 		</script>
@@ -161,7 +161,7 @@
 							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1" /> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0" /> {L_UNACTIVE}</label>
-							&nbsp; <img src="{MODULE_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{MODULE_DATA_PATH}/images/msg_display2.png" name="icon" alt="" style="vertical-align:middle" />
+							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_display2.png" name="icon" alt="" style="vertical-align:middle" />
 						</dd>
 					</dl>
 				</fieldset>

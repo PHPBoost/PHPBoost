@@ -1,4 +1,4 @@
-		<link href="{MODULE_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
+		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
 		function Confirm() {
@@ -263,7 +263,7 @@
 							<div>
 								<div class="row3 gallery_cat_admin">
 									<span style="float:left;">
-										&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> &nbsp;<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
+										&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> &nbsp;<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 									</span>
 									<span style="float:right;">
 										<a href="admin_gallery_cat.php?root=1"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
@@ -276,7 +276,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 gallery_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="text_small">{list.DESC}</span>
+											&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="text_small">{list.DESC}</span>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 

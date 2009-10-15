@@ -4,9 +4,9 @@
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</div>
 				<div style="float:right;">
-					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
-					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
+					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
+					<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
+					<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
 					
 					<div style="position:relative;float:left;">
 						<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread2">
@@ -78,7 +78,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
 					</span>
 					<div class="spacer"></div>
 				</div>
@@ -98,7 +98,7 @@
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
+					<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
 					<span id="forum_track">
 						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
 					</span>

@@ -72,7 +72,7 @@
 											<strong>{web.L_VIEWS}:</strong> {COMPT}
 									</p>
 									<p style="text-align: center;">					
-										<a href="{web.URL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
+										<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
 									</p>
 								</div>
 								<div class="module_bottom_l"></div>		
