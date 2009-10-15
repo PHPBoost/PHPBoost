@@ -57,7 +57,9 @@ class Errors
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)
-		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+		{
+			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+		}
 		$server_path = trim(dirname($server_path));
 
 		$nbr_occur = substr_count(PATH_TO_ROOT, '..'); //On supprime les x dossiers par rapport au PATH_TO_ROOT
@@ -128,8 +130,7 @@ class Errors
 		}
 
 		//On affiche l'erreur
-		echo '
-		<span id="errorh"></span>
+		echo '<span id="errorh"></span>
 		<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
 			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . get_root_path_from_file($errfile) . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
@@ -172,9 +173,13 @@ class Errors
 				case E_USER_REDIRECT:
 					self::log_error($errfile, $errline, $errno, $errstr, $archive);
 					if (!$_err_stop)
-					redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
+					{
+						redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
+					}
 					else
-					die($errstr);
+					{
+						die($errstr);
+					}
 					break;
 					//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
@@ -300,7 +305,9 @@ class Errors
 
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
-			self::log_error($errfile, $errline, $errno, $errstr, $archive);
+			{
+				self::log_error($errfile, $errline, $errno, $errstr, $archive);
+			}
 		}
 		return '';
 	}
@@ -392,10 +399,10 @@ class Errors
 		echo $errstr . '<hr />';
 		Debug::print_stacktrace();
 		static $i =0;
-		if ($i > 0)
+		if ($i++ > 0)
 		{
 			exit;
-		}$i++;
+		}
 
 		if ($archive || $this->archive_all)
 		{
