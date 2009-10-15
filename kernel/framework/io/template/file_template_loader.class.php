@@ -192,7 +192,8 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		foreach ($paths as $path)
 		{
-			if ($dirpath = (file_exists(dirname($path) . '/images')))
+			$dirpath = dirname($path);
+			if (file_exists($dirpath . '/images'))
 			{
 				$this->pictures_data_path = $this->convert_to_tpl_path($dirpath);
 				break;
