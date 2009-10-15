@@ -217,7 +217,6 @@ $Template->assign_vars(array(
 	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'C_TOTAL_POST' => true,
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),

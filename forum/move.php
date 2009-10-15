@@ -80,7 +80,6 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$Sql->query_close($result);
 	
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
@@ -191,7 +190,6 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'KERNEL_EDITOR' => display_editor(),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
 		'SID' => SID,			
 		'IDTOPIC' => 0,

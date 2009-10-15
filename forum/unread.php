@@ -156,7 +156,6 @@ $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'PAGINATION' => $Pagination->display('unread' . url('.php?p=%d' . $cat_filter), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 	'LANG' => get_ulang(),
 	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . $Session->get_token(),

@@ -50,7 +50,6 @@ $Template->set_filenames(array(
 
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'LANG' => get_ulang(),
 	'SID' => SID,
 	'SEARCH' => stripslashes($search),

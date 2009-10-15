@@ -130,7 +130,6 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'CAT' => $cat,
 		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short'),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'L_DESC' => $LANG['description'],
 		'L_DATE' => $LANG['date'],
 		'L_COM' => $LANG['com'],
@@ -140,7 +139,6 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	));
 
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,

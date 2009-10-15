@@ -718,7 +718,6 @@ elseif (!empty($id)) //Edition des catégories.
 
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
 		'NAME' => $gallery_info['name'],
@@ -781,7 +780,6 @@ elseif (!empty($root)) //Edition de la racine.
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, $array_auth),
 		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, $array_auth),
@@ -822,7 +820,6 @@ else
 		
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 

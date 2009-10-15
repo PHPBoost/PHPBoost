@@ -57,7 +57,6 @@ else
 	
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('wiki'),
 		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $array_auth),
 		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $array_auth),
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),

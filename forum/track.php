@@ -185,7 +185,6 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'PAGINATION' => $Pagination->display('track' . url('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => get_ulang(),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',

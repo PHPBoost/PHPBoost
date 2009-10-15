@@ -117,7 +117,6 @@ else
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'PAGINATION' => $Pagination->display('admin_gallery.php?p=%d', $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,

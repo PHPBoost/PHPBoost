@@ -132,7 +132,6 @@ if ($action == 'alert') //Gestion des alertes
 	}
 	
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_FORUM' => $LANG['forum'],
@@ -306,7 +305,6 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -489,7 +487,6 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -609,7 +606,6 @@ else //Panneau de modération
 			
 	$Template->assign_vars(array(
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
