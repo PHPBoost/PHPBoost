@@ -149,7 +149,7 @@
 					# START category.questions #
 						<div class="row1" id="q{category.questions.ID}">
 							<span style="float:left;">
-								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+								<img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
@@ -158,12 +158,12 @@
 								</a>
 								# START category.questions.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}">
-										<img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" />
+										<img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" />
 									</a>
 								# END category.questions.up #
 								# START category.questions.down #
 									<a href="{category.questions.U_DOWN}" title="{L_DOWN}">
-										<img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
+										<img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
 									</a>
 								# END category.questions.down #
 								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>

@@ -159,7 +159,7 @@
 								<br /><br />
 							# ENDIF #
 							<a href="{U_DOWNLOAD_FILE}">
-								<img src="{MODULE_DATA_PATH}/images/download_file.png" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/download_file.png" alt="" />
 							</a>
 							<p><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
 						</td>

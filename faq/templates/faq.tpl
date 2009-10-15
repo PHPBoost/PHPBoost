@@ -1,18 +1,18 @@
 		<script type="text/javascript">
 		<!--
 			theme = "{THEME}";
-			module_data_path = "{MODULE_DATA_PATH}";
+			PICTURES_DATA_PATH = "{PICTURES_DATA_PATH}";
 			function show_answer(id_question)
 			{
 				if( document.getElementById("a" + id_question).style.display == "none" )
 				{
 					Effect.Appear("a" + id_question);
-					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/opened_line.png";
+					document.getElementById("faq_i" + id_question).src = "{PICTURES_DATA_PATH}/images/opened_line.png";
 				}
 				else
 				{
 					Effect.Fade("a" + id_question);
-					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/line.png";
+					document.getElementById("faq_i" + id_question).src = "{PICTURES_DATA_PATH}/images/line.png";
 				}
 			}
 		-->
@@ -64,7 +64,7 @@
 				# START management #
 					<div style="text-align:center; margin:10px;">
 						<a href="{U_MANAGEMENT}">
-							<img src="{MODULE_DATA_PATH}/images/category_management.png" alt="{L_CATEGORY_MANAGEMENT}" title="{L_CAT_MANAGEMENT}" />
+							<img src="{PICTURES_DATA_PATH}/images/category_management.png" alt="{L_CATEGORY_MANAGEMENT}" title="{L_CAT_MANAGEMENT}" />
 						</a>
 						<br />
 						<a href="{U_MANAGEMENT}">{L_CAT_MANAGEMENT}</a>
@@ -76,7 +76,7 @@
 						<div style="margin-top:15px;" id="q{questions.faq.ID_QUESTION}">
 							<div class="row1">
 								<span style="float:left;">
-									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
+									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
 									<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 									<script type="text/javascript">
 									<!--
@@ -86,14 +86,14 @@
 									</script>
 								</span>
 								<span class="row2" style="float:right;">
-									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
 									# IF C_ADMIN_TOOLS #
 										<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 										# START questions.faq.up #
-											<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+											<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
 										# END questions.faq.up #
 										# START questions.faq.down #
-											<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+											<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 										# END questions.faq.down #
 										<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
 										<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
@@ -112,7 +112,7 @@
 							# ENDIF #
 							# IF questions.faq.C_SHOW_ANSWER #
 							<script type="text/javascript">
-								document.getElementById("faq_i{questions.faq.ID_QUESTION}").src = "{MODULE_DATA_PATH}/images/opened_line.png";
+								document.getElementById("faq_i{questions.faq.ID_QUESTION}").src = "{PICTURES_DATA_PATH}/images/opened_line.png";
 							</script>
 							# ENDIF #		
 						</div>
@@ -131,18 +131,18 @@
 					# START questions_block.contents #
 						<div class="row1" id="q{questions_block.contents.ID}">
 							<span style="float:left;">
-								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+								<img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 								{questions_block.contents.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
-								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
 								# IF C_ADMIN_TOOLS #
 									<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 									# START questions_block.contents.up #
-										<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+										<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
 									# END questions_block.contents.up #
 									# START questions_block.contents.down #
-										<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+										<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 									# END questions_block.contents.down #
 									<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
 									<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>

@@ -70,7 +70,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_img') )
-						document.getElementById('forum_track_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/untrack_mini.png' : '{MODULE_DATA_PATH}/images/track_mini.png';
+						document.getElementById('forum_track_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mini.png' : '{PICTURES_DATA_PATH}/images/track_mini.png';
 					if( document.getElementById('forum_track_msg') )
 						document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNTRACK}" : "{L_TRACK}";
 					is_track = xhr_object.responseText == '1' ? true : false;
@@ -91,7 +91,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_pm_img') )
-						document.getElementById('forum_track_pm_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/untrack_pm_mini.png' : '{MODULE_DATA_PATH}/images/track_pm_mini.png';
+						document.getElementById('forum_track_pm_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_pm_mini.png' : '{PICTURES_DATA_PATH}/images/track_pm_mini.png';
 					if( document.getElementById('forum_track_pm_msg') )
 						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE_PM}" : "{L_SUSCRIBE_PM}";
 					is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -112,7 +112,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_mail_img') )
-						document.getElementById('forum_track_mail_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/untrack_mail_mini.png' : '{MODULE_DATA_PATH}/images/track_mail_mini.png';
+						document.getElementById('forum_track_mail_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mail_mini.png' : '{PICTURES_DATA_PATH}/images/track_mail_mini.png';
 					if( document.getElementById('forum_track_mail_msg') )
 						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_track_mail = xhr_object.responseText == '1' ? true : false;
@@ -161,7 +161,7 @@
 					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ENDIF #
 					
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
 					# ENDIF #
 				</span>
 			</div>
@@ -253,7 +253,7 @@
 						# ENDIF #
 					# ENDIF #
 					
-					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{MODULE_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
+					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{PICTURES_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
 					
 					&nbsp;&nbsp;<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
 				</div>
@@ -325,7 +325,7 @@
 					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ENDIF #
 						
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>

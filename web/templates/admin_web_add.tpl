@@ -83,7 +83,7 @@
 											<br /><br />
 										</p>
 										<p style="text-align: center;">					
-											<a href="{web.URL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
+											<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
 										</p>
 								
 										<br /><br /><br />

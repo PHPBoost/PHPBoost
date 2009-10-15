@@ -1,4 +1,4 @@
-		<link href="{MODULE_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
+		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
 		function Confirm() {
@@ -248,7 +248,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 forum_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" class="valign_middle" /> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+											&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" class="valign_middle" /> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 

@@ -56,7 +56,7 @@ class DeprecatedTemplate extends Template
 			
 			// Auto assign the module data path
 			// Use of MODULE_DATA_PATH is deprecated
-			$new_template->assign_vars(array('MODULE_DATA_PATH' => $module_data_path));
+			$new_template->assign_vars(array('PICTURES_DATA_PATH' => $module_data_path));
 		}
 	}
 	
@@ -68,10 +68,6 @@ class DeprecatedTemplate extends Template
 	 */
 	public function get_module_data_path($module)
 	{
-		if (isset($this->modules[$module]))
-		{
-			return $this->modules[$module]->get_var('MODULE_DATA_PATH');
-		}
 		return '';
 	}
 	
