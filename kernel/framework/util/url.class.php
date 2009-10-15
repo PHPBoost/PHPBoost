@@ -467,8 +467,8 @@ class Url
 		static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
 		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
 		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
-		static $file_regex = '[a-z0-9-+_~:\.\%]+';
-		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=_~:;/\.\?\'\%]+=[a-z0-9-+=_~:;/\.\?\'\%]+)*)?';
+		static $file_regex = '[a-z0-9-+_,~:\.\%]+';
+		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=,_~:;/\.\?\'\%]+(?:=[a-z0-9-+=_~:;/\.\?\'\%]+)?)*)?';
         static $anchor_regex = '\#[a-z0-9-_/]*';
 
 		if ($forbid_js)
@@ -480,14 +480,19 @@ class Url
 			$protocol_regex_secured = $protocol_regex;
 		}
 
-		return set_subregex_multiplicity($protocol_regex_secured, $protocol) .
+		$regex = set_subregex_multiplicity($protocol_regex_secured, $protocol) .
 		set_subregex_multiplicity($user_regex, $user) .
 		set_subregex_multiplicity($domain_regex, $domain) .
 		set_subregex_multiplicity($folders_regex, $folders) .
-		set_subregex_multiplicity($file_regex, $file) .
-        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
-		set_subregex_multiplicity($args_regex, $args) .
+		set_subregex_multiplicity($file_regex, $file);
+        if ($anchor == REGEX_MULTIPLICITY_OPTIONNAL)
+		{
+			$regex .= set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL);
+		}
+		$regex .=  set_subregex_multiplicity($args_regex, $args) .
 		set_subregex_multiplicity($anchor_regex, $anchor);
+		
+		return $regex;
 	}
 
 	/**
