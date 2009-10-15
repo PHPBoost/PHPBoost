@@ -100,7 +100,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 		return mysql_insert_id();
 	}
 
-    protected function escape(&$value)
+    public function escape(&$value)
     {
         return mysql_real_escape_string($value);
     }

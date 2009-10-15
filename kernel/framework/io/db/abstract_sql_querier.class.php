@@ -55,37 +55,40 @@ abstract class AbstractSQLQuerier implements SQLQuerier
         $this->connection = $connection;
     }
     
-	protected function replace_query_vars(&$query, &$parameters)
+    protected function replace_query_vars(&$query, &$parameters)
+    {
+    	$query_var = new SQLQueryVar($this);
+    	return $query_var->replace($query, $parameters);
+    }
+	
+	abstract public function escape(&$value);
+}
+
+class SQLQueryVar extends StringVars
+{
+	/**
+	 * @var AbstractSQLQuerier
+	 */
+	private $querier;
+	
+	public function __construct(AbstractSQLQuerier $querier)
 	{
-		$this->parameters = $parameters;
-        return preg_replace_callback('`:([\w_]+)`', array($this, 'replace_query_var'), $query);
+        $this->querier = $querier;		
 	}
 	
-	private function replace_query_var($captures)
-	{
-		$query_varname =& $captures[1];
-		if (isset($this->parameters[$query_varname]))
-		{
-			return $this->set_parameter($this->parameters[$query_varname]);
-		}
-		throw new RemainingQueryVarException($query_varname);
-	}
-	
-	private function set_parameter(&$parameter)
-	{
-		if (is_array($parameter))
-		{
-			$nb_value = count($parameter);
-			for ($i = 0; $i < $nb_value; $i++)
-			{
-				$parameter[$i] = '\'' . $this->escape($parameter) . '\'';
-			}
-			return '(' . implode(', ', $parameter) . ')';
-		}
-		return $this->escape($parameter);
-	}
-	
-	abstract protected function escape(&$value);
+	protected function set_var(&$parameter)
+    {
+        if (is_array($parameter))
+        {
+            $nb_value = count($parameter);
+            for ($i = 0; $i < $nb_value; $i++)
+            {
+                $parameter[$i] = '\'' . $this->querier->escape($parameter) . '\'';
+            }
+            return '(' . implode(', ', $parameter) . ')';
+        }
+        return $this->querier->escape($parameter);
+    }
 }
 
 ?>

@@ -46,7 +46,7 @@ function list_tu($directory, $recursive = false) {
 		<form name="phpunit_launcher">
             <table class="run-options">
                 <tr>
-                    <td class="options-set-name"><span>Command line:</span></td>
+                    <td class="options-set-name"><span>command line</span></td>
 		            <td class="options-set">
 	                    <input type="text" name="params" id="params" value="<?php echo $params; ?>" style="width: 75%;" />
 			            <span>html output:</span>
@@ -60,7 +60,7 @@ function list_tu($directory, $recursive = false) {
                     </td>
                 </tr>
                 <tr>
-                    <td class="options-set-name"><span>Unit tests</span></td>
+                    <td class="options-set-name"><span>unit tests</span></td>
                     <td class="options-set">
                         <select id="tus" name="tus">
 <?php
