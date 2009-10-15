@@ -295,7 +295,6 @@ elseif (!empty($id))
 	
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'ID' => $id,
 		'TYPE' => $type,
 		'CATEGORIES' => $forums,
@@ -352,7 +351,6 @@ else
 		
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],

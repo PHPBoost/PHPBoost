@@ -246,7 +246,6 @@ elseif ($id_media > 0)
 	$Template->assign_vars(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('media'),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => second_parse($media['contents']),

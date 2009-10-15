@@ -258,7 +258,6 @@ else
 
 $Template->assign_vars(array(
 	'THEME' => get_utheme(),
-	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq'),
 	'L_SUBMIT' => $edit_question > 0 ? $LANG['update'] : $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],

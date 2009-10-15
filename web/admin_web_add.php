@@ -83,7 +83,6 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$Template->assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,

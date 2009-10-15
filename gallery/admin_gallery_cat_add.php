@@ -120,7 +120,6 @@ else
 		
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'CATEGORIES' => $galleries,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),

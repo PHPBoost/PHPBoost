@@ -115,7 +115,6 @@ else
 
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
 		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',
 		'PAGINATION_MSG' => !empty($CONFIG_FORUM['pagination_msg']) ? $CONFIG_FORUM['pagination_msg'] : '15',

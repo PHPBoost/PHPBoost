@@ -54,7 +54,6 @@ if ($file_id > 0) //Contenu
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
 		'C_EDIT_AUTH' => $auth_write,
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('download'),
 		'ID_FILE' => $file_id,
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
