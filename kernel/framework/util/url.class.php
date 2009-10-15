@@ -43,11 +43,20 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
  */
 class Url
 {
+	const FORBID_JS_REGEX = '(?!javascript:)';
+	const PROTOCOL_REGEX = '[a-z0-9-_]+(?::[a-z0-9-_]+)*://';
+	const USER_REGEX = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
+	const DOMAIN_REGEX = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
+	const FOLDERS_REGEX = '/*(?:[a-z0-9~_\.-]+/+)*';
+	const FILE_REGEX = '[a-z0-9-+_,~:\.\%]+';
+	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=,_~:;/\.\?\'\%]+(?:=[a-z0-9-+=_~:;/\.\?\'\%]+)?)*)?';
+	const ANCHOR_REGEX = '\#[a-z0-9-_/]*';
+
 	private $url = '';
 	private $is_relative = false;
 	private $path_to_root = '';
 	private $server_url = '';
-	
+
 	/**
 	 * @desc Build a Url object. By default, builds an Url object representing the current path.
 	 * If the url is empty, no computation is done and an empty string will be returned
@@ -77,7 +86,7 @@ class Url
 			{
 				$this->server_url = self::server_url();
 			}
-			
+				
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
@@ -106,7 +115,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(self::get_absolute_root() . '/', '/', self::compress($url)); 
+			$url = str_replace(self::get_absolute_root() . '/', '/', self::compress($url));
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -263,7 +272,7 @@ class Url
 		self::server_url($server_url);
 
 		$result = preg_replace_callback(self::build_html_match_regex(),
-		  array('Url', 'convert_url_to_root_relative'), $html_text);
+		array('Url', 'convert_url_to_root_relative'), $html_text);
 
 		self::path_to_root($path_to_root_bak);
 		self::server_url($server_url_bak);
@@ -361,32 +370,28 @@ class Url
 	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
 	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
-		static $forbid_js_regex = '(?!javascript:)';
-		static $protocol_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)*://';
-		static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
-		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
-		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
-		static $file_regex = '[a-z0-9-+_~:\.\%]+';
-		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=_~:;/\.\?\'\%]+=[a-z0-9-+=_~:;/\.\?\'\%]+)*)?';
-        static $anchor_regex = '\#[a-z0-9-_/]*';
-
 		if ($forbid_js)
 		{
-			$protocol_regex_secured = $forbid_js_regex . $protocol_regex;
+			$protocol_regex_secured = self::FORBID_JS_REGEX . self::PROTOCOL_REGEX;
 		}
 		else
 		{
-			$protocol_regex_secured = $protocol_regex;
+			$protocol_regex_secured = self::PROTOCOL_REGEX;
 		}
 
-		return set_subregex_multiplicity($protocol_regex_secured, $protocol) .
-		set_subregex_multiplicity($user_regex, $user) .
-		set_subregex_multiplicity($domain_regex, $domain) .
-		set_subregex_multiplicity($folders_regex, $folders) .
-		set_subregex_multiplicity($file_regex, $file) .
-        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
-		set_subregex_multiplicity($args_regex, $args) .
-		set_subregex_multiplicity($anchor_regex, $anchor);
+		$regex = set_subregex_multiplicity($protocol_regex_secured, $protocol) .
+		set_subregex_multiplicity(self::USER_REGEX, $user) .
+		set_subregex_multiplicity(self::DOMAIN_REGEX, $domain) .
+		set_subregex_multiplicity(self::FOLDERS_REGEX, $folders) .
+		set_subregex_multiplicity(self::FILE_REGEX, $file);
+		if ($anchor == REGEX_MULTIPLICITY_OPTIONNAL)
+		{
+			$regex .= set_subregex_multiplicity(self::ANCHOR_REGEX, REGEX_MULTIPLICITY_OPTIONNAL);
+		}
+		$regex .= set_subregex_multiplicity(self::ARGS_REGEX, $args) .
+		set_subregex_multiplicity(self::ANCHOR_REGEX, $anchor);
+
+		return $regex;
 	}
 
 	/**
@@ -411,10 +416,10 @@ class Url
 	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
 	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
-		return preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain,
+		return (bool) preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain,
 		$folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
 	}
-	
+
 	/**
 	 * @desc replace a relative url by the corresponding absolute one
 	 * @param string[] $url_params Array containing the attributes containing the url and the url

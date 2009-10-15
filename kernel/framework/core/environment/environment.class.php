@@ -139,13 +139,16 @@ class Environment
 
 	public static function load_static_constants()
 	{
-		if (@include(PATH_TO_ROOT . '/cache/debug.php'))
+		if (!defined('DEBUG'))
 		{
-			define('DEBUG', (bool) $DEBUG['debug_mode']);
-		}
-		else
-		{
-			define('DEBUG', false);
+			if (@include(PATH_TO_ROOT . '/cache/debug.php'))
+			{
+				define('DEBUG', (bool) $DEBUG['debug_mode']);
+			}
+			else
+			{
+				define('DEBUG', false);
+			}
 		}
 
 		### Common constants ###
