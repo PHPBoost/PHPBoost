@@ -1223,7 +1223,6 @@ function to_js_string($string)
 	addcslashes($string, '\'')) . '\'';
 }
 
-
 /**
  * @desc Returns the sub-regex with its multiplicity option
  * @param string $sub_regex the sub-regex on which add the multiplicity

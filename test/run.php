@@ -4,6 +4,7 @@ define('DEBUG', TRUE);
 
 require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
 Environment::load_imports();
+Environment::load_static_constants();
 EnvironmentServices::init_sql_querier();
 
 req('/test/PHPUnit/Framework.php');
