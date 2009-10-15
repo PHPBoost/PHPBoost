@@ -81,7 +81,9 @@ class LinksMenu extends LinksMenuElement
     public function add_array(&$menu_elements)
     {
         foreach ($menu_elements as $element)
-            $this->add($element);
+        {
+        	$this->add($element);
+        }
     }
     
 	/**
@@ -91,9 +93,13 @@ class LinksMenu extends LinksMenuElement
     public function add($element)
     {
         if (get_class($element) == get_class($this))
-            $element->_parent($this->type);
+        {
+        	$element->_parent($this->type);
+        }
         else
-            $element->_parent();
+        {
+        	$element->_parent();
+        }
         
         $this->elements[] = $element;
     }
@@ -105,7 +111,9 @@ class LinksMenu extends LinksMenuElement
     {
         parent::update_uid();
         foreach ($this->elements as $element)
-            $element->update_uid();
+        {
+        	$element->update_uid();
+        }
     }
     
 	/**

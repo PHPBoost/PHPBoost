@@ -372,6 +372,7 @@ class MenuService
                 }
             }
         }
+        
         // Cache compression
         $cache_str = preg_replace(
             array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`', '`\$__menu\.=\'\';`'),
@@ -453,7 +454,9 @@ class MenuService
         $installed_menus_names = array();
         $processed_folders = array();
         foreach ($m_menus_list as $menu)
-            $menus_names[] = $menu->get_name();
+        {
+        	$menus_names[] = $menu->get_name();
+        }
         
         $query = "SELECT title FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MINI_MENU__CLASS) . "';";
@@ -464,9 +467,13 @@ class MenuService
             if (!in_array($menu_folder, $processed_folders))
             {
                 if (!in_array($menu_folder, $menus_names))
-                    MenuService::delete_mini_menu($menu_folder);
+                {
+                	MenuService::delete_mini_menu($menu_folder);
+                }
                 else
-                    $installed_menus_names[] = $menu['title'];
+                {
+                	$installed_menus_names[] = $menu['title'];
+                }
                 $processed_folders[] = $menu_folder;
             }
         }
@@ -478,7 +485,9 @@ class MenuService
         }
         
         if ($update_cache)
-            MenuService::generate_cache();
+        {
+        	MenuService::generate_cache();
+        }
     }
     
     ## Mini Modules ##
