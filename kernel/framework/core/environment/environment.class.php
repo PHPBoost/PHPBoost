@@ -48,7 +48,7 @@ class Environment
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-		// Now we have the import classes, we can user it :)
+        import('util/string_vars');
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');

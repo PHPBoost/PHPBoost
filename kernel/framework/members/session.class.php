@@ -663,7 +663,7 @@ class Session
 				return true;
 			}
 			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			self::csrf_attack($redirect);
+			$this->csrf_attack($redirect);
 			return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -685,7 +685,7 @@ class Session
 		$token = $this->get_token();
 		if (empty($token) || retrieve(REQUEST, 'token', '') !== $token)
 		{
-			self::csrf_attack($redirect);
+			$this->csrf_attack($redirect);
 			return false;
 		}
 		return true;
@@ -711,16 +711,24 @@ class Session
 	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
 	 * if false, do not redirect
 	 */
-	private static function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	private function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
 		global $Errorh;
-		$Errorh->handler('e_token', E_TOKEN);
+		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
+		$good_token = $this->get_printable_token($this->get_token());
+		
+		$Errorh->handler(StringVars::replace_vars('CRSF Attack detected' . "\n" .
+        'token received: :bad_token' . "\n" .
+        'token expected: :good_token' . "\n",
+		array('bad_token' => $bad_token,'good_token' => $good_token)),
+		E_TOKEN, '', '', '', $archive = true);
+		
 		if ($redirect !== false && !empty($redirect))
 		{
 			redirect($redirect);
 		}
 	}
-	
+
 	/**
 	 * Returns the session data
 	 * @return array
@@ -729,7 +737,7 @@ class Session
 	{
 		return $this->data;
 	}
-	
+
 	/**
 	 * Tells whether the current user supports cookies
 	 * @return bool
@@ -737,7 +745,13 @@ class Session
 	public function supports_cookies()
 	{
 		return (bool)$this->session_mod;
-	} 
+	}
+	
+	private function get_printable_token($token)
+	{
+		$digits = 6;
+		return substr($token, 0, $digits) . '...' . substr($token, strlen($token) - $digits);
+	}
 }
 
 ?>
