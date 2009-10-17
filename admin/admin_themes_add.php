@@ -57,7 +57,9 @@ if ($install)
 		$Cache->Generate_file('themes');
 		
 		$Cache->load('themes', RELOAD_CACHE);
-		$Cache->Generate_file('css');
+		
+		import('core/cache/modules_css_files_cache');
+    	ModulesCssFilesCache::invalidate();
 
 		redirect(HOST . SCRIPT); 
 	}

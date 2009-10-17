@@ -100,7 +100,9 @@ if ($update) //Mise à jour du module
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
-		$Cache->Generate_file('css');
+		
+		import('core/cache/modules_css_files_cache');
+    	ModulesCssFilesCache::invalidate();
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))

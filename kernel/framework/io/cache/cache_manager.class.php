@@ -98,6 +98,7 @@ class CacheManager
 	protected function load_data($classname, $module_name, $entry_name = '')
 	{
 		$name = $this->compute_entry_name($module_name, $entry_name);
+
 		if ($this->is_memory_cached($name))
 		{
 			return $this->get_memory_cached_data($name);
@@ -149,7 +150,7 @@ class CacheManager
 	 */
 	protected function is_memory_cached($name)
 	{
-		return !empty($this->cached_data);
+		return !empty($this->cached_data[$name]);
 	}
 
 	/**
