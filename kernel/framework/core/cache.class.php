@@ -547,20 +547,6 @@ class Cache
 		return $com_config;
 	}
 
-	/**
-	 * @desc Method which is called to generate the writingpad file cache.
-	 * @return The content of the writingpad file cache.
-	 */
-	function _get_writingpad()
-	{
-		global $Sql;
-
-		$writing_pad_code = 'global $_writing_pad_content;' . "\n";
-		$writing_pad_code .= '$_writing_pad_content = ' . var_export((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'writingpad'", __LINE__, __FILE__), true) . ';' . "\n";
-
-		return $writing_pad_code;
-	}
-
 	//Smileys
 	function _get_smileys()
 	{
@@ -612,7 +598,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'day', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'day', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

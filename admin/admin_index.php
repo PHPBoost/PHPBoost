@@ -33,18 +33,17 @@ require_once('../admin/admin_header.php');
 import('events/administrator_alert_service');
 
 //Enregistrement du bloc note
-$content = retrieve(POST, 'writing_pad_content', '');
 $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
-	if (empty($content))
-		$content = addslashes($LANG['writing_pad_explain']);
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . $content . "' WHERE name = 'writingpad'", __LINE__, __FILE__);
-	$Cache->Generate_file('writingpad');
-		
+	$content = retrieve(POST, 'writing_pad_content', '', TSTRING_UNCHANGE);
+	import('core/config/writing_pad_config');
+	$writing_pad_content = WritingPadConfig::load();
+	$writing_pad_content->set_content($content);
+	WritingPadConfig::save($writing_pad_content);
+	
 	redirect(HOST . SCRIPT);
 }
-$Cache->load('writingpad');
 
 $Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
@@ -85,8 +84,11 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $Sql->query_close($result);
 
+import('core/config/writing_pad_config');
+$writing_pad_content = WritingPadConfig::load()->get_content();
+
 $Template->assign_vars(array(
-	'WRITING_PAD_CONTENT' => !empty($_writing_pad_content) ? $_writing_pad_content : $LANG['writing_pad_explain'],
+	'WRITING_PAD_CONTENT' => $writing_pad_content,
 	'C_NO_COM' => $i == 0 ? $LANG['no_comment'] : '',
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
