@@ -56,14 +56,15 @@ class ConfigManager extends CacheManager
 
 	/**
 	 * Loads the data identified by the parameters.
+	 * @param $classname Name of the class which is expected to be returned
 	 * @param $module_name Name of the module owning the entry to load
 	 * @param $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to load
 	 * @return ConfigData The loaded data
 	 */
-	public static function load($module_name, $entry_name = '')
+	public static function load($classname, $module_name, $entry_name = '')
 	{
-		return self::get_config_manager_instance()->load_config($module_name, $entry_name);
+		return self::get_config_manager_instance()->load_config($classname, $module_name, $entry_name);
 	}
 
 	/**
@@ -93,7 +94,7 @@ class ConfigManager extends CacheManager
 	/**
 	 * @return ConfigData
 	 */
-	private function load_config($module_name, $entry_name = '')
+	private function load_config($classname, $module_name, $entry_name = '')
 	{
 		$name = $this->compute_entry_name($module_name, $entry_name);
 		if ($this->is_memory_cached($name))
@@ -108,7 +109,16 @@ class ConfigManager extends CacheManager
 		}
 		else
 		{
-			$data = $this->load_in_db($name);
+			try
+			{
+				$data = $this->load_in_db($name);
+			}
+			catch(ConfigNotFoundException $ex)
+			{
+				$data = new $classname();
+				$data->set_default_values();
+				$this->save_in_db($name, $data);
+			}
 			$this->file_cache_data($name, $data);
 			$this->memory_cache_data($name, $data);
 			return $data;
