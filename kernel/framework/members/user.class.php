@@ -96,7 +96,7 @@ class User
 		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
 		$i = 0;
 
-		$groups_cache = GroupsCacheData::load();
+		$groups_cache = GroupsCache::load();
 
 		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
 		{

@@ -50,7 +50,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
-	GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
 	redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
@@ -69,7 +69,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 		
-		GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
+		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
 		redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
 	}
@@ -88,7 +88,7 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.
 		
-	GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
 	redirect(HOST . SCRIPT);
 }
@@ -102,7 +102,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	{
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
 		{
-			GroupsCacheData::invalidate();
+			GroupsCache::invalidate();
 			redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 		}
 		else
@@ -120,7 +120,7 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membr
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	GroupsService::remove_member($user_id, $idgroup);
-	GroupsCacheData::invalidate();
+	GroupsCache::invalidate();
 	redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif (!empty($_FILES['upload_groups']['name'])) //Upload

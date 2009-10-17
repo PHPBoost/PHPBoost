@@ -52,6 +52,7 @@ class Environment
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');
+		import('core/cache/groups_cache');
 		import('core/environment/environment_services');
 		import('core/environment/graphical_environment');
 		import('core/errors');
