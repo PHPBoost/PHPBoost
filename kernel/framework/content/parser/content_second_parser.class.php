@@ -88,7 +88,7 @@ class ContentSecondParser extends Parser
 		import('util/url');
 
 		//Balise vidéo
-		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="[^"]*"></a><br /><div id=".*"></div>\s*<script type="text/javascript"><!--\s*insertMoviePlayer(\'([^\']+)\', ([0-9]+), ([0-9]+), \'[^\']*\');\s*--></script>`isU',
+		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
             '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
@@ -134,7 +134,7 @@ class ContentSecondParser extends Parser
 		{
 			import('content/parser/template_highlighter');
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-			 
+
 			$template_highlighter = new TemplateHighlighter();
 			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
@@ -147,7 +147,7 @@ class ContentSecondParser extends Parser
 
 			if ($line_number) //Affichage des numéros de lignes.
 			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-			 
+
 			//No container if we are in an inline tag
 			if ($inline_code)
 			$Geshi->set_header_type(GESHI_HEADER_NONE);
@@ -188,7 +188,7 @@ class ContentSecondParser extends Parser
 		{
 			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
 		}
-		 
+			
 		return $contents;
 	}
 
