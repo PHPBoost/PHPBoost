@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      groups_cache_data.class.php
+ *                      groups_cache.class.php
  *                            -------------------
  *   begin                : September 29, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -33,7 +33,7 @@ import('io/cache/cache_data');
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class GroupsCacheData implements CacheData
+class GroupsCache implements CacheData
 {
 	private static $default_groups_value = array();
 	
@@ -95,7 +95,7 @@ class GroupsCacheData implements CacheData
 	
 	/**
 	 * Loads and returns the groups cached data.
-	 * @return GroupsCacheData The cached data
+	 * @return GroupsCache The cached data
 	 */
 	public static function load()
 	{

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                groups.class.php
+ *                          groups_service.class.php
  *                            -------------------
  *   begin                : May 18, 2007
  *   copyright            : (C) 2007 Viarre Régis
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-import('core/cache/groups_cache_data');
 
 define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
 define('GROUP_DEFAULT_IDSELECT', '');
@@ -119,7 +117,7 @@ class GroupsService
 		if ($groups_names === null)
 		{
 			$groups_names = array();
-			$group_config_data = GroupsCacheData::load();
+			$group_config_data = GroupsCache::load();
 			foreach ($group_config_data->get_groups() as $idgroup => $array_group_info)
 			{
 				$groups_names[$idgroup] = $array_group_info['name'];
@@ -137,7 +135,7 @@ class GroupsService
 		static $groups = null;
 		if ($groups === null)
 		{
-			$config = GroupsCacheData::load();
+			$config = GroupsCache::load();
 			$groups = $config->get_groups();
 		}
 		return $groups;
