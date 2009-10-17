@@ -399,39 +399,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the css file cache.
-	 * @return The content of the css file cache.
-	 */
-	function _get_css()
-	{
-		global $MODULES, $THEME_CONFIG, $CONFIG;
-
-		$css = 'global $CSS;' . "\n";
-		$css .= '$CSS = array();' . "\n\n";
-
-		$THEME_CONFIG = is_array($THEME_CONFIG) ? $THEME_CONFIG : array();
-		$MODULES = is_array($MODULES) ? $MODULES : array();
-
-		//Listing des modules disponibles:
-		foreach ($THEME_CONFIG as $theme => $infos)
-		{
-			foreach ($MODULES as $name => $array)
-			{
-				if ($array['activ'] == '1') //module activé.
-				{
-					if (file_exists(PATH_TO_ROOT . '/templates/' . $theme . '/modules/' . $name . '/' . $name . '_mini.css'))
-					$css .= '$CSS[\'' . $theme . '\'][] = \'/templates/' . $theme . '/modules/' . $name . '/' . $name . "_mini.css';\n";
-					elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css'))
-					$css .= '$CSS[\'' . $theme . '\'][] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
-				}
-			}
-			$css .= "\n";
-		}
-
-		return $css;
-	}
-
-	/**
 	 * @desc Method which is called to generate the themes file cache.
 	 * @return The content of the themes file cache.
 	 */
@@ -645,7 +612,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'day', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
 }
 
 ?>

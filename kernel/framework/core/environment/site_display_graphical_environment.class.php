@@ -50,7 +50,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	function display_header()
 	{
 		global $CONFIG, $LANG, $Errorh, $Cache;
-		
+
 		self::set_page_localization($this->get_page_title());
 
 		$template =  new Template('header.tpl');
@@ -84,15 +84,18 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function add_menus_css_files()
 	{
-		global $CSS, $Cache;
-
-		$Cache->load('css');
-		if (isset($CSS[get_utheme()]))
+		import('core/cache/modules_css_files_cache');
+		$css_files_cache = ModulesCssFilesCache::load();
+		try
 		{
-			foreach ($CSS[get_utheme()] as $css_mini_module)
+			$css_files = $css_files_cache->get_files_for_theme(get_utheme());
+			foreach ($css_files as $file)
 			{
-				$this->add_css_file($css_mini_module);
+				$this->add_css_file($file);
 			}
+		}
+		catch(PropertyNotFoundException $ex)
+		{
 		}
 	}
 

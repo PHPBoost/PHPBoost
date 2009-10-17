@@ -160,7 +160,10 @@ class PackagesManager
 		{
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
-			$Cache->Generate_file('css');
+			
+			import('core/cache/modules_css_files_cache');
+    		ModulesCssFilesCache::invalidate();
+			
 			MenuService::generate_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
@@ -246,7 +249,10 @@ class PackagesManager
 			}
 				
 			$Cache->Generate_file('modules');
-			$Cache->Generate_file('css');
+			
+			import('core/cache/modules_css_files_cache');
+    		ModulesCssFilesCache::invalidate();
+			
 			MenuService::generate_cache();
 
 			import('content/syndication/feed'); //Régénération des feeds.

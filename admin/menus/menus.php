@@ -93,7 +93,10 @@ if (!empty($id))
     }
     
     MenuService::generate_cache();
-    $Cache->Generate_file('css');
+    
+    import('core/cache/modules_css_files_cache');
+    ModulesCssFilesCache::invalidate();
+    
     redirect('menus.php#m' . $id);
 }
 
@@ -193,7 +196,8 @@ if ($action == 'save') //Save menus positions.
 	if ($changes > 0) //Update cache if necessary.
 	{
 	    MenuService::generate_cache();
-	    $Cache->Generate_file('css');
+	    import('core/cache/modules_css_files_cache');
+    	ModulesCssFilesCache::invalidate();
 	}
 
 	/*
