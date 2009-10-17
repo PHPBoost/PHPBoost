@@ -6,6 +6,8 @@ require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.clas
 Environment::load_imports();
 Environment::load_static_constants();
 EnvironmentServices::init_sql_querier();
+EnvironmentServices::init_session();
+EnvironmentServices::init_user();
 
 req('/test/PHPUnit/Framework.php');
 mimport('test/util/phpboost_unit_test_case');

@@ -74,7 +74,8 @@ elseif (isset($_POST['preview']))
 
 	if (!empty($news['date']) && !empty($news['hour']) && !empty($news['min']))
 	{
-		$date->adjust_timestamp(($news['hour'] * 60 + $news['min']) * 60);
+		$date->set_hours($news['hour']);
+		$date->set_minutes($news['min']);
 	}
 
 	$preview->assign_vars(array('C_NEWS_BLOCK' => true));
