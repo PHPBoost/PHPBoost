@@ -54,7 +54,7 @@ class Environment
 		import('core/breadcrumb');
 		import('core/cache');
 		import('core/cache/groups_cache');
-		import('core/environment/environment_services');
+		import('core/environment/app_context');
 		import('core/environment/graphical_environment');
 		import('core/errors');
 		import('db/mysql');
@@ -82,7 +82,7 @@ class Environment
 		// TODO move in begin
 		/* DEPRECATED VARS */
 		global $Sql, $Bread_crumb, $Session, $User, $Template;
-		$Sql = EnvironmentServices::get_sql();
+		$Sql = AppContext::get_sql();
 		/* END DEPRECATED */
 
 		self::load_cache();
@@ -91,9 +91,9 @@ class Environment
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
-		$Bread_crumb = EnvironmentServices::get_breadcrumb();
-		$Session = EnvironmentServices::get_session();
-		$User = EnvironmentServices::get_user();
+		$Bread_crumb = AppContext::get_breadcrumb();
+		$Session = AppContext::get_session();
+		$User = AppContext::get_user();
 		// This is also a deprecated variable and has to be created
 		// after the environment initialization
 		$Template = new DeprecatedTemplate();
@@ -108,11 +108,11 @@ class Environment
 
 	public static function init_services()
 	{
-		EnvironmentServices::set_request(new HTTPRequest());
-		EnvironmentServices::init_bench();
-		EnvironmentServices::init_breadcrumb();
-		EnvironmentServices::init_sql_querier();
-		EnvironmentServices::init_session();
+		AppContext::set_request(new HTTPRequest());
+		AppContext::init_bench();
+		AppContext::init_breadcrumb();
+		AppContext::init_sql_querier();
+		AppContext::init_session();
 	}
 
 	public static function fit_to_php_configuration()
@@ -263,18 +263,18 @@ class Environment
 	public static function init_session()
 	{
 		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG, $CONFIG_USER;
-		EnvironmentServices::get_session()->load();
-		EnvironmentServices::get_session()->act();
+		AppContext::get_session()->load();
+		AppContext::get_session()->act();
 
-		EnvironmentServices::init_user();
+		AppContext::init_user();
 
 		// TODO do we need to keep that feature? It's not supported every where
-		if (EnvironmentServices::get_session()->supports_cookies())
+		if (AppContext::get_session()->supports_cookies())
 		{
-			define('SID', 'sid=' . EnvironmentServices::get_user()->get_attribute('session_id') .
-				'&amp;suid=' . EnvironmentServices::get_user()->get_attribute('user_id'));
-			define('SID2', 'sid=' . EnvironmentServices::get_user()->get_attribute('session_id') .
-				'&suid=' . EnvironmentServices::get_user()->get_attribute('user_id'));
+			define('SID', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
+				'&amp;suid=' . AppContext::get_user()->get_attribute('user_id'));
+			define('SID2', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
+				'&suid=' . AppContext::get_user()->get_attribute('user_id'));
 		}
 		else
 		{
@@ -282,26 +282,26 @@ class Environment
 			define('SID2', '');
 		}
 
-		$user_theme = EnvironmentServices::get_user()->get_attribute('user_theme');
+		$user_theme = AppContext::get_user()->get_attribute('user_theme');
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		if ($CONFIG_USER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure'])
-		|| !EnvironmentServices::get_user()->check_level($THEME_CONFIG[$user_theme]['secure']))
+		|| !AppContext::get_user()->check_level($THEME_CONFIG[$user_theme]['secure']))
 		{
 			$user_theme = $CONFIG['theme'];
 		}
 		//If the user's theme doesn't exist, we assign it a default one which exists
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		EnvironmentServices::get_user()->set_user_theme($user_theme);
+		AppContext::get_user()->set_user_theme($user_theme);
 
-		$user_lang = EnvironmentServices::get_user()->get_attribute('user_lang');
+		$user_lang = AppContext::get_user()->get_attribute('user_lang');
 		//Is that member authorized to use this lang? If not, we assign it the default lang
 		if (!isset($LANGS_CONFIG[$user_lang]['secure']) ||
-		!EnvironmentServices::get_user()->check_level($LANGS_CONFIG[$user_lang]['secure']))
+		!AppContext::get_user()->check_level($LANGS_CONFIG[$user_lang]['secure']))
 		{
 			$user_lang = $CONFIG['lang'];
 		}
 		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		EnvironmentServices::get_user()->set_user_lang($user_lang);
+		AppContext::get_user()->set_user_lang($user_lang);
 	}
 
 	public static function init_output_bufferization()
@@ -348,7 +348,7 @@ class Environment
 			{
 				$yesterday_timestamp = self::get_yesterday_timestamp();
 
-				$num_entry_today = EnvironmentServices::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
+				$num_entry_today = AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
 				. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
 				TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
 				$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
@@ -388,21 +388,21 @@ class Environment
 		$yesterday_timestamp =self::get_yesterday_timestamp();
 
 		//We insert today's entry in the stats table
-		EnvironmentServices::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
+		AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
 		"stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y',
 		$yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp,
 		TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) .
 		"', 0, 0, '')", __LINE__, __FILE__);
 
 		//We retrieve the id we just come to create
-		$last_stats = EnvironmentServices::get_sql()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
+		$last_stats = AppContext::get_sql()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
 
-		EnvironmentServices::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET yesterday_visit = today_visit", __LINE__, __FILE__);
-		EnvironmentServices::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
 		//We delete the referer entries older than one week
-		EnvironmentServices::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
+		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
 		" WHERE last_update < '" . (self::get_yesterday_timestamp()) . "'", __LINE__, __FILE__);
 
 		//We retrieve the number of pages seen until now
@@ -414,28 +414,28 @@ class Environment
 		$pages_file->delete();
 
 		//How much visitors were there today?
-		$total_visit = EnvironmentServices::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
+		$total_visit = AppContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id = 1", __LINE__, __FILE__);
 		//We truncate the table containing the visitors of today
-		EnvironmentServices::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
+		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id <> 1", __LINE__, __FILE__);
 		//We update the last changeday date
-		EnvironmentServices::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
+		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
 			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . 
 				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
 		//We insert this visitor as a today visitor
-		EnvironmentServices::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
+		AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), 
 		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
 
 		//We update the stats table: the number of visits today
-		EnvironmentServices::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
+		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
 		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . 
 		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
 		__LINE__, __FILE__);
 
 		//Deleting all the invalid sessions
-		EnvironmentServices::get_session()->garbage_collector();
+		AppContext::get_session()->garbage_collector();
 	}
 
 	private static function clear_all_temporary_cache_files()
@@ -473,7 +473,7 @@ class Environment
 		//If the user configured a delay and member accounts must be activated
 		if ($delay_unactiv_max > 0 && $CONFIG_USER['activ_mbr'] != 2)
 		{
-			EnvironmentServices::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
+			AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
 				" WHERE timestamp < '" . (time() - $delay_unactiv_max) . 
 				"' AND user_aprob = 0", __LINE__, __FILE__);
 		}
@@ -481,7 +481,7 @@ class Environment
 
 	private static function remove_captcha_entries()
 	{
-		EnvironmentServices::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
+		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
 			" WHERE timestamp < '" . (self::get_yesterday_timestamp()) . "'", 
 		__LINE__, __FILE__);
 	}
@@ -506,7 +506,7 @@ class Environment
 				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 			}
 			//Is the module forbidden?
-			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'],
+			else if(!AppContext::get_user()->check_auth($MODULES[MODULE_NAME]['auth'],
 			ACCESS_MODULE))
 			{
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -530,9 +530,9 @@ class Environment
 	public static function csrf_protect_post_requests()
 	{
 		// Verify that the user really wanted to do this POST (only for the registered ones)
-		if (EnvironmentServices::get_user()->check_level(MEMBER_LEVEL))
+		if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
-			EnvironmentServices::get_session()->csrf_post_protect();
+			AppContext::get_session()->csrf_post_protect();
 		}
 	}
 
@@ -640,7 +640,7 @@ class Environment
 
 	public static function destroy()
 	{
-		EnvironmentServices::close_db_connection();
+		AppContext::close_db_connection();
 
 		ob_end_flush();
 	}

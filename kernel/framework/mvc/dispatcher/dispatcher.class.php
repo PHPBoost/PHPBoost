@@ -59,7 +59,7 @@ class Dispatcher
 	 */
 	public function dispatch()
 	{
-		$url = EnvironmentServices::get_request()->get_getstring('url', '');
+		$url = AppContext::get_request()->get_getstring('url', '');
 		foreach ($this->url_controller_mappers as $url_controller_mapper)
 		{
 			if ($url_controller_mapper->match($url))

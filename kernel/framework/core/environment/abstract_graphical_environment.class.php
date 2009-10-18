@@ -33,7 +33,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 	public function __construct()
 	{
-		$this->user = EnvironmentServices::get_user();
+		$this->user = AppContext::get_user();
 	}
 
 	protected function process_site_maintenance()
@@ -61,7 +61,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 	
 	protected static function set_page_localization($page_title)
 	{
-		EnvironmentServices::get_session()->check($page_title);
+		AppContext::get_session()->check($page_title);
 	}
 }
 

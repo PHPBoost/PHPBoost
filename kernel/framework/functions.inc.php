@@ -231,7 +231,7 @@ function numeric($var, $type = 'int')
  */
 function get_utheme()
 {
-	$user = EnvironmentServices::get_user();
+	$user = AppContext::get_user();
 	return $user->get_attribute('user_theme');
 }
 
@@ -241,7 +241,7 @@ function get_utheme()
  */
 function get_ulang()
 {
-	$user = EnvironmentServices::get_user();
+	$user = AppContext::get_user();
 	return $user->get_attribute('user_lang');
 }
 
@@ -831,7 +831,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = EnvironmentServices::get_user()->get_attribute('user_timezone') - $serveur_hour;
+		$timezone = AppContext::get_user()->get_attribute('user_timezone') - $serveur_hour;
 	}
 
 	if ($timezone != 0)

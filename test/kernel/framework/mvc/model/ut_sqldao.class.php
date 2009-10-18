@@ -57,7 +57,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function setUp()
 	{
-		$this->querier = EnvironmentServices::get_sql_querier();
+		$this->querier = AppContext::get_sql_querier();
 
 		$classname = 'MyUTBusinessTestObject';
 		$tablename = 'test_MySampleTestTable';

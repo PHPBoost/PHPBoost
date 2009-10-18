@@ -56,11 +56,11 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		if (retrieve(GET, 'disconnect', false))
 		{
-			EnvironmentServices::get_session()->end();
+			AppContext::get_session()->end();
 			redirect(get_start_page());
 		}
 
-		$sql = EnvironmentServices::get_sql();
+		$sql = AppContext::get_sql();
 
 		//If the member tried to connect
 		if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
@@ -118,7 +118,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 				elseif (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
 				{
-					EnvironmentServices::get_session()->end();
+					AppContext::get_session()->end();
 					redirect('/admin/admin_index.php?flood=0');
 				}
 				else //Succès redonne tous les essais.
@@ -133,7 +133,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 
 		$flood = retrieve(GET, 'flood', 0);
-		$is_admin = EnvironmentServices::get_user()->check_level(ADMIN_LEVEL); 
+		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL); 
 		if (!$is_admin || $flood)
 		{
 			$template = new Template('admin/admin_connect.tpl');
@@ -181,7 +181,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$header_tpl = new Template('admin/admin_header.tpl');
 
-		$include_tinymce_js = EnvironmentServices::get_user()->get_attribute('user_editor') == 'tinymce';
+		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
 		$header_tpl->assign_vars(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
@@ -382,8 +382,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		{
 			$tpl->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
-				'BENCH' => EnvironmentServices::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => EnvironmentServices::get_sql()->get_executed_requests_number(),
+				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
+				'REQ' => AppContext::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],

@@ -129,7 +129,7 @@ abstract class SQLDAO implements DAO
 		$this->model = $model;
 		if ($querier == null)
 		{
-			$this->querier = EnvironmentServices::get_sql_querier();
+			$this->querier = AppContext::get_sql_querier();
 		}
 		else
 		{

@@ -132,7 +132,7 @@ class FakeUser// extends User
 }
 global $User;
 $User = new FakeUser(array('user_lang' => $lang, 'user_theme' => 'base'));
-EnvironmentServices::set_user($User);
+AppContext::set_user($User);
 
 global $Sql;
 $Sql = null;
@@ -333,7 +333,7 @@ switch($step)
 					$db_connection->connect();
 					$db_connection->select_database($database);
 					$Sql = new Sql($db_connection, $database);
-					EnvironmentServices::set_sql($Sql);
+					AppContext::set_sql($Sql);
 
 					//Création du fichier de configuration
 					import('io/filesystem/file');
@@ -517,8 +517,8 @@ switch($step)
 			$CONFIG['html_auth'] = array ('r2' => 1);
 			$CONFIG['forbidden_tags'] = array ();
 
-			EnvironmentServices::init_sql_querier();
-			$Sql = EnvironmentServices::get_sql();
+			AppContext::init_sql_querier();
+			$Sql = AppContext::get_sql();
 
 			//On insère dans la base de données
 			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -682,8 +682,8 @@ switch($step)
 			//Si il n'y a pas d'erreur on enregistre dans la table
 			if (empty($error))
 			{
-				EnvironmentServices::init_sql_querier();
-				$Sql = EnvironmentServices::get_sql();
+				AppContext::init_sql_querier();
+				$Sql = AppContext::get_sql();
 					
 				//On crée le code de déverrouillage
 				import('core/cache');
@@ -790,8 +790,8 @@ switch($step)
     		break;
     		//Fin
 	case STEP_END:
-		EnvironmentServices::init_sql_querier();
-		$Sql = EnvironmentServices::get_sql();
+		AppContext::init_sql_querier();
+		$Sql = AppContext::get_sql();
 			
 		import('core/cache');
 		$Cache = new Cache;

@@ -470,7 +470,7 @@ class Date
 				break;
 
 			case TIMEZONE_USER:
-				$timezone = EnvironmentServices::get_user()->get_attribute('user_timezone')
+				$timezone = AppContext::get_user()->get_attribute('user_timezone')
 					 - $server_hour;
 				break;
 					

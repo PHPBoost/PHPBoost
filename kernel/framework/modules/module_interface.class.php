@@ -123,7 +123,7 @@ class ModuleInterface
         }
         $this->errors = $error;
         
-        $this->sql_querier = EnvironmentServices::get_sql();
+        $this->sql_querier = AppContext::get_sql();
     }
 
     /**

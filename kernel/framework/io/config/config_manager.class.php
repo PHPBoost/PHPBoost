@@ -86,7 +86,7 @@ class ConfigManager extends CacheManager
 		if (self::$config_manager_instance === null)
 		{
 			self::$config_manager_instance = new ConfigManager();
-			self::$config_manager_instance->db_connection = EnvironmentServices::get_sql();
+			self::$config_manager_instance->db_connection = AppContext::get_sql();
 		}
 		return self::$config_manager_instance;
 	}

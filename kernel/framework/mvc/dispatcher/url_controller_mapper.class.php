@@ -93,7 +93,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 	private function do_call()
 	{
 		$controller = new $this->classname();
-		$response = $controller->execute(EnvironmentServices::get_request());
+		$response = $controller->execute(AppContext::get_request());
 		$response->send();
 	}
 }

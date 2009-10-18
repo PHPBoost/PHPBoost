@@ -62,7 +62,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->assign_vars(array(
 			'SERVER_NAME' => $CONFIG['site_name'],
 			'SITE_NAME' => $CONFIG['site_name'],
-			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()->get_attribute('user_editor') == 'tinymce',
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 			'SITE_KEYWORD' => $CONFIG['site_keyword'],
@@ -77,7 +77,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->display_menus($template);
 
 		//Bread crumb
-		EnvironmentServices::get_breadcrumb()->display($template);
+		AppContext::get_breadcrumb()->display($template);
 
 		$template->parse();
 	}
@@ -106,7 +106,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//If the counter is to be displayed, we display it
 		if ($CONFIG['compteur'] == 1)
 		{
-			$compteur = EnvironmentServices::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
+			$compteur = AppContext::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
 				'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
 
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
@@ -328,9 +328,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$template->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
-				'BENCH' => EnvironmentServices::get_bench()->to_string(),
-				'REQ' => EnvironmentServices::get_sql_querier()->get_executed_requests_count() + 
-			EnvironmentServices::get_sql()->get_executed_requests_number(),
+				'BENCH' => AppContext::get_bench()->to_string(),
+				'REQ' => AppContext::get_sql_querier()->get_executed_requests_count() + 
+			AppContext::get_sql()->get_executed_requests_number(),
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],
 				'L_UNIT_SECOND' => $LANG['unit_seconds_short']

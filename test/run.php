@@ -5,9 +5,9 @@ define('DEBUG', TRUE);
 require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
 Environment::load_imports();
 Environment::load_static_constants();
-EnvironmentServices::init_sql_querier();
-EnvironmentServices::init_session();
-EnvironmentServices::init_user();
+AppContext::init_sql_querier();
+AppContext::init_session();
+AppContext::init_user();
 
 req('/test/PHPUnit/Framework.php');
 mimport('test/util/phpboost_unit_test_case');
@@ -26,6 +26,6 @@ req('/test/phpunit.php');
 if (!empty($_REQUEST['is_html'])) {
     echo '</pre>';
 }
-EnvironmentServices::close_db_connection();
+AppContext::close_db_connection();
     
 ?>
