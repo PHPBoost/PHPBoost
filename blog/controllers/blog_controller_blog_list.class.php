@@ -64,7 +64,7 @@ class BlogControllerBlogList implements Controller
                 'U_DETAILS' => $blog->action_url(Blog::ACTION_DETAILS)->absolute(),
                 'U_EDIT' => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
                 'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
-//                'USER' => $blog->get_property('member_login')
+                'USER' => $blog->get_login()
 			));
 		}
 

@@ -36,6 +36,22 @@ mimport('blog/models/blog_post');
  */
 class Blog extends BusinessObject
 {
+    const GLOBAL_ACTION_LIST = 0x00;
+    const GLOBAL_ACTION_CREATE = 0x01;
+    const GLOBAL_ACTION_CREATE_VALID = 0x02;
+    const ACTION_DETAILS = 0x01;
+    const ACTION_EDIT = 0x02;
+    const ACTION_EDIT_VALID = 0x03;
+    const ACTION_DELETE = 0x04;
+    const ACTION_ADD_POST = 0x05;
+    
+    private $id;
+    private $title;
+    private $description;
+    private $user_id;
+    private $login;
+    private $posts = array();
+    
 	public function __construct($title = '', $description = '')
 	{
 		$this->title = $title;
@@ -82,6 +98,16 @@ class Blog extends BusinessObject
 	public function set_description($value)
 	{
 		$this->description = $value;
+	}
+	
+	public function set_login($login)
+	{
+		$this->login = !empty($login) ? $login : 'visiteur';
+	}
+	
+	public function get_login()
+	{
+		return $this->login;
 	}
 
 	public static function global_action_url($global_action)
@@ -143,20 +169,5 @@ class Blog extends BusinessObject
 	{
 		unset($this->posts[$i]);
 	}
-
-	private $id;
-	private $title;
-	private $description;
-	private $user_id;
-	private $posts = array();
-
-	const GLOBAL_ACTION_LIST = 0x00;
-	const GLOBAL_ACTION_CREATE = 0x01;
-	const GLOBAL_ACTION_CREATE_VALID = 0x02;
-	const ACTION_DETAILS = 0x01;
-	const ACTION_EDIT = 0x02;
-	const ACTION_EDIT_VALID = 0x03;
-	const ACTION_DELETE = 0x04;
-	const ACTION_ADD_POST = 0x05;
 }
 ?>

@@ -50,6 +50,7 @@ Corriger les problèmes de la classe de catégories. Problème avec l'héritage des 
 
 ------------------------------------- NOYAU ------------------------------------
 - [color=red]Nouveauté:[/color] Framework MVC.
+- [color=red]Nouveauté:[/color] Template JSON.
 - [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
 - [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.

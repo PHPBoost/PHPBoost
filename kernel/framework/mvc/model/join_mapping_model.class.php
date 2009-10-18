@@ -28,16 +28,16 @@
 class JoinMappingModel
 {
 	private $table_name;
-	private $fk_property_name;
+	private $fk_db_field_name;
 	private $primary_key;
 	private $fields;
 
-	public function __construct($table_name, $fk_property_name, MappingModelField $primary_key,
+	public function __construct($table_name, $fk_db_field_name, MappingModelField $primary_key,
 	$fields)
 	{
 		$this->table_name = $table_name;
 
-		$this->fk_property_name = $fk_property;
+		$this->fk_db_field_name = $fk_db_field_name;
 		$this->primary_key = $primary_key;
 		$this->fields = $fields;
 
@@ -58,9 +58,9 @@ class JoinMappingModel
 	/**
 	 * @return string
 	 */
-	public function get_fk_property_name()
+	public function get_fk_db_field_name()
 	{
-		return $this->fk_property_name;
+		return $this->fk_db_field_name;
 	}
 
 	/**

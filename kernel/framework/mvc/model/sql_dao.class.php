@@ -265,8 +265,8 @@ abstract class SQLDAO implements DAO
 
 			$left_joins = $this->compute_joins();
 
-			$this->find_by_criteria_query .= ' FROM ' . $this->table . implode(' ', $left_joins) .
-			    ' ';
+			$this->find_by_criteria_query .= ' FROM ' . $this->table . ' ' .
+			implode(' ', $left_joins) . ' ';
 		}
 	}
 
@@ -313,20 +313,21 @@ abstract class SQLDAO implements DAO
 
 	private function compute_joins()
 	{
-		$fields = array();
+		$left_joins = array();
 		foreach ($this->model->get_joins() as $join)
 		{
 			$fields = array();
 			$table_name = $join->get_table_name();
 			$left_joins[] = 'LEFT JOIN ' . $table_name . ' ON ' . $table_name . '.' .
-			$join->get_primary_key()->get_db_field_name() . '=' . $this->pk_db_field;
+			$join->get_primary_key()->get_db_field_name() . '=' . $join->get_fk_db_field_name();
 			foreach ($join->get_fields() as $field)
 			{
 				$fields[$field->get_property_name()] = $table_name . '.' .
-				$field->get_property_name();
+				$field->get_db_field_name();
 			}
+			$this->add_select_columns($fields);
 		}
-		return $fields;
+		return $left_joins;
 	}
 }
 

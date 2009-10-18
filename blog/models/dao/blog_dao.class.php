@@ -56,7 +56,8 @@ class BlogDAO extends SQLDAO
 		$field_user_id = new MappingModelField('user_id');
 
 		$fields = array($field_title, $field_description, $field_user_id);
-		$joins = array();
+		$joins = array(new JoinMappingModel( DB_TABLE_MEMBER, $tablename . '.user_id',
+		new MappingModelField('user_id'), array(new MappingModelField('login'))));
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 
