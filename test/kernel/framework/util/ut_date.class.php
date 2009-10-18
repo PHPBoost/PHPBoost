@@ -155,6 +155,7 @@ class UTdate extends PHPBoostUnitTestCase
 		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
 		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
 		$this->assertEquals(true, $date1->is_anterior_to($date2));
+		$this->assertEquals(false, $date2->is_anterior_to($date1));
 	}
 	
 	public function test_is_posterior_to()
@@ -162,5 +163,14 @@ class UTdate extends PHPBoostUnitTestCase
 		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
 		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
 		$this->assertEquals(true, $date2->is_posterior_to($date1));
+		$this->assertEquals(false, $date1->is_posterior_to($date2));
+	}
+	
+	public function test_equals()
+	{
+		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
+		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
+		$this->assertEquals(false, $date2->equals($date1));
+		$this->assertEquals(true, $date1->equals($date1));
 	}
 }
