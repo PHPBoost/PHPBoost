@@ -426,6 +426,15 @@ class Date
 	}
 
 	/**
+	 * Tells whetehr this date equals the given one
+	 * @param Date $date The date to compare with.
+	 * @return bool true if the two dates are the same, false otherwise
+	 */
+	public function equals(Date $date)
+	{
+		return $this->timestamp == $date->timestamp;
+	}
+	/**
 	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
 	 * @param int $day The day
