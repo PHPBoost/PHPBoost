@@ -366,7 +366,9 @@ class MenuService
                 {
                     if ($menu->is_enabled())
                     {
-                        $cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
+                    	// TODO merci pour ce joli bug et ce patch
+//                        $cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
+                        $cache_str .= '$__menu=\'\';' . "\n";
                         $cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
                     }
                 }

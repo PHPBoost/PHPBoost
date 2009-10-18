@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           abstract_url_mapper.class.php
  *                            -------------------
- *   begin                : June 09 2009
+ *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,19 +25,50 @@
  *
  ###################################################*/
 
+import('mvc/dispatcher/url_mapper');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
+ * @desc Call the controller method matching an url
  */
-interface Controller
+abstract class AbstractUrlMapper implements UrlMapper
 {
 	/**
-	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
-	 * @return Response the controller response
+	 * @var string
 	 */
-	function execute(HTTPRequest $request);
+	private $capture_regex;
+	
+	/**
+	 * @var string[]
+	 */
+	private $captured_parameters = array();
+
+	public function __construct($capture_regex)
+	{
+		$this->capture_regex = $capture_regex;
+	}
+
+	public function match(&$url)
+	{
+		$match = preg_match($this->capture_regex, $url, $this->captured_parameters);
+		if ($match)
+		{
+			if (count($this->captured_parameters) == 2)
+			{
+				$this->url = $this->captured_parameters[1];
+			}
+			else
+			{
+				throw new MalformedUrlControllerMapperRegex($this->controller_name,
+				$this->capture_regex, $url);
+			}
+		}
+		return $match;
+	}
+	
+	protected function get_captured_parameters()
+	{
+		return $this->captured_parameters;
+	}
 }
 ?>

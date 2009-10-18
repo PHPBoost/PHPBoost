@@ -37,6 +37,11 @@ import('io/db/db_factory');
 class EnvironmentServices
 {
 	/**
+	 * @var HTTPRequest
+	 */
+	private static $request;
+	
+	/**
 	 * @var BreadCrumb
 	 */
 	private static $breadcrumb;
@@ -61,7 +66,25 @@ class EnvironmentServices
 	 */
 	private static $user;
 
+    /**
+     * @desc set the <code>HTTPRequest</code>
+     * @param HTTPRequest $request
+     */
+    public static function set_request(HTTPRequest $request)
+    {
+        self::$request = $request;
+    }
 
+    /**
+     * @desc Returns the <code>HTTPRequest</code> object
+     * @return HTTPRequest
+     */
+    public static function get_request()
+    {
+        return self::$request;
+    }
+	
+	
 	/**
 	 * Inits the bench
 	 */

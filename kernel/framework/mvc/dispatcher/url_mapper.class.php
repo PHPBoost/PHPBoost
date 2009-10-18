@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           url_mapper.class.php
  *                            -------------------
- *   begin                : June 09 2009
+ *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -27,17 +27,23 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
+ * @desc Call the controller method matching an url
  */
-interface Controller
+interface UrlMapper
 {
-	/**
-	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
-	 * @return Response the controller response
-	 */
-	function execute(HTTPRequest $request);
+    /**
+     * @desc Returns true if the UrlDispatcherItem match the url
+     * @param string $url the to match
+     * @return boolean true if the UrlDispatcherItem match the url
+     */
+    public function match(&$url);
+
+    /**
+     * @desc Call the controller method if the url match and if the method exists
+     * @param string $url the url
+     * @throws NoUrlMatchException
+     * @throws NoSuchControllerMethodException
+     */
+    public function call();
 }
 ?>

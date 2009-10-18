@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           response.class.php
  *                            -------------------
- *   begin                : June 09 2009
+ *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -27,17 +27,12 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
+ * @desc the response
+ * @package mvc
+ * @subpackage response
  */
-interface Controller
+class Response
 {
-	/**
-	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
-	 * @return Response the controller response
-	 */
-	function execute(HTTPRequest $request);
+	function send();
 }
 ?>

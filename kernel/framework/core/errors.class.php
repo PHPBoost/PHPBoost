@@ -86,7 +86,6 @@ class Errors
 	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
-
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
 			return true;
@@ -97,7 +96,7 @@ class Errors
 		{
 			return true;
 		}
-
+		
 		switch ($errno)
 		{
 			//Notice utilisateur.
