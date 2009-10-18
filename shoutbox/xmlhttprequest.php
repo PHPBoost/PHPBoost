@@ -134,6 +134,6 @@ elseif ($del)
 	}
 }
 
-$Sql->close(); //Fermeture de mysql
+require_once('../kernel/footer_no_display.php');
 
 ?>
