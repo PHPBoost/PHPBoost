@@ -475,7 +475,7 @@ if (!empty($id_get)) //Espace membre
 			
 			if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
 			{
-				if (Upload->get_size() > 0)
+				if ($Upload->get_size() > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if ($Upload->get_error() != '') //Erreur, on arrête ici

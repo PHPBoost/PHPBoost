@@ -443,15 +443,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the last record day file cache.
-	 * @return The content of the last record day file cache.
-	 */
-	function _get_day()
-	{
-		return 'global $_record_day;' . "\n" . '$_record_day = ' . gmdate_format('j', time(), TIMEZONE_SITE) . ';';
-	}
-
-	/**
 	 * @desc Method which is called to generate the members file cache.
 	 * @return The content of the members file cache.
 	 */
@@ -598,7 +589,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'day', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

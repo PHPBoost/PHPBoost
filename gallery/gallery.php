@@ -103,7 +103,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	if (is_writable($dir))
 	{
-		if (Upload->get_size() > 0)
+		if ($Upload->get_size() > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
