@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+import('mvc/controller/controller');
 import('mvc/dispatcher/url_controller_mapper');
 import('mvc/dispatcher/dispatcher_exception');
 
@@ -125,10 +126,14 @@ class Dispatcher
 		{
 			Dispatcher::show_error($ex);
 		}
-		catch (MalformedUrlMapperRegex $ex)
-		{
-			Dispatcher::show_error($ex);
-		}
+        catch (MalformedUrlMapperRegex $ex)
+        {
+            Dispatcher::show_error($ex);
+        }
+        catch (Exception $ex)
+        {
+            Dispatcher::show_error($ex);
+        }
 	}
 	
 	private function handle_dispatch_exception($exception)
