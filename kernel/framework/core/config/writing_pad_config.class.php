@@ -27,13 +27,27 @@
 
 import('io/config/default_config_data');
 
+/**
+ * This class contains the content of the writing pad which is on the home page 
+ * of the administration panel.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 class WritingPadConfig extends DefaultConfigData
 {
+	/**
+	 * Sets the content of the writing pad
+	 * @param string $content The content
+	 */
 	public function set_content($content)
 	{
 		$this->set_property('content', $content);
 	}
 
+	/**
+	 * Returns the content of the writing pad
+	 * @return string its content
+	 */
 	public function get_content()
 	{
 		try
@@ -46,6 +60,10 @@ class WritingPadConfig extends DefaultConfigData
 		}
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 */
 	public function set_default_values()
 	{
 		global $LANG;
@@ -53,14 +71,18 @@ class WritingPadConfig extends DefaultConfigData
 	}
 
 	/**
-	 *
-	 * @return WritingPadConfig
+	 * Returs the configuration.
+	 * @return WritingPadConfig The configuration
 	 */
 	public static function load()
 	{
 		return ConfigManager::load(__CLASS__, 'kernel', 'writing-pad');
 	}
 
+	/**
+	 * Saves the configuration
+	 * @param WritingPadConfig $config The configuration to save.
+	 */
 	public static function save(WritingPadConfig $config)
 	{
 		ConfigManager::save('kernel', $config, 'writing-pad');

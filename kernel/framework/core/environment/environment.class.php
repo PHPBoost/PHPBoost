@@ -229,7 +229,6 @@ class Environment
 		$Cache->load('modules');
 		$Cache->load('themes');
 		$Cache->load('langs');
-		$Cache->load('day');
 	}
 
 	public static function load_dynamic_constants()

@@ -28,8 +28,18 @@
 import('io/config/default_config_data');
 import('util/date');
 
+/**
+ * This class contains the date of the last day where PHPBoost was used.
+ * It's useful to know when to launch daily tasks.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 class LastUseDateConfig extends DefaultConfigData
 {
+	/**
+	 * Sets the date of the last time PHPBoost executed the daily tasks.
+	 * @param Date $date The date
+	 */
 	public function set_last_use_date(Date $date)
 	{
 		$this->set_property('year', $date->get_year(TIMEZONE_SYSTEM));
@@ -38,7 +48,7 @@ class LastUseDateConfig extends DefaultConfigData
 	}
 
 	/**
-	 * 
+	 * Returns the date of the last time PHPBoost executed the daily tasks.
 	 * @return Date
 	 */
 	public function get_last_use_date()
@@ -56,13 +66,17 @@ class LastUseDateConfig extends DefaultConfigData
 		}
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 */
 	public function set_default_values()
 	{
 		$this->set_last_use_date(new Date());
 	}
 
 	/**
-	 *
+	 * Returns the configuration.
 	 * @return LastUseDateConfig
 	 */
 	public static function load()
@@ -70,6 +84,10 @@ class LastUseDateConfig extends DefaultConfigData
 		return ConfigManager::load(__CLASS__, 'kernel', 'last-use-date');
 	}
 
+	/**
+	 * Saves the configuration in the database. Has it become persistent.
+	 * @param LastUseDateConfig $config The configuration to push in the database.
+	 */
 	public static function save(LastUseDateConfig $config)
 	{
 		ConfigManager::save('kernel', $config, 'last-use-date');
