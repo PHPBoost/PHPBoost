@@ -248,10 +248,10 @@ function hide_div(divID, useEffects)
 }
 
 //Affiche un bloc
-function show_div(divID, option, useEffects)
+function show_div(divID, useEffects)
 {
     var use_effects = false
-    if( arguments.length > 2 )
+    if( arguments.length > 1 )
         use_effects = useEffects;
     
     if( document.getElementById(divID) )
