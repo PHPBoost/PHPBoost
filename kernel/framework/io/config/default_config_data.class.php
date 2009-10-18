@@ -45,7 +45,7 @@ class DefaultConfigData implements ConfigData
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/cache/CacheData#synchronize()
 	 */
-	public function synchronize() {}
+	final public function synchronize() {}
 
 	/**
 	 * Redefine this method if you want to avoid getting errors while asking values.
