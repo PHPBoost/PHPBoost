@@ -116,7 +116,7 @@ class HTTPRequest
 		return $this->get_var($_POST, self::string, $varname, $default_value);
 	}
 
-	private function get_var(&$mode, &$type, &$varname, &$default_value)
+	private function get_var(&$mode, $type, &$varname, &$default_value)
 	{
 		if (!isset($mode[$varname]) && $default_value === null)
 		{

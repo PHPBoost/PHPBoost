@@ -35,18 +35,17 @@ import('core/environment/site_display_graphical_environment');
 $env = new SiteDisplayGraphicalEnvironment();
 
 Environment::set_graphical_environment($env);
-
+global $LANG;
 if (!defined('TITLE'))
 {
 	define('TITLE', $LANG['unknow']);
 }
 
 //DEPRECATED PROCESS
-if (defined('ALTERNATIVE_CSS') && false) // TODO remove this
+if (defined('ALTERNATIVE_CSS'))
 {
 	$alternative = null;
-	// TODO benoit, t'as fait de la merde, t'as pas converti les modules, et eux, ce ne sont pas des chaînes sérailisées
-	$styles = unserialize(ALTERNATIVE_CSS);
+	$styles = @unserialize(ALTERNATIVE_CSS);
 	if (is_array($styles))
 	{
 		foreach ($styles as $module => $style)

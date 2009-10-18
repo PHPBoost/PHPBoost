@@ -51,19 +51,11 @@ abstract class AbstractUrlMapper implements UrlMapper
 	public function match(&$url)
 	{
 		$match = preg_match($this->capture_regex, $url, $this->captured_parameters);
-		if ($match)
+		if ($match === false)
 		{
-			if (count($this->captured_parameters) == 2)
-			{
-				$this->url = $this->captured_parameters[1];
-			}
-			else
-			{
-				throw new MalformedUrlControllerMapperRegex($this->controller_name,
-				$this->capture_regex, $url);
-			}
+			throw new MalformedUrlControllerMapperRegex($this->capture_regex, $url);
 		}
-		return $match;
+		return $match > 0;
 	}
 	
 	protected function get_captured_parameters()
