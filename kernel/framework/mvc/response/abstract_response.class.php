@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           response.class.php
+ *                           abstract_response.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,22 +25,42 @@
  *
  ###################################################*/
 
+import('mvc/response/response');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
  * @package mvc
  * @subpackage response
  */
-class Response
+abstract class AbstractResponse implements Response
 {
-    /**
-     * @return GraphicalEnvironment
-     */
-    function get_graphical_environment();
-    
-    /**
-     * @return send the response to the browser
-     */
-    function send();
+	/**
+	 * @var View
+	 */
+	private $view;
+
+	/**
+	 * @var GraphicalEnvironment
+	 */
+	private $graphical_environment;
+
+	protected function __construct($graphical_environment, $view)
+	{
+		$this->graphical_environment = $graphical_environment;
+		$this->view = $view;
+	}
+
+	public function get_graphical_environment()
+	{
+		return $this->graphical_environment;
+	}
+
+	public function send()
+	{
+		$this->graphical_environment->display_header();
+		$this->view->parse();
+		$this->graphical_environment->display_footer();
+	}
 }
 ?>
