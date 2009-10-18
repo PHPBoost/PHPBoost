@@ -372,7 +372,7 @@ class Date
 	 */
 	public function get_minutes()
 	{
-		return date('i', $this->get_adjusted_timestamp($timezone));
+		return date('i', $this->timestamp);
 	}
 
 	public function set_minutes($minutes)
@@ -387,7 +387,7 @@ class Date
 	 */
 	public function get_seconds()
 	{
-		return date('s', $this->get_adjusted_timestamp($timezone));
+		return date('s', $this->timestamp);
 	}
 
 	public function set_seconds($second)

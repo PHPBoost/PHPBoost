@@ -64,6 +64,7 @@ class Environment
 		import('members/session');
 		import('members/user');
 		import('util/bench');
+		import('util/date');
 		import('util/debug');
 	}
 
@@ -307,9 +308,15 @@ class Environment
 
 	public static function process_changeday_tasks_if_needed()
 	{
-		global $_record_day, $Cache;
 		//If the day changed compared to the last request, we execute the daily tasks
-		if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day))
+		import('core/config/last_use_date_config');
+		$last_use_config = LastUseDateConfig::load();
+		$last_use_date = $last_use_config->get_last_use_date();
+		$current_date = new Date();
+		$current_date->set_hours(0);
+		$current_date->set_minutes(0);
+		$current_date->set_seconds(0);
+		if ($last_use_date->is_anterior_to($current_date))
 		{
 			import('io/filesystem/file');
 			$lock_file = new File(PATH_TO_ROOT . '/cache/changeday_lock');
@@ -330,7 +337,8 @@ class Environment
 
 				if ((int) $num_entry_today == 0)
 				{
-					$Cache->generate_file('day');
+					$last_use_config->set_last_use_date(new Date());
+					LastUseDateConfig::save($last_use_config);
 
 					self::perform_changeday();
 				}
