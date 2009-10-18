@@ -188,7 +188,7 @@ class HTTPRequest
 		}
 	}
 	
-	private function get_raw_string(&$mode, &$varname)
+	private function get_raw_string(&$value)
 	{
 		return (string) $value;
 	}

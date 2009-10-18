@@ -26,6 +26,7 @@
  ###################################################*/
 
 import('mvc/model/mapping_model_field');
+import('mvc/model/join_mapping_model');
 import('mvc/model/mapping_model_exception');
 import('mvc/model/properties_map_interface');
 
