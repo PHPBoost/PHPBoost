@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           response.class.php
+ *                           site_display_response.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,22 +25,20 @@
  *
  ###################################################*/
 
+import('mvc/response/abstract_response');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
  * @package mvc
  * @subpackage response
  */
-class Response
+class SiteDisplayResponse extends AbstractResponse
 {
-    /**
-     * @return GraphicalEnvironment
-     */
-    function get_graphical_environment();
-    
-    /**
-     * @return send the response to the browser
-     */
-    function send();
+	public function __construct($view)
+	{
+		import('core/environment/site_display_graphical_environment');
+		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
+	}
 }
 ?>
