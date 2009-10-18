@@ -48,7 +48,7 @@ class User
 	 */
 	public function __construct()
 	{
-		$this->user_data = EnvironmentServices::get_session()->get_data();
+		$this->user_data = AppContext::get_session()->get_data();
 
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();

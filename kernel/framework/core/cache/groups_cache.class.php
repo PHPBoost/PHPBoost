@@ -46,7 +46,7 @@ class GroupsCache implements CacheData
 	public function synchronize()
 	{
 		$this->groups = array();
-		$db_connection = EnvironmentServices::get_sql();
+		$db_connection = AppContext::get_sql();
 		
 		$result = $db_connection->query_while("SELECT id, name, img, color, auth
 			FROM " . PREFIX . "group

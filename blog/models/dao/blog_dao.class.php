@@ -55,7 +55,7 @@ class BlogDAO extends SQLDAO
 		
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 		
-		parent::__construct(EnvironmentServices::get_sql_querier(), $model);
+		parent::__construct(AppContext::get_sql_querier(), $model);
 	}
 
 	public function save(PropertiesMapInterface $blog)

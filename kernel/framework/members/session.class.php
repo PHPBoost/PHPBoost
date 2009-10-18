@@ -50,7 +50,7 @@ class Session
 
 	public function __construct()
 	{
-		$this->sql = EnvironmentServices::get_sql();
+		$this->sql = AppContext::get_sql();
 	}
 
 	/**

@@ -34,7 +34,7 @@ import('io/db/db_factory');
  * It's able to create each of them and return them.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class EnvironmentServices
+class AppContext
 {
 	/**
 	 * @var HTTPRequest

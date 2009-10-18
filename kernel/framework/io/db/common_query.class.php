@@ -41,7 +41,7 @@ class CommonQuery
 		$columns_names = array_keys($columns);
 		$query = 'INSERT INTO ' . $table_name . ' (' . implode(', ', $columns_names) .
 		  ') VALUES (\':' . implode(', :', $columns_names) . '\');';
-		EnvironmentServices::get_sql_querier()->inject($query, $columns);
+		AppContext::get_sql_querier()->inject($query, $columns);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class CommonQuery
 		}
 		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
             ' WHERE ' . $condition . ';';
-		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		AppContext::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
@@ -76,7 +76,7 @@ class CommonQuery
 	public static function delete($table_name, $condition, $parameters = array())
 	{
 		$query = 'DELETE FROM ' . $table_name . ' WHERE ' . $condition . ';';
-		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		AppContext::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
@@ -120,7 +120,7 @@ class CommonQuery
 	{
 		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' WHERE ' .
 		$condition;
-		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
+		return AppContext::get_sql_querier()->select($query, $parameters);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class CommonQuery
 		{
 			$query .= ' WHERE ' . $condition;
 		}
-		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
+		return AppContext::get_sql_querier()->select($query, $parameters);
 	}
 }
 
