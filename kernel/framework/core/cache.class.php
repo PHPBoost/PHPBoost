@@ -296,7 +296,6 @@ class Cache
 		global $Sql;
 
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
-
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'config'", __LINE__, __FILE__));
 		foreach ($CONFIG as $key => $value)

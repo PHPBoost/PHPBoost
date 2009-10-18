@@ -3,7 +3,7 @@
  *                           dispatcher.class.php
  *                            -------------------
  *   begin                : June 08 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -24,8 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
- 
-import('mvc/dispatcher/url_controller_method_mapper');
+
 import('mvc/dispatcher/url_controller_mapper');
 import('mvc/dispatcher/dispatcher_exception');
 
@@ -36,34 +35,31 @@ import('mvc/dispatcher/dispatcher_exception');
  */
 class Dispatcher
 {
+    // Changing this value will result in a crash in rewrite mode.
+    // To avoid this, also replace "?url=" by "?YourNewValue=" in config files
+    const URL_PARAM_NAME = 'url';
+
+    private $url_controller_mappers = array();
+    
 	/**
 	 * @desc build a new Dispatcher from a UrlDispatcherItem List
-	 * @param UrlDispatcherItem[] the list of the UrlDispatcherItem
+	 * @param <code>UrlControllerMapper[]</code> $url_controller_mappers
+	 * the list of the <code>UrlControllerMapper</code>
 	 * that could be applied on an url for that module
 	 */
-	public function __construct($url_controller_mappers, $url_controller_method_mappers = array())
+	public function __construct($url_controller_mappers)
 	{
 		$this->url_controller_mappers =& $url_controller_mappers;
-		$this->url_controller_method_mappers =& $url_controller_method_mappers;
 	}
 
 	/**
-	 * @desc dispatch the current url arg to the first method matching
-	 * in the UrlDispatcherItem list of the controller object
-	 * @throws NoSuchControllerMethodException
+	 * @desc dispatch the current url argument to the first method matching
+	 * in the <code>UrlControllerMapper</code> list of the controller object
 	 * @throws NoUrlMatchException
 	 */
 	public function dispatch()
 	{
-		$url = retrieve(GET, Dispatcher::URL_PARAM_NAME, '');
-		foreach ($this->url_controller_method_mappers as $url_controller_method_mapper)
-		{
-			if ($url_controller_method_mapper->match($url))
-			{
-				$url_controller_method_mapper->call();
-				return;
-			}
-		}
+		$url = EnvironmentServices::get_request()->get_getstring('url', '');
 		foreach ($this->url_controller_mappers as $url_controller_mapper)
 		{
 			if ($url_controller_mapper->match($url))
@@ -100,26 +96,21 @@ class Dispatcher
 		else if (strpos($url, '?') !== false)
 		{
 			$exploded = explode('?', $url, 2);
-			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $exploded[0] . '&amp;' . $exploded[1]);
+			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME .
+			    '=/' . $exploded[0] . '&amp;' . $exploded[1]);
 		}
 		else
 		{
-			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
+			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME .
+			    '=/' . $url);
 		}
 	}
-
-	// Changing this value will result in a crash in rewrite mode.
-	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
-	const URL_PARAM_NAME = 'url';
-
-	private $url_controller_mappers = array();
-	private $url_controller_method_mappers = array();
 	
-	public static function do_dispatch($url_controller_mappers, $url_controller_method_mappers = array())
+	public static function do_dispatch($url_controller_mappers)
 	{
 		try
 		{
-			$dispatcher = new Dispatcher($url_controller_mappers, $url_controller_method_mappers);
+			$dispatcher = new Dispatcher($url_controller_mappers);
 			$dispatcher->dispatch();
 		}
 		catch (NoUrlMatchException $ex)

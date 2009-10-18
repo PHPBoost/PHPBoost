@@ -26,14 +26,18 @@
  ###################################################*/
 
 import('mvc/controller/controller');
-import('mvc/dispatcher/controller_method_caller');
+import('mvc/dispatcher/abstract_url_mapper');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Call the controller method matching an url
  */
-class UrlControllerMapper
+class UrlControllerMapper extends AbstractUrlMapper
 {
+	private $class_file;
+	private $classname;
+	private $parameters_names;
+
 	/**
 	 * @desc build a new UrlDispatcherItem
 	 * @param string $controller_name the controller classname
@@ -42,77 +46,55 @@ class UrlControllerMapper
 	 * and capturing the controller method parameters
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($controller_name, $capture_regex)
+	public function __construct($class_file, $classname, $capture_regex, $parameters_names = array())
 	{
-		if (!implements_interface($controller_name, CONTROLLER__INTERFACE))
-		{
-			throw new NoSuchControllerException($controller_name);
-		}
-		$this->controller_name =& $controller_name;
-		$this->capture_regex = $capture_regex;
-	}
-
-	/**
-	 * @desc Returns true if the UrlDispatcherItem match the url
-	 * @param string $url the to match
-	 * @return boolean true if the UrlDispatcherItem match the url
-	 */
-	public function match(&$url)
-	{
-		$params = array();
-		$match = preg_match($this->capture_regex, $url, $params);
-		if ($match)
-		{
-			if (count($params) == 2)
-			{
-				$this->url = $params[1];
-			}
-			else
-			{
-				throw new MalformedUrlControllerMapperRegex($this->controller_name, $this->capture_regex, $url);
-			}
-		}
-		return $match;
+		$this->class_file =& $class_file;
+		$this->classname =& $classname;
+		$this->parameters_names = $parameters_names;
+		parent::__construct($capture_regex);
 	}
 
 	/**
 	 * @desc Call the controller method if the url match and if the method exists
-	 * @param string $url the url
-	 * @throws NoUrlMatchException
-	 * @throws NoSuchControllerMethodException
 	 */
 	public function call()
-	{	
-		$this->build_method();
+	{
+		$this->check_controller();
 		$this->build_parameters();
 		$this->do_call();
 	}
-	
-	private function build_method()
+
+	private function check_controller()
 	{
-		$matches = array();
-		preg_match(UrlControllerMapper::method_regex, $this->url, $matches);
-		$this->method_name = $matches[1];
+		mimport($this->class_file);
+		if (!($this->classname instanceof Controller))
+		{
+			throw new NoSuchControllerException($this->classname);
+		}
 	}
-	
+	 
 	private function build_parameters()
 	{
-		$this->parameters = explode('/', $this->url);
-		unset($this->parameters[0]);
+		$captured_parameters =& $this->get_captured_parameters();
+
+		$i = 0;
+		foreach ($this->parameters_names as $parameter_name)
+		{
+			$value = null;
+			if (isset($captured_parameters[$i]))
+			{
+				$value = $captured_parameters[$i];
+			}
+			$_GET[$parameter_name] = $value;
+			$i++;
+		}
 	}
-	
+
 	private function do_call()
 	{
-		//die('$' . $this->controller_name . '-&gt;' . $this->method_name . '(' . implode(',', $this->parameters) . ')');
-		$controller_method_mapper = new ControllerMethodCaller();
-		$controller_method_mapper->call($this->controller_name, $this->method_name, $this->parameters);
+		$controller = new $this->classname();
+		$response = $controller->execute(EnvironmentServices::get_request());
+		$response->send();
 	}
-	
-	private $controller_name;
-	private $method_name;
-	private $parameters;
-	private $capture_regex;
-	private $url;
-	const method_regex = '`^([^/]+)/?`';
 }
 ?>

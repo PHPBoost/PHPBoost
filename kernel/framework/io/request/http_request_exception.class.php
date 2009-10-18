@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           http_request_exception.class.php
  *                            -------------------
- *   begin                : June 09 2009
+ *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,19 +25,19 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
- */
-interface Controller
+class ParameterTypeMismatchException extends Exception
 {
-	/**
-	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
-	 * @return Response the controller response
-	 */
-	function execute(HTTPRequest $request);
+	public function __construct(&$varname, $type, &$value)
+	{
+		parent::__construct('The "' . $varname . '" parameter is not of type \'' . $type . '\'' .
+    	   "\n" . $value);
+	}
 }
-?>
+
+class UnexistingHTTPParameterException extends Exception
+{
+	public function __construct($varname)
+	{
+		parent::__construct('The "' . $varname . '" parameter does not exists in the http request');
+	}
+}

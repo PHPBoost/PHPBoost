@@ -48,7 +48,8 @@ class Environment
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-        import('util/string_vars');
+		import('util/string_vars');
+		import('io/request/http_request');
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');
@@ -77,9 +78,27 @@ class Environment
 		self::init_services();
 		self::load_static_constants();
 		self::write_http_headers();
+
+		// TODO move in begin
+		/* DEPRECATED VARS */
+		global $Sql, $Bread_crumb, $Session, $User, $Template;
+		$Sql = EnvironmentServices::get_sql();
+		/* END DEPRECATED */
+
 		self::load_cache();
 		self::load_dynamic_constants();
 		self::init_session();
+
+		// TODO move in begin
+		/* DEPRECATED VARS */
+		$Bread_crumb = EnvironmentServices::get_breadcrumb();
+		$Session = EnvironmentServices::get_session();
+		$User = EnvironmentServices::get_user();
+		// This is also a deprecated variable and has to be created
+		// after the environment initialization
+		$Template = new DeprecatedTemplate();
+		/* END DEPRECATED */
+
 		self::init_output_bufferization();
 		self::load_lang_files();
 		self::process_changeday_tasks_if_needed();
@@ -89,6 +108,7 @@ class Environment
 
 	public static function init_services()
 	{
+		EnvironmentServices::set_request(new HTTPRequest());
 		EnvironmentServices::init_bench();
 		EnvironmentServices::init_breadcrumb();
 		EnvironmentServices::init_sql_querier();
@@ -486,8 +506,8 @@ class Environment
 				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 			}
 			//Is the module forbidden?
-			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'], 
-				ACCESS_MODULE))
+			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'],
+			ACCESS_MODULE))
 			{
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
@@ -497,7 +517,7 @@ class Environment
 		elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel', 'test')))
 		{
 			//We try to see if it can be an uninstalled module
-			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME . 
+			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME .
 				'/lang/', get_ulang());
 			//If it's an unistalled module, we forbid access!
 			if (!empty($array_info_module['name']))

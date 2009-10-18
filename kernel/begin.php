@@ -37,15 +37,7 @@ $Cache = new Cache();
 
 Environment::init();
 
-/* DEPRECATED VARS */
-$Sql = EnvironmentServices::get_sql();
-$Bread_crumb = EnvironmentServices::get_breadcrumb();
-$Session = EnvironmentServices::get_session();
-$User = EnvironmentServices::get_user();
-
-// This is also a deprecated variable and has to be created
-// after the environment initialization
-$Template = new DeprecatedTemplate();
-/* END DEPRECATED */
+// TODO remove this
+global $Sql, $Bread_crumb, $Session, $User, $Template;
 
 ?>
