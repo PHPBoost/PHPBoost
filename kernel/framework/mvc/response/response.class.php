@@ -25,22 +25,19 @@
  *
  ###################################################*/
 
+import('mvc/view');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
  * @package mvc
  * @subpackage response
  */
-class Response
+interface Response
 {
-    /**
-     * @return GraphicalEnvironment
-     */
-    function get_graphical_environment();
-    
-    /**
-     * @return send the response to the browser
-     */
-    function send();
+	/**
+	 * @return send the response to the browser
+	 */
+	function send();
 }
 ?>

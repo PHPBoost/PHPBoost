@@ -191,7 +191,7 @@ abstract class SQLDAO implements DAO
 
 	public function find_all($limit = 100, $offset = 0, $order_by = array())
 	{
-		$query = 'LIMIT ' . $limit . ' OFFSET ' . $offset;
+		$query = '';
 		if (!empty($order_by))
 		{
 			$order_clause = '';
@@ -199,17 +199,18 @@ abstract class SQLDAO implements DAO
 			{
 				$order_clause .= ', ' . $order['column'] . ' ' . $order['way'];
 			}
-			$query .= ' ORDER BY' . rtrim($order_clause, ',');
+			$query .= 'ORDER BY' . ltrim($order_clause, ',');
 		}
 
-		return $this->find_by_criteria($query);
+		return $this->find_by_criteria($query . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
 	}
 
 	public function find_by_criteria($criteria, $parameters = array())
 	{
 		$this->compute_find_by_criteria_query();
 		$full_query = $this->find_by_criteria_query . $criteria;
-		return new QueryResultMapper($this->querier->select($full_query, $parameters), $this->model);
+		$result = $this->querier->select($full_query, $parameters);
+		return new QueryResultMapper($result, $this->model);
 	}
 
 	private function cache_model()

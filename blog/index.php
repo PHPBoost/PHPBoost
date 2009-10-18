@@ -33,7 +33,7 @@ import('mvc/dispatcher/dispatcher');
 
 $url_controller_mappers = array(
 new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/test/?$`'),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/?$`'),
+new UrlControllerMapper('blog/controllers/blog_controller_blog_list', 'BlogControllerBlogList', '`^/?$`'),
 new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/([0-9]+)/?$`', array('blog_id')),
 new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/create/?$`'),
 new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/create/valid/?$`'),

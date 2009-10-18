@@ -60,7 +60,7 @@ class NoSuchControllerException extends DispatcherException
 	public function __construct($controller)
 	{
 		import('mvc/controller/controller');
-		parent::__construct('Class "' . $controller . '" is not a valid controller (does not implement ' . CONTROLLER_INTERFACE . ')');
+		parent::__construct('Class "' . $controller . '" is not a valid controller (does not implement Controller)');
 	}
 }
 
@@ -94,13 +94,4 @@ class MalformedUrlControllerMapperRegex extends MalformedUrlMapperRegex
 		  part (for example : "`^/foo/(.*)`")');
 	}
 }
-
-/*class MalformedUrlControllerMethodMapperRegex extends MalformedUrlMapperRegex
-{
-	public function __construct($controller, $regex, $url)
-	{
-		parent::__construct($controller, $regex, $url,
-			'The regular expression must capture the parameters part (for example : "`^/foo/bar/([0-9]+)/([\w]+)/?$`")');
-	}
-}*/
 ?>

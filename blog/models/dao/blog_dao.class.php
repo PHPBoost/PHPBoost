@@ -48,14 +48,29 @@ class BlogDAO extends SQLDAO
 	public function __construct()
 	{
 		$classname = 'Blog';
-		$tablename = 'blog';
+		$tablename = PREFIX . 'blog';
 		$primary_key = new MappingModelField('id');
-		$fields = array(new MappingModelField('title'), new MappingModelField('description'), new MappingModelField('user_id'));
+
+		$field_title = new MappingModelField('title');
+		$field_description = new MappingModelField('description');
+		$field_user_id = new MappingModelField('user_id');
+
+		$fields = array($field_title, $field_description, $field_user_id);
 		$joins = array();
-		
+
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
-		
-		parent::__construct(AppContext::get_sql_querier(), $model);
+
+		parent::__construct($model, AppContext::get_sql_querier());
+	}
+
+	public function before_save($blog)
+	{
+		$title = $blog->get_title();
+		$description = $blog->get_description();
+		if (empty($title) || empty($description))
+		{
+			throw new BlogValidationExceptionMissingFields();
+		}
 	}
 
 	public function save(PropertiesMapInterface $blog)
@@ -72,17 +87,7 @@ class BlogDAO extends SQLDAO
 		}
 	}
 
-	public function before_save($blog)
-	{
-		$title = $blog->get_title();
-		$description = $blog->get_description();
-		if (empty($title) || empty($description))
-		{
-			throw new BlogValidationExceptionMissingFields();
-		}
-	}
-
-	public function delete($blog)
+	public function delete(PropertiesMapInterface $blog)
 	{
 		BlogPostDAO::instance()->delete_all_blog_post(is_numeric($blog) ? $blog : $blog->get_id());
 		parent::delete($blog);

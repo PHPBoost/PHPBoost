@@ -86,6 +86,7 @@ class BreadCrumb
 
         if (empty($this->array_links))
         {
+        	// TODO remove the title reference here
             $this->add(stripslashes(TITLE), HOST . SCRIPT . SID);
         }
 

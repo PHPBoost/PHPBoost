@@ -59,20 +59,10 @@ class UrlControllerMapper extends AbstractUrlMapper
 	 */
 	public function call()
 	{
-		$this->check_controller();
 		$this->build_parameters();
 		$this->do_call();
 	}
 
-	private function check_controller()
-	{
-		mimport($this->class_file);
-		if (!($this->classname instanceof Controller))
-		{
-			throw new NoSuchControllerException($this->classname);
-		}
-	}
-	 
 	private function build_parameters()
 	{
 		$captured_parameters =& $this->get_captured_parameters();
@@ -92,7 +82,12 @@ class UrlControllerMapper extends AbstractUrlMapper
 
 	private function do_call()
 	{
+		mimport($this->class_file);
 		$controller = new $this->classname();
+		if (!($controller instanceof Controller))
+		{
+			throw new NoSuchControllerException($this->classname);
+		}
 		$response = $controller->execute(AppContext::get_request());
 		$response->send();
 	}
