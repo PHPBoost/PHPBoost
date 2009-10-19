@@ -144,7 +144,17 @@ $ARTICLES_LANG = array(
 	'hide'=>'Cacher',
 	'enable'=>'Activer',
 	'desable'=>'Désactiver',
-
+	'mail_articles'=>'Envoyer le lien de l\'article par mail',
+	'mail_recipient'=>'E-mail du destinataire',
+	'sender'=>'Expéditeur',
+	'user_mail'=>'Votre adresse e-mail',
+	'subject'=>'Sujet',
+	'admin_invalid_email_error' => 'Mail invalide',
+	'require_sender'=> 'Veuillez remplir le champs expéditeur',
+	'require_subject'=> ' Veuillez remplir le champs sujet',
+	'admin_email_error' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
+	'link_mail'=>'Envoyer ce lien à un ami',
+	'order_by'=>'Trier par ',
+	
 );
-
 ?>

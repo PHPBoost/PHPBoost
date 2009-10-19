@@ -60,6 +60,14 @@ if (retrieve(POST,'valid',false))
 			break;
 	}
 	
+	$options = array (
+	'note'=>retrieve(POST, 'note', true, TBOOL),
+	'com'=>retrieve(POST, 'com', true, TBOOL),
+	'impr'=>retrieve(POST, 'impr', true, TBOOL),
+	'date'=>retrieve(POST, 'date', true, TBOOL),
+	'author'=>retrieve(POST, 'author', true, TBOOL)
+	);
+	
 	$config_articles = array(
 		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
@@ -68,6 +76,7 @@ if (retrieve(POST,'valid',false))
 		'tab'=>retrieve(POST, 'tab', 0),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
 		'mini'=>serialize($mini),
+		'options'=>serialize($options),
 	);
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
@@ -134,7 +143,8 @@ else
 	$Cache->load('articles');
 		
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-	
+	$options=unserialize($CONFIG_ARTICLES['options']);
+
 	$array_ranks =
 		array(
 			'-1' => $LANG['guest'],
@@ -142,7 +152,7 @@ else
 			'1' => $LANG['modo'],
 			'2' => $LANG['admin']
 		);
-			
+
 	$tpl->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
@@ -156,6 +166,21 @@ else
 		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
 		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',
 		'SELECTED_NOTE' => $mini_conf['type'] == 'note' ? ' selected="selected"' : '',
+		'SELECTED_NOTATION_HIDE'=> '',
+		'SELECTED_COM_HIDE'=> '',
+		'SELECTED_DATE_HIDE'=> '',
+		'SELECTED_AUTHOR_HIDE'=> '',
+		'SELECTED_IMPR_HIDE'=> '',
+		'SELECTED_NOTATION_HIDE'=> $options['note'] != 1? ' selected="selected"' : '',
+		'SELECTED_COM_HIDE'=> $options['com'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_DATE_HIDE'=> $options['date'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_AUTHOR_HIDE'=> $options['author'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_IMPR_HIDE'=> $options['impr'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_NOTATION_DISPLAY'=>$options['note'] == 1 ? ' selected="selected"' : '',
+		'SELECTED_COM_DISPLAY'=>$options['com'] == 1? ' selected="selected"' : '',
+		'SELECTED_DATE_DISPLAY'=>$options['date'] == 1 ? ' selected="selected"' : '',
+		'SELECTED_AUTHOR_DISPLAY'=>$options['author'] == 1 ? ' selected="selected"' : '',
+		'SELECTED_IMPR_DISPLAY'=>$options['impr'] == 1 ? ' selected="selected"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_ENABLED'=>$LANG['enabled'],
 		'L_DISABLED'=>$LANG['disabled'],
@@ -182,6 +207,15 @@ else
 		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
 		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
 		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],		
+		'L_HIDE'=>$ARTICLES_LANG['hide'],
+		'L_DISPLAY'=>$LANG['display'],
+		'L_ENABLE'=>$ARTICLES_LANG['enable'],
+		'L_DESABLE'=>$ARTICLES_LANG['desable'],
+		'L_AUTHOR'=>$ARTICLES_LANG['author'],
+		'L_COM'=>$LANG['title_com'],
+		'L_NOTE'=>$LANG['notes'],
+		'L_PRINTABLE'=>$LANG['printable_version'],
+		'L_DATE'=>$LANG['date'],
 	));
 	
 	$array_ranks =

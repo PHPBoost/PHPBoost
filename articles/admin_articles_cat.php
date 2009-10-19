@@ -77,6 +77,17 @@ if ($new_cat XOR $id_edit > 0)
 		'L_CAT_ICON'=>$ARTICLES_LANG['cat_icon'],
 		'L_TPL'=>$ARTICLES_LANG['tpl'],
 		'L_ARTICLES_TPL_EXPLAIN'=>$ARTICLES_LANG['tpl_explain'],
+		'L_SPECIAL_OPTION' => $ARTICLES_LANG['special_option'],
+		'L_SPECIAL_OPTION_EXPLAIN' => $ARTICLES_LANG['special_option_explain'],
+		'L_HIDE'=>$ARTICLES_LANG['hide'],
+		'L_DISPLAY'=>$LANG['display'],
+		'L_ENABLE'=>$ARTICLES_LANG['enable'],
+		'L_DESABLE'=>$ARTICLES_LANG['desable'],
+		'L_AUTHOR'=>$ARTICLES_LANG['author'],
+		'L_COM'=>$LANG['title_com'],
+		'L_NOTE'=>$LANG['notes'],
+		'L_PRINTABLE'=>$LANG['printable_version'],
+		'L_DATE'=>$LANG['date'],
 	));
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
@@ -114,6 +125,10 @@ if ($new_cat XOR $id_edit > 0)
 			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 		}
 
+
+		$special_options = $ARTICLES_CAT[$id_edit]['options'] !== unserialize($CONFIG_ARTICLES['options']) ? true : false;
+		$ARTICLES_CAT[$id_edit]['option'] = $special_options ? $ARTICLES_CAT[$id_edit]['options'] : unserialize($CONFIG_ARTICLES['options']);
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -133,11 +148,25 @@ if ($new_cat XOR $id_edit > 0)
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $ARTICLES_CAT[$id_edit]['auth']),
 			'ARTICLES_TPL_CHECKED'=>$ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl' || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'checked="checked"' : '',
 			'DISPLAY_ARTICLES_TPL' => $ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl'  || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'block' : 'none',
-			'JS_SPECIAL_ARTICLES_TPL' => $ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl'  || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'true' : 'false',
+			'JS_SPECIAL_ARTICLES_TPL' => $ARTICLES_CAT[$id_edit]['tpl_articles'] != 'articles.tpl'  || $ARTICLES_CAT[$id_edit]['tpl_cat'] != 'articles_cat.tpl' ? 'true' : 'false',		
+			'JS_SPECIAL_OPTION' => $special_options ? 'true' : 'false',
+			'DISPLAY_SPECIAL_OPTION'=> $special_options ? 'block' : 'none',
+			'OPTION_CHECKED' => $special_options ? 'checked="checked"' : '',
+			'SELECTED_NOTATION_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['note'] ? ' selected="selected"' : '',
+			'SELECTED_COM_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['com'] ? ' selected="selected"' : '',
+			'SELECTED_DATE_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['date'] ? ' selected="selected"' : '',
+			'SELECTED_AUTHOR_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['author'] ? ' selected="selected"' : '',
+			'SELECTED_IMPR_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['impr'] ? ' selected="selected"' : '',
+			'SELECTED_NOTATION_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['note'] ? ' selected="selected"' : '',
+			'SELECTED_COM_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['com'] ? ' selected="selected"' : '',
+			'SELECTED_DATE_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['date'] ? ' selected="selected"' : '',
+			'SELECTED_AUTHOR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['author'] ? ' selected="selected"' : '',
+			'SELECTED_IMPR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['impr'] ? ' selected="selected"' : '',
 		));
 	}
 	else
 	{
+
 		$id_edit = 0;
 		$img_default = '../articles/articles.png';
 		$img_default_name = 'articles.png';
@@ -171,6 +200,8 @@ if ($new_cat XOR $id_edit > 0)
 			$tpl_cat_list.= '<option value="' . $tpl_cat . '">' . $tpl_cat. '</option>';
 		}
 		
+		$options=unserialize($CONFIG_ARTICLES['options']);
+			
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
@@ -189,6 +220,22 @@ if ($new_cat XOR $id_edit > 0)
 			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
+			'JS_SPECIAL_ARTICLES_TPL' => 'false',
+			'ARTICLES_TPL_CHECKED'=> '',
+			'DISPLAY_ARTICLES_TPL' =>'none',
+			'JS_SPECIAL_OPTION' => 'false',
+			'DISPLAY_SPECIAL_OPTION'=>'none',
+			'OPTION_CHECKED' => '',
+			'SELECTED_NOTATION_HIDE'=> !$options['note'] ? ' selected="selected"' : '',
+			'SELECTED_COM_HIDE'=> !$options['com'] ? ' selected="selected"' : '',
+			'SELECTED_DATE_HIDE'=> !$options['date'] ? ' selected="selected"' : '',
+			'SELECTED_AUTHOR_HIDE'=> !$options['author'] ? ' selected="selected"' : '',
+			'SELECTED_IMPR_HIDE'=> !$options['impr'] ? ' selected="selected"' : '',
+			'SELECTED_NOTATION_DISPLAY'=>$options['note'] ? ' selected="selected"' : '',
+			'SELECTED_COM_DISPLAY'=>$options['com'] ? ' selected="selected"' : '',
+			'SELECTED_DATE_DISPLAY'=>$options['date'] ? ' selected="selected"' : '',
+			'SELECTED_AUTHOR_DISPLAY'=>$options['author'] ? ' selected="selected"' : '',
+			'SELECTED_IMPR_DISPLAY'=>$options['impr'] ? ' selected="selected"' : '',
 		));
 	}
 }
@@ -214,6 +261,15 @@ elseif (retrieve(POST,'submit',false))
 		$icon=retrieve(POST, 'icon', '', TSTRING);
 		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
+		$tpl_articles = empty($tpl_articles) ? 'articles.tpl' : $tpl_articles;
+		$tpl_cat = empty($tpl_cat) ? 'articles_cat.tpl' : $tpl_cat;
+		$options = array (
+			'note'=>retrieve(POST, 'note', true, TBOOL),
+			'com'=>retrieve(POST, 'com', true, TBOOL),
+			'impr'=>retrieve(POST, 'impr', true, TBOOL),
+			'date'=>retrieve(POST, 'date', true, TBOOL),
+			'author'=>retrieve(POST, 'author', true, TBOOL)
+			);
 
 		if(retrieve(POST,'icon_path',false))
 		$icon=retrieve(POST,'icon_path','');
@@ -224,9 +280,9 @@ elseif (retrieve(POST,'submit',false))
 		if (empty($name))
 		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		if ($id_cat > 0)
-		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
+		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options));
 		else
-		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat);
+		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options));
 	}
 
 	// Feeds Regeneration

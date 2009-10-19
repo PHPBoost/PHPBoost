@@ -52,10 +52,74 @@
 									&nbsp;&nbsp; 
 							<label><input type="radio" {NO_TAB} name="tab" value="0" />{L_DISABLED}</label></dd>	
 					</dl>
-
-				</fieldset>		
+					<dl>
+						<dt>
+							<label for="option_notation">* {L_NOTE}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="note" name="note">
+									<option value="0" {SELECTED_NOTATION_HIDE}>{L_HIDE}</option>
+									<option value="1" {SELECTED_NOTATION_DISPLAY}>{L_DISPLAY}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="option_com">* {L_COM}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="com" name="com">
+									<option value="0" {SELECTED_COM_HIDE}>{L_HIDE}</option>
+									<option value="1" {SELECTED_COM_DISPLAY}>{L_DISPLAY}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="option_impr">* {L_PRINTABLE}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="impr" name="impr">
+									<option value="0" {SELECTED_IMPR_HIDE}>{L_DESABLE}</option>
+									<option value="1" {SELECTED_IMPR_DISPLAY}>{L_ENABLE}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="option_date">* {L_DATE}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="date" name="date">
+									<option value="0" {SELECTED_DATE_HIDE}>{L_HIDE}</option>
+									<option value="1" {SELECTED_DATE_DISPLAY} >{L_DISPLAY}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="option_author">* {L_AUTHOR}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="author" name="author">
+									<option value="0" {SELECTED_AUTHOR_HIDE}>{L_HIDE}</option>
+									<option value="1" {SELECTED_AUTHOR_DISPLAY}>{L_DISPLAY}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
+				</fieldset>
 				<fieldset>
-				<legend>{L_ARTICLES_MINI_CONFIG}</legend>
+					<legend>{L_ARTICLES_MINI_CONFIG}</legend>
 					<dl>
 						<dt><label for="nbr_articles_max">* {L_NBR_ARTICLES_MINI}</label></dt>
 						<dd><label><input type="text" size="3" maxlength="3" id="nbr_articles_mini" name="nbr_articles_mini" value="{NBR_ARTICLES_MINI}" class="text" /></label></dd>
@@ -108,7 +172,6 @@
 						</dd>
 					</dl>
 				</fieldset>
-				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
