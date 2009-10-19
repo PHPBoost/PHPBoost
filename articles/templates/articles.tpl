@@ -228,7 +228,9 @@
 				# IF C_PRINT #
 				&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
 				# ENDIF #
+				# IF C_MAIL #
 				&nbsp;&nbsp;<a href="javascript:display_mail()"><img src="../templates/{THEME}/images/pm_mini.png" class="valign_middle" alt="{L_LINK_MAIL}" /></a>
+				# ENDIF #
 			</div>
 		</div>
 		# IF C_TAB #
@@ -340,6 +342,7 @@
 	-->
 	</script>
 	# ENDIF #
+	# IF C_MAIL #
 	<div id ="mail" style="display:none;">
 		<form action="articles.php?cat={IDCAT}&amp;id={IDART}&amp;token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
@@ -386,5 +389,6 @@
 			</fieldset>	
 		</form>
 	</div>
+	# ENDIF #
 # ENDIF #
 	

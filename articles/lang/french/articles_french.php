@@ -154,6 +154,7 @@ $ARTICLES_LANG = array(
 	'require_subject'=> ' Veuillez remplir le champs sujet',
 	'admin_email_error' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
 	'link_mail'=>'Envoyer ce lien à un ami',
+	'admin_link_mail'=>'Autoriser l\'envoie du liens d\'un article par mail',
 	'order_by'=>'Trier par ',
 	
 );

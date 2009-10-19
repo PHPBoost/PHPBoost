@@ -136,6 +136,7 @@ if (!empty($idart) && isset($cat) )
 		'C_COM'=> $ARTICLES_CAT[$idartcat]['options']['com'] ? true : false,
 		'C_AUTHOR'=> $ARTICLES_CAT[$idartcat]['options']['author'] ? true : false,
 		'C_DATE'=> $ARTICLES_CAT[$idartcat]['options']['date'] ? true : false,
+		'C_MAIL'=> $ARTICLES_CAT[$idartcat]['options']['mail'] ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -200,10 +201,6 @@ if (!empty($idart) && isset($cat) )
 		$mail = new Mail();
  
 		$contents =  "Ceci est un e-mail de (".$CONFIG['site_name'].") envoyé par ".$exp." (".$user_mail."). Ce lien pourrait vous intéresser: ".$CONFIG['server_name'].$link.".";
-		
-		echo " limiter aux membres ou voir sécu du truc";
-		echo " voir la barre wiki et les champs sup";
-		echo " rajouter les mail dans les options global";
 		
 		if($mail->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
 		{

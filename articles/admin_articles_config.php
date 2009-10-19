@@ -65,7 +65,8 @@ if (retrieve(POST,'valid',false))
 	'com'=>retrieve(POST, 'com', true, TBOOL),
 	'impr'=>retrieve(POST, 'impr', true, TBOOL),
 	'date'=>retrieve(POST, 'date', true, TBOOL),
-	'author'=>retrieve(POST, 'author', true, TBOOL)
+	'author'=>retrieve(POST, 'author', true, TBOOL),
+	'mail'=>retrieve(POST, 'mail', true, TBOOL)
 	);
 	
 	$config_articles = array(
@@ -176,11 +177,13 @@ else
 		'SELECTED_DATE_HIDE'=> $options['date'] != 1 ? ' selected="selected"' : '',
 		'SELECTED_AUTHOR_HIDE'=> $options['author'] != 1 ? ' selected="selected"' : '',
 		'SELECTED_IMPR_HIDE'=> $options['impr'] != 1 ? ' selected="selected"' : '',
+		'SELECTED_MAIL_HIDE'=> $options['mail'] != 1 ? ' selected="selected"' : '',
 		'SELECTED_NOTATION_DISPLAY'=>$options['note'] == 1 ? ' selected="selected"' : '',
 		'SELECTED_COM_DISPLAY'=>$options['com'] == 1? ' selected="selected"' : '',
 		'SELECTED_DATE_DISPLAY'=>$options['date'] == 1 ? ' selected="selected"' : '',
 		'SELECTED_AUTHOR_DISPLAY'=>$options['author'] == 1 ? ' selected="selected"' : '',
 		'SELECTED_IMPR_DISPLAY'=>$options['impr'] == 1 ? ' selected="selected"' : '',
+		'SELECTED_MAIL_DISPLAY'=>$options['mail'] == 1 ? ' selected="selected"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_ENABLED'=>$LANG['enabled'],
 		'L_DISABLED'=>$LANG['disabled'],
@@ -216,6 +219,7 @@ else
 		'L_NOTE'=>$LANG['notes'],
 		'L_PRINTABLE'=>$LANG['printable_version'],
 		'L_DATE'=>$LANG['date'],
+		'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
 	));
 	
 	$array_ranks =
