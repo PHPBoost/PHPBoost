@@ -342,6 +342,29 @@
 	-->
 	</script>
 	# ENDIF #
+	# IF C_EXTEND_FIELD #
+		<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
+			<tr>
+				<th style="text-align:center;">
+					&nbsp;&nbsp;
+				</th>
+				<th style="text-align:center;">
+					&nbsp;&nbsp;
+				</th>
+			</tr>
+		# START extend_field #
+			<tr>
+				<td class="row2" style="text-align:left;font-weight:bold;">	
+				
+					<span>{extend_field.NAME} : </span>
+				</td>
+				<td class="row2" style="text-align:left;">	
+					<span>{extend_field.CONTENTS}</span>
+				</td>
+			</tr>
+		# END extend_field #
+		</table>
+	# ENDIF #
 	# IF C_MAIL #
 	<div id ="mail" style="display:none;">
 		<form action="articles.php?cat={IDCAT}&amp;id={IDART}&amp;token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
