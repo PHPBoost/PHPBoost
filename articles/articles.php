@@ -37,7 +37,7 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.extend_field,a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
@@ -119,7 +119,19 @@ if (!empty($idart) && isset($cat) )
 		));
 		$i++;
 	}	
-
+	// extend field
+	$extend_field=!empty($ARTICLES_CAT[$idartcat]['extend_field']) ? true : false;
+	if($extend_field)
+	{
+		$extend_field_articles=unserialize($articles['extend_field']);
+		foreach ($ARTICLES_CAT[$idartcat]['extend_field'] as $field)
+		{	
+				$tpl->assign_vars(array(
+					$field['name']=>$extend_field_articles[$field['name']]['contents'],
+					'NAME_'.$field['name']=>$field['name'],
+				));
+		}	
+	}
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);

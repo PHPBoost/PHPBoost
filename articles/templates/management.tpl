@@ -102,19 +102,17 @@
 			if( document.getElementById('v'+i) )
 				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="40" name="v'+i+'" value="" class="text" /></label><br /><span id="v'+i2+'"></span>';	
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';
-	
-						
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';					
 		}
 		var global_auth = {JS_SPECIAL_AUTH};
-			function change_status_global_auth()
-			{
-				if( global_auth )
-					hide_div("hide_special_auth");
-				else
-					show_div("hide_special_auth");
-				global_auth = !global_auth;
-			}
+		function change_status_global_auth()
+		{
+			if( global_auth )
+				hide_div("hide_special_auth");
+			else
+				show_div("hide_special_auth");
+			global_auth = !global_auth;
+		}
 		-->
 		</script>		
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
@@ -149,6 +147,14 @@
 							</label>
 						</dd>
 				</dl>
+				# IF C_EXTEND_FIELD #
+					# START extend_field #
+						<dl>
+							<dt><label for="extend_cat">{extend_field.NAME}</label></dt>
+							<dd><label><input type="text" size="65" id="field_{extend_field.NAME}" name="field_{extend_field.NAME}" value="{extend_field.CONTENTS}" class="text" /></label></dd>
+						</dl>
+					# END extend_field #
+				# ENDIF #
 				<div id="preview">
 				</div>
 				<label for="description" id="scroll_contents">{L_ARTICLE_DESCRIPTION}</label>
