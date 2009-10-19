@@ -130,6 +130,11 @@ if (!empty($idart) && isset($cat) )
 					$field['name']=>$extend_field_articles[$field['name']]['contents'],
 					'NAME_'.$field['name']=>$field['name'],
 				));
+				
+					$tpl->assign_block_vars('extend_field',array(
+					'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
+					'NAME'=>$field['name'],
+				));
 		}	
 	}
 	//Affichage notation
@@ -143,6 +148,7 @@ if (!empty($idart) && isset($cat) )
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
+		'C_EXTEND_FIELD'=>$extend_field,
 		'C_NOTE'=> $ARTICLES_CAT[$idartcat]['options']['note'] ? true : false,
 		'C_PRINT'=> $ARTICLES_CAT[$idartcat]['options']['impr'] ? true : false,
 		'C_COM'=> $ARTICLES_CAT[$idartcat]['options']['com'] ? true : false,
