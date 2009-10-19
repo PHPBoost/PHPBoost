@@ -88,12 +88,16 @@ if ($new_cat XOR $id_edit > 0)
 		'L_NOTE'=>$LANG['notes'],
 		'L_PRINTABLE'=>$LANG['printable_version'],
 		'L_DATE'=>$LANG['date'],
+		'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
 	));
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
 	{
 		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $CONFIG_ARTICLES['global_auth'] ? true : false;
 		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $CONFIG_ARTICLES['global_auth'];
+
+		$special_options = $ARTICLES_CAT[$id_edit]['options'] !== unserialize($CONFIG_ARTICLES['options']) ? true : false;
+		$ARTICLES_CAT[$id_edit]['options'] = $special_options ? $ARTICLES_CAT[$id_edit]['options'] : unserialize($CONFIG_ARTICLES['options']);
 
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
@@ -125,10 +129,6 @@ if ($new_cat XOR $id_edit > 0)
 			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 		}
 
-
-		$special_options = $ARTICLES_CAT[$id_edit]['options'] !== unserialize($CONFIG_ARTICLES['options']) ? true : false;
-		$ARTICLES_CAT[$id_edit]['option'] = $special_options ? $ARTICLES_CAT[$id_edit]['options'] : unserialize($CONFIG_ARTICLES['options']);
-		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -157,16 +157,17 @@ if ($new_cat XOR $id_edit > 0)
 			'SELECTED_DATE_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['date'] ? ' selected="selected"' : '',
 			'SELECTED_AUTHOR_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['impr'] ? ' selected="selected"' : '',
+			'SELECTED_MAIL_HIDE'=> !$ARTICLES_CAT[$id_edit]['options']['mail'] ? ' selected="selected"' : '',
 			'SELECTED_NOTATION_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['note'] ? ' selected="selected"' : '',
 			'SELECTED_COM_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['com'] ? ' selected="selected"' : '',
 			'SELECTED_DATE_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['date'] ? ' selected="selected"' : '',
 			'SELECTED_AUTHOR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['impr'] ? ' selected="selected"' : '',
+			'SELECTED_MAIL_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['mail'] ? ' selected="selected"' : '',
 		));
 	}
 	else
 	{
-
 		$id_edit = 0;
 		$img_default = '../articles/articles.png';
 		$img_default_name = 'articles.png';
@@ -231,11 +232,13 @@ if ($new_cat XOR $id_edit > 0)
 			'SELECTED_DATE_HIDE'=> !$options['date'] ? ' selected="selected"' : '',
 			'SELECTED_AUTHOR_HIDE'=> !$options['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_HIDE'=> !$options['impr'] ? ' selected="selected"' : '',
+			'SELECTED_MAIL_HIDE'=> !$options['mail'] ? ' selected="selected"' : '',
 			'SELECTED_NOTATION_DISPLAY'=>$options['note'] ? ' selected="selected"' : '',
 			'SELECTED_COM_DISPLAY'=>$options['com'] ? ' selected="selected"' : '',
 			'SELECTED_DATE_DISPLAY'=>$options['date'] ? ' selected="selected"' : '',
 			'SELECTED_AUTHOR_DISPLAY'=>$options['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_DISPLAY'=>$options['impr'] ? ' selected="selected"' : '',
+			'SELECTED_MAIL_DISPLAY'=>$options['mail'] ? ' selected="selected"' : '',
 		));
 	}
 }
@@ -268,7 +271,8 @@ elseif (retrieve(POST,'submit',false))
 			'com'=>retrieve(POST, 'com', true, TBOOL),
 			'impr'=>retrieve(POST, 'impr', true, TBOOL),
 			'date'=>retrieve(POST, 'date', true, TBOOL),
-			'author'=>retrieve(POST, 'author', true, TBOOL)
+			'author'=>retrieve(POST, 'author', true, TBOOL),
+			'mail'=>retrieve(POST, 'mail', true, TBOOL),
 			);
 
 		if(retrieve(POST,'icon_path',false))

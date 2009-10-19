@@ -71,10 +71,10 @@
 		return true;
 	}
 	
-function change_icon(img_path)
-{
-	document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
-}
+	function change_icon(img_path)
+	{
+		document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
+	}
 	
 	var global_auth = {edition_interface.JS_SPECIAL_AUTH};
 	function change_status_global_auth()
@@ -95,16 +95,16 @@ function change_icon(img_path)
 		articles_tpl = !articles_tpl;
 	}
 	
-			var global_option = {edition_interface.JS_SPECIAL_OPTION};
-			function change_status_option()
-			{
-			
-				if( global_option )
-					hide_div("hide_special_option");
-				else
-					show_div("hide_special_option");
-				global_option = !global_option;
-			}
+	var global_option = {edition_interface.JS_SPECIAL_OPTION};
+	function change_status_option()
+	{
+	
+		if( global_option )
+			hide_div("hide_special_option");
+		else
+			show_div("hide_special_option");
+		global_option = !global_option;
+	}
 	-->
 	</script>
 	<form action="admin_articles_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -260,6 +260,19 @@ function change_icon(img_path)
 							<select id="author" name="author">
 								<option value="0" {edition_interface.SELECTED_AUTHOR_HIDE}>{L_HIDE}</option>
 								<option value="1" {edition_interface.SELECTED_AUTHOR_DISPLAY}>{L_DISPLAY}</option>
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="option_mail">{L_LINK_MAIL} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="mail" name="mail">
+								<option value="0" {edition_interface.SELECTED_MAIL_HIDE}>{L_HIDE}</option>
+								<option value="1" {edition_interface.SELECTED_MAIL_DISPLAY}>{L_DISPLAY}</option>
 							</select>
 						</label>
 					</dd>

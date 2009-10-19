@@ -117,6 +117,19 @@
 							</label>
 						</dd>
 					</dl>
+					<dl>
+						<dt>
+							<label for="option_mail">* {L_LINK_MAIL}</label>
+						</dt>
+						<dd>
+							<label>
+								<select id="mail" name="mail">
+									<option value="0" {SELECTED_MAIL_HIDE}>{L_HIDE}</option>
+									<option value="1" {SELECTED_MAIL_DISPLAY}>{L_DISPLAY}</option>
+								</select>
+							</label>
+						</dd>
+					</dl>
 				</fieldset>
 				<fieldset>
 					<legend>{L_ARTICLES_MINI_CONFIG}</legend>

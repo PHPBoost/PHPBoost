@@ -27,6 +27,7 @@
 
 require_once('../kernel/begin.php');
 require_once('articles_begin.php');
+
 require_once('articles_cats.class.php');
 $articles_categories = new ArticlesCats();
 
@@ -286,7 +287,6 @@ elseif(retrieve(POST,'submit',false))
 			else
 			redirect(url('articles.php'));
 		}
-
 	}
 	else
 	{
@@ -395,7 +395,6 @@ else
 	}
 	else
 	{
-	
 		if (!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) && !$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE))
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 		else
