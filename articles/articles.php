@@ -35,10 +35,9 @@ $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
 
-
 if (!empty($idart) && isset($cat) )
-{	
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com,a.options, m.login, m.level
+{		
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
@@ -114,17 +113,12 @@ if (!empty($idart) && isset($cat) )
 	{	
 		$tpl->assign_block_vars('sources', array(
 			'I' => $i,
-			'SOURCE' => $sources['sources'],
+			'SOURCE' => stripslashes($sources['sources']),
 			'URL' => substr($sources['url'],0,7) != "http://" ? "http://".$sources['url'] : $sources['url'],
 			'INDENT'=> $i < (count($array_sources)-1) ? '-' : '',
 		));
 		$i++;
 	}	
-
-	
-	// options
-	
-	$options=unserialize($articles['options']);
 
 	//Affichage notation
 	import('content/note'); 
@@ -137,11 +131,11 @@ if (!empty($idart) && isset($cat) )
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
-		'C_NOTE'=> (!isset($options['note']) || $options['note'] != false) ? true : false,
-		'C_PRINT'=>(!isset($options['impr']) || $options['impr'] != false) ? true : false,
-		'C_COM'=>(!isset($options['com']) || $options['com'] != false) ? true : false,
-		'C_AUTHOR'=>(!isset($options['author']) || $options['author'] != false) ? true : false,
-		'C_DATE'=>(!isset($options['date']) || $options['date'] != false) ? true : false,
+		'C_NOTE'=> $ARTICLES_CAT[$idartcat]['options']['note'] ? true : false,
+		'C_PRINT'=> $ARTICLES_CAT[$idartcat]['options']['impr'] ? true : false,
+		'C_COM'=> $ARTICLES_CAT[$idartcat]['options']['com'] ? true : false,
+		'C_AUTHOR'=> $ARTICLES_CAT[$idartcat]['options']['author'] ? true : false,
+		'C_DATE'=> $ARTICLES_CAT[$idartcat]['options']['date'] ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -156,6 +150,8 @@ if (!empty($idart) && isset($cat) )
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '+' . url_encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
 		'COM' => Comments::com_display_link($articles['nbr_com'], '../articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?com=0'), $articles['id'], 'articles'),
 		'KERNEL_NOTATION' => $Note->display_form(),
+		'USER_MAIL'=>$User->get_attribute('user_mail'),
+		'SENDER'=>$User->get_attribute('login'),
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],
@@ -165,7 +161,19 @@ if (!empty($idart) && isset($cat) )
 		'L_SOURCE'=>$ARTICLES_LANG['source'],
 		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
 		'L_SUMMARY' => $ARTICLES_LANG['summary'],
+		'L_ERASE'=>$LANG['erase'],
+		'L_MAIL_ARTICLES'=>$ARTICLES_LANG['mail_articles'],
+		'L_SENDER'=>$ARTICLES_LANG['sender'],
+		'L_MAIL_RECIPIENT'=>$ARTICLES_LANG['mail_recipient'],
+		'L_USER_MAIL'=>$ARTICLES_LANG['user_mail'],
+		'L_SUBJECT'=>$ARTICLES_LANG['subject'],
+		'L_MAIL_INVALID' => $ARTICLES_LANG['admin_invalid_email_error'],
+		'L_REQUIRE_SENDER'  => $ARTICLES_LANG['require_sender'],
+		'L_REQUIRE_SUBJECT' => $ARTICLES_LANG['require_subject'],
+		'L_EMAIL_ERROR' => $ARTICLES_LANG['admin_email_error'],
+		'L_LINK_MAIL'=> $ARTICLES_LANG['link_mail'],
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
+		'U_ARTICLES_LINK'=> url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart .  url_encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . url_encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
 		'U_ARTICLES_EDIT' =>url('management.php?edit=' . $idart),
@@ -180,7 +188,42 @@ if (!empty($idart) && isset($cat) )
 			'COMMENTS' => display_comments('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
 		));
 	}	
-
+	if(retrieve(POST,'submit',false))
+	{
+		$mail_recipient=retrieve(POST,'mail_recipient','',TSTRING_AS_RECEIVED);
+		$user_mail=retrieve(POST,'user_mail','',TSTRING_AS_RECEIVED);
+		$exp=retrieve(POST,'exp','',TSTRING);
+		$object=retrieve(POST,'subject','',TSTRING);		
+		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
+		
+		import('io/mail');
+		$mail = new Mail();
+ 
+		$contents =  "Ceci est un e-mail de (".$CONFIG['site_name'].") envoyé par ".$exp." (".$user_mail."). Ce lien pourrait vous intéresser: ".$CONFIG['server_name'].$link.".";
+		
+		echo " limiter aux membres ou voir sécu du truc";
+		echo " voir la barre wiki et les champs sup";
+		echo " rajouter les mail dans les options global";
+		
+		if($mail->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
+		{
+			$tpl->assign_vars(array(
+				'C_ERROR_HANDLER' => true,
+				'ERRORH_IMG' => 'success',
+				'ERRORH_CLASS' => 'error_success',
+				'L_ERRORH' => 'Votre mail a été envoyé avec succès',
+			));
+		}
+		else
+		{
+			$tpl->assign_vars(array(
+				'C_ERROR_HANDLER' => true,
+				'ERRORH_IMG' => 'notice',
+				'ERRORH_CLASS' => 'error_notice',
+				'L_ERRORH' => 'Une erreur est survenue veuillez réessayer plutard',
+			));
+		}
+	}
 	$tpl->parse();
 }
 else

@@ -42,6 +42,7 @@ if (empty($idartcat))//Racine.
 	$ARTICLES_CAT[0]['id_parent'] = 0;
 	$ARTICLES_CAT[0]['tpl_articles'] = 'articles.tpl';
 	$ARTICLES_CAT[0]['tpl_cat'] = 'articles_cat.tpl';
+	$ARTICLES_CAT[0]['options'] = Array ( 'note' => 1, 'com' => 1, 'impr' => 1, 'date' => 1, 'author' => 1 ) ; 
 	$idartcat=0;
 }
 

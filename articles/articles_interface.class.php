@@ -51,7 +51,7 @@ class ArticlesInterface extends ModuleInterface
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat,options
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -69,6 +69,7 @@ class ArticlesInterface extends ModuleInterface
 					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth'],
 					'tpl_articles'=>$row['tpl_articles'],
 					'tpl_cat'=>$row['tpl_cat'],
+					'options'=>!empty($row['options']) ? unserialize($row['options']) : $config_articles['options'] ,
 			), true) . ';' . "\n\n";
 		}
 		return $string;
@@ -225,7 +226,7 @@ class ArticlesInterface extends ModuleInterface
 			$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
-
+		
 		$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
 
 		//Niveau d'autorisation de la catégorie
@@ -322,6 +323,7 @@ class ArticlesInterface extends ModuleInterface
 		'L_WRITTEN' => $LANG['written_by'],
 		'L_ARTICLES' => $ARTICLES_LANG['articles'],
 		'L_AUTHOR' => $ARTICLES_LANG['author'],
+		'L_ORDER_BY' => $ARTICLES_LANG['order_by'],
 		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
 		'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
 		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',

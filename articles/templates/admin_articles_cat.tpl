@@ -94,6 +94,17 @@ function change_icon(img_path)
 			show_div("hide_articles_tpl");
 		articles_tpl = !articles_tpl;
 	}
+	
+			var global_option = {edition_interface.JS_SPECIAL_OPTION};
+			function change_status_option()
+			{
+			
+				if( global_option )
+					hide_div("hide_special_option");
+				else
+					show_div("hide_special_option");
+				global_option = !global_option;
+			}
 	-->
 	</script>
 	<form action="admin_articles_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -171,6 +182,86 @@ function change_icon(img_path)
 						<select name="tpl_cat">
 							{edition_interface.TPL_CAT_LIST}
 						</select>
+					</dd>
+				</dl>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+				{L_SPECIAL_OPTION}
+			</legend>
+			<dl>
+				<dt><label for="special_auth">{L_SPECIAL_OPTION}</label>
+				<br />
+				<span class="text_small">{L_SPECIAL_OPTION_EXPLAIN}</span></dt>
+				<dd>
+					<input type="checkbox" name="special_option" id="special_option" onclick="javascript: change_status_option();" {edition_interface.OPTION_CHECKED} />
+				</dd>					
+			</dl>
+			<div id="hide_special_option" style="display:{edition_interface.DISPLAY_SPECIAL_OPTION};">
+				<dl>
+					<dt>
+						<label for="option_notation">{L_NOTE} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="note" name="note">
+								<option value="0" {edition_interface.SELECTED_NOTATION_HIDE}>{L_HIDE}</option>
+								<option value="1" {edition_interface.SELECTED_NOTATION_DISPLAY}>{L_DISPLAY}</option>
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="option_com">{L_COM} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="com" name="com">
+								<option value="0" {edition_interface.SELECTED_COM_HIDE}>{L_HIDE}</option>
+								<option value="1" {edition_interface.SELECTED_COM_DISPLAY}>{L_DISPLAY}</option>
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="option_impr">{L_PRINTABLE} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="impr" name="impr">
+								<option value="0" {edition_interface.SELECTED_IMPR_HIDE}>{L_DESABLE}</option>
+								<option value="1" {edition_interface.SELECTED_IMPR_DISPLAY}>{L_ENABLE}</option>
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="option_date">{L_DATE} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="date" name="date">
+								<option value="0" {edition_interface.SELECTED_DATE_HIDE}>{L_HIDE}</option>
+								<option value="1" {edition_interface.SELECTED_DATE_DISPLAY} >{L_DISPLAY}</option>
+							</select>
+						</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="option_author">{L_AUTHOR} : </label>
+					</dt>
+					<dd>
+						<label>
+							<select id="author" name="author">
+								<option value="0" {edition_interface.SELECTED_AUTHOR_HIDE}>{L_HIDE}</option>
+								<option value="1" {edition_interface.SELECTED_AUTHOR_DISPLAY}>{L_DISPLAY}</option>
+							</select>
+						</label>
 					</dd>
 				</dl>
 			</div>

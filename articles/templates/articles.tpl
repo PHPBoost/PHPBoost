@@ -4,6 +4,76 @@
 		function Confirm_del_article() {
 		return confirm("{L_ALERT_DELETE_ARTICLE}");
 		}
+		function display_mail()
+		{
+			if( document.getElementById('mail').style.display== "block"  )
+					hide_div("mail");
+				else
+					show_div("mail");
+
+		}
+		//Vérifie une adresse email
+		function check_mail_validity(mail)
+		{
+			regex = new RegExp("^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$", "i");
+			return regex.test(trim(mail));
+		}
+		function check_mail(value,id) 
+		{
+			if (!check_mail_validity(value))
+			{	
+				if(id == "mail_recipient")
+				{
+					document.getElementById('msg_mail_recipient').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_div_mail_recipient').innerHTML = "{L_MAIL_INVALID}";
+				}
+				else
+				{
+					document.getElementById('msg_user_mail').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_div_user_mail').innerHTML = "{L_MAIL_INVALID}";
+				
+				}
+			}
+			else
+			{
+				if(id == "mail_recipient")
+				{
+					document.getElementById('msg_mail_recipient').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_div_mail_recipient').innerHTML = '';
+				}
+				else
+				{
+					document.getElementById('msg_user_mail').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_div_user_mail').innerHTML = '';
+				
+				}
+			}
+		}
+		function check_form()
+		{								
+			if (document.getElementById("subject").value == "")
+			{
+				alert("{L_REQUIRE_SUBJECT}");
+				return false;
+			}
+			else if (document.getElementById("exp").value == "")
+			{
+				alert("{L_REQUIRE_SENDER}");
+				return false;
+			}
+			else if (!check_mail_validity(document.getElementById("user_mail").value))
+			{
+				alert("{L_EMAIL_ERROR}");
+				return false;
+			}
+			else if (!check_mail_validity(document.getElementById("mail_recipient").value))
+			{
+				alert("{L_EMAIL_ERROR}");
+				return false;
+			}
+			else
+				return true;
+		}
 	-->
 	</script>	
 	# IF C_TAB #
@@ -125,7 +195,8 @@
 				}
 			}
 		}
-				
+		
+
 		-->
 	</script>		
 	<style>
@@ -157,6 +228,7 @@
 				# IF C_PRINT #
 				&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
 				# ENDIF #
+				&nbsp;&nbsp;<a href="javascript:display_mail()"><img src="../templates/{THEME}/images/pm_mini.png" class="valign_middle" alt="{L_LINK_MAIL}" /></a>
 			</div>
 		</div>
 		# IF C_TAB #
@@ -244,6 +316,7 @@
 			# IF C_DATE #
 				{L_ON}: {DATE}
 			# ENDIF #
+		
 			</div>
 			<div class="spacer"></div>
 		</div>
@@ -252,5 +325,66 @@
 	# IF C_COM #
 	{COMMENTS}
 	# ENDIF #
+	# IF C_ERROR_HANDLER #
+	<span id="errorh"></span>
+	<div id="error_msg">
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+		</div>
+	<br />
+	</div>
+	<script type="text/javascript">
+	<!--
+		//Javascript timeout to hide this message
+		setTimeout('Effect.Fade("error_msg");', 4000);
+	-->
+	</script>
+	# ENDIF #
+	<div id ="mail" style="display:none;">
+		<form action="articles.php?cat={IDCAT}&amp;id={IDART}&amp;token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
+			<fieldset>
+				<legend>{L_MAIL_ARTICLES}</legend>
+				<dl>
+					<dt>
+						<label for="recipient">{L_MAIL_RECIPIENT} :  </label>	
+					</dt>
+					<dd>
+						<label><input type="text" size="50" id="mail_recipient" name="mail_recipient" value="" onblur="check_mail(this.value,this.id);" /></label> &nbsp;<span id="msg_mail_recipient"></span><div id="msg_div_mail_recipient"></div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="exp">{L_SENDER} :  </label>	
+					</dt>
+					<dd>
+						<label><input type="text" size="50" id="exp" name="exp" value="{SENDER}" /></label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="user_mail">{L_USER_MAIL} :  </label>	
+					</dt>
+					<dd>
+						<label><input type="text" size="50" id="user_mail" name="user_mail" value="{USER_MAIL}"  onblur="check_mail(this.value,this.id);" /></label> &nbsp;<span id="msg_user_mail"></span><div id="msg_div_user_mail"></div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="subject"> {L_SUBJECT} :  </label>	
+					</dt>
+					<dd>
+						<label><input type="text" size="50" id="subject" name="subject" value="" /></label>
+					</dd>
+				</dl>
+				
+			</fieldset>
+				<fieldset class="fieldset_submit">
+				<legend>{L_SUBMIT}</legend>
+				<input type="hidden" id="link" name="link" value="{PATH_TO_ROOT}/articles/{U_ARTICLES_LINK}" />
+				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+				<input type="reset" value="{L_ERASE}" class="reset" />				
+			</fieldset>	
+		</form>
+	</div>
 # ENDIF #
 	

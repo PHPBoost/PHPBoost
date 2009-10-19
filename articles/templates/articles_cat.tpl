@@ -61,7 +61,7 @@
 			}
 			-->
 			</script>
-			{L_ORDER_BY}
+			{L_ORDER_BY}&nbsp;
 			<select name="sort" id="sort" class="nav" onchange="change_order()">
 				<option value="alpha"{SELECTED_ALPHA}>{L_TITLE}</option>
 				<option value="view"{SELECTED_VIEW}>{L_VIEW}</option>
