@@ -156,6 +156,11 @@ $ARTICLES_LANG = array(
 	'link_mail'=>'Envoyer ce lien à un ami',
 	'admin_link_mail'=>'Autoriser l\'envoie du liens d\'un article par mail',
 	'order_by'=>'Trier par ',
+	'extend_field'=>'Champs suplémentaires',
+	'extend_field_explain' => 'Vous pouvez déclarer ici des champs suplémentaires pour les articles de cette catégorie',
+	'extend_field_name'=>'Nom du champ',
+	'extend_field_type'=>'Type de champ',
+	'extend_field_add'=>'Ajouter un champ',
 	
 );
 ?>

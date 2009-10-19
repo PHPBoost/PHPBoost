@@ -51,7 +51,42 @@ $Errorh->set_template($tpl);
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
-if ($new_cat XOR $id_edit > 0)
+if ($cat_to_del > 0)
+{
+	$array_cat = array();
+	$nbr_cat = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $cat_to_del . "'", __LINE__, __FILE__);
+	$articles_categories->build_children_id_list($cat_to_del, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST);
+
+	if (empty($array_cat) && $nbr_cat === 0)
+	{
+
+		$articles_categories->delete($cat_to_del);
+		
+		// Feeds Regeneration
+		import('content/syndication/feed');
+		Feed::clear_cache('articles');
+
+		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
+	}
+	else
+	{
+		$tpl->assign_vars(array(
+			'EMPTY_CATS' => count($ARTICLES_CAT) < 2 ? true : false,
+			'L_REMOVING_CATEGORY' => $ARTICLES_LANG['removing_category'],
+			'L_EXPLAIN_REMOVING' => $ARTICLES_LANG['explain_removing_category'],
+			'L_DELETE_CATEGORY_AND_CONTENT' => $ARTICLES_LANG['delete_category_and_its_content'],
+			'L_MOVE_CONTENT' => $ARTICLES_LANG['move_category_content'],
+			'L_SUBMIT' => $LANG['delete']
+		));
+
+		$tpl->assign_block_vars('removing_interface', array(
+			'IDCAT' => $cat_to_del,
+		));
+		
+		$articles_categories->build_select_form(0, 'idcat', 'idcat', $cat_to_del, 0, array(), RECURSIVE_EXPLORATION, $tpl);
+	}
+}
+elseif ($new_cat XOR $id_edit > 0)
 {
 	$tpl->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
@@ -89,6 +124,11 @@ if ($new_cat XOR $id_edit > 0)
 		'L_PRINTABLE'=>$LANG['printable_version'],
 		'L_DATE'=>$LANG['date'],
 		'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
+		'L_EXTEND_FIELD'=>$ARTICLES_LANG['extend_field'],
+		'L_EXTEND_FIELD_EXPLAIN'=>$ARTICLES_LANG['extend_field_explain'],
+		'L_FIELD_NAME'=>$ARTICLES_LANG['extend_field_name'],
+		'L_FIELD_TYPE'=>$ARTICLES_LANG['extend_field_type'],
+		'L_ADD_FIELD'=>$ARTICLES_LANG['extend_field_add'],
 	));
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
@@ -98,7 +138,9 @@ if ($new_cat XOR $id_edit > 0)
 
 		$special_options = $ARTICLES_CAT[$id_edit]['options'] !== unserialize($CONFIG_ARTICLES['options']) ? true : false;
 		$ARTICLES_CAT[$id_edit]['options'] = $special_options ? $ARTICLES_CAT[$id_edit]['options'] : unserialize($CONFIG_ARTICLES['options']);
-
+		
+		$extend_field = !empty($ARTICLES_CAT[$id_edit]['extend_field']) ? true : false;
+		// category icon
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 		import('io/filesystem/folder');
@@ -109,7 +151,8 @@ if ($new_cat XOR $id_edit > 0)
 			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
-
+		
+		// articles templates
 		$tpl_articles_list = '';
 		$tpl_folder_path = new Folder('./templates');
 		foreach ($tpl_folder_path->get_files('`^articles.*\.tpl$`') as $tpl_articles)
@@ -119,7 +162,7 @@ if ($new_cat XOR $id_edit > 0)
 			if($tpl_articles != 'articles_cat.tpl')
 			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
 		}
-
+		// category templates
 		$tpl_cat_list = '';
 		$tpl_folder_path = new Folder('./templates');
 		foreach ($tpl_folder_path->get_files('`^articles_cat.*\.tpl$`') as $tpl_cat)
@@ -128,7 +171,31 @@ if ($new_cat XOR $id_edit > 0)
 			$selected = $tpl_cat == $ARTICLES_CAT[$id_edit]['tpl_cat'] ? ' selected="selected"' : '';
 			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 		}
+		// extend field
 
+		$extend_field=!empty($ARTICLES_CAT[$id_edit]['extend_field']) ? true : false;
+		$i=0;
+		if(	$extend_field )
+		{
+			foreach ($ARTICLES_CAT[$id_edit]['extend_field'] as $field)
+			{	
+				$tpl->assign_block_vars('field', array(
+					'I' =>$i,
+					'NAME' => stripslashes($field['name']),
+					'TYPE'=>stripslashes($field['type']),
+				));
+				$i++;
+			}	
+		}
+		if($i==0)
+		{
+				$tpl->assign_block_vars('field', array(
+					'I' =>0,
+					'NAME' => '',
+					'TYPE'=>'',
+				));
+		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -164,6 +231,10 @@ if ($new_cat XOR $id_edit > 0)
 			'SELECTED_AUTHOR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['impr'] ? ' selected="selected"' : '',
 			'SELECTED_MAIL_DISPLAY'=>$ARTICLES_CAT[$id_edit]['options']['mail'] ? ' selected="selected"' : '',
+			'JS_EXTEND_FIELD' => $extend_field ? 'true' : 'false',
+			'EXTEND_FIELD_CHECKED'=> $extend_field ? 'checked="checked"' : '',
+			'DISPLAY_EXTEND_FIELD' =>$extend_field ? 'block' : 'none',
+			'NB_FIELD'=>$i == 0 ? 1 : $i,
 		));
 	}
 	else
@@ -227,6 +298,9 @@ if ($new_cat XOR $id_edit > 0)
 			'JS_SPECIAL_OPTION' => 'false',
 			'DISPLAY_SPECIAL_OPTION'=>'none',
 			'OPTION_CHECKED' => '',
+			'JS_EXTEND_FIELD' => 'false',
+			'EXTEND_FIELD_CHECKED'=> '',
+			'DISPLAY_EXTEND_FIELD' =>'none',
 			'SELECTED_NOTATION_HIDE'=> !$options['note'] ? ' selected="selected"' : '',
 			'SELECTED_COM_HIDE'=> !$options['com'] ? ' selected="selected"' : '',
 			'SELECTED_DATE_HIDE'=> !$options['date'] ? ' selected="selected"' : '',
@@ -239,7 +313,14 @@ if ($new_cat XOR $id_edit > 0)
 			'SELECTED_AUTHOR_DISPLAY'=>$options['author'] ? ' selected="selected"' : '',
 			'SELECTED_IMPR_DISPLAY'=>$options['impr'] ? ' selected="selected"' : '',
 			'SELECTED_MAIL_DISPLAY'=>$options['mail'] ? ' selected="selected"' : '',
+			'NB_FIELD'=>1,
 		));
+	
+		$tpl->assign_block_vars('field', array(
+				'I'=>0,
+				'NAME'=>'',
+				'TYPE'=>'',
+			));
 	}
 }
 elseif (retrieve(POST,'submit',false))
@@ -249,7 +330,7 @@ elseif (retrieve(POST,'submit',false))
 	if (!empty($cat_to_del_post))
 	{
 		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
-		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
+		$id_parent = retrieve(POST, 'idcat', 0,TINTEGER);
 
 		if ($delete_content)
 		$articles_categories->delete_category_recursively($cat_to_del_post);
@@ -267,14 +348,26 @@ elseif (retrieve(POST,'submit',false))
 		$tpl_articles = empty($tpl_articles) ? 'articles.tpl' : $tpl_articles;
 		$tpl_cat = empty($tpl_cat) ? 'articles_cat.tpl' : $tpl_cat;
 		$options = array (
-			'note'=>retrieve(POST, 'note', true, TBOOL),
-			'com'=>retrieve(POST, 'com', true, TBOOL),
-			'impr'=>retrieve(POST, 'impr', true, TBOOL),
-			'date'=>retrieve(POST, 'date', true, TBOOL),
-			'author'=>retrieve(POST, 'author', true, TBOOL),
-			'mail'=>retrieve(POST, 'mail', true, TBOOL),
-			);
-
+				'note'=>retrieve(POST, 'note', true, TBOOL),
+				'com'=>retrieve(POST, 'com', true, TBOOL),
+				'impr'=>retrieve(POST, 'impr', true, TBOOL),
+				'date'=>retrieve(POST, 'date', true, TBOOL),
+				'author'=>retrieve(POST, 'author', true, TBOOL),
+				'mail'=>retrieve(POST, 'mail', true, TBOOL),
+				);
+				
+		$extend_field = array();
+		if(retrieve(POST,'extend_field_checkbox',false))
+		{
+			for ($i = 0;$i < 100; $i++)
+			{	
+				if (retrieve(POST,'a'.$i,false,TSTRING))
+				{				
+					$extend_field[$i]['name'] = strtoupper(retrieve(POST, 'a'.$i, '',TSTRING));
+					$extend_field[$i]['type'] = retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE);
+				}
+			}
+		}
 		if(retrieve(POST,'icon_path',false))
 		$icon=retrieve(POST,'icon_path','');
 			
@@ -284,9 +377,9 @@ elseif (retrieve(POST,'submit',false))
 		if (empty($name))
 		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		if ($id_cat > 0)
-		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options));
+		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options),addslashes(serialize($extend_field)));
 		else
-		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options));
+		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$tpl_articles,$tpl_cat,serialize($options),addslashes(serialize($extend_field)));
 	}
 
 	// Feeds Regeneration

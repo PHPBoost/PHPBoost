@@ -51,7 +51,7 @@ class ArticlesInterface extends ModuleInterface
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat,options
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat,options,extend_field
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -70,6 +70,7 @@ class ArticlesInterface extends ModuleInterface
 					'tpl_articles'=>$row['tpl_articles'],
 					'tpl_cat'=>$row['tpl_cat'],
 					'options'=>!empty($row['options']) ? unserialize($row['options']) : $config_articles['options'] ,
+					'extend_field'=>!empty($row['extend_field']) ? unserialize($row['extend_field']) : '' ,
 			), true) . ';' . "\n\n";
 		}
 		return $string;

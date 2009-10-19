@@ -99,7 +99,17 @@ elseif(retrieve(POST,'submit',false))
 			$sources[$i]['url'] = preg_replace('`\?.*`', '', retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE));
 		}
 	}
-
+	
+	$extend_field=!empty($ARTICLES_CAT[retrieve(POST, 'idcat', 0)]['extend_field']) ? true : false;
+	$extend_field_articles=Array();
+	if($extend_field)
+	{
+		foreach ($ARTICLES_CAT[retrieve(POST, 'idcat', 0)]['extend_field'] as $field)
+		{	
+			$extend_field_articles[$field['name']]['contents']=retrieve(POST,  'field_'.addslashes($field['name']), '', TSTRING);
+		}	
+	}
+	
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0),
@@ -122,7 +132,10 @@ elseif(retrieve(POST,'submit',false))
 		'sources'=>addslashes(serialize($sources)),
 		'description'=>retrieve(POST, 'description', '', TSTRING),
 		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
+		'extend_field'=>addslashes(serialize($extend_field_articles)),
 	);
+	
+	
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 	{
@@ -185,7 +198,7 @@ elseif(retrieve(POST,'submit',false))
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',extend_field = '".$articles['extend_field']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
@@ -216,8 +229,8 @@ elseif(retrieve(POST,'submit',false))
 			
 				$auth = $articles['auth'];
 					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -292,6 +305,7 @@ elseif(retrieve(POST,'submit',false))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
+	
 }
 else
 {
@@ -335,6 +349,7 @@ else
 				$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 			}			
 			
+			// sources
 			$array_sources = unserialize($articles['sources']);
 			$i = 0;
 			foreach ($array_sources as $sources)
@@ -355,10 +370,25 @@ else
 						'URL' => '',
 					));
 			}
-
+			// extend field
+			$extend_field=!empty($ARTICLES_CAT[$articles['idcat']]['extend_field']) ? true : false;
+			if(	$extend_field )
+			{
+				$extend_field_articles=unserialize($articles['extend_field']);
+				foreach ($ARTICLES_CAT[$articles['idcat']]['extend_field'] as $field)
+				{	
+					$tpl->assign_block_vars('extend_field', array(
+						'NAME' => stripslashes($field['name']),
+						'CONTENTS'=>!empty($extend_field_articles[$field['name']]['contents']) ? stripslashes($extend_field_articles[$field['name']]['contents']) : '',
+					));
+				}	
+			}
+			
+	
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
+				'C_EXTEND_FIELD'=>	$extend_field,
 				'JS_CONTRIBUTION' => 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
@@ -424,8 +454,19 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
+			$extend_field=!empty($ARTICLES_CAT[$cat]['extend_field']) ? true : false;
+			if(	$extend_field)
+			{
+				foreach ($ARTICLES_CAT[$cat]['extend_field'] as $field)
+				{	
+					$tpl->assign_block_vars('extend_field', array(
+						'NAME' => stripslashes($field['name']),
+					));
+				}	
+			}
 			$tpl->assign_vars(array(
 				'C_ADD' => false,
+				'C_EXTEND_FIELD'=>	$extend_field,
 				'C_CONTRIBUTION' => $auth_contrib ,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),

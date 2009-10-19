@@ -18,28 +18,32 @@
 	# ENDIF #
 	# START removing_interface #
 	<form action="admin_articles_cat.php?token={TOKEN}" method="post" class="fieldset_content">
-		<fieldset>
-			<legend>{L_REMOVING_CATEGORY}</legend>
-			<p>{L_EXPLAIN_REMOVING}</p>
-			
-			<label>
-				<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
-			</label>
-			<br /> <br />
-			<label>
-				<input type="radio" name="action" value="move" checked="checked" /> {L_MOVE_CONTENT}
-			</label>
-			&nbsp;
-			{removing_interface.CATEGORY_TREE}
-				
-		</fieldset>
-		
-		<fieldset class="fieldset_submit">
-			<legend>{L_SUBMIT}</legend>
-			<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
-			<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
-		</fieldset>
-	</form>
+				<fieldset>
+					<legend>{L_REMOVING_CATEGORY}</legend>
+					<p>{L_EXPLAIN_REMOVING}</p>
+
+					<label>
+						<input type="radio" name="action" value="delete"# IF EMPTY_CATS # checked="checked"# ENDIF # /> {L_DELETE_CATEGORY_AND_CONTENT}
+					</label>
+					<br /> <br />
+					<label>
+						<input type="radio" name="action" value="move"# IF EMPTY_CATS # disabled="disabled"# ELSE # checked="checked"# ENDIF # /> {L_MOVE_CONTENT}
+					</label>
+					&nbsp;
+					<select id="{FORM_ID}" name="{FORM_NAME}">
+						<option value="0" disabled="disabled">{L_ROOT}</option>
+					# START options #
+						<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
+					# END options #
+					</select>
+				</fieldset>
+
+				<fieldset class="fieldset_submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+				</fieldset>
+			</form>
 	# END removing_interface #
 	# START categories_management #
 		<table class="module_table" style="width:99%;">
@@ -104,6 +108,26 @@
 		else
 			show_div("hide_special_option");
 		global_option = !global_option;
+	}
+	var extend_field = {edition_interface.JS_EXTEND_FIELD};
+	function change_extend_field()
+	{
+		if( extend_field )
+			hide_div("hide_extend_field");
+		else
+			show_div("hide_extend_field");
+		extend_field = !extend_field;
+	}
+	function add_field(i, i_max) 
+	{
+		var i2 = i + 1;
+
+		if( document.getElementById('a'+i) )
+			document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" class="text" /></label><br /><span id="a'+i2+'"></span>';	
+		if( document.getElementById('v'+i) )
+			document.getElementById('v'+i).innerHTML = '<label><input type="text" size="40" name="v'+i+'" value="" class="text" /></label><br /><span id="v'+i2+'"></span>';	
+		if( document.getElementById('s'+i) )
+			document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';					
 	}
 	-->
 	</script>
@@ -277,6 +301,50 @@
 						</label>
 					</dd>
 				</dl>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+				{L_EXTEND_FIELD}
+			</legend>
+			<dl>
+				<dt><label for="extend_field">{L_EXTEND_FIELD}</label>
+				<br />
+				<span class="text_small">{L_EXTEND_FIELD_EXPLAIN}</span></dt>
+				<dd>
+					<input type="checkbox" name="extend_field_checkbox" id="extend_field_checkbox" onclick="javascript: change_extend_field();" {edition_interface.EXTEND_FIELD_CHECKED} />
+				</dd>					
+			</dl>
+			<div id="hide_extend_field" style="display:{edition_interface.DISPLAY_EXTEND_FIELD};">
+				<table style="margin:auto;text-align:center;border:none;border-spacing:0;">
+					<tr>
+						<th style="text-align:center;">
+							{L_FIELD_NAME}
+						</th>
+						<th style="text-align:center;">
+							{L_FIELD_TYPE}
+						</th>
+					</tr>
+					<tr>
+						<td class="row2" style="text-align:center;">	
+							# START field #
+							<label><input type="text" size="40" name="a{field.I}" id="a{field.I}" value="{field.NAME}" class="text" /></label><br />
+							# END field #
+							<span id="a{edition_interface.NB_FIELD}"></span>
+						</td>
+						<td class="row2" style="text-align:center;">	
+							# START field #					
+							<label><input type="text" size="40" name="v{field.I}" id="v{field.I}" value="{field.TYPE}" class="text" /> </label><br />
+							# END field #
+							<span id="v{edition_interface.NB_FIELD}"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;margin-top:5px;" colspan="2">
+							<div id="s{edition_interface.NB_FIELD}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_field({edition_interface.NB_FIELD}, 100)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_FIELD}</a></div>								
+						</td>
+					</tr>
+				</table>
 			</div>
 		</fieldset>
 		<fieldset>

@@ -21,6 +21,7 @@ CREATE TABLE `phpboost_articles` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   `auth` text,
+  `extend_field` text,
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),
@@ -41,6 +42,7 @@ CREATE TABLE `phpboost_articles_cats` (
   `visible` tinyint(1) NOT NULL default '0',
   `auth` text,
   `options` text,
+  `extend_field` text,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
