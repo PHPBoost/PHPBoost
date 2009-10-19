@@ -53,7 +53,7 @@ if ($delete > 0)
 		{
 			import('content/comments');
 			$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
-			$Comments->delete_all($delete_news);
+			$Comments->delete_all($delete);
 		}
 
 		// Feeds Regeneration
@@ -154,6 +154,22 @@ elseif (!empty($_POST['submit']))
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "'
 				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
+				
+				if ($news['visible'])
+				{
+					import('events/contribution');
+					import('events/contribution_service');
+
+					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);
+
+					if (count($corresponding_contributions) > 0)
+					{
+						$news_contribution = $corresponding_contributions[0];
+						$news_contribution->set_status(EVENT_STATUS_PROCESSED);
+
+						ContributionService::save_contribution($news_contribution);
+					}
+				}
 			}
 			else
 			{
