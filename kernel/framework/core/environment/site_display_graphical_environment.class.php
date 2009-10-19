@@ -171,7 +171,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			// Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 			$right_column_content = $MENUS[BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[BLOCK_POSITION__LEFT] : '');
-			$Template->assign_vars(array(
+			$template->assign_vars(array(
 				'C_MENUS_RIGHT_CONTENT' => !empty($right_column_content),
 				'MENUS_RIGHT_CONTENT' => $right_column_content
 			));
