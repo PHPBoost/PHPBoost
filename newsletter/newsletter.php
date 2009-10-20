@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 //Inscription ou désinscription
 if (!empty($mail_newsletter))
 {
-	import('io/mail');
+	import('io/Mail');
 	//Vérification de la validité du mail proposé
 	if (Mail::check_validity($mail_newsletter))
 	{

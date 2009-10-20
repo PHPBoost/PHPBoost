@@ -103,7 +103,7 @@ class PackagesManager
 		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
 		if (!is_dir($dir . '/' . $dir_db_module))
 		{
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$db_scripts_folder = new Folder($dir);
 				
 			$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
@@ -230,7 +230,7 @@ class PackagesManager
 			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
 
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
 			foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 			{

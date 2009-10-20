@@ -29,7 +29,7 @@
 
 define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 
-import('io/template/template');
+import('io/template/Template');
 import('content/syndication/feed');
 
 /**

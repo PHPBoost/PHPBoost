@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/template/template_exception');
-import('io/template/file_template_loader');
+import('io/template/TemplateException');
+import('io/template/FileTemplateLoader');
 
 /**
  * @package io
@@ -199,12 +199,12 @@ class Template
 			switch ($parser)
 			{
 				case self::TEMPLATE_PARSER_STRING:
-					import('io/template/template_parser_string');
+					import('io/template/TemplateParserString');
 					$parser = new TemplateParserString();
 					break;
 				case self::TEMPLATE_PARSER_ECHO:
 				default:
-					import('io/template/template_parser_echo');
+					import('io/template/TemplateParserEcho');
 					$parser = new TemplateParserEcho();
 					break;
 			}

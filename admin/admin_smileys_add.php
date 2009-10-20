@@ -66,7 +66,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		import('io/upload');
+		import('io/Upload');
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_smiley', '`[a-z0-9_ -]+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->get_error();
@@ -92,7 +92,7 @@ else
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 	$smileys_array = array();
 	$smileys_folder_path = new Folder('../images/smileys');
 	foreach ($smileys_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $smileys)

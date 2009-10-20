@@ -156,7 +156,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	));
 	
 	//Images disponibles
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 	$img_str = '<option value="">--</option>';
 	$in_dir_icon = false;
 	$image_folder_path = new Folder('./');

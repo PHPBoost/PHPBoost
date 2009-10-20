@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           cache_data.class.php
+ *                           config_data.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,25 +25,40 @@
  *
  ###################################################*/
 
-import('io/cache/cache_manager');
+import('io/cache/CacheData');
 
 /**
  * @package io
- * @subpackage cache
- * @desc This interface represents data which are stored automatically by the cache manager.
- * The storage mode is very powerful, it uses a two-level cache and the database.
- * <p>The cache manager is able to manager very well configuration values. They are stored
- * in a map associating a value to a property</p>
+ * @subpackage config
+ * @desc This interface represents configuration data which are stored automatically by the
+ * config manager. The storage mode is very powerful, it uses a two-level cache and the database.
+ * <p>They are stored in a map associating a value to a property</p>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-interface CacheData
+interface ConfigData extends CacheData
 {
 	/**
-	 * This method is called when the data needs to be sychronized.
-	 * For instance,
+	 * Reads a property's value.
+	 * @param string $name Name of the property to read
+	 * @return string the read value
+	 * @throws PropertyNotFoundException If the property if not found
 	 */
-	function synchronize();
+	function get_property($name);
+
+	/**
+	 * Sets a property value. If the property exists, it overrides its value,
+	 * otherwise, it creates an entry for this property.
+	 * @param string $name Name of the property
+	 * @param string $value Value of the property
+	 */
+	function set_property($name, $value);
+
+	/**
+	 * Sets the default value to avoid having unexisting values when we use it.
+	 * If some entries doesn't exist, they can be created here.
+	 */
+	function set_default_values();
 }
 
 ?>

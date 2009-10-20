@@ -43,7 +43,7 @@ $nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
 if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 { 
 	$dir = 'pics/';
-	import('io/upload');
+	import('io/Upload');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -180,7 +180,7 @@ else
 	$dir = 'pics/';
 	if (is_dir($dir)) //Si le dossier existe
 	{		
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 
 		$array_pics = array();
 		$image_folder_path = new Folder('./pics/');

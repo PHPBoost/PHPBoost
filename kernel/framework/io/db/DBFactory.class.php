@@ -57,7 +57,7 @@ class DBFactory
 				redirect(get_server_url_page('install/install.php'));
 			}
 
-			import('io/db/mysql/mysql_db_connection');
+			import('io/db/mysql/MySQLDBConnection');
 			self::$db_connection = new MySQLDBConnection($host, $login, $password);
 		}
         
@@ -76,7 +76,7 @@ class DBFactory
 	 */
 	public static function new_sql_querier(DBConnection $db_connection)
 	{
-		import('io/db/mysql/mysql_querier');
+		import('io/db/mysql/MySQLQuerier');
 		return new MySQLQuerier($db_connection);
 	}
 }

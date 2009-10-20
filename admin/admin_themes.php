@@ -142,7 +142,7 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))
 		{
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$folder = new Folder('../templates/' . $previous_theme);
 			if (!$folder->delete())
 			{

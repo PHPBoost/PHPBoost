@@ -26,7 +26,7 @@
  * The PHPboost template engine is actually based on sections of code from phpBB3 templates
  ###################################################*/
 
-import('io/template/template');
+import('io/template/Template');
 
 class DeprecatedTemplate extends Template
 {

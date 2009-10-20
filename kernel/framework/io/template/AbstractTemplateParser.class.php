@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/template/template_parser');
+import('io/template/TemplateParser');
 
 abstract class AbstractTemplateParser implements TemplateParser
 {
@@ -133,7 +133,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 	
 	private function save()
 	{
-		import('io/filesystem/file');
+		import('io/filesystem/File');
 		$file = new File($this->cache_filepath);
 		$file->open(WRITE);
 		$file->lock();

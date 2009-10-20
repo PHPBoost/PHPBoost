@@ -28,7 +28,7 @@
 if (defined('PHPBOOST') !== true)	exit;
 
 import('content/parser/content_second_parser');
-import('io/mail');
+import('io/Mail');
 	
 class NewsletterService
 {

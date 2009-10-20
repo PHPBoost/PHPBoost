@@ -88,7 +88,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//On recupère les images des groupes
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 	$rank_options_array = array();
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)

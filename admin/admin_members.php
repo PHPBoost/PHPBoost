@@ -141,7 +141,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_avatar = '';
 			$dir = '../images/avatars/';
 			
-			import('io/upload');
+			import('io/Upload');
 			$Upload = new Upload($dir);
 			
 			if (is_writable($dir))
@@ -223,7 +223,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				if ($user_ban > 0)	//Suppression de la session si le membre se fait bannir.
 				{	
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					import('io/mail');
+					import('io/Mail');
 					$Mail = new Mail();
 					$Mail->send_from_properties($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}

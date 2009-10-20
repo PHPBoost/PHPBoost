@@ -188,7 +188,7 @@ class Feed
 	 */
 	/*static*/ function clear_cache($module_id = false)
 	{
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 		$folder = new Folder(FEEDS_PATH, OPEN_NOW);
 		$files = null;
 		if ($module_id !== false)
@@ -215,7 +215,7 @@ class Feed
 	 */
 	/*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
 	{
-		import('io/filesystem/file');
+		import('io/filesystem/File');
 		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
 		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
 		$file->close();
@@ -243,7 +243,7 @@ class Feed
 		}
 		else
 		{
-			import('io/template/template');
+			import('io/template/Template');
 			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);

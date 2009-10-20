@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/template/template_loader');
+import('io/template/TemplateLoader');
 
 class FileTemplateLoader implements TemplateLoader
 {

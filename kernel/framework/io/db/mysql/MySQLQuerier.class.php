@@ -25,10 +25,10 @@
  *
  ###################################################*/
 
-import('io/db/abstract_sql_querier');
-import('io/db/mysql/mysql_db_connection');
-import('io/db/mysql/mysql_query_result');
-import('io/db/mysql/sql2mysql_query_translator');
+import('io/db/AbstractSQLQuerier');
+import('io/db/mysql/MySQLDBConnection');
+import('io/db/mysql/MySQLQueryResult');
+import('io/db/mysql/SQL2MySQLQueryTranslator');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

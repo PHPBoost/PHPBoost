@@ -477,7 +477,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 				
 				//Envoi du mail
-				import('io/mail');
+				import('io/Mail');
 				$Mail = new Mail();
 				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}

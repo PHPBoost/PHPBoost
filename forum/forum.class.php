@@ -80,7 +80,7 @@ class Forum
 			$next_msg_link = HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			$preview_contents = substr($contents, 0, 300);
 
-			import('io/mail');
+			import('io/Mail');
 			$Mail = new Mail();
 			import('members/PrivateMsg');
 			$Privatemsg = new PrivateMsg();

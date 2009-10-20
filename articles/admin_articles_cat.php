@@ -143,7 +143,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		// category icon
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -243,7 +243,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		$img_default = '../articles/articles.png';
 		$img_default_name = 'articles.png';
 		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default_name.'</option>';
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{

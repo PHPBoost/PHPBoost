@@ -470,7 +470,7 @@ if (!empty($id_get)) //Espace membre
 			//Gestion upload d'avatar.
 			$user_avatar = '';
 			$dir = '../images/avatars/';
-			import('io/upload');
+			import('io/Upload');
 			$Upload = new Upload($dir);
 			
 			if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)

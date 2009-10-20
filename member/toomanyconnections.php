@@ -78,7 +78,7 @@ header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
-import('io/template/template');
+import('io/template/Template');
 $tpl = new Template('framework/fatal.tpl');
 $tpl->assign_vars(array(
     'ERROR_TITLE' => $LANG['too_many_connections'],

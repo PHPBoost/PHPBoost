@@ -137,7 +137,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		import('io/upload');
+		import('io/Upload');
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 		{
@@ -176,7 +176,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$Pagination = new Pagination();
 		
 		//On recupère les dossier des images des groupes.
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
@@ -260,7 +260,7 @@ elseif ($add) //Interface d'ajout du groupe.
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 
 	$img_groups = '<option value="">--</option>';
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');

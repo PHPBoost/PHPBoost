@@ -1,6 +1,6 @@
 <?php
 
-import('io/db/db_factory');
+import('io/db/DBFactory');
 import('mvc/model/SQLDAO');
 import('mvc/model/MappingModel');
 import('mvc/model/BusinessObject');

@@ -73,7 +73,7 @@ $Template->assign_vars(array(
 ));
 
 //Modules disponibles
-import('io/filesystem/folder');
+import('io/filesystem/Folder');
 $folder_path = new Folder('../');
 foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 {

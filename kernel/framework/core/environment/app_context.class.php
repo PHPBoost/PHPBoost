@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/db_factory');
+import('io/db/DBFactory');
 
 /**
  * @package core
