@@ -36,7 +36,7 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //Initialisation  de la class de gestion des fichiers.
-import('members/uploads');
+import('members/Uploads');
 
 if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {

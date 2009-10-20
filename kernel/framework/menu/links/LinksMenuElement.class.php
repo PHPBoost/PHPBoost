@@ -29,7 +29,7 @@
 //      LinksMenuLink and LinksMenuLink classes are based on this class
 //      use, on of these
 
-import('menu/menu');
+import('menu/Menu');
 import('util/Url');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');

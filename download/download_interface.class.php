@@ -27,7 +27,7 @@
 
 define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 
-import('modules/module_interface');
+import('modules/ModuleInterface');
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
 class DownloadInterface extends ModuleInterface

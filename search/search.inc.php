@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 import('content/search');
 
 

@@ -62,7 +62,7 @@ if (!empty($module_id))
 	else
 	{   // Otherwise, we regenerate it before printing it
 		// Feeds Regeneration
-		import('modules/modules_discovery_service');
+		import('modules/ModulesDiscoveryService');
 		$modules_discovery_service = new ModulesDiscoveryService();
 		$module = $modules_discovery_service->get_module($module_id);
 

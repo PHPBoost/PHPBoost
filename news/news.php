@@ -223,7 +223,7 @@ else
 	define('TITLE', $NEWS_LANG['news']);
 	$news_cat->bread_crumb($idcat);
 	require_once('../kernel/header.php');
-	import('modules/modules_discovery_service');
+	import('modules/ModulesDiscoveryService');
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'news';
 	$module = $modulesLoader->get_module($module_name);

@@ -43,7 +43,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		import('members/uploads');
+		import('members/Uploads');
 		Uploads::Empty_folder_member($id_post); //Suppression de tout les fichiers et dossiers du membre.
 			
 		//On régénère le cache
@@ -344,7 +344,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 	
-	import('members/uploads');
+	import('members/Uploads');
 	Uploads::Empty_folder_member($id); //Suppression de tout les fichiers et dossiers du membre.
 	
 	//On régénère le cache

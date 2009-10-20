@@ -148,7 +148,7 @@ else
 }
 
 import('util/Url');
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 
 $modules = new ModulesDiscoveryService();
 $feeds_modules = $modules->get_available_modules('get_feeds_list');

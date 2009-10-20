@@ -26,7 +26,7 @@
  ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/module_interface');
+import('modules/ModuleInterface');
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface

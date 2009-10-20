@@ -40,7 +40,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		'membermsg'=> 'member/membermsg.tpl',
 	));
 	
-	import('modules/modules_discovery_service');
+	import('modules/ModulesDiscoveryService');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach ($modules as $module)

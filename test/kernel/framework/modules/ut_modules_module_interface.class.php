@@ -3,7 +3,7 @@ require_once 'header.php';
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
-import('modules/module_interface');
+import('modules/ModuleInterface');
 
 unset($Errorh);
 

@@ -89,7 +89,7 @@ $Cache->load('uploads');
 if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-import('members/uploads');
+import('members/Uploads');
 
 $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);

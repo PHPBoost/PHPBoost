@@ -28,7 +28,7 @@
 if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/module_interface');
+import('modules/ModuleInterface');
 
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
 require_once PATH_TO_ROOT . '/articles/articles_constants.php';

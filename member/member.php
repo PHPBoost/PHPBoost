@@ -421,7 +421,7 @@ if (!empty($id_get)) //Espace membre
 		{
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
-			import('members/uploads');
+			import('members/Uploads');
 			Uploads::Empty_folder_member($User->get_attribute('user_id')); //Suppression de tout les fichiers et dossiers du membre.
 
 			//On régénère le cache

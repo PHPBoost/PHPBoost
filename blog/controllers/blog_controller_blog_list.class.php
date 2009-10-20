@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 mimport('blog/models/blog');
 
 
