@@ -6,7 +6,7 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header.php';
 
 mimport('blog/model/blog');
-import('mvc/model/sql_dao');
+import('mvc/model/SQLDAO');
 
 require_once PATH_TO_ROOT . '/kernel/footer.php';
 

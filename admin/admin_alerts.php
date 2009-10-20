@@ -35,7 +35,7 @@ import('events/administrator_alert_service');
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
-import('util/pagination');
+import('util/Pagination');
 
 $pagination = new Pagination();
 

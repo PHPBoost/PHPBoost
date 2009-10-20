@@ -857,7 +857,7 @@ else
 
 	$nbr_membre = $Sql->count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 	 
 	$get_sort = retrieve(GET, 'sort', '');	

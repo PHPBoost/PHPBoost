@@ -87,7 +87,7 @@ else
 {
 	$Template->assign_block_vars('arch_title', array());
 	
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 	
 	$i = 0;	

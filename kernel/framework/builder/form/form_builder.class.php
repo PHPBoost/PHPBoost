@@ -69,7 +69,7 @@
 *	$fieldset_up->add_field(new FormHiddenField('test', 1));
 *	
 *	//Captcha
-*	import('util/captcha');
+*	import('util/Captcha');
 *	$captcha = new Captcha();
 *	$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
 *

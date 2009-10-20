@@ -25,9 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/controller/controller');
-
-define('ABSTRACT_CONTROLLER__CLASS', 'AbstractController');
+import('mvc/controller/Controller');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

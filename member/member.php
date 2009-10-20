@@ -994,7 +994,7 @@ else //Show all member!
 	$unget = (!empty($sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de membre est trop important.
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

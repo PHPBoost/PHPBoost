@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-import('mvc/controller/controller');
-import('mvc/dispatcher/url_controller_mapper');
-import('mvc/dispatcher/dispatcher_exception');
+import('mvc/controller/Controller');
+import('mvc/dispatcher/UrlControllerMapper');
+import('mvc/dispatcher/DispatcherException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -36,12 +36,12 @@ import('mvc/dispatcher/dispatcher_exception');
  */
 class Dispatcher
 {
-    // Changing this value will result in a crash in rewrite mode.
-    // To avoid this, also replace "?url=" by "?YourNewValue=" in config files
-    const URL_PARAM_NAME = 'url';
+	// Changing this value will result in a crash in rewrite mode.
+	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
+	const URL_PARAM_NAME = 'url';
 
-    private $url_controller_mappers = array();
-    
+	private $url_controller_mappers = array();
+
 	/**
 	 * @desc build a new Dispatcher from a UrlDispatcherItem List
 	 * @param <code>UrlControllerMapper[]</code> $url_controller_mappers
@@ -66,6 +66,7 @@ class Dispatcher
 			if ($url_controller_mapper->match($url))
 			{
 				$url_controller_mapper->call();
+				Environment::destroy();
 				return;
 			}
 		}
@@ -81,7 +82,7 @@ class Dispatcher
 	 */
 	public static function get_url($path, $url)
 	{
-		import('util/url');
+		import('util/Url');
 		$dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
 
@@ -106,7 +107,7 @@ class Dispatcher
 			    '=/' . $url);
 		}
 	}
-	
+
 	public static function do_dispatch($url_controller_mappers)
 	{
 		try
@@ -126,16 +127,16 @@ class Dispatcher
 		{
 			Dispatcher::show_error($ex);
 		}
-        catch (MalformedUrlMapperRegex $ex)
-        {
-            Dispatcher::show_error($ex);
-        }
-        catch (Exception $ex)
-        {
-            Dispatcher::show_error($ex);
-        }
+		catch (MalformedUrlMapperRegex $ex)
+		{
+			Dispatcher::show_error($ex);
+		}
+		catch (Exception $ex)
+		{
+			Dispatcher::show_error($ex);
+		}
 	}
-	
+
 	private function handle_dispatch_exception($exception)
 	{
 		if (DEBUG) {
@@ -144,12 +145,12 @@ class Dispatcher
 			Dispatcher::redirect404();
 		}
 	}
-	
+
 	private static function redirect404()
 	{
 		redirect(PATH_TO_ROOT . '/member/404.php');
 	}
-	
+
 	private static function show_error($exception)
 	{
 		require_once PATH_TO_ROOT . '/kernel/header.php';

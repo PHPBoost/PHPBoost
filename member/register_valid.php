@@ -68,7 +68,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Code de vérification si activé
-	import('util/captcha');
+	import('util/Captcha');
 	$Captcha = new Captcha();
 	$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 	

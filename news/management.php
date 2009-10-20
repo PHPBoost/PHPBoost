@@ -30,9 +30,9 @@ require_once('news_begin.php');
 require_once('news_cats.class.php');
 $news_categories = new NewsCats();
 
-import('util/date');
+import('util/Date');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-import('util/mini_calendar');
+import('util/MiniCalendar');
 
 $new = retrieve(GET, 'new', 0);
 $cat = retrieve(GET, 'cat', 0);

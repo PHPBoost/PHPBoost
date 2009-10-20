@@ -174,7 +174,7 @@ class DownloadInterface extends ModuleInterface
         load_module_lang('download'); //Chargement de la langue du module.
         $tpl = new Template('download/download_generic_results.tpl');
         
-        import('util/date');
+        import('util/Date');
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
         import('content/note'); //Notes
         
@@ -200,8 +200,8 @@ class DownloadInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         import('content/syndication/feed_data');
-        import('util/date');
-        import('util/url');
+        import('util/Date');
+        import('util/Url');
         
         global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');

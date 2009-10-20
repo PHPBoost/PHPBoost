@@ -1,7 +1,7 @@
 <?php
 
-import('mvc/model/mapping_model');
-import('mvc/model/business_object');
+import('mvc/model/MappingModel');
+import('mvc/model/BusinessObject');
 
 class MyUTMappingModelTestObject extends BusinessObject
 {

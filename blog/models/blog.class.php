@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/model/business_object');
+import('mvc/model/BusinessObject');
 
 mimport('blog/models/dao/blog_dao');
 mimport('blog/models/blog_post');

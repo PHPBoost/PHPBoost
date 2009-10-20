@@ -302,7 +302,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -651,7 +651,7 @@ else
 		else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
-			import('util/pagination');
+			import('util/Pagination');
 			$Pagination = new Pagination();
 			
 			$sort = retrieve(GET, 'sort', '');

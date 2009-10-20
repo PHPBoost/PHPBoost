@@ -46,7 +46,7 @@ $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
-import('util/images_stats');
+import('util/ImagesStats');
 import('core/stats_saver');
 $Stats = new Stats();
 

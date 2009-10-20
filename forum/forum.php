@@ -199,7 +199,7 @@ if (!empty($id_get))
 	}
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 
 	//Affichage de l'arborescence des catégories.

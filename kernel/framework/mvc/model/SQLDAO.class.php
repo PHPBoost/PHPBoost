@@ -25,8 +25,9 @@
  *
  ###################################################*/
 
-import('mvc/model/dao');
-import('mvc/model/query_result_mapper');
+import('mvc/model/DAO');
+import('mvc/model/MappingModel');
+import('mvc/model/QueryResultMapper');
 
 class ValidationException extends Exception {}
 

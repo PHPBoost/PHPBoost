@@ -73,7 +73,7 @@ class BlogControllerBlogList implements Controller
 	
 	private function load_env()
 	{
-		import('mvc/response/site_display_response');
+		import('mvc/response/SiteDisplayResponse');
         
         global $BLOG_LANGS;
         load_module_lang('blog');

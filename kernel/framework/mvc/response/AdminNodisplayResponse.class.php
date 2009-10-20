@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/response/abstract_response');
+import('mvc/response/AbstractResponse');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

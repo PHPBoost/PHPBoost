@@ -25,10 +25,7 @@
  *
  ###################################################*/
 
-define('BLOG_DAO__CLASS','blog_dao');
-
-import('mvc/model/sql_dao');
-import('mvc/model/mapping_model');
+import('mvc/model/SQLDAO');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

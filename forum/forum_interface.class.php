@@ -385,8 +385,8 @@ class ForumInterface extends ModuleInterface
 		$data = new FeedData();
 
 		import('content/syndication/feed_data');
-		import('util/date');
-		import('util/url');
+		import('util/Date');
+		import('util/Url');
 
 		$data->set_title($LANG['xml_forum_desc']);
 		$data->set_date(new Date());

@@ -51,7 +51,7 @@ elseif (retrieve(GET,'img_preview',false)) // image preview
 }
 elseif (retrieve(POST,'preview',false))
 {
-	import('util/date');
+	import('util/Date');
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new Template('articles/articles.tpl');
 	$Cache->load('articles');

@@ -569,7 +569,7 @@ function redirect($url)
 
 	if (!empty($CONFIG) && is_array($CONFIG))
 	{
-		import('util/url');
+		import('util/Url');
 		$url = new Url($url);
 		$url = $url->absolute();
 	}
@@ -721,7 +721,7 @@ function second_parse(&$content)
  */
 function second_parse_url(&$url)
 {
-	import('util/url');
+	import('util/Url');
 	$Url = new Url($url);
 	return $Url->absolute();
 }

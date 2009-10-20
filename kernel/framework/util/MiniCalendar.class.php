@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-import('util/date');
+import('util/Date');
 
 /**
  * @desc This class enables you to retrieve easily a date entered by a user.

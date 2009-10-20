@@ -60,7 +60,7 @@ $Template->assign_vars(array(
 if (!empty($table) && $action == 'data')
 {
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.

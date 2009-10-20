@@ -232,7 +232,7 @@ else
 	$nbr_web = $Sql->count_table('web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 
 	$Template->assign_vars(array(	

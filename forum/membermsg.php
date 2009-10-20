@@ -42,7 +42,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination;
 	
 	$auth_cats = '';

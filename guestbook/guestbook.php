@@ -35,7 +35,7 @@ $guestbook = retrieve(POST, 'guestbookForm', false);
 $Cache->load('guestbook');
 
 //Captcha
-import('util/captcha');
+import('util/Captcha');
 $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
@@ -227,7 +227,7 @@ else //Affichage.
 	
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

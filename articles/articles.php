@@ -58,7 +58,7 @@ if (!empty($idart) && isset($cat) )
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
 	//On crée une pagination si il y plus d'une page.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.

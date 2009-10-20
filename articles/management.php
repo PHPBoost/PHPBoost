@@ -31,9 +31,9 @@ require_once('articles_begin.php');
 require_once('articles_cats.class.php');
 $articles_categories = new ArticlesCats();
 
-import('util/date');
+import('util/Date');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-import('util/mini_calendar');
+import('util/MiniCalendar');
 
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);

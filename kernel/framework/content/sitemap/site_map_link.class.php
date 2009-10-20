@@ -26,8 +26,8 @@
  *
  ###################################################*/
 
-import('util/date');
-import('util/url');
+import('util/Date');
+import('util/Url');
 import('content/sitemap/site_map_element');
 
 /**

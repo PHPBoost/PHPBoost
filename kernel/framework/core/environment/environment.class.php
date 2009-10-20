@@ -48,7 +48,7 @@ class Environment
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-		import('util/string_vars');
+		import('util/StringVars');
 		import('io/request/http_request');
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
@@ -64,9 +64,9 @@ class Environment
 		import('members/groups_service');
 		import('members/session');
 		import('members/user');
-		import('util/bench');
-		import('util/date');
-		import('util/debug');
+		import('util/Bench');
+		import('util/Date');
+		import('util/Debug');
 	}
 
 	/**

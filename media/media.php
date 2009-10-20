@@ -161,7 +161,7 @@ if (empty($id_media) && $id_cat >= 0)
 		));
 
 		//On crée une pagination si le nombre de fichiers est trop important.
-		import('util/pagination');
+		import('util/Pagination');
 		$Pagination = new Pagination();
 
 		//Notes

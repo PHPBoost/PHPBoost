@@ -1,7 +1,7 @@
 <?php
 
-import('util/date');
-import('mvc/model/business_object');
+import('util/Date');
+import('mvc/model/BusinessObject');
 
 mimport('blog/models/dao/blog_post_dao');
 

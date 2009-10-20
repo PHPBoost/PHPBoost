@@ -48,7 +48,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-import('util/pagination'); 
+import('util/Pagination'); 
 $Pagination = new Pagination();
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.

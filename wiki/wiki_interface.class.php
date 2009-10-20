@@ -211,8 +211,8 @@ class WikiInterface extends ModuleInterface
 		}
 
 		import('content/syndication/feed_data');
-		import('util/date');
-		import('util/url');
+		import('util/Date');
+		import('util/Url');
 
 		$data = new FeedData();
 
@@ -349,7 +349,7 @@ class WikiInterface extends ModuleInterface
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
 		
 		import('content/sitemap/module_map');
-		import('util/url');
+		import('util/Url');
 		
 		load_module_lang('wiki');
 		$Cache->load('wiki');

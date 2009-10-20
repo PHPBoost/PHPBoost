@@ -56,7 +56,7 @@ if ($page > 0)
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 	
 	$result = $Sql->query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name

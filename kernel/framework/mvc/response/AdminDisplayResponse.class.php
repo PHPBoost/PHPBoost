@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           model.class.php
+ *                           admin_display_response.class.php
  *                            -------------------
- *   begin                : June 13 2009
+ *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,37 +25,20 @@
  *
  ###################################################*/
 
-abstract class ModelException {}
+import('mvc/response/AbstractResponse');
 
-class InvalidFieldTypeModelException extends ModelException
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc the response
+ * @package mvc
+ * @subpackage response
+ */
+class AdminDisplayResponse extends AbstractResponse
 {
-	public function __construct($field, $type, $length)
+	public function __construct($view)
 	{
-		parent::__construct('Invalid field type for field ' . $field . ' of type ' . $type . ' (' . $length . ')');
-	}
-}
-
-class NoTableModelException extends ModelException
-{
-	public function __construct()
-	{
-		parent::__construct('No Table given');
-	}
-}
-
-class NoPrimaryKeyModelException extends ModelException
-{
-	public function __construct($model_name)
-	{
-		parent::__construct('No Primary Key found for model ' . $model_name);
-	}
-}
-
-class ValidationException extends Exception
-{
-	public function __construct($message = 'Validation Exception')
-	{
-		parent::__construct($message);
+		import('core/environment/admin_display_graphical_environment');
+		parent::__construct(new AdminDisplayGraphicalEnvironment(), $view);
 	}
 }
 ?>

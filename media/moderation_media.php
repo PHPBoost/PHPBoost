@@ -170,7 +170,7 @@ else
 	}
 	
 	//On crée une pagination si le nombre de fichier est trop important.
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 
 	$nbr_media = 0;
