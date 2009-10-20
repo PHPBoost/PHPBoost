@@ -57,7 +57,7 @@ class Environment
 		import('core/environment/app_context');
 		import('core/environment/graphical_environment');
 		import('core/errors');
-		import('db/mysql');
+		import('db/Sql');
 		import('io/template/Template');
 		import('io/template/DeprecatedTemplate');
 		import('members/Authorizations');

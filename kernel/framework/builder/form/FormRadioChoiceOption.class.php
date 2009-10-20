@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_input_checkbox_option.class.php
+ *                             field_input_radio_option.class.php
  *                            -------------------
- *   begin                : April 28, 2009
+ *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,29 +24,29 @@
  *
 ###################################################*/
 
-import('builder/form/form_field_composite');
+import('builder/form/FormFieldComposite');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manages the checkbox fields.
- * It provides you some additionnal field options:
+ * @desc This class manage radio input field options.
+ * It provides you additionnal field options :
  * <ul>
  * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify it whether the option has to be checked.</li>
+ * 	<li>checked : Specify if the option has to be checked.</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormCheckboxOption extends FormFieldComposite
+class FormRadioChoiceOption extends FormFieldComposite
 {
 	private $checked = false;
 	
 	const CHECKED = true;
-
+	
 	/**
-	 * @param $label string The label for the checkbox option
-	 * @param $value string The value for the checkbox option
-	 * @param $checked boolean set to FORM__CHECKBOX_CHECKED to check the option
+	 * @param $label string The label for the radio option
+	 * @param $value string The value for the radio option
+	 * @param $checked boolean set to FORM__RADIO_CHECKED to check the option
 	 */
 	public function __construct($label, $value = '', $checked = false)
 	{
@@ -60,7 +60,7 @@ class FormCheckboxOption extends FormFieldComposite
 	 */
 	public function display()
 	{
-		$option = '<label><input type="checkbox" ';
+		$option = '<label><input type="radio" ';
 		$option .= 'name="' . $this->name . '" ';
 		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
 		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';

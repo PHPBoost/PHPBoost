@@ -114,7 +114,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 			));
 
 			//Update form
-			import('builder/form/form_builder');
+			import('builder/form/FormBuilder');
 			$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
 			$fieldset = new FormFieldset($LANG['update_msg']);
 			
@@ -204,7 +204,7 @@ else //Affichage.
 	$is_guest = !$User->check_level(MEMBER_LEVEL);
 	
 	//Post form
-	import('builder/form/form_builder');
+	import('builder/form/FormBuilder');
 	$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur

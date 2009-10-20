@@ -254,8 +254,8 @@ if ($edit_file_id > 0)
 			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 			if ($file_approved && !$file_properties['approved'])
 			{
-				import('events/contribution');
-				import('events/contribution_service');
+				import('events/Contribution');
+				import('events/ContributionService');
 				
 				$corresponding_contributions = ContributionService::find_by_criteria('download', $edit_file_id);
 				if (count($corresponding_contributions) > 0)
@@ -480,8 +480,8 @@ else
 			if (!$auth_write)
 			{
 				//Importing the contribution classes
-				import('events/contribution');
-				import('events/contribution_service');
+				import('events/Contribution');
+				import('events/ContributionService');
 				
 				$download_contribution = new Contribution();
 				

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             form_date_field.class.php
+ *                             field_input_text.class.php
  *                            -------------------
- *   begin                : September 19, 2009
+ *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,44 +24,40 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/FormField');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage single-line text fields for date input.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
- * </ul>
+ * @desc This class manage multi-line text fields.
  * @package builder
  * @subpackage form
  */
-class FormTextDate extends FormField
-{	
-	private $calendar_day = 1;
-	private $calendar_month = 1;
-	private $calendar_year = 2009;
-	private $num_instance = 0;
-	private static $num_instances = 0;
+class FormTextarea extends FormField
+{
+	private $rows = 10; //Rows for the textarea.
+	private $cols = 47; //Cols for the textarea.
+	private $editor = true; //Allow to hide the editor.
+	private $forbidden_tags = array(); //Forbiddend tags in the content.
 	
-	public function __construct($field_id, $field_options = array())
+	public function __construct($field_id, $field_value, $field_options = array())
 	{
-		$this->num_instance = ++self::$num_instances;
-
-		parent::__construct($field_id, '', $field_options);
+		parent::__construct($field_id, $field_value, $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'calendar_day' :
-					$this->calendar_day = $value;
+				case 'rows' :
+					$this->rows = $value;
 				break;
-				case 'calendar_month' :
-					$this->calendar_month = $value;
+				case 'cols' :
+					$this->cols = $value;
 				break;
-				case 'calendar_year' :
-					$this->calendar_year = $value;
+				case 'editor' :
+					$this->editor = $value;
+				break;
+				case 'forbiddentags' :
+					$this->forbidden_tags = $value;
 				break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
@@ -70,23 +66,25 @@ class FormTextDate extends FormField
 	}
 	
 	/**
-	 * @return string The html code for the input.
+	 * @return string The html code for the textarea.
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_date.tpl');
+		$Template = new Template('framework/builder/forms/field_extended.tpl');
+			
+		$field = '<textarea type="text" ';
+		$field .= 'rows="' . $this->rows . '" ';
+		$field .= 'cols="' . $this->cols . '" ';
+		$field .= 'name="' . $this->name . '" ';
+		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
+		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '"> ' : '>';
+		$field .= $this->value;
+		$field .= '</textarea>';
 		
 		$Template->assign_vars(array(
-			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
-			'INSTANCE' => $this->num_instance,
 			'ID' => $this->id,
-			'NAME' => $this->name,
-			'VALUE' => $this->value,
-			'CLASS' => !empty($this->css_class) ? ' ' . $this->css_class : '',
-			'ONBLUR' => $this->on_blur,
-			'CALENDAR_DAY' => $this->calendar_day,
-			'CALENDAR_MONTH' => $this->calendar_month,
-			'CALENDAR_YEAR' => $this->calendar_year,
+			'FIELD' => $field,
+			'KERNEL_EDITOR' => $this->editor ? display_editor($this->id, $this->forbidden_tags) : '',
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''

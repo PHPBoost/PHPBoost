@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_select.class.php
+ *                             field_free_field.class.php
  *                            -------------------
- *   begin                : April 28, 2009
+ *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,88 +24,61 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
-import('builder/form/form_select_option');
+import('builder/form/FormField');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select fields. 
+ * @desc This class manage free contents fields.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
+ * 	<li>template : A template object to personnalize the field</li>
+ * 	<li>content : The field html content if you don't use a personnal template</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormSelect extends FormField
+class FormFreeField extends FormField
 {
-	private $options = array();
-	private $multiple = false;
+	private $content = ''; //Content of the free field
+	private $template = ''; //Optionnal template
 	
-	public function __construct()
+	public function __construct($field_id, $field_options)
 	{
-		$field_id = func_get_arg(0);
-		$field_options = func_get_arg(1);
-
 		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'multiple' :
-					$this->multiple = $value;
+				case 'template' :
+					$this->template = $value;
+				break;
+				case 'content' :
+					$this->content = $value;
 				break;
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
+					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
-		
-		$nbr_arg = func_num_args() - 1;		
-		for ($i = 2; $i <= $nbr_arg; $i++)
-		{
-			$option = func_get_arg($i);
-			$this->add_errors($option->get_errors());
-			$this->options[] = $option;
-		}
 	}
 	
 	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormSelectOption option The new option. 
-	 */
-	public function add_option(&$option)
-	{
-		$this->options[] = $option;
-	}
-	
-	/**
-	 * @return string The html code for the select.
+	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_select.tpl');
-		
-		if ($this->multiple)
-			$field = '<select name="' . $this->name . '[]" multiple="multiple">' . $this->options . '</select>';
+		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template') //Optionnal template
+			$Template = $this->template;
 		else
-			$field = '<select name="' . $this->name . '">' . $this->options . '</select>';
+			$Template = new Template('framework/builder/forms/field.tpl');
 			
 		$Template->assign_vars(array(
 			'ID' => $this->id,
-			'C_SELECT_MULTIPLE' => $this->multiple,
-			'L_FIELD_NAME' => $this->name,
+			'FIELD' => $this->content,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
-		
-		foreach($this->options as $Option)
-		{
-			$Template->assign_block_vars('field_options', array(
-				'OPTION' => $Option->display(),
-			));	
-		}
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}

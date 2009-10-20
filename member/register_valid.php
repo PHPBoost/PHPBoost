@@ -141,7 +141,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
 					if ($CONFIG_USER['activ_mbr'] == 2)
 					{
-						import('events/administrator_alert_service');
+						import('events/AdministratorAlertService');
 						
 						$alert = new AdministratorAlert();
 						$alert->set_entitled($LANG['member_registered_to_approbate']);

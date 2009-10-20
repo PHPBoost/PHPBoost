@@ -70,7 +70,7 @@ if (retrieve(GET, 'restart', false))
 	redirect(HOST . add_lang(FILE, true));
 }
 
-import('db/mysql');
+import('db/Sql');
 
 //Template d'installation
 $template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);

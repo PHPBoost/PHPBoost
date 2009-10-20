@@ -72,7 +72,7 @@ function connect_mini($position, $block)
     		}
     	}
     
-    	import('events/administrator_alert_service');
+    	import('events/AdministratorAlertService');
     	
     	$tpl->assign_vars(array(
     		'C_ADMIN_AUTH' => $User->check_level(ADMIN_LEVEL),

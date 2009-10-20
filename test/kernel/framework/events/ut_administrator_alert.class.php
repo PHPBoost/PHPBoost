@@ -6,7 +6,7 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 
-import('events/administrator_alert');
+import('events/AdministratorAlert');
 
 unset($Errorh);
 

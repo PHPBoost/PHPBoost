@@ -51,7 +51,7 @@ $updates_availables = 0;
 if (phpversion() > PHP_MIN_VERSION_UPDATES)
 {
     // Retrieves all the update alerts from the database
-    import('events/administrator_alert_service');
+    import('events/AdministratorAlertService');
     import('core/application');
     $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
     $updates = array();

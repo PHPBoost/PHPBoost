@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_select_option.class.php
+ *                             field_input_checkbox_option.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,41 +24,47 @@
  *
 ###################################################*/
 
-import('builder/form/form_field_composite');
+import('builder/form/FormFieldComposite');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select field options.
+ * @desc This class manages the checkbox fields.
+ * It provides you some additionnal field options:
+ * <ul>
+ * 	<li>optiontitle : The option title</li>
+ * 	<li>checked : Specify it whether the option has to be checked.</li>
+ * </ul>
  * @package builder
  * @subpackage form
  */
-class FormSelectOption extends FormFieldComposite
+class FormCheckboxOption extends FormFieldComposite
 {
-	private $selected = false;
+	private $checked = false;
 	
-	const SELECTED = true;
-	
+	const CHECKED = true;
+
 	/**
-	 * @param $label string The label for the select option
-	 * @param $value string The value for the select option
-	 * @param $checked boolean set to FORM__SELECT_SELECTED to select the option
+	 * @param $label string The label for the checkbox option
+	 * @param $value string The value for the checkbox option
+	 * @param $checked boolean set to FORM__CHECKBOX_CHECKED to check the option
 	 */
-	public function __construct($label, $value = '', $selected = false)
+	public function __construct($label, $value = '', $checked = false)
 	{
 		$this->label = $label;
 		$this->value = $value;
-		$this->selected = $selected;
+		$this->checked = $checked;
 	}
-		
+	
 	/**
-	 * @return string The html code for the select.
+	 * @return string The html code for the radio input.
 	 */
 	public function display()
 	{
-		$option = '<option ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
-		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
-		$option .= '>' . $this->label . '</option>' . "\n";
+		$option = '<label><input type="checkbox" ';
+		$option .= 'name="' . $this->name . '" ';
+		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
+		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
+		$option .= '/> ' . $this->label . '</label><br />' . "\n";
 		
 		return $option;
 	}

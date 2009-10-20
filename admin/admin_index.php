@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Gestion des alertes.
-import('events/administrator_alert_service');
+import('events/AdministratorAlertService');
 
 //Enregistrement du bloc note
 $writingpad = retrieve(POST, 'writingpad', '');

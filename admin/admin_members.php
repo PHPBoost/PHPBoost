@@ -197,7 +197,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				if ($member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0)
 				{
 					//On recherche l'alerte
-					import('events/administrator_alert_service');
+					import('events/AdministratorAlertService');
 					
 					//Recherche de l'alerte correspondante
 					$matching_alerts = AdministratorAlertService::find_by_criteria($id_post, 'member_account_to_approbate');

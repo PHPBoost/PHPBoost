@@ -4,7 +4,7 @@ require_once 'header.php';
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-import('events/contribution');
+import('events/Contribution');
 
 unset($Errorh);
 

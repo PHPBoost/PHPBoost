@@ -42,7 +42,7 @@ define('DB_UNKNOW_ERROR', -1);
 //Function which returns a result code
 function check_database_config(&$host, &$login, &$password, &$database_name, $tables_prefix)
 {
-	import('db/mysql');
+	import('db/Sql');
 	import('core/errors');
 
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)

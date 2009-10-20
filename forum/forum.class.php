@@ -456,8 +456,8 @@ class Forum
 		$alert_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_alerts");
 
 		//Importing the contribution classes
-		import('events/contribution');
-		import('events/contribution_service');
+		import('events/Contribution');
+		import('events/ContributionService');
 
 		$contribution = new Contribution();
 
@@ -501,8 +501,8 @@ class Forum
 		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
 
 		//Si la contribution associée n'est pas réglée, on la règle
-		import('events/contribution');
-		import('events/contribution_service');
+		import('events/Contribution');
+		import('events/ContributionService');
 		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
@@ -535,8 +535,8 @@ class Forum
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
 		
 		//Si la contribution associée n'est pas réglée, on la règle
-		import('events/contribution');
-		import('events/contribution_service');
+		import('events/Contribution');
+		import('events/ContributionService');
 		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)

@@ -4,7 +4,7 @@ require_once 'header.php';
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
-import('events/event');
+import('events/Event');
 
 unset($Errorh);
 

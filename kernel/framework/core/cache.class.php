@@ -456,11 +456,11 @@ class Cache
 		foreach ($CONFIG_USER as $key => $value)
 		$config_member .= '$CONFIG_USER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 
-		import('events/contribution_service');
+		import('events/ContributionService');
 		//Unread contributions for each profile
 		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
 
-		import('events/administrator_alert_service');
+		import('events/AdministratorAlertService');
 		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
 
 		return $config_member;
