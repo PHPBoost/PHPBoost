@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_text.class.php
+ *                             field_select.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,70 +24,88 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/FormField');
+import('builder/form/FormSelectOption');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage single-line text fields.
+ * @desc This class manage select fields. 
  * It provides you additionnal field options :
  * <ul>
- * 	<li>size : The maximum size for the field</li>
- * 	<li>maxlength : The maximum length for the field</li>
- * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
+ * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormTextEdit extends FormField
+class FormSelect extends FormField
 {
-	private $size = '';
-	private $maxlength = '';
+	private $options = array();
+	private $multiple = false;
 	
-	public function __construct($field_id, $field_value, $field_options = array())
+	public function __construct()
 	{
-		parent::__construct($field_id, $field_value, $field_options);
-		
+		$field_id = func_get_arg(0);
+		$field_options = func_get_arg(1);
+
+		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'size' :
-					$this->size = $value;
-				break;
-				case 'maxlength' :
-					$this->maxlength = $value;
+				case 'multiple' :
+					$this->multiple = $value;
 				break;
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
+					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
+		}
+		
+		$nbr_arg = func_num_args() - 1;		
+		for ($i = 2; $i <= $nbr_arg; $i++)
+		{
+			$option = func_get_arg($i);
+			$this->add_errors($option->get_errors());
+			$this->options[] = $option;
 		}
 	}
 	
 	/**
-	 * @return string The html code for the input.
+	 * @desc Add an option for the radio field.
+	 * @param FormSelectOption option The new option. 
+	 */
+	public function add_option(&$option)
+	{
+		$this->options[] = $option;
+	}
+	
+	/**
+	 * @return string The html code for the select.
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field.tpl');
-			
-		$field = '<input type="text" ';
-		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
-		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
-		$field .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
-		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
-		$field .= 'value="' . $this->value . '" ';
-		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= !empty($this->on_blur) ? 'onblur="' . $this->on_blur . '" ' : '';
-		$field .= '/>';
+		$Template = new Template('framework/builder/forms/field_select.tpl');
 		
+		if ($this->multiple)
+			$field = '<select name="' . $this->name . '[]" multiple="multiple">' . $this->options . '</select>';
+		else
+			$field = '<select name="' . $this->name . '">' . $this->options . '</select>';
+			
 		$Template->assign_vars(array(
 			'ID' => $this->id,
-			'FIELD' => $field,
+			'C_SELECT_MULTIPLE' => $this->multiple,
+			'L_FIELD_NAME' => $this->name,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
+		
+		foreach($this->options as $Option)
+		{
+			$Template->assign_block_vars('field_options', array(
+				'OPTION' => $Option->display(),
+			));	
+		}
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}

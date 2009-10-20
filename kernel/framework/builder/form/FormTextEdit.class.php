@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_file_uploader.class.php
+ *                             field_input_text.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,26 +24,28 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/FormField');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage file input fields.
+ * @desc This class manage single-line text fields.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>size : The size for the field</li>
+ * 	<li>size : The maximum size for the field</li>
+ * 	<li>maxlength : The maximum length for the field</li>
+ * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormFileUploader extends FormField
+class FormTextEdit extends FormField
 {
 	private $size = '';
-	private $extended_text = '';
+	private $maxlength = '';
 	
-	public function __construct($field_id, $field_options = array())
+	public function __construct($field_id, $field_value, $field_options = array())
 	{
-		parent::__construct($field_id, '', $field_options);
+		parent::__construct($field_id, $field_value, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -53,9 +55,9 @@ class FormFileUploader extends FormField
 				case 'size' :
 					$this->size = $value;
 				break;
-				case 'extended_text':
-					$this->extended_text = $value;
-				break; 
+				case 'maxlength' :
+					$this->maxlength = $value;
+				break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
@@ -63,20 +65,21 @@ class FormFileUploader extends FormField
 	}
 	
 	/**
-	 * @return string The html code for the file input.
+	 * @return string The html code for the input.
 	 */
-	function display()
+	public function display()
 	{
 		$Template = new Template('framework/builder/forms/field.tpl');
 			
-		$field = '<input type="file" ';
-		$field .= 'name="' . $this->name . '" ';
+		$field = '<input type="text" ';
 		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
+		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
+		$field .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
+		$field .= 'value="' . $this->value . '" ';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= '/>
-		<input name="max_file_size" value="2000000" type="hidden">'
-		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
+		$field .= !empty($this->on_blur) ? 'onblur="' . $this->on_blur . '" ' : '';
+		$field .= '/>';
 		
 		$Template->assign_vars(array(
 			'ID' => $this->id,

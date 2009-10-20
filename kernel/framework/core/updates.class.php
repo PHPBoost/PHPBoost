@@ -142,7 +142,7 @@ class Updates
 	*/
     function _add_update_alert(&$app)
     {
-        import('events/administrator_alert_service');
+        import('events/AdministratorAlertService');
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
         if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)

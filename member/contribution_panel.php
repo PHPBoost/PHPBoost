@@ -35,7 +35,7 @@ $id_to_delete = retrieve(GET, 'del', 0);
 $id_to_update = retrieve(POST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
-import('events/contribution_service');
+import('events/ContributionService');
 import('util/Date');
 
 if ($contribution_id > 0)

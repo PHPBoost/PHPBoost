@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_free_field.class.php
+ *                             form_file_uploader.class.php
  *                            -------------------
- *   begin                : September 19, 2009
+ *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,38 +24,38 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/FormField');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage free contents fields.
+ * @desc This class manage file input fields.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>template : A template object to personnalize the field</li>
- * 	<li>content : The field html content if you don't use a personnal template</li>
+ * 	<li>size : The size for the field</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormFreeField extends FormField
+class FormFileUploader extends FormField
 {
-	private $content = ''; //Content of the free field
-	private $template = ''; //Optionnal template
+	private $size = '';
+	private $extended_text = '';
 	
-	public function __construct($field_id, $field_options)
+	public function __construct($field_id, $field_options = array())
 	{
 		parent::__construct($field_id, '', $field_options);
+		
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'template' :
-					$this->template = $value;
+				case 'size' :
+					$this->size = $value;
 				break;
-				case 'content' :
-					$this->content = $value;
-				break;
+				case 'extended_text':
+					$this->extended_text = $value;
+				break; 
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
@@ -63,18 +63,24 @@ class FormFreeField extends FormField
 	}
 	
 	/**
-	 * @return string The html code for the free field.
+	 * @return string The html code for the file input.
 	 */
-	public function display()
+	function display()
 	{
-		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template') //Optionnal template
-			$Template = $this->template;
-		else
-			$Template = new Template('framework/builder/forms/field.tpl');
+		$Template = new Template('framework/builder/forms/field.tpl');
 			
+		$field = '<input type="file" ';
+		$field .= 'name="' . $this->name . '" ';
+		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
+		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
+		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
+		$field .= '/>
+		<input name="max_file_size" value="2000000" type="hidden">'
+		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
+		
 		$Template->assign_vars(array(
 			'ID' => $this->id,
-			'FIELD' => $this->content,
+			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''

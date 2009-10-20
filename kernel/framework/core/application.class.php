@@ -30,7 +30,7 @@ define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
 import('util/Date');
-import('events/administrator_alert');
+import('events/AdministratorAlert');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/form/form_builder');
+import('builder/form/FormBuilder');
 
 /**
  * @desc

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_captcha_field.class.php
+ *                             field_input_radio.class.php
  *                            -------------------
- *   begin                : September 19, 2009
+ *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,58 +24,74 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/FormField');
+import('builder/form/FormRadioChoiceOption');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage captcha validation fields to avoid bot spam.
+ * @desc This class manage radio input fields.
  * @package builder
  * @subpackage form
  */
-class FormCaptchaField extends FormField
+class FormRadioChoice extends FormField
 {
-	private $Captcha = ''; //Captcha object
+	private $options = array(); //Array of FormRadioChoiceOption
 	
 	/**
-	 * @param $field_id string The html field identifier
-	 * @param $Captcha Captcha The captcha object
-	 * @param $field_options array Field's options
+	 * @desc constructor It takes a variable number of parameters. The first two are required. 
+	 * @param string $field_id Name of the field.
+	 * @param array $field_options Option for the field.
+	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
 	 */
-	public function __construct($field_id, &$Captcha, $field_options = array())
+	public function __construct()
 	{
-		global $LANG;
-		
-		$this->title = $LANG['verif_code'];
-		$this->required_alert = $LANG['require_verif_code'];
-		$this->required = true;
-		
-		parent::__construct($field_id . $Captcha->get_instance(), '', $field_options);
-		$this->Captcha = $Captcha;
+		$field_id = func_get_arg(0);
+		$field_options = func_get_arg(2);
+
+		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
-		{
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
+		
+		$nbr_arg = func_num_args() - 1;		
+		for ($i = 2; $i <= $nbr_arg; $i++)
+		{
+			$option = func_get_arg($i);
+			$this->add_errors($option->get_errors());
+			$this->options[] = $option;
 		}
 	}
 	
 	/**
-	 * @return string The html code for the free field.
+	 * @desc Add an option for the radio field.
+	 * @param FormRadioChoiceOption option The new option. 
+	 */
+	public function add_option(&$option)
+	{
+		$this->options[] = $option;
+	}
+	
+	/**
+	 * @return string The html code for the radio input.
 	 */
 	public function display()
 	{
-		$this->Captcha->save_user();
-		
-		$Template = new Template('framework/builder/forms/field_captcha.tpl');
+		$Template = new Template('framework/builder/forms/field_box.tpl');
 			
 		$Template->assign_vars(array(
 			'ID' => $this->id,
+			'FIELD' => $this->options,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'CAPTCHA_INSTANCE' => $this->Captcha->get_instance(),
-			'CAPTCHA_WIDTH' => $this->Captcha->get_width(),
-			'CAPTCHA_HEIGHT' => $this->Captcha->get_height(),
-			'CAPTCHA_FONT' => $this->Captcha->get_font(),
-			'CAPTCHA_DIFFICULTY' => $this->Captcha->get_difficulty()
+			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
+		
+		foreach($this->options as $Option)
+		{
+			$Option->set_name($this->name); //Set the same field name for each option.
+			$Template->assign_block_vars('field_options', array(
+				'OPTION' => $Option->display(),
+			));	
+		}
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}

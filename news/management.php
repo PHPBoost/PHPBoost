@@ -157,8 +157,8 @@ elseif (!empty($_POST['submit']))
 				
 				if ($news['visible'])
 				{
-					import('events/contribution');
-					import('events/contribution_service');
+					import('events/Contribution');
+					import('events/ContributionService');
 
 					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);
 
@@ -184,8 +184,8 @@ elseif (!empty($_POST['submit']))
 				if ($auth_contrib)
 				{
 					//Importing the contribution classes
-					import('events/contribution');
-					import('events/contribution_service');
+					import('events/Contribution');
+					import('events/ContributionService');
 					$news_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)

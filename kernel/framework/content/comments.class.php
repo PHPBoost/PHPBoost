@@ -293,7 +293,7 @@ class Comments
 						$is_guest = $row['user_id'] == -1;
 						
 						//Post form
-						import('builder/form/form_builder');
+						import('builder/form/FormBuilder');
 						$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . '&amp;token=' . $Session->get_token() . '&amp;updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : ''));
 						$fieldset = new FormFieldset($LANG['edit_comment']);
 						if ($is_guest) //Visiteur
@@ -454,7 +454,7 @@ class Comments
 				$is_guest = !$User->check_level(MEMBER_LEVEL);
 						
 				//Post form
-				import('builder/form/form_builder');
+				import('builder/form/FormBuilder');
 				$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
 				$fieldset = new FormFieldset($LANG['add_comment']);
 				if ($is_guest) //Visiteur

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('events/administrator_alert');
+import('events/AdministratorAlert');
 
 //Flag which distinguishes an alert and a contribution in the database
 define('ADMINISTRATOR_ALERT_TYPE', 1);

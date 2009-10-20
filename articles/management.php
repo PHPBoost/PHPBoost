@@ -204,8 +204,8 @@ elseif(retrieve(POST,'submit',false))
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 				if ($file_approved && !$articles_properties['visible'])
 				{
-					import('events/contribution');
-					import('events/contribution_service');
+					import('events/Contribution');
+					import('events/ContributionService');
 						
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
@@ -250,8 +250,8 @@ elseif(retrieve(POST,'submit',false))
 				if ($auth_contrib)
 				{
 					//Importing the contribution classes
-					import('events/contribution');
-					import('events/contribution_service');
+					import('events/Contribution');
+					import('events/ContributionService');
 					$articles_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)

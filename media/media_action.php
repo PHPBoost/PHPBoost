@@ -342,8 +342,8 @@ elseif (!empty($_POST['submit']))
 
 		if ($media['approved'])
 		{
-			import('events/contribution');
-			import('events/contribution_service');
+			import('events/Contribution');
+			import('events/ContributionService');
 
 			$corresponding_contributions = ContributionService::find_by_criteria('media', $media['idedit']);
 
@@ -375,8 +375,8 @@ elseif (!empty($_POST['submit']))
 
 		if (!$auth_write)
 		{
-			import('events/contribution');
-			import('events/contribution_service');
+			import('events/Contribution');
+			import('events/ContributionService');
 
 			$media_contribution = new Contribution();
 			$media_contribution->set_id_in_module($new_id_media);

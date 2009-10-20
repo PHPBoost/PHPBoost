@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_input_radio_option.class.php
+ *                             field_select_option.class.php
  *                            -------------------
- *   begin                : May 01, 2009
+ *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -24,47 +24,41 @@
  *
 ###################################################*/
 
-import('builder/form/form_field_composite');
+import('builder/form/FormFieldComposite');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage radio input field options.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify if the option has to be checked.</li>
- * </ul>
+ * @desc This class manage select field options.
  * @package builder
  * @subpackage form
  */
-class FormRadioChoiceOption extends FormFieldComposite
+class FormSelectOption extends FormFieldComposite
 {
-	private $checked = false;
+	private $selected = false;
 	
-	const CHECKED = true;
+	const SELECTED = true;
 	
 	/**
-	 * @param $label string The label for the radio option
-	 * @param $value string The value for the radio option
-	 * @param $checked boolean set to FORM__RADIO_CHECKED to check the option
+	 * @param $label string The label for the select option
+	 * @param $value string The value for the select option
+	 * @param $checked boolean set to FORM__SELECT_SELECTED to select the option
 	 */
-	public function __construct($label, $value = '', $checked = false)
+	public function __construct($label, $value = '', $selected = false)
 	{
 		$this->label = $label;
 		$this->value = $value;
-		$this->checked = $checked;
+		$this->selected = $selected;
 	}
-	
+		
 	/**
-	 * @return string The html code for the radio input.
+	 * @return string The html code for the select.
 	 */
 	public function display()
 	{
-		$option = '<label><input type="radio" ';
-		$option .= 'name="' . $this->name . '" ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
-		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
-		$option .= '/> ' . $this->label . '</label><br />' . "\n";
+		$option = '<option ';
+		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
+		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
+		$option .= '>' . $this->label . '</option>' . "\n";
 		
 		return $option;
 	}

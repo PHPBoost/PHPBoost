@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 
 $template = new Template('admin/admin_alerts.tpl');
 
-import('events/administrator_alert_service');
+import('events/AdministratorAlertService');
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
