@@ -338,7 +338,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//Gestion langue par défaut.
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 	$lang_array = array();
 	$lang_folder_path = new Folder('../lang/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
@@ -425,7 +425,7 @@ else //Sinon on rempli le formulaire
 //Renvoi du code de déblocage.
 if (!empty($_GET['unlock']))
 {
-	import('io/mail');
+	import('io/Mail');
 	$Mail = new Mail();
 	
 	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;

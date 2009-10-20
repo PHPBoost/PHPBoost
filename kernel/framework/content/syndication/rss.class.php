@@ -27,7 +27,7 @@
 
 define('DEFAULT_RSS_TEMPLATE', 'framework/content/syndication/rss.tpl');
 
-import('io/template/template');
+import('io/template/Template');
 import('content/syndication/feed');
 
 /**

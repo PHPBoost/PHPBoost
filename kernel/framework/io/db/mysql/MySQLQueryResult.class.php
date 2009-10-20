@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/db/query_result');
-import('io/db/mysql/mysql_querier_exception');
+import('io/db/QueryResult');
+import('io/db/mysql/MySQLQuerierException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

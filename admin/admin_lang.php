@@ -90,7 +90,7 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_lang))
 		{
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$folder = new Folder('../lang/' . $previous_lang);
 			if (!$folder->delete())
 				$error = 'files_del_failed';

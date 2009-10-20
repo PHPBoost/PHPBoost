@@ -472,7 +472,7 @@ function parse_ini_array($links_format)
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
 	$dir = find_require_dir($dir_path, $require_dir, false);
-	import('io/filesystem/file');
+	import('io/filesystem/File');
 
 	$module_config_file = new File($dir_path . $dir . '/config.ini', READ);
 	$module_config_file->open();
@@ -642,7 +642,7 @@ function check_nbr_links($contents, $max_nbr)
  */
 function check_mail($mail)
 {
-	import('io/mail');
+	import('io/Mail');
 	return Mail::check_validity($mail);
 }
 

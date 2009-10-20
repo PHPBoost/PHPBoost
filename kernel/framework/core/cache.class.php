@@ -218,7 +218,7 @@ class Cache
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
-		import('io/filesystem/file');
+		import('io/filesystem/File');
 		$cache_file = new File($file_path, WRITE);
 
 		//Suppression du fichier (si il existe)
@@ -383,7 +383,7 @@ class Cache
 		}
 
 		//Ecriture du fichier .htaccess
-		import('io/filesystem/file');
+		import('io/filesystem/File');
 		$file = new File(PATH_TO_ROOT . '/.htaccess');
 
 		//We delete the existing file

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/config/config_data');
+import('io/config/ConfigData');
 
 /**
  * @package io

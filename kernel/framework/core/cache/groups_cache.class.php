@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/cache/cache_data');
+import('io/cache/CacheData');
 
 
 /**

@@ -74,7 +74,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		//Chargement de la configuration.
 		$Cache->load('uploads');
 		
-		import('io/upload');
+		import('io/Upload');
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		

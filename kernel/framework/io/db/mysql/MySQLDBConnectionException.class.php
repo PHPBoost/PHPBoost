@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           db_connection.class.php
+ *                           mysql_db_connection_exception.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,40 +25,23 @@
  *
  ###################################################*/
 
-import('io/db/db_connection_exception');
+import('io/db/DBConnectionException');
 
-interface DBConnection
+class MySQLDBConnectionException extends DBConnectionException
 {
-    /**
-     * @desc
-     * @return bool
-     */
-    function is_connected();
-    
-    /**
-     * @desc
-     * @throws DBConnectionException
-     * @throws UnexistingDatabaseException
-     */
-    function connect();
-    
-    /**
-     * @desc
-     */
-    function disconnect();
-    
-    /**
-     * @desc
-     * @param $database_name
-     * @throws UnexistingDatabaseException
-     */
-    function select_database($database_name);
-    
-    /**
-     * @desc
-     * @return DBLink
-     */
-    function get_link();
+    public function __construct($message)
+    {
+        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
+    }
+}
+
+
+class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
+{
+    public function __construct()
+    {
+        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
+    }
 }
 
 ?>

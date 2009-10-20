@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_querier_exception.class.php
+ *                           db_connection.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,14 +25,40 @@
  *
  ###################################################*/
 
-import('io/db/sql_querier_exception');
+import('io/db/DBConnectionException');
 
-class MySQLQuerierException extends SQLQuerierException
+interface DBConnection
 {
-    public function __construct($message)
-    {
-        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
-    }
+    /**
+     * @desc
+     * @return bool
+     */
+    function is_connected();
+    
+    /**
+     * @desc
+     * @throws DBConnectionException
+     * @throws UnexistingDatabaseException
+     */
+    function connect();
+    
+    /**
+     * @desc
+     */
+    function disconnect();
+    
+    /**
+     * @desc
+     * @param $database_name
+     * @throws UnexistingDatabaseException
+     */
+    function select_database($database_name);
+    
+    /**
+     * @desc
+     * @return DBLink
+     */
+    function get_link();
 }
 
 ?>

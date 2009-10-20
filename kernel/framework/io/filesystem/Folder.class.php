@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/filesystem/file_system_element');
-import('io/filesystem/file');
+import('io/filesystem/FileSystemElement');
+import('io/filesystem/File');
 
 /**
  * @package io

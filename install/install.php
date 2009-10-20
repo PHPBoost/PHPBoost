@@ -328,7 +328,7 @@ switch($step)
 				case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
 					import('core/errors');
 					$Errorh = new Errors;
-					import('io/db/mysql/mysql_querier');
+					import('io/db/mysql/MySQLQuerier');
 					$db_connection = new MySQLDBConnection($host, $login, $password);
 					$db_connection->connect();
 					$db_connection->select_database($database);
@@ -336,7 +336,7 @@ switch($step)
 					AppContext::set_sql($Sql);
 
 					//Création du fichier de configuration
-					import('io/filesystem/file');
+					import('io/filesystem/File');
 
 					$file_path = '../kernel/db/config.php';
 
@@ -628,7 +628,7 @@ switch($step)
 		//Validation de l'étape
 		if (retrieve(POST, 'submit', false))
 		{
-			import('io/mail');
+			import('io/Mail');
 
 			$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
 			$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
@@ -716,7 +716,7 @@ switch($step)
 
 				//On envoie un mail à l'administrateur
 				$LANG['admin'] = '';
-				import('io/mail');
+				import('io/Mail');
 				$mail = new Mail();
 					
 				//Paramètres du mail
@@ -826,7 +826,7 @@ array($LANG['end'], 'end.png', 100)
 $step_name = $steps[$step - 1][0];
 
 
-import('io/filesystem/folder');
+import('io/filesystem/Folder');
 
 $lang_dir = new Folder('../lang');
 

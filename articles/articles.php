@@ -215,7 +215,7 @@ if (!empty($idart) && isset($cat) )
 		$object=retrieve(POST,'subject','',TSTRING);		
 		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
 		
-		import('io/mail');
+		import('io/Mail');
 		$mail = new Mail();
  
 		$contents =  "Ceci est un e-mail de (".$CONFIG['site_name'].") envoyé par ".$exp." (".$user_mail."). Ce lien pourrait vous intéresser: ".$CONFIG['server_name'].$link.".";

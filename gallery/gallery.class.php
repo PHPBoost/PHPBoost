@@ -584,7 +584,7 @@ class Gallery
 	public function Clear_cache()
 	{
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
 		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`i') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());

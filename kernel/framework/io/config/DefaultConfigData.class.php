@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-import('io/config/config_data');
-import('io/config/config_manager');
-import('io/config/config_exceptions');
+import('io/config/ConfigData');
+import('io/config/ConfigManager');
+import('io/config/ConfigExceptions');
 
 /**
  * @package io

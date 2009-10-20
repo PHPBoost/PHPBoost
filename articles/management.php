@@ -339,7 +339,7 @@ else
 
 			$img_direct_path = (strpos($articles['icon'], '/') !== false);
 			$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
@@ -435,7 +435,7 @@ else
 			
 			//Images disponibles
 			$image_list = '<option value="" selected="selected">--</option>';
-			import('io/filesystem/folder');
+			import('io/filesystem/Folder');
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/query_result');
+import('io/db/QueryResult');
 
 class QueryResultMapper implements QueryResult
 {

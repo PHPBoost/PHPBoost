@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           template_parser_echo.class.php
+ *                           template_parser_string.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,22 +25,30 @@
  *
  ###################################################*/
 
-import('io/template/abstract_template_parser');
+import('io/template/AbstractTemplateParser');
 
-class TemplateParserEcho extends AbstractTemplateParser
+class TemplateParserString extends AbstractTemplateParser
 {
+	const TPL_VAR_STRING = '$this->resource';
+	
 	protected function compute_cache_filepath()
 	{
 		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
 			array('/', '.', '..', 'tpl', 'templates'),
 			array('_', '', '', '', 'tpl'),
 			$this->template->get_identifier()
-		), '_') . '.php';
+		), '_') . '_str.php';
 	}
+	
+	/* public function parse($template_object, $template_loader)
+	{
+		parent::parse($template_object, $template_loader);
+		return $this->result;
+	} */
 	
 	protected function do_parse()
 	{
-		$this->parse_xml();
+		$this->prepare_parse();
 		$this->parse_vars();
 		$this->parse_imbricated_blocks();
 		$this->parse_conditional_blocks();
@@ -54,15 +62,13 @@ class TemplateParserEcho extends AbstractTemplateParser
 	
 	protected function optimize()
 	{
-		$this->content = preg_replace('` \?><\?php `', '', $this->content);
-		$this->content = preg_replace('` \?>[\s]+<\?php `', "echo ' ';", $this->content);
-		$this->content = preg_replace("`echo ' ';echo `", "echo ' ' . ", $this->content);
-		$this->content = preg_replace("`''\);echo `", "'') . ", $this->content);
+		$this->content = str_replace(self::TPL_VAR_STRING . ' .= \'\';', '', $this->content);
+		$this->content = preg_replace(array('`[\n]{2,}`', '`[\r]{2,}`', '`[\t]{2,}`', '`[ ]{2,}`'), array('', '', '', ''), $this->content);
 	}
 	
-	private function parse_xml()
+	private function prepare_parse()
 	{
-		$this->content = preg_replace_callback('`\<\?(?!php)(\s.*)\?\>`i', array($this, 'callback_accept_xml'), $this->content);
+		$this->content = '<?php ' . self::TPL_VAR_STRING . ' = \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $this->content) . '\'; ?>';
 	}
 	
 	private function parse_vars()
@@ -74,32 +80,27 @@ class TemplateParserEcho extends AbstractTemplateParser
 	private function parse_imbricated_blocks()
 	{
 		$this->content = preg_replace_callback('`# START ([\w\.]+) #`', array($this, 'callback_parse_blocks'), $this->content);
-		$this->content = preg_replace('`# END [\w\.]+ #`', '<?php } ?>', $this->content);
+		$this->content = preg_replace('`# END [\w\.]+ #`', '\';'."\n".'}'."\n".'' . self::TPL_VAR_STRING . ' .= \'', $this->content);
 	}
 	
 	private function parse_conditional_blocks()
 	{
 		$this->content = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, 'callback_parse_if_blocks'), $this->content);
 		$this->content = preg_replace_callback('`# ELSEIF (NOT )?([\w\.]+) #`', array($this, 'callback_parse_elseif_blocks'), $this->content);
-		$this->content = preg_replace('`# ELSE #`', '<?php } else { ?>', $this->content);
-		$this->content = preg_replace('`# ENDIF #`', '<?php } ?>', $this->content);
+		$this->content = preg_replace('`# ELSE #`', '\';}else{' . self::TPL_VAR_STRING . '.=\'', $this->content);
+		$this->content = preg_replace('`# ENDIF #`', '\';}' . self::TPL_VAR_STRING . '.=\'', $this->content);
 	}
 	
 	private function parse_includes()
 	{
-		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
-			'if ($_subtemplate !== null) {$_subtemplate->parse();} ?>', $this->content);
-	}
-	
-	private function callback_accept_xml($mask)
-	{
-		return '<?php echo \'<?' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '?>\'; ?>';
+		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '\'; $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
+			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING . '.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING . '.=\'', $this->content);
 	}
 	
 	private function callback_parse_vars($varname)
 	{
 		$method_var = $this->get_getvar_method_name($varname[1]);
-		return '<?php echo $this->template->' . $method_var['method'] . '(\'' . $method_var['varname'] . '\'); ?>';
+		return '\' . $this->template->' . $method_var['method'] . '(\'' . $method_var['varname'] . '\') . \'';
 	}
 	
 	private function callback_parse_blocks_vars($blocks)
@@ -109,7 +110,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 		$last_block = array_pop($array_block);
 		
 		$method_var = $this->get_getvar_method_name($varname);
-		return '<?php echo $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value); ?>';
+		return '\' . $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value) . \'';
 	}
 	
 	private function callback_parse_blocks($blocks)
@@ -120,13 +121,13 @@ class TemplateParserEcho extends AbstractTemplateParser
 		if (strpos($blockname, '.') !== false) //Contient un bloc imbriqué.
 		{
 			$array_block = explode('.', $blockname);
+			$current_block = array_pop($array_block);
 			$blockname = array_pop($array_block);
-			$previous_block = array_pop($array_block);
 			
 			$second_param =', $_tmp_' . $previous_block . '_value';
 			$method .= '_from_list';
 		}
-		return '<?php foreach ($this->template->' . $method .'(\'' . $blockname. '\'' . $second_param .') as $_tmp_' . $blockname . '_value) {?>';
+		return '\'; foreach ($this->template->' . $method .'(\'' . $blockname. '\'' . $second_param .') as $_tmp_' . $blockname . '_value) {' . self::TPL_VAR_STRING . ' .= \'';
 	}
 	
 	private function callback_parse_if_blocks($blocks)
@@ -154,7 +155,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 			$second_param = ', $_tmp_' . $last_block . '_value';
 			$method .= '_from_list';
 		}
-		return '<?php ' . $block_type . ' (' . $not . '$this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) { ?>';
+		return '\'; ' . $block_type . ' (' . $not . '$this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
 	}
 }
 

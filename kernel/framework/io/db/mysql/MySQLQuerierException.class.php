@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_db_connection_exception.class.php
+ *                           mysql_querier_exception.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,22 +25,13 @@
  *
  ###################################################*/
 
-import('io/db/db_connection_exception');
+import('io/db/SQLQuerierException');
 
-class MySQLDBConnectionException extends DBConnectionException
+class MySQLQuerierException extends SQLQuerierException
 {
     public function __construct($message)
     {
         parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
-    }
-}
-
-
-class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
-{
-    public function __construct()
-    {
-        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
 

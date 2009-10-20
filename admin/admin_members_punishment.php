@@ -239,7 +239,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 				//Envoi du mail
-				import('io/mail');
+				import('io/Mail');
 				$Mail = new Mail();
 				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}	
@@ -355,7 +355,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			
 			if (!empty($user_ban)) //Envoi du mail
 			{
-				import('io/mail');
+				import('io/Mail');
 				$Mail = new Mail();
 				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}				

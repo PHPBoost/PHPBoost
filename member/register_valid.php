@@ -82,7 +82,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$user_avatar = '';
 				//Gestion upload d'avatar.
 				$dir = '../images/avatars/';
-				import('io/upload');
+				import('io/Upload');
 				$Upload = new Upload($dir);
 				
 				if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
@@ -260,7 +260,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					import('io/mail');
+					import('io/Mail');
 					$Mail = new Mail();
 					
 					$Mail->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);

@@ -56,7 +56,7 @@ if ($update) //Mise à jour du module
 		$dir_db_module = get_ulang();
 		$dir = '../' . $module_name . '/db';
 		
-		import('io/filesystem/folder');
+		import('io/filesystem/Folder');
 		$folder_path = new Folder($dir . '/' . $dir_db_module);
 		foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 		{	
@@ -132,7 +132,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	{
 		if (!is_dir('../' . $_FILES['upload_module']['name']))
 		{
-			import('io/upload');
+			import('io/Upload');
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					

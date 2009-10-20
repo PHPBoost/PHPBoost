@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/db/db_connection');
-import('io/db/mysql/mysql_db_connection_exception');
+import('io/db/DBConnection');
+import('io/db/mysql/MySQLDBConnectionException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

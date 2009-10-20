@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/config/default_config_data');
+import('io/config/DefaultConfigData');
 import('util/Date');
 
 /**

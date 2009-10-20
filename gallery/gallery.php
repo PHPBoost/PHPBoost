@@ -94,7 +94,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
-	import('io/upload');
+	import('io/Upload');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;

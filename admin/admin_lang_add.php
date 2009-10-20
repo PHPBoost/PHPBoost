@@ -73,7 +73,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_lang))
 		{
-			import('io/upload');
+			import('io/Upload');
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -144,7 +144,7 @@ else
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
-	import('io/filesystem/folder');
+	import('io/filesystem/Folder');
 	$dir_array = array();
 	$lang_folder_path = new Folder('../lang/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
