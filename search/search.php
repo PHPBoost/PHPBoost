@@ -70,7 +70,7 @@ $Template->assign_vars(Array(
 
 //------------------------------------------------------------- Other includes
 
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main

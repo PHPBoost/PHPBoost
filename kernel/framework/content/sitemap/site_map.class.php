@@ -163,7 +163,7 @@ class SiteMap
      */
     function build_modules_maps()
     {
-        import('modules/modules_discovery_service');
+        import('modules/ModulesDiscoveryService');
          
         $Modules = new ModulesDiscoveryService();
         foreach ($Modules->get_available_modules('get_module_map') as $module)

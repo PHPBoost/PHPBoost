@@ -3,7 +3,7 @@ require_once 'header.php';
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 
 unset($Errorh);
 

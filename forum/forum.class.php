@@ -82,7 +82,7 @@ class Forum
 
 			import('io/mail');
 			$Mail = new Mail();
-			import('members/pm');
+			import('members/PrivateMsg');
 			$Privatemsg = new PrivateMsg();
 
 			//Récupération des membres suivant le sujet.

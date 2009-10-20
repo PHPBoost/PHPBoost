@@ -25,13 +25,13 @@
  *
  ###################################################*/
 
-import('menu/menu');
+import('menu/Menu');
 
-import('menu/content/content_menu');
-import('menu/links/links_menu');
-import('menu/mini/mini_menu');
-import('menu/module_mini/module_mini_menu');
-import('menu/feed/feed_menu');
+import('menu/content/ContentMenu');
+import('menu/links/LinksMenu');
+import('menu/mini/MiniMenu');
+import('menu/module_mini/ModuleMiniMenu');
+import('menu/feed/FeedMenu');
 
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
@@ -639,7 +639,7 @@ class MenuService
      */
     function website_modules($menu_type = VERTICAL_MENU)
     {
-        import('modules/modules_discovery_service');
+        import('modules/ModulesDiscoveryService');
         $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
         // Création d'un menu contenant des liens vers tous les modules
         $modules_discovery_service = new ModulesDiscoveryService();

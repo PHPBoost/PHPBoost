@@ -60,10 +60,10 @@ class Environment
 		import('db/mysql');
 		import('io/template/template');
 		import('io/template/deprecated_template');
-		import('members/authorizations');
-		import('members/groups_service');
-		import('members/session');
-		import('members/user');
+		import('members/Authorizations');
+		import('members/GroupsService');
+		import('members/Session');
+		import('members/User');
 		import('util/Bench');
 		import('util/Date');
 		import('util/Debug');
@@ -454,7 +454,7 @@ class Environment
 
 	private static function execute_modules_changedays_tasks()
 	{
-		import('modules/modules_discovery_service');
+		import('modules/ModulesDiscoveryService');
 		$modules_loader = new ModulesDiscoveryService();
 		$modules = $modules_loader->get_available_modules('on_changeday');
 		foreach ($modules as $module)

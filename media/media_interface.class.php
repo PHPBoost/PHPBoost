@@ -27,7 +27,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/module_interface');
+import('modules/ModuleInterface');
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);
 

@@ -1070,7 +1070,7 @@ function strhash($str, $salt = true)
 	}
 	else
 	{   // With PHP4
-		import('lib/sha256');
+		import('lib/SHA256');
 		return SHA256::hash($str);
 	}
 }

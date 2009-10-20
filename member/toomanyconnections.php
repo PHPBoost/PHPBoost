@@ -37,7 +37,7 @@ $Cache = new Cache();
 $Cache->load('config');
 $Cache->load('member');
 
-import('members/user');
+import('members/User');
 $user_data = array(
     'm_user_id' => 1,
     'login' => 'login',

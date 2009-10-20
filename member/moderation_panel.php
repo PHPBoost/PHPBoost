@@ -89,7 +89,7 @@ switch ($action)
 				{
 					if (!empty($readonly_contents) && !empty($readonly))
 					{					
-						import('members/pm');
+						import('members/PrivateMsg');
 						$Privatemsg = new PrivateMsg();
 						
 						//Envoi du message.
@@ -378,7 +378,7 @@ switch ($action)
 					{					
 						if (!empty($warning_contents))
 						{					
-							import('members/pm');
+							import('members/PrivateMsg');
 							$Privatemsg = new PrivateMsg();
 							
 							//Envoi du message.

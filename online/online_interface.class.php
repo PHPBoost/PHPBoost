@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/module_interface');
+import('modules/ModuleInterface');
 
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class OnlineInterface extends ModuleInterface

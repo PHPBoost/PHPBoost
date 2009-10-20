@@ -35,7 +35,7 @@ require_once('../kernel/header.php');
 if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-import('members/pm');
+import('members/PrivateMsg');
 $Privatemsg = new PrivateMsg();
 
 $pm_get = retrieve(GET, 'pm', 0);

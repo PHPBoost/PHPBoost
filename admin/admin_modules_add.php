@@ -40,7 +40,7 @@ if ($install) //Installation du module
 
 	$enable_module = retrieve(POST, $module_name . 'activ', false);
 	
-	import('modules/packages_manager');
+	import('modules/PackageManager');
 	
 	switch (PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{

@@ -145,7 +145,7 @@ class Cache
 	{
 		global $Errorh;
 
-		import('modules/modules_discovery_service');
+		import('modules/ModulesDiscoveryService');
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 
@@ -180,7 +180,7 @@ class Cache
 	{
 		global $MODULES;
 
-		import('modules/modules_discovery_service');
+		import('modules/ModulesDiscoveryService');
 		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach ($modules as $module)

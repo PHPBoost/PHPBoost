@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('menu/menu');
+import('menu/Menu');
 import('content/syndication/feed');
 
 define('FEED_MENU__CLASS','FeedMenu');

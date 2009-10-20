@@ -27,7 +27,7 @@
 
 import('io/template/Template');
 import('mvc/controller/AbstractController');
-import('modules/modules_discovery_service');
+import('modules/ModulesDiscoveryService');
 
 class AbstractBlogController extends AbstractController
 {

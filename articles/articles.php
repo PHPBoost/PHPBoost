@@ -243,7 +243,7 @@ if (!empty($idart) && isset($cat) )
 }
 else
 {
-	import('modules/modules_discovery_service');
+	import('modules/ModulesDiscoveryService');
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'articles';
 	$module = $modulesLoader->get_module($module_name);

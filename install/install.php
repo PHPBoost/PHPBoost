@@ -536,7 +536,7 @@ switch($step)
 			$Cache = new Cache;
 
 			//Installation des modules de la distribution
-			import('modules/packages_manager');
+			import('modules/PackageManager');
 			foreach ($DISTRIBUTION_MODULES as $module_name)
 			{
 				$Cache->load('modules', RELOAD_CACHE);
@@ -731,7 +731,7 @@ switch($step)
 				//On connecte directement l'administrateur si il l'a demandé
 				if ($create_session)
 				{
-					import('members/session');
+					import('members/Session');
 					$Session = new Session;
 
 					//Remise à zéro du compteur d'essais.

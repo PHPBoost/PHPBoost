@@ -254,7 +254,7 @@ class Feed
 		$result = @include($feed_data_cache_file);
 		if ($result === false)
 		{
-			import('modules/modules_discovery_service');
+			import('modules/ModulesDiscoveryService');
 			$modules = new ModulesDiscoveryService();
 			$module = $modules->get_module($module_id);
 
