@@ -194,7 +194,7 @@ class UTfunctions_inc extends UnitTestCase {
 	
 	function test_import()
 	{
-		import('util/date');
+		import('util/Date');
 		$this->assertTrue(class_exists('Date'));
 	}
 	

@@ -30,7 +30,7 @@
 //      use, on of these
 
 import('menu/menu');
-import('util/url');
+import('util/Url');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
 define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);

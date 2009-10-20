@@ -101,7 +101,7 @@ if (!empty($members))
 		$stats_array[$name] = $row['compt'];
 	}
 	$Sql->query_close($result);
-	import('util/images_stats');
+	import('util/ImagesStats');
 	$Stats = new Stats();
 		
 	$Stats->load_data($stats_array, 'ellipse');
@@ -927,7 +927,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 }
 elseif (!empty($referer))
 {
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
@@ -984,7 +984,7 @@ elseif (!empty($referer))
 }
 elseif (!empty($keyword))
 {
-	import('util/pagination');
+	import('util/Pagination');
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
@@ -1077,7 +1077,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 		$path = '../images/stats/countries/';
 	}
 	
-	import('util/images_stats');
+	import('util/ImagesStats');
 	$Stats = new Stats();
 		
 	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
@@ -1135,7 +1135,7 @@ elseif ($bot)
 		'L_LAST_UPDATE' => $LANG['last_update']
 	));
 
-	import('util/images_stats');
+	import('util/ImagesStats');
 	$Stats = new Stats();
 		
 	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');

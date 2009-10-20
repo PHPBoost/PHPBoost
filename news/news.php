@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
-import('util/date');
+import('util/Date');
 import('content/comments');
 import('content/syndication/feed');
 

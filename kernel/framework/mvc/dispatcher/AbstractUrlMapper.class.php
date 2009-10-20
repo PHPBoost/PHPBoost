@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           site_display_response.class.php
+ *                           abstract_url_mapper.class.php
  *                            -------------------
- *   begin                : October 18 2009
+ *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,20 +25,42 @@
  *
  ###################################################*/
 
-import('mvc/response/abstract_response');
+import('mvc/dispatcher/UrlMapper');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc the response
- * @package mvc
- * @subpackage response
+ * @desc Call the controller method matching an url
  */
-class SiteDisplayResponse extends AbstractResponse
+abstract class AbstractUrlMapper implements UrlMapper
 {
-	public function __construct($view)
+	/**
+	 * @var string
+	 */
+	private $capture_regex;
+	
+	/**
+	 * @var string[]
+	 */
+	private $captured_parameters = array();
+
+	public function __construct($capture_regex)
 	{
-		import('core/environment/site_display_graphical_environment');
-		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
+		$this->capture_regex = $capture_regex;
+	}
+
+	public function match(&$url)
+	{
+		$match = preg_match($this->capture_regex, $url, $this->captured_parameters);
+		if ($match === false)
+		{
+			throw new MalformedUrlControllerMapperRegex($this->capture_regex, $url);
+		}
+		return $match > 0;
+	}
+	
+	protected function get_captured_parameters()
+	{
+		return $this->captured_parameters;
 	}
 }
 ?>

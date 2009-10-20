@@ -147,7 +147,7 @@ else
 	));
 }
 
-import('util/url');
+import('util/Url');
 import('modules/modules_discovery_service');
 
 $modules = new ModulesDiscoveryService();

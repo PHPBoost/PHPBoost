@@ -26,8 +26,8 @@
 ###################################################*/
 
 import('content/syndication/feed_item');
-import('util/date');
-import('util/url');
+import('util/Date');
+import('util/Url');
 
 define('FEED_DATA__CLASS', 'FeedData');
 

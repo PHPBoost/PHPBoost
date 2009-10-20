@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           site_nodisplay_response.class.php
+ *                           site_display_response.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/response/abstract_response');
+import('mvc/response/AbstractResponse');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -33,12 +33,12 @@ import('mvc/response/abstract_response');
  * @package mvc
  * @subpackage response
  */
-class SiteNodisplayResponse extends AbstractResponse
+class SiteDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		import('core/environment/site_nodisplay_graphical_environment');
-		parent::__construct(new SiteNodisplayGraphicalEnvironment(), $view);
+		import('core/environment/site_display_graphical_environment');
+		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
 	}
 }
 ?>

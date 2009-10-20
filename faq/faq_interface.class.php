@@ -179,7 +179,7 @@ class FaqInterface extends ModuleInterface
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG, $Cache;
 		
 		import('content/sitemap/module_map');
-		import('util/url');
+		import('util/Url');
 		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		

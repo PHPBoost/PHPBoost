@@ -207,7 +207,7 @@ class Comments
 			//Chargement du cache
 			$Cache->load('com');
 			
-			import('util/captcha');
+			import('util/Captcha');
 			$captcha = new Captcha();
 			$captcha->set_difficulty($CONFIG_COM['com_verif_code_difficulty']);
 
@@ -480,7 +480,7 @@ class Comments
 				$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
 				
 				//On crée une pagination si le nombre de commentaires est trop important.
-				import('util/pagination');
+				import('util/Pagination');
 				$pagination = new Pagination();
 				
 				$Template->assign_vars(array(

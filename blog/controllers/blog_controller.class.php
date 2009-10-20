@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/view');
+import('mvc/View');
 import('modules/modules_discovery_service');
 
 mimport('blog/controllers/abstract_blog_controller');

@@ -4,7 +4,7 @@ require_once 'header.php';
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-import('util/pagination');
+import('util/Pagination');
 
 unset($Errorh);
 

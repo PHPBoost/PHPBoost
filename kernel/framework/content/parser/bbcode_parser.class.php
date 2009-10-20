@@ -169,7 +169,7 @@ class BBCodeParser extends ContentParser
     function _parse_simple_tags()
     {
         global $LANG;
-        import('util/url');
+        import('util/Url');
         $array_preg = array(
 			'b' => '`\[b\](.+)\[/b\]`isU',
 			'i' => '`\[i\](.+)\[/i\]`isU',

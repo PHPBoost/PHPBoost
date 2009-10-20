@@ -40,7 +40,7 @@ if ($file_id > 0) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
-	import('util/date');
+	import('util/Date');
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
 	
@@ -226,7 +226,7 @@ else
 		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		import('util/pagination'); 
+		import('util/Pagination'); 
 		$Pagination = new Pagination();
 		
 		//Notes

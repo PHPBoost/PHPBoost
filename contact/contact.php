@@ -35,7 +35,7 @@ $mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNCHANGE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
 $get_error = '';
 
-import('util/captcha');
+import('util/Captcha');
 $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
 

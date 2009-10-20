@@ -162,7 +162,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de lien est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
@@ -206,7 +206,7 @@ else
 	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de catégories est trop important.
-	import('util/pagination'); 
+	import('util/Pagination'); 
 	$Pagination = new Pagination();
 
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;

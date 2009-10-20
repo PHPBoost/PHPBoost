@@ -1,9 +1,9 @@
 <?php
 
 import('io/db/db_factory');
-import('mvc/model/sql_dao');
-import('mvc/model/mapping_model');
-import('mvc/model/business_object');
+import('mvc/model/SQLDAO');
+import('mvc/model/MappingModel');
+import('mvc/model/BusinessObject');
 
 class MyUTBusinessTestObject extends BusinessObject
 {

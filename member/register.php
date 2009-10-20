@@ -118,7 +118,7 @@ if (empty($key))
 		}
 		
 		//Code de vérification, anti-bots.
-		import('util/captcha');
+		import('util/Captcha');
 		$Captcha = new Captcha();
 		if ($Captcha->is_available() && $CONFIG_USER['verif_code'] == '1')
 		{

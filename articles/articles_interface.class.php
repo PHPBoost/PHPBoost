@@ -150,8 +150,8 @@ class ArticlesInterface extends ModuleInterface
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 
 		import('content/syndication/feed_data');
-		import('util/date');
-		import('util/url');
+		import('util/Date');
+		import('util/Url');
 
 		$data = new FeedData();
 
@@ -349,7 +349,7 @@ class ArticlesInterface extends ModuleInterface
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		//On crée une pagination si le nombre de fichiers est trop important.
-		import('util/pagination');
+		import('util/Pagination');
 		$Pagination = new Pagination();
 
 		//Catégories non autorisées.

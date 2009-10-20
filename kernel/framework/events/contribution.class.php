@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('util/date');
+import('util/Date');
 import('events/event');
 
 ## Constants ##

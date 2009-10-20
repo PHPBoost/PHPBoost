@@ -25,8 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/controller/controller');
-import('mvc/dispatcher/abstract_url_mapper');
+import('mvc/dispatcher/AbstractUrlMapper');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

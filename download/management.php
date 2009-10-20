@@ -32,8 +32,8 @@ $Cache->load('download');
 
 include_once('download_auth.php');
 
-import('util/date');
-import('util/mini_calendar');
+import('util/Date');
+import('util/MiniCalendar');
 
 include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
@@ -236,7 +236,7 @@ if ($edit_file_id > 0)
 			
 			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
-			import('util/url');
+			import('util/Url');
 			$file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
@@ -468,7 +468,7 @@ else
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-            import('util/url');
+            import('util/Url');
             $file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, users_note) " .

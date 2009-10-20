@@ -1,6 +1,6 @@
 <?php
 
-import('util/date');
+import('util/Date');
 
 unset($Errorh);
 

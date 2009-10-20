@@ -29,7 +29,7 @@ define('APPLICATION_TYPE__KERNEL', 'kernel');
 define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
-import('util/date');
+import('util/Date');
 import('events/administrator_alert');
 
 /**

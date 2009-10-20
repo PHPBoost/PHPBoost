@@ -152,7 +152,7 @@ class PagesInterface extends ModuleInterface
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG, $Cache;
 		
 		import('content/sitemap/module_map');
-		import('util/url');
+		import('util/Url');
 		
 		include(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
