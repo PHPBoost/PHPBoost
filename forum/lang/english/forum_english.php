@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 21, 2006
  *   last modified		: August 30, 2009 - Forensic 
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -178,7 +178,7 @@ $LANG['relevance'] = 'Relevance';
 $LANG['no_result'] = 'No result';
 $LANG['invalid_req'] = 'Invalid request';
 $LANG['keywords'] = 'Key Words (4 characters minimum)';
-$LANG['color_result'] = 'Color results';
+$LANG['colorate_result'] = 'Color results';
 
 //Stats
 $LANG['stats'] = 'Statistics';
