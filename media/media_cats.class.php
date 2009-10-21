@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-import('content/categories_manager');
+import('content/CategoriesManager');
 require_once PATH_TO_ROOT . '/media/media_constant.php';
 
 define('MEDIA_DO_NOT_GENERATE_CACHE', false);

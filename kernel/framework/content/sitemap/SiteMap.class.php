@@ -27,10 +27,10 @@
  ###################################################*/
 
 //Imports of every class of this package
-import('content/sitemap/module_map');
-import('content/sitemap/site_map_link');
-import('content/sitemap/site_map_section');
-import('content/sitemap/site_map_export_config');
+import('content/sitemap/ModuleMap');
+import('content/sitemap/SiteMapLink');
+import('content/sitemap/SiteMapSection');
+import('content/sitemap/SiteMapExportConfig');
 
 //For who is the site map?
 /**

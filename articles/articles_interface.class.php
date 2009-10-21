@@ -149,7 +149,7 @@ class ArticlesInterface extends ModuleInterface
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 
-		import('content/syndication/feed_data');
+		import('content/feed/FeedData');
 		import('util/Date');
 		import('util/Url');
 
@@ -401,7 +401,7 @@ class ArticlesInterface extends ModuleInterface
 			'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
 
-			import('content/note');
+			import('content/Note');
 			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -440,7 +440,7 @@ class ArticlesInterface extends ModuleInterface
 					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : ''
 				));
 
-				import('content/note');
+				import('content/Note');
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id

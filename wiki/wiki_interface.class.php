@@ -172,7 +172,7 @@ class WikiInterface extends ModuleInterface
 	{
 		global $LANG;
 
-		import('content/syndication/feeds_list');
+		import('content/feed/FeedsList');
 		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
 
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, a.title
@@ -210,7 +210,7 @@ class WikiInterface extends ModuleInterface
 			$where = "";
 		}
 
-		import('content/syndication/feed_data');
+		import('content/feed/FeedData');
 		import('util/Date');
 		import('util/Url');
 
@@ -348,7 +348,7 @@ class WikiInterface extends ModuleInterface
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
 		
-		import('content/sitemap/module_map');
+		import('content/sitemap/ModuleMap');
 		import('util/Url');
 		
 		load_module_lang('wiki');

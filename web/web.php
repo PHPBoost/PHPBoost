@@ -65,10 +65,10 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	));
 		
 	//Affichage notation.
-	import('content/note'); 
+	import('content/Note'); 
 	$Note = new Note('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	import('content/comments');
+	import('content/Comments');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_WEB' => true,
@@ -170,7 +170,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	));
 
 	//Notes
-	import('content/note');
+	import('content/Note');
 
 	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM " . PREFIX . "web

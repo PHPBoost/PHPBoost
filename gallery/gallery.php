@@ -499,7 +499,7 @@ else
 		}
 		$Sql->query_close($result);
 		
-		import('content/comments');
+		import('content/Comments');
 		
 		//Affichage d'une photo demandée.
 		if (!empty($g_idpics))
@@ -570,7 +570,7 @@ else
 				if ($activ_note)
 				{
 					//Affichage notation.
-					import('content/note');
+					import('content/Note');
 					$Note = new Note('gallery', $info_pics['id'], url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 				}
 				
@@ -663,7 +663,7 @@ else
 				'L_VIEWS' => $LANG['views']
 			));
 			
-			import('content/note');
+			import('content/Note');
 			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login

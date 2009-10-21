@@ -138,10 +138,10 @@ if (!empty($idart) && isset($cat) )
 		}	
 	}
 	//Affichage notation
-	import('content/note'); 
+	import('content/Note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	import('content/comments');
+	import('content/Comments');
 	
 	$tpl->assign_vars(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),

@@ -47,7 +47,7 @@ if ($id_up > 0)
 {
 	$download_categories->move($id_up, MOVE_CATEGORY_UP);
     // Feeds Regeneration
-    import('content/syndication/feed');
+    import('content/feed/feed');
     Feed::clear_cache('download');
 	redirect(url('admin_download_cat.php'));
 }
@@ -55,7 +55,7 @@ elseif ($id_down > 0)
 {
 	$download_categories->move($id_down, MOVE_CATEGORY_DOWN);
     // Feeds Regeneration
-    import('content/syndication/feed');
+    import('content/feed/feed');
     Feed::clear_cache('download');
 	redirect(url('admin_download_cat.php'));
 }
@@ -97,7 +97,7 @@ elseif (retrieve(POST, 'submit', false))
 			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
         
         // Feeds Regeneration
-        import('content/syndication/feed');
+        import('content/feed/feed');
         Feed::clear_cache('download');
 	}
 	else
@@ -132,7 +132,7 @@ elseif (retrieve(POST, 'submit', false))
 			$error_string = $download_categories->add($id_parent, $name, $description, $icon, $new_auth, $visible);
 		
         // Feeds Regeneration
-        import('content/syndication/feed');
+        import('content/feed/feed');
         Feed::clear_cache('download');
 	}
 
@@ -145,7 +145,7 @@ elseif (retrieve(GET, 'recount', false))
 {
 	$download_categories->Recount_sub_files();
 	// Feeds Regeneration
-    import('content/syndication/feed');
+    import('content/feed/feed');
     Feed::clear_cache('download');
 	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }

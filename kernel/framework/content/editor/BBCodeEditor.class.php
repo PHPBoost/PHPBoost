@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/editor/editor');
+import('content/editor/Editor');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

@@ -99,20 +99,20 @@ class ContentFormattingFactory
         switch ($this->language_type)
         {
             case BBCODE_LANGUAGE:
-                import('content/parser/bbcode_parser');
+                import('content/parser/BBCodeParser');
                 return new BBCodeParser();
             case TINYMCE_LANGUAGE:
-                import('content/parser/tinymce_parser');
+                import('content/parserTinyMCEParser');
                 return new TinyMCEParser();
             default:
                 if ($this->get_user_editor() == TINYMCE_LANGUAGE)
                 {
-                    import('content/parser/tinymce_parser');
+                    import('content/parserTinyMCEParser');
                     return new TinyMCEParser();
                 }
                 else
                 {
-                    import('content/parser/bbcode_parser');
+                    import('content/parser/BBCodeParser');
                     return new BBCodeParser();
                 }
         }
@@ -128,20 +128,20 @@ class ContentFormattingFactory
         switch ($this->language_type)
         {
             case BBCODE_LANGUAGE:
-                import('content/parser/bbcode_unparser');
+                import('content/parser/BBCodeUnparser');
                 return new BBCodeUnparser();
             case TINYMCE_LANGUAGE:
-                import('content/parser/tinymce_unparser');
+                import('content/parserTinyMCEUnparser');
                 return new TinyMCEUnparser();
             default:
                 if ($this->get_user_editor() == TINYMCE_LANGUAGE)
                 {
-                    import('content/parser/tinymce_unparser');
+                    import('content/parserTinyMCEUnparser');
                     return new TinyMCEUnparser();
                 }
                 else
                 {
-                    import('content/parser/bbcode_unparser');
+                    import('content/parser/BBCodeUnparser');
                     return new BBCodeUnparser();
                 }
         }
@@ -153,7 +153,7 @@ class ContentFormattingFactory
      */
     function get_second_parser()
     {
-        import('content/parser/content_second_parser');
+        import('content/parser/ContentSecondParser');
         return new ContentSecondParser();
     }
 
@@ -166,20 +166,20 @@ class ContentFormattingFactory
         switch ($this->language_type)
         {
             case BBCODE_LANGUAGE:
-                import('content/editor/bbcode_editor');
+                import('content/editor/BBCodeEditor');
                 return new BBCodeEditor();
             case TINYMCE_LANGUAGE:
-                import('content/editor/tinymce_editor');
+                import('content/editor/TinyMCEEditor');
                 return new TinyMCEEditor();
             default:
                 if ($this->get_user_editor() == TINYMCE_LANGUAGE)
                 {
-                    import('content/editor/tinymce_editor');
+                    import('content/editor/TinyMCEEditor');
                     return new TinyMCEEditor();
                 }
                 else
                 {
-                    import('content/editor/bbcode_editor');
+                    import('content/editor/BBCodeEditor');
                     return new BBCodeEditor();
                 }
         }

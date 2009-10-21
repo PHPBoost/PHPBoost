@@ -39,7 +39,7 @@ if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur con
 	$note = retrieve(POST, 'note', 0);
 
 	//Initialisation  de la class de gestion des fichiers.
-	import('content/note');
+	import('content/Note');
 	$Note = new Note('media', $id, '', $MEDIA_CONFIG['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if (!empty($note) && !empty($id))

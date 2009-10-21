@@ -42,7 +42,7 @@ $action_post = retrieve(POST, 'action', '');
 if ($action_post == 'save')
 {
     // Save a Menu (New / Edit)
-    import('content/parser/parser');
+    import('content/parser/Parser');
     $menu = null;
     
     $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);

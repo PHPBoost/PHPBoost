@@ -6,7 +6,7 @@ define('TITLE', 'titre');
 
 include(PATH_TO_ROOT . '/kernel/header.php');
 
-import('content/sitemap/site_map');
+import('content/sitemap/SiteMap');
 
 $site_map = new SiteMap();
 $config_xml = new SitemapExportConfig('framework/content/sitemap/site_map.xml.tpl', 'framework/content/sitemap/module_map.xml.tpl',

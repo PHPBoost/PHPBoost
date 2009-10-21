@@ -30,7 +30,7 @@
 define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 
 import('io/template/Template');
-import('content/syndication/feed');
+import('content/feed/feed');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

@@ -358,8 +358,8 @@ class ForumInterface extends ModuleInterface
 		$forum = new Forum();
 		$categories = $forum->get_cats_tree();
 
-		import('content/syndication/feeds_list');
-		import('content/syndication/feeds_cat');
+		import('content/feed/FeedsList');
+		import('content/feed/FeedsCat');
 
 		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
         
@@ -384,7 +384,7 @@ class ForumInterface extends ModuleInterface
 
 		$data = new FeedData();
 
-		import('content/syndication/feed_data');
+		import('content/feed/FeedData');
 		import('util/Date');
 		import('util/Url');
 

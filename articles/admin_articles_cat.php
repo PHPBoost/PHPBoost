@@ -63,7 +63,7 @@ if ($cat_to_del > 0)
 		$articles_categories->delete($cat_to_del);
 		
 		// Feeds Regeneration
-		import('content/syndication/feed');
+		import('content/feed/feed');
 		Feed::clear_cache('articles');
 
 		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
@@ -383,7 +383,7 @@ elseif (retrieve(POST,'submit',false))
 	}
 
 	// Feeds Regeneration
-	import('content/syndication/feed');
+	import('content/feed/feed');
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');

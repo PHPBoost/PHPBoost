@@ -109,7 +109,7 @@ if (!empty($_POST['submit']))
 		}
 
 		// Feeds Regeneration
-		import('content/syndication/feed');
+		import('content/feed/feed');
 		Feed::clear_cache('media');
 		$media_categories->recount_media_per_cat();
 
@@ -123,7 +123,7 @@ if (!empty($_POST['submit']))
 elseif (!empty($_GET['recount']))
 {
 	// Feeds Regeneration
-	import('content/syndication/feed');
+	import('content/feed/feed');
 	Feed::clear_cache('media');
 	$media_categories->recount_media_per_cat();
 	

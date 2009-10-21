@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/parser/parser');
+import('content/parser/Parser');
 
 //Colors of each language elements
 //For a BBCode tag

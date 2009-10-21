@@ -176,7 +176,7 @@ class DownloadInterface extends ModuleInterface
         
         import('util/Date');
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
-        import('content/note'); //Notes
+        import('content/Note'); //Notes
         
         $tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -199,7 +199,7 @@ class DownloadInterface extends ModuleInterface
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        import('content/syndication/feed_data');
+        import('content/feed/FeedData');
         import('util/Date');
         import('util/Url');
         

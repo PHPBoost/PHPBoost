@@ -69,13 +69,13 @@ if ($delete > 0)
 	}
 	if ($articles['nbr_com'] > 0)
 	{
-		import('content/comments');
+		import('content/Comments');
 		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 
 	// Feeds Regeneration
-	import('content/syndication/feed');
+	import('content/feed/feed');
 	Feed::clear_cache('articles');
 
 	redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . url_encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
@@ -292,7 +292,7 @@ elseif(retrieve(POST,'submit',false))
 			}
 
 			// Feeds Regeneration
-			import('content/syndication/feed');
+			import('content/feed/feed');
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])

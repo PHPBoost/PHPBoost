@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/parser/parser');
+import('content/parser/Parser');
 
 /**
  * @package content
@@ -123,7 +123,7 @@ class ContentSecondParser extends Parser
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')
 		{
-			import('content/parser/bbcode_highlighter');
+			import('content/parser/BBCodeHighlighter');
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$bbcode_highlighter->parse($inline_code);
@@ -132,7 +132,7 @@ class ContentSecondParser extends Parser
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
 		{
-			import('content/parser/template_highlighter');
+			import('content/parser/TemplateHighlighter');
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();
