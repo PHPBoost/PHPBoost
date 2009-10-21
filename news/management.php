@@ -57,7 +57,7 @@ if ($delete > 0)
 		}
 
 		// Feeds Regeneration
-	    import('content/feed/feed');
+	    import('content/feed/Feed');
 	    Feed::clear_cache('news');
 
 		redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
@@ -227,7 +227,7 @@ elseif (!empty($_POST['submit']))
 			}
 
 			// Feeds Regeneration
-			import('content/feed/feed');
+			import('content/feed/Feed');
 			Feed::clear_cache('news');
 
 			if ($news['visible'] && $news['start'] == 0)

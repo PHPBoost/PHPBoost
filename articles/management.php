@@ -75,7 +75,7 @@ if ($delete > 0)
 	}
 
 	// Feeds Regeneration
-	import('content/feed/feed');
+	import('content/feed/Feed');
 	Feed::clear_cache('articles');
 
 	redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . url_encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
@@ -292,7 +292,7 @@ elseif(retrieve(POST,'submit',false))
 			}
 
 			// Feeds Regeneration
-			import('content/feed/feed');
+			import('content/feed/Feed');
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])

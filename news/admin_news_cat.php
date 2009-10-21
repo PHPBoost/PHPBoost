@@ -88,7 +88,7 @@ elseif ($cat_to_del > 0)
 		$news_categories->delete($cat_to_del);
 		
 		// Feeds Regeneration
-		import('content/feed/feed');
+		import('content/feed/Feed');
 		Feed::clear_cache('news');
 
 		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
@@ -149,7 +149,7 @@ elseif (!empty($_POST['submit']))
 	}
 
 	// Feeds Regeneration
-	import('content/feed/feed');
+	import('content/feed/Feed');
 	Feed::clear_cache('news');
 
 	$Cache->Generate_module_file('news');
