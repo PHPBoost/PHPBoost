@@ -137,7 +137,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    import('content/feed/feed');
+    import('content/feed/Feed');
     Feed::clear_cache('forum');
 }
 

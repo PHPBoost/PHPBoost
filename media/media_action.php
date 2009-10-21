@@ -100,7 +100,7 @@ elseif ($delete > 0)
 	}
 
 	// Feeds Regeneration
-	import('content/feed/feed');
+	import('content/feed/Feed');
 	Feed::clear_cache('media');
 
 	$media_categories->recount_media_per_cat($media['idcat']);
@@ -357,7 +357,7 @@ elseif (!empty($_POST['submit']))
 		}
 
 		// Feeds Regeneration
-		import('content/feed/feed');
+		import('content/feed/Feed');
 		Feed::clear_cache('media');
 
 		redirect_confirm('media' . url('.php?id=' . $media['idedit']), $MEDIA_LANG['edit_success'], TIME_REDIRECT);
@@ -370,7 +370,7 @@ elseif (!empty($_POST['submit']))
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);
 		// Feeds Regeneration
-		import('content/feed/feed');
+		import('content/feed/Feed');
 		Feed::clear_cache('media');
 
 		if (!$auth_write)

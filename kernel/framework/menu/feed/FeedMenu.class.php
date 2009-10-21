@@ -26,7 +26,7 @@
  ###################################################*/
 
 import('menu/Menu');
-import('content/feed/feed');
+import('content/feed/Feed');
 
 define('FEED_MENU__CLASS','FeedMenu');
 

@@ -30,7 +30,7 @@ require_once('news_begin.php');
 
 import('util/Date');
 import('content/Comments');
-import('content/feed/feed');
+import('content/feed/Feed');
 
 require_once('news_cats.class.php');
 $news_cat = new NewsCats();

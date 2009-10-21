@@ -96,7 +96,7 @@ if ($delete_file > 0)
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
         
         // Feeds Regeneration
-        import('content/feed/feed');
+        import('content/feed/Feed');
         Feed::clear_cache('download');
 	}
 	else
@@ -270,7 +270,7 @@ if ($edit_file_id > 0)
 			}
             
             // Feeds Regeneration
-            import('content/feed/feed');
+            import('content/feed/Feed');
             Feed::clear_cache('download');
             
             //If we cannot see the file, we redirect in its category
@@ -528,7 +528,7 @@ else
 			$download_categories->Recount_sub_files();
             
             // Feeds Regeneration
-            import('content/feed/feed');
+            import('content/feed/Feed');
             Feed::clear_cache('download');
             
 			redirect('/download/' . url('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));

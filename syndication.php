@@ -33,7 +33,7 @@ define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visit
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
 
-import('content/feed/feed');
+import('content/feed/Feed');
 
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))

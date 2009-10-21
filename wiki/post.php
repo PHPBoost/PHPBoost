@@ -104,7 +104,7 @@ if (!empty($contents)) //On enregistre un article
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
         
             // Feeds Regeneration
-            import('content/feed/feed');
+            import('content/feed/Feed');
             Feed::clear_cache('wiki');
 			
 			//On redirige
@@ -148,7 +148,7 @@ if (!empty($contents)) //On enregistre un article
 				$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
                 // Feeds Regeneration
-                import('content/feed/feed');
+                import('content/feed/Feed');
                 Feed::clear_cache('wiki');
                 
 				$redirect = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);

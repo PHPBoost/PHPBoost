@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('content/feed/feed');
+import('content/feed/Feed');
 import('content/feed/FeedsCat');
 
 /**

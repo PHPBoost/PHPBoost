@@ -293,7 +293,7 @@ class NewsInterface extends ModuleInterface
 		// Import.
 		import('util/Date');
 		import('content/Comments');
-		import('content/feed/feed');
+		import('content/feed/Feed');
 		import('util/Pagination');
 
 		// Initialisation des imports.
