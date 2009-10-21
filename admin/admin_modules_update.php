@@ -101,7 +101,7 @@ if ($update) //Mise à jour du module
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
 		
-		import('core/cache/modules_css_files_cache');
+		import('core/cache/ModulesCssFilesCache');
     	ModulesCssFilesCache::invalidate();
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
@@ -177,14 +177,14 @@ else
 	));
 
     {   // Intégration du système d'updates des modules avec celui du site
-        import('core/updates');
+        import('core/Updates');
         $updates_availables = 0;
 
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             // Retrieves all the update alerts from the database
             import('events/AdministratorAlertService');
-            import('core/application');
+            import('core/Application');
             $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
             
             $updates = array();

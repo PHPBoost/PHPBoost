@@ -550,9 +550,9 @@ function get_module_name()
 }
 
 /**
-* @desc Returns the full path's file from the root installation.
-* @param string $errfile the filepath
-*/
+ * @desc Returns the full path's file from the root installation.
+ * @param string $errfile the filepath
+ */
 function get_root_path_from_file($errfile)
 {
 	$local_path = str_replace('/kernel/framework/functions.inc.php', '', str_replace('\\', '/', __FILE__));
@@ -1093,28 +1093,21 @@ define('PHP_IMPORT', '.php');
 define('PLAIN_IMPORT', '');
 
 /**
- * @desc Imports a class or a lib from the framework
+ * @desc Imports a class or a lib from the framework or from the root
  * @param string $path Path of the file to load without .class.php or .inc.php extension (for instance util/date)
+ * if this path begins with "/", it won't be searched from the kernel framework but from
+ * PHPBoost root
  * @param string $import_type the import type. Default is CLASS_IMPORT,
  * but you could also import a library by using LIB_IMPORT (file whose extension is .inc.php)
  * or INC_IMPORT to include a .inc.php file (for example the current file, functions.inc.php).
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
-	require_once PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type;
-}
-
-/**
- * @desc Imports a class or a lib from the web site root
- * @param string $path Path of the file to load without .class.php or .inc.php (INC_IMPORT)
- * .lib.php (LIB_IMPORT) or .int.php (INTERFACE_IMPORT) extension (for instance util/date)
- * @param string $import_type the import type. Default is CLASS_IMPORT,
- * but you could also import a library by using LIB_IMPORT (file whose extension is .inc.php)
- * or INC_IMPORT to include a .inc.php file (for example the current file, functions.inc.php).
- */
-function mimport($path, $import_type = CLASS_IMPORT)
-{
-	require_once PATH_TO_ROOT . '/' . $path . $import_type;
+	if (substr($path, 0, 1) !== 0)
+	{
+		$path = '/kernel/framework/' . $path;
+	}
+	require_once PATH_TO_ROOT . $path . $import_type;
 }
 
 /**
@@ -1158,7 +1151,7 @@ function req($file, $once = true)
  */
 function inc($file, $once = true)
 {
-    $file = '/' . ltrim($file, '/');
+	$file = '/' . ltrim($file, '/');
 	if ($once)
 	{
 		if (!DEBUG)
@@ -1260,7 +1253,7 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
 function check_for_maintain_redirect()
 {
 	global $CONFIG, $User;
-	
+
 	if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 	{
 		if (!$User->check_level(ADMIN_LEVEL) && !$User->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN)) //Non admin et utilisateurs autorisés.

@@ -6,7 +6,7 @@ require_once PATH_TO_ROOT . '/install/install_environment.class.php';
 InstallEnvironment::load_imports();
 
 /* Deprecated */
-import('core/errors');
+import('core/Errors');
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 /* End deprecated */
 

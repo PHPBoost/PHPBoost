@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
-import('core/stats_saver');
+import('core/StatsSaver');
 
 $Template->set_filenames(array(
 	'admin_stats_management'=> 'stats/admin_stats_management.tpl'

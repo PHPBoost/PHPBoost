@@ -43,7 +43,7 @@ require_once PATH_TO_ROOT . '/install/install_environment.class.php';
 InstallEnvironment::load_imports();
 
 /* Deprecated */
-import('core/errors');
+import('core/Errors');
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 /* End deprecated */
 
@@ -326,7 +326,7 @@ switch($step)
 			{
 				case DB_CONFIG_SUCCESS:
 				case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
-					import('core/errors');
+					import('core/Errors');
 					$Errorh = new Errors;
 					import('io/db/mysql/MySQLQuerier');
 					$db_connection = new MySQLDBConnection($host, $login, $password);
@@ -546,7 +546,7 @@ switch($step)
 			$Cache->load('modules', RELOAD_CACHE);
 
 			// Ajout du menu de lien par défaut tout en haut à gauche
-			import('core/menu_service');
+			import('core/MenuService');
 			MenuService::enable_all(true);
 
 			$modules_menu = MenuService::website_modules(VERTICAL_MENU);
@@ -558,7 +558,7 @@ switch($step)
 
 			$Cache->load('themes', RELOAD_CACHE);
 			
-			import('core/cache/modules_css_files_cache');
+			import('core/cache/ModulesCssFilesCache');
     		ModulesCssFilesCache::invalidate();
 
 			redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
@@ -686,7 +686,7 @@ switch($step)
 				$Sql = AppContext::get_sql();
 					
 				//On crée le code de déverrouillage
-				import('core/cache');
+				import('core/Cache');
 				$Cache = new Cache;
 				$Cache->load('config');
 					
@@ -793,7 +793,7 @@ switch($step)
 		AppContext::init_sql_querier();
 		$Sql = AppContext::get_sql();
 			
-		import('core/cache');
+		import('core/Cache');
 		$Cache = new Cache;
 		$Cache->load('config');
 		$Cache->load('modules');
@@ -808,7 +808,7 @@ switch($step)
     		'U_INDEX' => '..' . $CONFIG['start_page']
 		));
 			
-		import('core/updates');
+		import('core/Updates');
 		new Updates();
 		break;
 }

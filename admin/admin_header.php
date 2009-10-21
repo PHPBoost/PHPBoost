@@ -29,7 +29,7 @@
 if (defined('PHPBOOST') !== true)
 	exit;
 
-import('core/environment/admin_display_graphical_environment');
+import('core/environment/AdminDisplayGraphicalEnvironment');
 
 $env = new AdminDisplayGraphicalEnvironment();
 

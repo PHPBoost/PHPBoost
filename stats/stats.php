@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../stats/stats_begin.php');
 require_once('../kernel/header.php');
 
-import('core/stats_saver');
+import('core/StatsSaver');
 
 $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 

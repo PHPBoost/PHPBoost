@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          header_no_display.php
+ *               site_display_graphical_environment.class.php
  *                            -------------------
- *   begin                : August 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : October 01, 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,18 +25,22 @@
  *
  ###################################################*/
 
-
-if (defined('PHPBOOST') !== true)
+/**
+ * @package core
+ * @subpackage environment
+ * @desc 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
+interface GraphicalEnvironment
 {
-    exit;
+	/**
+	 * Displays the top of the environment.
+	 */
+	function display_header();
+	
+	/**
+	 * Displays the bottom of the environment.
+	 */
+	function display_footer();
 }
-
-import('core/environment/SiteNodisplayGraphicalEnvironment');
-
-$env = new SiteNodisplayGraphicalEnvironment();
-
-Environment::set_graphical_environment($env);
-
-Environment::display_header();
-
 ?>

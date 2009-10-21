@@ -154,7 +154,7 @@ elseif ($uninstall) //Désinstallation.
 		
 		$Cache->load('themes', RELOAD_CACHE);
 		
-		import('core/cache/modules_css_files_cache');
+		import('core/cache/ModulesCssFilesCache');
     	ModulesCssFilesCache::invalidate();
 	
 		$error = !empty($error) ? '?error=' . $error : '';

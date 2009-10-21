@@ -37,7 +37,7 @@ function articles_mini($position, $block)
 	load_module_lang('articles');
 	
 	$tpl = new Template('articles/articles_mini.tpl');
-	import('core/menu_service');
+	import('core/MenuService');
 	MenuService::assign_positions_conditions($tpl, $block);
 
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);

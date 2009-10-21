@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                           site_display_response.class.php
+ *                           ClassLoader.class.php
  *                            -------------------
- *   begin                : October 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   begin                : October 21, 2009
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
- *
  *
  ###################################################
  *
@@ -25,20 +24,28 @@
  *
  ###################################################*/
 
-import('mvc/response/AbstractResponse');
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc the response
- * @package mvc
- * @subpackage response
+ * @desc
+ * @package core
  */
-class AdminNodisplayResponse extends AbstractResponse
+class ClassLoader
 {
-	public function __construct($view)
+	public static function import($classpath)
 	{
-		import('core/environment/AdminNodisplayGraphicalEnvironment');
-		parent::__construct(new AdminNodisplayGraphicalEnvironment(), $view);
+		import($classpath);
+	}
+
+	public static function new_instance($classpath)
+	{
+		self::import($classpath);
+		$classname =& self::get_classname($classpath);
+		return new $classname();
+	}
+
+	public static function get_classname($classpath)
+	{
+		return substr($kernel_classpath, strpos($kernel_classpath, '/') + 1);
 	}
 }
 ?>

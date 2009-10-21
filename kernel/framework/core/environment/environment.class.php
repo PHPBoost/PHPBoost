@@ -48,15 +48,16 @@ class Environment
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-		import('util/StringVars');
+        import('core/ClassLoader');
+        import('util/StringVars');
 		import('io/request/HTTPRequest');
 		import('content/parser/ContentFormattingFactory');
-		import('core/breadcrumb');
-		import('core/cache');
-		import('core/cache/groups_cache');
-		import('core/environment/app_context');
-		import('core/environment/graphical_environment');
-		import('core/errors');
+		import('core/BreadCrumb');
+		import('core/Cache');
+		import('core/cache/GroupsCache');
+		import('core/environment/AppContext');
+		import('core/environment/GraphicalEnvironment');
+		import('core/Errors');
 		import('db/Sql');
 		import('io/template/Template');
 		import('io/template/DeprecatedTemplate');
@@ -328,7 +329,7 @@ class Environment
 	public static function process_changeday_tasks_if_needed()
 	{
 		//If the day changed compared to the last request, we execute the daily tasks
-		import('core/config/last_use_date_config');
+		import('core/config/LastUseDateConfig');
 		$last_use_config = LastUseDateConfig::load();
 		$last_use_date = $last_use_config->get_last_use_date();
 		$current_date = new Date();
@@ -488,7 +489,7 @@ class Environment
 
 	private static function check_updates()
 	{
-		import('core/updates');
+		import('core/Updates');
 		new Updates();
 	}
 
@@ -627,7 +628,7 @@ class Environment
 		if (self::$graphical_environment === null)
 		{
 			//Default graphical environment
-			import('core/environment/site_display_graphical_environment');
+			import('core/environment/SiteDisplayGraphicalEnvironment');
 			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
 		}
 		return self::$graphical_environment;

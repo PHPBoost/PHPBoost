@@ -283,7 +283,7 @@ class Cache
 	 */
 	function _get_menus()
 	{
-		import('core/menu_service');
+		import('core/MenuService');
 		return MenuService::generate_cache(true);
 	}
 

@@ -26,7 +26,7 @@
  ###################################################*/
 
 import('modules/ModulesDiscoveryService');
-mimport('blog/models/blog');
+import('/blog/models/blog');
 
 
 class BlogControllerBlogList implements Controller

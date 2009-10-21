@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-import('core/menu_service');
+import('core/MenuService');
 
 $menu_id = retrieve(REQUEST, 'id', 0);
 $action = retrieve(GET, 'action', '');

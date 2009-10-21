@@ -136,7 +136,7 @@ class PackagesManager
 		$module_identifier = strprotect($module_identifier);
 
 		//Installation du mini module s'il existe
-		import('core/menu_service');
+		import('core/MenuService');
 		MenuService::add_mini_module($module_identifier);
 
 		//Insertion du modules dans la bdd => module installé.
@@ -161,7 +161,7 @@ class PackagesManager
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
 			
-			import('core/cache/modules_css_files_cache');
+			import('core/cache/ModulesCssFilesCache');
     		ModulesCssFilesCache::invalidate();
 			
 			MenuService::generate_cache();
@@ -222,7 +222,7 @@ class PackagesManager
 			}
 				
 			//Suppression du module mini.
-			import('core/menu_service');
+			import('core/MenuService');
 			MenuService::delete_mini_module($module_name);
 			MenuService::delete_module_feeds_menus($module_name);
 			 
@@ -250,7 +250,7 @@ class PackagesManager
 				
 			$Cache->Generate_file('modules');
 			
-			import('core/cache/modules_css_files_cache');
+			import('core/cache/ModulesCssFilesCache');
     		ModulesCssFilesCache::invalidate();
 			
 			MenuService::generate_cache();

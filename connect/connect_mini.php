@@ -33,7 +33,7 @@ function connect_mini($position, $block)
     global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS, $Session;
     
     $tpl = new Template('connect/connect_mini.tpl');
-    import('core/menu_service');
+    import('core/MenuService');
     MenuService::assign_positions_conditions($tpl, $block);
     if ($User->check_level(MEMBER_LEVEL)) //Connecté.
     {

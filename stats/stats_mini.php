@@ -36,7 +36,7 @@ function stats_mini($position, $block)
     
     #########################Stats.tpl###########################
     $tpl = new Template('stats/stats_mini.tpl');
-    import('core/menu_service');
+    import('core/MenuService');
     MenuService::assign_positions_conditions($tpl, $block);
     
     $Cache->load('stats');

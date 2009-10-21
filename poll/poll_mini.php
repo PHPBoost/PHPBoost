@@ -38,7 +38,7 @@ function poll_mini($position, $block)
     	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
     	
     	$tpl = new Template('poll/poll_mini.tpl');
-        import('core/menu_service');
+        import('core/MenuService');
         MenuService::assign_positions_conditions($tpl, $block);
     		
     	#####################R�sultats######################
