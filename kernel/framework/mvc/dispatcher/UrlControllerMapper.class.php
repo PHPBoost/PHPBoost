@@ -33,22 +33,20 @@ import('mvc/dispatcher/AbstractUrlMapper');
  */
 class UrlControllerMapper extends AbstractUrlMapper
 {
-	private $class_file;
-	private $classname;
+	private $classpath;
 	private $parameters_names;
 
 	/**
 	 * @desc build a new UrlDispatcherItem
-	 * @param string $controller_name the controller classname
-	 * @param string $method_name the controller method name
+	 * @param string $classpath the controller classname
 	 * @param string $capture_regex the regular expression matching the url
 	 * and capturing the controller method parameters
+     * @param string $parameters_names the names of the parameters in the capture order
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($class_file, $classname, $capture_regex, $parameters_names = array())
+	public function __construct($classpath, $capture_regex, $parameters_names = array())
 	{
-		$this->class_file =& $class_file;
-		$this->classname =& $classname;
+		$this->classpath =& $classpath;
 		$this->parameters_names = $parameters_names;
 		parent::__construct($capture_regex);
 	}
@@ -81,8 +79,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 
 	private function do_call()
 	{
-		mimport($this->class_file);
-		$controller = new $this->classname();
+		$controller = ClassLoader::new_instance($this->classpath);
 		if (!($controller instanceof Controller))
 		{
 			throw new NoSuchControllerException($this->classname);

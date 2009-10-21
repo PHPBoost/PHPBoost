@@ -45,7 +45,7 @@ class ClassLoader
 
 	public static function get_classname($classpath)
 	{
-		return substr($kernel_classpath, strpos($kernel_classpath, '/') + 1);
+		return substr($classpath, strrpos($classpath, '/') + 1);
 	}
 }
 ?>

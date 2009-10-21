@@ -1103,11 +1103,16 @@ define('PLAIN_IMPORT', '');
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
-	if (substr($path, 0, 1) !== 0)
+	if (substr($path, 0, 1) !== '/')
 	{
 		$path = '/kernel/framework/' . $path;
 	}
-	require_once PATH_TO_ROOT . $path . $import_type;
+	if (!@include_once(PATH_TO_ROOT . $path . $import_type))
+	{
+		echo 'Can\'t load file ' . PATH_TO_ROOT . $path . $import_type . '<br /><br />Stack<hr />';
+		Debug::print_stacktrace();
+		exit;
+	}
 }
 
 /**
