@@ -27,8 +27,8 @@
 
 import('mvc/model/BusinessObject');
 
-mimport('blog/models/dao/blog_dao');
-mimport('blog/models/blog_post');
+import('/blog/models/dao/blog_dao');
+import('/blog/models/blog_post');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

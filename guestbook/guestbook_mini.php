@@ -39,7 +39,7 @@ function guestbook_mini($position, $block)
     	
     	###########################Affichage##############################
     	$tpl = new Template('guestbook/guestbook_mini.tpl');
-        import('core/menu_service');
+        import('core/MenuService');
         MenuService::assign_positions_conditions($tpl, $block);
 
 		$rand = array_rand($_guestbook_rand_msg);

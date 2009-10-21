@@ -36,7 +36,7 @@ $id = retrieve(GET, 'id', 0);
 $action = retrieve(GET, 'action', '');
 $move = retrieve(GET, 'move', '');
 
-import('core/menu_service');
+import('core/MenuService');
 
 function menu_admin_link(&$menu, $mode)
 {
@@ -94,7 +94,7 @@ if (!empty($id))
     
     MenuService::generate_cache();
     
-    import('core/cache/modules_css_files_cache');
+    import('core/cache/ModulesCssFilesCache');
     ModulesCssFilesCache::invalidate();
     
     redirect('menus.php#m' . $id);
@@ -196,7 +196,7 @@ if ($action == 'save') //Save menus positions.
 	if ($changes > 0) //Update cache if necessary.
 	{
 	    MenuService::generate_cache();
-	    import('core/cache/modules_css_files_cache');
+	    import('core/cache/ModulesCssFilesCache');
     	ModulesCssFilesCache::invalidate();
 	}
 

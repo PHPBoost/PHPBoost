@@ -28,8 +28,8 @@
 import('io/template/Template');
 import('modules/ModulesDiscoveryService');
 
-mimport('blog/controllers/abstract_blog_controller');
-mimport('blog/models/blog_post');
+import('/blog/controllers/abstract_blog_controller');
+import('/blog/models/blog_post');
 
 
 class BlogPostController extends AbstractBlogController

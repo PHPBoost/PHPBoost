@@ -30,7 +30,7 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-import('core/cache');
+import('core/Cache');
 
 $CONFIG = array();
 $Cache = new Cache();

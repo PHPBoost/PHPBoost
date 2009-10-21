@@ -34,7 +34,7 @@ function newsletter_mini($position, $block)
     load_module_lang('newsletter');
     
     $tpl = new Template('newsletter/newsletter_mini.tpl');
-    import('core/menu_service');
+    import('core/MenuService');
     MenuService::assign_positions_conditions($tpl, $block);
     
     $tpl->assign_vars(array(

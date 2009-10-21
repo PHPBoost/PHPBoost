@@ -37,7 +37,7 @@ class AdminDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		import('core/environment/admin_display_graphical_environment');
+		import('core/environment/AdminDisplayGraphicalEnvironment');
 		parent::__construct(new AdminDisplayGraphicalEnvironment(), $view);
 	}
 }

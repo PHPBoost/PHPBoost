@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-import('core/updates');
+import('core/Updates');
 $check_updates = retrieve(GET, 'check', false);
 $update_type = retrieve(GET, 'type', '');
 if (!in_array($update_type, array('', 'kernel', 'module', 'theme')))
@@ -52,7 +52,7 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
 {
     // Retrieves all the update alerts from the database
     import('events/AdministratorAlertService');
-    import('core/application');
+    import('core/Application');
     $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
     $updates = array();
     foreach ($update_alerts as $update_alert)

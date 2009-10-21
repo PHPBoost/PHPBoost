@@ -37,7 +37,7 @@ class SiteNodisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		import('core/environment/site_nodisplay_graphical_environment');
+		import('core/environment/SiteNodisplayGraphicalEnvironment');
 		parent::__construct(new SiteNodisplayGraphicalEnvironment(), $view);
 	}
 }

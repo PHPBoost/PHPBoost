@@ -43,7 +43,7 @@ define('DB_UNKNOW_ERROR', -1);
 function check_database_config(&$host, &$login, &$password, &$database_name, $tables_prefix)
 {
 	import('db/Sql');
-	import('core/errors');
+	import('core/Errors');
 
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
@@ -109,7 +109,7 @@ function load_db_connection()
 {
 	global $Sql, $Errorh;
 
-	import('core/errors');
+	import('core/Errors');
     
 	$Errorh = new Errors;
     return $Sql;

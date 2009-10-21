@@ -46,7 +46,7 @@ import('events/AdministratorAlertService');
 
 if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
-    import('core/application');
+    import('core/Application');
     $app = unserialize($update->get_properties());
 }
 

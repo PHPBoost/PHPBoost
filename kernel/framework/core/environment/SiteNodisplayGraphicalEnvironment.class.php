@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          header_no_display.php
+ *                  site_nodisplay_graphical_environment.class.php
  *                            -------------------
- *   begin                : August 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : October 15, 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,18 +25,40 @@
  *
  ###################################################*/
 
+import('core/environment/AbstractDisplayGraphicalEnvironment');
 
-if (defined('PHPBOOST') !== true)
+/**
+ * @package core
+ * @subpackage environment
+ * @desc
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
+class SiteNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
-    exit;
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/core/environment/GraphicalEnvironment#display_header()
+	 */
+	function display_header()
+	{
+		self::set_page_localization('');
+
+		$this->process_site_maintenance();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/core/environment/GraphicalEnvironment#display_footer()
+	 */
+	function display_footer()
+	{
+		
+	}
 }
-
-import('core/environment/SiteNodisplayGraphicalEnvironment');
-
-$env = new SiteNodisplayGraphicalEnvironment();
-
-Environment::set_graphical_environment($env);
-
-Environment::display_header();
 
 ?>

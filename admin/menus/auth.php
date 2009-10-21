@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $id = retrieve(REQUEST, 'id', 0);
 $post = retrieve(POST, 'id', -1) >= 0 ? true : false;
 
-import('core/menu_service');
+import('core/MenuService');
 
 $menu = MenuService::load($id);
 

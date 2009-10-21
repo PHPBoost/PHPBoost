@@ -54,7 +54,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     }
     
     $tpl = new Template('menus/themeswitcher/themeswitcher.tpl');
-    import('core/menu_service');
+    import('core/MenuService');
     MenuService::assign_positions_conditions($tpl, $block);
     
     $utheme = get_utheme();

@@ -50,7 +50,7 @@ if (isset($_POST['valid']))
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
 	$Cache->Load('modules', RELOAD_CACHE);
-	import('core/menu_service');
+	import('core/MenuService');
 	MenuService::generate_cache();
 	
 	redirect(HOST . SCRIPT);

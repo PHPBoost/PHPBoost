@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('core/application');
+import('core/Application');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

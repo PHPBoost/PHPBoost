@@ -3,7 +3,7 @@
 import('util/Date');
 import('mvc/model/BusinessObject');
 
-mimport('blog/models/dao/blog_post_dao');
+import('/blog/models/dao/blog_post_dao');
 
 class BlogPost extends BusinessObject
 {

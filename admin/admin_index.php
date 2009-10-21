@@ -37,7 +37,7 @@ $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
 	$content = retrieve(POST, 'writing_pad_content', '', TSTRING_UNCHANGE);
-	import('core/config/writing_pad_config');
+	import('core/config/WritingPadConfig');
 	$writing_pad_content = WritingPadConfig::load();
 	$writing_pad_content->set_content($content);
 	WritingPadConfig::save($writing_pad_content);
@@ -84,7 +84,7 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $Sql->query_close($result);
 
-import('core/config/writing_pad_config');
+import('core/config/WritingPadConfig');
 $writing_pad_content = WritingPadConfig::load()->get_content();
 
 $Template->assign_vars(array(
@@ -116,7 +116,7 @@ $Template->assign_vars(array(
     'L_RESET' => $LANG['reset']
 ));
 
-import('core/stats_saver');
+import('core/StatsSaver');
 
 //Liste des personnes en lignes.
 $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
