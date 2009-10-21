@@ -255,7 +255,7 @@ class PackagesManager
 			
 			MenuService::generate_cache();
 
-			import('content/syndication/feed'); //Régénération des feeds.
+			import('content/feed/feed'); //Régénération des feeds.
 			Feed::clear_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte

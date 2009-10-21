@@ -30,7 +30,7 @@ define('DEFAULT_FEED_NAME', 'master');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
 import('functions', INC_IMPORT);
-import('content/syndication/feed_data');
+import('content/feed/FeedData');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
@@ -78,7 +78,7 @@ class Feed
 	 */
 	function export($template = false, $number = 10, $begin_at = 0)
 	{
-		import('content/parser/content_second_parser');
+		import('content/parser/ContentSecondParser');
 
 		if ($template === false)
 		{    // A specific template is used

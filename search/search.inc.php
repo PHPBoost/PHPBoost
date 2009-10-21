@@ -28,7 +28,7 @@
 if (defined('PHPBOOST') !== true) exit;
 
 import('modules/ModulesDiscoveryService');
-import('content/search');
+import('content/Search');
 
 
 $Cache->load('search');

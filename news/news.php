@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
 import('util/Date');
-import('content/comments');
-import('content/syndication/feed');
+import('content/Comments');
+import('content/feed/feed');
 
 require_once('news_cats.class.php');
 $news_cat = new NewsCats();

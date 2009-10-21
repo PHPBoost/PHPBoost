@@ -28,7 +28,7 @@
 global $Cache;
 
 $Cache->load('download');
-import('content/categories_manager');
+import('content/CategoriesManager');
 
 define('NOT_GENERATE_CACHE', true);
 

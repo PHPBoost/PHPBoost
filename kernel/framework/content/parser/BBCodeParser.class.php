@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/parser/content_parser');
+import('content/parser/ContentParser');
 
 /**
  * @package content

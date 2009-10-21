@@ -141,7 +141,7 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	import('content/comments'); 
+	import('content/Comments'); 
 	$comments = new Comments('events', $contribution_id, url('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
 	//For PHP 4 :(

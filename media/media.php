@@ -165,8 +165,8 @@ if (empty($id_media) && $id_cat >= 0)
 		$Pagination = new Pagination();
 
 		//Notes
-		import('content/note');
-		import('content/comments');
+		import('content/Note');
+		import('content/Comments');
 
 		$Template->assign_vars(array(
 			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . url_encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
@@ -238,10 +238,10 @@ elseif ($id_media > 0)
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
 	//Affichage notation.
-	import('content/note');
+	import('content/Note');
 	$Note = new Note('media', $id_media, url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'), $MEDIA_CONFIG['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
-	import('content/comments');
+	import('content/Comments');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_MEDIA' => true,

@@ -70,7 +70,7 @@ function articles_mini($position, $block)
 			break;
 	}
 	
-	import('content/note');
+	import('content/Note');
 	$result = AppContext::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
 	FROM " . DB_TABLE_ARTICLES . " a	
 	WHERE a.visible = 1 

@@ -50,7 +50,7 @@ class Environment
 
 		import('util/StringVars');
 		import('io/request/HTTPRequest');
-		import('content/parser/content_formatting_factory');
+		import('content/parser/ContentFormattingFactory');
 		import('core/breadcrumb');
 		import('core/cache');
 		import('core/cache/groups_cache');

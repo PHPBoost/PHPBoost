@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-import('content/syndication/feed');
-import('content/syndication/feeds_cat');
+import('content/feed/feed');
+import('content/feed/FeedsCat');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

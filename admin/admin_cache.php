@@ -66,7 +66,7 @@ else    // Génération du cache des rss
     //Si c'est confirmé on execute
     if (!empty($_POST['cache']))
     {
-        import('content/syndication/feed');
+        import('content/feed/feed');
         Feed::clear_cache();
         
         redirect('/admin/admin_cache.php?cache=syndication&s=1');

@@ -90,7 +90,7 @@ class MediaInterface extends ModuleInterface
 
         require_once(PATH_TO_ROOT . '/media/media_constant.php');
         require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
-		import('content/syndication/feed_data');
+		import('content/feed/FeedData');
 		import('util/Date');
 		import('util/Url');
         

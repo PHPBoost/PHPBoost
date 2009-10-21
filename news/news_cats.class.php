@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('content/categories_manager');
+import('content/CategoriesManager');
 
 define('DO_NOT_GENERATE_CACHE', false);
 

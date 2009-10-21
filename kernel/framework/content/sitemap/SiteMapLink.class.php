@@ -28,7 +28,7 @@
 
 import('util/Date');
 import('util/Url');
-import('content/sitemap/site_map_element');
+import('content/sitemap/SiteMapElement');
 
 /**
  * @package content

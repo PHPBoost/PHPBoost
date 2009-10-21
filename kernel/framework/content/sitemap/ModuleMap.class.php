@@ -26,7 +26,7 @@
  *
  ###################################################*/
 
-import('content/sitemap/site_map_section');
+import('content/sitemap/SiteMapSection');
 
 /**
  * @package content

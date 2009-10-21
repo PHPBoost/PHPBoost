@@ -63,7 +63,7 @@ elseif (!empty($_GET['note']) ) //Utilisateur connecté.
 		$note = retrieve(POST, 'note', 0);
 
 		//Initialisation  de la class de gestion des fichiers.
-		import('content/note');
+		import('content/Note');
 		$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 		
 		if (!empty($note) && !empty($id))

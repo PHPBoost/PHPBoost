@@ -39,7 +39,7 @@ if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 	$note = retrieve(POST, 'note', 0);
 
 	// intialize management system class
-	import('content/note');
+	import('content/Note');
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 
 	if (!empty($note) && !empty($id))

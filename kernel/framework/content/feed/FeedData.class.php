@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('content/syndication/feed_item');
+import('content/feed/FeedItem');
 import('util/Date');
 import('util/Url');
 

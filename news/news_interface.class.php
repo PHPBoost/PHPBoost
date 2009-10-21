@@ -129,7 +129,7 @@ class NewsInterface extends ModuleInterface
 
 		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
 
-        import('content/syndication/feed_data');
+        import('content/feed/FeedData');
         import('util/Date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
         import('util/Url');
@@ -197,7 +197,7 @@ class NewsInterface extends ModuleInterface
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
 
-		import('content/sitemap/module_map');
+		import('content/sitemap/ModuleMap');
 		import('util/Url');
 
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
@@ -292,8 +292,8 @@ class NewsInterface extends ModuleInterface
 
 		// Import.
 		import('util/Date');
-		import('content/comments');
-		import('content/syndication/feed');
+		import('content/Comments');
+		import('content/feed/feed');
 		import('util/Pagination');
 
 		// Initialisation des imports.

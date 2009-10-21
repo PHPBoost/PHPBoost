@@ -51,13 +51,13 @@ if ($delete > 0)
 
 		if ($news['nbr_com'] > 0)
 		{
-			import('content/comments');
+			import('content/Comments');
 			$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
 			$Comments->delete_all($delete);
 		}
 
 		// Feeds Regeneration
-	    import('content/syndication/feed');
+	    import('content/feed/feed');
 	    Feed::clear_cache('news');
 
 		redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
@@ -227,7 +227,7 @@ elseif (!empty($_POST['submit']))
 			}
 
 			// Feeds Regeneration
-			import('content/syndication/feed');
+			import('content/feed/feed');
 			Feed::clear_cache('news');
 
 			if ($news['visible'] && $news['start'] == 0)
