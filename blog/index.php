@@ -32,21 +32,21 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 import('mvc/dispatcher/Dispatcher');
 
 $url_controller_mappers = array(
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/test/?$`'),
-new UrlControllerMapper('blog/controllers/blog_controller_blog_list', 'BlogControllerBlogList', '`^/?$`'),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/([0-9]+)/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/create/?$`'),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/create/valid/?$`'),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/([0-9]+)/edit/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/([0-9]+)/edit/valid/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_controller', 'BlogController', '`^/([0-9]+)/delete/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/([0-9]+)/posts/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/([0-9]+)/posts/([0-9]+)/?$`', array('blog_id', 'post_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/([0-9]+)/post/add/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/([0-9]+)/post/add/valid/?$`', array('blog_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/[0-9]+/post/([0-9]+)/edit/?$`', array('blog_id', 'post_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`', array('blog_id', 'post_id')),
-new UrlControllerMapper('blog/controllers/blog_post_controller', 'BlogPostController', '`^/[0-9]+/post/delete/([0-9]+)/?$`', array('blog_id', 'post_id'))
+new UrlControllerMapper('/blog/controllers/BlogController', '`^/test/?$`'),
+new UrlControllerMapper('/blog/controllers/BlogControllerBlogList', '`^/?$`'),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/([0-9]+)/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/create/?$`'),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/create/valid/?$`'),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/([0-9]+)/edit/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/([0-9]+)/edit/valid/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_controller', '`^/([0-9]+)/delete/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/([0-9]+)/posts/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/([0-9]+)/posts/([0-9]+)/?$`', array('blog_id', 'post_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/([0-9]+)/post/add/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/([0-9]+)/post/add/valid/?$`', array('blog_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/[0-9]+/post/([0-9]+)/edit/?$`', array('blog_id', 'post_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`', array('blog_id', 'post_id')),
+new UrlControllerMapper('/blog/controllers/blog_post_controller', '`^/[0-9]+/post/delete/([0-9]+)/?$`', array('blog_id', 'post_id'))
 );
 Dispatcher::do_dispatch($url_controller_mappers);
 
