@@ -224,8 +224,7 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	}
 	else
 		echo $LANG['no_result'];
-	
-	$Sql->close(); //Fermeture de mysql
 }
 
+include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

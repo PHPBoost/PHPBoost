@@ -81,8 +81,6 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
     {
         echo $LANG['no_result'];
     }
-
-    $Sql->close(); //Fermeture de mysql*/
 }
 elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty($_GET['ban_user'])) //Recherche d'un membre
 {
@@ -123,8 +121,8 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
     {
         echo $LANG['no_result'];
     }
-
-    $Sql->close(); //Fermeture de mysql*/
 }
+
+include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 
 ?>
