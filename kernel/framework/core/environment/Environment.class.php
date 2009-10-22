@@ -65,6 +65,7 @@ class Environment
 		import('members/GroupsService');
 		import('members/Session');
 		import('members/User');
+		import('menu/Menu');
 		import('util/Bench');
 		import('util/Date');
 		import('util/Debug');
