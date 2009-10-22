@@ -25,15 +25,6 @@
  *
  ###################################################*/
 
-
-//Constantes de base.
-define('ARCHIVE_ALL_ERRORS', true); //Archivage de toutes les erreurs, quel que soit le type.
-define('ARCHIVE_ERROR', true); //Archivage de l'erreur courante, quel que soit le type.
-define('NO_ARCHIVE_ERROR', false); //N'archive pas l'erreur courante, quel que soit le type.
-define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
-define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
-define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
-
 /**
  * @deprecated user ErrorsManager
  * @author Viarre Régis crowkait@phpboost.com
@@ -42,7 +33,8 @@ define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur coura
  */
 class Errors
 {
-	private $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
+	const DISPLAY_ALL_ERROR = false; //Display error suppressed by @.
+	
 	private $redirect;
 	private $template; //Template used by the error handler.
 	private $personal_tpl = false; //Template used by the error handler.
@@ -50,10 +42,8 @@ class Errors
 	/**
 	 * @param boolean $archive_all TRUE archive all events FALSE if not
 	 */
-	public function __construct($archive_all = false)
+	public function __construct()
 	{
-		$this->archive_all = $archive_all;
-
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)
@@ -92,7 +82,7 @@ class Errors
 		}
 
 		//Si une erreur est supprimé par un @ alors on passe
-		if (!DISPLAY_ALL_ERROR && error_reporting() == 0)
+		if (!self::DISPLAY_ALL_ERROR && error_reporting() == 0)
 		{
 			return true;
 		}
@@ -395,7 +385,7 @@ class Errors
 	 */
 	private static function log_error($errfile, $errline, $errno, $errstr, $archive)
 	{
-		if ($archive || $this->archive_all)
+		if ($archive)
 		{
 			//Nettoyage de la chaîne avant enregistrement.
 			$errstr = self::clean_error_string($errstr);
