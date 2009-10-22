@@ -87,8 +87,6 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 		</table>';
     }
     $Sql->query_close($result);
-
-    $Sql->close(); //Fermeture de mysql*/
 }
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
@@ -142,8 +140,8 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 		</table>';
     }
     $Sql->query_close($result);
-
-    $Sql->close(); //Fermeture de mysql*/
 }
+
+include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 
 ?>
