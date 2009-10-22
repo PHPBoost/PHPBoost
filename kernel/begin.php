@@ -37,7 +37,4 @@ $Cache = new Cache();
 
 Environment::init();
 
-// TODO remove this
-global $Sql, $Bread_crumb, $Session, $User, $Template;
-
 ?>
