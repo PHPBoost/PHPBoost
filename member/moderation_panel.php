@@ -90,10 +90,9 @@ switch ($action)
 					if (!empty($readonly_contents) && !empty($readonly))
 					{					
 						import('members/PrivateMsg');
-						$Privatemsg = new PrivateMsg();
 						
 						//Envoi du message.
-						$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
+						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
 			}
@@ -379,10 +378,9 @@ switch ($action)
 						if (!empty($warning_contents))
 						{					
 							import('members/PrivateMsg');
-							$Privatemsg = new PrivateMsg();
 							
 							//Envoi du message.
-							$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
+							PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
 						}
 					}
 				}

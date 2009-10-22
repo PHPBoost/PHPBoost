@@ -36,7 +36,6 @@ if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 import('members/PrivateMsg');
-$Privatemsg = new PrivateMsg();
 
 $pm_get = retrieve(GET, 'pm', 0);
 $pm_id_get = retrieve(GET, 'id', 0);
@@ -51,7 +50,7 @@ $read = retrieve(GET, 'read', false);
 //Marque les messages privés comme lus
 if ($read)
 {
-	$nbr_pm = $Privatemsg->count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
 
@@ -89,7 +88,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
-	if ($Privatemsg->count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
+	if (Privatemsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
@@ -99,9 +98,9 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 		if (!empty($user_id_dest) && $user_id_dest != $User->get_attribute('user_id'))
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
-			$Privatemsg->start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
+			list($pm_convers_id, $pm_msg_id) = Privatemsg::start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
 			//Succès redirection vers la conversation.
-			redirect('/member/pm' . url('.php?id=' . $Privatemsg->pm_convers_id, '-0-' . $Privatemsg->pm_convers_id . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
+			redirect('/member/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Destinataire non trouvé.
 			redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
@@ -144,7 +143,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	));
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$nbr_pm = $Privatemsg->count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
 	if (!$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
 		$Errorh->handler($LANG['e_pm_full_post'], E_USER_WARNING);
 	else
@@ -278,14 +277,14 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 				$status = 2;
 			
 			//Envoi du message privé.
-			$Privatemsg->send($user_id_dest, $pm_id_get, $contents, $User->get_attribute('user_id'), $status);
+			$pm_msg_id = PrivateMsg::send($user_id_dest, $pm_id_get, $contents, $User->get_attribute('user_id'), $status);
 
 			//Calcul de la page vers laquelle on redirige.
 			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
-			redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
+			redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
 			redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
@@ -343,7 +342,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 			
 			$view_status = $Sql->query("SELECT view_status FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);
 			$update_nbr_pm = ($view_status == '0') ? true : false;
-			$Privatemsg->delete_conversation($User->get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
+			PrivateMsg::delete_conversation($User->get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
 	
@@ -382,12 +381,12 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				$id_first = $Sql->query("SELECT MIN(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
 				if ($pm_del > $id_first) //Suppression du message.
 				{
-					$pm_last_msg = $Privatemsg->delete($pm_to, $pm_del, $pm['idconvers']);
+					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
 					redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
 				}
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
-					$Privatemsg->delete_conversation($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
+					PrivateMsg::delete_conversation($pm_to, $pm['idconvers'], $expd, PrivateMsg::DEL_PM_CONVERS, PrivateMsg::UPDATE_MBR_PM);
 					redirect('/member/pm.php' . SID2);
 				}
 			}
@@ -749,7 +748,7 @@ else //Liste des conversation, dans la boite du membre.
 		'pm'=> 'member/pm.tpl'
 	));
 
-	$nbr_pm = $Privatemsg->count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	import('util/Pagination');

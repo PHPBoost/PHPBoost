@@ -83,7 +83,6 @@ class Forum
 			import('io/Mail');
 			$Mail = new Mail();
 			import('members/PrivateMsg');
-			$Privatemsg = new PrivateMsg();
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - $CONFIG['site_session_invit'];
@@ -108,12 +107,12 @@ class Forum
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
-					$Privatemsg->start_conversation(
+					PrivateMsg::start_conversation(
 						$row['user_id'], 
 						addslashes($LANG['forum_mail_title_new_post']), 
 						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', '[url]' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2[/url]'), 
 						'-1', 
-						SYSTEM_PM
+						PrivateMsg::SYSTEM_PM
 					);
 				}
 			}
