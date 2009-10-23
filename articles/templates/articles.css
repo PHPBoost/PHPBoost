@@ -15,7 +15,6 @@
 	voice-family: inherit;
 	padding-left: 7px;
 	height: 24px;
-	width:900px;
 }
 
 #tabs ul {
@@ -154,4 +153,26 @@
 .carouseljs ol li,.carouseljs ul li {
 	float: left;
 	display: inline;
+}
+
+/* extend field */
+.tab_extend_field{
+	margin:10px;
+	text-align:center;
+	border:1px solid #CCCCCC;
+	border-spacing:0;
+}
+
+.extend_field_left{
+	text-align:left;
+	font-weight:bold;
+}
+.extend_field_right{
+	text-align:left;
+}
+
+/* info table */
+.info_row{
+	text-align:left;
+	font-weight:bold;
 }

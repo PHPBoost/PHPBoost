@@ -53,7 +53,7 @@ if (!empty($idart) && isset($cat) )
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 
 	$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_articles']);
-	
+	$Errorh->set_template($tpl);
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
@@ -119,27 +119,25 @@ if (!empty($idart) && isset($cat) )
 		));
 		$i++;
 	}	
+	
 	// extend field
 	$extend_field=!empty($ARTICLES_CAT[$idartcat]['extend_field']) ? true : false;
 	if($extend_field)
 	{
 		$extend_field_articles=unserialize($articles['extend_field']);
+	
 		foreach ($ARTICLES_CAT[$idartcat]['extend_field'] as $field)
 		{	
-				if(isset($extend_field_articles[$field['name']]['contents']))
-				{
-					$tpl->assign_vars(array(
-						$field['name']=>$extend_field_articles[$field['name']]['contents'] ,
-						'NAME_'.$field['name']=>$field['name'],
-					));
-					
-						$tpl->assign_block_vars('extend_field',array(
-						'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
-						'NAME'=>$field['name'],
-					));
-				}
+			if(isset($extend_field_articles[$field['name']]['contents']))
+			{
+					$tpl->assign_block_vars('extend_field',array(
+					'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
+					'NAME'=>$field['name'],
+				));
+			}
 		}	
 	}
+
 	//Affichage notation
 	import('content/Note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -151,13 +149,13 @@ if (!empty($idart) && isset($cat) )
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
-		'C_EXTEND_FIELD'=>$extend_field,
+		'C_EXTEND_FIELD'=>$extend_field && !empty($extend_field_articles),
 		'C_NOTE'=> $ARTICLES_CAT[$idartcat]['options']['note'] ? true : false,
 		'C_PRINT'=> $ARTICLES_CAT[$idartcat]['options']['impr'] ? true : false,
 		'C_COM'=> $ARTICLES_CAT[$idartcat]['options']['com'] ? true : false,
 		'C_AUTHOR'=> $ARTICLES_CAT[$idartcat]['options']['author'] ? true : false,
 		'C_DATE'=> $ARTICLES_CAT[$idartcat]['options']['date'] ? true : false,
-		'C_MAIL'=> $ARTICLES_CAT[$idartcat]['options']['mail'] ? true : false,
+		'C_MAIL'=> $ARTICLES_CAT[$idartcat]['options']['mail'] && $User->Check_level(MEMBER_LEVEL) ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -223,27 +221,13 @@ if (!empty($idart) && isset($cat) )
 		
 		import('io/Mail');
 		$mail = new Mail();
- 
-		$contents =  "Ceci est un e-mail de (".$CONFIG['site_name'].") envoyé par ".$exp." (".$user_mail."). Ce lien pourrait vous intéresser: ".$CONFIG['server_name'].$link.".";
+
+		$contents = sprintf($ARTICLES_LANG['text_link_mail'],$CONFIG['site_name'],$exp,$user_mail,$CONFIG['server_name'],$link) ;
 		
 		if($mail->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
-		{
-			$tpl->assign_vars(array(
-				'C_ERROR_HANDLER' => true,
-				'ERRORH_IMG' => 'success',
-				'ERRORH_CLASS' => 'error_success',
-				'L_ERRORH' => 'Votre mail a été envoyé avec succès',
-			));
-		}
+			$Errorh->handler($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS);
 		else
-		{
-			$tpl->assign_vars(array(
-				'C_ERROR_HANDLER' => true,
-				'ERRORH_IMG' => 'notice',
-				'ERRORH_CLASS' => 'error_notice',
-				'L_ERRORH' => 'Une erreur est survenue veuillez réessayer plutard',
-			));
-		}
+			$Errorh->handler($ARTICLES_LANG['error_send_mail'], E_USER_WARNING);
 	}
 	$tpl->parse();
 }
