@@ -33,18 +33,6 @@
 //Erreurs
 $LANG['e_unexist_articles'] = 'L\'article que vous avez demandé n\'existe pas';
 
-//Ajout article.
-$MAIL['new_article_website'] = 'Nouvel article sur votre site web';
-$MAIL['new_article'] = 'Un nouvel article a été ajouté sur votre site web ' . HOST . ',
-il devra être approuvé avant d\'être visible sur le site par tout le monde.
-
-Titre de l\'article: %s
-Contenu: %s...[suite]
-Posté par: %s
-
-Rendez-vous dans le panneau gestion des articles de l\'administration, pour l\'approuver.
-' . HOST . DIR . '/admin/admin_articles.php';
-
 
 global $ARTICLES_LANG;
 // contribution
@@ -161,6 +149,8 @@ $ARTICLES_LANG = array(
 	'extend_field_name'=>'Nom du champ',
 	'extend_field_type'=>'Type de champ',
 	'extend_field_add'=>'Ajouter un champ',
-	
+	'successful_send_mail'=>'Votre mail a été envoyé avec succès',
+	'error_send_mail'=>'Une erreur est survenue veuillez réessayer plutard',
+	'text_link_mail' =>'Ceci est un e-mail de (%s) envoyé par %s (%s). Ce lien pourrait vous intéresser: %s %s',
 );
 ?>

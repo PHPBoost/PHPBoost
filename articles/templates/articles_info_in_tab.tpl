@@ -243,12 +243,10 @@
 				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>	
 			</div>
 			<div style="float:right">
-
 				# IF C_IS_ADMIN #
 				&nbsp;&nbsp;<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
 				&nbsp;&nbsp;<a href="{U_ARTICLES_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
 				# ENDIF #
-
 			</div>
 		</div>
 		# IF C_TAB #
@@ -273,86 +271,84 @@
 			<div id="tabcontent">
 				# START tab #
 					<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
-					<div style="float:left;width:65%">
-						{tab.CONTENTS_TAB}
-					</div>
-					<div style="float:right;">
-						<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
-							<tr>
-								<th style="text-align:center;" colspan="2" >
-									{L_INFO}
-								</th>
-							</tr>
-							# IF C_AUTHOR #		
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
-									<span>{L_WRITTEN}  </span>
-								</td>
-								<td class="row2" >	
-									<span><a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a></span>
-								</td>
-							</tr>
-							# ENDIF #					
-							# IF C_DATE #			
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
-									<span>{L_DATE} </span>
-								</td>
-								<td class="row2">	
-									<span> {DATE}</span>
-								</td>
-							</tr>
-							# ENDIF #
-							# IF C_SOURCES #
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">					
-									<span> {L_SOURCE} </span>
-								</td>
-								<td class="row2">	
-									<span># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a><br /> # END sources #</span>
-								</td>
-							</tr>
-							# ENDIF #
-							# IF C_COM #						
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
-									<span>{L_COM} </span>
-								</td>
-								<td class="row2" >	
-									<span>{COM}</span>
-								</td>
-							</tr>
-							# ENDIF #
-							# IF C_PRINT #
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
-									<span>{L_PRINTABLE_VERSION} </span>
-								</td>
-								<td class="row2" >	
-									<span><a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a></span>
-								</td>
-							</tr>
-							# ENDIF #				
-							# IF C_MAIL #
-							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
-									<span>{L_LINK_MAIL} </span>
-								</td>
-								<td class="row2">	
-									<span><a href="javascript:display_mail()"><img src="../templates/{THEME}/images/pm_mini.png" class="valign_middle" alt="{L_LINK_MAIL}" /></a></span>
-								</td>
-							</tr>
-							# ENDIF #
-							# IF C_NOTE #
-							<tr>
-								<td class="row2" colspan="2" style="text-align:center;">	
-									<span>{KERNEL_NOTATION}</span>
-								</td>
-							</tr>
-							# ENDIF #
-						</table>
-					
-				</div>
+					<div style="float:right;top:0px;">
+							<table class="tab_extend_field">
+								<tr>
+									<th style="text-align:center;" colspan="2" >
+										{L_INFO}
+									</th>
+								</tr>
+								# IF C_AUTHOR #		
+								<tr>
+									<td class="row2 info_row">				
+										<span>{L_WRITTEN}  </span>
+									</td>
+									<td class="row2" >	
+										<span><a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a></span>
+									</td>
+								</tr>
+								# ENDIF #					
+								# IF C_DATE #			
+								<tr>
+									<td class="row2 info_row">				
+										<span>{L_DATE} </span>
+									</td>
+									<td class="row2">	
+										<span> {DATE}</span>
+									</td>
+								</tr>
+								# ENDIF #
+								# IF C_SOURCES #
+								<tr>
+									<td class="row2 info_row">					
+										<span> {L_SOURCE} </span>
+									</td>
+									<td class="row2">	
+										<span># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a><br /> # END sources #</span>
+									</td>
+								</tr>
+								# ENDIF #
+								# IF C_COM #						
+								<tr>
+									<td class="row2 info_row">				
+										<span>{L_COM} </span>
+									</td>
+									<td class="row2" >	
+										<span>{COM}</span>
+									</td>
+								</tr>
+								# ENDIF #
+								# IF C_PRINT #
+								<tr>
+									<td class="row2 info_row">				
+										<span>{L_PRINTABLE_VERSION} </span>
+									</td>
+									<td class="row2" >	
+										<span><a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a></span>
+									</td>
+								</tr>
+								# ENDIF #				
+								# IF C_MAIL #
+								<tr>
+									<td class="row2 info_row">				
+										<span>{L_LINK_MAIL} </span>
+									</td>
+									<td class="row2">	
+										<span><a href="javascript:display_mail()"><img src="../templates/{THEME}/images/pm_mini.png" class="valign_middle" alt="{L_LINK_MAIL}" /></a></span>
+									</td>
+								</tr>
+								# ENDIF #
+								# IF C_NOTE #
+								<tr>
+									<td class="row2" colspan="2" style="text-align:center;">	
+										<span>{KERNEL_NOTATION}</span>
+									</td>
+								</tr>
+								# ENDIF #
+							</table>				
+						</div>
+						{tab.CONTENTS_TAB}		
+						{TEST}		
 					</div>
 				# END tab #
 			</div>					
@@ -388,10 +384,10 @@
 				# ENDIF #	
 				<div>
 					<div style="float:left;width:65%">
-						{CONTENTS}
+						{CONTENTS}	
 					</div>
 					<div style="float:right;">
-						<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
+						<table class="tab_extend_field">
 							<tr>
 								<th style="text-align:center;" colspan="2" >
 									{L_INFO}
@@ -399,7 +395,7 @@
 							</tr>
 							# IF C_AUTHOR #		
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
+								<td class="row2 info_row">				
 									<span>{L_WRITTEN}  </span>
 								</td>
 								<td class="row2" >	
@@ -409,7 +405,7 @@
 							# ENDIF #					
 							# IF C_DATE #			
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
+								<td class="row2 info_row">				
 									<span>{L_DATE} </span>
 								</td>
 								<td class="row2">	
@@ -419,7 +415,7 @@
 							# ENDIF #
 							# IF C_SOURCES #
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">					
+								<td class="row2 info_row">					
 									<span> {L_SOURCE} </span>
 								</td>
 								<td class="row2">	
@@ -429,7 +425,7 @@
 							# ENDIF #
 							# IF C_COM #						
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
+								<td class="row2 info_row">				
 									<span>{L_COM} </span>
 								</td>
 								<td class="row2" >	
@@ -439,7 +435,7 @@
 							# ENDIF #
 							# IF C_PRINT #
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
+								<td class="row2 info_row">				
 									<span>{L_PRINTABLE_VERSION} </span>
 								</td>
 								<td class="row2" >	
@@ -449,7 +445,7 @@
 							# ENDIF #				
 							# IF C_MAIL #
 							<tr>
-								<td class="row2" style="text-align:left;font-weight:bold;">				
+								<td class="row2 info_row">				
 									<span>{L_LINK_MAIL} </span>
 								</td>
 								<td class="row2">	
@@ -487,21 +483,21 @@
 	{COMMENTS}
 	# ENDIF #
 	# IF C_EXTEND_FIELD #
-		<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
+		<table class="tab_extend_field">
 			<tr>
-				<th style="text-align:center;">
+				<th>
 					&nbsp;&nbsp;
 				</th>
-				<th style="text-align:center;">
+				<th>
 					&nbsp;&nbsp;
 				</th>
 			</tr>
 		# START extend_field #
 			<tr>
-				<td class="row2" style="text-align:left;font-weight:bold;">				
+				<td class="row2 extend_field_left">				
 					<span>{extend_field.NAME} : </span>
 				</td>
-				<td class="row2" style="text-align:left;">	
+				<td class="row2 extend_field_right">	
 					<span>{extend_field.CONTENTS}</span>
 				</td>
 			</tr>

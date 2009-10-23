@@ -159,7 +159,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		{
 			$tpl_articles = $tpl_articles->get_name();
 			$selected = $tpl_articles == $ARTICLES_CAT[$id_edit]['tpl_articles'] ? ' selected="selected"' : '';
-			if($tpl_articles != 'articles_cat.tpl')
+			if(!preg_match('`^articles_cat.*\.tpl$`',$tpl_articles) && !preg_match('`^articles_mini.*\.tpl$`',$tpl_articles))
 			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
 		}
 		// category templates
@@ -258,7 +258,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		foreach ($tpl_folder_path->get_files('`^articles.*\.tpl$`') as $tpl_articles)
 		{
 			$tpl_articles = $tpl_articles->get_name();
-			if($tpl_articles != $tpl_default_name & $tpl_articles != 'articles_cat.tpl' )
+			if($tpl_articles != $tpl_default_name && !preg_match('`^articles_cat.*\.tpl$`',$tpl_articles) && !preg_match('`^articles_mini.*\.tpl$`',$tpl_articles) )
 			$tpl_articles_list.= '<option value="' . $tpl_articles . '">' . $tpl_articles. '</option>';
 		}
 

@@ -353,7 +353,7 @@
 	{COMMENTS}
 	# ENDIF #
 	# IF C_EXTEND_FIELD #
-		<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
+		<table class="tab_extend_field">
 			<tr>
 				<th style="text-align:center;">
 					&nbsp;&nbsp;
@@ -364,11 +364,11 @@
 			</tr>
 		# START extend_field #
 			<tr>
-				<td class="row2" style="text-align:left;font-weight:bold;">	
+				<td class="row2 extend_field_left">		
 				
 					<span>{extend_field.NAME} : </span>
 				</td>
-				<td class="row2" style="text-align:left;">	
+				<td class="row2 extend_field_right">	
 					<span>{extend_field.CONTENTS}</span>
 				</td>
 			</tr>
