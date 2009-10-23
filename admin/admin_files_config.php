@@ -63,7 +63,8 @@ if (!empty($_POST['valid']) )
 	$Cache->Generate_file('uploads');
 	
 	//Régénération du htaccess.
-	$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
+	import('core/cache/HtaccessFileCache');
+	HtaccessFileCache::regenerate();
 	
 	redirect(HOST . SCRIPT);	
 }

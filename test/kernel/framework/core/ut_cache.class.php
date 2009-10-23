@@ -86,26 +86,6 @@ class UTcache extends PHPBoostUnitTestCase {
 		$this->assertTrue(is_string($ret));
 	}
 	
-	function test__get_htaccess()
-	{
-		$cache = new Cache();
-		$ret = $cache->_get_htaccess();
-		echo "<br>";
-		var_dump($ret);
-		echo "<br>";
-		$this->assertTrue(empty($ret) OR is_string($ret));
-	}
-	
-	function test__get_css()
-	{
-		$cache = new Cache();
-		$ret = $cache->_get_css();
-		echo "<br>";
-		var_dump($ret);
-		echo "<br>";
-		$this->assertTrue(is_string($ret));
-	}
-	
 	function test__get_themes()
 	{
 		$cache = new Cache();
@@ -134,23 +114,6 @@ class UTcache extends PHPBoostUnitTestCase {
 		var_dump($ret);
 		echo "<br>";
 		$this->assertTrue(is_string($ret));
-	}
-	
-	function test_get_groups()
-	{
-		$cache = new Cache();
-		$ret = $cache->_get_groups();
-		$file = PATH_TO_ROOT . '/cache/groups.php';
-		if (file_exists($file)) {
-			$tmp = file_get_contents($file);
-			$tmp = clean_string($tmp);
-			$this->assertEqual($tmp, $ret);
-		} else {
-			echo "<br>";
-			var_dump($ret);
-			echo "<br>";
-			$this->assertTrue(is_string($ret));
-		}
 	}
 	
 	function test__get_member()
@@ -187,16 +150,6 @@ class UTcache extends PHPBoostUnitTestCase {
 	{
 		$cache = new Cache();
 		$ret = $cache->_get_com();
-		echo "<br>";
-		var_dump($ret);
-		echo "<br>";
-		$this->assertTrue(is_string($ret));
-	}
-	
-	function test__get_writingpad()
-	{
-		$cache = new Cache();
-		$ret = $cache->_get_writingpad();
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";

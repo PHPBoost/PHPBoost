@@ -105,17 +105,19 @@ class CacheManager
 		else if ($this->is_file_cached($name))
 		{
 			$data = $this->get_file_cached_data($name);
-			$this->memory_cache_data($name, $data);
-			return $data;
+			if ($data instanceof $classname)
+			{
+				$this->memory_cache_data($name, $data);
+				return $data;
+			}
 		}
-		else
-		{
-			$data = new $classname();
-			$data->synchronize();
-			$this->file_cache_data($name, $data);
-			$this->memory_cache_data($name, $data);
-			return $data;
-		}
+		
+		//Not cached anywhere, we create it
+		$data = new $classname();
+		$data->synchronize();
+		$this->file_cache_data($name, $data);
+		$this->memory_cache_data($name, $data);
+		return $data;
 	}
 
 	protected function invalidate_file_cache($module_name, $entry_name = '')

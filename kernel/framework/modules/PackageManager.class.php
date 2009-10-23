@@ -169,7 +169,8 @@ class PackagesManager
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
+				import('core/cache/HtaccessFileCache');
+				HtaccessFileCache::regenerate();
 			}
 		}
 
@@ -261,7 +262,8 @@ class PackagesManager
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
+				import('core/cache/HtaccessFileCache');
+				HtaccessFileCache::regenerate();
 			}
 				
 			//Suppression des fichiers du module
