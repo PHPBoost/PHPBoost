@@ -158,7 +158,7 @@
 				<div id="preview">
 				</div>
 				<label for="description" id="scroll_contents">{L_ARTICLE_DESCRIPTION}</label>
-				<br /><br />
+				{KERNEL_EDITOR_DESC}
 				<label><textarea rows="4" cols="86" id="description" name="description">{DESCRIPTION}</textarea></label>
 				<br />
 				<label for="contents" id="scroll_contents">* {L_TEXT}</label>

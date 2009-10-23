@@ -126,15 +126,18 @@ if (!empty($idart) && isset($cat) )
 		$extend_field_articles=unserialize($articles['extend_field']);
 		foreach ($ARTICLES_CAT[$idartcat]['extend_field'] as $field)
 		{	
-				$tpl->assign_vars(array(
-					$field['name']=>$extend_field_articles[$field['name']]['contents'],
-					'NAME_'.$field['name']=>$field['name'],
-				));
-				
-					$tpl->assign_block_vars('extend_field',array(
-					'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
-					'NAME'=>$field['name'],
-				));
+				if(isset($extend_field_articles[$field['name']]['contents']))
+				{
+					$tpl->assign_vars(array(
+						$field['name']=>$extend_field_articles[$field['name']]['contents'] ,
+						'NAME_'.$field['name']=>$field['name'],
+					));
+					
+						$tpl->assign_block_vars('extend_field',array(
+						'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
+						'NAME'=>$field['name'],
+					));
+				}
 		}	
 	}
 	//Affichage notation
@@ -176,6 +179,8 @@ if (!empty($idart) && isset($cat) )
 		'L_SUBMIT' => $LANG['submit'],
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on'],
+		'L_DATE' => $LANG['date'],
+		'L_COM' => $LANG['com'],
 		'L_PRINTABLE_VERSION' => $LANG['printable_version'],
 		'L_SOURCE'=>$ARTICLES_LANG['source'],
 		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
@@ -191,6 +196,7 @@ if (!empty($idart) && isset($cat) )
 		'L_REQUIRE_SUBJECT' => $ARTICLES_LANG['require_subject'],
 		'L_EMAIL_ERROR' => $ARTICLES_LANG['admin_email_error'],
 		'L_LINK_MAIL'=> $ARTICLES_LANG['link_mail'],
+		'L_INFO'=>$LANG['info'],
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ARTICLES_LINK'=> url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart .  url_encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . url_encode_rewrite($articles['title']) . '.php' . "'"),

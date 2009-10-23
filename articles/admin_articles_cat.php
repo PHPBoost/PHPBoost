@@ -331,7 +331,9 @@ elseif (retrieve(POST,'submit',false))
 	{
 		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'idcat', 0,TINTEGER);
-
+		
+		$Session->csrf_get_protect();
+		
 		if ($delete_content)
 		$articles_categories->delete_category_recursively($cat_to_del_post);
 		else

@@ -116,7 +116,6 @@ elseif(retrieve(POST,'submit',false))
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'title' => retrieve(POST, 'title', '', TSTRING),
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
-		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
 		'start' => $begining_date->get_timestamp(),
@@ -130,7 +129,7 @@ elseif(retrieve(POST,'submit',false))
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'icon' => $icon,		
 		'sources'=>addslashes(serialize($sources)),
-		'description'=>retrieve(POST, 'description', '', TSTRING),
+		'description'=>retrieve(POST, 'description', '', TSTRING_PARSE),
 		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
 		'extend_field'=>addslashes(serialize($extend_field_articles)),
 	);
@@ -393,7 +392,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => unparse($articles['contents']),
-				'DESCRIPTION' => $articles['description'],
+				'DESCRIPTION' => unparse($articles['description']),
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
 				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'VISIBLE_UNAPROB' => !$articles['visible'],
@@ -516,6 +515,7 @@ else
 
 	$tpl->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_DESC' => display_editor('description'),
 		'TITLE' => '',	
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),

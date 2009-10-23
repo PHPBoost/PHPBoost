@@ -7,9 +7,14 @@
 		function display_mail()
 		{
 			if( document.getElementById('mail').style.display== "block"  )
-					hide_div("mail");
-				else
-					show_div("mail");
+			{
+				hide_div("mail");
+			}
+			else
+			{
+				show_div("mail");
+				new Effect.ScrollTo('mail',{duration:1.2});
+			}
 
 		}
 		//Vérifie une adresse email
@@ -163,18 +168,23 @@
 		---------------------------------------------------------*/
 		function toggleTab(num,numelems,opennum,animate) 
 		{
-			if ($('tabContent'+num).style.display == 'none'){
-				for (var i=1;i<=numelems;i++){
-					if ((opennum == null) || (opennum != i)){
+			if ($('tabContent'+num).style.display == 'none')
+			{
+				for (var i=1;i<=numelems;i++)
+				{
+					if ((opennum == null) || (opennum != i))
+					{
 						var temph = 'tabHeader'+i;
 						var h = $(temph);
-						if (!h){
+						if (!h)
+						{
 							var h = $('tabHeaderActive');
 							h.id = temph;
 						}
 						var tempc = 'tabContent'+i;
 						var c = $(tempc);
-						if(c.style.display != 'none'){
+						if(c.style.display != 'none')
+						{
 							if (animate || typeof animate == 'undefined')
 								Effect.toggle(tempc,'blind',{duration:0.5, queue:{scope:'menus', limit: 3}});
 							else
@@ -188,7 +198,8 @@
 				h.blur();
 				var c = $('tabContent'+num);
 				c.style.marginTop = '2px';
-				if (animate || typeof animate == 'undefined'){
+				if (animate || typeof animate == 'undefined')
+				{
 					Effect.toggle('tabContent'+num,'blind',{duration:0.5, queue:{scope:'menus', position:'end', limit: 3}});
 				}else{
 					toggleDisp('tabContent'+num);
@@ -205,10 +216,24 @@
 			border-left:1px #5D7C94 solid;
 			border-right:1px #5D7C94 solid;
 			border-bottom:1px #5D7C94 solid;
-
-
+					border-top: 1px solid #5D7C94;
 		}
 	</style>
+	# ENDIF #
+	# IF C_ERROR_HANDLER #
+	<span id="errorh"></span>
+	<div id="error_msg">
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+		</div>
+	<br />
+	</div>
+	<script type="text/javascript">
+	<!--
+		//Javascript timeout to hide this message
+		setTimeout('Effect.Fade("error_msg");', 4000);
+	-->
+	</script>
 	# ENDIF #
 	<div class="module_position">					
 		<div class="module_top_l"></div>		
@@ -236,7 +261,7 @@
 		# IF C_TAB #
 		<div id="tabs">
 			<ul>
-				 <div style="overflow: hidden; height: 24px; width: 900px; position: relative;" class="carouseljs">
+				 <div style="margin-left:auto;width:800px;overflow: hidden; height: 24px; position: relative;" class="carouseljs">
 				# IF C_CAROUSEL #
 					<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
 				# ENDIF #	
@@ -327,21 +352,6 @@
 	# IF C_COM #
 	{COMMENTS}
 	# ENDIF #
-	# IF C_ERROR_HANDLER #
-	<span id="errorh"></span>
-	<div id="error_msg">
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-		</div>
-	<br />
-	</div>
-	<script type="text/javascript">
-	<!--
-		//Javascript timeout to hide this message
-		setTimeout('Effect.Fade("error_msg");', 4000);
-	-->
-	</script>
-	# ENDIF #
 	# IF C_EXTEND_FIELD #
 		<table style="margin:10px;text-align:center;border:none;border-spacing:0;">
 			<tr>
@@ -401,8 +411,7 @@
 					<dd>
 						<label><input type="text" size="50" id="subject" name="subject" value="" /></label>
 					</dd>
-				</dl>
-				
+				</dl>				
 			</fieldset>
 				<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>

@@ -58,7 +58,7 @@ if(count($array_sources) != 0)
 	foreach ($array_sources as $value)
 	{	
 		$url=substr($value['url'],0,7) != "http://" ? "http://".$value['url'] : $value['url'];
-		$sources .='<a href="'.$url.'">'.$value['sources'].'</a>&nbsp;'.(($i < (count($array_sources)-1) )? '-' : ''.'');
+		$sources .='<a href="'.$url.'">'.$value['sources'].'</a>&nbsp;'.(($i < (count($array_sources)-1) )? '- ' : ''.'');
 		$i++;
 	}	
 	$sources .="</div>";

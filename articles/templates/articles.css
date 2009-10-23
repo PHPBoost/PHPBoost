@@ -15,7 +15,7 @@
 	voice-family: inherit;
 	padding-left: 7px;
 	height: 24px;
-	border-bottom: 1px solid #5D7C94;
+	width:900px;
 }
 
 #tabs ul {
@@ -87,6 +87,7 @@
 	padding-top: 1px;
 	background-color: #FFF;
 	padding-left: 5px;
+
 }
 
 .carouseljs ol,.carouseljs ul {
