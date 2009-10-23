@@ -320,84 +320,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the htaccess file cache.
-	 * @return The content of the htaccess file cache.
-	 */
-	function _get_htaccess()
-	{
-		global $CONFIG, $Sql;
-
-		if ($CONFIG['rewrite'])
-		{
-			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
-			$result = $Sql->query_while("SELECT name
-			FROM " . PREFIX . "modules
-			WHERE activ = 1", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				//Récupération des infos de config.
-				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', get_ulang());
-				if (!empty($get_info_modules['url_rewrite']))
-				{
-					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
-				}
-			}
-			$htaccess_rules .=
-			'# Core #' .
-			"\n" . 'RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]' .
-            "\n" . '# Feeds #' .
-            "\n" . 'RewriteRule ^(.*)rss/?$ ' . DIR . '/syndication.php?m=news&feed=rss [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&feed=rss [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&feed=rss [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&name=$3&feed=rss [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$3&name=$2&feed=rss [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)atom/?$ ' . DIR . '/syndication.php?m=news&feed=atom [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&feed=atom [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&feed=atom [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&name=$3&feed=atom [L,QSA]' .
-			"\n" . 'RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$3&name=$2&feed=atom [L,QSA]';
-			 
-			//Page d'erreur.
-			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
-			 
-			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
-			global $CONFIG_UPLOADS;
-			$this->load('uploads');
-			if ($CONFIG_UPLOADS['bandwidth_protect'])
-			{
-				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
-			}
-
-			//Protection anti-bot.
-			$htaccess_rules .= "\n\n" . '# Avoid Hacking Attempt #' . "\n" . 'RewriteCond %{HTTP_USER_AGENT} libwww [NC]' . "\n" . 'RewriteRule .* - [F,L]';
-		}
-		else
-		{
-			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
-		}
-
-		if (!empty($CONFIG['htaccess_manual_content']))
-		{
-			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
-		}
-
-		//Ecriture du fichier .htaccess
-		import('io/filesystem/File');
-		$file = new File(PATH_TO_ROOT . '/.htaccess');
-
-		//We delete the existing file
-		$file->delete();
-
-		//We open the file
-		$file->open();
-		//We write the file
-		$file->write($htaccess_rules);
-		//We close the file
-		$file->close();
-	}
-
-	/**
 	 * @desc Method which is called to generate the themes file cache.
 	 * @return The content of the themes file cache.
 	 */
@@ -588,7 +510,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'modules', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

@@ -106,7 +106,10 @@ if ($update) //Mise à jour du module
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
-			$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
+		{
+			import('core/cache/HtaccessFileCache');
+			HtaccessFileCache::regenerate();
+		}	
 		
 		redirect(HOST . SCRIPT);	
 	}

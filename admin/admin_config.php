@@ -218,7 +218,8 @@ elseif (!empty($_POST['advanced']))
 		$Cache->generate_file('debug');
 		
 		//Régénération du htaccess.
-		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
+		import('core/cache/HtaccessFileCache');
+		HtaccessFileCache::regenerate();
 			
 		redirect($host . $dir . '/admin/admin_config.php?adv=1');
 	}
