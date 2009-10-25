@@ -36,91 +36,101 @@ import('io/db/mysql/MySQLQuerierException');
  */
 class MysqlQueryResult implements QueryResult
 {
-    /**
-     * @var Resource
-     */
-    private $resource = null;
-    
-    /**
-     * @var string[string]
-     */
-    private $current;
-    
-    /**
-     * @var bool
-     */
-    private $has_next = true;
-    
-    /**
-     * @var bool
-     */
-    private $is_disposed = false;
-    
-    /**
-     * @var int
-     */
-    private $index = 0; 
-    
-    public function __construct($resource)
-    {
-        if (!is_resource($resource) || $resource === false)
-        {
-            throw new MySQLQuerierException('query returns an invalid sql resource');
-        }
-        $this->resource = $resource;
-    }
-    
-    public function __destruct()
-    {
-        $this->dispose();
-    }
-    
-    public function rewind()
-    {
-    	
-    }
-    
-    public function valid()
-    {
-        if ($this->has_next)
-        {
-            $next = mysql_fetch_assoc($this->resource);
-            $this->has_next = ($next !== false);
-            $this->move_intern_resource = false;
-            $this->current = $next;
-        }
-        else
-        {
-        	$this->dispose();
-        }
-        return $this->has_next;
-    }
-    
-    public function current()
-    {
-        return $this->current;
-    }
-    
-    public function key()
-    {
-    	return $this->index++;
-    }
-    
-    public function next()
-    {
-    }
-    
-    public function dispose()
-    {
-        if (!$this->is_disposed && is_resource($this->resource))
-        {
+	/**
+	 * @var Resource
+	 */
+	private $resource = null;
+
+	/**
+	 * @var string[string]
+	 */
+	private $next;
+
+	/**
+	 * @var string[string]
+	 */
+	private $current;
+
+	/**
+	 * @var bool
+	 */
+	private $has_next = true;
+
+	/**
+	 * @var bool
+	 */
+	private $is_disposed = false;
+
+	/**
+	 * @var int
+	 */
+	private $index = -1;
+
+	public function __construct($resource)
+	{
+		if (!is_resource($resource) || $resource === false)
+		{
+			throw new MySQLQuerierException('query returns an invalid sql resource');
+		}
+		$this->resource = $resource;
+		$this->rewind();
+	}
+
+	public function __destruct()
+	{
+		$this->dispose();
+	}
+
+	public function rewind()
+	{
+		if ($this->index < 0)
+		{
+			$this->next();
+			$this->index = 0;
+		}
+	}
+
+	public function valid()
+	{
+		if ($this->has_next)
+		{
+			$this->has_next = ($this->next !== false);
+			$this->current = $this->next;
+			$this->index++;
+		}
+		else
+		{
+			$this->dispose();
+		}
+		return $this->has_next;
+	}
+
+	public function current()
+	{
+		return $this->current;
+	}
+
+	public function key()
+	{
+		return $this->index;
+	}
+
+	public function next()
+	{
+		$this->next = mysql_fetch_assoc($this->resource);
+	}
+
+	public function dispose()
+	{
+		if (!$this->is_disposed && is_resource($this->resource))
+		{
 			if (!@mysql_free_result($this->resource))
 			{
-			    throw new MySQLQuerierException('can\'t close sql resource');
+				throw new MySQLQuerierException('can\'t close sql resource');
 			}
 			$this->is_disposed = true;
-        }
-    }
+		}
+	}
 }
 
 ?>

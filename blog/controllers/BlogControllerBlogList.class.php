@@ -59,7 +59,6 @@ class BlogControllerBlogList implements Controller
 			$this->view->assign_block_vars('blogs', array(
                 'TITLE' => $blog->get_title(),
                 'DESCRIPTION' => second_parse($blog->get_description()),
-        	    'E_TITLE' => htmlspecialchars($blog->get_title()),
                 'U_DETAILS' => $blog->action_url(Blog::ACTION_DETAILS)->absolute(),
                 'U_EDIT' => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
                 'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
