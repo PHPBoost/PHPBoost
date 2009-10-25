@@ -531,7 +531,7 @@ switch($step)
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
 
 			//On génère le cache
-			require_once '../kernel/framework/core/cache.class.php';
+			require_once '../kernel/framework/core/Cache.class.php';
 			include '../lang/' . $lang . '/main.php';
 			$Cache = new Cache;
 
