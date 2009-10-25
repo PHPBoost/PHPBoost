@@ -5,7 +5,7 @@
  *                            -------------------
  *   begin                : January 15, 2008
  *   copyright            : (C) 2008 Rouchon Loïc
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@
 import('modules/ModuleInterface');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class is a ModuleInterface factory providing some services like
  * mass operations (on several modules at the same time) or identifications
  * methods to get all modules that provide a given functionality

@@ -4,7 +4,7 @@
 *                            -------------------
 *   begin               : July 08, 2008
 *   copyright           : (C) 2008 Régis Viarre; Loïc Rouchon
-*   email               : crowkait@phpboost.com; horn@phpboost.com
+*   email               : crowkait@phpboost.com; loic.rouchon@phpboost.com
 *
 *
 ###################################################
@@ -38,7 +38,7 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 
 
 /**
-* @author Loïc Rouchon <horn@phpboost.com>
+* @author Loïc Rouchon <loic.rouchon@phpboost.com>
 * @desc Create a Menu with children.
 * Children could be Menu or LinksMenuLink objects
 * @package menu

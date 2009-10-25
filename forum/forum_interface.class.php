@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : Februar 24, 2008
  *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
- *   email                : crowkait@phpboost.com, horn@phpboost.com
+ *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
  ###################################################

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 08, 2008
  *   copyright            : (C) 2008 Régis Viarre, Loïc Rouchon
- *   email                : crowkait@phpboost.com, horn@phpboost.com
+ *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -39,7 +39,7 @@ define('DBTYPE', 'mysql');
 
 /**
  * @package db
- * @author Régis Viarre crowkait@phpboost.com, Loïc Rouchon <horn@phpboost.com>
+ * @author Régis Viarre crowkait@phpboost.com, Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class manages all the database access done by PHPBoost.
  * It currently manages only one DBMS, MySQL, but we made it as generic as we could.
  * It doesn't support ORM (Object Relationnal Mapping).

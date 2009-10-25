@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : June 02, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -28,7 +28,7 @@
 import('mvc/model/SQLDAO');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  */
 class BlogDAO extends SQLDAO

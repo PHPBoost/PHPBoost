@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 15, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -30,7 +30,7 @@ import('menu/Menu');
 define('CONTENT_MENU__CLASS','ContentMenu');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package menu
  * @subpackage contentmenu

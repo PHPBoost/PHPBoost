@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : June 02, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ import('/blog/models/dao/blog_dao');
 import('/blog/models/blog_post');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  */
 class Blog extends BusinessObject

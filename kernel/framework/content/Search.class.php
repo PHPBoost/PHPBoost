@@ -5,7 +5,7 @@
  *                            -------------------
  *   begin                : February 1, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -32,7 +32,7 @@ define('CACHE_TIME', $CONFIG['search_cache_time']);
 define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package content
  */

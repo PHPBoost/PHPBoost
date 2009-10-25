@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 08, 2008
  *   copyright            : (C) 2008 Régis Viarre; Loïc Rouchon
- *   email                : crowkait@phpboost.com; horn@phpboost.com
+ *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -37,7 +37,7 @@ define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
 define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
  * @package menu

@@ -4,7 +4,7 @@
 *                            -------------------
 *   begin                : March 14, 2006
 *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
-*   email                : crowkait@phpboost.com, horn@phpboost.com
+*   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
 *
 ###################################################
 *
@@ -25,7 +25,7 @@
 ###################################################*/
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class is done to time a process easily. You choose when to start and when to stop.
  * @package util
  */

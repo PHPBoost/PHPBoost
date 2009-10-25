@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 08, 2008
  *   copyright            : (C) 2008 Régis Viarre; Loïc Rouchon
- *   email                : crowkait@phpboost.com; horn@phpboost.com
+ *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -30,7 +30,7 @@ import('menu/links/LinksMenuElement');
 define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc A Simple menu link
  * @package menu
  * @subpackage linksmenu

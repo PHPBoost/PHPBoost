@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 14, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@ define('URL__CLASS','url');
 define('SERVER_URL', $_SERVER['PHP_SELF']);
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class offers a simple way to transform an absolute or relative link
  * to a relative one to the website root.
  * It can also deals with absolute url and will convert only those from this

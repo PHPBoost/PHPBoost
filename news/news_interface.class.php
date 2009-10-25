@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 9, 2008
  *   copyright            : (C) 2008 Loïc Rouchon, Roguelon Geoffrey
- *   email                : horn@phpboost.com, liaght@gmail.com
+ *   email                : loic.rouchon@phpboost.com, liaght@gmail.com
  *
  *
 ###################################################
