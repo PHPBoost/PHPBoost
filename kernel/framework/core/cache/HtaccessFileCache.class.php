@@ -95,7 +95,8 @@ class HtaccessFileCache implements CacheData
 			if ($CONFIG_UPLOADS['bandwidth_protect'])
 			{
 				$this->add_section('Bandwith protection');
-				$this->add_line('RewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^' . HOST);
+				$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
+				$this->add_line('RewriteCond %{HTTP_REFERER} !^' . HOST);
 				$this->add_line('ReWriteRule .*upload/.*$ - [F]');
 			}
 

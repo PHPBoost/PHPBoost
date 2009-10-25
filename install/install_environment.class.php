@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
 
 class InstallEnvironment
 {
