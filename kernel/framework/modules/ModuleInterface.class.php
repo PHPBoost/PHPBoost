@@ -5,7 +5,7 @@
  *                            -------------------
  *   begin                : January 15, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *   
  *
  *###################################################
@@ -34,7 +34,7 @@ define('FUNCTIONNALITY_NOT_IMPLEMENTED', 8);
 define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This Class allow you to call methods on a ModuleInterface extended class
  * that you're not sure of the method's availality. It also provides a set of
  * generic methods that you could use to integrate your module with others, or

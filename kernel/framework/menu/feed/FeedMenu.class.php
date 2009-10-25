@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 14, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ import('content/feed/Feed');
 define('FEED_MENU__CLASS','FeedMenu');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package menu
  * @subpackage feedmenu

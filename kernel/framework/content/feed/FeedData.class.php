@@ -4,7 +4,7 @@
  *                         -------------------
  *   begin                : June 21, 2008
  *   copyright            : (C) 2005 LoÃ¯c Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -32,7 +32,7 @@ import('util/Url');
 define('FEED_DATA__CLASS', 'FeedData');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc Contains meta-informations about a feed with its entries
  * @package content
  * @subpackage syndication

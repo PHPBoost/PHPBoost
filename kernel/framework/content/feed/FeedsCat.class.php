@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : Februrary 25, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -28,7 +28,7 @@
 import('util/Url');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc Describes a feed by building a category tree
  * @package content
  * @subpackage syndication

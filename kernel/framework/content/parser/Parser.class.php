@@ -4,7 +4,7 @@
 *                            -------------------
 *   begin                : November 29, 2007
 *   copyright            : (C) 2007 Régis Viarre, Benoit Sautel, Loïc Rouchon
-*   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, horn@phpboost.com
+*   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
 *
 *   
 ###################################################

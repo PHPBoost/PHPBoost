@@ -4,7 +4,7 @@
  *                         -------------------
  *   begin                : June 21, 2008
  *   copyright            : (C) 2005 LoÃ¯c Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -28,7 +28,7 @@
 import('util/Url');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc Contains meta-informations and informations about a feed entry / item
  * @package content
  * @subpackage syndication

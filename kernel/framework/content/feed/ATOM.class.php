@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 21, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -33,7 +33,7 @@ import('io/template/Template');
 import('content/feed/Feed');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
  * export it to the ATOM format
  * @package content

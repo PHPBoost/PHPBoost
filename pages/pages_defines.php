@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : August 09, 2007
  *   copyright            : (C) 2007 Benoit Sautel, Loïc Rouchon
- *   email                : ben.popeye@phpboost.com, horn@phpboost.com
+ *   email                : ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  *
 ###################################################

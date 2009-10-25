@@ -4,7 +4,7 @@
  *                         -------------------
  *   begin                : April 21, 2008
  *   copyright            : (C) 2005 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -33,7 +33,7 @@ import('functions', INC_IMPORT);
 import('content/feed/FeedData');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could be used to export feeds
  * @abstract  Do not use this class, but one of its children like RSS or ATOM
  * @package content

@@ -25,6 +25,8 @@
  *
  ###################################################*/
 
+define('REQUEST_URI', $_SERVER['REQUEST_URI']);
+
 import('mvc/controller/Controller');
 import('mvc/dispatcher/UrlControllerMapper');
 import('mvc/dispatcher/DispatcherException');

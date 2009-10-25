@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : Februrary 25, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   email                : loic.rouchon@phpboost.com
  *
  *
 ###################################################
@@ -29,7 +29,7 @@ import('content/feed/Feed');
 import('content/feed/FeedsCat');
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class contains an agregation of differents feeds
  * @package content
  * @subpackage syndication
