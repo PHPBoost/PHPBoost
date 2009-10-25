@@ -29,46 +29,61 @@ import('io/db/QueryResult');
 
 class QueryResultMapper implements QueryResult
 {
-    /**
-     * @var QueryResult the internal query result object
-     */
-    protected $query_result;
+	/**
+	 * @var QueryResult the internal query result object
+	 */
+	protected $query_result;
 
-    /**
-     * @var MappingModel the model that will instantiate retrieved objects
-     */
-    protected $model;
+	/**
+	 * @var MappingModel the model that will instantiate retrieved objects
+	 */
+	protected $model;
 
-    /**
-     * @desc initialize the dao
-     * @param SQLQuerier $querier the querier that will be used to interact with the database
-     * @param MappingModel $model the model on which rely to provides services
-     */
-    public function __construct(QueryResult $query_result, MappingModel $model)
-    {
-        $this->query_result = $query_result;
-        $this->model = $model;
-    }
-    
-    public function __destruct()
-    {
-        $this->dispose();
-    }
+	/**
+	 * @desc initialize the dao
+	 * @param SQLQuerier $querier the querier that will be used to interact with the database
+	 * @param MappingModel $model the model on which rely to provides services
+	 */
+	public function __construct(QueryResult $query_result, MappingModel $model)
+	{
+		$this->query_result = $query_result;
+		$this->model = $model;
+	}
 
-    public function has_next()
-    {
-    	return $this->query_result->has_next();
-    }
-    
-    public function next()
-    {
-        return $this->model->new_instance($this->query_result->next());
-    }
-    
-    public function dispose()
-    {
-        return $this->query_result->dispose();
-    }
+	public function __destruct()
+	{
+		$this->dispose();
+	}
+
+	public function rewind()
+	{
+		return $this->query_result->rewind();
+	}
+
+	public function valid()
+	{
+		return $this->query_result->valid();
+	}
+
+	public function current()
+	{
+		return $this->model->new_instance($this->query_result->current());
+	}
+
+	public function key()
+	{
+		return $this->query_result->key();
+	}
+
+	public function next()
+	{
+		return $this->query_result->next();
+	}
+
+	public function dispose()
+	{
+		return $this->query_result->dispose();
+	}
 }
 
 ?>

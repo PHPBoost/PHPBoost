@@ -7,7 +7,7 @@ import('io/filesystem/Folder');
 function list_tu($directory, $recursive = false) {
 	$files = array();
     $folder = new Folder($directory);
-    foreach ($folder->get_files('`^ut_.+\.class\.php$`') as $file) {
+    foreach ($folder->get_files('`^(?:(?:UT)|(?:ut_)).+\.class\.php$`') as $file) {
        $files[] = preg_replace('`^[\./]*kernel/framework/`', '', $file->get_name(true));
     }
     

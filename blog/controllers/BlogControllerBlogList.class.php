@@ -54,9 +54,8 @@ class BlogControllerBlogList implements Controller
             'U_LIST' => Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute()
 		));
 
-		while ($blogs->has_next())
+		foreach ($blogs as $blog)
 		{
-			$blog = $blogs->next();
 			$this->view->assign_block_vars('blogs', array(
                 'TITLE' => $blog->get_title(),
                 'DESCRIPTION' => second_parse($blog->get_description()),

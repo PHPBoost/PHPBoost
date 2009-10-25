@@ -61,9 +61,8 @@ class HtaccessFileCache implements CacheData
 			$result = $querier->select("SELECT name FROM ".PREFIX."modules WHERE activ = :activ",
 			array('activ' => 1));
 
-			while ($result->has_next())
+			foreach ($result as $row)
 			{
-				$row = $result->next();
 				//Récupération des infos de config.
 				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', get_ulang());
 				if (!empty($get_info_modules['url_rewrite']))
