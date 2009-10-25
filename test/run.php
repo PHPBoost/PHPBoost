@@ -2,7 +2,7 @@
 define('PATH_TO_ROOT', '..');
 define('DEBUG', TRUE);
 
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
 Environment::load_imports();
 Environment::load_static_constants();
 AppContext::init_sql_querier();

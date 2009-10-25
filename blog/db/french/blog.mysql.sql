@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `phpboost_Blog`;
-CREATE TABLE `phpboost_Blog` (
+DROP TABLE IF EXISTS `phpboost_blog`;
+CREATE TABLE `phpboost_blog` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128) NOT NULL,
   `description` TEXT NOT NULL,
@@ -10,8 +10,8 @@ CREATE TABLE `phpboost_Blog` (
   FULLTEXT INDEX `title_description`(`description`, `title`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `phpboost_BlogPost`;
-CREATE TABLE `phpboost_BlogPost` (
+DROP TABLE IF EXISTS `phpboost_blog_post`;
+CREATE TABLE `phpboost_blog_post` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128) NOT NULL,
   `content` MEDIUMTEXT NOT NULL,

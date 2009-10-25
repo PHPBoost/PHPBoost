@@ -93,12 +93,12 @@ class CommonQuery
 	$parameters = array())
 	{
 		$query_result = self::select_rows(table_name, $columns, $condition, $parameters);
-		if (!$query_result->has_next())
+		if (!$query_result->valid())
 		{
 			throw new RowNotFoundException();
 		}
-		$result = $query_result->next();
-		if ($query_result->has_next())
+		$result = $query_result->current();
+		if ($query_result->valid())
 		{
 			throw new NotASingleRowFoundException();
 		}

@@ -1,2 +1,2 @@
-DROP TABLE IF EXISTS `phpboost_Blog`;
-DROP TABLE IF EXISTS `phpboost_BlogPost`;
+DROP TABLE IF EXISTS `phpboost_blog`;
+DROP TABLE IF EXISTS `phpboost_blog_post`;

@@ -44,7 +44,7 @@ class MysqlQueryResult implements QueryResult
     /**
      * @var string[string]
      */
-    private $next;
+    private $current;
     
     /**
      * @var bool
@@ -54,12 +54,12 @@ class MysqlQueryResult implements QueryResult
     /**
      * @var bool
      */
-    private $move_intern_resource = true;
+    private $is_disposed = false;
     
     /**
-     * @var bool
+     * @var int
      */
-    private $is_disposed = false;
+    private $index = 0; 
     
     public function __construct($resource)
     {
@@ -75,26 +75,39 @@ class MysqlQueryResult implements QueryResult
         $this->dispose();
     }
     
-    public function has_next()
+    public function rewind()
     {
-        if ($this->has_next && $this->move_intern_resource)
+    	
+    }
+    
+    public function valid()
+    {
+        if ($this->has_next)
         {
             $next = mysql_fetch_assoc($this->resource);
             $this->has_next = ($next !== false);
             $this->move_intern_resource = false;
-            $this->next = $next;
+            $this->current = $next;
+        }
+        else
+        {
+        	$this->dispose();
         }
         return $this->has_next;
     }
     
+    public function current()
+    {
+        return $this->current;
+    }
+    
+    public function key()
+    {
+    	return $this->index++;
+    }
+    
     public function next()
     {
-        if (!$this->has_next)
-        {
-            $this->dispose();
-        }
-        $this->move_intern_resource = true;
-        return $this->next;
     }
     
     public function dispose()

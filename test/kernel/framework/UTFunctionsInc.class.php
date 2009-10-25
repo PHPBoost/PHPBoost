@@ -1,12 +1,7 @@
 <?php
 
-require_once 'header.php';
 
-require_once( PATH_TO_ROOT . '/kernel/begin.php');
-
-unset($Errorh);
-
-class UTfunctions_inc extends UnitTestCase {
+class UTFunctionsInc extends PHPBoostUnitTestCase {
 
 	function test_retrieve()
 	{
@@ -30,18 +25,12 @@ class UTfunctions_inc extends UnitTestCase {
 	
 	function test_get_utheme()
 	{
-		Global $User;
-		
-		$ret = get_utheme();
-		$this->assertEqual($ret, $User->get_attribute('user_theme'));
+		TODO(__FILE__, __METHOD__);
 	}
 	
 	function test_get_ulang()
 	{
-		Global $User;
-		
-		$ret = get_ulang();
-		$this->assertEqual($ret, $User->get_attribute('user_lang'));
+		TODO(__FILE__, __METHOD__);
 	}
 	
 	function test_wordwrap_html()
@@ -187,9 +176,9 @@ class UTfunctions_inc extends UnitTestCase {
 	function test_get_uid()
 	{
 		$ret = get_uid();
-		$this->assertEqual($ret, 1764);
+		$this->assertEqualss($ret, 1764);
 		$ret = get_uid();
-		$this->assertEqual($ret, 1765);		
+		$this->assertEqualss($ret, 1765);		
 	}
 	
 	function test_import()

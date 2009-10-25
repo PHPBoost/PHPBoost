@@ -183,9 +183,9 @@ abstract class SQLDAO implements DAO
 		$this->compute_find_by_id_query();
 		$parameters = array('id' => $id);
 		$query_result = $this->querier->select($this->find_by_id_query, $parameters);
-		if ($query_result->has_next())
+		if ($query_result->valid())
 		{
-			return $this->model->new_instance($query_result->next());
+			return $this->model->new_instance($query_result->current());
 		}
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}

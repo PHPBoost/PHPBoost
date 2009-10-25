@@ -32,25 +32,13 @@
  * @desc this class encapsulate a query result set
  * usage is:
  * <code>
- * while ($my_query_result->has_next()) {
- *   $row = $my_query_result->next();
+ * foreach ($my_query_result as $result) {
+ * 	   // do something with the $result
  * }
  * </code> 
  */
-interface QueryResult
-{
-    /**
-     * @desc returns true if there is a next row
-     * @return bool true if there is a next row
-     */
-    function has_next();
-    
-    /**
-     * @desc returns the next row as a properties map
-     * @return string[string] the next row
-     */
-    function next();
-    
+interface QueryResult extends iterator
+{    
     /**
      * @desc free the resource. If not done manually, this is done in the destructor
      */
