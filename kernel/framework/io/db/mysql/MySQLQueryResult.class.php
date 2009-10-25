@@ -44,17 +44,7 @@ class MysqlQueryResult implements QueryResult
 	/**
 	 * @var string[string]
 	 */
-	private $next;
-
-	/**
-	 * @var string[string]
-	 */
 	private $current;
-
-	/**
-	 * @var bool
-	 */
-	private $has_next = true;
 
 	/**
 	 * @var bool
@@ -64,7 +54,7 @@ class MysqlQueryResult implements QueryResult
 	/**
 	 * @var int
 	 */
-	private $index = -1;
+	private $index = 0;
 
 	public function __construct($resource)
 	{
@@ -83,26 +73,17 @@ class MysqlQueryResult implements QueryResult
 
 	public function rewind()
 	{
-		if ($this->index < 0)
+		if ($this->index > 0)
 		{
-			$this->next();
+			mysql_data_seek($this->resource, 0);
 			$this->index = 0;
 		}
+		$this->next();
 	}
 
 	public function valid()
 	{
-		if ($this->has_next)
-		{
-			$this->has_next = ($this->next !== false);
-			$this->current = $this->next;
-			$this->index++;
-		}
-		else
-		{
-			$this->dispose();
-		}
-		return $this->has_next;
+		return $this->current !== false;
 	}
 
 	public function current()
@@ -117,7 +98,8 @@ class MysqlQueryResult implements QueryResult
 
 	public function next()
 	{
-		$this->next = mysql_fetch_assoc($this->resource);
+		$this->current = mysql_fetch_assoc($this->resource);
+		$this->index++;
 	}
 
 	public function dispose()
