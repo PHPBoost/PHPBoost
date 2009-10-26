@@ -470,7 +470,7 @@ elseif (!empty($id))
 
 	$user_sex = '';
 	if (!empty($mbr['user_sex']))
-		$user_sex = ($mbr['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
+		$user_sex = ($mbr['user_sex'] == 1) ? 'man.png' : 'woman.png';
 	
 	//Rang d'autorisation.
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
@@ -647,7 +647,7 @@ elseif (!empty($id))
 		'YAHOO' => $mbr['user_yahoo'],
 		'LOCAL' => $mbr['user_local'],
 		'WEB' => $mbr['user_web'],
-		'IMG_SEX' => !empty($user_sex) ? '<img src="' . $user_sex . '" alt="" />' : '',
+		'IMG_SEX' => !empty($user_sex) ? $user_sex : 0,
 		'BORN' => $user_born,
 		'BORN_DAY' => $born_day,
 		'BORN_MONTH' => $born_month,
