@@ -298,7 +298,7 @@
 					</dl>
 					<dl>
 						<dt><label for="user_local">{L_LOCALISATION}</label></dt>
-						<dd><label><input type="text" maxlength=40" size="40" name="user_local" id="user_local" value="{LOCAL}" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="40" size="40" name="user_local" id="user_local" value="{LOCAL}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="user_occupation">{L_JOB}</label></dt>
@@ -314,7 +314,9 @@
 							<select name="user_sex" id="user_sex" onchange="img_change_sex(this.options[selectedIndex].value)">
 								{SEX_OPTIONS}						
 							</select>
-							<span id="img_sex">{IMG_SEX}</span>
+							<span id="img_sex">
+							# IF IMG_SEX #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_SEX}" alt="" /># ENDIF #
+							</span>
 						</label></dd>
 					</dl>
 					<dl class="overflow_visible">
