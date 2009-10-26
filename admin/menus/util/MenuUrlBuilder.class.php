@@ -34,39 +34,68 @@ class MenuUrlBuilder extends BusinessObject
 {
     private static $dispatcher = '/admin/menus/dispatcher.php';
     
+	/**
+	 * @return Url
+	 */
     public static function menu_configuration_list()
 	{
 		return Dispatcher::get_url(self::$dispatcher, '/');
 	}
     
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_create()
 	{
 		return Dispatcher::get_url(self::$dispatcher, '/create/');
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_create_valid()
 	{
 		return Dispatcher::get_url(self::$dispatcher, '/create/valid/?token=' . $Session->get_token());
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_edit($id)
 	{
 		return Dispatcher::get_url(self::$dispatcher, $this->id . '/edit/');
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_edit_valid($id)
 	{
 		return Dispatcher::get_url(self::$dispatcher, $this->id . '/edit/valid/?token=' . $Session->get_token());
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_edit_delete($id)
 	{
 		return Dispatcher::get_url(self::$dispatcher, $this->id . '/delete/?token=' . $Session->get_token());
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function menu_configuration_edit_add($id)
 	{
 		return Dispatcher::get_url(self::$dispatcher, $this->id . '/add/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function menu_list()
+	{
+		return Dispatcher::get_url(self::$dispatcher, '/menus/');
 	}
 }
 ?>

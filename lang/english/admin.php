@@ -471,6 +471,9 @@ $LANG['choose_feed_in_list'] = 'Choose a feed in the list';
 $LANG['feed'] = 'feed';
 $LANG['availables_feeds'] = 'Available feeds';
 
+$LANG['menu_configurations'] = 'Configurations';
+$LANG['menus'] = 'Menus';
+
 //Gestion du contenu
 $LANG['content_config'] = 'Content';
 $LANG['content_config_extend'] = 'Content configuration';

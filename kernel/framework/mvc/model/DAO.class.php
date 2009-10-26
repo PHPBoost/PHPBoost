@@ -31,6 +31,7 @@
  */
 interface DAO
 {
+	const FIND_ALL = 0;
 	const ORDER_BY_ASC = 'ASC';
 	const ORDER_BY_DESC = 'DESC';
 

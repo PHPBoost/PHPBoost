@@ -1279,7 +1279,8 @@ function check_for_maintain_redirect()
  */
 function get_free_phpboost_root_directory_path($path)
 {
-	return str_replace('\\', '/', substr($path, strlen(PATH_TO_ROOT)));
+	$path = str_replace('\\', '/', $path);
+	return str_replace(FS_ROOT_DIRECTORY, '', $path);
 }
 
 ?>

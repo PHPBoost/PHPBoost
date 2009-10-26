@@ -54,7 +54,7 @@ class ValidationException extends Exception {}
  * </code>
  */
 abstract class SQLDAO implements DAO
-{
+{	
 	/**
 	 * @var SQLQuerier the sql querier that will interact with the database
 	 */
@@ -190,8 +190,13 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
-	public function find_all($limit = 100, $offset = 0, $order_by = array())
+	public function find_all($limit = DAO::FIND_ALL, $offset = 0, $order_by = array())
 	{
+		if ($limit == DAO::FIND_ALL)
+		{
+			return $this->find_by_criteria(';');
+		}
+		
 		$query = '';
 		if (!empty($order_by))
 		{
@@ -203,7 +208,7 @@ abstract class SQLDAO implements DAO
 			$query .= 'ORDER BY' . ltrim($order_clause, ',');
 		}
 
-		return $this->find_by_criteria($query . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
+		return $this->find_by_criteria($query . ' LIMIT ' . $limit . ' OFFSET ' . $offset . ';');
 	}
 
 	public function find_by_criteria($criteria, $parameters = array())

@@ -468,6 +468,9 @@ $LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
 $LANG['feed'] = 'flux';
 $LANG['availables_feeds'] = 'Flux disponibles';
 
+$LANG['menu_configurations'] = 'Configurations';
+$LANG['menus'] = 'Menus';
+
 
 
 //Gestion du contenu
