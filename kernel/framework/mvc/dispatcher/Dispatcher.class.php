@@ -121,18 +121,6 @@ class Dispatcher
 		{
 			Dispatcher::handle_dispatch_exception($ex);
 		}
-		catch (NoSuchControllerMethodException $ex)
-		{
-			Dispatcher::handle_dispatch_exception($ex);
-		}
-		catch (NoSuchControllerException $ex)
-		{
-			Dispatcher::show_error($ex);
-		}
-		catch (MalformedUrlMapperRegex $ex)
-		{
-			Dispatcher::show_error($ex);
-		}
 		catch (Exception $ex)
 		{
 			Dispatcher::show_error($ex);
@@ -155,9 +143,7 @@ class Dispatcher
 
 	private static function show_error($exception)
 	{
-		require_once PATH_TO_ROOT . '/kernel/header.php';
-		echo '<div class="error">' . $exception->getMessage() . '</div>';
-		require_once PATH_TO_ROOT . '/kernel/footer.php';
+		Debug::fatal($exception);
 	}
 }
 

@@ -156,6 +156,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 	public function test_find_all_with_no_results()
 	{
 		$query_result = $this->sqldao->find_all(10, 100);
+		$query_result->rewind();
 		$this->assertFalse($query_result->valid(), 'query has results');
 	}
 

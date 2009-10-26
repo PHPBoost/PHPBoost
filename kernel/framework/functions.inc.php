@@ -1109,9 +1109,7 @@ function import($path, $import_type = CLASS_IMPORT)
 	}
 	if (!@include_once(PATH_TO_ROOT . $path . $import_type))
 	{
-		echo 'Can\'t load file ' . PATH_TO_ROOT . $path . $import_type . '<br /><br />Stack<hr />';
-		Debug::print_stacktrace();
-		exit;
+		Debug::fatal(new Exception('Can\'t load file ' . PATH_TO_ROOT . $path . $import_type));
 	}
 }
 

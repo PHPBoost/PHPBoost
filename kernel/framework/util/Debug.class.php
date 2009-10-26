@@ -31,6 +31,25 @@
  */
 class Debug
 {
+	/**
+	 * @desc Displays information on an exception and exits
+	 * @param Exception $exception the exception to display information on
+	 */
+	public static function fatal(Exception $exception)
+	{
+		$message = $exception->getMessage();
+		if (empty($message))
+		{
+			$message = 'An exception has been thrown';
+		}
+		echo '<br />' . $message . '<br /><br />Stack<hr />';
+		Debug::print_stacktrace(0, $exception);
+		exit;
+	}
+
+	/**
+	 * @desc prints the stacktrace and exits
+	 */
 	public static function stop()
 	{
 		self::print_stacktrace();
@@ -60,10 +79,20 @@ class Debug
 	/**
 	 * @desc print the current stacktrace
 	 */
-	public static function get_stacktrace_as_string($start_trace_index = 0)
+	public static function get_stacktrace_as_string($start_trace_index = 0,
+	Exception $exception = null)
 	{
 		$string_stacktrace = '';
-		$stacktrace = self::get_stacktrace();
+		$stacktrace = null;
+		if ($exception === null)
+		{
+			self::get_stacktrace();
+		}
+		else
+		{
+			$start_trace_index--;
+			$stacktrace = $exception->getTrace();
+		}
 		$stacktrace_size = count($stacktrace);
 		$start_trace_index = $start_trace_index + 1;
 		for ($i = $start_trace_index; $i < $stacktrace_size; $i++)
@@ -78,9 +107,13 @@ class Debug
 	/**
 	 * @desc print the current stacktrace
 	 */
-	public static function print_stacktrace($start_trace_index = 0)
+	public static function print_stacktrace($start_trace_index = 0, Exception $exception = null)
 	{
-		echo self::get_stacktrace_as_string($start_trace_index + 1);
+		if ($exception !== null)
+		{
+			$start_trace_index--;
+		}
+		echo self::get_stacktrace_as_string($start_trace_index + 1, $exception);
 	}
 
 	private static function get_file($trace)

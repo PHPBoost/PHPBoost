@@ -470,6 +470,9 @@ $LANG['availables_feeds'] = 'Flux disponibles';
 
 $LANG['menu_configurations'] = 'Configurations';
 $LANG['menus'] = 'Menus';
+$LANG['menu_configuration_name'] = 'Nom';
+$LANG['menu_configuration_match_regex'] = 'Correspond à';
+$LANG['menu_configuration_edit'] = 'Editer';
 
 
 

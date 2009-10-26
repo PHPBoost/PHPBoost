@@ -55,7 +55,8 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_create_valid()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/create/valid/?token=' . $Session->get_token());
+		return Dispatcher::get_url(self::$dispatcher, '/create/valid/?token=' .
+		$Session->get_token());
 	}
 	
 	/**
@@ -63,7 +64,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $this->id . '/edit/');
+		return Dispatcher::get_url(self::$dispatcher, $id . '/edit/');
 	}
 	
 	/**
@@ -71,7 +72,8 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit_valid($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $this->id . '/edit/valid/?token=' . $Session->get_token());
+		return Dispatcher::get_url(self::$dispatcher, $id . '/edit/valid/?token=' .
+		$Session->get_token());
 	}
 	
 	/**
@@ -79,7 +81,8 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit_delete($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $this->id . '/delete/?token=' . $Session->get_token());
+		return Dispatcher::get_url(self::$dispatcher, $id . '/delete/?token=' .
+		$Session->get_token());
 	}
 	
 	/**
@@ -87,7 +90,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit_add($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $this->id . '/add/');
+		return Dispatcher::get_url(self::$dispatcher, $id . '/add/');
 	}
 	
 	/**

@@ -178,7 +178,7 @@ CREATE TABLE `phpboost_menus` (
 
 CREATE TABLE `phpboost-trunk`.`phpboost_menu_configuration` (
   `id` INTEGER  NOT NULL,
-  `title` VARCHAR(100)  NOT NULL,
+  `name` VARCHAR(100)  NOT NULL,
   `match_regex` MEDIUMTEXT  NOT NULL,
   `priority` INTEGER  NOT NULL,
   PRIMARY KEY (`id`),

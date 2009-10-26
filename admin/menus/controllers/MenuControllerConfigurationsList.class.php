@@ -46,23 +46,16 @@ class MenuControllerConfigurationsList implements Controller
 
 		$menu_configurations = MenuConfigurationDAO::instance()->find_all(DAO::FIND_ALL, 0, array(
 		array('column' => 'priority', 'way' => DAO::ORDER_BY_ASC)));
-//			
-//		$this->view->assign_vars(array(
-//            'U_CREATE' => Blog::global_action_url(Blog::GLOBAL_ACTION_CREATE)->absolute(),
-//            'U_LIST' => Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute()
-//		));
-//
-//		foreach ($blogs as $blog)
-//		{
-//			$this->view->assign_block_vars('blogs', array(
-//                'TITLE' => $blog->get_title(),
-//                'DESCRIPTION' => second_parse($blog->get_description()),
-//                'U_DETAILS' => $blog->action_url(Blog::ACTION_DETAILS)->absolute(),
-//                'U_EDIT' => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
-//                'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
-//                'USER' => $blog->get_login()
-//			));
-//		}
+
+		foreach ($menu_configurations as $menu_config)
+		{
+			$this->view->assign_block_vars('menu_configuration', array(
+                'NAME' => $menu_config->get_name(),
+                'MATCH_REGEX' => $menu_config->get_match_regex(),
+                'U_EDIT' =>
+			MenuUrlBuilder::menu_configuration_edit($menu_config->get_id())->absolute(),
+			));
+		}
 
 		return $this->response;
 	}
@@ -74,7 +67,6 @@ class MenuControllerConfigurationsList implements Controller
 		global $LANG;
 
 		$this->view = new View('admin/menus/configuration/list.tpl');
-		$this->view->add_lang($LANG);
 		$this->response = new AdminMenusDisplayResponse($this->view);
 		$env = $this->response->get_graphical_environment();
 

@@ -93,6 +93,7 @@ class CommonQuery
 	$parameters = array())
 	{
 		$query_result = self::select_rows(table_name, $columns, $condition, $parameters);
+		$query_result->rewind();
 		if (!$query_result->valid())
 		{
 			throw new RowNotFoundException();
