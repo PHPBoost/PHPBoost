@@ -3,7 +3,7 @@
  *                              wiki_english.php
  *                            -------------------
  *   begin                : October 14, 2007
- *   last modified		: August 1st, 2009 - Forensic
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -60,7 +60,7 @@ $LANG['wiki_update_index'] = 'Edit wiki index';
 $LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Warning :</strong> This article has been updated, you are now consulting an old release of this article!</span>';
 $LANG['wiki_article_cat'] = 'Category of the article';
 $LANG['wiki_current_cat'] = 'Current category';
-$LANG['wiki_contribuate'] = 'Contribuate to the wiki';
+$LANG['wiki_contribuate'] = 'Contribute to the wiki';
 $LANG['wiki_edit_article'] = 'Edition of the article <em>%s</em>';
 $LANG['wiki_edit_cat'] = 'Edition of the category <em>%s</em>';
 $LANG['wiki_move'] = 'Move';
@@ -87,7 +87,7 @@ $LANG['wiki_member_restriction'] = 'This article is protected, only members can 
 $LANG['wiki_modo_restriction'] = 'This article is protected, only moderators can edit it.';
 $LANG['wiki_admin_restriction'] = 'This article is protected, only administrators can edit it.';
 $LANG['wiki_edition_restriction'] = 'Edition permissions';
-$LANG['wiki_no_restriction'] = 'No restriction';
+$LANG['wiki_no_restriction'] = 'No restrictions';
 $LANG['wiki_auth_management'] = 'Permissions management';
 $LANG['wiki_auth_management_article'] = 'Permissions management of the article <em>%s</em>';
 $LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to choose some options.';
@@ -136,7 +136,7 @@ $LANG['wiki_status_list'] = array(
 $LANG['wiki_moving_article'] = 'Moving of an article';
 $LANG['wiki_moving_this_article'] = 'Moving of the article: %s';
 $LANG['wiki_change_cat'] = 'Change category';
-$LANG['wiki_cat_contains_cat'] = 'You try to move this category in its sub-category or in itself, that\'s impossible!';
+$LANG['wiki_cat_contains_cat'] = 'You have attempted to move this category in its sub-category or in itself, that\'s impossible!';
 
 //Renommer l'article
 $LANG['wiki_renaming_article'] = 'Rename an article';
@@ -181,7 +181,7 @@ $LANG['wiki_remove_cat'] = 'Delete a category';
 $LANG['wiki_remove_this_cat'] = 'Delete the category: <em>%s</em>';
 $LANG['wiki_explain_remove_cat'] = 'You want to delete this category. You can delete all its content, or move its content somewhere else.The article will be delete anyway.';
 $LANG['wiki_remove_all_contents'] = 'Delete all its content (irreversible actions)';
-$LANG['wiki_move_all_contents'] = 'Move all its content in this folder:';
+$LANG['wiki_move_all_contents'] = 'Move all the content in this folder:';
 $LANG['wiki_future_cat'] = 'Category in which you want to move these element:';
 $LANG['wiki_alert_removing_cat'] = 'Are you sure you want to delete this category? (definitive)';
 $LANG['wiki_confirm_remove_article'] = 'Are you sure you want to delete this article?';

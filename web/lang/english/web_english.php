@@ -3,7 +3,7 @@
  *                             web_english.php
  *                            -------------------
  *   begin                :  July 28, 2005
- *   last modified		: August 1st, 2009 - Forensic 
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright          : (C) 2006 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
@@ -57,7 +57,7 @@ $LANG['delete_link'] = 'Delete this link?';
 
 //Add web link.
 $MAIL['new_link_website'] = 'New weblink on your website';
-$MAIL['new_link'] = 'A new weblink was added on your website ' . HOST . ', 
+$MAIL['new_link'] = 'A new weblink was added to your website ' . HOST . ', 
 it will have to be approved before being visible on the site by everyone.
 
 Weblink\'s title: %s

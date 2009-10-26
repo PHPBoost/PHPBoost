@@ -50,7 +50,7 @@ $LANG['simple_search'] = 'Simple search';
 $LANG['print'] = 'Print';
 $LANG['nb_results_found'] = 'results were found';
 $LANG['one_result_found'] = 'result was found';
-$LANG['no_results_found'] = 'no result was found';
+$LANG['no_results_found'] = 'no results were found';
 $LANG['search_all'] = 'All';
 $LANG['search_no_options'] = 'No specifics search options';
 
@@ -65,7 +65,7 @@ $LANG['cache_time'] = 'Search results cache length';
 $LANG['cache_time_explain'] = 'in minutes, after, results will be calculated again';
 $LANG['nb_results_per_page'] = 'Results number to print per page';
 $LANG['max_use'] = 'Maximum number of utilisation of the cache';
-$LANG['max_use_explain'] = 'This number represent the time the cache results will be used before calculating them again';
+$LANG['max_use_explain'] = 'This number represents the time the cache results will be used before calculating them again';
 $LANG['clear_out_cache'] = 'Clear out the cache content';
 $LANG['unauthorized_modules'] = 'Forbidden modules';
 $LANG['unauthorized_modules_explain'] = 'Select modules in which you want to forbid research';

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 21, 2006
  *   last modified		: August 30, 2009 - Forensic 
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -42,8 +42,8 @@ $LANG['unlock'] = 'Unlock';
 $LANG['cat_edit'] = 'Edit category';
 $LANG['del_cat'] = 'Subcategory suppression tool';
 $LANG['explain_topic'] = 'The forum you wish to delete contains <strong>1</strong> post, do you want to preserve it by moving it in another forum, or delete this post?';
-$LANG['explain_topics'] = 'The forum you wish to delete contains <strong>%d</strong> posts, do you want to preserve them by transferring them in another forum, or delete all posts?';
-$LANG['explain_subcat'] = 'The forum you wish to delete contains <strong>1</strong> subforum, do you want to preserve it by transferring it in another forum, or delete it and its content?';
+$LANG['explain_topics'] = 'The forum you wish to delete contains <strong>%d</strong> posts, do you want to preserve them by transferring them to another forum, or delete all posts?';
+$LANG['explain_subcat'] = 'The forum you wish to delete contains <strong>1</strong> subforum, do you want to preserve it by transferring it to another forum, or delete it and its content?';
 $LANG['explain_subcats'] = 'The forum you wish to delete contains <strong>%d</strong> subforums, do you want to preserve them by transferring them in another forum, or delete all those subforums and their contents?';
 $LANG['keep_topic'] = 'Keep post(s)';
 $LANG['keep_subforum'] = 'Keep subforum(s)';
@@ -155,7 +155,7 @@ $LANG['untrack_topic_mail'] = 'Stop email tracking';
 $LANG['alert_topic'] = 'Alert moderators';
 $LANG['banned'] = 'Banned';
 $LANG['xml_forum_desc'] = 'Last forum thread';
-$LANG['alert_modo_explain'] = 'You are about to alert the moderators. You are helping the moderation team by informing us about threads which don\'t comply with certain rules, but do know that when you alert a moderator, your pseudo is recorded. Be sure that your request is justified or you will risk sanctions on behalf of the moderators team and administrators in the event of abuse. In order to help the team, please explain what does not observe the conditions in this thread.
+$LANG['alert_modo_explain'] = 'You are about to alert the moderators. You are helping the moderation team by informing us about threads which don\'t comply with certain rules, but do know that when you alert a moderator, your username is recorded. Be sure that your request is justified or you will risk sanctions on behalf of the moderators team and administrators in the event of abuse. In order to help the team, please explain what does not observe the conditions in this thread.
 
 You wish to alert the moderators about a problem on the following thread';
 $LANG['alert_title'] = 'Short description';
@@ -178,7 +178,7 @@ $LANG['relevance'] = 'Relevance';
 $LANG['no_result'] = 'No result';
 $LANG['invalid_req'] = 'Invalid request';
 $LANG['keywords'] = 'Key Words (4 characters minimum)';
-$LANG['color_result'] = 'Color results';
+$LANG['colorate_result'] = 'Color results';
 
 //Stats
 $LANG['stats'] = 'Statistics';
@@ -266,8 +266,8 @@ $LANG['alert_login'] = 'Alert postor';
 $LANG['alert_msg'] = 'Precisions';
 $LANG['alert_not_solved'] = 'Waiting for treatement';
 $LANG['alert_solved'] = 'Resolve by ';
-$LANG['change_status_to_0'] = 'Set in waiting for treatement';
-$LANG['change_status_to_1'] = 'Set in resolve';
+$LANG['change_status_to_0'] = 'Set in waiting for treatment';
+$LANG['change_status_to_1'] = 'Set in resolved';
 $LANG['no_alert'] = 'There is no alert';
 $LANG['alert_not_auth'] = 'This alert has been posted in a forum in which you haven\'t the moderator\'s rights.';
 $LANG['delete_several_alerts'] = 'Are you sure, delete all this alerts?';
