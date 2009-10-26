@@ -176,6 +176,16 @@ CREATE TABLE `phpboost_menus` (
   KEY `enabled` (`enabled`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
+CREATE TABLE `phpboost-trunk`.`phpboost_menu_configuration` (
+  `id` INTEGER  NOT NULL,
+  `title` VARCHAR(100)  NOT NULL,
+  `match_regex` MEDIUMTEXT  NOT NULL,
+  `priority` INTEGER  NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `priority`(`priority`)
+)
+ENGINE = MyISAM;
+
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (
   `id` int(11) NOT NULL auto_increment,

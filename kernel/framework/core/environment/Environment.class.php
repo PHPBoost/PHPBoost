@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+define('FS_ROOT_DIRECTORY', preg_replace('`^(.+)/kernel/framework/core/environment/?$`i', '$1',
+str_replace('\\', '/', dirname(__FILE__))));
+
 /**
  * @package core
  * @subpackage environment
