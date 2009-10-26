@@ -3,7 +3,7 @@
  *                             poll_english.php
  *                            -------------------
  *   begin                : July 14, 2005
- *   last modified		: July 31, 2009 - Forensic
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -43,7 +43,7 @@ $LANG['answer_type'] = 'Answer type';
 $LANG['polls'] = 'Polls';
 $LANG['single'] = 'Single';
 $LANG['multiple'] = 'Multiple';
-$LANG['number_vote'] = 'Number of vote';
+$LANG['number_vote'] = 'Number of votes';
 $LANG['add_answer'] = 'Add an answer';
 $LANG['config_pool'] = 'Pool management';
 $LANG['pool_mini'] = 'Mini-poll';
@@ -51,7 +51,7 @@ $LANG['pool_mini_explain'] = 'Random display if more than one poll is selected';
 $LANG['poll_cookie_lenght'] = 'Cookie life length';
 $LANG['rank_vote'] = 'Rank to vote';
 $LANG['poll_date'] = 'Poll date';
-$LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to set today date';
+$LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to use today\'s date';
 
 //Requis
 $LANG['require_poll_entry'] = 'Please enter a number of entries for the poll!';

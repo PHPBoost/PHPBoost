@@ -3,7 +3,7 @@
  *                              media_english.php
  *                            -------------------
  *   begin               	: October 20, 2008
- *   last modified		: July 31, 2009 - Forensic
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright        	    : (C) 2007 
  *   email               	: sgtforensic@gmail.com
  *
@@ -43,9 +43,9 @@ $MEDIA_LANG = array(
 'show_media' => 'Show this multimedia file',
 
 // admin_media_cats.php
-'auth_read' => 'Reading permissions',
-'auth_contrib' => 'Contribution permissions',
-'auth_write' => 'Writing permissions',
+'auth_read' => 'Read permissions',
+'auth_contrib' => 'Contribute permissions',
+'auth_write' => 'Write permissions',
 'category' => 'Category',
 'cat_description' => 'Category description',
 'cat_image' => 'Category icon',
@@ -61,7 +61,7 @@ $MEDIA_LANG = array(
 'display_note' => 'Display the multimedia file mark in the ...',
 'display_poster' => 'Display the multimedia file author in the ...',
 'display_view' => 'Display the multimedia file views number in the ...',
-'infinite_loop' => 'You want to move the category in one of its subcategories or in itself, that makes no sense. Please choose another category',
+'infinite_loop' => 'You want to move the category into one of its subcategories or in itself, this is not possible. Please choose another category',
 'move_category_content' => 'Move its contents in :',
 'new_cat_does_not_exist' => 'The target category does not exist',
 'recount_success' => 'Multimedia files number for each category was recounted successfully.',
@@ -108,7 +108,7 @@ $MEDIA_LANG = array(
 'add_on_date' => 'Added on %s',
 'n_time' => '%d time',
 'n_times' => '%d times',
-'none_media' => 'No multimedia file in this category!',
+'none_media' => 'No multimedia files in this category!',
 'num_note' => '%d note',
 'num_notes' => '%d notes',
 'num_media' => '%d multimedia file',

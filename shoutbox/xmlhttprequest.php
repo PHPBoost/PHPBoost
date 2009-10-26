@@ -134,6 +134,6 @@ elseif ($del)
 	}
 }
 
-include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 
 ?>
