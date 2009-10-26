@@ -42,6 +42,11 @@ class MysqlQueryResult implements QueryResult
 	private $resource = null;
 
 	/**
+	 * @var int
+	 */
+	private $index = 0;
+
+	/**
 	 * @var string[string]
 	 */
 	private $current;
@@ -50,11 +55,6 @@ class MysqlQueryResult implements QueryResult
 	 * @var bool
 	 */
 	private $is_disposed = false;
-
-	/**
-	 * @var int
-	 */
-	private $index = 0;
 
 	public function __construct($resource)
 	{
@@ -73,11 +73,8 @@ class MysqlQueryResult implements QueryResult
 
 	public function rewind()
 	{
-		if ($this->index > 0)
-		{
-			mysql_data_seek($this->resource, 0);
-			$this->index = 0;
-		}
+		@mysql_data_seek($this->resource, 0);
+		$this->index = 0;
 		$this->next();
 	}
 

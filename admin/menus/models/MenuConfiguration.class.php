@@ -36,7 +36,7 @@ import('/admin/menus/models/dao/MenuConfigurationDAO');
 class MenuConfiguration extends BusinessObject
 {    
     private $id;
-    private $title;
+    private $name;
     private $match_regex;
     private $priority;
     
@@ -49,9 +49,9 @@ class MenuConfiguration extends BusinessObject
 		return $this->id;
 	}
 
-	public function get_title()
+	public function get_name()
 	{
-		return $this->title;
+		return $this->name;
 	}
 
 	public function get_match_regex()
@@ -69,9 +69,9 @@ class MenuConfiguration extends BusinessObject
 		$this->id = $value;
 	}
 
-	public function set_title($value)
+	public function set_name($value)
 	{
-		$this->title = $value;
+		$this->name = $value;
 	}
 
 	public function set_match_regex($value)

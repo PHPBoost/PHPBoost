@@ -473,6 +473,9 @@ $LANG['availables_feeds'] = 'Available feeds';
 
 $LANG['menu_configurations'] = 'Configurations';
 $LANG['menus'] = 'Menus';
+$LANG['menu_configuration_name'] = 'Name';
+$LANG['menu_configuration_match_regex'] = 'Match';
+$LANG['menu_configuration_edit'] = 'Edit';
 
 //Gestion du contenu
 $LANG['content_config'] = 'Content';
