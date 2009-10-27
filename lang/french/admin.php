@@ -469,15 +469,17 @@ $LANG['feed'] = 'flux';
 $LANG['availables_feeds'] = 'Flux disponibles';
 
 $LANG['menu_configurations'] = 'Configurations';
+$LANG['menu_configurations_list'] = 'Liste des configurations de menus';
 $LANG['menus'] = 'Menus';
 $LANG['menu_configuration_name'] = 'Nom';
 $LANG['menu_configuration_match_regex'] = 'Correspond à';
 $LANG['menu_configuration_edit'] = 'Editer';
 $LANG['menu_configuration_configure'] = 'Configurer';
 $LANG['menu_configuration_default_name'] = 'Configuration par défaut';
-$LANG['menu_configuration_edit_default_config'] = 'Editer la configuration par défaut';
-
-
+$LANG['menu_configuration_configure_default_config'] = 'Configurer la configuration par défaut';
+$LANG['menu_configuration_edition'] = 'Edition d\'une configuration de menu';
+$LANG['menu_configuration_edition_name'] = 'Nom de la configuration';
+$LANG['menu_configuration_edition_match_regex'] = 'Expression régulière de correspondance';
 
 //Gestion du contenu
 $LANG['content_config'] = 'Contenu';

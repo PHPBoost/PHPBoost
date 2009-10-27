@@ -34,6 +34,9 @@ import('mvc/dispatcher/Dispatcher');
 $url_controller_mappers = array(
 new UrlControllerMapper(
 	'/admin/menus/controllers/MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
+new UrlControllerMapper(
+	'/admin/menus/controllers/MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
+	array('menu_config_id'))
 );
 Dispatcher::do_dispatch($url_controller_mappers);
 

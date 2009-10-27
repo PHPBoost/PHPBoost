@@ -31,6 +31,11 @@
  */
 class Bench
 {
+	/**
+	 * @var bool
+	 */
+	private $started = false;
+	
     /**
 	 * @access protected
 	 * @var int start microtime
@@ -43,30 +48,41 @@ class Bench
     private $duration = 0;
     
     /**
-	 * @desc starts the bench now
-	 */
-    public function __construct()
-    {
-    	$this->start = $this->get_microtime();
-    }
-    
-    /**
 	 * @desc returns the number formatted with $digits floating numbers
 	 * @param int $digits the desired display precision
 	 * @return string the formatted duration
 	 */
     public function to_string($digits = 3) 
     {
-    	$this->stop();
+    	if ($this->started)
+    	{
+    		$this->duration += $this->get_delta_duration();
+    		$this->start();
+    	}
     	return number_round($this->duration, $digits); 
     }
 
     /**
-     * @desc stops the bench now
+     * @desc stops the bench
      */
-    private function stop()
+    public function stop()
     {
-        $this->duration = Bench::get_microtime() - $this->start; 
+        $this->duration += $this->get_delta_duration();
+        $this->started = false;
+    }
+    
+	/**
+     * @desc starts the bench
+     */
+    public function start()
+    {
+        $this->start = Bench::get_microtime(); 
+        $this->started = true;
+    }
+    
+    private function get_delta_duration()
+    {
+    	return Bench::get_microtime() - $this->start;
     }
     
     /**

@@ -472,13 +472,17 @@ $LANG['feed'] = 'feed';
 $LANG['availables_feeds'] = 'Available feeds';
 
 $LANG['menu_configurations'] = 'Configurations';
+$LANG['menu_configurations_list'] = 'Menus configurations list';
 $LANG['menus'] = 'Menus';
 $LANG['menu_configuration_name'] = 'Name';
 $LANG['menu_configuration_match_regex'] = 'Match';
 $LANG['menu_configuration_edit'] = 'Edit';
 $LANG['menu_configuration_configure'] = 'Configure';
 $LANG['menu_configuration_default_name'] = 'Default configuration';
-$LANG['menu_configuration_edit_default_config'] = 'Edit default configuration';
+$LANG['menu_configuration_configure_default_config'] = 'onfigure default configuration';
+$LANG['menu_configuration_edition'] = 'Edition a menu configuration';
+$LANG['menu_configuration_edition_name'] = 'Configuration name';
+$LANG['menu_configuration_edition_match_regex'] = 'Match regular expression';
 
 //Gestion du contenu
 $LANG['content_config'] = 'Content';
