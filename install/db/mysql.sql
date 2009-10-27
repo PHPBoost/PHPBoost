@@ -176,7 +176,7 @@ CREATE TABLE `phpboost_menus` (
   KEY `enabled` (`enabled`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
-CREATE TABLE `phpboost-trunk`.`phpboost_menu_configuration` (
+CREATE TABLE `phpboost_menu_configuration` (
   `id` INTEGER  NOT NULL,
   `name` VARCHAR(100)  NOT NULL,
   `match_regex` MEDIUMTEXT  NOT NULL,
