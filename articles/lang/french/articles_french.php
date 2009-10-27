@@ -152,5 +152,19 @@ $ARTICLES_LANG = array(
 	'successful_send_mail'=>'Votre mail a été envoyé avec succès',
 	'error_send_mail'=>'Une erreur est survenue veuillez réessayer plutard',
 	'text_link_mail' =>'Ceci est un e-mail de (%s) envoyé par %s (%s). Ce lien pourrait vous intéresser: %s %s',
+	
+	'models_management'=>'Gestion des modèles',
+	'model_info'=>'Informations sur le modèle',
+	'model'=>'Modèle',
+	'models'=>'Modèles',
+	'models_explain'=>'Vous définisser ici le modèle qui sera appliqué aux articles de cette catégorie',
+	'articles_models'=>'Modèle des articles',
+	'model_name'=>'Nom du modèle',
+	'model_desc'=>'Description du modèle',
+	'tpl_model_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles et les catégories associés à ce modèle.',
+	'extend_field_model_explain' => 'Vous pouvez déclarer ici des champs suplémentaires pour les articles associés à ce modèle.',
+	'special_option_model_explain' => 'Vous pouvez appliquer des options particulères pour les articles associés à ce modèle.',
+	'model_default'=>'Modèle par defaut',
+	'add_models'=>'Ajouter un modèle',
 );
 ?>

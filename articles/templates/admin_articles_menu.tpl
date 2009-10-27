@@ -22,6 +22,16 @@
 			<a href="admin_articles_cat.php?new=1" class="quick_link">{L_ADD_CAT}</a>
 		</li>
 		<li>
+			<a href="admin_articles_models.php"><img src="articles.png" alt="" /></a>
+			<br />
+			<a href="admin_articles_models.php" class="quick_link">{L_MODELS_MANAGEMENT}</a>
+		</li>
+		<li>
+			<a href="admin_articles_models.php?new=1"><img src="articles.png" alt="" /></a>
+			<br />
+			<a href="admin_articles_models.php?new=1" class="quick_link">{L_ADD_MODELS}</a>
+		</li>
+		<li>
 			<a href="admin_articles_config.php"><img src="articles.png" alt="" /></a>
 			<br />
 			<a href="admin_articles_config.php" class="quick_link">{L_CONFIG_ARTICLES}</a>

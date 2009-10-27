@@ -40,8 +40,7 @@
 			if( check_form() )
 			{
 				document.getElementById('preview').innerHTML = '<img src="{PHP_PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			
-							
+								
 				new Ajax.Request(
 					'xmlhttprequest.php',
 					{
@@ -52,7 +51,7 @@
 							id: document.getElementById('id').value,
 							title: document.getElementById('title').value,
 							idcat: document.getElementById('idcat').value,
-							desc: document.getElementById('contents').value,
+							contents: document.getElementById('contents').value,
 							user_id: document.getElementById('user_id').value,
 							date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
 							hour: document.getElementById('release_hour').value,
@@ -68,6 +67,24 @@
 				);
 			}
 			return false;
+		}
+		function ajax_models_desc()
+		{			
+			new Ajax.Request(
+				'xmlhttprequest.php',
+				{
+					method: 'post',
+					parameters: {
+						model_desc: true,
+						models: document.getElementById('models').value,
+					 },
+					onSuccess: function(response)
+					{
+				
+						document.getElementById('model_desc').innerHTML = response.responseText;
+					}				
+				}
+			);
 		}
 		function change_icon(img_path)
 		{
@@ -134,6 +151,22 @@
 						</select>
 					</label></dd>
 				</dl>
+				# IF NOT C_CONTRIBUTION #
+				<dl>
+					<dt><label for="special_auth">{L_MODELS}</label>
+					<dd>
+						<select id="models" name="models" onchange="ajax_models_desc()">
+							{MODELS}
+						</select>
+					</dd>	
+				</dl>
+				<dl>
+					<dt><label>{L_MODELS_DESCRIPTION} : </label></dt>
+					<dd>
+						 <span id="model_desc">{MODELE_DESCRIPTION}</span>	
+					</dd>			
+				</dl>
+				# ENDIF #
 				<dl>
 					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
 						<dd>

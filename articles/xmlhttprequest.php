@@ -62,7 +62,7 @@ elseif (retrieve(POST,'preview',false))
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
 		'title' => utf8_decode(retrieve(POST, 'title', '', TSTRING)),
-		'desc' => utf8_decode(retrieve(POST, 'desc', '', TSTRING_PARSE)),
+		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
 		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
@@ -88,7 +88,7 @@ elseif (retrieve(POST,'preview',false))
 		'IDCAT' => $articles['idcat'],
 		'DESCRIPTION'=>$articles['description'],
 		'NAME' => stripslashes($articles['title']),
-		'CONTENTS' => stripslashes(second_parse($articles['desc'])),
+		'CONTENTS' => stripslashes(second_parse($articles['contents'])),
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'DATE' =>   $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
@@ -97,6 +97,12 @@ elseif (retrieve(POST,'preview',false))
 	));
 
 	echo $preview->parse(TEMPLATE_STRING_MODE);
+}
+elseif (retrieve(POST,'model_desc',false))
+{
+	$id_model = retrieve(POST, 'models', 1, TINTEGER);
+	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
+	echo second_parse($model['description']);
 }
 else
 echo -2;

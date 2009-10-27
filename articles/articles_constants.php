@@ -35,7 +35,7 @@ define('AUTH_ARTICLES_MODERATE', 8);
 
 define('DB_TABLE_ARTICLES', PREFIX . 'articles');
 define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
-
+define('DB_TABLE_ARTICLES_MODEL', PREFIX . 'articles_models');
 $idartcat = retrieve(GET, 'cat',0);
 $idart = retrieve(GET, 'id', 0);
 $invisible = retrieve(GET, 'invisible', false, TBOOL);
