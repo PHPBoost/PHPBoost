@@ -89,45 +89,22 @@
 			show_div("hide_special_auth");
 		global_auth = !global_auth;
 	}
-	var articles_tpl = {edition_interface.JS_SPECIAL_ARTICLES_TPL};
-	function change_articles_tpl()
-	{
-		if( articles_tpl )
-			hide_div("hide_articles_tpl");
-		else
-			show_div("hide_articles_tpl");
-		articles_tpl = !articles_tpl;
-	}
-	
-	var global_option = {edition_interface.JS_SPECIAL_OPTION};
-	function change_status_option()
-	{
-	
-		if( global_option )
-			hide_div("hide_special_option");
-		else
-			show_div("hide_special_option");
-		global_option = !global_option;
-	}
-	var extend_field = {edition_interface.JS_EXTEND_FIELD};
-	function change_extend_field()
-	{
-		if( extend_field )
-			hide_div("hide_extend_field");
-		else
-			show_div("hide_extend_field");
-		extend_field = !extend_field;
-	}
-	function add_field(i, i_max) 
-	{
-		var i2 = i + 1;
-
-		if( document.getElementById('a'+i) )
-			document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" class="text" /></label><br /><span id="a'+i2+'"></span>';	
-		if( document.getElementById('v'+i) )
-			document.getElementById('v'+i).innerHTML = '<label><input type="text" size="40" name="v'+i+'" value="" class="text" /></label><br /><span id="v'+i2+'"></span>';	
-		if( document.getElementById('s'+i) )
-			document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';					
+	function ajax_models_desc()
+	{					
+		new Ajax.Request(
+			'xmlhttprequest.php',
+			{
+				method: 'post',
+				parameters: {
+					model_desc: true,
+					models: document.getElementById('models').value,
+				 },
+				onSuccess: function(response)
+				{
+					document.getElementById('model_desc').innerHTML = response.responseText;
+				}				
+			}
+		);
 	}
 	-->
 	</script>
@@ -173,179 +150,25 @@
 		</fieldset>
 		<fieldset>
 			<legend>
-				{L_TPL}
+				{L_ARTICLES_MODELS}
 			</legend>
 			<dl>
-				<dt><label for="special_auth">{L_TPL}</label>
+				<dt><label for="models">{L_MODELS}</label>
 				<br />
-				<span class="text_small">{L_ARTICLES_TPL_EXPLAIN}</span></dt>
+				<span class="text_small">{L_MODELS_EXPLAIN}</span></dt>
 				<dd>
-					<input type="checkbox" name="articles_tpl_checkbox" id="articles_tpl_checkbox" onclick="javascript: change_articles_tpl();" {edition_interface.ARTICLES_TPL_CHECKED} />
-				</dd>					
+					<select id="models" name="models" onchange="ajax_models_desc()">
+						{edition_interface.MODELS}
+					</select>
+				</dd>				
 			</dl>
-			<div id="hide_articles_tpl" style="display:{edition_interface.DISPLAY_ARTICLES_TPL};">
-				<dl>
-					<dt>
-						<label for="name">
-							* {L_ARTICLES_TPL}
-						</label>
-					</dt>
-					<dd>
-						<select name="tpl_articles">
-							{edition_interface.TPL_ARTICLES_LIST}
-						</select>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="name">
-							* {L_CAT_TPL}
-						</label>
-					</dt>
-					<dd>
-						<select name="tpl_cat">
-							{edition_interface.TPL_CAT_LIST}
-						</select>
-					</dd>
-				</dl>
-			</div>
-		</fieldset>
-		<fieldset>
-			<legend>
-				{L_SPECIAL_OPTION}
-			</legend>
 			<dl>
-				<dt><label for="special_auth">{L_SPECIAL_OPTION}</label>
-				<br />
-				<span class="text_small">{L_SPECIAL_OPTION_EXPLAIN}</span></dt>
+				<dt><label>{L_MODELS_DESCRIPTION} : </label></dt>
 				<dd>
-					<input type="checkbox" name="special_option" id="special_option" onclick="javascript: change_status_option();" {edition_interface.OPTION_CHECKED} />
-				</dd>					
+					 <span id="model_desc">{edition_interface.MODELE_DESCRIPTION}</span>	
+				</dd>	
+							
 			</dl>
-			<div id="hide_special_option" style="display:{edition_interface.DISPLAY_SPECIAL_OPTION};">
-				<dl>
-					<dt>
-						<label for="option_notation">{L_NOTE} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="note" name="note">
-								<option value="0" {edition_interface.SELECTED_NOTATION_HIDE}>{L_HIDE}</option>
-								<option value="1" {edition_interface.SELECTED_NOTATION_DISPLAY}>{L_DISPLAY}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="option_com">{L_COM} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="com" name="com">
-								<option value="0" {edition_interface.SELECTED_COM_HIDE}>{L_HIDE}</option>
-								<option value="1" {edition_interface.SELECTED_COM_DISPLAY}>{L_DISPLAY}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="option_impr">{L_PRINTABLE} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="impr" name="impr">
-								<option value="0" {edition_interface.SELECTED_IMPR_HIDE}>{L_DESABLE}</option>
-								<option value="1" {edition_interface.SELECTED_IMPR_DISPLAY}>{L_ENABLE}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="option_date">{L_DATE} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="date" name="date">
-								<option value="0" {edition_interface.SELECTED_DATE_HIDE}>{L_HIDE}</option>
-								<option value="1" {edition_interface.SELECTED_DATE_DISPLAY} >{L_DISPLAY}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="option_author">{L_AUTHOR} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="author" name="author">
-								<option value="0" {edition_interface.SELECTED_AUTHOR_HIDE}>{L_HIDE}</option>
-								<option value="1" {edition_interface.SELECTED_AUTHOR_DISPLAY}>{L_DISPLAY}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="option_mail">{L_LINK_MAIL} : </label>
-					</dt>
-					<dd>
-						<label>
-							<select id="mail" name="mail">
-								<option value="0" {edition_interface.SELECTED_MAIL_HIDE}>{L_HIDE}</option>
-								<option value="1" {edition_interface.SELECTED_MAIL_DISPLAY}>{L_DISPLAY}</option>
-							</select>
-						</label>
-					</dd>
-				</dl>
-			</div>
-		</fieldset>
-		<fieldset>
-			<legend>
-				{L_EXTEND_FIELD}
-			</legend>
-			<dl>
-				<dt><label for="extend_field">{L_EXTEND_FIELD}</label>
-				<br />
-				<span class="text_small">{L_EXTEND_FIELD_EXPLAIN}</span></dt>
-				<dd>
-					<input type="checkbox" name="extend_field_checkbox" id="extend_field_checkbox" onclick="javascript: change_extend_field();" {edition_interface.EXTEND_FIELD_CHECKED} />
-				</dd>					
-			</dl>
-			<div id="hide_extend_field" style="display:{edition_interface.DISPLAY_EXTEND_FIELD};">
-				<table style="margin:auto;text-align:center;border:none;border-spacing:0;">
-					<tr>
-						<th style="text-align:center;">
-							{L_FIELD_NAME}
-						</th>
-						<th style="text-align:center;">
-							{L_FIELD_TYPE}
-						</th>
-					</tr>
-					<tr>
-						<td class="row2" style="text-align:center;">	
-							# START field #
-							<label><input type="text" size="40" name="a{field.I}" id="a{field.I}" value="{field.NAME}" class="text" /></label><br />
-							# END field #
-							<span id="a{edition_interface.NB_FIELD}"></span>
-						</td>
-						<td class="row2" style="text-align:center;">	
-							# START field #					
-							<label><input type="text" size="40" name="v{field.I}" id="v{field.I}" value="{field.TYPE}" class="text" /> </label><br />
-							# END field #
-							<span id="v{edition_interface.NB_FIELD}"></span>
-						</td>
-					</tr>
-					<tr>
-						<td style="text-align:center;margin-top:5px;" colspan="2">
-							<div id="s{edition_interface.NB_FIELD}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_field({edition_interface.NB_FIELD}, 100)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_FIELD}</a></div>								
-						</td>
-					</tr>
-				</table>
-			</div>
 		</fieldset>
 		<fieldset>
 			<legend>

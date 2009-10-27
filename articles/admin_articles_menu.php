@@ -35,7 +35,9 @@ $tpl_menu->Assign_vars(array(
 	'L_ADD_ARTICLES' => $ARTICLES_LANG['add_articles'],
 	'L_CONFIG_ARTICLES' => $ARTICLES_LANG['configuration_articles'],
 	'L_CAT_ARTICLES' => $ARTICLES_LANG['category_articles'],
-	'L_ADD_CAT' => $ARTICLES_LANG['add_category']
+	'L_ADD_CAT' => $ARTICLES_LANG['add_category'],
+	'L_ADD_MODELS' =>$ARTICLES_LANG['add_models'],
+	'L_MODELS_MANAGEMENT'=>$ARTICLES_LANG['models_management']
 ));
 
 $admin_menu = $tpl_menu->parse(TEMPLATE_STRING_MODE);

@@ -37,8 +37,10 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon, a.extend_field,a.nbr_com, m.login, m.level
-		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon,a.nbr_com,a.id_models, m.login, m.level,a.extend_field,mo.tpl_articles,mo.tpl_cats ,mo.options,mo.pagination_tab
+		FROM " . DB_TABLE_ARTICLES . " a 
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+		LEFT JOIN " . DB_TABLE_ARTICLES_MODEL . " mo ON a.id_models = mo.id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -52,7 +54,7 @@ if (!empty($idart) && isset($cat) )
 	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 
-	$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_articles']);
+	$tpl = new Template('articles/'.$articles['tpl_articles']);
 	$Errorh->set_template($tpl);
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -76,7 +78,7 @@ if (!empty($idart) && isset($cat) )
 	$i = 1;
 	
 	// If tab pagination is active
-	$c_tab=$CONFIG_ARTICLES['tab'];
+	$c_tab=$articles['pagination_tab'];
 	//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
@@ -121,23 +123,21 @@ if (!empty($idart) && isset($cat) )
 	}	
 	
 	// extend field
-	$extend_field=!empty($ARTICLES_CAT[$idartcat]['extend_field']) ? true : false;
+	$extend_field_tab=unserialize($articles['extend_field']);
+	$extend_field=!empty($extend_field_tab) ? true : false;
 	if($extend_field)
 	{
-		$extend_field_articles=unserialize($articles['extend_field']);
-	
-		foreach ($ARTICLES_CAT[$idartcat]['extend_field'] as $field)
+		foreach ($extend_field_tab as $field)
 		{	
-			if(isset($extend_field_articles[$field['name']]['contents']))
-			{
-					$tpl->assign_block_vars('extend_field',array(
-					'CONTENTS'=>$extend_field_articles[$field['name']]['contents'],
-					'NAME'=>$field['name'],
-				));
-			}
+			$tpl->assign_block_vars('extend_field',array(
+				'CONTENTS'=>$field['contents'],
+				'NAME'=>$field['name'],
+			));
 		}	
 	}
-
+	//options
+	$options=unserialize($articles['options']);
+	
 	//Affichage notation
 	import('content/Note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -149,13 +149,13 @@ if (!empty($idart) && isset($cat) )
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
-		'C_EXTEND_FIELD'=>$extend_field && !empty($extend_field_articles),
-		'C_NOTE'=> $ARTICLES_CAT[$idartcat]['options']['note'] ? true : false,
-		'C_PRINT'=> $ARTICLES_CAT[$idartcat]['options']['impr'] ? true : false,
-		'C_COM'=> $ARTICLES_CAT[$idartcat]['options']['com'] ? true : false,
-		'C_AUTHOR'=> $ARTICLES_CAT[$idartcat]['options']['author'] ? true : false,
-		'C_DATE'=> $ARTICLES_CAT[$idartcat]['options']['date'] ? true : false,
-		'C_MAIL'=> $ARTICLES_CAT[$idartcat]['options']['mail'] && $User->Check_level(MEMBER_LEVEL) ? true : false,
+		'C_EXTEND_FIELD'=>$extend_field,
+		'C_NOTE'=> $options['note'] ? true : false,
+		'C_PRINT'=> $options['impr'] ? true : false,
+		'C_COM'=> $options['com'] ? true : false,
+		'C_AUTHOR'=> $options['author'] ? true : false,
+		'C_DATE'=> $options['date'] ? true : false,
+		'C_MAIL'=> $options['mail'] && $User->Check_level(MEMBER_LEVEL) ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],

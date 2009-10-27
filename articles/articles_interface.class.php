@@ -51,7 +51,7 @@ class ArticlesInterface extends ModuleInterface
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,tpl_articles,tpl_cat,options,extend_field
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,id_models
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -67,10 +67,7 @@ class ArticlesInterface extends ModuleInterface
 					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
 					'description' => $row['description'],
 					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth'],
-					'tpl_articles'=>$row['tpl_articles'],
-					'tpl_cat'=>$row['tpl_cat'],
-					'options'=>!empty($row['options']) ? unserialize($row['options']) : $config_articles['options'] ,
-					'extend_field'=>!empty($row['extend_field']) ? unserialize($row['extend_field']) : '' ,
+					'models'=>$row['id_models'],
 			), true) . ';' . "\n\n";
 		}
 		return $string;
@@ -227,8 +224,10 @@ class ArticlesInterface extends ModuleInterface
 			$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
+
+		$models = $this->sql_querier->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $ARTICLES_CAT[$idartcat]['models'] . "'", __LINE__, __FILE__);
 		
-		$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
+		$tpl = new Template('articles/'.$models['tpl_cats']);
 
 		//Niveau d'autorisation de la catégorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))

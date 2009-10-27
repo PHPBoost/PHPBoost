@@ -100,13 +100,17 @@ elseif(retrieve(POST,'submit',false))
 		}
 	}
 	
-	$extend_field=!empty($ARTICLES_CAT[retrieve(POST, 'idcat', 0)]['extend_field']) ? true : false;
+	// models
+	$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . retrieve(POST,'models',1,TINTEGER) . "'", __LINE__, __FILE__);
+	$extend_field_tab=unserialize($models['extend_field']);
+	$extend_field=!empty($extend_field_tab) ? true : false;
 	$extend_field_articles=Array();
 	if($extend_field)
 	{
-		foreach ($ARTICLES_CAT[retrieve(POST, 'idcat', 0)]['extend_field'] as $field)
+		foreach ($extend_field_tab as $field)
 		{	
-			$extend_field_articles[$field['name']]['contents']=retrieve(POST,  'field_'.addslashes($field['name']), '', TSTRING);
+			$extend_field_articles[$field['name']]['name']=$field['name'];
+			$extend_field_articles[$field['name']]['contents']=retrieve(POST, 'field_'.addslashes($field['name']), '', TSTRING);
 		}	
 	}
 	
@@ -116,6 +120,7 @@ elseif(retrieve(POST,'submit',false))
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'title' => retrieve(POST, 'title', '', TSTRING),
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
+		'models' => retrieve(POST, 'models', 1,TINTEGER),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
 		'start' => $begining_date->get_timestamp(),
@@ -197,7 +202,7 @@ elseif(retrieve(POST,'submit',false))
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',extend_field = '".$articles['extend_field']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',extend_field = '".$articles['extend_field']."',id_models='".$articles['models']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
@@ -228,8 +233,8 @@ elseif(retrieve(POST,'submit',false))
 			
 				$auth = $articles['auth'];
 					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field,id_models)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."','".$articles['models']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -369,21 +374,39 @@ else
 						'URL' => '',
 					));
 			}
-			// extend field
-			$extend_field=!empty($ARTICLES_CAT[$articles['idcat']]['extend_field']) ? true : false;
-			if(	$extend_field )
+			// models
+			$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $articles['id_models'] . "'", __LINE__, __FILE__);
+			
+			$result = $Sql->query_while("SELECT id, name,description
+			FROM " . DB_TABLE_ARTICLES_MODEL 
+			, __LINE__, __FILE__);
+			
+			$select_models='';			
+			while ($row = $Sql->fetch_assoc($result))
 			{
-				$extend_field_articles=unserialize($articles['extend_field']);
-				foreach ($ARTICLES_CAT[$articles['idcat']]['extend_field'] as $field)
+				if($row['id'] == $articles['id_models'])
+				{
+					$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
+					$model_desc=$row['description'];
+				}
+				else
+					$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+			}
+			
+			// extend field
+			$extend_field_tab=unserialize($articles['extend_field']);
+			$extend_field=!empty($extend_field_tab) ? true : false;
+			if($extend_field)
+			{
+				foreach ($extend_field_tab as $field)
 				{	
 					$tpl->assign_block_vars('extend_field', array(
 						'NAME' => stripslashes($field['name']),
-						'CONTENTS'=>!empty($extend_field_articles[$field['name']]['contents']) ? stripslashes($extend_field_articles[$field['name']]['contents']) : '',
+						'CONTENTS'=>$field['contents']
 					));
 				}	
 			}
 			
-	
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
@@ -393,6 +416,8 @@ else
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => unparse($articles['contents']),
 				'DESCRIPTION' => unparse($articles['description']),
+				'MODELE_DESCRIPTION'=>second_parse($model_desc),
+				'MODELS'=>$select_models,
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
 				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'VISIBLE_UNAPROB' => !$articles['visible'],
@@ -453,16 +478,37 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
-			$extend_field=!empty($ARTICLES_CAT[$cat]['extend_field']) ? true : false;
-			if(	$extend_field)
+			$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $ARTICLES_CAT[$cat]['models'] . "'", __LINE__, __FILE__);
+			
+			$extend_field_tab=unserialize($models['extend_field']);
+			$extend_field=!empty($extend_field_tab) ? true : false;
+			if($extend_field)
 			{
-				foreach ($ARTICLES_CAT[$cat]['extend_field'] as $field)
+				foreach ($extend_field_tab as $field)
 				{	
 					$tpl->assign_block_vars('extend_field', array(
 						'NAME' => stripslashes($field['name']),
+						'CONTENTS'=>'',
 					));
 				}	
 			}
+			
+			$result = $Sql->query_while("SELECT id, name,description
+			FROM " . DB_TABLE_ARTICLES_MODEL 
+			, __LINE__, __FILE__);
+
+			$select_models='';			
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				if($row['id'] == $ARTICLES_CAT[$cat]['models'])
+				{
+					$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
+					$model_desc=$row['description'];
+				}
+				else
+					$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+			}
+			
 			$tpl->assign_vars(array(
 				'C_ADD' => false,
 				'C_EXTEND_FIELD'=>	$extend_field,
@@ -472,6 +518,7 @@ else
 				'TITLE' => '',
 				'CONTENTS' => '',
 				'DESCRIPTION'=>'',
+				'MODELE_DESCRIPTION'=>second_parse($model_desc),
 				'EXTEND_CONTENTS' => '',
 				'VISIBLE_WAITING' => 0,
 				'VISIBLE_ENABLED' => 1,
@@ -492,6 +539,7 @@ else
 				'IMG_PATH' => '',
 				'IMG_ICON' => '',	
 				'IMG_LIST' => $image_list,
+				'MODELS'=>$select_models,
 				'NB_SOURCE'=>1,
 				'JS_SPECIAL_AUTH' => 'false',
 				'DISPLAY_SPECIAL_AUTH' => 'none',
@@ -553,6 +601,8 @@ else
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+		'L_MODELS'=>$ARTICLES_LANG['models'],
+		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
 
 	//Gestion erreur.
