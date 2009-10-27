@@ -476,6 +476,9 @@ $LANG['menus'] = 'Menus';
 $LANG['menu_configuration_name'] = 'Name';
 $LANG['menu_configuration_match_regex'] = 'Match';
 $LANG['menu_configuration_edit'] = 'Edit';
+$LANG['menu_configuration_configure'] = 'Configure';
+$LANG['menu_configuration_default_name'] = 'Default configuration';
+$LANG['menu_configuration_edit_default_config'] = 'Edit default configuration';
 
 //Gestion du contenu
 $LANG['content_config'] = 'Content';

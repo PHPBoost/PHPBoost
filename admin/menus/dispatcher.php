@@ -32,7 +32,8 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 import('mvc/dispatcher/Dispatcher');
 
 $url_controller_mappers = array(
-new UrlControllerMapper('/admin/menus/controllers/MenuControllerConfigurationsList', '`^/?$`'),
+new UrlControllerMapper(
+	'/admin/menus/controllers/MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
 );
 Dispatcher::do_dispatch($url_controller_mappers);
 
