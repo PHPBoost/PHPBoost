@@ -35,6 +35,9 @@ class MenuConfigurationDAO extends SQLDAO
 {
 	private static $instance;
 	
+	/**
+	 * @return MenuConfigurationDAO
+	 */
 	public static function instance()
 	{
 		if (self::$instance === null)

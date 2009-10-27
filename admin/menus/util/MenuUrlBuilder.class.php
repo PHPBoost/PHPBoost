@@ -39,7 +39,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
     public static function menu_configuration_list()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/');
+		return Dispatcher::get_url(self::$dispatcher, '/configs/list/');
 	}
     
 	/**
@@ -47,7 +47,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_create()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/create/');
+		return Dispatcher::get_url(self::$dispatcher, '/configs/create/');
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_create_valid()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/create/valid/?token=' .
+		return Dispatcher::get_url(self::$dispatcher, '/configs/create/valid/?token=' .
 		$Session->get_token());
 	}
 	
@@ -64,7 +64,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $id . '/edit/');
+		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/edit/');
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit_valid($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $id . '/edit/valid/?token=' .
+		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/edit/valid/?token=' .
 		$Session->get_token());
 	}
 	
@@ -81,16 +81,24 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_configuration_edit_delete($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $id . '/delete/?token=' .
+		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/delete/?token=' .
 		$Session->get_token());
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function menu_configuration_edit_add($id)
+	public static function menu_configuration_configure($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, $id . '/add/');
+		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/configure/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function menu_configuration_configure_valid($id)
+	{
+		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/configure/valid/');
 	}
 	
 	/**
@@ -98,7 +106,7 @@ class MenuUrlBuilder extends BusinessObject
 	 */
 	public static function menu_list()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/menus/');
+		return Dispatcher::get_url(self::$dispatcher, '/menus/list/');
 	}
 }
 ?>

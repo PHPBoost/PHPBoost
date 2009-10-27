@@ -44,8 +44,8 @@ class MenuControllerConfigurationsList implements Controller
 	{
 		$this->load_env();
 
-		$menu_configurations = MenuConfigurationDAO::instance()->find_all(DAO::FIND_ALL, 0, array(
-		array('column' => 'priority', 'way' => DAO::ORDER_BY_ASC)));
+		$menu_configurations = MenuConfigurationDAO::instance()->find_by_criteria(
+		'WHERE id!=:default_config_id ORDER BY priority DESC;', array('default_config_id' => 1));
 
 		foreach ($menu_configurations as $menu_config)
 		{
@@ -54,8 +54,16 @@ class MenuControllerConfigurationsList implements Controller
                 'MATCH_REGEX' => $menu_config->get_match_regex(),
                 'U_EDIT' =>
 			MenuUrlBuilder::menu_configuration_edit($menu_config->get_id())->absolute(),
+				'U_CONFIGURE' =>
+			MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->absolute()
 			));
 		}
+
+		$default_menu_config = MenuConfigurationDAO::instance()->find_by_id(1);
+		$this->view->assign_vars(array(
+			'U_DEFAULT_MENU_CONFIG_CONFIGURE' =>
+		MenuUrlBuilder::menu_configuration_configure($default_menu_config->get_id())->absolute()
+		));
 
 		return $this->response;
 	}
