@@ -72,6 +72,7 @@ class Dispatcher
 				return;
 			}
 		}
+		Environment::destroy();
 		throw new NoUrlMatchException($url);
 	}
 

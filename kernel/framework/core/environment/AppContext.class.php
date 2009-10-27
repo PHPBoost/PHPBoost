@@ -91,11 +91,12 @@ class AppContext
 	public static function init_bench()
 	{
 		self::$bench = new Bench();
+		self::$bench->start();
 	}
 
 	/**
 	 * Returns the current page's bench
-	 * @return BreadCrumb
+	 * @return Bench
 	 */
 	public static function get_bench()
 	{

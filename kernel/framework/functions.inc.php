@@ -1064,12 +1064,13 @@ function strhash($str, $salt = true)
 		$str = $salt . $str;
 	}
 
-	if (phpversion() >= '5.1.2' && @extension_loaded('pecl'))
+	if (function_exists('hash'))
 	{   // PHP5 Primitive
 		return hash('sha256', $str);
 	}
 	else
 	{   // With PHP4
+		echo 'PHP4';
 		import('lib/SHA256');
 		return SHA256::hash($str);
 	}

@@ -49,16 +49,20 @@ class Environment
 	 */
 	public static function load_imports()
 	{
+		require_once PATH_TO_ROOT . '/kernel/framework/util/Bench.class.php';
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-        import('core/ClassLoader');
+		import('core/environment/AppContext');
+		
+		AppContext::init_bench();
+        
+		import('core/ClassLoader');
         import('util/StringVars');
 		import('io/request/HTTPRequest');
 		import('content/parser/ContentFormattingFactory');
 		import('core/BreadCrumb');
 		import('core/Cache');
 		import('core/cache/GroupsCache');
-		import('core/environment/AppContext');
 		import('core/environment/GraphicalEnvironment');
 		import('core/Errors');
 		import('db/Sql');
@@ -69,7 +73,6 @@ class Environment
 		import('members/Session');
 		import('members/User');
 		import('menu/Menu');
-		import('util/Bench');
 		import('util/Date');
 		import('util/Debug');
 	}
@@ -114,7 +117,6 @@ class Environment
 	public static function init_services()
 	{
 		AppContext::set_request(new HTTPRequest());
-		AppContext::init_bench();
 		AppContext::init_breadcrumb();
 		AppContext::init_sql_querier();
 		AppContext::init_session();
