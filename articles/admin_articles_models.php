@@ -33,6 +33,7 @@ require_once('articles_constants.php');
 
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $model_to_del = retrieve(GET, 'del', 0,TINTEGER);
+$model_to_del_move = retrieve(POST, 'model_to_del', 0,TINTEGER);
 $new_model = retrieve(GET, 'new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
 $error = retrieve(GET, 'error', '');
@@ -50,10 +51,48 @@ if ($model_to_del > 0)
 {
 	$Session->csrf_get_protect();
 	
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del . "'", __LINE__, __FILE__);
+	$nbr_models_articles = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
+	$nbr_models_cats = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	
-	$error_string = 'e_success';
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	if($nbr_models_cats == 0 && $nbr_models_articles == 0)
+	{
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del . "'", __LINE__, __FILE__);
+	
+		$error_string = 'e_success';
+		redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	}
+	else
+	{
+		$tpl->assign_vars(array(
+			'EMPTY_CATS' => count($ARTICLES_CAT) < 2 ? true : false,
+			'L_REMOVING_MODEL' => $ARTICLES_LANG['removing_model'],
+			'L_EXPLAIN_REMOVING_MODEL' => $ARTICLES_LANG['explain_removing_model'],
+			'L_AFFECT_DEFAULT' => $ARTICLES_LANG['affect_default'],
+			'L_AFFECT_MODEL' => $ARTICLES_LANG['affect_model'],
+			'L_SUBMIT' => $LANG['delete']
+		));
+		
+		$result = $Sql->query_while("SELECT id, name,description
+		FROM " . DB_TABLE_ARTICLES_MODEL 
+		, __LINE__, __FILE__);
+		
+		$models="";
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			if($row['id'] != $model_to_del)
+			{
+				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+			}	
+		}
+		
+		$tpl->assign_block_vars('removing_interface', array(
+			'ID_MODEL' =>$model_to_del,
+			'MODELS'=>$models,
+		));
+	
+	}
+	/*
+*/
 }
 elseif ($new_model XOR $id_edit > 0)
 {
@@ -245,51 +284,112 @@ elseif ($new_model XOR $id_edit > 0)
 elseif (retrieve(POST,'submit',false))
 {
 	$error_string = 'e_success';
-
-	$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
-	$name = retrieve(POST, 'name', '');	
-	$description = retrieve(POST, 'description', '', TSTRING_PARSE);
-	$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
-	$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
-	$tpl_articles = empty($tpl_articles) ? 'articles.tpl' : $tpl_articles;
-	$tpl_cat = empty($tpl_cat) ? 'articles_cat.tpl' : $tpl_cat;
-	$options = array (
-		'note'=>retrieve(POST, 'note', true, TBOOL),
-		'com'=>retrieve(POST, 'com', true, TBOOL),
-		'impr'=>retrieve(POST, 'impr', true, TBOOL),
-		'date'=>retrieve(POST, 'date', true, TBOOL),
-		'author'=>retrieve(POST, 'author', true, TBOOL),
-		'mail'=>retrieve(POST, 'mail', true, TBOOL),
-		);
-	$pagination_tab=retrieve(POST, 'tab', 0);
 	
-	if (empty($name))
-	redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
-		
-	$extend_field = array();
-	if(retrieve(POST,'extend_field_checkbox',false))
+	if (!empty($model_to_del_move))
 	{
-		for ($i = 0;$i < 100; $i++)
-		{	
-			if (retrieve(POST,'a'.$i,false,TSTRING))
-			{				
-				$extend_field[$i]['name'] = strtoupper(retrieve(POST, 'a'.$i, '',TSTRING));
-				$extend_field[$i]['type'] = retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE);
+		$move_default =(retrieve(POST,'action','move') == 'affect_defaut') ? true : false;
+
+		$id_models_move = retrieve(POST, 'models', 0,TINTEGER);
+		
+		$Session->csrf_get_protect();
+		
+		if ($move_default)
+		{
+			
+			$result = $Sql->query_while("SELECT id,id_models
+			FROM " . DB_TABLE_ARTICLES_CAT . " a
+			WHERE id_models = ".$model_to_del_move
+			, __LINE__, __FILE__);
+
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_CAT. " SET id_models = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			}
+		
+			$result = $Sql->query_while("SELECT id,id_models
+			FROM " . DB_TABLE_ARTICLES . " a
+			WHERE id_models = ".$model_to_del_move
+			, __LINE__, __FILE__);
+
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES. " SET id_models = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			}
+				
+		}
+		else
+		{
+			$result = $Sql->query_while("SELECT id,id_models
+			FROM " . DB_TABLE_ARTICLES_CAT . " a
+			WHERE id_models = ".$model_to_del_move
+			, __LINE__, __FILE__);
+
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_CAT. " SET id_models = '".$id_models_move."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			}
+		
+			$result = $Sql->query_while("SELECT id,id_models
+			FROM " . DB_TABLE_ARTICLES . " a
+			WHERE id_models = ".$model_to_del_move
+			, __LINE__, __FILE__);
+
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES. " SET id_models = '".$id_models_move."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			}
 		}
-	}
-			
-	if ($id_model > 0)
-	{
-		$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."' WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
+		
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del_move . "'", __LINE__, __FILE__);
+	
 		$error_string = 'e_success';
 	}
 	else
 	{
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES_MODEL . " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."'", __LINE__, __FILE__);
-		$error_string = 'e_success';
+		$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
+		$name = retrieve(POST, 'name', '');	
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
+		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
+		$tpl_articles = empty($tpl_articles) ? 'articles.tpl' : $tpl_articles;
+		$tpl_cat = empty($tpl_cat) ? 'articles_cat.tpl' : $tpl_cat;
+		$options = array (
+			'note'=>retrieve(POST, 'note', true, TBOOL),
+			'com'=>retrieve(POST, 'com', true, TBOOL),
+			'impr'=>retrieve(POST, 'impr', true, TBOOL),
+			'date'=>retrieve(POST, 'date', true, TBOOL),
+			'author'=>retrieve(POST, 'author', true, TBOOL),
+			'mail'=>retrieve(POST, 'mail', true, TBOOL),
+			);
+		$pagination_tab=retrieve(POST, 'tab', 0);
+		
+		if (empty($name))
+		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			
+		$extend_field = array();
+		if(retrieve(POST,'extend_field_checkbox',false))
+		{
+			for ($i = 0;$i < 100; $i++)
+			{	
+				if (retrieve(POST,'a'.$i,false,TSTRING))
+				{				
+					$extend_field[$i]['name'] = strtoupper(retrieve(POST, 'a'.$i, '',TSTRING));
+					$extend_field[$i]['type'] = retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE);
+				}
+			}
+		}
+				
+		if ($id_model > 0)
+		{
+			$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."' WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
+			$error_string = 'e_success';
+		}
+		else
+		{
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES_MODEL . " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."'", __LINE__, __FILE__);
+			$error_string = 'e_success';
+		}
 	}
-
 	// Feeds Regeneration
 	import('content/feed/Feed');
 	Feed::clear_cache('articles');
@@ -358,15 +458,19 @@ else
 			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
 			'L_DESCRIPTION'=>$LANG['description'],
 			'L_EXTEND_FIELD'=>$ARTICLES_LANG['extend_field'],
-			'L_USE_TAB'=>$ARTICLES_LANG['use_tab'],
+			'L_USE_TAB'=>$ARTICLES_LANG['tab_pagination'],
 			'L_SPECIAL_OPTION' => $ARTICLES_LANG['special_option'],
 			'L_AUTHOR'=>$ARTICLES_LANG['author'],
 			'L_COM'=>$LANG['title_com'],
 			'L_NOTE'=>$LANG['notes'],
-			'L_PRINTABLE'=>$LANG['printable_version'],
+			'L_PRINT'=>$ARTICLES_LANG['print'],
 			'L_DATE'=>$LANG['date'],
-			'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
-			'L_MODEL_INO'=>$ARTICLES_LANG['model_info'],
+			'L_LINK_MAIL'=>$ARTICLES_LANG['model_link_mail'],
+			'L_MODEL_INFO'=>$ARTICLES_LANG['model_info'],
+			'L_MODEL_INFO_DISPLAY'=>$ARTICLES_LANG['model_info_display'],
+			'L_CONFIRM_DEL_MODEL'=>$ARTICLES_LANG['confirm_del_model'],
+			'L_HIDE'=>$ARTICLES_LANG['hide'],
+			'L_DISPLAY'=>$LANG['display'],
 		));
 		
 	$result = $Sql->query_while("SELECT id, name,description ,extend_field,tpl_articles ,tpl_cats ,options,pagination_tab
@@ -390,6 +494,7 @@ else
 		$options=unserialize($row['options']);
 		$tpl->assign_block_vars('models', array(
 			'NAME' => $row['name'],
+			'ID_MODEL'=>$row['id'],
 			'DESC' => second_parse($row['description']),
 			'USE_TAB'=> $row['pagination_tab'] == 1 ? $LANG['yes'] :  $LANG['no'],
 			'TPL_ARTICLES' => $row['tpl_articles'],

@@ -103,6 +103,7 @@ $ARTICLES_LANG = array(
 	'contribution_success' => 'Votre contribution a bien été enregistrée.',
 	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer un article, cependant vous pouvez proposer un article. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 	'use_tab'=>"Utilisation des onglets pour la pagination des articles",
+	'tab_pagination'=>'Pagination par onglets',
 	'or_direct_path' => 'Ou chemin direct',
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
@@ -142,7 +143,7 @@ $ARTICLES_LANG = array(
 	'require_subject'=> ' Veuillez remplir le champs sujet',
 	'admin_email_error' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
 	'link_mail'=>'Envoyer ce lien à un ami',
-	'admin_link_mail'=>'Autoriser l\'envoie du liens d\'un article par mail',
+	'admin_link_mail'=>'Autoriser l\'envoi du lien d\'un article par mail',
 	'order_by'=>'Trier par ',
 	'extend_field'=>'Champs suplémentaires',
 	'extend_field_explain' => 'Vous pouvez déclarer ici des champs suplémentaires pour les articles de cette catégorie',
@@ -155,6 +156,7 @@ $ARTICLES_LANG = array(
 	
 	'models_management'=>'Gestion des modèles',
 	'model_info'=>'Informations sur le modèle',
+	'model_info_display'=>'les informations du modèle',
 	'model'=>'Modèle',
 	'models'=>'Modèles',
 	'models_explain'=>'Vous définisser ici le modèle qui sera appliqué aux articles de cette catégorie',
@@ -166,5 +168,12 @@ $ARTICLES_LANG = array(
 	'special_option_model_explain' => 'Vous pouvez appliquer des options particulères pour les articles associés à ce modèle.',
 	'model_default'=>'Modèle par defaut',
 	'add_models'=>'Ajouter un modèle',
+	'model_link_mail'=>'Liens mail',
+	'print'=>'Impression',
+	'confirm_del_model'=>'Etes-vous sur de vouloir supprimer ce modèle ?',
+	'removing_model' => 'Suppression d\'un modèle',
+	'explain_removing_model' => 'Vous êtes sur le point de supprimer le model. Deux solutions s\'offrent à vous. Vous pouvez soit affecter aux articles et aux catégories associés à ce modèl un autre modèle ou alors leur affecter le modèle par defaut.',
+	'affect_default'=>'Affecter le modèle par defaut',
+	'affect_model'=>'Affecter un modèle personalisé',
 );
 ?>
