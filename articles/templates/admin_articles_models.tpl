@@ -17,36 +17,54 @@
 			</script>
 	# ENDIF #
 	# START removing_interface #
-	<form action="admin_articles_cat.php?token={TOKEN}" method="post" class="fieldset_content">
-				<fieldset>
-					<legend>{L_REMOVING_CATEGORY}</legend>
-					<p>{L_EXPLAIN_REMOVING}</p>
+	<form action="admin_articles_models.php?token={TOKEN}" method="post" class="fieldset_content">
+		<fieldset>
+			<legend>{L_REMOVING_MODEL}</legend>
+			<p>{L_EXPLAIN_REMOVING_MODEL}</p>
 
-					<label>
-						<input type="radio" name="action" value="delete"# IF EMPTY_CATS # checked="checked"# ENDIF # /> {L_DELETE_CATEGORY_AND_CONTENT}
-					</label>
-					<br /> <br />
-					<label>
-						<input type="radio" name="action" value="move"# IF EMPTY_CATS # disabled="disabled"# ELSE # checked="checked"# ENDIF # /> {L_MOVE_CONTENT}
-					</label>
-					&nbsp;
-					<select id="{FORM_ID}" name="{FORM_NAME}">
-						<option value="0" disabled="disabled">{L_ROOT}</option>
-					# START options #
-						<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
-					# END options #
-					</select>
-				</fieldset>
+			<label>
+				<input type="radio" name="action" value="affect_defaut"checked="checked"/> {L_AFFECT_DEFAULT}
+			</label>
+			<br /> <br />
+			<label>
+				<input type="radio" name="action" value="affect_model"/> {L_AFFECT_MODEL}
+			</label>
+			&nbsp;
+			<select id="models" name="models">
+				{removing_interface.MODELS}
+			</select>
+		</fieldset>
 
-				<fieldset class="fieldset_submit">
-					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
-				</fieldset>
-			</form>
+		<fieldset class="fieldset_submit">
+			<legend>{L_SUBMIT}</legend>
+			<input type="hidden" name="model_to_del" value="{removing_interface.ID_MODEL}" />
+			<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+		</fieldset>
+	</form>
 	# END removing_interface #
-	# START models_management #
-		
+	# START models_management #	
+	<script type="text/javascript">
+	<!--
+	function aff_info(id)
+	{
+		if(document.getElementById('info_model_'+id).style.display=="block" )
+		{
+			hide_div("info_model_"+id);
+			document.getElementById('info_model_'+id).style.width="0%";
+			document.getElementById('desc_model_'+id).style.width="99%";
+			document.getElementById('display_hide_'+id).innerHTML = "{models_management.L_DISPLAY} ";
+		}
+		else
+		{
+			show_div("info_model_"+id);
+			document.getElementById('info_model_'+id).style.width="50%";
+			document.getElementById('desc_model_'+id).style.width="48%";
+			document.getElementById('display_hide_'+id).innerHTML = "{models_management.L_HIDE} ";
+
+		}
+	}
+	-->
+	</script>
 		<table class="module_table" style="width:99%;">
 			<tr>			
 				<th colspan="3">
@@ -63,23 +81,28 @@
 									<a href="{models.U_ADMIN_EDIT_MODEL}">
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>
-									<a href="{models.U_ADMIN_DELETE_MODEL}" onclick="return Confirm_del_model();">
+									<a href="{models.U_ADMIN_DELETE_MODEL}" onclick="return confirm('{models_management.L_CONFIRM_DEL_MODEL}');">
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
 									</a>
+									<hr />
 								</p>
 								<div>
-									<div style="float:left;width:28%;text-align:justify">
+								
+									<div id="desc_model_{models.ID_MODEL}" style="float:left;text-align:justify">
 										<b>{models_management.L_DESCRIPTION} : </b>{models.DESC}
+										<div style="text-align:right;margin-top:15px;">
+										<a href="javascript:aff_info({models.ID_MODEL})" > <span id="display_hide_{models.ID_MODEL}">{models_management.L_DISPLAY}&nbsp;</span>{models_management.L_MODEL_INFO_DISPLAY} >> </a>
+										</div>
 									</div>
-									<div style="float:right;width:70%;">
+									<div id="info_model_{models.ID_MODEL}" style="display:none;float:right;margin-right:10px;">
 										<table class="module_table" style="margin-top:0px;">
 											<tr>
 											 <th colspan="2">
-												{models_management.L_MODEL_INO}
+												{models_management.L_MODEL_INFO}
 											 </th>
 											</tr>
 											<tr style="text-align:left;">		
-												<td class="row2 text_small" style="width:30%;">
+												<td class="row2 text_small" style="width:40%;">
 													<b>{models_management.L_CAT_TPL} :</b>
 												</td>
 												<td class="row2 text_small" >
@@ -110,7 +133,7 @@
 													<b>{models_management.L_AUTHOR} : </b>{models.AUTHOR}<br />
 													<b>{models_management.L_COM} : </b>{models.COM}<br />
 													<b>{models_management.L_NOTE} : </b>{models.NOTE}<br />
-													<b>{models_management.L_PRINTABLE} : </b>{models.IMPR}<br />
+													<b>{models_management.L_PRINT} : </b>{models.IMPR}<br />
 													<b>{models_management.L_DATE} : </b>{models.DATE} <br />
 													<b>{models_management.L_LINK_MAIL} : </b>{models.MAIL}<br />
 												</td>

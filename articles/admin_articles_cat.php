@@ -55,7 +55,6 @@ if ($cat_to_del > 0)
 
 	if (empty($array_cat) && $nbr_cat === 0)
 	{
-
 		$articles_categories->delete($cat_to_del);
 		
 		// Feeds Regeneration
@@ -68,7 +67,7 @@ if ($cat_to_del > 0)
 	{
 		$tpl->assign_vars(array(
 			'EMPTY_CATS' => count($ARTICLES_CAT) < 2 ? true : false,
-			'L_REMOVING_CATEGORY' => $ARTICLES_LANG['removing_category'],
+			'L_REMOVING_MODEL' => $ARTICLES_LANG['removing_category'],
 			'L_EXPLAIN_REMOVING' => $ARTICLES_LANG['explain_removing_category'],
 			'L_DELETE_CATEGORY_AND_CONTENT' => $ARTICLES_LANG['delete_category_and_its_content'],
 			'L_MOVE_CONTENT' => $ARTICLES_LANG['move_category_content'],
