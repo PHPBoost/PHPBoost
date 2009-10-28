@@ -93,8 +93,13 @@ class TemplateParserString extends AbstractTemplateParser
 	
 	private function parse_includes()
 	{
-		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '\'; $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
-			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING . '.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING . '.=\'', $this->content);
+		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '\';' .
+			'$_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
+			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING .
+			'.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING .
+			'.=\'', $this->content);
+		$this->content = preg_replace_callback('`# INCLUDE ([\w.]+)\.([\w]+) #`',
+		array($this, 'callback_parse_blocks_includes'), $this->content);
 	}
 	
 	private function callback_parse_vars($varname)
@@ -110,7 +115,7 @@ class TemplateParserString extends AbstractTemplateParser
 		$last_block = array_pop($array_block);
 		
 		$method_var = $this->get_getvar_method_name($varname);
-		return '\' . $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value) . \'';
+		return '\' . $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value[\'vars\']) . \'';
 	}
 	
 	private function callback_parse_blocks($blocks)
@@ -152,10 +157,23 @@ class TemplateParserString extends AbstractTemplateParser
 			$varname = array_pop($array_block);
 			$last_block = array_pop($array_block);
 			
-			$second_param = ', $_tmp_' . $last_block . '_value';
+			$second_param = ', $_tmp_' . $last_block . '_value[\'vars\']';
 			$method .= '_from_list';
 		}
 		return '\'; ' . $block_type . ' (' . $not . '$this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
+	}
+
+	private function callback_parse_blocks_includes($blocks)
+	{
+		$varname = $blocks[2];
+
+		$array_block = explode('.', $blocks[1]);
+		$second_param = '$_tmp_' .  array_pop($array_block) . '_value[\'subtemplates\']';
+		return '\';$_subtemplate = $this->template->get_subtemplate_from_list(\'' . $varname .
+			'\', ' . $second_param . ');' . "\n" .
+			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING .
+			'.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING .
+			'.=\'';
 	}
 }
 
