@@ -74,12 +74,11 @@ if (retrieve(POST,'valid',false))
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
 		'nbr_column' => retrieve(POST, 'nbr_column', 2),
 		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
-		'tab'=>retrieve(POST, 'tab', 0),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
 		'mini'=>serialize($mini),
-		'options'=>serialize($options),
 	);
-
+	
+	$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_MODEL . " SET options = '" . serialize($options) . "', pagination_tab = '".$config_articles['tab']."' WHERE id = '1'", __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
