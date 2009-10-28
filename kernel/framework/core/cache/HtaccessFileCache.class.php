@@ -95,7 +95,6 @@ class HtaccessFileCache implements CacheData
     {
         $querier = AppContext::get_sql_querier();
 
-
         $this->add_section('Modules rules');
         $result = $querier->select("SELECT name FROM ".PREFIX."modules WHERE activ = :activ",
         array('activ' => 1));

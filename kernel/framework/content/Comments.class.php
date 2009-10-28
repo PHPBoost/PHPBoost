@@ -219,7 +219,7 @@ class Comments
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
-				$contents = addslashes(retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE));
+				$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 				
 				if (!empty($login) && !empty($contents))
 				{
@@ -325,7 +325,7 @@ class Comments
 					}
 					elseif ($updatecom) //Mise à jour du commentaire.
 					{
-						$contents = addslashes(retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE));
+						$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 						$login = retrieve(POST, $this->script . 'login', $LANG['guest']);
 						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $login;
 			
