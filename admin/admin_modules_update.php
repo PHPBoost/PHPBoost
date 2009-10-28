@@ -68,7 +68,7 @@ if ($update) //Mise à jour du module
 		$filesupdate = array();
 		$dir_db = '../' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
 		$folder_path = new Folder($dir_db);
-		foreach ($folder_path->get_files('`.*\.php$`i') as $files)
+		foreach ($folder_path->get_files('`.*\.(php|sql)$`i') as $files)
 		{	
 			$file = $files->get_name();
 			if (strpos($file, DBTYPE) !== false)
