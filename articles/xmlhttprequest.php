@@ -98,11 +98,67 @@ elseif (retrieve(POST,'preview',false))
 
 	echo $preview->parse(TEMPLATE_STRING_MODE);
 }
-elseif (retrieve(POST,'model_desc',false))
+elseif (retrieve(POST,'model_extend_field',false))
 {
 	$id_model = retrieve(POST, 'models', 1, TINTEGER);
+	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);	
+	
+	$tpl_model = new Template('articles/extend_field.tpl');
+
+	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
+	
+	if($id_art != 0)
+	{
+		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id_art . "'", __LINE__, __FILE__);
+		if(unserialize($model['extend_field']))
+		{
+			$extend_field_articles = unserialize($articles['extend_field']);
+			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : unserialize($model['extend_field']);	
+		}
+		else
+		{
+			$extend_field_tab='';
+		}
+	}
+	else
+	{
+		$extend_field_tab=unserialize($model['extend_field']);
+	}
+
+	if(!empty($extend_field_tab))
+	{
+		foreach ($extend_field_tab as $field)
+		{	
+			$tpl_model->assign_block_vars('extend_field', array(
+				'NAME' => stripslashes($field['name']),
+				'CONTENTS'=>!empty($field['contents']) ? $field['contents'] : '',
+			));
+		}	
+	}
+
+	$tpl_model->assign_vars(array(
+		'C_EXTEND_FIELD'=>	!empty($extend_field_tab),
+		'MODEL_DESCRIPTION'=>second_parse($model['description']),
+		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
+	));
+	
+	echo $tpl_model->parse(TEMPLATE_STRING_MODE);
+}
+elseif (retrieve(POST,'model_desc',false))
+{
+	$id_model = retrieve(POST, 'models', 1, TINTEGER);    
+	
+	$tpl_model = new Template('articles/extend_field.tpl');
+	
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
-	echo second_parse($model['description']);
+	
+	$tpl_model->assign_vars(array(
+		'C_EXTEND_FIELD'=>	false,
+		'MODEL_DESCRIPTION'=>second_parse($model['description']),
+		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
+	));
+	
+	echo $tpl_model->parse(TEMPLATE_STRING_MODE);
 }
 else
 echo -2;

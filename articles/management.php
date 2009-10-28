@@ -317,6 +317,7 @@ else
 
 	if ($edit > 0)
 	{
+
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 
 		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -375,13 +376,11 @@ else
 					));
 			}
 			// models
-			$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $articles['id_models'] . "'", __LINE__, __FILE__);
-			
 			$result = $Sql->query_while("SELECT id, name,description
 			FROM " . DB_TABLE_ARTICLES_MODEL 
 			, __LINE__, __FILE__);
 			
-			$select_models='';			
+			$select_models='';		
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				if($row['id'] == $articles['id_models'])
@@ -393,24 +392,9 @@ else
 					$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 			}
 			
-			// extend field
-			$extend_field_tab=unserialize($articles['extend_field']);
-			$extend_field=!empty($extend_field_tab) ? true : false;
-			if($extend_field)
-			{
-				foreach ($extend_field_tab as $field)
-				{	
-					$tpl->assign_block_vars('extend_field', array(
-						'NAME' => stripslashes($field['name']),
-						'CONTENTS'=>$field['contents']
-					));
-				}	
-			}
-			
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
-				'C_EXTEND_FIELD'=>	$extend_field,
 				'JS_CONTRIBUTION' => 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
@@ -478,21 +462,6 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
-			$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $ARTICLES_CAT[$cat]['models'] . "'", __LINE__, __FILE__);
-			
-			$extend_field_tab=unserialize($models['extend_field']);
-			$extend_field=!empty($extend_field_tab) ? true : false;
-			if($extend_field)
-			{
-				foreach ($extend_field_tab as $field)
-				{	
-					$tpl->assign_block_vars('extend_field', array(
-						'NAME' => stripslashes($field['name']),
-						'CONTENTS'=>'',
-					));
-				}	
-			}
-			
 			$result = $Sql->query_while("SELECT id, name,description
 			FROM " . DB_TABLE_ARTICLES_MODEL 
 			, __LINE__, __FILE__);
@@ -511,7 +480,6 @@ else
 			
 			$tpl->assign_vars(array(
 				'C_ADD' => false,
-				'C_EXTEND_FIELD'=>	$extend_field,
 				'C_CONTRIBUTION' => $auth_contrib ,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),

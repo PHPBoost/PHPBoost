@@ -1,5 +1,9 @@
 		<script type="text/javascript">
 		<!--
+		 window.onload = function() {
+			ajax_models_desc();
+		}
+
 		var theme = '{THEME}';
 
 		function check_form()
@@ -68,15 +72,16 @@
 			}
 			return false;
 		}
-		function ajax_models_desc()
+		function ajax_model_extend_field()
 		{			
 			new Ajax.Request(
 				'xmlhttprequest.php',
 				{
 					method: 'post',
 					parameters: {
-						model_desc: true,
+						model_extend_field: true,
 						models: document.getElementById('models').value,
+						id_art: document.getElementById('id').value,
 					 },
 					onSuccess: function(response)
 					{
@@ -155,17 +160,13 @@
 				<dl>
 					<dt><label for="special_auth">{L_MODELS}</label>
 					<dd>
-						<select id="models" name="models" onchange="ajax_models_desc()">
+						<select id="models" name="models" onchange="ajax_model_extend_field()">
 							{MODELS}
 						</select>
 					</dd>	
 				</dl>
-				<dl>
-					<dt><label>{L_MODELS_DESCRIPTION} : </label></dt>
-					<dd>
-						 <span id="model_desc">{MODELE_DESCRIPTION}</span>	
-					</dd>			
-				</dl>
+				<div id="model_desc" ></div>
+			
 				# ENDIF #
 				<dl>
 					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
@@ -180,14 +181,6 @@
 							</label>
 						</dd>
 				</dl>
-				# IF C_EXTEND_FIELD #
-					# START extend_field #
-						<dl>
-							<dt><label for="extend_cat">{extend_field.NAME}</label></dt>
-							<dd><label><input type="text" size="65" id="field_{extend_field.NAME}" name="field_{extend_field.NAME}" value="{extend_field.CONTENTS}" class="text" /></label></dd>
-						</dl>
-					# END extend_field #
-				# ENDIF #
 				<div id="preview">
 				</div>
 				<label for="description" id="scroll_contents">{L_ARTICLE_DESCRIPTION}</label>
@@ -323,3 +316,8 @@
 				<input type="reset" value="{L_RESET}" class="reset" />				
 			</fieldset>	
 		</form>
+		<script type="text/javascript">
+		<!--
+			ajax_model_extend_field();
+		-->
+		</script>

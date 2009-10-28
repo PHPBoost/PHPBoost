@@ -162,13 +162,7 @@
 					</select>
 				</dd>				
 			</dl>
-			<dl>
-				<dt><label>{L_MODELS_DESCRIPTION} : </label></dt>
-				<dd>
-					 <span id="model_desc">{edition_interface.MODELE_DESCRIPTION}</span>	
-				</dd>	
-							
-			</dl>
+			<div id="model_desc"></div>
 		</fieldset>
 		<fieldset>
 			<legend>
@@ -227,6 +221,10 @@
 			<input type="reset" value="{L_RESET}" class="reset" />		
 		</fieldset>
 	</form>
-	# END edition_interface #
-	
+	<script type="text/javascript">
+	<!--
+		ajax_models_desc();
+	-->
+	</script>
+	# END edition_interface #	
 </div>

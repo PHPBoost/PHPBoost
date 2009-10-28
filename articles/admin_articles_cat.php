@@ -135,10 +135,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if($row['id'] == $ARTICLES_CAT[$id_edit]['models'])
-			{
 				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-				$model_desc=$row['description'];
-			}
 			else
 				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 		}
@@ -147,7 +144,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
 			'MODELS'=>$models,
-			'MODELE_DESCRIPTION'=>second_parse($model_desc),
 			'IMG_PATH' => $img_direct_path ? $ARTICLES_CAT[$id_edit]['image'] : '',
 			'IMG_ICON' => !empty($ARTICLES_CAT[$id_edit]['image']) ? '<img src="' . $ARTICLES_CAT[$id_edit]['image'] . '" alt="" class="valign_middle" />' : '',		
 			'IMG_LIST'=>$image_list,
@@ -185,10 +181,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if($row['id'] == 1)
-			{
 				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-				$model_desc=$row['description'];
-			}
 			else
 				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 		}
@@ -200,7 +193,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			'IMG_ICON' => '',	
 			'IMG_LIST' => $image_list,
 			'MODELS'=>$models,
-			'MODELE_DESCRIPTION'=>second_parse($model_desc),
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
