@@ -185,7 +185,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function process_site_maintenance(Template $template)
 	{
-		global $CONFIG, $Template;
+		global $CONFIG, $Template, $LANG;
 
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
