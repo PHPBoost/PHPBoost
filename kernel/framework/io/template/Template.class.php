@@ -138,7 +138,7 @@ class Template
 	 * @param string $block_name Block name.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 */
-	public function assign_block_vars($block_name, $array_vars)
+	public function assign_block_vars($block_name, $array_vars, $subtemplates = array())
 	{
 		if (strpos($block_name, '.') !== false) //Bloc imbriqué.
 		{
@@ -151,11 +151,17 @@ class Template
 				$str = &$str[$blocks[$i]];
 				$str = &$str[count($str) - 1];
 			}
-			$str[$blocks[$blockcount]][] = $array_vars;
+			$str[$blocks[$blockcount]][] = array(
+				'vars' => $array_vars,
+				'subtemplates' => $subtemplates
+			);
 		}
 		else
 		{
-			$this->blocks[$block_name][] = $array_vars;
+			$this->blocks[$block_name][] = array(
+				'vars' => $array_vars,
+				'subtemplates' => $subtemplates
+			);
 		}
 	}
 	
@@ -235,11 +241,26 @@ class Template
 	
 	/**
 	  * @desc returns the subtemplate identified by the $identifier tag
+	  * @param string $identifier the template identifier
 	  * @return Template the subtemplate identified by the $identifier tag
 	  */
 	public function get_subtemplate($identifier)
 	{
-		return $this->subtemplates[$identifier];
+		return $this->get_subtemplate_from_list($identifier, $this->subtemplates);
+	}
+	
+	/**
+	  * @desc returns the subtemplate identified by the $identifier tag
+	  * @param string $identifier the template identifier
+	  * @param Template[string] $list the template list in which we will the search for the
+	  * template identifier
+	  * @return Template the subtemplate identified by the $identifier tag
+	  */
+	public function get_subtemplate_from_list($identifier, &$list)
+	{
+		echo 'get_subtemplate_from_list' . $identifier . ' - ' . get_class($list[$identifier]) . '<br />';
+//		echo '<pre>'; print_r(array_keys($this->subtemplates)); echo '</pre>';
+		return $list[$identifier];
 	}
 	
 	
@@ -265,7 +286,7 @@ class Template
 		{
 			return $parent_block[$blockname];
 		}
-		return array();
+		return array('vars' => array(), 'subtemplates' => array());
 	}
 	
 	/**
