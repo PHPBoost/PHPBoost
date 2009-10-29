@@ -194,6 +194,7 @@ class Environment
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
+		define('E_UNKNOWN', 		0);
 		define('E_TOKEN', 			-3);
 		define('E_USER_REDIRECT', 	-1);
 		define('E_USER_SUCCESS', 	-2);

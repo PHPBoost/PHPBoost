@@ -48,12 +48,13 @@ class ErrorController implements Controller
 	private $view;
 
 	/**
-	 * @var AdminMenusDisplayResponse
+	 * @var response
 	 */
 	private $response;
 
 	public function execute(HTTPRequest $request)
 	{
+		$this->create_view($request);
 		$this->load_env();
 
 		$title = $request->get_value(self::TITLE, $this->lang['error']);
@@ -61,82 +62,38 @@ class ErrorController implements Controller
 		$env = $this->response->get_graphical_environment();
 		$env->set_page_title($title);
 
-		$exception = $request->get_value(self::EXCEPTION, false);
-
-		$message = '';
-		try
-		{
-			$message = htmlspecialchars($request->get_string(self::MESSAGE));
-		}
-		catch (UnexistingHTTPParameterException $ex)
-		{
-			if ($exception !== false && DEBUG)
-			{
-				$message = htmlspecialchars($exception->getMessage()) .
-					'<div class="spacer">&nbsp;</div>' . Debug::get_stacktrace_as_string(0, $exception);
-			}
-			else
-			{
-				$message = htmlspecialchars($this->lang['unexpected_error_occurs']);
-			}
-		}
-
-		$code = '';
-		try
-		{
-			$code = htmlspecialchars($request->get_int(self::CODE));
-		}
-		catch (UnexistingHTTPParameterException $ex)
-		{
-			if ($exception !== false && DEBUG)
-			{
-				$code = $exception->getCode();
-			}
-		}
-
-		$level = 'question';
-		switch ($request->get_int(self::LEVEL, E_ERROR))
-		{
-			case E_USER_NOTICE:
-			case E_NOTICE:
-			case E_STRICT:
-				$level = 'notice';
-				break;
-				//Warning utilisateur.
-			case E_USER_WARNING:
-			case E_WARNING:
-				$level = 'important';
-				break;
-				//Erreur fatale.
-			case E_USER_ERROR:
-			case E_ERROR:
-				$level = 'stop';
-				break;
-				//Erreur inconnue.
-			default:
-				$level = 'question';
-		}
-
-		$this->view->assign_vars(array(
-            'TITLE' => $title,
-            'CODE' => $code,
-			'MESSAGE' => $message,
-			'LINK_NAME' => $request->get_string(self::CORRECTION_LINK_NAME, $this->lang['back']),
-			'U_LINK' => $request->get_value(self::CORRECTION_LINK, 'javascript:history.back(1);'),
-			'LEVEL' => $level
-		));
-
 		return $this->response;
 	}
 
-	private function load_env()
+	protected function load_env()
 	{
 		import('mvc/response/SiteDisplayResponse');
+		$this->set_response(new SiteDisplayResponse($this->get_view()));
+	}
+	/**
+	 * @return View
+	 */
+	protected function get_view()
+	{
+		return $this->view;
+	}
 
-		$this->view = new View('member/error_controller.tpl');
-		$this->response = new SiteDisplayResponse($this->view);
-		$this->lang = LangLoader::get(get_class());
-		$this->view->add_lang($this->lang);
+	protected function set_response(Response $response)
+	{
+		return $this->response = $response;
+	}
+
+	private function create_view(HTTPRequest $request)
+	{
+		import('core/ErrorViewBuilder');
+		$view_builder = new ErrorViewBuilder($request);
+
+		$this->view = $view_builder->build($request->get_int(self::LEVEL, E_UNKNOWN),
+		$request->get_string(self::TITLE, ''), $request->get_string(self::CODE, ''),
+		$request->get_string(self::MESSAGE, ''), $request->get_string(self::CORRECTION_LINK, ''),
+		$request->get_string(self::CORRECTION_LINK_NAME, ''),
+		$request->get_string(self::EXCEPTION, '')
+		);
 	}
 }
 ?>

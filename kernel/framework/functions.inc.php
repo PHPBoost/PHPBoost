@@ -1109,7 +1109,7 @@ function import($path, $import_type = CLASS_IMPORT)
 	{
 		$path = '/kernel/framework/' . $path;
 	}
-	if (!@include_once(PATH_TO_ROOT . $path . $import_type))
+	if (!include_once(PATH_TO_ROOT . $path . $import_type))
 	{
 		Debug::fatal(new Exception('Can\'t load file ' . PATH_TO_ROOT . $path . $import_type));
 	}
