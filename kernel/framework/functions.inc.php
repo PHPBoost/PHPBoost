@@ -1023,7 +1023,8 @@ function file_get_contents_emulate($filename, $incpath = false, $resource_contex
 {
 	if (false === ($fh = @fopen($filename, 'rb', $incpath)))
 	{
-		user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
+		user_error('file_get_contents_emulate(\'' . $filename . '\')' .
+			'failed to open stream: No such file or directory', E_USER_WARNING);
 		return false;
 	}
 
