@@ -63,7 +63,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'lang_var3' => 'coucou3');
 		$this->assertEquals($expected, $lang);
 	}
-	
+
 	public function test_get_file()
 	{
 		$lang = LangLoader::get_file(PATH_TO_ROOT . '/test/data/mylang.cla.inc.ss.php');

@@ -34,7 +34,7 @@ class LangNotFoundException extends Exception
 {
 	public function __construct($default_langfile)
 	{
-		parent::__construct('Unable to load "' . $default_langfile . '"');
+		parent::__construct('Unable to find "' . $default_langfile . '"');
 	}
 }
 ?>
