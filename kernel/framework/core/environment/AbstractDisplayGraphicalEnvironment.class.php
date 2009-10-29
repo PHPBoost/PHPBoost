@@ -62,6 +62,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	public function set_page_title($title) 
 	{
 		$this->page_title = $title;
+		defined('TITLE') or define('TITLE', $title);
 	}
 }
 

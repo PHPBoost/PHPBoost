@@ -57,6 +57,7 @@ class Environment
 		AppContext::init_bench();
         
 		import('core/ClassLoader');
+		import('core/lang/LangLoader');
         import('util/StringVars');
 		import('io/request/HTTPRequest');
 		import('content/parser/ContentFormattingFactory');
@@ -326,6 +327,8 @@ class Environment
 
 	public static function load_lang_files()
 	{
+		LangLoader::set_locale(get_ulang());
+		
 		global $LANG;
 		$LANG = array();
 		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php');

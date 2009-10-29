@@ -34,7 +34,7 @@ class LangLoader
 {
 	const DEFAULT_LOCALE = 'english';
 
-	private static $locale = DEFAULT_LOCALE;
+	private static $locale = self::DEFAULT_LOCALE;
 	private static $langs = array();
 
 	public static function clear_lang_cache()
