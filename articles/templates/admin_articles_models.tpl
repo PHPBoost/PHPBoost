@@ -71,19 +71,31 @@
 			</tr>							
 			<tr>
 				<td style="padding-left:20px;" class="row2">
+				<span><b>{models_management.L_MODEL_DEFAULT_DEL_EXPLAIN}</b></span>
 					# START models #
 						<div class="block_container" style="margin-bottom:20px;">
 						<div class="block_contents">
-								<p>
-									<a href="../articles/admin_articles_models{models.U_MODEL_LINK}" class="big_link">{models.NAME}</a>
-									<a href="{models.U_ADMIN_EDIT_MODEL}">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
-									</a>
-									<a href="{models.U_ADMIN_DELETE_MODEL}" onclick="return confirm('{models_management.L_CONFIRM_DEL_MODEL}');">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
-									</a>
-									<hr />
-								</p>
+								<div>
+									<div style="float:left">
+									<p>
+										<a href="../articles/admin_articles_models{models.U_MODEL_LINK}" class="big_link">{models.NAME}</a>
+										<a href="{models.U_ADMIN_EDIT_MODEL}">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+										</a>
+										# IF NOT models.C_DEFAULT #
+										<a href="{models.U_ADMIN_DELETE_MODEL}" onclick="return confirm('{models_management.L_CONFIRM_DEL_MODEL}');">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+										</a>
+										# ENDIF #
+									</p>
+									</div>
+									<div style="float:right;font-weight:bold">
+										# IF models.C_DEFAULT #
+										{models.L_DEFAULT_MODEL}
+										# ENDIF #
+									</div>
+								</div>
+								<div class="spacer"><hr /></div>
 								<div>		
 									<div id="desc_model_{models.ID_MODEL}" style="float:left;text-align:justify">
 										<b>{models_management.L_DESCRIPTION} : </b>{models.DESC}
@@ -226,6 +238,12 @@
 				<dd>
 					<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text" />
 				</dd>
+			</dl>
+			<dl>
+				<dt><label for="tab">* {L_DEFAULT_MODELS}</label></dt>
+				<dd><label><input type="radio" {edition_interface.DEFAULT_MODEL} name="default" value="1" /> {L_YES}</label>
+							&nbsp;&nbsp; 
+					<label><input type="radio" {edition_interface.NOT_DEFAULT_MODEL} name="default" value="0" />{L_NO}</label></dd>	
 			</dl>
 			<label for="description">
 				{L_DESCRIPTION}

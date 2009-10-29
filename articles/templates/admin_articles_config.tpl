@@ -22,9 +22,7 @@
 		}
 		-->
 		</script>
-
 		{ADMIN_MENU}
-
 		<div id="admin_contents">
 			<form action="admin_articles_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 						
@@ -45,90 +43,6 @@
 					<dl>
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
 						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="tab">* {L_USE_TAB}</label></dt>
-						<dd><label><input type="radio" {TAB} name="tab" value="1" /> {L_ENABLED}</label>
-									&nbsp;&nbsp; 
-							<label><input type="radio" {NO_TAB} name="tab" value="0" />{L_DISABLED}</label></dd>	
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_notation">* {L_NOTE}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="note" name="note">
-									<option value="0" {SELECTED_NOTATION_HIDE}>{L_HIDE}</option>
-									<option value="1" {SELECTED_NOTATION_DISPLAY}>{L_DISPLAY}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_com">* {L_COM}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="com" name="com">
-									<option value="0" {SELECTED_COM_HIDE}>{L_HIDE}</option>
-									<option value="1" {SELECTED_COM_DISPLAY}>{L_DISPLAY}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_impr">* {L_PRINTABLE}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="impr" name="impr">
-									<option value="0" {SELECTED_IMPR_HIDE}>{L_DESABLE}</option>
-									<option value="1" {SELECTED_IMPR_DISPLAY}>{L_ENABLE}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_date">* {L_DATE}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="date" name="date">
-									<option value="0" {SELECTED_DATE_HIDE}>{L_HIDE}</option>
-									<option value="1" {SELECTED_DATE_DISPLAY} >{L_DISPLAY}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_author">* {L_AUTHOR}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="author" name="author">
-									<option value="0" {SELECTED_AUTHOR_HIDE}>{L_HIDE}</option>
-									<option value="1" {SELECTED_AUTHOR_DISPLAY}>{L_DISPLAY}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label for="option_mail">* {L_LINK_MAIL}</label>
-						</dt>
-						<dd>
-							<label>
-								<select id="mail" name="mail">
-									<option value="0" {SELECTED_MAIL_HIDE}>{L_HIDE}</option>
-									<option value="1" {SELECTED_MAIL_DISPLAY}>{L_DISPLAY}</option>
-								</select>
-							</label>
-						</dd>
 					</dl>
 				</fieldset>
 				<fieldset>

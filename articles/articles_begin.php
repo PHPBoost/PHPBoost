@@ -35,12 +35,14 @@ $Cache->load('articles');
 
 if (empty($idartcat))//Racine.
 {
+	$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1 ", __LINE__, __FILE__);
+	
 	$ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
 	$ARTICLES_CAT[0]['visible'] = 1;
 	$ARTICLES_CAT[0]['name'] = $LANG['root'];
 	$ARTICLES_CAT[0]['order'] = -1;
 	$ARTICLES_CAT[0]['id_parent'] = 0;
-	$ARTICLES_CAT[0]['models'] = 1;
+	$ARTICLES_CAT[0]['models'] = $default_model['id'];
 	$idartcat=0;
 
 }
