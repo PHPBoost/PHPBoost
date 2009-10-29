@@ -99,7 +99,7 @@ class ErrorController implements Controller
 
 		$this->view = new View('member/error_controller.tpl');
 		$this->response = new SiteDisplayResponse($this->view);
-		$this->lang = LangLoader::get_file(__FILE__);
+		$this->lang = LangLoader::get(get_class());
 		$this->view->add_lang($this->lang);
 	}
 }

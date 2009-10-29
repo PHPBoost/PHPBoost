@@ -47,52 +47,51 @@ class LangLoader
 		self::$locale = $locale;
 	}
 
-	public static function get($langpath)
+	public static function get($filename, $module = '')
 	{
-		return self::get_raw(PATH_TO_ROOT . '/' . ltrim($langpath, '/'));
+		return self::get_raw(trim($module, '/'), $filename);
 	}
 
-	public static function get_file($filepath)
+	private static function get_raw(&$folder, &$filename)
 	{
-		$slash_index = strrpos($filepath, '/');
-		$folder = substr($filepath, 0, $slash_index);
-		$file = substr($filepath, $slash_index + 1);
-		$filename = substr($file, 0, strpos($file, '.'));
-		return self::get_raw($folder . '/lang/' . $filename);
-	}
-
-	private static function get_raw($langpath)
-	{
-		if (!isset(self::$langs[$langpath]))
+		$langfile = $folder . '/' . $filename;
+		if (!isset(self::$langs[$langfile]))
 		{
-			self::load($langpath);
+			self::load($langfile, $folder, $filename);
 		}
-		return self::$langs[$langpath];
+		return self::$langs[$langfile];
 	}
 
-	private static function load(&$langpath)
+	private static function load(&$langfile, &$folder, &$filename)
 	{
-		include self::get_real_lang_path($langpath);
-		self::$langs[$langpath] = $lang;
+		include self::get_real_lang_path($folder, $filename);
+		self::$langs[$langfile] = $lang;
 	}
 
-	private static function get_real_lang_path($langpath)
+	private static function get_real_lang_path(&$folder, &$filename)
 	{
-		$real_lang_file = $langpath . '_' . self::$locale . '.php';
+		$real_folder = PATH_TO_ROOT;
+		if (!empty($folder))
+		{
+			$real_folder .= '/' . $folder;
+		}
+		$real_folder .= '/lang/';
+		$filename_with_extension = '/' . $filename . '.php';
 
+		$real_lang_file = $real_folder . self::$locale . $filename_with_extension;
 		if (file_exists($real_lang_file))
 		{
 			return $real_lang_file;
 		}
 
-		$real_lang_file = $langpath . '.php';
+		$real_lang_file = $real_folder . self::DEFAULT_LOCALE . $filename_with_extension;
 		if (file_exists($real_lang_file))
 		{
 			return $real_lang_file;
 		}
 
 		import('core/lang/LangNotFoundException');
-		throw new LangNotFoundException($langpath);
+		throw new LangNotFoundException($folder, $filename);
 	}
 }
 ?>
