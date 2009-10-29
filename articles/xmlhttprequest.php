@@ -46,9 +46,7 @@ if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 	echo $Note->add($note); //add a note
 }
 elseif (retrieve(GET,'img_preview',false)) // image preview
-{
 	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
-}
 elseif (retrieve(POST,'preview',false))
 {
 	import('util/Date');
@@ -73,12 +71,13 @@ elseif (retrieve(POST,'preview',false))
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
 	if (!empty($articles['date']))
-	$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $articles['date'], $LANG['date_format_short']);
+		$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $articles['date'], $LANG['date_format_short']);
 	else
-	$date = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 	if (!empty($articles['date']) && !empty($articles['hour']) && !empty($articles['min']))
-	$date->set_hours($articles['hour']);
+		$date->set_hours($articles['hour']);
+		
 	$date->set_minutes($articles['min']);
 
 	$preview->assign_vars(array(
@@ -116,14 +115,10 @@ elseif (retrieve(POST,'model_extend_field',false))
 			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : unserialize($model['extend_field']);	
 		}
 		else
-		{
 			$extend_field_tab='';
-		}
 	}
 	else
-	{
 		$extend_field_tab=unserialize($model['extend_field']);
-	}
 
 	if(!empty($extend_field_tab))
 	{
@@ -161,6 +156,6 @@ elseif (retrieve(POST,'model_desc',false))
 	echo $tpl_model->parse(TEMPLATE_STRING_MODE);
 }
 else
-echo -2;
+	echo -2;
 
 ?>

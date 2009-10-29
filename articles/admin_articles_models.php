@@ -50,12 +50,15 @@ $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 if ($model_to_del > 0)
 {
 	$Session->csrf_get_protect();
+	
 	$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $model_to_del . "' AND model_default = 1", __LINE__, __FILE__);
+	
 	if(!empty($model_default['id']))
 	{
 		$error_string = 'e_del_default_model';
 		redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 	}
+	
 	$nbr_models_articles = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	$nbr_models_cats = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	
@@ -94,7 +97,6 @@ if ($model_to_del > 0)
 			'ID_MODEL' =>$model_to_del,
 			'MODELS'=>$models,
 		));
-	
 	}
 }
 elseif ($new_model XOR $id_edit > 0)
@@ -138,15 +140,13 @@ elseif ($new_model XOR $id_edit > 0)
 
 	if ($id_edit > 0)
 	{
-
 		$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 		$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);	
 		
 		$options = unserialize($models['options']);
 		$special_options = $options  !== unserialize($default_model['options']) ? true : false;
 		$options  = $special_options ? $options  : unserialize($default_model['options']);
-		
-		
+			
 		import('io/filesystem/Folder');
 		
 		// articles templates
@@ -256,8 +256,8 @@ elseif ($new_model XOR $id_edit > 0)
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
-			'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' checked ' : '',
-			'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' checked ' : '',
+			'TAB'=>  'checked ',
+			'NO_TAB'=> '',
 			'TPL_ARTICLES_LIST'=>$tpl_articles_list,
 			'TPL_CAT_LIST'=>$tpl_cat_list,
 			'JS_SPECIAL_ARTICLES_TPL' => 'false',
@@ -299,15 +299,13 @@ elseif (retrieve(POST,'submit',false))
 	
 	if (!empty($model_to_del_move))
 	{
-		$move_default =(retrieve(POST,'action','move') == 'affect_defaut') ? true : false;
-
-		$id_models_move = retrieve(POST, 'models', 0,TINTEGER);
-		
 		$Session->csrf_get_protect();
 		
+		$move_default =(retrieve(POST,'action','move') == 'affect_defaut') ? true : false;
+		$id_models_move = retrieve(POST, 'models', 0,TINTEGER);
+		
 		if ($move_default)
-		{
-			
+		{			
 			$result = $Sql->query_while("SELECT id,id_models
 			FROM " . DB_TABLE_ARTICLES_CAT . " a
 			WHERE id_models = ".$model_to_del_move
@@ -326,8 +324,7 @@ elseif (retrieve(POST,'submit',false))
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES. " SET id_models = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			}
-				
+			}			
 		}
 		else
 		{
@@ -372,20 +369,18 @@ elseif (retrieve(POST,'submit',false))
 			'date'=>retrieve(POST, 'date', true, TBOOL),
 			'author'=>retrieve(POST, 'author', true, TBOOL),
 			'mail'=>retrieve(POST, 'mail', true, TBOOL),
-			);
+			);	
 		$pagination_tab=retrieve(POST, 'tab', 0);
 		$default_model=retrieve(POST, 'default', 1);
 			
 		if (empty($name))
-		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		
 		if($default_model == 1)
 		{
 			$exist_model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1 AND id != '" . $id_model . "'", __LINE__, __FILE__);
 			if(!empty($exist_model_default['id']))
-			{
-					$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET model_default = 0 WHERE id = '" . $exist_model_default['id'] . "'", __LINE__, __FILE__);
-			}
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET model_default = 0 WHERE id = '" . $exist_model_default['id'] . "'", __LINE__, __FILE__);
 		}
 
 
@@ -413,10 +408,7 @@ elseif (retrieve(POST,'submit',false))
 			$error_string = 'e_success';
 		}
 	}
-	// Feeds Regeneration
-	import('content/feed/Feed');
-	Feed::clear_cache('articles');
-
+	
 	$Cache->Generate_module_file('articles');
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
@@ -446,6 +438,7 @@ else
 				break;
 		}
 	}
+	
 	$nbr_models = $Sql->count_table('articles_models' , __LINE__, __FILE__);
 
 	//On crée une pagination si le nombre d'articles est trop important.
@@ -538,7 +531,6 @@ else
 			'L_DEFAULT_MODEL'=>$ARTICLES_LANG['default_model'],
 			'C_DEFAULT'=>$row['model_default'] == 1 ? true : false,
 		));
-
 	}
 }
 

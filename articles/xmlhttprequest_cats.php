@@ -45,13 +45,13 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 	$result = false;
 
 	if ($id_up > 0)
-	$result = $articles_categories->move($id_up, MOVE_CATEGORY_UP);
+		$result = $articles_categories->move($id_up, MOVE_CATEGORY_UP);
 	elseif ($id_down > 0)
-	$result = $articles_categories->move($id_down, MOVE_CATEGORY_DOWN);
+		$result = $articles_categories->move($id_down, MOVE_CATEGORY_DOWN);
 	elseif ($id_show > 0)
-	$result = $articles_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+		$result = $articles_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif ($id_hide > 0)
-	$result = $articles_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
+		$result = $articles_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 
 	//Operation was successfully
 	if ($result)

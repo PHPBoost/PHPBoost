@@ -69,13 +69,13 @@ if (isset($ARTICLES_CAT[$idartcat]) )
 			
 	}
 	else
-	define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
+		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
 }
 else
 {
 	$Bread_crumb->add($ARTICLES_LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
-	define('TITLE', $ARTICLES_LANG['title_articles']);
+		define('TITLE', $ARTICLES_LANG['title_articles']);
 }
 
 ?>

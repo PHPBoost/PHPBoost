@@ -48,9 +48,9 @@ if ($delete > 0)
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
 	if (empty($articles['id']))
-	$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
+		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
@@ -138,8 +138,6 @@ elseif(retrieve(POST,'submit',false))
 		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
 		'extend_field'=>addslashes(serialize($extend_field_articles)),
 	);
-	
-	
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 	{
@@ -165,12 +163,12 @@ elseif(retrieve(POST,'submit',false))
 				$articles['visible'] = 1;
 			}
 			else
-			$articles['start'] = $articles['end'] = 0;
+				$articles['start'] = $articles['end'] = 0;
 
 			// Release.
 			$articles['release'] += ($articles['release_hour'] * 60 + $articles['release_min']) * 60;
 			if ($articles['release'] == 0)
-			$articles['release'] = $now->get_timestamp();
+				$articles['release'] = $now->get_timestamp();
 
 			// Image.
 			$img = $articles['icon'];
@@ -306,9 +304,7 @@ elseif(retrieve(POST,'submit',false))
 		}
 	}
 	else
-	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-	}
 	
 }
 else
@@ -317,7 +313,6 @@ else
 
 	if ($edit > 0)
 	{
-
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 
 		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -375,6 +370,7 @@ else
 						'URL' => '',
 					));
 			}
+			
 			// models
 			$result = $Sql->query_while("SELECT id, name,description
 			FROM " . DB_TABLE_ARTICLES_MODEL 
@@ -429,7 +425,7 @@ else
 			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 	else
 	{
@@ -437,8 +433,7 @@ else
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 		else
 		{
-			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);
-				
+			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);			
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
 			
 			//Images disponibles
@@ -576,7 +571,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-	$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	$tpl->parse();
 }
 

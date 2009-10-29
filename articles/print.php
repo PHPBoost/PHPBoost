@@ -47,10 +47,11 @@ if ($idart > 0)
 }
 
 if (empty($articles['title']))
-redirect(url('articles.php'));
+	redirect(url('articles.php'));
 
 $array_sources = unserialize($articles['sources']);
 $sources='';
+
 if(count($array_sources) != 0)
 {
 	$i = 0;
