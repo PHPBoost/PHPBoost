@@ -176,5 +176,7 @@ $ARTICLES_LANG = array(
 	'affect_default'=>'Affecter le modèle par defaut',
 	'affect_model'=>'Affecter un modèle personalisé',
 	'read_article'=>'Lire la suite',
+	'model_default_del_explain'=>'Le modèle par defaut ne peut pas être supprimé.',
+	'default_model'=>'Model par defaut',
 );
 ?>

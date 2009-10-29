@@ -60,17 +60,6 @@ if (retrieve(POST,'valid',false))
 			break;
 	}
 	
-	$options = array (
-	'note'=>retrieve(POST, 'note', true, TBOOL),
-	'com'=>retrieve(POST, 'com', true, TBOOL),
-	'impr'=>retrieve(POST, 'impr', true, TBOOL),
-	'date'=>retrieve(POST, 'date', true, TBOOL),
-	'author'=>retrieve(POST, 'author', true, TBOOL),
-	'mail'=>retrieve(POST, 'mail', true, TBOOL)
-	);
-	
-	$tab=retrieve(POST, 'tab', 0);
-	
 	$config_articles = array(
 		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
@@ -80,7 +69,6 @@ if (retrieve(POST,'valid',false))
 		'mini'=>serialize($mini),
 	);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_MODEL . " SET options = '" . serialize($options) . "', pagination_tab = '".$tab."' WHERE id = '1'", __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
@@ -145,12 +133,7 @@ else
 	$Cache->load('articles');
 		
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-	
-	$options = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = 1", __LINE__, __FILE__);
-	
-	$tab=$options['pagination_tab'];
-	$options = unserialize($options['options']);
-	
+		
 	$array_ranks =
 		array(
 			'-1' => $LANG['guest'],
@@ -165,33 +148,12 @@ else
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
 		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
-		'TAB'=> $tab == 1 ? ' checked ' : '',
-		'NO_TAB'=>  $tab != 1 ? ' checked ' : '',
 		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
 		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
 		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
 		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',
 		'SELECTED_NOTE' => $mini_conf['type'] == 'note' ? ' selected="selected"' : '',
-		'SELECTED_NOTATION_HIDE'=> '',
-		'SELECTED_COM_HIDE'=> '',
-		'SELECTED_DATE_HIDE'=> '',
-		'SELECTED_AUTHOR_HIDE'=> '',
-		'SELECTED_IMPR_HIDE'=> '',
-		'SELECTED_NOTATION_HIDE'=> $options['note'] != 1? ' selected="selected"' : '',
-		'SELECTED_COM_HIDE'=> $options['com'] != 1 ? ' selected="selected"' : '',
-		'SELECTED_DATE_HIDE'=> $options['date'] != 1 ? ' selected="selected"' : '',
-		'SELECTED_AUTHOR_HIDE'=> $options['author'] != 1 ? ' selected="selected"' : '',
-		'SELECTED_IMPR_HIDE'=> $options['impr'] != 1 ? ' selected="selected"' : '',
-		'SELECTED_MAIL_HIDE'=> $options['mail'] != 1 ? ' selected="selected"' : '',
-		'SELECTED_NOTATION_DISPLAY'=>$options['note'] == 1 ? ' selected="selected"' : '',
-		'SELECTED_COM_DISPLAY'=>$options['com'] == 1? ' selected="selected"' : '',
-		'SELECTED_DATE_DISPLAY'=>$options['date'] == 1 ? ' selected="selected"' : '',
-		'SELECTED_AUTHOR_DISPLAY'=>$options['author'] == 1 ? ' selected="selected"' : '',
-		'SELECTED_IMPR_DISPLAY'=>$options['impr'] == 1 ? ' selected="selected"' : '',
-		'SELECTED_MAIL_DISPLAY'=>$options['mail'] == 1 ? ' selected="selected"' : '',
 		'L_REQUIRE' => $LANG['require'],	
-		'L_ENABLED'=>$LANG['enabled'],
-		'L_DISABLED'=>$LANG['disabled'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
 		'L_NOTE_MAX' => $LANG['note_max'],		
@@ -207,7 +169,6 @@ else
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
 		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
-		'L_USE_TAB'=>$ARTICLES_LANG['use_tab'],
 		'L_ARTICLES_MINI_CONFIG'=>$ARTICLES_LANG['articles_mini_config'],
 		'L_NBR_ARTICLES_MINI'=>$ARTICLES_LANG['nbr_articles_mini'],
 		'L_MINI_TYPE'=>$ARTICLES_LANG['mini_type'],
@@ -215,16 +176,6 @@ else
 		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
 		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
 		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],		
-		'L_HIDE'=>$ARTICLES_LANG['hide'],
-		'L_DISPLAY'=>$LANG['display'],
-		'L_ENABLE'=>$ARTICLES_LANG['enable'],
-		'L_DESABLE'=>$ARTICLES_LANG['desable'],
-		'L_AUTHOR'=>$ARTICLES_LANG['author'],
-		'L_COM'=>$LANG['title_com'],
-		'L_NOTE'=>$LANG['notes'],
-		'L_PRINTABLE'=>$LANG['printable_version'],
-		'L_DATE'=>$LANG['date'],
-		'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
 	));
 	
 	$array_ranks =

@@ -50,7 +50,12 @@ $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 if ($model_to_del > 0)
 {
 	$Session->csrf_get_protect();
-	
+	$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $model_to_del . "' AND model_default = 1", __LINE__, __FILE__);
+	if(!empty($model_default['id']))
+	{
+		$error_string = 'e_del_default_model';
+		redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	}
 	$nbr_models_articles = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	$nbr_models_cats = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	
@@ -91,8 +96,6 @@ if ($model_to_del > 0)
 		));
 	
 	}
-	/*
-*/
 }
 elseif ($new_model XOR $id_edit > 0)
 {
@@ -127,6 +130,9 @@ elseif ($new_model XOR $id_edit > 0)
 		'L_DATE'=>$LANG['date'],
 		'L_LINK_MAIL'=>$ARTICLES_LANG['admin_link_mail'],
 		'L_USE_TAB'=>$ARTICLES_LANG['use_tab'],
+		'L_DEFAULT_MODELS'=>$ARTICLES_LANG['default_model'],
+		'L_YES'=>$LANG['yes'],
+		'L_NO'=>$LANG['no'],
 		
 	));
 
@@ -134,9 +140,11 @@ elseif ($new_model XOR $id_edit > 0)
 	{
 
 		$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+		$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);	
+		
 		$options = unserialize($models['options']);
-		$special_options = $options  !== unserialize($CONFIG_ARTICLES['options']) ? true : false;
-		$options  = $special_options ? $options  : unserialize($CONFIG_ARTICLES['options']);
+		$special_options = $options  !== unserialize($default_model['options']) ? true : false;
+		$options  = $special_options ? $options  : unserialize($default_model['options']);
 		
 		
 		import('io/filesystem/Folder');
@@ -193,9 +201,9 @@ elseif ($new_model XOR $id_edit > 0)
 			'NO_TAB'=>  $models['pagination_tab'] != 1 ? ' checked ' : '',
 			'TPL_ARTICLES_LIST'=>$tpl_articles_list,
 			'TPL_CAT_LIST'=>$tpl_cat_list,
-			'ARTICLES_TPL_CHECKED'=>$models['tpl_articles'] != 'articles.tpl'  ? 'checked="checked"' : '',
-			'DISPLAY_ARTICLES_TPL' => $models['tpl_articles'] != 'articles.tpl' ? 'block' : 'none',
-			'JS_SPECIAL_ARTICLES_TPL' => $models['tpl_articles'] != 'articles.tpl' ? 'true' : 'false',		
+			'ARTICLES_TPL_CHECKED'=>($models['tpl_articles'] != $default_model['tpl_articles'] || $models['tpl_cats'] != $default_model['tpl_cats']) ? 'checked="checked"' : '',
+			'DISPLAY_ARTICLES_TPL' => ($models['tpl_articles'] != $default_model['tpl_articles'] || $models['tpl_cats'] != $default_model['tpl_cats']) ? 'block' : 'none',
+			'JS_SPECIAL_ARTICLES_TPL' => ($models['tpl_articles'] != $default_model['tpl_articles'] || $models['tpl_cats'] != $default_model['tpl_cats'])? 'true' : 'false',		
 			'JS_SPECIAL_OPTION' => $special_options ? 'true' : 'false',
 			'DISPLAY_SPECIAL_OPTION'=> $special_options ? 'block' : 'none',
 			'OPTION_CHECKED' => $special_options ? 'checked="checked"' : '',
@@ -215,6 +223,8 @@ elseif ($new_model XOR $id_edit > 0)
 			'EXTEND_FIELD_CHECKED'=> $extend_field ? 'checked="checked"' : '',
 			'DISPLAY_EXTEND_FIELD' =>$extend_field ? 'block' : 'none',
 			'NB_FIELD'=>$i == 0 ? 1 : $i,
+			'DEFAULT_MODEL'=>$models['model_default'] ? 'disabled checked="checked"' : '',
+			'NOT_DEFAULT_MODEL'=>$models['model_default'] ? 'disabled' : 'checked="checked"',
 		));
 	}
 	else
@@ -271,6 +281,8 @@ elseif ($new_model XOR $id_edit > 0)
 			'SELECTED_AUTHOR_DISPLAY'=>' selected="selected"' ,
 			'SELECTED_IMPR_DISPLAY'=> ' selected="selected"' ,
 			'SELECTED_MAIL_DISPLAY'=> ' selected="selected"',
+			'DEFAULT_MODEL'=>'',
+			'NOT_DEFAULT_MODEL'=> 'checked="checked"',
 			'NB_FIELD'=>1,
 		));
 	
@@ -362,10 +374,21 @@ elseif (retrieve(POST,'submit',false))
 			'mail'=>retrieve(POST, 'mail', true, TBOOL),
 			);
 		$pagination_tab=retrieve(POST, 'tab', 0);
-		
+		$default_model=retrieve(POST, 'default', 1);
+			
 		if (empty($name))
 		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
-			
+		
+		if($default_model == 1)
+		{
+			$exist_model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1 AND id != '" . $id_model . "'", __LINE__, __FILE__);
+			if(!empty($exist_model_default['id']))
+			{
+					$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET model_default = 0 WHERE id = '" . $exist_model_default['id'] . "'", __LINE__, __FILE__);
+			}
+		}
+
+
 		$extend_field = array();
 		if(retrieve(POST,'extend_field_checkbox',false))
 		{
@@ -381,12 +404,12 @@ elseif (retrieve(POST,'submit',false))
 				
 		if ($id_model > 0)
 		{
-			$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."' WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET name = '".$name."', description = '" . $description . "',model_default = '".$default_model."',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."' WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
 			$error_string = 'e_success';
 		}
 		else
 		{
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES_MODEL . " SET name = '".$name."', description = '" . $description . "',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."'", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES_MODEL . " SET name = '".$name."', description = '" . $description . "',model_default = '".$default_model."',tpl_articles='".$tpl_articles."',tpl_cats='".$tpl_cat."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."'", __LINE__, __FILE__);
 			$error_string = 'e_success';
 		}
 	}
@@ -417,6 +440,9 @@ else
 				break;
 			case 'e_success' :
 				$Errorh->handler($ARTICLES_LANG['successful_operation'], E_USER_SUCCESS);
+				break;
+			case 'e_del_default_model' :
+				$Errorh->handler($ARTICLES_LANG['model_default_del_explain'], E_USER_WARNING);
 				break;
 		}
 	}
@@ -471,9 +497,10 @@ else
 			'L_CONFIRM_DEL_MODEL'=>$ARTICLES_LANG['confirm_del_model'],
 			'L_HIDE'=>$ARTICLES_LANG['hide'],
 			'L_DISPLAY'=>$LANG['display'],
+			'L_MODEL_DEFAULT_DEL_EXPLAIN'=>$ARTICLES_LANG['model_default_del_explain']
 		));
 		
-	$result = $Sql->query_while("SELECT id, name,description ,extend_field,tpl_articles ,tpl_cats ,options,pagination_tab
+	$result = $Sql->query_while("SELECT id, name,description ,extend_field,tpl_articles ,tpl_cats ,options,pagination_tab,model_default
 	FROM " . DB_TABLE_ARTICLES_MODEL . " a
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
@@ -508,6 +535,8 @@ else
 			'AUTHOR'=>$options['author'] ? $LANG['display'] : $ARTICLES_LANG['hide'],
 			'IMPR'=>$options['impr'] ? $ARTICLES_LANG['enable'] : $ARTICLES_LANG['desable'],
 			'MAIL'=>$options['mail'] ? $LANG['display']: $ARTICLES_LANG['hide'],
+			'L_DEFAULT_MODEL'=>$ARTICLES_LANG['default_model'],
+			'C_DEFAULT'=>$row['model_default'] == 1 ? true : false,
 		));
 
 	}

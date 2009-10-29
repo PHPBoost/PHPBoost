@@ -173,13 +173,13 @@ elseif ($new_cat XOR $id_edit > 0)
 		}
 		
 		// models
-		$result = $Sql->query_while("SELECT id, name,description
+		$result = $Sql->query_while("SELECT id, name,description,model_default
 		FROM " . DB_TABLE_ARTICLES_MODEL 
 		, __LINE__, __FILE__);
 		$models='';
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			if($row['id'] == 1)
+			if($row['model_default'] == 1)
 				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
 			else
 				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
