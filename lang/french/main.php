@@ -462,7 +462,7 @@ $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoi
 $LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
+Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site.
 En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
