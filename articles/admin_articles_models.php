@@ -135,6 +135,7 @@ elseif ($new_model XOR $id_edit > 0)
 		'L_DEFAULT_MODELS'=>$ARTICLES_LANG['default_model'],
 		'L_YES'=>$LANG['yes'],
 		'L_NO'=>$LANG['no'],
+		'L_REQUIRE_TITLE' => $LANG['require_name'],
 		
 	));
 
@@ -148,23 +149,23 @@ elseif ($new_model XOR $id_edit > 0)
 		$options  = $special_options ? $options  : unserialize($default_model['options']);
 			
 		import('io/filesystem/Folder');
-		
+
 		// articles templates
-		$tpl_articles_list = '';
+		$tpl_articles_list = '<option value="articles.tpl" >articles.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
 		foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_articles)
 		{
 			$tpl_articles = $tpl_articles->get_name();
-			$selected = $tpl_articles == $models['tpl_articles'] ? ' selected="selected"' : '';
+			$selected = ($tpl_articles == $models['tpl_articles'] || './models/'.$tpl_articles == $models['tpl_articles'] ) ? ' selected="selected"' : '';
 			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
 		}
 		// category templates
-		$tpl_cat_list = '';
+		$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
 		foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_cat)
 		{
 			$tpl_cat = $tpl_cat->get_name();
-			$selected = $tpl_cat == $models['tpl_cats'] ? ' selected="selected"' : '';
+			$selected = ($tpl_cat == $models['tpl_cats'] || './models/'.$tpl_articles == $models['tpl_articles']) ? ' selected="selected"' : '';
 			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 		}
 		// extend field
@@ -358,9 +359,10 @@ elseif (retrieve(POST,'submit',false))
 		$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');	
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
-		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
-		$tpl_articles = empty($tpl_articles) ? 'articles.tpl' : $tpl_articles;
+		$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
+		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
+		$tpl_articles = $tpl_articles != 'articles.tpl' ? "./models/".$tpl_articles : $tpl_articles;
 		$tpl_cat = empty($tpl_cat) ? 'articles_cat.tpl' : $tpl_cat;
 		$options = array (
 			'note'=>retrieve(POST, 'note', true, TBOOL),
@@ -445,31 +447,6 @@ else
 	import('util/Pagination');
 	$Pagination = new Pagination();
 
-	$get_sort = retrieve(GET, 'sort', '');
-	switch ($get_sort)
-	{
-		case 'alpha' :
-			$sort = 'title';
-			break;
-		case 'date' :
-			$sort = 'timestamp';
-			break;
-		case 'cat' :
-			$sort = 'idcat';
-			break;
-		case 'user_id' :
-			$sort = 'user_id';
-			break;
-		case 'visible' :
-			$sort = 'visible';
-			break;
-		default :
-			$sort = 'id';
-	}
-
-	$get_mode = retrieve(GET, 'mode', '');
-	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-
 	$tpl->assign_block_vars('models_management', array(
 			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
 			'L_ARTICLES_TPL' => $ARTICLES_LANG['articles_tpl'],
@@ -493,9 +470,9 @@ else
 			'L_MODEL_DEFAULT_DEL_EXPLAIN'=>$ARTICLES_LANG['model_default_del_explain']
 		));
 		
-	$result = $Sql->query_while("SELECT id, name,description ,extend_field,tpl_articles ,tpl_cats ,options,pagination_tab,model_default
+	$result = $Sql->query_while("SELECT id, name,description ,model_default,extend_field,tpl_articles ,tpl_cats ,options,pagination_tab,model_default
 	FROM " . DB_TABLE_ARTICLES_MODEL . " a
-	ORDER BY " . $sort . " " . $mode .
+	ORDER BY model_default DESC".
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
