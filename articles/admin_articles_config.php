@@ -69,6 +69,8 @@ if (retrieve(POST,'valid',false))
 	'mail'=>retrieve(POST, 'mail', true, TBOOL)
 	);
 	
+	$tab=retrieve(POST, 'tab', 0);
+	
 	$config_articles = array(
 		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
@@ -78,7 +80,7 @@ if (retrieve(POST,'valid',false))
 		'mini'=>serialize($mini),
 	);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_MODEL . " SET options = '" . serialize($options) . "', pagination_tab = '".$config_articles['tab']."' WHERE id = '1'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_MODEL . " SET options = '" . serialize($options) . "', pagination_tab = '".$tab."' WHERE id = '1'", __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
@@ -143,8 +145,12 @@ else
 	$Cache->load('articles');
 		
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-	$options=unserialize($CONFIG_ARTICLES['options']);
-
+	
+	$options = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = 1", __LINE__, __FILE__);
+	
+	$tab=$options['pagination_tab'];
+	$options = unserialize($options['options']);
+	
 	$array_ranks =
 		array(
 			'-1' => $LANG['guest'],
@@ -159,8 +165,8 @@ else
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
 		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
-		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? ' checked ' : '',
-		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? ' checked ' : '',
+		'TAB'=> $tab == 1 ? ' checked ' : '',
+		'NO_TAB'=>  $tab != 1 ? ' checked ' : '',
 		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
 		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
 		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
