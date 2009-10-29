@@ -53,12 +53,12 @@ class Environment
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
 		import('core/environment/AppContext');
-		
+
 		AppContext::init_bench();
-        
+
 		import('core/ClassLoader');
 		import('core/lang/LangLoader');
-        import('util/StringVars');
+		import('util/StringVars');
 		import('io/request/HTTPRequest');
 		import('content/parser/ContentFormattingFactory');
 		import('core/BreadCrumb');
@@ -113,6 +113,8 @@ class Environment
 		self::process_changeday_tasks_if_needed();
 		self::check_current_page_auth();
 		self::csrf_protect_post_requests();
+
+		set_exception_handler(array(get_class(), 'exception_handler'));
 	}
 
 	public static function init_services()
@@ -328,7 +330,7 @@ class Environment
 	public static function load_lang_files()
 	{
 		LangLoader::set_locale(get_ulang());
-		
+
 		global $LANG;
 		$LANG = array();
 		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php');
@@ -546,6 +548,70 @@ class Environment
 		}
 	}
 
+	/**
+	 * @desc Returns the full phpboost version with its build number
+	 * @return string the full phpboost version with its build number
+	 */
+	public static function get_phpboost_version()
+	{
+		global $CONFIG;
+		import('io/filesystem/File');
+		$file = new File(PATH_TO_ROOT . '/kernel/.build');
+		$build =  $file->get_contents();
+		$file->close();
+		return $CONFIG['version'] . '.' . trim($build);
+	}
+
+	/**
+	 * Displays the top of the page.
+	 */
+	public static function display_header()
+	{
+		self::get_graphical_environment()->display_header();
+	}
+
+	/**
+	 * Displays the bottom of the page.
+	 */
+	public static function display_footer()
+	{
+		self::get_graphical_environment()->display_footer();
+	}
+
+	public static function set_graphical_environment(GraphicalEnvironment $env)
+	{
+		self::$graphical_environment = $env;
+	}
+
+	public static function destroy()
+	{
+		AppContext::close_db_connection();
+
+		ob_end_flush();
+	}
+
+	public static function exception_handler(Exception $exception)
+	{
+		ob_clean();
+		import('/member/controllers/ErrorController');
+		
+		// Log exception
+		
+		// move this out
+		
+		$request = AppContext::get_request();
+		$request->set_value(ErrorController::LEVEL, E_ERROR);
+		$request->set_value(ErrorController::EXCEPTION, $exception);
+
+		$error_controller = new ErrorController();
+		$response = $error_controller->execute($request);
+		$response->send();
+		
+		self::destroy();
+		exit;
+	}
+
+
 	private static function get_yesterday_timestamp()
 	{
 		return time() - 86400;
@@ -600,36 +666,6 @@ class Environment
 	}
 
 	/**
-	 * @desc Returns the full phpboost version with its build number
-	 * @return string the full phpboost version with its build number
-	 */
-	static function get_phpboost_version()
-	{
-		global $CONFIG;
-		import('io/filesystem/File');
-		$file = new File(PATH_TO_ROOT . '/kernel/.build');
-		$build =  $file->get_contents();
-		$file->close();
-		return $CONFIG['version'] . '.' . trim($build);
-	}
-
-	/**
-	 * Displays the top of the page.
-	 */
-	public static function display_header()
-	{
-		self::get_graphical_environment()->display_header();
-	}
-
-	/**
-	 * Displays the bottom of the page.
-	 */
-	public static function display_footer()
-	{
-		self::get_graphical_environment()->display_footer();
-	}
-
-	/**
 	 * @return GraphicalEnvironment
 	 */
 	private static function get_graphical_environment()
@@ -641,18 +677,6 @@ class Environment
 			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
 		}
 		return self::$graphical_environment;
-	}
-
-	public static function set_graphical_environment(GraphicalEnvironment $env)
-	{
-		self::$graphical_environment = $env;
-	}
-
-	public static function destroy()
-	{
-		AppContext::close_db_connection();
-
-		ob_end_flush();
 	}
 }
 

@@ -7,7 +7,7 @@
 	<div class="module_contents">
 		<img src="{PATH_TO_ROOT}/templates/base/images/{LEVEL}.png" alt="{E_TITLE}"
 		style="float: left; padding-right: 6px;" />
-		{E_MESSAGE}
+		{MESSAGE}
 		<div class="spacer">&nbsp;</div>
 	</div>
 	<div class="module_bottom_l"></div>

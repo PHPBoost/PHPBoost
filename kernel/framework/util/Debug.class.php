@@ -163,16 +163,16 @@ class Debug
 			}
 			elseif (is_array($arg))
 			{
-				$string_stacktrace .= 'Array(...)';
+				$string_stacktrace .= 'Array[' . count($arg) . ']';
 			}
 			else
 			{
 				$string_maxlength = 20;
 				if (strlen($arg) > $string_maxlength)
 				{
-					$arg = substr(addslashes($arg), 0, $string_maxlength - 3) . '...';
+					$arg = substr($arg, 0, $string_maxlength - 3) . '...';
 				}
-				$string_stacktrace .= '\'' . addslashes($arg) . '\'';
+				$string_stacktrace .= '\'' . htmlspecialchars(addslashes($arg)) . '\'';
 			}
 
 			if ($i < $count)

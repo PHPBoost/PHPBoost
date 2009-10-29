@@ -25,6 +25,8 @@
  *
  ###################################################*/
 
+import('mvc/controller/Controller');
+
 class ErrorController implements Controller
 {
 	const LEVEL = 'error_level';
@@ -33,12 +35,13 @@ class ErrorController implements Controller
 	const MESSAGE = 'error_message';
 	const CORRECTION_LINK = 'error_correction_link';
 	const CORRECTION_LINK_NAME = 'error_correction_link_name';
-	
+	const EXCEPTION = 'error_exception';
+
 	/**
 	 * @var string[string]
 	 */
 	private $lang;
-	
+
 	/**
 	 * @var View
 	 */
@@ -52,14 +55,47 @@ class ErrorController implements Controller
 	public function execute(HTTPRequest $request)
 	{
 		$this->load_env();
-		
+
 		$title = $request->get_value(self::TITLE, $this->lang['error']);
-		
+
 		$env = $this->response->get_graphical_environment();
 		$env->set_page_title($title);
-		
+
+		$exception = $request->get_value(self::EXCEPTION, false);
+
+		$message = '';
+		try
+		{
+			$message = htmlspecialchars($request->get_string(self::MESSAGE));
+		}
+		catch (UnexistingHTTPParameterException $ex)
+		{
+			if ($exception !== false && DEBUG)
+			{
+				$message = htmlspecialchars($exception->getMessage()) .
+					'<div class="spacer">&nbsp;</div>' . Debug::get_stacktrace_as_string(0, $exception);
+			}
+			else
+			{
+				$message = htmlspecialchars($this->lang['unexpected_error_occurs']);
+			}
+		}
+
+		$code = '';
+		try
+		{
+			$code = htmlspecialchars($request->get_int(self::CODE));
+		}
+		catch (UnexistingHTTPParameterException $ex)
+		{
+			if ($exception !== false && DEBUG)
+			{
+				$code = $exception->getCode();
+			}
+		}
+
 		$level = 'question';
-		switch ($request->get_string(self::LEVEL, E_ERROR))
+		switch ($request->get_int(self::LEVEL, E_ERROR))
 		{
 			case E_USER_NOTICE:
 			case E_NOTICE:
@@ -80,16 +116,16 @@ class ErrorController implements Controller
 			default:
 				$level = 'question';
 		}
-		
+
 		$this->view->assign_vars(array(
             'TITLE' => $title,
-            'CODE' => $request->get_string(self::CODE, ''),
-			'MESSAGE' => $request->get_string(self::MESSAGE, $this->lang['unexpected_error_occurs']),
+            'CODE' => $code,
+			'MESSAGE' => $message,
 			'LINK_NAME' => $request->get_string(self::CORRECTION_LINK_NAME, $this->lang['back']),
 			'U_LINK' => $request->get_value(self::CORRECTION_LINK, 'javascript:history.back(1);'),
 			'LEVEL' => $level
 		));
-		
+
 		return $this->response;
 	}
 
