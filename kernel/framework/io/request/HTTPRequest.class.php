@@ -38,14 +38,37 @@ class HTTPRequest
 	const bool = 0x00;
 	const int = 0x01;
 	const float = 0x02;
-    const string = 0x03;
-    const none = 0x03;
+	const string = 0x03;
+	const none = 0x04;
+	public function set_value($varname, $value)
+	{
+		$this->set_rawvalue($varname, $value, $_GET);
+		$this->set_rawvalue($varname, $value, $_POST);
+		$this->set_rawvalue($varname, $value, $_REQUEST);
+	}
+	
+	public function set_getvalue($varname, $value)
+	{
+		$this->set_rawvalue($varname, $value, $_GET);
+		$this->set_rawvalue($varname, $value, $_REQUEST);
+	}
+	
+	public function set_postvalue($varname, $value)
+	{
+		$this->set_rawvalue($varname, $value, $_POST);
+		$this->set_rawvalue($varname, $value, $_REQUEST);
+	}
+
+	public function set_rawvalue(&$varname, &$value, &$array)
+	{
+		$array[$varname] = $value;
+	}
 
 	public function get_value($varname, $default_value = null)
 	{
 		return $this->get_var($_REQUEST, self::none, $varname, $default_value);
 	}
-	
+
 	public function get_bool($varname, $default_value = null)
 	{
 		return $this->get_var($_REQUEST, self::bool, $varname, $default_value);
@@ -66,10 +89,10 @@ class HTTPRequest
 		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
 	}
 
-    public function get_getvalue($varname, $default_value = null)
-    {
-        return $this->get_var($_GET, self::none, $varname, $default_value);
-    }
+	public function get_getvalue($varname, $default_value = null)
+	{
+		return $this->get_var($_GET, self::none, $varname, $default_value);
+	}
 
 	public function get_getbool($varname, $default_value = null)
 	{
@@ -91,11 +114,11 @@ class HTTPRequest
 		return $this->get_var($_GET, self::string, $varname, $default_value);
 	}
 
-    public function get_postvalue($varname, $default_value = null)
-    {
-        return $this->get_var($_POST, self::none, $varname, $default_value);
-    }
-    
+	public function get_postvalue($varname, $default_value = null)
+	{
+		return $this->get_var($_POST, self::none, $varname, $default_value);
+	}
+
 	public function get_postbool($varname, $default_value = null)
 	{
 		return $this->get_var($_POST, self::bool, $varname, $default_value);
@@ -187,7 +210,7 @@ class HTTPRequest
 			throw new ParameterTypeMismatchException($varname, 'float', $value);
 		}
 	}
-	
+
 	private function get_raw_string(&$value)
 	{
 		return (string) $value;

@@ -86,7 +86,7 @@ class Debug
 		$stacktrace = null;
 		if ($exception === null)
 		{
-			self::get_stacktrace();
+			$stacktrace = self::get_stacktrace();
 		}
 		else
 		{
