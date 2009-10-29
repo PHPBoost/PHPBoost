@@ -71,12 +71,12 @@
 			</tr>							
 			<tr>
 				<td style="padding-left:20px;" class="row2">
-				<span><b>{models_management.L_MODEL_DEFAULT_DEL_EXPLAIN}</b></span>
+					<span><b>{models_management.L_MODEL_DEFAULT_DEL_EXPLAIN}</b></span>
 					# START models #
-						<div class="block_container" style="margin-bottom:20px;">
+					<div class="block_container" style="margin-bottom:20px;">
 						<div class="block_contents">
-								<div>
-									<div style="float:left">
+							<div>
+								<div style="float:left">
 									<p>
 										<a href="../articles/admin_articles_models{models.U_MODEL_LINK}" class="big_link">{models.NAME}</a>
 										<a href="{models.U_ADMIN_EDIT_MODEL}">
@@ -88,76 +88,76 @@
 										</a>
 										# ENDIF #
 									</p>
-									</div>
-									<div style="float:right;font-weight:bold">
-										# IF models.C_DEFAULT #
-										{models.L_DEFAULT_MODEL}
-										# ENDIF #
+								</div>
+								<div style="float:right;font-weight:bold">
+									# IF models.C_DEFAULT #
+									{models.L_DEFAULT_MODEL}
+									# ENDIF #
+								</div>
+							</div>
+							<div class="spacer"><hr /></div>
+							<div>		
+								<div id="desc_model_{models.ID_MODEL}" style="float:left;text-align:justify">
+									<b>{models_management.L_DESCRIPTION} : </b>{models.DESC}
+									<div style="text-align:right;margin-top:15px;">
+									<a href="javascript:aff_info({models.ID_MODEL})" > <span id="display_hide_{models.ID_MODEL}">{models_management.L_DISPLAY}&nbsp;</span>{models_management.L_MODEL_INFO_DISPLAY} >> </a>
 									</div>
 								</div>
-								<div class="spacer"><hr /></div>
-								<div>		
-									<div id="desc_model_{models.ID_MODEL}" style="float:left;text-align:justify">
-										<b>{models_management.L_DESCRIPTION} : </b>{models.DESC}
-										<div style="text-align:right;margin-top:15px;">
-										<a href="javascript:aff_info({models.ID_MODEL})" > <span id="display_hide_{models.ID_MODEL}">{models_management.L_DISPLAY}&nbsp;</span>{models_management.L_MODEL_INFO_DISPLAY} >> </a>
-										</div>
-									</div>
-									<div id="info_model_{models.ID_MODEL}" style="display:none;float:right;margin-right:10px;">
-										<table class="module_table" style="margin-top:0px;">
-											<tr>
-											 <th colspan="2">
-												{models_management.L_MODEL_INFO}
-											 </th>
-											</tr>
-											<tr style="text-align:left;">		
-												<td class="row2 text_small" style="width:40%;">
-													<b>{models_management.L_CAT_TPL} :</b>
-												</td>
-												<td class="row2 text_small" >
-													 {models.TPL_CATS}
-												</td>
-											</tr>	
-											<tr style="text-align:left;">		
-												<td class="row2 text_small">
-													<b>{models_management.L_ARTICLES_TPL} :</b>
-												</td>
-												<td class="row2 text_small">
-													{models.TPL_ARTICLES}
-												</td>
-											</tr>	
-											<tr style="text-align:left;">		
-												<td class="row2 text_small">
-													<b>{models_management.L_EXTEND_FIELD} :</b>
-												</td>
-												<td class="row2 text_small">
-													{models.EXTEND_FIELD}
-												</td>
-											</tr>	
-											<tr style="text-align:left;">	
-												<td class="row2 text_small">
-													<b>{models_management.L_SPECIAL_OPTION} :</b>
-												</td>
-												<td class="row2 text_small">
-													<b>{models_management.L_AUTHOR} : </b>{models.AUTHOR}<br />
-													<b>{models_management.L_COM} : </b>{models.COM}<br />
-													<b>{models_management.L_NOTE} : </b>{models.NOTE}<br />
-													<b>{models_management.L_PRINT} : </b>{models.IMPR}<br />
-													<b>{models_management.L_DATE} : </b>{models.DATE} <br />
-													<b>{models_management.L_LINK_MAIL} : </b>{models.MAIL}<br />
-												</td>
-											</tr>	
-											<tr style="text-align:left;">		
-												<td class="row2 text_small">
-													<b>{models_management.L_USE_TAB} :</b>
-												</td>
-												<td class="row2 text_small">
-													{models.USE_TAB}
-												</td>
-											</tr>									
-										</table>
-									</div>
+								<div id="info_model_{models.ID_MODEL}" style="display:none;float:right;margin-right:10px;">
+									<table class="module_table" style="margin-top:0px;">
+										<tr>
+										 <th colspan="2">
+											{models_management.L_MODEL_INFO}
+										 </th>
+										</tr>
+										<tr style="text-align:left;">		
+											<td class="row2 text_small" style="width:40%;">
+												<b>{models_management.L_CAT_TPL} :</b>
+											</td>
+											<td class="row2 text_small" >
+												 {models.TPL_CATS}
+											</td>
+										</tr>	
+										<tr style="text-align:left;">		
+											<td class="row2 text_small">
+												<b>{models_management.L_ARTICLES_TPL} :</b>
+											</td>
+											<td class="row2 text_small">
+												{models.TPL_ARTICLES}
+											</td>
+										</tr>	
+										<tr style="text-align:left;">		
+											<td class="row2 text_small">
+												<b>{models_management.L_EXTEND_FIELD} :</b>
+											</td>
+											<td class="row2 text_small">
+												{models.EXTEND_FIELD}
+											</td>
+										</tr>	
+										<tr style="text-align:left;">	
+											<td class="row2 text_small">
+												<b>{models_management.L_SPECIAL_OPTION} :</b>
+											</td>
+											<td class="row2 text_small">
+												<b>{models_management.L_AUTHOR} : </b>{models.AUTHOR}<br />
+												<b>{models_management.L_COM} : </b>{models.COM}<br />
+												<b>{models_management.L_NOTE} : </b>{models.NOTE}<br />
+												<b>{models_management.L_PRINT} : </b>{models.IMPR}<br />
+												<b>{models_management.L_DATE} : </b>{models.DATE} <br />
+												<b>{models_management.L_LINK_MAIL} : </b>{models.MAIL}<br />
+											</td>
+										</tr>	
+										<tr style="text-align:left;">		
+											<td class="row2 text_small">
+												<b>{models_management.L_USE_TAB} :</b>
+											</td>
+											<td class="row2 text_small">
+												{models.USE_TAB}
+											</td>
+										</tr>									
+									</table>
 								</div>
+							</div>
 							<div class="spacer"></div>		
 						</div>
 					</div>
@@ -243,7 +243,8 @@
 				<dt><label for="tab">* {L_DEFAULT_MODELS}</label></dt>
 				<dd><label><input type="radio" {edition_interface.DEFAULT_MODEL} name="default" value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
-					<label><input type="radio" {edition_interface.NOT_DEFAULT_MODEL} name="default" value="0" />{L_NO}</label></dd>	
+					<label><input type="radio" {edition_interface.NOT_DEFAULT_MODEL} name="default" value="0" />{L_NO}</label>
+				</dd>	
 			</dl>
 			<label for="description">
 				{L_DESCRIPTION}
@@ -445,5 +446,4 @@
 		</fieldset>
 	</form>
 	# END edition_interface #
-	
 </div>

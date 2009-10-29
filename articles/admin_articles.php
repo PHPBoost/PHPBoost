@@ -119,11 +119,12 @@ while ($row = $Sql->fetch_assoc($result))
 
 	$visible = '';
 	if ($row['start'] > 0)
-	$visible .= gmdate_format('date_format_short', $row['start']);
+		$visible .= gmdate_format('date_format_short', $row['start']);
+		
 	if ($row['end'] > 0 && $row['start'] > 0)
-	$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
+		$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
 	elseif ($row['end'] > 0)
-	$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
+		$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 
 	$tpl->assign_block_vars('list.articles', array(
 		'TITLE' => $title,

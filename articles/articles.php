@@ -47,15 +47,17 @@ if (!empty($idart) && isset($cat) )
 	
 	$special_auth = (unserialize($articles['auth']) !== $ARTICLES_CAT[$articles['idcat']]['auth']) && ($articles['auth'] != '')  ? true : false;
 	$articles['auth'] = $special_auth ? unserialize($articles['auth']) : $ARTICLES_CAT[$articles['idcat']]['auth'];
+
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 
 	$tpl = new Template('articles/'.$articles['tpl_articles']);
 	$Errorh->set_template($tpl);
+	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
@@ -71,6 +73,7 @@ if (!empty($idart) && isset($cat) )
 		
 	//Pagination des articles.
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
 	//Récupération de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
@@ -79,6 +82,7 @@ if (!empty($idart) && isset($cat) )
 	
 	// If tab pagination is active
 	$c_tab=$articles['pagination_tab'];
+	
 	//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
@@ -237,9 +241,10 @@ else
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'articles';
 	$module = $modulesLoader->get_module($module_name);
-	if ($module->has_functionality('get_home_page')) {
+	if ($module->has_functionality('get_home_page'))
 		echo $module->functionality('get_home_page');
-	} elseif (!$no_alert_on_error) {
+	elseif (!$no_alert_on_error) 
+	{
 		global $Errorh;
 		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
 		exit;

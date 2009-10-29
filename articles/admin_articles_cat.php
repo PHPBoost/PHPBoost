@@ -176,6 +176,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		$result = $Sql->query_while("SELECT id, name,description,model_default
 		FROM " . DB_TABLE_ARTICLES_MODEL 
 		, __LINE__, __FILE__);
+		
 		$models='';
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -218,9 +219,9 @@ elseif (retrieve(POST,'submit',false))
 		$Session->csrf_get_protect();
 		
 		if ($delete_content)
-		$articles_categories->delete_category_recursively($cat_to_del_post);
+			$articles_categories->delete_category_recursively($cat_to_del_post);
 		else
-		$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
+			$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
 	}
 	else
 	{
@@ -231,17 +232,18 @@ elseif (retrieve(POST,'submit',false))
 		$models=retrieve(POST, 'models', 1, TINTEGER);	
 		
 		if(retrieve(POST,'icon_path',false))
-		$icon=retrieve(POST,'icon_path','');
+			$icon=retrieve(POST,'icon_path','');
 			
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))
-		redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+	
 		if ($id_cat > 0)
-		$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models);
+			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models);
 		else
-		$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$models);
+			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$models);
 	}
 
 	// Feeds Regeneration
