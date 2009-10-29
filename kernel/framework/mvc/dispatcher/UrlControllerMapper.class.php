@@ -72,7 +72,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 			{
 				$value = $captured_parameters[$i];
 			}
-			$_GET[$parameter_name] = $value;
+			AppContext::get_request()->set_getvalue($parameter_name, $value);
 			$i++;
 		}
 	}

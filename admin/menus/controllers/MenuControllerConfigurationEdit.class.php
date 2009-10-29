@@ -53,11 +53,20 @@ class MenuControllerConfigurationEdit implements Controller
 		}
 		catch (ObjectNotFoundException $exception)
 		{
-			Debug::fatal($exception);
+			$error_controller = ClassLoader::new_instance('/admin/menus/controllers/MenuControllerError');
+			
+			$request->set_value(MenuControllerError::TITLE, 'Menu configuration does not exists');
+			$request->set_value(MenuControllerError::MESSAGE, 'The requested menu configuration ' .
+			$request->get_value('menu_config_id') . ' does not exists');
+			$request->set_value(MenuControllerError::CORRECTION_LINK, MenuUrlBuilder::menu_configuration_list()->absolute());
+			$request->set_value(MenuControllerError::CORRECTION_LINK_NAME, 'Menu configuration list');
+			
+			return $error_controller->execute($request);
 		}
 		catch (UnexistingHTTPParameterException $exception)
 		{
-			Debug::fatal($exception);
+			$error_controller = ClassLoader::new_instance('/admin/menus/controllers/MenuControllerError');
+			return $error_controller->execute($request);
 		}
 
 		return $this->response;
@@ -65,10 +74,11 @@ class MenuControllerConfigurationEdit implements Controller
 
 	private function try_execute()
 	{
-		$this->object_id = AppContext::get_request()->get_getint('menu_config_id');
 		$this->load_env();
-
+		
+		$this->object_id = AppContext::get_request()->get_getint('menu_config_id');
 		$menu_config = MenuConfigurationDAO::instance()->find_by_id($this->object_id);
+
 			
 		$this->view->assign_vars(array(
             'NAME' => $menu_config->get_name(),
