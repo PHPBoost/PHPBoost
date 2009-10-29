@@ -32,9 +32,9 @@
  */
 class LangNotFoundException extends Exception
 {
-	public function __construct($default_langfile)
+	public function __construct(&$folder, &$filename)
 	{
-		parent::__construct('Unable to find "' . $default_langfile . '"');
+		parent::__construct('Unable to find "' . $filename . '" in: "' . $folder . '"');
 	}
 }
 ?>

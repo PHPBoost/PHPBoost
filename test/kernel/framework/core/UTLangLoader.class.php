@@ -16,7 +16,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 	{
 		try
 		{
-			LangLoader::get('/test/data/lang/unexisting_lang');
+			LangLoader::get('unexisting_lang', '/test/data/');
 			$this->assertFalse(true, 'LangNotFoundException not raised');
 		}
 		catch (Exception $exception)
@@ -27,7 +27,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 
 	public function test_get()
 	{
-		$lang = LangLoader::get('/test/data/lang/mylang_common');
+		$lang = LangLoader::get('mylang_common', '/test/data/');
 		$expected = array(
 			'common_lang_var1' => 'hello1',
 			'common_lang_var2' => 'hello2',
@@ -38,7 +38,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 
 	public function test_get_imbricated()
 	{
-		$lang = LangLoader::get('/test/data/lang/mylang');
+		$lang = LangLoader::get('mylang', '/test/data/');
 		$expected = array(
 			'common_lang_var1' => 'hello1',
 			'common_lang_var2' => 'hello2',
@@ -53,7 +53,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 	public function test_get_imbricated_with_locale()
 	{
 		LangLoader::set_locale('french');
-		$lang = LangLoader::get('/test/data/lang/mylang');
+		$lang = LangLoader::get('mylang', '/test/data/');
 		$expected = array(
 			'common_lang_var1' => 'hello1',
 			'common_lang_var2' => 'hello2',
@@ -61,19 +61,6 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'lang_var1' => 'coucou1',
 			'lang_var2' => 'coucou2',
 			'lang_var3' => 'coucou3');
-		$this->assertEquals($expected, $lang);
-	}
-
-	public function test_get_file()
-	{
-		$lang = LangLoader::get_file(PATH_TO_ROOT . '/test/data/mylang.cla.inc.ss.php');
-		$expected = array(
-			'common_lang_var1' => 'hello1',
-			'common_lang_var2' => 'hello2',
-			'common_lang_var3' => 'hello3',
-			'lang_var1' => 'hello1',
-			'lang_var2' => 'hello2',
-			'lang_var3' => 'hello3');
 		$this->assertEquals($expected, $lang);
 	}
 }
