@@ -40,12 +40,6 @@ class TemplateParserString extends AbstractTemplateParser
 		), '_') . '_str.php';
 	}
 	
-	/* public function parse($template_object, $template_loader)
-	{
-		parent::parse($template_object, $template_loader);
-		return $this->result;
-	} */
-	
 	protected function do_parse()
 	{
 		$this->prepare_parse();
@@ -126,7 +120,7 @@ class TemplateParserString extends AbstractTemplateParser
 		if (strpos($blockname, '.') !== false) //Contient un bloc imbriqué.
 		{
 			$array_block = explode('.', $blockname);
-			$current_block = array_pop($array_block);
+			$previous_block = array_pop($array_block);
 			$blockname = array_pop($array_block);
 			
 			$second_param =', $_tmp_' . $previous_block . '_value';
