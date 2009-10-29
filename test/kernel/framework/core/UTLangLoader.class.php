@@ -25,6 +25,12 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 		}
 	}
 
+	public function test_get_kernel()
+	{
+		$lang = LangLoader::get('ErrorController');
+		$this->assertTrue(!empty($lang));
+	}
+
 	public function test_get()
 	{
 		$lang = LangLoader::get('mylang_common', '/test/data/');
