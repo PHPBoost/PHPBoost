@@ -21,7 +21,6 @@
 		<fieldset>
 			<legend>{L_REMOVING_MODEL}</legend>
 			<p>{L_EXPLAIN_REMOVING_MODEL}</p>
-
 			<label>
 				<input type="radio" name="action" value="affect_defaut"checked="checked"/> {L_AFFECT_DEFAULT}
 			</label>
@@ -34,7 +33,6 @@
 				{removing_interface.MODELS}
 			</select>
 		</fieldset>
-
 		<fieldset class="fieldset_submit">
 			<legend>{L_SUBMIT}</legend>
 			<input type="hidden" name="model_to_del" value="{removing_interface.ID_MODEL}" />
@@ -57,8 +55,8 @@
 		else
 		{
 			show_div("info_model_"+id);
-			document.getElementById('info_model_'+id).style.width="50%";
-			document.getElementById('desc_model_'+id).style.width="48%";
+			document.getElementById('info_model_'+id).style.width="40%";
+			document.getElementById('desc_model_'+id).style.width="58%";
 			document.getElementById('display_hide_'+id).innerHTML = "{models_management.L_HIDE} ";
 
 		}
@@ -86,8 +84,7 @@
 									</a>
 									<hr />
 								</p>
-								<div>
-								
+								<div>		
 									<div id="desc_model_{models.ID_MODEL}" style="float:left;text-align:justify">
 										<b>{models_management.L_DESCRIPTION} : </b>{models.DESC}
 										<div style="text-align:right;margin-top:15px;">

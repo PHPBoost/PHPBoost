@@ -88,13 +88,15 @@ function articles_mini($position, $block)
 			'DATE' => $date ? ($LANG['date']. " : ". gmdate_format('date_format_short', $row['timestamp'])) : '',
 			'VIEW'=> $view ? ($LANG['views']." : ".$row['views']) : '',
 			'COM'=> $com ? ($LANG['com']. " : ".$row['nbr_com']) : '',
+			'DESCRIPTION'=>$row['description'],
 			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
 		));
 	}
 	
 	$tpl->assign_vars(array(
 		'L_TYPE_MINI' => $l_type,
-		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article']
+		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article'],
+		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
 	));
 
 	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);

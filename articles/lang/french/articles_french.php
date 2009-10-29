@@ -175,5 +175,6 @@ $ARTICLES_LANG = array(
 	'explain_removing_model' => 'Vous êtes sur le point de supprimer le model. Deux solutions s\'offrent à vous. Vous pouvez soit affecter aux articles et aux catégories associés à ce modèl un autre modèle ou alors leur affecter le modèle par defaut.',
 	'affect_default'=>'Affecter le modèle par defaut',
 	'affect_model'=>'Affecter un modèle personalisé',
+	'read_article'=>'Lire la suite',
 );
 ?>
