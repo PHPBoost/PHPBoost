@@ -24,8 +24,6 @@
  *
  ###################################################*/
 
-import('core/lang/LangNotFoundException');
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -35,7 +33,7 @@ import('core/lang/LangNotFoundException');
 class LangLoader
 {
 	const DEFAULT_LOCALE = 'english';
-	
+
 	private static $locale = DEFAULT_LOCALE;
 	private static $langs = array();
 
@@ -43,7 +41,7 @@ class LangLoader
 	{
 		self::$langs = array();
 	}
-	
+
 	public static function set_locale($locale)
 	{
 		self::$locale = $locale;
@@ -92,7 +90,8 @@ class LangLoader
 		{
 			return $real_lang_file;
 		}
-		
+
+		import('core/lang/LangNotFoundException');
 		throw new LangNotFoundException($langpath);
 	}
 }
