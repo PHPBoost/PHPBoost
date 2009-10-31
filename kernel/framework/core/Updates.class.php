@@ -93,11 +93,14 @@ class Updates
                 $kThemes = array_keys($THEME_CONFIG);
                 foreach ($kThemes as $theme)
                 {
-                    $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
-                    if (!empty($infos['repository']))
-                    {
-                        $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);
-                    }
+                    if ($theme != 'default')
+					{
+						$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
+						if (!empty($infos['repository']))
+						{
+							$this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);
+						}
+					}
                 }
             }
         }
