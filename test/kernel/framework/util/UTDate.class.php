@@ -2,14 +2,12 @@
 
 import('util/Date');
 
-unset($Errorh);
-
 class UTdate extends PHPBoostUnitTestCase
 {
-	public function test_constructor()
+	public function test__constructor()
 	{
 		$date = new Date();
-		$this->assertEquals($date->get_timestamp(), time());
+		$this->assertEquals(time(), $date->get_timestamp());
 
 		$date = new Date(DATE_NOW);
 		$this->assertEquals(time(), $date->get_timestamp());
