@@ -25,13 +25,6 @@
  *
 ###################################################*/
 
-//Constantes de base.
-define('DELETE_ON_ERROR', 		true);
-define('NO_DELETE_ON_ERROR', 	false);
-define('UNIQ_NAME', 			true);
-define('CHECK_EXIST', 			true);
-define('NO_UNIQ_NAME', 			false);
-
 /**
  * @author Régis VIARRE <crowkait@phpboost.com
  * @desc This class provides you methods to upload easily files to the ftp.
@@ -45,6 +38,12 @@ class Upload
 	private $filename = '';
 	private $original_filename = '';
 	private $size = 0;
+	
+	const UNIQ_NAME = true;
+	const NO_UNIQ_NAME = false;
+	const CHECK_EXIST = true;
+	const DELETE_ON_ERROR = true;
+	const NO_DELETE_ON_ERROR = false;
 	
 	/**
 	 * @desc constructor
@@ -77,8 +76,8 @@ class Upload
 			if (($this->size/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$this->generate_file_info($this->original_filename, $uniq_name);
-				if ($this->check_file($this->original_filename, $regexp))
+				$this->generate_file_info($uniq_name);
+				if ($this->check_file($regexp))
 				{					
 					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
 					{
@@ -114,16 +113,25 @@ class Upload
 	 * @param boolean $delete
 	 * @return string Error code.
 	 */
-	public function validate_img($filepath, $width_max, $height_max, $delete = true)
+	public function check_img($width_max, $height_max, $delete = true)
 	{
 		$error = '';		
-		list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
-		if ($width > $width_max || $height > $height_max ) //Hauteur et largeur max.
-			$error = 'e_upload_max_dimension';
-
-		if (!empty($error) && $delete)
-			@unlink($filepath);
-			
+		if (!empty($this->filename))
+		{
+			$filepath = $this->base_directory . $this->filename;
+		
+			list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
+			if ($width > $width_max || $height > $height_max ) //Hauteur et largeur max.
+			{
+				$error = 'e_upload_max_dimension';
+			}
+	
+			if (!empty($error) && $delete)
+			{
+				@unlink($filepath);
+			}
+		}
+		
 		return $error;
 	}
 	
@@ -134,11 +142,11 @@ class Upload
 	 * @param string $regexp Regular expression
 	 * @return boolean The result of the regular expression test.
 	 */
-	private function check_file($filename, $regexp)
+	private function check_file($regexp)
 	{
 		if (!empty($regexp))
 		{
-			if (preg_match($regexp, $filename) && strpos($filename, '.php') === false) //Valide, sinon supprimé
+			if (preg_match($regexp, $this->original_filename) && strpos($this->original_filename, '.php') === false) //Valide, sinon supprimé
 				return true;
 			return false;
 		}
@@ -146,35 +154,21 @@ class Upload
 	}
 	
 	/**
-	 * @desc Clean the url, replace special characters with underscore.
-	 * @param string The file name.
-	 * @return string The cleaned file name.
-	 */
-	private function clean_filename($string)
-	{
-		$string = strtolower($string);
-		$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
-		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
-		$string = preg_replace('`[_]{2,}`', '_', $string);
-		$string = trim($string, ' _');
-		
-		return $string;
-	}
-	
-	/**
 	 * @desc Generates a unique file name. Completes informations on the file.
 	 * @param string $filename The filename
 	 * @param boolean $uniq_name
 	 */
-	private function generate_file_info($filename, $uniq_name)
+	private function generate_file_info($uniq_name)
 	{
+		$filename = $this->original_filename;
+		
 		$this->extension = strtolower(substr(strrchr($filename, '.'), 1));
 		if (strrpos($filename, '.') !== FALSE)
 		{
 			$filename = substr($filename, 0, strrpos($filename, '.'));
 		}
 		$filename = str_replace('.', '_', $filename);
-		$filename = $this->clean_filename($filename);
+		$filename = self::clean_filename($filename);
 
 		if ($uniq_name)
 		{
@@ -195,6 +189,22 @@ class Upload
 		if (!empty($this->extension))
 			$filename .= '.' . $this->extension;
 		$this->filename = $filename;
+	}
+	
+	/**
+	 * @desc Clean the url, replace special characters with underscore.
+	 * @param string The file name.
+	 * @return string The cleaned file name.
+	 */
+	private static function clean_filename($string)
+	{
+		$string = strtolower($string);
+		$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
+		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
+		$string = preg_replace('`[_]{2,}`', '_', $string);
+		$string = trim($string, ' _');
+		
+		return $string;
 	}
 	
 	/**
