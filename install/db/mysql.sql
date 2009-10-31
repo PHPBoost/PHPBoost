@@ -174,17 +174,17 @@ CREATE TABLE `phpboost_menus` (
   KEY `block` (`block`),
   KEY `class` (`class`),
   KEY `enabled` (`enabled`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `phpboost_menu_configuration`;
 CREATE TABLE `phpboost_menu_configuration` (
-  `id` INTEGER  NOT NULL,
-  `name` VARCHAR(100)  NOT NULL,
-  `match_regex` MEDIUMTEXT  NOT NULL,
-  `priority` INTEGER  NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL,
+  `match_regex` mediumtext NOT NULL,
+  `priority` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `priority`(`priority`)
-)
-ENGINE = MyISAM;
+  KEY `priority` (`priority`)
+) ENGINE = MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (
