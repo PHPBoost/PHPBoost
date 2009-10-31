@@ -73,7 +73,9 @@ class Cache
 		else
 		{
 			if (file_exists($cache_file))
-			$include = include($cache_file);
+			{
+			    $include = include($cache_file);
+			}
 		}
 		else
 		if (!DEBUG)
@@ -83,7 +85,9 @@ class Cache
 		else
 		{
 			if (file_exists($cache_file))
-			$include = include_once($cache_file);
+			{
+			    $include = include_once($cache_file);
+			}
 		}
 		if (!$include)
 		{

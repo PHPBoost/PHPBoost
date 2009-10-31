@@ -129,7 +129,7 @@ elseif (!empty($type)) //Rédaction
 		'NBR_SUBSCRIBERS' => $nbr,
 		'MESSAGE' => stripslashes($mail_contents),
 		'TITLE' => $mail_object,
-		'PREVIEW_BUTTON' => $type == 'bbcode' ? '<input value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button">' : ''
+		'PREVIEW_BUTTON' => $type == 'bbcode' ? '<input value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview();" class="submit" type="button">' : ''
 	));
 	$Template->assign_vars(array(
 		'L_WRITE_TYPE' => $LANG['newsletter_write_type'],
