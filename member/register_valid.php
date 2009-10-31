@@ -85,30 +85,27 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				import('io/Upload');
 				$Upload = new Upload($dir);
 				
-				if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
+				if ($CONFIG_USER['activ_up_avatar'] == 1)
 				{
-					if ($Upload->get_size() > 0)
+					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
+					
+					if ($Upload->get_error() != '') //Erreur, on arrête ici
+						redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
+					else
 					{
-						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-						
-						if ($Upload->get_error() != '') //Erreur, on arrête ici
-							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
+						$path = $dir . $Upload->get_filename();
+						$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+						if (!empty($error)) //Erreur, on arrête ici
+							redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 						else
-						{
-							$path = $dir . $Upload->get_filename();
-							$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
-							if (!empty($error)) //Erreur, on arrête ici
-								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
-							else
-								$user_avatar = $path; //Avatar uploadé et validé.
-						}
+							$user_avatar = $path; //Avatar uploadé et validé.
 					}
 				}
 				
 				$path = retrieve(POST, 'avatar', '');
 				if (!empty($path))
 				{
-					$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
+					$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
 						redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 					else
