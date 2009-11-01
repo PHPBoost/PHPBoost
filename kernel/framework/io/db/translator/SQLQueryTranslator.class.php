@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQuerierException.class.php
+ *                           SQLQueryTranslator.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : October 2, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,14 +25,20 @@
  *
  ###################################################*/
 
-import('io/db/SQLQuerierException');
-
-class MySQLQuerierException extends SQLQuerierException
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package db
+ * @subpackage translator
+ * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+ */
+interface SQLQueryTranslator
 {
-    public function __construct($message)
-    {
-        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
-    }
+	/**
+	 * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+	 * @param string $query the query to translate
+	 * @return string the translated query
+	 */
+	function translate(&$query);
 }
 
 ?>

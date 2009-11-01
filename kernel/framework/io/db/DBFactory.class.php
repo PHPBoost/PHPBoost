@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           db_factory.class.php
+ *                           DBFactory.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -77,7 +77,13 @@ class DBFactory
 	public static function new_sql_querier(DBConnection $db_connection)
 	{
 		import('io/db/mysql/MySQLQuerier');
-		return new MySQLQuerier($db_connection);
+		return new MySQLQuerier($db_connection, self::new_query_translator());
+	}
+	
+	private static function new_query_translator()
+	{
+		import('io/db/translator/MySQLQueryTranslator');
+		return new MySQLQueryTranslator();
 	}
 }
 

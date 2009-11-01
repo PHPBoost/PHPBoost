@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_db_connection_exception.class.php
+ *                           MySQLDBConnectionException.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon

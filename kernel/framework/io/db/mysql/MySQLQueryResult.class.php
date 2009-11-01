@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           query_result.class.php
+ *                           MySQLQueryResult.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -34,7 +34,7 @@ import('io/db/mysql/MySQLQuerierException');
  * @subpackage mysql
  * @desc
  */
-class MysqlQueryResult implements QueryResult
+class MySQLQueryResult implements QueryResult
 {
 	/**
 	 * @var Resource

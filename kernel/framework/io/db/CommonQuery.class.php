@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           common_query.class.php
+ *                           CommonQuery.class.php
  *                            -------------------
  *   begin                : October 5, 2009
  *   copyright            : (C) 2009 Loïc Rouchon

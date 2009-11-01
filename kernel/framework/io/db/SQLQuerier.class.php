@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sql_querier.class.php
+ *                           SQLQuerier.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -26,12 +26,13 @@
  ###################################################*/
 
 import('io/db/CommonQuery');
+import('io/db/translator/SQLQueryTranslator');
 import('io/db/SQLQuerierException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package io
- * @subpackage sql
+ * @subpackage db
  * @desc
  *
  */
@@ -77,23 +78,6 @@ interface SQLQuerier
      * @return string the last executed query
      */
     function get_last_executed_query_string();
-    
-    /**
-     * @desc start a new transaction. If a transaction has already been started,
-     * no new transaction will be created, but the existing one will be used
-     * (does not count in the requests count)
-     */
-    function start_transaction();
-    
-    /**
-     * @desc commit the current transaction (does not count in the requests count)
-     */
-    function commit();
-    
-    /**
-     * @desc rollback the current transaction (does not count in the requests count)
-     */
-    function rollback();
     
     /**
      * @desc returns the number of executed requests by this querier

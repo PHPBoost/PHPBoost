@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           abstract_sql_querier.class.php
+ *                           AbstractSQLQuerier.class.php
  *                            -------------------
  *   begin                : October 4, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -26,6 +26,7 @@
  ###################################################*/
 
 import('io/db/SQLQuerier');
+import('io/db/SQLQueryVars');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -39,56 +40,63 @@ abstract class AbstractSQLQuerier implements SQLQuerier
     /**
      * @var DBConnection
      */
-    protected $connection;
+    protected $link;
     
     /**
-     * @var mixed[string]
+     * @var SQLQueryTranslator
      */
-    private $parameters;
+    private $translator;
+	
+	/**
+	 * @var int
+	 */
+	private $executed_resquests_count;
+	
+	/**
+	 * @var string
+	 */
+	private $query;
+	
+	/**
+	 * @var SQLQueryVar
+	 */
+	private $query_var_replacator;
     
-    public function __construct(DBConnection $connection)
+    public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
     {
-        if (!$connection->is_connected())
-        {
-            $connection->connect();
-        }
-        $this->connection = $connection;
+        $this->link = $connection->get_link();
+        $this->translator = $translator;
+        $this->query_var_replacator = new SQLQueryVars($this);
+    }
+
+	public function get_last_executed_query_string()
+	{
+		return $this->query;
+	}
+    
+	public function get_executed_requests_count()
+	{
+		return $this->executed_resquests_count;
+	}
+	
+    protected function prepare(&$query, &$parameters)
+    {
+		$this->query = $query;
+    	$this->executed_resquests_count++;
+		$this->translate();
+		return $this->replace_query_vars($parameters);
+	}
+    
+    protected function translate()
+    {
+    	return $this->translator->translate($this->query);
     }
     
-    protected function replace_query_vars(&$query, &$parameters)
+    protected function replace_query_vars(&$parameters)
     {
-    	$query_var = new SQLQueryVar($this);
-    	return $query_var->replace($query, $parameters);
+    	return $this->query_var_replacator->replace($this->query, $parameters);
     }
 	
 	abstract public function escape(&$value);
 }
-
-class SQLQueryVar extends StringVars
-{
-	/**
-	 * @var AbstractSQLQuerier
-	 */
-	private $querier;
-	
-	public function __construct(AbstractSQLQuerier $querier)
-	{
-        $this->querier = $querier;		
-	}
-	
-	protected function set_var(&$parameter)
-    {
-        if (is_array($parameter))
-        {
-            $nb_value = count($parameter);
-            for ($i = 0; $i < $nb_value; $i++)
-            {
-                $parameter[$i] = '\'' . $this->querier->escape($parameter) . '\'';
-            }
-            return '(' . implode(', ', $parameter) . ')';
-        }
-        return $this->querier->escape($parameter);
-    }
-}
-
 ?>

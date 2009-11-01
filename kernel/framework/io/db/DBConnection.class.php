@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           db_connection.class.php
+ *                           DBConnection.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -56,9 +56,26 @@ interface DBConnection
     
     /**
      * @desc
-     * @return DBLink
+     * @return the database link (mysql resource, pdo object, ... depends of the database)
      */
     function get_link();
+    
+    /**
+     * @desc start a new transaction. If a transaction has already been started,
+     * no new transaction will be created, but the existing one will be used
+     * (does not count in the requests count)
+     */
+    function start_transaction();
+    
+    /**
+     * @desc commit the current transaction (does not count in the requests count)
+     */
+    function commit();
+    
+    /**
+     * @desc rollback the current transaction (does not count in the requests count)
+     */
+    function rollback();
 }
 
 ?>

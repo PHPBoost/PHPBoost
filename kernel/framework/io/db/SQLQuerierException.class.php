@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sql_querier_exception.class.php
+ *                           SQLQuerierException.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
