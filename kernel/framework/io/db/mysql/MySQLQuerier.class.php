@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_querier.class.php
+ *                           MySQLQuerier.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -26,9 +26,7 @@
  ###################################################*/
 
 import('io/db/AbstractSQLQuerier');
-import('io/db/mysql/MySQLDBConnection');
 import('io/db/mysql/MySQLQueryResult');
-import('io/db/mysql/SQL2MySQLQueryTranslator');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -38,61 +36,20 @@ import('io/db/mysql/SQL2MySQLQueryTranslator');
  */
 class MySQLQuerier extends AbstractSQLQuerier
 {
-	/**
-	 * @var string
-	 */
-	private $query;
-	
-	/**
-	 * @var int
-	 */
-	private $executed_resquests_count;
 
 	public function select($query, $parameters = array())
-	{
-		$this->transform_query($query, $parameters);
-		$this->inc_executed_resquests_count();
-		$resource = mysql_query($this->query, $this->connection->get_link());
-		return new MysqlQueryResult($resource);
+	{ 
+		$resource = $this->execute($query, $parameters); 
+		return new MySQLQueryResult($resource);
 	}
 
 	public function inject($query, $parameters = array())
 	{
-		$this->transform_query($query, $parameters);
-		$this->inc_executed_resquests_count();
-		$resource = mysql_query($this->query, $this->connection->get_link());
+		$resource = $this->execute($query, $parameters); 
 		if ($resource === false)
 		{
 			throw new MySQLQuerierException('invalid inject request');
 		}
-	}
-	
-	public function get_last_executed_query_string()
-	{
-		return $this->query;
-	}
-	
-    public function start_transaction()
-    {
-    	$this->query = "START TRANSACTION;";
-        $this->inject($this->query);
-    }
-    
-    public function commit()
-    {
-        $this->query = "COMMIT;";
-        $this->inject($this->query);
-    }
-    
-    public function rollback()
-    {
-        $this->query = "ROLLBACK;";
-        $this->inject($this->query);
-    }
-    
-	public function get_executed_requests_count()
-	{
-		return $this->executed_resquests_count;
 	}
 
 	public function get_last_inserted_id()
@@ -105,20 +62,11 @@ class MySQLQuerier extends AbstractSQLQuerier
         return mysql_real_escape_string($value);
     }
     
-	private function transform_query(&$query, &$parameters)
-	{
-		$this->query = $this->replace_query_vars($this->translate_query($query), $parameters);
-	}
-
-	private function translate_query(&$query)
-	{
-		return SQL2MySQLQueryTranslator::translate($query);
-	}
-
-	private function inc_executed_resquests_count()
-	{
-		$this->executed_resquests_count++;
-	}
+    private function execute(&$query, &$parameters)
+    {
+    	$this->query = $this->prepare($query, $parameters); 
+		return mysql_query($this->query, $this->link);
+    }
 }
 
 ?>

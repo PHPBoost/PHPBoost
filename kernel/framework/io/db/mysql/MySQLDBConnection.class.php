@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_db_connection.class.php
+ *                           MySQLDBConnection.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -65,7 +65,7 @@ class MySQLDBConnection implements DBConnection
 	 * @var MysqlResource
 	 */
 	private $link = null;
-	
+
 
 	public function __construct($host, $login, $password)
 	{
@@ -111,7 +111,7 @@ class MySQLDBConnection implements DBConnection
 		if ($this->is_connected())
 		{
 			$this->connected = false;
-            if (!is_resource($this->link) || !@mysql_close($this->link))
+			if (!is_resource($this->link) || !@mysql_close($this->link))
 			{
 				throw new MySQLDBConnectionException('can\'t close database connection');
 			}
@@ -131,6 +131,33 @@ class MySQLDBConnection implements DBConnection
 			throw new MySQLUnexistingDatabaseException();
 		}
 		$this->database_name = $database_name;
+	}
+
+	public function start_transaction()
+	{
+		$this->query = "START TRANSACTION;";
+		$this->inject($this->query);
+	}
+
+	public function commit()
+	{
+		$this->query = "COMMIT;";
+		$this->inject($this->query);
+	}
+
+	public function rollback()
+	{
+		$this->query = "ROLLBACK;";
+		$this->inject($this->query);
+	}
+
+	private function execute($command)
+	{
+		$resource = mysql_query($command, $this->link);
+		if ($resource === false)
+		{
+			throw new MySQLQuerierException('invalid mysql command');
+		}
 	}
 }
 

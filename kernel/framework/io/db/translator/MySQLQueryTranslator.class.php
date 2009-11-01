@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sql2mysql_query_translator.class.php
+ *                           MySQLQueryTranslator.class.php
  *                            -------------------
  *   begin                : October 2, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -27,47 +27,42 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
+ * @package db
+ * @subpackage translator
  * @desc translates the generic query <code>$query</code> into the mysql specific dialect
  */
-class SQL2MySQLQueryTranslator
+class MySQLQueryTranslator implements SQLQueryTranslator
 {
 	/**
 	 * @var string
 	 */
-	private static $query;
-
-	/**
-	 * @desc translates the generic query <code>$query</code> into the mysql specific dialect
-	 * @param string $query the query to translate
-	 * @return string the translated query
-	 */
-	public static function translate($query)
+	private $query;
+	
+	public function translate(&$query)
 	{
-		self::$query = $query;
+		$this->query = $query;
 		 
-		self::translate_operators();
-		self::translate_functions();
+		$this->translate_operators();
+		$this->translate_functions();
 
-		return self::$query;
+		return $this->query;
 	}
 
-	private static function translate_operators()
+	private function translate_operators()
 	{
-		self::$query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
-		array('SQL2MySQLQueryTranslator', 'concat_callback'), self::$query);
+		$this->query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
+		array('MySQLQueryTranslator', 'concat_callback'), $this->query);
 	}
 
-	private static function translate_functions()
+	private function translate_functions()
 	{
-		self::$query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', self::$query);
-		self::$query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', self::$query);
+		$this->query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
+        'MATCH($1) AGAINST($2)', $this->query);
+		$this->query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
+        'MATCH($1) AGAINST($2)', $this->query);
 	}
 
-	private static function concat_callback($matches)
+	private function concat_callback($matches)
 	{
 		$parameters = explode('||', $matches[0]);
 		return 'CONCAT(' . implode(',', $parameters) .')';
