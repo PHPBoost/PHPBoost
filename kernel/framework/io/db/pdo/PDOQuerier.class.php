@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQuerier.class.php
+ *                           PDOQuerier.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -26,51 +26,62 @@
  ###################################################*/
 
 import('io/db/AbstractSQLQuerier');
-import('io/db/mysql/MySQLSelectQueryResult');
-import('io/db/mysql/MySQLInjectQueryResult');
-import('io/db/SQLQueryVars');
+import('io/db/pdo/PDOSelectQueryResult');
+import('io/db/pdo/PDOInjectQueryResult');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
+ * @package sql
  * @subpackage mysql
  * @desc
  */
-class MySQLQuerier extends AbstractSQLQuerier
+class PDOQuerier extends AbstractSQLQuerier
 {
-	/**
-	 * @var SQLQueryVar
-	 */
-	private $query_var_replacator;
-
-	public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
-	{
-		parent::__construct($connection, $translator);
-		$this->query_var_replacator = new SQLQueryVars($this);
-	}
 
 	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
-		$resource = $this->execute($query, $parameters);
-		return new MySQLSelectQueryResult($query, $resource, $fetch_mode);
+		$statement = $this->prepare_statement($query);
+		$this->execute($statement, $query, $parameters);
+		return new PDOSelectQueryResult($query, $statement, $fetch_mode);
 	}
 
 	public function inject($query, $parameters = array())
 	{
-		$resource = $this->execute($query, $parameters);
-		return new MySQLInjectQueryResult($query, $this->link);
+		$statement = $this->prepare_statement($query, $parameters);
+		$this->execute($statement, $query, $parameters);
+		return new PDOInjectQueryResult($query, $statement, $this->link);
+		
 	}
 
-	public function escape(&$value)
+	/**
+	 * @param string $query
+	 * @return PDOStatement
+	 */
+	private function prepare_statement(&$query)
 	{
-		return mysql_real_escape_string($value);
+		return $this->link->prepare($this->prepare($query));
 	}
 
-	private function execute(&$query, &$parameters)
+	private function execute(&$statement, &$query, array &$parameters)
 	{
-		$query = $this->prepare($query);
-		$query = $this->query_var_replacator->replace($query, $parameters);
-		return mysql_query($query, $this->link);
+		$keys_to_remove = array();
+		foreach (array_keys($parameters) as $key)
+		{
+			if (!preg_match('`:' . $key . '[^\w]`i', $query))
+			{
+				$keys_to_remove[] = $key;
+			}
+		}
+		foreach ($keys_to_remove as $key)
+		{
+			unset($parameters[$key]);
+		}
+		
+		$result = $statement->execute($parameters);
+		if ($result === false)
+		{
+			throw new PDOQuerierException('invalid inject request', $statement);
+		}
 	}
 }
 

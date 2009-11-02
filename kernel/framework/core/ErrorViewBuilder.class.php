@@ -72,14 +72,16 @@ class ErrorViewBuilder
 		return $title;
 	}
 
-	private function get_message(&$message, &$exception)
+	private function get_message(&$message, $exception)
 	{
 		if (empty($message))
 		{
-			if (!empty($exception) && DEBUG)
+			if ($exception !== null && DEBUG)
 			{
-				$message = htmlspecialchars($exception->getMessage()) .
-					'<div class="spacer">&nbsp;</div>' . Debug::get_stacktrace_as_string(0, $exception);
+				$message = htmlspecialchars($exception->getMessage()) . '<br /><br /><i>' .
+				$exception->getFile() . ':' . $exception->getLine() .
+				'</i><div class="spacer">&nbsp;</div>' .
+				Debug::get_stacktrace_as_string(0, $exception);
 			}
 			else
 			{
@@ -89,11 +91,11 @@ class ErrorViewBuilder
 		return $message;
 	}
 
-	private function get_code(&$code, &$exception)
+	private function get_code(&$code, $exception)
 	{
 		if (empty($code))
 		{
-			if (!empty($exception) && DEBUG)
+			if ($exception !== null && DEBUG)
 			{
 				$code = $exception->getCode();
 			}
@@ -125,7 +127,7 @@ class ErrorViewBuilder
 		{
 			$level = E_UNKNOWN;
 		}
-		
+
 		$level_img = 'question';
 		switch ($level)
 		{

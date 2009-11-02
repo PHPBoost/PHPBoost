@@ -341,11 +341,13 @@ switch($step)
 					$file_path = '../kernel/db/config.php';
 
 					$db_config_content = '<?php' . "\n" .
-                        '$host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address' . "\n" .
-                        '$login = "' . $login . '"; //Login' . "\n" .
-                        '$password = "' . $password . '"; //Mot de passe - Password' . "\n" .
-                        '$database = "' . $database . '"; //Nom de la base de données - Database name' . "\n" .
-                        'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix' . "\n" .
+                        '$db_connection_data = array(' .
+						"\n\t" . '\'host\' => \'' . $host . '\',' .
+						"\n\t" . '\'login\' => \'' . $login . '\',' .
+						"\n\t" . '\'password\' => \'' . $password . '\',' .
+						"\n\t" . '\'database\' => \'' . $database . '\'' .
+						"\n" . ');' . "\n\n" .
+                        'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\');'. "\n" .
                         'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
                         'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
                         '?>';

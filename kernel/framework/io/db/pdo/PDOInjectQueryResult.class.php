@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQueryTranslator.class.php
+ *                           PDOInjectQueryResult.class.php
  *                            -------------------
- *   begin                : October 2, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,47 +25,77 @@
  *
  ###################################################*/
 
+import('io/db/InjectQueryResult');
+import('io/db/pdo/PDOQuerierException');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage translator
- * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+ * @package sql
+ * @subpackage mysql
+ * @desc
  */
-class MySQLQueryTranslator implements SQLQueryTranslator
+class PDOInjectQueryResult implements InjectQueryResult
 {
 	/**
 	 * @var string
 	 */
 	private $query;
 	
-	public function translate(&$query)
+	/**
+	 * @var PDOStatement
+	 */
+	private $statement = null;
+
+	/**
+	 * @var int
+	 */
+	private $affected_rows = 0;
+
+	/**
+	 * @var int
+	 */
+	private $last_inserted_id = 0;
+	
+	/**
+	 * @var bool
+	 */
+	private $is_disposed = false;
+
+	public function __construct(&$query, PDOStatement $statement, PDO $pdo)
 	{
+		// TODO change this for pgsql
+		$this->last_inserted_id = $pdo->lastInsertId();
 		$this->query = $query;
+		$this->statement = $statement;
+	}
 
-		$this->translate_operators();
-		$this->translate_functions();
+	public function __destruct()
+	{
+		$this->dispose();
+	}
 
+	public function get_query()
+	{
 		return $this->query;
 	}
 
-	private function translate_operators()
+	public function get_last_inserted_id()
 	{
-		$this->query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
-		array('MySQLQueryTranslator', 'concat_callback'), $this->query);
+		return $this->last_inserted_id;
 	}
 
-	private function translate_functions()
+	public function get_affected_rows()
 	{
-		$this->query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', $this->query);
-		$this->query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', $this->query);
+		return $this->statement->rowCount();
 	}
 
-	private function concat_callback($matches)
+	public function dispose()
 	{
-		$parameters = explode('||', $matches[0]);
-		return 'CONCAT(' . implode(',', $parameters) .')';
+		if (!$this->is_disposed)
+		{
+			$this->statement->closeCursor();
+			$this->is_disposed = true;
+		}
 	}
 }
 

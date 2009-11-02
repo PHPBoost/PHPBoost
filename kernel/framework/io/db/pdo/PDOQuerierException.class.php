@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           QueryResult.class.php
+ *                           PDOQuerierException.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,18 +25,20 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
- * @subpackage db
- */
-interface QueryResult
+import('io/db/SQLQuerierException');
+
+class PDOQuerierException extends SQLQuerierException
 {
-    /**
-     * @desc returns the executed query converted to dbms dialect
-     * @return string the executed query converted to dbms dialect
-     */
-    function get_query();
+	public function __construct($message, PDOStatement $statement)
+	{
+		$infos = array();
+		foreach ($statement->errorInfo() as $key => $info)
+		{
+			$infos[] = $key . ': ' . $info;
+		}
+		parent::__construct($message . '. (ERRNO ' . $statement->errorCode() . ') ' .
+		implode('<br />', $infos));
+	}
 }
 
 ?>

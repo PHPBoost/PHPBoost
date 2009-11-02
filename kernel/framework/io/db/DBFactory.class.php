@@ -34,6 +34,9 @@
  */
 class DBFactory
 {
+//	private static $dbms = 'pdo-mysql';
+	private static $dbms = 'mysql';
+	
 	/**
 	 * @var DBConnection
 	 */
@@ -57,14 +60,17 @@ class DBFactory
 				redirect(get_server_url_page('install/install.php'));
 			}
 
-			import('io/db/mysql/MySQLDBConnection');
-			self::$db_connection = new MySQLDBConnection($host, $login, $password);
-		}
-        
-		if (!self::$db_connection->is_connected())
-		{
-			self::$db_connection->connect();
-			self::$db_connection->select_database($database);
+			switch (self::$dbms)
+			{
+				case 'pdo-mysql':
+					self::$db_connection = ClassLoader::new_instance('io/db/pdo/PDODBConnection');
+					break;
+				case 'mysql':
+				default:
+					self::$db_connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
+					break;
+			}
+			self::$db_connection->connect($db_connection_data);
 		}
 		return self::$db_connection;
 	}
@@ -76,14 +82,28 @@ class DBFactory
 	 */
 	public static function new_sql_querier(DBConnection $db_connection)
 	{
-		import('io/db/mysql/MySQLQuerier');
-		return new MySQLQuerier($db_connection, self::new_query_translator());
+		switch (self::$dbms)
+		{
+			case 'pdo-mysql':
+				import('io/db/pdo/PDOQuerier');
+				return new PDOQuerier($db_connection, self::new_query_translator());
+			case 'mysql':
+			default:
+				import('io/db/mysql/MySQLQuerier');
+				return new MySQLQuerier($db_connection, self::new_query_translator());
+		}
 	}
-	
+
 	private static function new_query_translator()
 	{
-		import('io/db/translator/MySQLQueryTranslator');
-		return new MySQLQueryTranslator();
+		switch (self::$dbms)
+		{
+			case 'pdo-mysql':
+			case 'mysql':
+			default:
+				import('io/db/translator/MySQLQueryTranslator');
+				return new MySQLQueryTranslator();
+		}
 	}
 }
 

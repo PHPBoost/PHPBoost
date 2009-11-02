@@ -40,7 +40,7 @@ class AppContext
 	 * @var HTTPRequest
 	 */
 	private static $request;
-	
+
 	/**
 	 * @var BreadCrumb
 	 */
@@ -50,9 +50,13 @@ class AppContext
 	 */
 	private static $bench;
 	/**
-	 * @var SqlQuerier
+	 * @var SQLQuerier
 	 */
 	private static $sql_querier;
+	/**
+	 * @var CommonQuery
+	 */
+	private static $sql_common_query;
 	/**
 	 * @var Sql
 	 */
@@ -66,25 +70,25 @@ class AppContext
 	 */
 	private static $user;
 
-    /**
-     * @desc set the <code>HTTPRequest</code>
-     * @param HTTPRequest $request
-     */
-    public static function set_request(HTTPRequest $request)
-    {
-        self::$request = $request;
-    }
+	/**
+	 * @desc set the <code>HTTPRequest</code>
+	 * @param HTTPRequest $request
+	 */
+	public static function set_request(HTTPRequest $request)
+	{
+		self::$request = $request;
+	}
 
-    /**
-     * @desc Returns the <code>HTTPRequest</code> object
-     * @return HTTPRequest
-     */
-    public static function get_request()
-    {
-        return self::$request;
-    }
-	
-	
+	/**
+	 * @desc Returns the <code>HTTPRequest</code> object
+	 * @return HTTPRequest
+	 */
+	public static function get_request()
+	{
+		return self::$request;
+	}
+
+
 	/**
 	 * Inits the bench
 	 */
@@ -124,9 +128,9 @@ class AppContext
 	/**
 	 * Inits the db connection
 	 */
-	public static function init_sql($db_name)
+	public static function init_sql(DBConnection $connection, $database)
 	{
-		self::$sql = new Sql(DBFactory::get_db_connection(), $db_name);
+		self::$sql = new Sql($connection, $database);
 	}
 
 	/**
@@ -142,7 +146,7 @@ class AppContext
 	 */
 	public static function set_sql($sql)
 	{
-		// TODO ben, supprime ça, mais casse pas l'installateur (étape 6)
+		// TODO ben, supprime ça, mais casse pas l'installateur (étape 6
 		self::$sql = $sql;
 	}
 
@@ -152,6 +156,7 @@ class AppContext
 	public static function init_sql_querier()
 	{
 		self::$sql_querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
+		self::init_sql_common_query();
 
 		// TODO @ben, refactor this, find another way to retrieve the $sql_base
 		//Configuration file
@@ -159,7 +164,13 @@ class AppContext
 		//If PHPBoost is not installed, we redirect the user to the installation page
 		if (defined('PHPBOOST_INSTALLED'))
 		{
-			self::init_sql($database);
+			static $connection = null;
+			if ($connection === null)
+			{	// TODO arrange this If using PDO, there might be some problems with the connection
+				$connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
+				$connection->connect($db_connection_data);
+			}
+			self::init_sql($connection, $db_connection_data['database']);
 		}
 	}
 
@@ -170,6 +181,23 @@ class AppContext
 	public static function get_sql_querier()
 	{
 		return self::$sql_querier;
+	}
+	/**
+	 * Inits the database common querier
+	 */
+	public static function init_sql_common_query()
+	{
+		import('io/db/CommonQuery');
+		self::$sql_common_query = new CommonQuery(self::get_sql_querier());
+	}
+
+	/**
+	 * Returns the sql querier
+	 * @return CommonQuery
+	 */
+	public static function get_sql_common_query()
+	{
+		return self::$sql_common_query;
 	}
 
 	/**

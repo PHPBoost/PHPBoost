@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           DBConnection.class.php
+ *                           PDODBConnectionException.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -27,43 +27,17 @@
 
 import('io/db/DBConnectionException');
 
-interface DBConnection
-{    
-    /**
-     * @desc
-     * @param mixed[string] $db_connection_data
-     * @throws DBConnectionException
-     * @throws UnexistingDatabaseException
-     */
-    function connect(array &$db_connection_data);
-    
-    /**
-     * @desc
-     */
-    function disconnect();
-    
-    /**
-     * @desc
-     * @return the database link (mysql resource, pdo object, ... depends of the database)
-     */
-    function get_link();
-    
-    /**
-     * @desc start a new transaction. If a transaction has already been started,
-     * no new transaction will be created, but the existing one will be used
-     * (does not count in the requests count)
-     */
-    function start_transaction();
-    
-    /**
-     * @desc commit the current transaction (does not count in the requests count)
-     */
-    function commit();
-    
-    /**
-     * @desc rollback the current transaction (does not count in the requests count)
-     */
-    function rollback();
+class PDODBConnectionException extends DBConnectionException
+{
+    public function __construct($message, PDO $pdo)
+    {
+    	$infos = array();
+		foreach ($pdo->errorInfo() as $key => $info)
+		{
+			$infos[] = $key . ': ' . $info;
+		}
+		parent::__construct($message . '. (ERRNO ' . $pdo->errorCode() . ') ' .
+		implode('<br />', $infos));
+    }
 }
-
 ?>

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLDBConnection.class.php
+ *                           PDODBConnection.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -26,7 +26,6 @@
  ###################################################*/
 
 import('io/db/DBConnection');
-import('io/db/mysql/MySQLDBConnectionException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -34,12 +33,12 @@ import('io/db/mysql/MySQLDBConnectionException');
  * @subpackage mysql
  * @desc
  */
-class MySQLDBConnection implements DBConnection
+class PDODBConnection implements DBConnection
 {
 	/**
-	 * @var MysqlResource
+	 * @var PDO
 	 */
-	private $link = null;
+	private $pdo;
 
 	public function __destruct()
 	{
@@ -48,71 +47,43 @@ class MySQLDBConnection implements DBConnection
 
 	public function connect(array &$db_connection_data)
 	{
-		$mysql_link = @mysql_connect(
-		$db_connection_data['host'],
-		$db_connection_data['login'],
-		$db_connection_data['password']);
-		if ($mysql_link)
+		try
 		{
-			$this->link = $mysql_link;
-			$this->select_database($db_connection_data['database']);
+			$this->pdo = new PDO(
+			$db_connection_data['dsn'],
+			$db_connection_data['login'],
+			$db_connection_data['password'],
+			$db_connection_data['driver_options']);
 		}
-		else
+		catch (PDOException $exception)
 		{
-			throw new MySQLDBConnectionException('can\'t connect to database!');
+			throw new PDODBConnectionException($exception->getMessage(), $this->pdo);
 		}
 	}
 
 	public function get_link()
 	{
-		return $this->link;
+		return $this->pdo;
 	}
 
 	public function disconnect()
 	{
-		if ($this->link !== null)
-		{
-			if (!is_resource($this->link) || !@mysql_close($this->link))
-			{
-				throw new MySQLDBConnectionException('can\'t close database connection');
-			}
-			else
-			{
-				$this->link = null;
-			}
-		}
+		$this->pdo = null;
 	}
 
 	public function start_transaction()
 	{
-		$this->execute("START TRANSACTION;");
+		$this->pdo->beginTransaction();
 	}
 
 	public function commit()
 	{
-		$this->execute("COMMIT;");
+		$this->pdo->commit();
 	}
 
 	public function rollback()
 	{
-		$this->execute("ROLLBACK;");
-	}
-
-	private function execute($command)
-	{
-		$resource = mysql_query($command, $this->link);
-		if ($resource === false)
-		{
-			throw new MySQLQuerierException('invalid mysql command');
-		}
-	}
-
-	private function select_database(&$database)
-	{
-		if (!@mysql_select_db($database, $this->link))
-		{
-			throw new MySQLUnexistingDatabaseException();
-		}
+		$this->pdo->rollBack();
 	}
 }
 

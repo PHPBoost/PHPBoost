@@ -323,7 +323,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		//We add a page to the page displayed counter
 		pages_displayed();
-
+		
 		if ($CONFIG['bench'])
 		{
 			$template->assign_vars(array(

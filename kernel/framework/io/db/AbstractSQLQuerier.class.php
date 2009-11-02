@@ -26,7 +26,6 @@
  ###################################################*/
 
 import('io/db/SQLQuerier');
-import('io/db/SQLQueryVars');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -38,7 +37,7 @@ import('io/db/SQLQueryVars');
 abstract class AbstractSQLQuerier implements SQLQuerier
 {
     /**
-     * @var DBConnection
+     * @var mixed
      */
     protected $link;
     
@@ -50,23 +49,17 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 	/**
 	 * @var int
 	 */
-	private $executed_resquests_count;
+	private $executed_resquests_count = 0;
 	
 	/**
 	 * @var string
 	 */
 	private $query;
-	
-	/**
-	 * @var SQLQueryVar
-	 */
-	private $query_var_replacator;
     
     public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
     {
         $this->link = $connection->get_link();
         $this->translator = $translator;
-        $this->query_var_replacator = new SQLQueryVars($this);
     }
 
 	public function get_last_executed_query_string()
@@ -79,24 +72,11 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 		return $this->executed_resquests_count;
 	}
 	
-    protected function prepare(&$query, &$parameters)
+    protected function prepare(&$query)
     {
-		$this->query = $query;
+    	$this->query = $query;
     	$this->executed_resquests_count++;
-		$this->translate();
-		return $this->replace_query_vars($parameters);
-	}
-    
-    protected function translate()
-    {
     	return $this->translator->translate($this->query);
     }
-    
-    protected function replace_query_vars(&$parameters)
-    {
-    	return $this->query_var_replacator->replace($this->query, $parameters);
-    }
-	
-	abstract public function escape(&$value);
 }
 ?>

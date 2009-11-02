@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQueryResult.class.php
+ *                           PDOSelectQueryResult.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/db/QueryResult');
-import('io/db/mysql/MySQLQuerierException');
+import('io/db/SelectQueryResult');
+import('io/db/pdo/PDOQuerierException');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -34,36 +34,38 @@ import('io/db/mysql/MySQLQuerierException');
  * @subpackage mysql
  * @desc
  */
-class MySQLQueryResult implements QueryResult
+class PDOSelectQueryResult implements SelectQueryResult
 {
 	/**
-	 * @var Resource
+	 * @var string
 	 */
-	private $resource = null;
+	private $query;
+
+	/**
+	 * @var PDOStatement
+	 */
+	private $statement = null;
 
 	/**
 	 * @var int
 	 */
-	private $index = 0;
+	private $fetch_mode = null;
 
 	/**
-	 * @var string[string]
+	 * @var ArrayIterator
 	 */
-	private $current;
+	private $iterator = null;
 
 	/**
 	 * @var bool
 	 */
 	private $is_disposed = false;
 
-	public function __construct($resource)
+	public function __construct(&$query, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
 	{
-		if (!is_resource($resource) || $resource === false)
-		{
-			throw new MySQLQuerierException('query returns an invalid sql resource');
-		}
-		$this->resource = $resource;
-		$this->rewind();
+		$this->query = $query;
+		$this->statement = $statement;
+		$this->fetch_mode = $fetch_mode;
 	}
 
 	public function __destruct()
@@ -71,42 +73,66 @@ class MySQLQueryResult implements QueryResult
 		$this->dispose();
 	}
 
+	public function get_query()
+	{
+		return $this->query;
+	}
+
+	public function set_fetch_mode($fetch_mode)
+	{
+		$this->fetch_mode = $fetch_mode;
+	}
+
+	public function get_rows_count()
+	{
+		return $this->statement->rowCount();
+	}
+
 	public function rewind()
 	{
-		@mysql_data_seek($this->resource, 0);
-		$this->index = 0;
-		$this->next();
+		if ($this->iterator === null)
+		{
+			$pdo_fetch_mode = PDO::FETCH_ASSOC;
+			switch ($this->fetch_mode)
+			{
+				case self::FETCH_NUM:
+					$pdo_fetch_mode = PDO::FETCH_NUM;
+					break;
+				case self::FETCH_ASSOC:
+				default:
+					$pdo_fetch_mode = PDO::FETCH_ASSOC;
+					break;
+			}
+			$this->iterator = new ArrayIterator($this->statement->fetchAll($pdo_fetch_mode));
+		}
+		$this->iterator->rewind();
 	}
 
 	public function valid()
 	{
-		return $this->current !== false;
+		return  $this->iterator->valid();
 	}
 
 	public function current()
 	{
-		return $this->current;
+		return $this->iterator->current();
 	}
 
 	public function key()
 	{
-		return $this->index;
+		return $this->iterator->key();
 	}
 
 	public function next()
 	{
-		$this->current = mysql_fetch_assoc($this->resource);
-		$this->index++;
+		$this->iterator->next();
 	}
 
 	public function dispose()
 	{
-		if (!$this->is_disposed && is_resource($this->resource))
+		if (!$this->is_disposed)
 		{
-			if (!@mysql_free_result($this->resource))
-			{
-				throw new MySQLQuerierException('can\'t close sql resource');
-			}
+			$this->statement->closeCursor();
 			$this->is_disposed = true;
 		}
 	}

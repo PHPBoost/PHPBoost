@@ -48,7 +48,11 @@ class SQLQueryVars extends StringVars
 	
 	protected function set_var(&$parameter)
     {
-        if (is_array($parameter))
+    	if ($parameter === null)
+    	{
+    		return 'NULL';
+    	}
+    	elseif (is_array($parameter))
         {
             $nb_value = count($parameter);
             for ($i = 0; $i < $nb_value; $i++)
@@ -57,7 +61,15 @@ class SQLQueryVars extends StringVars
             }
             return '(' . implode(', ', $parameter) . ')';
         }
-        return $this->querier->escape($parameter);
+        
+        elseif (is_string($parameter))
+        {
+        	return '\'' . $this->querier->escape($parameter) . '\'';
+        }
+        else
+        {
+        	return $parameter;
+        }
     }
 }
 

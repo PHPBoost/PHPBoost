@@ -100,9 +100,11 @@ class Backup
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $Sql->query_while ('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				$result = $Sql->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
 				while ($row = $Sql->fetch_row($result))
+				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
+				}
 				$Sql->query_close($result);
 			}		
 		}
