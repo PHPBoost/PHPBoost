@@ -27,7 +27,7 @@
 
 import('mvc/model/DAO');
 import('mvc/model/MappingModel');
-import('mvc/model/QueryResultMapper');
+import('mvc/model/SelectQueryResultMapper');
 
 class ValidationException extends Exception {}
 
@@ -217,7 +217,7 @@ abstract class SQLDAO implements DAO
 		$this->compute_find_by_criteria_query();
 		$full_query = $this->find_by_criteria_query . $criteria;
 		$result = $this->querier->select($full_query, $parameters);
-		return new QueryResultMapper($result, $this->model);
+		return new SelectQueryResultMapper($result, $this->model);
 	}
 
 	private function cache_model()
