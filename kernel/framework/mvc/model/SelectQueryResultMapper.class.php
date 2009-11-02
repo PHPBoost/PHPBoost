@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           query_result_mapper.class.php
+ *                           SelectQueryResultMapper.class.php
  *                            -------------------
  *   begin                : October 5, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-import('io/db/QueryResult');
+import('io/db/SelectQueryResult');
 
-class QueryResultMapper implements SelectQueryResult
+class SelectQueryResultMapper implements SelectQueryResult
 {
 	/**
 	 * @var SelectQueryResult the internal query result object
@@ -54,12 +54,17 @@ class QueryResultMapper implements SelectQueryResult
 	{
 		return  $this->query_result->get_query();
 	}
-	
+
+	public function set_fetch_mode($fetch_mode)
+	{
+		return  $this->query_result->set_fetch_mode($fetch_mode);
+	}
+
 	public function get_rows_count()
 	{
 		return  $this->query_result->get_rows_count();
 	}
-	
+
 	public function __destruct()
 	{
 		$this->dispose();
