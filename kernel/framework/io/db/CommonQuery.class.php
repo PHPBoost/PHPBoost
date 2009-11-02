@@ -32,16 +32,26 @@
 class CommonQuery
 {
 	/**
+	 * @var SQLQuerier
+	 */
+	private $querier;
+	
+	public function __construct(SQLQuerier $querier)
+	{
+		$this->querier = $querier;
+	}
+	
+	/**
 	 * @desc insert the values into the <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
 	 */
-	public static function insert($table_name, $columns)
+	public function insert($table_name, $columns)
 	{
 		$columns_names = array_keys($columns);
 		$query = 'INSERT INTO ' . $table_name . ' (' . implode(', ', $columns_names) .
-		  ') VALUES (\':' . implode(', :', $columns_names) . '\');';
-		AppContext::get_sql_querier()->inject($query, $columns);
+		  ') VALUES (:' . implode(', :', $columns_names) . ');';
+		$this->querier->inject($query, $columns);
 	}
 
 	/**
@@ -53,16 +63,16 @@ class CommonQuery
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */
-	public static function update($table_name, $columns, $condition, $parameters = array())
+	public function update($table_name, $columns, $condition, $parameters = array())
 	{
 		$columns_names = array_keys($columns);
 		foreach (array_keys($columns) as $column)
 		{
-			$columns[] = $column . '=\'' . $column . '\'';
+			$columns[] = $column . '=:' . $column;
 		}
 		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
             ' WHERE ' . $condition . ';';
-		AppContext::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		$this->querier->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
@@ -73,10 +83,10 @@ class CommonQuery
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */
-	public static function delete($table_name, $condition, $parameters = array())
+	public function delete($table_name, $condition, $parameters = array())
 	{
 		$query = 'DELETE FROM ' . $table_name . ' WHERE ' . $condition . ';';
-		AppContext::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		$this->querier->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
@@ -89,16 +99,17 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public static function select_single_row($table_name, $columns, $condition,
+	public function select_single_row($table_name, $columns, $condition,
 	$parameters = array())
 	{
-		$query_result = self::select_rows(table_name, $columns, $condition, $parameters);
+		$query_result = self::select_rows($table_name, $columns, $condition, $parameters);
 		$query_result->rewind();
 		if (!$query_result->valid())
 		{
 			throw new RowNotFoundException();
 		}
 		$result = $query_result->current();
+		$query_result->next();
 		if ($query_result->valid())
 		{
 			throw new NotASingleRowFoundException();
@@ -116,12 +127,12 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public static function select_rows($table_name, $columns, $condition = '1',
+	public function select_rows($table_name, $columns, $condition = '1',
 	$parameters = array())
 	{
 		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' WHERE ' .
 		$condition;
-		return AppContext::get_sql_querier()->select($query, $parameters);
+		return $this->querier->select($query, $parameters);
 	}
 
 	/**
@@ -134,7 +145,7 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return int the number of rows returned
 	 */
-	public static function count($table_name, $condition = '', $count_column = '*',
+	public function count($table_name, $condition = '', $count_column = '*',
 	$parameters = array())
 	{
 		$query = 'SELECT COUNT(' . $count_column . ') FROM ' . $table_name;
@@ -142,7 +153,7 @@ class CommonQuery
 		{
 			$query .= ' WHERE ' . $condition;
 		}
-		return AppContext::get_sql_querier()->select($query, $parameters);
+		return $this->querier->select($query, $parameters);
 	}
 }
 

@@ -86,7 +86,7 @@ class Errors
 		{
 			return true;
 		}
-		
+		echo $errstr . ' ' . $errfile . ' ' . $errline;
 		switch ($errno)
 		{
 			//Notice utilisateur.

@@ -27,10 +27,10 @@
 
 import('io/db/QueryResult');
 
-class QueryResultMapper implements QueryResult
+class QueryResultMapper implements SelectQueryResult
 {
 	/**
-	 * @var QueryResult the internal query result object
+	 * @var SelectQueryResult the internal query result object
 	 */
 	protected $query_result;
 
@@ -50,6 +50,16 @@ class QueryResultMapper implements QueryResult
 		$this->model = $model;
 	}
 
+	public function get_query()
+	{
+		return  $this->query_result->get_query();
+	}
+	
+	public function get_rows_count()
+	{
+		return  $this->query_result->get_rows_count();
+	}
+	
 	public function __destruct()
 	{
 		$this->dispose();

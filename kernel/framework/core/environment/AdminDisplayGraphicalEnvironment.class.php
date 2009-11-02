@@ -43,7 +43,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		global $LANG, $CONFIG;
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
-		
+
 		$this->check_admin_auth();
 	}
 
@@ -136,7 +136,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 
 		$flood = retrieve(GET, 'flood', 0);
-		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL); 
+		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
 			$template = new Template('admin/admin_connect.tpl');
@@ -153,7 +153,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'L_PASSWORD' => $LANG['password'],
 				'L_AUTOCONNECT'	=> $LANG['autoconnect']	
 			));
-				
+
 			if ($flood)
 			{
 				$template->assign_vars(array(
@@ -386,7 +386,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$tpl->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => AppContext::get_sql()->get_executed_requests_number(),
+				'REQ' => AppContext::get_sql_querier()->get_executed_requests_count() +
+			AppContext::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],

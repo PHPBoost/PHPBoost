@@ -68,7 +68,9 @@ class ErrorController implements Controller
 	protected function load_env()
 	{
 		import('mvc/response/SiteDisplayResponse');
-		$this->set_response(new SiteDisplayResponse($this->get_view()));
+		$this->lang = LangLoader::get('ErrorViewBuilder');
+		$this->view->add_lang($this->lang);
+		$this->set_response(new SiteDisplayResponse($this->view));
 	}
 	/**
 	 * @return View
@@ -88,12 +90,20 @@ class ErrorController implements Controller
 		import('core/ErrorViewBuilder');
 		$view_builder = new ErrorViewBuilder($request);
 
+		$exception = null;
+		try
+		{
+			$exception = $request->get_value(self::EXCEPTION);
+		}
+		catch (UnexistingHTTPParameterException $exception)
+		{
+			Debug::fatal($exception);
+		}
+
 		$this->view = $view_builder->build($request->get_int(self::LEVEL, E_UNKNOWN),
 		$request->get_string(self::TITLE, ''), $request->get_string(self::CODE, ''),
 		$request->get_string(self::MESSAGE, ''), $request->get_string(self::CORRECTION_LINK, ''),
-		$request->get_string(self::CORRECTION_LINK_NAME, ''),
-		$request->get_string(self::EXCEPTION, '')
-		);
+		$request->get_string(self::CORRECTION_LINK_NAME, ''), $exception);
 	}
 }
 ?>

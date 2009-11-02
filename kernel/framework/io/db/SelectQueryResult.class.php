@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQueryTranslator.class.php
+ *                           SelectQueryResult.class.php
  *                            -------------------
- *   begin                : October 2, 2009
+ *   begin                : November 2, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,48 +25,37 @@
  *
  ###################################################*/
 
+import('io/db/QueryResult');
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage translator
- * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+ * @package io
+ * @subpackage db
+ * @desc this class encapsulate a query result set
+ * usage is:
+ * <code>
+ * foreach ($my_query_result as $result) {
+ * 	   // do something with the $result
+ * }
+ * </code> 
  */
-class MySQLQueryTranslator implements SQLQueryTranslator
+interface SelectQueryResult extends QueryResult, iterator
 {
-	/**
-	 * @var string
-	 */
-	private $query;
+	const FETCH_NUM = 0x00;
+	const FETCH_ASSOC = 0x01;
 	
-	public function translate(&$query)
-	{
-		$this->query = $query;
-
-		$this->translate_operators();
-		$this->translate_functions();
-
-		return $this->query;
-	}
-
-	private function translate_operators()
-	{
-		$this->query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
-		array('MySQLQueryTranslator', 'concat_callback'), $this->query);
-	}
-
-	private function translate_functions()
-	{
-		$this->query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', $this->query);
-		$this->query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
-        'MATCH($1) AGAINST($2)', $this->query);
-	}
-
-	private function concat_callback($matches)
-	{
-		$parameters = explode('||', $matches[0]);
-		return 'CONCAT(' . implode(',', $parameters) .')';
-	}
+	function set_fetch_mode($fetch_mode);
+	
+    /**
+     * @desc returns the number of returned rows by this query
+     * @return int the number of returned rows by this query
+     */
+    function get_rows_count();
+    
+    /**
+     * @desc free the resource. If not done manually, this is done in the destructor
+     */
+    function dispose();
 }
 
 ?>

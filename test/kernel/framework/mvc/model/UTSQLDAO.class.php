@@ -72,45 +72,32 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 		$this->model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 
-		$this->querier->inject("DROP TABLE IF EXISTS :table;",
-		array('table' => $this->model->get_table_name()));
-		$this->querier->inject("CREATE TABLE :table (
-				  :id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-				  :title VARCHAR(128) NOT NULL,
-				  :description TEXT NOT NULL,
-				  :user_id INTEGER UNSIGNED NOT NULL,
-				  PRIMARY KEY (:id),
-				  FULLTEXT INDEX :title(:title),
-				  FULLTEXT INDEX :description(:description),
-				  FULLTEXT INDEX title_description(:title, :description)
-				) ENGINE=MyISAM;", array(
-	            'table' => $this->model->get_table_name(),
-	            'id' => $primary_key->get_db_field_name(),
-	            'title' => $field_title->get_db_field_name(),
-	            'description' => $field_description->get_db_field_name(),
-	            'user_id' => $field_user_id->get_db_field_name(),
-		));
+		$this->querier->inject("DROP TABLE IF EXISTS " . $this->model->get_table_name() . ";");
+		$this->querier->inject("CREATE TABLE " . $this->model->get_table_name() . " (
+			  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+			  title VARCHAR(128) NOT NULL,
+			  description TEXT NOT NULL,
+			  user_id INTEGER UNSIGNED NOT NULL,
+			  PRIMARY KEY (id),
+			  FULLTEXT INDEX title(title),
+			  FULLTEXT INDEX description(description),
+			  FULLTEXT INDEX title_description(title, description)
+			) ENGINE=MyISAM;");
 
-		$this->querier->inject("INSERT INTO :table (:id, :title, :description, :user_id)
-		     VALUES(:id_value, ':title_value', ':description_value', :user_id_value);", array(
-             'table' => $this->model->get_table_name(),
-             'id' => $primary_key->get_db_field_name(),
-             'title' => $field_title->get_db_field_name(),
-             'description' => $field_description->get_db_field_name(),
-             'user_id' => $field_user_id->get_db_field_name(),
+		$this->querier->inject("INSERT INTO " . $this->model->get_table_name() .
+			" (id, title, description, user_id)
+		     VALUES(:id_value, :title_value, :description_value, :user_id_value);", array(
              'id_value' => self::AUTO_INSERTED_OBJECT_ID,
              'title_value' => 'A new title',
              'description_value' => 'a short description. isn\'t it cool?',
-             'user_id_value' => 42,
-		));
+             'user_id_value' => 42));
 
 		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 	}
 
 	public function tearDown()
 	{
-		$this->querier->inject("DROP TABLE IF EXISTS :table;",
-		array('table' => $this->model->get_table_name()));
+		$this->querier->inject("DROP TABLE IF EXISTS " . $this->model->get_table_name() . ";");
 	}
 
 	public function test___construct()

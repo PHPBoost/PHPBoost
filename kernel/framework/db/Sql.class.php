@@ -55,6 +55,38 @@ define('DBTYPE', 'mysql');
 class Sql
 {
 	/**
+	 * @var resource Link with the data base
+	 */
+	private $link;
+	/**
+	 * @var int Number of requests executed by the object.
+	 */
+	private $req = 0;
+	/**
+	 * @var bool true if the object is connected to the data base, false otherwise.
+	 */
+	private $connected = false;
+	/**
+	 * @var string name of the data base at which is connected the object.
+	 */
+	private $base_name = '';
+
+	/**
+	 * @var SelectQueryResult
+	 */
+	private $select_query_result = null;
+
+	/**
+	 * @var InjectQueryResult
+	 */
+	private $inject_query_result = null;
+
+	/**
+	 * @var bool
+	 */
+	private $needs_rewind = false;
+
+	/**
 	 * @desc Builds a MySQL connection.
 	 */
 	public function __construct(DBConnection $db_connection, $db_name = '')
@@ -75,12 +107,11 @@ class Sql
 	 */
 	public function query($query, $errline, $errfile)
 	{
-		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		if (is_resource($resource))
+		$query_result = AppContext::get_sql_querier()->select($query, array(), SelectQueryResult::FETCH_NUM);
+		$query_result->rewind();
+		if ($query_result->valid())
 		{
-			$result = mysql_fetch_row($resource);
-			$this->query_close($resource); //Déchargement mémoire.
-			$this->req++;
+			$result = $query_result->current();
 			return $result[0];
 		}
 		else
@@ -108,37 +139,35 @@ class Sql
 		$table = func_get_arg(0);
 		$nbr_arg = func_num_args();
 
+		$fields = array();
+		$conditions = '1';
 		if (func_get_arg(1) !== '*')
 		{
 			$nbr_arg_field_end = ($nbr_arg - 4);
 			for ($i = 1; $i <= $nbr_arg_field_end; $i++)
 			{
-				if ($i > 1)
-				$field .= ', ' . func_get_arg($i);
-				else
-				$field = func_get_arg($i);
+				$fields[] = func_get_arg($i);
 			}
-			$end_req = ' ' . func_get_arg($nbr_arg - 3);
+			$conditions = func_get_arg($nbr_arg - 3);
 		}
 		else
 		{
-			$field = '*';
-			$end_req = ($nbr_arg > 4) ? ' ' . func_get_arg($nbr_arg - 3) : '';
+			$fields = array('*');
 		}
 
-		$error_line = func_get_arg($nbr_arg - 2);
-		$error_file = func_get_arg($nbr_arg - 1);
-		$resource = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
-		if ($resource) {
-			$result = mysql_fetch_assoc($resource);
-			//Fermeture de la ressource
-			$this->query_close($resource);
-			$this->req++;
-			return $result;
-		} else {
+		try
+		{
+			return AppContext::get_sql_common_query()->select_single_row(
+			$table, $fields, str_replace('WHERE', '', $conditions));
+		}
+		catch (RowNotFoundException $exception)
+		{
 			return false;
 		}
-			
+		catch (NotASingleRowFoundException $exception)
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -153,10 +182,7 @@ class Sql
 	 */
 	public function query_inject($query, $errline, $errfile)
 	{
-		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid inject request', $errline, $errfile);
-		$this->req++;
-
-		return $resource;
+		$this->inject_query_result = AppContext::get_sql_querier()->inject($query);
 	}
 
 	/**
@@ -170,10 +196,9 @@ class Sql
 	 */
 	public function query_while ($query, $errline, $errfile)
 	{
-		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
-		$this->req++;
-
-		return $result;
+		$this->select_query_result = AppContext::get_sql_querier()->select($query);
+		$this->needs_rewind = true;
+		return $this->select_query_result;
 	}
 
 	/**
@@ -187,12 +212,18 @@ class Sql
 	 */
 	public function count_table($table, $errline, $errfile)
 	{
-		$resource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
-		$result = mysql_fetch_assoc($resource);
-		$this->query_close($resource); //Déchargement mémoire.
-		$this->req++;
+		$result = null;
+		try
+		{
+			$result = AppContext::get_sql_common_query()->select_single_row(PREFIX . $table,
+			array('COUNT(*) AS num_rows'));
+		}
+		catch (Exception $exception)
+		{
+			$this->_error($exception->getMessage(), 'Invalid count request', $errline, $errfile);
+		}
 
-		return $result['total'];
+		return $result['num_rows'];
 	}
 
 	/**
@@ -202,9 +233,10 @@ class Sql
 	 * @return string[] An associative array whose keys are the name of each column and values are the value of the field.
 	 * It returns false when you are at the end of the rows.
 	 */
-	public function fetch_assoc($result)
+	public function fetch_assoc(SelectQueryResult $result)
 	{
-		return mysql_fetch_assoc($result);
+		$result->set_fetch_mode(SelectQueryResult::FETCH_ASSOC);
+		return $this->fetch_next($result);
 	}
 
 	/**
@@ -214,9 +246,27 @@ class Sql
 	 * @return string[] An array whose values are the value of the field. The fields are indexed according to the order they had in the select query.
 	 * It returns false when you are at the end of the rows.
 	 */
-	public function fetch_row($result)
+	public function fetch_row(SelectQueryResult $result)
 	{
-		return mysql_fetch_row($result);
+		$result->set_fetch_mode(SelectQueryResult::FETCH_NUM);
+		return $this->fetch_next($result);
+	}
+
+	private function fetch_next(SelectQueryResult $result)
+	{
+		if ($this->needs_rewind)
+		{
+			$this->select_query_result->rewind();
+			$this->needs_rewind = false;
+		}
+		if ($result === null || !$result->valid())
+		{
+			return false;
+		}
+		$current = $result->current();
+		$result->key();
+		$result->next();
+		return $current;
 	}
 
 	/**
@@ -226,9 +276,9 @@ class Sql
 	 * @param string $query Deprecated field. Don't use it.
 	 * @return int The number of the rows affected by the specified resource.
 	 */
-	public function affected_rows($resource, $query = '')
+	public function affected_rows()
 	{
-		return mysql_affected_rows();
+		return $this->inject_query_result->get_affected_rows();
 	}
 
 	/**
@@ -237,9 +287,9 @@ class Sql
 	 * @param $query Deprecated field. Don't use it.
 	 * @return int The number of rows contained in the resource.
 	 */
-	public function num_rows($resource, $query)
+	public function num_rows()
 	{
-		return mysql_num_rows($resource);
+		return $this->select_query_result->get_rows_count();
 	}
 
 	/**
@@ -250,7 +300,7 @@ class Sql
 	 */
 	public function insert_id($query = '')
 	{
-		return mysql_insert_id();
+		return $this->inject_query_result->get_last_inserted_id();
 	}
 
 	/**
@@ -270,8 +320,15 @@ class Sql
 	 */
 	public function query_close($resource)
 	{
-		if (is_resource($resource))
-		return mysql_free_result($resource);
+		try
+		{
+			$resource->dispose();
+			return true;
+		}
+		catch (SQLQuerierException $exception)
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -284,15 +341,14 @@ class Sql
 		if (!empty($table))
 		{
 			$array_fields_name = array();
-			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->base_name . "`", __LINE__, __FILE__);
-			if (!$result) return array();
-			while ($row = mysql_fetch_row($result))
+			$query_result = AppContext::get_sql_querier()->select("SHOW COLUMNS FROM " . $table .
+			" FROM " . $this->base_name, array(), SelectQueryResult::FETCH_NUM);
+			foreach ($query_result as $row)
 			{
 				$array_fields_name[] = $row[0];
 			}
 			return $array_fields_name;
 		}
-		else
 		return array();
 	}
 
@@ -318,8 +374,10 @@ class Sql
 	{
 		$array_tables = array();
 
-		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->base_name . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
-		while ($row = mysql_fetch_row($result))
+		$query_result = AppContext::get_sql_querier()->select("SHOW TABLE STATUS FROM `" .
+		$this->base_name . "` LIKE '" . PREFIX . "%'", array(), SelectQueryResult::FETCH_NUM);
+
+		foreach ($query_result as $row)
 		{
 			$array_tables[$row[0]] = array(
 				'name' => $row[0],
@@ -359,18 +417,28 @@ class Sql
 					if (substr($sql_line, -1) == ';')
 					{
 						if (empty($req))
-						$req = $sql_line;
+						{
+							$req = $sql_line;
+						}
 						else
-						$req .= ' ' . $sql_line;
-							
+						{
+							$req .= ' ' . $sql_line;
+						}
+
 						if (!empty($tableprefix))
-						$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);
+						{
+							$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);
+						}
 						else
-						$this->query_inject($req, __LINE__, __FILE__);
+						{
+							$this->query_inject($req, __LINE__, __FILE__);
+						}
 						$req = '';
 					}
 					else //Concaténation de la requête qui peut être multi ligne.
-					$req .= ' ' . $sql_line;
+					{
+						$req .= ' ' . $sql_line;
+					}
 				}
 			}
 			@fclose($handle);
@@ -405,9 +473,10 @@ class Sql
 		$db_list = mysql_list_dbs($this->link);
 
 		$result = array();
-
 		while ($row = mysql_fetch_assoc($db_list))
-		$result[] = $row['Database'];
+		{
+			$result[] = $row['Database'];
+		}
 
 		return $result;
 	}
@@ -430,10 +499,10 @@ class Sql
 	 */
 	public function optimize_tables($table_array)
 	{
-		global $Sql;
-
-		if (count($table_array) != 0)
-		$Sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+		if (!empty($table_array))
+		{
+			AppContext::get_sql_querier()->inject("OPTIMIZE TABLE " . implode(', ', $table_array));
+		}
 	}
 
 	/**
@@ -442,9 +511,9 @@ class Sql
 	 */
 	public function repair_tables($table_array)
 	{
-		if (count($table_array) != 0)
+		if (!empty($table_array))
 		{
-			$this->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			AppContext::get_sql_querier()->inject("REPAIR TABLE " . implode(', ', $table_array));
 		}
 	}
 
@@ -454,8 +523,10 @@ class Sql
 	 */
 	public function truncate_tables($table_array)
 	{
-		if (count($table_array) != 0)
-		$this->query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+		if (!empty($table_array))
+		{
+			AppContext::get_sql_querier()->inject("TRUNCATE TABLE " . implode(', ', $table_array));
+		}
 	}
 
 	/**
@@ -464,8 +535,10 @@ class Sql
 	 */
 	public function drop_tables($table_array)
 	{
-		if (count($table_array) != 0)
-		$this->query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+		if (!empty($table_array))
+		{
+			AppContext::get_sql_querier()->inject("DROP TABLE " . implode(', ', $table_array));
+		}
 	}
 
 	/**
@@ -486,7 +559,7 @@ class Sql
 	 */
 	public static function limit($start, $num_lines = 0)
 	{
-		return ' LIMIT ' . $start . ', ' .  $num_lines;
+		return ' LIMIT ' . $num_lines . ' OFFSET ' . $start;
 	}
 
 	/**
@@ -503,7 +576,7 @@ class Sql
 		$concat_string = func_get_arg(0);
 		for ($i = 1; $i < $nbr_args; $i++)
 		{
-			$concat_string = 'CONCAT(' . $concat_string . ',' . func_get_arg($i) . ')';
+			$concat_string = '(' . $concat_string . ' || ' . func_get_arg($i) . ')';
 		}
 
 		return ' ' . $concat_string . ' ';
@@ -615,22 +688,5 @@ class Sql
 		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
 		redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
 	}
-
-	/**
-	 * @var resource Link with the data base
-	 */
-	private $link;
-	/**
-	 * @var int Number of requests executed by the object.
-	 */
-	private $req = 0;
-	/**
-	 * @var bool true if the object is connected to the data base, false otherwise.
-	 */
-	private $connected = false;
-	/**
-	 * @var string name of the data base at which is connected the object.
-	 */
-	private $base_name = '';
 }
 ?>
