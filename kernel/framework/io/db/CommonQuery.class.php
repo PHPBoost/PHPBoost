@@ -153,7 +153,6 @@ class CommonQuery
 		{
 			$query .= ' WHERE ' . $condition;
 		}
-		die($query);
 		return $this->querier->select($query, $parameters);
 	}
 }
