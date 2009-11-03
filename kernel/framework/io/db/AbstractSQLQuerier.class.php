@@ -50,22 +50,12 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 	 * @var int
 	 */
 	private $executed_resquests_count = 0;
-	
-	/**
-	 * @var string
-	 */
-	private $query;
     
     public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
     {
         $this->link = $connection->get_link();
         $this->translator = $translator;
     }
-
-	public function get_last_executed_query_string()
-	{
-		return $this->query;
-	}
     
 	public function get_executed_requests_count()
 	{
@@ -74,9 +64,8 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 	
     protected function prepare(&$query)
     {
-    	$this->query = $query;
     	$this->executed_resquests_count++;
-    	return $this->translator->translate($this->query);
+    	return $this->translator->translate($query);
     }
 }
 ?>
