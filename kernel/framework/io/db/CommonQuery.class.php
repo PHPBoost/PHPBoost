@@ -99,7 +99,7 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public function select_single_row($table_name, $columns, $condition,
+	public function select_single_row($table_name, $columns, $condition = '1',
 	$parameters = array())
 	{
 		$query_result = self::select_rows($table_name, $columns, $condition, $parameters);
@@ -153,6 +153,7 @@ class CommonQuery
 		{
 			$query .= ' WHERE ' . $condition;
 		}
+		die($query);
 		return $this->querier->select($query, $parameters);
 	}
 }
