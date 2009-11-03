@@ -80,9 +80,9 @@ class Forum
 			$next_msg_link = HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			$preview_contents = substr($contents, 0, 300);
 
-			import('io/Mail');
+			
 			$Mail = new Mail();
-			import('members/PrivateMsg');
+			
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - $CONFIG['site_session_invit'];
@@ -455,8 +455,8 @@ class Forum
 		$alert_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_alerts");
 
 		//Importing the contribution classes
-		import('events/Contribution');
-		import('events/ContributionService');
+		
+		
 
 		$contribution = new Contribution();
 
@@ -500,8 +500,8 @@ class Forum
 		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
 
 		//Si la contribution associée n'est pas réglée, on la règle
-		import('events/Contribution');
-		import('events/ContributionService');
+		
+		
 		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
@@ -534,8 +534,8 @@ class Forum
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
 		
 		//Si la contribution associée n'est pas réglée, on la règle
-		import('events/Contribution');
-		import('events/ContributionService');
+		
+		
 		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)

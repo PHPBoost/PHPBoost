@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
@@ -178,8 +178,8 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG, $Cache;
 		
-		import('content/sitemap/ModuleMap');
-		import('util/Url');
+		
+		
 		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		

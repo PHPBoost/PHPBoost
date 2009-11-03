@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/parser/Parser');
+
 
 //Couleurs pour la coloration du BBCode
 define('TPL_BRACES_STYLE', 'color:#7F3300;');

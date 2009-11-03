@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('menu/Menu');
-import('content/feed/Feed');
+
+
 
 define('FEED_MENU__CLASS','FeedMenu');
 
@@ -99,7 +99,7 @@ class FeedMenu extends Menu
 	*/
 	public function get_url($relative = false)
 	{
-		import('util/Url');
+		
 		$url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->category . '&amp;name=' . $this->name);
 		if ($relative)
 		{

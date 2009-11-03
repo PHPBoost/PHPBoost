@@ -35,7 +35,7 @@ $guestbook = retrieve(POST, 'guestbookForm', false);
 $Cache->load('guestbook');
 
 //Captcha
-import('util/Captcha');
+
 $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
@@ -114,7 +114,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 			));
 
 			//Update form
-			import('builder/form/FormBuilder');
+			
 			$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
 			$fieldset = new FormFieldset($LANG['update_msg']);
 			
@@ -204,7 +204,7 @@ else //Affichage.
 	$is_guest = !$User->check_level(MEMBER_LEVEL);
 	
 	//Post form
-	import('builder/form/FormBuilder');
+	
 	$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur
@@ -227,7 +227,7 @@ else //Affichage.
 	
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

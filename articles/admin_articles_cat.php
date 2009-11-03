@@ -58,7 +58,7 @@ if ($cat_to_del > 0)
 		$articles_categories->delete($cat_to_del);
 		
 		// Feeds Regeneration
-		import('content/feed/Feed');
+		
 		Feed::clear_cache('articles');
 
 		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
@@ -117,7 +117,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		// category icon
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		import('io/filesystem/Folder');
+		
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -163,7 +163,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		$img_default = '../articles/articles.png';
 		$img_default_name = 'articles.png';
 		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default_name.'</option>';
-		import('io/filesystem/Folder');
+		
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -247,7 +247,7 @@ elseif (retrieve(POST,'submit',false))
 	}
 
 	// Feeds Regeneration
-	import('content/feed/Feed');
+	
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');

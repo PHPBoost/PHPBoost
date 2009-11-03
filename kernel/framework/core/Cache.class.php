@@ -149,7 +149,7 @@ class Cache
 	{
 		global $Errorh;
 
-		import('modules/ModulesDiscoveryService');
+		
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 
@@ -184,7 +184,7 @@ class Cache
 	{
 		global $MODULES;
 
-		import('modules/ModulesDiscoveryService');
+		
 		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach ($modules as $module)
@@ -222,7 +222,7 @@ class Cache
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
-		import('io/filesystem/File');
+		
 		$cache_file = new File($file_path, WRITE);
 
 		//Suppression du fichier (si il existe)
@@ -287,7 +287,7 @@ class Cache
 	 */
 	function _get_menus()
 	{
-		import('core/MenuService');
+		
 		return MenuService::generate_cache(true);
 	}
 
@@ -382,11 +382,11 @@ class Cache
 		foreach ($CONFIG_USER as $key => $value)
 		$config_member .= '$CONFIG_USER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 
-		import('events/ContributionService');
+		
 		//Unread contributions for each profile
 		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
 
-		import('events/AdministratorAlertService');
+		
 		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
 
 		return $config_member;

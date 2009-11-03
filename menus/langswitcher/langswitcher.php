@@ -54,7 +54,7 @@ function menu_langswitcher_langswitcher($position, $block)
     }
     
     $tpl = new Template('menus/langswitcher/langswitcher.tpl');
-    import('core/MenuService');
+    
     MenuService::assign_positions_conditions($tpl, $block);
     
     $array_js_identifier = '';

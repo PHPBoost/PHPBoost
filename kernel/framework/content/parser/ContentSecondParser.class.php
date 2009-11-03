@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('content/parser/Parser');
+
 
 /**
  * @package content
@@ -74,7 +74,7 @@ class ContentSecondParser extends Parser
 			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
 		}
 
-		import('util/Url');
+		
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
 	}
 
@@ -85,7 +85,7 @@ class ContentSecondParser extends Parser
 	 */
 	function export_html_text($html_content)
 	{
-		import('util/Url');
+		
 
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
@@ -123,7 +123,7 @@ class ContentSecondParser extends Parser
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')
 		{
-			import('content/parser/BBCodeHighlighter');
+			
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$bbcode_highlighter->parse($inline_code);
@@ -132,7 +132,7 @@ class ContentSecondParser extends Parser
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
 		{
-			import('content/parser/TemplateHighlighter');
+			
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();

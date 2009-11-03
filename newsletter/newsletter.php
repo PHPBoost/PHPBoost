@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 //Inscription ou désinscription
 if (!empty($mail_newsletter))
 {
-	import('io/Mail');
+	
 	//Vérification de la validité du mail proposé
 	if (Mail::check_validity($mail_newsletter))
 	{
@@ -87,7 +87,7 @@ else
 {
 	$Template->assign_block_vars('arch_title', array());
 	
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 	
 	$i = 0;	

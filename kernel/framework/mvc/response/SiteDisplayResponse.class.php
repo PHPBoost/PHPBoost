@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/response/AbstractResponse');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -37,7 +37,7 @@ class SiteDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		import('core/environment/SiteDisplayGraphicalEnvironment');
+		
 		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
 	}
 }

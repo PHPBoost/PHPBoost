@@ -27,8 +27,8 @@
 
 define('DEFAULT_RSS_TEMPLATE', 'framework/content/syndication/rss.tpl');
 
-import('io/template/Template');
-import('content/feed/Feed');
+
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

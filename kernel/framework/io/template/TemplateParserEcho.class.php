@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/template/AbstractTemplateParser');
+
 
 class TemplateParserEcho extends AbstractTemplateParser
 {

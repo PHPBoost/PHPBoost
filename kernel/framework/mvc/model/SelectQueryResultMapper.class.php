@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/SelectQueryResult');
+
 
 class SelectQueryResultMapper implements SelectQueryResult
 {

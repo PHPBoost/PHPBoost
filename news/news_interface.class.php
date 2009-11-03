@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
@@ -83,7 +83,7 @@ class NewsInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
-		import('util/Date');
+		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
@@ -129,10 +129,10 @@ class NewsInterface extends ModuleInterface
 
 		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
 
-        import('content/feed/FeedData');
-        import('util/Date');
+        
+        
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-        import('util/Url');
+        
 
         load_module_lang('news');
 
@@ -197,8 +197,8 @@ class NewsInterface extends ModuleInterface
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
 
-		import('content/sitemap/ModuleMap');
-		import('util/Url');
+		
+		
 
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
 
@@ -291,10 +291,10 @@ class NewsInterface extends ModuleInterface
 		}
 
 		// Import.
-		import('util/Date');
-		import('content/Comments');
-		import('content/feed/Feed');
-		import('util/Pagination');
+		
+		
+		
+		
 
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);

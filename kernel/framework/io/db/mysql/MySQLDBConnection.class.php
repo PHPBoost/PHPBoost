@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/db/DBConnection');
-import('io/db/mysql/MySQLDBConnectionException');
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

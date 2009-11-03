@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('util/Url');
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

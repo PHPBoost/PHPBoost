@@ -27,10 +27,10 @@
  ###################################################*/
 
 //Imports of every class of this package
-import('content/sitemap/ModuleMap');
-import('content/sitemap/SiteMapLink');
-import('content/sitemap/SiteMapSection');
-import('content/sitemap/SiteMapExportConfig');
+
+
+
+
 
 //For who is the site map?
 /**
@@ -163,7 +163,7 @@ class SiteMap
      */
     function build_modules_maps()
     {
-        import('modules/ModulesDiscoveryService');
+        
          
         $Modules = new ModulesDiscoveryService();
         foreach ($Modules->get_available_modules('get_module_map') as $module)

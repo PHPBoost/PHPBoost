@@ -172,7 +172,7 @@ class Session
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 
 		########Insertion dans le compteur si l'ip est inconnue.########
-		import('core/StatsSaver');
+		
 
 		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
 		$_include_once = empty($check_ip) && (StatsSaver::check_bot() === false);

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/QueryResult');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

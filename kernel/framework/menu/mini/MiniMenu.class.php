@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('menu/Menu');
+
 
 define('MINI_MENU__CLASS', 'MiniMenu');
 

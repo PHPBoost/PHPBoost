@@ -31,7 +31,7 @@ function gallery_mini($position, $block)
 {
     global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics, $Sql;
     $tpl = new Template('gallery/gallery_mini.tpl');
-    import('core/MenuService');
+    
     MenuService::assign_positions_conditions($tpl, $block);
 
     //Chargement de la langue du module.

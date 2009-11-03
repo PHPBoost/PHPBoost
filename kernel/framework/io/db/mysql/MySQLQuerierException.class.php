@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/SQLQuerierException');
+
 
 class MySQLQuerierException extends SQLQuerierException
 {

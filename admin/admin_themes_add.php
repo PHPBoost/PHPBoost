@@ -58,7 +58,7 @@ if ($install)
 		
 		$Cache->load('themes', RELOAD_CACHE);
 		
-		import('core/cache/ModulesCssFilesCache');
+		
     	ModulesCssFilesCache::invalidate();
 
 		redirect(HOST . SCRIPT); 
@@ -81,7 +81,7 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 		$check_theme = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_THEMES . " WHERE theme = '" . strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_theme) && !is_dir('../templates/' . $_FILES['upload_theme']['name']))
 		{
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -159,7 +159,7 @@ else
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;
-	import('io/filesystem/Folder');
+	
 	$tpl_array = array();
 	$lang_folder_path = new Folder('../templates/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)

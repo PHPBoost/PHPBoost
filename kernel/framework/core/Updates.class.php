@@ -34,8 +34,8 @@ define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
 define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
-import('core/Application');
-import('core/Repository');
+
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
@@ -145,7 +145,7 @@ class Updates
 	*/
     function _add_update_alert(&$app)
     {
-        import('events/AdministratorAlertService');
+        
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
         if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)

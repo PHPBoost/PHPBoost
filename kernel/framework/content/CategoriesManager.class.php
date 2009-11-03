@@ -615,8 +615,8 @@ class CategoriesManager
 	function get_feeds_list()
 	{
 	    global $LANG;
-	    import('content/feed/FeedsList');
-	    import('content/feed/FeedsCat');
+	    
+	    
 	    
 	    $list = new FeedsList();
 	    //Catégorie racine

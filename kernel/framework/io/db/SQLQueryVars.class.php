@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('util/StringVars');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

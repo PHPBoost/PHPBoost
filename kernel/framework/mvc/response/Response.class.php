@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/View');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

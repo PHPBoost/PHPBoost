@@ -183,7 +183,7 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 	
 	function test_import()
 	{
-		import('util/Date');
+		
 		$this->assertTrue(class_exists('Date'));
 	}
 	

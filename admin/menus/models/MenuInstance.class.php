@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/model/BusinessObject');
+
 
 import('/admin/menus/models/dao/MenuInstanceDAO');
 

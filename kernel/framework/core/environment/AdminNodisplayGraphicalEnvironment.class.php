@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('core/environment/AbstractDisplayGraphicalEnvironment');
+
 
 /**
  * @package core

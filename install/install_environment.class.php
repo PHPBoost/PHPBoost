@@ -78,7 +78,7 @@ class InstallEnvironment
 		else
 		{
 			//We try to load another lang
-			import('io/filesystem/Folder');
+			
 			$distribution_folder = new Folder('distribution');
 			$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
 			if (count($distribution_files) > 0)

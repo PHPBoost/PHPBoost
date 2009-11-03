@@ -26,7 +26,7 @@
  *
  ###################################################*/
 
-import('content/sitemap/SiteMapElement');
+
 
 /**
  * @package content

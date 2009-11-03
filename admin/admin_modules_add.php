@@ -40,7 +40,7 @@ if ($install) //Installation du module
 
 	$enable_module = retrieve(POST, $module_name . 'activ', false);
 	
-	import('modules/PackageManager');
+	
 	
 	switch (PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
@@ -79,7 +79,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if (empty($ckeck_module) && !is_dir('../' . $module_name))
 		{
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -174,7 +174,7 @@ else
 	$uninstalled_modules = array();
 	if (is_dir($root)) //Si le dossier existe
 	{
-		import('io/filesystem/Folder');
+		
 		$dir_array = array();
 		$lang_folder_path = new Folder($root);
 		foreach ($lang_folder_path->get_folders() as $odir)

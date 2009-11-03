@@ -228,7 +228,7 @@ class Backup
 	 */
 	public function export_file($file_path)
 	{
-		import('io/filesystem/File');
+		
 		$file = new File($file_path);
 		$file->open(WRITE);
 		$file->write($this->backup_script);

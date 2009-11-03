@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-import('content/feed/Feed');
-import('content/feed/FeedsCat');
+
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

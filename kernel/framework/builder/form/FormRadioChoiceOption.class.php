@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/form/FormFieldComposite');
+
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

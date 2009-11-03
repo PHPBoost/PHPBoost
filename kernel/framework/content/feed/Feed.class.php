@@ -30,7 +30,7 @@ define('DEFAULT_FEED_NAME', 'master');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
 import('functions', INC_IMPORT);
-import('content/feed/FeedData');
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
@@ -78,7 +78,7 @@ class Feed
 	 */
 	function export($template = false, $number = 10, $begin_at = 0)
 	{
-		import('content/parser/ContentSecondParser');
+		
 
 		if ($template === false)
 		{    // A specific template is used
@@ -188,7 +188,7 @@ class Feed
 	 */
 	/*static*/ function clear_cache($module_id = false)
 	{
-		import('io/filesystem/Folder');
+		
 		$folder = new Folder(FEEDS_PATH, OPEN_NOW);
 		$files = null;
 		if ($module_id !== false)
@@ -215,7 +215,7 @@ class Feed
 	 */
 	/*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
 	{
-		import('io/filesystem/File');
+		
 		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
 		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
 		$file->close();
@@ -243,7 +243,7 @@ class Feed
 		}
 		else
 		{
-			import('io/template/Template');
+			
 			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
@@ -254,7 +254,7 @@ class Feed
 		$result = @include($feed_data_cache_file);
 		if ($result === false)
 		{
-			import('modules/ModulesDiscoveryService');
+			
 			$modules = new ModulesDiscoveryService();
 			$module = $modules->get_module($module_id);
 

@@ -54,7 +54,7 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
-import('util/Pagination'); 
+ 
 $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
@@ -73,7 +73,7 @@ $Template->assign_vars(array(
 ));
 
 //Modules disponibles
-import('io/filesystem/Folder');
+
 $folder_path = new Folder('../');
 foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 {

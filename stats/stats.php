@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../stats/stats_begin.php');
 require_once('../kernel/header.php');
 
-import('core/StatsSaver');
+
 
 $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 
@@ -90,7 +90,7 @@ if ($members)
 		$stats_array[$name] = $row['compt'];
 	}
 	$Sql->query_close($result);
-	import('util/ImagesStats');
+	
 	$Stats = new Stats();
 		
 	$Stats->load_data($stats_array, 'ellipse');
@@ -921,7 +921,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 }
 elseif ($referer)
 {
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
@@ -978,7 +978,7 @@ elseif ($referer)
 }
 elseif ($keyword)
 {
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
@@ -1072,7 +1072,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 		$path = '../images/stats/countries/';
 	}
 	
-	import('util/ImagesStats');
+	
 	$Stats = new Stats();
 		
 	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);

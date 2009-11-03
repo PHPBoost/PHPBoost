@@ -29,8 +29,8 @@ define('APPLICATION_TYPE__KERNEL', 'kernel');
 define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
-import('util/Date');
-import('events/AdministratorAlert');
+
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

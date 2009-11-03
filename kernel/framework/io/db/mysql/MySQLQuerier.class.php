@@ -25,10 +25,10 @@
  *
  ###################################################*/
 
-import('io/db/AbstractSQLQuerier');
-import('io/db/mysql/MySQLSelectQueryResult');
-import('io/db/mysql/MySQLInjectQueryResult');
-import('io/db/SQLQueryVars');
+
+
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

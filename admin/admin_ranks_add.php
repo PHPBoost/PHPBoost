@@ -64,7 +64,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		import('io/Upload');
+		
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->get_error();
@@ -92,7 +92,7 @@ else //Sinon on rempli le formulaire
 	//On recupère les images des groupes
 	$rank_options = '<option value="">--</option>';
 	
-	import('io/filesystem/Folder');
+	
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{

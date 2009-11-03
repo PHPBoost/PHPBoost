@@ -50,7 +50,7 @@ if (isset($_POST['valid']))
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
 	$Cache->Load('modules', RELOAD_CACHE);
-	import('core/MenuService');
+	
 	MenuService::generate_cache();
 	
 	redirect(HOST . SCRIPT);
@@ -62,7 +62,7 @@ elseif ($uninstall) //Désinstallation du module
 		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = retrieve(POST, 'drop_files', false);
 		
-		import('modules/PackageManager');
+		
 		
 		switch (PackagesManager::uninstall_module($idmodule, $drop_files))
 		{

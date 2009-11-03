@@ -312,7 +312,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-	import('content/Comments');
+	
 	$comments = new Comments($script, $idprov, $vars, $module_folder);
 
 	return $comments->display();
@@ -472,7 +472,7 @@ function parse_ini_array($links_format)
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
 	$dir = find_require_dir($dir_path, $require_dir, false);
-	import('io/filesystem/File');
+	
 
 	$module_config_file = new File($dir_path . $dir . '/config.ini', READ);
 	$module_config_file->open();
@@ -569,7 +569,7 @@ function redirect($url)
 
 	if (!empty($CONFIG) && is_array($CONFIG))
 	{
-		import('util/Url');
+		
 		$url = new Url($url);
 		$url = $url->absolute();
 	}
@@ -642,7 +642,7 @@ function check_nbr_links($contents, $max_nbr)
  */
 function check_mail($mail)
 {
-	import('io/Mail');
+	
 	return Mail::check_validity($mail);
 }
 
@@ -721,7 +721,7 @@ function second_parse(&$content)
  */
 function second_parse_url(&$url)
 {
-	import('util/Url');
+	
 	$Url = new Url($url);
 	return $Url->absolute();
 }
@@ -1072,7 +1072,7 @@ function strhash($str, $salt = true)
 	else
 	{   // With PHP4
 		echo 'PHP4';
-		import('lib/SHA256');
+		
 		return SHA256::hash($str);
 	}
 }

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('core/environment/AbstractDisplayGraphicalEnvironment');
+
 
 /**
  * @package core
@@ -84,7 +84,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function add_menus_css_files()
 	{
-		import('core/cache/ModulesCssFilesCache');
+		
 		$css_files_cache = ModulesCssFilesCache::load();
 		try
 		{
@@ -125,7 +125,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		global $THEME_CONFIG;
 
 		//Inclusion des blocs
-		import('core/MenuService');
+		
 		if (!DEBUG)
 		{
 			$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');

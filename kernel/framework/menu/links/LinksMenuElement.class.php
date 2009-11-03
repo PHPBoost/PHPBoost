@@ -29,8 +29,8 @@
 //      LinksMenuLink and LinksMenuLink classes are based on this class
 //      use, on of these
 
-import('menu/Menu');
-import('util/Url');
+
+
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
 define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);

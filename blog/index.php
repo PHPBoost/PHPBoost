@@ -29,7 +29,7 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-import('mvc/dispatcher/Dispatcher');
+
 
 $url_controller_mappers = array(
 new UrlControllerMapper('/blog/controllers/BlogController', '`^/test/?$`'),

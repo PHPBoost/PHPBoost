@@ -90,7 +90,7 @@ class LangLoader
 			return $real_lang_file;
 		}
 
-		import('core/lang/LangNotFoundException');
+		
 		throw new LangNotFoundException($folder, $filename);
 	}
 }

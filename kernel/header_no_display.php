@@ -31,7 +31,7 @@ if (defined('PHPBOOST') !== true)
     exit;
 }
 
-import('core/environment/SiteNodisplayGraphicalEnvironment');
+
 
 $env = new SiteNodisplayGraphicalEnvironment();
 

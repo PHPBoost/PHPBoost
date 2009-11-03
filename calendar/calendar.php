@@ -246,7 +246,7 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 			
-			import('content/Comments');
+			
 			
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),

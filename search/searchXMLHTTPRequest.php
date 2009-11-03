@@ -37,7 +37,7 @@ $module_id = strtolower(retrieve(POST, 'moduleName', ''));
 $id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes
-import('modules/ModulesDiscoveryService');
+
 require_once(PATH_TO_ROOT . '/search/search.inc.php');
 
 

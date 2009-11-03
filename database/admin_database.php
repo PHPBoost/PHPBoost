@@ -61,7 +61,7 @@ $Template->set_filenames(array(
 ));
 
 //outils de sauvegarde de la base de données
-import('db/Backup');
+
 $backup = new Backup();
 
 $Template->assign_vars(array(

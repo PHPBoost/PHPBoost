@@ -1,6 +1,6 @@
 <?php
 
-import('util/Url');
+
 
 class UTurl extends PHPBoostUnitTestCase {
 

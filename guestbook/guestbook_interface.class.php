@@ -28,7 +28,7 @@
 if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class GuestbookInterface extends ModuleInterface

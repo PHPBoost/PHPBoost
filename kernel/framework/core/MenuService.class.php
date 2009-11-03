@@ -25,13 +25,13 @@
  *
  ###################################################*/
 
-import('menu/Menu');
 
-import('menu/content/ContentMenu');
-import('menu/links/LinksMenu');
-import('menu/mini/MiniMenu');
-import('menu/module_mini/ModuleMiniMenu');
-import('menu/feed/FeedMenu');
+
+
+
+
+
+
 
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
@@ -446,7 +446,7 @@ class MenuService
     {
         global $Sql;
         
-        import('io/filesystem/Folder');
+        
         $m_menus_directory = new Folder(PATH_TO_ROOT . '/menus');
         $m_menus_list = $m_menus_directory->get_folders();
         
@@ -637,7 +637,7 @@ class MenuService
      */
     function website_modules($menu_type = VERTICAL_MENU)
     {
-        import('modules/ModulesDiscoveryService');
+        
         $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
         // Création d'un menu contenant des liens vers tous les modules
         $modules_discovery_service = new ModulesDiscoveryService();
@@ -658,7 +658,7 @@ class MenuService
             {
                 $img = '';
                 $img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id();
-                import('io/filesystem/File');
+                
                 foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
                 {
                     $file = new File($img_url . $extension);

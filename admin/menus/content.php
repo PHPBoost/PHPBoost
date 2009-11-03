@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-import('core/MenuService');
+
 
 $id = retrieve(REQUEST, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
@@ -42,7 +42,7 @@ $action_post = retrieve(POST, 'action', '');
 if ($action_post == 'save')
 {
     // Save a Menu (New / Edit)
-    import('content/parser/Parser');
+    
     $menu = null;
     
     $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);

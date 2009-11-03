@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/cache/CacheData');
+
 
 
 /**
@@ -215,7 +215,7 @@ class HtaccessFileCache implements CacheData
     private static function update_htaccess_file()
     {
         //Ecriture du fichier .htaccess
-        import('io/filesystem/File');
+        
         $file = new File(PATH_TO_ROOT . '/.htaccess');
 
         $file->delete();

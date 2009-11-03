@@ -70,15 +70,20 @@ class ClassLoader
 		  'FormTextDate' => 'builder/form/FormTextDate',
 		  'FormTextEdit' => 'builder/form/FormTextEdit',
 		  'FormTextarea' => 'builder/form/FormTextarea',
+		  'CategoriesManager' => 'content/CategoriesManager',
 		  'Comments' => 'content/Comments',
+		  'Note' => 'content/Note',
+		  'Search' => 'content/Search',
 		  'BBCodeEditor' => 'content/editor/BBCodeEditor',
 		  'Editor' => 'content/editor/Editor',
 		  'TinyMCEEditor' => 'content/editor/TinyMCEEditor',
+		  'ATOM' => 'content/feed/ATOM',
 		  'Feed' => 'content/feed/Feed',
 		  'FeedData' => 'content/feed/FeedData',
 		  'FeedItem' => 'content/feed/FeedItem',
 		  'FeedsCat' => 'content/feed/FeedsCat',
 		  'FeedsList' => 'content/feed/FeedsList',
+		  'RSS' => 'content/feed/RSS',
 		  'mathpublisher' => 'content/math/mathpublisher',
 		  'BBCodeHighlighter' => 'content/parser/BBCodeHighlighter',
 		  'BBCodeParser' => 'content/parser/BBCodeParser',
@@ -92,6 +97,7 @@ class ClassLoader
 		  'parserTinyMCEParser' => 'content/parserTinyMCEParser',
 		  'parserTinyMCEUnparser' => 'content/parserTinyMCEUnparser',
 		  'ModuleMap' => 'content/sitemap/ModuleMap',
+		  'SiteMap' => 'content/sitemap/SiteMap',
 		  'SiteMapElement' => 'content/sitemap/SiteMapElement',
 		  'SiteMapExportConfig' => 'content/sitemap/SiteMapExportConfig',
 		  'SiteMapLink' => 'content/sitemap/SiteMapLink',
@@ -100,6 +106,7 @@ class ClassLoader
 		  'BreadCrumb' => 'core/BreadCrumb',
 		  'Cache' => 'core/Cache',
 		  'ClassLoader' => 'core/ClassLoader',
+		  'ErrorViewBuilder' => 'core/ErrorViewBuilder',
 		  'Errors' => 'core/Errors',
 		  'MenuService' => 'core/MenuService',
 		  'Repository' => 'core/Repository',
@@ -109,6 +116,7 @@ class ClassLoader
 		  'HtaccessFileCache' => 'core/cache/HtaccessFileCache',
 		  'ModulesCssFilesCache' => 'core/cache/ModulesCssFilesCache',
 		  'LastUseDateConfig' => 'core/config/LastUseDateConfig',
+		  'WritingPadConfig' => 'core/config/WritingPadConfig',
 		  'AbstractDisplayGraphicalEnvironment' => 'core/environment/AbstractDisplayGraphicalEnvironment',
 		  'AbstractGraphicalEnvironment' => 'core/environment/AbstractGraphicalEnvironment',
 		  'AdminDisplayGraphicalEnvironment' => 'core/environment/AdminDisplayGraphicalEnvironment',
@@ -119,6 +127,7 @@ class ClassLoader
 		  'SiteNodisplayGraphicalEnvironment' => 'core/environment/SiteNodisplayGraphicalEnvironment',
 		  'LangLoader' => 'core/lang/LangLoader',
 		  'LangNotFoundException' => 'core/lang/LangNotFoundException',
+		  'Backup' => 'db/Backup',
 		  'Sql' => 'db/Sql',
 		  'AdministratorAlert' => 'events/AdministratorAlert',
 		  'AdministratorAlertService' => 'events/AdministratorAlertService',
@@ -126,6 +135,7 @@ class ClassLoader
 		  'ContributionService' => 'events/ContributionService',
 		  'Event' => 'events/Event',
 		  'Mail' => 'io/Mail',
+		  'Upload' => 'io/Upload',
 		  'CacheData' => 'io/cache/CacheData',
 		  'CacheManager' => 'io/cache/CacheManager',
 		  'ConfigData' => 'io/config/ConfigData',
@@ -143,6 +153,7 @@ class ClassLoader
 		  'SQLQuerierException' => 'io/db/SQLQuerierException',
 		  'SQLQueryVars' => 'io/db/SQLQueryVars',
 		  'SelectQueryResult' => 'io/db/SelectQueryResult',
+		  'MySQLDBConnection' => 'io/db/mysql/MySQLDBConnection',
 		  'MySQLDBConnectionException' => 'io/db/mysql/MySQLDBConnectionException',
 		  'MySQLInjectQueryResult' => 'io/db/mysql/MySQLInjectQueryResult',
 		  'MySQLQuerier' => 'io/db/mysql/MySQLQuerier',
@@ -159,6 +170,7 @@ class ClassLoader
 		  'Folder' => 'io/filesystem/Folder',
 		  'HTTPRequest' => 'io/request/HTTPRequest',
 		  'HTTPRequestException' => 'io/request/HTTPRequestException',
+		  'template' => 'io/template',
 		  'AbstractTemplateParser' => 'io/template/AbstractTemplateParser',
 		  'DeprecatedTemplate' => 'io/template/DeprecatedTemplate',
 		  'FileTemplateLoader' => 'io/template/FileTemplateLoader',
@@ -171,6 +183,7 @@ class ClassLoader
 		  'SHA256' => 'lib/SHA256',
 		  'Authorizations' => 'members/Authorizations',
 		  'GroupsService' => 'members/GroupsService',
+		  'PrivateMsg' => 'members/PrivateMsg',
 		  'Session' => 'members/Session',
 		  'Uploads' => 'members/Uploads',
 		  'User' => 'members/User',
@@ -184,30 +197,42 @@ class ClassLoader
 		  'ModuleMiniMenu' => 'menu/module_mini/ModuleMiniMenu',
 		  'ModuleInterface' => 'modules/ModuleInterface',
 		  'ModulesDiscoveryService' => 'modules/ModulesDiscoveryService',
+		  'PackageManager' => 'modules/PackageManager',
 		  'View' => 'mvc/View',
 		  'Controller' => 'mvc/controller/Controller',
 		  'controller' => 'mvc/controller/controller',
 		  'AbstractUrlMapper' => 'mvc/dispatcher/AbstractUrlMapper',
+		  'Dispatcher' => 'mvc/dispatcher/Dispatcher',
 		  'DispatcherException' => 'mvc/dispatcher/DispatcherException',
 		  'UrlControllerMapper' => 'mvc/dispatcher/UrlControllerMapper',
 		  'UrlMapper' => 'mvc/dispatcher/UrlMapper',
+		  'BusinessObject' => 'mvc/model/BusinessObject',
 		  'DAO' => 'mvc/model/DAO',
 		  'JoinMappingModel' => 'mvc/model/JoinMappingModel',
 		  'MappingModel' => 'mvc/model/MappingModel',
 		  'MappingModelException' => 'mvc/model/MappingModelException',
 		  'MappingModelField' => 'mvc/model/MappingModelField',
 		  'PropertiesMapInterface' => 'mvc/model/PropertiesMapInterface',
+		  'SQLDAO' => 'mvc/model/SQLDAO',
 		  'SelectQueryResultMapper' => 'mvc/model/SelectQueryResultMapper',
 		  'AbstractResponse' => 'mvc/response/AbstractResponse',
+		  'AdminDisplayResponse' => 'mvc/response/AdminDisplayResponse',
 		  'Response' => 'mvc/response/Response',
+		  'SiteDisplayResponse' => 'mvc/response/SiteDisplayResponse',
+		  'Bench' => 'util/Bench',
 		  'Captcha' => 'util/Captcha',
 		  'Date' => 'util/Date',
 		  'Debug' => 'util/Debug',
+		  'ImagesStats' => 'util/ImagesStats',
+		  'MiniCalendar' => 'util/MiniCalendar',
 		  'Pagination' => 'util/Pagination',
 		  'StringVars' => 'util/StringVars',
 		  'Url' => 'util/Url',
 		);
 
+		//		asort(self::$autoload);
+		//		echo '<pre>'; var_export(self::$autoload); echo '</pre>';
+		//		exit;
 		spl_autoload_register(array(get_class(), 'autoload'));
 	}
 
@@ -216,8 +241,7 @@ class ClassLoader
 		if (isset(self::$autoload[$classname]))
 		{
 			import(self::$autoload[$classname]);
-//			require_once PATH_TO_ROOT . '/kernel/framework/' . self::$autoload[$classname] .
-//				'.class.php';
+			//			require_once PATH_TO_ROOT . '/kernel/framework/' . self::$autoload[$classname] . '.class.php';
 		}
 	}
 }

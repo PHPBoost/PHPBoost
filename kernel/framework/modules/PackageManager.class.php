@@ -103,7 +103,7 @@ class PackagesManager
 		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
 		if (!is_dir($dir . '/' . $dir_db_module))
 		{
-			import('io/filesystem/Folder');
+			
 			$db_scripts_folder = new Folder($dir);
 				
 			$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
@@ -136,7 +136,7 @@ class PackagesManager
 		$module_identifier = strprotect($module_identifier);
 
 		//Installation du mini module s'il existe
-		import('core/MenuService');
+		
 		MenuService::add_mini_module($module_identifier);
 
 		//Insertion du modules dans la bdd => module installé.
@@ -161,7 +161,7 @@ class PackagesManager
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
 			
-			import('core/cache/ModulesCssFilesCache');
+			
     		ModulesCssFilesCache::invalidate();
 			
 			MenuService::generate_cache();
@@ -169,7 +169,7 @@ class PackagesManager
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				import('core/cache/HtaccessFileCache');
+				
 				HtaccessFileCache::regenerate();
 			}
 		}
@@ -223,7 +223,7 @@ class PackagesManager
 			}
 				
 			//Suppression du module mini.
-			import('core/MenuService');
+			
 			MenuService::delete_mini_module($module_name);
 			MenuService::delete_module_feeds_menus($module_name);
 			 
@@ -231,7 +231,7 @@ class PackagesManager
 			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
 
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-			import('io/filesystem/Folder');
+			
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
 			foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 			{
@@ -251,18 +251,18 @@ class PackagesManager
 				
 			$Cache->Generate_file('modules');
 			
-			import('core/cache/ModulesCssFilesCache');
+			
     		ModulesCssFilesCache::invalidate();
 			
 			MenuService::generate_cache();
 
-			import('content/feed/Feed'); //Régénération des feeds.
+			 //Régénération des feeds.
 			Feed::clear_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				import('core/cache/HtaccessFileCache');
+				
 				HtaccessFileCache::regenerate();
 			}
 				

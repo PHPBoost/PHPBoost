@@ -1,6 +1,6 @@
 <?php
 
-import('util/Bench');
+
 
 class UTBench extends PHPBoostUnitTestCase
 {

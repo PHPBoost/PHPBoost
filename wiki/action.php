@@ -187,7 +187,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 				$Cache->Generate_module_file('wiki');
 			}
     		 // Feeds Regeneration
-             import('content/feed/Feed');
+             
              Feed::clear_cache('wiki');
 		   redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
 		}
@@ -196,7 +196,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
             $Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . url_encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
 			
             //Feeds Regeneration
-            import('content/feed/Feed');
+            
             Feed::clear_cache('wiki');
             
             redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
@@ -311,7 +311,7 @@ elseif ($del_article > 0) //Suppression d'un article
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__, __FILE__); 
 	
 	 // Feeds Regeneration
-     import('content/feed/Feed');
+     
      Feed::clear_cache('wiki');
 	
 	if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS))//Si elle  a une catégorie parente
@@ -376,7 +376,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		$Cache->Generate_module_file('wiki');
 
 		// Feeds Regeneration
-        import('content/feed/Feed');
+        
         Feed::clear_cache('wiki');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie

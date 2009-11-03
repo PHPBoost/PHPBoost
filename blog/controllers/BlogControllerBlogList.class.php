@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('modules/ModulesDiscoveryService');
+
 import('/blog/models/blog');
 
 
@@ -71,7 +71,7 @@ class BlogControllerBlogList implements Controller
 	
 	private function load_env()
 	{
-		import('mvc/response/SiteDisplayResponse');
+		
         
         global $BLOG_LANGS;
         load_module_lang('blog');

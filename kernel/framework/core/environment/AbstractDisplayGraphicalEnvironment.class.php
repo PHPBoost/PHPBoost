@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('core/environment/AbstractGraphicalEnvironment');
+
 
 abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {

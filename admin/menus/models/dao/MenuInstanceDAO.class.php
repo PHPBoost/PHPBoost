@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/model/SQLDAO');
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

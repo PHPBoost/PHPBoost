@@ -27,7 +27,7 @@
 
 define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 
-import('modules/ModuleInterface');
+
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
 class DownloadInterface extends ModuleInterface
@@ -174,9 +174,9 @@ class DownloadInterface extends ModuleInterface
         load_module_lang('download'); //Chargement de la langue du module.
         $tpl = new Template('download/download_generic_results.tpl');
         
-        import('util/Date');
+        
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
-        import('content/Note'); //Notes
+         //Notes
         
         $tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -199,9 +199,9 @@ class DownloadInterface extends ModuleInterface
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        import('content/feed/FeedData');
-        import('util/Date');
-        import('util/Url');
+        
+        
+        
         
         global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');
