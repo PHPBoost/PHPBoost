@@ -52,30 +52,10 @@ class Environment
 		require_once PATH_TO_ROOT . '/kernel/framework/util/Bench.class.php';
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-		import('core/environment/AppContext');
+		import('core/ClassLoader');
+		ClassLoader::init_autoload();
 
 		AppContext::init_bench();
-
-		import('core/ClassLoader');
-		import('core/lang/LangLoader');
-		import('util/StringVars');
-		import('io/request/HTTPRequest');
-		import('content/parser/ContentFormattingFactory');
-		import('core/BreadCrumb');
-		import('core/Cache');
-		import('core/cache/GroupsCache');
-		import('core/environment/GraphicalEnvironment');
-		import('core/Errors');
-		import('db/Sql');
-		import('io/template/Template');
-		import('io/template/DeprecatedTemplate');
-		import('members/Authorizations');
-		import('members/GroupsService');
-		import('members/Session');
-		import('members/User');
-		import('menu/Menu');
-		import('util/Date');
-		import('util/Debug');
 	}
 
 	/**
@@ -595,11 +575,11 @@ class Environment
 	{
 		ob_clean();
 		import('/member/controllers/ErrorController');
-		
+
 		// Log exception
-		
+
 		// move this out
-		
+
 		$request = AppContext::get_request();
 		$request->set_value(ErrorController::LEVEL, E_ERROR);
 		$request->set_value(ErrorController::EXCEPTION, $exception);
@@ -607,7 +587,7 @@ class Environment
 		$error_controller = new ErrorController();
 		$response = $error_controller->execute($request);
 		$response->send();
-		
+
 		self::destroy();
 		exit;
 	}
