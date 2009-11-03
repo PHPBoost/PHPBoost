@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-import('members/Uploads');
+
 
 $folder = retrieve(GET, 'f', 0);
 $folder_member = retrieve(GET, 'fm', 0);
@@ -74,7 +74,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		//Chargement de la configuration.
 		$Cache->load('uploads');
 		
-		import('io/Upload');
+		
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', Upload::UNIQ_NAME);
 		

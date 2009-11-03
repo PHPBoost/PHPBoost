@@ -39,7 +39,7 @@ if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 	$note = retrieve(POST, 'note', 0);
 
 	// intialize management system class
-	import('content/Note');
+	
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 
 	if (!empty($note) && !empty($id))
@@ -49,7 +49,7 @@ elseif (retrieve(GET,'img_preview',false)) // image preview
 	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 elseif (retrieve(POST,'preview',false))
 {
-	import('util/Date');
+	
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new Template('articles/articles.tpl');
 	$Cache->load('articles');

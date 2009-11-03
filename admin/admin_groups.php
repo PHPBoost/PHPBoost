@@ -137,7 +137,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		import('io/Upload');
+		
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 		{
@@ -172,11 +172,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.
-		import('util/Pagination');
+		
 		$Pagination = new Pagination();
 		
 		//On recupère les dossier des images des groupes.
-		import('io/filesystem/Folder');
+		
 
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
@@ -260,7 +260,7 @@ elseif ($add) //Interface d'ajout du groupe.
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
-	import('io/filesystem/Folder');
+	
 
 	$img_groups = '<option value="">--</option>';
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
@@ -310,7 +310,7 @@ else //Liste des groupes.
 	 
 	$nbr_group = $Sql->count_table("group", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de group est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(

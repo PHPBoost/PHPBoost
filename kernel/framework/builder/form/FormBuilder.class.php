@@ -31,7 +31,7 @@
  * 
  * Example of use :
  *<code>
-*	import('builder/form/FormBuilder');
+*	
 *	$form = new FormBuilder('test', '');
 *	
 *	//####### First fieldset ######//
@@ -69,7 +69,7 @@
 *	$fieldset_up->add_field(new FormHiddenField('test', 1));
 *	
 *	//Captcha
-*	import('util/Captcha');
+*	
 *	$captcha = new Captcha();
 *	$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
 *
@@ -82,17 +82,17 @@
  * @subpackage form
  */ 
 
-import('builder/form/FormFieldset');
-import('builder/form/FormTextEdit');
-import('builder/form/FormTextarea');
-import('builder/form/FormSelect');
-import('builder/form/FormRadioChoice');
-import('builder/form/FormCheckbox');
-import('builder/form/FormCaptchaField');
-import('builder/form/FormFreeField');
-import('builder/form/FormFileUploader');
-import('builder/form/FormTextDate');
-import('builder/form/FormHiddenField');
+
+
+
+
+
+
+
+
+
+
+
 
 class FormBuilder
 {

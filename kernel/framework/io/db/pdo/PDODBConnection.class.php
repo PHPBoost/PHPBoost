@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/DBConnection');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/db/SelectQueryResult');
-import('io/db/mysql/MySQLQuerierException');
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

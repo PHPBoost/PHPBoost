@@ -25,10 +25,10 @@
  *
  ###################################################*/
 
-import('mvc/model/MappingModelField');
-import('mvc/model/JoinMappingModel');
-import('mvc/model/MappingModelException');
-import('mvc/model/PropertiesMapInterface');
+
+
+
+
 
 class MappingModel
 {

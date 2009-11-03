@@ -43,7 +43,7 @@ require_once PATH_TO_ROOT . '/install/install_environment.class.php';
 InstallEnvironment::load_imports();
 
 /* Deprecated */
-import('core/Errors');
+
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 /* End deprecated */
 
@@ -70,7 +70,7 @@ if (retrieve(GET, 'restart', false))
 	redirect(HOST . add_lang(FILE, true));
 }
 
-import('db/Sql');
+
 
 //Template d'installation
 $template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
@@ -326,9 +326,9 @@ switch($step)
 			{
 				case DB_CONFIG_SUCCESS:
 				case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
-					import('core/Errors');
+					
 					$Errorh = new Errors;
-					import('io/db/mysql/MySQLQuerier');
+					
 					$db_connection = new MySQLDBConnection($host, $login, $password);
 					$db_connection->connect();
 					$db_connection->select_database($database);
@@ -336,7 +336,7 @@ switch($step)
 					AppContext::set_sql($Sql);
 
 					//Création du fichier de configuration
-					import('io/filesystem/File');
+					
 
 					$file_path = '../kernel/db/config.php';
 
@@ -538,7 +538,7 @@ switch($step)
 			$Cache = new Cache;
 
 			//Installation des modules de la distribution
-			import('modules/PackageManager');
+			
 			foreach ($DISTRIBUTION_MODULES as $module_name)
 			{
 				$Cache->load('modules', RELOAD_CACHE);
@@ -548,7 +548,7 @@ switch($step)
 			$Cache->load('modules', RELOAD_CACHE);
 
 			// Ajout du menu de lien par défaut tout en haut à gauche
-			import('core/MenuService');
+			
 			MenuService::enable_all(true);
 
 			$modules_menu = MenuService::website_modules(VERTICAL_MENU);
@@ -560,7 +560,7 @@ switch($step)
 
 			$Cache->load('themes', RELOAD_CACHE);
 			
-			import('core/cache/ModulesCssFilesCache');
+			
     		ModulesCssFilesCache::invalidate();
 
 			redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
@@ -630,7 +630,7 @@ switch($step)
 		//Validation de l'étape
 		if (retrieve(POST, 'submit', false))
 		{
-			import('io/Mail');
+			
 
 			$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
 			$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
@@ -688,7 +688,7 @@ switch($step)
 				$Sql = AppContext::get_sql();
 					
 				//On crée le code de déverrouillage
-				import('core/Cache');
+				
 				$Cache = new Cache;
 				$Cache->load('config');
 					
@@ -718,7 +718,7 @@ switch($step)
 
 				//On envoie un mail à l'administrateur
 				$LANG['admin'] = '';
-				import('io/Mail');
+				
 				$mail = new Mail();
 					
 				//Paramètres du mail
@@ -733,7 +733,7 @@ switch($step)
 				//On connecte directement l'administrateur si il l'a demandé
 				if ($create_session)
 				{
-					import('members/Session');
+					
 					$Session = new Session;
 
 					//Remise à zéro du compteur d'essais.
@@ -795,7 +795,7 @@ switch($step)
 		AppContext::init_sql_querier();
 		$Sql = AppContext::get_sql();
 			
-		import('core/Cache');
+		
 		$Cache = new Cache;
 		$Cache->load('config');
 		$Cache->load('modules');
@@ -810,7 +810,7 @@ switch($step)
     		'U_INDEX' => '..' . $CONFIG['start_page']
 		));
 			
-		import('core/Updates');
+		
 		new Updates();
 		break;
 }
@@ -828,7 +828,7 @@ array($LANG['end'], 'end.png', 100)
 $step_name = $steps[$step - 1][0];
 
 
-import('io/filesystem/Folder');
+
 
 $lang_dir = new Folder('../lang');
 

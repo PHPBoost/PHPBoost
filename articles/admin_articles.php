@@ -39,7 +39,7 @@ $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 $nbr_articles = $Sql->count_table('articles', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre d'articles est trop important.
-import('util/Pagination');
+
 $Pagination = new Pagination();
 
 $tpl->assign_vars(array(

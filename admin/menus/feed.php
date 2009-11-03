@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-import('core/MenuService');
+
 
 $id = retrieve(REQUEST, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
@@ -147,8 +147,8 @@ else
 	));
 }
 
-import('util/Url');
-import('modules/ModulesDiscoveryService');
+
+
 
 $modules = new ModulesDiscoveryService();
 $feeds_modules = $modules->get_available_modules('get_feeds_list');

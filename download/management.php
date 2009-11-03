@@ -32,8 +32,8 @@ $Cache->load('download');
 
 include_once('download_auth.php');
 
-import('util/Date');
-import('util/MiniCalendar');
+
+
 
 include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
@@ -89,14 +89,14 @@ if ($delete_file > 0)
 		//Deleting comments if the file has
 		if ($file_infos['nbr_com'] > 0)
 		{
-			import('content/Comments');
+			
 			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
         
         // Feeds Regeneration
-        import('content/feed/Feed');
+        
         Feed::clear_cache('download');
 	}
 	else
@@ -236,7 +236,7 @@ if ($edit_file_id > 0)
 			
 			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
-			import('util/Url');
+			
 			$file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
@@ -254,8 +254,8 @@ if ($edit_file_id > 0)
 			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 			if ($file_approved && !$file_properties['approved'])
 			{
-				import('events/Contribution');
-				import('events/ContributionService');
+				
+				
 				
 				$corresponding_contributions = ContributionService::find_by_criteria('download', $edit_file_id);
 				if (count($corresponding_contributions) > 0)
@@ -270,7 +270,7 @@ if ($edit_file_id > 0)
 			}
             
             // Feeds Regeneration
-            import('content/feed/Feed');
+            
             Feed::clear_cache('download');
             
             //If we cannot see the file, we redirect in its category
@@ -468,7 +468,7 @@ else
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-            import('util/Url');
+            
             $file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, users_note) " .
@@ -480,8 +480,8 @@ else
 			if (!$auth_write)
 			{
 				//Importing the contribution classes
-				import('events/Contribution');
-				import('events/ContributionService');
+				
+				
 				
 				$download_contribution = new Contribution();
 				
@@ -528,7 +528,7 @@ else
 			$download_categories->Recount_sub_files();
             
             // Feeds Regeneration
-            import('content/feed/Feed');
+            
             Feed::clear_cache('download');
             
 			redirect('/download/' . url('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));

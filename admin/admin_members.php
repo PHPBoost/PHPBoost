@@ -43,7 +43,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		import('members/Uploads');
+		
 		Uploads::Empty_folder_member($id_post); //Suppression de tout les fichiers et dossiers du membre.
 			
 		//On régénère le cache
@@ -141,7 +141,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_avatar = '';
 			$dir = '../images/avatars/';
 			
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			
 			$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
@@ -191,7 +191,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				if ($member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0)
 				{
 					//On recherche l'alerte
-					import('events/AdministratorAlertService');
+					
 					
 					//Recherche de l'alerte correspondante
 					$matching_alerts = AdministratorAlertService::find_by_criteria($id_post, 'member_account_to_approbate');
@@ -217,7 +217,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				if ($user_ban > 0)	//Suppression de la session si le membre se fait bannir.
 				{	
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					import('io/Mail');
+					
 					$Mail = new Mail();
 					$Mail->send_from_properties($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}
@@ -338,7 +338,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 	
-	import('members/Uploads');
+	
 	Uploads::Empty_folder_member($id); //Suppression de tout les fichiers et dossiers du membre.
 	
 	//On régénère le cache
@@ -851,7 +851,7 @@ else
 
 	$nbr_membre = $Sql->count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 	 
 	$get_sort = retrieve(GET, 'sort', '');	

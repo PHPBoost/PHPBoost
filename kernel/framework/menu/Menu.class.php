@@ -146,7 +146,7 @@ abstract class Menu
 	 */
     protected function _assign(&$template)
     {
-    	import('core/MenuService');
+    	
     	MenuService::assign_positions_conditions($template, $this->get_block());
     }
     

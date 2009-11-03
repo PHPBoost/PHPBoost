@@ -26,7 +26,7 @@
  ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 define('FORUM_MAX_SEARCH_RESULTS', 50);
 
@@ -115,7 +115,7 @@ class ForumInterface extends ModuleInterface
 	{
 		global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
-		import('io/template/Template');
+		
 		$Tpl = new Template('forum/forum_search_form.tpl');
 
 		//Autorisation sur le module.
@@ -358,8 +358,8 @@ class ForumInterface extends ModuleInterface
 		$forum = new Forum();
 		$categories = $forum->get_cats_tree();
 
-		import('content/feed/FeedsList');
-		import('content/feed/FeedsCat');
+		
+		
 
 		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
         
@@ -384,9 +384,9 @@ class ForumInterface extends ModuleInterface
 
 		$data = new FeedData();
 
-		import('content/feed/FeedData');
-		import('util/Date');
-		import('util/Url');
+		
+		
+		
 
 		$data->set_title($LANG['xml_forum_desc']);
 		$data->set_date(new Date());

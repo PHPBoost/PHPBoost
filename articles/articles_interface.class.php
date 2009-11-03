@@ -28,7 +28,7 @@
 if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
 require_once PATH_TO_ROOT . '/articles/articles_constants.php';
@@ -146,9 +146,9 @@ class ArticlesInterface extends ModuleInterface
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 
-		import('content/feed/FeedData');
-		import('util/Date');
-		import('util/Url');
+		
+		
+		
 
 		$data = new FeedData();
 
@@ -348,7 +348,7 @@ class ArticlesInterface extends ModuleInterface
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		//On crée une pagination si le nombre de fichiers est trop important.
-		import('util/Pagination');
+		
 		$Pagination = new Pagination();
 
 		//Catégories non autorisées.
@@ -400,7 +400,7 @@ class ArticlesInterface extends ModuleInterface
 			'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
 
-			import('content/Note');
+			
 			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -439,7 +439,7 @@ class ArticlesInterface extends ModuleInterface
 					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : ''
 				));
 
-				import('content/Note');
+				
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id

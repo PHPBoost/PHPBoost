@@ -2,7 +2,7 @@
 define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
-import('io/filesystem/Folder');
+
 
 function list_tu($directory, $recursive = false) {
 	$files = array();

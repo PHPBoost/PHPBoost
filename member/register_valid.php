@@ -68,7 +68,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Code de vérification si activé
-	import('util/Captcha');
+	
 	$Captcha = new Captcha();
 	$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 	
@@ -82,7 +82,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$user_avatar = '';
 				//Gestion upload d'avatar.
 				$dir = '../images/avatars/';
-				import('io/Upload');
+				
 				$Upload = new Upload($dir);
 				
 				if ($CONFIG_USER['activ_up_avatar'] == 1)
@@ -138,7 +138,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
 					if ($CONFIG_USER['activ_mbr'] == 2)
 					{
-						import('events/AdministratorAlertService');
+						
 						
 						$alert = new AdministratorAlert();
 						$alert->set_entitled($LANG['member_registered_to_approbate']);
@@ -257,7 +257,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					import('io/Mail');
+					
 					$Mail = new Mail();
 					
 					$Mail->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);

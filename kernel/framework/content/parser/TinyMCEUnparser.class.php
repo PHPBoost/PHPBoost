@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-import('content/parser/ContentUnparser');
+
 
 /**
  * @package content
@@ -55,7 +55,7 @@ class TinyMCEUnparser extends ContentUnparser
 	function parse()
 	{
 		//The URL must be absolutes otherwise TinyMCE won't be able to display  images for instance.	
-		import('util/Url');
+		
         $this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
         
 	    //Extracting HTML and code tags

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/dispatcher/AbstractUrlMapper');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

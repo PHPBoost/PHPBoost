@@ -35,7 +35,7 @@ require_once('../kernel/header.php');
 if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-import('members/PrivateMsg');
+
 
 $pm_get = retrieve(GET, 'pm', 0);
 $pm_id_get = retrieve(GET, 'id', 0);
@@ -296,7 +296,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	$pagination_pm = 25;
 
@@ -514,7 +514,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 
 	//On récupère les info de la conversation.
@@ -751,7 +751,7 @@ else //Liste des conversation, dans la boite du membre.
 	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 
 	$pagination_pm = 25;

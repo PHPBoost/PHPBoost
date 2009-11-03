@@ -1,6 +1,6 @@
 <?php
 
-import('core/lang/LangLoader');
+
 
 
 class UTLangLoader extends PHPBoostUnitTestCase {

@@ -142,7 +142,7 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))
 		{
-			import('io/filesystem/Folder');
+			
 			$folder = new Folder('../templates/' . $previous_theme);
 			if (!$folder->delete())
 			{
@@ -154,7 +154,7 @@ elseif ($uninstall) //Désinstallation.
 		
 		$Cache->load('themes', RELOAD_CACHE);
 		
-		import('core/cache/ModulesCssFilesCache');
+		
     	ModulesCssFilesCache::invalidate();
 	
 		$error = !empty($error) ? '?error=' . $error : '';

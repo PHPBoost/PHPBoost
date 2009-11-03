@@ -100,7 +100,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			));
 			
 			//Update form
-			import('builder/form/FormBuilder');
+			
 			$form = new FormBuilder('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
 			$fieldset = new FormFieldset($LANG['update_msg']);
 			
@@ -197,7 +197,7 @@ else //Affichage.
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	//Post form
-	import('builder/form/FormBuilder');
+	
 	$form = new FormBuilder('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
@@ -215,7 +215,7 @@ else //Affichage.
 	
 	//On crée une pagination si le nombre de messages est trop important.
 	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

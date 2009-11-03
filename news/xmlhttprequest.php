@@ -40,7 +40,7 @@ elseif (isset($_GET['img_url']))
 }
 elseif (isset($_POST['preview']))
 {
-	import('util/Date');
+	
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new Template('news/news.tpl');
 	$Cache->load('news');

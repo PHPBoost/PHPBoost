@@ -109,7 +109,7 @@ if (!empty($_POST['submit']))
 		}
 
 		// Feeds Regeneration
-		import('content/feed/Feed');
+		
 		Feed::clear_cache('media');
 		$media_categories->recount_media_per_cat();
 
@@ -123,7 +123,7 @@ if (!empty($_POST['submit']))
 elseif (!empty($_GET['recount']))
 {
 	// Feeds Regeneration
-	import('content/feed/Feed');
+	
 	Feed::clear_cache('media');
 	$media_categories->recount_media_per_cat();
 	
@@ -170,7 +170,7 @@ else
 	}
 	
 	//On crée une pagination si le nombre de fichier est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 
 	$nbr_media = 0;

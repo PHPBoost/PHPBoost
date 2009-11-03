@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/DBConnectionException');
+
 
 class MySQLDBConnectionException extends DBConnectionException
 {

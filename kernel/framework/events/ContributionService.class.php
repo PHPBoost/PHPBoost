@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('events/Contribution');
+
 
 //Flag which distinguishes a contribution from an alert
 define('CONTRIBUTION_TYPE', 0);

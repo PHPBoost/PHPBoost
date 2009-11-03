@@ -42,15 +42,15 @@ define('DB_UNKNOW_ERROR', -1);
 //Function which returns a result code
 function check_database_config(&$host, &$login, &$password, &$database_name, $tables_prefix)
 {
-	import('db/Sql');
-	import('core/Errors');
+	
+	
 
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
 
 	$database_name = Sql::clean_database_name($database_name);
 
-	import('io/db/mysql/MySQLDBConnection');
+	
 	$db_connection = new MySQLDBConnection($host, $login, $password);
 	try
 	{
@@ -109,7 +109,7 @@ function load_db_connection()
 {
 	global $Sql, $Errorh;
 
-	import('core/Errors');
+	
     
 	$Errorh = new Errors;
     return $Sql;

@@ -30,14 +30,14 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-import('core/Cache');
+
 
 $CONFIG = array();
 $Cache = new Cache();
 $Cache->load('config');
 $Cache->load('member');
 
-import('members/User');
+
 $user_data = array(
     'm_user_id' => 1,
     'login' => 'login',
@@ -78,7 +78,7 @@ header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
-import('io/template/Template');
+
 $tpl = new Template('framework/fatal.tpl');
 $tpl->assign_vars(array(
     'ERROR_TITLE' => $LANG['too_many_connections'],

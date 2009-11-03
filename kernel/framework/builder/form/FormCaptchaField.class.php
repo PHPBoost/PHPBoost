@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/form/FormField');
+
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

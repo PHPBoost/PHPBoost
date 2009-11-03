@@ -24,8 +24,8 @@
  *
 ###################################################*/
 
-import('builder/form/FormField');
-import('builder/form/FormCheckboxOption');
+
+
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

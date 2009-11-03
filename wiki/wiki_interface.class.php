@@ -26,7 +26,7 @@
  ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
@@ -172,7 +172,7 @@ class WikiInterface extends ModuleInterface
 	{
 		global $LANG;
 
-		import('content/feed/FeedsList');
+		
 		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
 
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, a.title
@@ -210,9 +210,9 @@ class WikiInterface extends ModuleInterface
 			$where = "";
 		}
 
-		import('content/feed/FeedData');
-		import('util/Date');
-		import('util/Url');
+		
+		
+		
 
 		$data = new FeedData();
 
@@ -348,8 +348,8 @@ class WikiInterface extends ModuleInterface
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
 		
-		import('content/sitemap/ModuleMap');
-		import('util/Url');
+		
+		
 		
 		load_module_lang('wiki');
 		$Cache->load('wiki');

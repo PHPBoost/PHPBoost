@@ -26,7 +26,7 @@
  ###################################################*/
 
 import('/admin/menus/util/MenuUrlBuilder');
-import('mvc/response/AdminDisplayResponse');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -38,7 +38,7 @@ class AdminMenusDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		import('core/environment/AdminDisplayGraphicalEnvironment');
+		
 		$env = new AdminDisplayGraphicalEnvironment();
 		
 		global $LANG;

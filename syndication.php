@@ -33,7 +33,7 @@ define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visit
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
 
-import('content/feed/Feed');
+
 
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
@@ -46,11 +46,11 @@ if (!empty($module_id))
 	switch (retrieve(GET, 'feed', 'rss'))
 	{
 		case 'atom':    // ATOM
-			import('content/feed/ATOM');
+			
 			$feed= new ATOM($module_id, $feed_name, $category_id);
 			break;
 		default:        // RSS
-			import('content/feed/RSS');
+			
 			$feed= new RSS($module_id, $feed_name, $category_id);
 			break;
 	}
@@ -62,7 +62,7 @@ if (!empty($module_id))
 	else
 	{   // Otherwise, we regenerate it before printing it
 		// Feeds Regeneration
-		import('modules/ModulesDiscoveryService');
+		
 		$modules_discovery_service = new ModulesDiscoveryService();
 		$module = $modules_discovery_service->get_module($module_id);
 

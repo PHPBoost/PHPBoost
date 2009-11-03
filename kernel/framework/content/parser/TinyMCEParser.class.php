@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-import('content/parser/ContentParser');
+
 
 /**
  * @package content
@@ -336,7 +336,7 @@ class TinyMCEParser extends ContentParser
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
 		{
-		    import('util/Url');
+		    
 			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<a href="$1">$2</a>');
 		}
@@ -535,7 +535,7 @@ class TinyMCEParser extends ContentParser
 	function _parse_bbcode_tags()
 	{
 		global $LANG;
-		import('util/Url');
+		
 		$array_preg = array(
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',

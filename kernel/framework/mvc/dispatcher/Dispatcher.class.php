@@ -27,9 +27,9 @@
 
 define('REQUEST_URI', $_SERVER['REQUEST_URI']);
 
-import('mvc/controller/Controller');
-import('mvc/dispatcher/UrlControllerMapper');
-import('mvc/dispatcher/DispatcherException');
+
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -85,7 +85,7 @@ class Dispatcher
 	 */
 	public static function get_url($path, $url)
 	{
-		import('util/Url');
+		
 		$dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
 

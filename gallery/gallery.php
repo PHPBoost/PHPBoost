@@ -94,7 +94,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
-	import('io/Upload');
+	
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -296,7 +296,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -493,7 +493,7 @@ else
 		}
 		$Sql->query_close($result);
 		
-		import('content/Comments');
+		
 		
 		//Affichage d'une photo demandée.
 		if (!empty($g_idpics))
@@ -564,7 +564,7 @@ else
 				if ($activ_note)
 				{
 					//Affichage notation.
-					import('content/Note');
+					
 					$Note = new Note('gallery', $info_pics['id'], url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 				}
 				
@@ -645,7 +645,7 @@ else
 		else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
-			import('util/Pagination');
+			
 			$Pagination = new Pagination();
 			
 			$sort = retrieve(GET, 'sort', '');
@@ -657,7 +657,7 @@ else
 				'L_VIEWS' => $LANG['views']
 			));
 			
-			import('content/Note');
+			
 			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login

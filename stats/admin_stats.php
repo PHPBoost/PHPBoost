@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
-import('core/StatsSaver');
+
 
 $Template->set_filenames(array(
 	'admin_stats_management'=> 'stats/admin_stats_management.tpl'
@@ -101,7 +101,7 @@ if (!empty($members))
 		$stats_array[$name] = $row['compt'];
 	}
 	$Sql->query_close($result);
-	import('util/ImagesStats');
+	
 	$Stats = new Stats();
 		
 	$Stats->load_data($stats_array, 'ellipse');
@@ -927,7 +927,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 }
 elseif (!empty($referer))
 {
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
@@ -984,7 +984,7 @@ elseif (!empty($referer))
 }
 elseif (!empty($keyword))
 {
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
@@ -1077,7 +1077,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 		$path = '../images/stats/countries/';
 	}
 	
-	import('util/ImagesStats');
+	
 	$Stats = new Stats();
 		
 	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
@@ -1135,7 +1135,7 @@ elseif ($bot)
 		'L_LAST_UPDATE' => $LANG['last_update']
 	));
 
-	import('util/ImagesStats');
+	
 	$Stats = new Stats();
 		
 	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');

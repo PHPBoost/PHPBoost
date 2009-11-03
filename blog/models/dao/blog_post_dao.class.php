@@ -1,7 +1,7 @@
 <?php
 
-import('mvc/model/SQLDAO');
-import('mvc/model/MappingModel');
+
+
 
 class BlogPostDAO extends SQLDAO
 {
@@ -29,7 +29,7 @@ class BlogPostDAO extends SQLDAO
 	{
 		if ($blog_post->get_creation_date() === null)
 		{
-			import('util/Date');
+			
 			$blog_post->set_creation_date(new Date());
 		}
 		parent::save($blog_post);

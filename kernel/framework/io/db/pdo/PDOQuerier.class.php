@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-import('io/db/AbstractSQLQuerier');
-import('io/db/pdo/PDOSelectQueryResult');
-import('io/db/pdo/PDOInjectQueryResult');
+
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

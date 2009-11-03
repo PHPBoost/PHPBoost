@@ -148,7 +148,7 @@ elseif ($new_model XOR $id_edit > 0)
 		$special_options = $options  !== unserialize($default_model['options']) ? true : false;
 		$options  = $special_options ? $options  : unserialize($default_model['options']);
 			
-		import('io/filesystem/Folder');
+		
 
 		// articles templates
 		$tpl_articles_list = '<option value="articles.tpl" >articles.tpl</option>';
@@ -232,7 +232,7 @@ elseif ($new_model XOR $id_edit > 0)
 	{
 		$id_edit = 0;
 		
-		import('io/filesystem/Folder');
+		
 		
 		$tpl_default_name = 'articles.tpl';
 		$tpl_articles_list = '<option value=""' . ($tpl_default_name ? ' selected="selected"' : '') . '>'.$tpl_default_name.'</option>';
@@ -444,7 +444,7 @@ else
 	$nbr_models = $Sql->count_table('articles_models' , __LINE__, __FILE__);
 
 	//On crée une pagination si le nombre d'articles est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 
 	$tpl->assign_block_vars('models_management', array(

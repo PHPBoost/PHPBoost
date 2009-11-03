@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/controller/Controller');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

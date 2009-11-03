@@ -30,9 +30,9 @@ require_once('news_begin.php');
 require_once('news_cats.class.php');
 $news_categories = new NewsCats();
 
-import('util/Date');
+
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-import('util/MiniCalendar');
+
 
 $new = retrieve(GET, 'new', 0);
 $cat = retrieve(GET, 'cat', 0);
@@ -51,13 +51,13 @@ if ($delete > 0)
 
 		if ($news['nbr_com'] > 0)
 		{
-			import('content/Comments');
+			
 			$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
 			$Comments->delete_all($delete);
 		}
 
 		// Feeds Regeneration
-	    import('content/feed/Feed');
+	    
 	    Feed::clear_cache('news');
 
 		redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
@@ -157,8 +157,8 @@ elseif (!empty($_POST['submit']))
 				
 				if ($news['visible'])
 				{
-					import('events/Contribution');
-					import('events/ContributionService');
+					
+					
 
 					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);
 
@@ -184,8 +184,8 @@ elseif (!empty($_POST['submit']))
 				if ($auth_contrib)
 				{
 					//Importing the contribution classes
-					import('events/Contribution');
-					import('events/ContributionService');
+					
+					
 					$news_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
@@ -227,7 +227,7 @@ elseif (!empty($_POST['submit']))
 			}
 
 			// Feeds Regeneration
-			import('content/feed/Feed');
+			
 			Feed::clear_cache('news');
 
 			if ($news['visible'] && $news['start'] == 0)

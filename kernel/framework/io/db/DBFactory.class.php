@@ -92,11 +92,11 @@ class DBFactory
 		switch (self::$dbms)
 		{
 			case 'pdo-mysql':
-				import('io/db/pdo/PDOQuerier');
+				
 				return new PDOQuerier($db_connection, self::new_query_translator());
 			case 'mysql':
 			default:
-				import('io/db/mysql/MySQLQuerier');
+				
 				return new MySQLQuerier($db_connection, self::new_query_translator());
 		}
 	}
@@ -108,7 +108,7 @@ class DBFactory
 			case 'pdo-mysql':
 			case 'mysql':
 			default:
-				import('io/db/translator/MySQLQueryTranslator');
+				
 				return new MySQLQueryTranslator();
 		}
 	}

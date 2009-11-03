@@ -50,7 +50,7 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.

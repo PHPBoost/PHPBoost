@@ -28,9 +28,9 @@
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
-import('util/Date');
-import('content/Comments');
-import('content/feed/Feed');
+
+
+
 
 require_once('news_cats.class.php');
 $news_cat = new NewsCats();
@@ -223,7 +223,7 @@ else
 	define('TITLE', $NEWS_LANG['news']);
 	$news_cat->bread_crumb($idcat);
 	require_once('../kernel/header.php');
-	import('modules/ModulesDiscoveryService');
+	
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'news';
 	$module = $modulesLoader->get_module($module_name);

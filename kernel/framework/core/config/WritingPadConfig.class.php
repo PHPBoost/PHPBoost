@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/config/DefaultConfigData');
+
 
 /**
  * This class contains the content of the writing pad which is on the home page 

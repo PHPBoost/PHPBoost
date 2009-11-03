@@ -421,7 +421,7 @@ if (!empty($id_get)) //Espace membre
 		{
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
-			import('members/Uploads');
+			
 			Uploads::Empty_folder_member($User->get_attribute('user_id')); //Suppression de tout les fichiers et dossiers du membre.
 
 			//On régénère le cache
@@ -470,7 +470,7 @@ if (!empty($id_get)) //Espace membre
 			//Gestion upload d'avatar.
 			$user_avatar = '';
 			$dir = '../images/avatars/';
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			
 			if ($CONFIG_USER['activ_up_avatar'] == 1)
@@ -991,7 +991,7 @@ else //Show all member!
 	$unget = (!empty($sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de membre est trop important.
-	import('util/Pagination');
+	
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

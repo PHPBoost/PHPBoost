@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('events/Event');
+
 
 ## Constants ##
 //Priority levels

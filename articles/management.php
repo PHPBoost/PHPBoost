@@ -31,9 +31,9 @@ require_once('articles_begin.php');
 require_once('articles_cats.class.php');
 $articles_categories = new ArticlesCats();
 
-import('util/Date');
+
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-import('util/MiniCalendar');
+
 
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
@@ -69,13 +69,13 @@ if ($delete > 0)
 	}
 	if ($articles['nbr_com'] > 0)
 	{
-		import('content/Comments');
+		
 		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 
 	// Feeds Regeneration
-	import('content/feed/Feed');
+	
 	Feed::clear_cache('articles');
 
 	redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . url_encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
@@ -206,8 +206,8 @@ elseif(retrieve(POST,'submit',false))
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 				if ($file_approved && !$articles_properties['visible'])
 				{
-					import('events/Contribution');
-					import('events/ContributionService');
+					
+					
 						
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
@@ -252,8 +252,8 @@ elseif(retrieve(POST,'submit',false))
 				if ($auth_contrib)
 				{
 					//Importing the contribution classes
-					import('events/Contribution');
-					import('events/ContributionService');
+					
+					
 					$articles_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
@@ -294,7 +294,7 @@ elseif(retrieve(POST,'submit',false))
 			}
 
 			// Feeds Regeneration
-			import('content/feed/Feed');
+			
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
@@ -339,7 +339,7 @@ else
 
 			$img_direct_path = (strpos($articles['icon'], '/') !== false);
 			$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-			import('io/filesystem/Folder');
+			
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
@@ -438,7 +438,7 @@ else
 			
 			//Images disponibles
 			$image_list = '<option value="" selected="selected">--</option>';
-			import('io/filesystem/Folder');
+			
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/dispatcher/Dispatcher');
+
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc

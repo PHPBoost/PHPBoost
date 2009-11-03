@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/DBFactory');
+
 
 /**
  * @package core
@@ -187,7 +187,7 @@ class AppContext
 	 */
 	public static function init_sql_common_query()
 	{
-		import('io/db/CommonQuery');
+		
 		self::$sql_common_query = new CommonQuery(self::get_sql_querier());
 	}
 

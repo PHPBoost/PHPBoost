@@ -78,7 +78,7 @@ function shoutbox_mini($position, $block)
     	
     	###########################Affichage##############################
     	$tpl = new Template('shoutbox/shoutbox_mini.tpl');
-        import('core/MenuService');
+        
         MenuService::assign_positions_conditions($tpl, $block);
     
     	//Pseudo du membre connecté.

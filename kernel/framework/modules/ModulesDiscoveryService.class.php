@@ -26,7 +26,7 @@
  *
  ###################################################*/
 
-import('modules/ModuleInterface');
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

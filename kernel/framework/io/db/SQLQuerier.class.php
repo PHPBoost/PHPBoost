@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-import('io/db/CommonQuery');
-import('io/db/translator/SQLQueryTranslator');
-import('io/db/SQLQuerierException');
+
+
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

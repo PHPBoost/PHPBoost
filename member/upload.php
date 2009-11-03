@@ -89,7 +89,7 @@ $Cache->load('uploads');
 if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-import('members/Uploads');
+
 
 $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);
@@ -142,7 +142,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		if (is_writable($dir)) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', Upload::UNIQ_NAME, $weight_max);
 			

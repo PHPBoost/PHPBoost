@@ -35,7 +35,7 @@ function search_mini($position, $block)
     $search = retrieve(REQUEST, 'q', '');
     
     $tpl = new Template('search/search_mini.tpl');
-    import('core/MenuService');
+    
     MenuService::assign_positions_conditions($tpl, $block);
     $tpl->assign_vars(Array(
         'TITLE_SEARCH' => TITLE,

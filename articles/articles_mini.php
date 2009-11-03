@@ -37,7 +37,7 @@ function articles_mini($position, $block)
 	load_module_lang('articles');
 	
 	$tpl = new Template('articles/articles_mini.tpl');
-	import('core/MenuService');
+	
 	MenuService::assign_positions_conditions($tpl, $block);
 
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);
@@ -70,7 +70,7 @@ function articles_mini($position, $block)
 			break;
 	}
 	
-	import('content/Note');
+	
 	$result = AppContext::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
 	FROM " . DB_TABLE_ARTICLES . " a	
 	WHERE a.visible = 1 

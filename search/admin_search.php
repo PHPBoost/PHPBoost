@@ -99,7 +99,7 @@ else
 {
     $Tpl = new Template('search/admin_search.tpl');
 
-    import('modules/ModulesDiscoveryService');
+    
 
     $Tpl->assign_vars(array(
         'THEME' => get_utheme(),

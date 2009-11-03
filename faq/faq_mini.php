@@ -38,7 +38,7 @@ function faq_mini($position, $block)
     include_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
     
     $tpl = new Template('faq/faq_mini.tpl');
-    import('core/MenuService');
+    
     MenuService::assign_positions_conditions($tpl, $block);
     
     $no_random_question = array(

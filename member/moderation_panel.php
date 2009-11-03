@@ -89,7 +89,7 @@ switch ($action)
 				{
 					if (!empty($readonly_contents) && !empty($readonly))
 					{					
-						import('members/PrivateMsg');
+						
 						
 						//Envoi du message.
 						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
@@ -247,7 +247,7 @@ switch ($action)
 				
 				if (!empty($user_ban)) //Envoi du mail
 				{
-					import('io/Mail');
+					
 					$Mail = new Mail();
 					$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}			
@@ -377,7 +377,7 @@ switch ($action)
 					{					
 						if (!empty($warning_contents))
 						{					
-							import('members/PrivateMsg');
+							
 							
 							//Envoi du message.
 							PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
@@ -390,7 +390,7 @@ switch ($action)
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 					//Envoi du mail
-					import('io/Mail');
+					
 					$Mail = new Mail();
 					$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}	

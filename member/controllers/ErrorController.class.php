@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/controller/Controller');
+
 
 class ErrorController implements Controller
 {
@@ -67,7 +67,7 @@ class ErrorController implements Controller
 
 	protected function load_env()
 	{
-		import('mvc/response/SiteDisplayResponse');
+		
 		$this->lang = LangLoader::get('ErrorViewBuilder');
 		$this->view->add_lang($this->lang);
 		$this->set_response(new SiteDisplayResponse($this->view));
@@ -87,7 +87,7 @@ class ErrorController implements Controller
 
 	private function create_view(HTTPRequest $request)
 	{
-		import('core/ErrorViewBuilder');
+		
 		$view_builder = new ErrorViewBuilder($request);
 
 		$exception = null;

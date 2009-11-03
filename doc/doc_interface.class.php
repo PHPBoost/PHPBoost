@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('modules/ModuleInterface');
+
 
 class DocInterface extends ModuleInterface
 {

@@ -35,8 +35,8 @@ $id_to_delete = retrieve(GET, 'del', 0);
 $id_to_update = retrieve(POST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
-import('events/ContributionService');
-import('util/Date');
+
+
 
 if ($contribution_id > 0)
 {
@@ -141,7 +141,7 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	import('content/Comments'); 
+	 
 	$comments = new Comments('events', $contribution_id, url('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
 	//For PHP 4 :(
@@ -216,7 +216,7 @@ elseif ($id_update > 0)
 }
 else
 {
-	import('util/Pagination');
+	
 	
 	$pagination = new Pagination();
 	

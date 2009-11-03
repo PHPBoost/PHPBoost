@@ -318,7 +318,7 @@ elseif ($archives) //Archives.
 		
 	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(

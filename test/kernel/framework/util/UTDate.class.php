@@ -1,6 +1,6 @@
 <?php
 
-import('util/Date');
+
 
 class UTdate extends PHPBoostUnitTestCase
 {

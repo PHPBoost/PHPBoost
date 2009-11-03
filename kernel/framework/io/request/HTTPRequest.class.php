@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/request/HTTPRequestException');
+
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

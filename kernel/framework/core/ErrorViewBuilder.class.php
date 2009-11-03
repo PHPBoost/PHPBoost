@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('mvc/View');
+
 
 class ErrorViewBuilder
 {

@@ -38,7 +38,7 @@ $Template->set_filenames(array(
 ));
 
 //outils de sauvegarde de la base de données
-import('db/Backup');
+
 $backup = new Backup();
 
 $Template->assign_vars(array(
@@ -60,7 +60,7 @@ $Template->assign_vars(array(
 if (!empty($table) && $action == 'data')
 {
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.

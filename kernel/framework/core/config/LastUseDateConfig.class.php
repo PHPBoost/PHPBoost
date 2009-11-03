@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-import('io/config/DefaultConfigData');
-import('util/Date');
+
+
 
 /**
  * This class contains the date of the last day where PHPBoost was used.

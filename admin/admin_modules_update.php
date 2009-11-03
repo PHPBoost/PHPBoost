@@ -56,7 +56,7 @@ if ($update) //Mise à jour du module
 		$dir_db_module = get_ulang();
 		$dir = '../' . $module_name . '/db';
 		
-		import('io/filesystem/Folder');
+		
 		$folder_path = new Folder($dir . '/' . $dir_db_module);
 		foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 		{	
@@ -101,13 +101,13 @@ if ($update) //Mise à jour du module
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
 		
-		import('core/cache/ModulesCssFilesCache');
+		
     	ModulesCssFilesCache::invalidate();
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 		{
-			import('core/cache/HtaccessFileCache');
+			
 			HtaccessFileCache::regenerate();
 		}	
 		
@@ -135,7 +135,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	{
 		if (!is_dir('../' . $_FILES['upload_module']['name']))
 		{
-			import('io/Upload');
+			
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -180,14 +180,14 @@ else
 	));
 
     // Intégration du système d'updates des modules avec celui du site
-	import('core/Updates');
+	
 	$updates_availables = 0;
 
 	if (phpversion() > PHP_MIN_VERSION_UPDATES)
 	{
 		// Retrieves all the update alerts from the database
-		import('events/AdministratorAlertService');
-		import('core/Application');
+		
+		
 		$update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
 		
 		$updates = array();

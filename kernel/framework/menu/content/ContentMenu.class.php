@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('menu/Menu');
+
 
 define('CONTENT_MENU__CLASS','ContentMenu');
 

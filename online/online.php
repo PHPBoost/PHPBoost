@@ -35,7 +35,7 @@ $Template->set_filenames(array(
 	
 //Membre connectés..
 $nbr_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
-import('util/Pagination'); 
+ 
 $Pagination = new Pagination();
 	
 $Template->assign_vars(array(

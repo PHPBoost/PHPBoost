@@ -62,7 +62,7 @@ if (!empty($idart) && isset($cat) )
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
 	//On crée une pagination si il y plus d'une page.
-	import('util/Pagination'); 
+	 
 	$Pagination = new Pagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
@@ -143,10 +143,10 @@ if (!empty($idart) && isset($cat) )
 	$options=unserialize($articles['options']);
 	
 	//Affichage notation
-	import('content/Note'); 
+	 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	import('content/Comments');
+	
 	
 	$tpl->assign_vars(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
@@ -223,7 +223,7 @@ if (!empty($idart) && isset($cat) )
 		$object=retrieve(POST,'subject','',TSTRING);		
 		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
 		
-		import('io/Mail');
+		
 		$mail = new Mail();
 
 		$contents = sprintf($ARTICLES_LANG['text_link_mail'],$CONFIG['site_name'],$exp,$user_mail,$CONFIG['server_name'],$link) ;
@@ -237,7 +237,7 @@ if (!empty($idart) && isset($cat) )
 }
 else
 {
-	import('modules/ModulesDiscoveryService');
+	
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'articles';
 	$module = $modulesLoader->get_module($module_name);

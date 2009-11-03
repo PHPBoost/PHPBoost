@@ -27,7 +27,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-import('modules/ModuleInterface');
+
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
@@ -90,9 +90,9 @@ class MediaInterface extends ModuleInterface
 
         require_once(PATH_TO_ROOT . '/media/media_constant.php');
         require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
-		import('content/feed/FeedData');
-		import('util/Date');
-		import('util/Url');
+		
+		
+		
         
         $data = new FeedData();
         

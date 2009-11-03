@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/DBConnectionException');
+
 
 interface DBConnection
 {    

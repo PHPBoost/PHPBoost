@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('menu/links/LinksMenuElement');
+
 
 define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 
