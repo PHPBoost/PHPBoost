@@ -65,11 +65,11 @@ class DBFactory
 				switch (self::$dbms)
 				{
 					case 'pdo-mysql':
-						self::$db_connection = ClassLoader::new_instance('io/db/pdo/PDODBConnection');
+						self::$db_connection = new PDODBConnection();
 						break;
 					case 'mysql':
 					default:
-						self::$db_connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
+						self::$db_connection = new MySQLDBConnection();
 						break;
 				}
 				self::$db_connection->connect($db_connection_data);

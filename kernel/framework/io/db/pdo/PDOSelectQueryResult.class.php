@@ -34,7 +34,7 @@
  * @subpackage mysql
  * @desc
  */
-class PDOSelectQueryResult implements SelectQueryResult
+class PDOSelectQueryResult extends AbstractSelectQueryResult
 {
 	/**
 	 * @var string

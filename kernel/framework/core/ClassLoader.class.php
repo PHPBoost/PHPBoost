@@ -147,11 +147,14 @@ class ClassLoader
 		  'DBConnection' => 'io/db/DBConnection',
 		  'DBConnectionException' => 'io/db/DBConnectionException',
 		  'DBFactory' => 'io/db/DBFactory',
+		  'DBMSUtils' => 'io/db/dbms/DBMSUtils',
+		  'MySQLDBMSUtils' => 'io/db/dbms/MySQLDBMSUtils',
 		  'InjectQueryResult' => 'io/db/InjectQueryResult',
 		  'QueryResult' => 'io/db/QueryResult',
 		  'SQLQuerier' => 'io/db/SQLQuerier',
 		  'SQLQuerierException' => 'io/db/SQLQuerierException',
 		  'SQLQueryVars' => 'io/db/SQLQueryVars',
+		  'AbstractSelectQueryResult' => 'io/db/AbstractSelectQueryResult',
 		  'SelectQueryResult' => 'io/db/SelectQueryResult',
 		  'MySQLDBConnection' => 'io/db/mysql/MySQLDBConnection',
 		  'MySQLDBConnectionException' => 'io/db/mysql/MySQLDBConnectionException',
@@ -241,7 +244,6 @@ class ClassLoader
 		if (isset(self::$autoload[$classname]))
 		{
 			import(self::$autoload[$classname]);
-			//			require_once PATH_TO_ROOT . '/kernel/framework/' . self::$autoload[$classname] . '.class.php';
 		}
 	}
 }

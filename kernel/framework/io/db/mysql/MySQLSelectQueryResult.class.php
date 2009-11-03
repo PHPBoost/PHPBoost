@@ -34,7 +34,7 @@
  * @subpackage mysql
  * @desc
  */
-class MySQLSelectQueryResult implements SelectQueryResult
+class MySQLSelectQueryResult extends AbstractSelectQueryResult
 {
 	/**
 	 * @var string
