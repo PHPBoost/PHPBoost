@@ -434,6 +434,8 @@ $LANG['date_birth_parse'] = 'DD/MM/YYYY';
 $LANG['banned'] = 'Banni';
 $LANG['go_msg'] = 'Aller au message';
 $LANG['display'] = 'Afficher';
+$LANG['site_config_msg_mbr'] = 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.';
+$LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br /><br />Merci, l\'équipe du site.';
 
 //Register
 $LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';
