@@ -61,7 +61,6 @@ class SQLQueryVars extends StringVars
             }
             return '(' . implode(', ', $parameter) . ')';
         }
-        
         elseif (is_string($parameter))
         {
         	return '\'' . $this->querier->escape($parameter) . '\'';

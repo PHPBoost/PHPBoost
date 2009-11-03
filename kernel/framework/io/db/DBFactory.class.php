@@ -34,9 +34,9 @@
  */
 class DBFactory
 {
-//	private static $dbms = 'pdo-mysql';
+	//	private static $dbms = 'pdo-mysql';
 	private static $dbms = 'mysql';
-	
+
 	/**
 	 * @var DBConnection
 	 */
@@ -60,17 +60,24 @@ class DBFactory
 				redirect(get_server_url_page('install/install.php'));
 			}
 
-			switch (self::$dbms)
+			try
 			{
-				case 'pdo-mysql':
-					self::$db_connection = ClassLoader::new_instance('io/db/pdo/PDODBConnection');
-					break;
-				case 'mysql':
-				default:
-					self::$db_connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
-					break;
+				switch (self::$dbms)
+				{
+					case 'pdo-mysql':
+						self::$db_connection = ClassLoader::new_instance('io/db/pdo/PDODBConnection');
+						break;
+					case 'mysql':
+					default:
+						self::$db_connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
+						break;
+				}
+				self::$db_connection->connect($db_connection_data);
 			}
-			self::$db_connection->connect($db_connection_data);
+			catch (Exception $exception)
+			{
+				Debug::fatal($exception);
+			}
 		}
 		return self::$db_connection;
 	}
