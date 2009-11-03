@@ -75,7 +75,7 @@ class ClassLoader
 		  'Note' => 'content/Note',
 		  'Search' => 'content/Search',
 		  'BBCodeEditor' => 'content/editor/BBCodeEditor',
-		  'Editor' => 'content/editor/Editor',
+		  'ContentEditor' => 'content/editor/ContentEditor',
 		  'TinyMCEEditor' => 'content/editor/TinyMCEEditor',
 		  'ATOM' => 'content/feed/ATOM',
 		  'Feed' => 'content/feed/Feed',
