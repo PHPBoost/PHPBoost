@@ -381,7 +381,7 @@ elseif (!empty($_POST['submit']))
 			$media_contribution = new Contribution();
 			$media_contribution->set_id_in_module($new_id_media);
 			$media_contribution->set_description(stripslashes($media['counterpart']));
-			$media_contribution->set_entitled(sprintf($MEDIA_LANG['contribution_entitled'], $media['name']));
+			$media_contribution->set_entitled(stripslashes(sprintf($MEDIA_LANG['contribution_entitled'], $media['name'])));
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
 			$media_contribution->set_poster_id($User->get_attribute('user_id'));
 			$media_contribution->set_module('media');
