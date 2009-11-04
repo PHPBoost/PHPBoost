@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           mapping_model_exception.class.php
+ *                           UnexistingDatabaseException.class.php
  *                            -------------------
- *   begin                : October 2, 2009
+ *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,21 +25,6 @@
  *
  ###################################################*/
 
-
-class MappingModelException extends Exception
-{
-    public function __construct($classname, $message)
-    {
-        parent::__construct('mapping model "' . $classname . '" ' . $message);
-    }
-}
-
-class ObjectNotFoundException extends MappingModelException
-{
-    public function __construct($classname, $object_id)
-    {
-        parent::__construct($classname, 'object #' . $object_id . ' was not found');
-    }
-}
+class UnexistingDatabaseException extends DBConnectionException {}
 
 ?>

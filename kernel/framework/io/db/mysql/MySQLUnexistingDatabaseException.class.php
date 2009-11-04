@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PDOQuerierException.class.php
+ *                           MySQLUnexistingDatabaseException.class.php
  *                            -------------------
- *   begin                : November 1, 2009
+ *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,18 +25,12 @@
  *
  ###################################################*/
 
-class PDOQuerierException extends SQLQuerierException
+class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
 {
-	public function __construct($message, PDOStatement $statement)
-	{
-		$infos = array();
-		foreach ($statement->errorInfo() as $key => $info)
-		{
-			$infos[] = $key . ': ' . $info;
-		}
-		parent::__construct($message . '. (ERRNO ' . $statement->errorCode() . ') ' .
-		implode('<br />', $infos));
-	}
+    public function __construct()
+    {
+        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
+    }
 }
 
 ?>

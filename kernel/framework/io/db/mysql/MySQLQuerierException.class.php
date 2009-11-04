@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class MySQLQuerierException extends SQLQuerierException
 {
     public function __construct($message)

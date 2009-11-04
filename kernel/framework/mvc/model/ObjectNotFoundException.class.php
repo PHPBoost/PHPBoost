@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PDOQuerierException.class.php
+ *                           ObjectNotFoundException.class.php
  *                            -------------------
- *   begin                : November 1, 2009
+ *   begin                : October 2, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,18 +25,19 @@
  *
  ###################################################*/
 
-class PDOQuerierException extends SQLQuerierException
+
+/**
+ * @author  loic rouchon <loic.rouchon@phpboost.com>
+ * @desc
+ * @package mvc
+ * @subpackage model
+ */
+class ObjectNotFoundException extends Exception
 {
-	public function __construct($message, PDOStatement $statement)
-	{
-		$infos = array();
-		foreach ($statement->errorInfo() as $key => $info)
-		{
-			$infos[] = $key . ': ' . $info;
-		}
-		parent::__construct($message . '. (ERRNO ' . $statement->errorCode() . ') ' .
-		implode('<br />', $infos));
-	}
+    public function __construct($classname, $object_id)
+    {
+        parent::__construct('object #' . $object_id . ' of class "' . $classname . '" was not found');
+    }
 }
 
 ?>

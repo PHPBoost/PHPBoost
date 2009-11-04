@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           http_request_exception.class.php
+ *                           ParameterTypeMismatchException.class.php
  *                            -------------------
  *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -33,11 +33,4 @@ class ParameterTypeMismatchException extends Exception
     	   "\n" . $value);
 	}
 }
-
-class UnexistingHTTPParameterException extends Exception
-{
-	public function __construct($varname)
-	{
-		parent::__construct('The "' . $varname . '" parameter does not exists in the http request');
-	}
-}
+?>

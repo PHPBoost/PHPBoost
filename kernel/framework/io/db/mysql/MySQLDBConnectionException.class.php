@@ -25,22 +25,11 @@
  *
  ###################################################*/
 
-
-
 class MySQLDBConnectionException extends DBConnectionException
 {
     public function __construct($message)
     {
         parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
-    }
-}
-
-
-class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
-{
-    public function __construct()
-    {
-        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
 
