@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 ## Constants ##
 //Priority levels
 //High emergency, critical
@@ -68,9 +66,9 @@ class AdministratorAlert extends Event
     /**
      * @desc Builds an AdministratorAlert object.
      */
-    public function AdministratorAlert()
+    public function __construct()
     {
-        parent::Event();
+        parent::__construct();
         $this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
         $this->properties = '';
     }
