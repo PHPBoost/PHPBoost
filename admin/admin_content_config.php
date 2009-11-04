@@ -33,8 +33,12 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['submit']) )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
-	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
-	$CONFIG['html_auth'] = Authorizations::build_auth_array_from_form(1);
+	
+	$CONFIG['anti_flood'] 	= retrieve(POST, 'anti_flood', 0, TINTEGER);
+	$CONFIG['delay_flood'] 	= retrieve(POST, 'delay_flood', 0, TINTEGER);
+	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25, TINTEGER);
+	$CONFIG['editor'] 		= $editor == 'tinymce' ? $editor : 'bbcode';
+	$CONFIG['html_auth'] 	= Authorizations::build_auth_array_from_form(1);
 	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -64,7 +68,11 @@ else
 		'TINYMCE_SELECTED' => $CONFIG['editor'] == 'tinymce' ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $CONFIG['html_auth']),
 		'NBR_TAGS' => $j,
-
+		
+		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
+		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',
+		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
+		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
 
 		'L_CONTENT_CONFIG' => $LANG['content_config_extend'],
 		'L_DEFAULT_LANGUAGE' => $LANG['default_formatting_language'],
@@ -75,6 +83,16 @@ else
 		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none'],
+		
+		'L_POST_MANAGEMENT' => $LANG['post_management'],
+		'L_PM_MAX' => $LANG['pm_max'],
+		'L_SECONDS' => $LANG['unit_seconds'],
+		'L_ANTI_FLOOD' => $LANG['anti_flood'],
+		'L_INT_FLOOD' => $LANG['int_flood'],
+		'L_PM_MAX_EXPLAIN' => $LANG['pm_max_explain'],
+		'L_ANTI_FLOOD_EXPLAIN' => $LANG['anti_flood_explain'],
+		'L_INT_FLOOD_EXPLAIN' => $LANG['int_flood_explain'],
+		
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
 	));

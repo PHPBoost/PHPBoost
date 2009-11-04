@@ -67,6 +67,25 @@
 					</dl>
 				</fieldset>
 				
+				<fieldset>  
+					<legend>{L_POST_MANAGEMENT}</legend> 
+					<dl>
+						<dt><label for="pm_max">{L_PM_MAX}</label><br /><span>{L_PM_MAX_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="2" name="pm_max" id="pm_max" value="{PM_MAX}" class="text" /></label></dd>
+					</dl>
+					<dl>
+						<dt><label for="anti_flood">{L_ANTI_FLOOD}</label><br /><span>{L_ANTI_FLOOD_EXPLAIN}</span></dt>
+						<dd>
+							<label><input type="radio" {FLOOD_ENABLED} name="anti_flood" id="anti_flood" value="1" /> {L_ACTIV}&nbsp;&nbsp;</label>
+							<label><input type="radio" {FLOOD_DISABLED} name="anti_flood" value="0" /> {L_UNACTIVE}</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="delay_flood">{L_INT_FLOOD}</label><br /><span>{L_INT_FLOOD_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" maxlength="9" name="delay_flood" id="delay_flood" value="{DELAY_FLOOD}" class="text" /> {L_SECONDS}</label></dd>
+					</dl>
+				</fieldset>
+				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
