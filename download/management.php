@@ -250,9 +250,6 @@ if ($edit_file_id > 0)
 			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 			if ($file_approved && !$file_properties['approved'])
 			{
-				
-				
-				
 				$corresponding_contributions = ContributionService::find_by_criteria('download', $edit_file_id);
 				if (count($corresponding_contributions) > 0)
 				{
@@ -475,10 +472,6 @@ else
 			//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 			if (!$auth_write)
 			{
-				//Importing the contribution classes
-				
-				
-				
 				$download_contribution = new Contribution();
 				
 				//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
@@ -486,7 +479,7 @@ else
 				//The description of the contribution (the counterpart) to explain why did the contributor contributed
 				$download_contribution->set_description(stripslashes($contribution_counterpart));
 				//The entitled of the contribution
-				$download_contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_entitled'], $file_title));
+				$download_contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_entitled'], stripslashes($file_title)));
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
