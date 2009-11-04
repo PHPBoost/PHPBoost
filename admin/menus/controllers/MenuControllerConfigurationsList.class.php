@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('/admin/menus/models/MenuConfiguration');
+
 
 
 class MenuControllerConfigurationsList implements Controller
@@ -70,7 +70,7 @@ class MenuControllerConfigurationsList implements Controller
 
 	private function load_env()
 	{
-		import('/admin/menus/util/AdminMenusDisplayResponse');
+		
 
 		global $LANG;
 

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('/admin/menus/models/MenuConfiguration');
+
 
 
 class MenuControllerConfigurationEdit implements Controller
@@ -93,7 +93,7 @@ class MenuControllerConfigurationEdit implements Controller
 
 	private function load_env()
 	{
-		import('/admin/menus/util/AdminMenusDisplayResponse');
+		
 
 		global $LANG;
 

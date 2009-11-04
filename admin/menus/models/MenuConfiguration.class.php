@@ -27,7 +27,7 @@
 
 
 
-import('/admin/menus/models/dao/MenuConfigurationDAO');
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
