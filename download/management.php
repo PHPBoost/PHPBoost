@@ -32,10 +32,6 @@ $Cache->load('download');
 
 include_once('download_auth.php');
 
-
-
-
-include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
 
 $edit_file_id = retrieve(GET, 'edit', 0);

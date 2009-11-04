@@ -31,7 +31,6 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-include_once('faq_cats.class.php');
 $faq_categories = new FaqCats();
 
 $id_up = retrieve(GET, 'id_up', 0);

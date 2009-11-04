@@ -109,7 +109,6 @@ class DownloadInterface extends ModuleInterface
 		
 		$Cache->load('download');
 		
-        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         $cats = new DownloadCats();
         $auth_cats = array();
         $cats->build_children_id_list(0, $auth_cats);
@@ -198,10 +197,6 @@ class DownloadInterface extends ModuleInterface
     function get_feed_data_struct($idcat = 0, $name = '')
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
-        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        
-        
-        
         
         global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');
@@ -258,7 +253,6 @@ class DownloadInterface extends ModuleInterface
      */
     function get_feeds_list()
 	{
-        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         $dl_cats = new DownloadCats();
         return $dl_cats->get_feeds_list();
 	}

@@ -30,7 +30,6 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 require_once('media_begin.php');
-require_once('media_cats.class.php');
 $media_categories = new MediaCats();
 
 $Template->set_filenames(array('admin_media_cat'=> 'media/admin_media_cats.tpl'));

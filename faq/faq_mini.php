@@ -35,7 +35,6 @@ function faq_mini($position, $block)
     $Cache->load('faq'); //Chargement du cache
     
     include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
-    include_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
     
     $tpl = new Template('faq/faq_mini.tpl');
     

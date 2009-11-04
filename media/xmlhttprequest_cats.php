@@ -33,8 +33,6 @@ require_once('../kernel/header_no_display.php');
 
 if ($User->check_level(ADMIN_LEVEL)) //Admin
 {
-	require_once('media_cats.class.php');
-
 	$media_categories = new MediaCats();
 	$id_up = retrieve(GET, 'id_up', 0);
 	$id_down = retrieve(GET, 'id_down', 0);

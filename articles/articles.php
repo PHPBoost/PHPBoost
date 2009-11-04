@@ -29,7 +29,6 @@ require_once('../kernel/begin.php');
 require_once('articles_begin.php');
 require_once('../kernel/header.php');
 
-require_once('articles_cats.class.php');
 $articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);

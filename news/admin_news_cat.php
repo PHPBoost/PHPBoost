@@ -32,7 +32,6 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('news'); //Chargement de la langue du module.
 
-require_once('news_cats.class.php');
 $news_categories = new NewsCats();
 
 $id_up = retrieve(GET, 'id_up', 0);

@@ -49,7 +49,6 @@ if (empty($idartcat))//Racine.
 
 if (isset($ARTICLES_CAT[$idartcat]) )
 {
-	require_once('articles_cats.class.php');
 	$articles_categories = new ArticlesCats();
 	$articles_categories->bread_crumb($idartcat);
 

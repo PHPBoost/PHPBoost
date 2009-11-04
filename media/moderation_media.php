@@ -35,7 +35,6 @@ if (!$User->check_level(MODO_LEVEL))
 }
 
 require_once('media_begin.php');
-require_once('media_cats.class.php');
 $media_categories = new MediaCats();
 
 $Template->set_filenames(array('media_moderation' => 'media/moderation_media.tpl'));

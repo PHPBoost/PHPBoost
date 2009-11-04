@@ -64,7 +64,6 @@ if ($faq_del_id > 0)
 			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);			 //Updating number of subcategories
 			if ($faq_infos['idcat'] != 0)
 			{
-				include_once('faq_cats.class.php');
 				$faq_cats = new FaqCats();
 				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
@@ -144,7 +143,6 @@ elseif (!empty($entitled) && !empty($answer))
 			//Updating number of subcategories
 			if ($new_id_cat != 0)
 			{
-				include_once('faq_cats.class.php');
 				$faq_cats = new FaqCats();
 				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($new_id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
@@ -223,7 +221,6 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 				//Updating number of subcategories of its old parents
 				if ($question_infos['idcat'] != 0)
 				{
-					include_once('faq_cats.class.php');
 					$faq_cats = new FaqCats();
 					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
@@ -231,7 +228,6 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 				//Updating the number of subcategories of its new parents
 				if ($target != 0)
 				{
-					include_once('faq_cats.class.php');
 					$faq_cats = new FaqCats();
 					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
