@@ -40,7 +40,7 @@ class MySQLDBMSUtils implements DBMSUtils
 {
 	private $querier;
 
-	public function __construct(MySQLQuerier $querier)
+	public function __construct(SQLQuerier $querier)
 	{
 		$this->querier = $querier;
 	}

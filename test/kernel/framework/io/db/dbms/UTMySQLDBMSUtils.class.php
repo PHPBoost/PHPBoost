@@ -20,8 +20,8 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 		self::$test_table1 = PREFIX . 'test_table_1';
 		self::$test_table2 = PREFIX . 'test_table_2';
 
-		$connection = DBFactory::get_db_connection('mysql');
-		self::$querier = DBFactory::new_sql_querier($connection, 'mysql');
+		$connection = DBFactory::get_db_connection();
+		self::$querier = DBFactory::new_sql_querier($connection);
 		self::$dbms_utils = new MySQLDBMSUtils(self::$querier);
 
 		self::$querier->inject("DROP TABLE IF EXISTS `" . self::$test_table1 . "`");
