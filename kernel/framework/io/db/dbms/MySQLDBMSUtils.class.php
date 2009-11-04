@@ -86,7 +86,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function list_table_fields($table)
+	public function desc_table($table)
 	{
 		$fields = array();
 		$results = $this->querier->select('DESC ' . $table . ';');
@@ -115,11 +115,14 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function truncate($tables)
 	{
-		if (is_array($tables))
+		if (!is_array($tables))
 		{
-			$tables = implode('`, `', $tables);
+			$tables = array($tables);
 		}
-		$this->querier->inject('TRUNCATE TABLE `' . $tables . '`;');
+		foreach ($tables as $table)
+		{
+			$this->querier->inject('TRUNCATE TABLE `' . $table . '`;');
+		}
 	}
 
 	public function optimize($tables)
