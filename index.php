@@ -32,6 +32,9 @@ define('PATH_TO_ROOT', './');
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd (on n'en a pas besoin sur cette page)
 
 require_once('./kernel/framework/functions.inc.php');
+import('core/ClassLoader');
+ClassLoader::init_autoload();
+
 $CONFIG = array();
 //Chargement manuel de la configuration générale
 @include_once('./cache/config.php');
