@@ -25,13 +25,13 @@
  *
  ###################################################*/
 
-import('/member/controllers/ErrorController');
+
 
 class MenuErrorController extends ErrorController
 {
 	protected function load_env()
 	{
-		import('/admin/menus/util/AdminMenusDisplayResponse');
+		
 		$this->set_response(new AdminMenusDisplayResponse($this->get_view()));
 	}
 }

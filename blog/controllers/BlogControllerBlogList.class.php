@@ -26,7 +26,7 @@
  ###################################################*/
 
 
-import('/blog/models/blog');
+
 
 
 class BlogControllerBlogList implements Controller

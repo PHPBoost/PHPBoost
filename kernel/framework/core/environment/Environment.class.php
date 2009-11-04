@@ -576,7 +576,7 @@ class Environment
 	public static function exception_handler(Exception $exception)
 	{
 		ob_clean();
-		import('/member/controllers/ErrorController');
+		
 
 		// Log exception
 

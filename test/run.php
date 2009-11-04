@@ -10,7 +10,7 @@ AppContext::init_session();
 AppContext::init_user();
 
 req('/test/PHPUnit/Framework.php');
-import('/test/util/phpboost_unit_test_case');
+
 if (!empty($_REQUEST['params'])) {
     // Fake command line environment
     $argv = $_REQUEST['params'];

@@ -27,8 +27,8 @@
 
 
 
-import('/blog/models/dao/blog_dao');
-import('/blog/models/blog_post');
+
+
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>

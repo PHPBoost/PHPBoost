@@ -3,7 +3,7 @@
 
 
 
-import('/blog/models/dao/blog_post_dao');
+
 
 class BlogPost extends BusinessObject
 {
