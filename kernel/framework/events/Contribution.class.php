@@ -26,8 +26,6 @@
 ###################################################*/
 
 
-
-
 ## Constants ##
 
 //Bit on which are checked the authorizations
@@ -85,13 +83,16 @@ class Contribution extends Event
 	/**
 	 * @desc Builds a Contribution object.
 	 */
-	public function Contribution()
+	public function __construct()
 	{
+		parent::__construct();
 		$this->current_status = EVENT_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
 		if (defined('MODULE_NAME'))
+		{
 			$this->module = MODULE_NAME;
+		}
 	}
 	
 	/**
@@ -147,7 +148,9 @@ class Contribution extends Event
 	public function set_fixing_date($date)
 	{
 		if (is_object($date) && strtolower(get_class($date)) == 'date')
+		{
 			$this->fixing_date = $date;
+		}
 	}
 	
     /**
@@ -171,14 +174,18 @@ class Contribution extends Event
 				$this->fixing_date = new Date();
 				//If the fixer id is not defined, we define it
 				if ($this->fixer_id == 0)
+				{
 					$this->fixer_id = $User->get_attribute('user_id');
+				}
 			}
 			
 			$this->current_status = $new_current_status;
 		}
 		//Default
 		else
+		{
 			$this->current_status = EVENT_STATUS_UNREAD;
+		}
 		
 		$this->must_regenerate_cache = true;
 	}
@@ -190,7 +197,9 @@ class Contribution extends Event
 	public function set_auth($auth)
 	{
 		if (is_array($auth))
+		{
 			$this->auth = $auth;
+		}
 	}
 	
 	/**
@@ -232,7 +241,9 @@ class Contribution extends Event
 	public function set_description($description)
 	{
 		if (is_string($description))
+		{
 			$this->description = $description;
+		}
 	}
 	
 	/**
@@ -341,7 +352,9 @@ class Contribution extends Event
 			return isset($module_ini['name']) ? $module_ini['name'] : '';
 		}
 		else
+		{
 			return '';
+		}
 	}
 }
 

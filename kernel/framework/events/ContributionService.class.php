@@ -26,7 +26,6 @@
 ###################################################*/
 
 
-
 //Flag which distinguishes a contribution from an alert
 define('CONTRIBUTION_TYPE', 0);
 
@@ -62,7 +61,9 @@ class ContributionService
 			return $contribution;
 		}
 		else
+		{
 			return null;
+		}
 	}
 	
 	/**
@@ -117,24 +118,36 @@ class ContributionService
 		
 		//The module parameter must be specified and of string type, otherwise we can't continue
 		if (empty($module) || !is_string($module))
+		{
 			return array();
+		}
 		
 		$criterias[] = "module = '" . strprotect($module) . "'";
 		
 		if ($id_in_module != null)
+		{
 			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
+		}
 		
 		if ($type != null)
+		{
 			$criterias[] = "type = '" . strprotect($type) . "'";
+		}
 			
 		if ($identifier != null)
+		{
 			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+		}
 			
 		if ($poster_id != null)
+		{
 			$criterias[] = "poster_id = '" . intval($poster_id) . "'";
+		}
 			
 		if ($fixer_id != null)
+		{
 			$criterias[] = "fixer_id = '" . intval($fixer_id) . "'";
+		}
 		
 		$array_result = array();
 		$where_clause = "contribution_type = '" . CONTRIBUTION_TYPE . "' AND " . implode($criterias, " AND ");
@@ -239,7 +252,9 @@ class ContributionService
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if (!($this_auth = @unserialize($row['auth'])))
+			{
 				$this_auth = array();
+			}
 			
 			//We can count only for ranks. For groups and users we can't generalize because there can be intersection problems. Yet, we know the maximum number of contributions they can see, and we can be sure if they have at least 1.
 			
@@ -248,11 +263,15 @@ class ContributionService
 			
 			//For moderators ?
 			if (Authorizations::check_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
+			{
 				$array_result['r1']++;
+			}
 			
 			//For members ?
 			if (Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
+			{
 				$array_result['r0']++;
+			}
 				
 			foreach ($this_auth as $profile => $auth_profile)
 			{
@@ -261,14 +280,18 @@ class ContributionService
 				{
 					//If this member has not already an entry and he can see that contribution
 					if (empty($array_result[$profile]) && Authorizations::check_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT))
+					{
 						$array_result['g' . $profile] = 1;
+					}
 				}
 				//Members
 				elseif (substr($profile, 0, 1) == 'm')
 				{
 					//If this member has not already an entry and he can see that contribution
 					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT))
+					{
 						$array_result[$profile] = 1;
+					}
 				}
 			}
 		}
