@@ -53,8 +53,8 @@ class MenuControllerConfigurationEdit implements Controller
 		}
 		catch (ObjectNotFoundException $exception)
 		{
-			 $error_controller = ClassLoader::new_instance('/admin/menus/controllers/MenuErrorController');
-//			$error_controller = ClassLoader::new_instance('/member/controllers/ErrorController');
+			 $error_controller = new MenuErrorController();
+//			 $error_controller = new ErrorController();
 				
 			$request->set_value(ErrorController::TITLE, 'Menu configuration does not exists');
 			$request->set_value(ErrorController::MESSAGE, 'The requested menu configuration ' .

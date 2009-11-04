@@ -33,7 +33,7 @@
  */
 class UrlControllerMapper extends AbstractUrlMapper
 {
-	private $classpath;
+	private $classname;
 	private $parameters_names;
 
 	/**
@@ -44,9 +44,9 @@ class UrlControllerMapper extends AbstractUrlMapper
      * @param string $parameters_names the names of the parameters in the capture order
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($classpath, $capture_regex, $parameters_names = array())
+	public function __construct($classname, $capture_regex, $parameters_names = array())
 	{
-		$this->classpath =& $classpath;
+		$this->classname =& $classname;
 		$this->parameters_names = $parameters_names;
 		parent::__construct($capture_regex);
 	}
@@ -79,7 +79,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 
 	private function do_call()
 	{
-		$controller = ClassLoader::new_instance($this->classpath);
+		$controller = new $this->classname();
 		if (!($controller instanceof Controller))
 		{
 			throw new NoSuchControllerException($this->classname);

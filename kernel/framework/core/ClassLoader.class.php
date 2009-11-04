@@ -34,23 +34,6 @@ class ClassLoader
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
 
-	public static function import($classpath)
-	{
-		import($classpath);
-	}
-
-	public static function new_instance($classpath)
-	{
-		self::import($classpath);
-		$classname =& self::get_classname($classpath);
-		return new $classname();
-	}
-
-	public static function get_classname($classpath)
-	{
-		return substr($classpath, strrpos($classpath, '/') + 1);
-	}
-
 	public static function init_autoload()
 	{
 		if (!@include_once PATH_TO_ROOT . self::$cache_file)
@@ -64,14 +47,14 @@ class ClassLoader
 	{
 		if (isset(self::$autoload[$classname]))
 		{
-			import(self::$autoload[$classname]);
+			require_once PATH_TO_ROOT . self::$autoload[$classname];
 		}
 		else
 		{
 			self::generate_classlist();
 			if (isset(self::$autoload[$classname]))
 			{
-				import(self::$autoload[$classname]);
+				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
 		}
 	}
@@ -81,12 +64,12 @@ class ClassLoader
 		import('io/filesystem/FileSystemElement');
 		import('io/filesystem/Folder');
 		import('io/filesystem/File');
-		
+
 		self::add_classes(FS_ROOT_DIRECTORY, true);
 		self::generate_autoload_cache();
 		return self::$autoload;
 	}
-	
+
 	private static function add_classes($directory, $recursive = false)
 	{
 		$files = array();
@@ -95,7 +78,7 @@ class ClassLoader
 		foreach ($folder->get_files('`^.+\.class\.php$`') as $file)
 		{
 			$classname = preg_replace('`\.class\.php$`', '', $file->get_name(false, false));
-			self::$autoload[$classname] = $relative_path . '/' . $classname;
+			self::$autoload[$classname] = $relative_path . '/' . $classname . '.class.php';
 		}
 
 		if ($recursive)
@@ -106,7 +89,7 @@ class ClassLoader
 			}
 		}
 	}
-	
+
 	private static function generate_autoload_cache()
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file, WRITE);
