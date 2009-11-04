@@ -46,9 +46,9 @@ class DBFactory
 	 * @desc returns a new <code>DBConnection</code> instance
 	 * @return DBConnection a new <code>DBConnection</code> instance
 	 */
-	public static function get_db_connection()
+	public static function get_db_connection($dbms_type = null)
 	{
-		if (self::$db_connection == null)
+		if (self::$db_connection === null)
 		{
 			//Configuration file
 			include PATH_TO_ROOT . '/kernel/db/config.php';
@@ -60,24 +60,21 @@ class DBFactory
 				redirect(get_server_url_page('install/install.php'));
 			}
 
-			try
+			if ($dbms_type === null)
 			{
-				switch (self::$dbms)
-				{
-					case 'pdo-mysql':
-						self::$db_connection = new PDODBConnection();
-						break;
-					case 'mysql':
-					default:
-						self::$db_connection = new MySQLDBConnection();
-						break;
-				}
-				self::$db_connection->connect($db_connection_data);
+				$dbms_type = self::$dbms;
 			}
-			catch (Exception $exception)
+			switch ($dbms_type)
 			{
-				Debug::fatal($exception);
+				case 'pdo-mysql':
+					self::$db_connection = new PDODBConnection();
+					break;
+				case 'mysql':
+				default:
+					self::$db_connection = new MySQLDBConnection();
+					break;
 			}
+			self::$db_connection->connect($db_connection_data);
 		}
 		return self::$db_connection;
 	}
@@ -87,9 +84,13 @@ class DBFactory
 	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
 	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
 	 */
-	public static function new_sql_querier(DBConnection $db_connection)
+	public static function new_sql_querier(DBConnection $db_connection, $dbms_type = null)
 	{
-		switch (self::$dbms)
+		if ($dbms_type === null)
+		{
+			$dbms_type = self::$dbms;
+		}
+		switch ($dbms_type)
 		{
 			case 'pdo-mysql':
 				return new PDOQuerier($db_connection, self::new_query_translator());
@@ -98,10 +99,14 @@ class DBFactory
 				return new MySQLQuerier($db_connection, self::new_query_translator());
 		}
 	}
-	
-	public static function new_dbms_util(SQLQuerier $querier)
+
+	public static function new_dbms_util(SQLQuerier $querier, $dbms_type = null)
 	{
-		switch (self::$dbms)
+		if ($dbms_type === null)
+		{
+			$dbms_type = self::$dbms;
+		}
+		switch ($dbms_type)
 		{
 			case 'pdo-mysql':
 			case 'mysql':
@@ -110,9 +115,13 @@ class DBFactory
 		}
 	}
 
-	private static function new_query_translator()
+	private static function new_query_translator($dbms_type = null)
 	{
-		switch (self::$dbms)
+		if ($dbms_type === null)
+		{
+			$dbms_type = self::$dbms;
+		}
+		switch ($dbms_type)
 		{
 			case 'pdo-mysql':
 			case 'mysql':

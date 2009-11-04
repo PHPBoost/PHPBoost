@@ -70,10 +70,6 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	{
 		$this->query = $query;
 		$this->fetch_mode = $fetch_mode;
-		if (!is_resource($resource) || $resource === false)
-		{
-			throw new MySQLQuerierException('query returns an invalid sql resource');
-		}
 		$this->resource = $resource;
 	}
 

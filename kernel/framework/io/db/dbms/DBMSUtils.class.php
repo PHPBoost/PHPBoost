@@ -44,15 +44,15 @@ interface DBMSUtils
 	
 	function list_tables();
 	
-	function list_table_fields($table);
-	
-	function drop($tables);
-	
-	function truncate($tables);
+	function desc_table($table);
 	
 	function optimize($tables);
 	
 	function repair($tables);
+	
+	function truncate($tables);
+	
+	function drop($tables);
 }
 
 ?>

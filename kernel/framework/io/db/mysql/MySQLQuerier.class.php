@@ -70,7 +70,12 @@ class MySQLQuerier extends AbstractSQLQuerier
 	{
 		$query = $this->prepare($query);
 		$query = $this->query_var_replacator->replace($query, $parameters);
-		return mysql_query($query, $this->link);
+		$resource = mysql_query($query, $this->link);
+		if ($resource === false)
+		{
+			throw new MySQLQuerierException('invalid query');
+		}
+		return $resource;
 	}
 }
 
