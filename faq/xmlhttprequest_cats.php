@@ -31,7 +31,6 @@ require_once('../kernel/header_no_display.php');
 
 if ($User->check_level(ADMIN_LEVEL)) //Admin
 {	
-	include_once('faq_cats.class.php');
 	$faq_categories = new FaqCats();
 	
 	$id_up = retrieve(GET, 'id_up', 0);

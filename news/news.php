@@ -28,11 +28,6 @@
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
-
-
-
-
-require_once('news_cats.class.php');
 $news_cat = new NewsCats();
 
 $idnews = retrieve(GET, 'id', 0);

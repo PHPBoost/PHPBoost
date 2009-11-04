@@ -31,7 +31,6 @@ require_once('../kernel/header_no_display.php');
 
 if ($User->check_level(ADMIN_LEVEL)) //Admin
 {	
-	include_once('download_cats.class.php');
 	$download_categories = new DownloadCats();
 	
 	$id_up = retrieve(GET, 'id_up', 0);

@@ -38,7 +38,6 @@ $new_model = retrieve(GET, 'new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
 $error = retrieve(GET, 'error', '');
 
-require_once('articles_cats.class.php');
 $articles_categories = new ArticlesCats();
 
 $tpl = new Template('articles/admin_articles_models.tpl');

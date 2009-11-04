@@ -98,7 +98,6 @@ class FaqInterface extends ModuleInterface
 		$Cache->load('faq');
 		
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
         $auth_cats = array();
         $Cats->build_children_id_list(0, $auth_cats);

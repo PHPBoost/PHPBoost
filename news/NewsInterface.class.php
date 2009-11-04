@@ -86,7 +86,6 @@ class NewsInterface extends ModuleInterface
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
 
 		// Build array with the children categories.
@@ -115,7 +114,6 @@ class NewsInterface extends ModuleInterface
      */
     function get_feeds_list()
 	{
-        require_once PATH_TO_ROOT . '/news/news_cats.class.php';
         $news_cats = new NewsCats();
         return $news_cats->get_feeds_list();
 	}
@@ -148,7 +146,6 @@ class NewsInterface extends ModuleInterface
         $data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(AUTH_NEWS_READ);
 
-		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
 
 		// Build array with the children categories.
@@ -301,7 +298,6 @@ class NewsInterface extends ModuleInterface
 		$Pagination = new Pagination();
 
 		// Classe des catégories.
-		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
 
 		// Variables.

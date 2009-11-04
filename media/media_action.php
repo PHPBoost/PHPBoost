@@ -28,7 +28,6 @@
 
 require_once('../kernel/begin.php');
 require_once('media_begin.php');
-require_once('media_cats.class.php');
 $media_categories = new MediaCats();
 
 $Template->set_filenames(array('media_action' => 'media/media_action.tpl'));

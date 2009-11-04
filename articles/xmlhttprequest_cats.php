@@ -33,7 +33,6 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 {
 	$Session->csrf_get_protect();
 
-	require_once('articles_cats.class.php');
 	$articles_categories = new ArticlesCats();
 
 	$id_up = retrieve(GET, 'id_up', 0);

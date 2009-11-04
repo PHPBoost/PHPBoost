@@ -131,7 +131,6 @@ elseif ($cat_of_new_question >= 0 && $new)
 }
 elseif ($id_move > 0)
 {
-	include_once('faq_cats.class.php');
 	$faq_cats = new Faqcats();
 	
 	$Template->assign_block_vars('move_question', array(

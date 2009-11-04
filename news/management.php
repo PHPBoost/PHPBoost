@@ -27,7 +27,6 @@
 
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
-require_once('news_cats.class.php');
 $news_categories = new NewsCats();
 
 

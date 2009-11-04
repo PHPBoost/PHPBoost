@@ -89,7 +89,6 @@ class MediaInterface extends ModuleInterface
 		load_module_lang('media');
 
         require_once(PATH_TO_ROOT . '/media/media_constant.php');
-        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
 		
 		
 		
@@ -150,7 +149,6 @@ class MediaInterface extends ModuleInterface
 		$Cache->load('media');
 		
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        require_once PATH_TO_ROOT . '/media/media_cats.class.php';
         $Cats = new MediaCats();
         $auth_cats = array();
         $Cats->build_children_id_list(0, $auth_cats);
@@ -175,7 +173,6 @@ class MediaInterface extends ModuleInterface
      */
     function get_feeds_list()
 	{
-        require_once PATH_TO_ROOT . '/media/media_cats.class.php';
         $media_cats = new MediaCats();
         return $media_cats->get_feeds_list();	    
 	}

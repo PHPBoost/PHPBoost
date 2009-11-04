@@ -132,7 +132,6 @@ class ArticlesInterface extends ModuleInterface
 
     function get_feeds_list()
 	{
-        require_once PATH_TO_ROOT . '/articles/articles_cats.class.php';
         $articles_cats = new ArticlesCats();
         return $articles_cats->get_feeds_list();
 	}
