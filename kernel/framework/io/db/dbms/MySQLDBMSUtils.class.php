@@ -47,7 +47,7 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function get_dbms_version()
 	{
-		$result = $this->querier->select('SELECT DATABASE();')->fetch();
+		$result = $this->querier->select('SELECT VERSION();')->fetch();
 		return 'MySQL ' . $result['VERSION()'];
 	}
 
@@ -88,7 +88,20 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function list_table_fields($table)
 	{
-
+		$fields = array();
+		$results = $this->querier->select('DESC ' . $table . ';');
+		foreach ($results as $result)
+		{
+			$fields[] = array(
+				'name' => $result['Field'],
+				'type' => $result['Type'],
+				'null' => $result['Null'],
+				'key' => $result['Key'],
+				'default' => $result['Default'],
+				'extra' => $result['Extra'],
+			);
+		}
+		return $fields;
 	}
 
 	public function drop($tables)
