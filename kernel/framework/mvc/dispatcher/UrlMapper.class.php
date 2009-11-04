@@ -28,6 +28,8 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Call the controller method matching an url
+ * @package mvc
+ * @subpackage dispatcher
  */
 interface UrlMapper
 {

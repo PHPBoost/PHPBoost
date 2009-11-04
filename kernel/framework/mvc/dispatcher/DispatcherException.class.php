@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           dispatcher_exception.class.php
+ *                           DispatcherException.class.php
  *                            -------------------
  *   begin                : June 08 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -28,6 +28,8 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @abstract
+ * @package mvc
+ * @subpackage dispatcher
  *
  */
 abstract class DispatcherException extends Exception
@@ -35,63 +37,6 @@ abstract class DispatcherException extends Exception
 	public function __construct($message)
 	{
 		parent::__construct($message);
-	}
-}
-
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc No UrlDispatcherItem were found matching the given url
- */
-class NoUrlMatchException extends DispatcherException
-{
-	public function __construct($url)
-	{
-		parent::__construct('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
-	}
-}
-
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc The specified method of the controller from the UrlDispatcherItem
- * matching the url does not exists
- */
-class NoSuchControllerException extends DispatcherException
-{
-	public function __construct($controller)
-	{
-		
-		parent::__construct('Class "' . $controller . '" is not a valid controller (does not implement Controller)');
-	}
-}
-
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc The specified method of the controller from the UrlDispatcherItem
- * matching the url does not exists
- */
-class NoSuchControllerMethodException extends DispatcherException
-{
-	public function __construct($controller, $method_name)
-	{
-		parent::__construct('Controller "' . $controller . '" doesn\'t have a method called "' . $method_name . '"');
-	}
-}
-
-class MalformedUrlMapperRegex extends DispatcherException
-{
-	public function __construct($regex, $message)
-	{
-		parent::__construct('regular expression is malformed: "' . $regex .
-			'"<br />' . $message);
-	}
-}
-
-class MalformedUrlControllerMapperRegex extends MalformedUrlMapperRegex
-{
-	public function __construct($regex)
-	{
-		parent::__construct($regex, 'The regular expression must capture the method and parameters
-		  part (for example : "`^/foo/(.*)`")');
 	}
 }
 ?>

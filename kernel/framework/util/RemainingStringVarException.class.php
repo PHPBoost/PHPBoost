@@ -25,46 +25,18 @@
  *
  ###################################################*/
 
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package util
  * @desc implements the string var replacement method
  *
  */
-class StringVars
+class RemainingStringVarException extends Exception
 {
-	private $parameters;
-	
-    public static function replace_vars($string, $parameters)
-    {
-    	if (empty($parameters))
-    	{
-    		return $string;
-    	}
-    	$string_var = new StringVars();
-    	return $string_var->replace($string, $parameters);
-    }
-    
-    public function replace(&$string, &$parameters)
-    {
-    	$this->parameters = $parameters;
-        return preg_replace_callback('`:([a-z][\w_]+)`i', array($this, 'replace_var'), $string);
-    }
-    
-    private function replace_var($captures)
-    {
-        $varname =& $captures[1];
-        if (isset($this->parameters[$varname]))
-        {
-            return $this->set_var($this->parameters[$varname]);
-        }
-        throw new RemainingStringVarException($varname);
-    }
-    
-    protected function set_var(&$parameter)
-    {
-        return $parameter;
-    }
+	public function __construct($varname)
+	{
+		parent::__construct('the string var ":' . $varname . '" has not value');
+	}
 }
-
 ?>

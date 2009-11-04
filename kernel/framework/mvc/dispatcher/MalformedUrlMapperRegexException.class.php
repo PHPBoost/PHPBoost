@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           AbstractUrlMapper.class.php
+ *                           MalformedUrlMapperRegex.class.php
  *                            -------------------
- *   begin                : October 17 2009
+ *   begin                : June 08 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,45 +25,17 @@
  *
  ###################################################*/
 
-
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc Call the controller method matching an url
- * @abstract
+ * @author  loic rouchon <loic.rouchon@phpboost.com>
+ * @desc The regular expression that the controller have to match is malformed
  * @package mvc
  * @subpackage dispatcher
  */
-abstract class AbstractUrlMapper implements UrlMapper
+class MalformedUrlMapperRegex extends DispatcherException
 {
-	/**
-	 * @var string
-	 */
-	private $capture_regex;
-	
-	/**
-	 * @var string[]
-	 */
-	private $captured_parameters = array();
-
-	public function __construct($capture_regex)
+	public function __construct($regex, $message)
 	{
-		$this->capture_regex = $capture_regex;
-	}
-
-	public function match(&$url)
-	{
-		$match = preg_match($this->capture_regex, $url, $this->captured_parameters);
-		if ($match === false)
-		{
-			throw new MalformedUrlMapperRegexException($this->capture_regex, $url);
-		}
-		return $match > 0;
-	}
-	
-	protected function get_captured_parameters()
-	{
-		return $this->captured_parameters;
+		parent::__construct('regular expression is malformed: "' . $regex . '"<br />' . $message);
 	}
 }
 ?>

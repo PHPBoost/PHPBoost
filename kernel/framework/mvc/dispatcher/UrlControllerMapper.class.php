@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           url_controller_mapper.class.php
+ *                           UrlControllerMapper.class.php
  *                            -------------------
  *   begin                : June 08 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Call the controller method matching an url
+ * @package mvc
+ * @subpackage dispatcher
  */
 class UrlControllerMapper extends AbstractUrlMapper
 {
