@@ -70,7 +70,8 @@ class ContentSecondParser extends Parser
 		//Balise latex.
 		if (strpos($this->content, '[[MATH]]') !== false)
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php');
+			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php';
+			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.class.php';
 			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
 		}
 

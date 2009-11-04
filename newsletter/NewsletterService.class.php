@@ -25,11 +25,6 @@
  *
 ###################################################*/
 
-if (defined('PHPBOOST') !== true)	exit;
-
-
-
-	
 class NewsletterService
 {
 	function send_html($mail_object, $message, $email_test = '')

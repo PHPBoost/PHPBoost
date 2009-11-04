@@ -45,11 +45,7 @@ class ClassLoader
 
 	public static function autoload($classname)
 	{
-		if (isset(self::$autoload[$classname]))
-		{
-			require_once PATH_TO_ROOT . self::$autoload[$classname];
-		}
-		else
+		if (!(isset(self::$autoload[$classname]) && @include_once PATH_TO_ROOT . self::$autoload[$classname]))
 		{
 			self::generate_classlist();
 			if (isset(self::$autoload[$classname]))
