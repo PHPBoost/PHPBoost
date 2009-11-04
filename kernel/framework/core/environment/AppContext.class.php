@@ -167,7 +167,7 @@ class AppContext
 			static $connection = null;
 			if ($connection === null)
 			{	// TODO arrange this If using PDO, there might be some problems with the connection
-				$connection = ClassLoader::new_instance('io/db/mysql/MySQLDBConnection');
+				$connection = new MySQLDBConnection();
 				$connection->connect($db_connection_data);
 			}
 			self::init_sql($connection, $db_connection_data['database']);
