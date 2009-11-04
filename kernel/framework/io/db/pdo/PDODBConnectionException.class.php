@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class PDODBConnectionException extends DBConnectionException
 {
     public function __construct($message, PDO $pdo)

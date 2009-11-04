@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          template_loader.class.php
+ *                          TemplateLoaderException.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,15 +25,12 @@
  *
  ###################################################*/
 
-class TemplateException extends Exception
-{
-}
-
-class TemplateLoaderException extends TemplateException
+class TemplateLoaderException extends Exception
 {
 	public function __construct($template_identifier, $reason)
 	{
-		parent::__construct('Template loading failed for template "' . $template_identifier . '"<br />' . $reason);
+		parent::__construct('Template loading failed for template "' . $template_identifier .
+			'"<br />' . $reason);
 	}
 }
 ?>
