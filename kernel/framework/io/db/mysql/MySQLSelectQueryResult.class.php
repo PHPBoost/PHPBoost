@@ -145,6 +145,11 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 			$this->is_disposed = true;
 		}
 	}
+	
+	protected function needs_rewind()
+	{
+		return $this->index == 0;
+	}
 }
 
 ?>

@@ -136,6 +136,11 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 			$this->is_disposed = true;
 		}
 	}
+	
+	protected function needs_rewind()
+	{
+		return $this->iterator === null;
+	}
 }
 
 ?>

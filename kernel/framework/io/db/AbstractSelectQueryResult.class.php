@@ -42,7 +42,7 @@ abstract class AbstractSelectQueryResult implements SelectQueryResult
 
 	public function fetch()
 	{
-		if ($this->index == 0)
+		if ($this->needs_rewind())
 		{
 			$this->rewind();
 		}
@@ -51,6 +51,11 @@ abstract class AbstractSelectQueryResult implements SelectQueryResult
 		$this->next();
 		return $current;
 	}
+	
+	/**
+	 * @return bool
+	 */
+	abstract protected function needs_rewind();
 }
 
 ?>

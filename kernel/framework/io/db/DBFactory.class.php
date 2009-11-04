@@ -92,12 +92,21 @@ class DBFactory
 		switch (self::$dbms)
 		{
 			case 'pdo-mysql':
-				
 				return new PDOQuerier($db_connection, self::new_query_translator());
 			case 'mysql':
 			default:
-				
 				return new MySQLQuerier($db_connection, self::new_query_translator());
+		}
+	}
+	
+	public static function new_dbms_util(SQLQuerier $querier)
+	{
+		switch (self::$dbms)
+		{
+			case 'pdo-mysql':
+			case 'mysql':
+			default:
+				return new MySQLDBMSUtils($querier);
 		}
 	}
 
@@ -108,7 +117,6 @@ class DBFactory
 			case 'pdo-mysql':
 			case 'mysql':
 			default:
-				
 				return new MySQLQueryTranslator();
 		}
 	}
