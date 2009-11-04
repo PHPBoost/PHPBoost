@@ -70,10 +70,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 	$config['mail_exp'] 	= stripslashes(retrieve(POST, 'mail_exp', ''));  
 	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));
-	$config['sign'] 		= stripslashes(retrieve(POST, 'sign', ''));  
-	$config['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
-	$config['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
-	$config['pm_max'] 		= retrieve(POST, 'pm_max', 25);
+	$config['sign'] 		= stripslashes(retrieve(POST, 'sign', '')); 
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
@@ -274,17 +271,13 @@ else //Sinon on rempli le formulaire
 		'MAIL_EXP' => !empty($CONFIG['mail_exp']) ? $CONFIG['mail_exp'] : '',   
 		'MAIL' => !empty($CONFIG['mail']) ? $CONFIG['mail'] : '',   
 		'SIGN' => !empty($CONFIG['sign']) ? $CONFIG['sign'] : '',
-		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
-		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
 		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',
 		'BENCH_ENABLED' => ($CONFIG['bench'] == 1) ? 'checked="checked"' : '',
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
-		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
-		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
 		'L_REQUIRE_VALID_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
@@ -305,14 +298,6 @@ else //Sinon on rempli le formulaire
 		'L_THEME_AUTHOR' => $LANG['theme_author'],
 		'L_THEME_AUTHOR_EXPLAIN' => $LANG['theme_author_explain'],
 		'L_REWRITE' => $LANG['rewrite'],
-		'L_POST_MANAGEMENT' => $LANG['post_management'],
-		'L_PM_MAX' => $LANG['pm_max'],
-		'L_SECONDS' => $LANG['unit_seconds'],
-		'L_ANTI_FLOOD' => $LANG['anti_flood'],
-		'L_INT_FLOOD' => $LANG['int_flood'],
-		'L_PM_MAX_EXPLAIN' => $LANG['pm_max_explain'],
-		'L_ANTI_FLOOD_EXPLAIN' => $LANG['anti_flood_explain'],
-		'L_INT_FLOOD_EXPLAIN' => $LANG['int_flood_explain'],
 		'L_EMAIL_MANAGEMENT' => $LANG['email_management'],
 		'L_EMAIL_ADMIN_EXP' => $LANG['email_admin_exp'],
 		'L_EMAIL_ADMIN_EXP_EXPLAIN' => $LANG['email_admin_explain_exp'],
