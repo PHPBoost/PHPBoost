@@ -50,7 +50,7 @@ class PDOQuerier extends AbstractSQLQuerier
 		$statement = $this->prepare_statement($query, $parameters);
 		$this->execute($statement, $query, $parameters);
 		return new PDOInjectQueryResult($query, $statement, $this->link);
-		
+
 	}
 
 	/**
@@ -67,7 +67,7 @@ class PDOQuerier extends AbstractSQLQuerier
 		$keys_to_remove = array();
 		foreach (array_keys($parameters) as $key)
 		{
-			if (!preg_match('`:' . $key . '[^\w]`i', $query))
+			if (!preg_match('`:' . $key . '[^\w]|$`i', $query))
 			{
 				$keys_to_remove[] = $key;
 			}
@@ -76,7 +76,6 @@ class PDOQuerier extends AbstractSQLQuerier
 		{
 			unset($parameters[$key]);
 		}
-		
 		$result = $statement->execute($parameters);
 		if ($result === false)
 		{

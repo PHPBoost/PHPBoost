@@ -98,7 +98,7 @@ class Sql
 	 */
 	public function query($query, $errline, $errfile)
 	{
-		$query_result = AppContext::get_sql_querier()->select($query, array(), SelectQueryResult::FETCH_NUM);
+		$query_result = $this->select($query, SelectQueryResult::FETCH_NUM);
 		$query_result->rewind();
 		if ($query_result->valid())
 		{
@@ -148,8 +148,10 @@ class Sql
 
 		try
 		{
+			$query_conditions = new SqlParameterExtractor($conditions);
 			return AppContext::get_sql_common_query()->select_single_row(
-			$table, $fields, str_replace('WHERE', '', $conditions));
+			$table, $fields, str_replace('WHERE', '', $query_conditions->get_query()),
+			$query_conditions->get_parameters());
 		}
 		catch (RowNotFoundException $exception)
 		{
@@ -173,7 +175,7 @@ class Sql
 	 */
 	public function query_inject($query, $errline, $errfile)
 	{
-		$this->inject_query_result = AppContext::get_sql_querier()->inject($query);
+		$this->inject_query_result = $this->inject($query);
 	}
 
 	/**
@@ -187,7 +189,7 @@ class Sql
 	 */
 	public function query_while ($query, $errline, $errfile)
 	{
-		$this->select_query_result = AppContext::get_sql_querier()->select($query);
+		$this->select_query_result = $this->select($query);
 		$this->needs_rewind = true;
 		return $this->select_query_result;
 	}
@@ -589,11 +591,27 @@ class Sql
 	 */
 	private function _error($query, $errstr, $errline = '', $errfile = '')
 	{	// TODO review this
-//		global $Errorh;
-//		//Enregistrement dans le log d'erreur.
-//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
-//		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
-//		redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
+	//		global $Errorh;
+	//		//Enregistrement dans le log d'erreur.
+	//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
+	//		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
+	//		redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
+	}
+
+
+
+	private function select($query, $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	{
+		$decoded_query = new SqlParameterExtractor($query);
+		return AppContext::get_sql_querier()->select(
+		$decoded_query->get_query(), $decoded_query->get_parameters(), $fetch_mode);
+	}
+
+	private function inject($query, $parameters = array())
+	{
+		$decoded_query = new SqlParameterExtractor($query);
+		return AppContext::get_sql_querier()->inject(
+		$decoded_query->get_query(), $decoded_query->get_parameters());
 	}
 }
 ?>
