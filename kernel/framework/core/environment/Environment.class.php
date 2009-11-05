@@ -103,7 +103,6 @@ class Environment
 	{
 		AppContext::set_request(new HTTPRequest());
 		AppContext::init_breadcrumb();
-		AppContext::init_sql_querier();
 		AppContext::init_session();
 	}
 
@@ -224,6 +223,8 @@ class Environment
 		define('REGEX_MULTIPLICITY_REQUIRED', 0x03);
 		define('REGEX_MULTIPLICITY_AT_LEAST_ONE', 0x04);
 		define('REGEX_MULTIPLICITY_ALL', 0x05);
+		
+		@include PATH_TO_ROOT . '/kernel/db/config.php';
 	}
 
 	public static function write_http_headers()

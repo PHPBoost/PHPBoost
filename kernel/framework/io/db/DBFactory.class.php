@@ -34,8 +34,8 @@
  */
 class DBFactory
 {
-	//		private static $dbms = 'pdo-mysql';
-	private static $dbms = 'mysql';
+			private static $dbms = 'pdo-mysql';
+//	private static $dbms = 'mysql';
 
 	/**
 	 * @var DBConnection

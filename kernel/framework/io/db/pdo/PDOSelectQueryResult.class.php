@@ -110,6 +110,10 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 
 	public function valid()
 	{
+		if ($this->iterator === null)
+		{
+			$this->rewind();
+		}
 		return  $this->iterator->valid();
 	}
 

@@ -87,15 +87,6 @@ class Sql
 	private $needs_rewind = false;
 
 	/**
-	 * @desc Builds a MySQL connection.
-	 */
-	public function __construct(DBConnection $db_connection, $db_name = '')
-	{
-		$this->link = $db_connection->get_link();
-		$this->base_name = $db_name;
-	}
-
-	/**
 	 * @desc Sends a simple selection query to the DBMS and retrieves the result.
 	 * A simple query selects only one field in one row.
 	 * @param string $query Selection query
@@ -212,18 +203,7 @@ class Sql
 	 */
 	public function count_table($table, $errline, $errfile)
 	{
-		$result = null;
-		try
-		{
-			$result = AppContext::get_sql_common_query()->select_single_row(PREFIX . $table,
-			array('COUNT(*) AS num_rows'));
-		}
-		catch (Exception $exception)
-		{
-			$this->_error($exception->getMessage(), 'Invalid count request', $errline, $errfile);
-		}
-
-		return $result['num_rows'];
+		return AppContext::get_sql_common_query()->count($table);
 	}
 
 	/**
@@ -254,19 +234,11 @@ class Sql
 
 	private function fetch_next(SelectQueryResult $result)
 	{
-		if ($this->needs_rewind)
+		if ($result->has_next())
 		{
-			$this->select_query_result->rewind();
-			$this->needs_rewind = false;
+			return $result->fetch();
 		}
-		if ($result === null || !$result->valid())
-		{
-			return false;
-		}
-		$current = $result->current();
-		$result->key();
-		$result->next();
-		return $current;
+		return false;
 	}
 
 	/**
@@ -338,18 +310,7 @@ class Sql
 	 */
 	public function list_fields($table)
 	{
-		if (!empty($table))
-		{
-			$array_fields_name = array();
-			$query_result = AppContext::get_sql_querier()->select("SHOW COLUMNS FROM " . $table .
-			" FROM " . $this->base_name, array(), SelectQueryResult::FETCH_NUM);
-			foreach ($query_result as $row)
-			{
-				$array_fields_name[] = $row[0];
-			}
-			return $array_fields_name;
-		}
-		return array();
+		return AppContext::get_dbms_utils()->desc_table($table);
 	}
 
 	/**
@@ -372,28 +333,7 @@ class Sql
 	 */
 	public function list_tables()
 	{
-		$array_tables = array();
-
-		$query_result = AppContext::get_sql_querier()->select("SHOW TABLE STATUS FROM `" .
-		$this->base_name . "` LIKE '" . PREFIX . "%'", array(), SelectQueryResult::FETCH_NUM);
-
-		foreach ($query_result as $row)
-		{
-			$array_tables[$row[0]] = array(
-				'name' => $row[0],
-				'engine' => $row[1],
-				'row_format' => $row[3],
-				'rows' => $row[4],
-				'data_length' => $row[6],
-				'index_lenght' => $row[8],
-				'data_free' => $row[9],
-				'collation' => $row[14],
-				'auto_increment' => $row[10],
-				'create_time' => $row[11],
-				'update_time' => $row[12]
-			);
-		}
-		return $array_tables;
+		return AppContext::get_dbms_utils()->list_tables();
 	}
 
 	/**
@@ -460,7 +400,7 @@ class Sql
 	 */
 	public function get_data_base_name()
 	{
-		return $this->base_name;
+		return AppContext::get_dbms_utils()->get_database_name();
 	}
 
 	/**
@@ -470,15 +410,7 @@ class Sql
 	 */
 	public function list_databases()
 	{
-		$db_list = mysql_list_dbs($this->link);
-
-		$result = array();
-		while ($row = mysql_fetch_assoc($db_list))
-		{
-			$result[] = $row['Database'];
-		}
-
-		return $result;
+		return AppContext::get_dbms_utils()->list_databases();
 	}
 
 	/**
@@ -488,9 +420,7 @@ class Sql
 	 */
 	public function create_database($db_name)
 	{
-		$db_name = Sql::clean_database_name($db_name);
-		mysql_query("CREATE DATABASE `" . $db_name . "`");
-		return $db_name;
+		return AppContext::get_dbms_utils()->create_database($db_name);
 	}
 
 	/**
@@ -499,10 +429,7 @@ class Sql
 	 */
 	public function optimize_tables($table_array)
 	{
-		if (!empty($table_array))
-		{
-			AppContext::get_sql_querier()->inject("OPTIMIZE TABLE " . implode(', ', $table_array));
-		}
+		AppContext::get_dbms_utils()->optimize($table_array);
 	}
 
 	/**
@@ -511,10 +438,7 @@ class Sql
 	 */
 	public function repair_tables($table_array)
 	{
-		if (!empty($table_array))
-		{
-			AppContext::get_sql_querier()->inject("REPAIR TABLE " . implode(', ', $table_array));
-		}
+		AppContext::get_dbms_utils()->repair($table_array);
 	}
 
 	/**
@@ -523,10 +447,7 @@ class Sql
 	 */
 	public function truncate_tables($table_array)
 	{
-		if (!empty($table_array))
-		{
-			AppContext::get_sql_querier()->inject("TRUNCATE TABLE " . implode(', ', $table_array));
-		}
+		AppContext::get_dbms_utils()->truncate($table_array);
 	}
 
 	/**
@@ -535,20 +456,7 @@ class Sql
 	 */
 	public function drop_tables($table_array)
 	{
-		if (!empty($table_array))
-		{
-			AppContext::get_sql_querier()->inject("DROP TABLE " . implode(', ', $table_array));
-		}
-	}
-
-	/**
-	 * Cleans the data base name to be sure it's a correct name
-	 * @param string $db_name Name to clear
-	 * @return The clean name
-	 */
-	public static function clean_database_name($db_name)
-	{
-		return str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $db_name);
+		AppContext::get_dbms_utils()->drop($table_array);
 	}
 
 	/**
@@ -614,7 +522,7 @@ class Sql
 	 */
 	public function get_dbms_version()
 	{
-		return 'MySQL ' . mysql_get_server_info($this->link);
+		return AppContext::get_dbms_utils()->get_dbms_version();
 	}
 
 	/**
@@ -680,13 +588,12 @@ class Sql
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 */
 	private function _error($query, $errstr, $errline = '', $errfile = '')
-	{
-		global $Errorh;
-
-		//Enregistrement dans le log d'erreur.
-		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
-		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
-		redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
+	{	// TODO review this
+//		global $Errorh;
+//		//Enregistrement dans le log d'erreur.
+//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
+//		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
+//		redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
 	}
 }
 ?>

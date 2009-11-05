@@ -417,7 +417,7 @@ else
 		foreach ($backup->get_tables_properties_list() as $key => $table_info)
 		{	
 			$free = number_round($table_info['data_free']/1024, 1);
-			$data = number_round(($table_info['data_length'] + $table_info['index_lenght'])/1024, 1);
+			$data = number_round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
 			$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';
 			$data = ($data > 1024) ? number_round($data/1024, 1) . ' MB' : $data . ' kB';
 			
@@ -433,7 +433,7 @@ else
 			
 			$nbr_rows += $table_info['rows'];
 			$nbr_free += $table_info['data_free'];
-			$nbr_data += ($table_info['data_length'] + $table_info['index_lenght']);
+			$nbr_data += ($table_info['data_length'] + $table_info['index_length']);
 			$i++;
 		} 
 		
