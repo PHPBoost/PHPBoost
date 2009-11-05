@@ -1,8 +1,6 @@
 <?php
 
-
-
-class UTdate extends PHPBoostUnitTestCase
+class UTDate extends PHPBoostUnitTestCase
 {
 	public function test__constructor()
 	{

@@ -58,7 +58,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	const REGISTRATION_CAPTCHA_ENABLED_PROPERTY = 'registration_captcha_enabled';
 	/**
-	 * Name of the property containing the ifficulty level of the registration captcha 
+	 * Name of the property containing the ifficulty level of the registration captcha
 	 * (if it's enabled)
 	 */
 	const REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY = 'registration_captcha_difficulty';
@@ -68,15 +68,46 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	const UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY = 'unactivated_accounts_timeout';
 	/**
-	 * Name of the property indicating if the users can choose their theme (value is false) 
+	 * Name of the property indicating if the users can choose their theme (value is false)
 	 * or if the have to use the site default one (value is true).
 	 */
 	const FORCE_USERS_THEME_PROPERTY = 'force_users_theme';
 
 	/**
+	 * Name of the property indicating if users can upload on the server their avatar
+	 */
+	const ENABLE_AVATAR_UPLOAD_PROPERTY = 'enable_avatar_upload';
+
+	/**
+	 * Name of the property indicating if the default avatar is enable (users who don't have a
+	 * specific avatar will have the default one).
+	 */
+	const DEFAULT_AVATAR_ENABLED_PROPERTY = 'default_avatar_enabled';
+
+	/**
+	 * Name of the property indicating the URL of the default avatar
+	 */
+	const DEFAULT_AVATAR_URL_PROPERTY = 'default_avatar_url';
+
+	/**
+	 * Name of the property indicating the maximum avatar width (in pixels).
+	 */
+	const MAX_AVATAR_WIDTH_PROPERTY = 'max_avatar_width';
+
+	/**
+	 * Name of the property indicating the maximum avatar height (in pixels).
+	 */
+	const MAX_AVATAR_HEIGHT_PROPERTY = 'max_avatar_height';
+
+	/**
+	 * Name of the property containing the max size of avatars
+	 */
+	const MAX_AVATAR_WEIGHT_PROPERTY = 'max_avatar_weight';
+
+	/**
 	 * Tells whether the interaction between members is enabled or not.
 	 */
-	public function get_user_accounts_enabled()
+	public function are_user_accounts_enabled()
 	{
 		return $this->get_property(USER_ACCOUNTS_ENABLED_PROPERTY);
 	}
@@ -182,7 +213,7 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		$this->set_property(REGISTRATION_CAPTCHA_ENABLED_PROPERTY, false);
 	}
-	
+
 	/**
 	 * Returns the difficulty level of the registration captcha
 	 * @return int The level
@@ -191,7 +222,7 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		return $this->get_property(REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY);
 	}
-	
+
 	/**
 	 * Sets the difficulty level of the registration captcha
 	 * @param $level The level
@@ -209,29 +240,170 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		return $this->get_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
 	}
-	
+
+	/**
+	 * Tells whether users theme is forced or if they can choose
+	 * @return bool true if they cannot choose, false if they can
+	 */
 	public function is_users_theme_forced()
 	{
 		return $this->get_property(FORCE_USERS_THEME_PROPERTY);
 	}
-	
+
+	/**
+	 * Forces users theme as the site default one
+	 */
 	public function force_users_theme()
 	{
 		$this->set_property(FORCE_USERS_THEME_PROPERTY, true);
 	}
-	
+
+	/**
+	 * Lets users choose the theme they wanna use
+	 */
 	public function do_not_force_users_theme()
 	{
 		$this->set_property(FORCE_USERS_THEME_PROPERTY, false);
 	}
-	
+
+	/**
+	 * Tells whether users can upload their avatar
+	 * @return bool true if they can, false otherwise
+	 */
+	public function is_avatar_upload_enabled()
+	{
+		return $this->get_property(ENABLE_AVATAR_UPLOAD_PROPERTY);
+	}
+
+	/**
+	 * Lets users upload their avatar
+	 */
+	public function enable_avatar_upload()
+	{
+		$this->set_property(ENABLE_AVATAR_UPLOAD_PROPERTY, true);
+	}
+
+	/**
+	 * Forbid users to upload their avatar
+	 */
+	public function disable_avatar_upload()
+	{
+		$this->set_property(ENABLE_AVATAR_UPLOAD_PROPERTY, false);
+	}
+
+	/**
+	 * Returns the time after which the member accounts which haven't been activated are removed
+	 * @return int The time (in days)
+	 */
+	public function get_unactivated_accounts_timeout()
+	{
+		$this->get_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
+	}
+
 	/**
 	 * Sets the duration of the unactivated accounts timeout
-	 * @param $duration The duration (in days)
+	 * @param int $duration The duration (in days)
 	 */
 	public function set_unactivated_accounts_timeout($duration)
 	{
 		$this->set_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY, $duration);
+	}
+
+	/**
+	 * Tells whether the default avatar is enabled
+	 * @return bool true if it's enabled, false otherwise
+	 */
+	public function is_default_avatar_enabled()
+	{
+		return $this->get_property(DEFAULT_AVATAR_ENABLED_PROPERTY);
+	}
+
+	/**
+	 * Enables the default avatar for users who don't have their own one
+	 */
+	public function enable_default_avatar()
+	{
+		$this->set_property(DEFAULT_AVATAR_ENABLED_PROPERTY, true);
+	}
+
+	/**
+	 * Disables the default avatar for users who don't have their own one
+	 */
+	public function disable_default_avatar()
+	{
+		$this->set_property(DEFAULT_AVATAR_ENABLED_PROPERTY, false);
+	}
+
+	/**
+	 * Returns the default avatar URL
+	 * @return string sThe URL
+	 */
+	public function get_default_avatar_url()
+	{
+		return $this->get_property(DEFAULT_AVATAR_URL_PROPERTY);
+	}
+
+	/**
+	 * Sets the default avatar URL
+	 * @param tring $url The URL of the default avatar
+	 */
+	public function set_default_avatar_url($url)
+	{
+		$this->set_property(DEFAULT_AVATAR_URL_PROPERTY, $url);
+	}
+
+	/**
+	 * Returns the max width of avatars
+	 * @return int The width in pixels
+	 */
+	public function get_max_avatar_width()
+	{
+		return $this->get_property(MAX_AVATAR_WIDTH_PROPERTY);
+	}
+
+	/**
+	 * Sets the max width of avatars
+	 * @param int $width The width in pixels
+	 */
+	public function set_max_avatar_width($width)
+	{
+		$this->set_property(MAX_AVATAR_WIDTH_PROPERTY, $width);
+	}
+
+	/**
+	 * Returns the max height of avatars
+	 * @return int The height in pixels
+	 */
+	public function get_max_avatar_height()
+	{
+		return $this->get_property(MAX_AVATAR_HEIGHT_PROPERTY);
+	}
+
+	/**
+	 * Sets the max height of avatars
+	 * @param int $height The height in pixels
+	 */
+	public function set_max_avatar_height($height)
+	{
+		$this->set_property(MAX_AVATAR_HEIGHT_PROPERTY, $height);
+	}
+
+	/**
+	 * Returns the max weight of avatars
+	 * @return int The weight in bytes
+	 */
+	public function get_max_avatar_weight()
+	{
+		return $this->get_property(MAX_AVATAR_WEIGHT_PROPERTY);
+	}
+
+	/**
+	 * Sets the max weight of avatars
+	 * @param int $height The weight in bytes
+	 */
+	public function set_max_avatar_weight($weight)
+	{
+		$this->set_property(MAX_AVATAR_WEIGHT_PROPERTY, $weight);
 	}
 
 	/**
@@ -241,14 +413,21 @@ class UserAccountsConfig extends DefaultConfigData
 	public function set_default_values()
 	{
 		global $LANG;
-			
+		
+		$this->enable_user_accounts();
 		$this->enable_registration();
 		$this->set_welcome_message($LANG['site_config_msg_mbr']);
 		$this->set_registration_agreement($LANG['register_agreement']);
-		$this->enable_user_accounts();
 		$this->enable_registration_captcha();
 		$this->set_registration_captcha_difficulty(1);
 		$this->set_unactivated_accounts_timeout(20);
+		$this->force_users_theme();
+		$this->disable_avatar_upload();
+		$this->enable_default_avatar();
+		$this->set_default_avatar_url('no_avatar.png');
+		$this->set_max_avatar_width(120);
+		$this->set_max_avatar_height(120);
+		$this->set_max_avatar_weight(20);
 	}
 
 	/**
