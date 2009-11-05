@@ -58,6 +58,10 @@ class AppContext
 	 */
 	private static $sql_common_query;
 	/**
+	 * @var DBMSUtils
+	 */
+	private static $dbms_utils;
+	/**
 	 * @var Sql
 	 */
 	private static $sql;
@@ -124,23 +128,7 @@ class AppContext
 	{
 		return self::$breadcrumb;
 	}
-
-	/**
-	 * Inits the db connection
-	 */
-	public static function init_sql(DBConnection $connection, $database)
-	{
-		self::$sql = new Sql($connection, $database);
-	}
-
-	/**
-	 * Returns the data base connection
-	 * @return Sql
-	 */
-	public static function get_sql()
-	{
-		return self::$sql;
-	}
+	
 	/**
 	 * @deprecated de merde pour toi benoit
 	 */
@@ -151,27 +139,16 @@ class AppContext
 	}
 
 	/**
-	 * Inits the database querier
+	 * Returns the data base connection
+	 * @return Sql
 	 */
-	public static function init_sql_querier()
+	public static function get_sql()
 	{
-		self::$sql_querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
-		self::init_sql_common_query();
-
-		// TODO @ben, refactor this, find another way to retrieve the $sql_base
-		//Configuration file
-		@include PATH_TO_ROOT . '/kernel/db/config.php';
-		//If PHPBoost is not installed, we redirect the user to the installation page
-		if (defined('PHPBOOST_INSTALLED'))
+		if (self::$sql === null)
 		{
-			static $connection = null;
-			if ($connection === null)
-			{	// TODO arrange this If using PDO, there might be some problems with the connection
-				$connection = new MySQLDBConnection();
-				$connection->connect($db_connection_data);
-			}
-			self::init_sql($connection, $db_connection_data['database']);
+			self::$sql = new Sql();
 		}
+		return self::$sql;
 	}
 
 	/**
@@ -180,15 +157,11 @@ class AppContext
 	 */
 	public static function get_sql_querier()
 	{
+		if (self::$sql_querier === null)
+		{
+			self::$sql_querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
+		}
 		return self::$sql_querier;
-	}
-	/**
-	 * Inits the database common querier
-	 */
-	public static function init_sql_common_query()
-	{
-		
-		self::$sql_common_query = new CommonQuery(self::get_sql_querier());
 	}
 
 	/**
@@ -197,7 +170,24 @@ class AppContext
 	 */
 	public static function get_sql_common_query()
 	{
+		if (self::$sql_common_query === null)
+		{
+			self::$sql_common_query = new CommonQuery(self::get_sql_querier());
+		}
 		return self::$sql_common_query;
+	}
+
+	/**
+	 * Returns the sql querier
+	 * @return DBMSUtils
+	 */
+	public static function get_dbms_utils()
+	{
+		if (self::$dbms_utils === null)
+		{
+			self::$dbms_utils = DBFactory::new_dbms_util(self::get_sql_querier());
+		}
+		return self::$dbms_utils;
 	}
 
 	/**

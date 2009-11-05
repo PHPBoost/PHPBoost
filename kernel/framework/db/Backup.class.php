@@ -58,12 +58,11 @@ class Backup
 	 */
 	public function list_db_tables()
 	{
-		global $Sql;
-		
 		if (empty($this->tables))
 		{
-			$this->tables = $Sql->list_tables();
+			$this->tables = AppContext::get_sql()->list_tables();
 		}
+		return $this->tables;
 	}
 	
 	/**
@@ -198,8 +197,7 @@ class Backup
 	*/
 	public function get_tables_properties_list()
 	{
-		$this->list_db_tables();
-		return $this->tables;
+		return $this->list_db_tables();
 	}
 	
 	/**

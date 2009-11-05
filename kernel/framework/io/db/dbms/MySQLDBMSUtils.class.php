@@ -78,10 +78,24 @@ class MySQLDBMSUtils implements DBMSUtils
 	public function list_tables()
 	{
 		$tables = array();
-		$results = $this->querier->select('SHOW TABLES;', array(), SelectQueryResult::FETCH_NUM);
-		foreach ($results as $result)
+		$results = $this->querier->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() .
+			'`;', array());
+		foreach ($results as $table)
 		{
-			$tables[] = $result[0];
+			$tables[$table['Name']] = array(
+			  'name' => $table['Name'],
+			  'engine' => $table['Engine'],
+			  'row_format' => $table['Row_format'],
+			  'rows' => $table['Rows'],
+			  'data_length' => $table['Data_length'],
+			  'index_length' => $table['Index_length'],
+			  'data_free' => $table['Data_free'],
+			  'auto_increment' => $table['Auto_increment'],
+			  'create_time' => $table['Create_time'],
+			  'update_time' => $table['Update_time'],
+			  'collation' => $table['Collation'],
+			);
+			
 		}
 		return $tables;
 	}

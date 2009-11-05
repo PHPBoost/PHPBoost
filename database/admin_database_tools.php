@@ -396,7 +396,7 @@ elseif (!empty($table))
 	//Infos sur la table.
 	$free = number_round($backup->tables[$table]['data_free']/1024, 1);
 	$data = number_round($backup->tables[$table]['data_length']/1024, 1);
-	$index = number_round($backup->tables[$table]['index_lenght']/1024, 1);
+	$index = number_round($backup->tables[$table]['index_length']/1024, 1);
 	$total = ($index + $data);
 	$l_total = ($total > 1024) ? number_round($total/1024, 1) . ' MB' : $total . ' kB';
 	$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';

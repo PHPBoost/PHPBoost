@@ -70,6 +70,7 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 	public function test_list_tables()
 	{
 		$tables = self::$dbms_utils->list_tables();
+//		var_export($tables);
 		$this->assertContains(self::$test_table1, $tables);
 	}
 
