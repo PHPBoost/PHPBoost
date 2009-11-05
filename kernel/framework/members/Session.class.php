@@ -172,7 +172,7 @@ class Session
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 
 		########Insertion dans le compteur si l'ip est inconnue.########
-		
+
 
 		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
 		$_include_once = empty($check_ip) && (StatsSaver::check_bot() === false);
@@ -200,7 +200,7 @@ class Session
 		$session_uniq_id = strhash(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
 		$this->data['user_id'] = $user_id;
 		$this->data['session_id'] = $session_uniq_id;
-		$this->data['token'] = strhash(uniqid(mt_rand(), true), false);
+		$this->data['token'] = self::generate_token();
 
 		########Session existe t-elle?#########
 		$this->garbage_collector(); //On nettoie avant les sessions périmées.
@@ -412,9 +412,9 @@ class Session
 	public function end()
 	{
 		global $CONFIG;
-			
+
 		$this->get_id();
-			
+
 		//On supprime la session de la bdd.
 		$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
 
@@ -612,7 +612,7 @@ class Session
 	public function garbage_collector()
 	{
 		global $CONFIG;
-			
+
 		$this->sql->query_inject("DELETE
 		FROM " . DB_TABLE_SESSIONS . "
 		WHERE session_time < '" . (time() - $CONFIG['site_session']) . "'
@@ -627,11 +627,16 @@ class Session
 	{
 		if (empty($this->data['token']))
 		{   // if the token is empty (already connected while updating the website from 2.0 version to 3.0)
-			$this->data['token'] = strhash(uniqid(mt_rand(), true), false);
+			$this->data['token'] = self::generate_token();
 			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET token='" . $this->data['token'] . "' WHERE session_id='" . $this->data['session_id']. "'", __LINE__, __FILE__);
 
 		}
 		return $this->data['token'];
+	}
+
+	private static function generate_token()
+	{
+		return substr(strhash(uniqid(mt_rand(), true), false), 0, 16);
 	}
 
 	/**
@@ -716,13 +721,13 @@ class Session
 		global $Errorh;
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
-		
+
 		$Errorh->handler(StringVars::replace_vars('CRSF Attack detected' . "\n" .
         'token received: :bad_token' . "\n" .
         'token expected: :good_token' . "\n",
 		array('bad_token' => $bad_token,'good_token' => $good_token)),
 		E_TOKEN, '', '', '', $archive = true);
-		
+
 		if ($redirect !== false && !empty($redirect))
 		{
 			redirect($redirect);
@@ -746,7 +751,7 @@ class Session
 	{
 		return (bool)$this->session_mod;
 	}
-	
+
 	private function get_printable_token($token)
 	{
 		$digits = 6;

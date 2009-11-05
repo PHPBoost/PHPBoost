@@ -333,7 +333,7 @@ class Sql
 	 */
 	public function list_tables()
 	{
-		return AppContext::get_dbms_utils()->list_tables();
+		return AppContext::get_dbms_utils()->list_and_desc_tables();
 	}
 
 	/**
