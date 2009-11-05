@@ -6,14 +6,14 @@
  *   copyright            : (C) 2006 Viarre Régis / Sautel Benoît
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,12 +25,12 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$alert = retrieve(GET, 'id', 0);	
-$alert_post = retrieve(POST, 'id', 0);	
+$alert = retrieve(GET, 'id', 0);
+$alert_post = retrieve(POST, 'id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
 $topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
@@ -44,18 +44,18 @@ $Bread_crumb->add($LANG['alert_topic'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
-if (empty($alert) && empty($alert_post) || empty($topic['idcat'])) 
-	redirect('/forum/index' . url('.php'));  
+if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
+	redirect('/forum/index' . url('.php'));
 
 if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
-    $Errorh->handler('e_auth', E_USER_REDIRECT); 
-	
+    $Errorh->handler('e_auth', E_USER_REDIRECT);
+
 $Template->set_filenames(array(
 	'forum_alert'=> 'forum/forum_alert.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
-	
+
 //On fait un formulaire d'alerte
 if (!empty($alert) && empty($alert_post))
 {
@@ -72,12 +72,12 @@ if (!empty($alert) && empty($alert_post))
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
-		
+
 		$Template->assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,
 			'U_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'),
 			'ID_ALERT' => $alert,
-		));	
+		));
 	}
 	else //Une alerte a déjà été postée
 	{
@@ -85,8 +85,8 @@ if (!empty($alert) && empty($alert_post))
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
 			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php')
-		));	
-		
+		));
+
 		$Template->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']
 		));
@@ -101,20 +101,19 @@ if (!empty($alert_post))
 		'L_BACK_TOPIC' => $LANG['alert_back'],
 		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . url_encode_rewrite($topic_name) . '.php')
 	));
-	
+
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');
 		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-		
+
 		//Instanciation de la class du forum.
-		include_once('../forum/forum.class.php');
 		$Forumfct = new Forum;
 
 		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_contents);
-		
+
 		$Template->assign_block_vars('alert_confirm', array(
 			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])
 		));
@@ -125,12 +124,12 @@ if (!empty($alert_post))
 			'MSG' => $LANG['alert_topic_already_done']
 		));
 	}
-	
+
 }
 
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/%'");
-	
+
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
 	'SID' => SID,
@@ -156,7 +155,7 @@ $Template->assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
 
-$Template->pparse('forum_alert');	
+$Template->pparse('forum_alert');
 
 include('../kernel/footer.php');
 

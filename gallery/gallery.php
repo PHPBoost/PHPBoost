@@ -49,30 +49,29 @@ if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
 else
 	list($g_type, $g_mode) = array('date', 'desc');
 
-include_once('../gallery/gallery.class.php');
-$Gallery = new Gallery;
+$Gallery = new Gallery();
 
 if (!empty($g_del)) //Suppression d'une image.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-	
+
 	$Gallery->Del_pics($g_del);
-	
+
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-	
+
 	redirect('/gallery/gallery' . url('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-	
+
 	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
-	
+
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-	
+
 	redirect('/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
 }
 elseif (isset($_FILES['gallery'])) //Upload
@@ -84,7 +83,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 	else //Racine.
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
-		
+
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -92,11 +91,11 @@ elseif (isset($_FILES['gallery'])) //Upload
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
 		redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
-	
+
 	$dir = 'pics/';
-	
+
 	$Upload = new Upload($dir);
-	
+
 	$idpic = 0;
 	$idcat_post = retrieve(POST, 'cat', '');
 	$name_post = retrieve(POST, 'name', '');
@@ -116,16 +115,16 @@ elseif (isset($_FILES['gallery'])) //Upload
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
 				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
-			
+
 			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
 				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
-			
+
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
 		}
 	}
-	
+
 	redirect('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
 }
 elseif ($g_add)
@@ -133,7 +132,7 @@ elseif ($g_add)
 	$Template->set_filenames(array(
 		'gallery_add'=> 'gallery/gallery_add.tpl'
 	));
-	
+
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
@@ -156,11 +155,11 @@ elseif ($g_add)
 		$CAT_GALLERY[0]['aprob'] = 1;
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 	}
-	
+
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-	
+
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
 	foreach ($CAT_GALLERY as $idcat => $key)
 	{
@@ -174,7 +173,7 @@ elseif ($g_add)
 			}
 		}
 	}
-	
+
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
@@ -182,10 +181,10 @@ elseif ($g_add)
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	elseif ($get_error == 'unexist_cat')
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
-		
+
 	$module_data_path = $Template->get_module_data_path('gallery');
 	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
-	
+
 	//Aficchage de la photo uploadée.
 	if (!empty($g_idpics))
 	{
@@ -214,12 +213,12 @@ elseif ($g_add)
 			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
-		
+
 		$Template->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
 		));
 	}
-	
+
 	$Template->assign_vars(array(
 		'SID' => SID,
 		'THEME' => get_utheme(),
@@ -248,7 +247,7 @@ elseif ($g_add)
 		'U_GALLERY_ACTION_ADD' => url('.php?add=1&amp;cat=' . $g_idcat . '&amp;token=' . $Session->get_token()),
 		'U_INDEX' => url('.php')
 	));
-		
+
 	$Template->pparse('gallery_add');
 }
 else
@@ -256,7 +255,7 @@ else
 	$Template->set_filenames(array(
 		'gallery'=> 'gallery/gallery.tpl'
 	));
-	
+
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
@@ -282,11 +281,11 @@ else
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$CAT_GALLERY[0]['level'] = -1;
 	}
-	
+
 	//Niveau d'autorisation de la catégorie
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-	
+
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 
@@ -294,27 +293,27 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'unexist_cat')
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
-		
+
 	//On crée une pagination si le nombre de catégories est trop important.
-	
+
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
 	$nbr_column_cats = ($total_cat > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $total_cat;
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
-	
+
 	//Colonnes des images.
 	$nbr_column_pics = ($nbr_pics > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $nbr_pics;
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
-	
+
 	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
-	
+
 	$module_data_path = $Template->get_module_data_path('gallery');
 	$rewrite_title = url_encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
-	
+
 	//Ordonnement.
 	$array_order = array('name' => $LANG['name'], 'date' => $LANG['date'], 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
 	foreach ($array_order as $type => $name)
@@ -323,7 +322,7 @@ else
 			'ORDER_BY' => '<a href="gallery' . url('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
 		));
 	}
-	
+
 	$Template->assign_vars(array(
 		'ARRAY_JS' => '',
 		'NBR_PICS' => 0,
@@ -365,7 +364,7 @@ else
 		'U_ASC' => '<a class="small_link" href="gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
 		'U_DESC' => '<a class="small_link" href="gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 	));
-	
+
 	//Catégories non autorisées.
 	$unauth_cats_sql = array();
 	$unauth_cats = array();
@@ -392,7 +391,7 @@ else
 			'C_GALLERY_CATS' => true,
 			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 		));
-			
+
 		$j = 0;
 		$result = $Sql->query_while ("SELECT gc.id, gc.name, gc.contents, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
 		FROM " . PREFIX . "gallery_cats gc
@@ -421,7 +420,7 @@ else
 			));
 		}
 		$Sql->query_close($result);
-		
+
 		//Création des cellules du tableau si besoin est.
 		while (!is_int($j/$nbr_column_cats))
 		{
@@ -431,7 +430,7 @@ else
 			));
 		}
 	}
-	
+
 	##### Affichage des photos #####
 	if ($nbr_pics > 0)
 	{
@@ -476,7 +475,7 @@ else
 			'C_GALLERY_PICS' => true,
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 		));
-				
+
 		//Liste des catégories.
 		$array_cat_list = array(0 => '<option value="-1" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name
@@ -492,9 +491,9 @@ else
 			}
 		}
 		$Sql->query_close($result);
-		
-		
-		
+
+
+
 		//Affichage d'une photo demandée.
 		if (!empty($g_idpics))
 		{
@@ -528,7 +527,7 @@ else
 
 					//Affichage de la liste des miniatures sous l'image.
 					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
-					
+
 					if ($row['id'] == $g_idpics)
 					{
 						$reach_pics_pos = true;
@@ -554,27 +553,27 @@ else
 					$i++;
 				}
 				$Sql->query_close($result);
-					
+
 				//Liste des catégories.
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
-				
+
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(MEMBER_LEVEL) );
 				if ($activ_note)
 				{
 					//Affichage notation.
-					
+
 					$Note = new Note('gallery', $info_pics['id'], url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 				}
-				
+
 				if ($thumbnails_before < $nbr_pics_display_before)
 					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
-				
+
 				$html_protected_name = strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);
-				
+
 				//Affichage de l'image et de ses informations.
 				$Template->assign_vars(array(
 					'C_GALLERY_PICS_MAX' => true,
@@ -645,9 +644,9 @@ else
 		else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
-			
+
 			$Pagination = new Pagination();
-			
+
 			$sort = retrieve(GET, 'sort', '');
 			$Template->assign_vars(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
@@ -656,8 +655,8 @@ else
 				'L_VIEW' => $LANG['view'],
 				'L_VIEWS' => $LANG['views']
 			));
-			
-			
+
+
 			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
@@ -671,7 +670,7 @@ else
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
-				
+
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
 				{
@@ -684,16 +683,16 @@ else
 					$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
 				else //Ouverture nouvelle page.
 					$display_name = $display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
-				
+
 				//Liste des catégories.
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
-	
+
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
-					
+
 				$html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
@@ -718,7 +717,7 @@ else
 				));
 			}
 			$Sql->query_close($result);
-			
+
 			//Création des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_pics))
 			{
