@@ -41,6 +41,13 @@ class DefaultConfigData implements ConfigData
 	private $properties_map = array();
 
 	/**
+	 * Constructs a DefaultConfigData object
+	 */
+	public function __construct()
+	{
+	}
+
+	/**
 	 * This method is not used in the configuration context.
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/cache/CacheData#synchronize()

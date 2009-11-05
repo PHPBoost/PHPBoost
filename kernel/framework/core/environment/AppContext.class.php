@@ -134,7 +134,6 @@ class AppContext
 	 */
 	public static function set_sql($sql)
 	{
-		// TODO ben, supprime ça, mais casse pas l'installateur (étape 6
 		self::$sql = $sql;
 	}
 

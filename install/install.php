@@ -3,7 +3,7 @@
  *                                install.php
  *                            -------------------
  *   begin                : September 27, 2008
- *   copyright            : (C) 2008    SAUTEL Benoit
+ *   copyright            : (C) 2008 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -38,7 +38,7 @@ define('STEP_ADMIN_ACCOUNT', 6);
 define('STEP_END', 7);
 
 define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/install_environment.class.php';
+require_once PATH_TO_ROOT . '/install/InstallEnvironment.class.php';
 
 InstallEnvironment::load_imports();
 
