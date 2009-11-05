@@ -1,5 +1,7 @@
 <?php
 
+import('core/config/UserAccountsConfig');
+
 class UTUserAccountsConfig extends PHPBoostUnitTestCase
 {
 	public function __construct()

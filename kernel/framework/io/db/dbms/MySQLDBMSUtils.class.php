@@ -38,6 +38,9 @@
  */
 class MySQLDBMSUtils implements DBMSUtils
 {
+	/**
+	 * @var SQLQuerier
+	 */
 	private $querier;
 
 	public function __construct(SQLQuerier $querier)
@@ -47,14 +50,14 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function get_dbms_version()
 	{
-		$result = $this->querier->select('SELECT VERSION();')->fetch();
+		$result = $this->select('SELECT VERSION();')->fetch();
 		return 'MySQL ' . $result['VERSION()'];
 	}
 
 	public function list_databases()
 	{
 		$databases = array();
-		$results = $this->querier->select('SHOW DATABASES;', array(), SelectQueryResult::FETCH_NUM);
+		$results = $this->select('SHOW DATABASES;', array(), SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$databases[] = $result[0];
@@ -65,21 +68,32 @@ class MySQLDBMSUtils implements DBMSUtils
 	function create_database($database_name)
 	{
 		$database_name = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $database_name);
-		$this->querier->inject('CREATE DATABASE `' . $database_name . '`;');
+		$this->inject('CREATE DATABASE `' . $database_name . '`;');
 		return $database_name;
 	}
 
 	public function get_database_name()
 	{
-		$result = $this->querier->select('SELECT DATABASE();')->fetch();
+		$result = $this->select('SELECT DATABASE();')->fetch();
 		return $result['DATABASE()'];
 	}
 
 	public function list_tables()
 	{
 		$tables = array();
-		$results = $this->querier->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() .
-			'`;', array());
+		$results = $this->select('SHOW TABLES;', array(), SelectQueryResult::FETCH_NUM);
+		foreach ($results as $result)
+		{
+			$tables[] = $result[0];
+		}
+		return $tables;
+	}
+
+	public function list_and_desc_tables()
+	{
+		$tables = array();
+		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() .
+			'`;');
 		foreach ($results as $table)
 		{
 			$tables[$table['Name']] = array(
@@ -95,7 +109,7 @@ class MySQLDBMSUtils implements DBMSUtils
 			  'update_time' => $table['Update_time'],
 			  'collation' => $table['Collation'],
 			);
-			
+
 		}
 		return $tables;
 	}
@@ -103,10 +117,10 @@ class MySQLDBMSUtils implements DBMSUtils
 	public function desc_table($table)
 	{
 		$fields = array();
-		$results = $this->querier->select('DESC ' . $table . ';');
+		$results = $this->select('DESC ' . $table . ';');
 		foreach ($results as $result)
 		{
-			$fields[] = array(
+			$fields[$result['Field']] = array(
 				'name' => $result['Field'],
 				'type' => $result['Type'],
 				'null' => $result['Null'],
@@ -120,11 +134,7 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function drop($tables)
 	{
-		if (is_array($tables))
-		{
-			$tables = implode('`, `', $tables);
-		}
-		$this->querier->inject('DROP TABLE IF EXISTS `' . $tables . '`;');
+		$this->inject($this->get_drop_table_query($tables));
 	}
 
 	public function truncate($tables)
@@ -135,7 +145,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 		foreach ($tables as $table)
 		{
-			$this->querier->inject('TRUNCATE TABLE `' . $table . '`;');
+			$this->inject('TRUNCATE TABLE `' . $table . '`;');
 		}
 	}
 
@@ -145,7 +155,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		{
 			$tables = implode('`, `', $tables);
 		}
-		$this->querier->inject('OPTIMIZE TABLE`' . $tables . '`;');
+		$this->inject('OPTIMIZE TABLE`' . $tables . '`;');
 	}
 
 	public function repair($tables)
@@ -154,7 +164,99 @@ class MySQLDBMSUtils implements DBMSUtils
 		{
 			$tables = implode('`, `', $tables);
 		}
-		$this->querier->inject('REPAIR TABLE `' . $tables . '`;');
+		$this->inject('REPAIR TABLE `' . $tables . '`;');
+	}
+
+	public function export_phpboost($file = null)
+	{
+		foreach ($this->list_tables() as $table)
+		{
+			$this->export_table($table, $file);
+		}
+	}
+
+	public function export_table($table, $file = null)
+	{
+		$this->write($this->get_drop_table_query($table), $file);
+		$this->write($this->get_create_table_query($table), $file);
+		$this->export_table_rows($table, $file);
+	}
+
+	public function export_table_rows($table, $file = null)
+	{
+		$results = $this->select('SELECT * FROM `' . $table . '`');
+		$field_names = array_keys($this->desc_table($table));
+		$query = 'INSERT INTO `' . $table . '` (`' .
+		implode('`, `', $field_names) . '`) VALUES ';
+		foreach ($results as $result)
+		{
+			$fields = array();
+			foreach ($field_names as $field)
+			{
+				$fields[] = $this->export_field($result[$field]);
+			}
+			$this->write($query . '(' . implode(',', $fields) . ');', $file);
+		}
+	}
+
+	private function export_field($field)
+	{
+		if (is_numeric($field))
+		{
+			return $field;
+		}
+		elseif (is_string($field))
+		{
+			return '\'' .
+			str_replace(chr(13), '\r',
+			str_replace(chr(10), '\n',
+			str_replace('\\', '\\\\',
+			str_replace("'", "''", $value)))) . '\'';
+		}
+	}
+
+	private function write($string, $file = null)
+	{
+		$string .= "\n";
+		if ($file instanceof File)
+		{
+			$file->write($string, ADD);
+		}
+		else
+		{
+			echo $string;
+		}
+	}
+
+	private function get_drop_table_query($tables)
+	{
+		if (is_array($tables))
+		{
+			$tables = implode('`, `', $tables);
+		}
+		return 'DROP TABLE IF EXISTS `' . $tables . '`;';
+	}
+
+	private function get_create_table_query($table)
+	{
+		$result = $this->select('SHOW CREATE TABLE ' . $table)->fetch();
+		return $result['Create Table'] . ';';
+	}
+
+	private function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	{
+		$this->querier->disable_query_translator();
+		$result = $this->querier->select($query, $parameters, $fetch_mode);
+		$this->querier->enable_query_translator();
+		return $result;
+	}
+
+	private function inject($query, $parameters = array())
+	{
+		$this->querier->disable_query_translator();
+		$result = $this->querier->inject($query, $parameters);
+		$this->querier->enable_query_translator();
+		return $result;
 	}
 }
 
