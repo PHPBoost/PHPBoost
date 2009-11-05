@@ -1,10 +1,15 @@
 <?php
 
-class UTUsersAccountsConfig extends PHPBoostUnitTestCase
+class UTUserAccountsConfig extends PHPBoostUnitTestCase
 {
+	public function __construct()
+	{
+	}
+	
 	public function test_are_user_accounts_enabled()
 	{
 		$config = new UserAccountsConfig();
+				die('ici');
 		$this->assertEquals(true, $config->are_user_accounts_enabled());
 	}
 
