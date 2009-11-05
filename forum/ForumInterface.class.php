@@ -48,7 +48,7 @@ class ForumInterface extends ModuleInterface
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_FORUM = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
-			
+
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
 
 		//Liste des catégories du forum
@@ -115,7 +115,7 @@ class ForumInterface extends ModuleInterface
 	{
 		global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
-		
+
 		$Tpl = new Template('forum/forum_search_form.tpl');
 
 		//Autorisation sur le module.
@@ -354,15 +354,14 @@ class ForumInterface extends ModuleInterface
 	{
 		global $LANG;
 		$feed = array();
-		require_once PATH_TO_ROOT . '/forum/forum.class.php';
 		$forum = new Forum();
 		$categories = $forum->get_cats_tree();
 
-		
-		
+
+
 
 		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
-        
+
 		ForumInterface::_feeds_add_category($cat_tree, $categories);
 
 		$children = $cat_tree->get_children();
@@ -384,9 +383,9 @@ class ForumInterface extends ModuleInterface
 
 		$data = new FeedData();
 
-		
-		
-		
+
+
+
 
 		$data->set_title($LANG['xml_forum_desc']);
 		$data->set_date(new Date());
@@ -410,7 +409,7 @@ class ForumInterface extends ModuleInterface
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$item = new FeedItem();
-				
+
 			//Link
 			$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';

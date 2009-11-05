@@ -40,7 +40,7 @@ if ($action == 'alert')
 elseif ($action == 'users')
 	$Bread_crumb->add($LANG['warning_management'], url('moderation_forum.php?action=warning'));
 $Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php' . SID);
-	
+
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
@@ -103,9 +103,8 @@ if ($action == 'alert') //Gestion des alertes
 	if ((!empty($id_get) && ($new_status == '0' || $new_status == '1')) || !empty($get_del))
 	{
 		//Instanciation de la class du forum.
-		include_once('../forum/forum.class.php');
-		$Forumfct = new Forum;
-	
+		$Forumfct = new Forum();
+
 		if (!empty($get_del))
 		{
 			$hist = false;
@@ -122,15 +121,15 @@ if ($action == 'alert') //Gestion des alertes
 			elseif ($new_status == '1') //On le passe en résolu
 				$Forumfct->Solve_alert_topic($id_get);
 		}
-		
+
 		if (!empty($get_del))
 			$get_id = '';
 		else
 			$get_id = '&id=' . $id_get;
-			
+
 		redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
 	}
-	
+
 	$Template->assign_vars(array(
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
@@ -153,7 +152,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_DELETE' => $LANG['delete'],
 			'L_DELETE_MESSAGE' => $LANG['delete_several_alerts']
 		));
-		
+
 		//Vérification des autorisations.
 		$auth_cats = '';
 		foreach ($CAT_FORUM as $idcat => $key)
@@ -162,7 +161,7 @@ if ($action == 'alert') //Gestion des alertes
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-			
+
 		$i = 0;
 		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
@@ -178,7 +177,7 @@ if ($action == 'alert') //Gestion des alertes
 				$status = $LANG['alert_not_solved'];
 			else
 				$status = $LANG['alert_solved'] . '<a href="../member/member' . url('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
-			
+
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
@@ -189,10 +188,10 @@ if ($action == 'alert') //Gestion des alertes
 				'BACKGROUND_COLOR' => $row['status'] == 1 ? 'background-color:#82c2a7;' : 'background-color:#e59f09;',
 				'ID' => $row['id']
 			));
-				
+
 			$i++;
 		}
-		
+
 		if ($i === 0)
 		{
 			$Template->assign_vars(array(
@@ -211,7 +210,7 @@ if ($action == 'alert') //Gestion des alertes
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-		
+
 		$result = $Sql->query_while("
 		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM " . PREFIX . "forum_alerts ta
@@ -227,18 +226,17 @@ if ($action == 'alert') //Gestion des alertes
 			if (empty($row['idcat']))
 			{
 				//Instanciation de la class du forum.
-				include_once('../forum/forum.class.php');
-				$Forumfct = new Forum;
-			
+				$Forumfct = new Forum();
+
 				$Forumfct->Del_alert_topic($id_get);
 				redirect('/forum/moderation_forum' . url('.php?action=alert', '', '&'));
 			}
-		
+
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
 				$status = $LANG['alert_solved'] . '<a href="../member/member' . url('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
-			
+
 			$Template->assign_vars(array(
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
@@ -278,31 +276,31 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-		
+
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-			
+
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
-					
-					
+
+
 					//Envoi du message.
 					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
-			
+
 			//Insertion de l'action dans l'historique.
 			forum_history_collector(H_READONLY_USER, $info_mbr['user_id'], 'moderation_forum.php?action=punish&id=' . $info_mbr['user_id']);
 		}
-		
+
 		redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 	}
-	
+
 	$Template->assign_vars(array(
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
@@ -313,7 +311,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=punish&amp;token=' . $Session->get_token()) . '">' .$LANG['punishment_management'] . '</a>',
 		'U_ACTION' => url('.php?action=punish&amp;token=' . $Session->get_token())
 	));
-	
+
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if (retrieve(POST, 'search_member', false))
@@ -325,7 +323,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			else
 				redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 		}
-		
+
 		$Template->assign_vars(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -337,7 +335,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
-			
+
 		$i = 0;
 		$result = $Sql->query_while("SELECT user_id, login, user_readonly
 		FROM " . PREFIX . "member
@@ -352,10 +350,10 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
-			
+
 			$i++;
 		}
-		
+
 		if ($i === 0)
 		{
 			$Template->assign_vars( array(
@@ -371,7 +369,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		//Durée de la sanction.
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], '2 ' . $LANG['month'], $LANG['life']);
-		
+
 		$diff = ($member['user_readonly'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
@@ -395,7 +393,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}
-		
+
 		array_pop($array_sanction);
 		$Template->assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
@@ -443,27 +441,27 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-		
+
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
+
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 				{
 					if (!empty($warning_contents))
 					{
-						
+
 						$Privatemsg = new PrivateMsg();
-						
+
 						//Envoi du message.
 						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
-				
+
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_SET_WARNING_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 			}
@@ -471,20 +469,20 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
+
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
-				
+
 				//Envoi du mail
-				
+
 				$Mail = new Mail();
 				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}
 		}
-		
+
 		redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 	}
-	
+
 	$Template->assign_vars(array(
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
@@ -495,7 +493,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=warning&amp;token=' . $Session->get_token()) . '">' . $LANG['warning_management'] . '</a>',
 		'U_ACTION' => url('.php?action=warning&amp;token=' . $Session->get_token())
 	));
-	
+
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if (retrieve(POST, 'search_member', false))
@@ -507,7 +505,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			else
 				redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 		}
-		
+
 		$Template->assign_vars(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -518,7 +516,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
-		
+
 		$i = 0;
 		$result = $Sql->query_while("SELECT user_id, login, user_warning
 		FROM " . PREFIX . "member
@@ -533,10 +531,10 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
-			
+
 			$i++;
 		}
-		
+
 		if ($i === 0)
 		{
 			$Template->assign_vars( array(
@@ -548,7 +546,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	else //On affiche les infos sur l'utilisateur
 	{
 		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-		
+
 		$select = '';
 		$j = 0;
 		for ($j = 0; $j <= 10; $j++) //On crée le formulaire select
@@ -558,7 +556,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
-		
+
 		$Template->assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
@@ -582,19 +580,19 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Suppression de l'historique.
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
-	
+
 	redirect('/forum/moderation_forum' . url('.php', '', '&'));
 }
 else //Panneau de modération
 {
 	$get_more = retrieve(GET, 'more', 0);
-	
+
 	$Template->assign_vars(array(
 		'C_FORUM_MODO_MAIN' => true,
 		'U_ACTION_HISTORY' => url('.php?del_h=1&amp;token=' . $Session->get_token()),
 		'U_MORE_ACTION' => !empty($get_more) ? url('.php?more=' . ($get_more + 100)) : url('.php?more=100')
 	));
-	
+
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
 	if ($User->check_level(ADMIN_LEVEL))
 	{
@@ -602,7 +600,7 @@ else //Panneau de modération
 			'C_FORUM_ADMIN' => true
 		));
 	}
-			
+
 	$Template->assign_vars(array(
 		'SID' => SID,
 		'L_DEL_HISTORY' => $LANG['alert_history'],
@@ -623,7 +621,7 @@ else //Panneau de modération
 
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
-	
+
 	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m2.login as member
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
@@ -639,11 +637,11 @@ else //Panneau de modération
 			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id_action'], '-' . $row['user_id_action'] . '.php') . '">' . $row['member'] . '</a>' : '-')
 		));
-		
+
 		$i++;
 	}
 	$Sql->query_close($result);
-	
+
 	if ($i == 0)
 	{
 		$Template->assign_vars(array(
@@ -673,9 +671,9 @@ $Template->assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online']),
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 ));
-	
+
 $Template->pparse('forum_moderation_panel');
 
 include('../kernel/footer.php');

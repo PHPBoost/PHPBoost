@@ -6,7 +6,7 @@
  *   copyright          : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ if (!empty($_GET['increment_view']))
 		exit;
 	elseif (!empty($g_idcat))
 	{
-		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0) 
+		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
 			exit;
 	}
 	else //Racine.
@@ -51,21 +51,21 @@ if (!empty($_GET['increment_view']))
 	//Niveau d'autorisation de la catégorie
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
 		exit;
-		
+
 	//Mise à jour du nombre de vues.
 	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 }
 elseif (!empty($_GET['note']) ) //Utilisateur connecté.
-{	
+{
 	if ($User->check_level(MEMBER_LEVEL))
 	{
 		$id = retrieve(POST, 'id', 0);
 		$note = retrieve(POST, 'note', 0);
 
 		//Initialisation  de la class de gestion des fichiers.
-		
+
 		$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
-		
+
 		if (!empty($note) && !empty($id))
 			echo $Note->add($note); //Ajout de la note.
 	}
@@ -73,30 +73,28 @@ elseif (!empty($_GET['note']) ) //Utilisateur connecté.
 		echo -2;
 }
 elseif ($User->check_level(MODO_LEVEL)) //Modo
-{	
+{
 	$Session->csrf_get_protect(); //Protection csrf
-	
+
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		//Initialisation  de la class de gestion des fichiers.
-		include_once('../gallery/gallery.class.php');
-		$Gallery = new Gallery;
-		
+$Gallery = new Gallery();
+
 		$id_file = retrieve(POST, 'id_file', 0);
 		$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 		$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
-		
+
 		if (!empty($id_file))
 			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
-		else 
+		else
 			echo -1;
 	}
 	elseif (!empty($_GET['aprob_pics']))
 	{
 		//Initialisation  de la class de gestion des fichiers.
-		include_once('../gallery/gallery.class.php');
-		$Gallery = new Gallery;
-		
+$Gallery = new Gallery();
+
 		$id_file = retrieve(POST, 'id_file', 0);
 		if (!empty($id_file))
 		{
@@ -104,7 +102,7 @@ elseif ($User->check_level(MODO_LEVEL)) //Modo
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
 		}
-		else 
+		else
 			echo 0;
 	}
 }

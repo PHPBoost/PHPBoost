@@ -31,13 +31,13 @@ function gallery_mini($position, $block)
 {
     global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics, $Sql;
     $tpl = new Template('gallery/gallery_mini.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
 
     //Chargement de la langue du module.
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
-	
+
     //Affichage des miniatures disponibles
     $i = 0;
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
@@ -46,10 +46,10 @@ function gallery_mini($position, $block)
     {
     	if (!defined('READ_CAT_GALLERY'))
     		define('READ_CAT_GALLERY', 0x01);
-    	
+
     	$gallery_mini = array();
     	shuffle($_array_random_pics); //On mélange les éléments du tableau.
-    	
+
     	//Autorisations de la racine.
     	$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
     	//Vérification des autorisations.
@@ -64,7 +64,7 @@ function gallery_mini($position, $block)
     		if ($break == $CONFIG_GALLERY['nbr_pics_mini'])
     			break;
     	}
-    	
+
     	//Aucune photo ne correspond, on fait une requête pour vérifier.
     	if (count($gallery_mini) == 0)
     	{
@@ -79,7 +79,7 @@ function gallery_mini($position, $block)
 			{
 				$_array_random_pics[] = $row;
 			}
-			
+
     		//Vérification des autorisations.
     		$break = 0;
     		foreach ($_array_random_pics as $key => $array_pics_info)
@@ -93,7 +93,7 @@ function gallery_mini($position, $block)
     				break;
     		}
     	}
-    	
+
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
 			case 0:
@@ -117,22 +117,21 @@ function gallery_mini($position, $block)
     		));
 			break;
     	}
-    	
-    	include_once(PATH_TO_ROOT . '/gallery/gallery.class.php');
-    	$Gallery = new Gallery;
-    	
+
+    	$Gallery = new Gallery();
+
     	foreach ($gallery_mini as $key => $row)
     	{
     		//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
     		if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
     			$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
-    		
+
     		// On recupère la hauteur et la largeur de l'image.
     		if ($row['width'] == 0 || $row['height'] == 0)
     			list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
     		if ($row['width'] == 0 || $row['height'] == 0)
     			list($row['width'], $row['height']) = array(142, 142);
-    			
+
     		$tpl->assign_block_vars('pics_mini', array(
     			'ID' => $i,
     			'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
@@ -145,12 +144,12 @@ function gallery_mini($position, $block)
     		$sum_height += $row['height'] + 5;
     		$sum_width += $row['width'] + 5;
     		$i++;
-			
+
 			if ($CONFIG_GALLERY['scroll_type'] == 3)
 				break;
     	}
     }
-   
+
     $tpl->assign_vars(array(
     	'SID' => SID,
     	'ARRAY_PICS' => $array_pics_mini,

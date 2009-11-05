@@ -6,7 +6,7 @@
  *   copyright          : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *  
+ *
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -42,7 +42,7 @@ $del_member = retrieve(GET, 'del_member', 0);
 
 $Template->set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
-));	
+));
 
 $Template->assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
@@ -52,13 +52,12 @@ $Template->assign_vars(array(
 ));
 
 $Cache->load('newsletter');
-include('newsletter_service.class.php');
 
 //Liste des membres
 if ($member_list)
 {
 	$Template->assign_block_vars('member_list', array());
-	
+
 	if ($del_member > 0)
 	{
 		$member_mail = $Sql->query("SELECT mail FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
@@ -81,7 +80,7 @@ if ($member_list)
 elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents))
 {
 	$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
-	
+
 	switch ($type)
 	{
 		case 'html':
@@ -94,15 +93,15 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 			$type = 'text';
 			$error_mailing_list = NewsletterService::send_text($mail_object, $mail_contents);
 	}
-	
+
 	//On envoie une confirmation
 	$Template->assign_block_vars('end', array());
-	$Template->assign_vars(array(		
+	$Template->assign_vars(array(
 		'L_ARCHIVES' => $LANG['newsletter_go_to_archives'],
 		'L_BACK' => $LANG['newsletter_back'],
 		'L_NEWSLETTER' => $LANG['newsletter'],
 	));
-	
+
 	if (count($error_mailing_list) == 0) //Aucune erreur
 		$Errorh->handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
 	else
@@ -120,9 +119,9 @@ elseif (!empty($type)) //Rédaction
 	{
 		$type = ($type == 'html') ? 'html' : 'text';
 	}
-	
-	$nbr = $Sql->count_table("newsletter", __LINE__, __FILE__);	
-		
+
+	$nbr = $Sql->count_table("newsletter", __LINE__, __FILE__);
+
 	$Template->assign_block_vars('write', array(
 		'TYPE' => $type,
 		'SUBSCRIBE_LINK' => ($type == 'html') ? $LANG['newsletter_subscribe_link'] : '',
@@ -139,12 +138,12 @@ elseif (!empty($type)) //Rédaction
 		'L_NEWSLETTER_TEST' => $LANG['newsletter_test'],
 		'L_NBR_SUBSCRIBERS' => $LANG['newsletter_nbr_subscribers'],
 	));
-	
+
 	if ($type == 'bbcode')
 		$Template->assign_block_vars('write.bbcode_explain', array(
 			'L_WARNING' => $LANG['newsletter_bbcode_warning']
 		));
-	
+
 	if (empty($mail_object) && $send_test)
 		$Errorh->handler($LANG['require_title'], E_USER_WARNING);
 	elseif (empty($mail_contents) && $send_test)
@@ -190,7 +189,7 @@ $Template->assign_vars(array(
 	'L_DELETE' => $LANG['delete']
 ));
 
-$Template->pparse('admin_newsletter'); 
+$Template->pparse('admin_newsletter');
 
 
 require_once('../admin/admin_footer.php');
