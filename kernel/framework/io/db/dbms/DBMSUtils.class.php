@@ -44,6 +44,8 @@ interface DBMSUtils
 	
 	function list_tables();
 	
+	function list_and_desc_tables();
+	
 	function desc_table($table);
 	
 	function optimize($tables);
@@ -53,6 +55,10 @@ interface DBMSUtils
 	function truncate($tables);
 	
 	function drop($tables);
+	
+	function export_phpboost($file = null);
+	
+	function export_table($table, $file = null);
 }
 
 ?>

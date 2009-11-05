@@ -8,7 +8,6 @@ Environment::load_static_constants();
 
 AppContext::init_session();
 AppContext::init_user();
-
 req('/test/PHPUnit/Framework.php');
 
 if (!empty($_REQUEST['params'])) {
