@@ -245,7 +245,7 @@ class AdministratorAlertService
 	{
 		global $Sql;
 		
-		return array('unread' => $Sql->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
+		return array('unread' => $Sql->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
 			'all' => $Sql->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
 			);
 	}

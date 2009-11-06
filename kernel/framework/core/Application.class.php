@@ -98,13 +98,13 @@ class Application
 		switch ($this->priority)
 		{
 			case 'high':
-				$this->priority = ADMIN_ALERT_HIGH_PRIORITY;
+				$this->priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
 				break;
 			case 'medium':
-				$this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
+				$this->priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
 				break;
 			default:
-				$this->priority = ADMIN_ALERT_LOW_PRIORITY;
+				$this->priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
 				break;
 		}
 		if ($this->security_update)

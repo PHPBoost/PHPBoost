@@ -48,7 +48,9 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
 
-	$database_name = Sql::clean_database_name($database_name);
+	//TODO LOIC A corriger, méthode supprimée de la classe SQL.
+	//$database_name = Sql::clean_database_name($database_name);
+	$database_name = $database_name;
 
 	
 	$db_connection = new MySQLDBConnection($host, $login, $password);

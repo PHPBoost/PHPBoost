@@ -66,13 +66,13 @@ if ($app !== null && $app->check_compatibility())
     
     switch ($update->get_priority())
     {
-        case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+        case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
             $priority = 'priority_very_high';
             break;
-        case ADMIN_ALERT_HIGH_PRIORITY:
+        case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
             $priority = 'priority_high';
             break;
-        case ADMIN_ALERT_MEDIUM_PRIORITY:
+        case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
             $priority = 'priority_medium';
             break;
         default:

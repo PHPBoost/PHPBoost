@@ -55,20 +55,20 @@ foreach ($alerts_list as $alert)
 	
 	switch ($alert->get_priority())
 	{
-		case ADMIN_ALERT_VERY_LOW_PRIORITY:
+		case AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY:
 			$color = 'FFFFFF';
 			break;
-		case ADMIN_ALERT_LOW_PRIORITY:
+		case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
 			$color = 'ECDBB7';
 			break;
-		case ADMIN_ALERT_MEDIUM_PRIORITY:
+		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
 			$color = 'F5D5C6';
 			break;
-		case ADMIN_ALERT_HIGH_PRIORITY:
+		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 			$img_type = 'important.png';
 			$color = 'FFD5D1';
 			break;
-		case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 			$img_type = 'errors_mini.png';
 			$color = 'F3A29B';
 			break;
@@ -79,7 +79,7 @@ foreach ($alerts_list as $alert)
 	$creation_date = $alert->get_creation_date();
 	
 	$template->assign_block_vars('alerts', array(
-		'C_PROCESSED' => $alert->get_status() == ADMIN_ALERT_STATUS_PROCESSED,
+		'C_PROCESSED' => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
 		'FIXING_URL' => url(PATH_TO_ROOT . '/' . $alert->get_fixing_url()),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),

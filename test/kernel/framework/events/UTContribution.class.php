@@ -59,12 +59,12 @@ class UnitTest_contribution extends MY_UnitTestCase {
 		$contrib = new Contribution();
 		sleep(5);
 		$contrib->set_status('string');
-		$this->assertIdentical($contrib->get_status(), EVENT_STATUS_UNREAD);
-		$contrib->set_status(EVENT_STATUS_BEING_PROCESSED);
-		$this->assertIdentical($contrib->get_status(), EVENT_STATUS_BEING_PROCESSED);
-		$contrib->set_status(EVENT_STATUS_PROCESSED);
+		$this->assertIdentical($contrib->get_status(), Event::EVENT_STATUS_UNREAD);
+		$contrib->set_status(Event::EVENT_STATUS_BEING_PROCESSED);
+		$this->assertIdentical($contrib->get_status(), Event::EVENT_STATUS_BEING_PROCESSED);
+		$contrib->set_status(Event::EVENT_STATUS_PROCESSED);
 		$date2 = new Date();
-		$this->assertIdentical($contrib->get_status(), EVENT_STATUS_PROCESSED);
+		$this->assertIdentical($contrib->get_status(), Event::EVENT_STATUS_PROCESSED);
 		$this->assertEqual($contrib->get_fixing_date(), $date2);
 		$this->assertEqual($contrib->get_fixer_id(), $User->get_attribute('user_id'));
 	}

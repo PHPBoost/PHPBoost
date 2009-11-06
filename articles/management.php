@@ -217,7 +217,7 @@ elseif(retrieve(POST,'submit',false))
 						$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb_visible. "',nbr_articles_unvisible = '".$nb_unvisible."' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 						$file_contribution = $corresponding_contributions[0];
 						//The contribution is now processed
-						$file_contribution->set_status(EVENT_STATUS_PROCESSED);
+						$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 						//We save the contribution
 						ContributionService::save_contribution($file_contribution);
 					}
@@ -269,8 +269,8 @@ elseif(retrieve(POST,'submit',false))
 					$articles_contribution->set_module('articles');
 					//Assignation des autorisations d'écriture / Writing authorization assignation
 					$articles_contribution->set_auth(
-					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
-					//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
+					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir Contribution::CONTRIBUTION_AUTH_BIT
+					//We shift the authorization bit to the one with which the contribution class works, Contribution::CONTRIBUTION_AUTH_BIT
 					Authorizations::capture_and_shift_bit_auth(
 					//On fusionne toutes les autorisations pour obtenir l'autorisation d'écriture dans la catégorie sélectionnée :
 					//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
@@ -281,7 +281,7 @@ elseif(retrieve(POST,'submit',false))
 					$articles_categories->compute_heritated_auth($articles['idcat'], AUTH_ARTICLES_MODERATE, AUTH_CHILD_PRIORITY),
 					AUTH_ARTICLES_MODERATE, AUTH_CHILD_PRIORITY
 					),
-					AUTH_ARTICLES_MODERATE, CONTRIBUTION_AUTH_BIT
+					AUTH_ARTICLES_MODERATE, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 					);
 					//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
