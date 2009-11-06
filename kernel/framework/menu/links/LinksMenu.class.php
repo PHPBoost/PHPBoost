@@ -25,15 +25,6 @@
 *
 ###################################################*/
 
-
-## Menu types ##
-define('VERTICAL_MENU', 'vertical');
-define('HORIZONTAL_MENU', 'horizontal');
-define('TREE_MENU', 'tree');
-define('VERTICAL_SCROLLING_MENU', 'vertical_scrolling');
-define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
-
-
 /**
 * @author Loïc Rouchon <loic.rouchon@phpboost.com>
 * @desc Create a Menu with children.
@@ -44,6 +35,13 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 class LinksMenu extends LinksMenuElement
 {
 	const LINKS_MENU__CLASS = 'LinksMenu';
+	
+	## Menu types ##
+	const VERTICAL_MENU = 'vertical';
+	const HORIZONTAL_MENU = 'horizontal';
+	const TREE_MENU = 'tree';
+	const VERTICAL_SCROLLING_MENU = 'vertical_scrolling';
+	const HORIZONTAL_SCROLLING_MENU = 'horizontal_scrolling';
 	
     /**
 	* @access protected
@@ -64,10 +62,10 @@ class LinksMenu extends LinksMenuElement
 	* @param string $type Menu's type
 	* @param int $id The Menu's id in the database
 	*/
-    public function __construct($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
+    public function __construct($title, $url, $image = '', $type = self::VERTICAL_SCROLLING_MENU)
     {
         // Set the menu type
-        $this->type = in_array($type, self::get_menu_types_list()) ? $type : VERTICAL_SCROLLING_MENU;
+        $this->type = in_array($type, self::get_menu_types_list()) ? $type : self::VERTICAL_SCROLLING_MENU;
         
         // Build the menu element on witch is based the menu
         parent::__construct($title, $url, $image);
@@ -214,7 +212,7 @@ class LinksMenu extends LinksMenuElement
 	*/
     public static function get_menu_types_list()
     {
-        return array(VERTICAL_MENU, HORIZONTAL_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU/*, TREE_MENU*/);
+        return array(self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::VERTICAL_SCROLLING_MENU, self::HORIZONTAL_SCROLLING_MENU/*, self::TREE_MENU*/);
     }
    
     /**
