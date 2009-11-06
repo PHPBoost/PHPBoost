@@ -87,18 +87,20 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				
 				if ($CONFIG_USER['activ_up_avatar'] == 1)
 				{
-					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-					
-					if ($Upload->get_error() != '') //Erreur, on arrête ici
-						redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
-					else
+					if ($Upload->get_size() > 0)
 					{
-						$path = $dir . $Upload->get_filename();
-						$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
-						if (!empty($error)) //Erreur, on arrête ici
-							redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
+						if ($Upload->get_error() != '') //Erreur, on arrête ici
+							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 						else
-							$user_avatar = $path; //Avatar uploadé et validé.
+						{
+							$path = $dir . $Upload->get_filename();
+							$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+							if (!empty($error)) //Erreur, on arrête ici
+								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+							else
+								$user_avatar = $path; //Avatar uploadé et validé.
+						}
 					}
 				}
 				

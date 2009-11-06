@@ -91,7 +91,9 @@ class Upload
 						}
 					}
 					else
+					{
 						$this->error = 'e_upload_already_exist';
+					}
 				}
 				else
 					$this->error = 'e_upload_invalid_format';
