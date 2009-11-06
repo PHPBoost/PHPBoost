@@ -29,13 +29,6 @@
 //      LinksMenuLink and LinksMenuLink classes are based on this class
 //      use, on of these
 
-
-
-
-define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
-define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
-define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @abstract
@@ -45,6 +38,10 @@ define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
  */
 abstract class LinksMenuElement extends Menu
 {
+	const LINKS_MENU_ELEMENT__CLASS = 'LinksMenuElement';
+	const LINKS_MENU_ELEMENT__FULL_DISPLAYING = true;
+	const LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING = false;
+	
 	/**
 	 * @access protected
 	 * @var string the LinksMenuElement url
@@ -90,7 +87,7 @@ abstract class LinksMenuElement extends Menu
 	 * @abstract
 	 */
 	//TODO Loic faire une bidouille pour que la surchage ne pose pas de problème
-	//abstract public function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
+	//abstract public function display($template = false, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
 	
 	/**
 	 * @desc returns the string to write in the cache file at the beginning of the Menu element
@@ -123,11 +120,11 @@ abstract class LinksMenuElement extends Menu
 	 * @desc Assign tpl vars
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars
-	 * @param int $mode in LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
-	 * displayed. With the LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
+	 * @param int $mode in LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
+	 * displayed. With the LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
 	 * also shown.
 	 */
-	protected function _assign(&$template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	protected function _assign(&$template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		parent::_assign($template);
 		$template->assign_vars(array(

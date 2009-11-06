@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-define('MOVE_UP',   -1);
-define('MOVE_DOWN',  1);
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This service manage kernel menus by adding the persistance to menus objects.
@@ -37,21 +34,24 @@ define('MOVE_DOWN',  1);
  */
 class MenuService
 {
-    ## Menus ##
+    const MOVE_UP = -1;
+    const MOVE_DOWN = 1;
+
+	## Menus ##
     /**
      * @desc
      * @param $block
      * @param $enabled
      * @return unknown_type
      */
-    function get_menu_list($class = MENU__CLASS, $block = BLOCK_POSITION__ALL, $enabled = MENU_ENABLE_OR_NOT)
+    function get_menu_list($class = Menu::MENU__CLASS, $block = BLOCK_POSITION__ALL, $enabled = MENU_ENABLE_OR_NOT)
     {
         global $Sql;
         
         $query = "SELECT id, object, block, position, enabled FROM " . DB_TABLE_MENUS;
         
         $conditions = array();
-        if ($class != MENU__CLASS)
+        if ($class != Menu::MENU__CLASS)
             $conditions[] = "class='" . strtolower($class) . "'";
         if ($block != BLOCK_POSITION__ALL)
             $conditions[] = "block='" . $block . "'";
@@ -258,7 +258,7 @@ class MenuService
      * @param Menu $menu The menu to move
      * @param int $diff the direction to move it. positives integers move down, negatives, up.
      */
-    function change_position(&$menu, $direction = MOVE_UP)
+    function change_position(&$menu, $direction = self::MOVE_UP)
     {
         global $Sql;
         
@@ -762,7 +762,7 @@ class MenuService
         $menu->set_block($db_result['block']);
         $menu->set_block_position($db_result['position']);
         
-        if (of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, LINKS_MENU_LINK__CLASS))
+        if (of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, LinksMenuLink::LINKS_MENU_LINK__CLASS))
         {
             $menu->update_uid();
         }
