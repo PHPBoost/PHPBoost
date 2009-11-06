@@ -98,9 +98,6 @@ $Template->set_filenames(array(
 	'wiki'=> 'wiki/wiki.tpl',
 	'index'=> 'wiki/index.tpl'
 ));
-$Template->assign_vars(array(
-	'WIKI_PATH' => $Template->get_module_data_path('wiki')
-));
 
 //Si il s'agit d'un article
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
@@ -287,7 +284,6 @@ else
 		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 		'L_EXPLORER' => $LANG['wiki_explorer'],
 		'U_EXPLORER' => url('explorer.php'),
-		'WIKI_PATH' => $Template->get_module_data_path('wiki')
         ));
 
 	$page_type = 'index';

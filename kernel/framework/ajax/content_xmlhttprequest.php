@@ -63,13 +63,13 @@ $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
 $second_parser = $content_manager->get_second_parser();
-$second_parser->set_content($parser->get_content(DO_NOT_ADD_SLASHES), PARSER_DO_NOT_STRIP_SLASHES);
+$second_parser->set_content($parser->get_content(Parser::DONT_ADD_SLASHES), Parser::DONT_STRIP_SLASHES);
 $second_parser->set_path_to_root($page_path_to_root);
 $second_parser->set_page_path($page_path);
 
 $second_parser->parse();
 
-$contents = $second_parser->get_content(DO_NOT_ADD_SLASHES);
+$contents = $second_parser->get_content(Parser::DONT_ADD_SLASHES);
 
 echo $contents;
 

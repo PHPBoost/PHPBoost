@@ -66,7 +66,6 @@ $Sql->query_close($result);
 
 
 $Template->assign_vars(array(
-	'WIKI_PATH' => $module_data_path,
 	'TITLE' => $LANG['wiki_explorer'],
 	'L_ROOT' => $LANG['wiki_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,

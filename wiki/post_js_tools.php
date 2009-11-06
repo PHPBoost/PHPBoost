@@ -44,7 +44,6 @@ $Template->assign_vars(array(
 	'L_HELP_WIKI_TAGS' => $LANG['wiki_help_tags'],
 	'L_PARAGRAPH_NAME' => $LANG['wiki_paragraph_name'],
 	'PARAGRAPH_NAME' => $LANG['wiki_paragraph_name_example'],
-	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
 
 

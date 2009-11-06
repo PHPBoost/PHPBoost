@@ -33,7 +33,7 @@ define('WIKI_MENU_MAX_DEPTH', 5);
 function wiki_parse(&$var)
 {
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
+	$content_manager = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
 	$parser = $content_manager->get_parser();
     $parser->set_content($var, MAGIC_QUOTES);
     $parser->parse();
@@ -49,12 +49,12 @@ function wiki_unparse($var)
 	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
+	$content_manager = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
 	$unparser = $content_manager->get_unparser();
-    $unparser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
+    $unparser->set_content($var, Parser::DONT_STRIP_SLASHES);
     $unparser->parse();
 	
-	return $unparser->get_content(DO_NOT_ADD_SLASHES);
+	return $unparser->get_content(Parser::DONT_ADD_SLASHES);
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)

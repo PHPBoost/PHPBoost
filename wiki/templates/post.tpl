@@ -1,6 +1,6 @@
 		<script type="text/javascript">
 		<!--
-			var path = '{WIKI_PATH}';
+			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
 				if(document.getElementById('title').value == "") {
@@ -15,7 +15,7 @@
 			}
 		-->
 		</script>
-		<script type="text/javascript" src="{WIKI_PATH}/images/templates/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/templates/wiki.js"></script>
 
 		# START preview #
 		<div class="module_position">					
@@ -62,7 +62,7 @@
 				<dl>
 					<dt><label>{L_CAT}</label></dt>
 					<dd>
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{WIKI_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
 						# START create.list #
