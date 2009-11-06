@@ -38,7 +38,7 @@ require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
 {
-	$feed_name = retrieve(GET, 'name', DEFAULT_FEED_NAME);
+	$feed_name = retrieve(GET, 'name', Feed::DEFAULT_FEED_NAME);
 	$category_id = retrieve(GET, 'cat', 0);
 
 	$feed = null;
