@@ -624,7 +624,7 @@ class CategoriesManager
 	    //Liste de toutes les catégories (parcours récursif)
 	    $this->_build_feeds_sub_list($cats_tree, 0);
 	    //On ajoute la racine et ce qu'elle contient à la liste
-	    $list->add_feed($cats_tree, DEFAULT_FEED_NAME);
+	    $list->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 	    
 	    return $list;
 	}

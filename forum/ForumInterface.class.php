@@ -368,7 +368,7 @@ class ForumInterface extends ModuleInterface
 		$feeds = new FeedsList();
 		if (count($children) > 0)
 		{
-			$feeds->add_feed($children[0], DEFAULT_FEED_NAME);
+			$feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
 		}
 		return $feeds;
 	}

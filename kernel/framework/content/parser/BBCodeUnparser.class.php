@@ -50,8 +50,8 @@ class BBCodeUnparser extends ContentUnparser
 	public function parse()
 	{
 		//Isolement du code source et du code HTML qui ne sera pas protégé
-		$this->unparse_html(PICK_UP);
-		$this->unparse_code(PICK_UP);
+		$this->unparse_html(Parser::PICK_UP);
+		$this->unparse_code(Parser::PICK_UP);
 
 		//Smilies
 		$this->unparse_smilies();
@@ -67,8 +67,8 @@ class BBCodeUnparser extends ContentUnparser
 		if (strpos($this->content, '<li class="bb_li"') !== false)
 		$this->unparse_list();
 
-		$this->unparse_code(REIMPLANT);
-		$this->unparse_html(REIMPLANT);
+		$this->unparse_code(Parser::REIMPLANT);
+		$this->unparse_html(Parser::REIMPLANT);
 	}
 
 	/**

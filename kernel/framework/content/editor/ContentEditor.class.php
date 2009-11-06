@@ -97,7 +97,7 @@ class ContentEditor
     }
 
     ## Private ##
-    var $language_type = DEFAULT_LANGUAGE; //Langage type
+    var $language_type = ContentFormattingFactory::DEFAULT_LANGUAGE; //Langage type
     var $forbidden_tags = array();
     var $identifier = 'contents';
     var $template = null;

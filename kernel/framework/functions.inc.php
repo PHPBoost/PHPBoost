@@ -662,7 +662,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 	$parser = $content_manager->get_parser();
 
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
-	$parser->set_content($content, MAGIC_QUOTES);
+	$parser->set_content($content, Parser::MAGIC_QUOTES);
 
 	//Si il y a des balises interdites, on lui signale
 	if (!empty($forbidden_tags))
@@ -688,10 +688,10 @@ function unparse(&$content)
 {
 	$content_manager = new ContentFormattingFactory();
 	$parser = $content_manager->get_unparser();
-	$parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
+	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
 	$parser->parse();
 
-	return $parser->get_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(Parser::DONT_ADD_SLASHES);
 }
 
 /**
@@ -707,10 +707,10 @@ function second_parse(&$content)
 	$content_manager = new ContentFormattingFactory();
 
 	$parser = $content_manager->get_second_parser();
-	$parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
+	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
 	$parser->parse();
 
-	return $parser->get_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(Parser::DONT_ADD_SLASHES);
 }
 
 /**

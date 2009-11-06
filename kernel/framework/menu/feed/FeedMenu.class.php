@@ -48,7 +48,7 @@ class FeedMenu extends Menu
 	private $number = 10;
 	private $begin_at = 0;
 	
-	public function __construct($title, $module_id, $category = 0, $name = DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
+	public function __construct($title, $module_id, $category = 0, $name = Feed::DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
 		parent::__construct($title);
 		$this->module_id = $module_id;
