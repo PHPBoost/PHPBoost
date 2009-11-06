@@ -662,7 +662,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 	$parser = $content_manager->get_parser();
 
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
-	$parser->set_content($content, Parser::MAGIC_QUOTES);
+	$parser->set_content($content, MAGIC_QUOTES);
 
 	//Si il y a des balises interdites, on lui signale
 	if (!empty($forbidden_tags))
