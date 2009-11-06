@@ -1,31 +1,29 @@
 <?php
 /*##################################################
-*                         tinymce_unparser.class.php
-*                            -------------------
-*   begin                : August 10, 2008
-*   copyright            : (C) 2008 Benoit Sautel
-*   email                : ben.popeye@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
-
-
+ *                         tinymce_unparser.class.php
+ *                            -------------------
+ *   begin                : August 10, 2008
+ *   copyright            : (C) 2008 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
 
 /**
  * @package content
@@ -43,102 +41,101 @@ class TinyMCEUnparser extends ContentUnparser
 	/**
 	 * @desc Builds a TinyMCEUnparser object
 	 */
-	function TinyMCEUnparser()
+	function __construct()
 	{
-		parent::ContentUnparser();
+		parent::__construct();
 	}
-	
+
 	/**
 	 * @desc Unparses the content of the parser. It goes from the PHPBoost reference formatting syntax
 	 * to the TinyMCE one.
 	 */
-	function parse()
+	public function parse()
 	{
-		//The URL must be absolutes otherwise TinyMCE won't be able to display  images for instance.	
-		
-        $this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
-        
-	    //Extracting HTML and code tags
-		$this->_unparse_html(PICK_UP);
-		$this->_unparse_code(PICK_UP);
-		
+		//The URL must be absolutes otherwise TinyMCE won't be able to display  images for instance.
+
+		$this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
+
+		//Extracting HTML and code tags
+		$this->unparse_html(PICK_UP);
+		$this->unparse_code(PICK_UP);
+
 		//Smilies
-		$this->_unparse_smilies();
-		
+		$this->unparse_smilies();
+
 		//Remplacement des caractères de word
 		$array_str = array(
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
 			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
 			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
 			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">'
-		);
-		
-		$array_str_replace = array(
+			);
+
+			$array_str_replace = array(
 			'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
 			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
 			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
 			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>'
-		);
-		
-		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-		
-		//Replacing <br /> by a paragraph
-		$this->content = preg_replace(
-    		array(
+			);
+
+			$this->content = str_replace($array_str, $array_str_replace, $this->content);
+
+			//Replacing <br /> by a paragraph
+			$this->content = preg_replace(
+			array(
     		    '`(<h3[^>]*>.*</h3>)\s*`iUs',
     		    '`\s*<br />\s*`i',
                 '`<p>\s*</p>`i',
     		    '`\s*</p>`i',
         		'`<p>\s*`i',
         		'`<p>&nbsp;</p>\s*<p>(<h4[^>]*>.*</h4>)</p>\s*<p>&nbsp;</p>`iUs'
-    		),
-    		array(
+        		),
+        		array(
     		    "</p>\n$1\n<p>",
         		"</p>\n<p>",
         		'<p>&nbsp;</p>',
         		'</p>',
     		    '<p>',
     		    '<br />$1<br />'
-    		),
+    		    ),
     		'<p>' . $this->content . '</p>'
-		);
-		
-		//Unparsing tags supported by TinyMCE
-        $this->_unparse_tinymce_formatting();
-        //Unparsing tags unsupported by TinyMCE, those are in BBCode
-        $this->_unparse_bbcode_tags();
-        
-        $this->content = htmlspecialchars($this->content);
-	    
-		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-		if (!empty($this->array_tags['html_unparse']))
-		{
-		    $this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['html_unparse']);
-		}
-		if (!empty($this->array_tags['code_unparse']))
-		{
-		    $this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['code_unparse']);
-		}
-		
-		//Reimplanting html and code tags
-		$this->_unparse_code(REIMPLANT);
-		$this->_unparse_html(REIMPLANT);
+    		);
+
+    		//Unparsing tags supported by TinyMCE
+    		$this->unparse_tinymce_formatting();
+    		//Unparsing tags unsupported by TinyMCE, those are in BBCode
+    		$this->unparse_bbcode_tags();
+
+    		$this->content = htmlspecialchars($this->content);
+    		 
+    		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
+    		if (!empty($this->array_tags['html_unparse']))
+    		{
+    			$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['html_unparse']);
+    		}
+    		if (!empty($this->array_tags['code_unparse']))
+    		{
+    			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
+    		}
+
+    		//Reimplanting html and code tags
+    		$this->unparse_code(REIMPLANT);
+    		$this->unparse_html(REIMPLANT);
 	}
-	
-	## Protected ##
+
 	/**
 	 * @desc Replaces the image code for smilies by the text code
 	 */
-	function _unparse_smilies()
+	private function unparse_smilies()
 	{
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i', 
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i',
 		'<img class="smiley" style="vertical-align:middle" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" />', $this->content);
 	}
-	
+
 	/**
 	 * @desc Function which unparses only the tags supported by TinyMCE
 	 */
-	function _unparse_tinymce_formatting()
+	private function unparse_tinymce_formatting()
 	{
 		//Preg_replace.
 		$array_preg = array(
@@ -152,8 +149,8 @@ class TinyMCEUnparser extends ContentUnparser
 			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
-		);
-		$array_preg_replace = array(
+			);
+			$array_preg_replace = array(
 			"<img src=\"$1\" alt=\"\" align=\"$2\" />",
 			"<p style=\"text-align: $1;\">$2</p>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
@@ -164,45 +161,45 @@ class TinyMCEUnparser extends ContentUnparser
 			'<span style="color: $1;">$2</span>',
 		    '<span style="background-color: $1;">$2</span>',
 			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>"
-		);
-		
-		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-		
-		//Tableaux
-		while (preg_match('`<table class="bb_table"( style="([^"]+)")?>`i', $this->content))
-		{
-			$this->content = preg_replace('`<table class="bb_table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
-			$this->content = preg_replace('`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
-			$this->content = preg_replace('`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
-		}
-		
-		//Listes
-		while (preg_match('`<ul( style="[^"]+")? class="bb_ul">`i', $this->content))
-		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">`i', "<ul$1>", $this->content);
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">`i', "<ol$1>", $this->content);
-		}
-		
-		//Trait horizontal
-		$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
-		
-		//Balise size
-		$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array(&$this, '_unparse_size_tag'), $this->content);
-		
-		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
-		
-		//Balise indentation
-		$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
-		
-		//Police
-		$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, '_unparse_font'), $this->content );
+			);
+
+			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+
+			//Tableaux
+			while (preg_match('`<table class="bb_table"( style="([^"]+)")?>`i', $this->content))
+			{
+				$this->content = preg_replace('`<table class="bb_table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
+				$this->content = preg_replace('`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
+				$this->content = preg_replace('`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
+			}
+
+			//Listes
+			while (preg_match('`<ul( style="[^"]+")? class="bb_ul">`i', $this->content))
+			{
+				$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">`i', "<ul$1>", $this->content);
+				$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">`i', "<ol$1>", $this->content);
+			}
+
+			//Trait horizontal
+			$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
+
+			//Balise size
+			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array(&$this, 'unparse_size_tag'), $this->content);
+
+			//Citations
+			$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
+
+			//Balise indentation
+			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
+
+			//Police
+			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, 'unparse_font'), $this->content );
 	}
-	
+
 	/**
 	 * @desc Manages the whole tags which doesn't not exist in TinyMCE
 	 */
-	function _unparse_bbcode_tags()
+	private function unparse_bbcode_tags()
 	{
 		$array_preg = array(
 			'`<p class="float_(left|right)">(.*)</p>`isU',
@@ -217,9 +214,9 @@ class TinyMCEUnparser extends ContentUnparser
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
-		);
-		
-		$array_preg_replace = array(
+			);
+
+			$array_preg_replace = array(
 			"[float=$1]$2[/float]",
 			"[acronym=$1]$2[/acronym]",
 			"[mail=$1]$2[/mail]",
@@ -232,38 +229,38 @@ class TinyMCEUnparser extends ContentUnparser
 			"[swf=$2,$3]$1[/swf]",
 			"[html]$1[/html]",
 			"[math]$1[/math]"
-		);
-		
-		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-		
-		##Remplacement des balises imbriquées
-		
-		//Texte caché
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
-		
-		//Bloc HTML
-		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
-		
-		//Bloc de formulaire
-		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
-		{
-			$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->content);
-		}
+			);
 
-		//Liens Wikipédia
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->content);
-		
-		//Hide
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+
+			##Remplacement des balises imbriquées
+
+			//Texte caché
+			$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+
+			//Bloc HTML
+			$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+			$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+
+			//Bloc de formulaire
+			while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+			{
+				$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, 'unparse_fieldset'), $this->content);
+			}
+
+			//Liens Wikipédia
+			$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, 'unparse_wikipedia_link'), $this->content);
+
+			//Hide
+			$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 	}
-	
+
 	/**
 	 * @desc Handler which clears the HTML code which is in the code and HTML tags
 	 * @param string $var variable to clear
 	 * @return the clean content
 	 */
-	function _clear_html_and_code_tag($var)
+	private function clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
 		return htmlentities($var, ENT_NOQUOTES);
@@ -275,21 +272,21 @@ class TinyMCEUnparser extends ContentUnparser
 	 * @param string[] $matches The matched elements
 	 * @return string The corresponding BBCode syntax
 	 */
-	function _unparse_fieldset($matches)
+	private function unparse_fieldset($matches)
 	{
 		$style = '';
 		$legend = '';
-		
+
 		if (!empty($matches[1]))
 		{
 			$style = ' style="' . $matches[1] . '"';
 		}
-		
+
 		if (!empty($matches[2]))
 		{
 			$legend = ' legend="' . $matches[2] . '"';
 		}
-		
+
 		if (!empty($legend) || !empty($style))
 		{
 			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
@@ -299,17 +296,17 @@ class TinyMCEUnparser extends ContentUnparser
 			return '[fieldset]' . $matches[3] . '[/fieldset]';
 		}
 	}
-	
+
 	/**
 	 * @desc Unparses the wikipedia links (exists only in BBCode), so it
 	 * uses the BBCode syntax.
 	 * @param string[] $matches The matched elements
 	 * @return string The corresponding BBCode syntax
 	 */
-	function _unparse_wikipedia_link($matches)
+	private function unparse_wikipedia_link($matches)
 	{
 		global $LANG;
-		
+
 		//On est dans la langue par défaut
 		if ($matches[1] == $LANG['wikipedia_subdomain'])
 		{
@@ -329,10 +326,10 @@ class TinyMCEUnparser extends ContentUnparser
 		{
 			$page_name = '';
 		}
-		
+
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
-	
+
 	/**
 	 * @desc Computes the correct TinyMCE syntax for changing the font.
 	 * The problem is that in BBCode we only use one font, and to be compatible (and it's not so bad),
@@ -340,25 +337,25 @@ class TinyMCEUnparser extends ContentUnparser
 	 * @param string[] $matches The matched elements
 	 * @return string The correct TinyMCE formatting
 	 */
-	function _unparse_font($matches)
+	private function unparse_font($matches)
 	{
 		static $fonts_array = array(
 			'geneva' => 'trebuchet ms,geneva',
 			'optima' => 'comic sans ms,sans-serif',
 			'arial' => 'arial,helvetica,sans-serif',
 			'courier new' => 'courier new,courier'
-		);
-		
-		if (!empty($fonts_array[$matches[1]]))
-		{
-			return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
-		}
-		else
-		{
-			return $matches[2];
-		}
+			);
+
+			if (!empty($fonts_array[$matches[1]]))
+			{
+				return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+			}
+			else
+			{
+				return $matches[2];
+			}
 	}
-	
+
 	/**
 	 * @desc Processes the size tag. PHPBoost and TinyMCE don't work similary.
 	 * PHPBoost needs to have a size in pixels, whereas TinyMCE explains it differently,
@@ -367,7 +364,7 @@ class TinyMCEUnparser extends ContentUnparser
 	 * @param string[] $matches The matched elements.
 	 * @return string The good PHPBoost syntax.
 	 */
-	function _unparse_size_tag($matches)
+	private function unparse_size_tag($matches)
 	{
 		$size = 0;
 		//We retrieve the size (in pt)
@@ -399,9 +396,9 @@ class TinyMCEUnparser extends ContentUnparser
 		}
 		//If the size is known, we put the HTML code and convert the size into pixels
 		if (!empty($size))
-			return '<span style="font-size: ' . $size . ';">' . $matches[2] . '</span>';
+		return '<span style="font-size: ' . $size . ';">' . $matches[2] . '</span>';
 		else
-			return $matches[2];
+		return $matches[2];
 	}
 }
 

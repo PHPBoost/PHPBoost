@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @package content
  * @subpackage parser
@@ -39,32 +37,31 @@
  */
 class ContentSecondParser extends Parser
 {
-	######## Public #######
 	/**
-	* @desc Builds a ContentSecondParser object
-	*/
-	function ContentSecondParser()
+	 * @desc Builds a ContentSecondParser object
+	 */
+	public function __construct()
 	{
-		parent::Parser();
+		parent::__construct();
 	}
 
 	/**
 	 * @desc Parses the content of the parser. The result will be ready to be displayed.
 	 */
-	function parse()
+	public function parse()
 	{
 		global $LANG;
 
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 		{
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, 'callbackhighlight_code'), $this->content);
 		}
 
 		//Media
 		if (strpos($this->content, '[[MEDIA]]') !== false)
 		{
-			$this->_process_media_insertion();
+			$this->process_media_insertion();
 		}
 
 		//Balise latex.
@@ -72,10 +69,9 @@ class ContentSecondParser extends Parser
 		{
 			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php';
 			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.class.php';
-			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, 'math_code'), $this->content);
 		}
 
-		
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
 	}
 
@@ -84,10 +80,8 @@ class ContentSecondParser extends Parser
 	 * @param string $html Content to transform
 	 * @return string The exportable content
 	 */
-	function export_html_text($html_content)
+	public function export_html_text($html_content)
 	{
-		
-
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
             '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
@@ -106,8 +100,6 @@ class ContentSecondParser extends Parser
 		return Url::html_convert_root_relative2absolute($html_content);
 	}
 
-	## Private ##
-
 	/**
 	 * @static
 	 * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
@@ -119,12 +111,11 @@ class ContentSecondParser extends Parser
 	 * @param bool $line_number Indicate whether or not the line number must be added to the code.
 	 * @param bool $inline_code Indicate if the code is multi line.
 	 */
-	function _highlight_code($contents, $language, $line_number, $inline_code)
+	private function highlight_code($contents, $language, $line_number, $inline_code)
 	{
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')
 		{
-			
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$bbcode_highlighter->parse($inline_code);
@@ -133,7 +124,6 @@ class ContentSecondParser extends Parser
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
 		{
-			
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();
@@ -172,14 +162,14 @@ class ContentSecondParser extends Parser
 	 * 3 => multi line?, 4 => the code to highlight.
 	 * @return string the colored content
 	 */
-	function _callback_highlight_code($matches)
+	private function callbackhighlight_code($matches)
 	{
 		global $LANG;
 
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);
 
-		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
+		$contents = $this->highlight_code($matches[4], $matches[1], $line_number, $inline_code);
 
 		if (!$inline_code && !empty($matches[1]))
 		{
@@ -199,7 +189,7 @@ class ContentSecondParser extends Parser
 	 * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
 	 * @return string The code of the image containing the formula.
 	 */
-	function _math_code($matches)
+	private function math_code($matches)
 	{
 		$matches[1] = str_replace('<br />', '', $matches[1]);
 		$matches = mathfilter(html_entity_decode($matches[1]), 12);
@@ -210,14 +200,14 @@ class ContentSecondParser extends Parser
 	/**
 	 * Processes the media insertion it replaces the [[MEDIA]]tag[[/MEDIA]] by the Javascript API correspondig calls.
 	 */
-	function _process_media_insertion()
+	private function process_media_insertion()
 	{
 		//Swf
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_swf_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
 		//Movie
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_movie_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		//Sound
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_sound_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
 	}
 
 	/**
@@ -225,7 +215,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	function _process_swf_tag($matches)
+	private function process_swf_tag($matches)
 	{
 		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
@@ -244,7 +234,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	function _process_movie_tag($matches)
+	private function process_movie_tag($matches)
 	{
 		$id = 'movie_' . get_uid();
 		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
@@ -258,7 +248,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	function _process_sound_tag($matches)
+	private function process_sound_tag($matches)
 	{
 		//Balise son
 		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
