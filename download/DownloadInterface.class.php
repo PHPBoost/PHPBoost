@@ -118,10 +118,14 @@ class DownloadInterface extends ModuleInterface
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             d.id AS id_content,
             d.title AS title,
-            ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS relevance, "
+            ( 3 * FT_SEARCH(d.title, '" . $args['search'] . "') +
+            2 * FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "') +
+            FT_SEARCH_RELEVANCE(d.contents, '" . $args['search'] . "') ) / 6 * " . $weight . " AS relevance, "
             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
             FROM " . PREFIX . "download d
-            WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            WHERE ( FT_SEARCH(d.title, '" . $args['search'] . "') OR
+            FT_SEARCH(d.short_contents, '" . $args['search'] . "') OR
+            FT_SEARCH(d.contents, '" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, DOWNLOAD_MAX_SEARCH_RESULTS);
         
         return $request;

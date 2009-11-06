@@ -158,10 +158,10 @@ class MediaInterface extends ModuleInterface
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             f.id AS id_content,
             f.name AS title,
-            ( 2 * MATCH(f.name) AGAINST('" . $args['search'] . "') + MATCH(f.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+            ( 2 * FT_SEARCH_RELEVANCE(f.name, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(f.contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
             . $this->sql_querier->concat("'../media/media.php?id='","f.id","'&amp;cat='","f.idcat") . " AS link
             FROM " . PREFIX . "media f
-            WHERE ( MATCH(f.name) AGAINST('" . $args['search'] . "') OR MATCH(f.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            WHERE ( FT_SEARCH(f.name, '" . $args['search'] . "') OR FT_SEARCH(f.contents, '" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, MEDIA_MAX_SEARCH_RESULTS);
         
         return $request;

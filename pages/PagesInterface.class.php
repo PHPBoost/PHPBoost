@@ -117,11 +117,11 @@ class PagesInterface extends ModuleInterface
             $args['id_search']." AS `id_search`,
             p.id AS `id_content`,
             p.title AS `title`,
-            ( 2 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
+            ( 2 * FT_SEARCH_RELEVANCE(p.title, '".$args['search']."') + FT_SEARCH_RELEVANCE(p.contents, '".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
             CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
             p.auth AS `auth`
             FROM " . PREFIX . "pages p
-            WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
+            WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$auth_cats
             .$this->sql_querier->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
         $result = $this->sql_querier->query_while ($request, __LINE__, __FILE__);

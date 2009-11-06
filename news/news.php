@@ -75,15 +75,17 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 		// Suggestion de news.
 		$nbr_suggested = 0;
+		$news_content = addslashes($news['title']) . ', ' . addslashes(strip_tags($news['contents'])) . ', ' . addslashes(strip_tags($news['extend_contents']));
 		$result = $Sql->query_while("SELECT id, idcat, title, 
-		((2 * MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-		+ (MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-		+ MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) / 2) / 3) AS relevance
+		(2 * FT_SEARCH_RELEVANCE(title, '" . $news_content . "') 
+		+ FT_SEARCH_RELEVANCE(contents, '" . $news_content . "') 
+		+ FT_SEARCH_RELEVANCE(extend_contents, '" . $news_content . "') / 4) AS relevance
 		FROM " . DB_TABLE_NEWS . "
-		WHERE (MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-		OR MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
-		OR MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) 
-		AND id <> '" . $news['id'] . "'
+		WHERE (
+		FT_SEARCH(title, '" . $news_content . "') OR
+		FT_SEARCH(contents, '" . $news_content . "') OR
+		FT_SEARCH(extend_contents, '" . $news_content . "') 
+		) AND id <> '" . $news['id'] . "'
 		ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{

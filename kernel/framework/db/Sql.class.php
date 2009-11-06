@@ -486,7 +486,7 @@ class Sql
 		$concat_string = func_get_arg(0);
 		for ($i = 1; $i < $nbr_args; $i++)
 		{
-			$concat_string = '(' . $concat_string . ' || ' . func_get_arg($i) . ')';
+			$concat_string = '' . $concat_string . ' || ' . func_get_arg($i) . '';
 		}
 
 		return ' ' . $concat_string . ' ';
