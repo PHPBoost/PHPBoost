@@ -57,8 +57,8 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
 
 		//Extracting HTML and code tags
-		$this->unparse_html(PICK_UP);
-		$this->unparse_code(PICK_UP);
+		$this->unparse_html(Parser::PICK_UP);
+		$this->unparse_code(Parser::PICK_UP);
 
 		//Smilies
 		$this->unparse_smilies();
@@ -118,9 +118,9 @@ class TinyMCEUnparser extends ContentUnparser
     			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
     		}
 
-    		//Reimplanting html and code tags
-    		$this->unparse_code(REIMPLANT);
-    		$this->unparse_html(REIMPLANT);
+    		//reimplanting html and code tags
+    		$this->unparse_code(Parser::REIMPLANT);
+    		$this->unparse_html(Parser::REIMPLANT);
 	}
 
 	/**

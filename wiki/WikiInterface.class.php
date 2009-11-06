@@ -189,7 +189,7 @@ class WikiInterface extends ModuleInterface
 
 		WikiInterface::_build_wiki_cat_children($cats_tree, $results);
 		$feeds = new FeedsList();
-		$feeds->add_feed($cats_tree, DEFAULT_FEED_NAME);
+		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		return $feeds;
 	}
 

@@ -43,12 +43,12 @@ class ContentUnparser extends Parser
 
 	/**
 	* @desc Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it.
-	* @param bool $action PICK_UP if you want to pick up the html tag and REIMPLANT to reimplant it.
+	* @param bool $action Parser::PICK_UP if you want to pick up the html tag and Parser::REIMPLANT to reimplant it.
 	*/
 	protected function unparse_html($action)
 	{
 		//Prélèvement du HTML
-		if ($action == PICK_UP)
+		if ($action == Parser::PICK_UP)
 		{
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -106,12 +106,12 @@ class ContentUnparser extends Parser
 
 	/**
 	 * @desc Unparses the code tag. In a first time, you pick it up and you reimplant it.
-	 * @param bool $action PICK_UP to pick the code tag up, REIMPLANT to reinsert them.
+	 * @param bool $action Parser::PICK_UP to pick the code tag up, Parser::REIMPLANT to reinsert them.
 	 */
 	protected function unparse_code($action)
 	{
 		//Prélèvement du HTML
-		if ($action == PICK_UP)
+		if ($action == Parser::PICK_UP)
 		{
 			$mask = '`\[\[CODE(=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);

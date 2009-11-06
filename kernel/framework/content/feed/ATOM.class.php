@@ -25,13 +25,6 @@
  *
 ###################################################*/
 
-
-
-define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
-
-
-
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
@@ -41,17 +34,19 @@ define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
  */
 class ATOM extends Feed
 {
+	const DEFAULT_ATOM_TEMPLATE = 'framework/content/syndication/atom.tpl';
+	
     ## Public Methods ##
     /**
      * @desc Builds a new ATOM object
      * @param string $module_id its module_id
-     * @param string $feed_name the feeds name / type. default is DEFAULT_FEED_NAME
+     * @param string $feed_name the feeds name / type. default is Feed::DEFAULT_FEED_NAME
      * @param int $id_cat the feed category id
      */
-    function ATOM($module_id, $feed_name = DEFAULT_FEED_NAME, $id_cat = 0)
+    function ATOM($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
     {
         parent::Feed($module_id, $feed_name, $id_cat);
-        $this->tpl = new Template(DEFAULT_ATOM_TEMPLATE);
+        $this->tpl = new Template(self::DEFAULT_ATOM_TEMPLATE);
     }
 
     /**

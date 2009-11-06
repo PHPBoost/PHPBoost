@@ -288,7 +288,7 @@ class ContentParser extends Parser
 	}
 
 	/**
-	 * @desc Reimplants the code which has been picked up by the _pick_up method.
+	 * @desc reimplants the code which has been picked up by the _pick_up method.
 	 * @param $tag string tag to reimplant.
 	 * @return bool True if the reimplantation succed, otherwise false.
 	 */

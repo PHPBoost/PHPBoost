@@ -25,11 +25,6 @@
  *
 ###################################################*/
 
-define('DEFAULT_RSS_TEMPLATE', 'framework/content/syndication/rss.tpl');
-
-
-
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
@@ -39,17 +34,19 @@ define('DEFAULT_RSS_TEMPLATE', 'framework/content/syndication/rss.tpl');
  */
 class RSS extends Feed
 {
+	private static $default_rss_template = 'framework/content/syndication/rss.tpl';
+	
     ## Public Methods ##
     /**
      * @desc Builds a new RSS object
      * @param string $module_id its module_id
-     * @param string $feed_name the feeds name / type. default is DEFAULT_FEED_NAME
+     * @param string $feed_name the feeds name / type. default is Feed::DEFAULT_FEED_NAME
      * @param int $id_cat the feed category id
      */
-    function RSS($module_id, $feed_name = DEFAULT_FEED_NAME, $id_cat = 0)
+    function RSS($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
     {
         parent::Feed($module_id, $feed_name, $id_cat);
-        $this->tpl = new Template(DEFAULT_RSS_TEMPLATE);
+        $this->tpl = new Template(self::$default_rss_template);
     }
 
     /**

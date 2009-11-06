@@ -25,12 +25,6 @@
  *
 ###################################################*/
 
-
-
-
-
-define('FEED_DATA__CLASS', 'FeedData');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc Contains meta-informations about a feed with its entries
@@ -39,15 +33,13 @@ define('FEED_DATA__CLASS', 'FeedData');
  */
 class FeedData
 {
-    ## Public Methods ##
-    
     /**
      * @desc Builds a FeedData Object
      * @param FeedData $data an other FeedData object to clone
      */
     function FeedData($data = null)
     {
-		if ($data !== null && of_class($data, FEED_DATA__CLASS))
+		if ($data !== null && $data instanceof FeedData)
 		{
 			$this->title = $data->title;
 			$this->link = $data->link;

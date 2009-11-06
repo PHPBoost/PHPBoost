@@ -35,6 +35,11 @@
  */
 class BBCodeEditor extends ContentEditor
 {
+	/**
+	 * @var Usefull to know if we have to include all the necessary JS includes
+	 */
+	private static $editor_already_included = false;
+	
     function BBCodeEditor()
     {
         parent::ContentEditor();
@@ -58,7 +63,7 @@ class BBCodeEditor extends ContentEditor
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
-			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
+			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
@@ -204,9 +209,9 @@ class BBCodeEditor extends ContentEditor
             ));
         }
 
-        if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà includé.
+        if (!self::$editor_already_included)
         {
-            define('EDITOR_ALREADY_INCLUDED', true);
+        	self::$editor_already_included = true;
         }
 
         return $template->parse(Template::TEMPLATE_PARSER_STRING);
