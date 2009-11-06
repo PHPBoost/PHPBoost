@@ -421,7 +421,6 @@ if (!empty($id_get)) //Espace membre
 		{
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
-			
 			Uploads::Empty_folder_member($User->get_attribute('user_id')); //Suppression de tout les fichiers et dossiers du membre.
 
 			//On régénère le cache
@@ -469,31 +468,35 @@ if (!empty($id_get)) //Espace membre
 
 			//Gestion upload d'avatar.
 			$user_avatar = '';
-			$dir = '../images/avatars/';
-			
-			$Upload = new Upload($dir);
-			
 			if ($CONFIG_USER['activ_up_avatar'] == 1)
 			{
+				$dir = '../images/avatars/';
+				$Upload = new Upload($dir);
+			
 				$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-				if ($Upload->get_error() != '') //Erreur, on arrête ici
-					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
-				else
+				if ($Upload->get_size() > 0)
 				{
-					$path = $dir . $Upload->get_filename();
-					$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
-					if (!empty($error)) //Erreur, on arrête ici
-						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+					if ($Upload->get_error() != '') //Erreur, on arrête ici
+					{
+						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
+					}
 					else
 					{
-						//Suppression de l'ancien avatar (sur le serveur) si il existe!
-						$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-						if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
+						$path = $dir . $Upload->get_filename();
+						$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+						if (!empty($error)) //Erreur, on arrête ici
+							redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+						else
 						{
-							if (is_file($user_avatar_path) && isset($match[1]))
-								@unlink('../images/avatars/' . $match[1]);
+							//Suppression de l'ancien avatar (sur le serveur) si il existe!
+							$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+							if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
+							{
+								if (is_file($user_avatar_path) && isset($match[1]))
+									@unlink('../images/avatars/' . $match[1]);
+							}
+							$user_avatar = $path; //Avatar uploadé et validé
 						}
-						$user_avatar = $path; //Avatar uploadé et validé
 					}
 				}
 			}
@@ -501,7 +504,7 @@ if (!empty($id_get)) //Espace membre
 			if (!empty($_POST['avatar']))
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+				$error = Util::check_img_dimension($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
