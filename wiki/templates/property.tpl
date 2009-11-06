@@ -148,11 +148,11 @@
 
 		<script type="text/javascript">
 		<!--
-			var path = '{WIKI_PATH}';
+			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {move.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{WIKI_PATH}/images/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
 
 		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
@@ -174,7 +174,7 @@
 				<dl>
 					<dt><label>{L_SELECT_CAT}</label></dt>
 					<dd>
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{WIKI_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{move.CATS}
 					</dd>					
@@ -256,7 +256,7 @@
 					{redirect.list.REDIRECTION_NAME}
 				</td>
 				<td class="row2" style="text-align:center;">
-					<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{WIKI_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>
+					<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{PICTURES_DATA_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>
 				</td>
 			</tr>
 			# END redirect.list #
@@ -275,7 +275,7 @@
 					{L_CREATE_REDIRECTION}
 				</td>
 				<td class="row2" style="text-align:center;">
-					<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><img src="{WIKI_PATH}/images/create_redirection.png" alt="{L_CREATE_REDIRECTION}" /></a>
+					<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><img src="{PICTURES_DATA_PATH}/images/create_redirection.png" alt="{L_CREATE_REDIRECTION}" /></a>
 				</td>
 			</tr>
 		</table>
@@ -321,11 +321,11 @@
 		# START remove #
 		<script type="text/javascript">
 		<!--
-			var path = '{WIKI_PATH}';
+			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {remove.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{WIKI_PATH}/images/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
 
 		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
@@ -354,7 +354,7 @@
 				<dl>
 					<dt><label>{L_SELECT_CAT}</label></dt>
 					<dd>
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{WIKI_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
 					</dd>					

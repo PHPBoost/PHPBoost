@@ -269,9 +269,6 @@ class WikiInterface extends ModuleInterface
 			'wiki'=> 'wiki/wiki.tpl',
 			'index'=> 'wiki/index.tpl'
 			));
-			$Template->assign_vars(array(
-			'WIKI_PATH' => $Template->get_module_data_path('wiki')
-			));
 
 			if ($_WIKI_CONFIG['last_articles'] > 1)
 			{
@@ -336,7 +333,6 @@ class WikiInterface extends ModuleInterface
 			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 			'L_EXPLORER' => $LANG['wiki_explorer'],
 			'U_EXPLORER' => url('explorer.php'),
-			'WIKI_PATH' => $Template->get_module_data_path('wiki')
 			));
 
 			$page_type = 'index';

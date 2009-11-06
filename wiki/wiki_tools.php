@@ -33,9 +33,7 @@ $Template->set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
 $Template->assign_vars(array(
 	'L_CONTRIBUTION_TOOLS' => $LANG['wiki_contribution_tools'],
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
-	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
-$wiki_data_path = $Template->get_module_data_path('wiki');
 
 //Définition des images associés
 $action_pictures = array(
@@ -83,7 +81,9 @@ if ($page_type == 'article' || $page_type == 'cat')
 	$tools[$LANG['wiki_history']] = array(url('history.php?id=' . $id_article), 'history');
 	//Edition
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT)))
-	$tools[$LANG['update']] = array(url('post.php?id=' . $id_article), 'edit');
+	{
+		$tools[$LANG['update']] = array(url('post.php?id=' . $id_article), 'edit');
+	}
 	//Suppression
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)))
 	{
@@ -94,11 +94,15 @@ if ($page_type == 'article' || $page_type == 'cat')
 			$confirm[$LANG['delete']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_remove_article']) . '\');';
 		}
 		else
-		$tools[$LANG['delete']] = array(url('property.php?del=' . $id_article), 'delete');
+		{
+			$tools[$LANG['delete']] = array(url('property.php?del=' . $id_article), 'delete');
+		}
 	}
 	//Renommer
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)))
-	$tools[$LANG['wiki_rename']] = array(url('property.php?rename=' . $article_infos['id']), 'rename');
+	{
+		$tools[$LANG['wiki_rename']] = array(url('property.php?rename=' . $article_infos['id']), 'rename');
+	}
 	//Redirections
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth  || $User->check_auth($article_auth , WIKI_REDIRECT)))
 	{
@@ -106,13 +110,19 @@ if ($page_type == 'article' || $page_type == 'cat')
 	}
 	//Déplacement
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE)))
-	$tools[$LANG['wiki_move']] = array(url('property.php?move=' . $article_infos['id']), 'move');
+	{
+		$tools[$LANG['wiki_move']] = array(url('property.php?move=' . $article_infos['id']), 'move');
+	}
 	if ($page_type == 'cat')
 	{
 		if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE)) && ($general_auth || $User->check_auth($article_auth , WIKI_CREATE_ARTICLE)))//Création d'un article
-		$tools[$LANG['wiki_add_article']] = array(url('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), 'add_article');
+		{
+			$tools[$LANG['wiki_add_article']] = array(url('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), 'add_article');
+		}
 		if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT)) && ($general_auth || $User->check_auth($article_auth , WIKI_CREATE_CAT)))//Création d'une catégorie
-		$tools[$page_type == 'cat' ? $LANG['wiki_add_cat'] : $LANG['wiki_create_cat']] = array(url('post.php?type=cat&amp;id_parent=' . $id_cat), 'create_cat');
+		{
+			$tools[$page_type == 'cat' ? $LANG['wiki_add_cat'] : $LANG['wiki_create_cat']] = array(url('post.php?type=cat&amp;id_parent=' . $id_cat), 'create_cat');
+		}
 	}
 	//Statut de l'article
 	if ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)))
@@ -133,7 +143,9 @@ elseif ($page_type == 'index')
 	$tools = array();
 	$tools[$LANG['wiki_history']] = array(url('history.php'), 'history');
 	if ($User->check_level(ADMIN_LEVEL))
-	$tools[$LANG['wiki_update_index']] = array(url('admin_wiki.php#index'), 'edit_index');
+	{
+		$tools[$LANG['wiki_update_index']] = array(url('admin_wiki.php#index'), 'edit_index');
+	}
 }
 
 $other_tools = array();
@@ -160,25 +172,33 @@ if ($User->check_level(MEMBER_LEVEL))
 			$confirm_others[$LANG['wiki_unwatch_this_topic']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');';
 		}
 		else
-		$other_tools[$LANG['wiki_watch']] = array(url('favorites.php?add=' . $id_article), 'follow-article');
+		{
+			$other_tools[$LANG['wiki_watch']] = array(url('favorites.php?add=' . $id_article), 'follow-article');
+		}
 	}
 }
 //Discussion
 if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)))
-$Template->assign_vars(array(
+{
+	$Template->assign_vars(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')
-));
+	));
+}
 
 //Explorateur du wiki
 $other_tools[$LANG['wiki_explorer_short']] = array(url('explorer.php'), 'explorer');
 
 //Flux RSS du wiki
 if ($page_type == 'index')
-    $other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki'), 'rss');
+{
+	$other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki'), 'rss');
+}
 if ($page_type == 'cat')
-    $other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki&amp;cat=' . $article_infos['id_cat']), 'rss');
+{
+	$other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki&amp;cat=' . $article_infos['id_cat']), 'rss');
+}
 //On parse
 if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
 {
@@ -190,7 +210,7 @@ if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
 			'L_TOOL' => $key
 		));
 		$Template->assign_block_vars('contribution_tools', array(
-			'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
+			'DM_A_CLASS' => $action_pictures[$value[1]],
 			'U_ACTION' => '../wiki/'.$value[0],
 			'L_ACTION' => $key,
 			'ONCLICK' => (array_key_exists($key, $confirm)) ? $confirm[$key] : ''
@@ -207,10 +227,12 @@ foreach ($other_tools as $key => $value)
 		'L_TOOL' => $key
 	));
 	if ($i < $nbr_values && !empty($key))
-	$Template->assign_block_vars('tool.separation', array());
+	{
+		$Template->assign_block_vars('tool.separation', array());
+	}
 
 	$Template->assign_block_vars('other_tools', array(
-		'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
+		'DM_A_CLASS' => $action_pictures[$value[1]],
 		'U_ACTION' => '../wiki/'.$value[0],
 		'L_ACTION' => $key,
 		'ONCLICK' => (array_key_exists($key, $confirm_others)) ? $confirm_others[$key] : ''

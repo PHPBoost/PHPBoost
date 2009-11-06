@@ -160,10 +160,6 @@ if (!empty($contents)) //On enregistre un article
 
 //On propose le formulaire
 $Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
-$module_data_path = $module_data_path;
-$Template->assign_vars(array(
-	'WIKI_PATH' => $module_data_path
-));
 
 if ($id_edit > 0)//On édite
 {
@@ -267,7 +263,7 @@ else
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new ContentFormattingFactory(BBCODE_LANGUAGE);
+$content_editor = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 

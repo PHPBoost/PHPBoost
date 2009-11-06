@@ -125,9 +125,6 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
 $Template->set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
-$Template->assign_vars(array(
-	'WIKI_PATH' => $Template->get_module_data_path('wiki')
-));
 
 if ($random)//Recherche d'une page aléatoire
 {
@@ -366,7 +363,7 @@ else
 	redirect('/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new ContentFormattingFactory(BBCODE_LANGUAGE);
+$content_editor = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	
