@@ -106,10 +106,11 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * Tells whether the interaction between members is enabled or not.
+	 * @return bool if it's enabled, false otherwise
 	 */
 	public function are_user_accounts_enabled()
 	{
-		return $this->get_property(USER_ACCOUNTS_ENABLED_PROPERTY);
+		return $this->get_property(self::USER_ACCOUNTS_ENABLED_PROPERTY);
 	}
 
 	/**
@@ -117,7 +118,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function enable_user_accounts()
 	{
-		$this->set_property(USER_ACCOUNTS_ENABLED_PROPERTY, true);
+		$this->set_property(self::USER_ACCOUNTS_ENABLED_PROPERTY, true);
 	}
 
 	/**
@@ -125,7 +126,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_user_accounts()
 	{
-		$this->set_property(USER_ACCOUNTS_ENABLED_PROPERTY, false);
+		$this->set_property(self::USER_ACCOUNTS_ENABLED_PROPERTY, false);
 	}
 
 	/**
@@ -134,7 +135,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_welcome_message()
 	{
-		return $this->get_property(WELCOME_MESSAGE_PROPERTY);
+		return $this->get_property(self::WELCOME_MESSAGE_PROPERTY);
 	}
 
 	/**
@@ -143,7 +144,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_welcome_message($message)
 	{
-		$this->set_property(WELCOME_MESSAGE_PROPERTY, $message);
+		$this->set_property(self::WELCOME_MESSAGE_PROPERTY, $message);
 	}
 
 	/**
@@ -152,7 +153,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function is_registration_enabled()
 	{
-		return $this->get_property(REGISTRATION_ENABLED_PROPERTY);
+		return $this->get_property(self::REGISTRATION_ENABLED_PROPERTY);
 	}
 
 	/**
@@ -160,7 +161,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function enable_registration()
 	{
-		$this->set_property(REGISTRATION_ENABLED_PROPERTY, true);
+		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, true);
 	}
 
 	/**
@@ -168,7 +169,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_registration()
 	{
-		$this->set_property(REGISTRATION_ENABLED_PROPERTY, false);
+		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, false);
 	}
 
 	/**
@@ -177,7 +178,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_registration_agreement()
 	{
-		return $this->get_property(REGISTRATION_AGREEMENT_PROPERTY);
+		return $this->get_property(self::REGISTRATION_AGREEMENT_PROPERTY);
 	}
 
 	/**
@@ -186,7 +187,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_registration_agreement($agreement)
 	{
-		$this->set_property(REGISTRATION_AGREEMENT_PROPERTY, $agreement);
+		$this->set_property(self::REGISTRATION_AGREEMENT_PROPERTY, $agreement);
 	}
 
 	/**
@@ -195,7 +196,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function is_registration_captcha_enabled()
 	{
-		return $this->get_property(REGISTRATION_CAPTCHA_ENABLED_PROPERTY);
+		return $this->get_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY);
 	}
 
 	/**
@@ -203,7 +204,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function enable_registration_captcha()
 	{
-		$this->set_property(REGISTRATION_CAPTCHA_ENABLED_PROPERTY, true);
+		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, true);
 	}
 
 	/**
@@ -211,7 +212,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_registration_captcha()
 	{
-		$this->set_property(REGISTRATION_CAPTCHA_ENABLED_PROPERTY, false);
+		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, false);
 	}
 
 	/**
@@ -220,7 +221,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_registration_captcha_difficulty()
 	{
-		return $this->get_property(REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY);
+		return $this->get_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY);
 	}
 
 	/**
@@ -229,16 +230,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_registration_captcha_difficulty($level)
 	{
-		$this->set_property(REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY, $level);
-	}
-
-	/**
-	 * Returns the delay after which unactivated member accounts will be automatically removed
-	 * @return The duration (in days)
-	 */
-	public function get_unactivated_accounts_timeout()
-	{
-		return $this->get_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
+		$this->set_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY, $level);
 	}
 
 	/**
@@ -247,7 +239,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function is_users_theme_forced()
 	{
-		return $this->get_property(FORCE_USERS_THEME_PROPERTY);
+		return $this->get_property(self::FORCE_USERS_THEME_PROPERTY);
 	}
 
 	/**
@@ -255,7 +247,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function force_users_theme()
 	{
-		$this->set_property(FORCE_USERS_THEME_PROPERTY, true);
+		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, true);
 	}
 
 	/**
@@ -263,7 +255,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function do_not_force_users_theme()
 	{
-		$this->set_property(FORCE_USERS_THEME_PROPERTY, false);
+		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, false);
 	}
 
 	/**
@@ -272,7 +264,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function is_avatar_upload_enabled()
 	{
-		return $this->get_property(ENABLE_AVATAR_UPLOAD_PROPERTY);
+		return $this->get_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY);
 	}
 
 	/**
@@ -280,7 +272,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function enable_avatar_upload()
 	{
-		$this->set_property(ENABLE_AVATAR_UPLOAD_PROPERTY, true);
+		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, true);
 	}
 
 	/**
@@ -288,7 +280,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_avatar_upload()
 	{
-		$this->set_property(ENABLE_AVATAR_UPLOAD_PROPERTY, false);
+		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, false);
 	}
 
 	/**
@@ -297,7 +289,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_unactivated_accounts_timeout()
 	{
-		$this->get_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
+		$this->get_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
 	}
 
 	/**
@@ -306,7 +298,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_unactivated_accounts_timeout($duration)
 	{
-		$this->set_property(UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY, $duration);
+		$this->set_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY, $duration);
 	}
 
 	/**
@@ -315,7 +307,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function is_default_avatar_enabled()
 	{
-		return $this->get_property(DEFAULT_AVATAR_ENABLED_PROPERTY);
+		return $this->get_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY);
 	}
 
 	/**
@@ -323,7 +315,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function enable_default_avatar()
 	{
-		$this->set_property(DEFAULT_AVATAR_ENABLED_PROPERTY, true);
+		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, true);
 	}
 
 	/**
@@ -331,7 +323,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_default_avatar()
 	{
-		$this->set_property(DEFAULT_AVATAR_ENABLED_PROPERTY, false);
+		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, false);
 	}
 
 	/**
@@ -340,7 +332,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_default_avatar_url()
 	{
-		return $this->get_property(DEFAULT_AVATAR_URL_PROPERTY);
+		return $this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
 
 	/**
@@ -349,7 +341,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_default_avatar_url($url)
 	{
-		$this->set_property(DEFAULT_AVATAR_URL_PROPERTY, $url);
+		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
 	}
 
 	/**
@@ -358,7 +350,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_max_avatar_width()
 	{
-		return $this->get_property(MAX_AVATAR_WIDTH_PROPERTY);
+		return $this->get_property(self::MAX_AVATAR_WIDTH_PROPERTY);
 	}
 
 	/**
@@ -367,7 +359,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_max_avatar_width($width)
 	{
-		$this->set_property(MAX_AVATAR_WIDTH_PROPERTY, $width);
+		$this->set_property(self::MAX_AVATAR_WIDTH_PROPERTY, $width);
 	}
 
 	/**
@@ -376,7 +368,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_max_avatar_height()
 	{
-		return $this->get_property(MAX_AVATAR_HEIGHT_PROPERTY);
+		return $this->get_property(self::MAX_AVATAR_HEIGHT_PROPERTY);
 	}
 
 	/**
@@ -385,7 +377,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_max_avatar_height($height)
 	{
-		$this->set_property(MAX_AVATAR_HEIGHT_PROPERTY, $height);
+		$this->set_property(self::MAX_AVATAR_HEIGHT_PROPERTY, $height);
 	}
 
 	/**
@@ -394,7 +386,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_max_avatar_weight()
 	{
-		return $this->get_property(MAX_AVATAR_WEIGHT_PROPERTY);
+		return $this->get_property(self::MAX_AVATAR_WEIGHT_PROPERTY);
 	}
 
 	/**
@@ -403,7 +395,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_max_avatar_weight($weight)
 	{
-		$this->set_property(MAX_AVATAR_WEIGHT_PROPERTY, $weight);
+		$this->set_property(self::MAX_AVATAR_WEIGHT_PROPERTY, $weight);
 	}
 
 	/**
@@ -413,7 +405,7 @@ class UserAccountsConfig extends DefaultConfigData
 	public function set_default_values()
 	{
 		global $LANG;
-		
+
 		$this->enable_user_accounts();
 		$this->enable_registration();
 		$this->set_welcome_message($LANG['site_config_msg_mbr']);
