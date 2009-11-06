@@ -122,7 +122,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $THEME_CONFIG;
+		global $THEME_CONFIG, $MENUS;
 
 		//Inclusion des blocs
 		

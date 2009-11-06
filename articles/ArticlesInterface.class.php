@@ -118,13 +118,13 @@ class ArticlesInterface extends ModuleInterface
 				" . $args['id_search'] . " AS id_search,
 	             a.id AS id_content,
 	             a.title AS title,
-	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+	             ( 2 * FT_SEARCH_RELEVANCE(a.title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(a.contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
 	             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
 				FROM " . PREFIX . "articles a
 				LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
 				WHERE
 					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
-					AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
+					AND (FT_SEARCH(a.title, '" . $args['search'] . "') OR FT_SEARCH(a.contents, '" . $args['search'] . "'))
 				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
 	             return $request;

@@ -193,7 +193,7 @@ class ForumInterface extends ModuleInterface
 	 *  Renvoie la requête de recherche dans le forum
 	 */
 	{
-		global $CONFIG, $CAT_FORUM, $User;
+		global $CONFIG, $CAT_FORUM, $User, $Cache;
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		$Cache->load('forum');
 
@@ -220,12 +220,12 @@ class ForumInterface extends ModuleInterface
 		$args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(( 2 * MATCH(t.title) AGAINST('" . $search."') + MATCH(msg.contents) AGAINST('" . $search."') ) / 3) * " . $weight . " AS `relevance`,
+                MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS `relevance`,
                 " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE ( MATCH(t.title) AGAINST('" . $search."') OR MATCH(msg.contents) AGAINST('" . $search."') )
+            WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') )
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
@@ -235,12 +235,12 @@ class ForumInterface extends ModuleInterface
 		$args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(MATCH(msg.contents) AGAINST('" . $search."')) * " . $weight . " AS `relevance`,
+                MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS `relevance`,
                 " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE MATCH(msg.contents) AGAINST('" . $search."')
+            WHERE FT_SEARCH(msg.contents, '" . $search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
@@ -249,12 +249,12 @@ class ForumInterface extends ModuleInterface
 		$args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,
                 t.title AS `title`,
-                MATCH(t.title) AGAINST('" . $search."') * " . $weight . " AS `relevance`,
+                FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS `relevance`,
                 " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE MATCH(t.title) AGAINST('" . $search."')
+            WHERE FT_SEARCH(t.title, '" . $search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);

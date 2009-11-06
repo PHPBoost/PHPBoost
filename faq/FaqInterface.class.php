@@ -107,10 +107,10 @@ class FaqInterface extends ModuleInterface
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             f.id AS id_content,
             f.question AS title,
-            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+            ( 2 * FT_SEARCH_RELEVANCE(f.question, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(f.answer, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
             . $this->sql_querier->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS link
             FROM " . PREFIX . "faq f
-            WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            WHERE ( FT_SEARCH(f.question, '" . $args['search'] . "') OR FT_SEARCH(f.answer, '" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;

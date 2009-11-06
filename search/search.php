@@ -197,7 +197,9 @@ if (!empty($search))
     
     $all_html_result = '';
     if ( $nbResults > 0 )
-        get_html_results($results, $all_html_result, $search_in);
+    {
+    	get_html_results($results, $all_html_result, $search_in);
+    }
     
     $Template->assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,

@@ -41,7 +41,7 @@ class ErrorViewBuilder
 
 	public function build($level = null, $title = null, $code = null, $message = null,
 	$correction_link = null, $correction_link_name = null, $exception = null)
-	{
+	{	
 		$this->init_view();
 
 		$this->view->assign_vars(array(

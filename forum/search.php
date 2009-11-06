@@ -124,37 +124,38 @@ if (!empty($valid_search) && !empty($search))
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
-		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
+		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
-		WHERE MATCH(msg.contents) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
+		WHERE FT_SEARCH(msg.contents, '" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY msg.id
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 
-		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
+		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
-		WHERE MATCH(t.title) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
+		WHERE FT_SEARCH(t.title, '" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 		
-		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
+		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
+		FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
-		WHERE (MATCH(t.title) AGAINST('" . $search . "') OR MATCH(msg.contents) AGAINST('" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
+		WHERE (FT_SEARCH(t.title, '" . $search . "') OR FT_SEARCHmsg.contents, '" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC

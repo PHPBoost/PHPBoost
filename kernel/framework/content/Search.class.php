@@ -286,7 +286,6 @@ class Search
     function insert_results(&$requestAndResults)
     {
         global $Sql;
-        
         $nbReqSEARCH = 0;
         $reqSEARCH = "";
         $results = array();

@@ -98,10 +98,12 @@ class NewsInterface extends ModuleInterface
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             n.id AS id_content,
             n.title AS title,
-            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
+            ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
+            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
             FROM " . DB_TABLE_NEWS . " n
-            WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
+            WHERE ( FT_SEARCH(n.title, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
+            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "') )
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
             ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
 

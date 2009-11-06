@@ -67,7 +67,6 @@ class ErrorController implements Controller
 
 	protected function load_env()
 	{
-		
 		$this->lang = LangLoader::get('ErrorViewBuilder');
 		$this->view->add_lang($this->lang);
 		$this->set_response(new SiteDisplayResponse($this->view));
@@ -87,19 +86,17 @@ class ErrorController implements Controller
 
 	private function create_view(HTTPRequest $request)
 	{
-		
-		$view_builder = new ErrorViewBuilder($request);
 
+		$view_builder = new ErrorViewBuilder();
 		$exception = null;
 		try
 		{
-			$exception = $request->get_value(self::EXCEPTION);
+		$exception = $request->get_value(self::EXCEPTION);
 		}
 		catch (UnexistingHTTPParameterException $exception)
 		{
 			Debug::fatal($exception);
 		}
-
 		$this->view = $view_builder->build($request->get_int(self::LEVEL, E_UNKNOWN),
 		$request->get_string(self::TITLE, ''), $request->get_string(self::CODE, ''),
 		$request->get_string(self::MESSAGE, ''), $request->get_string(self::CORRECTION_LINK, ''),

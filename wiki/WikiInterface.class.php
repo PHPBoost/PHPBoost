@@ -113,30 +113,31 @@ class WikiInterface extends ModuleInterface
 		$args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
-                ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
+                ( 4 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."') +
+                FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM " . PREFIX . "wiki_articles a
                 LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-                WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )";
+                WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR MATCH(c.content, '".$args['search']."') )";
 		if ( $args['WikiWhere'] == 'contents' )
 		$req = "SELECT ".
 		$args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
-                MATCH(c.content) AGAINST('".$args['search']."') * " . $weight . " AS `relevance`,
+                FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM " . PREFIX . "wiki_articles a
                 LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-                WHERE MATCH(c.content) AGAINST('".$args['search']."')";
+                WHERE FT_SEARCH(c.content, '".$args['search']."')";
 		else
 		$req = "SELECT ".
 		$args['id_search']." AS `id_search`,
                 `id` AS `id_content`,
                 `title` AS `title`,
-                ((MATCH(title) AGAINST('".$args['search']."') )* " . $weight . ") AS `relevance`,
+                ((FT_SEARCH_RELEVANCE(title, '".$args['search']."') )* " . $weight . ") AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM " . PREFIX . "wiki_articles
-                WHERE MATCH(title) AGAINST('".$args['search']."')";
+                WHERE FT_SEARCH(title, '".$args['search']."')";
 
 		return $req;
 	}
