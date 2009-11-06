@@ -44,7 +44,7 @@ function menu_admin_link(&$menu, $mode)
     switch ($mode)
     {
         case 'edit':
-            if (of_class($menu, LINKS_MENU__CLASS))
+            if (of_class($menu, LinksMenu::LINKS_MENU__CLASS))
                 $link = 'links.php?';
             elseif (of_class($menu, CONTENT_MENU__CLASS))
                 $link = 'content.php?';
@@ -54,7 +54,7 @@ function menu_admin_link(&$menu, $mode)
                 $link = 'auth.php?';
             break;
         case 'delete':
-            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS) || of_class($menu, FEED_MENU__CLASS))
+            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, FEED_MENU__CLASS))
                 $link = 'menus.php?action=delete&amp;';
             else
             	return '';

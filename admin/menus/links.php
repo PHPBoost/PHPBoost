@@ -234,7 +234,7 @@ if ($menu_id > 0)
 {
 	$menu = MenuService::load($menu_id);
 	
-    if (!of_class($menu, LINKS_MENU__CLASS))
+    if (!of_class($menu, LinksMenu::LINKS_MENU__CLASS))
         redirect('menus.php');
 	
 	$block = $menu->get_block();
