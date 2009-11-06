@@ -25,15 +25,6 @@
  *
  ###################################################*/
 
-
-
-//Couleurs pour la coloration du BBCode
-define('TPL_BRACES_STYLE', 'color:#7F3300;');
-define('TPL_VARIABLE_STYLE', 'color:#FF6600; font-weight: bold;');
-define('TPL_NESTED_VARIABLE_STYLE', 'color:#8F5211;');
-define('TPL_SHARP_STYLE', 'color:#9915AF; font-weight: bold;');
-define('TPL_KEYWORD_STYLE', 'color:#000066; font-weight: bold;');
-
 /**
  * @package content
  * @subpackage parser
@@ -42,32 +33,37 @@ define('TPL_KEYWORD_STYLE', 'color:#000066; font-weight: bold;');
  */
 class TemplateHighlighter extends Parser
 {
-	######## Public #######
+	const TPL_BRACES_STYLE = 'color:#7F3300;';
+	const TPL_VARIABLE_STYLE = 'color:#FF6600; font-weight: bold;';
+	const TPL_NESTED_VARIABLE_STYLE = 'color:#8F5211;';
+	const TPL_SHARP_STYLE = 'color:#9915AF; font-weight: bold;';
+	const TPL_KEYWORD_STYLE = 'color:#000066; font-weight: bold;';
+	
 	/**
-	 * @desc Build a TemplateHighlighter object. 
+	 * @desc Build a TemplateHighlighter object.
 	 */
-	function TemplateHighlighter()
+	public function __construct()
 	{
-		parent::Parser();
+		parent::__construct();
 	}
 
 	/**
-	 * @desc Highlights the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax. 
+	 * @desc Highlights the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax.
 	 * @param int $line_number GESHI_NO_LINE_NUMBERS => no line numbers, GESHI_NORMAL_LINE_NUMBERS line numbers.
 	 * @param bool $inline_code true if it's a sigle line code, otherwise false.
 	 */
-	function parse($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
+	public function parse($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-		
+
 		$geshi = new GeSHi($this->content, 'html');
-				
+
 		if ($line_number) //Affichage des numéros de lignes.
 		{
 			$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
 		}
-		
+
 		//GeSHi must not put any div or pre tag before and after the content
 		if ($inline_code)
 		{
@@ -75,27 +71,27 @@ class TemplateHighlighter extends Parser
 		}
 
 		$this->content = $geshi->parse_code();
-		
+
 		//Now we highlight the specific syntax of PHPBoost templates
-		
+
 		//Conditionnal block
-		$this->content = preg_replace('`# IF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		$this->content = preg_replace('`# ELSEIF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		$this->content = str_replace('# ELSE #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSE</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		$this->content = str_replace('# ENDIF #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ENDIF</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		
+		$this->content = preg_replace('`# IF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# ELSEIF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = str_replace('# ELSE #', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ELSE</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = str_replace('# ENDIF #', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ENDIF</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+
 		//Loops
-		$this->content = preg_replace('`# START ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">START</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		$this->content = preg_replace('`# END ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">END</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		
+		$this->content = preg_replace('`# START ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">START</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_VARIABLE_STYLE . '">$2</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# END ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">END</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_VARIABLE_STYLE . '">$2</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+
 		//Inclusions
-		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">INCLUDE </span> <span style="' . TPL_VARIABLE_STYLE . '">$1</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
-		
+		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">INCLUDE </span> <span style="' . self::TPL_VARIABLE_STYLE . '">$1</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+
 		//Simple variable
-		$this->content = preg_replace('`{([\w]+)}`i', '<span style="' . TPL_BRACES_STYLE . '">{</span><span style="' . TPL_VARIABLE_STYLE . '">$1</span><span style="' . TPL_BRACES_STYLE . '">}</span>', $this->content);
+		$this->content = preg_replace('`{([\w]+)}`i', '<span style="' . self::TPL_BRACES_STYLE . '">{</span><span style="' . self::TPL_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_BRACES_STYLE . '">}</span>', $this->content);
 		//Loop variable
-		$this->content = preg_replace('`{((?:[\w]+\.)+)([\w]+)}`i', '<span style="' . TPL_BRACES_STYLE . '">{</span><span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span><span style="' . TPL_BRACES_STYLE . '">}</span>', $this->content);
-		
+		$this->content = preg_replace('`{((?:[\w]+\.)+)([\w]+)}`i', '<span style="' . self::TPL_BRACES_STYLE . '">{</span><span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_BRACES_STYLE . '">}</span>', $this->content);
+
 		if ($inline_code)
 		{
 			$this->content = '<pre style="display:inline; font-color:courier new;">' . $this->content . '</pre>';

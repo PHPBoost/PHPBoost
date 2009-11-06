@@ -25,22 +25,6 @@
  *
  ###################################################*/
 
-
-
-//Colors of each language elements
-//For a BBCode tag
-define('BBCODE_TAG_COLOR', '#0000FF');
-//For a BBCode tag parameter (value)
-define('BBCODE_PARAM_COLOR', '#7B00FF');
-//For a BBCode param name
-define('BBCODE_PARAM_NAME_COLOR', '#FF0000');
-//For the BBCode list tag
-define('BBCODE_LIST_ITEM_COLOR', '#00AF07');
-
-//Inline or block code (HTML context)
-define('BBCODE_HIGHLIGHTER_INLINE_CODE', true);
-define('BBCODE_HIGHLIGHTER_BLOCK_CODE', false);
-
 /**
  * @package content
  * @subpackage parser
@@ -50,30 +34,48 @@ define('BBCODE_HIGHLIGHTER_BLOCK_CODE', false);
  */
 class BBCodeHighlighter extends Parser
 {
-	######## Public #######
+	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
+	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;
+	/**
+	 * @var string color of a bbcode tag
+	 */
+	private static $bbcode_tag_color = '#0000FF';
+	/**
+	 * @var string Color of a bbcode param
+	 */
+	private static $bbcode_param_color = '#7B00FF';
+	/**
+	 * @var string Color of a bbcode param name
+	 */
+	private static $bbcode_param_name_color = '#FF0000';
+	/**
+	 * @var string Color of the list tag
+	 */
+	private static $bbcode_list_item_color = '#00AF07';
+
 	/**
 	 * @desc Builds a BBCodeHighlighter objet
 	 */
-	function BBCodeHighlighter()
+	public function __construct()
 	{
 		//We call the parent constructor
-		parent::Parser();
+		parent::__construct();
 	}
-	
+
 	/**
 	 * @desc Highlights the content of the parser.
 	 * @param bool $inline_code If you want that the code make a new HTML paragraph, use BBCODE_HIGHLIGHTER_BLOCK_CODE
 	 * (default parameter) and if you want that it would be integrated in a line, use BBCODE_HIGHLIGHTER_INLINE_CODE
 	 * @return void You can get the result by calling the get_content method
 	 */
-	function parse($inline_code = BBCODE_HIGHLIGHTER_BLOCK_CODE)
-	{		
+	public function parse($inline_code = self::BBCODE_HIGHLIGHTER_BLOCK_CODE)
+	{
 		//Protection of html code
 		$this->content = htmlspecialchars($this->content);
 
 		//Line tag
-		$this->content = str_replace('[line]', '<span style="color:' . BBCODE_TAG_COLOR . ';">[line]</span>', $this->content);
-		$this->content = str_replace('[*]', '<span style="color:' . BBCODE_LIST_ITEM_COLOR . ';">[*]</span>', $this->content);
+		$this->content = str_replace('[line]', '<span style="color:' . self::$bbcode_tag_color . ';">[line]</span>', $this->content);
+		$this->content = str_replace('[*]', '<span style="color:' . self::$bbcode_list_item_color . ';">[*]</span>', $this->content);
 
 		//Simple tags (whitout parameter)
 		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail');
@@ -82,7 +84,7 @@ class BBCodeHighlighter extends Parser
 		{
 			while (preg_match('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">/[/' . $tag . '/]/</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">/[//' . $tag . '/]/</span>', $this->content);
+				$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '/]/</span>$1<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
 			}
 		}
 
@@ -93,7 +95,7 @@ class BBCodeHighlighter extends Parser
 		{
 			while (preg_match('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">/[/' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">/]/</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">/[//' . $tag . '/]/</span>', $this->content);
+				$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '</span>=<span style="color:' . self::$bbcode_param_color . ';">$1</span><span style="color:' . self::$bbcode_tag_color . ';">/]/</span>$2<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
 			}
 		}
 
@@ -104,11 +106,11 @@ class BBCodeHighlighter extends Parser
 		{
 			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array(&$this, '_highlight_bbcode_tag_with_many_parameters'), $this->content);
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array(&$this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
 			}
 		}
-		
-		if (!$inline_code)
+
+		if ($inline_code == self::BBCODE_HIGHLIGHTER_BLOCK_CODE)
 		{
 			$this->content = '<pre>' . $this->content . '</pre>';
 		}
@@ -116,25 +118,24 @@ class BBCodeHighlighter extends Parser
 		{
 			$this->content = '<pre style="display:inline;">' . $this->content . '</pre>';
 		}
-		
-		//Te be able to handle the nested tags, we replaced [ by /[/, we do the reverse replacement now		
+
+		//Te be able to handle the nested tags, we replaced [ by /[/, we do the reverse replacement now
 		$this->content = str_replace(array('/[/', '/]/'), array('[', ']'), $this->content);
 	}
 
-	## Private ##
 	/**
 	 * @desc Callback which highlights the parameters of a complex tag
-	 * @param string[] $matches elements matched by the regular expression 
+	 * @param string[] $matches elements matched by the regular expression
 	 * @return string The complex tag highlighted
 	 */
-	function _highlight_bbcode_tag_with_many_parameters($matches)
+	private function highlight_bbcode_tag_with_many_parameters($matches)
 	{
 		$content = $matches[3];
 		$tag_name = $matches[1];
 
-		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . BBCODE_PARAM_NAME_COLOR . '">$1</span>=<span style="color:' . BBCODE_PARAM_COLOR . '">"$2"</span>', $matches[2]);
+		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . self::$bbcode_param_name_color . '">$1</span>=<span style="color:' . self::$bbcode_param_color . '">"$2"</span>', $matches[2]);
 
-		return '<span style="color:' . BBCODE_TAG_COLOR . '">/[/' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . BBCODE_TAG_COLOR . '">/]/</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">/[//' . $tag_name . '/]/</span>';
+		return '<span style="color:' . self::$bbcode_tag_color . '">/[/' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . self::$bbcode_tag_color . '">/]/</span>' . $content . '<span style="color:' . self::$bbcode_tag_color . '">/[//' . $tag_name . '/]/</span>';
 	}
 }
 ?>

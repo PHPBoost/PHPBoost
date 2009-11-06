@@ -41,11 +41,28 @@ define('REIMPLANT', false);
  */
 class Parser
 {
-	######## Public #######
+	/**
+	 * @var string Content of the parser
+	 */
+	protected $content = '';
+	/**
+	 * @var string[] List of the tags which have been picked up by the parser
+	 */
+	protected $array_tags = array();
+	/**
+	 * @var string Path to root of the page in which has been written the content to parse.
+	 */
+	protected $path_to_root = PATH_TO_ROOT;
+	
+	/**
+	 * @var string Path of the page in which has been written the content to parse.
+	 */
+	protected $page_path = '';
+	
 	/**
 	 * @desc Builds a Parser object. 
 	 */
-	function Parser()
+	public function __construct()
 	{
 		$this->content = '';
 		$this->page_path = $_SERVER['PHP_SELF'];
@@ -57,7 +74,7 @@ class Parser
 	 * (you often save a parsed content into the database when you parse it), otherwise DO_NOT_ADD_SLASHES.
 	 * @return string The content of the parser.
 	 */
-	function get_content($addslashes = ADD_SLASHES)
+	public function get_content($addslashes = ADD_SLASHES)
 	{
 		if ($addslashes)
 		{
@@ -75,7 +92,7 @@ class Parser
 	 * @param bool $stripslashes PARSER_DO_NOT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser, 
 	 * otherwise PARSER_STRIP_SLASHES.
 	 */
-	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
+	public function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
 		if ($stripslashes)
 		{
@@ -91,7 +108,7 @@ class Parser
 	 * Sets the reference path for relative URL
 	 * @param string $path Path 
 	 */
-	function set_path_to_root($path)
+	public function set_path_to_root($path)
 	{
 		$this->path_to_root = $path;	
 	}
@@ -100,7 +117,7 @@ class Parser
 	 * Returns the path to root attribute.
 	 * @return string The path
 	 */
-	function get_path_to_root()
+	public function get_path_to_root()
 	{
 		return $this->path_to_root;
 	}
@@ -109,7 +126,7 @@ class Parser
 	 * Sets the page path
 	 * @param string $page_path Page path
 	 */
-	function set_page_path($page_path)
+	public function set_page_path($page_path)
 	{
 		$this->page_path = $page_path;
 	}
@@ -118,44 +135,25 @@ class Parser
 	 * Returns the page path
 	 * @return string path
 	 */
-	function get_page_path()
+	public function get_page_path()
 	{
 		return $this->page_path;
 	}
 		
-	####### Protected #######
-	/**
-	 * @var string Content of the parser
-	 */
-	var $content = '';
-	/**
-	 * @static
-	 * @var string[] List of the tags which have been picked up by the parser
-	 */
-	var $array_tags = array();
-	
 	/**
 	 * @desc Parses a nested tag
 	 * @param string $match The regular expression which matches the tag to replace
 	 * @param string $regex The regular expression which matches the replacement
 	 * @param string $replace The replacement syntax.
 	 */
-	function _parse_imbricated($match, $regex, $replace)
+	protected function _parse_imbricated($match, $regex, $replace)
 	{
 		$nbr_match = substr_count($this->content, $match);
 		for ($i = 0; $i <= $nbr_match; $i++)
+		{
 			$this->content = preg_replace($regex, $replace, $this->content); 
+		}
 	}
-	
-	/**
-	 * @var string Path to root of the page in which has been written the content to parse.
-	 */
-	var $path_to_root = PATH_TO_ROOT;
-	
-	/**
-	 * @var string Path of the page in which has been written the content to parse.
-	 */
-	var $page_path = '';
 }
 
 ?>
