@@ -26,9 +26,6 @@
 ###################################################*/
 
 
-
-define('LINKS_MENU__CLASS', 'LinksMenu');
-
 ## Menu types ##
 define('VERTICAL_MENU', 'vertical');
 define('HORIZONTAL_MENU', 'horizontal');
@@ -46,6 +43,8 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 */
 class LinksMenu extends LinksMenuElement
 {
+	const LINKS_MENU__CLASS = 'LinksMenu';
+	
     /**
 	* @access protected
 	* @var string menu's type
