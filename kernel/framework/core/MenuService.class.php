@@ -25,14 +25,6 @@
  *
  ###################################################*/
 
-
-
-
-
-
-
-
-
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
 
@@ -635,7 +627,7 @@ class MenuService
      * @param int $menu_type the menu type
      * @return LinksMenu the menu with links to modules
      */
-    function website_modules($menu_type = VERTICAL_MENU)
+    function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
     {
         
         $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);

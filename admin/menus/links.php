@@ -41,7 +41,7 @@ if ($action == 'save')
     $menu_uid = retrieve(POST, 'menu_uid', 0);
     
 	//Properties of the menu we are creating/editing
-	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', VERTICAL_MENU);
+	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::VERTICAL_MENU);
     
     function build_menu_from_form(&$elements_ids, $level = 0)
     {
@@ -241,7 +241,7 @@ if ($menu_id > 0)
 }
 else
 {   // Create a new generic menu
-    $menu = new LinksMenu('', '', '', VERTICAL_MENU);
+    $menu = new LinksMenu('', '', '', LinksMenu::VERTICAL_MENU);
 }
 
 $tpl->assign_vars(array(
