@@ -37,6 +37,26 @@
  */
 class TinyMCEParser extends ContentParser
 {
+	private static $fonts_array = array(
+	'trebuchet ms,geneva' => 'geneva',
+	'comic sans ms,sans-serif' => 'optima',
+	'andale mono,times' => 'times',
+	'arial,helvetica,sans-serif' => 'arial',
+	'arial black,avant garde' => 'arial',
+	'book antiqua,palatino' => 'optima',
+	'courier new,courier' => 'courier new',
+	'georgia,palatino' => 'optima',
+	'helvetica' => 'arial',
+	'impact,chicago' => 'arial',
+	'symbol' => 'times',
+	'tahoma,arial,helvetica,sans-serif' => 'arial',
+	'terminal,monaco' => 'courier new',
+	'times new roman,times' => 'times',
+	'verdana,geneva' => 'arial',
+	'webdings' => 'times',
+	'wingdings,zapf dingbats' => 'times'
+	);
+
 	/**
 	 * @desc Builds this kind of parser
 	 */
@@ -82,7 +102,7 @@ class TinyMCEParser extends ContentParser
 
 		//Parse the tags which are not supported by TinyMCE but expected in BBCode
 		$this->parse_bbcode_tags();
-		 
+
 		$this->correct();
 
 		//On remet le code HTML mis de côté
@@ -118,7 +138,7 @@ class TinyMCEParser extends ContentParser
 	{
 		//On enlève toutes les entités HTML rajoutées par TinyMCE
 		$this->content = html_entity_decode($this->content);
-			
+
 		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
 		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
 
@@ -261,7 +281,7 @@ class TinyMCEParser extends ContentParser
 	{
 		global $LANG;
 
-		//Modification de quelques tags HTML envoyï¿½s par TinyMCE
+		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->content = str_replace(
 		array(
 				'&amp;nbsp;&amp;nbsp;&amp;nbsp;',
@@ -445,7 +465,7 @@ class TinyMCEParser extends ContentParser
 			//indent tag
 			if (!in_array('indent', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array(&$this, 'parse_bbcode_tags'), $this->content);
+				$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array(&$this, 'parse_indent_tag'), $this->content);
 			}
 
 			//Line tag
@@ -564,7 +584,7 @@ class TinyMCEParser extends ContentParser
 		//Suppression des remplacements des balises interdites.
 		if (!empty($this->forbidden_tags))
 		{
-			//Si on interdit les liens, on ajoute toutes les maniï¿½res par lesquelles elles peuvent passer
+			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
 			if (in_array('url', $this->forbidden_tags))
 			{
 				$this->forbidden_tags[] = 'url2';
@@ -615,7 +635,7 @@ class TinyMCEParser extends ContentParser
 		{
 			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, 'parse_wikipedia_links'), $this->content);
 		}
-			
+
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
 		{
@@ -660,7 +680,7 @@ class TinyMCEParser extends ContentParser
 	 * @param string[] $matches The matched elements
 	 * @return string The PHPBoost HTML syntax
 	 */
-	private function parse_bbcode_tags($matches)
+	private function parse_indent_tag($matches)
 	{
 		if ((int)$matches[1] > 0)
 		{
@@ -731,34 +751,14 @@ class TinyMCEParser extends ContentParser
 	 */
 	private function parse_font_tag($matches)
 	{
-		static $fonts_array = array(
-			'trebuchet ms,geneva' => 'geneva',
-			'comic sans ms,sans-serif' => 'optima',
-			'andale mono,times' => 'times',
-			'arial,helvetica,sans-serif' => 'arial',
-			'arial black,avant garde' => 'arial',
-			'book antiqua,palatino' => 'optima',
-			'courier new,courier' => 'courier new',
-			'georgia,palatino' => 'optima',
-			'helvetica' => 'arial',
-			'impact,chicago' => 'arial',
-			'symbol' => 'times',
-			'tahoma,arial,helvetica,sans-serif' => 'arial',
-			'terminal,monaco' => 'courier new',
-			'times new roman,times' => 'times',
-			'verdana,geneva' => 'arial',
-			'webdings' => 'times',
-			'wingdings,zapf dingbats' => 'times'
-			);
-
-			if (!empty($fonts_array[$matches[1]]))
-			{
-				return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
-			}
-			else
-			{
-				return $matches[2];
-			}
+		if (!empty(self::$fonts_array[$matches[1]]))
+		{
+			return '<span style="font-family: ' . self::$fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+		}
+		else
+		{
+			return $matches[2];
+		}
 	}
 
 	/**
