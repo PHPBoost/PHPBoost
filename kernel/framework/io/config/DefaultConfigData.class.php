@@ -69,7 +69,7 @@ class DefaultConfigData implements ConfigData
 	 */
 	public function get_property($name)
 	{
-		if (!empty($this->properties_map[$name]))
+		if (isset($this->properties_map[$name]))
 		{
 			return $this->properties_map[$name];
 		}
