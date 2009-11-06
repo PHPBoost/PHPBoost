@@ -253,7 +253,7 @@ class UserAccountsConfig extends DefaultConfigData
 	/**
 	 * Lets users choose the theme they wanna use
 	 */
-	public function do_not_force_users_theme()
+	public function dont_force_users_theme()
 	{
 		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, false);
 	}
@@ -289,7 +289,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function get_unactivated_accounts_timeout()
 	{
-		$this->get_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
+		return $this->get_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
 	}
 
 	/**
@@ -330,7 +330,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 * Returns the default avatar URL
 	 * @return string sThe URL
 	 */
-	public function get_default_avatar_url()
+	public function get_default_avatar()
 	{
 		return $this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
@@ -339,7 +339,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 * Sets the default avatar URL
 	 * @param tring $url The URL of the default avatar
 	 */
-	public function set_default_avatar_url($url)
+	public function set_default_avatar($url)
 	{
 		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
 	}
@@ -413,10 +413,10 @@ class UserAccountsConfig extends DefaultConfigData
 		$this->enable_registration_captcha();
 		$this->set_registration_captcha_difficulty(1);
 		$this->set_unactivated_accounts_timeout(20);
-		$this->force_users_theme();
-		$this->disable_avatar_upload();
+		$this->dont_force_users_theme();
+		$this->enable_avatar_upload();
 		$this->enable_default_avatar();
-		$this->set_default_avatar_url('no_avatar.png');
+		$this->set_default_avatar('no_avatar.png');
 		$this->set_max_avatar_width(120);
 		$this->set_max_avatar_height(120);
 		$this->set_max_avatar_weight(20);
