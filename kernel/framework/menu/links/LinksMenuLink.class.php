@@ -25,10 +25,6 @@
  *
  ###################################################*/
 
-
-
-define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc A Simple menu link
@@ -37,6 +33,8 @@ define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
  */
 class LinksMenuLink extends LinksMenuElement
 {
+	const LINKS_MENU_LINK__CLASS = 'LinksMenuLink';
+	
 	/**
 	* @desc Constructor
 	* @param string $title Menu title
@@ -54,7 +52,7 @@ class LinksMenuLink extends LinksMenuElement
 	 * @param Template $template the template to use
 	 * @return string the menu parsed in xHTML
 	 */
-	public function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		// Stop if the user isn't authorised
 		if (!$this->_check_auth())

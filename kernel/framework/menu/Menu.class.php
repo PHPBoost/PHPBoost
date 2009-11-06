@@ -25,8 +25,6 @@
  *
 ###################################################*/
 
-define('MENU__CLASS','Menu');
-
 define('MENU_AUTH_BIT', 1);
 define('MENU_ENABLE_OR_NOT', 42);
 define('MENU_ENABLED', true);
@@ -51,6 +49,8 @@ define('BLOCK_POSITION__ALL',               9);
  */
 abstract class Menu
 {
+	const MENU__CLASS = 'Menu';
+	
     /**
 	 * @access protected
 	 * @var int the element identifier, only used by the service
