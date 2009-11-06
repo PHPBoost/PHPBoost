@@ -19,7 +19,7 @@ class UTevents extends PHPBoostUnitTestCase {
 	function test_constructor()
 	{
 		$event = new Event();
-		$this->assertEqual($event->get_status(), EVENT_STATUS_UNREAD);
+		$this->assertEqual($event->get_status(), Event::EVENT_STATUS_UNREAD);
 		$date = new Date();
 		$this->assertEqual($event->get_creation_date(), $date);		
 	}
@@ -56,12 +56,12 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$tmp = 'status';
 		$event->set_status($tmp);
-		$this->assertIdentical($event->get_status(), EVENT_STATUS_UNREAD);
-		$tmp = EVENT_STATUS_BEING_PROCESSED;
+		$this->assertIdentical($event->get_status(), Event::EVENT_STATUS_UNREAD);
+		$tmp = Event::EVENT_STATUS_BEING_PROCESSED;
 		$event->set_must_regenerate_cache(FALSE);
 		$this->assertIdentical($event->get_must_regenerate_cache(), FALSE);
 		$event->set_status($tmp);
-		$this->assertIdentical($event->current_status, EVENT_STATUS_BEING_PROCESSED);
+		$this->assertIdentical($event->current_status, Event::EVENT_STATUS_BEING_PROCESSED);
 		$this->assertIdentical($event->get_must_regenerate_cache(), TRUE);
 	}
 	
@@ -116,9 +116,9 @@ class UTevents extends PHPBoostUnitTestCase {
 		
 		$event = new Event();
 		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_unread']);
-		$event->set_status(EVENT_STATUS_BEING_PROCESSED);
+		$event->set_status(Event::EVENT_STATUS_BEING_PROCESSED);
 		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_being_processed']);
-		$event->set_status(EVENT_STATUS_PROCESSED);
+		$event->set_status(Event::EVENT_STATUS_PROCESSED);
 		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_processed']);
 	}
 	
@@ -126,11 +126,11 @@ class UTevents extends PHPBoostUnitTestCase {
 	{
 		$event = new Event();
 		$date = new Date();
-		$event->build(777, 'entitled', 'fixing_url', EVENT_STATUS_BEING_PROCESSED, $date, 999, 'identifier', 'type');
+		$event->build(777, 'entitled', 'fixing_url', Event::EVENT_STATUS_BEING_PROCESSED, $date, 999, 'identifier', 'type');
 		$this->assertEqual($event->get_id(), 777);
 		$this->assertEqual($event->get_entitled(), 'entitled');
 		$this->assertEqual($event->get_fixing_url(), 'fixing_url');
-		$this->assertEqual($event->get_status(), EVENT_STATUS_BEING_PROCESSED);
+		$this->assertEqual($event->get_status(), Event::EVENT_STATUS_BEING_PROCESSED);
 		$this->assertEqual($event->get_creation_date(), $date);
 		$this->assertEqual($event->get_id_in_module(), 999);
 		$this->assertEqual($event->get_identifier(), 'identifier');

@@ -25,25 +25,6 @@
  *
  ###################################################*/
 
-## Constants ##
-//Priority levels
-//High emergency, critical
-define('ADMIN_ALERT_VERY_LOW_PRIORITY', 1);
-//Emergency, important
-define('ADMIN_ALERT_LOW_PRIORITY', 2);
-//Medium
-define('ADMIN_ALERT_MEDIUM_PRIORITY', 3);
-//Low priority
-define('ADMIN_ALERT_HIGH_PRIORITY', 4);
-//Very low priority
-define('ADMIN_ALERT_VERY_HIGH_PRIORITY', 5);
-
-//Alert status (boolean)
-//Unread alert
-define('ADMIN_ALERT_STATUS_UNREAD', EVENT_STATUS_UNREAD);
-//Processed alert
-define('ADMIN_ALERT_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
-
 /**
  * @package events
  * @author Benoît Sautel <ben.popeye@phpboost.com>
@@ -53,10 +34,28 @@ define('ADMIN_ALERT_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
  */
 class AdministratorAlert extends Event
 {
-     /**
+	//Priority levels
+	//High emergency, critical
+	const ADMIN_ALERT_VERY_LOW_PRIORITY = 1;
+	//Emergency, important
+	const ADMIN_ALERT_LOW_PRIORITY = 2;
+	//Medium
+	const ADMIN_ALERT_MEDIUM_PRIORITY = 3;
+	//Low priority
+	const ADMIN_ALERT_HIGH_PRIORITY = 4;
+	//Very low priority
+	const ADMIN_ALERT_VERY_HIGH_PRIORITY = 5;
+	
+	//Alert status (boolean)
+	//Unread alert
+	const ADMIN_ALERT_STATUS_UNREAD = Event::EVENT_STATUS_UNREAD;
+	//Processed alert
+	const ADMIN_ALERT_STATUS_PROCESSED = Event::EVENT_STATUS_PROCESSED;
+	
+	/**
      * @var int Priority of the alert
      */
-    private $priority = ADMIN_ALERT_MEDIUM_PRIORITY;
+    private $priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
     
     /**
      * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
@@ -69,7 +68,7 @@ class AdministratorAlert extends Event
     public function __construct()
     {
         parent::__construct();
-        $this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
+        $this->priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
         $this->properties = '';
     }
 
@@ -98,11 +97,11 @@ class AdministratorAlert extends Event
      * @desc Gets the priority of the alert.
      * @return int One of those values:
      * <ul>
-     * 	<li>ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
-     * 	<li>ADMIN_ALERT_LOW_PRIORITY Low priority</li>
-     * 	<li>ADMIN_ALERT_MEDIUM_PRIORITY Medium priority</li>
-     * 	<li>ADMIN_ALERT_HIGH_PRIORITY High priority</li>
-     * 	<li>ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY Low priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY Medium priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY High priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
      * </ul>
      */
     public function get_priority()
@@ -123,23 +122,23 @@ class AdministratorAlert extends Event
      * @desc Sets the priority of the alert.
      * @param int $priority The priority, it must be one of those values:
      * <ul>
-     * 	<li>ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
-     * 	<li>ADMIN_ALERT_LOW_PRIORITY Low priority</li>
-     * 	<li>ADMIN_ALERT_MEDIUM_PRIORITY Medium priority</li>
-     * 	<li>ADMIN_ALERT_HIGH_PRIORITY High priority</li>
-     * 	<li>ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY Low priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY Medium priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY High priority</li>
+     * 	<li>AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
      * </ul>
      */
     public function set_priority($priority)
     {
         $priority = intval($priority);
-        if ($priority >= ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= ADMIN_ALERT_VERY_HIGH_PRIORITY)
+        if ($priority >= self::ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= self::ADMIN_ALERT_VERY_HIGH_PRIORITY)
         {
             $this->priority = $priority;
         }
         else
         {
-            $this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
+            $this->priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
         }
     }
 
@@ -165,19 +164,19 @@ class AdministratorAlert extends Event
         global $LANG;
         switch ($this->priority)
         {
-            case ADMIN_ALERT_VERY_LOW_PRIORITY:
+            case self::ADMIN_ALERT_VERY_LOW_PRIORITY:
                 return $LANG['priority_very_low'];
                 break;
-            case ADMIN_ALERT_LOW_PRIORITY:
+            case self::ADMIN_ALERT_LOW_PRIORITY:
                 return $LANG['priority_low'];
                 break;
-            case ADMIN_ALERT_MEDIUM_PRIORITY:
+            case self::ADMIN_ALERT_MEDIUM_PRIORITY:
                 return $LANG['priority_medium'];
                 break;
-            case ADMIN_ALERT_HIGH_PRIORITY:
+            case self::ADMIN_ALERT_HIGH_PRIORITY:
                 return $LANG['priority_high'];
                 break;
-            case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+            case self::ADMIN_ALERT_VERY_HIGH_PRIORITY:
                 return $LANG['priority_very_high'];
                 break;
             default:

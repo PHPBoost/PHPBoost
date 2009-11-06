@@ -29,7 +29,6 @@
 ## Constants ##
 
 //Bit on which are checked the authorizations
-define('CONTRIBUTION_AUTH_BIT', 1);
 
 /**
  * @package events
@@ -39,6 +38,8 @@ define('CONTRIBUTION_AUTH_BIT', 1);
  */
 class Contribution extends Event
 {
+	const CONTRIBUTION_AUTH_BIT = 1;
+	
   	/**
 	 * @var string Description of the contribution (for instance to justify a contribution).
 	 */
@@ -86,7 +87,7 @@ class Contribution extends Event
 	public function __construct()
 	{
 		parent::__construct();
-		$this->current_status = EVENT_STATUS_UNREAD;
+		$this->current_status = Event::EVENT_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
 		if (defined('MODULE_NAME'))
@@ -157,19 +158,19 @@ class Contribution extends Event
      * @desc Set the status of the contribution.
      * @param int $new_current_status One of those elements:
      * <ul>
-     * 	<li>EVENT_STATUS_UNREAD if it's not read.</li>
-     * 	<li>EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
-     * 	<li>EVENT_STATUS_PROCESSED if the event is processed.
+     * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
+     * 	<li>Event::EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
+     * 	<li>Event::EVENT_STATUS_PROCESSED if the event is processed.
      * </ul>
      */
 	public function set_status($new_current_status)
 	{
 		global $User;
 		
-		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED), TRUE))
+		if (in_array($new_current_status, array(Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED), TRUE))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
-			if ($this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED)
+			if ($this->current_status != Event::EVENT_STATUS_PROCESSED && $new_current_status == Event::EVENT_STATUS_PROCESSED)
 			{
 				$this->fixing_date = new Date();
 				//If the fixer id is not defined, we define it
@@ -184,7 +185,7 @@ class Contribution extends Event
 		//Default
 		else
 		{
-			$this->current_status = EVENT_STATUS_UNREAD;
+			$this->current_status = Event::EVENT_STATUS_UNREAD;
 		}
 		
 		$this->must_regenerate_cache = true;
@@ -328,11 +329,11 @@ class Contribution extends Event
 		
 		switch ($this->current_status)
 		{
-			case EVENT_STATUS_UNREAD:
+			case Event::EVENT_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];
-			case EVENT_STATUS_BEING_PROCESSED:
+			case Event::EVENT_STATUS_BEING_PROCESSED:
 				return $LANG['contribution_status_being_processed'];
-			case EVENT_STATUS_PROCESSED:
+			case Event::EVENT_STATUS_PROCESSED:
 				return $LANG['contribution_status_processed'];
 		}
 	}

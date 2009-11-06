@@ -22,9 +22,9 @@ class UTadmin_alert extends PHPBoostUnitTestCase {
 	{
 		$alert = new AdministratorAlert();
 		$date = new Date();
-		$this->assertEqual($alert->get_status(), EVENT_STATUS_UNREAD);
+		$this->assertEqual($alert->get_status(), Event::EVENT_STATUS_UNREAD);
 		$this->assertEqual($alert->get_creation_date(), $date);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_MEDIUM_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$this->assertEqual($alert->get_properties(), '');
 	}
 	
@@ -36,26 +36,26 @@ class UTadmin_alert extends PHPBoostUnitTestCase {
 	function test_accessor_priority()
 	{
 		$alert = new AdministratorAlert();
-		$alert->set_priority(ADMIN_ALERT_VERY_LOW_PRIORITY);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_VERY_LOW_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_LOW_PRIORITY);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_LOW_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_MEDIUM_PRIORITY);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_MEDIUM_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_HIGH_PRIORITY);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_HIGH_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_VERY_HIGH_PRIORITY);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_VERY_HIGH_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_VERY_LOW_PRIORITY - 10);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_MEDIUM_PRIORITY);
-		$alert->set_priority(ADMIN_ALERT_VERY_HIGH_PRIORITY + 10);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_MEDIUM_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY - 10);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY + 10);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$alert->set_priority('1');
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_VERY_LOW_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY);
 		$str = '1_LOW';
 		echo 'Bizarre mais OK : '.$str.'<br />';
 		$alert->set_priority($str);
-		$this->assertEqual($alert->get_priority(), ADMIN_ALERT_VERY_LOW_PRIORITY);
+		$this->assertEqual($alert->get_priority(), AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY);
 	}
 	
 	function test_accessor_properties()
@@ -73,15 +73,15 @@ class UTadmin_alert extends PHPBoostUnitTestCase {
 		global $LANG;
 		
 		$alert = new AdministratorAlert();
-		$alert->set_priority(ADMIN_ALERT_VERY_LOW_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY);
 		$this->assertEqual($alert->get_priority_name(), $LANG['priority_very_low']);
-		$alert->set_priority(ADMIN_ALERT_LOW_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY);
 		$this->assertEqual($alert->get_priority_name(), $LANG['priority_low']);
-		$alert->set_priority(ADMIN_ALERT_MEDIUM_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$this->assertEqual($alert->get_priority_name(), $LANG['priority_medium']);
-		$alert->set_priority(ADMIN_ALERT_HIGH_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY);
 		$this->assertEqual($alert->get_priority_name(), $LANG['priority_high']);
-		$alert->set_priority(ADMIN_ALERT_VERY_HIGH_PRIORITY);
+		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY);
 		$this->assertEqual($alert->get_priority_name(), $LANG['priority_very_high']);
 	}
 	

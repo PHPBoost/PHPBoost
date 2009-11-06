@@ -25,15 +25,6 @@
  *
  ###################################################*/
 
-##Constants##
-//Those are the different status of events
-//Unread event
-define('EVENT_STATUS_UNREAD', 0);
-//Read event and beeing processed, somebody is focusing on it, but it's not processed
-define('EVENT_STATUS_BEING_PROCESSED', 1);
-//Read and processed, it is normally not useful anymore
-define('EVENT_STATUS_PROCESSED', 2);
-
 /**
  * @abstract
  * @package events
@@ -47,6 +38,14 @@ define('EVENT_STATUS_PROCESSED', 2);
 
 class Event
 {
+	//Those are the different status of events
+	//Unread event
+	const EVENT_STATUS_UNREAD = 0;
+	//Read event and beeing processed, somebody is focusing on it, but it's not processed
+	const EVENT_STATUS_BEING_PROCESSED = 1;
+	//Read and processed, it is normally not useful anymore
+	const EVENT_STATUS_PROCESSED = 2;
+	
 	/**
 	 * @protected int Numerical identifier of the event (in DB).
 	 */
@@ -65,7 +64,7 @@ class Event
 	/**
 	 * @protected int The event status.
 	 */
-	protected $current_status = EVENT_STATUS_UNREAD;
+	protected $current_status = self::EVENT_STATUS_UNREAD;
 
 	/**
 	 * @protected Date The event creation date.
@@ -98,7 +97,7 @@ class Event
 	 */
 	public function __construct()
 	{
-		$this->current_status = EVENT_STATUS_UNREAD;
+		$this->current_status = self::EVENT_STATUS_UNREAD;
 		$this->creation_date = new Date();
 	}
 
@@ -134,20 +133,22 @@ class Event
 	 * @desc Set the status of the event.
 	 * @param int $new_current_status One of those elements:
 	 * <ul>
-	 * 	<li>EVENT_STATUS_UNREAD if it's not read.</li>
-	 * 	<li>EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
-	 * 	<li>EVENT_STATUS_PROCESSED if the event is processed.
+	 * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
+	 * 	<li>Event::EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
+	 * 	<li>Event::EVENT_STATUS_PROCESSED if the event is processed.
 	 * </ul>
 	 */
 	public function set_status($new_current_status)
 	{
-		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED), TRUE))
+		if (in_array($new_current_status, array(self::EVENT_STATUS_UNREAD, self::EVENT_STATUS_BEING_PROCESSED, self::EVENT_STATUS_PROCESSED), TRUE))
 		{
 			$this->current_status = $new_current_status;
 		}
 		//Default
 		else
-		$this->current_status = EVENT_STATUS_UNREAD;
+		{
+			$this->current_status = self::EVENT_STATUS_UNREAD;
+		}
 
 		$this->must_regenerate_cache = true;
 	}
@@ -231,9 +232,9 @@ class Event
 	/**
 	 * @desc Gets the status of the event. The status is one of those elements:
 	 * ul>
-	 * 	<li>EVENT_STATUS_UNREAD if it's not read.</li>
-	 * 	<li>EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
-	 * 	<li>EVENT_STATUS_PROCESSED if the event is processed.
+	 * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
+	 * 	<li>Event::EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
+	 * 	<li>Event::EVENT_STATUS_PROCESSED if the event is processed.
 	 * </ul>
 	 * @return int Status
 	 */
@@ -298,11 +299,11 @@ class Event
 
 		switch ($this->current_status)
 		{
-			case EVENT_STATUS_UNREAD:
+			case self::EVENT_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];
-			case EVENT_STATUS_BEING_PROCESSED:
+			case self::EVENT_STATUS_BEING_PROCESSED:
 				return $LANG['contribution_status_being_processed'];
-			case EVENT_STATUS_PROCESSED:
+			case self::EVENT_STATUS_PROCESSED:
 				return $LANG['contribution_status_processed'];
 		}
 	}

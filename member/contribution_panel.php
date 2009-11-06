@@ -41,7 +41,7 @@ if ($contribution_id > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')))
+	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
@@ -56,7 +56,7 @@ elseif ($id_update > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT))
+	if (($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
@@ -73,13 +73,13 @@ elseif ($id_to_update > 0)
 	
 	$contribution = new Contribution();
 	
-	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT))
+	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
 	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
-	$status = retrieve(POST, 'status', EVENT_STATUS_UNREAD);
+	$status = retrieve(POST, 'status', Event::EVENT_STATUS_UNREAD);
 	
 	//Si le titre n'est pas vide
 	if (!empty($entitled))
@@ -89,7 +89,7 @@ elseif ($id_to_update > 0)
 		$contribution->set_description($description);
 		
 		//Changement de statut ? On regarde si la contribution a été réglée
-		if ($status == EVENT_STATUS_PROCESSED && $contribution->get_status() != EVENT_STATUS_PROCESSED)
+		if ($status == Event::EVENT_STATUS_PROCESSED && $contribution->get_status() != Event::EVENT_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id($User->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
@@ -115,7 +115,7 @@ elseif ($id_to_delete > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)))
+	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT)))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	ContributionService::delete_contribution($contribution);
@@ -147,8 +147,8 @@ if ($contribution_id > 0)
 	$contribution_fixing_date = $contribution->get_fixing_date();
 	
 	$template->assign_vars(array(
-		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
-		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != EVENT_STATUS_PROCESSED,
+		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
+		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
@@ -161,7 +161,7 @@ if ($contribution_id > 0)
 	));
 	
 	//Si la contribution a été traitée
-	if ($contribution->get_status() == EVENT_STATUS_PROCESSED)
+	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
@@ -196,9 +196,9 @@ elseif ($id_update > 0)
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
-		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
-		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
-		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
+		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
 		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
 		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
 		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
@@ -242,7 +242,7 @@ else
 		$fixing_date = $this_contribution->get_fixing_date();
 		
 		//Affichage des contributions du membre
-		if ($User->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id())
+		if ($User->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id())
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page())
@@ -258,8 +258,8 @@ else
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
-					'C_FIXED' => $this_contribution->get_status() == EVENT_STATUS_PROCESSED,
-					'C_PROCESSING' => $this_contribution->get_status() == EVENT_STATUS_BEING_PROCESSED
+					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
+					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
 				));
 			
 			$num_contributions++;

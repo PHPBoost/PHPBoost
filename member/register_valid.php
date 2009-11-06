@@ -146,7 +146,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$alert->set_entitled($LANG['member_registered_to_approbate']);
 						$alert->set_fixing_url('admin/admin_members.php?id=' . $last_mbr_id);
 						//Priorité 3/5
-						$alert->set_priority(ADMIN_ALERT_MEDIUM_PRIORITY);
+						$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 						//Code pour retrouver l'alerte
 						$alert->set_id_in_module($last_mbr_id);
 						$alert->set_type('member_account_to_approbate');

@@ -255,7 +255,7 @@ if ($edit_file_id > 0)
 				{
 					$file_contribution = $corresponding_contributions[0];
 					//The contribution is now processed
-					$file_contribution->set_status(EVENT_STATUS_PROCESSED);
+					$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					
 					//We save the contribution
 					ContributionService::save_contribution($file_contribution);
@@ -490,8 +490,8 @@ else
 				
 				//Assignation des autorisations d'écriture / Writing authorization assignation
 				$download_contribution->set_auth(
-					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
-					//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
+					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir Contribution::CONTRIBUTION_AUTH_BIT
+					//We shift the authorization bit to the one with which the contribution class works, Contribution::CONTRIBUTION_AUTH_BIT
 					Authorizations::capture_and_shift_bit_auth(
 						//On fusionne toutes les autorisations pour obtenir l'autorisation d'écriture dans la catégorie sélectionnée :
 						//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
@@ -502,7 +502,7 @@ else
 							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY),
 							DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY
 						),
-						DOWNLOAD_WRITE_CAT_AUTH_BIT, CONTRIBUTION_AUTH_BIT
+						DOWNLOAD_WRITE_CAT_AUTH_BIT, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
 

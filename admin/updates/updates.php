@@ -69,7 +69,7 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
             {
                 // Like the update is incompatible (or has been applied)
                 // We set the alert status to processed
-            	$update_alert->set_status(EVENT_STATUS_PROCESSED);
+            	$update_alert->set_status(Event::EVENT_STATUS_PROCESSED);
                 AdministratorAlertService::save_alert($update_alert);
             }
         }
@@ -79,13 +79,13 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
     {
         switch ($update->get_priority())
         {
-            case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+            case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
                 $priority = 'priority_very_high';
                 break;
-            case ADMIN_ALERT_HIGH_PRIORITY:
+            case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
                 $priority = 'priority_high';
                 break;
-            case ADMIN_ALERT_MEDIUM_PRIORITY:
+            case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
                 $priority = 'priority_medium';
                 break;
             default:
