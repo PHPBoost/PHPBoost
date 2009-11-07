@@ -48,6 +48,8 @@ interface DBMSUtils
 	
 	function desc_table($table);
 	
+    function create_table($table_name, array $fields, array $options = array());
+    
 	function optimize($tables);
 	
 	function repair($tables);
