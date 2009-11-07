@@ -33,14 +33,13 @@ define('FAQ_MAX_SEARCH_RESULTS', 100);
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class FaqInterface extends ModuleInterface
 {
-    ## Public Methods ##
-    function FaqInterface() //Constructeur de la classe ForumInterface
+    public function __construct() //Constructeur de la classe ForumInterface
     {
         parent::__construct('faq');
     }
     
 	//Récupération du cache.
-	function get_cache()
+	public function get_cache()
 	{
 		//Configuration
 		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'faq'", __LINE__, __FILE__));
@@ -92,7 +91,7 @@ class FaqInterface extends ModuleInterface
 	 * @param $args string[] parameters of the research
 	 * @return string The SQL query corresponding to the research.
 	 */
-	function get_search_request($args)
+	public function get_search_request($args)
     {
         global $Cache;
 		$Cache->load('faq');
@@ -122,7 +121,7 @@ class FaqInterface extends ModuleInterface
      * @param &string[][] $args The array containing the result's id list
      * @return string[] The array containing the result's data list
      */
-    function compute_search_results(&$args)
+    public function compute_search_results(&$args)
     {
         global $CONFIG;
         
@@ -166,23 +165,19 @@ class FaqInterface extends ModuleInterface
         
         return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
-    
-    // Returns the module map objet to build the global sitemap
+
     /**
-	 * @desc 
+	 * @desc Returns the module map objet to build the global sitemap 
 	 * @param $auth_mode
 	 * @return unknown_type
      */
-	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
+	public function get_module_map($auth_mode)
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG, $Cache;
-		
-		
-		
-		
+
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
-		$faq_link = new SiteMapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), SITE_MAP_FREQ_DEFAULT, SITE_MAP_PRIORITY_MAX);
+		$faq_link = new SiteMapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_MAX);
 		
 		$module_map = new ModuleMap($faq_link);
 		$module_map->set_description('<em>Test</em>');
@@ -195,7 +190,7 @@ class FaqInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $FAQ_CATS[$id];
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			if ($auth_mode == SiteMap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
@@ -205,15 +200,14 @@ class FaqInterface extends ModuleInterface
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
-				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
+				$module_map->add($this->create_module_map_sections($id, $auth_mode));
 			}
 		}
 		
 		return $module_map;
 	}
 	
-	#Private#
-	function _create_module_map_sections($id_cat, $auth_mode)
+	private function create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
@@ -230,7 +224,7 @@ class FaqInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $FAQ_CATS[$id];
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			if ($auth_mode == SiteMap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
@@ -240,13 +234,15 @@ class FaqInterface extends ModuleInterface
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
-				$category->add($this->_create_module_map_sections($id, $auth_mode));
+				$category->add($this->create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}
 		
 		if ($i == 0	)
+		{
 			$category = $this_category;
+		}
 		
 		return $category;
 	}

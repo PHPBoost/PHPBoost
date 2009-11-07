@@ -7,7 +7,7 @@
  *   email                : loic.rouchon@phpboost.com, liaght@gmail.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
 
@@ -35,16 +35,15 @@ require_once PATH_TO_ROOT . '/news/news_constant.php';
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class NewsInterface extends ModuleInterface
 {
-    ## Public Methods ##
-    function NewsInterface() //Constructeur de la classe ForumInterface
-    {
-        parent::__construct('news');
-    }
-
-    //Récupération du cache.
-	function get_cache()
+	public function __construct() //Constructeur de la classe ForumInterface
 	{
-		//Récupération du tableau linéarisé dans la bdd.
+		parent::__construct('news');
+	}
+
+	//Récupération du cache.
+	public function get_cache()
+	{
+		//Récupération du tableau linéarisé dans la bdd
 		$news_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
 		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";
@@ -58,7 +57,7 @@ class NewsInterface extends ModuleInterface
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
-				var_export(array(
+			var_export(array(
 					'id_parent' => (int)$row['id_parent'],
 					'order' => (int)$row['c_order'],
 					'name' => $row['name'],
@@ -67,23 +66,15 @@ class NewsInterface extends ModuleInterface
 					'image' => !empty($row['image']) ? $row['image'] : '/news/news.png',
 					'description' => $row['description'],
 					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $news_config['global_auth']
-				), true) . ';' . "\n\n";
+			), true) . ';' . "\n\n";
 		}
 
 		return $string;
 	}
 
-	//Actions journalière.
-	// function on_changeday()
-	// {
-	// }
+	public function get_search_request($args)
+	{
 
-	function get_search_request($args)
-    /**
-     *  Renvoie la requête de recherche
-     */
-    {
-		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		$news_cat = new NewsCats();
@@ -93,9 +84,9 @@ class NewsInterface extends ModuleInterface
 		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		$where = !empty($array_cat) ? " AND idcat IN(" . implode(", ", $array_cat) . ")" : " AND idcat = '0'";
 
-        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
+		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
-        $request = "SELECT " . $args['id_search'] . " AS id_search,
+		$request = "SELECT " . $args['id_search'] . " AS id_search,
             n.id AS id_content,
             n.title AS title,
             ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
@@ -107,45 +98,42 @@ class NewsInterface extends ModuleInterface
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
             ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
 
-        return $request;
-    }
-
-	/**
-     * @desc Return the list of the feeds available for this module.
-     * @return FeedsList The list
-     */
-    function get_feeds_list()
-	{
-        $news_cats = new NewsCats();
-        return $news_cats->get_feeds_list();
+            return $request;
 	}
 
-    function get_feed_data_struct($idcat = 0, $name = '')
-    {
-        global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
+	/**
+	 * @desc Return the list of the feeds available for this module.
+	 * @return FeedsList The list
+	 */
+	public function get_feeds_list()
+	{
+		$news_cats = new NewsCats();
+		return $news_cats->get_feeds_list();
+	}
+
+	public function get_feed_data_struct($idcat = 0, $name = '')
+	{
+		global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
 
 		// Load the new's config
-        $Cache->load('news');
+		$Cache->load('news');
 
 		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
 
-        
-        
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-        
 
-        load_module_lang('news');
+		load_module_lang('news');
 
 		$site_name = $idcat > 0 ? $CONFIG['site_name'] . ' : ' . $NEWS_CAT[$idcat]['name'] : $CONFIG['site_name'];
 
-        $data = new FeedData();
+		$data = new FeedData();
 
-        $data->set_title($NEWS_LANG['xml_news_desc'] . $site_name);
-        $data->set_date(new Date());
-        $data->set_link(new Url('/syndication.php?m=news&amp;cat=' . $idcat));
-        $data->set_host(HOST);
-        $data->set_desc($NEWS_LANG['xml_news_desc'] . $site_name);
-        $data->set_lang($LANG['xml_lang']);
+		$data->set_title($NEWS_LANG['xml_news_desc'] . $site_name);
+		$data->set_date(new Date());
+		$data->set_link(new Url('/syndication.php?m=news&amp;cat=' . $idcat));
+		$data->set_host(HOST);
+		$data->set_desc($NEWS_LANG['xml_news_desc'] . $site_name);
+		$data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(AUTH_NEWS_READ);
 
 		$news_cat = new NewsCats();
@@ -156,58 +144,54 @@ class NewsInterface extends ModuleInterface
 
 		if (!empty($array_cat))
 		{
-	        // Last news
-	        $result = $this->sql_querier->query_while("SELECT id, idcat, title, contents, extend_contents, timestamp, img
+			// Last news
+			$result = $this->sql_querier->query_while("SELECT id, idcat, title, contents, extend_contents, timestamp, img
 	            FROM " . DB_TABLE_NEWS . "
 	            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1 AND idcat IN(" . implode(", ", $array_cat) . ")
 	            ORDER BY timestamp DESC"
-				. $this->sql_querier->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+	            . $this->sql_querier->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
-	        // Generation of the feed's items
-	        while ($row = $this->sql_querier->fetch_assoc($result))
-	        {
-				// Rewriting
-	            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
+	            // Generation of the feed's items
+	            while ($row = $this->sql_querier->fetch_assoc($result))
+	            {
+	            	// Rewriting
+	            	$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
 
-	            $item = new FeedItem();
-	            $item->set_title($row['title']);
-	            $item->set_link($link);
-	            $item->set_guid($link);
-	            $item->set_desc($row['contents'] . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
-	            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-	            $item->set_image_url($row['img']);
-            	$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, AUTH_PARENT_PRIORITY));
+	            	$item = new FeedItem();
+	            	$item->set_title($row['title']);
+	            	$item->set_link($link);
+	            	$item->set_guid($link);
+	            	$item->set_desc($row['contents'] . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
+	            	$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
+	            	$item->set_image_url($row['img']);
+	            	$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, AUTH_PARENT_PRIORITY));
 
-	            $data->add_item($item);
-	        }
-	        $this->sql_querier->query_close($result);
-        }
+	            	$data->add_item($item);
+	            }
+	            $this->sql_querier->query_close($result);
+		}
 
-        return $data;
-    }
+		return $data;
+	}
 
-	// Returns the module map objet to build the global sitemap
-    /**
-	 * @desc
+	/**
+	 * @desc Returns the module map objet to build the global sitemap
 	 * @param $auth_mode
 	 * @return unknown_type
-     */
-	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
+	 */
+	public function get_module_map($auth_mode)
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
 
-		
-		
-
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
 
-		$news_link = new SiteMapLink($NEWS_LANG['news'], new Url('/news/news.php'), SITE_MAP_FREQ_DAILY, SITE_MAP_PRIORITY_MAX);
+		$news_link = new SiteMapLink($NEWS_LANG['news'], new Url('/news/news.php'), SiteMap::FREQ_DAILY, SiteMap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($news_link);
 		$module_map->set_description('<em>Test</em>');
 
 		$id_cat = 0;
-	    $keys = array_keys($NEWS_CAT);
+		$keys = array_keys($NEWS_CAT);
 		$num_cats = count($NEWS_CAT);
 		$properties = array();
 		for ($j = 0; $j < $num_cats; $j++)
@@ -215,7 +199,7 @@ class NewsInterface extends ModuleInterface
 			$id = $keys[$j];
 			$properties = $NEWS_CAT[$id];
 
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			if ($auth_mode == SiteMap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
@@ -226,56 +210,14 @@ class NewsInterface extends ModuleInterface
 
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
-				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
+				$module_map->add($this->create_module_map_sections($id, $auth_mode));
 			}
 		}
 
 		return $module_map;
 	}
 
-	#Private#
-	function _create_module_map_sections($id_cat, $auth_mode)
-	{
-		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
-
-		$this_category = new SiteMapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), SITE_MAP_FREQ_WEEKLY);
-
-		$category = new SiteMapSection($this_category);
-
-		$i = 0;
-
-		$keys = array_keys($NEWS_CAT);
-		$num_cats = count($NEWS_CAT);
-		$properties = array();
-
-		for ($j = 0; $j < $num_cats; $j++)
-		{
-			$id = $keys[$j];
-			$properties = $NEWS_CAT[$id];
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
-			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-			else
-			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
-			{
-				$category->add($this->_create_module_map_sections($id, $auth_mode));
-				$i++;
-			}
-		}
-
-		if ($i == 0)
-		{
-			$category = $this_category;
-		}
-
-		return $category;
-	}
-
-	function get_home_page($cat = 0)
+	public function get_home_page($cat = 0)
 	{
 		global $User, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
@@ -288,12 +230,6 @@ class NewsInterface extends ModuleInterface
 		{
 			require_once PATH_TO_ROOT . '/news/news_constant.php';
 		}
-
-		// Import.
-		
-		
-		
-		
 
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -326,7 +262,7 @@ class NewsInterface extends ModuleInterface
 				'C_CAT' => true,
 				'EDITO_NAME' => $NEWS_CAT[$cat]['name'],
 				'EDITO_CONTENTS' => !empty($NEWS_CAT[$cat]['desc']) ? second_parse($NEWS_CAT[$cat]['desc']) : ''
-			));
+				));
 		}
 		else
 		{
@@ -358,9 +294,9 @@ class NewsInterface extends ModuleInterface
 		// Construction du tableau des catégories.
 		$array_cat = array();
 		if ($cat > 0)
-			$array_cat[] = $cat;
+		$array_cat[] = $cat;
 		else
-			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+		$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
 		// Gestion du where.
 		$last_release = 0;
@@ -529,6 +465,47 @@ class NewsInterface extends ModuleInterface
 		}
 
 		return $tpl->parse(true);
+	}
+
+	private function create_module_map_sections($id_cat, $auth_mode)
+	{
+		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
+
+		$this_category = new SiteMapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), SiteMap::FREQ_WEEKLY);
+
+		$category = new SiteMapSection($this_category);
+
+		$i = 0;
+
+		$keys = array_keys($NEWS_CAT);
+		$num_cats = count($NEWS_CAT);
+		$properties = array();
+
+		for ($j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $NEWS_CAT[$id];
+			if ($auth_mode == SiteMap::AUTH_GUEST)
+			{
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
+			}
+			else
+			{
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
+			}
+			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
+			{
+				$category->add($this->create_module_map_sections($id, $auth_mode));
+				$i++;
+			}
+		}
+
+		if ($i == 0)
+		{
+			$category = $this_category;
+		}
+
+		return $category;
 	}
 }
 
