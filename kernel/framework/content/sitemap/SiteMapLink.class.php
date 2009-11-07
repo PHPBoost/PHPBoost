@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sitemaplink.class.php
+ *                           SiteMapLink.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright            : (C) 2008 Sautel Benoit
@@ -26,10 +26,6 @@
  *
  ###################################################*/
 
-
-
-
-
 /**
  * @package content
  * @subpackage sitemap
@@ -38,185 +34,203 @@
  */
 class SiteMapLink extends SiteMapElement
 {
-    /**
-     * @desc Builds a SiteMapLink object
-     * @param string $name Name of the target page
-     * @param Url $link link
-     * @param string $change_freq Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
-     * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
-     * SITE_MAP_FREQ_DEFAULT
-     * @param string $priority Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
-     * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
-     * @param Date $last_modification_date Last modification date of the target page
-     */
-    function SitemapLink($name = '', $link = null, $change_freq = SITE_MAP_FREQ_MONTHLY, $priority = SITE_MAP_PRIORITY_AVERAGE, $last_modification_date = null)
-    {
-        $this->name = $name;
-        $this->set_link($link);
-        $this->set_change_freq($change_freq);
-        $this->set_priority($priority);
-        $this->set_last_modification_date($last_modification_date);
-    }
-    
-    /**
-     * @desc Returns the name of the target page 
-     * @return string name
-     */
-    function get_name()
-    {
-        return $this->name;
-    }
+	/**
+	 * @var string Name of the SiteMapElement
+	 */
+	private $name = '';
+	/**
+	 * @var Url Url of the link
+	 */
+	private $link = null;
+	/**
+	 * @var string Actualization frequency of the target page, must be a member of the following enum:
+	 * SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY, SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY,
+	 * SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER, SiteMap::FREQ_DEFAULT
+	 */
+	private $change_freq = SiteMap::FREQ_DEFAULT;
+	/**
+	 *
+	 * @var Date Last modification date of the target page
+	 */
+	private $last_modification_date = null;
+	/**
+	 * @var string Priority of the target page, must be a member of the following enum: SiteMap::PRIORITY_MAX,
+	 *  SiteMap::PRIORITY_HIGH, SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN
+	 */
+	private $priority = SiteMap::PRIORITY_AVERAGE;
 
-    /**
-     * @desc Returns the URL of the link
-     * @return Url The URL of the link
-     */
-    function get_link()
-    {
-        return $this->link;
-    }
+	/**
+	 * @desc Builds a SiteMapLink object
+	 * @param string $name Name of the target page
+	 * @param Url $link link
+	 * @param string $change_freq Frequency taken into the following enum: SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY,
+	 * SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER,
+	 * SiteMap::FREQ_DEFAULT
+	 * @param string $priority Priority taken into the following enum: SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH,
+	 * SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN
+	 * @param Date $last_modification_date Last modification date of the target page
+	 */
+	public function __construct($name = '', Url $link = null, $change_freq = SiteMap::FREQ_MONTHLY, $priority = SiteMap::PRIORITY_AVERAGE, Date $last_modification_date = null)
+	{
+		$this->set_name($name);
+		$this->set_link($link);
+		$this->set_change_freq($change_freq);
+		$this->set_priority($priority);
+		if ($last_modification_date !== null)
+		{
+			$this->set_last_modification_date($last_modification_date);
+		}
+	}
 
-    /**
-     * @desc Gets the change frequency (how often the target page is actualized)
-     * @return string Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
-     * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
-     * SITE_MAP_FREQ_DEFAULT
-     */
-    function get_change_freq()
-    {
-        return $this->change_freq;
-    }
+	/**
+	 * @desc Returns the name of the target page
+	 * @return string name
+	 */
+	public function get_name()
+	{
+		return $this->name;
+	}
 
-    /**
-     * @desc Gets the priority of the link
-     * @return string Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
-     * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
-     */
-    function get_priority()
-    {
-        return $this->priority;
-    }
+	/**
+	 * @desc Returns the URL of the link
+	 * @return Url The URL of the link
+	 */
+	public function get_link()
+	{
+		return $this->link;
+	}
 
-    /**
-     * @desc Returns the last modification date of the target page
-     * @return Date the last modification date
-     */
-    function get_last_modification_date()
-    {
-        return $this->last_modification_date;
-    }
+	/**
+	 * @desc Gets the change frequency (how often the target page is actualized)
+	 * @return string Frequency taken into the following enum: SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY,
+	 * SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER,
+	 * SiteMap::FREQ_DEFAULT
+	 */
+	public function get_change_freq()
+	{
+		return $this->change_freq;
+	}
 
-    /**
-     * @desc Returns the URL of the link 
-     * @return string the URL
-     */
-    function get_url()
-    {
-        if (is_object($this->link))
-        {
-            return $this->link->absolute();
-        }
-        else
-        {
-            return '';
-        }
-    }
+	/**
+	 * @desc Gets the priority of the link
+	 * @return string Priority taken into the following enum: SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH,
+	 * SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN
+	 */
+	public function get_priority()
+	{
+		return $this->priority;
+	}
 
-    /**
-     * @desc Sets the name of the element
-     * @param string $name name of the element
-     */
-    function set_name($name)
-    {
-        $this->name = $name;
-    }
+	/**
+	 * @desc Returns the last modification date of the target page
+	 * @return Date the last modification date
+	 */
+	public function get_last_modification_date()
+	{
+		return $this->last_modification_date;
+	}
 
-    /**
-     * @desc Sets the URL of the link
-     * @param Url $link URL
-     */
-    function set_link($link)
-    {
-        if (is_object($link))
-        {
-            $this->link = $link;
-        }
-        else if (is_string($link))
-        {
-            $this->link = new Url($link);
-        }
-    }
+	/**
+	 * @desc Returns the URL of the link
+	 * @return string the URL
+	 */
+	public function get_url()
+	{
+		if ($this->link !== null)
+		{
+			return $this->link->absolute();
+		}
+		else
+		{
+			return '';
+		}
+	}
 
-    /**
-     * @desc Sets the change frequency
-     * @param string $change_freq Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
-     * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
-     * SITE_MAP_FREQ_DEFAULT
-     */
-    function set_change_freq($change_freq)
-    {
-        //If the given frequency is correct
-        if (in_array($change_freq, array(SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY, SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER, SITE_MAP_FREQ_DEFAULT)))
-        {
-            $this->change_freq = $change_freq;
-        }
-        else
-        {
-            $this->change_freq = SITE_MAP_FREQ_DEFAULT;
-        }
-    }
+	/**
+	 * @desc Sets the name of the element
+	 * @param string $name name of the element
+	 */
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
 
-    /**
-     * @desc Sets the priority of the link
-     * @param string $priority Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
-     * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
-     */
-    function set_priority($priority)
-    {
-        if (in_array($priority, array(SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH, SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN)))
-        {
-            $this->priority = $priority;
-        }
-        else
-        {
-            $this->priority = SITE_MAP_PRIORITY_AVERAGE;
-        }
-    }
+	/**
+	 * @desc Sets the URL of the link
+	 * @param Url $link URL
+	 */
+	public function set_link(Url $link)
+	{
+		$this->link = $link;
+	}
 
-    /**
-     * @desc Sets the last modification date of the target page
-     * @param Date $date date
-     */
-    function set_last_modification_date($last_modification_date)
-    {
-        if (is_object($last_modification_date))
-        {
-            $this->last_modification_date = $last_modification_date;
-        }
-    }
+	/**
+	 * @desc Sets the change frequency
+	 * @param string $change_freq Frequency taken into the following enum: SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY,
+	 * SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER,
+	 * SiteMap::FREQ_DEFAULT
+	 */
+	public function set_change_freq($change_freq)
+	{
+		//If the given frequency is correct
+		if (in_array($change_freq, array(SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY, SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER, SiteMap::FREQ_DEFAULT)))
+		{
+			$this->change_freq = $change_freq;
+		}
+		else
+		{
+			$this->change_freq = SiteMap::FREQ_DEFAULT;
+		}
+	}
 
-    /**
-     * @desc Exports the section according to the given configuration. You will use the following template variables:
-     * <ul>
-     * 	<li>LOC containing the URL of the link</li>
-     * 	<li>TEXT containing the name of the target page</li>
-     * 	<li>C_DISPLAY_DATE indicating if the date is not empty</li>
-     * 	<li>DATE containing the date of the last modification of the target page, formatted for the sitemap.xml file</li>
-     * 	<li>ACTUALIZATION_FREQUENCY corresponding to the code needed in the sitemap.xml file</li>
-     * 	<li>PRIORITY corresponding to the code needed in the sitemap.xml file to indicate the priority of the target page.</li>
-     * 	<li>C_LINK indicating that we are displaying a link (useful if you want to use a signe template export configuration)</li>
-     * </ul>
-     * @param SiteMapExportConfig $export_config Export configuration
-     * @return string the exported link
-     */
-    function export(&$export_config)
-    {
-        $display_date = is_object($this->last_modification_date);
+	/**
+	 * @desc Sets the priority of the link
+	 * @param string $priority Priority taken into the following enum: SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH,
+	 * SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN
+	 */
+	public function set_priority($priority)
+	{
+		if (in_array($priority, array(SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH, SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN)))
+		{
+			$this->priority = $priority;
+		}
+		else
+		{
+			$this->priority = SiteMap::PRIORITY_AVERAGE;
+		}
+	}
 
-        //We get the stream in which we are going to write
-        $template = $export_config->get_link_stream();
+	/**
+	 * @desc Sets the last modification date of the target page
+	 * @param Date $date date
+	 */
+	public function set_last_modification_date(Date $last_modification_date)
+	{
+		$this->last_modification_date = $last_modification_date;
+	}
 
-        $template->assign_vars(array(
+	/**
+	 * @desc Exports the section according to the given configuration. You will use the following template variables:
+	 * <ul>
+	 * 	<li>LOC containing the URL of the link</li>
+	 * 	<li>TEXT containing the name of the target page</li>
+	 * 	<li>C_DISPLAY_DATE indicating if the date is not empty</li>
+	 * 	<li>DATE containing the date of the last modification of the target page, formatted for the sitemap.xml file</li>
+	 * 	<li>ACTUALIZATION_FREQUENCY corresponding to the code needed in the sitemap.xml file</li>
+	 * 	<li>PRIORITY corresponding to the code needed in the sitemap.xml file to indicate the priority of the target page.</li>
+	 * 	<li>C_LINK indicating that we are displaying a link (useful if you want to use a signe template export configuration)</li>
+	 * </ul>
+	 * @param SiteMapExportConfig $export_config Export configuration
+	 * @return string the exported link
+	 */
+	public function export(SiteMapExportConfig  $export_config)
+	{
+		$display_date = $this->last_modification_date !== null;
+
+		//We get the stream in which we are going to write
+		$template = $export_config->get_link_stream();
+
+		$template->assign_vars(array(
 			'LOC' => $this->get_url(),
 			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
@@ -224,36 +238,10 @@ class SiteMapLink extends SiteMapElement
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
 			'PRIORITY' => $this->priority,
             'C_LINK' => true
-        ));
+		));
 
-        return $template->parse(Template::TEMPLATE_PARSER_STRING);
-    }
-
-    ## Private elements ##
-    /**
-    * @var string Name of the SiteMapElement
-    */
-    var $name = '';
-    /**
-     * @var Url Url of the link
-     */
-    var $link;
-    /**
-     * @var string Actualization frequency of the target page, must be a member of the following enum:
-     * SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY, SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY,
-     * SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER, SITE_MAP_FREQ_DEFAULT
-     */
-    var $change_freq = SITE_MAP_FREQ_DEFAULT;
-    /**
-     *
-     * @var Date Last modification date of the target page
-     */
-    var $last_modification_date;
-    /**
-     * @var string Priority of the target page, must be a member of the following enum: SITE_MAP_PRIORITY_MAX,
-     *  SITE_MAP_PRIORITY_HIGH, SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
-     */
-    var $priority = SITE_MAP_PRIORITY_AVERAGE;
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+	}
 }
 
 ?>

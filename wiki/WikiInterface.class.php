@@ -31,14 +31,12 @@
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
 {
-	## Public Methods ##
-	function WikiInterface() //Constructeur de la classe WikiInterface
+	public function __construct()
 	{
 		parent::__construct('wiki');
 	}
 
-	//Récupération du cache.
-	function get_cache()
+	public function get_cache()
 	{
 		//Catégories du wiki
 		$config = 'global $_WIKI_CATS;' . "\n";
@@ -64,22 +62,18 @@ class WikiInterface extends ModuleInterface
 		return $config . "\n\r" . $code;
 	}
 
-	// Recherche
-	function get_search_form($args=null)
-	/**
-	 *  Renvoie le formulaire de recherche du wiki
-	 */
+	public function get_search_form($args=null)
 	{
 		require_once(PATH_TO_ROOT . '/kernel/begin.php');
 		load_module_lang('wiki');
 		global $CONFIG, $LANG;
 
-		$Tpl = new Template('wiki/wiki_search_form.tpl');
+		$tpl = new Template('wiki/wiki_search_form.tpl');
 
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
 		$args['WikiWhere'] = 'title';
 
-		$Tpl->assign_vars(Array(
+		$tpl->assign_vars(Array(
             'L_WHERE' => $LANG['wiki_search_where'],
             'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
             'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
@@ -88,21 +82,15 @@ class WikiInterface extends ModuleInterface
             'L_CONTENTS' => $LANG['wiki_search_where_contents']
 		));
 
-		return $Tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
-	function get_search_args()
-	/**
-	 *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
-	 */
+	public function get_search_args()
 	{
 		return Array('WikiWhere');
 	}
 
-	function get_search_request($args)
-	/**
-	 *  Renvoie la requÃªte de recherche dans le wiki
-	 */
+	public function get_search_request($args)
 	{
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
@@ -142,7 +130,7 @@ class WikiInterface extends ModuleInterface
 		return $req;
 	}
 
-	function _build_wiki_cat_children(&$cats_tree, $cats, $id_parent = 0)
+	private function _build_wiki_cat_children(&$cats_tree, $cats, $id_parent = 0)
 	{
 		$i = 0;
 		$nb_cats = count($cats);
@@ -169,7 +157,7 @@ class WikiInterface extends ModuleInterface
 		}
 	}
 
-	function get_feeds_list()
+	public function get_feeds_list()
 	{
 		global $LANG;
 
@@ -193,7 +181,7 @@ class WikiInterface extends ModuleInterface
 		return $feeds;
 	}
 
-	function get_feed_data_struct($idcat = 0, $name = '')
+	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		global $Cache, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
 
@@ -210,10 +198,6 @@ class WikiInterface extends ModuleInterface
 			$desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']));
 			$where = "";
 		}
-
-		
-		
-		
 
 		$data = new FeedData();
 
@@ -254,7 +238,7 @@ class WikiInterface extends ModuleInterface
 		return $data;
 	}
 
-	function get_home_page()
+	public function get_home_page()
 	{
 		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
 
@@ -341,17 +325,15 @@ class WikiInterface extends ModuleInterface
 			$tmp = $Template->pparse('wiki', TRUE);
 			return $tmp;
 	}
-	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
+	
+	public function get_module_map($auth_mode)
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
-		
-		
-		
 		
 		load_module_lang('wiki');
 		$Cache->load('wiki');
 		
-		$wiki_link = new SiteMapLink($LANG['wiki'], new Url('wiki/wiki.php'), SITE_MAP_FREQ_DEFAULT, SITE_MAP_PRIORITY_LOW);
+		$wiki_link = new SiteMapLink($LANG['wiki'], new Url('wiki/wiki.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_LOW);
 		$module_map = new ModuleMap($wiki_link);
 		
 		$id_cat = 0;
@@ -371,7 +353,7 @@ class WikiInterface extends ModuleInterface
 		
 		return $module_map; 
 	}
-	
+
 	function _create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;

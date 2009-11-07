@@ -32,14 +32,13 @@ define('PAGES_MAX_SEARCH_RESULTS', 100);
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class PagesInterface extends ModuleInterface
 {
-    ## Public Methods ##
-    function PagesInterface() //Constructeur de la classe WikiInterface
+    public function __construct() //Constructeur de la classe WikiInterface
     {
         parent::__construct('pages');
     }
 	
 	//Récupération du cache.
-	function get_cache()
+	public function get_cache()
 	{
 		//Catégories des pages
 		$config = 'global $_PAGES_CATS;' . "\n";
@@ -79,15 +78,8 @@ class PagesInterface extends ModuleInterface
 		return $config . "\n\r" . $code;	
 	}
     
-    //Actions journalière.
-	/*
-	function on_changeday()
-	{
-	}
-	*/
-	
 	// Recherche
-    function get_search_request($args)
+    public function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
      */
@@ -147,18 +139,15 @@ class PagesInterface extends ModuleInterface
         return $results;
     }
     
-	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
+	public function get_module_map($auth_mode)
 	{
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG, $Cache;
-		
-		
-		
 		
 		include(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
 		$Cache->load('pages');
 		
-		$pages_link = new SiteMapLink($LANG['pages'], new Url('/pages/explorer.php'), SITE_MAP_FREQ_DEFAULT, SITE_MAP_PRIORITY_MAX);
+		$pages_link = new SiteMapLink($LANG['pages'], new Url('/pages/explorer.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_MAX);
 		$module_map = new ModuleMap($pages_link);
 		
 		$id_cat = 0;
@@ -170,11 +159,11 @@ class PagesInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			if ($auth_mode == SiteMap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
-			elseif ($auth_mode == SITE_MAP_AUTH_USER)
+			elseif ($auth_mode == SiteMap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == ADMIN_LEVEL)
 					$this_auth = true;
@@ -183,14 +172,14 @@ class PagesInterface extends ModuleInterface
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
-				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
+				$module_map->add($this->create_module_map_sections($id, $auth_mode));
 			}
 		}
 		
 		return $module_map; 
 	}
 	
-	function _create_module_map_sections($id_cat, $auth_mode)
+	private function create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG;
 		
@@ -207,11 +196,11 @@ class PagesInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			if ($auth_mode == SiteMap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
-			elseif ($auth_mode == SITE_MAP_AUTH_USER)
+			elseif ($auth_mode == SiteMap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == ADMIN_LEVEL)
 					$this_auth = true;
@@ -220,7 +209,7 @@ class PagesInterface extends ModuleInterface
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
-				$category->add($this->_create_module_map_sections($id, $auth_mode));
+				$category->add($this->create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}

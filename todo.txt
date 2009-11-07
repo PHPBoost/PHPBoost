@@ -9,6 +9,7 @@
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 Réparer le générateur de la documentation (lien.html#ancre non remplacé parfois)
 Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisation (différencier null et array vide)
+Essayer d'intégrer une balise flux en BBCode.
 
 ------------------------------------ MODULES -----------------------------------
 

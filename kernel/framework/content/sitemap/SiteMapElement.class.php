@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        site_map_element.class.php
+ *                        SiteMapElement.class.php
  *                            -------------------
  *   begin                : February 3rd 2009
  *   copyright            : (C) 2009 Sautel Benoit
@@ -35,66 +35,52 @@
  * Some SiteMapElements objects can contain one or many SiteMapElement objects therefore the elements
  * can be represented by a tree an each element has a depth in the tree.
  */
-class SiteMapElement
+abstract class SiteMapElement
 {
-    /**
-     * @desc Builds a SiteMapElement object
-     * @param string $name Name of the object
-     */
-    function SiteMapElement($name)
-    {
-        $this->name = $name;
-    }
+	/**
+	 * @var int Depth of the element in the elements tree
+	 */
+	var $depth = 1;
 
-    /**
-     * @desc Returns the depth of the element in the tree
-     * @return int depth
-     */
-    function get_depth()
-    {
-        return $this->depth;
-    }
+	/**
+	 * @desc Builds a SiteMapElement object
+	 * @param string $name Name of the object
+	 */
+	public function __construct()
+	{
+	}
 
-    /**
-     * @desc Returns the name of the menu
-     * @return string name
-     */
-    function get_name()
-    {
-        if (is_object($this->link))
-        {
-            return $this->link->get_name();
-        }
-        else
-        {
-            return '';
-        }
-    }
+	/**
+	 * @desc Returns the depth of the element in the tree
+	 * @return int depth
+	 */
+	public function get_depth()
+	{
+		return $this->depth;
+	}
 
-    /**
-     * @desc Sets the depth of the element
-     * @param int $depth the depth of the element
-     */
-    function set_depth($depth)
-    {
-        $this->depth = $depth;
-    }
+	/**
+	 * @desc Sets the depth of the element
+	 * @param int $depth the depth of the element
+	 */
+	public function set_depth($depth)
+	{
+		$this->depth = $depth;
+	}
 
-    /**
-     * @desc Exports the element
-     * @param SiteMapExportConfig $export_config Export configuration
-     * @param int $depth Depth of the element
-     * @return string The exported code
-     */
-    function export(&$export_config)
-    {
-    }
+	/**
+	 * @desc Returns the name of the menu
+	 * @return string name
+	 */
+	public abstract function get_name();
 
-    ## Private elements ##
-    /**
-    * @var int Depth of the element in the elements tree
-    */
-    var $depth = 1;
+	/**
+	 * @desc Exports the element
+	 * @param SiteMapExportConfig $export_config Export configuration
+	 * @param int $depth Depth of the element
+	 * @return string The exported code
+	 */
+	public abstract function export(SiteMapExportConfig  $export_config);
 }
 
 ?>
