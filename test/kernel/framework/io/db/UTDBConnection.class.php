@@ -211,7 +211,7 @@ class UTmysql extends PHPBoostUnitTestCase {
 	{
 		global $Sql;
 		
-		$ret = $Sql->count_table("member", __LINE__, __FILE__);
+		$ret = $Sql->count_table(PREFIX."member", __LINE__, __FILE__);
 		$this->assertTrue($ret AND ($ret>0));
 	}
 	

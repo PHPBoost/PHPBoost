@@ -973,7 +973,7 @@ else //Show all member!
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
 	
-	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
+	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	
 	$get_sort = retrieve(GET, 'sort', '', TSTRING_UNCHANGE);
 	switch ($get_sort)

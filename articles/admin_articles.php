@@ -36,7 +36,7 @@ $tpl = new Template('articles/admin_articles_management.tpl');
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
-$nbr_articles = $Sql->count_table('articles', __LINE__, __FILE__);
+$nbr_articles = $Sql->count_table(PREFIX . 'articles', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre d'articles est trop important.
 

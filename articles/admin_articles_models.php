@@ -440,7 +440,7 @@ else
 		}
 	}
 	
-	$nbr_models = $Sql->count_table('articles_models' , __LINE__, __FILE__);
+	$nbr_models = $Sql->count_table(PREFIX . 'articles_models' , __LINE__, __FILE__);
 
 	//On crée une pagination si le nombre d'articles est trop important.
 	

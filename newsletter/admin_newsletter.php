@@ -79,7 +79,7 @@ if ($member_list)
 //Si on envoie avec un certain type
 elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents))
 {
-	$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
+	$nbr = $Sql->count_table(PREFIX . 'newsletter', __LINE__, __FILE__);
 
 	switch ($type)
 	{
@@ -120,7 +120,7 @@ elseif (!empty($type)) //Rédaction
 		$type = ($type == 'html') ? 'html' : 'text';
 	}
 
-	$nbr = $Sql->count_table("newsletter", __LINE__, __FILE__);
+	$nbr = $Sql->count_table(PREFIX . "newsletter", __LINE__, __FILE__);
 
 	$Template->assign_block_vars('write', array(
 		'TYPE' => $type,

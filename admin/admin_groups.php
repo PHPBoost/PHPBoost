@@ -308,7 +308,7 @@ else //Liste des groupes.
 		'admin_groups_management'=> 'admin/admin_groups_management.tpl'
 	 ));
 	 
-	$nbr_group = $Sql->count_table("group", __LINE__, __FILE__);
+	$nbr_group = $Sql->count_table(DB_TABLE_GROUP, __LINE__, __FILE__);
 	//On crée une pagination si le nombre de group est trop important.
 	
 	$Pagination = new Pagination();

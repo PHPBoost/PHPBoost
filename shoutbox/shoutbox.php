@@ -214,7 +214,7 @@ else //Affichage.
 	$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
 	
 	//On crée une pagination si le nombre de messages est trop important.
-	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
+	$nbr_shout = $Sql->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
 	 
 	$Pagination = new Pagination();
 		

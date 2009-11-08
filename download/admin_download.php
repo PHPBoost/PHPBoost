@@ -36,7 +36,7 @@ $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
 
-$nbr_dl = $Sql->count_table('download', __LINE__, __FILE__);
+$nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
 

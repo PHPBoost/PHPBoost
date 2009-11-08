@@ -69,7 +69,7 @@ $Template->assign_vars(array(
 if (!empty($members))
 {
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
-	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
+	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
 		'C_STATS_USERS' => true,
