@@ -136,13 +136,15 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 			}
+			
+			$user_accounts_config = UserAccountsConfig::load();
 
 			//Gestion upload d'avatar.					
 			$user_avatar = '';
 			$dir = '../images/avatars/';
 			
 			$Upload = new Upload($dir);
-			$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
+			$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 			if ($Upload->get_size() > 0)
 			{
 				if ($Upload->get_error() != '') //Erreur, on arrête ici
@@ -150,7 +152,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				else
 				{
 					$path = $dir . $Upload->get_filename();
-					$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
 						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 					else
@@ -170,7 +172,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			if (!empty($_POST['avatar']))
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
@@ -613,6 +615,8 @@ elseif (!empty($id))
 		$i++;
 	}
 	
+	$user_accounts_config = UserAccountsConfig::load();
+	
 	//On assigne les variables pour le POST en précisant l'user_id.
 	$Template->assign_vars(array(
 		'C_USERS_MANAGEMENT' => true,
@@ -650,9 +654,9 @@ elseif (!empty($id))
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',
 		'THEME' => get_utheme(),
-		'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
-		'HEIGHT_MAX' => $CONFIG_USER['height_max'],
-		'WIDTH_MAX' => $CONFIG_USER['width_max'],
+		'WEIGHT_MAX' => $user_accounts_config->get_max_avatar_weight(),
+		'HEIGHT_MAX' => $user_accounts_config->get_max_avatar_height(),
+		'WIDTH_MAX' => $user_accounts_config->get_max_avatar_width(),
 		'USER_SIGN_EDITOR' => display_editor('user_sign'),
 		'USER_DESC_EDITOR' => display_editor('user_desc'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
@@ -850,7 +854,7 @@ else
 		}		
 	}
 
-	$nbr_membre = $Sql->count_table("member", __LINE__, __FILE__);
+	$nbr_membre = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
 	 
 	$Pagination = new Pagination();

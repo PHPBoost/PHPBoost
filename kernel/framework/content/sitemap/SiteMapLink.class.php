@@ -60,6 +60,15 @@ class SiteMapLink extends SiteMapElement
 	private $priority = SiteMap::PRIORITY_AVERAGE;
 
 	/**
+	 * @var mixed[] list of the accepted change freq values
+	 */
+	private static $change_freq_list = array(SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY, SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER, SiteMap::FREQ_DEFAULT);
+	/**
+	 * @var mixed[] list of the accepted priority values
+	 */
+	private static $priority_list = array(SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH, SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN);
+
+	/**
 	 * @desc Builds a SiteMapLink object
 	 * @param string $name Name of the target page
 	 * @param Url $link link
@@ -173,7 +182,7 @@ class SiteMapLink extends SiteMapElement
 	public function set_change_freq($change_freq)
 	{
 		//If the given frequency is correct
-		if (in_array($change_freq, array(SiteMap::FREQ_ALWAYS, SiteMap::FREQ_HOURLY, SiteMap::FREQ_DAILY, SiteMap::FREQ_WEEKLY, SiteMap::FREQ_MONTHLY, SiteMap::FREQ_YEARLY, SiteMap::FREQ_NEVER, SiteMap::FREQ_DEFAULT)))
+		if (in_array($change_freq, self::$change_freq_list))
 		{
 			$this->change_freq = $change_freq;
 		}
@@ -190,7 +199,7 @@ class SiteMapLink extends SiteMapElement
 	 */
 	public function set_priority($priority)
 	{
-		if (in_array($priority, array(SiteMap::PRIORITY_MAX, SiteMap::PRIORITY_HIGH, SiteMap::PRIORITY_AVERAGE, SiteMap::PRIORITY_LOW, SiteMap::PRIORITY_MIN)))
+		if (in_array($priority, self::$priority_list))
 		{
 			$this->priority = $priority;
 		}

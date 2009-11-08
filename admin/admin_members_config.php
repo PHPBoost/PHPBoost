@@ -31,25 +31,25 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['msg_mbr'])) //Message aux membres.
 {
-	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
-	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
-	$config_member['msg_register'] = $CONFIG_USER['msg_register'];
-	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
-	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
-	$config_member['verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
-	$config_member['delay_unactiv_max'] = retrieve(POST, 'delay_unactiv_max', 0); 
-	$config_member['force_theme'] = retrieve(POST, 'force_theme', 0); //Désactivé par défaut.
-	$config_member['activ_up_avatar'] = retrieve(POST, 'activ_up_avatar', 0); //Désactivé par défaut.
-	$config_member['width_max'] = retrieve(POST, 'width_max', 120);
-	$config_member['height_max'] = retrieve(POST, 'height_max', 120);
-	$config_member['weight_max'] = retrieve(POST, 'weight_max', 20);
-	$config_member['activ_avatar'] = retrieve(POST, 'activ_avatar', 0);
-	$config_member['avatar_url'] = retrieve(POST, 'avatar_url', '');
+	$user_account_config = UserAccountsConfig::load();
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$user_account_config->set_registration_enabled(retrieve(POST, 'activ_register', false));
+	$user_account_config->set_welcome_message(stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED))));
+	$user_account_config->set_member_accounts_validation_method(retrieve(POST, 'activ_mbr', 0));
+	$user_account_config->set_registration_captcha_enabled(retrieve(POST, 'verif_code', false));
+	$user_account_config->set_registration_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
+	$user_account_config->set_force_theme_enabled(retrieve(POST, 'force_theme', false));
+	$user_account_config->set_avatar_upload_enabled(retrieve(POST, 'activ_up_avatar', false));
+	$user_account_config->set_unactivated_accounts_timeout(retrieve(POST, 'delay_unactiv_max', 20));
+
+	$user_account_config->set_default_avatar_name_enabled(retrieve(POST, 'activ_avatar', false));
+	$user_account_config->set_default_avatar_name(retrieve(POST, 'avatar_url', ''));
 	
-	###### Régénération du cache $CONFIG_USER #######
-	$Cache->Generate_file('member');
+	$user_account_config->set_max_avatar_width(retrieve(POST, 'width_max', 120));
+	$user_account_config->set_max_avatar_height(retrieve(POST, 'height_max', 120));
+	$user_account_config->set_max_avatar_weight(retrieve(POST, 'weight_max', 20));
+	
+	UserAccountsConfig::save($user_account_config);
 	
 	redirect(HOST . SCRIPT); 	
 }
@@ -59,12 +59,14 @@ else
 		'admin_members_config'=> 'admin/admin_members_config.tpl'
 	));
 	
+	$user_account_config = UserAccountsConfig::load();
+	
 	#####################Activation du mail par le membre pour s'inscrire##################
 	$array = array(0 => $LANG['no_activ_mbr'], 1 => $LANG['mail'], 2 => $LANG['admin']);
 	$activ_mode_option = '';
 	foreach ($array as $key => $value)
 	{
-		$selected = ( $CONFIG_USER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
+		$selected = ($user_account_config->get_member_accounts_validation_method() == $key) ? 'selected="selected"' : '' ;		
 		$activ_mode_option .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
@@ -72,28 +74,28 @@ else
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
-			'SELECTED' => ($CONFIG_USER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+			'SELECTED' => ($user_account_config->get_registration_captcha_difficulty() == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
 	$Template->assign_vars(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
-		'ACTIV_REGISTER_ENABLED' => $CONFIG_USER['activ_register'] == 1 ? 'selected="selected"' : '',
-		'ACTIV_REGISTER_DISABLED' => $CONFIG_USER['activ_register'] == 0 ? 'selected="selected"' : '',
-		'VERIF_CODE_ENABLED' => ($CONFIG_USER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
-		'VERIF_CODE_DISABLED' => ($CONFIG_USER['verif_code'] == 0) ? 'checked="checked"' : '',
-		'DELAY_UNACTIV_MAX' => !empty($CONFIG_USER['delay_unactiv_max']) ? $CONFIG_USER['delay_unactiv_max'] : '',
-		'ALLOW_THEME_ENABLED' => ($CONFIG_USER['force_theme'] == 0) ? 'checked="checked"' : '',
-		'ALLOW_THEME_DISABLED' => ($CONFIG_USER['force_theme'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_UP_ENABLED' => ($CONFIG_USER['activ_up_avatar'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_UP_DISABLED' => ($CONFIG_USER['activ_up_avatar'] == 0) ? 'checked="checked"' : '',
-		'AVATAR_ENABLED' => ($CONFIG_USER['activ_avatar'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_DISABLED' => ($CONFIG_USER['activ_avatar'] == 0) ? 'checked="checked"' : '',
-		'WIDTH_MAX' => !empty($CONFIG_USER['width_max']) ? $CONFIG_USER['width_max'] : '120',
-		'HEIGHT_MAX' => !empty($CONFIG_USER['height_max']) ? $CONFIG_USER['height_max'] : '120',
-		'WEIGHT_MAX' => !empty($CONFIG_USER['weight_max']) ? $CONFIG_USER['weight_max'] : '20',
-		'AVATAR_URL' => !empty($CONFIG_USER['avatar_url']) ? $CONFIG_USER['avatar_url'] : '',
-		'CONTENTS' => unparse($CONFIG_USER['msg_mbr']),
+		'ACTIV_REGISTER_ENABLED' => $user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
+		'ACTIV_REGISTER_DISABLED' => !$user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
+		'VERIF_CODE_ENABLED' => $user_account_config->is_registration_captcha_enabled() ? 'checked="checked"' : '',
+		'VERIF_CODE_DISABLED' => !$user_account_config->is_registration_captcha_enabled() ? 'checked="checked"' : '',
+		'DELAY_UNACTIV_MAX' => $user_account_config->get_unactivated_accounts_timeout(),
+		'ALLOW_THEME_ENABLED' => !$user_account_config->is_users_theme_forced() ? 'checked="checked"' : '',
+		'ALLOW_THEME_DISABLED' => $user_account_config->is_users_theme_forced() ? 'checked="checked"' : '',
+		'AVATAR_UP_ENABLED' => $user_account_config->is_avatar_upload_enabled() ? 'checked="checked"' : '',
+		'AVATAR_UP_DISABLED' => !$user_account_config->is_avatar_upload_enabled() ? 'checked="checked"' : '',
+		'AVATAR_ENABLED' => $user_account_config->is_default_avatar_enabled() ? 'checked="checked"' : '',
+		'AVATAR_DISABLED' => !$user_account_config->is_default_avatar_enabled() ? 'checked="checked"' : '',
+		'WIDTH_MAX' => $user_account_config->get_max_avatar_width(),
+		'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
+		'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
+		'AVATAR_URL' => $user_account_config->get_default_avatar_name(),
+		'CONTENTS' => unparse($user_account_config->get_welcome_message()),
 		'KERNEL_EDITOR' => display_editor(),
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
 		'L_KB' => $LANG['unit_kilobytes'],

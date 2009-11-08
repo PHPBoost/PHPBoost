@@ -315,7 +315,7 @@ class ForumInterface extends ModuleInterface
 	 */
 	function parse_search_result(&$result_data)
 	{
-		global $CONFIG, $LANG, $CONFIG_USER;
+		global $CONFIG, $LANG;
 
 		load_module_lang('forum'); //Chargement de la langue du module.
 
@@ -334,7 +334,7 @@ class ForumInterface extends ModuleInterface
             'TITLE' => ucfirst($result_data['title']),
             'DATE' => gmdate_format('d/m/y', $result_data['date']),
             'CONTENTS' => second_parse($result_data['contents']),
-            'USER_AVATAR' => '<img src="' . ($CONFIG_USER['activ_avatar'] == '1' && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url']) . '" alt="" />'
+            'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" />'
             ));
 
             return $tpl->parse(Template::TEMPLATE_PARSER_STRING);

@@ -239,7 +239,6 @@ class Environment
 		global $Cache;
 		$CONFIG = array();
 		$Cache->load('config');
-		$Cache->load('member');
 		$Cache->load('modules');
 		$Cache->load('themes');
 		$Cache->load('langs');
@@ -256,7 +255,7 @@ class Environment
 
 	public static function init_session()
 	{
-		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG, $CONFIG_USER;
+		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG;
 		AppContext::get_session()->load();
 		AppContext::get_session()->act();
 
@@ -278,7 +277,7 @@ class Environment
 
 		$user_theme = AppContext::get_user()->get_attribute('user_theme');
 		//Is that theme authorized for this member? If not, we assign it the default theme
-		if ($CONFIG_USER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure'])
+		if (UserAccountsConfig::load()->is_users_theme_forced() || !isset($THEME_CONFIG[$user_theme]['secure'])
 		|| !AppContext::get_user()->check_level($THEME_CONFIG[$user_theme]['secure']))
 		{
 			$user_theme = $CONFIG['theme'];
@@ -364,8 +363,6 @@ class Environment
 
 	private static function perform_changeday()
 	{
-		global $CONFIG_USER;
-
 		self::perform_stats_changeday();
 
 		self::clear_all_temporary_cache_files();
@@ -464,10 +461,11 @@ class Environment
 
 	private static function remove_old_unactivated_member_accounts()
 	{
-		global $CONFIG_USER;
-		$delay_unactiv_max = (int)($CONFIG_USER['delay_unactiv_max'] * 3600 * 24);
+		$user_account_settings = UserAccountsConfig::load();
+		
+		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
 		//If the user configured a delay and member accounts must be activated
-		if ($delay_unactiv_max > 0 && $CONFIG_USER['activ_mbr'] != 2)
+		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
 		{
 			AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
 				" WHERE timestamp < '" . (time() - $delay_unactiv_max) . 

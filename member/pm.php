@@ -634,7 +634,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		//Avatar
 		if (empty($row['user_avatar']))
-			$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
+			$user_avatar = UserAccountsConfig::load()->is_default_avatar_enabled() ? '<img src="../templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name() . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 			

@@ -330,9 +330,11 @@ while ( $row = $Sql->fetch_assoc($result) )
 	else
 		$user_groups = $LANG['group'] . ': ' . $user_group;
 
+	$user_accounts_config = UserAccountsConfig::load();
+	
 	//Avatar			
 	if (empty($row['user_avatar'])) 
-		$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
+		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		

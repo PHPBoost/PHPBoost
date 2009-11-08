@@ -181,7 +181,7 @@ class Comments
 	 */
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $Session;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_COM, $_array_rank, $Session;
 		
 		if ($integrated_in_environment)
 		{
@@ -582,9 +582,11 @@ class Comments
 					//Membre en ligne?
 					$user_online = !empty($row['connect']) ? 'online' : 'offline';
 					
+					$user_accounts_config = UserAccountsConfig::load();
+					
 					//Avatar
 					if (empty($row['user_avatar']))
-						$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
+						$user_avatar = $user_accounts_config->is_default_avatar_enabled() ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 						
