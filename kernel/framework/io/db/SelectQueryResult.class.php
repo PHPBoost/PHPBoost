@@ -37,21 +37,25 @@
  * foreach ($my_query_result as $result) {
  * 	   // do something with the $result
  * }
- * </code> 
+ * </code>
  */
 interface SelectQueryResult extends QueryResult, iterator
 {
 	const FETCH_NUM = 0x00;
 	const FETCH_ASSOC = 0x01;
-	
+
 	function set_fetch_mode($fetch_mode);
-	
+
     /**
      * @desc returns the number of returned rows by this query
      * @return int the number of returned rows by this query
      */
     function get_rows_count();
-    
+
+	function has_next();
+
+	function fetch();
+
     /**
      * @desc free the resource. If not done manually, this is done in the destructor
      */
