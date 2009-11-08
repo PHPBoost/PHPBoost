@@ -50,7 +50,7 @@ $read = retrieve(GET, 'read', false);
 //Marque les messages privés comme lus
 if ($read)
 {
-	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
 
@@ -88,7 +88,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
-	if (Privatemsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
+	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
@@ -98,7 +98,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 		if (!empty($user_id_dest) && $user_id_dest != $User->get_attribute('user_id'))
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
-			list($pm_convers_id, $pm_msg_id) = Privatemsg::start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
+			list($pm_convers_id, $pm_msg_id) = PrivateMsg::start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
 			//Succès redirection vers la conversation.
 			redirect('/member/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
 		}
@@ -143,7 +143,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	));
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	if (!$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
 		$Errorh->handler($LANG['e_pm_full_post'], E_USER_WARNING);
 	else
@@ -748,7 +748,7 @@ else //Liste des conversation, dans la boite du membre.
 		'pm'=> 'member/pm.tpl'
 	));
 
-	$nbr_pm = Privatemsg::count_conversations($User->get_attribute('user_id'));
+	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	

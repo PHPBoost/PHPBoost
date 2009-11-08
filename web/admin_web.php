@@ -229,7 +229,7 @@ else
 		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
 
-	$nbr_web = $Sql->count_table('web', __LINE__, __FILE__);
+	$nbr_web = $Sql->count_table(PREFIX . 'web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
 	 

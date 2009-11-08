@@ -226,7 +226,7 @@ else //Affichage.
 	$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
 
 	//On crée une pagination si le nombre de msg est trop important.
-	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
+	$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
 	$Pagination = new Pagination();
 

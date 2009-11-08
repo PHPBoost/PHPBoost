@@ -455,7 +455,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 					if (!empty($warning_contents))
 					{
 
-						$Privatemsg = new PrivateMsg();
+						$PrivateMsg = new PrivateMsg();
 
 						//Envoi du message.
 						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);

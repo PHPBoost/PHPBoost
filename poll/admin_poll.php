@@ -242,7 +242,7 @@ else
 		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
 	));
 	 
-	$nbr_poll = $Sql->count_table('poll', __LINE__, __FILE__);
+	$nbr_poll = $Sql->count_table(PREFIX . 'poll', __LINE__, __FILE__);
 
 	 
 	$Pagination = new Pagination();
