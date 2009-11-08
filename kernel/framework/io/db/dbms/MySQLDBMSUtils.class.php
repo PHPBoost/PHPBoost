@@ -128,42 +128,16 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $fields;
 	}
 
-    public function create_table($table_name, array $fields, array $options = array())
-    {
-        $options_sample = array(
-            'primary' => array('event_id', 'person_id'),
-            'character_set' => 'utf8',
-            'collate' => 'utf8_unicode_ci',
-            'foreignKeys' => array(
-                'fk_name' => array(
-                    'local'   => 'ext_id_fk',
-                    'foreign' => 'id',
-                    'foreignTable' => 'events',
-                ),
-                'onDelete' => 'CASCADE',
-            )
-        );
-        $fields_sample = array(
-            'id' => array(
-                'type' => 'integer',
-                'primary' => true,
-                'autoincrement' => true
-            ),
-            'name' => array(
-                'type' => 'string',
-                'length' => 255,
-                'full_text' => true
-            ),
-            'datetime' => array(
-                'type' => 'timestamp'
-            ),
-            'ext_id_fk' => array(
-                'type' => 'integer',
-            ),
-        );
-        $create_table_query = 'CREATE TABLE IF NOT EXISTS `' . $table_name . '`';
-        $this->inject($create_table_query . ';');
-    }
+	public function create_table($table_name, array $fields, array $options = array())
+	{
+		//        $create_table_query = 'CREATE TABLE IF NOT EXISTS `' . $table_name . '`';
+
+		    	$mysql_platform = new MySqlPlatform();
+//		$mysql_platform = new PostgreSqlPlatform();
+		var_export($mysql_platform->getCreateTableSql($table_name, $fields, $options));
+
+		//        $this->inject($create_table_query . ';');
+	}
 
 	public function drop($tables)
 	{

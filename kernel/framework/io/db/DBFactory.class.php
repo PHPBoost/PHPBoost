@@ -34,6 +34,11 @@
  */
 class DBFactory
 {
+	const MYSQL = 0x01;
+	const PDO_MYSQL = 0x11;
+	const PDO_SQLITE = 0x12;
+	const PDO_POSTGRESQL = 0x13;
+
 	//private static $dbms = 'pdo-mysql';
 	private static $dbms = 'mysql';
 
@@ -66,10 +71,10 @@ class DBFactory
 			}
 			switch ($dbms_type)
 			{
-				case 'pdo-mysql':
+				case self::PDO_MYSQL:
 					self::$db_connection = new PDODBConnection();
 					break;
-				case 'mysql':
+				case self::MYSQL:
 				default:
 					self::$db_connection = new MySQLDBConnection();
 					break;
@@ -92,9 +97,9 @@ class DBFactory
 		}
 		switch ($dbms_type)
 		{
-			case 'pdo-mysql':
+			case self::PDO_MYSQL:
 				return new PDOQuerier($db_connection, self::new_query_translator());
-			case 'mysql':
+			case self::MYSQL:
 			default:
 				return new MySQLQuerier($db_connection, self::new_query_translator());
 		}
@@ -108,8 +113,8 @@ class DBFactory
 		}
 		switch ($dbms_type)
 		{
-			case 'pdo-mysql':
-			case 'mysql':
+			case self::PDO_MYSQL:
+			case self::MYSQL:
 			default:
 				return new MySQLDBMSUtils($querier);
 		}
@@ -123,8 +128,8 @@ class DBFactory
 		}
 		switch ($dbms_type)
 		{
-			case 'pdo-mysql':
-			case 'mysql':
+			case self::PDO_MYSQL:
+			case self::MYSQL:
 			default:
 				return new MySQLQueryTranslator();
 		}
