@@ -139,10 +139,10 @@ class MySQLDBMSUtils implements DBMSUtils
                     'local'   => 'ext_id_fk',
                     'foreign' => 'id',
                     'foreignTable' => 'events',
-                )
+                ),
                 'onDelete' => 'CASCADE',
             )
-        )
+        );
         $fields_sample = array(
             'id' => array(
                 'type' => 'integer',
@@ -156,7 +156,7 @@ class MySQLDBMSUtils implements DBMSUtils
             ),
             'datetime' => array(
                 'type' => 'timestamp'
-            )
+            ),
             'ext_id_fk' => array(
                 'type' => 'integer',
             ),

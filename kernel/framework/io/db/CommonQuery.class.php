@@ -35,12 +35,12 @@ class CommonQuery
 	 * @var SQLQuerier
 	 */
 	private $querier;
-	
+
 	public function __construct(SQLQuerier $querier)
 	{
 		$this->querier = $querier;
 	}
-	
+
 	/**
 	 * @desc insert the values into the <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
@@ -153,7 +153,8 @@ class CommonQuery
 		{
 			$query .= ' WHERE ' . $condition;
 		}
-		return $this->querier->select($query, $parameters);
+		$row = $this->querier->select($query, $parameters, SelectQueryResult::FETCH_NUM)->fetch();
+		return $row[0];
 	}
 }
 
