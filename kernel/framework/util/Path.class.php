@@ -67,7 +67,7 @@ class Path
 
 	public static function uniformize_path($path)
 	{
-		return str_replace('\\', '/', $path);
+		return str_replace('\\', '/', realpath($path));
 	}
 }
 

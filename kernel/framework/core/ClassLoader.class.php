@@ -62,27 +62,29 @@ class ClassLoader
 		import('io/filesystem/File');
 		import('util/Path');
 
-		self::add_classes(Path::phpboost_path(), true);
+		self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
+		self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
 		self::generate_autoload_cache();
 		return self::$autoload;
 	}
 
-	private static function add_classes($directory, $recursive = false)
+	private static function add_classes($directory, $pattern, $recursive = false)
 	{
 		$files = array();
 		$folder = new Folder($directory);
 		$relative_path = Path::get_path_from_root($folder->get_name(true));
-		foreach ($folder->get_files('`^.+\.class\.php$`') as $file)
+		foreach ($folder->get_files($pattern) as $file)
 		{
-			$classname = preg_replace('`\.class\.php$`', '', $file->get_name(false, false));
-			self::$autoload[$classname] = $relative_path . '/' . $classname . '.class.php';
+			$filename = $file->get_name(false, false);
+			$classname = substr($filename, 0, strpos($filename, '.'));
+			self::$autoload[$classname] = $relative_path . '/' . $filename;
 		}
 
 		if ($recursive)
 		{
 			foreach ($folder->get_folders() as $folder)
 			{
-				self::add_classes($folder->get_name(true), true);
+				self::add_classes($folder->get_name(true), $pattern, true);
 			}
 		}
 	}
