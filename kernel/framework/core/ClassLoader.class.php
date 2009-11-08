@@ -60,8 +60,9 @@ class ClassLoader
 		import('io/filesystem/FileSystemElement');
 		import('io/filesystem/Folder');
 		import('io/filesystem/File');
+		import('util/Path');
 
-		self::add_classes(FS_ROOT_DIRECTORY, true);
+		self::add_classes(Path::phpboost_path(), true);
 		self::generate_autoload_cache();
 		return self::$autoload;
 	}
@@ -70,7 +71,7 @@ class ClassLoader
 	{
 		$files = array();
 		$folder = new Folder($directory);
-		$relative_path = str_replace(FS_ROOT_DIRECTORY, '', $folder->get_name(true));
+		$relative_path = Path::get_path_from_root($folder->get_name(true));
 		foreach ($folder->get_files('`^.+\.class\.php$`') as $file)
 		{
 			$classname = preg_replace('`\.class\.php$`', '', $file->get_name(false, false));

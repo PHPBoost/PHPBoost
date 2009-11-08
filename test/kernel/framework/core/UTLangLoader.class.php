@@ -1,7 +1,6 @@
 <?php
 
-
-
+import('core/lang/LangLoader');
 
 class UTLangLoader extends PHPBoostUnitTestCase {
 
@@ -10,7 +9,6 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 		LangLoader::clear_lang_cache();
 		LangLoader::set_locale(LangLoader::DEFAULT_LOCALE);
 	}
-
 
 	public function test_unexisting_lang()
 	{
@@ -68,5 +66,12 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'lang_var2' => 'coucou2',
 			'lang_var3' => 'coucou3');
 		$this->assertEquals($expected, $lang);
+	}
+
+	public function test_get_class()
+	{
+		$class_file = Path::phpboost_path() .
+			'/admin/menus/controllers/MenuControllerConfigurationsList.class.php';
+		LangLoader::get_class($class_file, '/test/data/');
 	}
 }
