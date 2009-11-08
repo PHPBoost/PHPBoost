@@ -120,7 +120,7 @@ class Debug
 	{
 		if (!empty($trace['file']))
 		{
-			return get_free_phpboost_root_directory_path($trace['file']) . ':' . $trace['line'];
+			return Path::uniformize_path($trace['file']) . ':' . $trace['line'];
 		}
 		return 'Internal';
 	}

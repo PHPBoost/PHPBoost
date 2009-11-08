@@ -52,6 +52,14 @@ class LangLoader
 		return self::get_raw(trim($module, '/'), $filename);
 	}
 
+	public static function get_class($class_file, $module = '')
+	{
+		$package = Path::get_package($class_file);
+		$classname = Path::get_classname($class_file);
+		$lang_file = str_replace('/', '-', $package) . '-' . $classname;
+		return self::get($lang_file, $module);
+	}
+
 	private static function get_raw(&$folder, &$filename)
 	{
 		$langfile = $folder . '/' . $filename;
@@ -90,7 +98,7 @@ class LangLoader
 			return $real_lang_file;
 		}
 
-		
+
 		throw new LangNotFoundException($folder, $filename);
 	}
 }
