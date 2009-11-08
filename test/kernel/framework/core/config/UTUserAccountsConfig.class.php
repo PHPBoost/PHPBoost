@@ -8,24 +8,21 @@ class UTUserAccountsConfig extends PHPBoostUnitTestCase
 	{
 	}
 
-	public function test_are_user_accounts_enabled()
+	public function test_get_member_accounts_validation_method()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(true, $config->are_user_accounts_enabled());
+		$this->assertEquals(1, $config->get_member_accounts_validation_method());
 	}
 
-	public function test_enable_user_accounts()
+	public function test_set_member_accounts_validation_method()
 	{
 		$config = self::prepare_config();
-		$config->enable_user_accounts();
-		$this->assertEquals(true, $config->are_user_accounts_enabled());
-	}
-
-	public function test_disable_user_accounts()
-	{
-		$config = self::prepare_config();
-		$config->disable_user_accounts();
-		$this->assertEquals(false, $config->are_user_accounts_enabled());
+		$config->set_member_accounts_validation_method(0);
+		$this->assertEquals(0,  $config->get_member_accounts_validation_method());
+		$config->set_member_accounts_validation_method(2);
+		$this->assertEquals(2,  $config->get_member_accounts_validation_method());
+		$config->set_member_accounts_validation_method(3);
+		$this->assertEquals(0,  $config->get_member_accounts_validation_method());
 	}
 
 	public function test_get_welcome_message()
@@ -64,7 +61,7 @@ class UTUserAccountsConfig extends PHPBoostUnitTestCase
 	public function test_is_registration_captcha_enabled()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(true, $config->is_registration_captcha_enabled());
+		$this->assertEquals(@extension_loaded('gd'), $config->is_registration_captcha_enabled());
 	}
 
 	public function test_enable_registration_captcha()
@@ -92,6 +89,10 @@ class UTUserAccountsConfig extends PHPBoostUnitTestCase
 		$config = self::prepare_config();
 		$config->set_registration_captcha_difficulty(3);
 		$this->assertEquals(3, $config->get_registration_captcha_difficulty());
+		$config->set_registration_captcha_difficulty(5);
+		$this->assertEquals(2, $config->get_registration_captcha_difficulty());
+		$config->set_registration_captcha_difficulty(-1);
+		$this->assertEquals(2, $config->get_registration_captcha_difficulty());
 	}
 
 	public function test_get_unactivated_accounts_timeout()
@@ -147,17 +148,19 @@ class UTUserAccountsConfig extends PHPBoostUnitTestCase
 		$this->assertEquals(false, $config->is_avatar_upload_enabled());
 	}
 
-	public function test_get_default_avatar()
+	public function test_get_default_avatar_name()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals('no_avatar.png', $config->get_default_avatar());
+		$this->assertEquals('no_avatar.png', $config->get_default_avatar_name());
 	}
 
-	public function test_set_default_avatar()
+	public function test_set_default_avatar_name()
 	{
 		$config = self::prepare_config();
-		$config->set_default_avatar('avatar.png');
-		$this->assertEquals('avatar.png', $config->get_default_avatar());
+		$config->set_default_avatar_name('avatar.png');
+		$this->assertEquals('avatar.png', $config->get_default_avatar_name());
+		$config->set_default_avatar_name('');
+		$this->assertEquals('no_avatar.png', $config->get_default_avatar_name());
 	}
 
 	public function test_get_max_avatar_width()

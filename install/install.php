@@ -706,15 +706,11 @@ switch($step)
 				$Cache->Generate_file('config');
 					
 				//Configuration des membres
-				$Cache->load('member');
-					
-				$CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
-				$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
-				$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
-					
-				$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
-					
-				$Cache->generate_file('member');
+				$user_account_config = UserAccountsConfig::load();
+
+				$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
+				
+				UserAccountsConfig::save($user_account_config);
 
 				//On envoie un mail à l'administrateur
 				$LANG['admin'] = '';

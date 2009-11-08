@@ -57,7 +57,7 @@ $Sql->query_close($result);
  
 $Pagination = new Pagination();
 
-$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
+$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table(DB_TABLE_COM, __LINE__, __FILE__);
 $Template->assign_vars(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
@@ -165,10 +165,23 @@ while ($row = $Sql->fetch_assoc($result))
 	$user_online = !empty($row['connect']) ? 'online' : 'offline';
 	
 	//Avatar			
-	if (empty($row['user_avatar'])) 
-		$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
+	if (empty($row['user_avatar']))
+	{
+		$user_accounts_config = UserAccountsConfig::load();
+		$default_avatar = $user_accounts_config->get_default_avatar_name();
+		if ($user_accounts_config->is_default_avatar_enabled() && !empty($default_avatar))
+		{
+			$user_avatar = '<img src="../templates/' . get_utheme() . '/images/' .  $default_avatar . '" alt="" />';
+		}
+		else
+		{
+			$user_avatar = '';
+		}
+	}
 	else
+	{
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+	}
 	
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	$user_sex = '';

@@ -191,9 +191,10 @@ if (!empty($id_get)) //Espace membre
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
+		$user_account_config = UserAccountsConfig::load();
 		
 		//Gestion thème par défaut.
-		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		if (!$user_account_config->is_users_theme_forced()) //Thèmes aux membres autorisés.
 		{
 			$utheme = get_utheme();
 			foreach($THEME_CONFIG as $theme => $array_info)
@@ -258,13 +259,13 @@ if (!empty($id_get)) //Espace membre
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
-		if ($CONFIG_USER['activ_up_avatar'] == 1)
+		if ($user_account_config->is_avatar_upload_enabled())
 		{
 			$Template->assign_vars(array(
 				'C_UPLOAD_AVATAR' => true,
-				'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
-				'HEIGHT_MAX' => $CONFIG_USER['height_max'],
-				'WIDTH_MAX' => $CONFIG_USER['width_max']
+				'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
+				'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
+				'WIDTH_MAX' => $user_account_config->get_max_avatar_width()
 			));
 		}
 		
@@ -466,14 +467,16 @@ if (!empty($id_get)) //Espace membre
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			}
 
+			$user_account_config = UserAccountsConfig::load();
+			
 			//Gestion upload d'avatar.
 			$user_avatar = '';
-			if ($CONFIG_USER['activ_up_avatar'] == 1)
+			if ($user_account_config->is_avatar_upload_enabled())
 			{
 				$dir = '../images/avatars/';
 				$Upload = new Upload($dir);
 			
-				$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
+				$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_account_config->get_max_avatar_weight() * 1024);
 				if ($Upload->get_size() > 0)
 				{
 					if ($Upload->get_error() != '') //Erreur, on arrête ici
@@ -483,7 +486,7 @@ if (!empty($id_get)) //Espace membre
 					else
 					{
 						$path = $dir . $Upload->get_filename();
-						$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+						$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
 							redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
@@ -504,7 +507,7 @@ if (!empty($id_get)) //Espace membre
 			if (!empty($_POST['avatar']))
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = Util::check_img_dimension($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+				$error = Util::check_img_dimension($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
@@ -633,7 +636,7 @@ if (!empty($id_get)) //Espace membre
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
 		//Info membre
-		$msg_mbr = !empty($CONFIG_USER['msg_mbr']) ? second_parse($CONFIG_USER['msg_mbr']) : '';
+		$msg_mbr = second_parse(UserAccountsConfig::load()->get_welcome_message());
 	
 		//Chargement de la configuration.
 		$Cache->load('uploads');
@@ -899,11 +902,13 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 				$user_rank = $LANG['admin'];
 				break;
 			}
-				
+			
+			$user_account_config = UserAccountsConfig::load();
+			
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
-			if (empty($row['user_avatar']) && $CONFIG_USER['activ_avatar'] == '1')
-				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />';
+			if (empty($row['user_avatar']) && $user_account_config->is_default_avatar_enabled())
+				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $user_account_config->get_default_avatar_name() . '" alt="" />';
 			
 			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,

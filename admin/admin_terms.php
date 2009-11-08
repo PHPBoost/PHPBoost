@@ -29,30 +29,14 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->load('member');
-
 if (!empty($_POST['msg_register'])) //Message à l'inscription.
 {
-	$config_member['activ_register'] = isset($CONFIG_USER['activ_register']) ? numeric($CONFIG_USER['activ_register']) : 0;
-	$config_member['activ_mbr'] = isset($CONFIG_USER['activ_mbr']) ? numeric($CONFIG_USER['activ_mbr']) : 0; //désactivé par defaut. 
-	$config_member['verif_code'] = isset($CONFIG_USER['verif_code']) ? numeric($CONFIG_USER['verif_code']) : 0; //désactivé par defaut. 
-	$config_member['delay_unactiv_max'] = isset($CONFIG_USER['delay_unactiv_max']) ? numeric($CONFIG_USER['delay_unactiv_max']) : '';
-	$config_member['force_theme'] = isset($CONFIG_USER['force_theme']) ? numeric($CONFIG_USER['force_theme']) : 0; //Désactivé par défaut.
-	$config_member['activ_up_avatar'] = isset($CONFIG_USER['activ_up_avatar']) ? numeric($CONFIG_USER['activ_up_avatar']) : 0; //Désactivé par défaut.
-	$config_member['width_max'] = isset($CONFIG_USER['width_max']) ? numeric($CONFIG_USER['width_max']) : 120;
-	$config_member['height_max'] = isset($CONFIG_USER['height_max']) ? numeric($CONFIG_USER['height_max']) : 120;
-	$config_member['weight_max'] = isset($CONFIG_USER['weight_max']) ? numeric($CONFIG_USER['weight_max']) : 20;
-	$config_member['activ_avatar'] = isset($CONFIG_USER['activ_avatar']) ? numeric($CONFIG_USER['activ_avatar']) : 0;
-	$config_member['avatar_url'] = isset($CONFIG_USER['avatar_url']) ? $CONFIG_USER['avatar_url'] : 0;
-	$config_member['msg_mbr'] = isset($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
+	$user_accounts_config = UserAccountsConfig::load();
+
+	$user_accounts_config->set_registration_agreement(stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE)));
 	
-	$config_member['msg_register'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
+	UserAccountsConfig::save($user_accounts_config);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
-	
-	###### Régénération du cache $CONFIG_USER #######
-	$Cache->Generate_file('member');
-		
 	redirect(HOST . SCRIPT); 	
 }
 else
@@ -68,8 +52,10 @@ else
 	
 	$msg_register = $Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
+	$user_accounts_config = UserAccountsConfig::load();
+	
 	$Template->assign_vars(array(
-		'CONTENTS' => unparse($CONFIG_USER['msg_register']),
+		'CONTENTS' => unparse($user_accounts_config->get_registration_agreement()),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],

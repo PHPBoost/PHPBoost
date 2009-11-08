@@ -30,8 +30,9 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_register']);
 require_once('../kernel/header.php');
 
-$Cache->load('member');
-if (!$CONFIG_USER['activ_register'])
+$user_accounts_config = UserAccountsConfig::load();
+
+if (!$user_accounts_config->is_registration_enabled())
 	redirect(get_start_page());
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
@@ -70,9 +71,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	//Code de vérification si activé
 	
 	$Captcha = new Captcha();
-	$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
+	$Captcha->set_difficulty($user_accounts_config->get_registration_captcha_difficulty());
 	
-	if (!($CONFIG_USER['verif_code'] == '1') || $Captcha->is_valid()) //Code de vérification si activé
+	if (!$user_accounts_config->is_registration_captcha_enabled() || $Captcha->is_valid()) //Code de vérification si activé
 	{
 		if (strlen($login) >= 3 && strlen($password) >= 6 && strlen($password_bis) >= 6)
 		{
@@ -85,17 +86,17 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				
 				$Upload = new Upload($dir);
 				
-				if ($CONFIG_USER['activ_up_avatar'] == 1)
+				if ($user_accounts_config->is_avatar_upload_enabled())
 				{
 					if ($Upload->get_size() > 0)
 					{
-						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
+						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 						if ($Upload->get_error() != '') //Erreur, on arrête ici
 							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->get_filename();
-							$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+							$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 							if (!empty($error)) //Erreur, on arrête ici
 								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 							else
@@ -107,7 +108,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$path = retrieve(POST, 'avatar', '');
 				if (!empty($path))
 				{
-					$error = $Upload->check_img($CONFIG_USER['width_max'], $CONFIG_USER['height_max'], Upload::DELETE_ON_ERROR);
+					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
 						redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 					else
@@ -125,8 +126,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					redirect('/member/register' . url('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
-					$user_aprob = ($CONFIG_USER['activ_mbr'] == 0) ? 1 : 0;
-					$activ_mbr = ($CONFIG_USER['activ_mbr'] == 1) ? substr(strhash(uniqid(rand(), true)), 0, 15) : ''; //Génération de la clée d'activation!
+					$user_aprob = ($user_accounts_config->get_member_accounts_validation_method() == 0) ? 1 : 0;
+					$activ_mbr = ($user_accounts_config->get_member_accounts_validation_method() == 1) ? substr(strhash(uniqid(rand(), true)), 0, 15) : ''; //Génération de la clée d'activation!
 					
 					//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 					@unlink('../cache/sex.png');
@@ -138,7 +139,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MEMBER); //Id du membre qu'on vient d'enregistrer
 					
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
-					if ($CONFIG_USER['activ_mbr'] == 2)
+					if ($user_accounts_config->get_member_accounts_validation_method() == 2)
 					{
 						
 						
@@ -242,12 +243,12 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					}
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
-					if ($CONFIG_USER['activ_mbr'] == 1)
+					if ($user_accounts_config->get_member_accounts_validation_method() == 1)
 					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_email_confirm'];
 						$valid = sprintf($LANG['register_valid_email'], HOST . DIR . '/member/register.php?key=' . $activ_mbr);
 					}
-					elseif ($CONFIG_USER['activ_mbr'] == 2)
+					elseif ($user_accounts_config->get_member_accounts_validation_method() == 2)
 					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_admin'];
 						$valid = $LANG['register_valid_admin'];
@@ -265,7 +266,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					$Mail->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);
 					
 					//On connecte le membre directement si aucune activation demandée.
-					if ($CONFIG_USER['activ_mbr'] == 0)
+					if ($user_accounts_config->get_member_accounts_validation_method() == 0)
 					{
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 						$Session->start($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.

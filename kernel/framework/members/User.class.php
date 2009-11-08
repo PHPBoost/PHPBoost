@@ -201,9 +201,9 @@ class User
 	 */
 	public function update_user_theme($user_theme)
 	{
-		global $Sql, $CONFIG_USER;
+		global $Sql;
 
-		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		if (!UserAccountsConfig::load()->is_users_theme_forced()) //Thèmes aux membres autorisés.
 		{
 			if ($this->user_data['level'] > -1)
 			{

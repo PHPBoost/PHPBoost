@@ -26,8 +26,6 @@
  ###################################################*/
 
 
-
-
 /**
  * This class contains all the data related to the user accounts configuration.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -36,9 +34,9 @@
 class UserAccountsConfig extends DefaultConfigData
 {
 	/**
-	 * Name of the property indicating if the interaction with users is enabled
+	 * Name of the property indicating if member accounts have to be validated and how.
 	 */
-	const USER_ACCOUNTS_ENABLED_PROPERTY = 'user_accounts_enabled';
+	const MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY = 'member_accounts_validation_method';
 	/**
 	 * Name of the property containing the welcome message visible at the entry of the member zone
 	 */
@@ -105,28 +103,27 @@ class UserAccountsConfig extends DefaultConfigData
 	const MAX_AVATAR_WEIGHT_PROPERTY = 'max_avatar_weight';
 
 	/**
-	 * Tells whether the interaction between members is enabled or not.
-	 * @return bool if it's enabled, false otherwise
+	 * Tells how the member accounts are activated
+	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
+	 * mail it receives, 2 if the administrator has to approbate it.
 	 */
-	public function are_user_accounts_enabled()
+	public function get_member_accounts_validation_method()
 	{
-		return $this->get_property(self::USER_ACCOUNTS_ENABLED_PROPERTY);
+		return $this->get_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY);
 	}
 
 	/**
-	 * Enables the interaction between members.
+	 * Sets the method used to validate the member accounts
+	 * @param int $method 0 if there is no activation, 1 if the member activates its account 
+	 * thanks to the mail it receives, 2 if the administrator has to approbate it.
 	 */
-	public function enable_user_accounts()
+	public function set_member_accounts_validation_method($method)
 	{
-		$this->set_property(self::USER_ACCOUNTS_ENABLED_PROPERTY, true);
-	}
-
-	/**
-	 * Disables the interaction between members.
-	 */
-	public function disable_user_accounts()
-	{
-		$this->set_property(self::USER_ACCOUNTS_ENABLED_PROPERTY, false);
+		if ($method > 2 || $method < 0)
+		{
+			$method = 0;
+		}
+		$this->set_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY, $method);
 	}
 
 	/**
@@ -157,11 +154,20 @@ class UserAccountsConfig extends DefaultConfigData
 	}
 
 	/**
+	 * Sets the boolean indicating if the registration is enabled
+	 * @param bool $enabled true if enabled, false otherwise
+	 */
+	public function set_registration_enabled($enabled)
+	{
+		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, $enabled);
+	}
+
+	/**
 	 * Enables the member registration
 	 */
 	public function enable_registration()
 	{
-		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, true);
+		$this->set_registration_enabled(true);
 	}
 
 	/**
@@ -169,7 +175,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_registration()
 	{
-		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, false);
+		$this->set_registration_enabled(false);
 	}
 
 	/**
@@ -200,11 +206,21 @@ class UserAccountsConfig extends DefaultConfigData
 	}
 
 	/**
+	 * Sets the boolean indicating if the registration captcha is enabled.
+	 * If it can't be enabled (GD extension not loaded), it's disabled.
+	 * @param true $enabled true if enabled, false otherwise
+	 */
+	public function set_registration_captcha_enabled($enabled)
+	{
+		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, $enabled && @extension_loaded('gd'));
+	}
+
+	/**
 	 * Enables the registration captcha.
 	 */
 	public function enable_registration_captcha()
 	{
-		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, true);
+		$this->set_registration_captcha_enabled(true);
 	}
 
 	/**
@@ -212,7 +228,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_registration_captcha()
 	{
-		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, false);
+		$this->set_registration_captcha_enabled(false);
 	}
 
 	/**
@@ -230,6 +246,10 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function set_registration_captcha_difficulty($level)
 	{
+		if ($level < 0 || $level > 4)
+		{
+			$level = 2;
+		}
 		$this->set_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY, $level);
 	}
 
@@ -243,11 +263,20 @@ class UserAccountsConfig extends DefaultConfigData
 	}
 
 	/**
+	 * Sets the boolean indicating if the theme is forced
+	 * @param true $enabled true if enabled, false otherwise
+	 */
+	public function set_force_theme_enabled($enabled)
+	{
+		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, $enabled);
+	}
+
+	/**
 	 * Forces users theme as the site default one
 	 */
 	public function force_users_theme()
 	{
-		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, true);
+		$this->set_force_theme_enabled(true);
 	}
 
 	/**
@@ -255,7 +284,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function dont_force_users_theme()
 	{
-		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, false);
+		$this->set_force_theme_enabled(false);
 	}
 
 	/**
@@ -268,11 +297,20 @@ class UserAccountsConfig extends DefaultConfigData
 	}
 
 	/**
+	 * Sets the boolean indicating if avatars can be uploaded on the server
+	 * @param bool $enabled true if enabled, false otherwise
+	 */
+	public function set_avatar_upload_enabled($enabled)
+	{
+		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, $enabled);
+	}
+	
+	/**
 	 * Lets users upload their avatar
 	 */
 	public function enable_avatar_upload()
 	{
-		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, true);
+		$this->set_avatar_upload_enabled(true);
 	}
 
 	/**
@@ -280,7 +318,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_avatar_upload()
 	{
-		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, false);
+		$this->set_avatar_upload_enabled(false);
 	}
 
 	/**
@@ -311,11 +349,20 @@ class UserAccountsConfig extends DefaultConfigData
 	}
 
 	/**
+	 * Sets the boolean indicating if the default avatar is enabled when a user hasn't its own one.
+	 * @param true $enabled true if enabled, false otherwise
+	 */
+	public function set_default_avatar_name_enabled($enabled)
+	{
+		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, $enabled);
+	}
+	
+	/**
 	 * Enables the default avatar for users who don't have their own one
 	 */
 	public function enable_default_avatar()
 	{
-		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, true);
+		$this->set_default_avatar_name_enabled(true);
 	}
 
 	/**
@@ -323,14 +370,14 @@ class UserAccountsConfig extends DefaultConfigData
 	 */
 	public function disable_default_avatar()
 	{
-		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, false);
+		$this->set_default_avatar_name_enabled(false);
 	}
 
 	/**
 	 * Returns the default avatar URL
 	 * @return string sThe URL
 	 */
-	public function get_default_avatar()
+	public function get_default_avatar_name()
 	{
 		return $this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
@@ -339,8 +386,12 @@ class UserAccountsConfig extends DefaultConfigData
 	 * Sets the default avatar URL
 	 * @param tring $url The URL of the default avatar
 	 */
-	public function set_default_avatar($url)
+	public function set_default_avatar_name($url)
 	{
+		if (empty($url))
+		{
+			$url = 'no_avatar.png';
+		}
 		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
 	}
 
@@ -382,7 +433,7 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * Returns the max weight of avatars
-	 * @return int The weight in bytes
+	 * @return int The weight in kilobytes
 	 */
 	public function get_max_avatar_weight()
 	{
@@ -391,7 +442,7 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * Sets the max weight of avatars
-	 * @param int $height The weight in bytes
+	 * @param int $height The weight in kilobytes
 	 */
 	public function set_max_avatar_weight($weight)
 	{
@@ -406,8 +457,8 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		global $LANG;
 
-		$this->enable_user_accounts();
 		$this->enable_registration();
+		$this->set_member_accounts_validation_method(1);
 		$this->set_welcome_message($LANG['site_config_msg_mbr']);
 		$this->set_registration_agreement($LANG['register_agreement']);
 		$this->enable_registration_captcha();
@@ -416,7 +467,7 @@ class UserAccountsConfig extends DefaultConfigData
 		$this->dont_force_users_theme();
 		$this->enable_avatar_upload();
 		$this->enable_default_avatar();
-		$this->set_default_avatar('no_avatar.png');
+		$this->set_default_avatar_name('no_avatar.png');
 		$this->set_max_avatar_width(120);
 		$this->set_max_avatar_height(120);
 		$this->set_max_avatar_weight(20);
