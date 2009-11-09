@@ -130,11 +130,12 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function create_table($table_name, array $fields, array $options = array())
 	{
-//		$mysql_platform = new MySqlPlatform();
-		$mysql_platform = new PostgreSqlPlatform();
-		var_export($mysql_platform->getCreateTableSql($table_name, $fields, $options));
-
-		//        $this->inject($create_table_query . ';');
+		$mysql_platform = new MySqlPlatform();
+		// $mysql_platform = new PostgreSqlPlatform();
+		foreach ($mysql_platform->getCreateTableSql($table_name, $fields, $options) as $query)
+		{
+			$this->inject($query);
+		}
 	}
 
 	public function drop($tables)
