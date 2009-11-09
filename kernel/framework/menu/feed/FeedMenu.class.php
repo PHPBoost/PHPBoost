@@ -74,14 +74,14 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($name = '', $block_position = BLOCK_POSITION__LEFT)
+	public static function get_template($name = '', $block_position = Menu::BLOCK_POSITION__LEFT)
 	{
 		$tpl = new Template('framework/menus/feed/feed.tpl');
 
 		$tpl->assign_vars(array(
 			'NAME' => $name,
 			'C_NAME' => !empty($name),
-			'C_VERTICAL_BLOCK' => ($block_position == BLOCK_POSITION__LEFT || $block_position == BLOCK_POSITION__RIGHT)
+			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT)
 		));
 			
 		return $tpl;

@@ -44,7 +44,7 @@ class MenuService
      * @param $enabled
      * @return unknown_type
      */
-    function get_menu_list($class = Menu::MENU__CLASS, $block = BLOCK_POSITION__ALL, $enabled = MENU_ENABLE_OR_NOT)
+    function get_menu_list($class = Menu::MENU__CLASS, $block = Menu::BLOCK_POSITION__ALL, $enabled = Menu::MENU_ENABLE_OR_NOT)
     {
         global $Sql;
         
@@ -53,9 +53,9 @@ class MenuService
         $conditions = array();
         if ($class != Menu::MENU__CLASS)
             $conditions[] = "class='" . strtolower($class) . "'";
-        if ($block != BLOCK_POSITION__ALL)
+        if ($block != Menu::BLOCK_POSITION__ALL)
             $conditions[] = "block='" . $block . "'";
-        if ($enabled !== MENU_ENABLE_OR_NOT)
+        if ($enabled !== Menu::MENU_ENABLE_OR_NOT)
             $conditions[] .= "enabled='" . $enabled . "'";
         
         if (count($conditions) > 0)
@@ -91,9 +91,9 @@ class MenuService
         $result = $Sql->query_while ($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
         {
-            if ($row['enabled'] != MENU_ENABLED)
+            if ($row['enabled'] != Menu::MENU_ENABLED)
             {
-                $menus[BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
+                $menus[Menu::BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
             }
             else
             {
@@ -135,7 +135,7 @@ class MenuService
         global $Sql;
         $block_position = $menu->get_block_position();
         
-        if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
+        if (($block = $menu->get_block()) != Menu::MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
         {
             $block_position_query = "SELECT MAX(position) + 1 FROM " . DB_TABLE_MENUS . " WHERE block='" . $block. "'";
             $block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
@@ -211,7 +211,7 @@ class MenuService
     function disable(&$menu)
     {
         // Commputes menus positions of the previous block and save the current menu
-        MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
+        MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
     }
     
     /**
@@ -235,7 +235,7 @@ class MenuService
         }
         
         // Disables the menu if the destination block is the NOT_ENABLED block position
-        $menu->enabled($block == BLOCK_POSITION__NOT_ENABLED ? MENU_NOT_ENABLED : MENU_ENABLED);
+        $menu->enabled($block == Menu::BLOCK_POSITION__NOT_ENABLED ? Menu::MENU_NOT_ENABLED : Menu::MENU_ENABLED);
         
         // If not enabled, we do not move it so we can restore its position by reactivating it
         if ($menu->is_enabled())
@@ -338,21 +338,21 @@ class MenuService
     {
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
-        $cache_str .= '$MENUS[BLOCK_POSITION__HEADER] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__SUB_HEADER] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_CENTRAL] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__BOTTOM_CENTRAL] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_FOOTER] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__FOOTER] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__LEFT] = \'\';';
-        $cache_str .= '$MENUS[BLOCK_POSITION__RIGHT] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__HEADER] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__SUB_HEADER] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__FOOTER] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__LEFT] = \'\';';
+        $cache_str .= '$MENUS[Menu::BLOCK_POSITION__RIGHT] = \'\';';
         $cache_str .= 'global $User;' . "\n";
         
         $menus_map = MenuService::get_menus_map();
         
         foreach ($menus_map as $block => $block_menus)
         {
-            if ($block != BLOCK_POSITION__NOT_ENABLED)
+            if ($block != Menu::BLOCK_POSITION__NOT_ENABLED)
             {
                 foreach ($block_menus as $menu)
                 {
@@ -524,7 +524,7 @@ class MenuService
                 
                 $menu = new ModuleMiniMenu($module, $file[0]);
                 $menu->enabled(false);
-                $menu->set_auth(array('r1' => MENU_AUTH_BIT, 'r0' => MENU_AUTH_BIT, 'r-1' => MENU_AUTH_BIT));
+                $menu->set_auth(array('r1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r-1' => Menu::MENU_AUTH_BIT));
                 $menu->set_block(MenuService::str_to_location($location));
                 MenuService::save($menu);
                 if ($generate_cache)
@@ -678,16 +678,16 @@ class MenuService
      */
     function assign_positions_conditions(&$template, $position)
     {
-    	$vertical_position = in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT));
+    	$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
         $template->assign_vars(array(
-            'C_HEADER' => $position == BLOCK_POSITION__HEADER,
-            'C_SUBHEADER' => $position == BLOCK_POSITION__SUB_HEADER,
-            'C_TOP_CENTRAL' => $position == BLOCK_POSITION__TOP_CENTRAL,
-            'C_BOTTOM_CENTRAL' => $position == BLOCK_POSITION__BOTTOM_CENTRAL,
-            'C_TOP_FOOTER' => $position == BLOCK_POSITION__TOP_FOOTER,
-            'C_FOOTER' => $position == BLOCK_POSITION__FOOTER,
-            'C_LEFT' => $position == BLOCK_POSITION__LEFT,
-            'C_RIGHT' => $position == BLOCK_POSITION__RIGHT,
+            'C_HEADER' => $position == Menu::BLOCK_POSITION__HEADER,
+            'C_SUBHEADER' => $position == Menu::BLOCK_POSITION__SUB_HEADER,
+            'C_TOP_CENTRAL' => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,
+            'C_BOTTOM_CENTRAL' => $position == Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
+            'C_TOP_FOOTER' => $position == Menu::BLOCK_POSITION__TOP_FOOTER,
+            'C_FOOTER' => $position == Menu::BLOCK_POSITION__FOOTER,
+            'C_LEFT' => $position == Menu::BLOCK_POSITION__LEFT,
+            'C_RIGHT' => $position == Menu::BLOCK_POSITION__RIGHT,
             'C_VERTICAL' => $vertical_position,
             'C_HORIZONTAL' => !$vertical_position
         ));
@@ -704,23 +704,23 @@ class MenuService
         switch ($str_location)
         {
             case 'header':
-                return BLOCK_POSITION__HEADER;
+                return Menu::BLOCK_POSITION__HEADER;
             case 'subheader':
-                return BLOCK_POSITION__SUB_HEADER;
+                return Menu::BLOCK_POSITION__SUB_HEADER;
             case 'topcentral':
-                return BLOCK_POSITION__TOP_CENTRAL;
+                return Menu::BLOCK_POSITION__TOP_CENTRAL;
             case 'left':
-                return BLOCK_POSITION__LEFT;
+                return Menu::BLOCK_POSITION__LEFT;
             case 'right':
-                return BLOCK_POSITION__RIGHT;
+                return Menu::BLOCK_POSITION__RIGHT;
             case 'bottomcentral':
-                return BLOCK_POSITION__BOTTOM_CENTRAL;
+                return Menu::BLOCK_POSITION__BOTTOM_CENTRAL;
             case 'topfooter':
-                return BLOCK_POSITION__TOP_FOOTER;
+                return Menu::BLOCK_POSITION__TOP_FOOTER;
             case 'footer':
-                return BLOCK_POSITION__FOOTER;
+                return Menu::BLOCK_POSITION__FOOTER;
             default:
-                return BLOCK_POSITION__NOT_ENABLED;
+                return Menu::BLOCK_POSITION__NOT_ENABLED;
         }
     }
     
@@ -734,15 +734,15 @@ class MenuService
     function _initialize_menus_map()
     {
         return array(
-            BLOCK_POSITION__HEADER => array(),
-            BLOCK_POSITION__SUB_HEADER => array(),
-            BLOCK_POSITION__TOP_CENTRAL => array(),
-            BLOCK_POSITION__BOTTOM_CENTRAL => array(),
-            BLOCK_POSITION__TOP_FOOTER => array(),
-            BLOCK_POSITION__FOOTER => array(),
-            BLOCK_POSITION__LEFT => array(),
-            BLOCK_POSITION__RIGHT => array(),
-            BLOCK_POSITION__NOT_ENABLED => array()
+            Menu::BLOCK_POSITION__HEADER => array(),
+            Menu::BLOCK_POSITION__SUB_HEADER => array(),
+            Menu::BLOCK_POSITION__TOP_CENTRAL => array(),
+            Menu::BLOCK_POSITION__BOTTOM_CENTRAL => array(),
+            Menu::BLOCK_POSITION__TOP_FOOTER => array(),
+            Menu::BLOCK_POSITION__FOOTER => array(),
+            Menu::BLOCK_POSITION__LEFT => array(),
+           	Menu::BLOCK_POSITION__RIGHT => array(),
+           	Menu::BLOCK_POSITION__NOT_ENABLED => array()
         );
     }
     

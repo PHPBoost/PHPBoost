@@ -114,15 +114,15 @@ $left_column = $THEME_CONFIG[get_utheme()]['left_column'];
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
 $blocks = array(
-   BLOCK_POSITION__HEADER => 'mod_header',
-   BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
-   BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
-   BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
-   BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
-   BLOCK_POSITION__FOOTER => 'mod_footer',
-   BLOCK_POSITION__LEFT => 'mod_left',
-   BLOCK_POSITION__RIGHT => 'mod_right',
-   BLOCK_POSITION__NOT_ENABLED => 'mod_main'
+   Menu::BLOCK_POSITION__HEADER => 'mod_header',
+   Menu::BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
+   Menu::BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
+   Menu::BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
+   Menu::BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
+   Menu::BLOCK_POSITION__FOOTER => 'mod_footer',
+   Menu::BLOCK_POSITION__LEFT => 'mod_left',
+   Menu::BLOCK_POSITION__RIGHT => 'mod_right',
+   Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
 if ($action == 'save') //Save menus positions.
@@ -218,14 +218,14 @@ $menu_template->assign_vars(array(
     'THEME' => get_utheme(),
     'L_ENABLED' => $LANG['enabled'],
     'L_DISABLED' => $LANG['disabled'],
-    'I_HEADER' => BLOCK_POSITION__HEADER,
-    'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
-    'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
-    'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
-    'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
-    'I_FOOTER' => BLOCK_POSITION__FOOTER,
-    'I_LEFT' => BLOCK_POSITION__LEFT,
-    'I_RIGHT' => BLOCK_POSITION__RIGHT,
+    'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
+    'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
+    'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,
+    'I_BOTTOMCENTRAL' => Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
+    'I_TOPFOOTER' => Menu::BLOCK_POSITION__TOP_FOOTER,
+    'I_FOOTER' => Menu::BLOCK_POSITION__FOOTER,
+    'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
+    'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
 	'U_TOKEN' => $Session->get_token()
 ));
 
@@ -242,12 +242,12 @@ foreach ($menus_blocks as $block_id => $menus)
         $enabled = $menu->is_enabled();
         
         if (!$enabled)
-           $block_id = BLOCK_POSITION__NOT_ENABLED;
+           $block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
         
         $edit_link = menu_admin_link($menu, 'edit');
         $del_link = menu_admin_link($menu, 'delete');
         
-		$mini = in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT));
+		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
 		
         $menu_tpl->assign_vars(array(
             'NAME' => $menu->get_formated_title(),
@@ -258,8 +258,8 @@ foreach ($menus_blocks as $block_id => $menus)
 			'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
-			'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
-            'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
+			'C_UP' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
+            'C_DOWN' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
 			'L_ACTIVATE' => $LANG['activate'],
 			'L_UNACTIVATE' => $LANG['unactivate'],
 			'L_DEL' => $LANG['delete'],
@@ -301,15 +301,15 @@ $tpl->assign_vars(array(
 	'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
 	'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
 	'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
-	'I_HEADER' => BLOCK_POSITION__HEADER,
-    'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
-    'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
-    'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
-    'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
-    'I_FOOTER' => BLOCK_POSITION__FOOTER,
-    'I_LEFT' => BLOCK_POSITION__LEFT,
-    'I_RIGHT' => BLOCK_POSITION__RIGHT,
-    'L_MENUS_AVAILABLE' => count($menus_blocks[BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
+	'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
+    'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
+    'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,
+    'I_BOTTOMCENTRAL' => Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
+    'I_TOPFOOTER' => Menu::BLOCK_POSITION__TOP_FOOTER,
+    'I_FOOTER' => Menu::BLOCK_POSITION__FOOTER,
+    'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
+    'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
+    'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
     'L_INSTALL' => $LANG['install'],
     'L_SUBMIT' => $LANG['submit'],
     'L_RESET' => $LANG['reset'],

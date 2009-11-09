@@ -123,8 +123,8 @@ if ($action == 'save')
     }
     
     //Menu enabled?
-    $menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', MENU_NOT_ENABLED));
-    $menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', BLOCK_POSITION__NOT_ENABLED));
+    $menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
+    $menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(
         AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
     ));
@@ -146,7 +146,7 @@ if ($action == 'save')
         // When enabling it, the menu will be moved to this block location
         $block = $menu->get_block();
         // Disable the menu and move it to the disabled position computing new positions
-        MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
+        MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
         
         // Restore its position and save it
         $menu->set_block($block);
@@ -204,16 +204,16 @@ $tpl->assign_vars(array(
 ));
 
 //Localisation possibles.
-$block = retrieve(GET, 's', BLOCK_POSITION__HEADER, TINTEGER);
+$block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
-    BLOCK_POSITION__HEADER => $LANG['menu_header'],
-    BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-    BLOCK_POSITION__LEFT => $LANG['menu_left'],
-    BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-    BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-    BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-    BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+    Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
+    Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+    Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
+    Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+    Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+    Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+    Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+    Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 $edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
