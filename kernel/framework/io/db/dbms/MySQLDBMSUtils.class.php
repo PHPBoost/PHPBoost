@@ -130,10 +130,8 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function create_table($table_name, array $fields, array $options = array())
 	{
-		//        $create_table_query = 'CREATE TABLE IF NOT EXISTS `' . $table_name . '`';
-
-		    	$mysql_platform = new MySqlPlatform();
-//		$mysql_platform = new PostgreSqlPlatform();
+//		$mysql_platform = new MySqlPlatform();
+		$mysql_platform = new PostgreSqlPlatform();
 		var_export($mysql_platform->getCreateTableSql($table_name, $fields, $options));
 
 		//        $this->inject($create_table_query . ';');
