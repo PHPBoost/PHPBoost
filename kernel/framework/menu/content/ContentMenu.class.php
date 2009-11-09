@@ -64,7 +64,7 @@ class ContentMenu extends Menu
 		}
         $tpl->assign_vars(array(
             'C_DISPLAY_TITLE' => $this->display_title,
-			'C_VERTICAL_BLOCK' => ($this->get_block() == BLOCK_POSITION__LEFT || $this->get_block() == BLOCK_POSITION__RIGHT),
+			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
             'TITLE' => $this->title,
         	'CONTENT' => second_parse($this->content)
         ));

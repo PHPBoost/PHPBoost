@@ -25,22 +25,6 @@
  *
 ###################################################*/
 
-define('MENU_AUTH_BIT', 1);
-define('MENU_ENABLE_OR_NOT', 42);
-define('MENU_ENABLED', true);
-define('MENU_NOT_ENABLED', false);
-
-define('BLOCK_POSITION__NOT_ENABLED',       0);
-define('BLOCK_POSITION__HEADER',            1);
-define('BLOCK_POSITION__SUB_HEADER',        2);
-define('BLOCK_POSITION__TOP_CENTRAL',       3);
-define('BLOCK_POSITION__BOTTOM_CENTRAL',    4);
-define('BLOCK_POSITION__TOP_FOOTER',        5);
-define('BLOCK_POSITION__FOOTER',            6);
-define('BLOCK_POSITION__LEFT',              7);
-define('BLOCK_POSITION__RIGHT',             8);
-define('BLOCK_POSITION__ALL',               9);
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This class represents a menu element and is used to build any kind of menu
@@ -49,6 +33,22 @@ define('BLOCK_POSITION__ALL',               9);
  */
 abstract class Menu
 {
+	const MENU_AUTH_BIT = 1;
+	const MENU_ENABLE_OR_NOT = 42;
+	const MENU_ENABLED = true;
+	const MENU_NOT_ENABLED = false;
+
+	const BLOCK_POSITION__NOT_ENABLED = 0;
+	const BLOCK_POSITION__HEADER = 1;
+	const BLOCK_POSITION__SUB_HEADER = 2;
+	const BLOCK_POSITION__TOP_CENTRAL = 3;
+	const BLOCK_POSITION__BOTTOM_CENTRAL = 4;
+	const BLOCK_POSITION__TOP_FOOTER = 5;
+	const BLOCK_POSITION__FOOTER = 6;
+	const BLOCK_POSITION__LEFT = 7;
+	const BLOCK_POSITION__RIGHT = 8;
+	const BLOCK_POSITION__ALL = 9;
+	
 	const MENU__CLASS = 'Menu';
 	
     /**
@@ -70,12 +70,12 @@ abstract class Menu
 	 * @access protected
 	 * @var bool true if the Menu is used
 	 */
-    protected $enabled = MENU_NOT_ENABLED;
+    protected $enabled = self::MENU_NOT_ENABLED;
     /**
 	 * @access protected
 	 * @var int The Menu block position
 	 */
-    protected $block = BLOCK_POSITION__NOT_ENABLED;
+    protected $block = self::BLOCK_POSITION__NOT_ENABLED;
     /**
 	 * @access protected
 	 * @var int The Menu position on the website
@@ -157,7 +157,7 @@ abstract class Menu
     protected function _check_auth()
     {
         global $User;
-        return empty($this->auth) || $User->check_auth($this->auth, MENU_AUTH_BIT);
+        return empty($this->auth) || $User->check_auth($this->auth, self::MENU_AUTH_BIT);
     }
     
     ## Setters ##
@@ -172,7 +172,7 @@ abstract class Menu
     /**
 	 * @param bool $enabled Enable or not the Menu
 	 */
-    public function enabled($enabled = MENU_ENABLED) { $this->enabled = $enabled; }
+    public function enabled($enabled = self::MENU_ENABLED) { $this->enabled = $enabled; }
     /**
 	 * @return int the Menu $block position
 	 */

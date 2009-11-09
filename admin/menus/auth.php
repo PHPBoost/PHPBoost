@@ -43,7 +43,7 @@ if ($menu == null)
         
 if ($post)
 {   // Edit a Menu authorizations
-    $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
+    $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     
     MenuService::save($menu);

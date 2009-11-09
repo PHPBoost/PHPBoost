@@ -62,10 +62,10 @@ if ($action_post == 'save')
         redirect('menus.php');
     }
     
-    $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
+    $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
     if ($menu->is_enabled())
     {
-        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
+        $menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
     }
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     $menu->set_display_title(retrieve(POST, 'display_title', false));
@@ -108,16 +108,16 @@ $tpl->assign_vars(array(
 ));
 
 //Localisation possibles.
-$block = retrieve(GET, 's', BLOCK_POSITION__HEADER, TINTEGER);
+$block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
-    BLOCK_POSITION__HEADER => $LANG['menu_header'],
-    BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-    BLOCK_POSITION__LEFT => $LANG['menu_left'],
-    BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-    BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-    BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-    BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+    Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
+    Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+    Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
+    Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+    Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+    Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+    Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+    Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 if ($edit)

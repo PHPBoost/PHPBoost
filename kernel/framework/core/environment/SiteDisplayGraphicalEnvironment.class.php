@@ -148,10 +148,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 
 		$template->assign_vars(array(
-			'C_MENUS_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__HEADER]),
-		    'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
-			'C_MENUS_SUB_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__SUB_HEADER]),
-			'MENUS_SUB_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__SUB_HEADER]
+			'C_MENUS_HEADER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__HEADER]),
+		    'MENUS_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__HEADER],
+			'C_MENUS_SUB_HEADER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]),
+			'MENUS_SUB_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__SUB_HEADER]
 		));
 
 		$left_column  = ($THEME_CONFIG[get_utheme()]['left_column'] && $this->are_left_menus_enabled());
@@ -161,7 +161,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		if ($left_column) //Gestion des blocs de gauche.
 		{
 			// Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
-			$left_column_content = $MENUS[BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[BLOCK_POSITION__RIGHT] : '');
+			$left_column_content = $MENUS[Menu::BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '');
 			$template->assign_vars(array(
 				'C_MENUS_LEFT_CONTENT' => !empty($left_column_content),
 				'MENUS_LEFT_CONTENT' => $left_column_content
@@ -170,7 +170,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		if ($right_column)  //Gestion des blocs de droite.
 		{
 			// Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
-			$right_column_content = $MENUS[BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[BLOCK_POSITION__LEFT] : '');
+			$right_column_content = $MENUS[Menu::BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '');
 			$template->assign_vars(array(
 				'C_MENUS_RIGHT_CONTENT' => !empty($right_column_content),
 				'MENUS_RIGHT_CONTENT' => $right_column_content
@@ -178,8 +178,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 
 		$template->assign_vars(array(
-			'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[BLOCK_POSITION__TOP_CENTRAL]),
-			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
+			'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]),
+			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]
 		));
 	}
 
@@ -304,12 +304,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template->assign_vars(array(
 			'THEME' => get_utheme(),
-			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => !empty($MENUS[BLOCK_POSITION__BOTTOM_CENTRAL]),
-			'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__BOTTOM_CENTRAL],
-			'C_MENUS_TOP_FOOTER_CONTENT' => !empty($MENUS[BLOCK_POSITION__TOP_FOOTER]),
-			'MENUS_TOP_FOOTER_CONTENT' => $MENUS[BLOCK_POSITION__TOP_FOOTER],
-			'C_MENUS_FOOTER_CONTENT' => !empty($MENUS[BLOCK_POSITION__FOOTER]),
-			'MENUS_FOOTER_CONTENT' => $MENUS[BLOCK_POSITION__FOOTER],
+			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
+			'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL],
+			'C_MENUS_TOP_FOOTER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]),
+			'MENUS_TOP_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER],
+			'C_MENUS_FOOTER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]),
+			'MENUS_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__FOOTER],
 			'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
 			'L_POWERED_BY' => $LANG['powered_by'],
 			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
