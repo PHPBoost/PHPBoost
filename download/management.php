@@ -499,8 +499,8 @@ else
 						Authorizations::merge_auth(
 							$CONFIG_DOWNLOAD['global_auth'],
 							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
-							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY),
-							DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY
+							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, Authorizations::AUTH_CHILD_PRIORITY),
+							DOWNLOAD_WRITE_CAT_AUTH_BIT, Authorizations::AUTH_CHILD_PRIORITY
 						),
 						DOWNLOAD_WRITE_CAT_AUTH_BIT, Contribution::CONTRIBUTION_AUTH_BIT
 					)

@@ -210,8 +210,8 @@ elseif (!empty($_POST['submit']))
 							Authorizations::merge_auth(
 								$NEWS_CONFIG['global_auth'],
 								//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
-								$news_categories->compute_heritated_auth($news['idcat'], AUTH_NEWS_MODERATE, AUTH_CHILD_PRIORITY),
-								AUTH_NEWS_MODERATE, AUTH_CHILD_PRIORITY
+								$news_categories->compute_heritated_auth($news['idcat'], AUTH_NEWS_MODERATE, Authorizations::AUTH_CHILD_PRIORITY),
+								AUTH_NEWS_MODERATE, Authorizations::AUTH_CHILD_PRIORITY
 							),
 							AUTH_NEWS_MODERATE, Contribution::CONTRIBUTION_AUTH_BIT
 						)

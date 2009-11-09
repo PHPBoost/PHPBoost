@@ -421,7 +421,7 @@ class MenuService
     {
         global $Sql;
         $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(MINI_MENU__CLASS) . "' AND
+            class='" . strtolower(MiniMenu::MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($menu))  . "/%';";
         $result = $Sql->query_while($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
@@ -451,7 +451,7 @@ class MenuService
         }
         
         $query = "SELECT title FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(MINI_MENU__CLASS) . "';";
+            class='" . strtolower(MiniMenu::MINI_MENU__CLASS) . "';";
         $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
         while ($menu = $Sql->fetch_assoc($result))
         {
@@ -544,7 +544,7 @@ class MenuService
     {
         global $Sql;
         $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(MODULE_MINI_MENU__CLASS) . "' AND
+            class='" . strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($module))  . "/%';";
         $result = $Sql->query_while($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
@@ -563,7 +563,7 @@ class MenuService
         
         // Retrieves the mini modules already installed
         $installed_minimodules = array();
-        $query = "SELECT id, title FROM " . DB_TABLE_MENUS . " WHERE class='" . strtolower(MODULE_MINI_MENU__CLASS) . "'";
+        $query = "SELECT id, title FROM " . DB_TABLE_MENUS . " WHERE class='" . strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS) . "'";
         
         $modules = array();
         // Build the availables modules list
@@ -612,7 +612,7 @@ class MenuService
      */
     function delete_module_feeds_menus($module_id)
     {
-    	$feeds_menus = MenuService::get_menu_list(FEED_MENU__CLASS);
+    	$feeds_menus = MenuService::get_menu_list(FeedMenu::FEED_MENU__CLASS);
     	foreach($feeds_menus as $feed_menu)
     	{
     		if ($module_id == $feed_menu->get_module_id())

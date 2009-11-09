@@ -25,10 +25,6 @@
  *
 ###################################################*/
 
-
-
-define('CONTENT_MENU__CLASS','ContentMenu');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -37,6 +33,8 @@ define('CONTENT_MENU__CLASS','ContentMenu');
  */
 class ContentMenu extends Menu
 {
+	const CONTENT_MENU__CLASS = 'ContentMenu';
+	
     /**
      * @var string the menu's content
      */

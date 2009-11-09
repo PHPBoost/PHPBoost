@@ -25,11 +25,6 @@
  *
  ###################################################*/
 
-
-
-
-define('FEED_MENU__CLASS','FeedMenu');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -38,6 +33,8 @@ define('FEED_MENU__CLASS','FeedMenu');
  */
 class FeedMenu extends Menu
 {
+	const FEED_MENU__CLASS = 'FeedMenu';
+	
 	/**
 	 * @var string the feed url
 	 */

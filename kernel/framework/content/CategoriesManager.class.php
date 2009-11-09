@@ -587,7 +587,7 @@ class CategoriesManager
 	 * @desc Computes the global authorization level of the whole parent categories. The result corresponds to all the category's parents merged.
 	 * @param int $category_id Id of the category for which you want to know what is the global authorization
 	 * @param int $bit The autorization bit you want to check
-	 * @param int $mode Merge mode. If it corresponds to a read autorization, use AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
+	 * @param int $mode Merge mode. If it corresponds to a read autorization, use Authorizations::AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or Authorizations::AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
 	 * @return mixed[] The merged array that you can use only for the bit $bit.
 	 */
 	function compute_heritated_auth($category_id, $bit, $mode)

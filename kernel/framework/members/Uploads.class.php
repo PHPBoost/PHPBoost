@@ -25,9 +25,6 @@
  *
 ###################################################*/
 
-define('EMPTY_FOLDER', true);
-define('ADMIN_NO_CHECK', true);
-
 /**
  * @package members
  *
@@ -35,6 +32,9 @@ define('ADMIN_NO_CHECK', true);
 
 class Uploads
 {
+	const EMPTY_FOLDER = true;
+	const ADMIN_NO_CHECK = true;
+	
 	//Ajout d'un dossier virtuel
 	public static function Add_folder($id_parent, $user_id, $name)
 	{

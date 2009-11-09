@@ -25,10 +25,6 @@
  *
 ###################################################*/
 
-
-
-define('MINI_MENU__CLASS', 'MiniMenu');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -37,6 +33,8 @@ define('MINI_MENU__CLASS', 'MiniMenu');
  */
 class MiniMenu extends Menu
 {
+    const MINI_MENU__CLASS = 'MiniMenu';
+    
     private $function_name = '';
     
     public function __construct($title, $filename)

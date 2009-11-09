@@ -188,7 +188,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	if ($User->check_level(ADMIN_LEVEL))
-		Uploads::Del_file($del_file, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+		Uploads::Del_file($del_file, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	else
 	{
 		$error = Uploads::Del_file($del_file, $User->get_attribute('user_id'));

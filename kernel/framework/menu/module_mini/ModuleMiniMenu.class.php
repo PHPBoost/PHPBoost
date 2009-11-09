@@ -27,8 +27,6 @@
 
 
 
-define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -37,6 +35,8 @@ define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
  */
 class ModuleMiniMenu extends Menu
 {
+	const MODULE_MINI_MENU__CLASS = 'ModuleMiniMenu';
+	
 	private $filename = '';
 	
     /**

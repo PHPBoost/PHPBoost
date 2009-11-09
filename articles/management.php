@@ -278,8 +278,8 @@ elseif(retrieve(POST,'submit',false))
 					Authorizations::merge_auth(
 					$CONFIG_ARTICLES['global_auth'],
 					//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
-					$articles_categories->compute_heritated_auth($articles['idcat'], AUTH_ARTICLES_MODERATE, AUTH_CHILD_PRIORITY),
-					AUTH_ARTICLES_MODERATE, AUTH_CHILD_PRIORITY
+					$articles_categories->compute_heritated_auth($articles['idcat'], AUTH_ARTICLES_MODERATE, Authorizations::AUTH_CHILD_PRIORITY),
+					AUTH_ARTICLES_MODERATE, Authorizations::AUTH_CHILD_PRIORITY
 					),
 					AUTH_ARTICLES_MODERATE, Contribution::CONTRIBUTION_AUTH_BIT
 					)
