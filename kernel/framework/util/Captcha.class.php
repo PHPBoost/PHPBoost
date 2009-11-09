@@ -26,11 +26,7 @@
  *
 ###################################################*/
 
-define('CAPTCHA_VERY_EASY', 0);
-define('CAPTCHA_EASY', 1);
-define('CAPTCHA_NORMAL', 2);
-define('CAPTCHA_HARD', 3);
-define('CAPTCHA_VERY_HARD', 4);
+
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -39,13 +35,19 @@ define('CAPTCHA_VERY_HARD', 4);
  */
 class Captcha
 {
+	const CAPTCHA_VERY_EASY = 0;
+	const CAPTCHA_EASY = 1;
+	const CAPTCHA_NORMAL = 2;
+	const CAPTCHA_HARD = 3;
+	const CAPTCHA_VERY_HARD = 4;
+	
     private $instance = 0; //Numéro d'instance.
 	private $gd_loaded = false; //Chargement de la librairie GD.
 	private $width = 160; //Largeur de l'image générée.
 	private $code = ''; //Code captcha.
 	private $height = 50; //Largeur de l'image générée.
 	private $font = '../../../kernel/data/fonts/impact.ttf'; //Police
-	private $difficulty = 2; //Difficulté du code. 
+	private $difficulty = self::CAPTCHA_NORMAL; //Difficulté du code. 
 	
 	private static $instance_number = 0;
 	

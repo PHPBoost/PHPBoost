@@ -25,9 +25,6 @@
  *
 ###################################################*/
 
-define('AUTH_PARENT_PRIORITY', 0x01);	// Generally read mode
-define('AUTH_CHILD_PRIORITY', 0x02);	// Generally write mode
-
 /**
  * @author Régis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
  * @desc This class contains only static methods, it souldn't be instantiated.
@@ -35,7 +32,9 @@ define('AUTH_CHILD_PRIORITY', 0x02);	// Generally write mode
  */
 class Authorizations
 {
-	## Public methods ##
+	const AUTH_PARENT_PRIORITY = 0x01;	// Generally read mode
+	const AUTH_CHILD_PRIORITY = 0x02;	// Generally write mode
+
 	/**
 	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * This returned array is used to be serialized.
@@ -280,7 +279,7 @@ class Authorizations
 	 * @param array $parent Array of authorizations.
 	 * @param array $child Array of authorizations.
 	 * @param int $auth_bit Bit emplacement for the merge.
-	 * @param int $mode Mode used for the merge. Use AUTH_PARENT_PRIORITY to give to the parent the priority for the authorization, AUTH_CHILD_PRIORITY otherwise.
+	 * @param int $mode Mode used for the merge. Use Authorizations::AUTH_PARENT_PRIORITY to give to the parent the priority for the authorization, Authorizations::AUTH_CHILD_PRIORITY otherwise.
 	 * @return array The new array merged.
 	 * @static
 	 */
@@ -292,7 +291,7 @@ class Authorizations
 		if (empty($child))
 			return $parent;
 		
-		if ($mode == AUTH_PARENT_PRIORITY)
+		if ($mode == self::AUTH_PARENT_PRIORITY)
 		{
 			foreach ($parent as $key => $value)
 			{
@@ -307,7 +306,7 @@ class Authorizations
 					$merged[$key] = $bit;
 			}
 		}
-		elseif ($mode == AUTH_CHILD_PRIORITY)
+		elseif ($mode == self::AUTH_CHILD_PRIORITY)
 		{
 			foreach ($parent as $key => $value)
 				$merged[$key] = $value & $auth_bit;

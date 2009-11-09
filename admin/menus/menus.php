@@ -46,15 +46,15 @@ function menu_admin_link(&$menu, $mode)
         case 'edit':
             if (of_class($menu, LinksMenu::LINKS_MENU__CLASS))
                 $link = 'links.php?';
-            elseif (of_class($menu, CONTENT_MENU__CLASS))
+            elseif (of_class($menu, ContentMenu::CONTENT_MENU__CLASS))
                 $link = 'content.php?';
-            elseif (of_class($menu, FEED_MENU__CLASS))
+            elseif (of_class($menu, FeedMenu::FEED_MENU__CLASS))
                 $link = 'feed.php?';
             else
                 $link = 'auth.php?';
             break;
         case 'delete':
-            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, FEED_MENU__CLASS))
+            if (of_class($menu, ContentMenu::CONTENT_MENU__CLASS) || of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, FeedMenu::FEED_MENU__CLASS))
                 $link = 'menus.php?action=delete&amp;';
             else
             	return '';

@@ -121,7 +121,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression d'un fichier.
-	Uploads::Del_file($del_file, -1, ADMIN_NO_CHECK);
+	Uploads::Del_file($del_file, -1, Uploads::ADMIN_NO_CHECK);
 	
 	redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
@@ -144,7 +144,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	$array_child_folder[] = $move_folder;
 	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
-		Uploads::Move_folder($move_folder, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+		Uploads::Move_folder($move_folder, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	else
 		redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
 			
@@ -154,7 +154,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	Uploads::Move_file($move_file, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+	Uploads::Move_file($move_file, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	
 	redirect('/admin/admin_files.php?f=' . $to);
 }

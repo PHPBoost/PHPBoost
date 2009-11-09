@@ -57,7 +57,7 @@ if ($action_post == 'save')
         $menu = new ContentMenu($menu_name);
     }
     
-    if (!of_class($menu, CONTENT_MENU__CLASS))
+    if (!of_class($menu, ContentMenu::CONTENT_MENU__CLASS))
     {
         redirect('menus.php');
     }
@@ -124,7 +124,7 @@ if ($edit)
 {
 	$menu = MenuService::load($id);
 	
-    if (!of_class($menu, CONTENT_MENU__CLASS))
+    if (!of_class($menu, ContentMenu::CONTENT_MENU__CLASS))
         redirect('menus.php');
     
 	$block = $menu->get_block();

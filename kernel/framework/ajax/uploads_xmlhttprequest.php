@@ -73,11 +73,11 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
         {
             if ($User->check_level(ADMIN_LEVEL))
             {
-                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
+                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
             }
             else
             {
-                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
             }
         }
         else
@@ -101,11 +101,11 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
         {
             if ($User->check_level(ADMIN_LEVEL))
             {
-                echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
+                echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
             }
             else
             {
-                echo Uploads::Rename_file($id_file, $name, $previous_name, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+                echo Uploads::Rename_file($id_file, $name, $previous_name, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
             }
         }
         else
