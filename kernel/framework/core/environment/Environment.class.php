@@ -235,7 +235,9 @@ class Environment
 	{
 		global $Cache;
 		$CONFIG = array();
+		echo 'le cache est cassé';
 		$Cache->load('config');
+		echo 'le cache est cassé suite';
 		$Cache->load('modules');
 		$Cache->load('themes');
 		$Cache->load('langs');
