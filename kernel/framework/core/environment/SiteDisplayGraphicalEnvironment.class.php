@@ -84,7 +84,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function add_menus_css_files()
 	{
-		
+
 		$css_files_cache = ModulesCssFilesCache::load();
 		try
 		{
@@ -125,21 +125,14 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		global $THEME_CONFIG, $MENUS;
 
 		//Inclusion des blocs
-		
-		if (!DEBUG)
-		{
-			$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');
-		}
-		else
-		{
-			$result = include_once(PATH_TO_ROOT . '/cache/menus.php');
-		}
+
+		$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');
 		if (!$result)
 		{
 			global $Cache, $Errorh;
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
-			
+				
 			//On inclut une nouvelle fois
 			if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 			{
@@ -323,7 +316,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		//We add a page to the page displayed counter
 		pages_displayed();
-		
+
 		if ($CONFIG['bench'])
 		{
 			$template->assign_vars(array(

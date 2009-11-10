@@ -64,29 +64,33 @@ class Cache
 
 		//On charge le fichier
 		$cache_file = PATH_TO_ROOT . '/cache/' . $file . '.php';
-		$include = FALSE;
+		$include = false;
 		if ($reload_cache)
-		if (!DEBUG)
 		{
-			$include = @include($cache_file);
-		}
-		else
-		{
-			if (file_exists($cache_file))
+			if (!DEBUG)
 			{
-			    $include = include($cache_file);
+				$include = @include($cache_file);
+			}
+			else
+			{
+				if (file_exists($cache_file))
+				{
+					$include = include($cache_file);
+				}
 			}
 		}
 		else
-		if (!DEBUG)
 		{
-			$include = @include_once($cache_file);
-		}
-		else
-		{
-			if (file_exists($cache_file))
+			if (!DEBUG)
 			{
-			    $include = include_once($cache_file);
+				$include = @include_once($cache_file);
+			}
+			else
+			{
+				if (file_exists($cache_file))
+				{
+					$include = include_once($cache_file);
+				}
 			}
 		}
 		if (!$include)
@@ -149,7 +153,7 @@ class Cache
 	{
 		global $Errorh;
 
-		
+
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 
@@ -184,7 +188,7 @@ class Cache
 	{
 		global $MODULES;
 
-		
+
 		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach ($modules as $module)
@@ -222,7 +226,7 @@ class Cache
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
-		
+
 		$cache_file = new File($file_path, WRITE);
 
 		//Suppression du fichier (si il existe)
@@ -243,7 +247,7 @@ class Cache
 		//Fermeture du fichier
 		$cache_file->close();
 
-		//On lui met les autorisations nécessaires de façon à pouvoir par la suite le lire (4) et le supprimer (2), soit 4 + 2 =
+		//On lui met les autorisations nécessaires de façon à pouvoir par la suite le lire (4) et le supprimer (2), soit 4 + 2 
 		$cache_file->change_chmod(0666);
 
 		//Il est l'heure de vérifier si la génération a fonctionné.
@@ -287,7 +291,7 @@ class Cache
 	 */
 	function _get_menus()
 	{
-		
+
 		return MenuService::generate_cache(true);
 	}
 
@@ -301,7 +305,8 @@ class Cache
 
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string) AppContext::get_sql()->query(
+			"SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name='config'"));
 		foreach ($CONFIG as $key => $value)
 		{
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
@@ -382,11 +387,11 @@ class Cache
 		foreach ($CONFIG_USER as $key => $value)
 		$config_member .= '$CONFIG_USER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 
-		
+
 		//Unread contributions for each profile
 		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
 
-		
+
 		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
 
 		return $config_member;
@@ -424,7 +429,7 @@ class Cache
 		global $Sql;
 
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
-		 
+			
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
@@ -451,7 +456,7 @@ class Cache
 		global $Sql;
 
 		$com_config = 'global $CONFIG_COM;' . "\n";
-		 
+			
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();

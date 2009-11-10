@@ -75,11 +75,6 @@ class Errors
 	 */
 	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
-//		if (DEBUG)
-//		{
-//			echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
-//		}
-
 		global $LANG, $CONFIG;
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
@@ -91,6 +86,8 @@ class Errors
 		{
 			return true;
 		}
+		echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
+		/*
 		switch ($errno)
 		{
 			//Notice utilisateur.
@@ -141,6 +138,7 @@ class Errors
 
 		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
 		return true;
+		*/
 	}
 
 	/**

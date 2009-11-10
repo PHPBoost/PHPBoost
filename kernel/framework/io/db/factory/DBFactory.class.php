@@ -100,11 +100,15 @@ class DBFactory
 				break;
 			case self::MYSQL:
 			default:
+				require_once PATH_TO_ROOT . '/kernel/framework/io/db/factory/MySQLDBFactory.class.php';
 				self::$factory = new MySQLDBFactory();
 				break;
 		}
 	}
 
+	/**
+	 * @return DBMSFactory
+	 */
 	private static function get_factory()
 	{
 		return self::$factory;
