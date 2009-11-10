@@ -34,22 +34,22 @@
  */
 class MySQLDBFactory implements DBMSFactory
 {
-	public static function new_db_connection()
+	public function new_db_connection()
 	{
 		return new MySQLDBConnection();
 	}
 
-	public static function new_sql_querier(DBConnection $db_connection)
+	public function new_sql_querier(DBConnection $db_connection)
 	{
-		return new MySQLQuerier($db_connection, self::new_query_translator());
+		return new MySQLQuerier($db_connection, $this->new_query_translator());
 	}
 
-	public static function new_dbms_util(SQLQuerier $querier)
+	public function new_dbms_util(SQLQuerier $querier)
 	{
 		return new MySQLDBMSUtils($querier);
 	}
 
-	private static function new_query_translator()
+	private function new_query_translator()
 	{
 		return new MySQLQueryTranslator();
 	}

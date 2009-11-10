@@ -96,7 +96,7 @@ class Sql
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @return string The result of your query (the value at the row and column you chose).
 	 */
-	public function query($query, $errline, $errfile)
+	public function query($query)
 	{
 		$query_result = $this->select($query, SelectQueryResult::FETCH_NUM);
 		$query_result->rewind();

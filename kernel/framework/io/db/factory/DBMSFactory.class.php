@@ -32,27 +32,27 @@
  * @desc this factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
  * for the right sgbd.
  */
-class DBMSFactory
+interface DBMSFactory
 {
 	/**
 	 * @desc returns the opened <code>DBConnection</code>. If not yet opened, opens it
 	 * @return DBConnection the opened <code>DBConnection</code>. If not yet opened, opens it
 	 */
-	public static function new_db_connection();
+	function new_db_connection();
 
 	/**
 	 * @desc returns a new <code>SQLQuerier</code> instance
 	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
 	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
 	 */
-	public static function new_sql_querier(DBConnection $db_connection);
+	function new_sql_querier(DBConnection $db_connection);
 
 	/**
 	 * @desc returns a new <code>DBMSUtils</code> instance
 	 * @param SQLQuerier $querier the <code>SQLQuerier</code> that the <code>DBMSUtils</code> will use
 	 * @return DBMSUtils a new <code>DBMSUtils</code> instance
 	 */
-	public static function new_dbms_util(SQLQuerier $querier);
+	function new_dbms_util(SQLQuerier $querier);
 }
 
 ?>
