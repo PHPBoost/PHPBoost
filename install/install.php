@@ -44,7 +44,7 @@ InstallEnvironment::load_imports();
 
 /* Deprecated */
 
-$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
+$Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
 /* End deprecated */
 
 InstallEnvironment::init();
@@ -327,7 +327,7 @@ switch($step)
 				case DB_CONFIG_SUCCESS:
 				case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
 
-					$Errorh = new Errors;
+					$Errorh = new Errors();
 
 					$db_connection = new MySQLDBConnection($host, $login, $password);
 					$db_connection->connect();

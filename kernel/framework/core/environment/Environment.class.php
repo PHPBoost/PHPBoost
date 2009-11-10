@@ -157,7 +157,7 @@ class Environment
 			}
 			else
 			{
-				define('DEBUG', false);
+				define('DEBUG', true);
 			}
 		}
 

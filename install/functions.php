@@ -42,27 +42,27 @@ define('DB_UNKNOW_ERROR', -1);
 //Function which returns a result code
 function check_database_config(&$host, &$login, &$password, &$database_name, $tables_prefix)
 {
-	
-	
+
+
 
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
-	$Errorh = new Errors;
+	$Errorh = new Errors();
 
 	//TODO LOIC A corriger, méthode supprimée de la classe SQL.
 	//$database_name = Sql::clean_database_name($database_name);
 	$database_name = $database_name;
 
-	
+
 	$db_connection = new MySQLDBConnection($host, $login, $password);
 	try
 	{
-		$db_connection->connect();	
+		$db_connection->connect();
 	}
 	catch (DBConnectionException $ex)
 	{
 		return DB_CONFIG_ERROR_CONNECTION_TO_DBMS;
 	}
-	
+
 	try
 	{
 		$db_connection->select_database($database_name);
@@ -70,7 +70,7 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	catch (UnexistingDatabaseException $ex)
 	{
 		$Sql = new Sql($db_connection, $database_name);
-		
+
 		//Tentative de création de la base de données
 		$database_name = $Sql->create_database($database_name);
 
@@ -88,7 +88,7 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 			return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED;
 		}
 	}
-	
+
 	$Sql = new Sql($db_connection, $database_name);
 	define('PREFIX', $tables_prefix);
 	$tables_list = $Sql->list_tables();
@@ -111,9 +111,9 @@ function load_db_connection()
 {
 	global $Sql, $Errorh;
 
-	
-    
-	$Errorh = new Errors;
+
+
+	$Errorh = new Errors();
     return $Sql;
 }
 
