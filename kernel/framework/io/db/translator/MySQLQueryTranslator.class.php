@@ -27,8 +27,8 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage translator
+ * @package io
+ * @subpackage db/translator
  * @desc translates the generic query <code>$query</code> into the mysql specific dialect
  */
 class MySQLQueryTranslator implements SQLQueryTranslator
@@ -37,7 +37,7 @@ class MySQLQueryTranslator implements SQLQueryTranslator
 	 * @var string
 	 */
 	private $query;
-	
+
 	public function translate(&$query)
 	{
 		$this->query = $query;

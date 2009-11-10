@@ -40,12 +40,12 @@ class SQLQueryVars extends StringVars
 	 * @var AbstractSQLQuerier
 	 */
 	private $querier;
-	
+
 	public function __construct(AbstractSQLQuerier $querier)
 	{
-        $this->querier = $querier;		
+        $this->querier = $querier;
 	}
-	
+
 	protected function set_var(&$parameter)
     {
     	if ($parameter === null)

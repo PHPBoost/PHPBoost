@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           PDODBConnection.class.php
+ *                           PDOQuerierException.class.php
  *                            -------------------
  *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,65 +25,22 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
- * @desc
+ * @package io
+ * @subpackage db/driver/pdo
  */
-class PDODBConnection implements DBConnection
+class PDOQuerierException extends SQLQuerierException
 {
-	/**
-	 * @var PDO
-	 */
-	private $pdo;
-
-	public function __destruct()
+	public function __construct($message, PDOStatement $statement)
 	{
-		$this->disconnect();
-	}
-
-	public function connect(array &$db_connection_data)
-	{
-		try
+		$infos = array();
+		foreach ($statement->errorInfo() as $key => $info)
 		{
-			$this->pdo = new PDO(
-			$db_connection_data['dsn'],
-			$db_connection_data['login'],
-			$db_connection_data['password'],
-			$db_connection_data['driver_options']);
+			$infos[] = $key . ': ' . $info;
 		}
-		catch (PDOException $exception)
-		{
-			throw new PDODBConnectionException($exception->getMessage(), $this->pdo);
-		}
-	}
-
-	public function get_link()
-	{
-		return $this->pdo;
-	}
-
-	public function disconnect()
-	{
-		$this->pdo = null;
-	}
-
-	public function start_transaction()
-	{
-		$this->pdo->beginTransaction();
-	}
-
-	public function commit()
-	{
-		$this->pdo->commit();
-	}
-
-	public function rollback()
-	{
-		$this->pdo->rollBack();
+		parent::__construct($message . '. (ERRNO ' . $statement->errorCode() . ') ' .
+		implode('<br />', $infos));
 	}
 }
 

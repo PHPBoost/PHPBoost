@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           NotASingleRowFoundException.class.php
+ *                           PDOInjectQueryResult.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -28,14 +28,72 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package io
- * @subpackage db
+ * @subpackage db/driver/pdo
+ * @desc
  */
-class NotASingleRowFoundException extends SQLQuerierException
+class PDOInjectQueryResult implements InjectQueryResult
 {
-    public function __construct()
-    {
-        parent::__construct('multiple rows have been found but the query expect only one result');
-    }
+	/**
+	 * @var string
+	 */
+	private $query;
+
+	/**
+	 * @var PDOStatement
+	 */
+	private $statement = null;
+
+	/**
+	 * @var int
+	 */
+	private $affected_rows = 0;
+
+	/**
+	 * @var int
+	 */
+	private $last_inserted_id = 0;
+
+	/**
+	 * @var bool
+	 */
+	private $is_disposed = false;
+
+	public function __construct(&$query, PDOStatement $statement, PDO $pdo)
+	{
+		// TODO change this for pgsql
+		$this->last_inserted_id = $pdo->lastInsertId();
+		$this->query = $query;
+		$this->statement = $statement;
+	}
+
+	public function __destruct()
+	{
+		$this->dispose();
+	}
+
+	public function get_query()
+	{
+		return $this->query;
+	}
+
+	public function get_last_inserted_id()
+	{
+		return $this->last_inserted_id;
+	}
+
+	public function get_affected_rows()
+	{
+		return $this->statement->rowCount();
+	}
+
+	public function dispose()
+	{
+		if (!$this->is_disposed)
+		{
+			$this->statement->closeCursor();
+			$this->is_disposed = true;
+		}
+	}
 }
 
 ?>

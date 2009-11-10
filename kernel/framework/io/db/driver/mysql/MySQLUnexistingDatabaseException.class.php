@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           MySQLQuerierException.class.php
+ *                           MySQLUnexistingDatabaseException.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,11 +25,16 @@
  *
  ###################################################*/
 
-class MySQLQuerierException extends SQLQuerierException
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db/driver/mysql
+ */
+class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
 {
-    public function __construct($message)
+    public function __construct()
     {
-        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
+        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
 

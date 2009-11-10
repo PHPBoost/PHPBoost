@@ -25,5 +25,10 @@
  *
  ###################################################*/
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db
+ */
 class SQLQuerierException extends Exception {}
 ?>

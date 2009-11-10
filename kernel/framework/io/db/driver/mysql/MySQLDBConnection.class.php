@@ -30,8 +30,8 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
+ * @package io
+ * @subpackage db/driver/mysql
  * @desc
  */
 class MySQLDBConnection implements DBConnection

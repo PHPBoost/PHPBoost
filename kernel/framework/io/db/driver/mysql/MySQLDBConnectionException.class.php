@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           MySQLUnexistingDatabaseException.class.php
+ *                           MySQLDBConnectionException.class.php
  *                            -------------------
  *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -25,11 +25,16 @@
  *
  ###################################################*/
 
-class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db/driver/mysql
+ */
+class MySQLDBConnectionException extends DBConnectionException
 {
-    public function __construct()
+    public function __construct($message)
     {
-        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
+        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
 

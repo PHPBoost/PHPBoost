@@ -25,14 +25,10 @@
  *
  ###################################################*/
 
-
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
+ * @package io
+ * @subpackage db/driver/pdo
  * @desc
  */
 class PDOQuerier extends AbstractSQLQuerier

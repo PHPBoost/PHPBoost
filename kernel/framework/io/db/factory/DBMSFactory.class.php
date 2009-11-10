@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PDOInjectQueryResult.class.php
+ *                           DBMSFactory.class.php
  *                            -------------------
- *   begin                : November 1, 2009
+ *   begin                : November 10, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,78 +25,34 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
- * @desc
+ * @package io
+ * @subpackage db/factory
+ * @desc this factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
+ * for the right sgbd.
  */
-class PDOInjectQueryResult implements InjectQueryResult
+class DBMSFactory
 {
 	/**
-	 * @var string
+	 * @desc returns the opened <code>DBConnection</code>. If not yet opened, opens it
+	 * @return DBConnection the opened <code>DBConnection</code>. If not yet opened, opens it
 	 */
-	private $query;
-	
-	/**
-	 * @var PDOStatement
-	 */
-	private $statement = null;
+	public static function new_db_connection();
 
 	/**
-	 * @var int
+	 * @desc returns a new <code>SQLQuerier</code> instance
+	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
+	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
 	 */
-	private $affected_rows = 0;
+	public static function new_sql_querier(DBConnection $db_connection);
 
 	/**
-	 * @var int
+	 * @desc returns a new <code>DBMSUtils</code> instance
+	 * @param SQLQuerier $querier the <code>SQLQuerier</code> that the <code>DBMSUtils</code> will use
+	 * @return DBMSUtils a new <code>DBMSUtils</code> instance
 	 */
-	private $last_inserted_id = 0;
-	
-	/**
-	 * @var bool
-	 */
-	private $is_disposed = false;
-
-	public function __construct(&$query, PDOStatement $statement, PDO $pdo)
-	{
-		// TODO change this for pgsql
-		$this->last_inserted_id = $pdo->lastInsertId();
-		$this->query = $query;
-		$this->statement = $statement;
-	}
-
-	public function __destruct()
-	{
-		$this->dispose();
-	}
-
-	public function get_query()
-	{
-		return $this->query;
-	}
-
-	public function get_last_inserted_id()
-	{
-		return $this->last_inserted_id;
-	}
-
-	public function get_affected_rows()
-	{
-		return $this->statement->rowCount();
-	}
-
-	public function dispose()
-	{
-		if (!$this->is_disposed)
-		{
-			$this->statement->closeCursor();
-			$this->is_disposed = true;
-		}
-	}
+	public static function new_dbms_util(SQLQuerier $querier);
 }
 
 ?>

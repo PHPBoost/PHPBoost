@@ -65,9 +65,9 @@ interface SQLQuerier
 	 * @return InjectQueryResult the query result
 	 */
 	function inject($query, $parameters = array());
-	
+
 	function enable_query_translator();
-	
+
 	function disable_query_translator();
 }
 

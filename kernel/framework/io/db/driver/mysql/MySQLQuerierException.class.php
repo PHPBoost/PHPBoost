@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PDODBConnectionException.class.php
+ *                           MySQLQuerierException.class.php
  *                            -------------------
- *   begin                : November 1, 2009
+ *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,17 +25,17 @@
  *
  ###################################################*/
 
-class PDODBConnectionException extends DBConnectionException
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db/driver/mysql
+ */
+class MySQLQuerierException extends SQLQuerierException
 {
-    public function __construct($message, PDO $pdo)
+    public function __construct($message)
     {
-    	$infos = array();
-		foreach ($pdo->errorInfo() as $key => $info)
-		{
-			$infos[] = $key . ': ' . $info;
-		}
-		parent::__construct($message . '. (ERRNO ' . $pdo->errorCode() . ') ' .
-		implode('<br />', $infos));
+        parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
+
 ?>
