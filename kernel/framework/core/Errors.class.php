@@ -75,10 +75,10 @@ class Errors
 	 */
 	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
-		if (DEBUG)
-		{
-			echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
-		}
+//		if (DEBUG)
+//		{
+//			echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
+//		}
 
 		global $LANG, $CONFIG;
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
