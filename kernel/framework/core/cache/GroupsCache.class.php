@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      groups_cache.class.php
+ *                      	 GroupsCache.class.php
  *                            -------------------
  *   begin                : September 29, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -24,9 +24,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
-
 
 /**
  * This class contains the cache data of the groups which group users having common criteria.
