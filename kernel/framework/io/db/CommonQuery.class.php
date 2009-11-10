@@ -27,6 +27,8 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db
  * @desc implements some simple queries
  */
 class CommonQuery

@@ -25,6 +25,11 @@
  *
  ###################################################*/
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db
+ */
 class UnexistingDatabaseException extends DBConnectionException {}
 
 ?>

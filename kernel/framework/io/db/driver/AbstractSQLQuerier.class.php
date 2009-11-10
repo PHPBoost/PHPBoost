@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLQuerier.class.php
+ *                           AbstractSQLQuerier.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : October 4, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,58 +25,65 @@
  *
  ###################################################*/
 
-
-
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage mysql
- * @desc
+ * @package io
+ * @subpackage db/driver
+ * @desc implements the query var replacement method
+ *
  */
-class MySQLQuerier extends AbstractSQLQuerier
+abstract class AbstractSQLQuerier implements SQLQuerier
 {
 	/**
-	 * @var SQLQueryVar
+	 * @var mixed
 	 */
-	private $query_var_replacator;
+	protected $link;
+
+	/**
+	 * @var SQLQueryTranslator
+	 */
+	private $translator;
+
+	/**
+	 * @var bool
+	 */
+	private $translator_enabled = true;
+
+	/**
+	 * @var int
+	 */
+	private $executed_resquests_count = 0;
 
 	public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
 	{
-		parent::__construct($connection, $translator);
-		$this->query_var_replacator = new SQLQueryVars($this);
+		$this->link = $connection->get_link();
+		$this->translator = $translator;
 	}
 
-	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+
+	function enable_query_translator()
 	{
-		$resource = $this->execute($query, $parameters);
-		return new MySQLSelectQueryResult($query, $resource, $fetch_mode);
+		$this->translator_enabled = true;
 	}
 
-	public function inject($query, $parameters = array())
+	function disable_query_translator()
 	{
-		$resource = $this->execute($query, $parameters);
-		return new MySQLInjectQueryResult($query, $this->link);
+		$this->translator_enabled = false;
 	}
 
-	public function escape(&$value)
+	public function get_executed_requests_count()
 	{
-		return mysql_real_escape_string($value);
+		return $this->executed_resquests_count;
 	}
 
-	private function execute(&$query, &$parameters)
+	protected function prepare(&$query)
 	{
-		$query = $this->prepare($query);
-		$query = $this->query_var_replacator->replace($query, $parameters);
-		$resource = mysql_query($query, $this->link);
-		if ($resource === false)
+		$this->executed_resquests_count++;
+		if ($this->translator_enabled)
 		{
-			throw new MySQLQuerierException('invalid query');
+			return $this->translator->translate($query);
 		}
-		return $resource;
+		return $query;
 	}
 }
-
 ?>

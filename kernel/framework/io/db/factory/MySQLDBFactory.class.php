@@ -28,11 +28,11 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package io
- * @subpackage sql
+ * @subpackage db/factory
  * @desc this factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
  * for the right sgbd.
  */
-class MySQLDBFactory
+class MySQLDBFactory implements DBMSFactory
 {
 	public static function new_db_connection()
 	{

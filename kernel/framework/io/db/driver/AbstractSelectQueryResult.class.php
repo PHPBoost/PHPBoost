@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           NotASingleRowFoundException.class.php
+ *                           AbstractSelectQueryResult.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 4, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,17 +25,37 @@
  *
  ###################################################*/
 
+
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package io
- * @subpackage db
+ * @subpackage db/driver
+ * @desc this class encapsulate a query result set
  */
-class NotASingleRowFoundException extends SQLQuerierException
+abstract class AbstractSelectQueryResult implements SelectQueryResult
 {
-    public function __construct()
-    {
-        parent::__construct('multiple rows have been found but the query expect only one result');
-    }
+	public function has_next()
+	{
+		return $this->valid();
+	}
+
+	public function fetch()
+	{
+		if ($this->needs_rewind())
+		{
+			$this->rewind();
+		}
+		$current = $this->current();
+		$this->key();
+		$this->next();
+		return $current;
+	}
+
+	/**
+	 * @return bool
+	 */
+	abstract protected function needs_rewind();
 }
 
 ?>

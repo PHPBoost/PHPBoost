@@ -27,39 +27,39 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage dbms
+ * @package io
+ * @subpackage db/dbms
  * @desc
  *
  */
 interface DBMSUtils
 {
 	function get_dbms_version();
-	
+
 	function list_databases();
-	
+
 	function get_database_name();
-	
+
 	function create_database($database_name);
-	
+
 	function list_tables();
-	
+
 	function list_and_desc_tables();
-	
+
 	function desc_table($table);
-	
+
     function create_table($table_name, array $fields, array $options = array());
-    
+
 	function optimize($tables);
-	
+
 	function repair($tables);
-	
+
 	function truncate($tables);
-	
+
 	function drop($tables);
-	
+
 	function export_phpboost($file = null);
-	
+
 	function export_table($table, $file = null);
 }
 

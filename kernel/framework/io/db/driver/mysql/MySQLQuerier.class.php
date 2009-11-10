@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLInjectQueryResult.class.php
+ *                           MySQLQuerier.class.php
  *                            -------------------
- *   begin                : November 2, 2009
+ *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,79 +25,52 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage mysql
+ * @package io
+ * @subpackage db/driver/mysql
  * @desc
  */
-class MySQLInjectQueryResult implements InjectQueryResult
+class MySQLQuerier extends AbstractSQLQuerier
 {
 	/**
-	 * @var string
+	 * @var SQLQueryVar
 	 */
-	private $query;
+	private $query_var_replacator;
 
-	/**
-	 * @var Resource
-	 */
-	private $resource = null;
-
-	/**
-	 * @var int
-	 */
-	private $affected_rows = 0;
-
-	/**
-	 * @var int
-	 */
-	private $last_inserted_id = 0;
-
-	/**
-	 * @var bool
-	 */
-	private $is_disposed = false;
-
-	public function __construct(&$query, &$link)
+	public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
 	{
-		$this->query = $query;
-		$this->affected_rows = mysql_affected_rows($link);
-		$this->last_inserted_id = mysql_insert_id($link);
+		parent::__construct($connection, $translator);
+		$this->query_var_replacator = new SQLQueryVars($this);
 	}
 
-	public function __destruct()
+	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
-		$this->dispose();
+		$resource = $this->execute($query, $parameters);
+		return new MySQLSelectQueryResult($query, $resource, $fetch_mode);
 	}
 
-	public function get_query()
+	public function inject($query, $parameters = array())
 	{
-		return $this->query;
+		$resource = $this->execute($query, $parameters);
+		return new MySQLInjectQueryResult($query, $this->link);
 	}
 
-	public function get_affected_rows()
+	public function escape(&$value)
 	{
-		return $this->affected_rows;
+		return mysql_real_escape_string($value);
 	}
 
-	public function get_last_inserted_id()
+	private function execute(&$query, &$parameters)
 	{
-		return $this->last_inserted_id;
-	}
-
-	public function dispose()
-	{
-		if (!$this->is_disposed && is_resource($this->resource))
+		$query = $this->prepare($query);
+		$query = $this->query_var_replacator->replace($query, $parameters);
+		$resource = mysql_query($query, $this->link);
+		if ($resource === false)
 		{
-			if (!@mysql_free_result($this->resource))
-			{
-				throw new MySQLQuerierException('can\'t close sql resource');
-			}
-			$this->is_disposed = true;
+			throw new MySQLQuerierException('invalid query');
 		}
+		return $resource;
 	}
 }
 

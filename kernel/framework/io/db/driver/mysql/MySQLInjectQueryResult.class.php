@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MySQLSelectQueryResult.class.php
+ *                           MySQLInjectQueryResult.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : November 2, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,13 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage mysql
+ * @package io
+ * @subpackage db/driver/mysql
  * @desc
  */
-class MySQLSelectQueryResult extends AbstractSelectQueryResult
+class MySQLInjectQueryResult implements InjectQueryResult
 {
 	/**
 	 * @var string
@@ -49,28 +46,23 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	/**
 	 * @var int
 	 */
-	private $index = 0;
-
-	/**
-	 * @var string[string]
-	 */
-	private $current;
+	private $affected_rows = 0;
 
 	/**
 	 * @var int
 	 */
-	private $fetch_mode;
+	private $last_inserted_id = 0;
 
 	/**
 	 * @var bool
 	 */
 	private $is_disposed = false;
 
-	public function __construct(&$query, &$resource, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct(&$query, &$link)
 	{
 		$this->query = $query;
-		$this->fetch_mode = $fetch_mode;
-		$this->resource = $resource;
+		$this->affected_rows = mysql_affected_rows($link);
+		$this->last_inserted_id = mysql_insert_id($link);
 	}
 
 	public function __destruct()
@@ -83,51 +75,14 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 		return $this->query;
 	}
 
-	public function set_fetch_mode($fetch_mode)
+	public function get_affected_rows()
 	{
-		$this->fetch_mode = $fetch_mode;
+		return $this->affected_rows;
 	}
 
-	public function get_rows_count()
+	public function get_last_inserted_id()
 	{
-		return mysql_num_rows($this->resource);
-	}
-
-	public function rewind()
-	{
-		@mysql_data_seek($this->resource, 0);
-		$this->index = 0;
-		$this->next();
-	}
-
-	public function valid()
-	{
-		return $this->current !== false;
-	}
-
-	public function current()
-	{
-		return $this->current;
-	}
-
-	public function key()
-	{
-		return $this->index;
-	}
-
-	public function next()
-	{
-		switch ($this->fetch_mode)
-		{
-			case SelectQueryResult::FETCH_NUM:
-				$this->current = mysql_fetch_row($this->resource);
-				break;
-			case SelectQueryResult::FETCH_ASSOC:
-			default:
-				$this->current = mysql_fetch_assoc($this->resource);
-				break;
-		}
-		$this->index++;
+		return $this->last_inserted_id;
 	}
 
 	public function dispose()
@@ -140,11 +95,6 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 			}
 			$this->is_disposed = true;
 		}
-	}
-	
-	protected function needs_rewind()
-	{
-		return $this->index == 0;
 	}
 }
 

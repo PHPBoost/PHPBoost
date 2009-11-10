@@ -27,8 +27,8 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package db
- * @subpackage dbms
+ * @package io
+ * @subpackage db/dbms
  * @desc
  *
  */

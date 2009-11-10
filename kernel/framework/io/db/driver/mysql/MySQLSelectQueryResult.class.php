@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PDOSelectQueryResult.class.php
+ *                           MySQLSelectQueryResult.class.php
  *                            -------------------
- *   begin                : November 1, 2009
+ *   begin                : October 1, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,13 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package sql
- * @subpackage mysql
+ * @package io
+ * @subpackage db/driver/mysql
  * @desc
  */
-class PDOSelectQueryResult extends AbstractSelectQueryResult
+class MySQLSelectQueryResult extends AbstractSelectQueryResult
 {
 	/**
 	 * @var string
@@ -42,30 +39,35 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 	private $query;
 
 	/**
-	 * @var PDOStatement
+	 * @var Resource
 	 */
-	private $statement = null;
+	private $resource = null;
 
 	/**
 	 * @var int
 	 */
-	private $fetch_mode = null;
+	private $index = 0;
 
 	/**
-	 * @var ArrayIterator
+	 * @var string[string]
 	 */
-	private $iterator = null;
+	private $current;
+
+	/**
+	 * @var int
+	 */
+	private $fetch_mode;
 
 	/**
 	 * @var bool
 	 */
 	private $is_disposed = false;
 
-	public function __construct(&$query, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct(&$query, &$resource, $fetch_mode = self::FETCH_ASSOC)
 	{
 		$this->query = $query;
-		$this->statement = $statement;
 		$this->fetch_mode = $fetch_mode;
+		$this->resource = $resource;
 	}
 
 	public function __destruct()
@@ -85,65 +87,61 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 
 	public function get_rows_count()
 	{
-		return $this->statement->rowCount();
+		return mysql_num_rows($this->resource);
 	}
 
 	public function rewind()
 	{
-		if ($this->iterator === null)
-		{
-			$pdo_fetch_mode = PDO::FETCH_ASSOC;
-			switch ($this->fetch_mode)
-			{
-				case self::FETCH_NUM:
-					$pdo_fetch_mode = PDO::FETCH_NUM;
-					break;
-				case self::FETCH_ASSOC:
-				default:
-					$pdo_fetch_mode = PDO::FETCH_ASSOC;
-					break;
-			}
-			$this->iterator = new ArrayIterator($this->statement->fetchAll($pdo_fetch_mode));
-		}
-		$this->iterator->rewind();
+		@mysql_data_seek($this->resource, 0);
+		$this->index = 0;
+		$this->next();
 	}
 
 	public function valid()
 	{
-		if ($this->iterator === null)
-		{
-			$this->rewind();
-		}
-		return  $this->iterator->valid();
+		return $this->current !== false;
 	}
 
 	public function current()
 	{
-		return $this->iterator->current();
+		return $this->current;
 	}
 
 	public function key()
 	{
-		return $this->iterator->key();
+		return $this->index;
 	}
 
 	public function next()
 	{
-		$this->iterator->next();
+		switch ($this->fetch_mode)
+		{
+			case SelectQueryResult::FETCH_NUM:
+				$this->current = mysql_fetch_row($this->resource);
+				break;
+			case SelectQueryResult::FETCH_ASSOC:
+			default:
+				$this->current = mysql_fetch_assoc($this->resource);
+				break;
+		}
+		$this->index++;
 	}
 
 	public function dispose()
 	{
-		if (!$this->is_disposed)
+		if (!$this->is_disposed && is_resource($this->resource))
 		{
-			$this->statement->closeCursor();
+			if (!@mysql_free_result($this->resource))
+			{
+				throw new MySQLQuerierException('can\'t close sql resource');
+			}
 			$this->is_disposed = true;
 		}
 	}
-	
+
 	protected function needs_rewind()
 	{
-		return $this->iterator === null;
+		return $this->index == 0;
 	}
 }
 

@@ -34,7 +34,7 @@
 class Errors
 {
 	const DISPLAY_ALL_ERROR = false; //Display error suppressed by @.
-	
+
 	private $redirect;
 	private $template; //Template used by the error handler.
 	private $personal_tpl = false; //Template used by the error handler.
@@ -75,6 +75,8 @@ class Errors
 	 */
 	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
+		echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
+
 		global $LANG, $CONFIG;
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
@@ -86,7 +88,6 @@ class Errors
 		{
 			return true;
 		}
-		echo $errstr . ' ' . $errfile . ' ' . $errline;
 		switch ($errno)
 		{
 			//Notice utilisateur.

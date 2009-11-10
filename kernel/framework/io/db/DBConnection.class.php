@@ -27,8 +27,14 @@
 
 
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage db
+ *
+ */
 interface DBConnection
-{    
+{
     /**
      * @desc
      * @param mixed[string] $db_connection_data
@@ -36,30 +42,30 @@ interface DBConnection
      * @throws UnexistingDatabaseException
      */
     function connect(array &$db_connection_data);
-    
+
     /**
      * @desc
      */
     function disconnect();
-    
+
     /**
      * @desc
      * @return the database link (mysql resource, pdo object, ... depends of the database)
      */
     function get_link();
-    
+
     /**
      * @desc start a new transaction. If a transaction has already been started,
      * no new transaction will be created, but the existing one will be used
      * (does not count in the requests count)
      */
     function start_transaction();
-    
+
     /**
      * @desc commit the current transaction (does not count in the requests count)
      */
     function commit();
-    
+
     /**
      * @desc rollback the current transaction (does not count in the requests count)
      */
