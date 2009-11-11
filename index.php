@@ -51,8 +51,6 @@ elseif (empty($CONFIG))
 }
 
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
-define('DIR', $CONFIG['server_path']);
-define('HOST', $CONFIG['server_name']);
 $start_page = get_start_page();
 
 if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
