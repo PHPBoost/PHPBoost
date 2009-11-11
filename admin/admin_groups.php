@@ -170,14 +170,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$Errorh->handler($LANG['e_already_group'], E_USER_NOTICE);
 		}
 		
-		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
-		//On crée une pagination si le nombre de membre est trop important.
-		
-		$Pagination = new Pagination();
-		
 		//On recupère les dossier des images des groupes.
-		
-
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
@@ -186,8 +179,10 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
 			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
-	
 		$array_group = unserialize($group['auth']);
+	
+		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
+		$Pagination = new Pagination();
 		$Template->assign_vars(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
@@ -260,7 +255,6 @@ elseif ($add) //Interface d'ajout du groupe.
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
-	
 
 	$img_groups = '<option value="">--</option>';
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
@@ -309,12 +303,10 @@ else //Liste des groupes.
 	 ));
 	 
 	$nbr_group = $Sql->count_table(DB_TABLE_GROUP, __LINE__, __FILE__);
-	//On crée une pagination si le nombre de group est trop important.
 	
 	$Pagination = new Pagination();
-	
 	$Template->assign_vars(array(
-		'PAGINATION' => $Pagination->display('admin_groups', $nbr_group, 'p', 25, 3),
+		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
