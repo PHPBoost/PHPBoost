@@ -296,7 +296,7 @@ else //Liste des groupes.
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(
-		'PAGINATION' => $Pagination->display('admin_groups', $nbr_group, 'p', 25, 3),
+		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
