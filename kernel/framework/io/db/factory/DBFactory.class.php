@@ -79,7 +79,6 @@ class DBFactory
 			self::$db_connection = self::get_factory()->new_db_connection();
 			self::$db_connection->connect($data);
 		}
-		print_r(self::$db_connection);
 		return self::$db_connection;
 	}
 

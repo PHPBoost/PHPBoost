@@ -477,7 +477,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 * Returns the configuration.
 	 * @return UserAccountsConfig
 	 */
-	public static function load($config_name = null, $default_config_classname = null, $entry_name = '')
+	public static function load()
 	{
 		return ConfigManager::load(__CLASS__, 'kernel', 'user-accounts');
 	}

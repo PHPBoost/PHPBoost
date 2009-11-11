@@ -68,7 +68,6 @@ class MySQLQuerier extends AbstractSQLQuerier
 		$resource = mysql_query($query, $this->link);
 		if ($resource === false)
 		{
-			echo $query . '<hr />';
 			throw new MySQLQuerierException('invalid query');
 		}
 		return $resource;
