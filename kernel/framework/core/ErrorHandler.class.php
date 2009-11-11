@@ -39,7 +39,6 @@ class ErrorHandler
 	protected $errdesc;
 	protected $errclass;
 	protected $errimg;
-	protected $error_log_string;
 	protected $fatal;
 
 	/**
@@ -77,7 +76,6 @@ class ErrorHandler
 		$this->errdesc = '';
 		$this->errclass = '';
 		$this->errimg = '';
-		$this->error_log_string = '';
 		$this->fatal = false;
 	}
 
@@ -161,23 +159,23 @@ class ErrorHandler
 
 	private function log()
 	{
-		$this->compute_error_log_string();
-		$this->add_error_in_log();
+		$error_msg = $this->compute_error_log_string();
+		self::add_error_in_log($error_msg);
 	}
 
 	private function compute_error_log_string()
 	{
-		$this->error_log_string = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
-		$this->error_log_string .= $this->errno . "\n";
-		$this->error_log_string .= $this->clean_error_string() . "\n";
-		$this->error_log_string .= Path::get_path_from_root($this->errfile) . "\n";
-		$this->error_log_string .= $this->errline . "\n";
+		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
+		$this->errno . "\n" .
+		$this->clean_error_string() . "\n" .
+		Path::get_path_from_root($this->errfile) . "\n" .
+		$this->errline . "\n";
 	}
 
-	private function add_error_in_log()
+	public static function add_error_in_log($error_msg)
 	{
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+');
-		$write = @fwrite($handle,  $this->error_log_string);
+		$write = @fwrite($handle,  $error_msg);
 		$close = @fclose($handle);
 
 		if ($handle === false || $write === false || $close === false)
