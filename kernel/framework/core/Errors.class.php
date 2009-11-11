@@ -75,70 +75,71 @@ class Errors
 	 */
 	public function handler_php($errno, $errstr, $errfile, $errline)
 	{
+		// Hides errors suppressed by @.
+		if (!self::DISPLAY_ALL_ERROR && error_reporting() == 0)
+		{
+			return true;
+		}
+		echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><hr />';
+//		$this->display('error_notice', $errno, $errline, $errfile);
+
 		global $LANG, $CONFIG;
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
 			return true;
 		}
-
-		//Si une erreur est supprimé par un @ alors on passe
-		if (!self::DISPLAY_ALL_ERROR && error_reporting() == 0)
-		{
-			return true;
-		}
-		echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><br />';
 		/*
-		switch ($errno)
-		{
+		 switch ($errno)
+		 {
 			//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
 			case E_STRICT:
-				$errdesc = $LANG['e_notice'];
-				$errimg = 'notice';
-				$errclass = 'error_notice';
-				break;
-				//Warning utilisateur.
+			$errdesc = $LANG['e_notice'];
+			$errimg = 'notice';
+			$errclass = 'error_notice';
+			break;
+			//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
-				$errdesc = $LANG['e_warning'];
-				$errimg = 'important';
-				$errclass = 'error_warning';
-				break;
-				//Erreur fatale.
+			$errdesc = $LANG['e_warning'];
+			$errimg = 'important';
+			$errclass = 'error_warning';
+			break;
+			//Erreur fatale.
 			case E_USER_ERROR:
 			case E_ERROR:
-				$errdesc = $LANG['error'];
-				$errimg = 'stop';
-				$errclass = 'error_fatal';
-				break;
-				//Erreur inconnue.
+			$errdesc = $LANG['error'];
+			$errimg = 'stop';
+			$errclass = 'error_fatal';
+			break;
+			//Erreur inconnue.
 			default:
-				$errdesc = $LANG['e_unknow'];
-				$errimg = 'question';
-				$errclass = 'error_unknow';
-		}
+			$errdesc = $LANG['e_unknow'];
+			$errimg = 'question';
+			$errclass = 'error_unknow';
+			}
 
-		//On affiche l'erreur
-		echo '<span id="errorh"></span>
-		<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
+			//On affiche l'erreur
+			echo '<span id="errorh"></span>
+			<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
-			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . get_root_path_from_file($errfile) . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . Path::get_path_from_root($errfile) . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />
-		</div>';
+			</div>';
 
-		//Et on l'archive
-		self::log_error($errfile, $errline, $errno, $errstr, true);
+			//Et on l'archive
+			self::log_error($errfile, $errline, $errno, $errstr, true);
 
-		//Dans le cas d'un E_USER_ERROR on arrête l'exécution
-		if ($errno == E_USER_ERROR)
-		{
+			//Dans le cas d'un E_USER_ERROR on arrête l'exécution
+			if ($errno == E_USER_ERROR)
+			{
 			exit;
-		}
+			}
 
-		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
-		return true;
-		*/
+			//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
+			return true;
+			*/
 	}
 
 	/**
@@ -254,167 +255,173 @@ class Errors
 	 */
 	public function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
 	{
-		global $LANG;
 
 		//Parsage du bloc seulement si une erreur à afficher.
 		if (!empty($errstr))
 		{
-			$Template = new Template('framework/errors.tpl');
-			switch ($errno)
-			{
-				//Message de succès, étrange pour une classe d'erreur non?
-				case E_USER_SUCCESS:
-					$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-					$Template->assign_vars(array(
-    					'ERRORH_IMG' => 'success',
-    					'ERRORH_CLASS' => 'error_success',
-    					'L_ERRORH' => $errstr
-					));
-					break;
-					//Notice utilisateur.
-				case E_USER_NOTICE:
-				case E_NOTICE:
-					$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
-					$Template->assign_vars(array(
-    					'ERRORH_IMG' => 'notice',
-    					'ERRORH_CLASS' => 'error_notice',
-    					'L_ERRORH' => $errstr
-					));
-					break;
-					//Warning utilisateur.
-				case E_USER_WARNING:
-				case E_WARNING:
-					$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
-					$Template->assign_vars(array(
-    					'ERRORH_IMG' => 'important',
-    					'ERRORH_CLASS' => 'error_warning',
-    					'L_ERRORH' => $errstr
-					));
-					break;
-			}
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			echo '<span id="errorh"></span>
+			<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
+			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
+			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . Path::get_path_from_root($errfile) . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<br />
+			</div>';
+			//			global $LANG;
+			//			$Template = new Template('framework/errors.tpl');
+			//			switch ($errno)
+			//			{
+			//				//Message de succès, étrange pour une classe d'erreur non?
+			//				case E_USER_SUCCESS:
+			//					$errstr = sprintf($LANG['error_success'], $errstr, '', '');
+			//					$Template->assign_vars(array(
+			//    					'ERRORH_IMG' => 'success',
+			//    					'ERRORH_CLASS' => 'error_success',
+			//    					'L_ERRORH' => $errstr
+			//					));
+			//					break;
+			//					//Notice utilisateur.
+			//				case E_USER_NOTICE:
+			//				case E_NOTICE:
+			//					$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
+			//					$Template->assign_vars(array(
+			//    					'ERRORH_IMG' => 'notice',
+			//    					'ERRORH_CLASS' => 'error_notice',
+			//    					'L_ERRORH' => $errstr
+			//					));
+			//					break;
+			//					//Warning utilisateur.
+			//				case E_USER_WARNING:
+			//				case E_WARNING:
+			//					$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
+			//					$Template->assign_vars(array(
+			//    					'ERRORH_IMG' => 'important',
+			//    					'ERRORH_CLASS' => 'error_warning',
+			//    					'L_ERRORH' => $errstr
+			//					));
+			//					break;
+			//			}
+			//			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
 			{
 				self::log_error($errfile, $errline, $errno, $errstr, $archive);
 			}
-		}
-		return '';
-	}
-
-	/**
-	 * @desc Set a personnal template for the handler methods.
-	 */
-	public function set_template(&$template)
-	{
-		$this->template = &$template;
-		$this->personal_tpl = true;
-	}
-
-	/**
-	 * @desc Set default template for the handler methods.
-	 */
-	public function set_default_template()
-	{
-		global $Template;
-
-		$this->template = &$Template;
-		$this->personal_tpl = false;
-	}
-
-	/**
-	 * @desc Get last error informations
-	 */
-	public static function get_last_error_log()
-	{
-		$errinfo = '';
-		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
-		if ($handle)
-		{
-			$i = 1;
-			while (!feof($handle))
-			{
-				$buffer = fgets($handle);
-				if ($i == 2)
-				$errinfo['errno'] = $buffer;
-				if ($i == 3)
-				$errinfo['errstr'] = $buffer;
-				if ($i == 4)
-				$errinfo['errfile'] = $buffer;
-				if ($i == 5)
-				{
-					$errinfo['errline'] = $buffer;
-					$i = 0;
-				}
-				$i++;
 			}
-			@fclose($handle);
+			return '';
 		}
-		return $errinfo;
-	}
 
-	/**
-	 * @desc Get Error type
-	 */
-	public static function get_errno_class($errno)
-	{
-		switch ($errno)
+		/**
+		 * @desc Set a personnal template for the handler methods.
+		 */
+		public function set_template(&$template)
 		{
-			//Redirection utilisateur.
-			case E_USER_REDIRECT:
-				return 'error_fatal';
-				//Notice utilisateur.
-			case E_USER_NOTICE:
-			case E_NOTICE:
-				return 'error_notice';
-				//Warning utilisateur.
-			case E_USER_WARNING:
-			case E_WARNING:
-				return 'error_warning';
-				//Erreur fatale.
-			case E_USER_ERROR:
-			case E_ERROR:
-			case E_RECOVERABLE_ERROR:
-				return 'error_fatal';
-			default: //Erreur inconnue.
-				return 'error_unknow';
+			$this->template = &$template;
+			$this->personal_tpl = true;
 		}
-	}
 
-	/**
-	 * @desc Save error in log file
-	 */
-	private static function log_error($errfile, $errline, $errno, $errstr, $archive)
-	{
-		if ($archive)
+		/**
+		 * @desc Set default template for the handler methods.
+		 */
+		public function set_default_template()
 		{
-			//Nettoyage de la chaîne avant enregistrement.
-			$errstr = self::clean_error_string($errstr);
+			global $Template;
 
-			$error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
-			$error .= $errno . "\n";
-			$error .= $errstr . "\n";
-			$error .= get_root_path_from_file($errfile) . "\n";
-			$error .= $errline . "\n";
-
-			$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+'); //On crée le fichier avec droit d'écriture et lecture.
-			@fwrite($handle,  $error);
-			@fclose($handle);
-			return true;
+			$this->template = &$Template;
+			$this->personal_tpl = false;
 		}
-		return false;
+
+		/**
+		 * @desc Get last error informations
+		 */
+		public static function get_last_error_log()
+		{
+			$errinfo = '';
+			$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
+			if ($handle)
+			{
+				$i = 1;
+				while (!feof($handle))
+				{
+					$buffer = fgets($handle);
+					if ($i == 2)
+					$errinfo['errno'] = $buffer;
+					if ($i == 3)
+					$errinfo['errstr'] = $buffer;
+					if ($i == 4)
+					$errinfo['errfile'] = $buffer;
+					if ($i == 5)
+					{
+						$errinfo['errline'] = $buffer;
+						$i = 0;
+					}
+					$i++;
+				}
+				@fclose($handle);
+			}
+			return $errinfo;
+		}
+
+		/**
+		 * @desc Get Error type
+		 */
+		public static function get_errno_class($errno)
+		{
+			switch ($errno)
+			{
+				//Redirection utilisateur.
+				case E_USER_REDIRECT:
+					return 'error_fatal';
+					//Notice utilisateur.
+				case E_USER_NOTICE:
+				case E_NOTICE:
+					return 'error_notice';
+					//Warning utilisateur.
+				case E_USER_WARNING:
+				case E_WARNING:
+					return 'error_warning';
+					//Erreur fatale.
+				case E_USER_ERROR:
+				case E_ERROR:
+				case E_RECOVERABLE_ERROR:
+					return 'error_fatal';
+				default: //Erreur inconnue.
+					return 'error_unknow';
+			}
+		}
+
+		/**
+		 * @desc Save error in log file
+		 */
+		private static function log_error($errfile, $errline, $errno, $errstr, $archive)
+		{
+			if ($archive)
+			{
+				//Nettoyage de la chaîne avant enregistrement.
+				$errstr = self::clean_error_string($errstr);
+
+				$error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
+				$error .= $errno . "\n";
+				$error .= $errstr . "\n";
+				$error .= Path::get_path_from_root($errfile) . "\n";
+				$error .= $errline . "\n";
+
+				$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+'); //On crée le fichier avec droit d'écriture et lecture.
+				@fwrite($handle,  $error);
+				@fclose($handle);
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 * @desc Clean Error String
+		 */
+		private static function clean_error_string($errstr)
+		{
+			$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
+			$errstr = preg_replace("`(\n){1,}`", '<br />', $errstr);
+			return $errstr;
+		}
 	}
 
-	/**
-	 * @desc Clean Error String
-	 */
-	private static function clean_error_string($errstr)
-	{
-		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
-		$errstr = preg_replace("`(\n){1,}`", '<br />', $errstr);
-		return $errstr;
-	}
-}
-
-?>
+	?>

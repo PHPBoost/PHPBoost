@@ -51,7 +51,7 @@ class MySQLQueryTranslator implements SQLQueryTranslator
 	private function translate_operators()
 	{
 		$this->query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w.:_\']+)+`',
-		array('MySQLQueryTranslator', 'concat_callback'), $this->query);
+		array($this, 'concat_callback'), $this->query);
 	}
 
 	private function translate_functions()

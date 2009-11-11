@@ -105,7 +105,8 @@ class Environment
 
 	public static function fit_to_php_configuration()
 	{
-		define('ERROR_REPORTING',   E_ALL | E_NOTICE);
+		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
+//		define('ERROR_REPORTING',   E_ALL | E_NOTICE);
 		@error_reporting(ERROR_REPORTING);
 
 		@ini_set('open_basedir', NULL);
@@ -145,6 +146,8 @@ class Environment
 		{
 			define('MAGIC_QUOTES', false);
 		}
+
+		set_error_handler(array(ErrorsManager::get_instance(), 'handler'));
 	}
 
 	public static function load_static_constants()
