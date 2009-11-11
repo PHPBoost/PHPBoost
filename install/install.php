@@ -329,12 +329,18 @@ switch($step)
 
 					$Errorh = new Errors();
 
-					$db_connection = new MySQLDBConnection($host, $login, $password);
-					$db_connection->connect();
-					$db_connection->select_database($database);
-					$Sql = new Sql($db_connection, $database);
-					AppContext::set_sql($Sql);
-
+					$db_connection_data = array(
+						'dbms' => DBFactory::MYSQL,
+						'dsn' => 'mysql:host=' . $host . ';dbname=' . $database,
+						'driver_options' => array(),
+						'host' => $host,
+						'login' => $login,
+						'password' => $password,
+						'database' => $database,
+					);
+					$db_connection = new MySQLDBConnection();
+					$db_connection->connect($db_connection_data);
+					$Sql = AppContext::get_sql();
 					//Création du fichier de configuration
 
 
@@ -343,7 +349,7 @@ switch($step)
 					$db_config_content = '<?php' . "\n" .
                         '$db_connection_data = array(' .
 						"\n\t" . '\'dbms\' => DBFactory::MYSQL,' .
-						"\n\t" . '\'dsn\' => \'mysql:host=' . $host . ';dbname=' . $database . ';\'' .
+						"\n\t" . '\'dsn\' => \'mysql:host=' . $host . ';dbname=' . $database . ';\',' .
 						"\n\t" . '\'driver_options\' => array(),' .
 						"\n\t" . '\'host\' => \'' . $host . '\',' .
 						"\n\t" . '\'login\' => \'' . $login . '\',' .
@@ -454,6 +460,7 @@ switch($step)
 		break;
 		// Configuration du site
 	case STEP_SITE_CONFIG:
+
 		//Variables serveur.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)
@@ -522,18 +529,28 @@ switch($step)
 			$CONFIG['html_auth'] = array ('r2' => 1);
 			$CONFIG['forbidden_tags'] = array ();
 
-			AppContext::init_sql_querier();
 			$Sql = AppContext::get_sql();
 
 			//On insère dans la base de données
-			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			AppContext::get_sql_querier()->inject(
+				"UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'",
+			array('config' => serialize($CONFIG)));
 
 			//On installe la langue
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+			AppContext::get_sql_querier()->inject(
+				"INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)",
+			array('config_lang' => $CONFIG['lang']));
 
 			//On installe le thème
 			$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $lang);
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
+			AppContext::get_sql_querier()->inject(
+				"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
+				VALUES (:theme, 1, -1, :left_column, :right_column)",
+			array(
+					'theme' => $CONFIG['theme'],
+					'left_column' => $info_theme['left_column'],
+					'right_column' => $info_theme['right_column']
+			));
 
 			//On génère le cache
 			require_once '../kernel/framework/core/Cache.class.php';
@@ -564,7 +581,7 @@ switch($step)
 			$Cache->load('themes', RELOAD_CACHE);
 
 
-    		ModulesCssFilesCache::invalidate();
+			ModulesCssFilesCache::invalidate();
 
 			redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
 		}
@@ -598,7 +615,7 @@ switch($step)
     			'NAME' => $timezone_name,
     			'VALUE' => $i,
     			'SELECTED' => $i === $site_timezone ? 'selected="selected"' : ''
-    		));
+    			));
 		}
 
 		$template->assign_vars(array(
@@ -687,7 +704,6 @@ switch($step)
 			//Si il n'y a pas d'erreur on enregistre dans la table
 			if (empty($error))
 			{
-				AppContext::init_sql_querier();
 				$Sql = AppContext::get_sql();
 
 				//On crée le code de déverrouillage
@@ -791,7 +807,6 @@ switch($step)
     		break;
     		//Fin
 	case STEP_END:
-		AppContext::init_sql_querier();
 		$Sql = AppContext::get_sql();
 
 

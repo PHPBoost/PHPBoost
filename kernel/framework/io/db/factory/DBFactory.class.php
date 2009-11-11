@@ -44,11 +44,31 @@ class DBFactory
 	 */
 	private static $db_connection;
 
+	/**
+	 * @var DBMSFactory
+	 */
 	private static $factory;
 
+
+	public static function init_factory($dbms)
+	{
+		switch ($dbms)
+		{
+			case self::PDO_MYSQL:
+				self::$factory = new PDOMySQLDBFactory();
+				break;
+			case self::MYSQL:
+			default:
+				require_once PATH_TO_ROOT . '/kernel/framework/io/db/factory/MySQLDBFactory.class.php';
+				self::$factory = new MySQLDBFactory();
+				break;
+		}
+	}
+
 	/**
-	 * @desc returns a new <code>DBConnection</code> instance
-	 * @return DBConnection a new <code>DBConnection</code> instance
+	 * @desc returns the currently opened <code>DBConnection</code> instance or if none,
+	 * creates a new one
+	 * @return DBConnection the currently opened <code>DBConnection</code> instance
 	 */
 	public static function get_db_connection()
 	{
@@ -59,7 +79,13 @@ class DBFactory
 			self::$db_connection = self::get_factory()->new_db_connection();
 			self::$db_connection->connect($data);
 		}
+		print_r(self::$db_connection);
 		return self::$db_connection;
+	}
+
+	public static function set_db_connection(DBConnection $connection)
+	{
+		self::$db_connection = $connection;
 	}
 
 	/**
@@ -89,21 +115,6 @@ class DBFactory
 			redirect(get_server_url_page('install/install.php'));
 		}
 		return $db_connection_data;
-	}
-
-	private static function init_factory($dbms)
-	{
-		switch ($dbms)
-		{
-			case self::PDO_MYSQL:
-				self::$factory = new PDOMySQLDBFactory();
-				break;
-			case self::MYSQL:
-			default:
-				require_once PATH_TO_ROOT . '/kernel/framework/io/db/factory/MySQLDBFactory.class.php';
-				self::$factory = new MySQLDBFactory();
-				break;
-		}
 	}
 
 	/**

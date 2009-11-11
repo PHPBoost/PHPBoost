@@ -31,16 +31,22 @@ abstract class AbstractTemplateParser implements TemplateParser
 {
 	protected $cache_filepath;
 	protected $content;
+	/**
+	 * @var TemplateLoader
+	 */
 	protected $loader;
+	/**
+	 * @var Template
+	 */
 	protected $template;
-	
+
 	protected $resource = null;
-	
+
 	public function parse($template_object, $template_loader)
 	{
 		$this->template = $template_object;
 		$this->loader = $template_loader;
-		
+
 		$this->compute_cache_filepath();
 		if (!$this->is_cache_valid())
 		{
@@ -49,14 +55,14 @@ abstract class AbstractTemplateParser implements TemplateParser
 		$this->execute();
 		return $this->resource;
 	}
-	
+
 	protected abstract function compute_cache_filepath();
-	
+
 	private function is_cache_valid()
-	{	
+	{
 		return $this->loader->is_cache_file_valid($this->cache_filepath);
 	}
-	
+
 	private function generate_cache()
 	{
 		$this->load();
@@ -65,17 +71,17 @@ abstract class AbstractTemplateParser implements TemplateParser
 		$this->optimize();
 		$this->save();
 	}
-	
+
 	protected abstract function execute();
-	
+
 	private function load()
 	{
 		$this->loader->load();
 		$this->content = $this->loader->get_resource_as_string();
 	}
-	
+
 	protected abstract function do_parse();
-	
+
 	protected function clean()
 	{
 		$this->content = preg_replace(
@@ -84,18 +90,18 @@ abstract class AbstractTemplateParser implements TemplateParser
 			$this->content
 		);
 	}
-	
+
 	protected function optimize()
 	{
 	}
-	
+
 	protected function get_getvar_method_name($varname)
 	{
 		$method = 'var';
 		$tiny_varname = $varname;
-		
+
 		$split_index = strpos($varname, '_');
-		
+
 		if ($split_index > 0)
 		{
 			$prefix = substr($varname, 0, $split_index);
@@ -126,14 +132,14 @@ abstract class AbstractTemplateParser implements TemplateParser
 					break;
 			}
 		}
-		
+
 		//echo 'get_' . $method . '(' . $varname . ', ' . $tiny_varname . ', ' . $prefix . ')<br />';
 		return array('method' => 'get_' . $method, 'varname' => $tiny_varname);
 	}
-	
+
 	private function save()
 	{
-		
+
 		$file = new File($this->cache_filepath);
 		$file->open(WRITE);
 		$file->lock();
