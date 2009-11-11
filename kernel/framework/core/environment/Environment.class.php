@@ -67,9 +67,8 @@ class Environment
 		self::init_services();
 		self::load_static_constants();
 
-		// TODO move in begin
-		/* DEPRECATED VARS */
-		global $Sql, $Bread_crumb, $Session, $User, $Template;
+		// TODO Suppress uses of $Sql in the framework
+		global $Sql;
 		$Sql = AppContext::get_sql();
 		/* END DEPRECATED */
 
@@ -79,11 +78,10 @@ class Environment
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
+		global $Bread_crumb, $Session, $User, $Template;
 		$Bread_crumb = AppContext::get_breadcrumb();
 		$Session = AppContext::get_session();
 		$User = AppContext::get_user();
-		// This is also a deprecated variable and has to be created
-		// after the environment initialization
 		$Template = new DeprecatedTemplate();
 		/* END DEPRECATED */
 
@@ -92,8 +90,7 @@ class Environment
 		self::process_changeday_tasks_if_needed();
 		self::check_current_page_auth();
 		self::csrf_protect_post_requests();
-
-		set_exception_handler(array(get_class(), 'exception_handler'));
+		self::enable_errors_and_exceptions_management();
 	}
 
 	public static function init_services()
@@ -103,11 +100,17 @@ class Environment
 		AppContext::init_session();
 	}
 
+	public static function enable_errors_and_exceptions_management()
+	{
+		set_error_handler(array(new IntegratedErrorHandler(), 'handler'));
+		set_exception_handler(array(get_class(), 'exception_handler'));
+	}
+
 	public static function fit_to_php_configuration()
 	{
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
 		@error_reporting(ERROR_REPORTING);
-		set_error_handler(array('ErrorsManager', 'handler'));
+		set_error_handler(array(new ErrorHandler(), 'handler'));
 
 		@ini_set('open_basedir', NULL);
 
