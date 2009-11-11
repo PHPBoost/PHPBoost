@@ -312,7 +312,6 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-
 	$comments = new Comments($script, $idprov, $vars, $module_folder);
 
 	return $comments->display();

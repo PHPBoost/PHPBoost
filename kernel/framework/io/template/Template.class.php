@@ -419,7 +419,9 @@ class Template
 		{
 			$list[$varname] = '';
 		}
-		return $this->register_var($full_varname, htmlspecialchars($list[$varname]), $list);
+		
+		$value = htmlspecialchars($list[$varname]);
+		return $this->register_var($full_varname, $value, $list);
 	}
 	
 	public function get_lang_var($varname)

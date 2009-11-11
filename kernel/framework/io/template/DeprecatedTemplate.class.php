@@ -79,7 +79,7 @@ class DeprecatedTemplate extends Template
 	 */
 	public function pparse($identifier)
 	{
-		$template =& $this->get_subtemplate($identifier);
+		$template = $this->get_subtemplate($identifier);
 		if ($template != null)
 		{
 			$template->parse();

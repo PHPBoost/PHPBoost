@@ -76,7 +76,7 @@ class MenuService
      * @desc
      * @return unknown_type
      */
-    function get_menus_map()
+    static function get_menus_map()
     {
         global $Sql;
         
@@ -334,7 +334,7 @@ class MenuService
     /**
      * @desc Generate the cache
      */
-    function generate_cache($return_string = false)
+    static function generate_cache($return_string = false)
     {
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
@@ -673,10 +673,10 @@ class MenuService
     
     /**
      * @desc Assigns the positions conditions for different printing modes
-     * @param &Template &$template the template to use
+     * @param Template &$template the template to use
      * @param int $position the menu position
      */
-    function assign_positions_conditions(&$template, $position)
+    static function assign_positions_conditions(&$template, $position)
     {
     	$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
         $template->assign_vars(array(
@@ -731,7 +731,7 @@ class MenuService
      * @access private
      * @return array[] initialize the menus map structure
      */
-    function _initialize_menus_map()
+    static function _initialize_menus_map()
     {
         return array(
             Menu::BLOCK_POSITION__HEADER => array(),
@@ -752,7 +752,7 @@ class MenuService
      * @param string[key] $db_result the map from the database with the Menu id and serialized object
      * @return Menu the menu object from the serialized one
      */
-    function _load($db_result)
+    static function _load($db_result)
     {
         $menu = unserialize($db_result['object']);
         

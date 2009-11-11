@@ -144,7 +144,7 @@ elseif (!empty($_POST['submit']))
 		if ($id_cat > 0)
 			$error_string = $news_categories->Update_category($id_cat, $id_parent, $name, $description, $image, $auth);
 		else
-			$error_string = $news_categories->add($id_parent, $name, $description, $image, $auth);
+			$error_string = $news_categories->add_category($id_parent, $name, $description, $image, $auth);
 	}
 
 	// Feeds Regeneration

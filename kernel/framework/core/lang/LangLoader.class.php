@@ -49,7 +49,8 @@ class LangLoader
 
 	public static function get($filename, $module = '')
 	{
-		return self::get_raw(trim($module, '/'), $filename);
+		$module_name = trim($module, '/');
+		return self::get_raw($module_name, $filename);
 	}
 
 	public static function get_class($class_file, $module = '')

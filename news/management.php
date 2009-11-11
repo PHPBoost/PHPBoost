@@ -27,8 +27,6 @@
 
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
-$news_categories = new NewsCats();
-
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 

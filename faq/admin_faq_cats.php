@@ -122,7 +122,7 @@ elseif (!empty($_POST['submit']))
 		if ($id_cat > 0)
 			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
 		else
-			$error_string = $faq_categories->add($id_parent, $name, $description, $image);
+			$error_string = $faq_categories->add_category($id_parent, $name, $description, $image);
 	}
 
 	$Cache->Generate_module_file('faq');

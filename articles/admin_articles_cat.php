@@ -242,7 +242,7 @@ elseif (retrieve(POST,'submit',false))
 		if ($id_cat > 0)
 			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models);
 		else
-			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$models);
+			$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth,$models);
 	}
 
 	// Feeds Regeneration

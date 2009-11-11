@@ -55,7 +55,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template =  new Template('header.tpl');
 
-		$this->process_site_maintenance($template);
+		$this->display_site_maintenance($template);
 
 		$this->add_menus_css_files();
 
@@ -176,7 +176,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		));
 	}
 
-	protected function process_site_maintenance(Template $template)
+	protected function display_site_maintenance(Template $template)
 	{
 		global $CONFIG, $Template, $LANG;
 

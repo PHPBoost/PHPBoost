@@ -545,7 +545,7 @@ switch($step)
 			foreach ($DISTRIBUTION_MODULES as $module_name)
 			{
 				$Cache->load('modules', RELOAD_CACHE);
-				PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+				ModulesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 			}
 			$Cache->generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);

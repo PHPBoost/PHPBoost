@@ -215,7 +215,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	private function process_swf_tag($matches)
+	private static function process_swf_tag($matches)
 	{
 		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
@@ -234,7 +234,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	private function process_movie_tag($matches)
+	private static function process_movie_tag($matches)
 	{
 		$id = 'movie_' . get_uid();
 		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
@@ -248,7 +248,7 @@ class ContentSecondParser extends Parser
 	 * @param $matches The matched elements
 	 * @return The movie insertion code containing javascrpt calls
 	 */
-	private function process_sound_tag($matches)
+	private static function process_sound_tag($matches)
 	{
 		//Balise son
 		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">

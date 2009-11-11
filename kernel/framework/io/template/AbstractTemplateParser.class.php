@@ -71,7 +71,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 	private function load()
 	{
 		$this->loader->load();
-		$this->content =& $this->loader->get_resource_as_string();
+		$this->content = $this->loader->get_resource_as_string();
 	}
 	
 	protected abstract function do_parse();

@@ -64,7 +64,7 @@ elseif ($uninstall) //Désinstallation du module
 		
 		
 		
-		switch (PackagesManager::uninstall_module($idmodule, $drop_files))
+		switch (ModulesManager::uninstall_module($idmodule, $drop_files))
 		{
 			case NOT_INSTALLED_MODULE:
 				redirect('/admin/admin_modules.php?error=incomplete#errorh');

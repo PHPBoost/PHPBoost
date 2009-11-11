@@ -82,7 +82,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add($id_parent, $name, $description, $image, $auth,$models)
+	function add_category($id_parent, $name, $description, $image, $auth,$models)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var) || $id_parent == 0)
