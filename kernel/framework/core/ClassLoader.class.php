@@ -36,7 +36,7 @@ class ClassLoader
 
 	public static function init_autoload()
 	{
-		if (!@include_once PATH_TO_ROOT . self::$cache_file)
+		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
 		{
 			self::generate_classlist();
 		}
@@ -45,7 +45,7 @@ class ClassLoader
 
 	public static function autoload($classname)
 	{
-		if (!(isset(self::$autoload[$classname]) && @include_once PATH_TO_ROOT . self::$autoload[$classname]))
+		if (!(isset(self::$autoload[$classname]) && self::inc(PATH_TO_ROOT . self::$autoload[$classname])))
 		{
 			self::generate_classlist();
 			if (isset(self::$autoload[$classname]))
@@ -94,6 +94,11 @@ class ClassLoader
 		$file = new File(PATH_TO_ROOT . self::$cache_file, WRITE);
 		$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
 		$file->close();
+	}
+
+	private static function inc($file)
+	{
+		return file_exists($file) && include_once $file;
 	}
 }
 ?>

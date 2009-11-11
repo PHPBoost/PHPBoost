@@ -31,7 +31,6 @@ require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.clas
 Environment::load_imports();
 
 /* DEPRECATED VARS */
-$Errorh = new Errors();
 $Cache = new Cache();
 /* END DEPRECATED */
 

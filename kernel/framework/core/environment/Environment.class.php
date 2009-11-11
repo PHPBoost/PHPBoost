@@ -62,10 +62,10 @@ class Environment
 	 */
 	public static function init()
 	{
+		self::write_http_headers();
 		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();
-		self::write_http_headers();
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
@@ -106,8 +106,8 @@ class Environment
 	public static function fit_to_php_configuration()
 	{
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
-//		define('ERROR_REPORTING',   E_ALL | E_NOTICE);
 		@error_reporting(ERROR_REPORTING);
+		set_error_handler(array('ErrorsManager', 'handler'));
 
 		@ini_set('open_basedir', NULL);
 
@@ -146,15 +146,14 @@ class Environment
 		{
 			define('MAGIC_QUOTES', false);
 		}
-
-		set_error_handler(array(ErrorsManager::get_instance(), 'handler'));
 	}
 
 	public static function load_static_constants()
 	{
 		if (!defined('DEBUG'))
 		{
-			if (@include(PATH_TO_ROOT . '/cache/debug.php'))
+			$debug_cache_file = PATH_TO_ROOT . '/cache/debug.php';
+			if (file_exists($debug_cache_file) && @include $debug_cache_file)
 			{
 				define('DEBUG', (bool) $DEBUG['debug_mode']);
 			}

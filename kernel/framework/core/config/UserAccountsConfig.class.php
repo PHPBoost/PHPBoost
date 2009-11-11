@@ -114,7 +114,7 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * Sets the method used to validate the member accounts
-	 * @param int $method 0 if there is no activation, 1 if the member activates its account 
+	 * @param int $method 0 if there is no activation, 1 if the member activates its account
 	 * thanks to the mail it receives, 2 if the administrator has to approbate it.
 	 */
 	public function set_member_accounts_validation_method($method)
@@ -304,7 +304,7 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, $enabled);
 	}
-	
+
 	/**
 	 * Lets users upload their avatar
 	 */
@@ -356,7 +356,7 @@ class UserAccountsConfig extends DefaultConfigData
 	{
 		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, $enabled);
 	}
-	
+
 	/**
 	 * Enables the default avatar for users who don't have their own one
 	 */
@@ -477,7 +477,7 @@ class UserAccountsConfig extends DefaultConfigData
 	 * Returns the configuration.
 	 * @return UserAccountsConfig
 	 */
-	public static function load()
+	public static function load($config_name = null, $default_config_classname = null, $entry_name = '')
 	{
 		return ConfigManager::load(__CLASS__, 'kernel', 'user-accounts');
 	}

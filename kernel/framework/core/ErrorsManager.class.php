@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+import('util/Path');
+defined('DEBUG') or define('DEBUG', true);
+
 /**
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @package core
@@ -32,33 +35,17 @@
  */
 class ErrorsManager
 {
-	private static $instance = null;
-
-	private $errno;
-	private $errstr;
-	private $errfile;
-	private $errline;
-	private $errdesc;
-	private $errclass;
-	private $errimg;
-	private $error_log_string;
-
-	public static function get_instance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-	private function __construct()
-	{
-
-	}
+	private static $errno;
+	private static $errstr;
+	private static $errfile;
+	private static $errline;
+	private static $errdesc;
+	private static $errclass;
+	private static $errimg;
+	private static $error_log_string;
 
 	/**
-	 * @desc The user function needs to accept two parameters: the error code, and a string
+	 * @desc The user static functionneeds to accept two parameters: the error code, and a string
 	 * describing the error.
 	 * @param unknown_type $errno contains the level of the error raised, as an integer
 	 * @param unknown_type $errstr contains the error message, as a string
@@ -67,108 +54,108 @@ class ErrorsManager
 	 * @return bool always true because we don't want the php default error handler to process the
 	 * error again
 	 */
-	public function handler($errno, $errstr, $errfile, $errline)
+	public static function handler($errno, $errstr, $errfile, $errline)
 	{
-		$this->prepare($errno, $errstr, $errfile, $errline);
-		if ($this->needs_to_be_processed())
+		self::prepare($errno, $errstr, $errfile, $errline);
+		if (self::needs_to_be_processed())
 		{
-			$this->process();
-			$this->display();
-			$this->log();
+			self::process();
+			self::display();
+			self::log();
 		}
 		return true;
 	}
 
-	private function prepare($errno, $errstr, $errfile, $errline)
+	private static function prepare($errno, $errstr, $errfile, $errline)
 	{
-		$this->errno = $errno;
-		$this->errstr = $errstr;
-		$this->errfile = $errfile;
-		$this->errline = $errline;
-		$this->errdesc = '';
-		$this->errclass = '';
-		$this->errimg = '';
-		$this->error_log_string = '';
+		self::$errno = $errno;
+		self::$errstr = $errstr;
+		self::$errfile = $errfile;
+		self::$errline = $errline;
+		self::$errdesc = '';
+		self::$errclass = '';
+		self::$errimg = '';
+		self::$error_log_string = '';
 	}
 
 	/**
-	 * @return boolean true if the error is not thrown by a function prefixed with an @ and if the
+	 * @return boolean true if the error is not thrown by a static functionprefixed with an @ and if the
 	 * errno is in the ERROR_REPORTING level
 	 */
-	private function needs_to_be_processed()
+	private static function needs_to_be_processed()
 	{
-		return true;
-		return (error_reporting() > 0) && ($this->errno & ERROR_REPORTING);
+//		return true;
+		return (error_reporting() != 0) && (self::$errno & ERROR_REPORTING);
 	}
 
-	private function process()
+	private static function process()
 	{
-		switch ($this->errno)
+		switch (self::$errno)
 		{
 			case E_USER_NOTICE:
 			case E_NOTICE:
 			case E_STRICT:
-				$this->errdesc = 'Notice';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				self::$errdesc = 'Notice';
+				self::$errimg =  'notice';
+				self::$errclass =  'error_notice';
 				break;
 				//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
-				$this->errdesc = 'Warning';
-				$this->errimg =  'important';
-				$this->errclass =  'error_warning';
+				self::$errdesc = 'Warning';
+				self::$errimg =  'important';
+				self::$errclass =  'error_warning';
 				break;
 				//Erreur fatale.
 			case E_USER_ERROR:
 			case E_ERROR:
 			case E_RECOVERABLE_ERROR:
-				$this->errdesc = 'Fatal Error';
-				$this->errimg =  'stop';
-				$this->errclass =  'error_fatal';
+				self::$errdesc = 'Fatal Error';
+				self::$errimg =  'stop';
+				self::$errclass =  'error_fatal';
 				break;
 			default:
-				$this->errdesc = 'Unknown Error';
-				$this->errimg =  'question';
-				$this->errclass =  'error_unknow';
+				self::$errdesc = 'Unknown Error';
+				self::$errimg =  'question';
+				self::$errclass =  'error_unknow';
 				break;
 		}
 	}
 
-	private function display()
+	private static function display()
 	{
-		echo '<span id="errorh"></span>
-			<div class="' . $this->errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
-				<img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
-					alt="" style="float:left;padding-right:6px;" />
-				<strong>' . $this->errdesc . ' : </strong>' . $this->errstr . '<br /><br /><em>'
-				. Path::get_path_from_root($this->errfile) . '</em>:' . $this->errline . '
-				<br />
-			</div>';
-	}
-
-	private function log()
-	{
-		if (true)
+		if (DEBUG)
 		{
-			$this->compute_error_log_string();
-			$this->add_error_in_log();
+			echo '<span id="errorh"></span>
+				<div class="' . self::$errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
+					<img src="' . PATH_TO_ROOT . '/templates/default/images/' . self::$errimg . '.png"
+						alt="" style="float:left;padding-right:6px;" />
+					<strong>' . self::$errdesc . ' : </strong>' . self::$errstr . '<br /><br /><em>'
+					. Path::get_path_from_root(self::$errfile) . '</em>:' . self::$errline . '
+					<br />
+				</div>';
 		}
 	}
 
-	private function compute_error_log_string()
+	private static function log()
 	{
-		$this->error_log_string = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
-		$this->errno . "\n" .
-		$this->clean_error_string() . "\n" .
-		Path::get_path_from_root($this->errfile) . "\n" .
-		$this->errline . "\n";
+		self::compute_error_log_string();
+		self::add_error_in_log();
 	}
 
-	private function add_error_in_log()
+	private static function compute_error_log_string()
+	{
+		self::$error_log_string = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
+		self::$error_log_string .= self::$errno . "\n";
+		self::$error_log_string .= self::clean_error_string() . "\n";
+		self::$error_log_string .= Path::get_path_from_root(self::$errfile) . "\n";
+		self::$error_log_string .= self::$errline . "\n";
+	}
+
+	private static function add_error_in_log()
 	{
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+');
-		$write = @fwrite($handle,  $this->error_log_string);
+		$write = @fwrite($handle,  self::$error_log_string);
 		$close = @fclose($handle);
 
 		if ($handle === false || $write === false || $close === false)
@@ -177,8 +164,8 @@ class ErrorsManager
 		}
 	}
 
-	private function clean_error_string()
+	private static function clean_error_string()
 	{
-		return preg_replace("`(\n){1,}`", '<br />', preg_replace("`\r|\n|\t`", "\n", $this->errstr));
+		return preg_replace("`(\n){1,}`", '<br />', preg_replace("`\r|\n|\t`", "\n", self::$errstr));
 	}
 }

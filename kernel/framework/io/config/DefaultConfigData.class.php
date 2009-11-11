@@ -96,7 +96,7 @@ class DefaultConfigData implements ConfigData
 	 * @param $entry_name Name of the entry if the module has many entries.
 	 * @return ConfigData
 	 */
-	public static function load($config_name, $default_config_classname, $entry_name = '')
+	public static function load($config_name = null, $default_config_classname = null, $entry_name = '')
 	{
 		try
 		{
