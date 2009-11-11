@@ -40,46 +40,42 @@ define('DB_CONFIG_ERROR_TABLES_ALREADY_EXIST', 4);
 define('DB_UNKNOW_ERROR', -1);
 
 //Function which returns a result code
-function check_database_config(&$host, &$login, &$password, &$database_name, $tables_prefix)
+function check_database_config(&$host, &$login, &$password, &$database, $tables_prefix)
 {
+	$db_connection_data = array(
+		'dbms' => DBFactory::MYSQL,
+		'dsn' => 'mysql:host=' . $host . ';dbname=' . $database,
+		'driver_options' => array(),
+		'host' => $host,
+		'login' => $login,
+		'password' => $password,
+		'database' => $database,
+	);
 
-
-
-	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
-	$Errorh = new Errors();
-
-	//TODO LOIC A corriger, méthode supprimée de la classe SQL.
-	//$database_name = Sql::clean_database_name($database_name);
-	$database_name = $database_name;
-
-
-	$db_connection = new MySQLDBConnection($host, $login, $password);
+	$db_connection = new MySQLDBConnection();
+	DBFactory::init_factory($db_connection_data['dbms']);
+	DBFactory::set_db_connection($db_connection);
 	try
 	{
-		$db_connection->connect();
+		$db_connection->connect($db_connection_data);
 	}
 	catch (DBConnectionException $ex)
 	{
 		return DB_CONFIG_ERROR_CONNECTION_TO_DBMS;
 	}
-
-	try
-	{
-		$db_connection->select_database($database_name);
-	}
 	catch (UnexistingDatabaseException $ex)
 	{
-		$Sql = new Sql($db_connection, $database_name);
+		// TODO rework with new API
 
 		//Tentative de création de la base de données
-		$database_name = $Sql->create_database($database_name);
+		$database = AppContext::get_dbms_utils()->create_database($database);
 
 		//On regarde si elle a pu être traitée
-		$databases_list = $Sql->list_databases();
+		$databases_list = AppContext::get_dbms_utils()->list_databases();
 
 		$db_connection->disconnect();
 
-		if (in_array($database_name, $databases_list))
+		if (in_array($database, $databases_list))
 		{
 			return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED;
 		}
@@ -89,14 +85,10 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 		}
 	}
 
-	$Sql = new Sql($db_connection, $database_name);
-	define('PREFIX', $tables_prefix);
-	$tables_list = $Sql->list_tables();
+	defined('PREFIX') or define('PREFIX', $tables_prefix);
+	$tables_list = AppContext::get_dbms_utils()->list_tables();
 
-	//We close the database connection
-	$db_connection->disconnect();
-
-	//Is PHPBoost already installed in this database?
+	// Is PHPBoost already installed in this database?
 	if (!empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']))
 	{
 		return DB_CONFIG_ERROR_TABLES_ALREADY_EXIST;
@@ -114,7 +106,7 @@ function load_db_connection()
 
 
 	$Errorh = new Errors();
-    return $Sql;
+	return $Sql;
 }
 
 ?>
