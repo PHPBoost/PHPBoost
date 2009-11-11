@@ -94,7 +94,6 @@ class ErrorsManager
 		{
 			case E_USER_NOTICE:
 			case E_NOTICE:
-			case E_STRICT:
 				self::$errdesc = 'Notice';
 				self::$errimg =  'notice';
 				self::$errclass =  'error_notice';
@@ -106,6 +105,12 @@ class ErrorsManager
 				self::$errimg =  'important';
 				self::$errclass =  'error_warning';
 				break;
+				//Strict standards
+			case E_STRICT:
+				$this->errdesc = 'Strict Standards';
+				$this->errimg =  'notice';
+				$this->errclass =  'error_notice';
+				break;	
 				//Erreur fatale.
 			case E_USER_ERROR:
 			case E_ERROR:
