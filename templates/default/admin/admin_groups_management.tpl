@@ -65,8 +65,8 @@
 						</td>
 					</tr>
 				</table>
+				&nbsp;
 			</fieldset>
-			
-			<p style="text-align: center;">{PAGINATION}</p>
+			<p style="text-align:center;padding-top:8px;">{PAGINATION}</p>
 		</div>
 		
