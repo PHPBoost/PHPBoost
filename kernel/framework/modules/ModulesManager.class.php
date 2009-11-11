@@ -45,7 +45,7 @@ define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
  * @desc This class enables you to manages the PHPBoost packages which are nothing else than the modules.
  *
  */
-class PackagesManager
+class ModulesManager
 {
 	/**
 	 * @static

@@ -87,29 +87,6 @@ class DefaultConfigData implements ConfigData
 	{
 		$this->properties_map[$name] = $value;
 	}
-
-	/**
-	 * Loads a config entry and creates it if it doesn't already exists.
-	 * @param $config_name The name of the module owning the configuration
-	 * @param $default_config_classname The name of the class of which the expected result
-	 * is an instance. It's used to create the default value if it doesn't already exists.
-	 * @param $entry_name Name of the entry if the module has many entries.
-	 * @return ConfigData
-	 */
-	public static function load($config_name = null, $default_config_classname = null, $entry_name = '')
-	{
-		try
-		{
-			return ConfigManager::load($config_name, $entry_name);
-		}
-		catch(ConfigNotFoundException $e)
-		{
-			$config = new $default_config_classname();
-			$config->set_default_values();
-			ConfigManager::save($config_name, $config);
-			return $config;
-		}
-	}
 }
 
 ?>

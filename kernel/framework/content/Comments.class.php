@@ -665,7 +665,7 @@ class Comments
 	 * @param int $options
 	 * @return string
 	 */
-	/* static */ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
+	public static function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	{
 	    global $CONFIG, $LANG;
 	

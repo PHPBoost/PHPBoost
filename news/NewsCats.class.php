@@ -83,7 +83,7 @@ class NewsCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add($id_parent, $name, $description, $image, $auth)
+	function add_category($id_parent, $name, $description, $image, $auth)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var) || $id_parent == 0)

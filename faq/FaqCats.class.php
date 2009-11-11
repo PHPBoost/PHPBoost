@@ -86,7 +86,7 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Function which adds a category
-	function add($id_parent, $name, $description, $image)
+	function add_category($id_parent, $name, $description, $image)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var))

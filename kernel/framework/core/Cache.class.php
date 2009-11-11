@@ -159,7 +159,8 @@ class Cache
 
 		if ((!$module->get_errors() || $module->got_error(ACCES_DENIED)) && $module->has_functionality('get_cache')) //Le module implémente bien la fonction.
 		{
-			$this->write($module_name, $module->functionality('get_cache'));
+			$module_cache = $module->functionality('get_cache');
+			$this->write($module_name, $module_cache);
 		}
 		elseif (!$no_alert_on_error)
 		{
