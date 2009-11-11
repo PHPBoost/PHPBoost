@@ -75,7 +75,7 @@ if (!empty($_POST['valid']))
     else
     {
 		$SEARCH_CONFIG['modules_weighting'] = array();
-	    import('modules/modules_discovery_service');
+		import('modules/modules_discovery_service');
 		$Modules = new ModulesDiscoveryService();
 		$searchModules = $Modules->get_available_modules('get_search_request');
 
