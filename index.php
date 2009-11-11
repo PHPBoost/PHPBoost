@@ -3,7 +3,7 @@
  *                                index.php
  *                            -------------------
  *   begin                : August 23 2007
- *   copyright            : (C) 2007 CrowkaiT
+ *   copyright            : (C) 2007 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -25,20 +25,17 @@
  *
 ###################################################*/
 
-define('PATH_TO_ROOT', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]?$`i', '$1', dirname(__FILE__))));
 define('PATH_TO_ROOT', '.');
 
-@include_once('./kernel/db/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
-unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd (on n'en a pas besoin sur cette page)
-
-require_once './kernel/framework/core/environment/Environment.class.php';
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
 Environment::load_imports();
-//import('core/ClassLoader');
-//ClassLoader::init_autoload();
 
-$CONFIG = array();
-//Chargement manuel de la configuration générale
-@include_once('./cache/config.php');
+/* DEPRECATED VARS */
+$Errorh = new Errors();
+$Cache = new Cache();
+/* END DEPRECATED */
+
+Environment::init();
 
 //Si PHPBoost n'est pas installé, on renvoie vers l'installateur
 if (!defined('PHPBOOST_INSTALLED'))
