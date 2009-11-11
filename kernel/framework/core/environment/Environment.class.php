@@ -576,12 +576,12 @@ class Environment
 
 	public static function exception_handler(Exception $exception)
 	{
+		// TODO move this out
 		ob_clean();
 
-
-		// Log exception
-
-		// move this out
+		// TODO log exception information
+		$info = $exception->getMessage() . "\n" . $exception->getTraceAsString();
+		self::add_error_in_log($info);
 
 		$request = AppContext::get_request();
 		$request->set_value(ErrorController::LEVEL, E_ERROR);
