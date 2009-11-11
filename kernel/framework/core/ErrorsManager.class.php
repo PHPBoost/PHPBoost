@@ -107,9 +107,9 @@ class ErrorsManager
 				break;
 				//Strict standards
 			case E_STRICT:
-				$this->errdesc = 'Strict Standards';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				self::$errdesc = 'Strict Standards';
+				self::$errimg =  'notice';
+				self::$errclass =  'error_notice';
 				break;	
 				//Erreur fatale.
 			case E_USER_ERROR:
