@@ -74,9 +74,19 @@ if (!empty($_POST['valid']))
     }
     else
     {
+		$SEARCH_CONFIG['modules_weighting'] = array();
+	    import('modules/modules_discovery_service');
+		$Modules = new ModulesDiscoveryService();
+		$searchModules = $Modules->get_available_modules('get_search_request');
+
         // Configuration du module 'Search'
-        foreach ($SEARCH_CONFIG['unauthorized_modules'] as $module)
-        $SEARCH_CONFIG['modules_weighting'][$module] = retrieve(POST, $module, 1);
+		foreach ($searchModules as $module)
+		{
+			if (!in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']))
+			{
+				$SEARCH_CONFIG['modules_weighting'][$module->get_id()] = retrieve(POST, $module->get_id(), 1);
+			}
+		}
 
         // Enregistrement des modifications de la config du module 'Search'
         $search_cfg = addslashes(serialize($SEARCH_CONFIG));
