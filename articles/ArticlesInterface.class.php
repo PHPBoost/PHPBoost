@@ -51,7 +51,7 @@ class ArticlesInterface extends ModuleInterface
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,id_models
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,id_models,tpl_cat
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -68,6 +68,7 @@ class ArticlesInterface extends ModuleInterface
 					'description' => $row['description'],
 					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth'],
 					'models'=>$row['id_models'],
+					'tpl_cat'=>$row['tpl_cat']
 			), true) . ';' . "\n\n";
 		}
 		return $string;
@@ -226,7 +227,7 @@ class ArticlesInterface extends ModuleInterface
 
 		$models = $this->sql_querier->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $ARTICLES_CAT[$idartcat]['models'] . "'", __LINE__, __FILE__);
 
-		$tpl = new Template('articles/'.$models['tpl_cats']);
+		$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
 
 		//Niveau d'autorisation de la catégorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
