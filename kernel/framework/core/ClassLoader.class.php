@@ -33,6 +33,7 @@ class ClassLoader
 {
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
+	private static $already_reloaded = false;
 
 	public static function init_autoload()
 	{
@@ -57,14 +58,18 @@ class ClassLoader
 
 	public static function generate_classlist()
 	{
-		import('io/filesystem/FileSystemElement');
-		import('io/filesystem/Folder');
-		import('io/filesystem/File');
-		import('util/Path');
+		if (!self::$already_reloaded)
+		{
+			import('io/filesystem/FileSystemElement');
+			import('io/filesystem/Folder');
+			import('io/filesystem/File');
+			import('util/Path');
 
-		self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
-		self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
-		self::generate_autoload_cache();
+			self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
+			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
+			self::generate_autoload_cache();
+			self::$already_reloaded = true;
+		}
 		return self::$autoload;
 	}
 

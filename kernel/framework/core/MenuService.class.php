@@ -629,7 +629,6 @@ class MenuService
      */
     function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
     {
-        
         $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
         // Création d'un menu contenant des liens vers tous les modules
         $modules_discovery_service = new ModulesDiscoveryService();
@@ -666,7 +665,6 @@ class MenuService
                 ));
             }
         }
-        
         return $modules_menu;
     }
     

@@ -151,7 +151,7 @@ class ContributionService
 		}
 		
 		$array_result = array();
-		$where_clause = "contribution_type = '" . self::CONTRIBUTION_TYPE . "' AND " . implode($criterias, " AND ");
+		$where_clause = "contribution_type = '" . self::CONTRIBUTION_TYPE . "' AND " . implode(" AND ", $criterias);
 		
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
 		FROM " . DB_TABLE_EVENTS  . " c

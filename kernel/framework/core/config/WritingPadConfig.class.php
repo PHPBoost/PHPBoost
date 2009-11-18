@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                   writing_pad_config.class.php
+ *		                    writing_pad_config.class.php
  *                            -------------------
  *   begin                : October 17, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -24,8 +24,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * This class contains the content of the writing pad which is on the home page 
