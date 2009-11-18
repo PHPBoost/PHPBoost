@@ -65,8 +65,7 @@ elseif (retrieve(POST,'preview',false))
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
 		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
 		'min' => retrieve(POST, 'min', 0, TINTEGER),
-		'description' => retrieve(POST, 'description', '', TSTRING),
-	);
+		'description' => retrieve(POST, 'description', '', TSTRING_PARSE),	);
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
@@ -87,7 +86,7 @@ elseif (retrieve(POST,'preview',false))
 		'IDCAT' => $articles['idcat'],
 		'DESCRIPTION'=>$articles['description'],
 		'NAME' => stripslashes($articles['title']),
-		'CONTENTS' => stripslashes(second_parse($articles['contents'])),
+		'CONTENTS' => second_parse(stripslashes($articles['contents'])),
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'DATE' =>   $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
@@ -112,21 +111,25 @@ elseif (retrieve(POST,'model_extend_field',false))
 		if(unserialize($model['extend_field']))
 		{
 			$extend_field_articles = unserialize($articles['extend_field']);
-			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : unserialize($model['extend_field']);	
+			$model_extend_tab=unserialize($model['extend_field']);
+			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : $model_extend_tab;	
 		}
 		else
 			$extend_field_tab='';
 	}
 	else
+	{
+		$model_extend_tab=unserialize($model['extend_field']);
 		$extend_field_tab=unserialize($model['extend_field']);
+	}
 
 	if(!empty($extend_field_tab))
 	{
-		foreach ($extend_field_tab as $field)
+		foreach ($model_extend_tab as $field)
 		{	
 			$tpl_model->assign_block_vars('extend_field', array(
-				'NAME' => stripslashes($field['name']),
-				'CONTENTS'=>!empty($field['contents']) ? $field['contents'] : '',
+				'NAME' => $field['name'],
+				'CONTENTS'=>!empty($extend_field_articles[$field['name']]['contents']) ? $extend_field_articles[$field['name']]['contents']: '',
 			));
 		}	
 	}

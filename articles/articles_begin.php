@@ -43,6 +43,7 @@ if (empty($idartcat))//Racine.
 	$ARTICLES_CAT[0]['order'] = -1;
 	$ARTICLES_CAT[0]['id_parent'] = 0;
 	$ARTICLES_CAT[0]['models'] = $default_model['id'];
+	$ARTICLES_CAT[0]['tpl_cat'] = $CONFIG_ARTICLES['tpl_cat'];
 	$idartcat=0;
 
 }

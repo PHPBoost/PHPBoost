@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 define('DO_NOT_GENERATE_CACHE', false);
 
 class ArticlesCats extends CategoriesManager
@@ -82,13 +80,13 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add_category($id_parent, $name, $description, $image, $auth,$models)
+	function add($id_parent, $name, $description, $image, $auth,$models,$tpl_cat)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var) || $id_parent == 0)
 		{
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT . " SET description = '" . $description . "', image = '" . $image . "', auth = '" . $auth . "',id_models='".$models."' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT . " SET description = '" . $description . "', image = '" . $image . "', auth = '" . $auth . "',id_models='".$models."',tpl_cat='".$tpl_cat."' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -97,7 +95,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which updates a category
-	function update_category($id_cat, $id_parent, $name, $description, $image, $auth,$models)
+	function update_category($id_cat, $id_parent, $name, $description, $image, $auth,$models,$tpl_cat)
 	{
 		global $Sql, $Cache;
 		if (array_key_exists($id_cat, $this->cache_var))
@@ -116,7 +114,7 @@ class ArticlesCats extends CategoriesManager
 					$Cache->load('articles', RELOAD_CACHE);
 				}
 			}
-			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT . " SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $auth . "',id_models='".$models."' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT . " SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $auth . "',id_models='".$models."',tpl_cat='".$tpl_cat."' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('articles');
 				
 			return 'e_success';
