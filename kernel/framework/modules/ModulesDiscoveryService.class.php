@@ -116,7 +116,7 @@ class ModulesDiscoveryService
 			foreach (array_keys($MODULES) as $module_id)
 			{
 				$module = $this->get_module($module_id);
-				if (!$module->got_error() && $module->has_functionality($functionality))
+				if (!$module->got_error() && ($functionality === 'none' || $module->has_functionality($functionality)))
 				{
 					$modules[$module->get_id()] = $module;
 				}
