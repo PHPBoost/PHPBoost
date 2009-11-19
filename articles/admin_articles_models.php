@@ -41,7 +41,6 @@ $error = retrieve(GET, 'error', '');
 $articles_categories = new ArticlesCats();
 
 $tpl = new Template('articles/admin_articles_models.tpl');
-$Errorh->set_template($tpl);
 
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
@@ -191,14 +190,13 @@ elseif ($new_model XOR $id_edit > 0)
 	if ($id_edit > 0)
 	{
 		$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+
 		$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);	
-		
+
 		$options = unserialize($models['options']);
 		$special_options = $options  !== unserialize($default_model['options']) ? true : false;
 		$options  = $special_options ? $options  : unserialize($default_model['options']);
-			
 		
-
 		// articles templates
 		$tpl_articles_list = '<option value="articles.tpl" '.($models['tpl_articles'] == "articles.tpl" ? "selected='selected'" : "").' >articles.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
@@ -233,8 +231,8 @@ elseif ($new_model XOR $id_edit > 0)
 					'TYPE'=>'',
 				));
 		}
-		
-	$tpl->assign_block_vars('edition_interface', array(
+
+		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $models['name'],
 			'DESCRIPTION' => unparse($models['description']),
 			'ID_MODEL'=>$models['id'],
@@ -269,21 +267,9 @@ elseif ($new_model XOR $id_edit > 0)
 	}
 	else
 	{
-
-
-
-
-
-
-
-
-
-
 		$id_edit = 0;
-		
-		
-		
-$tpl_default_name = 'articles.tpl';
+	
+		$tpl_default_name = 'articles.tpl';
 		$tpl_articles_list = '<option value="articles.tpl" selected >articles.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
 		foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_articles)
@@ -292,7 +278,7 @@ $tpl_default_name = 'articles.tpl';
 			if($tpl_articles != $tpl_default_name)
 			$tpl_articles_list.= '<option value="' . $tpl_articles . '">' . $tpl_articles. '</option>';
 		}		
-	$tpl->assign_block_vars('edition_interface', array(
+		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'TAB'=>  'checked ',
@@ -524,7 +510,21 @@ else
 	//On crée une pagination si le nombre d'articles est trop important.
 	
 	$Pagination = new Pagination();
-TICLES_LANG['model_info'],
+	$tpl->assign_block_vars('models_management', array(
+			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
+			'L_ARTICLES_TPL' => $ARTICLES_LANG['articles_tpl'],
+			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
+			'L_DESCRIPTION'=>$LANG['description'],
+			'L_EXTEND_FIELD'=>$ARTICLES_LANG['extend_field'],
+			'L_USE_TAB'=>$ARTICLES_LANG['tab_pagination'],
+			'L_SPECIAL_OPTION' => $ARTICLES_LANG['special_option'],
+			'L_AUTHOR'=>$ARTICLES_LANG['author'],
+			'L_COM'=>$LANG['title_com'],
+			'L_NOTE'=>$LANG['notes'],
+			'L_PRINT'=>$ARTICLES_LANG['print'],
+			'L_DATE'=>$LANG['date'],
+			'L_LINK_MAIL'=>$ARTICLES_LANG['model_link_mail'],
+			'L_MODEL_INFO'=>$ARTICLES_LANG['model_info'],
 			'L_MODEL_INFO_DISPLAY'=>$ARTICLES_LANG['model_info_display'],
 			'L_CONFIRM_DEL_MODEL'=>$ARTICLES_LANG['confirm_del_model'],
 			'L_HIDE'=>$ARTICLES_LANG['hide'],

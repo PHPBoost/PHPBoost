@@ -163,7 +163,7 @@ $ARTICLES_LANG = array(
 	'articles_models'=>'Modèle des articles',
 	'model_name'=>'Nom du modèle',
 	'model_desc'=>'Description du modèle',
-	'tpl_model_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles et les catégories associés à ce modèle.',
+	'tpl_model_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles associés à ce modèle.',
 	'extend_field_model_explain' => 'Vous pouvez déclarer ici des champs suplémentaires pour les articles associés à ce modèle.',
 	'special_option_model_explain' => 'Vous pouvez appliquer des options particulères pour les articles associés à ce modèle.',
 	'model_default'=>'Modèle par defaut',
@@ -178,5 +178,7 @@ $ARTICLES_LANG = array(
 	'read_article'=>'Lire la suite',
 	'model_default_del_explain'=>'Le modèle par defaut ne peut pas être supprimé.',
 	'default_model'=>'Model par defaut',
+	'cat_tpl_default'=>'Template par defaut des catégories',
+	'warning_extend_field_del'=>' Avertissement : les champs suplémentaires d\'un article qui ne sont pas présent dans le nouveau modèle choisi seront supprimés.',
 );
 ?>

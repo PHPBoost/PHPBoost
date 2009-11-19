@@ -44,6 +44,18 @@
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
 						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
 					</dl>
+					<dl>
+						<dt>
+							<label for="name">
+								* {L_CAT_TPL_DEFAULT}
+							</label>
+						</dt>
+						<dd>
+							<select name="tpl_cat">
+								{TPL_CAT_LIST}
+							</select>
+						</dd>
+					</dl>
 				</fieldset>
 				<fieldset>
 					<legend>{L_ARTICLES_MINI_CONFIG}</legend>
