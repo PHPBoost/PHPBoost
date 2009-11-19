@@ -41,7 +41,6 @@ $error = retrieve(GET, 'error', '');
 $articles_categories = new ArticlesCats();
 
 $tpl = new Template('articles/admin_articles_cat.tpl');
-$Errorh->set_template($tpl);
 
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
@@ -56,10 +55,8 @@ if ($cat_to_del > 0)
 	{
 		$articles_categories->delete($cat_to_del);
 		
-		// Feeds Regeneration
-		
+		// Feeds Regeneration		
 		Feed::clear_cache('articles');
-
 		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
 	}
 	else
@@ -265,9 +262,9 @@ elseif (retrieve(POST,'submit',false))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 	
 		if ($id_cat > 0)
-			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+			$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
 		else
-			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+			$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
 	}
 
 	// Feeds Regeneration

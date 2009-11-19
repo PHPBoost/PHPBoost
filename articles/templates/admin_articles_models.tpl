@@ -22,16 +22,29 @@
 			<legend>{L_REMOVING_MODEL}</legend>
 			<p>{L_EXPLAIN_REMOVING_MODEL}</p>
 			<label>
-				<input type="radio" name="action" value="affect_defaut"checked="checked"/> {L_AFFECT_DEFAULT}
+				<input type="radio" name="action" value="affect_default" checked="checked" /> {L_AFFECT_DEFAULT}
 			</label>
 			<br /> <br />
 			<label>
-				<input type="radio" name="action" value="affect_model"/> {L_AFFECT_MODEL}
+				<input type="radio" name="action" value="affect_model" {removing_interface.DISABLED} /> {L_AFFECT_MODEL}
 			</label>
 			&nbsp;
-			<select id="models" name="models">
+			<select id="models" name="models" {removing_interface.DISABLED} >
 				{removing_interface.MODELS}
 			</select>
+			<br /><br />
+			<label>{L_WARNING_EXTEND_FIELD_DEL}</label>
+			<br />
+			# IF removing_interface.C_EXTEND_FIELD #
+			<fieldset>
+			<legend>Champs suplémentaire </legend>
+				<p>explication</p>
+				<br />
+				<label>Champs perdu : </label> {removing_interface.LOST_FIELD}<br /><br />
+				<label>Champs gagné :</label> {removing_interface.SAVE_FIELD}
+
+			</fieldset>
+			# ENDIF #
 		</fieldset>
 		<fieldset class="fieldset_submit">
 			<legend>{L_SUBMIT}</legend>
@@ -78,7 +91,7 @@
 							<div>
 								<div style="float:left">
 									<p>
-										<a href="../articles/admin_articles_models{models.U_MODEL_LINK}" class="big_link">{models.NAME}</a>
+										<a href="../articles/admin_articles_models.php" class="big_link">{models.NAME}</a>
 										<a href="{models.U_ADMIN_EDIT_MODEL}">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 										</a>
@@ -109,14 +122,6 @@
 										 <th colspan="2">
 											{models_management.L_MODEL_INFO}
 										 </th>
-										</tr>
-										<tr style="text-align:left;">		
-											<td class="row2 text_small" style="width:40%;">
-												<b>{models_management.L_CAT_TPL} :</b>
-											</td>
-											<td class="row2 text_small" >
-												 {models.TPL_CATS}
-											</td>
 										</tr>	
 										<tr style="text-align:left;">		
 											<td class="row2 text_small">
@@ -165,7 +170,9 @@
 					<br />
 				</td>
 			</tr>
-		</table>	
+		</table>
+		<p style="text-align:center;">{models_management.PAGINATION}</p>
+		
 	# END models_management #
 	# START edition_interface #
 	<script type="text/javascript">
@@ -281,18 +288,6 @@
 					<dd>
 						<select name="tpl_articles">
 							{edition_interface.TPL_ARTICLES_LIST}
-						</select>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="name">
-							* {L_CAT_TPL}
-						</label>
-					</dt>
-					<dd>
-						<select name="tpl_cat">
-							{edition_interface.TPL_CAT_LIST}
 						</select>
 					</dd>
 				</dl>
