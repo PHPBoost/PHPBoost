@@ -76,7 +76,7 @@ class MenuService
      * @desc
      * @return unknown_type
      */
-    public static static function get_menus_map()
+    public static function get_menus_map()
     {
         global $Sql;
         
@@ -334,7 +334,7 @@ class MenuService
     /**
      * @desc Generate the cache
      */
-    public static static function generate_cache($return_string = false)
+    public static function generate_cache($return_string = false)
     {
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
