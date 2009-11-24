@@ -131,7 +131,7 @@ class Sql
 		$nbr_arg = func_num_args();
 
 		$fields = array();
-		$conditions = '1';
+		$conditions = func_get_arg($nbr_arg - 3);
 		if (func_get_arg(1) !== '*')
 		{
 			$nbr_arg_field_end = ($nbr_arg - 4);
@@ -139,7 +139,6 @@ class Sql
 			{
 				$fields[] = func_get_arg($i);
 			}
-			$conditions = func_get_arg($nbr_arg - 3);
 		}
 		else
 		{

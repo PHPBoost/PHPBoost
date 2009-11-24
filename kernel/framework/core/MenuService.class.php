@@ -44,7 +44,7 @@ class MenuService
      * @param $enabled
      * @return unknown_type
      */
-    function get_menu_list($class = Menu::MENU__CLASS, $block = Menu::BLOCK_POSITION__ALL, $enabled = Menu::MENU_ENABLE_OR_NOT)
+    public static function get_menu_list($class = Menu::MENU__CLASS, $block = Menu::BLOCK_POSITION__ALL, $enabled = Menu::MENU_ENABLE_OR_NOT)
     {
         global $Sql;
         
@@ -76,7 +76,7 @@ class MenuService
      * @desc
      * @return unknown_type
      */
-    static function get_menus_map()
+    public static static function get_menus_map()
     {
         global $Sql;
         
@@ -112,7 +112,7 @@ class MenuService
      * @param int $id the id of the Menu to retrieve from the database
      * @return Menu the requested Menu if it exists else, null
      */
-    function load($id)
+    public static function load($id)
     {
         global $Sql;
         $result = $Sql->query_array(DB_TABLE_MENUS, 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
@@ -130,7 +130,7 @@ class MenuService
      * @param Menu $menu The Menu to save
      * @return bool true if the save have been correctly done
      */
-    function save(&$menu)
+    public static function save(&$menu)
     {
         global $Sql;
         $block_position = $menu->get_block_position();
@@ -180,7 +180,7 @@ class MenuService
      * @desc Delete a Menu from the database
      * @param mixed $menu The (Menu) Menu or its (int) id to delete from the database
      */
-    function delete(&$menu)
+    public static function delete(&$menu)
     {
         global $Sql;
         if (!is_object($menu))
@@ -198,7 +198,7 @@ class MenuService
      * @desc Enable a menu
      * @param Menu $menu the menu to enable
      */
-    function enable(&$menu)
+    public static function enable(&$menu)
     {
         // Commputes the new Menu position and save it
         MenuService::move($menu, $menu->get_block());
@@ -208,7 +208,7 @@ class MenuService
      * @desc Disable a menu
      * @param Menu $menu the menu to disable
      */
-    function disable(&$menu)
+    public static function disable(&$menu)
     {
         // Commputes menus positions of the previous block and save the current menu
         MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
@@ -220,7 +220,7 @@ class MenuService
      * @param int $block the destination block
      * @param bool $save if true, save also the menu
      */
-    function move(&$menu, $block, $save = true)
+    public static function move(&$menu, $block, $save = true)
     {
         global $Sql;
         
@@ -258,7 +258,7 @@ class MenuService
      * @param Menu $menu The menu to move
      * @param int $diff the direction to move it. positives integers move down, negatives, up.
      */
-    function change_position(&$menu, $direction = self::MOVE_UP)
+    public static function change_position(&$menu, $direction = self::MOVE_UP)
     {
         global $Sql;
         
@@ -312,7 +312,7 @@ class MenuService
      * @desc Enables or disables all menus
      * @param bool $enable if true enables all menus otherwise, disables them
      */
-    function enable_all($enable = true)
+    public static function enable_all($enable = true)
     {
         global $Sql;
         $menus = MenuService::get_menu_list();
@@ -334,7 +334,7 @@ class MenuService
     /**
      * @desc Generate the cache
      */
-    static function generate_cache($return_string = false)
+    public static static function generate_cache($return_string = false)
     {
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
@@ -386,7 +386,7 @@ class MenuService
      * @param Folder $menu the menu folder
      * @return bool true if the menu has been installed, else, false
      */
-    function add_mini_menu($menu, &$installed_menus_names)
+    public static function add_mini_menu($menu, &$installed_menus_names)
     {
         // Break if no mini menu file found
         $i = 0;
@@ -417,7 +417,7 @@ class MenuService
      * @desc delete the mini menu named $menu
      * @param string $menu the mini menu name
      */
-    function delete_mini_menu($menu)
+    public static function delete_mini_menu($menu)
     {
         global $Sql;
         $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
@@ -434,7 +434,7 @@ class MenuService
      * @desc Update the mini menus list by adding new ones and delete old ones
      * @param bool $update_cache if true it will also regenerate the cache
      */
-    function update_mini_menus_list($update_cache = true)
+    public static function update_mini_menus_list($update_cache = true)
     {
         global $Sql;
         
@@ -488,7 +488,7 @@ class MenuService
      * @param string $module the module name
      * @return bool true if the module has been installed, else, false
      */
-    function add_mini_module($module, $generate_cache = true)
+    public static function add_mini_module($module, $generate_cache = true)
     {
         // Break if no config file found
         $info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
@@ -540,7 +540,7 @@ class MenuService
      * @desc delete the mini module $module
      * @param string $module the mini module name
      */
-    function delete_mini_module($module)
+    public static function delete_mini_module($module)
     {
         global $Sql;
         $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
@@ -557,7 +557,7 @@ class MenuService
      * @desc Update the mini modules list by adding new ones and delete old ones
      * @param bool $update_cache if true it will also regenerate the cache
      */
-    function update_mini_modules_list($update_cache = true)
+    public static function update_mini_modules_list($update_cache = true)
     {
         global $Sql, $MODULES;
         
@@ -610,7 +610,7 @@ class MenuService
      * @desc Delete all the feeds menus with the this module id
      * @param string $module_id the module id
      */
-    function delete_module_feeds_menus($module_id)
+    public static function delete_module_feeds_menus($module_id)
     {
     	$feeds_menus = MenuService::get_menu_list(FeedMenu::FEED_MENU__CLASS);
     	foreach($feeds_menus as $feed_menu)
@@ -627,7 +627,7 @@ class MenuService
      * @param int $menu_type the menu type
      * @return LinksMenu the menu with links to modules
      */
-    function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
+    public static function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
     {
         $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
         // Création d'un menu contenant des liens vers tous les modules
@@ -674,7 +674,7 @@ class MenuService
      * @param Template &$template the template to use
      * @param int $position the menu position
      */
-    static function assign_positions_conditions(&$template, $position)
+    public static function assign_positions_conditions(&$template, $position)
     {
     	$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
         $template->assign_vars(array(
@@ -697,7 +697,7 @@ class MenuService
      * @param string $str_location the location
      * @return int the corresponding location
      */
-    function str_to_location($str_location)
+    public static function str_to_location($str_location)
     {
         switch ($str_location)
         {
@@ -729,7 +729,7 @@ class MenuService
      * @access private
      * @return array[] initialize the menus map structure
      */
-    static function _initialize_menus_map()
+    private static function _initialize_menus_map()
     {
         return array(
             Menu::BLOCK_POSITION__HEADER => array(),
@@ -750,7 +750,7 @@ class MenuService
      * @param string[key] $db_result the map from the database with the Menu id and serialized object
      * @return Menu the menu object from the serialized one
      */
-    static function _load($db_result)
+    private static function _load($db_result)
     {
         $menu = unserialize($db_result['object']);
         
