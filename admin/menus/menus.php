@@ -38,7 +38,7 @@ $move = retrieve(GET, 'move', '');
 
 
 
-function menu_admin_link(&$menu, $mode)
+function menu_admin_link($menu, $mode)
 {
     $link = '';
     switch ($mode)

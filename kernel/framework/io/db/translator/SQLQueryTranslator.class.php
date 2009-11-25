@@ -38,7 +38,7 @@ interface SQLQueryTranslator
 	 * @param string $query the query to translate
 	 * @return string the translated query
 	 */
-	function translate(&$query);
+	function translate($query);
 }
 
 ?>

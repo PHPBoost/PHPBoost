@@ -63,7 +63,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct(&$query, &$resource, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct($query, $resource, $fetch_mode = self::FETCH_ASSOC)
 	{
 		$this->query = $query;
 		$this->fetch_mode = $fetch_mode;

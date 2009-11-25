@@ -73,9 +73,9 @@ class LinksMenu extends LinksMenuElement
     
 	/**
 	* @desc Add a list of LinksMenu or (sub)Menu to the current one
-	* @param &LinksMenuElement[] &$menu_elements A reference to a list of LinksMenuLink and / or Menu to add
+	* @param LinksMenuElement[] $menu_elements A reference to a list of LinksMenuLink and / or Menu to add
 	*/
-    public function add_array(&$menu_elements)
+    public function add_array($menu_elements)
     {
         foreach ($menu_elements as $element)
         {

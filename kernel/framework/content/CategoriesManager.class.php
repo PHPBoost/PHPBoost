@@ -105,9 +105,9 @@ class CategoriesManager
      * @desc Builds a CategoriesManager object
 	 * @param string $table Table name of the database which contains the require fields (explained in the class description)
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
-	 * @param &array[] &$cache_var Array containing the correct data, descripted in the description of the class.
+	 * @param &array[] $cache_var Array containing the correct data, descripted in the description of the class.
 	 */
-	function CategoriesManager($table, $cache_file_name, &$cache_var)
+	function CategoriesManager($table, $cache_file_name, $cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
@@ -638,7 +638,7 @@ class CategoriesManager
 	 * @param Template $reference_template Customized template.
 	 * @return string The row interface
 	 */
-	function _create_row_interface($id_cat, $level, $ajax_mode, &$reference_template)
+	function _create_row_interface($id_cat, $level, $ajax_mode, $reference_template)
 	{
 		global $CONFIG, $LANG, $Session;
 		
@@ -715,7 +715,7 @@ class CategoriesManager
 	 * @param mixed[] $general_auth Authorization to use if a category hasn't special auth
 	 * @param Template $template Customized template to use
 	 */
-	function _create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, &$template)
+	function _create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template)
 	{
 		global $User;
 		//Boolean variable which is true when we can stop the loop
@@ -821,7 +821,7 @@ class CategoriesManager
 	 * @param FeedsCat $tree The tree in which we must add the list.
 	 * @param int $parent_id Id of the category to build
 	 */
-	function _build_feeds_sub_list(&$tree, $parent_id)
+	function _build_feeds_sub_list($tree, $parent_id)
 	{
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);

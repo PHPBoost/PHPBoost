@@ -58,7 +58,7 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct(&$query, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct($query, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
 	{
 		$this->query = $query;
 		$this->statement = $statement;

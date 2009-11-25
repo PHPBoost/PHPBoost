@@ -59,7 +59,7 @@ class FormCheckbox extends FormField
 	 * @desc Add an option for the radio field.
 	 * @param FormRadioChoiceOption option The new option. 
 	 */
-	public function add_option(&$option)
+	public function add_option($option)
 	{
 		$this->options[] = $option;
 	}

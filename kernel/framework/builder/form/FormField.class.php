@@ -60,7 +60,7 @@ abstract class FormField
 	 * @param string $field_id Name of the field.
 	 * @param array $field_options Option for the field.
 	 */
-	protected function __construct($field_id, $value, &$field_options)
+	protected function __construct($field_id, $value, $field_options)
 	{
 		$this->name = $field_id;
 		$this->id = $field_id;
@@ -117,7 +117,7 @@ abstract class FormField
 	 * @desc Merge errors.
 	 * @param array $array_errors
 	 */	
-	protected function add_errors(&$array_errors)
+	protected function add_errors($array_errors)
 	{
 		$this->errors = array_merge($this->errors, $array_errors);
 	}

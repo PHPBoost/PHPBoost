@@ -313,7 +313,7 @@ class Errors
 		/**
 		 * @desc Set a personnal template for the handler methods.
 		 */
-		public function set_template(&$template)
+		public function set_template($template)
 		{
 			$this->template = &$template;
 			$this->personal_tpl = true;

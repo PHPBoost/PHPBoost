@@ -63,7 +63,7 @@ class ErrorViewBuilder
 		$this->view->add_lang($this->lang);
 	}
 
-	private function get_title(&$title)
+	private function get_title($title)
 	{
 		if (empty($title))
 		{
@@ -72,7 +72,7 @@ class ErrorViewBuilder
 		return $title;
 	}
 
-	private function get_message(&$message, $exception)
+	private function get_message($message, $exception)
 	{
 		if (empty($message))
 		{
@@ -91,7 +91,7 @@ class ErrorViewBuilder
 		return $message;
 	}
 
-	private function get_code(&$code, $exception)
+	private function get_code($code, $exception)
 	{
 		if (empty($code))
 		{
@@ -103,7 +103,7 @@ class ErrorViewBuilder
 		return $code;
 	}
 
-	private function get_correction_link(&$correction_link)
+	private function get_correction_link($correction_link)
 	{
 		if (empty($correction_link))
 		{
@@ -112,7 +112,7 @@ class ErrorViewBuilder
 		return $correction_link;
 	}
 
-	private function get_correction_link_name(&$correction_link_name)
+	private function get_correction_link_name($correction_link_name)
 	{
 		if (empty($correction_link_name))
 		{

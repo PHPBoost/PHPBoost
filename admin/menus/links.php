@@ -43,7 +43,7 @@ if ($action == 'save')
 	//Properties of the menu we are creating/editing
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::VERTICAL_MENU);
     
-    function build_menu_from_form(&$elements_ids, $level = 0)
+    function build_menu_from_form($elements_ids, $level = 0)
     {
         $menu = null;
         $menu_element_id = $elements_ids['id'];

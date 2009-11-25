@@ -45,7 +45,7 @@ class StringVars
     	return $string_var->replace($string, $parameters);
     }
     
-    public function replace(&$string, &$parameters)
+    public function replace($string, $parameters)
     {
     	$this->parameters = $parameters;
         return preg_replace_callback('`:([a-z][\w_]+)`i', array($this, 'replace_var'), $string);
@@ -61,7 +61,7 @@ class StringVars
         throw new RemainingStringVarException($varname);
     }
     
-    protected function set_var(&$parameter)
+    protected function set_var($parameter)
     {
         return $parameter;
     }

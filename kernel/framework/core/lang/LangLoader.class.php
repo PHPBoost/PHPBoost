@@ -61,7 +61,7 @@ class LangLoader
 		return self::get($lang_file, $module);
 	}
 
-	private static function get_raw(&$folder, &$filename)
+	private static function get_raw($folder, $filename)
 	{
 		$langfile = $folder . '/' . $filename;
 		if (!isset(self::$langs[$langfile]))
@@ -71,13 +71,13 @@ class LangLoader
 		return self::$langs[$langfile];
 	}
 
-	private static function load(&$langfile, &$folder, &$filename)
+	private static function load($langfile, $folder, $filename)
 	{
 		include self::get_real_lang_path($folder, $filename);
 		self::$langs[$langfile] = $lang;
 	}
 
-	private static function get_real_lang_path(&$folder, &$filename)
+	private static function get_real_lang_path($folder, $filename)
 	{
 		$real_folder = PATH_TO_ROOT;
 		if (!empty($folder))

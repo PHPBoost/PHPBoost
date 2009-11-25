@@ -267,7 +267,7 @@ class ForumInterface extends ModuleInterface
 	 * @param &string[][] $args The array containing the result's id list
 	 * @return string[] The array containing the result's data list
 	 */
-	function compute_search_results(&$args)
+	function compute_search_results($args)
 	{
 		global $CONFIG;
 
@@ -313,7 +313,7 @@ class ForumInterface extends ModuleInterface
 	 *  @param &string[] $result_data the result's data
 	 *  @return string[] The string to print the result of a search element
 	 */
-	function parse_search_result(&$result_data)
+	function parse_search_result($result_data)
 	{
 		global $CONFIG, $LANG;
 
@@ -340,7 +340,7 @@ class ForumInterface extends ModuleInterface
             return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
-	function _feeds_add_category(&$cat_tree, &$category)
+	function _feeds_add_category($cat_tree, $category)
 	{
 		$child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
 		foreach ($category['children'] as $sub_category)

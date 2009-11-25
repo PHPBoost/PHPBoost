@@ -46,7 +46,7 @@ class MySQLDBConnection implements DBConnection
 		$this->disconnect();
 	}
 
-	public function connect(array &$db_connection_data)
+	public function connect(array $db_connection_data)
 	{
 		$mysql_link = @mysql_connect(
 		$db_connection_data['host'],
@@ -107,7 +107,7 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 
-	private function select_database(&$database)
+	private function select_database($database)
 	{
 		if (!@mysql_select_db($database, $this->link))
 		{

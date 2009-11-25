@@ -106,7 +106,7 @@ class BBCodeHighlighter extends Parser
 		{
 			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array(&$this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array($this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
 			}
 		}
 

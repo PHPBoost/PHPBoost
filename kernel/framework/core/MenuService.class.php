@@ -130,7 +130,7 @@ class MenuService
      * @param Menu $menu The Menu to save
      * @return bool true if the save have been correctly done
      */
-    public static function save(&$menu)
+    public static function save($menu)
     {
         global $Sql;
         $block_position = $menu->get_block_position();
@@ -180,7 +180,7 @@ class MenuService
      * @desc Delete a Menu from the database
      * @param mixed $menu The (Menu) Menu or its (int) id to delete from the database
      */
-    public static function delete(&$menu)
+    public static function delete($menu)
     {
         global $Sql;
         if (!is_object($menu))
@@ -198,7 +198,7 @@ class MenuService
      * @desc Enable a menu
      * @param Menu $menu the menu to enable
      */
-    public static function enable(&$menu)
+    public static function enable($menu)
     {
         // Commputes the new Menu position and save it
         MenuService::move($menu, $menu->get_block());
@@ -208,7 +208,7 @@ class MenuService
      * @desc Disable a menu
      * @param Menu $menu the menu to disable
      */
-    public static function disable(&$menu)
+    public static function disable($menu)
     {
         // Commputes menus positions of the previous block and save the current menu
         MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
@@ -220,7 +220,7 @@ class MenuService
      * @param int $block the destination block
      * @param bool $save if true, save also the menu
      */
-    public static function move(&$menu, $block, $save = true)
+    public static function move($menu, $block, $save = true)
     {
         global $Sql;
         
@@ -258,7 +258,7 @@ class MenuService
      * @param Menu $menu The menu to move
      * @param int $diff the direction to move it. positives integers move down, negatives, up.
      */
-    public static function change_position(&$menu, $direction = self::MOVE_UP)
+    public static function change_position($menu, $direction = self::MOVE_UP)
     {
         global $Sql;
         
@@ -386,7 +386,7 @@ class MenuService
      * @param Folder $menu the menu folder
      * @return bool true if the menu has been installed, else, false
      */
-    public static function add_mini_menu($menu, &$installed_menus_names)
+    public static function add_mini_menu($menu, $installed_menus_names)
     {
         // Break if no mini menu file found
         $i = 0;
@@ -671,10 +671,10 @@ class MenuService
     
     /**
      * @desc Assigns the positions conditions for different printing modes
-     * @param Template &$template the template to use
+     * @param Template $template the template to use
      * @param int $position the menu position
      */
-    public static function assign_positions_conditions(&$template, $position)
+    public static function assign_positions_conditions($template, $position)
     {
     	$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
         $template->assign_vars(array(

@@ -40,7 +40,7 @@ define('DB_CONFIG_ERROR_TABLES_ALREADY_EXIST', 4);
 define('DB_UNKNOW_ERROR', -1);
 
 //Function which returns a result code
-function check_database_config(&$host, &$login, &$password, &$database, $tables_prefix)
+function check_database_config($host, $login, $password, &$database, $tables_prefix)
 {
 	$db_connection_data = array(
 		'dbms' => DBFactory::MYSQL,

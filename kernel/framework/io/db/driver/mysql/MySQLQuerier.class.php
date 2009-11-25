@@ -56,12 +56,12 @@ class MySQLQuerier extends AbstractSQLQuerier
 		return new MySQLInjectQueryResult($query, $this->link);
 	}
 
-	public function escape(&$value)
+	public function escape($value)
 	{
 		return mysql_real_escape_string($value);
 	}
 
-	private function execute(&$query, &$parameters)
+	private function execute($query, $parameters)
 	{
 		$query = $this->prepare($query);
 		$query = $this->query_var_replacator->replace($query, $parameters);

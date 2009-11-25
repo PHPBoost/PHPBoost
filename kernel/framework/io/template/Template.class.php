@@ -224,7 +224,7 @@ class Template
 	  * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
 	  * @param string[string] $lang the language map
 	  */
-	public function add_lang(&$lang)
+	public function add_lang($lang)
 	{
 		$this->langs[] = $lang;
 	}
@@ -256,7 +256,7 @@ class Template
 	  * template identifier
 	  * @return Template the subtemplate identified by the $identifier tag
 	  */
-	public function get_subtemplate_from_list($identifier, &$list)
+	public function get_subtemplate_from_list($identifier, $list)
 	{
 		return $list[$identifier];
 	}
@@ -275,10 +275,10 @@ class Template
 	/**
 	  * @desc returns the block "blockname" in the parent_block
 	  * @param string $blockname the blockname of the block to retrieve
-	  * @param mixed[] &$parent_block the parent block in which $blockname will be searched for
+	  * @param mixed[] $parent_block the parent block in which $blockname will be searched for
 	  * @return mixed[] the requested block
 	  */
-	public function get_block_from_list($blockname, &$parent_block)
+	public function get_block_from_list($blockname, $parent_block)
 	{
 		if (isset($parent_block[$blockname]) && is_array($parent_block[$blockname]))
 		{
@@ -300,10 +300,10 @@ class Template
 	/**
 	  * @desc rReturns true if the variable $varname exists and is not considered as false
 	  * @param string $varname the name of the variable to check if it is true
-	  * @param mixed[] &$list the array in which we varname will be searched for
+	  * @param mixed[] $list the array in which we varname will be searched for
 	  * @return bool true if the variable $varname exists and is not considered as false
 	  */
-	public function is_true_from_list($varname, &$list)
+	public function is_true_from_list($varname, $list)
 	{
 		return isset($list[$varname]) && $list[$varname];
 	}
@@ -312,7 +312,7 @@ class Template
 	  * @desc Returns the $varname variable content
 	  * @param string $varname the name of the variable to retrieve
 	  * @return string the $varname variable content
-	  * @see get_var_from_list($varname, &$list)
+	  * @see get_var_from_list($varname, $list)
 	  */
 	/**
 	  * @desc Returns the $varname variable content searched in from the $list
@@ -326,7 +326,7 @@ class Template
 	  * </ul>
 	  * Each time one of these operation is requested, the variable is registered in order to speed up next calls. If nothing is found, then an empty string is returned
 	  * @param string $varname the name of the variable to retrieve
-	  * @param mixed[] &$list the list in which the variable will be searched for
+	  * @param mixed[] $list the list in which the variable will be searched for
 	  * @return string the $varname variable content 
 	  */
 	
@@ -461,7 +461,7 @@ class Template
 		));
 	}
 
-	private function find_lang_var(&$varname)
+	private function find_lang_var($varname)
 	{
 		foreach ($this->langs as $lang)
 		{
@@ -473,7 +473,7 @@ class Template
 		return '';
 	}
 	
-	private function register_var(&$name, &$value, &$list)
+	private function register_var($name, $value, &$list)
 	{
 		$list[$name] = $value;
 		return $value;

@@ -46,7 +46,7 @@ class SQLQueryVars extends StringVars
         $this->querier = $querier;
 	}
 
-	protected function set_var(&$parameter)
+	protected function set_var($parameter)
     {
     	if ($parameter === null)
     	{

@@ -48,7 +48,7 @@ class ContentEditor
 	 * @desc Set the forbidden tags
 	 * @param array List of forbidden tags.
 	 */
-    function set_forbidden_tags(&$forbidden_tags)
+    function set_forbidden_tags($forbidden_tags)
     {
         $this->forbidden_tags = $forbidden_tags;
     }
@@ -75,7 +75,7 @@ class ContentEditor
 	 * @desc Set an alternative template for the editor.
 	 * @param Template $template.
 	 */
-    function set_template(&$template)
+    function set_template($template)
     {
         $this->template = $template;
     }

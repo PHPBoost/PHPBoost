@@ -34,14 +34,14 @@
  */
 class FormCaptchaField extends FormField
 {
-	private $Captcha = ''; //Captcha object
+	private $captcha = ''; //Captcha object
 	
 	/**
 	 * @param $field_id string The html field identifier
-	 * @param $Captcha Captcha The captcha object
+	 * @param $captcha Captcha The captcha object
 	 * @param $field_options array Field's options
 	 */
-	public function __construct($field_id, &$Captcha, $field_options = array())
+	public function __construct($field_id, $captcha, $field_options = array())
 	{
 		global $LANG;
 		
@@ -49,8 +49,8 @@ class FormCaptchaField extends FormField
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
 		
-		parent::__construct($field_id . $Captcha->get_instance(), '', $field_options);
-		$this->Captcha = $Captcha;
+		parent::__construct($field_id . $captcha->get_instance(), '', $field_options);
+		$this->captcha = $captcha;
 		foreach($field_options as $attribute => $value)
 		{
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
@@ -62,7 +62,7 @@ class FormCaptchaField extends FormField
 	 */
 	public function display()
 	{
-		$this->Captcha->save_user();
+		$this->captcha->save_user();
 		
 		$Template = new Template('framework/builder/forms/field_captcha.tpl');
 			
@@ -70,11 +70,11 @@ class FormCaptchaField extends FormField
 			'ID' => $this->id,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'CAPTCHA_INSTANCE' => $this->Captcha->get_instance(),
-			'CAPTCHA_WIDTH' => $this->Captcha->get_width(),
-			'CAPTCHA_HEIGHT' => $this->Captcha->get_height(),
-			'CAPTCHA_FONT' => $this->Captcha->get_font(),
-			'CAPTCHA_DIFFICULTY' => $this->Captcha->get_difficulty()
+			'CAPTCHA_INSTANCE' => $this->captcha->get_instance(),
+			'CAPTCHA_WIDTH' => $this->captcha->get_width(),
+			'CAPTCHA_HEIGHT' => $this->captcha->get_height(),
+			'CAPTCHA_FONT' => $this->captcha->get_font(),
+			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty()
 		));	
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);

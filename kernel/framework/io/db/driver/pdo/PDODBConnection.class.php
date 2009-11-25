@@ -43,7 +43,7 @@ class PDODBConnection implements DBConnection
 		$this->disconnect();
 	}
 
-	public function connect(array &$db_connection_data)
+	public function connect(array $db_connection_data)
 	{
 		try
 		{

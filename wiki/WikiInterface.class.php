@@ -130,7 +130,7 @@ class WikiInterface extends ModuleInterface
 		return $req;
 	}
 
-	private function _build_wiki_cat_children(&$cats_tree, $cats, $id_parent = 0)
+	private function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
 	{
 		$i = 0;
 		$nb_cats = count($cats);

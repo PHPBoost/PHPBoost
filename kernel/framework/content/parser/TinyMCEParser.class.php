@@ -452,7 +452,7 @@ class TinyMCEParser extends ContentParser
 				$nbr_size_parsing = 0;
 				while (preg_match('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
 				{
-					$this->content = preg_replace_callback('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array(&$this, 'parse_size_tag'), $this->content);
+					$this->content = preg_replace_callback('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
 				}
 			}
 
@@ -465,7 +465,7 @@ class TinyMCEParser extends ContentParser
 			//indent tag
 			if (!in_array('indent', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array(&$this, 'parse_indent_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array($this, 'parse_indent_tag'), $this->content);
 			}
 
 			//Line tag
@@ -489,7 +489,7 @@ class TinyMCEParser extends ContentParser
 				$nbr_font_parsing = 0;
 				while (preg_match('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
 				{
-					$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', array(&$this, 'parse_font_tag'), $this->content );
+					$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
 				}
 			}
 	}
@@ -502,7 +502,7 @@ class TinyMCEParser extends ContentParser
 		$content_contains_table = false;
 		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->content))
 		{
-			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array(&$this, 'parse_table_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array($this, 'parse_table_tag'), $this->content);
 			$content_contains_table = true;
 		}
 
@@ -511,14 +511,14 @@ class TinyMCEParser extends ContentParser
 			//Rows
 			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`is', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isU', array(&$this, 'parse_row_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isU', array($this, 'parse_row_tag'), $this->content);
 			}
 
 			//Cols
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array(&$this, 'parse_col_tag'), $this->content);
-				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array(&$this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array($this, 'parse_col_tag'), $this->content);
 			}
 		}
 	}
@@ -633,7 +633,7 @@ class TinyMCEParser extends ContentParser
 		//Wikipedia tag
 		if (!in_array('wikipedia', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, 'parse_wikipedia_links'), $this->content);
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array($this, 'parse_wikipedia_links'), $this->content);
 		}
 
 		//Hide tag

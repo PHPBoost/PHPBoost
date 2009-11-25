@@ -227,7 +227,7 @@ class Feed
 	 * @param int $idcat the feed data category
 	 * @static
 	 */
-	private static function update_cache($module_id, $name, &$data, $idcat = 0)
+	private static function update_cache($module_id, $name, $data, $idcat = 0)
 	{
 		
 		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
