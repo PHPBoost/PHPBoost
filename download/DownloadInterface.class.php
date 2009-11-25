@@ -137,7 +137,7 @@ class DownloadInterface extends ModuleInterface
      * @param &string[][] $args The array containing the result's id list
      * @return string[] The array containing the result's data list
      */
-    function compute_search_results(&$args)
+    function compute_search_results($args)
     {
         global $CONFIG;
         
@@ -169,7 +169,7 @@ class DownloadInterface extends ModuleInterface
      *  @param &string[] $result_data the result's data
      *  @return string[] The string to print the result of a search element
      */
-    function parse_search_result(&$result_data)
+    function parse_search_result($result_data)
     {
         global $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
         $Cache->load('download');
@@ -262,7 +262,7 @@ class DownloadInterface extends ModuleInterface
 	}
     
     ## Private ##
-    function _check_cats_auth($id_cat, &$list)
+    function _check_cats_auth($id_cat, $list)
     {
         global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
 

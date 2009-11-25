@@ -55,7 +55,7 @@ class ContentSecondParser extends Parser
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 		{
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, 'callbackhighlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
 		}
 
 		//Media
@@ -69,7 +69,7 @@ class ContentSecondParser extends Parser
 		{
 			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php';
 			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.class.php';
-			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, 'math_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
 		}
 
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);

@@ -503,7 +503,7 @@ class Stats
 	 * @param array $array_scale List of element
 	 * @param resource $max_element Maximal element int the array_scale list
 	 */
-	private function generate_scale(&$array_scale, $max_element)
+	private function generate_scale($array_scale, $max_element)
 	{
 		$max_element += ($max_element * 20/100);
 		while (($max_element%3) != 0)

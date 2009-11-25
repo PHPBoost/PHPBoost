@@ -271,13 +271,13 @@ class BBCodeParser extends ContentParser
             //Title tag
             if (!in_array('title', $this->forbidden_tags))
             {
-            	$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, 'parse_title'), $this->content);
+            	$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array($this, 'parse_title'), $this->content);
             }
 
             //Wikipedia tag
             if (!in_array('wikipedia', $this->forbidden_tags))
             {
-            	$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, 'parse_wikipedia_links'), $this->content);
+            	$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array($this, 'parse_wikipedia_links'), $this->content);
             }
 
             ##Parsage des balises imbriquées.
@@ -318,7 +318,7 @@ class BBCodeParser extends ContentParser
 	 * @desc Serializes a split content according to the table tag and generates the complete HTML code.
 	 * @param string[] $content Content of the parser split according to the table tag
 	 */
-	protected function parse_imbricated_table(&$content)
+	protected function parse_imbricated_table($content)
 	{
 		if (is_array($content))
 		{
@@ -386,7 +386,7 @@ class BBCodeParser extends ContentParser
 	 * Generates the HTML code
 	 * @param string[] $content Content split according to the list tag
 	 */
-	protected function parse_imbricated_list(&$content)
+	protected function parse_imbricated_list($content)
 	{
 		if (is_array($content))
 		{

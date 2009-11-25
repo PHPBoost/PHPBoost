@@ -189,7 +189,7 @@ class UnreadContributionsCache implements CacheData
 		}
 	}
 
-	private function add_unique_item_in_list(&$list, &$item)
+	private function add_unique_item_in_list(&$list, $item)
 	{
 		if (!in_array($item, $list))
 		{

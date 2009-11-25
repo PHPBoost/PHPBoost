@@ -223,7 +223,7 @@ class Cache
 	 * @param string $module_name Name of the file to write
 	 * @param string $cache_string Content of the file to write
 	 */
-	function write($module_name, &$cache_string)
+	function write($module_name, $cache_string)
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 

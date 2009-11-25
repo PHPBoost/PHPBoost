@@ -121,7 +121,7 @@ class FaqInterface extends ModuleInterface
      * @param &string[][] $args The array containing the result's id list
      * @return string[] The array containing the result's data list
      */
-    public function compute_search_results(&$args)
+    public function compute_search_results($args)
     {
         global $CONFIG;
         
@@ -153,7 +153,7 @@ class FaqInterface extends ModuleInterface
      *  @param &string[] $result_data the result's data
      *  @return string[] The string to print the result of a search element
      */
-    function parse_search_result(&$result_data)
+    function parse_search_result($result_data)
     {
         $tpl = new Template('faq/search_result.tpl');
         

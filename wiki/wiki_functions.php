@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)	exit;
 define('WIKI_MENU_MAX_DEPTH', 5);
 
 //Interprétation du BBCode en ajoutant la balise [link]
-function wiki_parse(&$var)
+function wiki_parse($var)
 {
 	//On force le langage de formatage à BBCode
 	$content_manager = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
@@ -188,7 +188,6 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 	-->
 	</script>
 	' . $cats_list;
-	
 }
 
 //Fonction récursive pour l'affichage des catégories

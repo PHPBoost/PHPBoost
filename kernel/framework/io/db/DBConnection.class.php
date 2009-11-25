@@ -41,7 +41,7 @@ interface DBConnection
      * @throws DBConnectionException
      * @throws UnexistingDatabaseException
      */
-    function connect(array &$db_connection_data);
+    function connect(array $db_connection_data);
 
     /**
      * @desc

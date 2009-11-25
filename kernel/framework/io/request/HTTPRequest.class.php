@@ -59,7 +59,7 @@ class HTTPRequest
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
-	public function set_rawvalue(&$varname, &$value, &$array)
+	public function set_rawvalue($varname, $value, &$array)
 	{
 		$array[$varname] = $value;
 	}
@@ -139,7 +139,7 @@ class HTTPRequest
 		return $this->get_var($_POST, self::string, $varname, $default_value);
 	}
 
-	private function get_var(&$mode, $type, &$varname, &$default_value)
+	private function get_var($mode, $type, $varname, $default_value)
 	{
 		if (!isset($mode[$varname]) && $default_value === null)
 		{
@@ -155,7 +155,7 @@ class HTTPRequest
 		}
 	}
 
-	private function get_raw_var(&$mode, &$type, &$varname, &$default_value)
+	private function get_raw_var($mode, $type, $varname, $default_value)
 	{
 		$value =& $mode[$varname];
 		switch ($type)
@@ -174,12 +174,12 @@ class HTTPRequest
 		}
 	}
 
-	private function get_raw_bool(&$value)
+	private function get_raw_bool($value)
 	{
 		return $value === 'true' || $value === '1' || $value === true;
 	}
 
-	private function get_raw_int(&$value, &$varname, &$default_value)
+	private function get_raw_int($value, $varname, $default_value)
 	{
 		if (is_numeric($value))
 		{
@@ -195,7 +195,7 @@ class HTTPRequest
 		}
 	}
 
-	private function get_raw_float(&$value, &$varname, &$default_value)
+	private function get_raw_float($value, $varname, $default_value)
 	{
 		if (is_float($value))
 		{
@@ -211,7 +211,7 @@ class HTTPRequest
 		}
 	}
 
-	private function get_raw_string(&$value)
+	private function get_raw_string($value)
 	{
 		return (string) $value;
 	}

@@ -247,7 +247,7 @@ class Authorizations
 	 * @return boolean True if authorized, false otherwise.
 	 * @static
 	 */
-	public static function check_auth($type, $value, &$array_auth, $bit)
+	public static function check_auth($type, $value, $array_auth, $bit)
 	{
 		if (!is_int($value))
 			return false;
@@ -365,7 +365,7 @@ class Authorizations
 	 * @param array $sum_auth Sum up all authorizations for the authorization array.
 	 * @static
 	 */
-	static private function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	static private function _get_auth_array($bit_value, $idselect, $array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		

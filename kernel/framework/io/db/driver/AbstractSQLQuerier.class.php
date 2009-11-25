@@ -76,7 +76,7 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 		return $this->executed_resquests_count;
 	}
 
-	protected function prepare(&$query)
+	protected function prepare($query)
 	{
 		$this->executed_resquests_count++;
 		if ($this->translator_enabled)

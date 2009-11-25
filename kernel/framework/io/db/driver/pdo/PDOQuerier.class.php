@@ -53,12 +53,12 @@ class PDOQuerier extends AbstractSQLQuerier
 	 * @param string $query
 	 * @return PDOStatement
 	 */
-	private function prepare_statement(&$query)
+	private function prepare_statement($query)
 	{
 		return $this->link->prepare($this->prepare($query));
 	}
 
-	private function execute(PDOStatement $statement, &$query, array &$parameters)
+	private function execute(PDOStatement $statement, $query, array $parameters)
 	{
 		$keys_to_remove = array();
 		foreach (array_keys($parameters) as $key)

@@ -124,7 +124,7 @@ abstract class LinksMenuElement extends Menu
 	 * displayed. With the LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
 	 * also shown.
 	 */
-	protected function _assign(&$template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		parent::_assign($template);
 		$template->assign_vars(array(

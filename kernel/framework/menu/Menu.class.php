@@ -144,9 +144,8 @@ abstract class Menu
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars
 	 */
-    protected function _assign(&$template)
+    protected function _assign($template)
     {
-    	
     	MenuService::assign_positions_conditions($template, $this->get_block());
     }
     

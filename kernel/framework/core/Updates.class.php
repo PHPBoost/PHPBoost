@@ -143,7 +143,7 @@ class Updates
     /**
 	* @desc Save an alert for Update Notification
 	*/
-    function _add_update_alert(&$app)
+    function _add_update_alert($app)
     {
         
         $identifier = $app->get_identifier();

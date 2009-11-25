@@ -173,7 +173,7 @@ class ContributionService
      * @desc Create or update a contribution in the database.
      * @param Contribution $contribution The contribution to synchronize with the data base.
 	 */
-	public static function save_contribution(&$contribution)
+	public static function save_contribution($contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -206,7 +206,7 @@ class ContributionService
      * @desc Deletes a contribution in the database.
      * @param Contribution $contribution The contribution to delete in the data base.
 	 */
-	public static function delete_contribution(&$contribution)
+	public static function delete_contribution($contribution)
 	{
 		global $Sql, $Cache;
 		

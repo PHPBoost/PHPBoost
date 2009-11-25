@@ -220,12 +220,12 @@ class Search
      * returns the number of results.
      * Query complexity: 1 query.
      * @param string[] &$results the results returned
-     * @param string[] &$module_ids the modules ids from which retrieve results
+     * @param string[] $module_ids the modules ids from which retrieve results
      * @param int $nb_lines the number of lines to return
      * @param int $offset the offset from which return results
      * @return int The number of results
      */
-    function get_results(&$results, &$module_ids, $nb_lines = 0, $offset = 0 )
+    function get_results(&$results, $module_ids, $nb_lines = 0, $offset = 0 )
     {
         global $Sql;
 
@@ -280,10 +280,10 @@ class Search
     /**
      * @desc Inserts search results in the database cache in order to speed up next searches.
      * Query complexity: 1 + k / 10 queries. (k represent the number of results to insert in the database)
-     * @param mixed[] &$requestAndResults This parameters is an array with keys that are
+     * @param mixed[] $requestAndResults This parameters is an array with keys that are
      * modules ids and values that could be both a SQL query or a results array.
      */
-    function insert_results(&$requestAndResults)
+    function insert_results($requestAndResults)
     {
         global $Sql;
         $nbReqSEARCH = 0;
@@ -418,7 +418,7 @@ class Search
      * containings modules specifics options.
      * @return string The condition to put in a query WHERE clause
      */
-    function _get_modules_conditions(&$modules)
+    function _get_modules_conditions($modules)
     /**
      *  Génère les conditions de la clause WHERE pour limiter les requêtes
      *  aux seuls modules avec les bonnes options de recherches concernés.

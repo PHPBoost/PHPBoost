@@ -64,7 +64,7 @@ class Application
 	 * @desc Loads an XML description
 	 * @param $xml_desc reference to xml description
 	 */
-	function load(&$xml_desc)
+	function load($xml_desc)
 	{
 		$attributes = $xml_desc->attributes();
 
@@ -318,7 +318,7 @@ class Application
 	 * @param xpath_query
 	 * @return string attrbute value
 	 */
-	function _get_attribute(&$xdoc, $attibute_name, $xpath_query = '.')
+	function _get_attribute($xdoc, $attibute_name, $xpath_query = '.')
 	{
 		$elements = $xdoc->xpath($xpath_query);
 		if (count($elements) > 0)

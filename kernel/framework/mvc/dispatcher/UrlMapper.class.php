@@ -38,7 +38,7 @@ interface UrlMapper
      * @param string $url the to match
      * @return boolean true if the UrlDispatcherItem match the url
      */
-    public function match(&$url);
+    public function match($url);
 
     /**
      * @desc Call the controller method if the url match and if the method exists

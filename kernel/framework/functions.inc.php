@@ -254,7 +254,7 @@ function get_ulang()
  * @param bool $cut True if you accept that a word would be broken apart, false if you want to cut only on a blank character.
  * @return string The wrapped HTML string.
  */
-function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $cut = true)
+function wordwrap_html($str, $lenght, $cut_char = '<br />', $cut = true)
 {
 	$str = wordwrap(html_entity_decode($str), $lenght, $cut_char, $cut);
 	return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES));
@@ -270,7 +270,7 @@ function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $cut = true)
  * @param int $end If length is given and is positive, the string returned will contain at most length  characters beginning from start  (depending on the length of string ).
  * @return string The sub string.
  */
-function substr_html(&$str, $start, $end = '')
+function substr_html($str, $start, $end = '')
 {
 	if ($end == '')
 	{
@@ -643,7 +643,7 @@ function check_mail($mail)
  * @return string The parsed string.
  * @see ContentParser
  */
-function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
+function strparse($content, $forbidden_tags = array(), $addslashes = true)
 {
 	//On utilise le gestionnaire de contenu
 	$content_manager = new ContentFormattingFactory();
@@ -673,7 +673,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
  * @return string The unparsed string.
  * @see ContentUnparser
  */
-function unparse(&$content)
+function unparse($content)
 {
 	$content_manager = new ContentFormattingFactory();
 	$parser = $content_manager->get_unparser();
@@ -691,7 +691,7 @@ function unparse(&$content)
  * @return string The second parsed string.
  * @see ContentSecondParser
  */
-function second_parse(&$content)
+function second_parse($content)
 {
 	$content_manager = new ContentFormattingFactory();
 
@@ -708,9 +708,8 @@ function second_parse(&$content)
  * @return string The second parsed url.
  * @see Url
  */
-function second_parse_url(&$url)
+function second_parse_url($url)
 {
-
 	$Url = new Url($url);
 	return $Url->absolute();
 }
@@ -1179,7 +1178,7 @@ function inc($file, $once = true)
  * @param string $classname the classname you want to compare with
  * @return bool true if the $object is an instance of the $classname class
  */
-function of_class(&$object, $classname)
+function of_class($object, $classname)
 {
 	if (!is_object($object))
 	{

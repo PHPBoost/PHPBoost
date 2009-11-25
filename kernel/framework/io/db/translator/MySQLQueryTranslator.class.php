@@ -38,7 +38,7 @@ class MySQLQueryTranslator implements SQLQueryTranslator
 	 */
 	private $query;
 
-	public function translate(&$query)
+	public function translate($query)
 	{
 		$this->query = $query;
 

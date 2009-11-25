@@ -153,7 +153,7 @@ else
 $modules = new ModulesDiscoveryService();
 $feeds_modules = $modules->get_available_modules('get_feeds_list');
 
-function build_feed_urls($elts, $module_id, &$feed_type, $level = 0)
+function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 {
 	$urls = array();
 	global $edit, $feed_url;

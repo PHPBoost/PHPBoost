@@ -58,7 +58,7 @@ class PDOInjectQueryResult implements InjectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct(&$query, PDOStatement $statement, PDO $pdo)
+	public function __construct($query, PDOStatement $statement, PDO $pdo)
 	{
 		// TODO change this for pgsql
 		$this->last_inserted_id = $pdo->lastInsertId();

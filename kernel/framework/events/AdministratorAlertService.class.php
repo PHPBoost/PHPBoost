@@ -185,7 +185,7 @@ class AdministratorAlertService
      * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
      * @param AdministratorAlert $alert The alert to create or update.
 	 */
-    public static function save_alert(&$alert)
+    public static function save_alert($alert)
 	{
 		global $Sql, $Cache;
 		
@@ -219,7 +219,7 @@ class AdministratorAlertService
  	 * @desc Deletes an alert from the database.
  	 * @param AdministratorAlert $alert The alert to delete.
 	 */
-	public static function delete_alert(&$alert)
+	public static function delete_alert($alert)
 	{
 		global $Sql, $Cache;
 		
