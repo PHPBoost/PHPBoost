@@ -247,7 +247,6 @@ class Template
 	public function get_subtemplate($identifier)
 	{
 		return $this->subtemplates[$identifier];
-//		return $this->get_subtemplate_from_list($identifier, $this->subtemplates);
 	}
 	
 	/**
@@ -259,8 +258,6 @@ class Template
 	  */
 	public function get_subtemplate_from_list($identifier, &$list)
 	{
-//		echo 'get_subtemplate_from_list' . $identifier . ' - ' . get_class($list[$identifier]) . '<br />';
-//		echo '<pre>'; print_r(array_keys($this->subtemplates)); echo '</pre>';
 		return $list[$identifier];
 	}
 	

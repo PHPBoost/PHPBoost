@@ -54,7 +54,7 @@ class StringVars
     private function replace_var($captures)
     {
         $varname =& $captures[1];
-        if (in_array($varname, array_keys($this->parameters)))
+        if (array_key_exists($varname, $this->parameters))
         {
             return $this->set_var($this->parameters[$varname]);
         }
