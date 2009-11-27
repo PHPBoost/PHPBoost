@@ -65,8 +65,6 @@ class ClassLoader
 	{
 		if (!self::$already_reloaded)
 		{
-			$bench = new Bench();
-			$bench->start();
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
@@ -74,11 +72,6 @@ class ClassLoader
 
 			self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
-			
-			$bench->stop();
-			echo $bench->to_string();
-			
-			exit;
 			
 			self::generate_autoload_cache();
 			self::$already_reloaded = true;
@@ -104,7 +97,6 @@ class ClassLoader
 			{
 				if (!in_array($folder->get_name(), self::$exclude_paths))
 				{
-					echo $folder->get_name(true) . '<br>';
 					self::add_classes($folder->get_name(true), $pattern, true);
 				}
 			}
