@@ -34,6 +34,11 @@ class ClassLoader
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
 	private static $already_reloaded = false;
+	private static $exclude_paths = array(
+		'cache', 'images', 'lang', 'upload', 'templates',
+		'tinymce', //kernel
+		'.svn' //Dev
+	);
 
 	public static function init_autoload()
 	{
@@ -60,6 +65,8 @@ class ClassLoader
 	{
 		if (!self::$already_reloaded)
 		{
+			$bench = new Bench();
+			$bench->start();
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
@@ -67,6 +74,12 @@ class ClassLoader
 
 			self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
+			
+			$bench->stop();
+			echo $bench->to_string();
+			
+			exit;
+			
 			self::generate_autoload_cache();
 			self::$already_reloaded = true;
 		}
@@ -87,9 +100,13 @@ class ClassLoader
 
 		if ($recursive)
 		{
-			foreach ($folder->get_folders() as $folder)
+			foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $folder)
 			{
-				self::add_classes($folder->get_name(true), $pattern, true);
+				if (!in_array($folder->get_name(), self::$exclude_paths))
+				{
+					echo $folder->get_name(true) . '<br>';
+					self::add_classes($folder->get_name(true), $pattern, true);
+				}
 			}
 		}
 	}
