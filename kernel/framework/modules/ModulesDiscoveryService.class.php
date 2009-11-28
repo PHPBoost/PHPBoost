@@ -143,11 +143,11 @@ class ModulesDiscoveryService
 	 */
 	public function get_module($module_id = '')
 	{
-		$module_constructor = ucfirst($module_id) . 'Interface';
-		
-		if (class_exists($module_constructor))
+		$classname = ucfirst($module_id) . 'Interface';
+
+		if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/' . $classname . '.class.php'))
 		{   // The Interface exists
-			$module = new $module_constructor();
+			$module = new $classname();
 
 			if (isset($this->loaded_modules[$module_id]))
 			{
@@ -172,7 +172,7 @@ class ModulesDiscoveryService
 		{   // NOT IMPLEMENTED
 			$module = new ModuleInterface($module_id, MODULE_NOT_YET_IMPLEMENTED);
 		}
-		
+
 		$this->loaded_modules[$module_id] = $module;
 		return $this->loaded_modules[$module_id];
 	}
