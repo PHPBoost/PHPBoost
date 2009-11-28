@@ -88,6 +88,28 @@ class UnreadContributionsCache implements CacheData
 	{
 		return $this->moderators;
 	}
+	
+	/**
+	 * Tells whether a user has unread contributions (it only deals with user-specific contributions
+	 * and not with rank or group contributions).
+	 * @param int $user_id The id if the user
+	 * @return bool true if the user has, false if it doesn't
+	 */
+	public function has_user_unread_contributions($user_id)
+	{
+		return in_array($user_id, $this->get_users_with_unread_contributions());
+	}
+	
+	/**
+	 * Tells whether a group has unread contributions (it only deals with user-specific contributions
+	 * and not with rank or group contributions).
+	 * @param int $group_id The id of the group
+	 * @return bool true if the group has, false otherwise
+	 */
+	public function has_group_unread_contributions($group_id)
+	{
+		return in_array($group_id, $this->get_groups_with_unread_contributions());
+	}
 
 	/**
 	 * Sets whether there are unread contributions for moderators.
@@ -187,6 +209,23 @@ class UnreadContributionsCache implements CacheData
 				}
 			}
 		}
+	}
+
+	/**
+	 * Loads and returns the unread contribution cached data.
+	 * @return UnreadContributionsCache The cached data
+	 */
+	public static function load()
+	{
+		return CacheManager::load(__CLASS__, 'kernel', 'unread-contributions');
+	}
+
+	/**
+	 * Invalidates the current modules css files cached data.
+	 */
+	public static function invalidate()
+	{
+		CacheManager::invalidate('kernel', 'unread-contributions');
 	}
 
 	private function add_unique_item_in_list(&$list, $item)

@@ -510,7 +510,7 @@ class Environment
 		}
 		//Otherwise, if it's not a kernel page (they are in specific folders) and it's a module page
 		// => it's forbidden
-		elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel', 'test')))
+		elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel')))
 		{
 			//We try to see if it can be an uninstalled module
 			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME .
