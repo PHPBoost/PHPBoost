@@ -87,6 +87,14 @@ class UTUnreadContributionsCache extends PHPBoostUnitTestCase
 		self::assertEquals(true, $cache->has_user_unread_contributions(5));
 		self::assertEquals(false, $cache->has_user_unread_contributions(3));
 	}
+	
+	public function test_has_group_unread_contributions()
+	{
+		$cache = new UnreadContributionsCache();
+		$cache->add_group_with_unread_contributions(5);
+		self::assertEquals(true, $cache->has_group_unread_contributions(5));
+		self::assertEquals(false, $cache->has_group_unread_contributions(3));
+	}
 }
 
 ?>
