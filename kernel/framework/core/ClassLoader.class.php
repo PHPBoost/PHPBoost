@@ -70,9 +70,20 @@ class ClassLoader
 			import('io/filesystem/File');
 			import('util/Path');
 
-			self::add_classes(Path::phpboost_path(), '`^.+\.class\.php$`', true);
+			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
+			$paths = array(
+				'',
+				'/kernel/framework/core/cache',
+				'/kernel/framework/io/cache',
+				'/kernel/framework/core/lang',
+			);
+
+			foreach ($paths as $path)
+			{
+				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern, true);
+			}
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
-			
+
 			self::generate_autoload_cache();
 			self::$already_reloaded = true;
 		}
