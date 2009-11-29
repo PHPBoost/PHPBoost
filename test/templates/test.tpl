@@ -10,7 +10,6 @@
 	<dd><input type="text" name="params" id="params" value="{PARAMS}"
 		class="text" style="width: 75%;" /></dd>
 	<dt><label for="is_html">HTML output</label></dt>
-	</dt>
 	<dd><input type="checkbox" name="is_html" id="is_html" /></dd>
 </dl>
 </fieldset>
@@ -36,8 +35,8 @@
 
 <hr />
 <br />
-<iframe src="run.php?params={PARAMS}" style="width:100%;height:500px"
-	name="phpunit" /></div>
+<iframe src="run.php?params={PARAMS}" style="width: 100%; height: 500px"
+	name="phpunit"></iframe></div>
 <div class="module_bottom_l"></div>
 <div class="module_bottom_r"></div>
 <div class="module_bottom"></div>
