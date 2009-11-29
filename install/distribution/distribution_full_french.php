@@ -26,11 +26,12 @@
 ###################################################*/
 
 //Nom de la distribution
-define('DISTRIBUTION_NAME', 'Development');
+define('DISTRIBUTION_NAME', 'Pack complet');
 
 //Description de la distribution
-define('DISTRIBUTION_DESCRIPTION', 'You are about to install the development version of PHPBoost.
-<p>This version is not stable and mustn\'t be used in production for a website.</p>');
+define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
+<p>Vous allez installer la distribution <strong>Pack complet</strong> de PHPBoost.</p>
+<p>Cette distribution contient l\'ensemble des modules officiels publiés par l\'équipe de développement de PHPBoost. Elle devrait répondre à une grande variété de besoins grâce à la diversité de ses modules.</p>');
 
 //Thème de la distribution
 define('DISTRIBUTION_THEME', 'base');
@@ -42,6 +43,6 @@ define('DISTRIBUTION_START_PAGE', '/news/news.php');
 define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'test', 'web', 'wiki');
+$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
 
 ?>
