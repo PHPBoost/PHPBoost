@@ -334,7 +334,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					redirect(HOST . DIR . '/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
 			}
 			else //Longueur minimale du password
-				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
+				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id . '&error=pass_mini&add=1') . '#errorh');
 		}
 	}
 	else
