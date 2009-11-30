@@ -30,7 +30,7 @@
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc
  */
-class MenuUrlBuilder extends BusinessObject
+class MenuUrlBuilder
 {
     private static $dispatcher = '/admin/menus/dispatcher.php';
     

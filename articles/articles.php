@@ -55,7 +55,6 @@ if (!empty($idart) && isset($cat) )
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 
 	$tpl = new Template('articles/'.$articles['tpl_articles']);
-	$Errorh->set_template($tpl);
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
