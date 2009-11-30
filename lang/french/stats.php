@@ -3,7 +3,7 @@
  *                                stats.php
  *                            -------------------
  *   begin                : September 05, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
  *  

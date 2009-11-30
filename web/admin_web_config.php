@@ -3,7 +3,7 @@
  *                               admin_web_config.php
  *                            -------------------
  *   begin                : March 12, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

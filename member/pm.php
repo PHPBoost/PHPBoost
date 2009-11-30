@@ -3,7 +3,7 @@
  *                                pm.php
  *                            -------------------
  *   begin                : July 12, 2006
- *   copyright          : (C) 2006 Viarre Régis
+ *   copyright            : (C) 2006 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                              calendar.php
  *                            -------------------
  *   begin                : January 29, 2006
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

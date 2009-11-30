@@ -3,7 +3,7 @@
  *                                news.php
  *                            -------------------
  *   begin              : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis, Roguelon Geoffrey
+ *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
  *   email              : crowkait@phpboost.com, liaght@gmail.com
  *
  *

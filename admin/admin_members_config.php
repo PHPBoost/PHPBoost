@@ -3,7 +3,7 @@
  *                               admin_members_config.php
  *                            -------------------
  *   begin                : April 15, 2006
- *   copyright          : (C) 2006 Viarre Régis
+ *   copyright            : (C) 2006 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

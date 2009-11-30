@@ -3,7 +3,7 @@
  *                               admin_com.php
  *                            -------------------
  *   begin                : January 11, 2008
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

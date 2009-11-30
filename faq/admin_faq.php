@@ -3,7 +3,7 @@
  *                               admin_faq.php
  *                            -------------------
  *   begin                : February 27, 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *

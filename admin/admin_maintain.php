@@ -3,7 +3,7 @@
  *                               admin_maintain.php
  *                            -------------------
  *   begin                : Februar 07, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

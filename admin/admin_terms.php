@@ -3,7 +3,7 @@
  *                               admin_terms.php
  *                            -------------------
  *   begin                : Februar 06 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

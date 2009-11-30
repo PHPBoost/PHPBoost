@@ -3,7 +3,7 @@
  *                                stats_saver.class.php
  *                            -------------------
  *   begin                : July 23, 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

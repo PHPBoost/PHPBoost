@@ -3,7 +3,7 @@
  *                                 english.php
  *                            -------------------
  *   begin                : August 24, 2009
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
  *

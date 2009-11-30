@@ -3,7 +3,7 @@
  *                           web_french.php
  *                            -------------------
  *   begin                :  July 28, 2005
- *   copyright          : (C) 2006 CrowkaiT
+ *   copyright            : (C) 2006 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *  

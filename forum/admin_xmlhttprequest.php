@@ -3,7 +3,7 @@
  *                                admin_xmlhttprequest.php
  *                            -------------------
  *   begin                : August 15, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

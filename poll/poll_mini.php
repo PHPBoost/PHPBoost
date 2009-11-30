@@ -3,7 +3,7 @@
  *                               poll_mini.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre R�gis
+ *   copyright            : (C) 2005 Viarre R�gis
  *   email                : crowkait@phpboost.com
  *
   *

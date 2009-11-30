@@ -3,7 +3,7 @@
  *                              faq_french.php
  *                            -------------------
  *   begin                : October 20, 2007
- *   copyright          : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  

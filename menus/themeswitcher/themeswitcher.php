@@ -3,7 +3,7 @@
  *                               themeswitcher.php
  *                            -------------------
  *   begin                : November 16, 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

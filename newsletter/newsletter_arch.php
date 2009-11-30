@@ -3,7 +3,7 @@
  *                               newsletter_arch.php
  *                            -------------------
  *   begin                : July 11, 2006
- *   copyright          : (C) 2006 Sautel Benoit
+ *   copyright            : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  

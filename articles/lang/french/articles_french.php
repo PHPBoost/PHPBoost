@@ -3,7 +3,7 @@
  *                              articles_french.php
  *                            -------------------
  *   begin                : November 21, 2006
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

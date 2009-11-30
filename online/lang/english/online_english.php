@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                :  November 23 2006
  *   last modified		: July 31, 2009 - Forensic
- *   copyright          : (C) 2006 CrowkaiT
+ *   copyright            : (C) 2006 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *  

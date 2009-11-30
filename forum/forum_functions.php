@@ -3,7 +3,7 @@
  *                              forum_functions.php
  *                            -------------------
  *   begin                : December 11, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                                search.php
  *                            -------------------
  *   begin                : May 18 2006
- *   copyright          : (C) 2006 Viarre Régis
+ *   copyright            : (C) 2006 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   

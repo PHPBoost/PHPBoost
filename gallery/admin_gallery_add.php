@@ -3,7 +3,7 @@
  *                               admin_gallery_add.php
  *                            -------------------
  *   begin                : August 17, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

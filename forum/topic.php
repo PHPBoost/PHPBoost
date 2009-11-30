@@ -3,7 +3,7 @@
  *                                topic.php
  *                            -------------------
  *   begin                : October 26, 2005
- *   copyright          : (C) 2005 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
  *   email                : mickaelhemri@gmail.com / ben.popeye@gmail.com
  *
  *  

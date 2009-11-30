@@ -3,7 +3,7 @@
  *                               admin_newsletter_config.php
  *                            -------------------
  *   begin                : July 9, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  

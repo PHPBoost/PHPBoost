@@ -3,7 +3,7 @@
  *                               newsletter.php
  *                            -------------------
  *   begin                : July 06, 2006
- *   copyright          : (C) 2006 Sautel Benoit
+ *   copyright            : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  

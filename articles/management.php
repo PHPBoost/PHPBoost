@@ -3,7 +3,7 @@
  *                               management.php
  *                            -------------------
  *   begin                :  August 16, 2009
- *   copyright          : (C) 2009 Maurel Nicolas
+ *   copyright            : (C) 2009 Maurel Nicolas
  *   email                : crunchfamily@free.fr
  *
  *

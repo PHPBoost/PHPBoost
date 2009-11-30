@@ -3,7 +3,7 @@
  *                                error.php
  *                            -------------------
  *   begin                : August 08 2005
- *   copyright          : (C) 2005 CrowkaiT
+ *   copyright            : (C) 2005 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *   
