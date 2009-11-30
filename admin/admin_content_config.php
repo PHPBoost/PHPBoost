@@ -3,7 +3,7 @@
  *                               admin_content_config.php
  *                            -------------------
  *   begin                : July 4 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  

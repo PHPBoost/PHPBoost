@@ -3,7 +3,7 @@
  *                             forum_tools.php
  *                            -------------------
  *   begin                : March 26, 2008
- *   copyright          : (C) 2008 Viarre régis
+ *   copyright            : (C) 2008 Viarre régis
  *   email                : crowkait@phpboost.com
  *
  *

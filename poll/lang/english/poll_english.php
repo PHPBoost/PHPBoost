@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 14, 2005
  *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

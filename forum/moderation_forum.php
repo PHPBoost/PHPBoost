@@ -3,7 +3,7 @@
  *                               moderation_forum.php
  *                            -------------------
  *   begin                : August 8, 2006
- *   copyright          : (C) 2006 Sautel Benoît / Viarre Régis
+ *   copyright            : (C) 2006 Sautel Benoît / Viarre Régis
  *   email                :  ben.popeye@phpboost.com / crowkait@phpboost.com
  *
  *

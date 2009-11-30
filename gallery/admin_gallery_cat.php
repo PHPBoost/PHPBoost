@@ -3,7 +3,7 @@
  *                               admin_gallery_cat.php
  *                            -------------------
  *   begin                : August 01, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

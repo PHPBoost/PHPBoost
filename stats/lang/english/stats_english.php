@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                :  September 27, 2007
  *   last modified		: August 1st, 2009 - Forensic
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

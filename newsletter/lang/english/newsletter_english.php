@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 11 2006
  *   last modified		: July 31, 2009 - Forensic
- *   copyright          : (C) 2006 ben.popeye
+ *   copyright            : (C) 2006 ben.popeye
  *   email                : ben.popeye@phpboost.com
  *
  *  

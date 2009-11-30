@@ -3,7 +3,7 @@
  *                               admin_calendar.php
  *                            -------------------
  *   begin                : March 13, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

@@ -3,7 +3,7 @@
  *                               show_pics.php
  *                            -------------------
  *   begin                : August 12, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : June 27, 2006
  *   last modified		: October 3rd 2009 - JMNaylor
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
  *

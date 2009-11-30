@@ -3,7 +3,7 @@
  *                               management.php
  *                            -------------------
  *   begin                :  August 13, 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : regis.viarre@phpboost.com
  *
  *

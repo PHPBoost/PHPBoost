@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                :  July 28, 2005
  *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright          : (C) 2006 CrowkaiT
+ *   copyright            : (C) 2006 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *  

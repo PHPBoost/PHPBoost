@@ -3,7 +3,7 @@
  *                               admin_articles_models.php
  *                            -------------------
  *   begin                : November 27, 2009
- *   copyright          : (C) 2009 Maurel Nicolas
+ *   copyright            : (C) 2009 Maurel Nicolas
  *   email                : crunchfamily@free.fr
  *
  *

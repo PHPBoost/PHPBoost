@@ -3,7 +3,7 @@
  *                              contact_begin.php
  *                            -------------------
  *   begin                : November 26, 2007
- *   copyright          : (C) 2007 Viarre régis
+ *   copyright            : (C) 2007 Viarre régis
  *   email                : crowkait@phpboost.com
  *
  *

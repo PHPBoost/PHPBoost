@@ -3,7 +3,7 @@
  *                              articles_mini.php
  *                            -------------------
  *   begin                : October 09, 2009
- *   copyright          : (C) 2009 Maurel Nicolas
+ *   copyright            : (C) 2009 Maurel Nicolas
  *   email                : crunchfamily@free.fr
  *
   *

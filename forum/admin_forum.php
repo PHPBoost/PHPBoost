@@ -3,7 +3,7 @@
  *                               admin_forum.php
  *                            -------------------
  *   begin                : October 30, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

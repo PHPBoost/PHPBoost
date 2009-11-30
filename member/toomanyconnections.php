@@ -3,7 +3,7 @@
  *                                fatal.php
  *                            -------------------
  *   begin                : April 12, 2007
- *   copyright          : (C) 2007 CrowkaiT
+ *   copyright            : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                               admin_contact.php
  *                            -------------------
  *   begin                : November 26, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

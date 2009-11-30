@@ -3,7 +3,7 @@
  *                               action.php
  *                            -------------------
  *   begin                : August 18, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *

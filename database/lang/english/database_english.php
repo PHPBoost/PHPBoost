@@ -3,7 +3,7 @@
  *                              database_english.php
  *                            -------------------
  *   begin                : Februar 02, 2009
- *   copyright          : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

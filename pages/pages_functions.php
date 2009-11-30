@@ -3,7 +3,7 @@
  *                              pages_functions.php
  *                            -------------------
  *   begin                : August 15, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *

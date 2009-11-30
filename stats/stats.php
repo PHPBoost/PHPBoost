@@ -3,7 +3,7 @@
  *                              stats.php
  *                            -------------------
  *   begin                : January 31, 2006
- *   copyright          : (C) 2005 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *

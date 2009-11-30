@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 20, 2007
  *   last modified		: July 3rd, 2009 - JMNaylor
- *   copyright          : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  

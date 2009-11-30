@@ -3,7 +3,7 @@
  *                               admin_smileys_add.php
  *                            -------------------
  *   begin                : June 29, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   Admin_theme_ajout, v 2.0.1 
