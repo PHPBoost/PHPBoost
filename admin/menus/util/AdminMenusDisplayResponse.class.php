@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
