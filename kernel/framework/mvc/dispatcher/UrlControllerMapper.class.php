@@ -62,7 +62,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 
 	private function build_parameters()
 	{
-		$captured_parameters =& $this->get_captured_parameters();
+		$captured_parameters = $this->get_captured_parameters();
 
 		$i = 1;
 		foreach ($this->parameters_names as $parameter_name)

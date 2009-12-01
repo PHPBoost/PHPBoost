@@ -59,6 +59,11 @@ abstract class SQLDAO implements DAO
 	 * @var SQLQuerier the sql querier that will interact with the database
 	 */
 	protected $querier;
+	
+	/**
+	 * @var CommonQuery
+	 */
+	protected $common_query;
 
 	/**
 	 * @var MappingModel the model on which services are based
@@ -136,11 +141,13 @@ abstract class SQLDAO implements DAO
 		{
 			$this->querier = $querier;
 		}
+		$this->common_query = new CommonQuery($this->querier);
 		$this->cache_model();
 	}
 
 	/**
-	 * @desc this method is called just before a save
+	 * @desc this method is called just before the "save" method
+	 * (not called with the "update" method)
 	 * @param PropertiesMapInterface $object
 	 */
 	protected function before_save(PropertiesMapInterface $object) { }
@@ -151,17 +158,23 @@ abstract class SQLDAO implements DAO
 		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
 		{
-			$result = $this->insert($object);
+			$result = $this->raw_insert($object);
 			$object->{$this->pk_setter}($result->get_last_inserted_id());
 		}
 		else
 		{
-			$this->update($object, $pk_value);
+			$this->raw_update($object, $pk_value);
 		}
 	}
 
+	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array())
+	{
+		$this->common_query->delete($this->table, $fields, $where, $parameters);
+	}
+	
 	/**
-	 * @desc this method is called just before a delete
+	 * @desc this method is called just before the "delete" method
+     * (not called with the "delete_all" method)
 	 * @param PropertiesMapInterface $object
 	 */
 	protected function before_delete(PropertiesMapInterface $object) { }
@@ -177,7 +190,17 @@ abstract class SQLDAO implements DAO
 		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
 		$this->querier->inject($this->delete_query, $prepared_vars);
 	}
+	
+	public function delete_all($where = DAO::WHERE_ALL, array $parameters = array())
+    {
+    	$this->common_query->delete($this->table, $where, $parameters);
+    }
 
+    public function count($where = DAO::WHERE_ALL, array $parameters = array())
+    {
+        $this->common_query->count($this->table, $where, $parameters);
+    }
+    
 	public function find_by_id($id)
 	{
 		$this->compute_find_by_id_query();
@@ -242,7 +265,7 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 * @return InjectQueryResult
 	 */
-	private function insert(PropertiesMapInterface $object)
+	private function raw_insert(PropertiesMapInterface $object)
 	{
 		$this->compute_insert_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
@@ -254,7 +277,7 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 * @return InjectQueryResult
 	 */
-	private function update(PropertiesMapInterface $object, $pk_value)
+	private function raw_update(PropertiesMapInterface $object, $pk_value)
 	{
 		$this->compute_update_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
