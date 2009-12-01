@@ -126,7 +126,7 @@ class Dispatcher
 		}
 	}
 
-	private function handle_dispatch_exception($exception)
+	private static function handle_dispatch_exception($exception)
 	{
 		if (DEBUG) {
 			Dispatcher::show_error($exception);

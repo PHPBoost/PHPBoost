@@ -27,35 +27,58 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc Describes a simple way to interact with a datastore
+ * @desc Describes a simple way to interact with a table
  */
 interface DAO
 {
 	const FIND_ALL = 0;
 	const ORDER_BY_ASC = 'ASC';
 	const ORDER_BY_DESC = 'DESC';
+	const WHERE_ALL = '1';
 
     /**
-     * @desc Saves <code>$object</code> in the datastore.
+     * @desc Saves <code>$object</code> in the table.
      * If the object does not exist, it is created, else,  just updated
      * @param PropertiesMapInterface $object the object to save
      */
-    public function save(PropertiesMapInterface $object);
+    function save(PropertiesMapInterface $object);
     
-	/**
-     * @desc Deletes <code>$object</code> from the datastore.
+    /**
+     * @desc Update all fields in the table to the given value if row match the where clause.
+     * @param string[string] $fields keys are the fields names to update, values, their new value
+     * @param string $where the part of the query that came just after the from
+     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     */
+    function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array());
+    
+    /**
+     * @desc Deletes <code>$object</code> from the table.
      * If the object does not exist, nothing is done
-	 * @param PropertiesMapInterface $object the object to delete
-	 */
-	public function delete(PropertiesMapInterface $object);
+     * @param PropertiesMapInterface $object the object to delete
+     */
+    function delete(PropertiesMapInterface $object);
+    
+    /**
+     * @desc Deletes all object matching the where clause from the table.
+     * @param string $where the part of the query that came just after the from
+     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     */
+    function delete_all($where = DAO::WHERE_ALL, array $parameters = array());
+    
+    /**
+     * @desc Count the number of object in the table matching the <code>$where</code> clause
+     * @param string $where the part of the query that came just after the from
+     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     */
+    function count($where = DAO::WHERE_ALL, array $parameters = array());
 
 	/**
 	 * @desc retrieves the object with the <code>$id</code> primary identifier
 	 * @param mixed $id the object primary identifier (shoudl always be an integer)
-	 * @return PropertiesMapInterface the objet retrieved from the datastore
-	 * @throws ObjectNotFoundException if no objects with this id are found in the datastore
+	 * @return PropertiesMapInterface the objet retrieved from the table
+	 * @throws ObjectNotFoundException if no objects with this id are found in the table
 	 */
-	public function find_by_id($id);
+	function find_by_id($id);
 	
 	/**
 	 * @desc retrieves the <code>$limit</code> first objects from the <code>$offset</code> one.
@@ -69,15 +92,15 @@ interface DAO
 	 * ascending (<code>DAO::ORDER_BY_ASC</code>) or descending (<code>DAO::ORDER_BY_DESC</code>)
 	 * @return QueryResultMapper the objects list
 	 */
-	public function find_all($limit = 100, $offset = 0, $order_by = array());
+	function find_all($limit = 100, $offset = 0, $order_by = array());
 	
 	/**
-	 * @desc retrieves all the objects in the datastore matching the <code>$criteria</code>
+	 * @desc retrieves all the objects in the table matching the <code>$criteria</code>
 	 * @param string $criteria the part of the query that came just after the from
 	 * @param string[string] $parameters the query vars to inject into the <code>$criteria</code>
 	 * @return QueryResultMapper the objects list
 	 */
-	public function find_by_criteria($criteria, $parameters = array());
+	function find_by_criteria($criteria, $parameters = array());
 }
 
 ?>

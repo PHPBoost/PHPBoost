@@ -88,7 +88,7 @@ class CommonQuery
 	public function delete($table_name, $condition, $parameters = array())
 	{
 		$query = 'DELETE FROM ' . $table_name . ' WHERE ' . $condition . ';';
-		$this->querier->inject($query, array_merge($parameters, $columns));
+		$this->querier->inject($query, $parameters);
 	}
 
 	/**
@@ -142,13 +142,13 @@ class CommonQuery
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the update condition beginning just after the where clause.
-     * For example, <code>"length > 50 and weight < 100"</code>
-     * @param string $count_column the column name on which count or * if all
+	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * @param string $count_column the column name on which count or * if all
 	 * @param string[string] $parameters the query_var map
 	 * @return int the number of rows returned
 	 */
-	public function count($table_name, $condition = '', $count_column = '*',
-	$parameters = array())
+	public function count($table_name, $condition = '', $parameters = array(),
+	$count_column = '*')
 	{
 		$query = 'SELECT COUNT(' . $count_column . ') FROM ' . $table_name;
 		if (!empty($condition))

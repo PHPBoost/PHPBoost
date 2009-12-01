@@ -70,6 +70,16 @@ class SelectQueryResultMapper implements SelectQueryResult
 		$this->dispose();
 	}
 
+    public function has_next()
+    {
+        return $this->query_result->has_next();
+    }
+    
+    public function fetch()
+    {
+        return $this->query_result->fetch();
+    }
+    
 	public function rewind()
 	{
 		return $this->query_result->rewind();
