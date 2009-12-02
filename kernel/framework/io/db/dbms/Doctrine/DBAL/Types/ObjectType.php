@@ -27,3 +27,5 @@ class ObjectType extends Type
         return 'Object';
     }
 }
+
+?>

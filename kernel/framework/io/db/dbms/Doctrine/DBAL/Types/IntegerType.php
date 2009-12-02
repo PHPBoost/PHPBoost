@@ -26,3 +26,5 @@ class IntegerType extends Type
     	return self::CODE_INT;
     }
 }
+
+?>

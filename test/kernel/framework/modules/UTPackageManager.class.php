@@ -1,19 +1,7 @@
 <?php
-require_once 'header.php';
 
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTpackages_manager extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		// TODO
-	}
-
+class UTPackageManager extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		TODO(__FILE__, __METHOD__);

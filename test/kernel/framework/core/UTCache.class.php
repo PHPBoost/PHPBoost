@@ -1,23 +1,5 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-
-
-unset($Errorh);
-
-class Errors_mock extends Errors
-{
-	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
-	{
-		echo '<br />'.$errno.'-'.$errstr.'-'.$errline.'-'.$errfile.'<br />';
-	}
-}
-
-$Errorh = new Errors_mock();
-
 function clean_string($str)
 {
 	$tmp = str_replace("<?php\n", "", $str);
@@ -25,14 +7,8 @@ function clean_string($str)
 	return $tmp;
 }
 
-class UTcache extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$cache = new Cache();	
-		$this->check_methods($cache);
-	}
-
+class UTcache extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		$cache = new Cache();

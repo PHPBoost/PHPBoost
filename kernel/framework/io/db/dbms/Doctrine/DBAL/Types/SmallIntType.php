@@ -27,3 +27,5 @@ class SmallIntType
     	return self::CODE_INT;
     }
 }
+
+?>

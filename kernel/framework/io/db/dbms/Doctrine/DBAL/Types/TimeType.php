@@ -42,3 +42,5 @@ class TimeType extends Type
             ? \DateTime::createFromFormat($platform->getTimeFormatString(), $value) : null;
     }
 }
+
+?>

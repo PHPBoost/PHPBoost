@@ -1,29 +1,13 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTfolder extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$path = PATH_TO_ROOT . '/kernel';
-		
-		$folder = new Folder($path);
-		$this->check_methods($folder);
-	}
-
+class UTFolder extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		$path = PATH_TO_ROOT . '/kernel';
 		
 		$folder = new Folder($path);
-		$this->assertEqual($folder->path, rtrim($path, '/'));
+		$this->assertEquals($folder->path, rtrim($path, '/'));
 		unset($folder);
 		
 		$path = dirname(__FILE__) . '/tmp_dir';
@@ -53,7 +37,7 @@ class UTfolder extends PHPBoostUnitTestCase {
 		$ret = $folder->get_files();
 		$this->assertTrue(is_array($ret));
 		$this->assertTrue($folder->is_open);
-		$this->assertEqual(count($ret), count($folder->files));
+		$this->assertEquals(count($ret), count($folder->files));
 	}
 	
 	function test_get_folders()
@@ -64,7 +48,7 @@ class UTfolder extends PHPBoostUnitTestCase {
 		$folder->open();
 		$ret = $folder->get_folders();
 		$this->assertTrue(is_array($ret));
-		$this->assertEqual(count($ret), count($folder->folders));
+		$this->assertEquals(count($ret), count($folder->folders));
 	}
 	
 	function test_get_first_folder()
@@ -75,7 +59,7 @@ class UTfolder extends PHPBoostUnitTestCase {
 		$this->assertFalse($folder->is_open);
 		$ret = $folder->get_first_folder();
 		$this->assertTrue($folder->is_open);
-		$this->assertEqual($ret, $folder->folders[0]);
+		$this->assertEquals($ret, $folder->folders[0]);
 		unset($folder);
 		
 		$path = dirname(__FILE__) . '/tmp_dir';
@@ -93,7 +77,7 @@ class UTfolder extends PHPBoostUnitTestCase {
 		$folder = new Folder($path);
 		$folder->open();
 		$ret = $folder->get_all_content();
-		$this->assertEqual(count($ret), count($folder->folders) + count($folder->files) );
+		$this->assertEquals(count($ret), count($folder->folders) + count($folder->files) );
 	}
 
 	function test_delete()

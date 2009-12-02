@@ -1,38 +1,24 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTevents extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$event = new Event();
-		$this->check_methods($event);
-	}
-
+class UTEvent extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		$event = new Event();
-		$this->assertEqual($event->get_status(), Event::EVENT_STATUS_UNREAD);
+		$this->assertEquals($event->get_status(), Event::EVENT_STATUS_UNREAD);
 		$date = new Date();
-		$this->assertEqual($event->get_creation_date(), $date);		
+		$this->assertEquals($event->get_creation_date(), $date);		
 	}
 	
 	function test_accessor_id()
 	{
 		$event = new Event();
 		$event->set_id(0);
-		$this->assertEqual($event->get_id(), NULL);
+		$this->assertEquals($event->get_id(), NULL);
 		$event->set_id('string');
-		$this->assertEqual($event->get_id(), NULL);
+		$this->assertEquals($event->get_id(), NULL);
 		$event->set_id(1);
-		$this->assertEqual($event->get_id(), 1);
+		$this->assertEquals($event->get_id(), 1);
 	}
 	
 	function test_accessor_entitled()
@@ -40,7 +26,7 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$str = 'string';
 		$event->set_entitled($str);
-		$this->assertEqual($event->get_entitled(), $str);
+		$this->assertEquals($event->get_entitled(), $str);
 	}
 	
 	function test_accessor_fixing_url()
@@ -48,7 +34,7 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$url = 'test_url';
 		$event->set_fixing_url($url);
-		$this->assertEqual($event->get_fixing_url(), $url);
+		$this->assertEquals($event->get_fixing_url(), $url);
 	}
 	
 	function test_accessor_status()
@@ -56,13 +42,13 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$tmp = 'status';
 		$event->set_status($tmp);
-		$this->assertIdentical($event->get_status(), Event::EVENT_STATUS_UNREAD);
+		$this->assertEquals($event->get_status(), Event::EVENT_STATUS_UNREAD);
 		$tmp = Event::EVENT_STATUS_BEING_PROCESSED;
 		$event->set_must_regenerate_cache(FALSE);
-		$this->assertIdentical($event->get_must_regenerate_cache(), FALSE);
+		$this->assertEquals($event->get_must_regenerate_cache(), FALSE);
 		$event->set_status($tmp);
-		$this->assertIdentical($event->current_status, Event::EVENT_STATUS_BEING_PROCESSED);
-		$this->assertIdentical($event->get_must_regenerate_cache(), TRUE);
+		$this->assertEquals($event->current_status, Event::EVENT_STATUS_BEING_PROCESSED);
+		$this->assertEquals($event->get_must_regenerate_cache(), TRUE);
 	}
 	
 	function test_accessor_creation_date()
@@ -70,10 +56,10 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$date = new Date();
 		$event->set_creation_date('string');
-		$this->assertEqual($event->get_creation_date(), $date);
+		$this->assertEquals($event->get_creation_date(), $date);
 		$date = new Date();
 		$event->set_creation_date($date);
-		$this->assertEqual($event->get_creation_date(), $date);
+		$this->assertEquals($event->get_creation_date(), $date);
 	}
 
 	function test_accessor_id_in_module()
@@ -81,7 +67,7 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$id = 10;
 		$event->set_id_in_module($id);
-		$this->assertEqual($event->get_id_in_module(), $id);
+		$this->assertEquals($event->get_id_in_module(), $id);
 	}
 	
 	function test_accessor_identifier()
@@ -89,7 +75,7 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$id = 1111;
 		$event->set_identifier($id);
-		$this->assertEqual($event->get_identifier(), $id);
+		$this->assertEquals($event->get_identifier(), $id);
 	}
 	
 	function test_accessor_type()
@@ -97,17 +83,17 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$id = 2222;
 		$event->set_type($id);
-		$this->assertEqual($event->get_type(), $id);
+		$this->assertEquals($event->get_type(), $id);
 	}
 	
 	function test_accessor_must_regenerate_cache()
 	{
 		$event = new Event();
 		$event->set_must_regenerate_cache(0);
-		$this->assertIdentical($event->get_must_regenerate_cache(), TRUE); // TRUE valeur initiale
+		$this->assertEquals($event->get_must_regenerate_cache(), TRUE); // TRUE valeur initiale
 		$id = FALSE;
 		$event->set_must_regenerate_cache($id);
-		$this->assertEqual($event->get_must_regenerate_cache(), $id);
+		$this->assertEquals($event->get_must_regenerate_cache(), $id);
 	}
 	
 	function test_get_status_name()
@@ -115,11 +101,11 @@ class UTevents extends PHPBoostUnitTestCase {
 		global $LANG;
 		
 		$event = new Event();
-		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_unread']);
+		$this->assertEquals($event->get_status_name(), $LANG['contribution_status_unread']);
 		$event->set_status(Event::EVENT_STATUS_BEING_PROCESSED);
-		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_being_processed']);
+		$this->assertEquals($event->get_status_name(), $LANG['contribution_status_being_processed']);
 		$event->set_status(Event::EVENT_STATUS_PROCESSED);
-		$this->assertEqual($event->get_status_name(), $LANG['contribution_status_processed']);
+		$this->assertEquals($event->get_status_name(), $LANG['contribution_status_processed']);
 	}
 	
 	function test_build()
@@ -127,13 +113,13 @@ class UTevents extends PHPBoostUnitTestCase {
 		$event = new Event();
 		$date = new Date();
 		$event->build(777, 'entitled', 'fixing_url', Event::EVENT_STATUS_BEING_PROCESSED, $date, 999, 'identifier', 'type');
-		$this->assertEqual($event->get_id(), 777);
-		$this->assertEqual($event->get_entitled(), 'entitled');
-		$this->assertEqual($event->get_fixing_url(), 'fixing_url');
-		$this->assertEqual($event->get_status(), Event::EVENT_STATUS_BEING_PROCESSED);
-		$this->assertEqual($event->get_creation_date(), $date);
-		$this->assertEqual($event->get_id_in_module(), 999);
-		$this->assertEqual($event->get_identifier(), 'identifier');
-		$this->assertEqual($event->get_type(), 'type');
+		$this->assertEquals($event->get_id(), 777);
+		$this->assertEquals($event->get_entitled(), 'entitled');
+		$this->assertEquals($event->get_fixing_url(), 'fixing_url');
+		$this->assertEquals($event->get_status(), Event::EVENT_STATUS_BEING_PROCESSED);
+		$this->assertEquals($event->get_creation_date(), $date);
+		$this->assertEquals($event->get_id_in_module(), 999);
+		$this->assertEquals($event->get_identifier(), 'identifier');
+		$this->assertEquals($event->get_type(), 'type');
 	}
 }

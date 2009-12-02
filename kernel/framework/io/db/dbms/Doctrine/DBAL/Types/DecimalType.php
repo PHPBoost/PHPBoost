@@ -22,3 +22,5 @@ class DecimalType extends Type
         return (double) $value;
     }
 }
+
+?>

@@ -22,20 +22,20 @@ class UTerrors extends PHPBoostUnitTestCase {
 	function test_get_errno_class()
 	{
 		$tmp = Errors::get_errno_class(E_USER_REDIRECT);
-		$this->assertEqual($tmp, "error_fatal");
+		$this->assertEquals($tmp, "error_fatal");
 		$tmp = Errors::get_errno_class(E_USER_NOTICE);
-		$this->assertEqual($tmp, "error_notice");
+		$this->assertEquals($tmp, "error_notice");
 		$tmp = Errors::get_errno_class(E_NOTICE);
-		$this->assertEqual($tmp, "error_notice");
+		$this->assertEquals($tmp, "error_notice");
 		$tmp = Errors::get_errno_class(E_USER_WARNING);
-		$this->assertEqual($tmp, "error_warning");
+		$this->assertEquals($tmp, "error_warning");
 		$tmp = Errors::get_errno_class(E_WARNING);
-		$this->assertEqual($tmp, "error_warning");
+		$this->assertEquals($tmp, "error_warning");
 		$tmp = Errors::get_errno_class(E_USER_ERROR);
-		$this->assertEqual($tmp, "error_fatal");
+		$this->assertEquals($tmp, "error_fatal");
 		$tmp = Errors::get_errno_class(E_ERROR);
-		$this->assertEqual($tmp, "error_fatal");
+		$this->assertEquals($tmp, "error_fatal");
 		$tmp = Errors::get_errno_class(0);
-		$this->assertEqual($tmp, "error_unknow");
+		$this->assertEquals($tmp, "error_unknow");
 	}
 }

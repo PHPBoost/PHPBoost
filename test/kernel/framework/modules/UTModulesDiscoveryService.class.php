@@ -1,20 +1,7 @@
 <?php
-require_once 'header.php';
 
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTmodules_discovery_service extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$modulediscovery = new ModulesDiscoveryService();
-		$this->check_methods($modulediscovery);
-	}
-
+class UTModulesDiscoveryService extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		Global $MODULES;
