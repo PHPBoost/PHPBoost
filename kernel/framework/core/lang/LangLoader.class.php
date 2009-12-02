@@ -37,22 +37,41 @@ class LangLoader
 	private static $locale = self::DEFAULT_LOCALE;
 	private static $langs = array();
 
-	public static function clear_lang_cache()
-	{
-		self::$langs = array();
-	}
-
+	/**
+	 * @desc sets the language locale
+	 * @param string $locale the locale
+	 */
 	public static function set_locale($locale)
 	{
 		self::$locale = $locale;
 	}
 
+	/**
+	 * @desc Retrieves the language file <code>$filename</code> in
+	 * <code>/$module/lang/$locale/$filename.php</code>
+	 * If module is empty, the kernel lang folder will be used
+	 * @param string $filename the language filename
+	 * @param string $module the module to look for languages files in
+	 * @return string[string] the lang array which keys are languages identifiers and values the
+	 * translated messages
+	 */
 	public static function get($filename, $module = '')
 	{
 		$module_name = trim($module, '/');
 		return self::get_raw($module_name, $filename);
 	}
 
+    /**
+     * @desc Retrieves the language file associated to the <code>$class_file</code>
+     * If module is empty, the kernel lang folder will be used
+     * <p>Usage:
+     * LangLoader::get_class(__FILE__, $module); // if called inside the class
+     * </p>
+     * @param string $class_file the class file that you want to load associated languages messages
+     * @param string $module the module to look for languages files in
+     * @return string[string] the lang array which keys are languages identifiers and values the
+     * translated messages
+     */
 	public static function get_class($class_file, $module = '')
 	{
 		$package = Path::get_package($class_file);
@@ -77,6 +96,13 @@ class LangLoader
 		self::$langs[$langfile] = $lang;
 	}
 
+	/**
+	 * @desc returns the real language file path, trying first to load the localized language file
+	 * and if it's not possible, use the default locale one.
+	 * @param string $folder the folder to look in
+	 * @param string $filename the language filename
+	 * @return string the real language file path
+	 */
 	private static function get_real_lang_path($folder, $filename)
 	{
 		$real_folder = PATH_TO_ROOT;
@@ -102,5 +128,13 @@ class LangLoader
 
 		throw new LangNotFoundException($folder, $filename);
 	}
+
+    /**
+     * @desc clear the lang cache (for unit test only)
+     */
+    public static function clear_lang_cache()
+    {
+        self::$langs = array();
+    }
 }
 ?>

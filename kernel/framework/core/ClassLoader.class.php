@@ -40,6 +40,9 @@ class ClassLoader
 		'.svn' //Dev
 	);
 
+    /**
+     * @desc initializes the autoload class list
+     */
 	public static function init_autoload()
 	{
 		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
@@ -49,6 +52,10 @@ class ClassLoader
 		spl_autoload_register(array(get_class(), 'autoload'));
 	}
 
+	/**
+	 * @desc tries to autoload the given <code>$classname</code> else, a fatal error is raised
+	 * @param string $classname the name of the class to load
+	 */
 	public static function autoload($classname)
 	{
 		if (!(isset(self::$autoload[$classname]) && self::inc(PATH_TO_ROOT . self::$autoload[$classname])))
@@ -61,6 +68,9 @@ class ClassLoader
 		}
 	}
 
+	/**
+	 * @desc Generates the autoload cache file by exploring phpboost folders
+	 */
 	public static function generate_classlist()
 	{
 		if (!self::$already_reloaded)
