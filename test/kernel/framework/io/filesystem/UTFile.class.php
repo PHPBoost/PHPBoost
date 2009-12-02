@@ -1,22 +1,7 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTfile extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$path = PATH_TO_ROOT . '/kernel';		
-		$file = new File($path);
-		$this->check_methods($file);
-	}
-	
+class UTFile extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		// DO NOTHING
@@ -27,32 +12,32 @@ class UTfile extends PHPBoostUnitTestCase {
 		$path = PATH_TO_ROOT . '/kernel';
 		
 		$file = new File($path);
-		$this->assertEqual($file->path, $path);
-		$this->assertEqual($file->mode, READ_WRITE);
+		$this->assertEquals($file->path, $path);
+		$this->assertEquals($file->mode, READ_WRITE);
 		$this->assertFalse($file->is_open());
 		unset($file);
 		
 		$file = new File($path, READ);
-		$this->assertEqual($file->path, $path);
-		$this->assertEqual($file->mode, READ);
+		$this->assertEquals($file->path, $path);
+		$this->assertEquals($file->mode, READ);
 		unset($file);
 		
 		$file = new File($path, WRITE);
-		$this->assertEqual($file->path, $path);
-		$this->assertEqual($file->mode, WRITE);
+		$this->assertEquals($file->path, $path);
+		$this->assertEquals($file->mode, WRITE);
 		unset($file);
 		
 		$path = PATH_TO_ROOT . '/kernel/begin.php';
 		
 		$file = new File($path, READ_WRITE, OPEN_NOW);
-		$this->assertEqual($file->path, $path);
+		$this->assertEquals($file->path, $path);
 		$this->assertTrue($file->is_open());
 		unset($file);
 		
 		$path = 'toto.tmp';
 		
 		$file = new File($path, READ_WRITE, OPEN_NOW);
-		$this->assertEqual($file->path, $path);
+		$this->assertEquals($file->path, $path);
 		$this->assertTrue(file_exists($path));
 		$file->delete();
 	}
@@ -132,7 +117,7 @@ class UTfile extends PHPBoostUnitTestCase {
 		$path = 'toto.tmp';
 		
 		$file = new File($path, READ_WRITE, OPEN_NOW);
-		$this->assertEqual($file->path, $path);
+		$this->assertEquals($file->path, $path);
 		$this->assertTrue(file_exists($path));
 		
 		$file->delete();
@@ -144,7 +129,7 @@ class UTfile extends PHPBoostUnitTestCase {
 		$path = 'toto.tmp';
 		
 		$file = new File($path, READ_WRITE, OPEN_NOW);
-		$this->assertEqual($file->path, $path);
+		$this->assertEquals($file->path, $path);
 		$this->assertTrue(file_exists($path));
 		
 		$file->lock();

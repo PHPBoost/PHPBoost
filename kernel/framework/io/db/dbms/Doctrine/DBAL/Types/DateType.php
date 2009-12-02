@@ -29,3 +29,5 @@ class DateType extends Type
             ? \DateTime::createFromFormat($platform->getDateFormatString(), $value) : null;
     }
 }
+
+?>

@@ -37,7 +37,7 @@ class UTpagination extends PHPBoostUnitTestCase {
 		
 		$page = new Pagination();
 		$ret = $page->display('toto', 1, 'p', 11, 5);
-		$this->assertEqual($ret, '');		
+		$this->assertEquals($ret, '');		
 		
 		$_GET['p'] = 10;
 		$ret = $page->display('toto', 100, 'p', 5, 3);
@@ -66,19 +66,19 @@ class UTpagination extends PHPBoostUnitTestCase {
 		$page = new Pagination();
 
 		$ret = $page->get_first_msg(2, 'p');
-		$this->assertEqual($ret, 0);
+		$this->assertEquals($ret, 0);
 		
 		$_GET['p'] = 10;
 		$ret = $page->get_first_msg(2, 'p');
-		$this->assertEqual($ret, 18);
+		$this->assertEquals($ret, 18);
 
 		$_GET['p'] = 10;
 		$ret = $page->get_first_msg(0, 'p');
-		$this->assertEqual($ret, 0);		
+		$this->assertEquals($ret, 0);		
 		
 		$_GET['p'] = 0;
 		$ret = $page->get_first_msg(10, 'p');
-		$this->assertEqual($ret, 0);
+		$this->assertEquals($ret, 0);
 	}
 
 	function test__get_var_page()
@@ -87,15 +87,15 @@ class UTpagination extends PHPBoostUnitTestCase {
 		
 		$page = new Pagination();
 		$ret = $page->_get_var_page('p');
-		$this->assertEqual($ret, 1);
+		$this->assertEquals($ret, 1);
 
 		$_GET['p'] = 11;
 		$ret = $page->_get_var_page('p');
-		$this->assertEqual($ret, 11);
+		$this->assertEquals($ret, 11);
 		
 		$_GET['p'] = 'toto';
 		$ret = $page->_get_var_page('p');
-		$this->assertEqual($ret, 1);
+		$this->assertEquals($ret, 1);
 	}
 	
 	function test_get_current_page()
@@ -103,26 +103,26 @@ class UTpagination extends PHPBoostUnitTestCase {
 		$page = new Pagination();
 		$page->var_page = 'p';
 		$ret = $page->get_current_page();
-		$this->assertEqual($ret, 1);
+		$this->assertEquals($ret, 1);
 		
 		$_GET['p'] = 11;
 		$page->var_page = 'p';
 		$ret = $page->get_current_page();
-		$this->assertEqual($ret, 11);
+		$this->assertEquals($ret, 11);
 	}
 	
 	function test__check_page()
 	{
 		$page = new Pagination();
 		$ret = $page->_check_page(1);
-		$this->assertEqual($ret, null);
+		$this->assertEquals($ret, null);
 		
 		$page->page = -1;
 		$ret = $page->_check_page(1);
-		$this->assertEqual($ret, -1);
+		$this->assertEquals($ret, -1);
 		
 		$page->page = 2;
 		$ret = $page->_check_page(1);
-		$this->assertEqual($ret, 2);
+		$this->assertEquals($ret, 2);
 	}
 }

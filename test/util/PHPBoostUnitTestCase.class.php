@@ -1,7 +1,7 @@
 <?php
 
-function TODO($file, $method) {
-	echo "\n" . 'TODO ' . $file . '->' . $method . '()' . "\n";
+function TODO($method) {
+	echo "\n" . 'TODO ' . $method . '()' . "\n";
 }
 
 

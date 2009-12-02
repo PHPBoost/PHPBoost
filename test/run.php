@@ -7,15 +7,17 @@ Environment::load_imports();
 Environment::load_static_constants();
 
 AppContext::init_session();
+AppContext::get_session()->load();
+AppContext::get_session()->act();
 AppContext::init_user();
 req('/test/PHPUnit/Framework.php');
 
 if (!empty($_REQUEST['params'])) {
-    // Fake command line environment
-    $argv = $_REQUEST['params'];
-    $_SERVER['argv'] = explode(' ', '--configuration ./phpunit.cfg.xml ' . $argv);
+	// Fake command line environment
+	$argv = $_REQUEST['params'];
+	$_SERVER['argv'] = explode(' ', '--configuration ./phpunit.cfg.xml ' . $argv);
 } else {
-    $_SERVER['argv'] = array();
+	$_SERVER['argv'] = array();
 }
 
 if (empty($_REQUEST['is_html'])) {
@@ -23,8 +25,8 @@ if (empty($_REQUEST['is_html'])) {
 }
 req('/test/phpunit.php');
 if (!empty($_REQUEST['is_html'])) {
-    echo '</pre>';
+	echo '</pre>';
 }
 AppContext::close_db_connection();
-    
+
 ?>

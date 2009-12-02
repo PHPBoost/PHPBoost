@@ -1,31 +1,7 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-
-
-unset($Errorh);
-
-class Error_mock extends Errors
+class UTMail extends PHPBoostUnitTestCase
 {
-	function handler($str, $errlevel)
-	{
-		echo '<br />Error: '.$str.'-'.$errlevel.'<br />';
-	}
-}
-
-$Errorh = new Error_mock();
-
-class UTmail extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$msg = new Mail();
-		$this->check_methods($msg);
-	}
-	
 	function test_constructor()
 	{
 		// DO NOTHING
@@ -47,14 +23,14 @@ class UTmail extends PHPBoostUnitTestCase {
 
 		$mail = 'test@test.fr';
 		$msg->set_sender($mail);
-		$this->assertEqual($mail, $msg->get_sender_mail());
-		$this->assertEqual($msg->sender_name, $msg->get_sender_name());	
+		$this->assertEquals($mail, $msg->get_sender_mail());
+		$this->assertEquals($msg->sender_name, $msg->get_sender_name());	
 		
 		$mail = 'test@test.fr';
 		$name = 'sender';
 		$msg->set_sender($mail, $name);
-		$this->assertEqual($mail, $msg->get_sender_mail());
-		$this->assertEqual($msg->sender_name, $msg->get_sender_name());	
+		$this->assertEquals($mail, $msg->get_sender_mail());
+		$this->assertEquals($msg->sender_name, $msg->get_sender_name());	
 	}
 
 	function test_accessor_recipients()
@@ -78,7 +54,7 @@ class UTmail extends PHPBoostUnitTestCase {
 		
 		$object = 'object';
 		$msg->set_object($object);
-		$this->assertEqual($object, $msg->get_object());
+		$this->assertEquals($object, $msg->get_object());
 	}
 
 	function test_accessor_content()
@@ -87,7 +63,7 @@ class UTmail extends PHPBoostUnitTestCase {
 		
 		$content = 'content';
 		$msg->set_content($content);
-		$this->assertEqual($content, $msg->get_content());
+		$this->assertEquals($content, $msg->get_content());
 	}
 	
 	function test_accessor_headers()
@@ -96,7 +72,7 @@ class UTmail extends PHPBoostUnitTestCase {
 		
 		$headers = 'headers';
 		$msg->set_headers($headers);
-		$this->assertEqual($headers, $msg->get_headers());
+		$this->assertEquals($headers, $msg->get_headers());
 	}
 	
 	function test_send_from_properties()

@@ -27,3 +27,5 @@ class BooleanType extends Type
         return 'boolean';
     }
 }
+
+?>

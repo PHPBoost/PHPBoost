@@ -24,7 +24,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		
-		$this->assertEqual($fse->path, $path);
+		$this->assertEquals($fse->path, $path);
 		$this->assertFalse($fse->is_open);
 	}
 	
@@ -63,7 +63,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$name = $fse->get_name();
-		$this->assertEqual($name, basename($path));
+		$this->assertEquals($name, basename($path));
 	}
 
 	function test_change_chmod()

@@ -1,31 +1,18 @@
 <?php
-require_once 'header.php';
 
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTmodule_interface extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$module = new ModuleInterface('news', 1);
-		$this->check_methods($module);
-	}
-
+class UTModuleInterface extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		$ret = new ModuleInterface('news', 1);
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->get_id(), 'news');
+		$this->assertEquals($ret->get_id(), 'news');
 		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
 		$this->assertTrue($ret->get_errors() != 0);
 		
 		$ret = new ModuleInterface('news');
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->get_id(), 'news');
+		$this->assertEquals($ret->get_id(), 'news');
 		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities) > 0);
 	}
 
@@ -33,14 +20,14 @@ class UTmodule_interface extends PHPBoostUnitTestCase {
 	{
 		$ret = new ModuleInterface('news', 1);
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->get_id(), 'news');
+		$this->assertEquals($ret->get_id(), 'news');
 	}
 	
 	function test_get_name()
 	{
 		$ret = new ModuleInterface('news', 1);
 		$this->assertTrue(is_object($ret));
-		$this->assertEqual($ret->get_name(), 'News');
+		$this->assertEquals($ret->get_name(), 'News');
 	}
 	
 	function test_get_infos()
@@ -49,8 +36,8 @@ class UTmodule_interface extends PHPBoostUnitTestCase {
 		$this->assertTrue(is_object($ret));
 		
 		$tmp = $ret->get_infos();
-		$this->assertEqual($tmp['name'], $ret->get_name());
-		$this->assertEqual($tmp['functionnalities'], $ret->functionnalities);
+		$this->assertEquals($tmp['name'], $ret->get_name());
+		$this->assertEquals($tmp['functionnalities'], $ret->functionnalities);
 		$this->assertTrue(is_array($tmp['infos']));
 		print_r($tmp['infos']);
 	}

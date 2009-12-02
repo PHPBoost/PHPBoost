@@ -18,3 +18,5 @@ class TextType extends Type
         return 'text';
     }
 }
+
+?>

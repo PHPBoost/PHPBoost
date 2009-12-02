@@ -173,3 +173,5 @@ abstract class Type
         self::$_typesMap[$name] = $className;
     }
 }
+
+?>

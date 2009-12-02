@@ -25,3 +25,5 @@ class StringType extends Type
         return 'string';
     }
 }
+
+?>

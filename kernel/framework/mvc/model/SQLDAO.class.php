@@ -214,7 +214,7 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
-	public function find_all($limit = DAOFIND_ALL, $offset = 0, $order_by = array())
+	public function find_all($limit = DAO::FIND_ALL, $offset = 0, $order_by = array())
 	{
 		$query = '';
 		if (!empty($order_by))
@@ -227,7 +227,7 @@ abstract class SQLDAO implements DAO
 			$query .= 'ORDER BY' . ltrim($order_clause, ',');
 		}
 
-		if ($limit != DAOFIND_ALL)
+		if ($limit != DAO::FIND_ALL)
 		{
 			$query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
 		}

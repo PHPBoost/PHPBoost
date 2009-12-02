@@ -23,3 +23,5 @@ class BigIntType extends Type
     	return self::CODE_INT;
     }
 }
+
+?>
