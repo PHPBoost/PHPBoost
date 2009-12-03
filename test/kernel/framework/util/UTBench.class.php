@@ -9,7 +9,7 @@ class UTBench extends PHPBoostUnitTestCase
 	public function test___construct()
 	{
 		$bench = new Bench();
-		$this->assertNotNull($bench, 'bench is null');
+		self::assertNotNull($bench, 'bench is null');
 	}
 
 	public function test_to_string()
@@ -24,7 +24,7 @@ class UTBench extends PHPBoostUnitTestCase
 		$this->random_usleep();
 		$time = $bench->to_string();
 
-		$this->assertRegExp(sprintf($this->result_format_regex, 3), $time);
+		self::assertRegExp(sprintf($this->result_format_regex, 3), $time);
 	}
 
 	private function _test_to_string5digits()
@@ -35,7 +35,7 @@ class UTBench extends PHPBoostUnitTestCase
 		$this->random_usleep();
 		$time = $bench->to_string($digits);
 
-        $this->assertRegExp(sprintf($this->result_format_regex, $digits), $time);
+        self::assertRegExp(sprintf($this->result_format_regex, $digits), $time);
 	}
 
 	private function random_usleep()

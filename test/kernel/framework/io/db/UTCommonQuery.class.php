@@ -52,7 +52,7 @@ class UTCommonQuery extends PHPBoostUnitTestCase
 		{
 			$this->common_query->select_single_row($this->test_table, array('*'),
                 'value=:value', array('value' => 'cou2cou'));
-			$this->assertTrue(false, 'Row has been found but shoudn\'t');
+			self::assertTrue(false, 'Row has been found but shoudn\'t');
 		}
 		catch (RowNotFoundException $ex)
 		{
@@ -64,7 +64,7 @@ class UTCommonQuery extends PHPBoostUnitTestCase
 		try
 		{
 			$this->common_query->select_single_row($this->test_table, array('*'));
-			$this->assertTrue(false, 'Only on row has been found but multiples shoud');
+			self::assertTrue(false, 'Only on row has been found but multiples shoud');
 		}
 		catch (NotASingleRowFoundException $ex)
 		{

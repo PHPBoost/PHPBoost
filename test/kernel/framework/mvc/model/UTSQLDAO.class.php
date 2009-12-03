@@ -1,10 +1,5 @@
 <?php
 
-
-
-
-
-
 class MyUTBusinessTestObject extends BusinessObject
 {
 	public $id;
@@ -108,17 +103,17 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 	public function test_delete()
 	{
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
-		$this->assertObjectExists($object);
+		self::assertObjectExists($object);
 
 		$this->sqldao->delete($object);
-		$this->assertObjectDoesNotExist($object);
+		self::assertObjectDoesNotExist($object);
 	}
 
 	public function test_find_by_id_without_exception()
 	{
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
 
-		$this->assertObjectExists($object);
+		self::assertObjectExists($object);
 	}
 
 	public function test_find_by_id_object_not_found_exception()
@@ -127,7 +122,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 		try
 		{
 			$object = $this->sqldao->find_by_id($pk_value);
-			$this->assertFalse(true, 'object with id ' . $pk_value . ' does not exist');
+			self::assertFalse(true, 'object with id ' . $pk_value . ' does not exist');
 		}
 		catch (ObjectNotFoundException $ex)
 		{
@@ -144,7 +139,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 	{
 		$query_result = $this->sqldao->find_all(10, 100);
 		$query_result->rewind();
-		$this->assertFalse($query_result->valid(), 'query has results');
+		self::assertFalse($query_result->valid(), 'query has results');
 	}
 
 	public function test_find_all_with_not_all_results()
@@ -163,7 +158,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 		$this->sqldao->save($object);
 
-		$this->assertObjectExists($object);
+		self::assertObjectExists($object);
 	}
 
 	public function test_update()
@@ -173,7 +168,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 		$this->sqldao->save($object);
 
-		$this->assertObjectExists($object);
+		self::assertObjectExists($object);
 	}
 
 	private function assertObjectExists($object)
@@ -184,16 +179,16 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 			try
 			{
 				$test_object = $this->sqldao->find_by_id($pk_value);
-				$this->assertEquals($test_object, $object);
+				self::assertEquals($test_object, $object);
 			}
 			catch (ObjectNotFoundException $ex)
 			{
-				$this->assertFalse(true, 'object does not exists');
+				self::assertFalse(true, 'object does not exists');
 			}
 		}
 		else
 		{
-			$this->assertFalse(true, 'object has no id ' . $pk_value . ' and does not exists');
+			self::assertFalse(true, 'object has no id ' . $pk_value . ' and does not exists');
 		}
 	}
 
@@ -205,7 +200,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 			try
 			{
 				$this->sqldao->find_by_id($pk_value);
-				$this->assertFalse(true, 'object with id ' . $pk_value . ' exists');
+				self::assertFalse(true, 'object with id ' . $pk_value . ' exists');
 			}
 			catch (ObjectNotFoundException $ex)
 			{

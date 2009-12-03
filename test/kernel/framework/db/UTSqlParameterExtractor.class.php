@@ -105,8 +105,8 @@ class UTSqlParameterExtractor extends PHPBoostUnitTestCase
 		}
 
 		$extractor = new SqlParameterExtractor($raw_query);
-		$this->assertEquals($query, $extractor->get_query());
-		$this->assertEquals($params, $extractor->get_parameters());
+		self::assertEquals($query, $extractor->get_query());
+		self::assertEquals($params, $extractor->get_parameters());
 	}
 }
 

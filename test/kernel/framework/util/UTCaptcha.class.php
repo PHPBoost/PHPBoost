@@ -1,21 +1,7 @@
 <?php
 
-require_once 'header.php';
-
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
-
-
-
-unset($Errorh);
-
-class UTcaptcha extends PHPBoostUnitTestCase {
-
-	function test()
-	{
-		$captcha = new Captcha();
-		$this->check_methods($captcha);
-	}
-
+class UTCaptcha extends PHPBoostUnitTestCase
+{
 	function test_constructor()
 	{
 		TODO(__FILE__, __METHOD__);
