@@ -11,195 +11,195 @@ class UTUserAccountsConfig extends PHPBoostUnitTestCase
 	public function test_get_member_accounts_validation_method()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(1, $config->get_member_accounts_validation_method());
+		self::assertEquals(1, $config->get_member_accounts_validation_method());
 	}
 
 	public function test_set_member_accounts_validation_method()
 	{
 		$config = self::prepare_config();
 		$config->set_member_accounts_validation_method(0);
-		$this->assertEquals(0,  $config->get_member_accounts_validation_method());
+		self::assertEquals(0,  $config->get_member_accounts_validation_method());
 		$config->set_member_accounts_validation_method(2);
-		$this->assertEquals(2,  $config->get_member_accounts_validation_method());
+		self::assertEquals(2,  $config->get_member_accounts_validation_method());
 		$config->set_member_accounts_validation_method(3);
-		$this->assertEquals(0,  $config->get_member_accounts_validation_method());
+		self::assertEquals(0,  $config->get_member_accounts_validation_method());
 	}
 
 	public function test_get_welcome_message()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals('toto', $config->get_welcome_message());
+		self::assertEquals('toto', $config->get_welcome_message());
 	}
 
 	public function test_set_welcome_message()
 	{
 		$config = self::prepare_config();
 		$config->set_welcome_message('tutu');
-		$this->assertEquals('tutu', $config->get_welcome_message());
+		self::assertEquals('tutu', $config->get_welcome_message());
 	}
 
 	public function test_is_registration_enabled()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(true, $config->is_registration_enabled());
+		self::assertEquals(true, $config->is_registration_enabled());
 	}
 
 	public function test_enable_registration()
 	{
 		$config = self::prepare_config();
 		$config->enable_registration();
-		$this->assertEquals(true, $config->is_registration_enabled());
+		self::assertEquals(true, $config->is_registration_enabled());
 	}
 
 	public function test_disable_registration()
 	{
 		$config = self::prepare_config();
 		$config->disable_registration();
-		$this->assertEquals(false, $config->is_registration_enabled());
+		self::assertEquals(false, $config->is_registration_enabled());
 	}
 
 	public function test_is_registration_captcha_enabled()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(@extension_loaded('gd'), $config->is_registration_captcha_enabled());
+		self::assertEquals(@extension_loaded('gd'), $config->is_registration_captcha_enabled());
 	}
 
 	public function test_enable_registration_captcha()
 	{
 		$config = self::prepare_config();
 		$config->enable_registration_captcha();
-		$this->assertEquals(true, $config->is_registration_captcha_enabled());
+		self::assertEquals(true, $config->is_registration_captcha_enabled());
 	}
 
 	public function test_disable_registration_captcha()
 	{
 		$config = self::prepare_config();
 		$config->disable_registration_captcha();
-		$this->assertEquals(false, $config->is_registration_captcha_enabled());
+		self::assertEquals(false, $config->is_registration_captcha_enabled());
 	}
 
 	public function test_get_registration_captcha_difficulty()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(1, $config->get_registration_captcha_difficulty());
+		self::assertEquals(1, $config->get_registration_captcha_difficulty());
 	}
 
 	public function test_set_registration_captcha_difficulty()
 	{
 		$config = self::prepare_config();
 		$config->set_registration_captcha_difficulty(3);
-		$this->assertEquals(3, $config->get_registration_captcha_difficulty());
+		self::assertEquals(3, $config->get_registration_captcha_difficulty());
 		$config->set_registration_captcha_difficulty(5);
-		$this->assertEquals(2, $config->get_registration_captcha_difficulty());
+		self::assertEquals(2, $config->get_registration_captcha_difficulty());
 		$config->set_registration_captcha_difficulty(-1);
-		$this->assertEquals(2, $config->get_registration_captcha_difficulty());
+		self::assertEquals(2, $config->get_registration_captcha_difficulty());
 	}
 
 	public function test_get_unactivated_accounts_timeout()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(20, $config->get_unactivated_accounts_timeout());
+		self::assertEquals(20, $config->get_unactivated_accounts_timeout());
 	}
 
 	public function test_set_unactivated_accounts_timeout()
 	{
 		$config = self::prepare_config();
 		$config->set_unactivated_accounts_timeout(50);
-		$this->assertEquals(50, $config->get_unactivated_accounts_timeout());
+		self::assertEquals(50, $config->get_unactivated_accounts_timeout());
 	}
 
 	public function test_is_users_theme_forced()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(false, $config->is_users_theme_forced());
+		self::assertEquals(false, $config->is_users_theme_forced());
 	}
 
 	public function test_force_users_theme()
 	{
 		$config = self::prepare_config();
 		$config->force_users_theme();
-		$this->assertEquals(true, $config->is_users_theme_forced());
+		self::assertEquals(true, $config->is_users_theme_forced());
 	}
 
 	public function test_dont_force_users_theme()
 	{
 		$config = self::prepare_config();
 		$config->dont_force_users_theme();
-		$this->assertEquals(false, $config->is_users_theme_forced());
+		self::assertEquals(false, $config->is_users_theme_forced());
 	}
 
 	public function test_is_avatar_upload_enabled()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(true, $config->is_avatar_upload_enabled());
+		self::assertEquals(true, $config->is_avatar_upload_enabled());
 	}
 
 	public function test_enable_avatar_upload()
 	{
 		$config = self::prepare_config();
 		$config->enable_avatar_upload();
-		$this->assertEquals(true, $config->is_avatar_upload_enabled());
+		self::assertEquals(true, $config->is_avatar_upload_enabled());
 	}
 
 	public function test_disable_avatar_upload()
 	{
 		$config = self::prepare_config();
 		$config->disable_avatar_upload();
-		$this->assertEquals(false, $config->is_avatar_upload_enabled());
+		self::assertEquals(false, $config->is_avatar_upload_enabled());
 	}
 
 	public function test_get_default_avatar_name()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals('no_avatar.png', $config->get_default_avatar_name());
+		self::assertEquals('no_avatar.png', $config->get_default_avatar_name());
 	}
 
 	public function test_set_default_avatar_name()
 	{
 		$config = self::prepare_config();
 		$config->set_default_avatar_name('avatar.png');
-		$this->assertEquals('avatar.png', $config->get_default_avatar_name());
+		self::assertEquals('avatar.png', $config->get_default_avatar_name());
 		$config->set_default_avatar_name('');
-		$this->assertEquals('no_avatar.png', $config->get_default_avatar_name());
+		self::assertEquals('no_avatar.png', $config->get_default_avatar_name());
 	}
 
 	public function test_get_max_avatar_width()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(120, $config->get_max_avatar_width());
+		self::assertEquals(120, $config->get_max_avatar_width());
 	}
 
 	public function test_set_max_avatar_width()
 	{
 		$config = self::prepare_config();
 		$config->set_max_avatar_width(150);
-		$this->assertEquals(150, $config->get_max_avatar_width());
+		self::assertEquals(150, $config->get_max_avatar_width());
 	}
 
 	public function test_get_max_avatar_height()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(120, $config->get_max_avatar_height());
+		self::assertEquals(120, $config->get_max_avatar_height());
 	}
 
 	public function test_set_max_avatar_height()
 	{
 		$config = self::prepare_config();
 		$config->set_max_avatar_height(150);
-		$this->assertEquals(150, $config->get_max_avatar_height());
+		self::assertEquals(150, $config->get_max_avatar_height());
 	}
 
 	public function test_get_max_avatar_weight()
 	{
 		$config = self::prepare_config();
-		$this->assertEquals(20, $config->get_max_avatar_weight());
+		self::assertEquals(20, $config->get_max_avatar_weight());
 	}
 
 	public function test_set_max_avatar_weight()
 	{
 		$config = self::prepare_config();
 		$config->set_max_avatar_weight(50);
-		$this->assertEquals(50, $config->get_max_avatar_weight());
+		self::assertEquals(50, $config->get_max_avatar_weight());
 	}
 
 	/**

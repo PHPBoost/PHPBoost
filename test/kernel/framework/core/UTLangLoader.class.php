@@ -15,18 +15,18 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 		try
 		{
 			LangLoader::get('unexisting_lang', '/test/data/');
-			$this->assertFalse(true, 'LangNotFoundException not raised');
+			self::assertFalse(true, 'LangNotFoundException not raised');
 		}
 		catch (Exception $exception)
 		{
-			$this->assertType('LangNotFoundException', $exception);
+			self::assertType('LangNotFoundException', $exception);
 		}
 	}
 
 	public function test_get_kernel()
 	{
 		$lang = LangLoader::get('ErrorViewBuilder');
-		$this->assertTrue(!empty($lang));
+		self::assertTrue(!empty($lang));
 	}
 
 	public function test_get()
@@ -37,7 +37,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'common_lang_var2' => 'hello2',
 			'common_lang_var3' => 'hello3');
 
-		$this->assertEquals($expected, $lang);
+		self::assertEquals($expected, $lang);
 	}
 
 	public function test_get_imbricated()
@@ -51,7 +51,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'lang_var2' => 'hello2',
 			'lang_var3' => 'hello3');
 
-		$this->assertEquals($expected, $lang);
+		self::assertEquals($expected, $lang);
 	}
 
 	public function test_get_imbricated_with_locale()
@@ -65,7 +65,7 @@ class UTLangLoader extends PHPBoostUnitTestCase {
 			'lang_var1' => 'coucou1',
 			'lang_var2' => 'coucou2',
 			'lang_var3' => 'coucou3');
-		$this->assertEquals($expected, $lang);
+		self::assertEquals($expected, $lang);
 	}
 
 	public function test_get_class()

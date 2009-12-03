@@ -16,11 +16,11 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 	function test_numeric()
 	{
 		$ret = numeric(10);
-		$this->assertTrue(is_int($ret) AND $ret == 10);
+		self::assertTrue(is_int($ret) AND $ret == 10);
 		$ret = numeric(10.55, 'float');
-		$this->assertTrue(is_float($ret) AND $ret == 10.55);
+		self::assertTrue(is_float($ret) AND $ret == 10.55);
 		$ret = numeric('bidon');
-		$this->assertTrue(is_int($ret) AND $ret == 0);
+		self::assertTrue(is_int($ret) AND $ret == 0);
 	}
 	
 	function test_get_utheme()
@@ -47,7 +47,7 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 	{
         TODO(__METHOD__);
 //		$ret = display_editor();
-//		$this->assertTrue(is_string($ret));
+//		self::assertTrue(is_string($ret));
 	}
 	
 	function test_display_comments()
@@ -112,9 +112,9 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 	function test_check_mail()
 	{
 		$ret = check_mail('toto@test.fr');
-		$this->assertTrue($ret);
+		self::assertTrue($ret);
 		$ret = check_mail('toto_bidon');
-		$this->assertFalse($ret);
+		self::assertFalse($ret);
 	}
 	
 	function test_strparse()
@@ -209,15 +209,15 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 	function test_get_uid()
 	{
 		$ret = get_uid();
-		$this->assertEquals($ret, 1764);
+		self::assertEquals($ret, 1764);
 		$ret = get_uid();
-		$this->assertEquals($ret, 1765);		
+		self::assertEquals($ret, 1765);		
 	}
 	
 	function test_import()
 	{
 		
-		$this->assertTrue(class_exists('Date'));
+		self::assertTrue(class_exists('Date'));
 	}
 	
 	function test_req()
@@ -235,10 +235,10 @@ class UTFunctionsInc extends PHPBoostUnitTestCase {
 		Global $User;
 		
 		$ret = of_class($User, 'User');
-		$this->assertTrue($ret);
+		self::assertTrue($ret);
 		
 		$ret = of_class($User, 'Sql');
-		$this->assertFalse($ret);	
+		self::assertFalse($ret);	
 	}
 
 }

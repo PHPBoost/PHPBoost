@@ -217,7 +217,7 @@ class MySQLDBMSUtils implements DBMSUtils
 			str_replace(chr(13), '\r',
 			str_replace(chr(10), '\n',
 			str_replace('\\', '\\\\',
-			str_replace("'", "''", $value)))) . '\'';
+			str_replace("'", "''", $field)))) . '\'';
 		}
 	}
 

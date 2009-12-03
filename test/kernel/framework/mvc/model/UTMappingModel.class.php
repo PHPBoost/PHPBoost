@@ -64,7 +64,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		try
 		{
 			$model = new MappingModel($classname, $tablename, $primary_key, $fields);
-			$this->assertFalse(true, 'MappingModelException have not been thrown');
+			self::assertFalse(true, 'MappingModelException have not been thrown');
 		} catch (MappingModelException $mme)
 		{
 			// Successfull
@@ -75,11 +75,11 @@ class UTMappingModel extends PHPBoostUnitTestCase
 	{
 		$object = $this->model->new_instance();
 
-		$this->assertNull($object->get_id(), 'id ' . $object->get_id() . ' is not null');
-		$this->assertNull($object->get_title(), 'title ' . $object->get_title() . 'is not null');
-		$this->assertNull($object->get_description(), 'description ' . $object->get_description() .
+		self::assertNull($object->get_id(), 'id ' . $object->get_id() . ' is not null');
+		self::assertNull($object->get_title(), 'title ' . $object->get_title() . 'is not null');
+		self::assertNull($object->get_description(), 'description ' . $object->get_description() .
             'is not null');
-		$this->assertNull($object->get_user_id(), 'user_id ' . $object->get_user_id() .
+		self::assertNull($object->get_user_id(), 'user_id ' . $object->get_user_id() .
             'is not null');
 	}
 
@@ -90,12 +90,12 @@ class UTMappingModel extends PHPBoostUnitTestCase
 
 		$object = $this->model->new_instance(array('title' => $title, 'description' => $description));
 
-		$this->assertNull($object->get_id(), 'id ' . $object->get_id() . ' is not null');
-		$this->assertEquals($object->get_title(), $title,
+		self::assertNull($object->get_id(), 'id ' . $object->get_id() . ' is not null');
+		self::assertEquals($object->get_title(), $title,
             'title ' . $object->get_title() . '!=' . $title);
-		$this->assertEquals($object->get_description(), $description,
+		self::assertEquals($object->get_description(), $description,
             'description ' . $object->get_description() . '!=' . $description);
-		$this->assertNull($object->get_user_id(), 'user_id ' . $object->get_user_id() .
+		self::assertNull($object->get_user_id(), 'user_id ' . $object->get_user_id() .
             'is not null');
 	}
 	
@@ -105,11 +105,11 @@ class UTMappingModel extends PHPBoostUnitTestCase
 
 		$properties = $this->model->get_raw_value($object);
 
-		$this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
-		$this->assertNull($properties['title'], 'title ' . $properties['title'] . 'is not null');
-		$this->assertNull($properties['description'], 'description ' . $properties['description'] .
+		self::assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
+		self::assertNull($properties['title'], 'title ' . $properties['title'] . 'is not null');
+		self::assertNull($properties['description'], 'description ' . $properties['description'] .
             'is not null');
-		$this->assertNull($properties['user_id'], 'user_id ' . $properties['user_id'] .
+		self::assertNull($properties['user_id'], 'user_id ' . $properties['user_id'] .
             'is not null');
 	}
 
@@ -123,43 +123,43 @@ class UTMappingModel extends PHPBoostUnitTestCase
 
 		$properties = $this->model->get_raw_value($object);
 
-		$this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
-		$this->assertEquals($properties['title'], $title,
+		self::assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
+		self::assertEquals($properties['title'], $title,
             'title ' . $properties['title'] . '!=' . $title);
-		$this->assertNull($properties['description'],
+		self::assertNull($properties['description'],
             'description ' . $properties['description'] . 'is not null');
-		$this->assertEquals($properties['user_id'],  $user_id,
+		self::assertEquals($properties['user_id'],  $user_id,
             'title ' . $properties['user_id'] . '!=' . $user_id);
 	}
 
     public function test_get_class_name()
     {
-        $this->assertEquals($this->model->get_class_name(), $this->classname,
+        self::assertEquals($this->model->get_class_name(), $this->classname,
         $this->model->get_class_name() . ' is not equal to ' . $this->classname);
     }
 
     public function test_get_table_name()
     {
-        $this->assertEquals($this->model->get_table_name(), $this->tablename,
+        self::assertEquals($this->model->get_table_name(), $this->tablename,
         $this->model->get_table_name() . ' is not equal to ' . $this->tablename);
     }
 
 	public function test_get_primary_key()
 	{
-		$this->assertEquals($this->model->get_primary_key(), $this->primary_key,
+		self::assertEquals($this->model->get_primary_key(), $this->primary_key,
 		var_export($this->model->get_primary_key(), true) . ' is not equal to ' .
 		var_export($this->primary_key, true));
 	}
 
 	public function test_get_fields()
 	{
-		$this->assertEquals($this->model->get_fields(), $this->fields,
+		self::assertEquals($this->model->get_fields(), $this->fields,
 		$this->model->get_fields() . ' is not equal to ' . $this->fields);
 	}
 
 	public function test_get_joins()
 	{
-		$this->assertEquals($this->model->get_joins(), $this->joins,
+		self::assertEquals($this->model->get_joins(), $this->joins,
 		$this->model->get_joins() . ' is not equal to ' . $this->joins);
 	}
 }

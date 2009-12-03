@@ -5,40 +5,40 @@ class UTModuleInterface extends PHPBoostUnitTestCase
 	function test_constructor()
 	{
 		$ret = new ModuleInterface('news', 1);
-		$this->assertTrue(is_object($ret));
-		$this->assertEquals($ret->get_id(), 'news');
-		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
-		$this->assertTrue($ret->get_errors() != 0);
+		self::assertTrue(is_object($ret));
+		self::assertEquals($ret->get_id(), 'news');
+		self::assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
+		self::assertTrue($ret->get_errors() != 0);
 		
 		$ret = new ModuleInterface('news');
-		$this->assertTrue(is_object($ret));
-		$this->assertEquals($ret->get_id(), 'news');
-		$this->assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities) > 0);
+		self::assertTrue(is_object($ret));
+		self::assertEquals($ret->get_id(), 'news');
+		self::assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities) > 0);
 	}
 
 	function test_get_id()
 	{
 		$ret = new ModuleInterface('news', 1);
-		$this->assertTrue(is_object($ret));
-		$this->assertEquals($ret->get_id(), 'news');
+		self::assertTrue(is_object($ret));
+		self::assertEquals($ret->get_id(), 'news');
 	}
 	
 	function test_get_name()
 	{
 		$ret = new ModuleInterface('news', 1);
-		$this->assertTrue(is_object($ret));
-		$this->assertEquals($ret->get_name(), 'News');
+		self::assertTrue(is_object($ret));
+		self::assertEquals($ret->get_name(), 'News');
 	}
 	
 	function test_get_infos()
 	{
 		$ret = new ModuleInterface('news', 1);
-		$this->assertTrue(is_object($ret));
+		self::assertTrue(is_object($ret));
 		
 		$tmp = $ret->get_infos();
-		$this->assertEquals($tmp['name'], $ret->get_name());
-		$this->assertEquals($tmp['functionnalities'], $ret->functionnalities);
-		$this->assertTrue(is_array($tmp['infos']));
+		self::assertEquals($tmp['name'], $ret->get_name());
+		self::assertEquals($tmp['functionnalities'], $ret->functionnalities);
+		self::assertTrue(is_array($tmp['infos']));
 		print_r($tmp['infos']);
 	}
 	

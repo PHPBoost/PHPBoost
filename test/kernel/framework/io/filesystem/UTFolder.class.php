@@ -7,12 +7,12 @@ class UTFolder extends PHPBoostUnitTestCase
 		$path = PATH_TO_ROOT . '/kernel';
 		
 		$folder = new Folder($path);
-		$this->assertEquals($folder->path, rtrim($path, '/'));
+		self::assertEquals($folder->path, rtrim($path, '/'));
 		unset($folder);
 		
 		$path = dirname(__FILE__) . '/tmp_dir';
 		$folder = new Folder($path);
-		$this->assertTrue(is_dir($path));
+		self::assertTrue(is_dir($path));
 		$folder->delete();
 	}
 
@@ -22,10 +22,10 @@ class UTFolder extends PHPBoostUnitTestCase
 		
 		$folder = new Folder($path);
 		$folder->open();
-		$this->assertTrue(is_array($folder->files));
-		$this->assertTrue(is_a($folder->files[0], 'file'));
-		$this->assertTrue(is_array($folder->folders));
-		$this->assertTrue(is_a($folder->folders[0], 'folder'));
+		self::assertTrue(is_array($folder->files));
+		self::assertTrue(is_a($folder->files[0], 'file'));
+		self::assertTrue(is_array($folder->folders));
+		self::assertTrue(is_a($folder->folders[0], 'folder'));
 	}
 	
 	function test_get_files()
@@ -35,9 +35,9 @@ class UTFolder extends PHPBoostUnitTestCase
 		$folder = new Folder($path);
 		$folder->open();
 		$ret = $folder->get_files();
-		$this->assertTrue(is_array($ret));
-		$this->assertTrue($folder->is_open);
-		$this->assertEquals(count($ret), count($folder->files));
+		self::assertTrue(is_array($ret));
+		self::assertTrue($folder->is_open);
+		self::assertEquals(count($ret), count($folder->files));
 	}
 	
 	function test_get_folders()
@@ -47,8 +47,8 @@ class UTFolder extends PHPBoostUnitTestCase
 		$folder = new Folder($path);
 		$folder->open();
 		$ret = $folder->get_folders();
-		$this->assertTrue(is_array($ret));
-		$this->assertEquals(count($ret), count($folder->folders));
+		self::assertTrue(is_array($ret));
+		self::assertEquals(count($ret), count($folder->folders));
 	}
 	
 	function test_get_first_folder()
@@ -56,18 +56,18 @@ class UTFolder extends PHPBoostUnitTestCase
 		$path = PATH_TO_ROOT . '/kernel';
 		
 		$folder = new Folder($path);
-		$this->assertFalse($folder->is_open);
+		self::assertFalse($folder->is_open);
 		$ret = $folder->get_first_folder();
-		$this->assertTrue($folder->is_open);
-		$this->assertEquals($ret, $folder->folders[0]);
+		self::assertTrue($folder->is_open);
+		self::assertEquals($ret, $folder->folders[0]);
 		unset($folder);
 		
 		$path = dirname(__FILE__) . '/tmp_dir';
 		
 		$folder = new Folder($path);
-		$this->assertTrue(is_dir($path));
+		self::assertTrue(is_dir($path));
 		$ret = $folder->get_first_folder();
-		$this->assertFalse($ret);
+		self::assertFalse($ret);
 	}
 
 	function test_get_all_content()
@@ -77,7 +77,7 @@ class UTFolder extends PHPBoostUnitTestCase
 		$folder = new Folder($path);
 		$folder->open();
 		$ret = $folder->get_all_content();
-		$this->assertEquals(count($ret), count($folder->folders) + count($folder->files) );
+		self::assertEquals(count($ret), count($folder->folders) + count($folder->files) );
 	}
 
 	function test_delete()
@@ -85,9 +85,9 @@ class UTFolder extends PHPBoostUnitTestCase
 		$path = dirname(__FILE__) . '\tmp_dir';
 		
 		$folder = new Folder($path);		
-		$this->assertTrue(is_dir($path));
+		self::assertTrue(is_dir($path));
 		$folder->delete();
-		$this->assertFalse(file_exists($path));
+		self::assertFalse(file_exists($path));
 	}
 	
 }

@@ -24,8 +24,8 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		
-		$this->assertEquals($fse->path, $path);
-		$this->assertFalse($fse->is_open);
+		self::assertEquals($fse->path, $path);
+		self::assertFalse($fse->is_open);
 	}
 	
 	function test_open()
@@ -34,7 +34,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$fse->open();
-		$this->assertTrue($fse->is_open);
+		self::assertTrue($fse->is_open);
 	}
 	
 	function test_get()
@@ -43,9 +43,9 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$fse->is_open = FALSE;
-		$this->assertFalse($fse->is_open);
+		self::assertFalse($fse->is_open);
 		$fse->get();
-		$this->assertTrue($fse->is_open);
+		self::assertTrue($fse->is_open);
 	}
 	
 	function test_write()
@@ -54,7 +54,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$fse->write();
-		$this->assertTrue($fse->is_open);
+		self::assertTrue($fse->is_open);
 	}
 	
 	function test_get_name()
@@ -63,7 +63,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$name = $fse->get_name();
-		$this->assertEquals($name, basename($path));
+		self::assertEquals($name, basename($path));
 	}
 
 	function test_change_chmod()
@@ -72,7 +72,7 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$mode = $fse->change_chmod(0755);
-		$this->assertTrue(TRUE);
+		self::assertTrue(TRUE);
 		
 		$tmp = stat($path);
 		printf("%o",$tmp['mode']); echo '<br />';
@@ -84,6 +84,6 @@ class UTfse extends PHPBoostUnitTestCase {
 		
 		$fse = new FileSystemElement($path);
 		$fse->delete();
-		$this->assertTrue(TRUE);
+		self::assertTrue(TRUE);
 	}
 }

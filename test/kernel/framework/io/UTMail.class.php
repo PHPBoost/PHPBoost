@@ -11,10 +11,10 @@ class UTMail extends PHPBoostUnitTestCase
 	{
 		$msg = new Mail();
 		$ret = $msg->check_validity('from-one_two.test-one_two.test-one_two@test.test.fr');
-		$this->assertTrue($ret);
+		self::assertTrue($ret);
 		
 		$ret = $msg->check_validity('titi_bidon');
-		$this->assertFalse($ret);		
+		self::assertFalse($ret);		
 	}
 	
 	function test_accessor_sender()
@@ -23,14 +23,14 @@ class UTMail extends PHPBoostUnitTestCase
 
 		$mail = 'test@test.fr';
 		$msg->set_sender($mail);
-		$this->assertEquals($mail, $msg->get_sender_mail());
-		$this->assertEquals($msg->sender_name, $msg->get_sender_name());	
+		self::assertEquals($mail, $msg->get_sender_mail());
+		self::assertEquals($msg->sender_name, $msg->get_sender_name());	
 		
 		$mail = 'test@test.fr';
 		$name = 'sender';
 		$msg->set_sender($mail, $name);
-		$this->assertEquals($mail, $msg->get_sender_mail());
-		$this->assertEquals($msg->sender_name, $msg->get_sender_name());	
+		self::assertEquals($mail, $msg->get_sender_mail());
+		self::assertEquals($msg->sender_name, $msg->get_sender_name());	
 	}
 
 	function test_accessor_recipients()
@@ -39,12 +39,12 @@ class UTMail extends PHPBoostUnitTestCase
 		
 		$recipients = 'titi@test.fr; tutu@test.fr; toto@test.fr';
 		$ret = $msg->set_recipients($recipients);
-		$this->assertTrue($ret);
+		self::assertTrue($ret);
 		
 		$ret = $msg->get_recipients();
-		$this->assertTrue(is_array($ret));
+		self::assertTrue(is_array($ret));
 		foreach($ret as $r) {
-			$this->assertTrue(strpos($recipients, $r) !== FALSE);
+			self::assertTrue(strpos($recipients, $r) !== FALSE);
 		}
 	}
 
@@ -54,7 +54,7 @@ class UTMail extends PHPBoostUnitTestCase
 		
 		$object = 'object';
 		$msg->set_object($object);
-		$this->assertEquals($object, $msg->get_object());
+		self::assertEquals($object, $msg->get_object());
 	}
 
 	function test_accessor_content()
@@ -63,7 +63,7 @@ class UTMail extends PHPBoostUnitTestCase
 		
 		$content = 'content';
 		$msg->set_content($content);
-		$this->assertEquals($content, $msg->get_content());
+		self::assertEquals($content, $msg->get_content());
 	}
 	
 	function test_accessor_headers()
@@ -72,7 +72,7 @@ class UTMail extends PHPBoostUnitTestCase
 		
 		$headers = 'headers';
 		$msg->set_headers($headers);
-		$this->assertEquals($headers, $msg->get_headers());
+		self::assertEquals($headers, $msg->get_headers());
 	}
 	
 	function test_send_from_properties()
@@ -84,31 +84,31 @@ class UTMail extends PHPBoostUnitTestCase
 		$mail_contents 	= 'contents';
 		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from);
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
-			$this->assertFalse($ret);
+			self::assertFalse($ret);
 		} else {
-			$this->assertTrue($ret);
+			self::assertTrue($ret);
 		}
 		
 		$mail_header = 'My header';
 		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header);		
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
-			$this->assertFalse($ret);
+			self::assertFalse($ret);
 		} else {
-			$this->assertTrue($ret);
+			self::assertTrue($ret);
 		}
 		
 		$mail_sender = 'visiteur';
 		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header, $mail_sender);	
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
-			$this->assertFalse($ret);
+			self::assertFalse($ret);
 		} else {
-			$this->assertTrue($ret);
+			self::assertTrue($ret);
 		}
 
 		$mail_from 		= 'from_bidon';
 		$mail_sender 	= 'visiteur';		
 		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, '', $mail_sender);
-		$this->assertFalse($ret);		
+		self::assertFalse($ret);		
 	}
 	
 	function test_send()
@@ -121,9 +121,9 @@ class UTMail extends PHPBoostUnitTestCase
 		$msg->set_sender('sender@mail.fr', 'sender_name');
 		$ret = $msg->send();
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
-			$this->assertFalse($ret);
+			self::assertFalse($ret);
 		} else {
-			$this->assertTrue($ret);
+			self::assertTrue($ret);
 		}
 		/*
 		var_dump($msg->objet);
@@ -141,7 +141,7 @@ class UTMail extends PHPBoostUnitTestCase
 		$msg = new Mail();
 		$msg->_generate_headers();
 		echo '<br />'.htmlentities($msg->headers).'<br />';
-		$this->assertTrue(is_string($msg->headers) AND strlen($msg->headers) > 0);
+		self::assertTrue(is_string($msg->headers) AND strlen($msg->headers) > 0);
 	}
 	
 }

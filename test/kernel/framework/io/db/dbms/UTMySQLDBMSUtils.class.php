@@ -71,38 +71,38 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 
 	public function test_get_dbms_version()
 	{
-		$this->assertRegExp('`^MySQL [a-z0-9_.~-]+$`i', self::$dbms_utils->get_dbms_version());
+		self::assertRegExp('`^MySQL [a-z0-9_.~-]+$`i', self::$dbms_utils->get_dbms_version());
 	}
 
 	public function test_get_database_name()
 	{
 		include PATH_TO_ROOT . '/kernel/db/config.php';
-		$this->assertEquals($db_connection_data['database'], self::$dbms_utils->get_database_name());
+		self::assertEquals($db_connection_data['database'], self::$dbms_utils->get_database_name());
 	}
 
 	public function test_list_databases()
 	{
 		$db_name = self::$dbms_utils->get_database_name();
 		$db_list = self::$dbms_utils->list_databases();
-		$this->assertContains($db_name, $db_list);
+		self::assertContains($db_name, $db_list);
 	}
 
 	public function test_list_tables()
 	{
 		$tables = self::$dbms_utils->list_tables();
-		$this->assertContains(self::$test_table1, $tables);
+		self::assertContains(self::$test_table1, $tables);
 	}
 
 	public function test_list_and_desc_tables()
 	{
 		$tables = self::$dbms_utils->list_and_desc_tables();
-		$this->assertContains(self::$test_table1, array_keys($tables));
+		self::assertContains(self::$test_table1, array_keys($tables));
 	}
 
 	public function test_desc_table()
 	{
 		$desc = self::$dbms_utils->desc_table(self::$test_table1);
-		$this->assertContains(array (
+		self::assertContains(array (
 			    'name' => 'id',
 			    'type' => 'int(11)',
 			    'null' => 'NO',
@@ -110,7 +110,7 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 			    'default' => NULL,
 			    'extra' => 'auto_increment',
 		), $desc);
-		$this->assertContains(array (
+		self::assertContains(array (
 			    'name' => 'ip',
 			    'type' => 'varchar(50)',
 			    'null' => 'NO',
@@ -118,7 +118,7 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 			    'default' => '',
 			    'extra' => '',
 		), $desc);
-		$this->assertContains(array (
+		self::assertContains(array (
 			    'name' => 'time',
 			    'type' => 'date',
 			    'null' => 'NO',
@@ -126,7 +126,7 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 			    'default' => '0000-00-00',
 			    'extra' => '',
 		), $desc);
-		$this->assertContains(array (
+		self::assertContains(array (
 			    'name' => 'total',
 			    'type' => 'int(11)',
 			    'null' => 'NO',
@@ -168,22 +168,22 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 
 	public function test_drop_table()
 	{
-		$this->assertContains(self::$test_table1, self::$dbms_utils->list_tables());
+		self::assertContains(self::$test_table1, self::$dbms_utils->list_tables());
 		self::$dbms_utils->drop(self::$test_table1);
-		$this->assertNotContains(self::$test_table1, self::$dbms_utils->list_tables());
+		self::assertNotContains(self::$test_table1, self::$dbms_utils->list_tables());
 	}
 
 	public function test_drop_tables()
 	{
 		$tables_list = self::$dbms_utils->list_tables();
-		$this->assertContains(self::$test_table1, $tables_list);
-		$this->assertContains(self::$test_table2, $tables_list);
+		self::assertContains(self::$test_table1, $tables_list);
+		self::assertContains(self::$test_table2, $tables_list);
 
 		self::$dbms_utils->drop(array(self::$test_table1, self::$test_table2));
 
 		$tables_list = self::$dbms_utils->list_tables();
-		$this->assertNotContains(self::$test_table1, $tables_list);
-		$this->assertNotContains(self::$test_table2, $tables_list);
+		self::assertNotContains(self::$test_table1, $tables_list);
+		self::assertNotContains(self::$test_table2, $tables_list);
 	}
 
 	public function test_export_table()
@@ -196,7 +196,7 @@ class UTMySQLDBMSUtils extends PHPBoostUnitTestCase
 		$file->open();
 		$content = $file->get_contents();
 
-		$this->assertEquals(
+		self::assertEquals(
 "DROP TABLE IF EXISTS `phpboost_test_table_1`;
 CREATE TABLE `phpboost_test_table_1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

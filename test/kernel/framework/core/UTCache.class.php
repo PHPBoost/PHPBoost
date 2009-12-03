@@ -12,7 +12,7 @@ class UTcache extends PHPBoostUnitTestCase
 	function test_constructor()
 	{
 		$cache = new Cache();
-		$this->assertIsA($cache, 'Cache');
+		self::assertIsA($cache, 'Cache');
 	}
 
 	/**
@@ -25,7 +25,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 
 	}
 	
@@ -37,7 +37,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 		*/
 		TODO(__FILE__, __METHOD__);
 	}
@@ -49,7 +49,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_debug()
@@ -59,7 +59,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_themes()
@@ -69,7 +69,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_langs()
@@ -79,7 +79,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_day()
@@ -89,7 +89,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_member()
@@ -99,7 +99,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_ranks()
@@ -109,7 +109,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_uploads()
@@ -119,7 +119,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_com()
@@ -129,7 +129,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_smileys()
@@ -139,7 +139,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	function test__get_stats()
@@ -149,7 +149,7 @@ class UTcache extends PHPBoostUnitTestCase
 		echo "<br>";
 		var_dump($ret);
 		echo "<br>";
-		$this->assertTrue(is_string($ret));
+		self::assertTrue(is_string($ret));
 	}
 	
 	/**
