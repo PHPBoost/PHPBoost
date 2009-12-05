@@ -216,7 +216,7 @@ INSERT INTO `phpboost_test_table_1` (`id`, `ip`, `time`, `total`) VALUES (3,'','
 	public function test_create_table()
 	{
 		$options_sample = array(
-            'primary' => array('event_id', 'person_id'),
+            'primary' => array('id'),
             'character_set' => 'utf8',
             'collate' => 'utf8_unicode_ci',
             'foreignKeys' => array(
@@ -240,6 +240,7 @@ INSERT INTO `phpboost_test_table_1` (`id`, `ip`, `time`, `total`) VALUES (3,'','
                 'full_text' => true
             ),
             'datetime' => array(
+                'version' => false,
                 'type' => 'datetime'
             ),
             'ext_id_fk' => array(

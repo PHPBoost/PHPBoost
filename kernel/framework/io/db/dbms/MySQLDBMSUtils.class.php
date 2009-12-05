@@ -39,6 +39,11 @@ class MySQLDBMSUtils implements DBMSUtils
 	 */
 	private $querier;
 
+	/**
+	 * @var MySqlPlatform
+	 */
+	private $platform;
+
 	public function __construct(SQLQuerier $querier)
 	{
 		$this->querier = $querier;
@@ -130,10 +135,9 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function create_table($table_name, array $fields, array $options = array())
 	{
-		$mysql_platform = new MySqlPlatform();
-		// $mysql_platform = new PostgreSqlPlatform();
-		foreach ($mysql_platform->getCreateTableSql($table_name, $fields, $options) as $query)
+		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
 		{
+			echo '<br /><pre>' . wordwrap($query) . '</pre><hr/>';
 			$this->inject($query);
 		}
 	}
@@ -263,6 +267,18 @@ class MySQLDBMSUtils implements DBMSUtils
 		$result = $this->querier->inject($query, $parameters);
 		$this->querier->enable_query_translator();
 		return $result;
+	}
+
+	/**
+	 * @return MySqlPlatform
+	 */
+	private function get_platform()
+	{
+		if ($this->platform === null)
+		{
+			$this->platform = new  MySqlPlatform();
+		}
+		return $this->platform;
 	}
 }
 
