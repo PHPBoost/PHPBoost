@@ -4,3 +4,5 @@ class MySQLDBConnectionTest extends PHPBoostUnitTestCase
 {
 
 }
+
+?>
