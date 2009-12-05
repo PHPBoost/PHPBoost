@@ -54,21 +54,37 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
                         <select id="tus" name="tus">
 <?php
 foreach (list_tu('./kernel/framework', true) as $tu) {
-	echo '<option value="./kernel/framework/' . $tu . '">' . $tu . '</option>';
+    echo '<option value="./kernel/framework/' . $tu . '">' . $tu . '</option>';
 }
 ?>
                         </select>
                     </td>
-		            <td class="run-options-set">
+                    <td class="run-options-set">
                         <input type="button" name="run_tu" value="run unit test" class="run-button"
-			                onclick="self.frames['phpunit'].location='run.php?is_html=0' +
-			                '&amp;params=' + document.getElementById('tus').value;" />
+                            onclick="self.frames['phpunit'].location='run.php?is_html=0' +
+                            '&amp;params=' + document.getElementById('tus').value;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="options-set-name"><span>tests suite</span></td>
+                    <td class="options-set">
+                        <select id="ts" name="ts">
+<?php
+foreach (list_test_suite('./kernel/framework', true) as $ts) {
+    echo '<option value="./kernel/framework/' . $ts . '">' . $ts . '</option>';
+}
+?>
+                        </select>
+                    </td>
+                    <td class="run-options-set">
+                        <input type="button" name="run_ts" value="run test suite" class="run-button"
+                            onclick="self.frames['phpunit'].location='run.php?is_html=0' +
+                            '&amp;params=' + document.getElementById('ts').value;" />
                     </td>
                 </tr>
             </table>
         </form>
 		<hr />
 		<iframe src="run.php?params=<?php echo $params; ?>" width="100%" height="80%" name="phpunit"></iframe>
-	
 	</body>
 </html>

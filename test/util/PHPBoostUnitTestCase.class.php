@@ -1,7 +1,7 @@
 <?php
 
 function TODO($method) {
-	echo "\n" . 'TODO ' . $method . '()' . "\n";
+//	echo "\n" . 'TODO ' . $method . '()' . "\n";
 }
 
 

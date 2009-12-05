@@ -25,19 +25,38 @@
  *
  ###################################################*/
 
-function list_tu($directory, $recursive = false) {
+function list_tu($directory, $recursive = false)
+{
 	$files = array();
 	$folder = new Folder($directory);
-	foreach ($folder->get_files('`^(?:(?:UT)|(?:ut_)).+\.class\.php$`') as $file) {
+	foreach ($folder->get_files('`^.+Test\.php$`') as $file)
+	{
 		$files[] = preg_replace('`^[\./]*kernel/framework/`', '', $file->get_name(true));
 	}
 
-	if ($recursive) {
-		foreach ($folder->get_folders() as $folder) {
+	if ($recursive)
+	{
+		foreach ($folder->get_folders() as $folder)
+		{
 			$files = array_merge($files, list_tu($folder->get_name(true), true));
 		}
 	}
 	return $files;
+}
+
+function list_test_suite($directory, $recursive = false)
+{
+	$folders = array();
+	$folder = new Folder($directory);
+	foreach ($folder->get_folders('`^[^.].+$`') as $folder)
+	{
+		$folders[] = preg_replace('`^[\./]*kernel/framework/`', '', $folder->get_name(true));
+		if ($recursive)
+		{
+			$folders = array_merge($folders, list_test_suite($folder->get_name(true), true));
+		}
+	}
+	return $folders;
 }
 
 ?>
