@@ -19,17 +19,31 @@
 </fieldset>
 <fieldset><legend>Unit tests</legend>
 <dl>
-	<dt><label for="tus">Choose in the list</label></dt>
-	<dd><select id="tus" name="tus">
-		# START tests #
-		<option value="./kernel/framework/{tests.NAME}">{tests.NAME}</option>
-		# END tests #
-	</select></dd>
+    <dt><label for="tus">Choose in the list</label></dt>
+    <dd><select id="tus" name="tus">
+        # START tests #
+        <option value="./kernel/framework/{tests.NAME}">{tests.NAME}</option>
+        # END tests #
+    </select></dd>
 </dl>
 </fieldset>
 <fieldset class="fieldset_submit"><input type="button"
-	name="run_tu" value="run unit test" class="submit" class="run-button"
-	onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('tus').value;" />
+    name="run_tu" value="run unit test" class="submit" class="run-button"
+    onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('tus').value;" />
+</fieldset>
+<fieldset><legend>Tests suite</legend>
+<dl>
+    <dt><label for="ts">Choose in the list</label></dt>
+    <dd><select id="ts" name="ts">
+        # START tests_suite #
+        <option value="./kernel/framework/{tests_suite.NAME}">{tests_suite.NAME}</option>
+        # END tests_suite #
+    </select></dd>
+</dl>
+</fieldset>
+<fieldset class="fieldset_submit"><input type="button"
+    name="run_ts" value="run test suite" class="submit" class="run-button"
+    onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('ts').value;" />
 </fieldset>
 </form>
 
