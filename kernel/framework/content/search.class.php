@@ -140,7 +140,8 @@ class Search
                         // Executes 10 insertions
                         if ($nbReqInsert == 10)
                         {
-                            $reqInsert = "INSERT INTO " . DB_TABLE_SEARCH_INDEX . " (id_user, module, search, options, last_search_use, times_used) VALUES " . $reqInsert . "";
+                            $reqInsert = "INSERT INTO " . DB_TABLE_SEARCH_INDEX .
+								" (id_user, module, search, options, last_search_use, times_used) VALUES " . rtrim($reqInsert, ',');
                             $Sql->query_inject($reqInsert, __LINE__, __FILE__);
                             $reqInsert = '';
                             $nbReqInsert = 0;
