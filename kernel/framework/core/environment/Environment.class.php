@@ -102,15 +102,15 @@ class Environment
 
 	public static function enable_errors_and_exceptions_management()
 	{
-		set_error_handler(array(new IntegratedErrorHandler(), 'handler'));
-		set_exception_handler(array(get_class(), 'exception_handler'));
+		set_error_handler(array(new IntegratedErrorHandler(), 'handle'));
+		set_exception_handler(array(new ExceptionHandler(), 'handle'));
 	}
 
 	public static function fit_to_php_configuration()
 	{
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
 		@error_reporting(ERROR_REPORTING);
-		set_error_handler(array(new ErrorHandler(), 'handler'));
+		set_error_handler(array(new ErrorHandler(), 'handle'));
 
 		@ini_set('open_basedir', NULL);
 
@@ -573,28 +573,6 @@ class Environment
 
 		ob_end_flush();
 	}
-
-	public static function exception_handler(Exception $exception)
-	{
-		// TODO move this out
-		ob_clean();
-
-		$info = $exception->getMessage() . "\n" . $exception->getTraceAsString();
-		ErrorHandler::add_error_in_log($info);
-
-		// TODO refactor with new error API
-		$request = AppContext::get_request();
-		//$request->set_value(ErrorController::LEVEL, E_ERROR);
-		//$request->set_value(ErrorController::EXCEPTION, $exception);
-
-		$error_controller = new ErrorController();
-		$response = $error_controller->execute($request);
-		$response->send();
-
-		self::destroy();
-		exit;
-	}
-
 
 	private static function get_yesterday_timestamp()
 	{

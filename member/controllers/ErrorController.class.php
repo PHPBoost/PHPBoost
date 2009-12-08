@@ -54,7 +54,7 @@ class ErrorController implements Controller
 
 	public function set_level($level)
 	{
-		$this->level = level;
+		$this->level = $level;
 	}
 
 	public function set_title($title)

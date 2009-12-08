@@ -81,14 +81,14 @@ class Template
 	protected $blocks = array();
 	protected $subtemplates = array();
 	protected $loader;
-	
+
 	const AUTO_LOAD_FREQUENT_VARS = true;
 	const DO_NOT_LOAD_FREQUENT_VARS = false;
-	
+
 	const FILE_TEMPLATE_LOADER = 0x01;
 	const TEMPLATE_PARSER_ECHO = 0x01;
 	const TEMPLATE_PARSER_STRING = 0x02;
-	
+
 	/**
 	 * @desc Builds a Template object.
 	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
@@ -98,12 +98,12 @@ class Template
 		if ($identifier != null)
 		{
 			$this->identifier = $identifier;
-			
+				
 			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 			{
 				$this->auto_load_frequent_vars();
 			}
-			
+				
 			if ($loader !== self::FILE_TEMPLATE_LOADER)
 			{
 				$this->set_loader($loader);
@@ -114,7 +114,7 @@ class Template
 			}
 		}
 	}
-	
+
 	public function set_loader($loader)
 	{
 		$this->loader = $loader;
@@ -131,7 +131,7 @@ class Template
 			$this->vars[$key] = $val;
 		}
 	}
-	
+
 	/**
 	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
@@ -164,7 +164,7 @@ class Template
 			);
 		}
 	}
-	
+
 	/**
 	 * @desc Clones this object.
 	 * @return Template A clone of this object.
@@ -172,26 +172,26 @@ class Template
 	public function copy()
 	{
 		$copy = new Template();
-		
+
 		$copy->identifier = $this->identifier;
 		$copy->loader = $this->loader;
 		$copy->langs = $this->langs;
 		$copy->vars = $this->vars;
 		$copy->blocks = $this->blocks;
 		$copy->subtemplates = $this->subtemplates;
-		
+
 		return $copy;
 	}
-	
+
 	/**
-	  * @desc Returns the template identifier
-	  * @return string the template identifier
-	  */
+	 * @desc Returns the template identifier
+	 * @return string the template identifier
+	 */
 	public function get_identifier()
 	{
 		return $this->identifier;
 	}
-	
+
 	/**
 	 * @desc Parses the file. It will use the variables you assigned.
 	 * @param mixed $parser In its default behaviour (self::TEMPLATE_PARSER_ECHO), this class write what it parses in the PHP standard output.
@@ -213,69 +213,73 @@ class Template
 					break;
 			}
 		}
-		
+
 		return $parser->parse($this, $this->loader);
 	}
-	
-	
+
+
 	/**
-	  * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-	  * @param string[string] $lang the language map
-	  */
+	 * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
+	 * @param string[string] $lang the language map
+	 */
 	public function add_lang($lang)
 	{
 		$this->langs[] = $lang;
 	}
-	
+
 	/**
-	  * @desc add a subtemplate that could be used using the following template code <code># include identifier #</code>
-	  * @param string $identifier the identifier
-	  * @param Template $template the template
-	  */
+	 * @desc add a subtemplate that could be used using the following template code <code># include identifier #</code>
+	 * @param string $identifier the identifier
+	 * @param Template $template the template
+	 */
 	public function add_subtemplate($identifier, $template)
 	{
 		$this->subtemplates[$identifier] =& $template;
 	}
-	
+
 	/**
-	  * @desc returns the subtemplate identified by the $identifier tag
-	  * @param string $identifier the template identifier
-	  * @return Template the subtemplate identified by the $identifier tag
-	  */
+	 * @desc returns the subtemplate identified by the $identifier tag
+	 * @param string $identifier the template identifier
+	 * @return Template the subtemplate identified by the $identifier tag
+	 */
 	public function get_subtemplate($identifier)
 	{
 		return $this->subtemplates[$identifier];
 	}
-	
+
 	/**
-	  * @desc returns the subtemplate identified by the $identifier tag
-	  * @param string $identifier the template identifier
-	  * @param Template[string] $list the template list in which we will the search for the
-	  * template identifier
-	  * @return Template the subtemplate identified by the $identifier tag
-	  */
+	 * @desc returns the subtemplate identified by the $identifier tag
+	 * @param string $identifier the template identifier
+	 * @param Template[string] $list the template list in which we will the search for the
+	 * template identifier
+	 * @return Template the subtemplate identified by the $identifier tag
+	 */
 	public function get_subtemplate_from_list($identifier, $list)
 	{
-		return $list[$identifier];
+		if (isset($list[$identifier]))
+		{
+			return $list[$identifier];
+		}
+		return null;
 	}
-	
-	
+
+
 	/**
-	  * @desc returns the block "blockname" in the template block list
-	  * @param string $blockname the blockname of the block to retrieve
-	  * @return mixed[] the requested block
-	  */
+	 * @desc returns the block "blockname" in the template block list
+	 * @param string $blockname the blockname of the block to retrieve
+	 * @return mixed[] the requested block
+	 */
 	public function get_block($blockname)
 	{
 		return $this->get_block_from_list($blockname, $this->blocks);
 	}
-	
+
 	/**
-	  * @desc returns the block "blockname" in the parent_block
-	  * @param string $blockname the blockname of the block to retrieve
-	  * @param mixed[] $parent_block the parent block in which $blockname will be searched for
-	  * @return mixed[] the requested block
-	  */
+	 * @desc returns the block "blockname" in the parent_block
+	 * @param string $blockname the blockname of the block to retrieve
+	 * @param mixed[] $parent_block the parent block in which $blockname will be searched for
+	 * @return mixed[] the requested block
+	 */
 	public function get_block_from_list($blockname, $parent_block)
 	{
 		if (isset($parent_block[$blockname]) && is_array($parent_block[$blockname]))
@@ -284,55 +288,55 @@ class Template
 		}
 		return array();
 	}
-	
+
 	/**
-	  * @desc Returns true if the variable $varname exists and is not considered as false
-	  * @param string $varname the name of the variable to check if it is true
-	  * @return bool true if the variable $varname exists and is not considered as false
-	  */
+	 * @desc Returns true if the variable $varname exists and is not considered as false
+	 * @param string $varname the name of the variable to check if it is true
+	 * @return bool true if the variable $varname exists and is not considered as false
+	 */
 	public function is_true($varname)
 	{
 		return $this->is_true_from_list($varname, $this->vars);
 	}
-	
+
 	/**
-	  * @desc rReturns true if the variable $varname exists and is not considered as false
-	  * @param string $varname the name of the variable to check if it is true
-	  * @param mixed[] $list the array in which we varname will be searched for
-	  * @return bool true if the variable $varname exists and is not considered as false
-	  */
+	 * @desc rReturns true if the variable $varname exists and is not considered as false
+	 * @param string $varname the name of the variable to check if it is true
+	 * @param mixed[] $list the array in which we varname will be searched for
+	 * @return bool true if the variable $varname exists and is not considered as false
+	 */
 	public function is_true_from_list($varname, $list)
 	{
 		return isset($list[$varname]) && $list[$varname];
 	}
-	
+
 	/**
-	  * @desc Returns the $varname variable content
-	  * @param string $varname the name of the variable to retrieve
-	  * @return string the $varname variable content
-	  * @see get_var_from_list($varname, $list)
-	  */
+	 * @desc Returns the $varname variable content
+	 * @param string $varname the name of the variable to retrieve
+	 * @return string the $varname variable content
+	 * @see get_var_from_list($varname, $list)
+	 */
 	/**
-	  * @desc Returns the $varname variable content searched in from the $list
-	  * Special operations will be done if the variable is not registered in $list. If $varname begins with
-	  * <ul>
-	  *	<li><E_: the variable will be search without its prefix and will be escaped using <code>htmlspecialchars()</code></li>
-	  *	<li><J_: the variable will be search without its prefix and will be escaped using <code>to_js_string()</code></li>
-	  *	<li><L_: the variable will be search without its prefix in every languages maps registered using <code>Template->add_lang($language)</code></li>
-	  *	<li><EL_: the variable will be search without its prefix like languages variables and will be escaped using <code>htmlspecialchars()</code></li>
-	  *	<li><JL_: the variable will be search without its prefix like languages variables and will be escaped using <code>to_js_string()</code></li>
-	  * </ul>
-	  * Each time one of these operation is requested, the variable is registered in order to speed up next calls. If nothing is found, then an empty string is returned
-	  * @param string $varname the name of the variable to retrieve
-	  * @param mixed[] $list the list in which the variable will be searched for
-	  * @return string the $varname variable content 
-	  */
-	
+	 * @desc Returns the $varname variable content searched in from the $list
+	 * Special operations will be done if the variable is not registered in $list. If $varname begins with
+	 * <ul>
+	 *	<li><E_: the variable will be search without its prefix and will be escaped using <code>htmlspecialchars()</code></li>
+	 *	<li><J_: the variable will be search without its prefix and will be escaped using <code>to_js_string()</code></li>
+	 *	<li><L_: the variable will be search without its prefix in every languages maps registered using <code>Template->add_lang($language)</code></li>
+	 *	<li><EL_: the variable will be search without its prefix like languages variables and will be escaped using <code>htmlspecialchars()</code></li>
+	 *	<li><JL_: the variable will be search without its prefix like languages variables and will be escaped using <code>to_js_string()</code></li>
+	 * </ul>
+	 * Each time one of these operation is requested, the variable is registered in order to speed up next calls. If nothing is found, then an empty string is returned
+	 * @param string $varname the name of the variable to retrieve
+	 * @param mixed[] $list the list in which the variable will be searched for
+	 * @return string the $varname variable content
+	 */
+
 	public function get_var($varname)
 	{
 		return $this->get_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_var_from_list($varname, &$list)
 	{
 		if (isset($list[$varname]))
@@ -342,12 +346,12 @@ class Template
 		$empty_value = '';
 		return $this->register_var($varname, $empty_value, $list);
 	}
-	
+
 	public function get_js_var($varname)
 	{
 		return $this->get_js_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_js_var_from_list($varname, &$list)
 	{
 		$full_varname = 'J_' . $varname;
@@ -355,19 +359,19 @@ class Template
 		{
 			return $list[$full_varname];
 		}
-		
+
 		if (!isset($list[$varname]))
 		{
 			$list[$varname] = '';
 		}
 		return $this->register_var($full_varname, to_js_string($list[$varname]), $list);
 	}
-	
+
 	public function get_js_lang_var($varname)
 	{
 		return $this->get_js_lang_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_js_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'JL_' . $varname;
@@ -375,16 +379,16 @@ class Template
 		{
 			return $list[$full_varname];
 		}
-		
+
 		$lang_var = $this->get_lang_var_from_list($varname, $list);
 		return $this->register_var($full_varname, to_js_string($lang_var), $list);
 	}
-	
+
 	public function get_htmlescaped_lang_var($varname)
 	{
 		return $this->get_htmlescaped_lang_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_htmlescaped_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'EL_' . $varname;
@@ -392,16 +396,16 @@ class Template
 		{
 			return $list[$full_varname];
 		}
-		
+
 		$lang_var = $this->get_lang_var_from_list($varname, $list);
 		return $this->register_var($full_varname, htmlspecialchars($lang_var), $list);
 	}
-	
+
 	public function get_htmlescaped_var($varname)
 	{
 		return $this->get_htmlescaped_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_htmlescaped_var_from_list($varname, &$list)
 	{
 		$full_varname = 'E_' . $varname;
@@ -409,21 +413,21 @@ class Template
 		{
 			return $list[$full_varname];
 		}
-		
+
 		if (!isset($list[$varname]))
 		{
 			$list[$varname] = '';
 		}
-		
+
 		$value = htmlspecialchars($list[$varname]);
 		return $this->register_var($full_varname, $value, $list);
 	}
-	
+
 	public function get_lang_var($varname)
 	{
 		return $this->get_lang_var_from_list($varname, $this->vars);
 	}
-	
+
 	public function get_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'L_' . $varname;
@@ -442,7 +446,7 @@ class Template
 		$empty_string = '';
 		return $this->register_var($full_varname, $empty_string, $list);
 	}
-	
+
 	protected function auto_load_frequent_vars()
 	{
 		global $User, $Session;
@@ -456,7 +460,7 @@ class Template
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($Session) ? $Session->get_token() : ''
-		));
+			));
 	}
 
 	private function find_lang_var($varname)
@@ -470,7 +474,7 @@ class Template
 		}
 		return '';
 	}
-	
+
 	private function register_var($name, $value, &$list)
 	{
 		$list[$name] = $value;
