@@ -579,10 +579,10 @@ class Environment
 		// TODO move this out
 		ob_clean();
 
-		// TODO log exception information
 		$info = $exception->getMessage() . "\n" . $exception->getTraceAsString();
 		self::add_error_in_log($info);
 
+		// TODO refactor with new error API
 		$request = AppContext::get_request();
 		$request->set_value(ErrorController::LEVEL, E_ERROR);
 		$request->set_value(ErrorController::EXCEPTION, $exception);
