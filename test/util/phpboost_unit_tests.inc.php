@@ -25,7 +25,14 @@
  *
  ###################################################*/
 
-function list_tu($directory, $recursive = false)
+function list_tu($directory)
+{
+	$tus = list_tu_recursive($directory, true);
+	sort($tus);
+	return $tus;
+}
+
+function list_tu_recursive($directory, $recursive = false)
 {
 	$files = array();
 	$folder = new Folder($directory);
@@ -38,22 +45,31 @@ function list_tu($directory, $recursive = false)
 	{
 		foreach ($folder->get_folders() as $folder)
 		{
-			$files = array_merge($files, list_tu($folder->get_name(true), true));
+			$files = array_merge($files, list_tu_recursive($folder->get_name(true), true));
 		}
 	}
 	return $files;
 }
 
-function list_test_suite($directory, $recursive = false)
+function list_test_suite($directory)
+{
+	$directory_name = preg_replace('`^[\./]*kernel/framework`', '', $directory);
+	$directories = list_test_suite_recursive($directory, true);
+	$directories[] = '/' . trim($directory_name, '/');
+	sort($directories);
+	return $directories;
+}
+
+function list_test_suite_recursive($directory, $recursive = false)
 {
 	$folders = array();
 	$folder = new Folder($directory);
 	foreach ($folder->get_folders('`^[^.].+$`') as $folder)
 	{
-		$folders[] = preg_replace('`^[\./]*kernel/framework/`', '', $folder->get_name(true));
+		$folders[] = preg_replace('`^[\./]*kernel/framework`', '', $folder->get_name(true));
 		if ($recursive)
 		{
-			$folders = array_merge($folders, list_test_suite($folder->get_name(true), true));
+			$folders = array_merge($folders, list_test_suite_recursive($folder->get_name(true), true));
 		}
 	}
 	return $folders;

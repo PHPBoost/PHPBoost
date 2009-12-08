@@ -169,7 +169,7 @@ abstract class SQLDAO implements DAO
 
 	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array())
 	{
-		$this->common_query->delete($this->table, $fields, $where, $parameters);
+		$this->common_query->update($this->table, $fields, $where, $parameters);
 	}
 	
 	/**

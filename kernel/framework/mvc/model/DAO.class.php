@@ -45,7 +45,7 @@ interface DAO
     
     /**
      * @desc Update all fields in the table to the given value if row match the where clause.
-     * @param string[string] $fields keys are the fields names to update, values, their new value
+     * @param mixed[string] $fields keys are the fields names to update, values, their new value
      * @param string $where the part of the query that came just after the from
      * @param string[string] $parameters the query vars to inject into the <code>$where</code>
      */
