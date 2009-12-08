@@ -29,13 +29,13 @@
 
 class ErrorController implements Controller
 {
-	const LEVEL = 'error_level';
-	const TITLE = 'error_title';
-	const CODE = 'error_code';
-	const MESSAGE = 'error_message';
-	const CORRECTION_LINK = 'error_correction_link';
-	const CORRECTION_LINK_NAME = 'error_correction_link_name';
-	const EXCEPTION = 'error_exception';
+	private $level = E_UNKNOWN;
+	private $title = '';
+	private $code = '';
+	private $message = '';
+	private $correction_link = '';
+	private $correction_link_name = '';
+	private $exception = null;
 
 	/**
 	 * @var string[string]
@@ -52,15 +52,53 @@ class ErrorController implements Controller
 	 */
 	private $response;
 
+	public function set_level($level)
+	{
+		$this->level = level;
+	}
+
+	public function set_title($title)
+	{
+		$this->title = $title;
+	}
+
+	public function set_code($code)
+	{
+		$this->code = $code;
+	}
+
+	public function set_message($message)
+	{
+		$this->message = $message;
+	}
+
+	public function set_correction_link($correction_link)
+	{
+		$this->correction_link = $correction_link;
+	}
+
+	public function set_correction_link_name($correction_link_name)
+	{
+		$this->correction_link_name = $correction_link_name;
+	}
+
+	public function set_exception(Exception $exception)
+	{
+		$this->exception = $exception;
+	}
+	
 	public function execute(HTTPRequest $request)
 	{
 		$this->create_view($request);
 		$this->load_env();
 
-		$title = $request->get_value(self::TITLE, $this->lang['error']);
+		if (empty($this->title))
+		{
+			$this->title = $this->lang['error'];
+		}
 
 		$env = $this->response->get_graphical_environment();
-		$env->set_page_title($title);
+		$env->set_page_title($this->title);
 
 		return $this->response;
 	}
@@ -86,21 +124,9 @@ class ErrorController implements Controller
 
 	private function create_view(HTTPRequest $request)
 	{
-
 		$view_builder = new ErrorViewBuilder();
-		$exception = null;
-		try
-		{
-		$exception = $request->get_value(self::EXCEPTION);
-		}
-		catch (UnexistingHTTPParameterException $exception)
-		{
-			Debug::fatal($exception);
-		}
-		$this->view = $view_builder->build($request->get_int(self::LEVEL, E_UNKNOWN),
-		$request->get_string(self::TITLE, ''), $request->get_string(self::CODE, ''),
-		$request->get_string(self::MESSAGE, ''), $request->get_string(self::CORRECTION_LINK, ''),
-		$request->get_string(self::CORRECTION_LINK_NAME, ''), $exception);
+		$this->view = $view_builder->build($this->level, $this->title, $this->code, $this->message,
+		$this->correction_link, $this->correction_link_name, $this->exception);
 	}
 }
 ?>

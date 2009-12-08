@@ -56,11 +56,11 @@ class MenuControllerConfigurationEdit implements Controller
 			 $error_controller = new MenuErrorController();
 //			 $error_controller = new ErrorController();
 				
-			$request->set_value(ErrorController::TITLE, 'Menu configuration does not exists');
-			$request->set_value(ErrorController::MESSAGE, 'The requested menu configuration ' .
+			$error_controller->set_title('Menu configuration does not exists');
+			$error_controller->set_message('The requested menu configuration ' .
 			$request->get_value('menu_config_id') . ' does not exists');
-			$request->set_value(ErrorController::CORRECTION_LINK, MenuUrlBuilder::menu_configuration_list()->absolute());
-			$request->set_value(ErrorController::CORRECTION_LINK_NAME, 'Menu configuration list');
+			$error_controller->set_correction_link(MenuUrlBuilder::menu_configuration_list()->absolute());
+			$error_controller->set_correction_link_name('Menu configuration list');
 				
 			return $error_controller->execute($request);
 		}
@@ -93,8 +93,6 @@ class MenuControllerConfigurationEdit implements Controller
 
 	private function load_env()
 	{
-		
-
 		global $LANG;
 
 		$this->view = new View('admin/menus/configuration/edit.tpl');

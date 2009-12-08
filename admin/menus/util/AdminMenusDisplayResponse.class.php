@@ -35,7 +35,6 @@ class AdminMenusDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		
 		$env = new AdminDisplayGraphicalEnvironment();
 		
 		global $LANG;

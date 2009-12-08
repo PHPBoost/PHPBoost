@@ -31,7 +31,7 @@ class MenuErrorController extends ErrorController
 {
 	protected function load_env()
 	{
-		
+		parent::load_env();
 		$this->set_response(new AdminMenusDisplayResponse($this->get_view()));
 	}
 }
