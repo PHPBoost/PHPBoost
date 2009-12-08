@@ -53,7 +53,7 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
                     <td class="options-set">
                         <select id="tus" name="tus">
 <?php
-foreach (list_tu('./kernel/framework', true) as $tu) {
+foreach (list_tu('./kernel/framework') as $tu) {
     echo '<option value="./kernel/framework/' . $tu . '">' . $tu . '</option>';
 }
 ?>
@@ -70,7 +70,7 @@ foreach (list_tu('./kernel/framework', true) as $tu) {
                     <td class="options-set">
                         <select id="ts" name="ts">
 <?php
-foreach (list_test_suite('./kernel/framework', true) as $ts) {
+foreach (list_test_suite('./kernel/framework') as $ts) {
     echo '<option value="./kernel/framework/' . $ts . '">' . $ts . '</option>';
 }
 ?>
