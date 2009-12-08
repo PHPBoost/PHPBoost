@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class TemplateParserEcho extends AbstractTemplateParser
 {
 	protected function compute_cache_filepath()
@@ -36,6 +34,15 @@ class TemplateParserEcho extends AbstractTemplateParser
 		array('_', '', '', '', 'tpl'),
 		$this->template->get_identifier()
 		), '_') . '.php';
+	}
+	
+	protected function clean()
+	{
+		parent::clean();
+		
+		//If short tags are enabled, PHP will execute for instance the XML code and it will fail.
+		//This regular expression makes it work.
+		$this->content = preg_replace('`<\?(?!php)([^?]*)\?>`', '<<?php ?>?$1?<?php ?>>', $this->content);
 	}
 
 	protected function do_parse()

@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-
-
-
 class MenuControllerConfigurationsList implements Controller
 {
 	/**
@@ -70,8 +67,6 @@ class MenuControllerConfigurationsList implements Controller
 
 	private function load_env()
 	{
-		
-
 		global $LANG;
 
 		$this->view = new View('admin/menus/configuration/list.tpl');

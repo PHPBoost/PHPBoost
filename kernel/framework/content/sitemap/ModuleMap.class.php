@@ -83,8 +83,9 @@ class ModuleMap extends SiteMapSection
 	 *  <li>The loop "element" for which the variable CODE contains the code of each sub element of the module (for example categories)</li>
 	 *  </ul>
 	 * @param SiteMapExportConfig $export_config export configuration
+	 * @return Template the template
 	 */
-	public function export(SiteMapExportConfig  $export_config)
+	public function export(SiteMapExportConfig $export_config)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->get_module_map_stream();
@@ -94,18 +95,22 @@ class ModuleMap extends SiteMapSection
 			'MODULE_DESCRIPTION' => $this->description,
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
-            'LINK_CODE' => $this->link !== null ? $this->link->export($export_config) : '',
             'C_MODULE_MAP' => true
 		));
+
+		if (is_object($this->link))
+		{
+			$template->add_subtemplate('LINK', $this->link->export($export_config));
+		}
 
 		//We export all the elements contained by the module map
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(
-				'CODE' => $element->export($export_config)
+			$template->assign_block_vars('element', array(), array(
+				'ELEMENT' => $element->export($export_config)
 			));
 		}
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template;
 	}
 }
 

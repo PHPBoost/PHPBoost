@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                index.php
+ *                        XMLSiteMapController.class.php
  *                            -------------------
  *   begin                : December 08 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,14 +25,15 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-new UrlControllerMapper('XMLSiteMapController', '`^/sitemap/view/xml?$`'),
-);
-
-Dispatcher::do_dispatch($url_controller_mappers);
-
-?>
+class XMLSiteMapController implements Controller
+{
+	public function execute(HTTPRequest $request)
+	{
+		$site_map = new SiteMap();
+		$config_xml = new SiteMapExportConfig('framework/content/sitemap/sitemap.xml.tpl',
+		 'framework/content/sitemap/module_map.xml.tpl', 'framework/content/sitemap/sitemap_section.xml.tpl',
+		 'framework/content/sitemap/sitemap_link.xml.tpl');
+		
+		return new SiteNodisplayResponse($site_map->export($config_xml));
+	}
+}

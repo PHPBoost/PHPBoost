@@ -230,7 +230,7 @@ class SiteMapLink extends SiteMapElement
 	 * 	<li>C_LINK indicating that we are displaying a link (useful if you want to use a signe template export configuration)</li>
 	 * </ul>
 	 * @param SiteMapExportConfig $export_config Export configuration
-	 * @return string the exported link
+	 * @return Template the exported link
 	 */
 	public function export(SiteMapExportConfig  $export_config)
 	{
@@ -249,7 +249,7 @@ class SiteMapLink extends SiteMapElement
             'C_LINK' => true
 		));
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template;
 	}
 }
 
