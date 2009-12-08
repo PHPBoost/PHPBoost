@@ -1,4 +1,3 @@
-{LINK_CODE}
 # START element #
-{element.CODE}
+	# INCLUDE element.ELEMENT #
 # END element #

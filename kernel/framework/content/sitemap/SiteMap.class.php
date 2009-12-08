@@ -139,7 +139,7 @@ class SiteMap
 	 * 	<li>A loop "element" in which the code of each element is in the variable CODE</li>
 	 * </ul>
 	 * @param SiteMapExportConfig $export_config Export configuration
-	 * @return string The exported code of the SiteMap
+	 * @return Template The exported code of the SiteMap
 	 */
 	public function export(SiteMapExportConfig  $export_config)
 	{
@@ -154,11 +154,12 @@ class SiteMap
 		//Let's export all the element it contains
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(
-				'CODE' => $element->export($export_config)
+			$template->assign_block_vars('element', array(), array(
+				'ELEMENT' => $element->export($export_config)
 			));
 		}
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		
+		return $template;
 	}
 
 	/**
@@ -166,8 +167,6 @@ class SiteMap
 	 */
 	public function build_modules_maps()
 	{
-
-			
 		$Modules = new ModulesDiscoveryService();
 		foreach ($Modules->get_available_modules('get_module_map') as $module)
 		{

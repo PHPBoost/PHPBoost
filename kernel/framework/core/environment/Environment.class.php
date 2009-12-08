@@ -580,12 +580,12 @@ class Environment
 		ob_clean();
 
 		$info = $exception->getMessage() . "\n" . $exception->getTraceAsString();
-		self::add_error_in_log($info);
+		ErrorHandler::add_error_in_log($info);
 
 		// TODO refactor with new error API
 		$request = AppContext::get_request();
-		$request->set_value(ErrorController::LEVEL, E_ERROR);
-		$request->set_value(ErrorController::EXCEPTION, $exception);
+		//$request->set_value(ErrorController::LEVEL, E_ERROR);
+		//$request->set_value(ErrorController::EXCEPTION, $exception);
 
 		$error_controller = new ErrorController();
 		$response = $error_controller->execute($request);

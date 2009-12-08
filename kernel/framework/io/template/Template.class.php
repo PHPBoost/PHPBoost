@@ -205,12 +205,10 @@ class Template
 			switch ($parser)
 			{
 				case self::TEMPLATE_PARSER_STRING:
-					
 					$parser = new TemplateParserString();
 					break;
 				case self::TEMPLATE_PARSER_ECHO:
 				default:
-					
 					$parser = new TemplateParserEcho();
 					break;
 			}

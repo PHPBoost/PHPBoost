@@ -112,7 +112,7 @@ class SiteMapSection extends SiteMapElement
 	 * 	<li>A loop "element" containing evert element of the section (their code is available in the CODE variable of the loop)</li>
 	 * </ul>
 	 * @param SiteMapExportConfig $export_config Export configuration
-	 * @return string the exported section
+	 * @return Template the exported section
 	 */
 	public function export(SiteMapExportConfig  $export_config)
 	{
@@ -123,17 +123,21 @@ class SiteMapSection extends SiteMapElement
 			'SECTION_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
-            'LINK_CODE' => is_object($this->link) ? $this->link->export($export_config) : '',
             'C_SECTION' => true
 		));
+		
+		if (is_object($this->link))
+		{
+			$template->add_subtemplate('LINK', $this->link->export($export_config));
+		}
 
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(
-				'CODE' => $element->export($export_config)
+			$template->assign_block_vars('element', array(), array(
+				'ELEMENT' => $element->export($export_config)
 			));
 		}
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template;
 	}
 }
 

@@ -1,6 +1,6 @@
-	{LINK_CODE}
+	# INCLUDE LINK #
 	<ul class="bb_ul">
 		# START element #
-		<li>{element.CODE}</li>
+		<li># INCLUDE element.ELEMENT #</li>
 		# END element #
 	</ul>
