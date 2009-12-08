@@ -120,10 +120,6 @@ class Dispatcher
 		{
 			Dispatcher::handle_dispatch_exception($ex);
 		}
-		catch (Exception $ex)
-		{
-			Dispatcher::show_error($ex);
-		}
 	}
 
 	private static function handle_dispatch_exception($exception)

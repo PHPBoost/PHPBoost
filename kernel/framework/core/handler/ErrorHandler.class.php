@@ -32,6 +32,8 @@
  */
 class ErrorHandler
 {
+	const FATAL_MESSAGE = 'Sorry, we encountered a problem and we cannot complete your request...';
+	
 	protected $errno;
 	protected $errstr;
 	protected $errfile;
@@ -42,8 +44,7 @@ class ErrorHandler
 	protected $fatal;
 
 	/**
-	 * @desc The user functionneeds to accept two parameters: the error code, and a string
-	 * describing the error.
+	 * @desc log the error and displays it in debug mode
 	 * @param unknown_type $errno contains the level of the error raised, as an integer
 	 * @param unknown_type $errstr contains the error message, as a string
 	 * @param unknown_type $errfile the filename that the error was raised in, as a string
@@ -51,7 +52,7 @@ class ErrorHandler
 	 * @return bool always true because we don't want the php default error handler to process the
 	 * error again
 	 */
-	public function handler($errno, $errstr, $errfile, $errline)
+	public function handle($errno, $errstr, $errfile, $errline)
 	{
 		$this->prepare($errno, $errstr, $errfile, $errline);
 		if ($this->needs_to_be_processed())

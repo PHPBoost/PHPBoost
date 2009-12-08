@@ -120,7 +120,7 @@ class Debug
 	{
 		if (!empty($trace['file']))
 		{
-			return Path::uniformize_path($trace['file']) . ':' . $trace['line'];
+			return Path::get_path_from_root($trace['file']) . ':' . $trace['line'];
 		}
 		return 'Internal';
 	}

@@ -58,7 +58,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 
 	public function escape($value)
 	{
-		return mysql_real_escape_string($value);
+		return mysql_real_escape_string($value, $this->link);
 	}
 
 	private function execute($query, $parameters)

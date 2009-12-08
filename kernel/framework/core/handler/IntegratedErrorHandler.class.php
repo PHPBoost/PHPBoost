@@ -40,6 +40,7 @@ class IntegratedErrorHandler extends ErrorHandler
 	protected function display_fatal()
 	{
 		// TODO manage languages here
-		die('A fatal error occurred and we could not complete your request...');
+        ob_clean();
+		die(ErrorHandler::FATAL_MESSAGE);
 	}
 }
