@@ -31,7 +31,8 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('XMLSiteMapController', '`^/view/xml/?$`'),
-	new UrlControllerMapper('SiteMapController', '`^/view(?:/html)?/?$`')
+	new UrlControllerMapper('SiteMapController', '`^/view(?:/html)?/?$`'),
+	new UrlControllerMapper('SiteMapController', '`^/?$`')
 );
 
 Dispatcher::do_dispatch($url_controller_mappers);
