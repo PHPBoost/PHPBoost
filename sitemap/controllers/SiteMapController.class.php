@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                                index.php
+ *                          SiteMapController.class.php
  *                            -------------------
- *   begin                : December 08 2009
+ *   begin                : December 09 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,15 +25,22 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+class SiteMapController implements Controller
+{
+	public function execute(HTTPRequest $request)
+	{
+		$sitemap = new SiteMap();
+		$sitemap->build();
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+		$sub_section_tpl = new Template('sitemap/sitemap_section.html.tpl');
+		$sub_section_tpl->assign_vars(array(
+		'L_LEVEL' => 'de niveau'
+		));
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('XMLSiteMapController', '`^/view/xml/?$`'),
-	new UrlControllerMapper('SiteMapController', '`^/view(?:/html)?/?$`')
-);
+		$config_html = new SiteMapExportConfig('sitemap/sitemap.html.tpl',
+			'sitemap/module_map.html.tpl', $sub_section_tpl, 'sitemap/sitemap_link.html.tpl');
 
-Dispatcher::do_dispatch($url_controller_mappers);
-
+		return new SiteDisplayResponse($sitemap->export($config_html));
+	}
+}
 ?>
