@@ -30,9 +30,8 @@ if (defined('PHPBOOST') !== true)
 	exit;
 }
 
-
-
 $env = new SiteDisplayGraphicalEnvironment();
+$env->set_breadcrumb($Bread_crumb);
 
 Environment::set_graphical_environment($env);
 global $LANG;

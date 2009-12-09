@@ -78,8 +78,7 @@ class Environment
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
-		global $Bread_crumb, $Session, $User, $Template;
-		$Bread_crumb = AppContext::get_breadcrumb();
+		global $Session, $User, $Template;
 		$Session = AppContext::get_session();
 		$User = AppContext::get_user();
 		$Template = new DeprecatedTemplate();
@@ -96,7 +95,6 @@ class Environment
 	public static function init_services()
 	{
 		AppContext::set_request(new HTTPRequest());
-		AppContext::init_breadcrumb();
 		AppContext::init_session();
 	}
 

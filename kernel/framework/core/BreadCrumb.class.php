@@ -36,6 +36,15 @@
 class BreadCrumb
 {
     /**
+     * @var string[string] List of the links
+     */
+    private $array_links = array();
+    /**
+     * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
+     */
+    private $graphical_environment;
+    
+    /**
      * @desc Builds a BreadCrumb object.
      */
     public function __construct()
@@ -86,13 +95,18 @@ class BreadCrumb
 
         if (empty($this->array_links))
         {
-        	// TODO remove the title reference here
-            $this->add(stripslashes(TITLE), HOST . SCRIPT . SID);
+            $this->add($this->get_page_title(), HOST . SCRIPT . SID);
         }
 
 		$start_page = '';
-		if (!empty($CONFIG['server_name'])) $start_page .= $CONFIG['server_name'];
-		if (!empty($CONFIG['server_path'])) $start_page .= $CONFIG['server_path'] . '/';
+		if (!empty($CONFIG['server_name']))
+		{
+			$start_page .= $CONFIG['server_name'];
+		}
+		if (!empty($CONFIG['server_path'])) 
+		{
+			$start_page .= $CONFIG['server_path'] . '/';
+		}
 		
         $tpl->assign_vars(array(
 			'START_PAGE' => $start_page,
@@ -115,11 +129,20 @@ class BreadCrumb
     {
         $this->array_links = array();
     }
-
+    
     /**
-     * @var string List of the links
+     * Sets the reference to the parent graphical environment
+     * @param SiteDisplayGraphicalEnvironment $env The parent environment
      */
-    private $array_links = array();
+    public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env)
+    {
+    	$this->graphical_environment = $env;
+    }
+    
+    private function get_page_title()
+    {
+    	return $this->graphical_environment->get_page_title();
+    }
 }
 
 ?>

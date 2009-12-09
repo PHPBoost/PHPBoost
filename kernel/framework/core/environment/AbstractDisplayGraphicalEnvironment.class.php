@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
 	private $css_files = array();
