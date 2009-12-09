@@ -163,9 +163,21 @@ class SiteMap
 	}
 
 	/**
-	 * @desc Adds to the site map all maps of the installed modules
+	 * @desc Builds the whole sitemap
+	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
+	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	public function build_modules_maps()
+	public function build($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
+	{
+		$this->build_kernel_map($mode, $auth_mode);
+		$this->build_modules_maps($auth_mode);
+	}
+	
+	/**
+	 * @desc Adds to the site map all maps of the installed modules
+	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
+	 */
+	public function build_modules_maps($auth_mode = self::AUTH_GUEST)
 	{
 		$Modules = new ModulesDiscoveryService();
 		foreach ($Modules->get_available_modules('get_module_map') as $module)
@@ -177,6 +189,8 @@ class SiteMap
 
 	/**
 	 * @desc Adds to the site map all the kernel links.
+	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
+	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
 	public function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
 	{

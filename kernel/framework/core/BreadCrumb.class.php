@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           bread_crumb.class.php
+ *                            BreadCrumb.class.php
  *                            -------------------
  *   begin                : February 16, 2007
  *   copyright            : (C) 2007 Sautel Benoit
@@ -38,7 +38,7 @@ class BreadCrumb
     /**
      * @desc Builds a BreadCrumb object.
      */
-    function BreadCrumb()
+    public function __construct()
     {
     }
 
@@ -47,7 +47,7 @@ class BreadCrumb
      * @param string $text Name of the page
      * @param string $target Link whose target is the page
      */
-    function add($text, $target = '')
+    public function add($text, $target = '')
     {
         if (!empty($text))
         {
@@ -64,7 +64,7 @@ class BreadCrumb
      * @desc Reverses the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
      * end, you only need to reverse the list and it will be ok.
      */
-    function reverse()
+    public function reverse()
     {
         $this->array_links = array_reverse($this->array_links);
     }
@@ -72,7 +72,7 @@ class BreadCrumb
     /**
      * @desc Removes the last link of the list
      */
-    function remove_last()
+    public function remove_last()
     {
         array_pop($this->array_links);
     }
@@ -80,7 +80,7 @@ class BreadCrumb
     /**
      * @desc Displays the bread crumb.
      */
-    function display(Template $tpl)
+    public function display(Template $tpl)
     {
         global $CONFIG, $LANG;
 
@@ -111,16 +111,15 @@ class BreadCrumb
     /**
      * @desc Removes all the existing links.
      */
-    function clean()
+    public function clean()
     {
         $this->array_links = array();
     }
 
-    ## Attributs protégés #
     /**
      * @var string List of the links
      */
-    var $array_links = array();
+    private $array_links = array();
 }
 
 ?>

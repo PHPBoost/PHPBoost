@@ -10,8 +10,7 @@ $site_map = new SiteMap();
 $config_xml = new SiteMapExportConfig('framework/content/sitemap/sitemap.xml.tpl', 'framework/content/sitemap/module_map.xml.tpl',
 	 'framework/content/sitemap/sitemap_section.xml.tpl', 'framework/content/sitemap/sitemap_link.xml.tpl');
 
-$site_map->build_kernel_map(SiteMap::USER_MODE, SiteMap::AUTH_USER);
-$site_map->build_modules_maps();
+$site_map->build(SiteMap::USER_MODE, SiteMap::AUTH_USER);
 
 echo '<pre>' . htmlentities($site_map->export($config_xml)->parse(Template::TEMPLATE_PARSER_STRING)) . '</pre>';
 	
