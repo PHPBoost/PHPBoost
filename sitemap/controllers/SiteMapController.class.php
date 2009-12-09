@@ -39,8 +39,12 @@ class SiteMapController implements Controller
 
 		$config_html = new SiteMapExportConfig('sitemap/sitemap.html.tpl',
 			'sitemap/module_map.html.tpl', $sub_section_tpl, 'sitemap/sitemap_link.html.tpl');
+		
+		$response = new SiteDisplayResponse($sitemap->export($config_html));
+		
+		$response->get_graphical_environment()->set_page_title('Site map');
 
-		return new SiteDisplayResponse($sitemap->export($config_html));
+		return $response;
 	}
 }
 ?>

@@ -32,6 +32,7 @@ Environment::load_imports();
 
 /* DEPRECATED VARS */
 $Cache = new Cache();
+$Bread_crumb = new BreadCrumb();
 /* END DEPRECATED */
 
 Environment::init();

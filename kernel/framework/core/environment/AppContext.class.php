@@ -110,24 +110,6 @@ class AppContext
 	{
 		return self::$bench;
 	}
-
-
-	/**
-	 * Inits the breadcrumb
-	 */
-	public static function init_breadcrumb()
-	{
-		self::$breadcrumb = new BreadCrumb();
-	}
-
-	/**
-	 * Returns the current page's bread crumb
-	 * @return BreadCrumb
-	 */
-	public static function get_breadcrumb()
-	{
-		return self::$breadcrumb;
-	}
 	
 	/**
 	 * @deprecated de merde pour toi benoit

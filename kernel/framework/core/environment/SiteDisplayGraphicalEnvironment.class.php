@@ -35,12 +35,23 @@
  */
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
+	/**
+	 * @var bool
+	 */
 	private $display_left_menus = true;
+	/**
+	 * @var bool
+	 */
 	private $display_right_menus = true;
+	/**
+	 * @var BreadCrumb The page breadcrumb
+	 */
+	private $breadcrumb = null;
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->set_breadcrumb(new BreadCrumb());
 	}
 
 	/**
@@ -77,7 +88,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->display_menus($template);
 
 		//Bread crumb
-		AppContext::get_breadcrumb()->display($template);
+		$this->get_breadcrumb()->display($template);
 
 		$template->parse();
 	}
@@ -331,6 +342,25 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 
 		$template->parse();
+	}
+	
+	/**
+	 * Returns the bread crumb
+	 * @return BreadCrumb The breadcrumb
+	 */
+	public function get_breadcrumb()
+	{
+		return $this->breadcrumb;
+	}
+	
+	/**
+	 * Sets the page's bread crumb
+	 * @param BreadCrumb $breadcrumb The bread crumb to use
+	 */
+	public function set_breadcrumb(BreadCrumb $breadcrumb)
+	{
+		$this->breadcrumb = $breadcrumb;
+		$this->breadcrumb->set_graphical_environment($this);
 	}
 }
 
