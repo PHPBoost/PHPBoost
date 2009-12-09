@@ -50,9 +50,14 @@ class CacheManager
 	private static $cache_manager_instance = null;
 
 	/**
-	 * @var The top-level cache which associates a name to the corresponding data.
+	 * @var RAMCache The RAM cache
 	 */
-	protected $cached_data = array();
+	protected $ram_cache = null;
+
+	protected function __construct()
+	{
+		$this->ram_cache = RAMCacheFactory::get('CacheManager');
+	}
 
 	/**
 	 * Loads the data which is identified by the parameters
@@ -76,8 +81,9 @@ class CacheManager
 	 */
 	public static function invalidate($module_name, $entry_name = '')
 	{
-		self::get_cache_manager_instance()->invalidate_file_cache($module_name, $entry_name);
-		self::get_cache_manager_instance()->invalidate_memory_cache($module_name, $entry_name);
+		$name = self::compute_entry_name($module_name, $entry_name);
+		self::get_cache_manager_instance()->invalidate_file_cache($name);
+		self::get_cache_manager_instance()->invalidate_memory_cache($name);
 	}
 
 	/**
@@ -97,7 +103,7 @@ class CacheManager
 	 */
 	protected function load_data($classname, $module_name, $entry_name = '')
 	{
-		$name = $this->compute_entry_name($module_name, $entry_name);
+		$name = self::compute_entry_name($module_name, $entry_name);
 		if ($this->is_memory_cached($name))
 		{
 			return $this->get_memory_cached_data($name);
@@ -111,7 +117,7 @@ class CacheManager
 				return $data;
 			}
 		}
-		
+
 		//Not cached anywhere, we create it
 		$data = new $classname();
 		$data->synchronize();
@@ -120,20 +126,20 @@ class CacheManager
 		return $data;
 	}
 
-	protected function invalidate_file_cache($module_name, $entry_name = '')
+	protected function invalidate_file_cache($name)
 	{
-		$this->get_file($this->compute_entry_name($module_name, $entry_name))->delete();
+		$this->get_file($name)->delete();
 	}
 
-	protected function invalidate_memory_cache($module_name, $entry_name = '')
+	protected function invalidate_memory_cache($name)
 	{
-		unset($this->cached_data[$this->compute_entry_name($module_name, $entry_name)]);
+		$this->ram_cache->delete($name);
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function compute_entry_name($module_name, $entry_name)
+	protected static function compute_entry_name($module_name, $entry_name)
 	{
 		if (!empty($entry_name))
 		{
@@ -145,13 +151,13 @@ class CacheManager
 		}
 	}
 
-	//Top-level (memory) cache management
+	//RAM cache management
 	/**
 	 * @return bool
 	 */
 	protected function is_memory_cached($name)
 	{
-		return !empty($this->cached_data[$name]);
+		return $this->ram_cache->contains($name);
 	}
 
 	/**
@@ -159,12 +165,12 @@ class CacheManager
 	 */
 	protected function get_memory_cached_data($name)
 	{
-		return $this->cached_data[$name];
+		return $this->ram_cache->get($name);
 	}
 
 	protected function memory_cache_data($name, CacheData  $value)
 	{
-		$this->cached_data[$name] = $value;
+		return $this->ram_cache->store($name, $value);
 	}
 
 	//Filesystem cache
