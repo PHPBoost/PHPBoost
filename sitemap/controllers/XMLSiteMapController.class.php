@@ -34,6 +34,8 @@ class XMLSiteMapController implements Controller
 		 'framework/content/sitemap/module_map.xml.tpl', 'framework/content/sitemap/sitemap_section.xml.tpl',
 		 'framework/content/sitemap/sitemap_link.xml.tpl');
 		
+		$site_map->build();
+		
 		return new SiteNodisplayResponse($site_map->export($config_xml));
 	}
 }

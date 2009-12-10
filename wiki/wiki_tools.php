@@ -151,12 +151,18 @@ elseif ($page_type == 'index')
 $other_tools = array();
 //Création d'un article
 if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
-$other_tools[ $LANG['wiki_create_article']] = array(url('post.php'), 'create_article');
+{
+	$other_tools[ $LANG['wiki_create_article']] = array(url('post.php'), 'create_article');
+}
 //Création d'une catégorie
 if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
-$other_tools[$LANG['wiki_create_cat']] = array(url('post.php?type=cat'), 'create_cat');
+{
+	$other_tools[$LANG['wiki_create_cat']] = array(url('post.php?type=cat'), 'create_cat');
+}
 //Page au hasard
-$other_tools[$LANG['wiki_random_page']] = array(url('property.php?random=1'), 'random_page');
+{
+	$other_tools[$LANG['wiki_random_page']] = array(url('property.php?random=1'), 'random_page');
+}
 //Recherche
 $other_tools[$LANG['wiki_search']] = array(url('search.php'), 'search');
 //Sujets suivis (membres seulement)

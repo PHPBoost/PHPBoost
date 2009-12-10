@@ -27,14 +27,18 @@
 						<ul>
 							# IF C_ACTIV_COM #
 							<li>
-								<h5 style="margin-right:20px;"><img src="{PAGES_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}">{L_COM}</a></h5>
+								<h5 style="margin-right:20px;"><img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}">{L_COM}</a></h5>
 							</li>
 							# ENDIF #
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="{PAGES_PATH}/images/tools.png" class="valign_middle" alt="" > {L_LINKS}</h5>
+								<h5 style="margin-right:5px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" > {L_LINKS}</h5>
 								<ul id="smenu1">
 									# START links_list #
-									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" {links_list.DM_A_CLASS}>{links_list.L_ACTION}</a></li>
+									<li>
+										<a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" style="background-image:url('{PICTURES_DATA_PATH}/{links_list.DM_A_CLASS}')";>
+											{links_list.L_ACTION}
+										</a>
+									</li>
 									# END links_list #
 								</ul>
 							</li>
