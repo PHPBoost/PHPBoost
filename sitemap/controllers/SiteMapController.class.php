@@ -27,22 +27,28 @@
 
 class SiteMapController implements Controller
 {
+	private $lang = array();
+	
+	public function __construct()
+	{
+		$this->lang = LangLoader::get('main', 'sitemap');
+	}
+	
 	public function execute(HTTPRequest $request)
 	{
 		$sitemap = new SiteMap();
-		$sitemap->build();
+		$sitemap->build(SiteMap::USER_MODE, SiteMap::AUTH_USER);
 
-		$sub_section_tpl = new Template('sitemap/sitemap_section.html.tpl');
-		$sub_section_tpl->assign_vars(array(
-		'L_LEVEL' => 'de niveau'
-		));
-
-		$config_html = new SiteMapExportConfig('sitemap/sitemap.html.tpl',
-			'sitemap/module_map.html.tpl', $sub_section_tpl, 'sitemap/sitemap_link.html.tpl');
+		$config_html = new SiteMapExportConfig('sitemap/export/sitemap.html.tpl',
+			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
 		
-		$response = new SiteDisplayResponse($sitemap->export($config_html));
+		$tpl = new Template('sitemap/sitemap.tpl');
+		$tpl->add_lang($this->lang);
+		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
 		
-		$response->get_graphical_environment()->set_page_title('Site map');
+		$response = new SiteDisplayResponse($tpl);
+		
+		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
 
 		return $response;
 	}

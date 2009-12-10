@@ -167,7 +167,7 @@ class SiteMap
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	public function build($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
+	public function build($mode = self::SEARCH_ENGINE_MODE, $auth_mode = self::AUTH_GUEST)
 	{
 		$this->build_kernel_map($mode, $auth_mode);
 		$this->build_modules_maps($auth_mode);
