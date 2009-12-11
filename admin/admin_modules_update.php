@@ -33,13 +33,14 @@ $update = !empty($_GET['update']) ? true : false;
 if ($update) //Mise à jour du module
 {	
 	//Récupération de l'identifiant du module
-	$module_name = '';
-	foreach ($_POST as $key => $value)
-		if ($value == $LANG['update_module'])
-			$module_name = $key;
-	
-	$activ_module = retrieve(POST, $module_name . 'activ', 0);
-	
+	$module_name = retrieve(GET, 'update', '');
+	if ( empty($module_name) ) {
+		foreach ($_POST as $key => $value)
+			if ($value == $LANG['update_module'])
+				$module_name = $key;
+		
+		$activ_module = retrieve(POST, $module_name . 'activ', 0);
+	}
 	//Vérification de l'existance du module
 	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
@@ -68,7 +69,7 @@ if ($update) //Mise à jour du module
 		$filesupdate = array();
 		$dir_db = '../' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
 		$folder_path = new Folder($dir_db);
-		foreach ($folder_path->get_files('`.*\.php$`i') as $files)
+		foreach ($folder_path->get_files('`.*\.(php|sql)$`i') as $files)
 		{	
 			$file = $files->get_name();
 			if (strpos($file, DBTYPE) !== false)
@@ -166,7 +167,12 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	
+	if (!empty($error)) {
+		redirect(HOST . SCRIPT . $error);	
+	} else {
+		redirect(HOST . SCRIPT . '?update=' . $module_name);	
+	}
 }
 else
 {			
