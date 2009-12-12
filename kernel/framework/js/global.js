@@ -672,7 +672,7 @@ function include(file)
 		script = window.document.createElement("script");
 		script.type = "text/javascript";
 		script.src = file;
-		$("header").appendChild(script);
+		document.documentElement.firstChild.appendChild(script);
 	}
 }
 
