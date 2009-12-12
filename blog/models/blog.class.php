@@ -115,13 +115,13 @@ class Blog extends BusinessObject
 		switch ($global_action)
 		{
 			case self::GLOBAL_ACTION_CREATE:
-				return Dispatcher::get_url('/blog', '/create/');
+				return DispatchManager::get_url('/blog', '/create/');
 			case self::GLOBAL_ACTION_CREATE_VALID:
 				global $Session;
-				return Dispatcher::get_url('/blog', '/create/valid/?token=' . $Session->get_token());
+				return DispatchManager::get_url('/blog', '/create/valid/?token=' . $Session->get_token());
 			case self::GLOBAL_ACTION_LIST:
 			default:
-				return Dispatcher::get_url('/blog', '/');
+				return DispatchManager::get_url('/blog', '/');
 		}
 	}
 
@@ -130,22 +130,22 @@ class Blog extends BusinessObject
 		switch ($action)
 		{
 			case self::ACTION_EDIT:
-				return Dispatcher::get_url('/blog', $this->id . '/edit/');
+				return DispatchManager::get_url('/blog', $this->id . '/edit/');
 			case self::ACTION_EDIT_VALID:
 				global $Session;
-				return Dispatcher::get_url('/blog', $this->id . '/edit/valid/?token=' . $Session->get_token());
+				return DispatchManager::get_url('/blog', $this->id . '/edit/valid/?token=' . $Session->get_token());
 			case self::ACTION_DELETE:
 				global $Session;
-				return Dispatcher::get_url('/blog', $this->id . '/delete/?token=' . $Session->get_token());
+				return DispatchManager::get_url('/blog', $this->id . '/delete/?token=' . $Session->get_token());
 			case self::ACTION_ADD_POST:
-				return Dispatcher::get_url('/blog', $this->id . '/add/');
+				return DispatchManager::get_url('/blog', $this->id . '/add/');
 			case self::ACTION_DETAILS:
 			default:
 				if ($param !== null && is_numeric($param))
 				{   // represents the page number
-					return Dispatcher::get_url('/blog', '/' . $this->id . '/' . $param . '/');
+					return DispatchManager::get_url('/blog', '/' . $this->id . '/' . $param . '/');
 				}
-				return Dispatcher::get_url('/blog', '/' . $this->id . '/');
+				return DispatchManager::get_url('/blog', '/' . $this->id . '/');
 		}
 	}
 

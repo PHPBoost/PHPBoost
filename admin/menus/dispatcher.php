@@ -36,6 +36,6 @@ new UrlControllerMapper('MenuControllerConfigurationsList', '`^(?:/configs(?:/li
 new UrlControllerMapper('MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
 array('menu_config_id'))
 );
-Dispatcher::do_dispatch($url_controller_mappers);
+DispatchManager::dispatch($url_controller_mappers);
 
 ?>

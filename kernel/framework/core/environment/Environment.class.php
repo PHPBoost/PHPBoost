@@ -516,7 +516,9 @@ class Environment
 			//If it's an unistalled module, we forbid access!
 			if (!empty($array_info_module['name']))
 			{
-				$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
+				// TODO manage PHPBoost specifics errors messages like this
+				//				$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
+				DispatchManager::redirect(PHPBoostErrors::module_not_installed());
 			}
 		}
 	}

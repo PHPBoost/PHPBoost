@@ -39,7 +39,7 @@ class MenuUrlBuilder
 	 */
     public static function menu_configuration_list()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/list/');
+		return DispatchManager::get_url(self::$dispatcher, '/configs/list/');
 	}
     
 	/**
@@ -47,7 +47,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_create()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/create/');
+		return DispatchManager::get_url(self::$dispatcher, '/configs/create/');
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_create_valid()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/create/valid/?token=' .
+		return DispatchManager::get_url(self::$dispatcher, '/configs/create/valid/?token=' .
 		$Session->get_token());
 	}
 	
@@ -64,7 +64,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_edit($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/edit/');
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_edit_valid($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/edit/valid/?token=' .
+		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/edit/valid/?token=' .
 		$Session->get_token());
 	}
 	
@@ -81,7 +81,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_edit_delete($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/delete/?token=' .
+		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/delete/?token=' .
 		$Session->get_token());
 	}
 	
@@ -90,7 +90,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_configure($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/configure/');
+		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/configure/');
 	}
 	
 	/**
@@ -98,7 +98,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_configuration_configure_valid($id)
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/configs/' . $id . '/configure/valid/');
+		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/configure/valid/');
 	}
 	
 	/**
@@ -106,7 +106,7 @@ class MenuUrlBuilder
 	 */
 	public static function menu_list()
 	{
-		return Dispatcher::get_url(self::$dispatcher, '/menus/list/');
+		return DispatchManager::get_url(self::$dispatcher, '/menus/list/');
 	}
 }
 ?>

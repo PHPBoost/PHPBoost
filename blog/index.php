@@ -46,6 +46,6 @@ new UrlControllerMapper('blog_post_controller', '`^/[0-9]+/post/([0-9]+)/edit/?$
 new UrlControllerMapper('blog_post_controller', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`', array('blog_id', 'post_id')),
 new UrlControllerMapper('blog_post_controller', '`^/[0-9]+/post/delete/([0-9]+)/?$`', array('blog_id', 'post_id'))
 );
-Dispatcher::do_dispatch($url_controller_mappers);
+DispatchManager::dispatch($url_controller_mappers);
 
 ?>
