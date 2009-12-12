@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        SiteMapExportConfig.class.php
+ *                        SitemapExportConfig.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright            : (C) 2008 Sautel Benoit
@@ -30,7 +30,7 @@
  * @package content
  * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc Configuration used to export a SiteMap. It contains some Template objects
+ * @desc Configuration used to export a Sitemap. It contains some Template objects
  * which are used to export each kind of elements of a sitemap.
  * Using different configurations will enable you for example to export in HTML code to be
  * displayed in a page of the web site (the site map) or to be written in the sitemap.xml
@@ -38,10 +38,10 @@
  * the research of your site.
  *
  */
-class SiteMapExportConfig
+class SitemapExportConfig
 {
 	/**
-	 * @var Template object used to export the SiteMap objects
+	 * @var Template object used to export the Sitemap objects
 	 */
 	private $site_map_file;
 
@@ -51,19 +51,19 @@ class SiteMapExportConfig
 	private $module_map_file;
 
 	/**
-	 * @var Template object used to export the SiteMapSection objects
+	 * @var Template object used to export the SitemapSection objects
 	 */
 	private $section_file;
 	/**
-	 * @var Template object used to export the SiteMapLink objects
+	 * @var Template object used to export the SitemapLink objects
 	 */
 	private $link_file;
 
 	/**
-	 * @desc Builds a SiteMapExportConfig object
+	 * @desc Builds a SitemapExportConfig object
 	 * @param mixed $module_map_file The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
-	 * @param mixed $section_file The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
-	 * @param mixed $link_file The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $section_file The template used to export a SitemapSection object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $link_file The template used to export a SitemapLink object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function __construct($site_map_file, $module_map_file, $section_file, $link_file)
 	{
@@ -75,7 +75,7 @@ class SiteMapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a SiteMap object.
+	 * @desc Returns the Template object to use while exporting a Sitemap object.
 	 * @return Template
 	 */
 	public function get_site_map_stream()
@@ -93,7 +93,7 @@ class SiteMapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a SiteMapSection object.
+	 * @desc Returns the Template object to use while exporting a SitemapSection object.
 	 * @return Template
 	 */
 	public function get_section_stream()
@@ -102,7 +102,7 @@ class SiteMapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a SiteMapLink object.
+	 * @desc Returns the Template object to use while exporting a SitemapLink object.
 	 * @return Template
 	 */
 	public function get_link_stream()
@@ -129,8 +129,8 @@ class SiteMapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a SiteMapSection object.
-	 * @param mixed $section_file The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
+	 * @desc Sets the Template object to use while exporting a SitemapSection object.
+	 * @param mixed $section_file The template used to export a SitemapSection object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_section_stream($section_file)
 	{
@@ -138,8 +138,8 @@ class SiteMapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a SiteMapLink object.
-	 * @param mixed $link_file The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
+	 * @desc Sets the Template object to use while exporting a SitemapLink object.
+	 * @param mixed $link_file The template used to export a SitemapLink object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_link_stream($link_file)
 	{

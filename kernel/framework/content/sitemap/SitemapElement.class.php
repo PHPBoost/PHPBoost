@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        SiteMapElement.class.php
+ *                        SitemapElement.class.php
  *                            -------------------
  *   begin                : February 3rd 2009
  *   copyright            : (C) 2009 Sautel Benoit
@@ -31,11 +31,11 @@
  * @package content
  * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This abstract is the root of every object which can be contained by a SiteMap object.
- * Some SiteMapElements objects can contain one or many SiteMapElement objects therefore the elements
+ * @desc This abstract is the root of every object which can be contained by a Sitemap object.
+ * Some SitemapElements objects can contain one or many SitemapElement objects therefore the elements
  * can be represented by a tree an each element has a depth in the tree.
  */
-abstract class SiteMapElement
+abstract class SitemapElement
 {
 	/**
 	 * @var int Depth of the element in the elements tree
@@ -43,7 +43,7 @@ abstract class SiteMapElement
 	var $depth = 1;
 
 	/**
-	 * @desc Builds a SiteMapElement object
+	 * @desc Builds a SitemapElement object
 	 * @param string $name Name of the object
 	 */
 	public function __construct()
@@ -76,11 +76,11 @@ abstract class SiteMapElement
 
 	/**
 	 * @desc Exports the element
-	 * @param SiteMapExportConfig $export_config Export configuration
+	 * @param SitemapExportConfig $export_config Export configuration
 	 * @param int $depth Depth of the element
 	 * @return string The exported code
 	 */
-	public abstract function export(SiteMapExportConfig  $export_config);
+	public abstract function export(SitemapExportConfig  $export_config);
 }
 
 ?>

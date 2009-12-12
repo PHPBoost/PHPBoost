@@ -185,7 +185,7 @@ class NewsInterface extends ModuleInterface
 
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
 
-		$news_link = new SiteMapLink($NEWS_LANG['news'], new Url('/news/news.php'), SiteMap::FREQ_DAILY, SiteMap::PRIORITY_MAX);
+		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($news_link);
 		$module_map->set_description('<em>Test</em>');
@@ -199,7 +199,7 @@ class NewsInterface extends ModuleInterface
 			$id = $keys[$j];
 			$properties = $NEWS_CAT[$id];
 
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
@@ -471,9 +471,9 @@ class NewsInterface extends ModuleInterface
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
 
-		$this_category = new SiteMapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), SiteMap::FREQ_WEEKLY);
+		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), Sitemap::FREQ_WEEKLY);
 
-		$category = new SiteMapSection($this_category);
+		$category = new SitemapSection($this_category);
 
 		$i = 0;
 
@@ -485,7 +485,7 @@ class NewsInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $NEWS_CAT[$id];
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}

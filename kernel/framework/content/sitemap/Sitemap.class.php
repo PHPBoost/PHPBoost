@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            SiteMap.class.php
+ *                            Sitemap.class.php
  *                            -------------------
  *   begin                : February 3rd 2009
  *   copyright            : (C) 2009 Sautel Benoit
@@ -33,7 +33,7 @@
  * @desc Describes the map of the site. Can be exported according to any text form by using a template configuration.
  * A site map contains some links, some link sections and some module maps (which also contain links and sections).
  */
-class SiteMap
+class Sitemap
 {
 	//Who will see the site map?
 	/**
@@ -74,7 +74,7 @@ class SiteMap
 	const PRIORITY_MIN = '0';
 
 	/**
-	 * @var SiteMapElement[] Elements contained by the site map
+	 * @var SitemapElement[] Elements contained by the site map
 	 */
 	private $elements = array();
 	/**
@@ -83,8 +83,8 @@ class SiteMap
 	private $site_name = '';
 
 	/**
-	 * @desc Builds a SiteMap object with its elements
-	 * @param SiteMapElement[] $elements List of the elements it contains
+	 * @desc Builds a Sitemap object with its elements
+	 * @param SitemapElement[] $elements List of the elements it contains
 	 */
 	public function __construct($site_name = '', $elements = null)
 	{
@@ -122,8 +122,8 @@ class SiteMap
 	}
 
 	/**
-	 * @desc Adds an element to the elements list of the SiteMap
-	 * @param SiteMapElement $element The element to add
+	 * @desc Adds an element to the elements list of the Sitemap
+	 * @param SitemapElement $element The element to add
 	 */
 	public function add($element)
 	{
@@ -131,17 +131,17 @@ class SiteMap
 	}
 
 	/**
-	 * @desc Exports a SiteMap. You will be able to use the following variables into the templates used to export:
+	 * @desc Exports a Sitemap. You will be able to use the following variables into the templates used to export:
 	 * <ul>
 	 * 	<li>C_SITE_MAP which is a condition indicating if it's a site map (useful if you want to use a sigle template
 	 * for the whole export configuration)</li>
 	 * 	<li>SITE_NAME which contains the name of the site</li>
 	 * 	<li>A loop "element" in which the code of each element is in the variable CODE</li>
 	 * </ul>
-	 * @param SiteMapExportConfig $export_config Export configuration
-	 * @return Template The exported code of the SiteMap
+	 * @param SitemapExportConfig $export_config Export configuration
+	 * @return Template The exported code of the Sitemap
 	 */
-	public function export(SiteMapExportConfig  $export_config)
+	public function export(SitemapExportConfig  $export_config)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->get_site_map_stream();
@@ -197,7 +197,7 @@ class SiteMap
 		global $CONFIG, $LANG, $User;
 			
 		//We consider the kernel as a module
-		$kernel_map = new ModuleMap(new SiteMapLink($LANG['home'], new Url($CONFIG['start_page'])));
+		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url($CONFIG['start_page'])));
 			
 		//The site description
 		$kernel_map->set_description(nl2br($CONFIG['site_desc']));
@@ -205,30 +205,30 @@ class SiteMap
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
-			$kernel_map->add(new SiteMapLink($LANG['members_list'], new Url('/member/member.php')));
+			$kernel_map->add(new SitemapLink($LANG['members_list'], new Url('/member/member.php')));
 
 			//Member space
 			if ($auth_mode == self::AUTH_USER && $User->check_level(MEMBER_LEVEL))
 			{
 				//We create a section for that
-				$member_space_section = new SiteMapSection(new SiteMapLink($LANG['my_private_profile'],
+				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
 				new Url('/member/' . url('member.php?id=' . $User->get_id() . '&amp;view=1', 'member-' . $User->get_id() . '.php?view=1'))));
 					
 				//Profile edition
-				$member_space_section->add(new SiteMapLink($LANG['profile_edition'],
+				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
 				new Url('/member/' . url('member.php?id=' . $User->get_id() . '&amp;edit=1', 'member-' . $User->get_id() . '.php?edit=1'))));
 					
 				//Private messaging
-				$member_space_section->add(new SiteMapLink($LANG['private_messaging'],
+				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
 				new Url('/member/' . url('pm.php?pm=' . $User->get_id(), 'pm-' . $User->get_id() . '.php'))));
 					
 				//Contribution panel
-				$member_space_section->add(new SiteMapLink($LANG['contribution_panel'], new Url('/member/contribution_panel.php')));
+				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], new Url('/member/contribution_panel.php')));
 					
 				//Administration panel
 				if ($User->check_level(ADMIN_LEVEL))
 				{
-					$member_space_section->add(new SiteMapLink($LANG['admin_panel'], new Url('/admin/admin_index.php')));
+					$member_space_section->add(new SitemapLink($LANG['admin_panel'], new Url('/admin/admin_index.php')));
 				}
 					
 				//We add it to the kernel map

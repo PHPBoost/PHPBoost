@@ -333,7 +333,7 @@ class WikiInterface extends ModuleInterface
 		load_module_lang('wiki');
 		$Cache->load('wiki');
 		
-		$wiki_link = new SiteMapLink($LANG['wiki'], new Url('wiki/wiki.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_LOW);
+		$wiki_link = new SitemapLink($LANG['wiki'], new Url('wiki/wiki.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_LOW);
 		$module_map = new ModuleMap($wiki_link);
 		
 		$id_cat = 0;
@@ -358,9 +358,9 @@ class WikiInterface extends ModuleInterface
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;
 		
-		$this_category = new SiteMapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.url_encode_rewrite($_WIKI_CATS[$id_cat]['name']), url_encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
+		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.url_encode_rewrite($_WIKI_CATS[$id_cat]['name']), url_encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
 			
-		$category = new SiteMapSection($this_category);
+		$category = new SitemapSection($this_category);
 		
 		$i = 0;
 		

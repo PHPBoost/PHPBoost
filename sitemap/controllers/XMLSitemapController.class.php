@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          SiteMapController.class.php
+ *                        XMLSitemapController.class.php
  *                            -------------------
- *   begin                : December 09 2009
+ *   begin                : December 08 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,32 +25,14 @@
  *
  ###################################################*/
 
-class SiteMapController implements Controller
+class XMLSitemapController implements Controller
 {
-	private $lang = array();
-	
-	public function __construct()
-	{
-		$this->lang = LangLoader::get('main', 'sitemap');
-	}
-	
 	public function execute(HTTPRequest $request)
 	{
-		$sitemap = new SiteMap();
-		$sitemap->build(SiteMap::USER_MODE, SiteMap::AUTH_USER);
-
-		$config_html = new SiteMapExportConfig('sitemap/export/sitemap.html.tpl',
-			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
+		$export_config = SitemapService::get_xml_file_export_config();
 		
-		$tpl = new Template('sitemap/sitemap.tpl');
-		$tpl->add_lang($this->lang);
-		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
+		$sitemap = SitemapService::get_public_sitemap();
 		
-		$response = new SiteDisplayResponse($tpl);
-		
-		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
-
-		return $response;
+		return new SiteNodisplayResponse($sitemap->export($export_config));
 	}
 }
-?>

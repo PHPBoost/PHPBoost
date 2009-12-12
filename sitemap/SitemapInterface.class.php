@@ -31,5 +31,10 @@ class SitemapInterface extends ModuleInterface
 	{
 		parent::__construct('sitemap');
 	}
+	
+	public function on_changeday()
+	{
+		
+	}
 }
 ?>

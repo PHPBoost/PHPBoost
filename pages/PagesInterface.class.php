@@ -147,7 +147,7 @@ class PagesInterface extends ModuleInterface
 		load_module_lang('pages');
 		$Cache->load('pages');
 		
-		$pages_link = new SiteMapLink($LANG['pages'], new Url('/pages/explorer.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_MAX);
+		$pages_link = new SitemapLink($LANG['pages'], new Url('/pages/explorer.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($pages_link);
 		
 		$id_cat = 0;
@@ -159,11 +159,11 @@ class PagesInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
-			elseif ($auth_mode == SiteMap::AUTH_USER)
+			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == ADMIN_LEVEL)
 					$this_auth = true;
@@ -183,9 +183,9 @@ class PagesInterface extends ModuleInterface
 	{
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG;
 		
-		$this_category = new SiteMapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.url_encode_rewrite($_PAGES_CATS[$id_cat]['name']), url_encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
+		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.url_encode_rewrite($_PAGES_CATS[$id_cat]['name']), url_encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
 			
-		$category = new SiteMapSection($this_category);
+		$category = new SitemapSection($this_category);
 		
 		$i = 0;
 		
@@ -196,11 +196,11 @@ class PagesInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
-			elseif ($auth_mode == SiteMap::AUTH_USER)
+			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == ADMIN_LEVEL)
 					$this_auth = true;
