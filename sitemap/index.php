@@ -35,6 +35,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('SiteMapController', '`^/?$`')
 );
 
-Dispatcher::do_dispatch($url_controller_mappers);
+DispatchManager::dispatch($url_controller_mappers);
 
 ?>

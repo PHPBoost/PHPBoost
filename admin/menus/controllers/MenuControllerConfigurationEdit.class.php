@@ -53,15 +53,16 @@ class MenuControllerConfigurationEdit implements Controller
 		}
 		catch (ObjectNotFoundException $exception)
 		{
-			 $error_controller = new MenuErrorController();
-//			 $error_controller = new ErrorController();
-				
-			$error_controller->set_title('Menu configuration does not exists');
-			$error_controller->set_message('The requested menu configuration ' .
-			$request->get_value('menu_config_id') . ' does not exists');
-			$error_controller->set_correction_link(MenuUrlBuilder::menu_configuration_list()->absolute());
-			$error_controller->set_correction_link_name('Menu configuration list');
-				
+			$error_controller = new UserErrorController(
+			    'Menu configuration does not exists',
+			    'The requested menu configuration ' . $request->get_value('menu_config_id') . ' does not exists',
+			UserErrorController::FATAL
+			);
+
+			$error_controller->set_correction_link(
+			    'Menu configuration list', MenuUrlBuilder::menu_configuration_list()->absolute());
+			$error_controller->set_response_classname('AdminMenusDisplayResponse');
+
 			return $error_controller->execute($request);
 		}
 		catch (UnexistingHTTPParameterException $exception)
