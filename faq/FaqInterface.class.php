@@ -177,7 +177,7 @@ class FaqInterface extends ModuleInterface
 
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
-		$faq_link = new SiteMapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), SiteMap::FREQ_DEFAULT, SiteMap::PRIORITY_MAX);
+		$faq_link = new SitemapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		
 		$module_map = new ModuleMap($faq_link);
 		$module_map->set_description('<em>Test</em>');
@@ -190,7 +190,7 @@ class FaqInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $FAQ_CATS[$id];
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
@@ -211,9 +211,9 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
-		$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
+		$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
 			
-		$category = new SiteMapSection($this_category);
+		$category = new SitemapSection($this_category);
 		
 		$i = 0;
 		
@@ -224,7 +224,7 @@ class FaqInterface extends ModuleInterface
 		{
 			$id = $keys[$j];
 			$properties = $FAQ_CATS[$id];
-			if ($auth_mode == SiteMap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}

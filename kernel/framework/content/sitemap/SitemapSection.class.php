@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           SiteMapSection.class.php
+ *                           SitemapSection.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright            : (C) 2008 Sautel Benoit
@@ -32,22 +32,22 @@
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a section of a site map.
  */
-class SiteMapSection extends SiteMapElement
+class SitemapSection extends SitemapElement
 {
 	/**
-	 * @var SiteMapLink Link associated to the section
+	 * @var SitemapLink Link associated to the section
 	 */
 	protected $link;
 	/**
-	 * @var SiteMapElement[] List of the elements contained by the module map
+	 * @var SitemapElement[] List of the elements contained by the module map
 	 */
 	protected $elements = array();
 
 	/**
-	 * @desc Builds a SiteMapSection object
-	 * @param SiteMapLink $link The link associated to the section
+	 * @desc Builds a SitemapSection object
+	 * @param SitemapLink $link The link associated to the section
 	 */
-	public function __construct(SiteMapLink $link)
+	public function __construct(SitemapLink $link)
 	{
 		$this->set_link($link);
 	}
@@ -59,7 +59,7 @@ class SiteMapSection extends SiteMapElement
 
 	/**
 	 * @desc Returns the link associated to the section
-	 * @return SiteMapLink the link
+	 * @return SitemapLink the link
 	 */
 	public function get_link()
 	{
@@ -68,9 +68,9 @@ class SiteMapSection extends SiteMapElement
 
 	/**
 	 * @desc Sets the link associated to the section
-	 * @param SiteMapLink $link the link
+	 * @param SitemapLink $link the link
 	 */
-	public function set_link(SiteMapLink  $link)
+	public function set_link(SitemapLink  $link)
 	{
 		$this->link = $link;
 	}
@@ -91,7 +91,7 @@ class SiteMapSection extends SiteMapElement
 
 	/**
 	 * @desc Adds an elemement to the section
-	 * @param SiteMapElement $element element to add
+	 * @param SitemapElement $element element to add
 	 */
 	public function add($element)
 	{
@@ -111,10 +111,10 @@ class SiteMapSection extends SiteMapElement
 	 * 	<li>C_SECTION, boolean meaning that it's a section (useful if you want to use a sigle template for the whole export configuration)</li>
 	 * 	<li>A loop "element" containing evert element of the section (their code is available in the CODE variable of the loop)</li>
 	 * </ul>
-	 * @param SiteMapExportConfig $export_config Export configuration
+	 * @param SitemapExportConfig $export_config Export configuration
 	 * @return Template the exported section
 	 */
-	public function export(SiteMapExportConfig  $export_config)
+	public function export(SitemapExportConfig  $export_config)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->get_section_stream();

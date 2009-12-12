@@ -34,7 +34,7 @@
  * (generally the module description) and contains some elements which can be
  * some simple links or some sections (which can match the categories for example).
  */
-class ModuleMap extends SiteMapSection
+class ModuleMap extends SitemapSection
 {
 	/**
 	 * @var string Description of the module
@@ -43,9 +43,9 @@ class ModuleMap extends SiteMapSection
 
 	/**
 	 * @desc Builds a ModuleMap object
-	 * @param SiteMapLink $link Link associated to the root of the module
+	 * @param SitemapLink $link Link associated to the root of the module
 	 */
-	public function __construct(SiteMapLink  $link)
+	public function __construct(SitemapLink  $link)
 	{
 		//We build the parent object
 		parent::__construct($link);
@@ -82,10 +82,10 @@ class ModuleMap extends SiteMapSection
 	 *  <li>C_MODULE_MAP which is a boolean whose value is true, this will enable you to use a single template for the whole export configuration</li>
 	 *  <li>The loop "element" for which the variable CODE contains the code of each sub element of the module (for example categories)</li>
 	 *  </ul>
-	 * @param SiteMapExportConfig $export_config export configuration
+	 * @param SitemapExportConfig $export_config export configuration
 	 * @return Template the template
 	 */
-	public function export(SiteMapExportConfig $export_config)
+	public function export(SitemapExportConfig $export_config)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->get_module_map_stream();

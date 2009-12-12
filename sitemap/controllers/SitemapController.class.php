@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                                index.php
+ *                          SitemapController.class.php
  *                            -------------------
- *   begin                : December 08 2009
+ *   begin                : December 09 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,17 +25,31 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+class SitemapController implements Controller
+{
+	private $lang = array();
+	
+	public function __construct()
+	{
+		$this->lang = LangLoader::get('main', 'sitemap');
+	}
+	
+	public function execute(HTTPRequest $request)
+	{
+		$config_html = new SitemapExportConfig('sitemap/export/sitemap.html.tpl',
+			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+		$sitemap = SitemapService::get_personal_sitemap();
+		
+		$tpl = new Template('sitemap/sitemap.tpl');
+		$tpl->add_lang($this->lang);
+		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
+		
+		$response = new SiteDisplayResponse($tpl);
+		
+		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('XMLSitemapController', '`^/view/xml/?$`'),
-	new UrlControllerMapper('SitemapController', '`^/view(?:/html)?/?$`'),
-	new UrlControllerMapper('SitemapAdminController', '`^/admin/?$`'),
-	new UrlControllerMapper('SitemapController', '`^/?$`')
-);
-
-DispatchManager::dispatch($url_controller_mappers);
-
+		return $response;
+	}
+}
 ?>
