@@ -88,7 +88,7 @@ class ApcRAMCache implements RAMCache
     		$website_id_cache_file = PATH_TO_ROOT . '/cache/website_id.cfg';
     		if (file_exists($website_id_cache_file))
     		{
-    			self::$website_id = file_get_contents($website_id_cache_file);
+    			self::$website_id = @file_get_contents($website_id_cache_file);
     		}
     		if (self::$website_id === false)
     		{

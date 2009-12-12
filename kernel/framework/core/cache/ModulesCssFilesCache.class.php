@@ -43,19 +43,18 @@ class ModulesCssFilesCache implements CacheData
 	 */
 	public function synchronize()
 	{
-		global $MODULES, $THEME_CONFIG, $CONFIG;
+		global $THEME_CONFIG, $CONFIG;
 
 		$THEME_CONFIG = is_array($THEME_CONFIG) ? $THEME_CONFIG : array();
-		$MODULES = is_array($MODULES) ? $MODULES : array();
 
 		//We brows all the enabled modules
 		foreach ($THEME_CONFIG as $theme => $infos)
 		{
 			$files_for_this_theme = array();
-			foreach ($MODULES as $name => $array)
+			foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 			{
 				//If the module is enabled, we add it to the list
-				if ($array['activ'] == '1')
+				if ($module->is_activated())
 				{
 					if (file_exists(PATH_TO_ROOT . '/templates/' . $theme . '/modules/' . $name . '/' . $name . '_mini.css'))
 					{

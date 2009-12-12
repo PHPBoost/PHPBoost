@@ -246,7 +246,8 @@ else //Sinon on rempli le formulaire
 	//Pages de démarrage
 	$i = 0;
 	$modules_config = array();
-	foreach ($MODULES as $name => $array)
+	$modules_names = ModulesManager::get_installed_modules_ids_list();
+	foreach ($modules_names as $name)
 	{
 		$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
 		if (is_array($array_info))

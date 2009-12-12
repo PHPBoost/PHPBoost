@@ -556,16 +556,12 @@ switch($step)
 			require_once '../kernel/framework/core/Cache.class.php';
 			include '../lang/' . $lang . '/main.php';
 			$Cache = new Cache;
-
+			ModulesConfig::load()->set_modules(array());
 			//Installation des modules de la distribution
-
 			foreach ($DISTRIBUTION_MODULES as $module_name)
 			{
-				$Cache->load('modules', RELOAD_CACHE);
-				ModulesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+				ModulesManager::install_module($module_name, true);
 			}
-			$Cache->generate_file('modules');
-			$Cache->load('modules', RELOAD_CACHE);
 
 			// Ajout du menu de lien par défaut tout en haut à gauche
 

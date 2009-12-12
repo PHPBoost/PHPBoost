@@ -406,7 +406,7 @@ class MenuService
 			}
 			$menu = new MiniMenu($menu_name, $file_name);
 			MenuService::save($menu);
-			 
+
 			$i++;
 		}
 
@@ -490,51 +490,54 @@ class MenuService
 	*/
 	public static function add_mini_module($module, $generate_cache = true)
 	{
-		//        // Break if no config file found
-		//        $info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-		//        if (empty($info_module) || empty($info_module['mini_module']))
-		//            return false;
-		//
-		//        // Break if no mini module config
-		//        $mini_modules_menus = parse_ini_array($info_module['mini_module']);
-		//        if (empty($mini_modules_menus))
-		//        {
-		//            return false;
-		//        }
-		//
-		//        $installed = false;
-		//        foreach ($mini_modules_menus as $filename => $location)
-		//        {   // For each mini module for the current module
-		//
-		//            // Check the mini module file
-		//            if (file_exists(PATH_TO_ROOT . '/' . $module . '/' . $filename))
-		//            {
-		//                $file = explode('.', $filename, 2);
-		//                if (!is_array($file) || count($file) < 1)
-		//                {
-		//                    continue;
-		//                }
-		//
-		//                // Check the mini module function
-		//                include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
-		//                if (!function_exists($file[0]))
-		//                {
-		//                    continue;
-		//                }
-		//
-		//                $menu = new ModuleMiniMenu($module, $file[0]);
-		//                $menu->enabled(false);
-		//                $menu->set_auth(array('r1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r-1' => Menu::MENU_AUTH_BIT));
-		//                $menu->set_block(MenuService::str_to_location($location));
-		//                MenuService::save($menu);
-		//                if ($generate_cache)
-		//                    MenuService::generate_cache();
-		//
-		//                $installed = true;
-		//            }
-		//        }
-		//        return $installed;
-		return false;
+		// Break if no config file found
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+		if (empty($info_module) || empty($info_module['mini_module']))
+		{
+			return false;
+		}
+		
+		// Break if no mini module config
+		$mini_modules_menus = ModuleConfiguration::parse_admin_links($info_module['mini_module']);
+		if (empty($mini_modules_menus))
+		{
+			return false;
+		}
+
+		$installed = false;
+		foreach ($mini_modules_menus as $filename => $location)
+		{   // For each mini module for the current module
+
+			// Check the mini module file
+			if (file_exists(PATH_TO_ROOT . '/' . $module . '/' . $filename))
+			{
+				$file = explode('.', $filename, 2);
+				if (!is_array($file) || count($file) < 1)
+				{
+					continue;
+				}
+
+				// Check the mini module function
+				include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
+				if (!function_exists($file[0]))
+				{
+					continue;
+				}
+
+				$menu = new ModuleMiniMenu($module, $file[0]);
+				$menu->enabled(false);
+				$menu->set_auth(array('r1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r-1' => Menu::MENU_AUTH_BIT));
+				$menu->set_block(MenuService::str_to_location($location));
+				MenuService::save($menu);
+				if ($generate_cache)
+				{
+					MenuService::generate_cache();
+				}
+
+				$installed = true;
+			}
+		}
+		return $installed;
 	}
 
 	/**
@@ -560,7 +563,7 @@ class MenuService
 	 */
 	public static function update_mini_modules_list($update_cache = true)
 	{
-		global $Sql, $MODULES;
+		global $Sql;
 
 		// Retrieves the mini modules already installed
 		$installed_minimodules = array();
@@ -568,10 +571,13 @@ class MenuService
 
 		$modules = array();
 		// Build the availables modules list
-		foreach ($MODULES as $module_id => $module)
+		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
-			if (!empty($module['activ']) && $module['activ'] == 1)
-			$modules[] = $module_id;
+			die('coucou');
+			if ($module->is_activated())
+			{
+				$modules[] = $module->get_id();
+			}
 		}
 
 		$result = $Sql->query_while ($query, __LINE__, __FILE__);
@@ -635,7 +641,6 @@ class MenuService
 		$modules_discovery_service = new ModulesDiscoveryService();
 		// Récupère tous les modules même ceux n'ayant pas d'interface
 		$modules = $modules_discovery_service->get_all_modules();
-
 		// Sorts by localized name
 		$sorted_modules = array();
 		foreach ($modules as $module)

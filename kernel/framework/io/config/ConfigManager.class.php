@@ -130,7 +130,7 @@ class ConfigManager extends CacheManager
 		$name = $this->compute_entry_name($module_name, $entry_name);
 			
 		$this->save_in_db($name, $data);
-		$this->file_cache_data($name, $data);
+		$this->invalidate_file_cache($name);
 		$this->memory_cache_data($name, $data);
 	}
 

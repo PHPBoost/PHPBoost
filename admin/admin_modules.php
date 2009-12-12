@@ -156,16 +156,14 @@ else
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $Sql->query_while("SELECT id, name, auth, activ
-	FROM " . PREFIX . "modules
-	ORDER BY name", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	foreach (ModulesManager::get_installed_modules_map() as $module)
 	{
 		//Récupération des infos de config.
-		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
-		$array_modules[$array_info_module[$row['name']]['name']] = array('id' => $row['id'], 'name' => $row['name'], 'auth' => $row['auth'], 'activ' => $row['activ']);
+		$array_info_module[$module->get_id()] = load_ini_file('../' . $module->get_id() . '/lang/', get_ulang());
+		$array_modules[$array_info_module[$module->get_id()]['name']] = array(
+        'id' => $module->get_id(), 
+        'name' => $module->get_id(), 'auth' => $module->get_authorizations(), 'activ' => $module->is_activated());
 	}
-	$Sql->query_close($result);
 	
 	ksort($array_modules);
 	foreach ($array_modules as $name => $array_config)
@@ -174,11 +172,11 @@ else
 		$info_module = $array_info_module[$array_config['name']];
 		
 		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = !empty($row['auth']) ? unserialize($row['auth']) : array();
+		$array_auth = $row['auth'];
 		
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 		$Template->assign_block_vars('installed', array(
-			'ID' => $row['id'],
+			'ID' => $row['name'],
 			'NAME' => ucfirst($info_module['name']),
 			'ICON' => $row['name'],
 			'VERSION' => $info_module['version'],
