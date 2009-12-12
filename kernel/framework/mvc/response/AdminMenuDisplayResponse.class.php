@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin_display_response.class.php
+ *                           AdminMenuDisplayResponse.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -31,19 +31,32 @@
  * @package mvc
  * @subpackage response
  */
-class AdminMenusDisplayResponse extends AdminMenuDisplayResponse
+class AdminMenuDisplayResponse extends AbstractResponse
 {
+	private $full_view;
+
 	public function __construct($view)
 	{
-        global $LANG;
-        
-        parent::__construct($view);
-        
-        $view->add_lang($LANG);
-        $this->set_title($LANG['menus_management']);
-        $img = '/templates/' . get_utheme() . '/images/admin/menus.png';
-        $this->add_link($LANG['menu_configurations'], MenuUrlBuilder::menu_configuration_list()->absolute(), $img);
-        $this->add_link($LANG['menus'], MenuUrlBuilder::menu_list()->absolute(), $img);
+		$env = new AdminDisplayGraphicalEnvironment();
+
+		$this->full_view = new View('admin/AdminMenuDisplayResponse.tpl');
+		$this->full_view->add_subtemplate('content', $view);
+
+		parent::__construct($env , $this->full_view);
+	}
+
+	public function set_title($title)
+	{
+		$this->full_view->assign_vars(array('TITLE' => $title));
+	}
+
+	public function add_link($name, $url, $img)
+	{
+		$this->full_view->assign_block_vars('links', array(
+		    'LINK' => $name,
+		    'U_LINK' => $url,
+		    'U_IMG' => $img
+		));
 	}
 }
 ?>

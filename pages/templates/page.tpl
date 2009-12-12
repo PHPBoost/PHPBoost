@@ -35,7 +35,7 @@
 								<ul id="smenu1">
 									# START links_list #
 									<li>
-										<a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" style="background-image:url('{PICTURES_DATA_PATH}/{links_list.DM_A_CLASS}')";>
+										<a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" style="background-image:url('{links_list.DM_A_CLASS}')";>
 											{links_list.L_ACTION}
 										</a>
 									</li>
