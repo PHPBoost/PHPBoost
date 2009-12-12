@@ -48,11 +48,41 @@ define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
 class ModulesManager
 {
 	/**
+	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
+	 */
+	public static function get_installed_modules_map()
+	{
+		return ModulesConfig::load()->get_modules();
+	}
+
+	/**
+	 * @return string[] the names list of the installed modules (activated or not)
+	 */
+	public static function get_installed_modules_ids_list()
+	{
+		return array_keys(ModulesConfig::load()->get_modules());
+	}
+
+	/**
+	 * @desc Returns the requested module
+	 * @param $module_id the id of the module
+	 * @return Module the requested module
+	 */
+	public static function get_module($module_id)
+	{
+		return ModulesConfig::load()->get_module($module_id);
+	}
+
+	public static function is_module_installed($module_id)
+	{
+		return in_array($module_id, self::get_installed_modules_ids_list());
+	}
+
+	/**
 	 * @static
 	 * @desc Installs a module.
 	 * @param string $module_identifier Module identifier (name of its folder)
 	 * @param bool $enable_module true if you want the module to be enabled, otherwise false.
-	 * @param bool $generate_cache GENERATE_CACHE_AFTER_THE_OPERATION if you want to regenerate the cache after the installation or DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION if you want to go on a new package operation.
 	 * @return int One of the following error codes:
 	 * <ul>
 	 * 	<li>MODULE_INSTALLED: the installation succeded</li>
@@ -62,18 +92,15 @@ class ModulesManager
 	 * 	<li>CONFIG_CONFLICT: the configuration field is already used</i>
 	 * </ul>
 	 */
-	public static function install_module($module_identifier, $enable_module = true, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)
+	public static function install_module($module_identifier, $enable_module = true)
 	{
-		global $Cache, $Sql, $CONFIG, $MODULES;
-
+		global $Cache, $Sql, $CONFIG;
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return UNEXISTING_MODULE;
 		}
 
-		//Vérification de l'unicité du module
-		$check_module = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . strprotect($module_identifier) . "'", __LINE__, __FILE__);
-		if ($check_module > 0)
+		if (self::is_module_installed($module_identifier))
 		{
 			return MODULE_ALREADY_INSTALLED;
 		}
@@ -103,9 +130,8 @@ class ModulesManager
 		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
 		if (!is_dir($dir . '/' . $dir_db_module))
 		{
-			
 			$db_scripts_folder = new Folder($dir);
-				
+
 			$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
 			$dir_db_module = count($existing_db_files) > 0 ? $existing_db_files[0]->get_name() : '';
 		}
@@ -135,12 +161,12 @@ class ModulesManager
 
 		$module_identifier = strprotect($module_identifier);
 
-		//Installation du mini module s'il existe
-		
-		MenuService::add_mini_module($module_identifier);
 
-		//Insertion du modules dans la bdd => module installé.
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_MODULES . " (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . ((int)$enable_module) . "')", __LINE__, __FILE__);
+		$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+		ModulesConfig::load()->add_module(new Module($module_identifier, $enable_module, $authorizations));
+		ModulesConfig::save();
+		//Installation du mini module s'il existe
+		MenuService::add_mini_module($module_identifier);
 
 		//Parsage du fichier php.
 		$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
@@ -160,16 +186,16 @@ class ModulesManager
 		{
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
-			
-			
-    		ModulesCssFilesCache::invalidate();
-			
+
+
+			ModulesCssFilesCache::invalidate();
+
 			MenuService::generate_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				
+
 				HtaccessFileCache::regenerate();
 			}
 		}
@@ -195,43 +221,41 @@ class ModulesManager
 	public static function uninstall_module($module_id, $drop_files)
 	{
 		global $Cache, $Sql, $CONFIG, $MODULES;
-		//Suppression du module dans la bdd => module désinstallé.
-		$module_name = $Sql->query("SELECT name FROM " . DB_TABLE_MODULES . " WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 
-		//Désinstallation du module
-		if (!empty($module_id) && !empty($module_name))
+		if (!empty($module_id))
 		{
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_MODULES . " WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
-				
+			ModulesConfig::load()->remove_module_by_id($module_id);
+			ModulesConfig::save();
+
 			//Récupération des infos de config.
-			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());
-				
+			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
+
 			//Suppression du fichier cache
-			$Cache->delete_file($module_name);
-				
+			$Cache->delete_file($module_id);
+
 			//Suppression des commentaires associés.
 			if (!empty($info_module['com']))
 			{
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			}
-				
+
 			//Suppression de la configuration.
 			$config = get_ini_config(PATH_TO_ROOT . '/news/lang/', get_ulang()); //Récupération des infos de config.
 			if (!empty($config))
 			{
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'", __LINE__, __FILE__);
 			}
-				
+
 			//Suppression du module mini.
-			
-			MenuService::delete_mini_module($module_name);
-			MenuService::delete_module_feeds_menus($module_name);
-			 
+
+			MenuService::delete_mini_module($module_id);
+			MenuService::delete_module_feeds_menus($module_id);
+
 			$dir_db_module = get_ulang();
-			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
+			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
 
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-			
+
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
 			foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 			{
@@ -239,43 +263,43 @@ class ModulesManager
 				break;
 			}
 
-			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql'))
+			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.' . DBTYPE . '.sql'))
 			{   //Parsage du fichier sql de désinstallation.
-				$Sql->parse(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+				$Sql->parse(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.' . DBTYPE . '.sql', PREFIX);
 			}
-				
-			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php'))
+
+			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.php'))
 			{   //Parsage fichier php de désinstallation.
-				@include_once(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
+				@include_once(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.php');
 			}
-				
+
 			$Cache->Generate_file('modules');
-			
-			
-    		ModulesCssFilesCache::invalidate();
-			
+
+
+			ModulesCssFilesCache::invalidate();
+
 			MenuService::generate_cache();
 
-			 //Régénération des feeds.
+			//Régénération des feeds.
 			Feed::clear_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			{
-				
+
 				HtaccessFileCache::regenerate();
 			}
-				
+
 			//Suppression des fichiers du module
 			if ($drop_files)
 			{
-				$folder = new Folder(PATH_TO_ROOT . '/' . $module_name);
+				$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
 				if (!$folder->delete())
 				{
 					return MODULE_FILES_COULD_NOT_BE_DROPPED;
 				}
 			}
-				
+
 			return MODULE_UNINSTALLED;
 		}
 		else

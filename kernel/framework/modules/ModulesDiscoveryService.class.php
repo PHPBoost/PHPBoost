@@ -45,13 +45,11 @@ class ModulesDiscoveryService
 	 */
 	public function __construct()
 	{
-		global $MODULES;
-
 		$this->loaded_modules = array();
 		$this->availables_modules = array();
-		foreach ($MODULES as $module_id => $module)
+		foreach (ModulesManager::get_installed_modules_map() as $module_id => $module)
 		{
-			if (!empty($module['activ']) && $module['activ'] == true)
+			if ($module->is_activated())
 			{
 				$this->availables_modules[] = $module_id;
 			}
@@ -107,13 +105,12 @@ class ModulesDiscoveryService
 	 * availables modules interfaces.
 	 * @return ModuleInterface[] the ModuleInterface list.
 	 */
-	public function get_available_modules($functionality = 'none', $modulesList = array())
+	public function get_available_modules($functionality = 'none', $modules_list = array())
 	{
 		$modules = array();
-		if ($modulesList === array())
+		if ($modules_list === array())
 		{
-			global $MODULES;
-			foreach (array_keys($MODULES) as $module_id)
+			foreach (ModulesManager::get_installed_modules_ids_list() as $module_id)
 			{
 				$module = $this->get_module($module_id);
 				if (!$module->got_error() && ($functionality === 'none' || $module->has_functionality($functionality)))
@@ -124,7 +121,7 @@ class ModulesDiscoveryService
 		}
 		else
 		{
-			foreach ($modulesList as $module)
+			foreach ($modules_list as $module)
 			{
 				if (!$module->got_error() && $module->has_functionality($functionality))
 				{

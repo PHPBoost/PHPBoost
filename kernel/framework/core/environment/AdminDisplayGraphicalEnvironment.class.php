@@ -295,7 +295,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 					if (!empty($modules_config[$module_name]['admin_links']))
 					{
-						$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
+						$admin_links = ModuleConfiguration::parse_admin_links($modules_config[$module_name]['admin_links']);
 						$links = '';
 						$i = 0;
 						$j = 0;

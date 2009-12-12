@@ -113,17 +113,9 @@ class ForumInterface extends ModuleInterface
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
-
+		global $User, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
 		$Tpl = new Template('forum/forum_search_form.tpl');
-
-		//Autorisation sur le module.
-		if (isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1)
-		{
-			if (!$User->check_auth($MODULES['forum']['auth'], ACCESS_MODULE)) //Accès non autorisé!
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
-		}
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');

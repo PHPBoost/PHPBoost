@@ -80,9 +80,9 @@ class ModuleConfigurationTest extends PHPBoostUnitTestCase
 		self::assertEquals('3.1', $this->module_config->get_compatibility());
 	}
 
-	public function test_has_admin()
+	public function test_has_admin_interface()
 	{
-		self::assertTrue($this->module_config->has_admin());
+		self::assertTrue($this->module_config->has_admin_interface());
 	}
 
 	public function test_get_admin_links()

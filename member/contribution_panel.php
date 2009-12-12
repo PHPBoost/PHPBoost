@@ -279,7 +279,8 @@ else
 	//Liste des modules proposant de contribuer
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
-	foreach ($MODULES as $module_name => $module_infos)
+    $modules_names = ModulesManager::get_installed_modules_ids_list();
+	foreach ($modules_names as $name)
 	{
 		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());
 		

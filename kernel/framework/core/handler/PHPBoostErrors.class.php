@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-
 class PHPBoostErrors
 {
 	public static function module_not_installed()

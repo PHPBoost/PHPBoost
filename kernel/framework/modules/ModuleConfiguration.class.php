@@ -36,7 +36,7 @@ class ModuleConfiguration
 	private $version;
 	private $date;
 	private $compatibility;
-	private $has_admin;
+	private $has_admin_interface;
 	private $admin_links;
 	private $start_page;
 	private $contribution_interface;
@@ -89,9 +89,9 @@ class ModuleConfiguration
 		return $this->compatibility;
 	}
 
-	public function has_admin()
+	public function has_admin_interface()
 	{
-		return $this->has_admin;
+		return $this->has_admin_interface;
 	}
 
 	public function get_admin_links()
@@ -130,7 +130,7 @@ class ModuleConfiguration
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
-		$this->has_admin = $config['admin'] == 1;
+		$this->has_admin_interface = $config['has_admin_interface'] == 1;
 		$this->start_page = $config['start_page'];
 		$this->contribution_interface = $config['contribution_interface'];
 		$this->mini_modules = $config['mini_modules'];
@@ -154,8 +154,6 @@ class ModuleConfiguration
 		}
 	}
 
-
-
 	/**
 	 * @desc Parses a table written in a special syntax which is user-friendly and can be inserted in a ini file (PHP serialized arrays cannot be inserted because they contain the " character).
 	 * The syntax is very easy, it really looks like the PHP array declaration: key => value, key2 => value2
@@ -163,8 +161,9 @@ class ModuleConfiguration
 	 * @param string $links_format Serialized array
 	 * @return string[] The unserialized array.
 	 */
-	private function parse_admin_links($links_format)
+	public static function parse_admin_links($links_format)
 	{
+		// TODO remove the public visibility when migration to new config files will be done
 		$links_format = preg_replace('` ?=> ?`', '=', $links_format);
 		$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
 		list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());

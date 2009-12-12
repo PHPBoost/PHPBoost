@@ -488,20 +488,20 @@ class Environment
 
 	public static function check_current_page_auth()
 	{
-		global $MODULES, $Errorh;
+		global $Errorh;
 		//We verify if the user can display this page
 		define('MODULE_NAME', get_module_name());
 
-		if (isset($MODULES[MODULE_NAME]))
+		if (ModulesManager::is_module_installed(MODULE_NAME))
 		{
+			$module = ModulesManager::get_module(MODULE_NAME);
 			//Is the module disabled?
-			if ($MODULES[MODULE_NAME]['activ'] == 0)
+			if (!$module->is_activated())
 			{
 				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 			}
 			//Is the module forbidden?
-			else if(!AppContext::get_user()->check_auth($MODULES[MODULE_NAME]['auth'],
-			ACCESS_MODULE))
+			else if(!AppContext::get_user()->check_auth($module->get_authorizations(), ACCESS_MODULE))
 			{
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
@@ -516,8 +516,6 @@ class Environment
 			//If it's an unistalled module, we forbid access!
 			if (!empty($array_info_module['name']))
 			{
-				// TODO manage PHPBoost specifics errors messages like this
-				//				$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
 				DispatchManager::redirect(PHPBoostErrors::module_not_installed());
 			}
 		}
