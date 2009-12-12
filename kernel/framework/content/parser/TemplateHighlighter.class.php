@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       template_highlighter.class.php
+ *                       TemplateHighlighter.class.php
  *                            -------------------
  *   begin                : August 29, 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -85,7 +85,7 @@ class TemplateHighlighter extends Parser
 		$this->content = preg_replace('`# END ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">END</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_VARIABLE_STYLE . '">$2</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
 
 		//Inclusions
-		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">INCLUDE </span> <span style="' . self::TPL_VARIABLE_STYLE . '">$1</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# INCLUDE ((?:\w+\.)*)([\w]+) #`', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">INCLUDE </span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_VARIABLE_STYLE . '">$2</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
 
 		//Simple variable
 		$this->content = preg_replace('`{([\w]+)}`i', '<span style="' . self::TPL_BRACES_STYLE . '">{</span><span style="' . self::TPL_VARIABLE_STYLE . '">$1</span><span style="' . self::TPL_BRACES_STYLE . '">}</span>', $this->content);
