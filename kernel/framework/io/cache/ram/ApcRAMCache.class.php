@@ -34,11 +34,13 @@
  */
 class ApcRAMCache implements RAMCache
 {
+	private static $website_id = false;
+	
 	private $ram_cache_id;
 	
 	public function __construct($ram_cache_id)
 	{
-		$this->ram_cache_id = $ram_cache_id;
+		$this->ram_cache_id = self::get_website_id() . '-' . $ram_cache_id;
 	}
 	
     public function get($id)
@@ -77,6 +79,26 @@ class ApcRAMCache implements RAMCache
     private function get_full_object_id($tiny_id)
     {
     	return $this->ram_cache_id . '-' . $tiny_id;
+    }
+    
+    private static function get_website_id()
+    {
+    	if (self::$website_id === false)
+    	{
+    		$website_id_cache_file = PATH_TO_ROOT . '/cache/website_id.cfg';
+    		if (file_exists($website_id_cache_file))
+    		{
+    			self::$website_id = file_get_contents($website_id_cache_file);
+    		}
+    		if (self::$website_id === false)
+    		{
+    			self::$website_id = substr(md5(realpath(PATH_TO_ROOT)), 0, 10);
+    			$file = new File($website_id_cache_file);
+    			$file->write(self::$website_id);
+    			$file->close();
+    		}
+    	}
+    	return self::$website_id;
     }
 }
 ?>
