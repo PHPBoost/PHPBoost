@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         admin-errors-AdminErrorsController404List.php
+ *                           admin-errors-Common.php
  *                            -------------------
  *   begin                : December 13, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,21 +25,13 @@
  *
 ###################################################*/
 
-
 ####################################################
-#                     French                       #
+#                    English                       #
 ####################################################
 
 $lang = array(
-    '404_list' => 'Liste des erreurs 404',
-    '404_error_requested_url' => 'Url demandée',
-    '404_error_from_url' => 'Url de provenance',
-    '404_error_times' => 'Nombre',
-    '404_error_delete' => 'Supprimer',
-    '404_error_delete_confirmation' => 'Etes vous sûr de vouloir supprimer cette entrée?',
-    'clear_404_list' => 'Vider la liste',
-    'clear_404_list_explain' => 'Définitif!',
-    '404_errors_clear_confirmation' => 'Effacer toutes les erreurs 404?',
+    'logged_errors' => 'Logged errors',
+    '404_errors' => '404 errors',
 );
 
 ?>

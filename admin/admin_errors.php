@@ -40,8 +40,9 @@ $file_path = '../cache/error.log';
 if (!empty($_POST['erase']))
 	delete_file($file_path); //On supprime le fichier.
 
+$Template->add_lang(LangLoader::get('admin-errors-Common'));
 $Template->assign_vars(array(
-	'L_ERRORS_MANAGEMENT' => $LANG['error_management'],
+    'L_ERRORS_MANAGEMENT' => $LANG['error_management'],
 	'L_ERRORS' => $LANG['errors'],
 	'L_ALL_ERRORS' => $LANG['all_errors'],
 	'L_DESC' => $LANG['description'],
