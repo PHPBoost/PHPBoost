@@ -36,10 +36,8 @@ include_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php';
 $Template->set_filenames(array(
 	'error'=> 'member/error.tpl'
 ));
-// TODO generate a proper error message and extract it into a special error cache
-$error404 = 'Error 404 - \'' . $_SERVER['HTTP_REFERER'] . '\' does not exists';
-ErrorHandler::add_error_in_log($error404, '/member/404.php', '1');
 
+AdminError404Service::register_404();
 
 $lang = LangLoader::get('errors');
 $Template->assign_vars(array(

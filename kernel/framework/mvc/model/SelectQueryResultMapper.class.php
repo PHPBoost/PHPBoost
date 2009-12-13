@@ -77,7 +77,7 @@ class SelectQueryResultMapper implements SelectQueryResult
     
     public function fetch()
     {
-        return $this->query_result->fetch();
+        return $this->model->new_instance($this->query_result->fetch());
     }
     
 	public function rewind()

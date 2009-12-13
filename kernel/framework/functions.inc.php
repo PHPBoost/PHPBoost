@@ -497,8 +497,10 @@ function redirect($url)
 
 	if (!empty($CONFIG) && is_array($CONFIG))
 	{
-
-		$url = new Url($url);
+		if (!($url instanceof Url))
+		{
+			$url = new Url($url);
+		}
 		$url = $url->absolute();
 	}
 	header('Location:' . $url);
