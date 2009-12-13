@@ -128,7 +128,14 @@ class CacheManager
 
 	protected function invalidate_file_cache($name)
 	{
-		$this->get_file($name)->delete();
+		try
+		{
+			$this->get_file($name)->delete();
+		}
+		catch(IOException $ex)
+		{
+				
+		}
 	}
 
 	protected function invalidate_memory_cache($name)
