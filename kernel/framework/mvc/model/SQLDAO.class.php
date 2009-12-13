@@ -268,7 +268,7 @@ abstract class SQLDAO implements DAO
 	private function raw_insert(PropertiesMapInterface $object)
 	{
 		$this->compute_insert_query();
-		$prepared_vars =& $this->model->get_raw_value($object);
+		$prepared_vars = $this->model->get_raw_value($object);
 		return $this->querier->inject($this->insert_query, $prepared_vars);
 	}
 
@@ -280,7 +280,7 @@ abstract class SQLDAO implements DAO
 	private function raw_update(PropertiesMapInterface $object, $pk_value)
 	{
 		$this->compute_update_query();
-		$prepared_vars =& $this->model->get_raw_value($object);
+		$prepared_vars = $this->model->get_raw_value($object);
 		$prepared_vars['pk_value'] = $pk_value;
 		return $this->querier->inject($this->update_query, $prepared_vars);
 	}
@@ -314,7 +314,7 @@ abstract class SQLDAO implements DAO
 	{
 		if ($this->insert_query === null)
 		{
-			$fields_list =& array_keys($this->fields_mapping);
+			$fields_list = array_keys($this->fields_mapping);
 
 			$this->insert_query = 'INSERT INTO ' . $this->table .
 				' (' . implode(', ', $fields_list) .

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               begin.php
+ *                           index.php
  *                            -------------------
- *   begin                : Februar 08, 2006
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : December 13 2009
+ *   copyright            : (C) 2009 Loïc Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,15 +25,14 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
-Environment::load_imports();
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
-/* DEPRECATED VARS */
-$Cache = new Cache();
-$Bread_crumb = new BreadCrumb();
-/* END DEPRECATED */
+require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-Environment::init();
+$url_controller_mappers = array(
+new UrlControllerMapper('AdminErrorsController404List', '`^/404(?:/list)?/?$`'),
+new UrlControllerMapper('AdminErrorsController404Clear', '`^/404/clear/?$`')
+);
+DispatchManager::dispatch($url_controller_mappers);
 
 ?>

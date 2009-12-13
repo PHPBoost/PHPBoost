@@ -160,7 +160,7 @@ class HtaccessFileCache implements CacheData
         //Error page
         $this->add_empty_line();
         $this->add_line('# Error page #');
-        $this->add_line('ErrorDocument 404 ' . HOST . DIR . '/member/404.php');
+        $this->add_line('ErrorDocument 404 ' . DIR . '/member/404.php');
     }
 
     private function add_manual_content()

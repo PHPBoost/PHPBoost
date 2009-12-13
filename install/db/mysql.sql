@@ -62,6 +62,15 @@ CREATE TABLE `phpboost_events` (
   KEY `id_in_module_index` (`id_in_module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `phpboost_errors_404`;
+CREATE TABLE `phpboost_errors_404` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `requested_url` VARCHAR(255) NOT NULL,
+  `from_url` VARCHAR(255) NOT NULL,
+  `times` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique`(`requested_url`, `from_url`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `phpboost_group`;
 CREATE TABLE `phpboost_group` (
