@@ -25,19 +25,6 @@
  *
  ###################################################*/
 
-
-
-define('ERASE', false);
-define('ADD', true);
-
-define('READ', 0x1);
-define('WRITE', 0x2);
-define('READ_WRITE', 0x3);
-define('LOCK', 0x4);
-
-define('CLOSEFILE', 0x1);
-define('NOTCLOSEFILE', 0x2);
-
 /**
  * @package io
  * @subpackage filesystem
@@ -46,6 +33,16 @@ define('NOTCLOSEFILE', 0x2);
  */
 class File extends FileSystemElement
 {
+	const ERASE = false;
+	const ADD = true;
+	const READ = 0x1;
+	const WRITE = 0x2;
+	const READ_WRITE = 0x3;
+	const LOCK = 0x4;
+
+	const CLOSE_FILE =  0x1;
+	const DONT_CLOSE_FILE = 0x2;
+
 	/**
 	 * @var string[] List of the lines of the file.
 	 */
@@ -62,20 +59,20 @@ class File extends FileSystemElement
 	 * @var File descriptor of the open file.
 	 */
 	private $fd;
-	
+
 	/**
 	 * @desc Builds a File object.
 	 * @param string $path Path of the file you want to work with.
-	 * @param int $mode If you want to open it only to read it, use the flag READ, if it's to write it use the WRITE flag, you also can use the READ_WRITE flag.
-	 * @param bool $whenopen If you want to open the file now, use the OPEN_NOW constant, if you want to open it only when you will need it, use the OPEN_AFTER constant.
+	 * @param int $mode If you want to open it only to read it, use the flag File::READ, if it's to write it use the File::WRITE flag, you also can use the File::READ_WRITE flag.
+	 * @param bool $whenopen If you want to open the file now, use the File::DIRECT_OPENING constant, if you want to open it only when you will need it, use the File::LAZY_OPENING constant.
 	 */
-	public function __construct($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
+	public function __construct($path, $mode = self::READ_WRITE, $whenopen = self::LAZY_OPENING)
 	{
 		parent::__construct($path);
 
 		$this->mode = $mode;
 
-		if (@file_exists($this->path) && $whenopen == OPEN_NOW)
+		if (@file_exists($this->path) && $whenopen == self::DIRECT_OPENING)
 		{
 			$this->open();
 		}
@@ -83,12 +80,14 @@ class File extends FileSystemElement
 
 	/**
 	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
+	 * @throws IOException If the file can neither been read nor created.
 	 */
 	public function open()
 	{
 		if (!$this->is_open())
 		{
 			parent::open();
+			
 			if (file_exists($this->path) && is_file($this->path))
 			{   // The file already exists and is a file (not a folder)
 				$this->fd = @fopen($this->path, 'r+');
@@ -97,8 +96,13 @@ class File extends FileSystemElement
 			{   // The file does not exists
 				$this->fd = @fopen($this->path, 'x+');
 			}
-				
-			if ($this->mode & READ)
+			
+			if ($this->fd === false)
+			{
+				throw new IOException('Can neither open nor create the file ' . $this->path);
+			}
+
+			if ($this->mode & self::READ)
 			{
 				$this->contents = file_get_contents_emulate($this->path);
 				$this->lines = explode("\n", $this->contents);
@@ -114,7 +118,7 @@ class File extends FileSystemElement
 	 */
 	public function get_contents($start = 0, $len = -1)
 	{
-		if ($this->mode & READ)
+		if ($this->mode & self::READ)
 		{
 			parent::get();
 
@@ -145,7 +149,7 @@ class File extends FileSystemElement
 	 */
 	public function get_lines($start = 0, $n = -1)
 	{
-		if ($this->mode & READ)
+		if ($this->mode & self::READ)
 		{
 			parent::get();
 
@@ -171,19 +175,19 @@ class File extends FileSystemElement
 	/**
 	 * @desc Writes some text in the file.
 	 * @param string $data The text you want to write in the file.
-	 * @param bool $what ERASE if you want to erase the file, ADD if you want to write at the end of the file.
-	 * @param bool $mode CLOSEFILE if you want to close the file before to write in it, NOTCLOSEFILE otherwise.
-	 * @return bool True if it could write, false otherwise.
+	 * @param bool $what File::ERASE if you want to erase the file, File::ADD if you want to write at the end of the file.
+	 * @param bool $mode File::CLOSE_FILE if you want to close the file before to write in it, File::DONT_CLOSE_FILE otherwise.
+	 * @throws IOException If it's not possible to write the file
 	 */
-	public function write($data, $how = ERASE, $mode = CLOSEFILE)
+	public function write($data, $how = self::ERASE, $mode = self::CLOSE_FILE)
 	{
-		if ($this->mode & WRITE)
+		if ($this->mode & self::WRITE)
 		{
-			if (($mode == NOTCLOSEFILE && !is_ressource($this->fd)) || $mode == CLOSEFILE)
+			if (($mode == self::DONT_CLOSE_FILE && !is_ressource($this->fd)) || $mode == self::CLOSE_FILE)
 			{
-				if (!($this->fd = @fopen($this->path, ( $how == ADD ) ? 'a' : 'w')))
+				if (!($this->fd = @fopen($this->path, ($how == File::ADD ) ? 'a' : 'w')))
 				{
-					return false;
+					throw new IOException('The file ' . $this->path . ' couldn\'t been written');
 				}
 			}
 
@@ -202,13 +206,16 @@ class File extends FileSystemElement
 				$bytes_written += $bytes;
 			}
 			$this->is_open = false;
-            $this->open();
+			$this->open();
 
-			return $bytes_written == $bytes_to_write;
+			if ($bytes_written != $bytes_to_write)
+			{
+				throw new IOException('The file ' . $this->path . ' couldn\'t been written correctly.');
+			}
 		}
 		else
 		{
-			user_error('File ' . $this->path . ' is open in the read only mode, it can\'t be written.');
+			throw new IOException('The file ' . $this->path . ' is open in the read only mode, it can\'t be written.');
 		}
 	}
 
@@ -228,6 +235,7 @@ class File extends FileSystemElement
 
 	/**
 	 * @desc Deletes the file.
+	 * @throws IOException if the file cannot been deleted
 	 */
 	public function delete()
 	{
@@ -236,9 +244,8 @@ class File extends FileSystemElement
 		if (!@unlink($this->path)) // Empty the file if it couldn't delete it
 		{
 			$this->write('');
+			throw new IOException('The file ' . $this->path . ' couldn\'t been deleted');
 		}
-		// Clear file stats (@see http://fr3.php.net/clearstatcache for futher informations)
-		// TODO clearstatcache(true, $this->path);
 	}
 
 	/**
@@ -253,6 +260,7 @@ class File extends FileSystemElement
 	/**
 	 * @param bool $blocking if true, block the script, if false, non blocking operation
 	 * @desc Locks the file (it won't be readable by another thread which could try to access it).
+	 * @throws IOException if the file cannot been locked
 	 */
 	public function lock($blocking = true)
 	{
@@ -261,11 +269,15 @@ class File extends FileSystemElement
 			$this->open();
 		}
 
-		return @flock($this->fd, LOCK_EX, $blocking);
+		if (!@flock($this->fd, LOCK_EX, $blocking))
+		{
+			throw new IOException('The file ' . $this->path . ' couldn\'t been locked');
+		}
 	}
 
 	/**
 	 * @desc Unlocks a file. The file must have been locked before you call this method.
+	 * @throws IOException if the file cannot been unlocked
 	 */
 	public function unlock()
 	{
@@ -274,7 +286,10 @@ class File extends FileSystemElement
 			$this->open();
 		}
 
-		return @flock($this->fd, LOCK_UN);
+		if (!@flock($this->fd, LOCK_UN))
+		{
+			throw new IOException('The file ' . $this->path . ' couldn\'t been unlocked');
+		}
 	}
 
 	/**
@@ -319,7 +334,7 @@ class File extends FileSystemElement
 		}
 		else
 		{
-		    return require $this->path;
+			return require $this->path;
 		}
 	}
 

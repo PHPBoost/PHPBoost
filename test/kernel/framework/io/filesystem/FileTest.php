@@ -25,14 +25,14 @@ class FileTest extends PHPBoostUnitTestCase
 //		
 //		$path = PATH_TO_ROOT . '/kernel/begin.php';
 //		
-//		$file = new File($path, READ_WRITE, OPEN_NOW);
+//		$file = new File($path, READ_WRITE, DIRECT_OPENING);
 //		self::assertEquals($file->path, $path);
 //		self::assertTrue($file->is_open());
 //		unset($file);
 //		
 //		$path = 'toto.tmp';
 //		
-//		$file = new File($path, READ_WRITE, OPEN_NOW);
+//		$file = new File($path, READ_WRITE, DIRECT_OPENING);
 //		self::assertEquals($file->path, $path);
 //		self::assertTrue(file_exists($path));
 //		$file->delete();
@@ -112,7 +112,7 @@ class FileTest extends PHPBoostUnitTestCase
 //	{
 //		$path = 'toto.tmp';
 //		
-//		$file = new File($path, READ_WRITE, OPEN_NOW);
+//		$file = new File($path, READ_WRITE, DIRECT_OPENING);
 //		self::assertEquals($file->path, $path);
 //		self::assertTrue(file_exists($path));
 //		
@@ -124,7 +124,7 @@ class FileTest extends PHPBoostUnitTestCase
 //	{
 //		$path = 'toto.tmp';
 //		
-//		$file = new File($path, READ_WRITE, OPEN_NOW);
+//		$file = new File($path, READ_WRITE, DIRECT_OPENING);
 //		self::assertEquals($file->path, $path);
 //		self::assertTrue(file_exists($path));
 //		

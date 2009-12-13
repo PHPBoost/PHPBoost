@@ -228,7 +228,7 @@ class Cache
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
 
-		$cache_file = new File($file_path, WRITE);
+		$cache_file = new File($file_path, File::WRITE);
 
 		//Suppression du fichier (si il existe)
 		$cache_file->delete();

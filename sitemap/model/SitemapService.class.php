@@ -51,15 +51,18 @@ class SitemapService
 	{
 		$sitemap = self::get_public_sitemap();
 		$export_config = self::get_xml_file_export_config();
-		
+
 		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
-		
-		if ($file->exists())
+
+		try
 		{
-			$file->delete();
+			$file->write($sitemap->export($export_config)->parse(Template::TEMPLATE_PARSER_STRING));
 		}
-		// TODO catch here IOException (implement IOException in the io/fse package)
-		$file->write($sitemap->export($export_config)->parse(Template::TEMPLATE_PARSER_STRING));
+		catch(IOException $ex)
+		{
+			$lang = LangLoader::get('main', 'sitemap');
+			ErrorHandler::add_error_in_log($lang['sitemap_xml_could_not_been_written']);
+		}
 	}
 
 	/**

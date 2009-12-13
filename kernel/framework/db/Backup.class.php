@@ -227,7 +227,7 @@ class Backup
 	public function export_file($file_path)
 	{
 		$file = new File($file_path);
-		$file->open(WRITE);
+		$file->open(File::WRITE);
 		$file->write($this->backup_script);
 		$file->close();
 	}
