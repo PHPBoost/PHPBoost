@@ -92,7 +92,7 @@ class DispatchManager
 		}
 		else
 		{
-			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME .
+			return new Url($dispatcher_url->relative() . '?' . Dispatcher::URL_PARAM_NAME .
 			    '=/' . $url);
 		}
 	}

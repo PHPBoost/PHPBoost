@@ -39,8 +39,8 @@ class MenuControllerConfigurationsList implements Controller
 
 	public function execute(HTTPRequest $request)
 	{
-        global $LANG;
-        
+		global $LANG;
+
 		$this->load_env();
 
 		$menu_configurations = MenuConfigurationDAO::instance()->find_by_criteria(

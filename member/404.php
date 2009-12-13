@@ -30,17 +30,24 @@ header('HTTP/1.0 404 Not Found'); //Header 404
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_error'] . ' 404');
 require_once('../kernel/header.php'); 
+global $LANG;
+include_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php';
 
 $Template->set_filenames(array(
 	'error'=> 'member/error.tpl'
 ));
+// TODO generate a proper error message and extract it into a special error cache
+$error404 = 'Error 404 - \'' . $_SERVER['HTTP_REFERER'] . '\' does not exists';
+ErrorHandler::add_error_in_log($error404, '/member/404.php', '1');
 
+
+$lang = LangLoader::get('errors');
 $Template->assign_vars(array(
 	'C_ERRORH' => true,
 	'ERRORH_IMG' => 'important',
 	'ERRORH_CLASS' => 'error_warning',
-	'L_ERROR' => $LANG['title_error'] . ' 404',
-	'L_ERRORH' => '<strong>' . $LANG['title_error'] . ' 404</strong>' . '<br /><br />' . $LANG['e_unexist_page'],
+	'L_ERROR' => $LANG['title_error'] . ' 404', 
+	'L_ERRORH' => '<strong>' . $LANG['title_error'] . ' 404</strong>' . '<br /><br />' . $lang['e_unexist_page'],
 	'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 ));
 

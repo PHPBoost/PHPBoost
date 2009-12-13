@@ -33,7 +33,7 @@
 class ErrorHandler
 {
 	const FATAL_MESSAGE = 'Sorry, we encountered a problem and we cannot complete your request...';
-	
+
 	protected $errno;
 	protected $errstr;
 	protected $errfile;
@@ -160,23 +160,14 @@ class ErrorHandler
 
 	private function log()
 	{
-		$error_msg = $this->compute_error_log_string();
-		self::add_error_in_log($error_msg);
+		self::add_error_in_log($this->errstr, $this->errfile, $this->errline, $this->errno);
 	}
 
-	private function compute_error_log_string()
+	public static function add_error_in_log($error_msg, $file, $line, $errno = 0)
 	{
-		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
-		$this->errno . "\n" .
-		$this->clean_error_string() . "\n" .
-		Path::get_path_from_root($this->errfile) . "\n" .
-		$this->errline . "\n";
-	}
-
-	public static function add_error_in_log($error_msg)
-	{
+		//        echo 'ciyciy' . $this->clean_error_string($error_msg) . 'coucou';
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+');
-		$write = @fwrite($handle,  $error_msg);
+		$write = @fwrite($handle,  self::compute_error_log_string($error_msg, $file, $line, $errno));
 		$close = @fclose($handle);
 
 		if ($handle === false || $write === false || $close === false)
@@ -185,8 +176,17 @@ class ErrorHandler
 		}
 	}
 
-	private function clean_error_string()
+    private static function compute_error_log_string($error_msg, $file, $line, $errno = 0)
+    {
+        return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
+        $errno . "\n" .
+        self::clean_error_string($error_msg) . "\n" .
+        Path::get_path_from_root($file) . "\n" .
+        $line . "\n";
+    }
+
+	private static function clean_error_string($message)
 	{
-		return preg_replace("`(\n){1,}`", '<br />', preg_replace("`\r|\n|\t`", "\n", $this->errstr));
+		return preg_replace("`(\n)+`", '<br />', preg_replace("`\r|\n|\t`", "\n", $message));
 	}
 }
