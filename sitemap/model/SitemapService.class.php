@@ -61,7 +61,7 @@ class SitemapService
 		catch(IOException $ex)
 		{
 			$lang = LangLoader::get('main', 'sitemap');
-			ErrorHandler::add_error_in_log($lang['sitemap_xml_could_not_been_written']);
+			ErrorHandler::add_error_in_log($lang['sitemap_xml_could_not_been_written'], __FILE__, __LINE__);
 		}
 	}
 

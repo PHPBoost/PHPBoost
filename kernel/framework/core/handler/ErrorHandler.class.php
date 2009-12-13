@@ -165,7 +165,6 @@ class ErrorHandler
 
 	public static function add_error_in_log($error_msg, $file, $line, $errno = 0)
 	{
-		//        echo 'ciyciy' . $this->clean_error_string($error_msg) . 'coucou';
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+');
 		$write = @fwrite($handle,  self::compute_error_log_string($error_msg, $file, $line, $errno));
 		$close = @fclose($handle);
