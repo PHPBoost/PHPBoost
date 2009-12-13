@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @package io
  * @subpackage filesystem
@@ -48,9 +45,9 @@ class Folder extends FileSystemElement
 	/**
 	 * @desc Builds a Folder object.
 	 * @param string $path Path of the folder.
-	 * @param bool $whenopen OPEN_AFTER if you want to synchronyse you with the folder only when it's necessary or OPEN_NOW if you want to open it now.
+	 * @param bool $whenopen OPEN_AFTER if you want to synchronyse you with the folder only when it's necessary or DIRECT_OPENING if you want to open it now.
 	 */
-	public function __construct($path, $whenopen = OPEN_AFTER)
+	public function __construct($path, $whenopen = self::LAZY_OPENING)
 	{
 		parent::__construct(rtrim($path, '/'));
 
@@ -61,7 +58,7 @@ class Folder extends FileSystemElement
 				return false;
 			}
 			 
-			if ($whenopen == OPEN_NOW)
+			if ($whenopen == self::DIRECT_OPENING)
 			{
 				$this->open();
 			}

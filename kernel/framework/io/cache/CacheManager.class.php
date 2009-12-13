@@ -206,7 +206,7 @@ class CacheManager
 	{
 		$file = $this->get_file($name);
 		$data_to_write = serialize($value);
-		$file->write($data_to_write, ERASE);
+		$file->write($data_to_write, File::ERASE);
 	}
 }
 

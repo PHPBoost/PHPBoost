@@ -203,7 +203,7 @@ class Feed
 	public static function clear_cache($module_id = false)
 	{
 		
-		$folder = new Folder(FEEDS_PATH, OPEN_NOW);
+		$folder = new Folder(FEEDS_PATH, File::DIRECT_OPENING);
 		$files = null;
 		if ($module_id !== false)
 		{   // Clear only this module cache
@@ -230,7 +230,7 @@ class Feed
 	private static function update_cache($module_id, $name, $data, $idcat = 0)
 	{
 		
-		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
+		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', File::WRITE);
 		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
 		$file->close();
 	}

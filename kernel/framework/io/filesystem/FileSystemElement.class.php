@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-define('OPEN_NOW', true);
-define('OPEN_AFTER', false);
-
 /**
  * @package io
  * @subpackage filesystem 
@@ -37,6 +34,9 @@ define('OPEN_AFTER', false);
  */
 abstract class FileSystemElement
 {
+	const DIRECT_OPENING = true;
+	const LAZY_OPENING = false;
+	
     /**
      * @var string Path of the file system element
      */

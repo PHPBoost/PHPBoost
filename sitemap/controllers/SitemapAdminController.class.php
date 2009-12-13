@@ -39,7 +39,9 @@ class SitemapAdminController implements Controller
 		SitemapService::write_sitemap_xml_file();
 		
 		$tpl = new Template('sitemap/sitemap.tpl');
-		$response = new AdminDisplayResponse($tpl);
+		
+		$response = new AdminMenuDisplayResponse($tpl);
+		$response->set_title($this->lang['sitemap']);
 		
 		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
 

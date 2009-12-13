@@ -412,7 +412,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 	$dir = find_require_dir($dir_path, $require_dir, false);
 
 
-	$module_config_file = new File($dir_path . $dir . '/config.ini', READ);
+	$module_config_file = new File($dir_path . $dir . '/config.ini', File::READ);
 	$module_config_file->open();
 	$module_config_text = $module_config_file->get_contents();
 
