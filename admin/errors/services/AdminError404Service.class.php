@@ -33,7 +33,7 @@ class AdminError404Service
 {
 	public static function list_404_errors()
 	{
-		return AdminError404DAO::instance()->find_all();
+		return AdminError404DAO::instance()->find_all(100, 0, array(array('column' => 'times', 'way' => DAO::ORDER_BY_DESC)));
 	}
 
 	public static function clear_404_errors_list()
@@ -61,6 +61,19 @@ class AdminError404Service
 				$error_404 = new AdminError404($requested_url, $from_url);
 			}
 			AdminError404DAO::instance()->save($error_404);
+		}
+	}
+
+	public static function delete_404_error($id)
+	{
+		try
+		{
+			$error = AdminError404DAO::instance()->find_by_id($id);
+			AdminError404DAO::instance()->delete($error);
+		}
+		catch(ObjectNotFoundException $exception)
+		{
+			
 		}
 	}
 }

@@ -27,19 +27,19 @@
 
 
 ####################################################
-#                     French                       #
+#                    English                       #
 ####################################################
 
 $lang = array(
-    '404_list' => 'Liste des erreurs 404',
-    '404_error_requested_url' => 'Url demandée',
-    '404_error_from_url' => 'Url de provenance',
-    '404_error_times' => 'Nombre',
-    '404_error_delete' => 'Supprimer',
-    '404_error_delete_confirmation' => 'Etes vous sûr de vouloir supprimer cette entrée?',
-    'clear_404_list' => 'Vider la liste',
-    'clear_404_list_explain' => 'Définitif!',
-    '404_errors_clear_confirmation' => 'Effacer toutes les erreurs 404?',
+    '404_list' => '404 errors list',
+    '404_error_requested_url' => 'Requested url',
+    '404_error_from_url' => 'Source',
+    '404_error_times' => 'Times',
+    '404_error_delete' => 'Delete',
+    '404_error_delete_confirmation' => 'Delete this entry?',
+    'clear_404_list' => 'Clear the 404 errors list',
+    'clear_404_list_explain' => 'This cannot be undone!',
+    '404_errors_clear_confirmation' => 'Erase all 404 errors?',
 );
 
 ?>
