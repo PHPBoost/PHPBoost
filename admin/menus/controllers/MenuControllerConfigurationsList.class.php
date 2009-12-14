@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class MenuControllerConfigurationsList implements Controller
+class MenuControllerConfigurationsList extends AdminController
 {
 	/**
 	 * @var View

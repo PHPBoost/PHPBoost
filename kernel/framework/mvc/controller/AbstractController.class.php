@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           abstract_controller.class.php
+ *                          AbstractController.class.php
  *                            -------------------
  *   begin                : September 15 2009
  *   copyright         : (C) 2009 Loïc Rouchon
@@ -30,58 +30,12 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc This class defines the minimalist controler pattern
- * with no actions. This, in order to avoid to defines empty
- * init() and destroy() method for controlers that doesn't need
- * this functionality
  */
 abstract class AbstractController implements Controller
 {
-	public function init() {}
-	public function destroy() {}
-	
-	public function exception_handler($exception)
-	{
-		throw $exception;
-	}
-	
-	public function get_title()
-	{
-		return $this->title;
-	}
-	
-	public function get_bread_crumb()
-	{
-		global $Bread_crumb;
-		return $Bread_crumb;
-	}
-	
-	public function is_display_enabled()
-	{
-		return $this->display;
-	}
-	
-	protected function disable_display()
-	{
-		$this->display = false;
-	}
-	
-	protected function enable_display()
-	{
-		$this->display = true;
-	}
-	
-	protected function set_title($title)
-	{
-		$this->title = $title;
-	}
-	
-	protected function check_token()
-	{
-		global $Session;
-		$Session->csrf_get_protect();
-	}
-	
-	var $display = true;
-	var $title = 'Controller';
+	public function check_basic_auth()
+    {
+        return true;
+    }
 }
 ?>

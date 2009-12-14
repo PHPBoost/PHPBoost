@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SitemapController implements Controller
+class SitemapController extends ModuleController
 {
 	private $lang = array();
 	

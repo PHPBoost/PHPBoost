@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminErrorsController404List implements Controller
+class AdminErrorsController404List extends AdminController
 {
 	/**
 	 * @var View

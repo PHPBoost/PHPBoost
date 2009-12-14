@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           Controller.class.php
+ *                          AbstractController.class.php
  *                            -------------------
- *   begin                : June 09 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   begin                : December 14 2009
+ *   copyright         : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -27,17 +27,13 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
+ * @desc This class defines the minimalist controler pattern
  */
-interface Controller
+class AdminController extends AbstractController
 {
-    function check_basic_auth();
-
-	/**
-	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
-	 * @return Response the controller response
-	 */
-	function execute(HTTPRequest $request);
+	public final function check_basic_auth()
+    {
+        return true;
+    }
 }
 ?>

@@ -25,10 +25,7 @@
  *
  ###################################################*/
 
-
-
-
-class MenuControllerConfigurationEdit implements Controller
+class MenuControllerConfigurationEdit extends AdminController
 {
 	/**
 	 * @var int
