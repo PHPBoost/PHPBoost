@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class XMLSitemapController implements Controller
+class XMLSitemapController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{

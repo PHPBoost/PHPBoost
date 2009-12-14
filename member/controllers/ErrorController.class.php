@@ -27,7 +27,7 @@
 
 
 
-class ErrorController implements Controller
+class ErrorController extends AbstractController
 {
 	private $level = E_UNKNOWN;
 	private $title = '';

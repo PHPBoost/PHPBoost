@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminErrorsController404Delete implements Controller
+class AdminErrorsController404Delete extends AdminController
 {
 	public function execute(HTTPRequest $request)
 	{

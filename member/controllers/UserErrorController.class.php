@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class UserErrorController implements Controller
+class UserErrorController extends AbstractController
 {
 	const SUCCESS = 1;
 	const QUESTION = 2;

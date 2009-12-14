@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SitemapAdminController implements Controller
+class SitemapAdminController extends AdminController
 {
 	private $lang = array();
 	
