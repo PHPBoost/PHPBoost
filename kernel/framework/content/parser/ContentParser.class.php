@@ -31,7 +31,7 @@
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is abstract. It contains tools that are usefull for implement a content parser.
  */
-class ContentParser extends Parser
+abstract class ContentParser extends Parser
 {
 	/**
 	@var string[] List of the BBCode supported tags

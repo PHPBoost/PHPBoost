@@ -37,6 +37,20 @@ class PHPBoostErrors
 		return $controller;
 	}
 
+	public static function module_not_activated()
+	{
+		// TODO
+        $controller = new UserErrorController('TODO', 'Module not activated');
+        return $controller;
+	}
+	
+	public static function user_not_authorized()
+	{
+		// TODO
+        $controller = new UserErrorController('TODO', 'User not authorized');
+        return $controller;
+	}
+
 	public static function member_banned()
 	{
 		// TODO

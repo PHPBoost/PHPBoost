@@ -30,6 +30,22 @@ if (defined('PHPBOOST') !== true)
 	exit;
 }
 
+// TODO loic
+//if (ModulesManager::is_module_installed(MODULE_NAME))
+//{
+//	$module = ModulesManager::get_module(MODULE_NAME);
+//	//Is the module disabled?
+//	if (!$module->is_activated())
+//	{
+//		$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
+//	}
+//	//Is the module forbidden?
+//	else if(!AppContext::get_user()->check_auth($module->get_authorizations(), ACCESS_MODULE))
+//	{
+//		$Errorh->handler('e_auth', E_USER_REDIRECT);
+//	}
+//}
+
 $env = new SiteDisplayGraphicalEnvironment();
 $env->set_breadcrumb($Bread_crumb);
 

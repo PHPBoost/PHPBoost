@@ -63,5 +63,10 @@ class Module
     {
         return ModulesDiscoveryService::get_module($this->module_id);
     }
+    
+    public function check_auth()
+    {
+    	return AppContext::get_user()->check_auth($this->authorizations, ACCESS_MODULE);
+    }
 }
 ?>
