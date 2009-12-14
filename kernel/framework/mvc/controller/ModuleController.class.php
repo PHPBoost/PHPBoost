@@ -9,10 +9,10 @@
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -33,9 +33,9 @@ abstract class ModuleController extends AbstractController
 {
 	public final function get_right_controller_regarding_authorizations()
 	{
-		if (ModulesManager::is_module_installed(MODULE_NAME))
+		if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
 		{
-			$module = ModulesManager::get_module(MODULE_NAME);
+			$module = ModulesManager::get_module(Environment::get_running_module_name());
 			if (!$module->is_activated())
 			{
 				return PHPBoostErrors::module_not_activated();

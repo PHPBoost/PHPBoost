@@ -10,10 +10,10 @@
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -474,19 +474,6 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 }
 
 /**
- * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
- * @return string The module identifier.
- */
-function get_module_name()
-{
-	$path = str_replace(DIR, '', SCRIPT);
-	$path = trim($path, '/');
-	$module_name = explode('/', $path);
-
-	return $module_name[0];
-}
-
-/**
  * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
  * @param string $url URL at which you want to redirect the user.
  */
@@ -745,7 +732,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	{
 		$timestamp = time();
 	}
-	
+
 	//TODO S'occuper de ce problème de timezone
 	date_default_timezone_set('Europe/Paris');
 	// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
