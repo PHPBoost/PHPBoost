@@ -84,7 +84,8 @@ class UrlControllerMapper extends AbstractUrlMapper
 		{
 			throw new NoSuchControllerException($this->classname);
 		}
-		$response = $controller->execute(AppContext::get_request());
+		$controller_to_execute = $controller->get_right_controller_regarding_authorizations();
+		$response = $controller_to_execute->execute(AppContext::get_request());
 		$response->send();
 	}
 }

@@ -33,9 +33,9 @@
  */
 abstract class AbstractController implements Controller
 {
-	public function check_basic_auth()
+	public function get_right_controller_regarding_authorizations()
     {
-        return true;
+        return $this;
     }
 }
 ?>

@@ -488,36 +488,12 @@ class Environment
 
 	public static function check_current_page_auth()
 	{
-		global $Errorh;
 		//We verify if the user can display this page
 		define('MODULE_NAME', get_module_name());
-
-		if (ModulesManager::is_module_installed(MODULE_NAME))
+		// TODO loic
+		if (!in_array(MODULE_NAME, array('member', 'admin', 'kernel')) && !ModulesManager::is_module_installed(MODULE_NAME))
 		{
-			$module = ModulesManager::get_module(MODULE_NAME);
-			//Is the module disabled?
-			if (!$module->is_activated())
-			{
-				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
-			}
-			//Is the module forbidden?
-			else if(!AppContext::get_user()->check_auth($module->get_authorizations(), ACCESS_MODULE))
-			{
-				$Errorh->handler('e_auth', E_USER_REDIRECT);
-			}
-		}
-		//Otherwise, if it's not a kernel page (they are in specific folders) and it's a module page
-		// => it's forbidden
-		elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel')))
-		{
-			//We try to see if it can be an uninstalled module
-			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME .
-				'/lang/', get_ulang());
-			//If it's an unistalled module, we forbid access!
-			if (!empty($array_info_module['name']))
-			{
-				DispatchManager::redirect(PHPBoostErrors::module_not_installed());
-			}
+			DispatchManager::redirect(PHPBoostErrors::module_not_installed());
 		}
 	}
 

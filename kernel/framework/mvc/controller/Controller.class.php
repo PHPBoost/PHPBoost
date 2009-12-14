@@ -31,7 +31,12 @@
  */
 interface Controller
 {
-    function check_basic_auth();
+    /**
+     * @desc Returns the right controller to execute regarding the authorizations defined
+     * for the controller
+     * @return Controller the right controller
+     */
+    function get_right_controller_regarding_authorizations();
 
 	/**
 	 * @desc execute the controller and returns the response

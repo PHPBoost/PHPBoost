@@ -29,11 +29,11 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc This class defines the minimalist controler pattern
  */
-class AdminController extends AbstractController
+abstract class AdminController extends AbstractController
 {
-	public final function check_basic_auth()
+	public final function get_right_controller_regarding_authorizations()
     {
-        return true;
+        return $this;
     }
 }
 ?>

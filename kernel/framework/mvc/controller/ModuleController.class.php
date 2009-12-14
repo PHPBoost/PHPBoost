@@ -29,11 +29,27 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc This class defines the minimalist controler pattern
  */
-class ModuleController extends AbstractController
+abstract class ModuleController extends AbstractController
 {
-	public final function check_basic_auth()
-    {
-        return true;
-    }
+	public final function get_right_controller_regarding_authorizations()
+	{
+		if (ModulesManager::is_module_installed(MODULE_NAME))
+		{
+			$module = ModulesManager::get_module(MODULE_NAME);
+			if (!$module->is_activated())
+			{
+				return PHPBoostErrors::module_not_activated();
+			}
+			else if(!$module->check_auth())
+			{
+				return PHPBoostErrors::user_not_authorized();
+			}
+		}
+		else
+		{
+			return PHPBoostErrors::module_not_installed();
+		}
+		return $this;
+	}
 }
 ?>

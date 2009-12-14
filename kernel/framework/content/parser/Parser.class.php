@@ -31,7 +31,7 @@
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
  */
-class Parser
+abstract class Parser
 {
 	const DONT_ADD_SLASHES = false;
 	const ADD_SLASHES = true;
@@ -66,6 +66,11 @@ class Parser
 		$this->content = '';
 		$this->page_path = $_SERVER['PHP_SELF'];
 	}
+	
+	/**
+	 * Parses the content of the parser.
+	 */
+	public abstract function parse();
 
 	/**
 	 * @desc Returns the content of the parser. If you called a method which parses the content, this content will be parsed.
