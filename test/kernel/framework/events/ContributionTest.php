@@ -9,23 +9,22 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		self::assertEquals($contrib->get_status(), CONTRIBUTION_STATUS_UNREAD);
 //		self::assertEquals($contrib->get_creation_date(), $date);
 //		self::assertEquals($contrib->get_fixing_date(), $date);
-//		if (defined('MODULE_NAME'))
-//			self::assertEquals($contrib->get_module(), MODULE_NAME);		
+//		self::assertEquals($contrib->get_module(), Environment::get_running_module_name());
 //	}
-//	
+//
 //	function test_build()
 //	{
 //		TODO(__FILE__, __METHOD__);
 //	}
-//	
+//
 //	function test_accessor_module()
 //	{
 //		$contrib = new Contribution();
 //		$module  = 'test';
 //		$contrib->set_module($module);
-//		self::assertEquals($contrib->get_module(), $module);		
+//		self::assertEquals($contrib->get_module(), $module);
 //	}
-//	
+//
 //	function test_accessor_fixing_date()
 //	{
 //		$contrib = new Contribution();
@@ -36,11 +35,11 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$contrib->set_fixing_date($date);
 //		self::assertEquals($contrib->get_creation_date(), $date);
 //	}
-//	
+//
 //	function test_accessor_status()
 //	{
 //		global $User;
-//		
+//
 //		$date = new Date();
 //		$contrib = new Contribution();
 //		sleep(5);
@@ -54,19 +53,19 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		self::assertEquals($contrib->get_fixing_date(), $date2);
 //		self::assertEquals($contrib->get_fixer_id(), $User->get_attribute('user_id'));
 //	}
-//	
+//
 //	function test_accessor_auth()
 //	{
 //		$contrib = new Contribution();
 //		$tmp  = array(1, 2, 3);
 //		$contrib->set_auth($tmp);
-//		self::assertEquals($contrib->get_auth(), $tmp);		
+//		self::assertEquals($contrib->get_auth(), $tmp);
 //	}
-//	
+//
 //	function test_accessor_poster_id()
 //	{
 //		global $Sql;
-//		
+//
 //		$contrib = new Contribution();
 //		$tmp  = 10;
 //		$contrib->set_poster_id($tmp);
@@ -78,11 +77,11 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $tmp . "'", __LINE__, __FILE__);
 //		self::assertEquals($contrib->get_poster_login(), $login);
 //	}
-//	
+//
 //	function test_accessor_fixer_id()
 //	{
 //		global $Sql;
-//		
+//
 //		$contrib = new Contribution();
 //		$tmp  = 10;
 //		$contrib->set_fixer_id($tmp);
@@ -108,7 +107,7 @@ class ContributionTest extends PHPBoostUnitTestCase
 //	function test_get_status_name()
 //	{
 //		global $LANG;
-//		
+//
 //		$contrib = new Contribution();
 //		self::assertEquals($contrib->get_status_name(), $LANG['contribution_status_unread']);
 //		$contrib->set_status(CONTRIBUTION_STATUS_BEING_PROCESSED);
@@ -116,10 +115,10 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$contrib->set_status(CONTRIBUTION_STATUS_PROCESSED);
 //		self::assertEquals($contrib->get_status_name(), $LANG['contribution_status_processed']);
 //	}
-//	
+//
 //	function test_get_module_name()
 //	{
 //		$contrib = new Contribution();
-//		self::assertEquals($contrib->get_module_name(), '');		
+//		self::assertEquals($contrib->get_module_name(), '');
 //	}
 }

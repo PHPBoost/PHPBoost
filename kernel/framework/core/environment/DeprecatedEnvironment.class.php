@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          IntegratedErrorHandler.class.php
+ *                          DeprecatedEnvironment.class.php
  *                            -------------------
- *   begin                : November 11, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : December 28, 2009
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -26,21 +26,36 @@
  ###################################################*/
 
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @package core
- * @desc
+ * @subpackage environment
+ * This class manages all the deprecated services that old PHPBoost modules need to run.
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ *
  */
-class IntegratedErrorHandler extends ErrorHandler
+class DeprecatedEnvironment
 {
-	protected function display_debug()
+	public static function check_page_auth()
 	{
-		parent::display_debug();
-	}
-
-	protected function display_fatal()
-	{
-		// TODO manage languages here
-        ob_clean();
-		die(ErrorHandler::FATAL_MESSAGE);
+		$running_module_name = Environment::get_running_module_name();
+		if (!in_array($running_module_name, array('member', 'admin', 'kernel')))
+		{
+			if (ModulesManager::is_module_installed($running_module_name))
+			{
+				$module = ModulesManager::get_module($running_module_name);
+				if (!$module->is_activated())
+				{
+					DispatchManager::redirect(PHPBoostErrors::module_not_activated());
+				}
+				else if(!$module->check_auth())
+				{
+					DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
+				}
+			}
+		}
+		else
+		{
+			DispatchManager::redirect(PHPBoostErrors::module_not_installed());
+		}
 	}
 }
+?>

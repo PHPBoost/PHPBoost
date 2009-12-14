@@ -9,10 +9,10 @@
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -87,7 +87,7 @@ class File extends FileSystemElement
 		if (!$this->is_open())
 		{
 			parent::open();
-			
+
 			if (file_exists($this->path) && is_file($this->path))
 			{   // The file already exists and is a file (not a folder)
 				$this->fd = @fopen($this->path, 'r+');
@@ -96,7 +96,7 @@ class File extends FileSystemElement
 			{   // The file does not exists
 				$this->fd = @fopen($this->path, 'x+');
 			}
-			
+
 			if ($this->fd === false)
 			{
 				throw new IOException('Can neither open nor create the file ' . $this->path);

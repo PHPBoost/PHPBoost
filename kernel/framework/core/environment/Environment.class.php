@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          environment.class.php
+ *                          Environment.class.php
  *                            -------------------
  *   begin                : September 28, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loïc Rouchon
@@ -9,10 +9,10 @@
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,6 +36,8 @@
  */
 class Environment
 {
+	private static $running_module_name = '';
+
 	/**
 	 * @var GraphicalEnvironment
 	 */
@@ -87,7 +89,7 @@ class Environment
 		self::init_output_bufferization();
 		self::load_lang_files();
 		self::process_changeday_tasks_if_needed();
-		self::check_current_page_auth();
+		self::compute_running_module_name();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
 	}
@@ -482,19 +484,24 @@ class Environment
 
 	private static function check_updates()
 	{
-
 		new Updates();
 	}
 
-	public static function check_current_page_auth()
+	public static function compute_running_module_name()
 	{
-		//We verify if the user can display this page
-		define('MODULE_NAME', get_module_name());
-		// TODO loic
-		if (!in_array(MODULE_NAME, array('member', 'admin', 'kernel')) && !ModulesManager::is_module_installed(MODULE_NAME))
-		{
-			DispatchManager::redirect(PHPBoostErrors::module_not_installed());
-		}
+		$path = str_replace(DIR, '', SCRIPT);
+		$path = trim($path, '/');
+		$module_name = explode('/', $path);
+
+		self::$running_module_name = $module_name[0];
+	}
+	/**
+	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
+	 * @return string The module identifier.
+	 */
+	public static function get_running_module_name()
+	{
+		return self::$running_module_name;
 	}
 
 	public static function csrf_protect_post_requests()

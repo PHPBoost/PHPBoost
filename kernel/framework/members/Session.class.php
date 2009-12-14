@@ -10,10 +10,10 @@
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -444,7 +444,7 @@ class Session
 
 		if (empty($module) || !is_string($module))
 		{
-			$module = MODULE_NAME;
+			$module = Environment::get_running_module_name();
 		}
 
 		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
@@ -479,7 +479,7 @@ class Session
 
 		if (empty($module) || !is_string($module))
 		{
-			$module = MODULE_NAME;
+			$module = Environment::get_running_module_name();
 		}
 
 		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
