@@ -37,7 +37,7 @@ global $SEARCH_CONFIG;
 define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
 
 /**
- *  Exécute la recherche
+ * Exécute la recherche
  */
 function execute_search($search, $search_modules, &$modules_args)
 {
@@ -60,8 +60,8 @@ function execute_search($search, $search_modules, &$modules_args)
 }
 
 /**
- *  Exécute la recherche si les résultats ne sont pas dans le cache et
- *  renvoie les résultats.
+ * Exécute la recherche si les résultats ne sont pas dans le cache et
+ * renvoie les résultats.
  */
 function get_search_results($search_string, $search_modules, &$modules_args, &$results, &$ids_search, $just_insert = false)
 {
@@ -86,7 +86,7 @@ function get_search_results($search_string, $search_modules, &$modules_args, &$r
 }
 
 /**
- *  Renvoie une chaine contenant les resultats
+ * Renvoie une chaine contenant les resultats
  */
 function get_html_results($results, $html_results, $results_name)
 {
