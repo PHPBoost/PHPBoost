@@ -3,7 +3,7 @@
  *                              mail.class.php
  *                            -------------------
  *   begin                : March 11, 2005
- *   copyright            : (C) 2009 Viarre Régis, Benoit Sautel
+ *   copyright            : (C) 2009 Viarre Rï¿½gis, Benoit Sautel
  *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
  *
  *
@@ -31,7 +31,7 @@ define('MIME_FORMAT_HTML', 'text/html');
 
 /**
  * @package io
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to send mails without having to deal with the mail headers and parameters.
  */
 
