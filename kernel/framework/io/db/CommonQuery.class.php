@@ -73,7 +73,7 @@ class CommonQuery
 			$columns[] = $column . '=:' . $column;
 		}
 		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
-            ' WHERE ' . $condition . ';';
+            ' ' . $condition . ';';
 		$this->querier->inject($query, array_merge($parameters, $columns));
 	}
 
@@ -87,7 +87,7 @@ class CommonQuery
 	 */
 	public function delete($table_name, $condition, $parameters = array())
 	{
-		$query = 'DELETE FROM ' . $table_name . ' WHERE ' . $condition . ';';
+		$query = 'DELETE FROM ' . $table_name . ' ' . $condition . ';';
 		$this->querier->inject($query, $parameters);
 	}
 
@@ -101,7 +101,7 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public function select_single_row($table_name, $columns, $condition = '1',
+	public function select_single_row($table_name, $columns, $condition,
 	$parameters = array())
 	{
 		$query_result = self::select_rows($table_name, $columns, $condition, $parameters);
@@ -129,11 +129,10 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public function select_rows($table_name, $columns, $condition = '1',
+	public function select_rows($table_name, $columns, $condition = 'WHERE 1',
 	$parameters = array())
 	{
-		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' WHERE ' .
-		$condition;
+		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' ' . $condition;
 		return $this->querier->select($query, $parameters);
 	}
 

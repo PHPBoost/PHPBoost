@@ -79,7 +79,7 @@ $LANG['alert_no_login'] = 'Le pseudo entré n\'existe pas!';
 $LANG['require'] = 'Les Champs marqués * sont obligatoires!';
 $LANG['require_title'] = 'Veuillez entrer un titre !';
 $LANG['require_text'] = 'Veuillez entrer un texte!';
-$LANG['require_password'] = 'Veuillez entrer un password!';
+$LANG['require_password'] = 'Veuillez entrer un mot de passe!';
 $LANG['require_cat'] = 'Veuillez entrer une catégorie!';
 $LANG['require_cat_create'] = 'Aucune catégorie trouvée, veuillez d\'abord en créer une';
 $LANG['require_serv'] = 'Veuillez entrer un nom pour le serveur!';
@@ -294,7 +294,7 @@ $LANG['administrator_alerts_action'] = 'Actions';
 $LANG['admin_alert_fix'] = 'Régler';
 $LANG['admin_alert_unfix'] = 'Passer l\'alerte en non réglée';
 $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
-	
+
 //Config
 $LANG['config_main'] = 'Configuration générale';
 $LANG['config_advanced'] = 'Configuration avancée';
@@ -373,7 +373,7 @@ $LANG['maintain_for'] = 'Mettre le site en maintenance';
 $LANG['maintain_delay'] = 'Afficher la durée de la maintenance';
 $LANG['maintain_display_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
 $LANG['maintain_text'] = 'Texte à afficher lorsque la maintenance du site est en cours';
-	
+
 //Gestion des modules
 $LANG['modules_management'] = 'Gestion des modules';
 $LANG['add_modules'] = 'Ajouter un module';
@@ -500,7 +500,7 @@ $LANG['smiley_available'] = 'Smileys disponibles';
 $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
 $LANG['e_smiley_already_exist'] = 'Le smiley existe déjà';
-		
+
 //Thèmes
 $LANG['upload_theme'] = 'Uploader un thème';
 $LANG['theme_on_serv'] = 'Thèmes disponibles sur le serveur';
@@ -520,7 +520,7 @@ $LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstal
 $LANG['activ_left_column'] = 'Activer la colonne de gauche';
 $LANG['activ_right_column'] = 'Activer la colonne de droite';
 $LANG['manage_theme_columns'] = 'Gérer les colonnes du thème';
-		
+
 //Langues
 $LANG['upload_lang'] = 'Uploader une langue';
 $LANG['lang_on_serv'] = 'Langues disponibles sur le serveur';
@@ -532,7 +532,7 @@ $LANG['e_lang_already_exist'] = 'La langue existe déjà';
 $LANG['del_lang'] = 'Suppression de la langue';
 $LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
 $LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
-	
+
 //Comments
 $LANG['com_management'] = 'Gestion des commentaires';
 $LANG['com_config'] = 'Configuration des commentaires';

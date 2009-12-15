@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          AbstractController.class.php
+ *                           AdminLoginController.class.php
  *                            -------------------
  *   begin                : December 14 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,19 +25,23 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class defines the minimalist controler pattern
- */
-abstract class AdminController extends AbstractController
+class AdminLoginController extends AbstractController
 {
-	public final function get_right_controller_regarding_authorizations()
-    {
-    	if (!AppContext::get_user()->is_admin() && !AdminLoginService::try_to_connect())
-    	{
-    		return new AdminLoginController();
-    	}
-        return $this;
-    }
+	public function execute(HTTPRequest $request)
+	{
+		$view = new View('admin/AdminLoginController.tpl');
+		$lang = LangLoader::get_class(__FILE__);
+		$view->add_lang($lang);
+
+		if ($request->get_bool('flood', false))
+		{
+			$view->assign_vars(array(
+				'ERROR' => (($flood > '0') ? StringVars::replace_vars($lang['flood_block'], array('remaining_tries' => $flood)) : $lang['flood_max']),
+				'C_UNLOCK' => true
+			));
+		}
+
+		return new AdminNodisplayResponse($view);
+	}
 }
 ?>

@@ -44,7 +44,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		global $LANG, $CONFIG;
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 
-		$this->check_admin_auth();
+//		$this->check_admin_auth();
 	}
 
 	private function check_admin_auth()
@@ -151,7 +151,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'L_ADMIN' => $LANG['admin'],
 				'L_PSEUDO' => $LANG['pseudo'],
 				'L_PASSWORD' => $LANG['password'],
-				'L_AUTOCONNECT'	=> $LANG['autoconnect']	
+				'L_AUTOCONNECT'	=> $LANG['autoconnect']
 			));
 
 			if ($flood)
@@ -305,13 +305,13 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 							{
 								$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu .
 								$i . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" ' .
-									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $name . 
-									'/' . $name . '_mini.png);cursor:default;">' . $key . 
+									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $name .
+									'/' . $name . '_mini.png);cursor:default;">' . $key .
 									'</a><ul id="sssmenu' . $idmenu . $i . $name . '">' . "\n";
 								foreach ($value as $key2 => $value2)
 								{
 									$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $name .
-									'/' . $value2 . '" style="background-image:url(' . 
+									'/' . $value2 . '" style="background-image:url(' .
 									TPL_PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">'
 									. $key2 . '</a></li>' . "\n";
 								}
@@ -322,7 +322,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 							{
 								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $name . '/' .
 								$value . '" style="background-image:url(' . PATH_TO_ROOT .
-									'/' . $name . '/' . $name . '_mini.png);">' . $key . 
+									'/' . $name . '/' . $name . '_mini.png);">' . $key .
 									'</a></li>' . "\n";
 							}
 							$j++;
@@ -343,7 +343,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'IDMENU' => $menu_pos,
 							'NAME' => $modules_config[$module_name]['name'],
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $name . '/admin_' . $name 
+							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $name . '/admin_' . $name
 						. '.php',
 							'IMG' => TPL_PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png'
 							));

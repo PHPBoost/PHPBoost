@@ -158,18 +158,6 @@ CREATE TABLE `phpboost_member_extend_cat` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-DROP TABLE IF EXISTS `phpboost_modules`;
-CREATE TABLE `phpboost_modules` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(150) NOT NULL default '',
-  `version` varchar(15) NOT NULL default '',
-  `auth` text,
-  `activ` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
 DROP TABLE IF EXISTS `phpboost_menus`;
 CREATE TABLE `phpboost_menus` (
   `id` int(11) NOT NULL auto_increment,
