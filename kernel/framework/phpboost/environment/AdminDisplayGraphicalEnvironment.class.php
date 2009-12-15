@@ -44,7 +44,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		global $LANG, $CONFIG;
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 
-//		$this->check_admin_auth();
+		$this->check_admin_auth();
 	}
 
 	private function check_admin_auth()
@@ -258,96 +258,96 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		));
 
 		//Listing des modules disponibles:
-		$modules_config = array();
-		foreach ($MODULES as $name => $array)
+		$modules_sorted_by_name = array();
+		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
-			$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
-			if (is_array($array_info))
+			try
 			{
-				$array_info['module_name'] = $name;
-				$modules_config[$array_info['name']] = $array_info;
+				$modules_sorted_by_name[$module->get_configuration()->get_name()] = $module;
+			}
+			catch (Exception $ex) {
+				//				echo 'Failed to load ' . $module->get_id() . '<br />';
 			}
 		}
 
-		ksort($modules_config);
+		ksort($modules_sorted_by_name);
 		$array_pos = array(0, 4, 3, 3, 3, 1);
 		$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4,
 			 'content' => 5, 'modules' => 6);
-		foreach ($modules_config as $module_name => $auth)
+		foreach ($modules_sorted_by_name as $module)
 		{
-			$name = $modules_config[$module_name]['module_name'];
-			if (is_array($modules_config[$module_name]))
+			$module_id = $module->get_id();
+			$configuration = $module->get_configuration();
+
+			$menu_pos_name = $configuration->get_admin_menu();
+			$menu_pos = 0;
+
+			if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name]))
 			{
-				$menu_pos_name = $modules_config[$module_name]['admin'];
-				$menu_pos = 0;
-
-				if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name]))
 				$menu_pos = $menus_numbers[$menu_pos_name];
+			}
 
-				//Le module possède une administration
-				if ($menu_pos > 0)
+			//Le module possède une administration
+			if ($menu_pos > 0)
+			{
+				$array_pos[$menu_pos-1]++;
+				$idmenu = $array_pos[$menu_pos - 1];
+				$subheader_tpl->assign_vars(array(
+					'C_ADMIN_LINKS_' . $menu_pos => true
+				));
+
+				$admin_links = $configuration->get_admin_links();
+				if (!empty($admin_links))
 				{
-					$array_pos[$menu_pos-1]++;
-					$idmenu = $array_pos[$menu_pos-1];
-					$subheader_tpl->assign_vars(array(
-						'C_ADMIN_LINKS_' . $menu_pos => true
-					));
-
-					if (!empty($modules_config[$module_name]['admin_links']))
+					$links = '';
+					$i = 0;
+					$j = 0;
+					foreach ($admin_links as $key => $value)
 					{
-						$admin_links = ModuleConfiguration::parse_admin_links($modules_config[$module_name]['admin_links']);
-						$links = '';
-						$i = 0;
-						$j = 0;
-						foreach ($admin_links as $key => $value)
+						if (is_array($value))
 						{
-							if (is_array($value))
+							$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu .
+							$i . $module_id . '\', 2);" onmouseout="hide_menu(2);"><a href="#" ' .
+									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $module_id .
+									'/' . $module_id . '_mini.png);cursor:default;">' . $key .
+									'</a><ul id="sssmenu' . $idmenu . $i . $module_id . '">' . "\n";
+							foreach ($value as $key2 => $value2)
 							{
-								$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu .
-								$i . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" ' .
-									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $name .
-									'/' . $name . '_mini.png);cursor:default;">' . $key .
-									'</a><ul id="sssmenu' . $idmenu . $i . $name . '">' . "\n";
-								foreach ($value as $key2 => $value2)
-								{
-									$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $name .
+								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id .
 									'/' . $value2 . '" style="background-image:url(' .
-									TPL_PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">'
-									. $key2 . '</a></li>' . "\n";
-								}
-								$links .= '</ul></li>' . "\n";
-								$i++;
+								TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png);">'
+								. $key2 . '</a></li>' . "\n";
 							}
-							else
-							{
-								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $name . '/' .
-								$value . '" style="background-image:url(' . PATH_TO_ROOT .
-									'/' . $name . '/' . $name . '_mini.png);">' . $key .
-									'</a></li>' . "\n";
-							}
-							$j++;
+							$links .= '</ul></li>' . "\n";
+							$i++;
 						}
+						else
+						{
+							$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id . '/' .
+							$value . '" style="background-image:url(' . PATH_TO_ROOT .
+									'/' . $module_id . '/' . $module_id . '_mini.png);">' . $key .
+									'</a></li>' . "\n";
+						}
+						$j++;
+					}
 
-						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'C_ADMIN_LINKS_EXTEND' => ($j > 0 ? true : false),
 							'IDMENU' => $idmenu,
-							'NAME' => $modules_config[$module_name]['name'],
+							'NAME' => $configuration->get_name(),
 							'LINKS' => $links,
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $name . '/admin_' . $name .
-								'.php',
-							'IMG' => TPL_PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png'
+							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_start_page(),
+							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
 							));
-					}
-					else
-					{
-						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+				}
+				else
+				{
+					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'IDMENU' => $menu_pos,
-							'NAME' => $modules_config[$module_name]['name'],
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $name . '/admin_' . $name
-						. '.php',
-							'IMG' => TPL_PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png'
+							'NAME' => $configuration->get_name(),
+							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_start_page(),
+							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
 							));
-					}
 				}
 			}
 		}

@@ -58,7 +58,7 @@ class ModuleConfigurationManager
 		{
 			self::$cache_manager = RAMCacheFactory::get(__CLASS__);
 		}
-		return self::$ram_cache;
+		return self::$cache_manager;
 	}
 
 	/**
@@ -73,7 +73,7 @@ class ModuleConfigurationManager
 
 	private static function find_desc_ini_file($module_id)
 	{
-		$desc_ini_folder = PATH_TO_ROOT . '/' . $module_id . 'lang/';
+		$desc_ini_folder = PATH_TO_ROOT . '/' . $module_id . '/lang/';
 
 		$desc_ini_file = $desc_ini_folder . get_ulang() . '/desc.ini';
 		if (file_exists($desc_ini_file))

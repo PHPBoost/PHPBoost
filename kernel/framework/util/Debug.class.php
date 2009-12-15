@@ -116,6 +116,15 @@ class Debug
 		echo self::get_stacktrace_as_string($start_trace_index + 1, $exception);
 	}
 
+	/**
+	 * @desc executes a print_r() in an html <pre> block
+	 * @param mixed $object the object to see using print_r
+	 */
+	public static function dump($object)
+	{
+		echo '<pre>'; print_r($object); echo '</pre>';
+	}
+
 	private static function get_file($trace)
 	{
 		if (!empty($trace['file']))
