@@ -36,7 +36,8 @@ class ModuleConfiguration
 	private $version;
 	private $date;
 	private $compatibility;
-	private $has_admin_interface;
+	private $admin_start_page;
+	private $admin_menu;
 	private $admin_links;
 	private $start_page;
 	private $contribution_interface;
@@ -89,9 +90,14 @@ class ModuleConfiguration
 		return $this->compatibility;
 	}
 
-	public function has_admin_interface()
+	public function get_admin_start_page()
 	{
-		return $this->has_admin_interface;
+		return $this->admin_start_page;
+	}
+
+	public function get_admin_menu()
+	{
+		return $this->admin_menu;
 	}
 
 	public function get_admin_links()
@@ -130,7 +136,8 @@ class ModuleConfiguration
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
-		$this->has_admin_interface = $config['has_admin_interface'] == 1;
+		$this->admin_start_page = $config['admin_start_page'];
+		$this->admin_menu = $config['admin_menu'];
 		$this->start_page = $config['start_page'];
 		$this->contribution_interface = $config['contribution_interface'];
 		$this->mini_modules = $config['mini_modules'];
