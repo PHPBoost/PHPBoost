@@ -153,9 +153,8 @@ class ModulesDiscoveryService
 
 			if (in_array($module_id, $this->availables_modules))
 			{   // The interface is available
-				global $MODULES;
 				$user = AppContext::get_user();
-				if (!$user->check_auth($MODULES[$module_id]['auth'], ACCESS_MODULE))
+				if (!ModulesManager::get_module($module_id)->check_auth())
 				{   // ACCESS DENIED
 					$module->set_error(ACCES_DENIED);
 				}

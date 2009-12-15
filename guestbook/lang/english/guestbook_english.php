@@ -38,5 +38,6 @@ $LANG['rank_post'] = 'Rank required to post';
 $LANG['title_guestbook'] = 'Guest Book';
 $LANG['guestbook_more_contents'] = '[Read more...]';
 $LANG['no_message_guestbook'] = 'No message';
+$LANG['e_unauthorized'] = 'You aren\'t authorized to post !';
 
 ?>

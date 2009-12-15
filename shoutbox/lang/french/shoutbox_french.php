@@ -40,4 +40,11 @@ $LANG['shoutbox_refresh_delay_explain'] = 'Mettre 0 pour désactiver';
 		
 $LANG['title_shoutbox'] = 'Discussion';
 $LANG['archives'] = 'Archives';
+
+$LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
+$LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
+$LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
+$LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
+$LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
+$LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
 ?>

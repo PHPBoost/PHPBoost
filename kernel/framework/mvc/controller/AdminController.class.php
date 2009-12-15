@@ -3,7 +3,7 @@
  *                          AbstractController.class.php
  *                            -------------------
  *   begin                : December 14 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

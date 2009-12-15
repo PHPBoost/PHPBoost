@@ -51,10 +51,10 @@ class DeprecatedEnvironment
 					DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 				}
 			}
-		}
-		else
-		{
-			DispatchManager::redirect(PHPBoostErrors::module_not_installed());
+			else
+			{
+				DispatchManager::redirect(PHPBoostErrors::module_not_installed());
+			}
 		}
 	}
 }

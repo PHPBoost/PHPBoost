@@ -55,8 +55,6 @@ class Environment
 		ClassLoader::init_autoload();
 
 		AppContext::init_bench();
-
-		import('menu/Menu');
 	}
 
 	/**
@@ -111,6 +109,7 @@ class Environment
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
+		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
 
 		@ini_set('open_basedir', NULL);
 

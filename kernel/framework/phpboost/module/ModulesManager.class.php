@@ -73,6 +73,16 @@ class ModulesManager
 		return ModulesConfig::load()->get_module($module_id);
 	}
 
+	/**
+	 * @desc tells whether the current user is authorized to access the requested module
+	 * @param $module_id the id of the module
+	 * @return bool true if the current user is authorized to access the requested module
+	 */
+	public static function check_module_auth($module_id)
+	{
+		return ModulesConfig::load()->get_module($module_id)->check_auth();
+	}
+
 	public static function is_module_installed($module_id)
 	{
 		return in_array($module_id, self::get_installed_modules_ids_list());
@@ -281,7 +291,7 @@ class ModulesManager
 			MenuService::generate_cache();
 
 			//Régénération des feeds.
-			Feed::clear_cache();
+			ModuleFeedBuilder::clear_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))

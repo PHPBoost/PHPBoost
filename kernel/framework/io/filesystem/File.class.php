@@ -241,7 +241,7 @@ class File extends FileSystemElement
 	{
 		$this->close();
 
-		if (!@unlink($this->path)) // Empty the file if it couldn't delete it
+		if (file_exists($this->path) && !@unlink($this->path)) // Empty the file if it couldn't delete it
 		{
 			$this->write('');
 			throw new IOException('The file ' . $this->path . ' couldn\'t been deleted');

@@ -98,12 +98,12 @@ class Template
 		if ($identifier != null)
 		{
 			$this->identifier = $identifier;
-				
+
 			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 			{
 				$this->auto_load_frequent_vars();
 			}
-				
+
 			if ($loader !== self::FILE_TEMPLATE_LOADER)
 			{
 				$this->set_loader($loader);
@@ -244,7 +244,11 @@ class Template
 	 */
 	public function get_subtemplate($identifier)
 	{
-		return $this->subtemplates[$identifier];
+		if (isset($this->subtemplates[$identifier]))
+		{
+			return $this->subtemplates[$identifier];
+		}
+		return null;
 	}
 
 	/**

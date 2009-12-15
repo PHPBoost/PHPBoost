@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               shoutbox_mini.php
+ *                              shoutbox_mini.php
  *                            -------------------
  *   begin                : July 29, 2005
  *   copyright            : (C) 2005 Viarre Régis
