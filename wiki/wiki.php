@@ -34,13 +34,13 @@ include('../wiki/wiki_functions.php');
 
 //Titre de l'article
 $encoded_title = retrieve(GET, 'title', '');
-//numï¿½ro de l'article (utile pour les archives)
+//numéro de l'article (utile pour les archives)
 $id_contents = retrieve(GET, 'id_contents', 0);
 
 $num_rows = 0;
 $parse_redirection = false;
 
-//Requï¿½tes prï¿½liminaires utiles par la suite
+//Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
@@ -163,9 +163,9 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 	));
-	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catï¿½gorie non archivï¿½e
+	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archiée
 	{
-		//On liste les articles de la catï¿½gorie et ses sous catï¿½gories
+		//On liste les articles de la catégorie et ses sous catégories
 		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
@@ -255,7 +255,7 @@ else
 			));
 		}
 	}
-	//Affichage de toutes les catï¿½gories si c'est activï¿½
+	//Affichage de toutes les catégories si c'est activé
 	if ($_WIKI_CONFIG['display_cats'] != 0)
 	{
 		$Template->assign_block_vars('cat_list', array(
