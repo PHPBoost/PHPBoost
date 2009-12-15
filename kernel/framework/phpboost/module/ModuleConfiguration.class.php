@@ -36,6 +36,7 @@ class ModuleConfiguration
 	private $version;
 	private $date;
 	private $compatibility;
+	private $repository;
 	private $admin_start_page;
 	private $admin_menu;
 	private $admin_links;
@@ -90,6 +91,11 @@ class ModuleConfiguration
 		return $this->compatibility;
 	}
 
+	public function get_repository()
+	{
+		return $this->repository;
+	}
+
 	public function get_admin_start_page()
 	{
 		return $this->admin_start_page;
@@ -136,12 +142,13 @@ class ModuleConfiguration
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
-		$this->admin_start_page = $config['admin_start_page'];
-		$this->admin_menu = $config['admin_menu'];
-		$this->start_page = $config['start_page'];
-		$this->contribution_interface = $config['contribution_interface'];
-		$this->mini_modules = $config['mini_modules'];
-		$this->url_rewrite_rules = $config['rewrite_rules'];
+		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+		$this->admin_start_page = !empty($config['admin_start_page']) ? $config['admin_start_page'] : '';
+		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
+		$this->start_page = !empty($config['start_page']) ? $config['start_page'] : '';
+		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
+		$this->mini_modules = !empty($config['mini_modules']) ? $config['mini_modules'] : array();
+		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 	}
 
 	private function load_description($desc_ini_file)
@@ -150,7 +157,7 @@ class ModuleConfiguration
 		$this->check_parse_ini_file($desc, $desc_ini_file);
 		$this->name = $desc['name'];
 		$this->description = $desc['desc'];
-		$this->admin_links = $this->parse_admin_links($desc['admin_links']);
+		$this->admin_links = !empty($desc['admin_links']) ? $this->parse_admin_links($desc['admin_links']) : array();
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)

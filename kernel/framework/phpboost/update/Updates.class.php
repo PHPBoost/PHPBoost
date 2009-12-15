@@ -25,17 +25,13 @@
  *
 ###################################################*/
 
-//define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
-define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
+//define('Updates::PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
 define('PHP_MIN_VERSION_UPDATES', '5');
 
 define('CHECK_KERNEL', 0X01);
 define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
 define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
-
-
-
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
@@ -44,6 +40,7 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
  */
 class Updates
 {
+	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
     /**
 	* @desc constructor of the class
 	* @param $checks
@@ -54,7 +51,7 @@ class Updates
         $this->_load_repositories();
         $this->_check_repositories();
     }
-	
+
     /**
 	* @desc Load Application Classes
 	* @param $checks
@@ -64,12 +61,12 @@ class Updates
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             global $CONFIG;
-            
+
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
             }
-            
+
             if ($checks & CHECK_MODULES)
             {
                 global $MODULES;
@@ -78,14 +75,14 @@ class Updates
                 foreach ($kModules as $module)
                 {
                     $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-                    $repository = !empty($infos['repository']) ? $infos['repository'] : PHPBOOST_OFFICIAL_REPOSITORY;
+                    $repository = !empty($infos['repository']) ? $infos['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
                     if (!empty($infos['repository']))
                     {
                         $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $repository);
                     }
                 }
             }
-            
+
             if ($checks & CHECK_THEMES)
             {
                 global $THEME_CONFIG;
@@ -105,7 +102,7 @@ class Updates
             }
         }
     }
-	
+
     /**
 	* @desc Load Repository Classes
 	*/
@@ -139,13 +136,13 @@ class Updates
             }
         }
     }
-	
+
     /**
 	* @desc Save an alert for Update Notification
 	*/
     function _add_update_alert($app)
     {
-        
+
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
         if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
@@ -157,18 +154,18 @@ class Updates
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));
-            
+
             $alert->set_fixing_url('admin/updates/detail.php?identifier=' . $identifier);
             $alert->set_priority($app->get_priority());
             $alert->set_properties(serialize($app));
             $alert->set_type('updates');
             $alert->set_identifier($identifier);
-            
+
             //Save
             AdministratorAlertService::save_alert($alert);
         }
     }
-    
+
     var $repositories = array();
     var $apps = array();
 };
