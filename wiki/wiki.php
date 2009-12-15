@@ -34,13 +34,13 @@ include('../wiki/wiki_functions.php');
 
 //Titre de l'article
 $encoded_title = retrieve(GET, 'title', '');
-//numéro de l'article (utile pour les archives)
+//numï¿½ro de l'article (utile pour les archives)
 $id_contents = retrieve(GET, 'id_contents', 0);
 
 $num_rows = 0;
 $parse_redirection = false;
 
-//Requêtes préliminaires utiles par la suite
+//Requï¿½tes prï¿½liminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
@@ -54,7 +54,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
 
-	if (!empty($article_infos['redirect']))//Si on est redirigé
+	if (!empty($article_infos['redirect']))//Si on est redirigï¿½
 	{
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
@@ -163,9 +163,9 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 	));
-	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
+	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catï¿½gorie non archivï¿½e
 	{
-		//On liste les articles de la catégorie et ses sous catégories
+		//On liste les articles de la catï¿½gorie et ses sous catï¿½gories
 		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
@@ -234,7 +234,7 @@ else
 		
 		$Template->assign_block_vars('last_articles', array(
 			'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-			'RSS' => $articles_number > 0 ? '<a href="syndication.php"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
+			'RSS' => $articles_number > 0 ? '<a href="' . PATH_TO_ROOT . '/syndication.php?m=wiki"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 		
 		$i = 0;
@@ -255,7 +255,7 @@ else
 			));
 		}
 	}
-	//Affichage de toutes les catégories si c'est activé
+	//Affichage de toutes les catï¿½gories si c'est activï¿½
 	if ($_WIKI_CONFIG['display_cats'] != 0)
 	{
 		$Template->assign_block_vars('cat_list', array(
@@ -264,7 +264,7 @@ else
 		$i = 0;
 		foreach ($_WIKI_CATS as $id => $infos)
 		{
-			//Si c'est une catégorie mère
+			//Si c'est une catï¿½gorie mï¿½re
 			if ($infos['id_parent'] == 0)
 			{
 				$Template->assign_block_vars('cat_list.list', array(
