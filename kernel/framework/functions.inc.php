@@ -10,10 +10,10 @@
  *
  ###################################################
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -160,7 +160,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  * @desc Protects an input variable. Never trust user input!
  * @param string $var Variable to protect.
  * @param bool $html_protect HTML_PROTECT if you don't accept the HTML code (it will be transformed
- *  by the corresponding HTML entities and won't be considerer by the web browsers). HTML_UNPROTECT if you want to let them.
+ * by the corresponding HTML entities and won't be considerer by the web browsers). HTML_UNPROTECT if you want to let them.
  * @param int $addslashes If you want to escape the quotes in the string, use ADDSLASHES_FORCE, if you don't want, use the ADDSLASHES_NONE constant.
  * If you want to escape them only if they have not been escaped automatically by the magic quotes option, use the ADDSLASHES_AUTO constant.
  * @return string The protected string.
