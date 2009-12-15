@@ -36,9 +36,7 @@ define('USER_TYPE', 3);
  */
 class User
 {
-	/**
-	 * @var Session
-	 */
+	private $is_admin = false;
 	private $user_data; //Données du membres, obtenues à partir de la class de session.
 	private $groups_auth; //Tableau contenant le nom des groupes disponibles.
 	private $user_groups; //Groupes du membre.
@@ -49,6 +47,7 @@ class User
 	public function __construct()
 	{
 		$this->user_data = AppContext::get_session()->get_data();
+		$this->is_admin = ($this->user_data['level'] == 2);
 
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();
@@ -62,6 +61,11 @@ class User
 		$this->user_groups = explode('|', $this->user_data['user_groups']);
 		array_unshift($this->user_groups, 'r' . $this->user_data['level']); //Ajoute le groupe associé au rang du membre.
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
+	}
+
+	public function is_admin()
+	{
+		return $this->is_admin;
 	}
 
 	/**
@@ -173,7 +177,7 @@ class User
 				$max_auth = max($max_auth, $group_auth[$key_auth]);
 			}
 		}
-			
+
 		return $max_auth;
 	}
 

@@ -164,7 +164,9 @@ class Session
 
 		$pwd = $password;
 		if (!$already_hashed)
-		$password = strhash($password);
+		{
+			$password = strhash($password);
+		}
 
 		$error = '';
 		$session_script = addslashes($session_script);

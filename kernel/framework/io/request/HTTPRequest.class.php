@@ -40,19 +40,40 @@ class HTTPRequest
 	const float = 0x02;
 	const string = 0x03;
 	const none = 0x04;
+
+	public function has_parameter($parameter)
+	{
+		return $this->has_rawparameter($parameter, $_REQUEST);
+	}
+
+	public function has_getparameter($parameter)
+	{
+		return $this->has_rawparameter($parameter, $_GET);
+	}
+
+	public function has_postparameter($parameter)
+	{
+		return $this->has_rawparameter($parameter, $_POST);
+	}
+
+	private function has_rawparameter($parameter, $array)
+	{
+		return !empty($array[$parameter]);
+	}
+
 	public function set_value($varname, $value)
 	{
 		$this->set_rawvalue($varname, $value, $_GET);
 		$this->set_rawvalue($varname, $value, $_POST);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
-	
+
 	public function set_getvalue($varname, $value)
 	{
 		$this->set_rawvalue($varname, $value, $_GET);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
-	
+
 	public function set_postvalue($varname, $value)
 	{
 		$this->set_rawvalue($varname, $value, $_POST);

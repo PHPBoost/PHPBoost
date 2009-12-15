@@ -43,7 +43,7 @@ class CommonQueryTest extends PHPBoostUnitTestCase
 	public function test_select_single_row()
 	{
 		$this->common_query->select_single_row($this->test_table, array('*'),
-          'value=:value', array('value' => 'coucou'));
+          'WHERE value=:value', array('value' => 'coucou'));
 	}
 
 	public function test_select_single_row_not_found()
@@ -51,7 +51,7 @@ class CommonQueryTest extends PHPBoostUnitTestCase
 		try
 		{
 			$this->common_query->select_single_row($this->test_table, array('*'),
-                'value=:value', array('value' => 'cou2cou'));
+                'WHERE value=:value', array('value' => 'cou2cou'));
 			self::assertTrue(false, 'Row has been found but shoudn\'t');
 		}
 		catch (RowNotFoundException $ex)

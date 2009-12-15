@@ -149,8 +149,7 @@ class Sql
 		{
 			$query_conditions = new SqlParameterExtractor($conditions);
 			return AppContext::get_sql_common_query()->select_single_row(
-			$table, $fields, str_replace('WHERE', '', $query_conditions->get_query()),
-			$query_conditions->get_parameters());
+			$table, $fields, $query_conditions->get_query(), $query_conditions->get_parameters());
 		}
 		catch (RowNotFoundException $exception)
 		{

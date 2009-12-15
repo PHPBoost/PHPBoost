@@ -38,7 +38,7 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		global $LANG, $CONFIG;
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 	}
@@ -52,12 +52,12 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 		self::set_page_localization('');
 
 		$this->process_site_maintenance();
-		$this->check_admin_auth();
+//		$this->check_admin_auth();
 	}
-	
+
 	private function check_admin_auth()
 	{
-		if (!AppContext::get_user()->check_level(ADMIN_LEVEL))
+		if (!AppContext::get_user()->is_admin())
 		{
 			exit;
 		}
@@ -69,7 +69,7 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	 */
 	function display_footer()
 	{
-		
+
 	}
 }
 
