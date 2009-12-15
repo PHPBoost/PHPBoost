@@ -80,6 +80,11 @@ class ModuleConfigurationTest extends PHPBoostUnitTestCase
 		self::assertEquals('3.1', $this->module_config->get_compatibility());
 	}
 
+	public function test_get_repository()
+	{
+		self::assertEquals(Updates::PHPBOOST_OFFICIAL_REPOSITORY, $this->module_config->get_repository());
+	}
+
 	public function test_get_admin_start_page()
 	{
 		self::assertEquals("admin.php", $this->module_config->get_admin_start_page());
