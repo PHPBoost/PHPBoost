@@ -120,9 +120,9 @@ class TemplateParserString extends AbstractTemplateParser
 		if (strpos($blockname, '.') !== false) //Contient un bloc imbriqué.
 		{
 			$array_block = explode('.', $blockname);
-			$previous_block = array_pop($array_block);
 			$blockname = array_pop($array_block);
-			
+			$previous_block = array_pop($array_block);
+				
 			$second_param =', $_tmp_' . $previous_block . '_value';
 			$method .= '_from_list';
 		}

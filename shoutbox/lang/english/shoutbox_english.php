@@ -40,4 +40,11 @@ $LANG['shoutbox_refresh_delay_explain'] = 'Set 0 to disable';
 
 $LANG['title_shoutbox'] = 'Shoutbox';
 $LANG['archives'] = 'Archives';
+
+$LANG['e_unauthorized'] = 'You aren\'t authorized to post !';
+$LANG['e_flood'] = 'You can\'t post yet, retry in a few moments';
+$LANG['e_l_flood'] = 'You can\'t post more than %d link(s) in your message';
+$LANG['e_link_pseudo'] = 'Your login can\'t contain weblinks';
+$LANG['e_incomplete'] = 'All the required fields must be filled !';
+$LANG['e_readonly'] = 'You can\'t perform this action because you have been set in read only status !';
 ?>

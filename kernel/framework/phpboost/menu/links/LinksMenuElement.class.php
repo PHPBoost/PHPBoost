@@ -173,7 +173,7 @@ abstract class LinksMenuElement extends Menu
 	 * @desc Increase the Menu Depth and set the menu type to its parent one
 	 * @access protected
 	 */
-	protected function _parent()
+	protected function _parent($type)
 	{
 		$this->depth++;
 	}

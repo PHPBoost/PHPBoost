@@ -82,8 +82,8 @@ class ClassLoader
 
 			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
 			$paths = array(
-				'',
-				'/kernel/framework/core/cache',
+				'/',
+				'/kernel/framework/phpboost/cache',
 				'/kernel/framework/io/cache',
 				'/kernel/framework/core/lang',
 			);

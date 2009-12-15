@@ -40,6 +40,10 @@ function articles_mini($position, $block)
 	
 	MenuService::assign_positions_conditions($tpl, $block);
 
+	$com = false;
+	$note = false;
+	$date = false;
+	$view = false;
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);
 	switch ($mini_conf['type'])
 	{

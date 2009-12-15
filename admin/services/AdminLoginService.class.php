@@ -87,6 +87,7 @@ class AdminLoginService
 		array('user_id', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob'),
 				'WHERE login=:login AND level=2', array('login' => $login));
 		self::$admin_uid = self::$admin_data['user_id'];
+		AppContext::get_request()->set_getvalue('flood', self::$admin_data['test_connect']);
 	}
 
 	private static function is_admin_allowed()
@@ -99,8 +100,9 @@ class AdminLoginService
 
 	private static function start_session($password)
 	{
-		$delay_connect = (time() - self::$admin_data['last_connect']); //Délai entre deux essais de connexion.
-		//Protection de l'administration par connexion brute force.
+		$error_report = false;
+		$delay_connect = (time() - self::$admin_data['last_connect']);
+		
 		if (self::$admin_data['test_connect'] < 5)
 		{
 			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
@@ -115,10 +117,11 @@ class AdminLoginService
 			self::set_test_connections(3);
 			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
 		}
-		else //plus d'essais
+		else
 		{
-			redirect('/admin/admin_index.php?flood=0');
+			return false;
 		}
+		return empty($error_report);
 	}
 
 	private static function reset_attempts()
@@ -131,7 +134,6 @@ class AdminLoginService
 		self::$admin_data['test_connect']++;
 		self::set_test_connections(self::$admin_data['test_connect']);
 		$remaining_connections = 5 - (self::$admin_data['test_connect']);
-		redirect('/admin/admin_index.php?flood=' . $remaining_connections);
 	}
 
 	private static function unlock_admin()
@@ -141,7 +143,6 @@ class AdminLoginService
 		if (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
 		{
 			AppContext::get_session()->end();
-			redirect('/admin/admin_index.php?flood=0');
 		}
 	}
 

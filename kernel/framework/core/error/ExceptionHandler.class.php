@@ -56,7 +56,7 @@ class ExceptionHandler
 
 	private function clean_output_buffer()
 	{
-		ob_clean();
+		@ob_clean();
 	}
 
 	private function log()
