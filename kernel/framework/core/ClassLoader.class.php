@@ -40,9 +40,9 @@ class ClassLoader
 		'.svn' //Dev
 	);
 
-    /**
-     * @desc initializes the autoload class list
-     */
+	/**
+	 * @desc initializes the autoload class list
+	 */
 	public static function init_autoload()
 	{
 		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
@@ -78,6 +78,7 @@ class ClassLoader
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
+			import('io/filesystem/IOexception');
 			import('util/Path');
 
 			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
@@ -88,19 +89,26 @@ class ClassLoader
 				'/kernel/framework/core/lang',
 			);
 
-			foreach ($paths as $path)
+			try
 			{
-				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern, true);
-			}
-			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`', true);
+				foreach ($paths as $path)
+				{
+					self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
+				}
+				self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`');
 
-			self::generate_autoload_cache();
+				self::generate_autoload_cache();
+			}
+			catch (Exception $exception)
+			{
+				Debug::fatal($exception);
+			}
 			self::$already_reloaded = true;
 		}
 		return self::$autoload;
 	}
 
-	private static function add_classes($directory, $pattern, $recursive = false)
+	private static function add_classes($directory, $pattern, $recursive = true)
 	{
 		$files = array();
 		$folder = new Folder($directory);
@@ -118,7 +126,7 @@ class ClassLoader
 			{
 				if (!in_array($folder->get_name(), self::$exclude_paths))
 				{
-					self::add_classes($folder->get_name(true), $pattern, true);
+					self::add_classes($folder->get_name(true), $pattern);
 				}
 			}
 		}
