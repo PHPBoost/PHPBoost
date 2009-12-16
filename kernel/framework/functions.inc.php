@@ -399,6 +399,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 }
 
 /**
+ * @deprecated
  * @desc Returns the config field of a module configuration file.
  * In fact, this field contains the default module configuration in which we can find some " characters. To solve the problem,
  * this field is considered as a comment and when we want to retrieve its value, we have to call this method which returns its value.
@@ -409,9 +410,10 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
+	// TODO remove this function
 	$dir = find_require_dir($dir_path, $require_dir, false);
 
-	$module_config_file = new File($dir_path . $dir . '/config.ini', File::READ);
+	$module_config_file = new File($dir_path . $dir . '/desc.ini', File::READ);
 	$module_config_file->open();
 	$module_config_text = $module_config_file->get_contents();
 

@@ -52,20 +52,30 @@ class MenuService
 
 		$conditions = array();
 		if ($class != Menu::MENU__CLASS)
-		$conditions[] = "class='" . strtolower($class) . "'";
+		{
+			$conditions[] = "class='" . strtolower($class) . "'";
+		}
 		if ($block != Menu::BLOCK_POSITION__ALL)
-		$conditions[] = "block='" . $block . "'";
+		{
+			$conditions[] = "block='" . $block . "'";
+		}
 		if ($enabled !== Menu::MENU_ENABLE_OR_NOT)
-		$conditions[] .= "enabled='" . $enabled . "'";
+		{
+			$conditions[] .= "enabled='" . $enabled . "'";
+		}
 
 		if (count($conditions) > 0)
-		$query .= " WHERE " . implode(' AND ', $conditions);
+		{
+			$query .= " WHERE " . implode(' AND ', $conditions);
+		}
 
 		$menus = array();
 		$result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
 
 		while ($row = $Sql->fetch_assoc($result))
-		$menus[] = MenuService::_load($row);
+		{
+			$menus[] = MenuService::_load($row);
+		}
 
 		$Sql->query_close($result);
 
@@ -272,7 +282,9 @@ class MenuService
 			$max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
 			// Getting the max diff
 			if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
-			$new_block_position = $max_position;
+			{
+				$new_block_position = $max_position;
+			}
 
 			$update_query = "
                 UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
@@ -286,7 +298,9 @@ class MenuService
 
 			// Getting the max diff
 			if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
-			$new_block_position = 0;
+			{
+				$new_block_position = 0;
+			}
 
 			// Updating other menus
 			$update_query = "
@@ -488,22 +502,18 @@ class MenuService
 	* @param string $module the module name
 	* @return bool true if the module has been installed, else, false
 	*/
-	public static function add_mini_module($module, $generate_cache = true)
+	public static function add_mini_module($module_id, $generate_cache = true)
 	{
-		// Break if no config file found
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-		if (empty($info_module) || empty($info_module['mini_module']))
-		{
-			return false;
-		}
+		$configuration = ModulesManager::get_module($module_id)->get_configuration();
 		
-		// Break if no mini module config
-		$mini_modules_menus = ModuleConfiguration::parse_admin_links($info_module['mini_module']);
+		Debug::dump($configuration->get_mini_modules());
+		$mini_modules_menus = $configuration->get_mini_modules();
 		if (empty($mini_modules_menus))
 		{
 			return false;
 		}
 
+		echo 'toto';
 		$installed = false;
 		foreach ($mini_modules_menus as $filename => $location)
 		{   // For each mini module for the current module
@@ -573,7 +583,6 @@ class MenuService
 		// Build the availables modules list
 		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
-			die('coucou');
 			if ($module->is_activated())
 			{
 				$modules[] = $module->get_id();
@@ -607,9 +616,10 @@ class MenuService
 		{   // Browse availables modules without mini modules
 			MenuService::add_mini_module($module, false);
 		}
-
 		if ($update_cache)
-		MenuService::generate_cache();
+		{
+			MenuService::generate_cache();
+		}
 	}
 
 
@@ -640,18 +650,12 @@ class MenuService
 		// Création d'un menu contenant des liens vers tous les modules
 		$modules_discovery_service = new ModulesDiscoveryService();
 		// Récupère tous les modules même ceux n'ayant pas d'interface
-		$modules = $modules_discovery_service->get_all_modules();
-		// Sorts by localized name
-		$sorted_modules = array();
+		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		foreach ($modules as $module)
 		{
-			$sorted_modules[$module->get_name()] = $module;
-		}
-		ksort($sorted_modules);
-		foreach ($sorted_modules as $module)
-		{
-			$infos = $module->get_infos();
-			if (!empty($infos['infos']) && !empty($infos['infos']['starteable_page']))
+			$configuration = $module->get_configuration();
+			$start_page = $configuration->get_start_page();
+			if (!empty($start_page))
 			{
 				$img = '';
 				$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id();
@@ -665,10 +669,7 @@ class MenuService
 						break;
 					}
 				}
-				$modules_menu->add(new LinksMenuLink($module->get_name(),
-                    '/' . $module->get_id() . '/' . $infos['infos']['starteable_page'],
-				$img
-				));
+				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/' . $start_page, $img));
 			}
 		}
 		return $modules_menu;

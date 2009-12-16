@@ -54,6 +54,9 @@ class Module
         return $this->authorizations;
     }
 
+    /**
+     * @return ModuleConfiguration
+     */
     public function get_configuration()
     {
         return ModuleConfigurationManager::get($this->module_id);

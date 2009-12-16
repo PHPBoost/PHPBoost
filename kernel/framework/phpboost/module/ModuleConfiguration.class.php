@@ -36,6 +36,7 @@ class ModuleConfiguration
 	private $version;
 	private $date;
 	private $compatibility;
+	private $php_version;
 	private $repository;
 	private $admin_start_page;
 	private $admin_menu;
@@ -91,6 +92,11 @@ class ModuleConfiguration
 		return $this->compatibility;
 	}
 
+	public function get_php_version()
+	{
+		return $this->php_version;
+	}
+
 	public function get_repository()
 	{
 		return $this->repository;
@@ -142,12 +148,13 @@ class ModuleConfiguration
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
+		$this->php_version = !empty($config['php_version']) ? $config['php_version'] : '5.1.2';
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->admin_start_page = !empty($config['admin_start_page']) ? $config['admin_start_page'] : '';
 		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
 		$this->start_page = !empty($config['start_page']) ? $config['start_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
-		$this->mini_modules = !empty($config['mini_modules']) ? $config['mini_modules'] : array();
+		$this->mini_modules = !empty($config['mini_modules']) ? self::parse_ini_array($config['mini_modules']) : array();
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 	}
 
@@ -157,7 +164,7 @@ class ModuleConfiguration
 		$this->check_parse_ini_file($desc, $desc_ini_file);
 		$this->name = $desc['name'];
 		$this->description = $desc['desc'];
-		$this->admin_links = !empty($desc['admin_links']) ? $this->parse_admin_links($desc['admin_links']) : array();
+		$this->admin_links = !empty($desc['admin_links']) ? self::parse_ini_array($desc['admin_links']) : array();
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)
@@ -175,7 +182,7 @@ class ModuleConfiguration
 	 * @param string $links_format Serialized array
 	 * @return string[] The unserialized array.
 	 */
-	public static function parse_admin_links($links_format)
+	public static function parse_ini_array($links_format)
 	{
 		// TODO remove the public visibility when migration to new config files will be done
 		$links_format = preg_replace('` ?=> ?`', '=', $links_format);

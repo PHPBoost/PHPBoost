@@ -293,8 +293,8 @@ switch($step)
 		{
 			//Récupération de la configuration de connexion
 			$host = retrieve(POST, 'host', 'localhost');
-			$login = retrieve(POST, 'login', '');
-			$password = retrieve(POST, 'password', '');
+			$login = retrieve(POST, 'db_login', '');
+			$password = retrieve(POST, 'db_password', '');
 			$database = str_replace('.', '_', retrieve(POST, 'database', ''));
 			$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
 
@@ -553,7 +553,7 @@ switch($step)
 			));
 
 			//On génère le cache
-			require_once '../kernel/framework/core/Cache.class.php';
+//			require_once '../kernel/framework/core/Cache.class.php';
 			include '../lang/' . $lang . '/main.php';
 			$Cache = new Cache;
 			ModulesConfig::load()->set_modules(array());
@@ -562,6 +562,7 @@ switch($step)
 			{
 				ModulesManager::install_module($module_name, true);
 			}
+			exit;
 
 			// Ajout du menu de lien par défaut tout en haut à gauche
 

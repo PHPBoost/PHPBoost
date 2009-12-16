@@ -93,19 +93,15 @@ class HtaccessFileCache implements CacheData
 
 	private function add_modules_rules()
 	{
-		$querier = AppContext::get_sql_querier();
-
 		$this->add_section('Modules rules');
-		$result = $querier->select("SELECT name FROM ".PREFIX."modules WHERE activ = :activ",
-		array('activ' => 1));
 
-		foreach ($result as $row)
+		$modules = ModulesManager::get_installed_modules_map();
+		foreach ($modules as $module)
 		{
-			//Récupération des infos de config.
-			$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', get_ulang());
-			if (!empty($get_info_modules['url_rewrite']))
+			$configuration = $module->get_configuration();
+			foreach ($configuration->get_rewrite_rules() as $rule)
 			{
-				$this->add_line(str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])));
+				$this->add_line(str_replace('DIR', DIR, $rule));
 			}
 		}
 	}
