@@ -562,7 +562,6 @@ switch($step)
 			{
 				ModulesManager::install_module($module_name, true);
 			}
-			exit;
 
 			// Ajout du menu de lien par défaut tout en haut à gauche
 

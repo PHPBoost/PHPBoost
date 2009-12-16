@@ -120,7 +120,7 @@ class ModuleConfigurationTest extends PHPBoostUnitTestCase
 
 	public function test_get_mini_modules()
 	{
-		$mini_modules = array('MyModuleFirstMiniModule', 'MyModuleSecondMiniModule', 'MyModuleThirdMiniModule');
+        $mini_modules = array('MyModuleFirstMiniModule' => 'right', 'MyModuleSecondMiniModule' => 'left', 'MyModuleThirdMiniModule' => 'header');
 		self::assertEquals($mini_modules, $this->module_config->get_mini_modules());
 	}
 

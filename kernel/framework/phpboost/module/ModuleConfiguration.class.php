@@ -155,7 +155,7 @@ class ModuleConfiguration
 		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
 		$this->start_page = !empty($config['start_page']) ? $config['start_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
-		$this->mini_modules = !empty($config['mini_modules']) ? self::parse_ini_array($config['mini_modules']) : array();
+        $this->mini_modules = !empty($config['mini_modules']) ? $config['mini_modules'] : array();
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 	}
 
