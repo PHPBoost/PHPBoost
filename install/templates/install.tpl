@@ -378,7 +378,7 @@
 								return;
 							
 							load_progress_bar(20, '');
-							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value + "&prefix=" + document.getElementById("tableprefix").value;
+							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("db_login").value + "&password=" + document.getElementById("db_password").value + "&database=" + document.getElementById("database").value + "&prefix=" + document.getElementById("tableprefix").value;
 
 							if( !display_result )
 								Effect.Appear('result_box');
@@ -449,12 +449,12 @@
 									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
-									<dt><label for="login">* {L_LOGIN}</label><br /><span>{L_LOGIN_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" /></label></dd>
+									<dt><label for="db_login">* {L_LOGIN}</label><br /><span>{L_LOGIN_EXPLAIN}</span></dt>
+									<dd><label><input type="text" maxlength="25" size="25" id="db_login" name="db_login" value="{LOGIN_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
-									<dt><label for="password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" /></label></dd>
+									<dt><label for="db_password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
+									<dd><label><input type="password" maxlength="25" size="25" id="db_password" name="db_password" value="{PASSWORD_VALUE}" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>	
 							

@@ -257,24 +257,11 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		    'L_WEBSITE_UPDATES' => $LANG['website_updates']
 		));
 
-		//Listing des modules disponibles:
-		$modules_sorted_by_name = array();
-		foreach (ModulesManager::get_installed_modules_map() as $module)
-		{
-			try
-			{
-				$modules_sorted_by_name[$module->get_configuration()->get_name()] = $module;
-			}
-			catch (Exception $ex) {
-				//				echo 'Failed to load ' . $module->get_id() . '<br />';
-			}
-		}
-
-		ksort($modules_sorted_by_name);
+		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		$array_pos = array(0, 4, 3, 3, 3, 1);
 		$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4,
 			 'content' => 5, 'modules' => 6);
-		foreach ($modules_sorted_by_name as $module)
+		foreach ($modules as $module)
 		{
 			$module_id = $module->get_id();
 			$configuration = $module->get_configuration();

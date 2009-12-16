@@ -56,6 +56,26 @@ class ModulesManager
 	}
 
 	/**
+	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
+	 * sorted by name
+	 */
+	public static function get_installed_modules_map_sorted_by_localized_name()
+	{
+		$modules = ModulesConfig::load()->get_modules();
+		usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		return $modules;
+	}
+
+	public static function callback_sort_modules_by_name(Module $module1, Module $module2)
+	{
+		if ($module1->get_configuration()->get_name() > $module2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
+	}
+
+	/**
 	 * @return string[] the names list of the installed modules (activated or not)
 	 */
 	public static function get_installed_modules_ids_list()
@@ -115,24 +135,18 @@ class ModulesManager
 			return MODULE_ALREADY_INSTALLED;
 		}
 
-		//Récupération des infos de config.
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang());
-		if (empty($info_module))
+		$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+		$module = new Module($module_identifier, $enable_module, $authorizations);
+		$configuration = $module->get_configuration();
+
+		$phpversion = phpversion();
+		if (strpos(phpversion(), '-') !== FALSE)
 		{
-			return UNEXISTING_MODULE;
+			$phpversion = substr($phpversion, 0, strpos(phpversion(), '-'));
 		}
-			
-		if (!empty($info_module['php_version']))
+		if (version_compare($phpversion, $configuration->get_php_version(), 'lt'))
 		{
-			$phpversion = phpversion();
-			if (strpos(phpversion(), '-') !== FALSE)
-			{
-				$phpversion = substr($phpversion, 0, strpos(phpversion(), '-'));
-			}
-			if (version_compare($phpversion, $info_module['php_version'], 'lt'))
-			{
-				return PHP_VERSION_CONFLICT;
-			}
+			return PHP_VERSION_CONFLICT;
 		}
 
 		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
@@ -169,11 +183,7 @@ class ModulesManager
 			$Sql->parse($sql_file, PREFIX);
 		}
 
-		$module_identifier = strprotect($module_identifier);
-
-
-		$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
-		ModulesConfig::load()->add_module(new Module($module_identifier, $enable_module, $authorizations));
+		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 		//Installation du mini module s'il existe
 		MenuService::add_mini_module($module_identifier);
@@ -202,10 +212,9 @@ class ModulesManager
 
 			MenuService::generate_cache();
 
-			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
+			$rewrite_rules = $configuration->get_url_rewrite_rules();
+			if ($CONFIG['rewrite'] == 1 && !empty($rewrite_rules))
 			{
-
 				HtaccessFileCache::regenerate();
 			}
 		}
@@ -249,13 +258,7 @@ class ModulesManager
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			}
 
-			//Suppression de la configuration.
-			$config = get_ini_config(PATH_TO_ROOT . '/news/lang/', get_ulang()); //Récupération des infos de config.
-			if (!empty($config))
-			{
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'", __LINE__, __FILE__);
-			}
-
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'", __LINE__, __FILE__);
 			//Suppression du module mini.
 
 			MenuService::delete_mini_module($module_id);
@@ -293,10 +296,9 @@ class ModulesManager
 			//Régénération des feeds.
 			ModuleFeedBuilder::clear_cache();
 
-			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
+			$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
+			if ($CONFIG['rewrite'] == 1 && !empty($rewrite_rules))
 			{
-
 				HtaccessFileCache::regenerate();
 			}
 
