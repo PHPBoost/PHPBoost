@@ -506,20 +506,17 @@ class MenuService
 	{
 		$configuration = ModulesManager::get_module($module_id)->get_configuration();
 		
-		Debug::dump($configuration->get_mini_modules());
 		$mini_modules_menus = $configuration->get_mini_modules();
 		if (empty($mini_modules_menus))
 		{
 			return false;
 		}
 
-		echo 'toto';
 		$installed = false;
 		foreach ($mini_modules_menus as $filename => $location)
 		{   // For each mini module for the current module
-
 			// Check the mini module file
-			if (file_exists(PATH_TO_ROOT . '/' . $module . '/' . $filename))
+			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/' . $filename))
 			{
 				$file = explode('.', $filename, 2);
 				if (!is_array($file) || count($file) < 1)
@@ -528,13 +525,13 @@ class MenuService
 				}
 
 				// Check the mini module function
-				include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
+				include_once PATH_TO_ROOT . '/' . $module_id . '/' . $filename;
 				if (!function_exists($file[0]))
 				{
 					continue;
 				}
 
-				$menu = new ModuleMiniMenu($module, $file[0]);
+				$menu = new ModuleMiniMenu($module_id, $file[0]);
 				$menu->enabled(false);
 				$menu->set_auth(array('r1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r-1' => Menu::MENU_AUTH_BIT));
 				$menu->set_block(MenuService::str_to_location($location));
