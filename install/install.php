@@ -553,7 +553,6 @@ switch($step)
 			));
 
 			//On génère le cache
-//			require_once '../kernel/framework/core/Cache.class.php';
 			include '../lang/' . $lang . '/main.php';
 			$Cache = new Cache;
 			ModulesConfig::load()->set_modules(array());
@@ -562,8 +561,6 @@ switch($step)
 			{
 				ModulesManager::install_module($module_name, true);
 			}
-
-			// Ajout du menu de lien par défaut tout en haut à gauche
 
 			MenuService::enable_all(true);
 
