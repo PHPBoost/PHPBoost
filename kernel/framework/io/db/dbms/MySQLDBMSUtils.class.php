@@ -229,7 +229,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		$string .= "\n";
 		if ($file instanceof File)
 		{
-			$file->write($string, File::ADD);
+			$file->append($string);
 		}
 		else
 		{

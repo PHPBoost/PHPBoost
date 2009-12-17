@@ -222,7 +222,6 @@ class HtaccessFileCache implements CacheData
 
 		try
 		{
-			$file->open();
 			$file->write(self::get_file_content());
 			$file->close();
 		}

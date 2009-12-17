@@ -505,7 +505,7 @@ class MenuService
 	public static function add_mini_module($module_id, $generate_cache = true)
 	{
 		$configuration = ModulesManager::get_module($module_id)->get_configuration();
-		
+
 		$mini_modules_menus = $configuration->get_mini_modules();
 		if (empty($mini_modules_menus))
 		{

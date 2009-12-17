@@ -228,13 +228,10 @@ class Cache
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
 
-		$cache_file = new File($file_path, File::WRITE);
+		$cache_file = new File($file_path);
 
 		//Suppression du fichier (si il existe)
 		$cache_file->delete();
-
-		//Ouverture du fichier
-		$cache_file->open();
 
 		//Verrouillage du fichier (comme un mutex si une autre tâche travaille actuellement dessus)
 		$cache_file->lock();
@@ -248,7 +245,7 @@ class Cache
 		//Fermeture du fichier
 		$cache_file->close();
 
-		//On lui met les autorisations nécessaires de façon à pouvoir par la suite le lire (4) et le supprimer (2), soit 4 + 2 
+		//On lui met les autorisations nécessaires de façon à pouvoir par la suite le lire (4) et le supprimer (2), soit 4 + 2
 		$cache_file->change_chmod(0666);
 
 		//Il est l'heure de vérifier si la génération a fonctionné.
@@ -420,7 +417,7 @@ class Cache
 		global $Sql;
 
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
-			
+
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
@@ -447,7 +444,7 @@ class Cache
 		global $Sql;
 
 		$com_config = 'global $CONFIG_COM;' . "\n";
-			
+
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();

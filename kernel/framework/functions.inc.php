@@ -413,9 +413,8 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 	// TODO remove this function
 	$dir = find_require_dir($dir_path, $require_dir, false);
 
-	$module_config_file = new File($dir_path . $dir . '/desc.ini', File::READ);
-	$module_config_file->open();
-	$module_config_text = $module_config_file->get_contents();
+	$module_config_file = new File($dir_path . $dir . '/desc.ini');
+	$module_config_text = $module_config_file->read();
 
 	//Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
 	$result = array();
