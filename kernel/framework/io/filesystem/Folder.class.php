@@ -33,6 +33,8 @@
  */
 class Folder extends FileSystemElement
 {
+	private $open = false;
+
 	/**
 	 * @var File[] List of the files contained by this folder.
 	 */
@@ -47,7 +49,7 @@ class Folder extends FileSystemElement
 	 * @param string $path Path of the folder.
 	 * @param bool $whenopen OPEN_AFTER if you want to synchronyse you with the folder only when it's necessary or DIRECT_OPENING if you want to open it now.
 	 */
-	public function __construct($path, $whenopen = self::LAZY_OPENING)
+	public function __construct($path)
 	{
 		parent::__construct(rtrim($path, '/'));
 
@@ -57,47 +59,44 @@ class Folder extends FileSystemElement
 			{
 				return false;
 			}
-			 
-			if ($whenopen == self::DIRECT_OPENING)
-			{
-				$this->open();
-			}
 		}
 		else if (!@mkdir($this->path))
 		{
 			return false;
 		}
-		 
+
 		return true;
 	}
 
 	/**
 	 * @desc Opens the folder.
 	 */
-	public function open()
+	protected function open()
 	{
-		parent::open();
-
-		$this->files = $this->folders = array();
-		if ($dh = @opendir($this->path))
+		if (!$this->is_open)
 		{
-			while (!is_bool($fse_name = readdir($dh)))
+			$this->files = $this->folders = array();
+			if ($dh = @opendir($this->path))
 			{
-				if ($fse_name == '.' || $fse_name == '..')
+				while (!is_bool($fse_name = readdir($dh)))
 				{
-					continue;
+					if ($fse_name == '.' || $fse_name == '..')
+					{
+						continue;
+					}
+
+					if (is_file($this->path . '/' . $fse_name))
+					{
+						$this->files[] = new File($this->path . '/' . $fse_name);
+					}
+					else
+					{
+						$this->folders[] = new Folder($this->path . '/' . $fse_name);
+					}
 				}
-				 
-				if (is_file($this->path . '/' . $fse_name))
-				{
-					$this->files[] = new File($this->path . '/' . $fse_name);
-				}
-				else
-				{
-					$this->folders[] = new Folder($this->path . '/' . $fse_name);
-				}
+				closedir($dh);
 			}
-			closedir($dh);
+			$this->is_open = true;
 		}
 	}
 
@@ -108,7 +107,7 @@ class Folder extends FileSystemElement
 	 */
 	public function get_files($regex = '')
 	{
-		parent::get();
+		$this->open();
 
 		$ret = array();
 		if (empty($regex))
@@ -138,7 +137,7 @@ class Folder extends FileSystemElement
 	 */
 	public function get_folders($regex = '')
 	{
-		parent::get();
+		$this->open();
 		$ret = array();
 		if (empty($regex))
 		{
@@ -166,7 +165,7 @@ class Folder extends FileSystemElement
 	 */
 	public function get_first_folder()
 	{
-		parent::get();
+		$this->open();
 
 		if (isset($this->folders[0]))
 		{
@@ -193,15 +192,13 @@ class Folder extends FileSystemElement
 	 */
 	public function delete()
 	{
-		$this->open();
-
-		$fs = array_merge($this->files, $this->folders);
+		$fs = array_merge($this->get_files(), $this->get_folders());
 
 		foreach ($fs as $fse)
 		{
 			$fse->delete();
 		}
-		 
+
 		if (!@rmdir($this->path))
 		{
 			return false;

@@ -54,13 +54,13 @@ class FileTest extends PHPBoostUnitTestCase
 //		
 //		$file = new File($path);
 //		$file->open();
-//		$ret = $file->get_contents();
+//		$ret = $file->read();
 //		self::assertTrue(!empty($ret) AND is_string($ret));
 //		
-//		$ret = $file->get_contents(10);
+//		$ret = $file->read(10);
 //		self::assertTrue(!empty($ret) AND is_string($ret));
 //		
-//		$ret = $file->get_contents(10,filesize($path));
+//		$ret = $file->read(10,filesize($path));
 //		self::assertTrue(!empty($ret) AND is_string($ret));
 //		unset($file);
 //
@@ -68,7 +68,7 @@ class FileTest extends PHPBoostUnitTestCase
 //		
 //		$file = new File($path, WRITE);
 //		$file->open();
-//		$ret = $file->get_contents();
+//		$ret = $file->read();
 //		self::assertError();
 //		self::assertFalse($ret);
 //	}

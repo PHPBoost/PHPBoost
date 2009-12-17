@@ -33,15 +33,10 @@
  */
 class File extends FileSystemElement
 {
-	const ERASE = false;
-	const ADD = true;
-	const READ = 0x1;
-	const WRITE = 0x2;
-	const READ_WRITE = 0x3;
-	const LOCK = 0x4;
-
-	const CLOSE_FILE =  0x1;
-	const DONT_CLOSE_FILE = 0x2;
+	private static $READ = 0x1;
+	private static $WRITE = 0x2;
+	private static $APPEND = 0x3;
+	private static $BUFFER_SIZE = 8192;
 
 	/**
 	 * @var string[] List of the lines of the file.
@@ -54,7 +49,7 @@ class File extends FileSystemElement
 	/**
 	 * @var int Open mode
 	 */
-	private $mode;
+	private $mode = 0;
 	/**
 	 * @var File descriptor of the open file.
 	 */
@@ -66,46 +61,37 @@ class File extends FileSystemElement
 	 * @param int $mode If you want to open it only to read it, use the flag File::READ, if it's to write it use the File::WRITE flag, you also can use the File::READ_WRITE flag.
 	 * @param bool $whenopen If you want to open the file now, use the File::DIRECT_OPENING constant, if you want to open it only when you will need it, use the File::LAZY_OPENING constant.
 	 */
-	public function __construct($path, $mode = self::READ_WRITE, $whenopen = self::LAZY_OPENING)
+	public function __construct($path)
 	{
 		parent::__construct($path);
-
-		$this->mode = $mode;
-
-		if (@file_exists($this->path) && $whenopen == self::DIRECT_OPENING)
-		{
-			$this->open();
-		}
 	}
 
 	/**
 	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
 	 * @throws IOException If the file can neither been read nor created.
 	 */
-	public function open()
+	protected function open($mode)
 	{
-		if (!$this->is_open())
+		if ($this->mode != $mode)
 		{
-			parent::open();
-
-			if (file_exists($this->path) && is_file($this->path))
-			{   // The file already exists and is a file (not a folder)
-				$this->fd = @fopen($this->path, 'r+');
+			$this->close();
+			$this->mode = $mode;
+			switch ($this->mode)
+			{
+				case self::$APPEND:
+					$this->fd = @fopen($this->path, 'a+b');
+					break;
+				case self::$WRITE:
+					$this->fd = @fopen($this->path, 'w+b');
+					break;
+				case self::$READ:
+				default:
+					$this->fd = @fopen($this->path, 'rb');
+					break;
 			}
-			else if (!file_exists($this->path))
-			{   // The file does not exists
-				$this->fd = @fopen($this->path, 'x+');
-			}
-
 			if ($this->fd === false)
 			{
 				throw new IOException('Can neither open nor create the file ' . $this->path);
-			}
-
-			if ($this->mode & self::READ)
-			{
-				$this->contents = file_get_contents_emulate($this->path);
-				$this->lines = explode("\n", $this->contents);
 			}
 		}
 	}
@@ -116,106 +102,73 @@ class File extends FileSystemElement
 	 * @param int $len Number of bytes you want to read.
 	 * @return string The read content.
 	 */
-	public function get_contents($start = 0, $len = -1)
+	public function read($start = 0, $len = -1)
 	{
-		if ($this->mode & self::READ)
-		{
-			parent::get();
+		$this->open(self::$READ);
 
-			if (!$start && $len == -1)
-			{
-				return $this->contents;
-			}
-			else if ($len == -1)
-			{
-				return substr($this->contents, $start);
-			}
-			else
-			{
-				return substr($this->contents, $start, $len);
-			}
-		}
-		else
+		if ($start > 0)
 		{
-			user_error('File ' . $this->path . ' is not open for read');
+			fseek($this->fd, $start);
 		}
+		if ($len == -1)
+		{
+			$len = filesize($this->get_path());
+		}
+
+		$content = '';
+		while (!feof($this->fd) && $len > 0)
+		{
+			$content .= fread($this->fd, min($len, self::$BUFFER_SIZE));
+			$len -= self::$BUFFER_SIZE;
+		}
+
+		return $content;
 	}
 
 	/**
 	 * @desc Returns the content of the file grouped by lines.
-	 * @param int $start Byte from which you want to start. 0 if you want to read the file from its begening, 1 to start with the second etc.
-	 * @param int $len Number of bytes you want to read.
 	 * @return string[] The list of the lines of the file.
 	 */
-	public function get_lines($start = 0, $n = -1)
+	public function read_lines()
 	{
-		if ($this->mode & self::READ)
-		{
-			parent::get();
-
-			if (!$start && $n == -1)
-			{
-				return $this->lines;
-			}
-			else if ($n == -1)
-			{
-				return array_slice($this->lines, $start);
-			}
-			else
-			{
-				return array_slice($this->lines, $start, $n);
-			}
-		}
-		else
-		{
-			user_error('File ' . $this->path . ' is open in the write only mode, it can\'t be read');
-		}
+		return explode("\n", $this->read());
 	}
 
 	/**
-	 * @desc Writes some text in the file.
+	 * @desc Writes some text in the file. Erases the file previous content
 	 * @param string $data The text you want to write in the file.
-	 * @param bool $what File::ERASE if you want to erase the file, File::ADD if you want to write at the end of the file.
-	 * @param bool $mode File::CLOSE_FILE if you want to close the file before to write in it, File::DONT_CLOSE_FILE otherwise.
 	 * @throws IOException If it's not possible to write the file
 	 */
-	public function write($data, $how = self::ERASE, $mode = self::CLOSE_FILE)
+	public function write($data)
 	{
-		if ($this->mode & self::WRITE)
+		$this->open(self::$WRITE);
+		$this->write_data($data);
+	}
+
+	/**
+	 * @desc Appends some text at the end of the file.
+	 * @param string $data The text you want to write in the file.
+	 * @throws IOException If it's not possible to write the file
+	 */
+	public function append($data)
+	{
+		$this->open(self::$APPEND);
+		$this->write_data($data);
+	}
+
+	private function write_data($data)
+	{
+		$bytes_to_write = strlen($data);
+		$bytes_written = 0;
+		while ($bytes_written < $bytes_to_write)
 		{
-			if (($mode == self::DONT_CLOSE_FILE && !is_ressource($this->fd)) || $mode == self::CLOSE_FILE)
+			$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
+			if ($bytes === false || $bytes == 0)
 			{
-				if (!($this->fd = @fopen($this->path, ($how == File::ADD ) ? 'a' : 'w')))
-				{
-					throw new IOException('The file ' . $this->path . ' couldn\'t been written');
-				}
+				break;
 			}
 
-			$bytes_to_write = strlen($data);
-			$bytes_written = 0;
-			while ($bytes_written < $bytes_to_write)
-			{
-				// on écrit par bloc de 4Ko
-				$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
-
-				if ($bytes === false || $bytes == 0)
-				{
-					break;
-				}
-
-				$bytes_written += $bytes;
-			}
-			$this->is_open = false;
-			$this->open();
-
-			if ($bytes_written != $bytes_to_write)
-			{
-				throw new IOException('The file ' . $this->path . ' couldn\'t been written correctly.');
-			}
-		}
-		else
-		{
-			throw new IOException('The file ' . $this->path . ' is open in the read only mode, it can\'t be written.');
+			$bytes_written += $bytes;
 		}
 	}
 
@@ -224,11 +177,9 @@ class File extends FileSystemElement
 	 */
 	public function close()
 	{
-		$this->contents = '';
-		$this->lines = array();
-
 		if (is_resource($this->fd))
 		{
+			$this->mode = 0;
 			fclose($this->fd);
 		}
 	}
@@ -254,7 +205,7 @@ class File extends FileSystemElement
 	 */
 	public function is_open()
 	{
-		return $this->is_open && is_resource($this->fd);
+		return is_resource($this->fd);
 	}
 
 	/**

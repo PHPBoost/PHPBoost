@@ -41,37 +41,37 @@ define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndic
 class Feed
 {
 	const DEFAULT_FEED_NAME = 'master';
-	
+
 	/**
 	 * @var int Module ID
 	 */
 	private $module_id = '';
 	/**
-	 * 
+	 *
 	 * @var int ID cat
 	 */
 	private $id_cat = 0;
 	/**
-	 * 
+	 *
 	 * @var string Feed Name
 	 */
 	private $name = '';
 	/**
-	 * 
+	 *
 	 * @var string The feed as a string
 	 */
 	private $str = '';
 	/**
-	 * 
+	 *
 	 * @var string The feed Template to use
 	 */
 	private $tpl = null;
 	/**
-	 * 
+	 *
 	 * @var string The data structure
 	 */
 	private $data = null;
-	
+
 	/**
 	 * @desc Builds a new feed object
 	 * @param string $module_id its module_id
@@ -187,13 +187,13 @@ class Feed
 	 * @return bool true if the feed data are in the cache
 	 */
 	public function is_in_cache() { return file_exists($this->get_cache_file_name()); }
-	 
+
 	/**
 	 * @desc Returns the feed data cache filename
 	 * @return string the feed data cache filename
 	 */
 	public function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
-	 
+
 	/**
 	 * @desc Clear the cache of the specified module_id.
 	 * @param mixed $module_id the module module_id or false. If false,
@@ -202,8 +202,8 @@ class Feed
 	 */
 	public static function clear_cache($module_id = false)
 	{
-		
-		$folder = new Folder(FEEDS_PATH, File::DIRECT_OPENING);
+
+		$folder = new Folder(FEEDS_PATH);
 		$files = null;
 		if ($module_id !== false)
 		{   // Clear only this module cache
@@ -213,7 +213,7 @@ class Feed
 		{   // Clear the whole cache
 			$files = $folder->get_files();
 		}
-		 
+
 		foreach ($files as $file)
 		$file->delete();
 	}
@@ -229,8 +229,8 @@ class Feed
 	 */
 	private static function update_cache($module_id, $name, $data, $idcat = 0)
 	{
-		
-		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', File::WRITE);
+
+		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php');
 		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
 		$file->close();
 	}
@@ -257,18 +257,18 @@ class Feed
 		}
 		else
 		{
-			
+
 			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
 		}
-		 
+
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
 		$result = @include($feed_data_cache_file);
 		if ($result === false)
 		{
-			
+
 			$modules = new ModulesDiscoveryService();
 			$module = $modules->get_module($module_id);
 
@@ -309,7 +309,7 @@ class Feed
 		$feed->load_data($__feed_object);
 		return $feed->export($template, $number, $begin_at);
 	}
-	
+
 	/**
 	 * @static
 	 * @desc Generates the code which shows all the feeds formats.
@@ -319,11 +319,11 @@ class Feed
 	public static function get_feed_menu($feed_url)
 	{
 	    global $LANG, $CONFIG;
-	    
+
 	    $feed_menu = new Template('framework/content/syndication/menu.tpl');
-	    
+
 	    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
-	    
+
 	    $feed_menu->assign_vars(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	        'THEME' => get_utheme(),
@@ -332,7 +332,7 @@ class Feed
 	        'L_RSS' => $LANG['rss'],
 	        'L_ATOM' => $LANG['atom']
 	    ));
-	    
+
 	    return $feed_menu->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }

@@ -140,7 +140,6 @@ abstract class AbstractTemplateParser implements TemplateParser
 	{
 
 		$file = new File($this->cache_filepath);
-		$file->open(File::WRITE);
 		$file->lock();
 		$file->write($this->content);
 		$file->unlock();

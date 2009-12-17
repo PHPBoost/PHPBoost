@@ -193,8 +193,7 @@ class MySQLDBMSUtilsTest extends PHPBoostUnitTestCase
 		self::$dbms_utils->export_table(self::$test_table1, $file);
 		$file->close();
 
-		$file->open();
-		$content = $file->get_contents();
+		$content = $file->read();
 
 		self::assertEquals(
 "DROP TABLE IF EXISTS `phpboost_test_table_1`;

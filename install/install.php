@@ -284,7 +284,6 @@ switch($step)
 		break;
 		//Mise en place de la base de données
 	case STEP_DB_CONFIG:
-
 		require_once 'functions.php';
 
 		$display_message_already_installed = false;
@@ -460,7 +459,6 @@ switch($step)
 		break;
 		// Configuration du site
 	case STEP_SITE_CONFIG:
-
 		//Variables serveur.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)
@@ -833,9 +831,6 @@ array($LANG['end'], 'end.png', 100)
 );
 
 $step_name = $steps[$step - 1][0];
-
-
-
 
 $lang_dir = new Folder('../lang');
 

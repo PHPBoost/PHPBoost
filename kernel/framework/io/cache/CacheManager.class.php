@@ -134,7 +134,7 @@ class CacheManager
 		}
 		catch(IOException $ex)
 		{
-				
+
 		}
 	}
 
@@ -204,7 +204,7 @@ class CacheManager
 	protected function get_file_cached_data($name)
 	{
 		$file = $this->get_file($name);
-		$content = $file->get_contents();
+		$content = $file->read();
 		$data = unserialize($content);
 		return $data;
 	}
@@ -213,7 +213,7 @@ class CacheManager
 	{
 		$file = $this->get_file($name);
 		$data_to_write = serialize($value);
-		$file->write($data_to_write, File::ERASE);
+		$file->write($data_to_write);
 	}
 }
 

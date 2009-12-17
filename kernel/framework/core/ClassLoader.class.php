@@ -134,7 +134,7 @@ class ClassLoader
 
 	private static function generate_autoload_cache()
 	{
-		$file = new File(PATH_TO_ROOT . self::$cache_file, File::WRITE);
+		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
 		$file->close();
 	}

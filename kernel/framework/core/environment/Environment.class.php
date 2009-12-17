@@ -521,7 +521,7 @@ class Environment
 		global $CONFIG;
 
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
-		$build =  $file->get_contents();
+		$build =  $file->read();
 		$file->close();
 		return $CONFIG['version'] . '.' . trim($build);
 	}
