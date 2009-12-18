@@ -257,39 +257,13 @@ class Cache
 
 	## Private Methods ##
 	########## Fonctions de génération des fichiers un à un ##########
-	/**
-	* @desc Method which is called to generate the modules file cache.
-	* @return The content of the modules file cache.
-	*/
-	function _get_modules()
-	{
-		global $Sql;
-
-		$code = 'global $MODULES;' . "\n";
-		$code .= '$MODULES = array();' . "\n\n";
-		$result = $Sql->query_while("SELECT name, auth, activ
-		FROM " . PREFIX . "modules
-		ORDER BY name", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
-			. "'name' => " . var_export($row['name'], true) . ',' . "\n"
-			. "'activ' => " . var_export($row['activ'], true) . ',' . "\n"
-			. "'auth' => " . var_export(unserialize($row['auth']), true) . ',' . "\n"
-			. ");\n";
-		}
-		$Sql->query_close($result);
-
-		return $code;
-	}
-
+	
 	/**
 	 * @desc Method which is called to generate the menus file cache.
 	 * @return The content of the menus file cache.
 	 */
 	function _get_menus()
 	{
-
 		return MenuService::generate_cache(true);
 	}
 
@@ -507,7 +481,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

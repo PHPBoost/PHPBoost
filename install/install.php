@@ -37,6 +37,7 @@ define('STEP_SITE_CONFIG', 5);
 define('STEP_ADMIN_ACCOUNT', 6);
 define('STEP_END', 7);
 
+define('DEBUG', true);
 define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/install/InstallEnvironment.class.php';
 
@@ -803,7 +804,6 @@ switch($step)
 
 		$Cache = new Cache;
 		$Cache->load('config');
-		$Cache->load('modules');
 		$Cache->load('themes');
 
 		$template->assign_vars(array(

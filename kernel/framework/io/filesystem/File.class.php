@@ -66,34 +66,9 @@ class File extends FileSystemElement
 		parent::__construct($path);
 	}
 
-	/**
-	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
-	 * @throws IOException If the file can neither been read nor created.
-	 */
-	protected function open($mode)
+	public function __destruct()
 	{
-		if ($this->mode != $mode)
-		{
-			$this->close();
-			$this->mode = $mode;
-			switch ($this->mode)
-			{
-				case self::$APPEND:
-					$this->fd = @fopen($this->path, 'a+b');
-					break;
-				case self::$WRITE:
-					$this->fd = @fopen($this->path, 'w+b');
-					break;
-				case self::$READ:
-				default:
-					$this->fd = @fopen($this->path, 'rb');
-					break;
-			}
-			if ($this->fd === false)
-			{
-				throw new IOException('Can neither open nor create the file ' . $this->path);
-			}
-		}
+		$this->close();
 	}
 
 	/**
@@ -156,20 +131,12 @@ class File extends FileSystemElement
 		$this->write_data($data);
 	}
 
-	private function write_data($data)
+	/**
+	 * @desc empty the file
+	 */
+	public function erase()
 	{
-		$bytes_to_write = strlen($data);
-		$bytes_written = 0;
-		while ($bytes_written < $bytes_to_write)
-		{
-			$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
-			if ($bytes === false || $bytes == 0)
-			{
-				break;
-			}
-
-			$bytes_written += $bytes;
-		}
+		$this->write('');
 	}
 
 	/**
@@ -177,7 +144,7 @@ class File extends FileSystemElement
 	 */
 	public function close()
 	{
-		if (is_resource($this->fd))
+		if ($this->is_open())
 		{
 			$this->mode = 0;
 			fclose($this->fd);
@@ -200,26 +167,13 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Allows you to know if the file is already open.
-	 * @return bool true if the file is open, false if it's closed.
-	 */
-	public function is_open()
-	{
-		return is_resource($this->fd);
-	}
-
-	/**
 	 * @param bool $blocking if true, block the script, if false, non blocking operation
 	 * @desc Locks the file (it won't be readable by another thread which could try to access it).
 	 * @throws IOException if the file cannot been locked
 	 */
 	public function lock($blocking = true)
 	{
-		if (!$this->is_open())
-		{
-			$this->open();
-		}
-
+		$this->open(self::$WRITE);
 		if (!@flock($this->fd, LOCK_EX, $blocking))
 		{
 			throw new IOException('The file ' . $this->path . ' couldn\'t been locked');
@@ -232,11 +186,7 @@ class File extends FileSystemElement
 	 */
 	public function unlock()
 	{
-		if (!$this->is_open())
-		{
-			$this->open();
-		}
-
+		$this->open(self::$WRITE);
 		if (!@flock($this->fd, LOCK_UN))
 		{
 			throw new IOException('The file ' . $this->path . ' couldn\'t been unlocked');
@@ -305,6 +255,61 @@ class File extends FileSystemElement
 	public function get_last_access_date()
 	{
 		return filectime($this->path);
+	}
+
+	/**
+	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
+	 * @throws IOException If the file can neither been read nor created.
+	 */
+	private function open($mode)
+	{
+		if ($this->mode != $mode)
+		{
+			$this->close();
+			$this->mode = $mode;
+			switch ($this->mode)
+			{
+				case self::$APPEND:
+					$this->fd = @fopen($this->path, 'a+b');
+					break;
+				case self::$WRITE:
+					$this->fd = @fopen($this->path, 'w+b');
+					break;
+				case self::$READ:
+				default:
+					$this->fd = @fopen($this->path, 'rb');
+					break;
+			}
+			if ($this->fd === false)
+			{
+				throw new IOException('Can neither open nor create the file ' . $this->path);
+			}
+		}
+	}
+
+	/**
+	 * @desc Allows you to know if the file is already open.
+	 * @return bool true if the file is open, false if it's closed.
+	 */
+	private function is_open()
+	{
+		return is_resource($this->fd);
+	}
+
+	private function write_data($data)
+	{
+		$bytes_to_write = strlen($data);
+		$bytes_written = 0;
+		while ($bytes_written < $bytes_to_write)
+		{
+			$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
+			if ($bytes === false || $bytes == 0)
+			{
+				break;
+			}
+
+			$bytes_written += $bytes;
+		}
 	}
 }
 

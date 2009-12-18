@@ -78,7 +78,7 @@ class ClassLoader
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
-			import('io/filesystem/IOexception');
+			import('io/filesystem/IOException');
 			import('util/Path');
 
 			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
@@ -136,7 +136,6 @@ class ClassLoader
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
-		$file->close();
 	}
 
 	private static function inc($file)

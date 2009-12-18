@@ -240,7 +240,6 @@ class Environment
 		global $Cache;
 		$CONFIG = array();
 		$Cache->load('config');
-		$Cache->load('modules');
 		$Cache->load('themes');
 		$Cache->load('langs');
 	}
