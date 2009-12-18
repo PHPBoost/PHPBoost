@@ -69,17 +69,11 @@ class Updates
 
             if ($checks & CHECK_MODULES)
             {
-                global $MODULES;
-                // Add Modules
-                $kModules = array_keys($MODULES);
-                foreach ($kModules as $module)
+                foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
                 {
-                    $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-                    $repository = !empty($infos['repository']) ? $infos['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-                    if (!empty($infos['repository']))
-                    {
-                        $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $repository);
-                    }
+                    $this->apps[] = new Application($module->get_id(),
+                    get_ulang(), APPLICATION_TYPE__MODULE,
+                    $module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
                 }
             }
 
@@ -92,7 +86,7 @@ class Updates
                 {
                     if ($theme != 'default')
 					{
-						$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
+						$infos = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
 						if (!empty($infos['repository']))
 						{
 							$this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);

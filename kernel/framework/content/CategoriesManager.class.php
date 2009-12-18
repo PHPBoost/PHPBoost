@@ -359,7 +359,9 @@ class CategoriesManager
 
 			//Regeneration of the cache file
 			if ($generate_cache)
+			{
 				$Cache->Generate_module_file($this->cache_file_name);
+			}
 			
 			return true;
 		}

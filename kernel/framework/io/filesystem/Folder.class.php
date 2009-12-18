@@ -33,7 +33,7 @@
  */
 class Folder extends FileSystemElement
 {
-	private $open = false;
+	private $opened = false;
 
 	/**
 	 * @var File[] List of the files contained by this folder.
@@ -64,18 +64,18 @@ class Folder extends FileSystemElement
 		{
 			return false;
 		}
-
 		return true;
 	}
 
 	/**
 	 * @desc Opens the folder.
 	 */
-	protected function open()
+	private function open()
 	{
-		if (!$this->is_open)
+		if (!$this->opened)
 		{
-			$this->files = $this->folders = array();
+			$this->files = array();
+			$this->folders = array();
 			if ($dh = @opendir($this->path))
 			{
 				while (!is_bool($fse_name = readdir($dh)))
@@ -96,7 +96,7 @@ class Folder extends FileSystemElement
 				}
 				closedir($dh);
 			}
-			$this->is_open = true;
+			$this->opened = true;
 		}
 	}
 
@@ -108,26 +108,20 @@ class Folder extends FileSystemElement
 	public function get_files($regex = '')
 	{
 		$this->open();
-
-		$ret = array();
 		if (empty($regex))
 		{
-			foreach ($this->files as $file)
-			{
-				$ret[] = $file;
-			}
+			return $this->files;
 		}
-		else
+
+		$files = array();
+		foreach ($this->files as $file)
 		{
-			foreach ($this->files as $file)
+			if (preg_match($regex, $file->get_name()))
 			{
-				if (preg_match($regex, $file->get_name()))
-				{
-					$ret[] = $file;
-				}
+				$files[] = $file;
 			}
 		}
-		return $ret;
+		return $files;
 	}
 
 	/**
@@ -138,25 +132,20 @@ class Folder extends FileSystemElement
 	public function get_folders($regex = '')
 	{
 		$this->open();
-		$ret = array();
 		if (empty($regex))
 		{
-			foreach ($this->folders as $folder)
-			{
-				$ret[] = $folder;
-			}
+			return $this->folders;
 		}
-		else
+
+		$folders = array();
+		foreach ($this->folders as $folder)
 		{
-			foreach ($this->folders as $folder)
+			if (preg_match($regex, $folder->get_name()))
 			{
-				if (preg_match($regex, $folder->get_name()))
-				{
-					$ret[] = $folder;
-				}
+				$folders[] = $folder;
 			}
 		}
-		return $ret;
+		return $folders;
 	}
 
 	/**
@@ -166,7 +155,6 @@ class Folder extends FileSystemElement
 	public function get_first_folder()
 	{
 		$this->open();
-
 		if (isset($this->folders[0]))
 		{
 			return $this->folders[0];
@@ -192,7 +180,7 @@ class Folder extends FileSystemElement
 	 */
 	public function delete()
 	{
-		$fs = array_merge($this->get_files(), $this->get_folders());
+		$fs = $this->get_all_content();
 
 		foreach ($fs as $fse)
 		{
