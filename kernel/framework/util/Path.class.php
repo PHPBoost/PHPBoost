@@ -40,7 +40,7 @@ class Path
 		if (empty(self::$fs_root_directory))
 		{
 			self::$fs_root_directory = preg_replace('`^(.+)/kernel/framework/util/?$`i', '$1',
-			self::uniformize_path(dirname(__FILE__)));
+			self::real_path(dirname(__FILE__)));
 		}
 		return self::$fs_root_directory;
 	}
@@ -63,7 +63,7 @@ class Path
 	 */
 	public static function get_path_from_root($path)
 	{
-		return '/' . trim(str_replace(self::phpboost_path(), '', self::uniformize_path($path)), '/');
+		return '/' . trim(str_replace(self::phpboost_path(), '', self::real_path($path)), '/');
 	}
 
 	/**
@@ -90,9 +90,19 @@ class Path
 	 * @param string $path the path to uniformize
 	 * @return string the absolute path
 	 */
+	public static function real_path($path)
+	{
+		return self::uniformize_path(realpath($path));
+	}
+
+	/**
+	 * @desc Uniformizes the path replacing all <code>'\'</code> by <code>'/'</code>
+	 * @param string $path the path to uniformize
+	 * @return string the uniformized path
+	 */
 	public static function uniformize_path($path)
 	{
-		return str_replace('\\', '/', realpath($path));
+		return str_replace('\\', '/', $path);
 	}
 }
 

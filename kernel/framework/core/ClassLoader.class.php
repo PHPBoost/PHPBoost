@@ -101,6 +101,7 @@ class ClassLoader
 			}
 			catch (Exception $exception)
 			{
+				import('util/Debug');
 				Debug::fatal($exception);
 			}
 			self::$already_reloaded = true;
@@ -112,11 +113,11 @@ class ClassLoader
 	{
 		$files = array();
 		$folder = new Folder($directory);
-		$relative_path = Path::get_path_from_root($folder->get_name(true));
+		$relative_path = Path::get_path_from_root($folder->get_path());
 		foreach ($folder->get_files($pattern) as $file)
 		{
-			$filename = $file->get_name(false, false);
-			$classname = substr($filename, 0, strpos($filename, '.'));
+			$filename = $file->get_name();
+			$classname = $file->get_name_without_extension();
 			self::$autoload[$classname] = $relative_path . '/' . $filename;
 		}
 
@@ -126,7 +127,7 @@ class ClassLoader
 			{
 				if (!in_array($folder->get_name(), self::$exclude_paths))
 				{
-					self::add_classes($folder->get_name(true), $pattern);
+					self::add_classes($folder->get_path(), $pattern);
 				}
 			}
 		}

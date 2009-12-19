@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               file.class.php
+ *                               File.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel
- *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com
+ *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel, Loic ROuchon
+ *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -37,11 +37,7 @@ class File extends FileSystemElement
 	private static $WRITE = 0x2;
 	private static $APPEND = 0x3;
 	private static $BUFFER_SIZE = 8192;
-
-	/**
-	 * @var string[] List of the lines of the file.
-	 */
-	private $lines = array();
+	
 	/**
 	 * @var string Content of the file
 	 */
@@ -69,6 +65,15 @@ class File extends FileSystemElement
 	public function __destruct()
 	{
 		$this->close();
+	}
+	/**
+	 * @desc Returns the element name without extension.
+	 * @return string The element name without extension.
+	 */
+	public function get_name_without_extension()
+	{
+		$name = $this->get_name();
+		return substr($name, 0, strpos($name, '.'));
 	}
 
 	/**
@@ -159,10 +164,10 @@ class File extends FileSystemElement
 	{
 		$this->close();
 
-		if (file_exists($this->path) && !@unlink($this->path)) // Empty the file if it couldn't delete it
+		if (file_exists($this->get_path()) && !@unlink($this->get_path())) // Empty the file if it couldn't delete it
 		{
-			$this->write('');
-			throw new IOException('The file ' . $this->path . ' couldn\'t been deleted');
+			$this->erase();
+			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been deleted');
 		}
 	}
 
@@ -176,7 +181,7 @@ class File extends FileSystemElement
 		$this->open(self::$WRITE);
 		if (!@flock($this->fd, LOCK_EX, $blocking))
 		{
-			throw new IOException('The file ' . $this->path . ' couldn\'t been locked');
+			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been locked');
 		}
 	}
 
@@ -189,7 +194,7 @@ class File extends FileSystemElement
 		$this->open(self::$WRITE);
 		if (!@flock($this->fd, LOCK_UN))
 		{
-			throw new IOException('The file ' . $this->path . ' couldn\'t been unlocked');
+			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
 		}
 	}
 
@@ -204,48 +209,13 @@ class File extends FileSystemElement
 		}
 	}
 
-
-	/**
-	 * @desc Includes the file. Executes its PHP content here. Equivalent to the PHP include function.
-	 * @param bool $once true if you don't want to include it if it has already been included.
-	 * @return true if the file has been successfully included
-	 */
-	public function finclude($once = true)
-	{
-		if ($once)
-		{
-			return include_once $this->path;
-		}
-		else
-		{
-			return include $this->path;
-		}
-	}
-
-	/**
-	 * @desc Requires the file. Executes its PHP content here. Equivalent to the PHP require function.
-	 * @param bool $once true if you don't want to include it if it has already been included.
-	 * @return true if the file has been successfully included
-	 */
-	public function frequire($once = true)
-	{
-		if ($once)
-		{
-			return require_once $this->path;
-		}
-		else
-		{
-			return require $this->path;
-		}
-	}
-
 	/**
 	 * @desc Returns the date of the last modification of the file.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
 	public function get_last_modification_date()
 	{
-		return filemtime($this->path);
+		return filemtime($this->get_path());
 	}
 
 	/**
@@ -254,7 +224,7 @@ class File extends FileSystemElement
 	 */
 	public function get_last_access_date()
 	{
-		return filectime($this->path);
+		return filectime($this->get_path());
 	}
 
 	/**
@@ -270,19 +240,19 @@ class File extends FileSystemElement
 			switch ($this->mode)
 			{
 				case self::$APPEND:
-					$this->fd = @fopen($this->path, 'a+b');
+					$this->fd = @fopen($this->get_path(), 'a+b');
 					break;
 				case self::$WRITE:
-					$this->fd = @fopen($this->path, 'w+b');
+					$this->fd = @fopen($this->get_path(), 'w+b');
 					break;
 				case self::$READ:
 				default:
-					$this->fd = @fopen($this->path, 'rb');
+					$this->fd = @fopen($this->get_path(), 'rb');
 					break;
 			}
 			if ($this->fd === false)
 			{
-				throw new IOException('Can neither open nor create the file ' . $this->path);
+				throw new IOException('Can neither open nor create the file ' . $this->get_path());
 			}
 		}
 	}
@@ -302,12 +272,11 @@ class File extends FileSystemElement
 		$bytes_written = 0;
 		while ($bytes_written < $bytes_to_write)
 		{
-			$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
+			$bytes = fwrite($this->fd, substr($data, $bytes_written, self::$BUFFER_SIZE));
 			if ($bytes === false || $bytes == 0)
 			{
 				break;
 			}
-
 			$bytes_written += $bytes;
 		}
 	}
