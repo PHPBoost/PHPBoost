@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_fieldset.class.php
+ *                             FormFieldset.class.php
  *                            -------------------
  *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -33,12 +33,10 @@
  * @subpackage form
  *
  */
-class FormFieldset
+class FormFieldset implements ValidableFormComponent
 {
 	private $title = '';
 	private $fields = array();
-	private $errors = array();
-	private $display_required = false;
 	
 	/**
 	 * @desc constructor
@@ -62,6 +60,16 @@ class FormFieldset
 		else
 			$this->fields[$form_field->get_id()] = $form_field;
 	}
+	
+	public function validate()
+	{
+		$validation_result = true;
+		foreach ($this->fields as $field)
+		{
+			$validation_result = $validation_result && $field->validate();
+		}
+		return $validation_result;	
+	}
 
 	/**
 	 * @desc Return the form
@@ -70,35 +78,21 @@ class FormFieldset
 	 */
 	public function display($Template = false)
 	{
-		global $LANG, $Errorh;
+		global $LANG;
 		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
+		{
 			$Template = new Template('framework/builder/forms/fieldset.tpl');
+		}
 			
 		$Template->assign_vars(array(
-			'C_DISPLAY_WARNING_REQUIRED_FIELDS' => $this->display_required,
 			'L_FORMTITLE' => $this->title,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-		));	
-		
-		//On liste les éventuelles erreurs du fieldset.
-		foreach($this->errors as $error) 
-		{
-			$Template->assign_block_vars('errors', array(
-				'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
-			));	
-		}
+		));
 		
 		//On affiche les champs		
 		foreach($this->fields as $Field)
 		{
-			foreach($Field->get_errors() as $error) //On liste les éventuelles erreurs du champs.
-			{
-				$Template->assign_block_vars('errors', array(
-					'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
-				));	
-			}
-			
 			$Template->assign_block_vars('fields', array(
 				'FIELD' => $Field->display(),
 			));	
@@ -126,21 +120,6 @@ class FormFieldset
 	 * @return array All fields in the fieldset.
 	 */
 	public function get_fields() { return $this->fields; }
-	
-	/**
-	 * @return boolean True if the fieldset has to display a warning for required fields.
-	 */
-	public function get_display_required() { return $this->display_required; }
-	
-	/**
-	 * @desc Store all erros in the field construct process.
-	 * @param string $errstr  Error message description
-	 * @param int $errno Error type, use php constants.
-	 */	
-	private function throw_error($errstr, $errno)
-	{
-		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
-	}
 }
 
 ?>

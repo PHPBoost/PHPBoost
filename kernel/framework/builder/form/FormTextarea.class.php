@@ -39,30 +39,10 @@ class FormTextarea extends FormField
 	private $editor = true; //Allow to hide the editor.
 	private $forbidden_tags = array(); //Forbiddend tags in the content.
 	
-	public function __construct($field_id, $field_value, $field_options = array())
+	public function __construct($field_id, $field_value, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, $field_value, $field_options);
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'rows' :
-					$this->rows = $value;
-				break;
-				case 'cols' :
-					$this->cols = $value;
-				break;
-				case 'editor' :
-					$this->editor = $value;
-				break;
-				case 'forbiddentags' :
-					$this->forbidden_tags = $value;
-				break;
-				default :
-					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
-			}
-		}
+		parent::__construct($field_id, $field_value, $field_options, $constraints);
+		$this->compute_fields_options($field_options);
 	}
 	
 	/**
@@ -91,6 +71,31 @@ class FormTextarea extends FormField
 		));	
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+	}
+
+	private function compute_fields_options(array $field_options)
+	{
+		foreach($field_options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'rows' :
+					$this->rows = $value;
+				break;
+				case 'cols' :
+					$this->cols = $value;
+				break;
+				case 'editor' :
+					$this->editor = $value;
+				break;
+				case 'forbiddentags' :
+					$this->forbidden_tags = $value;
+				break;
+				default :
+					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
+			}
+		}
 	}
 }
 

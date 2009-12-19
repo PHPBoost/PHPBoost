@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_builer.class.php
+ *                             Form.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -81,21 +81,9 @@
  * @package builder
  * @subpackage form
  */ 
-
-
-
-
-
-
-
-
-
-
-
-
-
-class FormBuilder
+class Form implements ValidableFormComponent
 {
+	private $constraints = array();
 	private $form_fieldsets = array(); //Fieldsets stored
 	private $form_name = '';
 	private $form_submit = '';
@@ -129,19 +117,45 @@ class FormBuilder
 		$this->form_fieldsets[] = $fieldset;
 	}
 	
+	public function validate()
+	{
+		$validation_result = true;
+		foreach ($this->form_fieldsets as $fieldset)
+		{
+			$validation_result = $validation_result && $fieldset->validate();
+		}
+		foreach ($this->constraints as $constraint)
+		{
+			$validation_result = $validation_result && $constraint->validate($this);
+		}
+		return $validation_result;	
+	}
+	
+	public function add_constraint(FormConstraint $constraint)
+	{
+		$this->constraints[] = $constraint;
+	}
+	
+	public function get_value($element_name)
+	{
+		
+	}
+	
 	/**
 	 * @desc Return the form
 	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
-	public function display($Template = false)
+	public function export($template = false)
 	{
 		global $LANG, $User;
 		
-		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
-			$Template = new Template('framework/builder/forms/form.tpl');
+		if (!is_object($template) || strtolower(get_class($template)) != 'template')
+		{
+			$template = new Template('framework/builder/forms/form.tpl');
+		}
 			
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
 			'C_DISPLAY_RESET' => $this->display_reset, 
 			'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
@@ -155,27 +169,27 @@ class FormBuilder
 		));	
 		
 		$i = 0;
-		foreach($this->form_fieldsets as $Fieldset)
+		foreach($this->form_fieldsets as $fieldset)
 		{
-			foreach($Fieldset->get_fields() as $Field)
+			foreach($fieldset->get_fields() as $field)
 			{
-				$field_required_alert = $Field->get_required_alert();
-				if (!empty($field_required_alert))
-				{
-					$Template->assign_block_vars('check_form', array(
-						'COMA' => ($i++ > 0) ? ',' : '',
-						'FIELD_ID' => $Field->get_id(),
-						'FIELD_REQUIRED_ALERT' => str_replace('"', '\"', $field_required_alert)
-					));
-				}
+//				$field_required_alert = $field->get_required_alert();
+//				if (!empty($field_required_alert))
+//				{
+//					$template->assign_block_vars('check_form', array(
+//						'COMA' => ($i++ > 0) ? ',' : '',
+//						'FIELD_ID' => $field->get_id(),
+//						'FIELD_REQUIRED_ALERT' => str_replace('"', '\"', $field_required_alert)
+//					));
+//				}
 			}
 			
-			$Template->assign_block_vars('fieldsets', array(
-				'FIELDSET' => $Fieldset->display(),
+			$template->assign_block_vars('fieldsets', array(
+				'FIELDSET' => $fieldset->display(),
 			));	
 		}
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template;
 	}
 	
 	/**

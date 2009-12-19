@@ -1,13 +1,12 @@
 <?php
 /*##################################################
- *                           SQLDAO.class.php
+ *                             FormConstraint.class.php
  *                            -------------------
- *   begin                 October 2, 2009
- *   copyright             (C) 2009 Loïc Rouchon
- *   email                 loic.rouchon@phpboost.com
+ *   begin                : December 19, 2009
+ *   copyright            : (C) 2009 Régis Viarre, Benoit Sautel, Loic Rouchon
+ *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
- *
- ###################################################
+###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +22,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
-class ValidationException extends Exception {}
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>, Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @desc 
+ * @package builder
+ * @subpackage form/constraint
+ */ 
+interface FormConstraint 
+{
+	function validate(Form $form);
+
+	function generate_js_validation();
+}
+
 ?>
