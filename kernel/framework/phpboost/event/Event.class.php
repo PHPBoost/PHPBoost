@@ -319,7 +319,7 @@ class Event
 	 * @param string $identifier The event identifier.
 	 * @param string $type The event type.
 	 */
-	public function build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
+	public function build_event($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
 	{
 		$this->id = $id;
 		$this->entitled = $entitled;
