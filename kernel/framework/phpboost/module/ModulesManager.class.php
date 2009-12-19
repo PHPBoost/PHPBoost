@@ -147,17 +147,6 @@ class ModulesManager
 		{
 			return PHP_VERSION_CONFLICT;
 		}
-
-		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
-		$dir_db_module = get_ulang();
-		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
-		if (!is_dir($dir . '/' . $dir_db_module))
-		{
-			$db_scripts_folder = new Folder($dir);
-
-			$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
-			$dir_db_module = count($existing_db_files) > 0 ? $existing_db_files[0]->get_name() : '';
-		}
 			
 		//Insertion de la configuration du module.
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
@@ -175,30 +164,43 @@ class ModulesManager
 			}
 		}
 
-		//Parsage du fichier sql.
-		$sql_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql';
-		if (file_exists($sql_file))
+		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
+		$dir_db_module = get_ulang();
+		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
+		$db_scripts_folder = new Folder($dir);
+		if ($db_scripts_folder->exists())
 		{
-			$Sql->parse($sql_file, PREFIX);
-		}
+			if (!file_exists($dir . '/' . $dir_db_module))
+			{
+				$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
+				$dir_db_module = count($existing_db_files) > 0 ? $existing_db_files[0]->get_name() : '';
+			}
 
+			//Parsage du fichier sql.
+			$sql_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql';
+			if (file_exists($sql_file))
+			{
+				$Sql->parse($sql_file, PREFIX);
+			}
+
+			//Parsage du fichier php.
+			$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
+			if (file_exists($php_file))
+			{
+				if (!DEBUG)
+				{
+					@include_once($php_file);
+				}
+				else
+				{
+					include_once($php_file);
+				}
+			}
+		}
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 		//Installation du mini module s'il existe
 		MenuService::add_mini_module($module_identifier);
-
-		//Parsage du fichier php.
-		$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
-		if (file_exists($php_file)) {
-			if (!DEBUG)
-			{
-				@include_once($php_file);
-			}
-			else
-			{
-				include_once($php_file);
-			}
-		}
 
 		//Génération du cache des modules
 		if ($generate_cache)
