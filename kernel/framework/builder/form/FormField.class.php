@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                             form_field.class.php
+ *                             FormField.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -41,7 +41,7 @@
  * @subpackage form
  * @abstract
  */
-abstract class FormField
+abstract class FormField implements ValidableFormComponent
 {
 	protected $title = '';
 	protected $sub_title = '';
@@ -52,20 +52,56 @@ abstract class FormField
 	protected $required = false;
 	protected $required_alert = '';
 	protected $on_blur = '';
-	protected $errors = array();
-	
+	private $constraints = array();
+
 	public abstract function display();
-	
+
 	/**
 	 * @param string $field_id Name of the field.
 	 * @param array $field_options Option for the field.
 	 */
-	protected function __construct($field_id, $value, $field_options)
+	protected function __construct($field_id, $value, array &$field_options, array $constraints)
 	{
 		$this->name = $field_id;
 		$this->id = $field_id;
 		$this->value = $value;
-		
+		$this->constraints = $constraints;
+		$this->compute_options($field_options);
+	}
+
+	public function validate()
+	{
+		$this->retrieve_value();
+		$validation_result = true;
+		foreach ($this->constraints as $constraint)
+		{
+			$validation_result = $validation_result && $constraint->validate($this);
+		}
+		return $validation_result;
+	}
+
+	public function retrieve_value()
+	{
+		if (isset($_REQUEST[$this->id]))
+		{
+			$this->value = $_REQUEST[$this->id];
+		}
+		else
+		{
+			$this->value = null;
+		}
+	}
+
+	## Getters and Setters ##
+	/**
+	 * @return string The fied identifier.
+	 */
+	public function get_id() { return $this->id;}
+	public function get_value() { return $this->value; }
+	public function set_value($var) { $this->value = $var; }
+
+	private function compute_options(array &$field_options)
+	{
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -74,72 +110,34 @@ abstract class FormField
 				case 'title' :
 					$this->title = $value;
 					unset($field_options['title']);
-				break;
+					break;
 				case 'subtitle' :
 					$this->sub_title = $value;
 					unset($field_options['subtitle']);
-				break;
+					break;
 				case 'id' :
 					$this->id = $value;
 					unset($field_options['id']);
-				break;
+					break;
 				case 'class' :
 					$this->css_class = $value;
 					unset($field_options['class']);
-				break;
+					break;
 				case 'required' :
 					$this->required = $value;
+					if ($this->required)
+					{
+						$this->constraints[] = new NotEmptyFormFieldConstraint($this->id);
+					}
 					unset($field_options['required']);
-				break;
-				case 'required_alert' :
-					$this->required_alert = $value;
-					unset($field_options['required_alert']);
-				break;		
+					break;
 				case 'onblur' :
 					$this->maxlength = $value;
 					unset($field_options['onblur']);
-				break;
+					break;
 			}
 		}
 	}
-	
-	/**
-	 * @desc Store all erros in the field construct process.
-	 * @param string $errstr  Error message description
-	 * @param int $errno Error type, use php constants.
-	 */	
-	protected function throw_error($errstr, $errno)
-	{
-		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
-	}
-	
-	/**
-	 * @desc Merge errors.
-	 * @param array $array_errors
-	 */	
-	protected function add_errors($array_errors)
-	{
-		$this->errors = array_merge($this->errors, $array_errors);
-	}
-	
-	## Getters and Setters ##
-	/**
-	 * @desc  Get all errors occured in the field construct process.
-	 * @return array All errors
-	 */	
-	public function get_errors() { return $this->errors; }
-	
-	/**
-	 * @return string The fied identifier.
-	 */
-	public function get_id() { return $this->id;}
-	/**
-	 * @return string Text displayed if field is empty.
-	 */
-	public function get_required_alert() { return $this->required_alert;}
-	public function get_value() { return $this->value; }
-	
-	public function set_value($var) { $this->value = $var; }
 }
 
 ?>

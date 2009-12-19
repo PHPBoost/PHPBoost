@@ -19,7 +19,7 @@
 		-->
 		</script>
 
-		{GUESTBOOK_FORM}
+		# INCLUDE GUESTBOOK_FORM #
 
 		<br />
 		# IF C_ERROR_HANDLER #
