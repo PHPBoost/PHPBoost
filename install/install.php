@@ -71,8 +71,6 @@ if (retrieve(GET, 'restart', false))
 	redirect(HOST . add_lang(FILE, true));
 }
 
-
-
 //Template d'installation
 $template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
