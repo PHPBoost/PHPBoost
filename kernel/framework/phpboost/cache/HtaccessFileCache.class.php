@@ -211,14 +211,6 @@ class HtaccessFileCache implements CacheData
 
 		try
 		{
-			$file->delete();
-		}
-		catch(IOException $ex)
-		{
-		}
-
-		try
-		{
 			$file->write(self::get_file_content());
 			$file->close();
 		}
