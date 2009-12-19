@@ -3,7 +3,7 @@
  *                               File.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel, Loic ROuchon
+ *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel, Loic Rouchon
  *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -241,18 +241,17 @@ class File extends FileSystemElement
 			{
 				case self::$APPEND:
 					$this->fd = @fopen($this->get_path(), 'a+b');
+					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
 				case self::$WRITE:
 					$this->fd = @fopen($this->get_path(), 'w+b');
+					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
 				case self::$READ:
 				default:
 					$this->fd = @fopen($this->get_path(), 'rb');
+					$this->check_file_descriptor('Can\'t open the file for reading');
 					break;
-			}
-			if ($this->fd === false)
-			{
-				throw new IOException('Can neither open nor create the file ' . $this->get_path());
 			}
 		}
 	}
@@ -279,6 +278,14 @@ class File extends FileSystemElement
 			}
 			$bytes_written += $bytes;
 		}
+	}
+	
+	private function check_file_descriptor($message)
+	{
+			if ($this->fd === false)
+			{
+				throw new IOException($message . ' : ' . $this->get_path());
+			}
 	}
 }
 

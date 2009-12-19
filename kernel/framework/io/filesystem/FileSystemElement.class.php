@@ -3,8 +3,8 @@
  *                      file_system_element.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel
- *   email                : akhenathon2@gmail.com
+ *   copyright            : (C) 2008 Nicolas Duhamel, Loic Rouchon
+ *   email                : akhenathon2@gmail.com, loic.rouchon@phpboost.com
  *
  *
  ###################################################
