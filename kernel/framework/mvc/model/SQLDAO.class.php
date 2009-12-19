@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sql_dao.class.php
+ *                           SQLDAO.class.php
  *                            -------------------
  *   begin                 October 2, 2009
  *   copyright             (C) 2009 Loïc Rouchon
@@ -25,33 +25,10 @@
  *
  ###################################################*/
 
-
-
-
-
-class ValidationException extends Exception {}
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Implements common access to a sql based datastore for CRUD operations on
  * objects attached to the given <code>MappingModel</code>.
- * Two additionnals methods are offered
- * <code>protected function before_save(PropertiesMapInterface $object)</code> and
- * <code>protected function before_delete(PropertiesMapInterface $object)</code>.
- * Those two methods are automatically called just before a save or juste before a delete.
- * They actually do nothing. Theu are only here in order to be inherited. This way, you could throw
- * <code>ValidationException</code> or implement your own exceptions that inherit from
- * <code>ValidationException</code>. This will allow you to do the validation control before a save
- * or a delete operation. For example
- * <code>
- * try {
- *     $my_dao->save($my_object);
- * } catch (MyFirstValidationException $ex) {
- *     // process first exception here
- * } catch (MySecondValidationException $ex) {
- *     // process second exception here
- * }
- * </code>
  */
 abstract class SQLDAO implements DAO
 {
