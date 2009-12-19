@@ -148,7 +148,7 @@ class PagesInterface extends ModuleInterface
 		$Cache->load('pages');
 		
 		$pages_link = new SitemapLink($LANG['pages'], new Url('/pages/explorer.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
-		$module_map = new ModuleMap($pages_link);
+		$module_map = new ModuleMap($pages_link, 'pages');
 		
 		$id_cat = 0;
 	    $keys = array_keys($_PAGES_CATS);
