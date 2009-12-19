@@ -864,18 +864,15 @@ function strtodate($str, $date_format)
  * @param string $file Path of the file to delete
  * @return bool true if the file could be deleted, false if an error occured.
  */
-function delete_file($file)
+function delete_file($filepath)
 {
-	global $LANG;
-
-	if (function_exists('unlink'))
+	$file = new File($filepath);
+	try
 	{
-		if (file_exists($file))
-		{
-			return @unlink($file); //On supprime le fichier.
-		}
+		$file->delete();
+		return true;
 	}
-	else
+	catch (IOException $exception)
 	{
 		return false;
 	}

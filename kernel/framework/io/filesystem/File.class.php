@@ -141,7 +141,8 @@ class File extends FileSystemElement
 	 */
 	public function erase()
 	{
-		$this->write('');
+		$this->open(self::$WRITE);
+		ftruncate($this->fd, 0);
 	}
 
 	/**

@@ -7,7 +7,7 @@
  *   email                : crowkait@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
@@ -50,7 +50,17 @@ $user_lang = !empty($_GET['lang']) ? true : false;
 $bot = !empty($_GET['bot']) ? true : false;
 
 if (!empty($_POST['erase'])) //Suppression de robots.txt
-	delete_file('../cache/robots.txt'); //On supprime le fichier.
+{
+	$file = new File('../cache/robots.txt');
+	try
+	{
+		$file->delete();
+	}
+	catch (IOException $exception)
+	{
+		echo $exception->getMessage();
+	}
+}
 
 $Template->assign_vars(array(
 	'L_SITE' => $LANG['site'],
@@ -70,7 +80,7 @@ if (!empty($members))
 {
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
-	
+
 	$Template->assign_vars(array(
 		'C_STATS_USERS' => true,
 		'LAST_USER' => $last_user['login'],
@@ -87,7 +97,7 @@ if (!empty($members))
 		'L_USERS' => $LANG['member_s'],
 		'L_SEX' => $LANG['sex']
 	));
-	
+
 	$stats_array = array();
 	$result = $Sql->query_while ("SELECT at.theme, COUNT( m.user_theme) AS compt
 	FROM " . DB_TABLE_THEMES . " at
@@ -101,9 +111,9 @@ if (!empty($members))
 		$stats_array[$name] = $row['compt'];
 	}
 	$Sql->query_close($result);
-	
+
 	$Stats = new Stats();
-		
+
 	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $name => $angle_value)
 	{
@@ -115,7 +125,7 @@ if (!empty($members))
 			'PERCENT' => number_round(($angle_value/3.6), 1)
 		));
 	}
-	
+
 	$stats_array = array();
 	$result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
 	FROM " . PREFIX . "member
@@ -126,19 +136,19 @@ if (!empty($members))
 		switch ($row['user_sex'])
 		{
 			case 0:
-			$name = $LANG['unknow'];
-			break;
+				$name = $LANG['unknow'];
+				break;
 			case 1:
-			$name = $LANG['male'];
-			break;
+				$name = $LANG['male'];
+				break;
 			case 2:
-			$name = $LANG['female'];
-			break;
+				$name = $LANG['female'];
+				break;
 		}
 		$stats_array[$name] = $row['compt'];
 	}
 	$Sql->query_close($result);
-	
+
 	$Stats->color_index = 0;
 	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $name => $angle_value)
@@ -151,7 +161,7 @@ if (!empty($members))
 			'PERCENT' => number_round(($angle_value/3.6), 1)
 		));
 	}
-	
+
 	$i = 1;
 	$result = $Sql->query_while("SELECT user_id, login, user_msg
 	FROM " . DB_TABLE_MEMBER . "
@@ -165,7 +175,7 @@ if (!empty($members))
 			'LOGIN' => $row['login'],
 			'USER_POST' => $row['user_msg']
 		));
-		
+
 		$i++;
 	}
 	$Sql->query_close($result);
@@ -176,7 +186,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	$compteur = $Sql->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
-	
+
 	$Template->assign_vars(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
@@ -187,16 +197,16 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		'L_MONTH' => $LANG['month'],
 		'L_SUBMIT' => $LANG['submit']
 	));
-	
+
 	$time = gmdate_format('Ym');
 	$current_year = substr($time, 0, 4);
 	$current_month = substr($time, 4, 2);
-	
+
 	$month = retrieve(GET, 'm', (int)$current_month);
 	$year = retrieve(GET, 'y', (int)$current_year);
 	if ($visit_year)
-		$year = $visit_year;
-	
+	$year = $visit_year;
+
 	//Gestion des mois pour s'adapter au array défini dans lang/main.php
 	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
@@ -236,27 +246,27 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
-		
+
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
-			));
-			
-			//On fait la liste des visites journalières
-			$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total
+				));
+					
+				//On fait la liste des visites journalières
+				$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total
 			FROM " . DB_TABLE_STATS . "
 			WHERE stats_year = '" . $visit_year . "'
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->assign_block_vars('value', array(
+				while ($row = $Sql->fetch_assoc($result))
+				{
+					//On affiche les stats numériquement dans un tableau en dessous
+					$Template->assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
-				));
-			}
-			$Sql->query_close($result);
+					));
+				}
+				$Sql->query_close($result);
 		}
 		else
 		{
@@ -265,15 +275,15 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			WHERE stats_year = '" . $visit_year . "'
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			
-			while ($row = $Sql->fetch_assoc($result))
-				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-			
 				
+			while ($row = $Sql->fetch_assoc($result))
+			$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
+				
+
 			$Template->assign_vars(array(
 				'C_STATS_NO_GD' => true
 			));
-			
+				
 			$i = 1;
 			$last_month = 1;
 			$months_not_empty = array();
@@ -294,15 +304,15 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 						));
 					}
 				}
-				
+
 				$i += $diff;
-				
+
 				//On a des stats pour ce mois-ci, on l'enregistre
 				array_push($months_not_empty, $row['stats_month']);
-				
+
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $max_month * 200;
-				
+
 				$Template->assign_block_vars('values', array(
 					'HEIGHT' => ceil($height)
 				));
@@ -315,7 +325,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
-				
+
 				$last_month = $row['stats_month'];
 				$i++;
 			}
@@ -327,7 +337,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			{
 				$Template->assign_block_vars('end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
-				));
+					));
 			}
 			//On liste les jours en dessous du graphique
 			$i = 1;
@@ -345,13 +355,13 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-				
+
 		//Mois précédent et suivant
 		$next_month = ($month < 12) ? $month + 1 : 1;
 		$next_year = ($month < 12) ? $year : $year + 1;
 		$previous_month = ($month > 1) ? $month - 1 : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
-		
+
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
 			
@@ -369,138 +379,138 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1'),
 			'U_YEAR' => '<a href="admin_stats' . url('.php?year=' . $year) . '#stats">' . $year . '</a>',
 			'U_VISITS_MORE' => '<a href="admin_stats' . url('.php?year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
-		));
-		
-		$months = '';
-		for ($i = 1; $i <= 12; $i++)
-		{
-			$selected = ($i == $month) ? ' selected="selected"' : '';
-			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
-		}
-		
-		//Année maximale
-		$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
-		$years = '';
-		for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-		{
-			$selected = ($i == $year) ? ' selected="selected"' : '';
-			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
-		}
-		$Template->assign_vars(array(
+			));
+
+			$months = '';
+			for ($i = 1; $i <= 12; $i++)
+			{
+				$selected = ($i == $month) ? ' selected="selected"' : '';
+				$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+			}
+
+			//Année maximale
+			$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+			$years = '';
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$selected = ($i == $year) ? ' selected="selected"' : '';
+				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+			}
+			$Template->assign_vars(array(
 			'C_STATS_MONTH' => true,
 			'C_STATS_YEAR' => true,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years
-		));
-		
-		if (@extension_loaded('gd'))
-		{
-			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
-			
-			//On fait la liste des visites journalières
-			$result = $Sql->query_while("SELECT nbr, stats_day AS day
-			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-			ORDER BY stats_day", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
-				
-				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
-					'NBR' => $row['nbr']
-				));
-			}
-			$Sql->query_close($result);
-		}
-		else
-		{
-			//Mois selectionné.
-			if (!empty($month) && !empty($year))
+
+			if (@extension_loaded('gd'))
 			{
 				$Template->assign_vars(array(
-					'C_STATS_NO_GD' => true
+				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 				));
-				
-				//On rajoute un 0 devant tous les mois plus petits que 10
-				$month = ($month < 10) ? '0' . $month : $month;
-				unset($i);
-				
+					
 				//On fait la liste des visites journalières
-				$j = 0;
 				$result = $Sql->query_while("SELECT nbr, stats_day AS day
-				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-				ORDER BY stats_day", __LINE__, __FILE__);
+			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
+			ORDER BY stats_day", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					//Complétion des jours précédent le premier enregistrement du mois.
-					if ($j == 0)
-					{
-						for ($z = 1; $z < $row['day']; $z++)
-						{
-							$Template->assign_block_vars('values', array(
-								'HEIGHT' => 0
-							));
-						}
-						$j++;
-					}
-					//Remplissage des trous possibles entre les enregistrements.
-					$i = !isset($i) ? $row['day'] : $i;
-					$diff = 0;
-					if ($row['day'] != $i)
-					{
-						$diff = $row['day'] - $i;
-						for ($j = 0; $j < $diff; $j++)
-						{
-							$Template->assign_block_vars('values', array(
-								'HEIGHT' => 0
-							));
-						}
-					}
-					$i += $diff;
-					
-					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-					$height = ($row['nbr'] / $info['max_nbr']) * 200;
-					
-					$Template->assign_block_vars('values', array(
-						'HEIGHT' => ceil($height)
-					));
-					
-					$Template->assign_block_vars('values.head', array(
-					));
-						
 					$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
-						
+
 					//On affiche les stats numériquement dans un tableau en dessous
 					$Template->assign_block_vars('value', array(
-						'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
-						'NBR' => $row['nbr']
+					'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+					'NBR' => $row['nbr']
 					));
-
-					$i++;
 				}
 				$Sql->query_close($result);
-				
-				//Génération des td manquants.
-				$date_day = isset($date_day) ? $date_day : 1;
-				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+			}
+			else
+			{
+				//Mois selectionné.
+				if (!empty($month) && !empty($year))
 				{
-					$Template->assign_block_vars('end_td', array(
+					$Template->assign_vars(array(
+					'C_STATS_NO_GD' => true
+					));
+
+					//On rajoute un 0 devant tous les mois plus petits que 10
+					$month = ($month < 10) ? '0' . $month : $month;
+					unset($i);
+
+					//On fait la liste des visites journalières
+					$j = 0;
+					$result = $Sql->query_while("SELECT nbr, stats_day AS day
+				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
+				ORDER BY stats_day", __LINE__, __FILE__);
+					while ($row = $Sql->fetch_assoc($result))
+					{
+						//Complétion des jours précédent le premier enregistrement du mois.
+						if ($j == 0)
+						{
+							for ($z = 1; $z < $row['day']; $z++)
+							{
+								$Template->assign_block_vars('values', array(
+								'HEIGHT' => 0
+								));
+							}
+							$j++;
+						}
+						//Remplissage des trous possibles entre les enregistrements.
+						$i = !isset($i) ? $row['day'] : $i;
+						$diff = 0;
+						if ($row['day'] != $i)
+						{
+							$diff = $row['day'] - $i;
+							for ($j = 0; $j < $diff; $j++)
+							{
+								$Template->assign_block_vars('values', array(
+								'HEIGHT' => 0
+								));
+							}
+						}
+						$i += $diff;
+							
+						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+						$height = ($row['nbr'] / $info['max_nbr']) * 200;
+							
+						$Template->assign_block_vars('values', array(
+						'HEIGHT' => ceil($height)
+						));
+							
+						$Template->assign_block_vars('values.head', array(
+						));
+
+						$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
+
+						//On affiche les stats numériquement dans un tableau en dessous
+						$Template->assign_block_vars('value', array(
+						'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+						'NBR' => $row['nbr']
+						));
+
+						$i++;
+					}
+					$Sql->query_close($result);
+
+					//Génération des td manquants.
+					$date_day = isset($date_day) ? $date_day : 1;
+					for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+					{
+						$Template->assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
-					));
-				}
-				
-				//On liste les jours en dessous du graphique
-				for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-				{
-					$Template->assign_block_vars('legend', array(
+						));
+					}
+
+					//On liste les jours en dessous du graphique
+					for ($i = 1; $i <= $array_month[$month - 1]; $i++)
+					{
+						$Template->assign_block_vars('legend', array(
 						'LEGEND' => $i
-					));
+						));
+					}
 				}
 			}
-		}
 	}
 }
 elseif ($pages || $pages_year) //Pages par jour classées par mois.
@@ -527,7 +537,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$clause = "AND stats_month = '" . $month . "'";
 		$year = retrieve(GET, 'y', (int)$current_year);
 	}
-	
+
 	//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 	$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month", __LINE__, __FILE__);
 
@@ -536,7 +546,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	$compteur_day = array_sum(pages_displayed(NO_UPDATE_PAGES)) + 1;
 	$compteur_total = $compteur_total + $compteur_day;
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
-	
+
 	$Template->assign_vars(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
@@ -584,27 +594,27 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
-		
+
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
-			));
-			
-			//On fait la liste des visites journalières
-			$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total
+				));
+					
+				//On fait la liste des visites journalières
+				$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total
 			FROM " . DB_TABLE_STATS . "
 			WHERE stats_year = '" . $pages_year . "'
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->assign_block_vars('value', array(
+				while ($row = $Sql->fetch_assoc($result))
+				{
+					//On affiche les stats numériquement dans un tableau en dessous
+					$Template->assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
-				));
-			}
-			$Sql->query_close($result);
+					));
+				}
+				$Sql->query_close($result);
 		}
 		else
 		{
@@ -613,15 +623,15 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			WHERE stats_year = '" . $visit_year . "'
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			
+				
 			while ($row = $Sql->fetch_assoc($result))
-				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-			
-						
+			$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
+				
+
 			$Template->assign_vars(array(
 				'C_STATS_NO_GD' => true
 			));
-			
+				
 			$i = 1;
 			$last_month = 1;
 			$months_not_empty = array();
@@ -642,28 +652,28 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 						));
 					}
 				}
-				
+
 				$i += $diff;
-				
+
 				//On a des stats pour ce mois-ci, on l'enregistre
 				array_push($months_not_empty, $row['stats_month']);
-				
+
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $info['max_month'] * 200;
-				
+
 				$Template->assign_block_vars('months', array(
 					'HEIGHT' => ceil($height)
 				));
 
 				$Template->assign_block_vars('values.head', array(
 				));
-				
+
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
-				
+
 				$last_month = $row['stats_month'];
 				$i++;
 			}
@@ -675,7 +685,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			{
 				$Template->assign_block_vars('end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
-				));
+					));
 			}
 			//On liste les jours en dessous du graphique
 			$i = 1;
@@ -693,7 +703,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-		
+
 		//Mois précédent et suivant
 		$check_day = $day < $array_month[$month-1];
 		$next_day = $check_day ? $day + 1 : 1;
@@ -716,66 +726,66 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'U_PREVIOUS_LINK' => url('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1'),
 			'U_YEAR' => '<a href="admin_stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
 			'U_VISITS_MORE' => '<a href="admin_stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
-		));
-		
-		$days = '';
-		for ($i = 1; $i <= $array_month[$month-1]; $i++)
-		{
-			$selected = ($i == $day) ? ' selected="selected"' : '';
-			$days .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
-		}
-		
-		$months = '';
-		for ($i = 1; $i <= 12; $i++)
-		{
-			$selected = ($i == $month) ? ' selected="selected"' : '';
-			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
-		}
-		
-		//Année maximale
-		$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
-		$years = '';
-		for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-		{
-			$selected = ($i == $year) ? ' selected="selected"' : '';
-			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
-		}
-		
-		$Template->assign_vars(array(
+			));
+
+			$days = '';
+			for ($i = 1; $i <= $array_month[$month-1]; $i++)
+			{
+				$selected = ($i == $day) ? ' selected="selected"' : '';
+				$days .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+			}
+
+			$months = '';
+			for ($i = 1; $i <= 12; $i++)
+			{
+				$selected = ($i == $month) ? ' selected="selected"' : '';
+				$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+			}
+
+			//Année maximale
+			$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+			$years = '';
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$selected = ($i == $year) ? ' selected="selected"' : '';
+				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+			}
+
+			$Template->assign_vars(array(
 			'STATS_DAY' => $days,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years,
 			'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
-		));
-		
-		//On fait la liste des visites journalières
-		$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
+			));
+
+			//On fait la liste des visites journalières
+			$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
 		FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
 		ORDER BY stats_day", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
-			
-			//On affiche les stats numériquement dans un tableau en dessous
-			$Template->assign_block_vars('value', array(
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
+					
+				//On affiche les stats numériquement dans un tableau en dessous
+				$Template->assign_block_vars('value', array(
 				'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 				'NBR' => $row['pages']
-			));
-		}
-		$Sql->query_close($result);
+				));
+			}
+			$Sql->query_close($result);
 	}
 	else
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-				
+
 		//Mois précédent et suivant
 		$next_month = ($month < 12) ? $month + 1 : 1;
 		$next_year = ($month < 12) ? $year : $year + 1;
 		$previous_month = ($month > 1) ? $month - 1 : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
-		
+
 		$Template->assign_vars(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
@@ -790,146 +800,146 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1'),
 			'U_YEAR' => '<a href="admin_stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
 			'U_VISITS_MORE' => '<a href="admin_stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
-		));
-		
-		$months = '';
-		for ($i = 1; $i <= 12; $i++)
-		{
-			$selected = ($i == $month) ? ' selected="selected"' : '';
-			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
-		}
-		
-		//Année maximale
-		$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
-		$years = '';
-		for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-		{
-			$selected = ($i == $year) ? ' selected="selected"' : '';
-			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
-		}
-		
-		$Template->assign_vars(array(
+			));
+
+			$months = '';
+			for ($i = 1; $i <= 12; $i++)
+			{
+				$selected = ($i == $month) ? ' selected="selected"' : '';
+				$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+			}
+
+			//Année maximale
+			$info_year = $Sql->query_array(DB_TABLE_STATS, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+			$years = '';
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$selected = ($i == $year) ? ' selected="selected"' : '';
+				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+			}
+
+			$Template->assign_vars(array(
 			'C_STATS_YEAR' => true,
 			'C_STATS_MONTH' => true,
 			'STATS_YEAR' => $years,
 			'STATS_MONTH' => $months
-		));
-		
-		if (@extension_loaded('gd'))
-		{
-			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
-			
-			//On fait la liste des visites journalières
-			$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
-			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-			ORDER BY stats_day", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
-				
-				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
-					'NBR' => $row['pages']
-				));
-			}
-			$Sql->query_close($result);
-		}
-		else
-		{
-			//Mois selectionné.
-			if (!empty($month) && !empty($year))
+
+			if (@extension_loaded('gd'))
 			{
 				$Template->assign_vars(array(
-					'C_STATS_NO_GD' => true
+				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 				));
-				
-				//On rajoute un 0 devant tous les mois plus petits que 10
-				$month = ($month < 10) ? '0' . $month : $month;
-				unset($i);
-				
+					
 				//On fait la liste des visites journalières
-				$j = 0;
-				$result = $Sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year
-				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-				ORDER BY stats_day", __LINE__, __FILE__);
+				$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
+			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
+			ORDER BY stats_day", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					//Complétion des jours précédent le premier enregistrement du mois.
-					if ($j == 0)
-					{
-						for ($z = 1; $z < $row['day']; $z++)
-						{
-							$Template->assign_block_vars('days', array(
-								'HEIGHT' => 0
-							));
-						}
-						$j++;
-					}
-					//Remplissage des trous possibles entre les enregistrements.
-					$i = !isset($i) ? $row['day'] : $i;
-					$diff = 0;
-					if ($row['day'] != $i)
-					{
-						$diff = $row['day'] - $i;
-						for ($j = 0; $j < $diff; $j++)
-						{
-							$Template->assign_block_vars('days', array(
-								'HEIGHT' => 0
-							));
-						}
-					}
-					$i += $diff;
-					
-					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-					$height = ($row['pages'] / $info['max_nbr']) * 200;
-					
-					$Template->assign_block_vars('values', array(
-						'HEIGHT' => ceil($height)
-					));
-					
-					$Template->assign_block_vars('values.head', array(
-					));
-						
-					$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
-						
+					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
+
 					//On affiche les stats numériquement dans un tableau en dessous
 					$Template->assign_block_vars('value', array(
-						'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
-						'NBR' => $row['pages']
+					'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+					'NBR' => $row['pages']
 					));
-
-					$i++;
 				}
 				$Sql->query_close($result);
-				
-				//Génération des td manquants.
-				$date_day = isset($date_day) ? $date_day : 1;
-				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+			}
+			else
+			{
+				//Mois selectionné.
+				if (!empty($month) && !empty($year))
 				{
-					$Template->assign_block_vars('end_td', array(
+					$Template->assign_vars(array(
+					'C_STATS_NO_GD' => true
+					));
+
+					//On rajoute un 0 devant tous les mois plus petits que 10
+					$month = ($month < 10) ? '0' . $month : $month;
+					unset($i);
+
+					//On fait la liste des visites journalières
+					$j = 0;
+					$result = $Sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year
+				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
+				ORDER BY stats_day", __LINE__, __FILE__);
+					while ($row = $Sql->fetch_assoc($result))
+					{
+						//Complétion des jours précédent le premier enregistrement du mois.
+						if ($j == 0)
+						{
+							for ($z = 1; $z < $row['day']; $z++)
+							{
+								$Template->assign_block_vars('days', array(
+								'HEIGHT' => 0
+								));
+							}
+							$j++;
+						}
+						//Remplissage des trous possibles entre les enregistrements.
+						$i = !isset($i) ? $row['day'] : $i;
+						$diff = 0;
+						if ($row['day'] != $i)
+						{
+							$diff = $row['day'] - $i;
+							for ($j = 0; $j < $diff; $j++)
+							{
+								$Template->assign_block_vars('days', array(
+								'HEIGHT' => 0
+								));
+							}
+						}
+						$i += $diff;
+							
+						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+						$height = ($row['pages'] / $info['max_nbr']) * 200;
+							
+						$Template->assign_block_vars('values', array(
+						'HEIGHT' => ceil($height)
+						));
+							
+						$Template->assign_block_vars('values.head', array(
+						));
+
+						$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
+
+						//On affiche les stats numériquement dans un tableau en dessous
+						$Template->assign_block_vars('value', array(
+						'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
+						'NBR' => $row['pages']
+						));
+
+						$i++;
+					}
+					$Sql->query_close($result);
+
+					//Génération des td manquants.
+					$date_day = isset($date_day) ? $date_day : 1;
+					for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+					{
+						$Template->assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
-					));
-				}
-				
-				//On liste les jours en dessous du graphique
-				for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-				{
-					$Template->assign_block_vars('legend', array(
+						));
+					}
+
+					//On liste les jours en dessous du graphique
+					for ($i = 1; $i <= $array_month[$month - 1]; $i++)
+					{
+						$Template->assign_block_vars('legend', array(
 						'LEGEND' => $i
-					));
+						));
+					}
 				}
 			}
-		}
 	}
 }
 elseif (!empty($referer))
 {
-	
+
 	$Pagination = new Pagination();
-	
+
 	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM " . PREFIX . "stats_referer
@@ -968,10 +978,10 @@ elseif (!empty($referer))
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
 			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
-		));
+			));
 	}
 	$Sql->query_close($result);
-	
+
 	$Template->assign_vars(array(
 		'C_STATS_REFERER' => true,
 		'PAGINATION' => $Pagination->display('admin_stats' . url('.php?referer=1&amp;p=%d'), $nbr_referer, 'p', 15, 3),
@@ -984,9 +994,9 @@ elseif (!empty($referer))
 }
 elseif (!empty($keyword))
 {
-	
+
 	$Pagination = new Pagination();
-	
+
 	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM " . PREFIX . "stats_referer
@@ -1025,10 +1035,10 @@ elseif (!empty($keyword))
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
 			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
-		));
+			));
 	}
 	$Sql->query_close($result);
-		
+
 	$Template->assign_vars(array(
 		'C_STATS_KEYWORD' => true,
 		'PAGINATION' => $Pagination->display('admin_stats' . url('.php?keyword=1&amp;p=%d'), $nbr_keyword, 'p', 15, 3),
@@ -1042,7 +1052,7 @@ elseif (!empty($keyword))
 elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques camenbert.
 {
 	include_once('../lang/' . get_ulang() . '/stats.php');
-	
+
 	if (!empty($browser))
 	{
 		$Template->assign_vars(array(
@@ -1076,15 +1086,15 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 		$array_stats_info = $stats_array_lang;
 		$path = '../images/stats/countries/';
 	}
-	
-	
+
+
 	$Stats = new Stats();
-		
+
 	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
-	
+
 	//Tri décroissant.
 	arsort($Stats->data_stats);
-	
+
 	//Traitement des données.
 	$array_stats_tmp = array();
 	$array_order = array();
@@ -1104,7 +1114,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 			$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
 			$name_stats = $array_stats_info[$value_name][0];
 		}
-		
+
 		if (!isset($array_order[$value_name]))
 		{
 			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
@@ -1112,7 +1122,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 			$array_order[$value_name] = $angle_value;
 		}
 	}
-	
+
 	//Affichage.
 	foreach ($array_order as $value_name => $angle_value)
 	{
@@ -1135,9 +1145,9 @@ elseif ($bot)
 		'L_LAST_UPDATE' => $LANG['last_update']
 	));
 
-	
+
 	$Stats = new Stats();
-		
+
 	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');
 
 	$stats_info = array('google bot', 'yahoo Slurp', 'bing bot', 'voila', 'gigablast', 'ia archiver', 'exalead');
