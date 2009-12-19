@@ -145,13 +145,6 @@ abstract class SQLDAO implements DAO
 		$this->cache_model();
 	}
 
-	/**
-	 * @desc this method is called just before the "save" method
-	 * (not called with the "update" method)
-	 * @param PropertiesMapInterface $object
-	 */
-	protected function before_save(PropertiesMapInterface $object) { }
-
 	public function save(PropertiesMapInterface $object)
 	{
 		$this->before_save($object);
@@ -171,13 +164,6 @@ abstract class SQLDAO implements DAO
 	{
 		$this->common_query->update($this->table, $fields, $where, $parameters);
 	}
-	
-	/**
-	 * @desc this method is called just before the "delete" method
-     * (not called with the "delete_all" method)
-	 * @param PropertiesMapInterface $object
-	 */
-	protected function before_delete(PropertiesMapInterface $object) { }
 
 	public function delete(PropertiesMapInterface $object)
 	{
@@ -190,6 +176,8 @@ abstract class SQLDAO implements DAO
 		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
 		$this->querier->inject($this->delete_query, $prepared_vars);
 	}
+	
+	// TODO delete_by_id
 	
 	public function delete_all($where = DAO::WHERE_ALL, array $parameters = array())
     {

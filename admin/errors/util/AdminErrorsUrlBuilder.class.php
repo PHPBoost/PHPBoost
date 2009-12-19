@@ -46,8 +46,7 @@ class AdminErrorsUrlBuilder
      */
     public static function clear_404_errors()
     {
-        global $Session;
-        return DispatchManager::get_url(self::$dispatcher, '/404/clear/?token=' . $Session->get_token());
+        return DispatchManager::get_url(self::$dispatcher, '/404/clear/?token=' . AppContext::get_session()->get_token());
     }
     
     /**
@@ -55,8 +54,7 @@ class AdminErrorsUrlBuilder
      */
     public static function delete_404_error($id)
     {
-        global $Session;
-        return DispatchManager::get_url(self::$dispatcher, '/404/' . $id . '/delete/?token=' . $Session->get_token());
+        return DispatchManager::get_url(self::$dispatcher, '/404/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
     }
     
     /**

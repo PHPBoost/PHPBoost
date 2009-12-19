@@ -71,7 +71,7 @@ class AdminError404Service
 			$error = AdminError404DAO::instance()->find_by_id($id);
 			AdminError404DAO::instance()->delete($error);
 		}
-		catch(ObjectNotFoundException $exception)
+		catch (ObjectNotFoundException $exception)
 		{
 			
 		}
