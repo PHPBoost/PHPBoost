@@ -187,7 +187,7 @@ class NewsInterface extends ModuleInterface
 
 		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
 
-		$module_map = new ModuleMap($news_link);
+		$module_map = new ModuleMap($news_link, 'news');
 		$module_map->set_description('<em>Test</em>');
 
 		$id_cat = 0;

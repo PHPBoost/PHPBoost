@@ -40,15 +40,20 @@ class ModuleMap extends SitemapSection
 	 * @var string Description of the module
 	 */
 	private $description;
+	/**
+	 * @var string id of the corresponding module
+	 */
+	private $module_id;
 
 	/**
 	 * @desc Builds a ModuleMap object
 	 * @param SitemapLink $link Link associated to the root of the module
+	 * @param string $module_id Id of the corresponding module
 	 */
-	public function __construct(SitemapLink  $link)
+	public function __construct(SitemapLink  $link, $module_id = '')
 	{
-		//We build the parent object
 		parent::__construct($link);
+		$this->module_id = $module_id;
 	}
 
 	/**
@@ -73,6 +78,8 @@ class ModuleMap extends SitemapSection
 	 * @desc Exports the sitemap (according to a configuration of templates).
 	 * In your template, you will be able to use the following variables:
 	 * <ul>
+	 * 	<li>MODULE_ID which contains the id of the module</li>
+	 *  <li>C_MODULE_ID tells whether the module identifier is known</li>
 	 * 	<li>MODULE_NAME which contains the name of the module</li>
 	 *  <li>MODULE_DESCRIPTION which contains the description of the module</li>
 	 *  <li>MODULE_URL which contains the URL of the module root page</li>
@@ -91,6 +98,8 @@ class ModuleMap extends SitemapSection
 		$template = $export_config->get_module_map_stream();
 
 		$template->assign_vars(array(
+			'MODULE_ID' => $this->get_module_id(),
+			'C_MODULE_ID' => $this->get_module_id() != '',
 			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
 			'MODULE_DESCRIPTION' => $this->description,
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
@@ -98,7 +107,7 @@ class ModuleMap extends SitemapSection
             'C_MODULE_MAP' => true
 		));
 
-		if (is_object($this->link))
+		if (is_object($this->link) && $this->link instanceof SitemapSection)
 		{
 			$template->add_subtemplate('LINK', $this->link->export($export_config));
 		}
@@ -111,6 +120,15 @@ class ModuleMap extends SitemapSection
 			));
 		}
 		return $template;
+	}
+	
+	/**
+	 * Returns the corresponding module's identifier
+	 * @return string The identifier
+	 */
+	public function get_module_id()
+	{
+		return $this->module_id;
 	}
 }
 

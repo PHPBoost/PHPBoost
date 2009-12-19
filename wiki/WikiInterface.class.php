@@ -334,7 +334,7 @@ class WikiInterface extends ModuleInterface
 		$Cache->load('wiki');
 		
 		$wiki_link = new SitemapLink($LANG['wiki'], new Url('wiki/wiki.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_LOW);
-		$module_map = new ModuleMap($wiki_link);
+		$module_map = new ModuleMap($wiki_link, 'wiki');
 		
 		$id_cat = 0;
 	    $keys = array_keys($_WIKI_CATS);
