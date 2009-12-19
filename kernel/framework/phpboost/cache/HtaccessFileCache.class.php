@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * This class contains the cache data of the .htaccess file which is located at the root of the site
  * and is used to change the Apache configuration only in the PHPBoost folder.
@@ -99,7 +96,7 @@ class HtaccessFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$configuration = $module->get_configuration();
-			foreach ($configuration->get_rewrite_rules() as $rule)
+			foreach ($configuration->get_url_rewrite_rules() as $rule)
 			{
 				$this->add_line(str_replace('DIR', DIR, $rule));
 			}
