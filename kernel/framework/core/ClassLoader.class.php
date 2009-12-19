@@ -45,11 +45,11 @@ class ClassLoader
 	 */
 	public static function init_autoload()
 	{
+		spl_autoload_register(array(get_class(), 'autoload'));
 		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
 		{
 			self::generate_classlist();
 		}
-		spl_autoload_register(array(get_class(), 'autoload'));
 	}
 
 	/**
@@ -75,6 +75,7 @@ class ClassLoader
 	{
 		if (!self::$already_reloaded)
 		{
+			self::$already_reloaded = true;
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
@@ -89,24 +90,13 @@ class ClassLoader
 				'/kernel/framework/core/lang',
 			);
 
-			try
+			foreach ($paths as $path)
 			{
-				foreach ($paths as $path)
-				{
-					self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
-				}
-				self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`');
-
-				self::generate_autoload_cache();
+				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
 			}
-			catch (Exception $exception)
-			{
-				import('util/Debug');
-				Debug::fatal($exception);
-			}
-			self::$already_reloaded = true;
+			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`');
+			self::generate_autoload_cache();
 		}
-		return self::$autoload;
 	}
 
 	private static function add_classes($directory, $pattern, $recursive = true)

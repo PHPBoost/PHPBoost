@@ -3,7 +3,7 @@
  *                                install.php
  *                            -------------------
  *   begin                : September 28, 2008
- *   last modified		: October 3rd, 2009 - JMNaylor
+ *   last modified		  : October 3rd, 2009 - JMNaylor
  *   copyright            : (C) 2008 	Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
@@ -35,7 +35,7 @@ $LANG = array();
 
 // Errors
 $LANG['cache_tpl_must_exist_and_be_writable'] = '<h1>PHPBoost installation</h1>
-<p><strong>Warning</strong> : the folder cache/tpl must exist and be writable. Please create and/or give it the good CHMOD (777) to be able to continue the installation.</p>
+<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>';
 
 // General variables

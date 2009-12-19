@@ -31,7 +31,13 @@ class InstallEnvironment
 {
 	public static function load_imports()
 	{
-		Environment::load_imports();
+		try
+		{
+			Environment::load_imports();
+		}
+		catch(Exception $ex)
+		{
+		}
 	}
 
 	public static function init()
@@ -68,7 +74,7 @@ class InstallEnvironment
 	public static function load_distribution_properties($prefered_lang)
 	{
 		global $DISTRIBUTION_MODULES;
-		
+
 		//If the distribution properties exist in the prefered language
 		if (is_file('distribution/distribution_' . $prefered_lang . '.php'))
 		{
@@ -78,7 +84,7 @@ class InstallEnvironment
 		else
 		{
 			//We try to load another lang
-			
+
 			$distribution_folder = new Folder('distribution');
 			$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
 			if (count($distribution_files) > 0)
