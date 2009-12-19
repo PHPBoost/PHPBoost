@@ -38,7 +38,17 @@ $Template->set_filenames(array(
 $file_path = '../cache/error.log';
 
 if (!empty($_POST['erase']))
-	delete_file($file_path); //On supprime le fichier.
+{
+	$error_log_file = new File($file_path);
+	try
+	{
+		$error_log_file->delete();
+	}
+	catch (IOException $exception)
+	{
+		echo $exception->getMessage();
+	}
+}
 
 $Template->add_lang(LangLoader::get('admin-errors-Common'));
 $Template->assign_vars(array(

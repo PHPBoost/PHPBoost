@@ -34,6 +34,11 @@ class ErrorHandler
 {
 	const FATAL_MESSAGE = 'Sorry, we encountered a problem and we cannot complete your request...';
 
+	/**
+	 * @var int the maximum size of the error log file in bytes
+	 */
+	private static $LOG_FILE_MAX_SIZE = 1048576;
+
 	protected $errno;
 	protected $errstr;
 	protected $errfile;
@@ -165,8 +170,25 @@ class ErrorHandler
 
 	public static function add_error_in_log($error_msg, $file, $line, $errno = 0)
 	{
-		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+');
-		$write = @fwrite($handle,  self::compute_error_log_string($error_msg, $file, $line, $errno));
+		$error_log_file = PATH_TO_ROOT . '/cache/error.log';
+		self::clear_error_log_file($error_log_file);
+		self::add_error_in_log_file($error_log_file, $error_msg, $file, $line, $errno);
+	}
+
+	private static function clear_error_log_file($log_file)
+	{
+		if (file_exists($log_file) && filesize($log_file) > self::$LOG_FILE_MAX_SIZE)
+		{
+			$handle = @fopen($log_file, 'w+');
+			@ftruncate($handle, 0);
+			@fclose($handle);
+		}
+	}
+
+	private static function add_error_in_log_file($log_file, $error_msg, $file, $line, $errno = 0)
+	{
+		$handle = @fopen($log_file, 'a+');
+		$write = @fwrite($handle, self::compute_error_log_string($error_msg, $file, $line, $errno));
 		$close = @fclose($handle);
 
 		if ($handle === false || $write === false || $close === false)
@@ -175,14 +197,14 @@ class ErrorHandler
 		}
 	}
 
-    private static function compute_error_log_string($error_msg, $file, $line, $errno = 0)
-    {
-        return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
-        $errno . "\n" .
-        self::clean_error_string($error_msg) . "\n" .
-        Path::get_path_from_root($file) . "\n" .
-        $line . "\n";
-    }
+	private static function compute_error_log_string($error_msg, $file, $line, $errno = 0)
+	{
+		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
+		$errno . "\n" .
+		self::clean_error_string($error_msg) . "\n" .
+		Path::get_path_from_root($file) . "\n" .
+		$line . "\n";
+	}
 
 	private static function clean_error_string($message)
 	{
