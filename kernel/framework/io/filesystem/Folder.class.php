@@ -3,8 +3,8 @@
  *                              folder.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel
- *   email                : akhenathon2@gmail.com
+ *   copyright            : (C) 2008 Nicolas Duhamel, Loic Rouchon
+ *   email                : akhenathon2@gmail.com, loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -104,6 +104,10 @@ class Folder extends FileSystemElement
 					}
 				}
 				closedir($dh);
+			}
+			else
+			{
+				throw new IOException('Can\'t open folder : ' . $this->get_path());
 			}
 			$this->opened = true;
 		}
