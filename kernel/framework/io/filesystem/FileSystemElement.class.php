@@ -37,7 +37,7 @@ abstract class FileSystemElement
 	/**
 	 * @var string Path of the file system element
 	 */
-	protected $path;
+	private $path;
 
 	/**
 	 * @desc Builds a FileSystemElement object from the path of the element.
@@ -45,7 +45,7 @@ abstract class FileSystemElement
 	 */
 	protected function __construct($path)
 	{
-		$this->path = $path;
+		$this->path = Path::uniformize_path($path);
 	}
 
 	/**
@@ -57,6 +57,10 @@ abstract class FileSystemElement
 		return file_exists($this->path);
 	}
 
+	/**
+	 * @desc Returns the element full path.
+	 * @return string The element full path.
+	 */
 	public function get_path()
 	{
 		return $this->path;
@@ -64,27 +68,16 @@ abstract class FileSystemElement
 
 	/**
 	 * @desc Returns the element name.
-	 * @param bool $full_path True if you want the full path or false if you just want a relative path.
-	 * @param bool $no_extension False if you want the name of the file with the extension and true without.
 	 * @return string The element name.
 	 */
-	public function get_name($full_path = false, $no_extension = false)
+	public function get_name()
 	{
-		if ($full_path)
+		if (strpos($this->path, '/') !== false)
 		{
-			return $this->path;
+			$parts = explode('/', trim($this->path, '/'));
+			return $parts[count($parts) - 1];
 		}
-
-		$path = trim($this->path, '/');
-		$parts = explode('/', $path);
-		$name =$parts[count($parts) - 1];
-
-		if ($no_extension)
-		{
-			return substr($name, 0, strrpos($name, '.'));
-		}
-
-		return $name;
+		return $this->path;
 	}
 
 	/**

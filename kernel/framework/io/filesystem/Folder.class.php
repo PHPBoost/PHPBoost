@@ -47,20 +47,27 @@ class Folder extends FileSystemElement
 	/**
 	 * @desc Builds a Folder object.
 	 * @param string $path Path of the folder.
-	 * @param bool $whenopen OPEN_AFTER if you want to synchronyse you with the folder only when it's necessary or DIRECT_OPENING if you want to open it now.
 	 */
 	public function __construct($path)
 	{
 		parent::__construct(rtrim($path, '/'));
-
-		if (@file_exists($this->path))
+	}
+	
+	/**
+	 * @desc Returns true if the folder exists after this call, else, false
+	 * @return bool true if the folder exists after this call, else, false
+	 */
+	public function create()
+	{
+		$path = $this->get_path();
+		if (@file_exists($path))
 		{
-			if (!@is_dir($this->path))
+			if (!@is_dir($path))
 			{
 				return false;
 			}
 		}
-		else if (!@mkdir($this->path))
+		else if (!@mkdir($path))
 		{
 			return false;
 		}
@@ -76,7 +83,8 @@ class Folder extends FileSystemElement
 		{
 			$this->files = array();
 			$this->folders = array();
-			if ($dh = @opendir($this->path))
+			$path = $this->get_path();
+			if ($dh = @opendir($path))
 			{
 				while (!is_bool($fse_name = readdir($dh)))
 				{
@@ -85,13 +93,14 @@ class Folder extends FileSystemElement
 						continue;
 					}
 
-					if (is_file($this->path . '/' . $fse_name))
+					$file = $path . '/' . $fse_name;
+					if (is_file($file))
 					{
-						$this->files[] = new File($this->path . '/' . $fse_name);
+						$this->files[] = new File($file);
 					}
 					else
 					{
-						$this->folders[] = new Folder($this->path . '/' . $fse_name);
+						$this->folders[] = new Folder($file);
 					}
 				}
 				closedir($dh);
@@ -187,7 +196,7 @@ class Folder extends FileSystemElement
 			$fse->delete();
 		}
 
-		if (!@rmdir($this->path))
+		if (!@rmdir($this->get_path()))
 		{
 			return false;
 		}

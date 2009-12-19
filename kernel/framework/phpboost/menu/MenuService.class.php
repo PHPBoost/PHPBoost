@@ -409,11 +409,11 @@ class MenuService
 
 		foreach ($files as $file)
 		{
-			$file_name = $file->get_name(false, true);
+			$file_name = $file->get_name_without_extension();
 			// We do not installed the mini menu if it's already installed or
 			// if it's not correct
 			if (in_array($menu_name . '/' . $file_name, $installed_menus_names) ||
-			!$file->finclude() ||
+			!(@include $file->get_path()) ||
 			!function_exists('menu_' . $menu_name . '_' . $file_name))
 			{
 				continue;
