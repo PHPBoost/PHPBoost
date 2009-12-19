@@ -114,7 +114,7 @@ class Contribution extends Event
 	public function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '')
 	{
 		//Building parent class
-		parent::build($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
+		parent::build_event($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
 
 		//Setting its whole parameters
 		$this->description 	= $description;
