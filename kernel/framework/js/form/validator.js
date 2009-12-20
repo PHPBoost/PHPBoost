@@ -31,6 +31,21 @@ function integerIntervalValidator(value, lbound, rbound)
 }
 
 /* #### Onsubmit validator #### */
+function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, message)
+{
+	if (document.getElementById(field_id))
+	{
+		value = document.getElementById(field_id).value;
+		regex = new RegExp(regexPattern, options);
+		if (!regex.test(value))
+		{
+			displayFormFieldOnsubmitValidatorMessage(message);
+			return false;
+		}
+	}
+	return true;
+}
+
 /**
  * @desc validate not empty field
  * @return bool  
