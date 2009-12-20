@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   Admin, v 1.0.0 
+ *   Admin, v 1.0.0
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -62,23 +62,23 @@ $Template->assign_vars(array(
 
 //Listing des modules disponibles:
 $i = 1;
-$nbr_modules = count($modules_config);
-foreach ($modules_config as $module_name => $auth)
+$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+$nbr_modules = count($modules);
+foreach ($modules as $module)
 {
-	if (is_array($modules_config[$module_name]))
+	$configuration = $module->get_configuration();
+	$name = $configuration->get_name();
+	$admin_home_page = $configuration->get_admin_main_page();
+	if (!empty($admin_home_page))
 	{
-		$name = $modules_config[$module_name]['module_name'];
-		if (!empty($modules_config[$module_name]['admin']))
-		{
-			$Template->assign_block_vars('modules_extend', array(
-				'NAME' => $module_name,
-				'IMG' => '../' . $name . '/' . $name . '.png',
-				'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
-				'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-				'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
-			));			
-			$i++;
-		}
+		$Template->assign_block_vars('modules_extend', array(
+		'NAME' => $name,
+		'IMG' => '../' . $module->get_id() . '/' . $module->get_id() . '.png',
+		'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
+		'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
+		'U_ADMIN_MODULE' => '../' . $module->get_id() . '/' . $admin_home_page . '.php'
+		));
+		$i++;
 	}
 }
 //Complétion éventuelle des cases du tableaux.
@@ -89,12 +89,12 @@ if ($i != 0)
 	{
 		$Template->assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
-		));	
-		$i++;
+			));
+			$i++;
 	}
 }
 
-$Template->pparse('admin_extend'); 
+$Template->pparse('admin_extend');
 
 require_once('../admin/admin_footer.php');
 
