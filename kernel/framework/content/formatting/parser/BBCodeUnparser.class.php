@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         bbcode_unparser.class.php
+ *                          BBCodeUnparser.class.php
  *                            -------------------
  *   begin                : July 3 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -32,7 +32,7 @@
  * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.
  */
-class BBCodeUnparser extends ContentUnparser
+class BBCodeUnparser extends ContentFormattingUnparser
 {
 	/**
 	 * @desc Builds a BBCodeUnparser object
@@ -50,8 +50,8 @@ class BBCodeUnparser extends ContentUnparser
 	public function parse()
 	{
 		//Isolement du code source et du code HTML qui ne sera pas protégé
-		$this->unparse_html(Parser::PICK_UP);
-		$this->unparse_code(Parser::PICK_UP);
+		$this->unparse_html(self::PICK_UP);
+		$this->unparse_code(self::PICK_UP);
 
 		//Smilies
 		$this->unparse_smilies();
@@ -67,8 +67,8 @@ class BBCodeUnparser extends ContentUnparser
 		if (strpos($this->content, '<li class="bb_li"') !== false)
 		$this->unparse_list();
 
-		$this->unparse_code(Parser::REIMPLANT);
-		$this->unparse_html(Parser::REIMPLANT);
+		$this->unparse_code(self::REIMPLANT);
+		$this->unparse_html(self::REIMPLANT);
 	}
 
 	/**

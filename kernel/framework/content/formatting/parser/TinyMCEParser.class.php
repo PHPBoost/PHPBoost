@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           tinymce_parser.class.php
+ *                           TinyMCEParser.class.php
  *                            -------------------
  *   begin                : July 3 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -35,7 +35,7 @@
  * @see The TinyMCEUnparser class which makes the reverse operation.
  * @author Benoit Sautel
  */
-class TinyMCEParser extends ContentParser
+class TinyMCEParser extends ContentFormattingParser
 {
 	private static $fonts_array = array(
 	'trebuchet ms,geneva' => 'geneva',

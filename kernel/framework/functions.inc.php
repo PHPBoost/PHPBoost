@@ -567,7 +567,6 @@ function check_mail($mail)
  * @param string[] $forbidden_tags List of the forbidden formatting tags
  * @param bool $addslashes if true, the parsed string will be escaped.
  * @return string The parsed string.
- * @see ContentParser
  */
 function strparse($content, $forbidden_tags = array(), $addslashes = true)
 {
@@ -594,15 +593,15 @@ function strparse($content, $forbidden_tags = array(), $addslashes = true)
  * @param string[] $forbidden_tags List of the forbidden formatting tags
  * @param bool $addslashes if true, the unparsed string will be escaped.
  * @return string The unparsed string.
- * @see ContentUnparser
+ * @see ContentFormattingUnparser
  */
 function unparse($content)
 {
 	$parser = ContentFormattingFactory::get_unparser();
-	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
+	$parser->set_content($content, FormattingParser::DONT_STRIP_SLASHES);
 	$parser->parse();
 
-	return $parser->get_content(Parser::DONT_ADD_SLASHES);
+	return $parser->get_content(FormattingParser::DONT_ADD_SLASHES);
 }
 
 /**
@@ -616,10 +615,10 @@ function unparse($content)
 function second_parse($content)
 {
 	$parser = ContentFormattingFactory::get_second_parser();
-	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
+	$parser->set_content($content, FormattingParser::DONT_STRIP_SLASHES);
 	$parser->parse();
 
-	return $parser->get_content(Parser::DONT_ADD_SLASHES);
+	return $parser->get_content(FormattingParser::DONT_ADD_SLASHES);
 }
 
 /**

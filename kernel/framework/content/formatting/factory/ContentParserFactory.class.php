@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                     ContentParserFactory.class.php
+ *                        ContentParserFactory.class.php
  *                            -------------------
  *   begin                : July 3 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -37,25 +37,25 @@ interface ContentParserFactory
 {
     /**
      * @desc Returns a parser which will work in the language you chose.
-     * @return ContentParser The parser to use to parse you formatting
+     * @return FormattingParser The parser to use to parse you formatting
      */
     function get_parser();
 
     /**
      * @desc Returns a unparser which will work in the language you chose.
-     * @return ContentUnparser The unparser to use to unparse you formatting
+     * @return FormattingParser The unparser to use to unparse you formatting
      */
     function get_unparser();
 
     /**
      * @desc Returns a second parser which will work in the language you chose.
-     * @return ContentSecondParser The second parser to use just before displaying you formatted text
+     * @return FormattingParser The second parser to use just before displaying you formatted text
      */
     function get_second_parser();
 
     /**
      * @desc Returns an editor object which will display the editor corresponding to the language you chose.
-     * @return ContentParser The editor to use.
+     * @return ContentEditor The editor to use.
      */
     function get_editor();
 }
