@@ -98,12 +98,12 @@ abstract class FormField implements ValidableFormComponent
 		$this->id = $prefix . $this->id;
 	}
 
-	public function generate_onsubmit_validation()
+	public function get_onsubmit_validation()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
 		{
-			$validation = $constraint->generate_onsubmit_validation($this);
+			$validation = $constraint->get_onsubmit_validation($this);
 			if (!empty($validation))
 			{
 				$validations[] =  $validation;
@@ -112,12 +112,12 @@ abstract class FormField implements ValidableFormComponent
 		return $validations;
 	}
 
-	protected function generate_onblur_validation()
+	protected function get_onblur_validation()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
 		{
-			$validation = $constraint->generate_onblur_validation($this);
+			$validation = $constraint->get_onblur_validation($this);
 			if (!empty($validation))
 			{
 				$validations[] =  $validation;
