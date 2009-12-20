@@ -60,10 +60,11 @@ abstract class FormField implements ValidableFormComponent
 	 * @param string $field_id Name of the field.
 	 * @param array $field_options Option for the field.
 	 */
-	protected function __construct($field_id, array &$field_options, array $constraints)
+	protected function __construct($field_id, $value, array &$field_options, array $constraints)
 	{
 		$this->name = $field_id;
 		$this->id = $field_id;
+		$this->value = $value;
 		$this->constraints = $constraints;
 		$this->compute_options($field_options);
 	}
