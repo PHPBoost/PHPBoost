@@ -63,8 +63,6 @@ elseif ($uninstall) //Désinstallation du module
 		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = retrieve(POST, 'drop_files', false);
 		
-		
-		
 		switch (ModulesManager::uninstall_module($idmodule, $drop_files))
 		{
 			case NOT_INSTALLED_MODULE:
@@ -83,8 +81,12 @@ elseif ($uninstall) //Désinstallation du module
 		//Récupération de l'identifiant du module
 		$idmodule = '';
 		foreach ($_POST as $key => $value)
+		{
 			if ($value == $LANG['uninstall'])
+			{
 				$idmodule = $key;
+			}
+		}
 				
 		$Template->set_filenames(array(
 			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
@@ -148,64 +150,54 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
+	{
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+	}
 		
-	//Modules installé
+	// Installed modules
 	$i = 0;
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	foreach (ModulesManager::get_installed_modules_map() as $module)
+	foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
 	{
-		//Récupération des infos de config.
-		$array_info_module[$module->get_id()] = load_ini_file('../' . $module->get_id() . '/lang/', get_ulang());
-		$array_modules[$array_info_module[$module->get_id()]['name']] = array(
-        'id' => $module->get_id(), 
-        'name' => $module->get_id(), 'auth' => $module->get_authorizations(), 'activ' => $module->is_activated());
-	}
-	
-	ksort($array_modules);
-	foreach ($array_modules as $name => $array_config)
-	{
-		$row = $array_modules[$name];
-		$info_module = $array_info_module[$array_config['name']];
+		$configuration = $module->get_configuration();
+		$array_auth = $module->get_authorizations();
 		
-		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = $row['auth'];
-		
-		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 		$Template->assign_block_vars('installed', array(
-			'ID' => $row['name'],
-			'NAME' => ucfirst($info_module['name']),
-			'ICON' => $row['name'],
-			'VERSION' => $info_module['version'],
-			'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-			'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-			'DESC' => $info_module['info'],
-			'COMPAT' => $info_module['compatibility'],
-			'ADMIN' => ($info_module['admin'] ? $LANG['yes'] : $LANG['no']),
-			'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
-			'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
-			'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),
-			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
-			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
-			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : ''),
-			'AUTH_MODULES' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $row['id']),
+			'ID' => $module->get_id(),
+			'NAME' => ucfirst($configuration->get_name()),
+			'ICON' => $module->get_id(),
+			'VERSION' => $configuration->get_version(),
+			'AUTHOR' => ($configuration->get_author_email() ? '<a href="mailto:' . $configuration->get_author_email() . '">' . $configuration->get_author() . '</a>' : $configuration->get_author()),
+			'AUTHOR_WEBSITE' => ($configuration->get_author_website() ? '<a href="' . $configuration->get_author_website() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'DESC' => $configuration->get_description(),
+			'COMPAT' => $configuration->get_compatibility(),
+			'ADMIN' => ($configuration->get_admin_main_page() ? $LANG['yes'] : $LANG['no']),
+			'HOME_PAGE' => ($configuration->get_home_page() ? $LANG['yes'] : $LANG['no']),
+			'ACTIV_ENABLED' => ($module->is_activated() ? 'checked="checked"' : ''),
+			'ACTIV_DISABLED' => (!$module->is_activated() ? 'checked="checked"' : ''),
+			'AUTH_MODULES' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
 		));
 		$i++;
 	}
 
 	if ($i == 0)
+	{
 		$Template->assign_vars(array(
 			'C_NO_MODULE_INSTALLED' => true
 		));
+	}
 	else
+	{
 		$Template->assign_vars(array(
 			'C_MODULES_INSTALLED' => true
 		));
+	}
 	
 	$Template->pparse('admin_modules_management');
 }
