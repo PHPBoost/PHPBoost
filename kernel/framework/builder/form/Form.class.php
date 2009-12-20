@@ -161,7 +161,7 @@ class Form implements ValidableFormComponent
 	 */
 	public function get_value($field_id)
 	{
-		$field = $this->get_element_by_id($field_id);
+		$field = $this->get_field_by_id($field_id);
 		return $field->get_value();
 	}
 

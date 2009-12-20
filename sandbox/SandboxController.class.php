@@ -35,7 +35,7 @@ class SandboxController extends ModuleController
 		{
 			if ($form->validate())
 			{
-				echo 'on poste';
+				echo $form->get_value('pseudo') . ' poste ' . $form->get_value('contents');
 			}
 		}
 		$view->add_subtemplate('form', $form->export());
