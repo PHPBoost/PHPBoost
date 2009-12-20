@@ -45,6 +45,9 @@ define('DISTRIBUTION_ENABLE_USER', true);
 //Debug mode?
 define('DISTRIBUTION_ENABLE_DEBUG_MODE', false);
 
+//Bench activé?
+define('DISTRIBUTION_ENABLE_BENCH', false);
+
 //Liste des modules
 $DISTRIBUTION_MODULES = array('articles', 'contact', 'connect', 'database', 'guestbook', 'news', 'pages', 'search', 'web');
 

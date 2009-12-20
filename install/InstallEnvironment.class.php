@@ -111,6 +111,9 @@ class InstallEnvironment
 
                 //Debug mode?
                 define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
+                
+                //Enable bench?
+                define('DISTRIBUTION_ENABLE_BENCH', false);
 
                 //Modules list
                 $DISTRIBUTION_MODULES = array();
