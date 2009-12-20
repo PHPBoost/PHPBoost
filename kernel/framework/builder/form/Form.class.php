@@ -242,7 +242,7 @@ class Form implements ValidableFormComponent
 	public function display_preview_button($field_identifier_preview)
 	{
 		$this->display_preview = true;
-		$this->field_identifier_preview = $field_identifier_preview;
+		$this->field_identifier_preview = $this->form_name . $field_identifier_preview;
 	}
 
 	/**
