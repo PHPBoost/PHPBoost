@@ -48,6 +48,6 @@ define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
 define('DISTRIBUTION_ENABLE_BENCH', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'sitemap', 'shoutbox', 'stats', 'test', 'web', 'wiki');
+$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'sandbox', 'search', 'sitemap', 'shoutbox', 'stats', 'test', 'web', 'wiki');
 
 ?>
