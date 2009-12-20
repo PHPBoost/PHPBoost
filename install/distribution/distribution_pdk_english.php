@@ -44,6 +44,9 @@ define('DISTRIBUTION_ENABLE_USER', true);
 //Debug mode?
 define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
 
+//Enable bench?
+define('DISTRIBUTION_ENABLE_BENCH', true);
+
 //Modules list
 $DISTRIBUTION_MODULES = array('connect', 'database', 'doc');
 
