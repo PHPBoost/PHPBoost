@@ -41,6 +41,9 @@ define('DISTRIBUTION_START_PAGE', '/doc/3.0/index.php');
 //Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
 define('DISTRIBUTION_ENABLE_USER', true);
 
+//Mode debug ?
+define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
+
 //Liste des modules
 $DISTRIBUTION_MODULES = array('connect', 'database', 'doc');
 
