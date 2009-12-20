@@ -112,4 +112,8 @@ $lang['atline'] = 'à la ligne';
 // Too Many Connections
 $lang['too_many_connections'] = 'Trop de connexions';
 $lang['too_many_connections_explain'] = 'Le nombre maximum de connexions simultanées à la base de données à été atteint.<br />Veuillez réessayer dans quelques secondes.';
+
+// DEPRECATED
+global $LANG;
+$LANG = array_merge($LANG, $lang);
 ?>

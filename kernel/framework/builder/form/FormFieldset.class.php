@@ -31,7 +31,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @package builder
  * @subpackage form
- *
  */
 class FormFieldset implements ValidableFormComponent
 {
