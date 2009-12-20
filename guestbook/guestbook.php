@@ -40,8 +40,8 @@ $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
 if ($guestbook && empty($id_get)) //Enregistrement
 {
-	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
-	$guestbook_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
+	$guestbook_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$guestbook_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, 'pseudo', $LANG['guest']);
 
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time())
@@ -55,7 +55,9 @@ if ($guestbook && empty($id_get)) //Enregistrement
 		if ($User->check_level($CONFIG_GUESTBOOK['guestbook_auth']))
 		{
 			if ($CONFIG_GUESTBOOK['guestbook_verifcode'] && !$captcha->is_valid())
-			redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
+			{
+				redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
+			}
 
 			//Mod anti-flood
 			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
@@ -129,13 +131,13 @@ elseif (!empty($id_get)) //Edition + suppression!
 			if ($row['user_id'] == -1) //Visiteur
 			{
 				$fieldset->add_field(new FormTextEdit('pseudo', $row['login'], array(
-					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 'maxlength' => 25),
-					array(new NotEmptyFormFieldConstraint($LANG['require_pseudo']))
+					'title' => $LANG['pseudo'], 'class' => 'text', 
+					'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 				));
 			}
 			$fieldset->add_field(new FormTextarea('contents', unparse($row['contents']), array(
 				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-				'rows' => 10, 'cols' => 47, 'required' => true), array(new NotEmptyFormFieldConstraint($LANG['require_text']))
+				'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
 			$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
@@ -227,14 +229,12 @@ else //Affichage.
 	{
 		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
-			'maxlength' => 25),
-		array(new RegexFormFieldConstraint('`^[a-z0-9_]+@[a-z0-9_]+\\\.[a-z0-9]{2,5}$`i'))
+			'maxlength' => 25)
 		));
 	}
 	$fieldset->add_field(new FormTextarea('contents', '', array(
 		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-		'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text']), 
-		array(new IntegerIntervalFormFieldConstraint(5, 10, $LANG['require_text']))
+		'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 	));
 	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
 	{
