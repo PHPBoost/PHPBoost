@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_file_uploader.class.php
+ *                             FormFileUploader.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,8 +24,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage file input fields.
@@ -41,10 +39,9 @@ class FormFileUploader extends FormField
 	private $size = '';
 	private $extended_text = '';
 	
-	public function __construct($field_id, $field_options = array())
+	public function __construct($field_id, $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options);
-		
+		parent::__construct($field_id, '', $field_options, $constraints);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -57,7 +54,7 @@ class FormFileUploader extends FormField
 					$this->extended_text = $value;
 				break; 
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
+					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
 			}
 		}
 	}
@@ -67,7 +64,7 @@ class FormFileUploader extends FormField
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/field.tpl');
+		$template = new Template('framework/builder/forms/field.tpl');
 			
 		$field = '<input type="file" ';
 		$field .= 'name="' . $this->name . '" ';
@@ -78,7 +75,7 @@ class FormFileUploader extends FormField
 		<input name="max_file_size" value="2000000" type="hidden">'
 		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
 		
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->title,
@@ -86,7 +83,7 @@ class FormFileUploader extends FormField
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

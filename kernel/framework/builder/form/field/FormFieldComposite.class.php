@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_field_composite.class.php
+ *                            FormFieldComposite.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -30,12 +30,10 @@ abstract class FormFieldComposite
 	protected $name = '';
 	protected $value = '';
 	protected $id = '';
-	protected $errors = array();
 
 	public abstract function display();
 
 	public function set_name($var) { $this->name = $var; }
-	public function get_errors() { return array(); }
 }
 
 ?>

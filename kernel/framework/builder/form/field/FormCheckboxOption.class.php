@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_checkbox_option.class.php
+ *                        FormFieldCheckboxOption.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -23,8 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
