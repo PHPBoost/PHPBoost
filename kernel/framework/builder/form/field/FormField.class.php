@@ -84,12 +84,13 @@ abstract class FormField implements ValidableFormComponent
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->id))
 		{
-			$request->get_value($this->id);
+			$this->value = $request->get_value($this->id);
 		}
 		else
 		{
 			$this->value = null;
 		}
+		echo $this->name . ' ' . $this->value . '<br />';
 	}
 
 	public function prefix_id($prefix)

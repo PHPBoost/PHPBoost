@@ -44,7 +44,7 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 	
 	public function validate(FormField $field)
 	{
-		$value = $field->get_value($name);
+		$value = $field->get_value();
 		return $value !== null && $value != '';
 	}
 

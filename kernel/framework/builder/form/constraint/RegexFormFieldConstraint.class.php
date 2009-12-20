@@ -66,7 +66,7 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 
 	public function validate(FormField $field)
 	{
-		$value = $field->get_value($name);
+		$value = $field->get_value();
 		return preg_match($this->php_regex, $value) > 0;
 	}
 

@@ -41,6 +41,16 @@ class HTTPRequest
 	const string = 0x03;
 	const none = 0x04;
 
+	public function is_post_method()
+	{
+		return $_SERVER['REQUEST_METHOD'] == 'POST';
+	}
+	
+	public function is_get_method()
+	{
+		return $_SERVER['REQUEST_METHOD'] == 'GET';
+	}
+	
 	public function has_parameter($parameter)
 	{
 		return $this->has_rawparameter($parameter, $_REQUEST);
