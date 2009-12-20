@@ -42,6 +42,9 @@ define('DISTRIBUTION_START_PAGE', '/news/news.php');
 //Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
 define('DISTRIBUTION_ENABLE_USER', true);
 
+//Mode debug ?
+define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
+
 //Liste des modules
 $DISTRIBUTION_MODULES = array('articles', 'connect', 'contact', 'database', 'news', 'pages', 'search', 'web', 'download', 'wiki', 'shoutbox', 'faq', 'forum', 'guestbook', 'online', 'poll');
 

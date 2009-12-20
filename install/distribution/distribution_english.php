@@ -25,23 +25,26 @@
 *
 ###################################################*/
 
-//Nom de la distribution
+//Name of the distribution (localized)
 define('DISTRIBUTION_NAME', 'Development');
 
-//Description de la distribution
+//Description of the distribution (localized)
 define('DISTRIBUTION_DESCRIPTION', 'You are about to install the development version of PHPBoost.
 <p>This version is not stable and mustn\'t be used in production for a website.</p>');
 
-//Thème de la distribution
+//Distribution default theme
 define('DISTRIBUTION_THEME', 'base');
 
-//Page de démarrage de la distribution (commencer à la racine du site avec /)
+//Home page
 define('DISTRIBUTION_START_PAGE', '/news/news.php');
 
-//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
+//Can people register?
 define('DISTRIBUTION_ENABLE_USER', true);
 
-//Liste des modules
+//Debug mode?
+define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
+
+//Modules list
 $DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'sitemap', 'shoutbox', 'stats', 'test', 'web', 'wiki');
 
 ?>

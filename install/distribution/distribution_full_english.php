@@ -25,24 +25,27 @@
 *
 ###################################################*/
 
-//Nom de la distribution
+//Name of the distribution (localized)
 define('DISTRIBUTION_NAME', 'Full pack');
 
-//Description de la distribution
+//Description of the distribution (localized)
 define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
 <p>You are going to install the <strong>full pack</strong> distribution of PHPBoost.</p>
 <p>This distribution contains all the official modules developed by the PHPBoost team. It will enable you to make many different things thanks to the large number of modules.</p>');
 
-//Thème de la distribution
+//Distribution default theme
 define('DISTRIBUTION_THEME', 'base');
 
-//Page de démarrage de la distribution (commencer à la racine du site avec /)
+//Home page
 define('DISTRIBUTION_START_PAGE', '/news/news.php');
 
-//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
+//Can people register?
 define('DISTRIBUTION_ENABLE_USER', true);
 
-//Liste des modules
+//Debug mode?
+define('DISTRIBUTION_ENABLE_DEBUG_MODE', false);
+
+//Modules list
 $DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
 
 ?>

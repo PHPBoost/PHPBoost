@@ -25,23 +25,26 @@
 *
 ###################################################*/
 
-//Nom de la distribution
+//Name of the distribution (localized)
 define('DISTRIBUTION_NAME', 'PDK');
 
-//Description de la distribution
+//Description of the distribution (localized)
 define('DISTRIBUTION_DESCRIPTION', '<p>You are going to install the <strong><acronym title="PHPBoost Development Kit">PDK</acronym></strong> distribution of PHPBoost.</p>
 <p>This distribution fits very well to developers who want to create and integrate a module in PHPBoost. It contains tools enabling you to manage the database and the PHPBoost framework documentation.</p>');
 
-//Thème de la distribution
+//Distribution default theme
 define('DISTRIBUTION_THEME', 'extends');
 
-//Page de démarrage de la distribution (commencer à la racine du site avec /)
+//Home page
 define('DISTRIBUTION_START_PAGE', '/doc/3.0/index.php');
 
-//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
+//Can people register?
 define('DISTRIBUTION_ENABLE_USER', true);
 
-//Liste des modules
+//Debug mode?
+define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
+
+//Modules list
 $DISTRIBUTION_MODULES = array('connect', 'database', 'doc');
 
 ?>
