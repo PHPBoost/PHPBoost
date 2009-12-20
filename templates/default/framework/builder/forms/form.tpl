@@ -1,20 +1,3 @@
-<script type="text/javascript">
-<!--
-	function check_generated_form_{L_FORMNAME}()
-	{
-		# IF C_BBCODE_TINYMCE_MODE #
-		tinyMCE.triggerSave();
-		# ENDIF #
-		
-		return checkForms(new Array(
-			# START check_form #
-			{check_form.COMA} '{check_form.FIELD_ID}', "{check_form.FIELD_REQUIRED_ALERT}" 
-			# END check_form #
-		));
-	}
--->
-</script>
-
 <form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="return check_generated_form_{L_FORMNAME}();" class="{FORMCLASS}">
 	# START fieldsets #
 		{fieldsets.FIELDSET}
@@ -33,3 +16,19 @@
 		# IF C_DISPLAY_RESET # <input type="reset" value="{L_RESET}" class="reset" /> # ENDIF #
 	</fieldset>
 </form>
+<script type="text/javascript">
+<!--
+	function check_generated_form_{L_FORMNAME}()
+	{
+		# IF C_BBCODE_TINYMCE_MODE #
+		tinyMCE.triggerSave();
+		# ENDIF #
+		
+		return checkForms(new Array(
+			# START check_form #
+			{check_form.COMA} '{check_form.FIELD_ID}', "{check_form.FIELD_REQUIRED_ALERT}" 
+			# END check_form #
+		));
+	}
+-->
+</script>

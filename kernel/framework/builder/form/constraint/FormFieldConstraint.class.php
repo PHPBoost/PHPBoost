@@ -34,7 +34,9 @@ interface FormFieldConstraint
 {
 	function validate(FormField $field);
 
-	function generate_js_validation(FormField $field);
+	function generate_onblur_validation(FormField $field);
+	
+	function generate_onsubmit_validation(FormField $field);
 }
 
 ?>
