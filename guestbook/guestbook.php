@@ -128,17 +128,17 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormTextEdit('guestbook_pseudo', $row['login'], array(
+				$fieldset->add_field(new FormTextEdit('pseudo', $row['login'], array(
 					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 'maxlength' => 25),
 					array(new NotEmptyFormFieldConstraint($LANG['require_pseudo']))
 				));
 			}
-			$fieldset->add_field(new FormTextarea('guestbook_contents', unparse($row['contents']), array(
+			$fieldset->add_field(new FormTextarea('contents', unparse($row['contents']), array(
 				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 				'rows' => 10, 'cols' => 47, 'required' => true), array(new NotEmptyFormFieldConstraint($LANG['require_text']))
 			));
 			$form->add_fieldset($fieldset);
-			$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
+			$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
 			$form->set_form_submit($LANG['update']);
 
 			$Template->add_subtemplate('GUESTBOOK_FORM', $form->export());
@@ -230,7 +230,7 @@ else //Affichage.
 			'maxlength' => 25), array(new NotEmptyFormFieldConstraint($LANG['require_pseudo']))
 		));
 	}
-	$fieldset->add_field(new FormTextarea('guestbook_contents', '', array(
+	$fieldset->add_field(new FormTextarea('contents', '', array(
 		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 		'rows' => 10, 'cols' => 47, 'required' => true), array(new NotEmptyFormFieldConstraint($LANG['require_text']))
 	));
@@ -239,7 +239,7 @@ else //Affichage.
 		$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
 	}
 	$form->add_fieldset($fieldset);
-	$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
+	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
 
 	$Template->add_subtemplate('GUESTBOOK_FORM', $form->export());
 	

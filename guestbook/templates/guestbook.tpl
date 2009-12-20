@@ -1,21 +1,8 @@
 		<script type="text/javascript">
 		<!--
-		function check_form_or(){
-			# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-			# ENDIF #
-			
-			if(document.getElementById('guestbook_contents').value == "") {
-				alert("{L_ALERT_TEXT}");
-				return false;
-		    }
-			return true;
-		}
-
 		function Confirm() {
-		return confirm("{L_DELETE_MSG}");
+			return confirm("{L_DELETE_MSG}");
 		}
-		
 		-->
 		</script>
 
