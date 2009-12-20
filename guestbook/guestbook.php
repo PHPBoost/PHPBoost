@@ -215,7 +215,7 @@ else //Affichage.
 	}
 	if (!empty($errstr))
 	{
-		$Errorh->handler($errstr, E_USER_NOTICE);
+		echo $errstr;
 	}
 
 	$is_guest = !$User->check_level(MEMBER_LEVEL);
@@ -227,7 +227,9 @@ else //Affichage.
 	{
 		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
-			'maxlength' => 25), array(new IntegerIntervalFormFieldConstraint(2, 10, 'Intervalle entre 2 et 10 non respecté !'))
+			'maxlength' => 25),
+		array(new RegexFormFieldConstraint('`^[a-z0-9_]+@[a-z0-9_]+\\\.[a-z0-9]{2,5}$`i',
+			'', 'pas le bon format'))
 		));
 	}
 	$fieldset->add_field(new FormTextarea('contents', '', array(

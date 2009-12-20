@@ -57,18 +57,19 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, mes
 
 
 /* #### Onblur validator #### */
-function regexFormFieldOnblurValidator(field_id, regexPattern, message)
+function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
 {
 	if (document.getElementById(field_id))
 	{
 		value = document.getElementById(field_id).value;
-		regex = new RegExp(regexPattern, "i");
+		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
 			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
 		}
 	}
+	clearFormFieldOnblurValidatorMessage(field_id);
 	return true;
 }
 
