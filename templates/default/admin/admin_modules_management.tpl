@@ -81,9 +81,6 @@
 								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}
 								<br /><br />
 								<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
-								<strong>{L_USE_SQL}:</strong> {installed.USE_SQL} <em>{installed.SQL_TABLE}</em><br />
-								<strong>{L_USE_CACHE}:</strong> {installed.USE_CACHE}<br />
-								<strong>{L_ALTERNATIVE_CSS}:</strong> {installed.ALTERNATIVE_CSS}<br />
 							</td>
 							<td class="row2">								
 								<label><input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}</label>
