@@ -107,7 +107,7 @@ class CategoriesManager
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] $cache_var Array containing the correct data, descripted in the description of the class.
 	 */
-	function CategoriesManager($table, $cache_file_name, $cache_var)
+	function CategoriesManager($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
@@ -599,7 +599,7 @@ class CategoriesManager
 
 		$result = array();
 		
-		if (count($ids) > 0)
+		if ($length > 0)
 		{
 			$result = $this->cache_var[$ids[0]]['auth'];
 		
@@ -617,8 +617,6 @@ class CategoriesManager
 	function get_feeds_list()
 	{
 	    global $LANG;
-	    
-	    
 	    
 	    $list = new FeedsList();
 	    //Catégorie racine
