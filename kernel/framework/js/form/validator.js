@@ -3,9 +3,9 @@ function displayFormFieldOnsubmitValidatorMessage(message)
 {
 	alert(message);
 }
-function displayFormFieldOnblurValidatorMessage(message)
+function displayFormFieldOnblurValidatorMessage(field_id, message)
 {
-	alert(message);
+	alert(field_id + " : " + message);
 }
 
 function integerIntervalValidator(value, lboundary, rboundary)
@@ -58,7 +58,7 @@ function regexFormFieldOnblurValidator(field_id, regexPattern, message)
 		regex = new RegExp(regexPattern, "i");
 		if (!regex.test(value))
 		{
-			displayFormFieldOnblurValidatorMessage(message);
+			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
 		}
 	}
@@ -71,7 +71,7 @@ function integerIntervalFormFieldOnblurValidator(field_id, lboundary, rboundary,
 	{
 		if (!integerIntervalValidator(document.getElementById(field_id).value, lboundary, rboundary))
 		{
-			displayFormFieldOnblurValidatorMessage(message);
+			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
 		}
 	}
