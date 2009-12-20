@@ -74,7 +74,10 @@ abstract class FormField implements ValidableFormComponent
 		$validation_result = true;
 		foreach ($this->constraints as $constraint)
 		{
-			$validation_result = $validation_result && $constraint->validate($this);
+			if (!$constraint->validate($this))
+			{
+				$validation_result = false;;
+			}
 		}
 		return $validation_result;
 	}
@@ -82,15 +85,14 @@ abstract class FormField implements ValidableFormComponent
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		if ($request->has_parameter($this->id))
+		if ($request->has_parameter($this->name))
 		{
-			$this->value = $request->get_value($this->id);
+			$this->value = $request->get_value($this->name);
 		}
 		else
 		{
 			$this->value = null;
 		}
-		echo $this->name . ' ' . $this->value . '<br />';
 	}
 
 	public function prefix_id($prefix)

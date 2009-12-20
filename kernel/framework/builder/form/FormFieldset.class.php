@@ -75,7 +75,10 @@ class FormFieldset implements ValidableFormComponent
 		$validation_result = true;
 		foreach ($this->fields as $field)
 		{
-			$validation_result = $validation_result && $field->validate();
+			if (!$field->validate())
+			{
+				$validation_result = false;;
+			}
 		}
 		return $validation_result;	
 	}
