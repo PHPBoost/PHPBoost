@@ -48,7 +48,8 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 		
 		if (empty($js_message))
 		{
-			// TODO load lang
+			$lang = LangLoader::get('builder-form-Validator');
+			$js_message = $lang['doesnt_match_regex'];
 		}
 		$this->js_message = to_js_string($js_message);
 
