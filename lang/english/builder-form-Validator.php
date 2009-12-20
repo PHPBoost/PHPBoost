@@ -30,7 +30,8 @@
  ####################################################
 
 $lang = array(
-    'doesnt_match_regex' => 'the entered value does not fit the proper format.',
+    'doesnt_match_regex' => 'The entered value does not fit the proper format.',
+	'validation_error' => 'Please, correct the form errors'
 );
 
 ?>

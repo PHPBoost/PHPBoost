@@ -95,9 +95,10 @@ class Form implements ValidableFormComponent
 	private $display_preview = false; //Field identifier of textarea for preview.
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
 	private $display_reset = true;
+	private $validation_error_message = '';
 
 	private static $js_already_included = false;
-	
+
 	/**
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
@@ -126,13 +127,24 @@ class Form implements ValidableFormComponent
 	public function validate()
 	{
 		$validation_result = true;
+
 		foreach ($this->form_fieldsets as $fieldset)
 		{
-			$validation_result = $validation_result && $fieldset->validate();
+			if (!$fieldset->validate())
+			{
+				$validation_result = false;;
+			}
 		}
 		foreach ($this->constraints as $constraint)
 		{
-			$validation_result = $validation_result && $constraint->validate($this);
+			if (!$constraint->validate($this))
+			{
+				$validation_result = false;;
+			}
+		}
+		if (!$validation_result)
+		{
+			$this->validation_error_message = LangLoader::get_message('validation_error', 'builder-form-Validator');
 		}
 		return $validation_result;
 	}
@@ -197,16 +209,18 @@ class Form implements ValidableFormComponent
 			'L_SUBMIT' => $this->form_submit,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
+			'C_VALIDATION_ERROR' => !empty($this->validation_error_message),
+			'VALIDATION_ERROR' => $this->validation_error_message,
 		));
-        self::$js_already_included = true;
-        
+		self::$js_already_included = true;
+
 		$i = 0;
 		foreach($this->form_fieldsets as $fieldset)
 		{
 			$template->assign_block_vars('fieldsets', array(
 				'FIELDSET' => $fieldset->display()
 			));
-			
+				
 			foreach($fieldset->get_onsubmit_validations() as $constraints)
 			{
 				foreach($constraints as $constraint)

@@ -35,11 +35,7 @@ class SandboxController extends ModuleController
 		{
 			if ($form->validate())
 			{
-				echo 'valide';
-			}
-			else
-			{
-				echo 'pas valide';
+				echo 'on poste';
 			}
 		}
 		$view->add_subtemplate('form', $form->export());

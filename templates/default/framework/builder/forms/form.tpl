@@ -1,7 +1,6 @@
-# IF C_JS_NOT_ALREADY_INCLUDED # 
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script> 
+# IF C_VALIDATION_ERROR #
+<div class="error">{VALIDATION_ERROR}</div>
 # ENDIF #
-
 <form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="return check_generated_form_{L_FORMNAME}();" class="{FORMCLASS}">
 	# START fieldsets #
 		{fieldsets.FIELDSET}
@@ -20,6 +19,10 @@
 		# IF C_DISPLAY_RESET # <input type="reset" value="{L_RESET}" class="reset" /> # ENDIF #
 	</fieldset>
 </form>
+# IF C_JS_NOT_ALREADY_INCLUDED # 
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script> 
+# ENDIF #
+
 <script type="text/javascript">
 <!--
 	function check_generated_form_{L_FORMNAME}()
