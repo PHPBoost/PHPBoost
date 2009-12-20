@@ -35,20 +35,33 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 	private $js_message;
 	private $php_regex;
 	private $js_regex;
+	private $js_options;
 
-	public function __construct($js_message, $php_regex, $js_regex = '')
+	public function __construct($php_regex, $js_regex = '', $js_message = '')
 	{
-		$this->js_message = $js_message;
+		if (empty($js_regex))
+		{
+			$js_regex = $php_regex;
+		}
+		$this->parse_js_regex($js_regex);
 		$this->php_regex = $php_regex;
-		if (!empty($js_regex))
+		
+		if (empty($js_message))
 		{
-			$this->js_regex = $js_regex;
+			// TODO load lang
 		}
-		else
-		{
-			$this->js_regex = $this->php_regex;
-		}
+		$this->js_message = to_js_string($js_message);
 
+	}
+	
+	private function parse_js_regex($regex)
+	{
+		$delimiter = $regex[0];
+		$end_delimiter_position = strrpos($regex, $delimiter);
+		$js_regex = substr($regex, 1, $end_delimiter_position - 1);
+		$js_options = substr($regex, $end_delimiter_position + 1);
+		$this->js_regex = '\'' . str_replace('\'', '\\\'', $js_regex) . '\'';
+		$this->js_options = '\'' . str_replace('\'', '\\\'', $js_options) . '\'';
 	}
 
 	public function validate(FormField $field)
@@ -59,13 +72,14 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'regexFormFieldOnblurValidator();';
+		return 'regexFormFieldOnblurValidator(' . to_js_string($field->get_id()) .
+			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'regexFormFieldOnsubmitValidator("' . $field->get_id() .
-			'", ' . to_js_string($this->js_regex) . ', ' . to_js_string($this->js_message) . ')';
+		return 'regexFormFieldOnsubmitValidator(' . to_js_string($field->get_id()) .
+			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 }
 
