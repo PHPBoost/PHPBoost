@@ -50,7 +50,7 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'integerIntervalFormFieldOnblurValidator("' . $field->get_id() . '", 
+		return 'integerIntervalFormFieldOnblurValidator(' . to_js_string($field->get_id()) . ', 
 		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
 	}
 

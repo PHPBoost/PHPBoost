@@ -227,7 +227,7 @@ else //Affichage.
 	{
 		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
-			'maxlength' => 25), array(new IntegerIntervalFormFieldConstraint(2, 10, 'Intervalle non respecté !'))
+			'maxlength' => 25), array(new IntegerIntervalFormFieldConstraint(2, 10, 'Intervalle entre 2 et 10 non respecté !'))
 		));
 	}
 	$fieldset->add_field(new FormTextarea('contents', '', array(

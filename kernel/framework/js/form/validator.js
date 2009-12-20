@@ -5,13 +5,20 @@ function displayFormFieldOnsubmitValidatorMessage(message)
 }
 function displayFormFieldOnblurValidatorMessage(field_id, message)
 {
-	alert(field_id + " : " + message);
+	document.getElementById('onblurContainerResponse' + field_id).innerHTML = 
+		'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/forbidden_mini.png" alt="" class="valign_middle" />';
+	document.getElementById('onblurMesssageResponse' + field_id).innerHTML = message;
+}
+function clearFormFieldOnblurValidatorMessage(field_id)
+{
+	document.getElementById('onblurContainerResponse' + field_id).innerHTML = '';
+	document.getElementById('onblurMesssageResponse' + field_id).innerHTML = '';
 }
 
-function integerIntervalValidator(value, lboundary, rboundary)
+function integerIntervalValidator(value, lbound, rbound)
 {
 	value = parseInt(value);
-	if (isNaN(value) || value < lboundary || value > rboundary)
+	if (isNaN(value) || value < lbound || value > rbound)
 	{
 		return false;
 	}
@@ -35,11 +42,11 @@ function notEmptyFormFieldOnsubmitValidator(field_id, message)
 	}
 	return true;
 }
-function integerIntervalFormFieldOnsubmitValidator(field_id, lboundary, rboundary, message)
+function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, message)
 {
 	if (document.getElementById(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value, lboundary, rboundary))
+		if (!integerIntervalValidator(document.getElementById(field_id).value, lbound, rbound))
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -65,16 +72,17 @@ function regexFormFieldOnblurValidator(field_id, regexPattern, message)
 	return true;
 }
 
-function integerIntervalFormFieldOnblurValidator(field_id, lboundary, rboundary, message)
+function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, message)
 {
 	if (document.getElementById(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value, lboundary, rboundary))
+		if (!integerIntervalValidator(document.getElementById(field_id).value, lbound, rbound))
 		{
 			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
 		}
 	}
+	clearFormFieldOnblurValidatorMessage(field_id);
 	return true;
 }
 
