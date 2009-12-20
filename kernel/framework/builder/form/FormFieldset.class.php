@@ -110,6 +110,15 @@ class FormFieldset implements ValidableFormComponent
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
+	
+	public function get_onsubmit_validations()
+	{
+		$validations = array();
+		foreach ($this->fields as $field)
+		{
+			$validations[] = $field->get_onsubmit_validations();
+		}
+	}
 
 	/**
 	 * @param string $title The fieldset title
@@ -125,11 +134,16 @@ class FormFieldset implements ValidableFormComponent
 	 * @return string The fieldset title
 	 */
 	public function get_title() { return $this->title; }
+
+	/**
+	 * @return bool
+	 */
+	public function has_field($field_id) { return isset($this->fields[$field_id]); }
 	
 	/**
-	 * @return array All fields in the fieldset.
+	 * @return FormField
 	 */
-	public function get_fields() { return $this->fields; }
+	public function get_field($field_id) { return $this->fields[$field_id]; }
 }
 
 ?>
