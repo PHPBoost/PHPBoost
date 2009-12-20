@@ -54,6 +54,8 @@ class FormTextEdit extends FormField
 	{
 		$template = new Template('framework/builder/forms/field.tpl');
 			
+		$onblur = !empty($this->on_blur) || !empty($this->generate_onblur_validation());
+		
 		$field = '<input type="text" ';
 		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
 		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
@@ -61,7 +63,7 @@ class FormTextEdit extends FormField
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= 'value="' . $this->value . '" ';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= !empty($this->on_blur) ? 'onblur="' . $this->on_blur . '" ' : '';
+		$field .= $onblur ? 'onblur="' . $this->generate_onblur_validation() . $this->on_blur . '" ' : '';
 		$field .= '/>';
 
 		$template->assign_vars(array(

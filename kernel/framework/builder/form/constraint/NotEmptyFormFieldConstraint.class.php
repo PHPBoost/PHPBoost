@@ -45,14 +45,14 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 		return $value !== null && $value != '';
 	}
 
-	public function generate_onblur_validation(FormField $field)
+	public function get_onblur_validation(FormField $field)
 	{
 		return '';
 	}
 
-	public function generate_onsubmit_validation(FormField $field)
+	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'document.getElementById("' . $field->get_id() .  '").value != ""';
+		return 'notEmptyFormFieldOnsubmitValidator("' . $field->get_id() . '");';
 	}
 }
 
