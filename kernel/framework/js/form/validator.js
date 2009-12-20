@@ -1,4 +1,8 @@
-/* #### #### */
+/* #### Utils #### */
+function displayFormFieldOnsubmitValidatorMessage(field_id)
+{
+	alert('test' + field_id);
+}
 function displayFormFieldOnblurValidatorMessage(field_id)
 {
 	alert('test' + field_id);
@@ -10,9 +14,12 @@ function displayFormFieldOnblurValidatorMessage(field_id)
  * @desc validate not empty field
  * @return bool  
  */
-function notEmptyFormFieldOnsubmitValidator(field_id)
+function notEmptyFormFieldOnsubmitValidator(field_id, message)
 {
-	return (document.getElementById(field_id).value == '');
+	if (document.getElementById(field_id).value == '')
+	{
+		displayFormFieldOnsubmitValidatorMessage(message);
+	}		
 }
 
 

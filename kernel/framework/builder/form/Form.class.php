@@ -196,12 +196,16 @@ class Form implements ValidableFormComponent
 			'L_RESET' => $LANG['reset'],
 		));
 
+		$i = 0;
 		foreach($this->form_fieldsets as $fieldset)
 		{
-			$validations = $fieldset->get_onsubmit_validations();
-			// TODO	
+			$template->assign_block_vars('check_constraints', array(
+				'COMA' => ($i++ > 0 ? ', ' : ''),
+				'ONSUBMIT_CONSTRAINTS' => $fieldset->get_onsubmit_validations()
+			));
+			
 			$template->assign_block_vars('fieldsets', array(
-				'FIELDSET' => $fieldset->display(),
+				'FIELDSET' => $fieldset->display()
 			));
 		}
 

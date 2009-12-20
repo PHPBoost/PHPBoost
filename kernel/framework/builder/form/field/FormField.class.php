@@ -50,7 +50,6 @@ abstract class FormField implements ValidableFormComponent
 	protected $id = '';
 	protected $css_class = '';
 	protected $required = false;
-	protected $required_alert = '';
 	protected $on_blur = '';
 	private $constraints = array();
 
