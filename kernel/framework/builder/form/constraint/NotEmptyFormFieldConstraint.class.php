@@ -52,7 +52,7 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'notEmptyFormFieldOnsubmitValidator("' . $field->get_id() . '", ' . to_js_string($js_message) . ');';
+		return 'notEmptyFormFieldOnsubmitValidator("' . $field->get_id() . '", ' . to_js_string($this->js_message) . ');';
 	}
 }
 

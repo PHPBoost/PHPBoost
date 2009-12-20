@@ -97,7 +97,7 @@ abstract class FormField implements ValidableFormComponent
 		$this->id = $prefix . $this->id;
 	}
 
-	public function get_onsubmit_validation()
+	public function get_onsubmit_validations()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
@@ -111,7 +111,7 @@ abstract class FormField implements ValidableFormComponent
 		return $validations;
 	}
 
-	protected function get_onblur_validation()
+	protected function get_onblur_validations()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
