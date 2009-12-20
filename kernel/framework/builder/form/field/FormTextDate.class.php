@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_date_field.class.php
+ *                             FormTextDate.class.php
  *                            -------------------
  *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,8 +24,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line text fields for date input.
@@ -44,11 +42,11 @@ class FormTextDate extends FormField
 	private $num_instance = 0;
 	private static $num_instances = 0;
 	
-	public function __construct($field_id, $field_options = array())
+	public function __construct($field_id, $field_options = array(), array $constraints = array())
 	{
 		$this->num_instance = ++self::$num_instances;
 
-		parent::__construct($field_id, '', $field_options);
+		parent::__construct($field_id, '', $field_options, $constraints);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -64,7 +62,7 @@ class FormTextDate extends FormField
 					$this->calendar_year = $value;
 				break;
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
+					new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
 			}
 		}
 	}
@@ -74,9 +72,9 @@ class FormTextDate extends FormField
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_date.tpl');
+		$template = new Template('framework/builder/forms/field_date.tpl');
 		
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
 			'INSTANCE' => $this->num_instance,
 			'ID' => $this->id,
@@ -92,7 +90,7 @@ class FormTextDate extends FormField
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

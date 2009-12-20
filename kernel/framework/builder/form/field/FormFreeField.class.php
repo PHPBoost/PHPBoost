@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_free_field.class.php
+ *                             FormFreeField.class.php
  *                            -------------------
  *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,8 +24,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage free contents fields.
@@ -42,9 +40,9 @@ class FormFreeField extends FormField
 	private $content = ''; //Content of the free field
 	private $template = ''; //Optionnal template
 	
-	public function __construct($field_id, $field_options)
+	public function __construct($field_id, array $field_options)
 	{
-		parent::__construct($field_id, '', $field_options);
+		parent::__construct($field_id, '', $field_options, array());
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -57,7 +55,7 @@ class FormFreeField extends FormField
 					$this->content = $value;
 				break;
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
+					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
 			}
 		}
 	}
@@ -67,12 +65,16 @@ class FormFreeField extends FormField
 	 */
 	public function display()
 	{
-		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template') //Optionnal template
-			$Template = $this->template;
+		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template')
+		{
+			$template = $this->template;
+		}
 		else
-			$Template = new Template('framework/builder/forms/field.tpl');
+		{
+			$template = new Template('framework/builder/forms/field.tpl');
+		}
 			
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $this->content,
 			'L_FIELD_TITLE' => $this->title,
@@ -80,7 +82,7 @@ class FormFreeField extends FormField
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
