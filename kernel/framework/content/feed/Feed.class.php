@@ -25,11 +25,8 @@
  *
  ###################################################*/
 
-
 define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
-
-
 
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
@@ -65,7 +62,7 @@ class Feed
 	 *
 	 * @var string The feed Template to use
 	 */
-	private $tpl = null;
+	protected $tpl = null;
 	/**
 	 *
 	 * @var string The data structure

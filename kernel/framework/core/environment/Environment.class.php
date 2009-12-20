@@ -489,9 +489,15 @@ class Environment
 	{
 		$path = str_replace(DIR, '', SCRIPT);
 		$path = trim($path, '/');
-		$module_name = explode('/', $path);
-
-		self::$running_module_name = $module_name[0];
+		if (strpos($path, '/'))
+		{
+			$module_name = explode('/', $path);
+			self::$running_module_name = $module_name[0];
+		}
+		else
+		{
+			self::$running_module_name = '';
+		}
 	}
 	/**
 	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.

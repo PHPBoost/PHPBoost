@@ -45,7 +45,7 @@ class RSS extends Feed
      */
     function RSS($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
     {
-        parent::Feed($module_id, $feed_name, $id_cat);
+        parent::__construct($module_id, $feed_name, $id_cat);
         $this->tpl = new Template(self::$default_rss_template);
     }
 

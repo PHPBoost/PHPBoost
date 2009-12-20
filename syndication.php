@@ -46,11 +46,9 @@ if (!empty($module_id))
 	switch (retrieve(GET, 'feed', 'rss'))
 	{
 		case 'atom':    // ATOM
-			
 			$feed= new ATOM($module_id, $feed_name, $category_id);
 			break;
 		default:        // RSS
-			
 			$feed= new RSS($module_id, $feed_name, $category_id);
 			break;
 	}
