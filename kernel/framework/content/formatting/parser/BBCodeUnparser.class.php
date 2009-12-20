@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 3 2008
  *   copyright            : (C) 2008 Benoit Sautel
- *   email                :  ben.popeye@phpboost.com
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################

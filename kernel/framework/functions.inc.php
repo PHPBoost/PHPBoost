@@ -290,8 +290,7 @@ function substr_html($str, $start, $end = '')
  */
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
-	$content_editor = new ContentFormattingFactory();
-	$editor = $content_editor->get_editor();
+	$editor = ContentFormattingFactory::get_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 	{
 		$editor->set_forbidden_tags($forbidden_tags);
@@ -559,7 +558,6 @@ function check_nbr_links($contents, $max_nbr)
  */
 function check_mail($mail)
 {
-
 	return Mail::check_validity($mail);
 }
 
@@ -573,10 +571,7 @@ function check_mail($mail)
  */
 function strparse($content, $forbidden_tags = array(), $addslashes = true)
 {
-	//On utilise le gestionnaire de contenu
-	$content_manager = new ContentFormattingFactory();
-	//On lui demande le parser adéquat
-	$parser = $content_manager->get_parser();
+	$parser = ContentFormattingFactory::get_parser();
 
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
 	$parser->set_content($content, MAGIC_QUOTES);
@@ -603,8 +598,7 @@ function strparse($content, $forbidden_tags = array(), $addslashes = true)
  */
 function unparse($content)
 {
-	$content_manager = new ContentFormattingFactory();
-	$parser = $content_manager->get_unparser();
+	$parser = ContentFormattingFactory::get_unparser();
 	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
 	$parser->parse();
 
@@ -621,9 +615,7 @@ function unparse($content)
  */
 function second_parse($content)
 {
-	$content_manager = new ContentFormattingFactory();
-
-	$parser = $content_manager->get_second_parser();
+	$parser = ContentFormattingFactory::get_second_parser();
 	$parser->set_content($content, Parser::DONT_STRIP_SLASHES);
 	$parser->parse();
 

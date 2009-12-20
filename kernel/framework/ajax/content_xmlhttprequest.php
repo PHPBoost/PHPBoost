@@ -47,8 +47,7 @@ $ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
 
 //On prend le bon parseur avec la bonne configuration
-$content_manager = new ContentFormattingFactory($editor);
-$parser = $content_manager->get_parser($editor);
+$parser = ContentFormattingFactory::get_parser($editor);
 
 $parser->set_content($contents, MAGIC_QUOTES);
 $parser->set_path_to_root($page_path_to_root);
@@ -62,7 +61,7 @@ if (!empty($forbidden_tags))
 $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
-$second_parser = $content_manager->get_second_parser();
+$second_parser = ContentFormattingFactory::get_second_parser($editor);
 $second_parser->set_content($parser->get_content(Parser::DONT_ADD_SLASHES), Parser::DONT_STRIP_SLASHES);
 $second_parser->set_path_to_root($page_path_to_root);
 $second_parser->set_page_path($page_path);

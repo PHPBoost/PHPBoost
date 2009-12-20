@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 5 2008
  *   copyright            : (C) 2008 Régis Viarre
- *   email                :  crowkait@phpboost.com
+ *   email                : crowkait@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class for editors content.
  */
-class ContentEditor
+abstract class ContentEditor
 {
     function ContentEditor($language_type = null)
     {

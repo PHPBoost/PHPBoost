@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : March 20, 2007
  *   copyright            : (C) 2007 Viarre Régis
- *   email                :   crowkait@phpboost.com
+ *   email                :  crowkait@phpboost.com
  *
  *  
 ###################################################

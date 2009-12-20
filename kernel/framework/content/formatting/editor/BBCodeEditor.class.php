@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          bbcode_editor.class.php
+ *                          BBCodeEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

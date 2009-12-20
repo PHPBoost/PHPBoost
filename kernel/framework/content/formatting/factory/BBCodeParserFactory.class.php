@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                    AbstractContentFormattingFactory.class.php
+ *                       BBCodeParserFactory.class.php
  *                            -------------------
  *   begin                : December 20, 2000
  *   copyright            : (C) 2009 Benoit Sautel
- *   email                :  ben.popeye@phpboost.com
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -29,19 +29,19 @@
  * @package content
  * @subpackage formatting/factory
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class is a factory which generates every formatting element required by the TinyMCE
- * formatting system.
+ * @desc This class is a factory which generates every formatting element corresponding
+ * to the BBCode formatting syntax.
  */
-abstract class AbstractContentFormattingFactory
+class BBCodeParserFactory implements ContentParserFactory
 {
 	public function get_parser()
 	{
-		return new TinyMCEParser();
+		return new BBCodeParser();
 	}
 
 	public function get_unparser()
 	{
-		return new TinyMCEUnparser();
+		return new BBCodeUnparser();
 	}
 
 	public function get_second_parser()
@@ -51,7 +51,7 @@ abstract class AbstractContentFormattingFactory
 
 	public function get_editor()
 	{
-		return new TinyMCEEditor();
+		return new BBCodeEditor();
 	}
 }
 
