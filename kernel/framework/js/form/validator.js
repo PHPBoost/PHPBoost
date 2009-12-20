@@ -5,17 +5,23 @@ function displayFormFieldOnsubmitValidatorMessage(message)
 }
 function displayFormFieldOnblurValidatorMessage(field_id, message)
 {
-	document.getElementById('onblurContainerResponse' + field_id).innerHTML = 
+	if (document.getElementById('onblurContainerResponse' + field_id))
+	{
+		document.getElementById('onblurContainerResponse' + field_id).innerHTML = 
 		'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/forbidden_mini.png" alt="" class="valign_middle" />';
-	document.getElementById('onblurMesssageResponse' + field_id).innerHTML = message;
+		document.getElementById('onblurMesssageResponse' + field_id).innerHTML = message;
 	
-	Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.5 });
-	Effect.Appear('onblurMesssageResponse' + field_id, { duration: 0.5 });
+		Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.5 });
+		Effect.Appear('onblurMesssageResponse' + field_id, { duration: 0.5 });
+	}
 }
 function clearFormFieldOnblurValidatorMessage(field_id)
 {
-	Effect.Fade('onblurContainerResponse' + field_id, { duration: 0.2 });
-	Effect.Fade('onblurMesssageResponse' + field_id, { duration: 0.2 });
+	if (document.getElementById('onblurContainerResponse' + field_id))
+	{
+		Effect.Fade('onblurContainerResponse' + field_id, { duration: 0.2 });
+		Effect.Fade('onblurMesssageResponse' + field_id, { duration: 0.2 });
+	}
 }
 
 /* #### Outils #### */

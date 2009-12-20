@@ -48,18 +48,22 @@ class FormTextarea extends FormField
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_extended.tpl');
+		$template = new Template('framework/builder/forms/field_extended.tpl');
 			
+		$validations = $this->get_onblur_validations();
+		$onblur = !empty($this->on_blur) || !empty($validations);
+		
 		$field = '<textarea type="text" ';
 		$field .= 'rows="' . $this->rows . '" ';
 		$field .= 'cols="' . $this->cols . '" ';
 		$field .= 'name="' . $this->name . '" ';
+		$field .= $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : '';
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '"> ' : '>';
 		$field .= $this->value;
 		$field .= '</textarea>';
 		
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $field,
 			'KERNEL_EDITOR' => $this->editor ? display_editor($this->id, $this->forbidden_tags) : '',
@@ -68,7 +72,7 @@ class FormTextarea extends FormField
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
 	private function compute_fields_options(array $field_options)

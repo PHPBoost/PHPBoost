@@ -10,6 +10,8 @@
 						{field_options.OPTION}
 					# END field_options #		
 				</select>
+				&nbsp;<span id="onblurContainerResponse{ID}" style="display:none"></span>
+			 	<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
 			</dd>
 		</dl>
 		

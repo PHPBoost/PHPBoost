@@ -44,8 +44,8 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 	
 	public function validate(FormField $field)
 	{
-		$value = $field->get_value();
-		return $value !== null && $value != '';
+		$value = (int)$field->get_value($name);
+		return ($value >= $this->lboundary && $value <= $this->rboundary);
 	}
 
 	public function get_onblur_validation(FormField $field)
