@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        bbcode_highlighter.class.php
+ *                        BBCodeHighlighter.class.php
  *                            -------------------
  *   begin                : August 29, 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -32,7 +32,7 @@
  * @desc This class is a highlighter for the PHPBoost BBCode language.
  * It supplies the highlighted code written in XHTML.
  */
-class BBCodeHighlighter extends Parser
+class BBCodeHighlighter extends FormattingParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;

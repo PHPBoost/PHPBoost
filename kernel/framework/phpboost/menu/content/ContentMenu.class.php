@@ -83,7 +83,7 @@ class ContentMenu extends Menu
     /**
      * @param string $content the content to set
      */
-    public function set_content($content) { $this->content = strparse($content, array(), Parser::DONT_ADD_SLASHES); }
+    public function set_content($content) { $this->content = strparse($content, array(), FormattingParser::DONT_ADD_SLASHES); }
     
     ## Getters ##
     /**

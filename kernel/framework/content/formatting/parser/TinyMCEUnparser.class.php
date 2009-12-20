@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         tinymce_unparser.class.php
+ *                          TinyMCEUnparser.class.php
  *                            -------------------
  *   begin                : August 10, 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -36,7 +36,7 @@
  * @author Benoit Sautel ben.popeye@phpboost.com
  * @see the TinyMCEParser class which makes the reverse operation.
  */
-class TinyMCEUnparser extends ContentUnparser
+class TinyMCEUnparser extends ContentFormattingUnparser
 {
 	/**
 	 * @desc Builds a TinyMCEUnparser object
@@ -57,8 +57,8 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
 
 		//Extracting HTML and code tags
-		$this->unparse_html(Parser::PICK_UP);
-		$this->unparse_code(Parser::PICK_UP);
+		$this->unparse_html(self::PICK_UP);
+		$this->unparse_code(self::PICK_UP);
 
 		//Smilies
 		$this->unparse_smilies();
@@ -119,8 +119,8 @@ class TinyMCEUnparser extends ContentUnparser
     		}
 
     		//reimplanting html and code tags
-    		$this->unparse_code(Parser::REIMPLANT);
-    		$this->unparse_html(Parser::REIMPLANT);
+    		$this->unparse_code(self::REIMPLANT);
+    		$this->unparse_html(self::REIMPLANT);
 	}
 
 	/**

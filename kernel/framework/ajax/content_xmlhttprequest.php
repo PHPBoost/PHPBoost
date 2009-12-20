@@ -24,10 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-/**
-* @package ajax
-*
-*/
 
 define('PATH_TO_ROOT', '../../..');
 define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
@@ -62,13 +58,13 @@ $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
 $second_parser = ContentFormattingFactory::get_second_parser($editor);
-$second_parser->set_content($parser->get_content(Parser::DONT_ADD_SLASHES), Parser::DONT_STRIP_SLASHES);
+$second_parser->set_content($parser->get_content(FormattingParser::DONT_ADD_SLASHES), FormattingParser::DONT_STRIP_SLASHES);
 $second_parser->set_path_to_root($page_path_to_root);
 $second_parser->set_page_path($page_path);
 
 $second_parser->parse();
 
-$contents = $second_parser->get_content(Parser::DONT_ADD_SLASHES);
+$contents = $second_parser->get_content(FormattingParser::DONT_ADD_SLASHES);
 
 echo $contents;
 

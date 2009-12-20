@@ -46,7 +46,8 @@ class BBCodeParserFactory implements ContentParserFactory
 
 	public function get_second_parser()
 	{
-		return new ContentSecondParser();
+		$toto = new ContentSecondParser();
+		return $toto;
 	}
 
 	public function get_editor()

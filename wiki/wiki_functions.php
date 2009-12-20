@@ -51,10 +51,10 @@ function wiki_unparse($var)
 	//On force le langage de formatage à BBCode
 	$content_manager = new BBCodeParserFactory();
 	$unparser = $content_manager->get_unparser();
-    $unparser->set_content($var, Parser::DONT_STRIP_SLASHES);
+    $unparser->set_content($var, FormattingParser::DONT_STRIP_SLASHES);
     $unparser->parse();
 	
-	return $unparser->get_content(Parser::DONT_ADD_SLASHES);
+	return $unparser->get_content(FormattingParser::DONT_ADD_SLASHES);
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)

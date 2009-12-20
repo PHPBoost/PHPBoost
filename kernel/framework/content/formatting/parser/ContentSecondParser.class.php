@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        content_second_parser.class.php
+ *                       ContentSecondParser.class.php
  *                            -------------------
  *   begin                : August 10, 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -32,10 +32,10 @@
  * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
  * which replaces the code by a lot of html code which formats the code.
  * This kind of tag is treated in real time by this class.
- * The content you put in that parser must come from a ContentParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
+ * The content you put in that parser must come from a ContentFormattingParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  */
-class ContentSecondParser extends Parser
+class ContentSecondParser extends AbstractParser
 {
 	/**
 	 * @desc Builds a ContentSecondParser object
@@ -50,8 +50,6 @@ class ContentSecondParser extends Parser
 	 */
 	public function parse()
 	{
-		global $LANG;
-
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 		{

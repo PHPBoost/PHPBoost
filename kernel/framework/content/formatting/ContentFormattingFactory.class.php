@@ -43,7 +43,7 @@ class ContentFormattingFactory
     private static $factories = array();
 
     /**
-     * @return ContentParser
+     * @return ContentParserFactory
      */
     public static function get_parser($editor = self::DEFAULT_LANGUAGE)
     {
@@ -51,7 +51,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @return ContentUnparser
+     * @return FormattingParser
      */
     public static function get_unparser($editor = self::DEFAULT_LANGUAGE)
     {
@@ -59,7 +59,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @return ContentSecondParser
+     * @return FormattingParser
      */
     public static function get_second_parser($editor = self::DEFAULT_LANGUAGE)
     {
@@ -67,7 +67,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @return ContentEditors
+     * @return ContentEditor
      */
     public static function get_editor($editor = self::DEFAULT_LANGUAGE)
     {
@@ -76,7 +76,7 @@ class ContentFormattingFactory
 
     /**
      * @param string $editor The editor
-     * @return AbstractContentFormattingFactory
+     * @return ContentParserFactory
      */
     private static function get_factory($editor = self::DEFAULT_LANGUAGE)
     {
@@ -103,7 +103,7 @@ class ContentFormattingFactory
 
     /**
      * @param string $editor
-     * @return AbstractContentFormattingFactory
+     * @return ContentParserFactory
      */
     private static function create_factory($editor)
     {

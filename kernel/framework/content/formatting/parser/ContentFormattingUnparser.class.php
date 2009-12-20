@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             content_unparser.class.php
+ *                       ContentFormattingUnparser.class.php
  *                            -------------------
  *   begin                : August 10, 2008
  *   copyright            : (C) 2008 Benoit Sautel
@@ -31,10 +31,10 @@
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
  */
-abstract class ContentUnparser extends Parser
+abstract class ContentFormattingUnparser extends AbstractParser
 {
 	/**
-	 * @desc Builds a ContentUnparser class.
+	 * @desc Builds a ContentFormattingUnparser class.
 	 */
 	public function __construct()
 	{
@@ -43,12 +43,12 @@ abstract class ContentUnparser extends Parser
 
 	/**
 	* @desc Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it.
-	* @param bool $action Parser::PICK_UP if you want to pick up the html tag and Parser::REIMPLANT to reimplant it.
+	* @param bool $action self::PICK_UP if you want to pick up the html tag and self::REIMPLANT to reimplant it.
 	*/
 	protected function unparse_html($action)
 	{
 		//Prélèvement du HTML
-		if ($action == Parser::PICK_UP)
+		if ($action == self::PICK_UP)
 		{
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -106,12 +106,12 @@ abstract class ContentUnparser extends Parser
 
 	/**
 	 * @desc Unparses the code tag. In a first time, you pick it up and you reimplant it.
-	 * @param bool $action Parser::PICK_UP to pick the code tag up, Parser::REIMPLANT to reinsert them.
+	 * @param bool $action self::PICK_UP to pick the code tag up, self::REIMPLANT to reinsert them.
 	 */
 	protected function unparse_code($action)
 	{
 		//Prélèvement du HTML
-		if ($action == Parser::PICK_UP)
+		if ($action == self::PICK_UP)
 		{
 			$mask = '`\[\[CODE(=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);

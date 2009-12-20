@@ -126,7 +126,7 @@ class Feed
                     'TITLE' => $this->data->get_title(),
                     'U_LINK' => $this->data->get_link(),
                     'HOST' => $this->data->get_host(),
-                    'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
+                    'DESC' => htmlspecialchars(ContentSecondFormattingParser::export_html_text($desc)),
                     'RAW_DESC' => $desc,
                     'LANG' => $this->data->get_lang()
 				));
@@ -139,7 +139,7 @@ class Feed
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
+                        'DESC' => htmlspecialchars(ContentSecondFormattingParser::export_html_text($desc)),
                         'RAW_DESC' => $desc,
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
