@@ -42,12 +42,12 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value($name);
-		return !empty($value);
+		return $value !== null && $value != '';
 	}
 
-	public function generate_js_validation()
+	public function generate_js_validation(FormField $field)
 	{
-		return '';
+		return 'document.getElementById("' . $field->get_id() .  '").value != ""';
 	}
 }
 

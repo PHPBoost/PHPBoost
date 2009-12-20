@@ -36,6 +36,7 @@
 class FormFieldset implements ValidableFormComponent
 {
 	private $title = '';
+	private $form_name = '';
 	private $fields = array();
 	
 	/**
@@ -49,6 +50,11 @@ class FormFieldset implements ValidableFormComponent
 		$this->title = $title;
 	}
 	
+	public function set_form_name($form_name)
+	{
+		$this->form_name = $form_name;
+	}
+	
 	/**
 	 * @desc Store fields in the fieldset.
 	 * @param FormField $form_field
@@ -56,9 +62,13 @@ class FormFieldset implements ValidableFormComponent
 	public function add_field($form_field)
 	{
 		if (isset($this->fields[$form_field->get_id()]))
+		{
 			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->get_id()), E_USER_WARNING);
+		}
 		else
+		{
 			$this->fields[$form_field->get_id()] = $form_field;
+		}
 	}
 	
 	public function validate()
@@ -76,29 +86,30 @@ class FormFieldset implements ValidableFormComponent
 	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
-	public function display($Template = false)
+	public function display($template = false)
 	{
 		global $LANG;
 		
-		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
+		if (!is_object($template) || strtolower(get_class($template)) != 'template')
 		{
-			$Template = new Template('framework/builder/forms/fieldset.tpl');
+			$template = new Template('framework/builder/forms/fieldset.tpl');
 		}
 			
-		$Template->assign_vars(array(
+		$template->assign_vars(array(
 			'L_FORMTITLE' => $this->title,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 		));
 		
 		//On affiche les champs		
-		foreach($this->fields as $Field)
+		foreach($this->fields as $field)
 		{
-			$Template->assign_block_vars('fields', array(
-				'FIELD' => $Field->display(),
+			$field->prefix_id($this->form_name);
+			$template->assign_block_vars('fields', array(
+				'FIELD' => $field->display(),
 			));	
 		}
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
 	/**

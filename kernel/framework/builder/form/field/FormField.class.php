@@ -82,14 +82,20 @@ abstract class FormField implements ValidableFormComponent
 
 	public function retrieve_value()
 	{
-		if (isset($_REQUEST[$this->id]))
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->id))
 		{
-			$this->value = $_REQUEST[$this->id];
+			$request->get_value($this->id);
 		}
 		else
 		{
 			$this->value = null;
 		}
+	}
+
+	public function prefix_id($prefix)
+	{
+		$this->id = $prefix . $this->id;
 	}
 
 	## Getters and Setters ##
