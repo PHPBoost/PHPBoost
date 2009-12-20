@@ -9,7 +9,7 @@
  *
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is a free software. You can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@
  * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 
-####################################################
+ ####################################################
 #                     English                      #
-####################################################
+ ####################################################
 
 global $MEDIA_LANG;
 

@@ -6,7 +6,7 @@
  *   email                : crowkait@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 var delay_calendar = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout_calendar;
