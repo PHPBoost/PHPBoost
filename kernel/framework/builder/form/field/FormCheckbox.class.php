@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_checkbox.class.php
+ *                          FormFieldCheckbox.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,9 +24,6 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manages checkbox input fields.
@@ -36,58 +33,51 @@
 class FormCheckbox extends FormField
 {
 	private $options = array();
-	
-	public function __construct()
-	{
-		$field_id = func_get_arg(0);
-		$field_options = func_get_arg(1);
 
+	public function __construct($field_id, array $field_options, array $options)
+	{
 		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
-			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
-		
-		$nbr_arg = func_num_args() - 1;		
-		for ($i = 2; $i <= $nbr_arg; $i++)
 		{
-			$option = func_get_arg($i);
-			$this->add_errors($option->get_errors());
-			$this->options[] = $option;
+			throw new FormBuilderException(sprintf(
+				'Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
 		}
+		$this->options = $options;
 	}
 
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option. 
+	 * @param FormRadioChoiceOption option The new option.
 	 */
 	public function add_option($option)
 	{
 		$this->options[] = $option;
 	}
-	
+
 	/**
 	 * @return string The html code for the checkbox input.
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_box.tpl');
+		$template = new Template('framework/builder/forms/field_box.tpl');
 			
-		$Template->assign_vars(array(
-			'ID' => $this->id,
-			'FIELD' => $this->options,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
-		));	
-		
-		foreach($this->options as $Option)
+		$template->assign_vars(array(
+		'ID' => $this->id,
+		'FIELD' => $this->options,
+		'L_FIELD_TITLE' => $this->title,
+		'L_EXPLAIN' => $this->sub_title,
+		'L_REQUIRE' => $this->required ? '* ' : ''
+		));
+
+		foreach($this->options as $option)
 		{
-			$Option->set_name($this->name); //Set the same field name for each option.
-			$Template->assign_block_vars('field_options', array(
-				'OPTION' => $Option->display(),
-			));	
+			$option->set_name($this->name); //Set the same field name for each option.
+			$template->assign_block_vars('field_options', array(
+				'OPTION' => $option->display(),
+			));
 		}
-		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
