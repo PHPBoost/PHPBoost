@@ -91,7 +91,9 @@ class Authorizations
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if ($admin_auth_default)
+		{
 			$array_auth_all['r2'] = $sum_auth;
+		}
 		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
 
 		return $array_auth_all;
@@ -289,7 +291,9 @@ class Authorizations
 		$merged = array();
 		
 		if (empty($child))
+		{
 			return $parent;
+		}
 		
 		if ($mode == self::AUTH_PARENT_PRIORITY)
 		{
@@ -298,20 +302,30 @@ class Authorizations
 				if ($bit = ($value & $auth_bit))
 				{
 					if (!empty($child[$key]))
+					{
 						$merged[$key] = $auth_bit;
+					}
 					else
+					{
 						$merged[$key] = 0;
+					}
 				}
 				else
+				{
 					$merged[$key] = $bit;
+				}
 			}
 		}
 		elseif ($mode == self::AUTH_CHILD_PRIORITY)
 		{
 			foreach ($parent as $key => $value)
+			{
 				$merged[$key] = $value & $auth_bit;
+			}
 			foreach ($child as $key => $value)
+			{
 				$merged[$key] = $value & $auth_bit;
+			}
 		}
 		return $merged;
 	}
@@ -337,7 +351,9 @@ class Authorizations
 			$quotient = log($original_bit / $final_bit, 2);
 			
 			foreach ($auth as $user_kind => $auth_values)
+			{
 				$result[$user_kind] = ($auth_values & $original_bit) >> $quotient;
+			}
 		}
 		elseif ($original_bit < $final_bit)
 		{
@@ -345,12 +361,16 @@ class Authorizations
 			$quotient = log($final_bit / $original_bit, 2);
 			
 			foreach ($auth as $user_kind => $auth_values)
+			{
 				$result[$user_kind] = ($auth_values & $original_bit) << $quotient;
+			}
 		}
 		else
 		{
 			foreach ($auth as $user_kind => $auth_values)
+			{
 				$result[$user_kind] = $auth_values & $original_bit;
+			}
 		}
 		return $result;
 	}
@@ -365,7 +385,7 @@ class Authorizations
 	 * @param array $sum_auth Sum up all authorizations for the authorization array.
 	 * @static
 	 */
-	static private function _get_auth_array($bit_value, $idselect, $array_auth_all, &$sum_auth)
+	private static function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		
@@ -396,11 +416,17 @@ class Authorizations
 				foreach ($array_auth_groups as $value)
 				{
 					if ($value == "" || $value == 'r2')
+					{
 						continue;
+					}
 					if (isset($array_auth_all[$value]))
+					{
 						$array_auth_all[$value] += $bit_value;
+					}
 					else
+					{
 						$array_auth_all[$value] = $bit_value;
+					}
 				}
 			}
 		}
@@ -419,9 +445,13 @@ class Authorizations
 						continue;
 					}
 					if (isset($array_auth_all['m' . $value]))
+					{
 						$array_auth_all['m' . $value] += $bit_value;
+					}
 					else
+					{
 						$array_auth_all['m' . $value] = $bit_value;
+					}
 				}
 			}
 		}

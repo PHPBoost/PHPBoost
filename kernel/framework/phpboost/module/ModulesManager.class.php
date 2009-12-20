@@ -199,7 +199,7 @@ class ModulesManager
 		}
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
-		
+
 		//Installation du mini module s'il existe
 		MenuService::add_mini_module($module_identifier);
 
@@ -250,6 +250,7 @@ class ModulesManager
 			//Récupération des infos de config.
 			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
 
+			// TODO suppress deprecated block
 			//Suppression du fichier cache
 			$Cache->delete_file($module_id);
 
@@ -260,8 +261,9 @@ class ModulesManager
 			}
 
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'", __LINE__, __FILE__);
+			// END DEPRECATED BLOCK suppress deprecated block
+				
 			//Suppression du module mini.
-
 			MenuService::delete_mini_module($module_id);
 			MenuService::delete_module_feeds_menus($module_id);
 
@@ -318,6 +320,14 @@ class ModulesManager
 		{
 			return NOT_INSTALLED_MODULE;
 		}
+	}
+
+	public static function update_module_authorizations($module_id, $activated, array $authorizations)
+	{
+		$module = ModulesConfig::load()->get_module($module_id);
+		$module->set_activated($activated);
+		$module->set_authorizations($authorizations);
+		ModulesConfig::save($module);
 	}
 }
 
