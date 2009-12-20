@@ -651,7 +651,7 @@ class MenuService
 		foreach ($modules as $module)
 		{
 			$configuration = $module->get_configuration();
-			$start_page = $configuration->get_start_page();
+			$start_page = $configuration->get_home_page();
 			if (!empty($start_page))
 			{
 				$img = '';

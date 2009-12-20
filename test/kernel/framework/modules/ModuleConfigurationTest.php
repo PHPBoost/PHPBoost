@@ -85,9 +85,9 @@ class ModuleConfigurationTest extends PHPBoostUnitTestCase
 		self::assertEquals(Updates::PHPBOOST_OFFICIAL_REPOSITORY, $this->module_config->get_repository());
 	}
 
-	public function test_get_admin_start_page()
+	public function test_get_admin_main_page()
 	{
-		self::assertEquals("admin.php", $this->module_config->get_admin_start_page());
+		self::assertEquals("admin.php", $this->module_config->get_admin_main_page());
 	}
 
 	public function test_get_admin_menu()
@@ -108,9 +108,9 @@ class ModuleConfigurationTest extends PHPBoostUnitTestCase
 		self::assertEquals($admin_menu, $this->module_config->get_admin_links());
 	}
 
-	public function test_get_start_page()
+	public function test_get_home_page()
 	{
-		self::assertEquals('index.php', $this->module_config->get_start_page());
+		self::assertEquals('index.php', $this->module_config->get_home_page());
 	}
 
 	public function test_get_contribution_interface()

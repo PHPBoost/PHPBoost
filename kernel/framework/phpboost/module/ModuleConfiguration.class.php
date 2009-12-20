@@ -39,10 +39,10 @@ class ModuleConfiguration
 	private $compatibility;
 	private $php_version;
 	private $repository;
-	private $admin_start_page;
+	private $admin_main_page;
 	private $admin_menu;
 	private $admin_links;
-	private $start_page;
+	private $home_page;
 	private $contribution_interface;
 	private $mini_modules;
 	private $url_rewrite_rules;
@@ -103,9 +103,9 @@ class ModuleConfiguration
 		return $this->repository;
 	}
 
-	public function get_admin_start_page()
+	public function get_admin_main_page()
 	{
-		return $this->admin_start_page;
+		return $this->admin_main_page;
 	}
 
 	public function get_admin_menu()
@@ -118,9 +118,9 @@ class ModuleConfiguration
 		return $this->admin_links;
 	}
 
-	public function get_start_page()
+	public function get_home_page()
 	{
-		return $this->start_page;
+		return $this->home_page;
 	}
 
 	public function get_contribution_interface()
@@ -151,9 +151,9 @@ class ModuleConfiguration
 		$this->compatibility = $config['compatibility'];
 		$this->php_version = !empty($config['php_version']) ? $config['php_version'] : '5.1.2';
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-		$this->admin_start_page = !empty($config['admin_start_page']) ? $config['admin_start_page'] : '';
+		$this->admin_main_page = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
 		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
-		$this->start_page = !empty($config['start_page']) ? $config['start_page'] : '';
+		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
         $this->mini_modules = !empty($config['mini_modules']) ? self::parse_ini_array($config['mini_modules']) : array();
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();

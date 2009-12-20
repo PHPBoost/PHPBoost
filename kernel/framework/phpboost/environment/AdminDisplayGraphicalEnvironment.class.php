@@ -60,7 +60,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (retrieve(GET, 'disconnect', false))
 		{
 			AppContext::get_session()->end();
-			redirect(get_start_page());
+			redirect(get_home_page());
 		}
 
 		$sql = AppContext::get_sql();
@@ -253,7 +253,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_CACHE' => $LANG['cache'],
 			'L_SYNDICATION' => $LANG['syndication'],
 			'L_CONTENT_CONFIG' => $LANG['content_config'],
-			'U_INDEX_SITE' => get_start_page(),
+			'U_INDEX_SITE' => get_home_page(),
 		    'L_WEBSITE_UPDATES' => $LANG['website_updates']
 		));
 
@@ -323,7 +323,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 							'IDMENU' => $idmenu,
 							'NAME' => $configuration->get_name(),
 							'LINKS' => $links,
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_start_page(),
+							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
 							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
 							));
 				}
@@ -332,7 +332,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'IDMENU' => $menu_pos,
 							'NAME' => $configuration->get_name(),
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_start_page(),
+							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
 							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
 							));
 				}

@@ -62,7 +62,7 @@ $Template->assign_vars(array(
 	'C_ERRORH' => true,
 	'L_ERRORH' => sprintf($LANG[$class], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']),
 	'L_ERROR' => $LANG['error'],
-	'U_BACK' => '<a href="' . get_start_page() . '">' . $LANG['home'] . '</a>' . (!empty($_SERVER['HTTP_REFERER']) ? ' &raquo; <a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : ' &raquo; <a href="javascript:history.back(1)">' . $LANG['back'] . '</a>'),
+	'U_BACK' => '<a href="' . get_home_page() . '">' . $LANG['home'] . '</a>' . (!empty($_SERVER['HTTP_REFERER']) ? ' &raquo; <a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : ' &raquo; <a href="javascript:history.back(1)">' . $LANG['back'] . '</a>'),
 ));
 
 $Template->pparse('error');
