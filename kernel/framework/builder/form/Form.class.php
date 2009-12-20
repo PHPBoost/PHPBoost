@@ -83,6 +83,9 @@
  */ 
 class Form implements ValidableFormComponent
 {
+	const METHOD_POST = 'post';
+	const METHOD_GET = 'get';
+	
 	private $constraints = array();
 	private $form_fieldsets = array(); //Fieldsets stored
 	private $form_name = '';

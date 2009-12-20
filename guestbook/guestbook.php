@@ -205,17 +205,18 @@ else //Affichage.
 		$is_guest = !$User->check_level(MEMBER_LEVEL);
 
 		//Post form
-
 		$form = new Form('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
 		$fieldset = new FormFieldset($LANG['add_msg']);
 		if ($is_guest) //Visiteur
 		{
-			$fieldset->add_field(new FormTextEdit('guestbook_pseudo', $LANG['guest'], array(
+			$pseudo = new FormTextEdit('guestbook_pseudo', array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true,
 			'maxlength' => 25), array(new NotEmptyFormFieldConstraint($LANG['require_pseudo']))
-			));
+			);
+			$pseudo->set_value($LANG['guest']);
+			$fieldset->add_field($pseudo);
 		}
-		$fieldset->add_field(new FormTextarea('guestbook_contents', '', array(
+		$fieldset->add_field(new FormTextarea('guestbook_contents', array(
 		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 		'rows' => 10, 'cols' => 47, 'required' => true), array(new NotEmptyFormFieldConstraint($LANG['require_text']))
 		));
@@ -226,11 +227,12 @@ else //Affichage.
 		$form->add_fieldset($fieldset);
 		$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
 
+		$Template->add_subtemplate('GUESTBOOK_FORM', $form->export());
+		
 		//On crée une pagination si le nombre de msg est trop important.
 		$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
 		$Pagination = new Pagination();
-		$Template->add_subtemplate('GUESTBOOK_FORM', $form->export());
 		$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
