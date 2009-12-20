@@ -37,9 +37,9 @@ class FormTextarea extends FormField
 	private $editor = true; //Allow to hide the editor.
 	private $forbidden_tags = array(); //Forbiddend tags in the content.
 	
-	public function __construct($field_id, array $field_options = array(), array $constraints = array())
+	public function __construct($field_id, $value, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, $field_options, $constraints);
+		parent::__construct($field_id, $value, $field_options, $constraints);
 		$this->compute_fields_options($field_options);
 	}
 	

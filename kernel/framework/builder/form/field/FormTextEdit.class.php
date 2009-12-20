@@ -41,9 +41,9 @@ class FormTextEdit extends FormField
 	private $size = '';
 	private $maxlength = '';
 
-	public function __construct($field_id, $field_options = array(), array $constraints = array())
+	public function __construct($field_id, $value, $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, $field_options, $constraints);
+		parent::__construct($field_id, $value, $field_options, $constraints);
 		$this->compute_fields_options($field_options);
 	}
 
