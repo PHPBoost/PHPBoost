@@ -225,14 +225,15 @@ else //Affichage.
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur
 	{
-		$fieldset->add_field(new FormTextEdit('guestbook_pseudo', $LANG['guest'], array(
-			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true,
-			'maxlength' => 25), array(new NotEmptyFormFieldConstraint($LANG['require_pseudo']))
+		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
+			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
+			'maxlength' => 25), array(new IntegerIntervalFormFieldConstraint(0, 10, 'Intervalle non respecté !'))
 		));
 	}
 	$fieldset->add_field(new FormTextarea('contents', '', array(
 		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-		'rows' => 10, 'cols' => 47, 'required' => true), array(new NotEmptyFormFieldConstraint($LANG['require_text']))
+		'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text']), 
+		array(new IntegerIntervalFormFieldConstraint(5, 10, $LANG['require_text']))
 	));
 	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
 	{

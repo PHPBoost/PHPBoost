@@ -118,6 +118,7 @@ class FormFieldset implements ValidableFormComponent
 		{
 			$validations[] = $field->get_onsubmit_validations();
 		}
+		return $validations;
 	}
 
 	/**

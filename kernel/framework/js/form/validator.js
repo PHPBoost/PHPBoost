@@ -1,13 +1,21 @@
 /* #### Utils #### */
-function displayFormFieldOnsubmitValidatorMessage(field_id)
+function displayFormFieldOnsubmitValidatorMessage(message)
 {
-	alert('test' + field_id);
+	alert(message);
 }
-function displayFormFieldOnblurValidatorMessage(field_id)
+function displayFormFieldOnblurValidatorMessage(message)
 {
-	alert('test' + field_id);
+	alert(message);
 }
 
+function integerIntervalValidator(value)
+{
+	if (value < lboundary || value > rboundary)
+	{
+		return false;
+	}
+	return true;
+}
 
 /* #### Onsubmit validator #### */
 /**
@@ -16,31 +24,56 @@ function displayFormFieldOnblurValidatorMessage(field_id)
  */
 function notEmptyFormFieldOnsubmitValidator(field_id, message)
 {
-	if (document.getElementById(field_id).value == '')
+	if (document.getElementById(field_id))
 	{
-		displayFormFieldOnsubmitValidatorMessage(message);
-	}		
+		if (document.getElementById(field_id).value == '')
+		{
+			displayFormFieldOnsubmitValidatorMessage(message);
+			return false;
+		}
+	}
+	return true;
+}
+function integerIntervalFormFieldOnsubmitValidator(field_id, lboundary, rboundary, message)
+{
+	if (document.getElementById(field_id))
+	{
+		if (!integerIntervalValidator(document.getElementById(field_id).value))
+		{
+			displayFormFieldOnsubmitValidatorMessage(message);
+			return false;
+		}
+	}
+	return true;
 }
 
 
 /* #### Onblur validator #### */
-function regexFormFieldOnblurValidator(field_id, regexPattern)
+function regexFormFieldOnblurValidator(field_id, regexPattern, message)
 {
-	value = document.getElementById(field_id).value;
-	
-	regex = new RegExp(regexPattern, "i");
-	if (!regex.test(value))
+	if (document.getElementById(field_id))
 	{
-		displayFormFieldOnblurValidatorMessage(field_id);
+		value = document.getElementById(field_id).value;
+		regex = new RegExp(regexPattern, "i");
+		if (!regex.test(value))
+		{
+			displayFormFieldOnblurValidatorMessage(message);
+			return false;
+		}
 	}
+	return true;
 }
 
-function integerIntervalFormFieldOnblurValidator(field_id, lboundary, rboundary)
+function integerIntervalFormFieldOnblurValidator(field_id, lboundary, rboundary, message)
 {
-	value = document.getElementById(field_id).value;
-	if (value < lboundary || value > rboundary)
+	if (document.getElementById(field_id))
 	{
-		displayFormFieldOnblurValidatorMessage(field_id);
+		if (!integerIntervalValidator(document.getElementById(field_id).value))
+		{
+			displayFormFieldOnblurValidatorMessage(message);
+			return false;
+		}
 	}
+	return true;
 }
 

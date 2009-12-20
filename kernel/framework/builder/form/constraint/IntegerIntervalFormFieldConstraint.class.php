@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         NotEmptyFormFieldConstraint.class.php
+ *                         IntegerIntervalFormFieldConstraint.class.php
  *                            -------------------
- *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
- *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
+ *   begin                : December 20, 2009
+ *   copyright            : (C) 2009 Régis Viarre
+ *   email                : crowkait@phpboost.com
  *
  ###################################################
  *
@@ -30,13 +30,16 @@
  * @package builder
  * @subpackage form/constraint
  */ 
-class NotEmptyFormFieldConstraint implements FormFieldConstraint 
+class IntegerIntervalFormFieldConstraint implements FormFieldConstraint 
 {
 	private $js_message;
+	private $rboundary;
 	
-	public function __construct($js_message)
+	public function __construct($lboundary, $rboundary, $js_message)
 	{
 		$this->js_message = $js_message;
+		$this->lboundary = $lboundary;
+		$this->rboundary = $rboundary;
 	}
 	
 	public function validate(FormField $field)
@@ -47,12 +50,14 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return '';
+		return 'integerIntervalFormFieldOnblurValidator("' . $field->get_id() . '", 
+		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'notEmptyFormFieldOnsubmitValidator("' . $field->get_id() . '", ' . to_js_string($this->js_message) . ')';
+		return 'integerIntervalFormFieldOnsubmitValidator("' . $field->get_id() . '", 
+		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
 	}
 }
 
