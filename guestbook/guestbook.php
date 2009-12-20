@@ -228,8 +228,7 @@ else //Affichage.
 		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
 			'maxlength' => 25),
-		array(new RegexFormFieldConstraint('`^[a-z0-9_]+@[a-z0-9_]+\\\.[a-z0-9]{2,5}$`i',
-			'', 'pas le bon format'))
+		array(new RegexFormFieldConstraint('`^[a-z0-9_]+@[a-z0-9_]+\\\.[a-z0-9]{2,5}$`i'))
 		));
 	}
 	$fieldset->add_field(new FormTextarea('contents', '', array(
