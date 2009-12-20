@@ -35,8 +35,16 @@ class LangLoader
 	const DEFAULT_LOCALE = 'english';
 
 	private static $locale = self::DEFAULT_LOCALE;
-	private static $langs = array();
+	/**
+	 * @var RAMCache
+	 */
+	private static $ram_cache = null;
 
+	public static function init()
+	{
+		self::$ram_cache = RAMCacheFactory::get('lang');
+	}
+	
 	/**
 	 * @desc sets the language locale
 	 * @param string $locale the locale
@@ -44,6 +52,30 @@ class LangLoader
 	public static function set_locale($locale)
 	{
 		self::$locale = $locale;
+	}
+	
+	/**
+	 * @param string $message_id the language message identifier
+	 * @param string $filename the language filename
+	 * @param string $module the module to look for languages files in
+	 * @return string the localized message
+	 */
+	public static function get_message($message_id, $filename, $module = '')
+	{
+		$lang = self::get($filename, $module);
+		return $lang[$message_id];
+	}
+	
+	/**
+	 * @param string $message_id the language message identifier
+     * @param string $class_file the class file that you want to load associated languages messages
+     * @param string $module the module to look for languages files in
+	 * @return string the localized message
+	 */
+	public static function get_class_message($message_id, $class_file, $module = '')
+	{
+		$lang = self::get_class($filename, $module);
+		return $lang[$message_id];
 	}
 
 	/**
@@ -83,17 +115,17 @@ class LangLoader
 	private static function get_raw($folder, $filename)
 	{
 		$langfile = $folder . '/' . $filename;
-		if (!isset(self::$langs[$langfile]))
+		if (!self::$ram_cache->contains($langfile))
 		{
 			self::load($langfile, $folder, $filename);
 		}
-		return self::$langs[$langfile];
+		return self::$ram_cache->get($langfile);
 	}
 
 	private static function load($langfile, $folder, $filename)
 	{
 		include self::get_real_lang_path($folder, $filename);
-		self::$langs[$langfile] = $lang;
+		self::$ram_cache->store($langfile, $lang);
 	}
 
 	/**
