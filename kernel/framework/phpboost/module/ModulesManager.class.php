@@ -199,6 +199,7 @@ class ModulesManager
 		}
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
+		
 		//Installation du mini module s'il existe
 		MenuService::add_mini_module($module_identifier);
 
@@ -207,7 +208,6 @@ class ModulesManager
 		{
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
-
 
 			ModulesCssFilesCache::invalidate();
 
@@ -269,7 +269,6 @@ class ModulesManager
 			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
 
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
 			foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 			{
