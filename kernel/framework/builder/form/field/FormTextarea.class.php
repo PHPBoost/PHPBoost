@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_text.class.php
+ *                             FormTextArea.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_radio_option.class.php
+ *                             FormRadioChoiceOption.class.php
  *                            -------------------
  *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -23,8 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
