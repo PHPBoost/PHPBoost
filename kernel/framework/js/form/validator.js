@@ -8,9 +8,10 @@ function displayFormFieldOnblurValidatorMessage(message)
 	alert(message);
 }
 
-function integerIntervalValidator(value)
+function integerIntervalValidator(value, lboundary, rboundary)
 {
-	if (value < lboundary || value > rboundary)
+	value = parseInt(value);
+	if (isNaN(value) || value < lboundary || value > rboundary)
 	{
 		return false;
 	}
@@ -38,7 +39,7 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lboundary, rboundar
 {
 	if (document.getElementById(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value))
+		if (!integerIntervalValidator(document.getElementById(field_id).value, lboundary, rboundary))
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -68,7 +69,7 @@ function integerIntervalFormFieldOnblurValidator(field_id, lboundary, rboundary,
 {
 	if (document.getElementById(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value))
+		if (!integerIntervalValidator(document.getElementById(field_id).value, lboundary, rboundary))
 		{
 			displayFormFieldOnblurValidatorMessage(message);
 			return false;
