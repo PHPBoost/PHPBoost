@@ -1,3 +1,7 @@
+# IF C_JS_NOT_ALREADY_INCLUDED # 
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script> 
+# ENDIF #
+
 <form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="return check_generated_form_{L_FORMNAME}();" class="{FORMCLASS}">
 	# START fieldsets #
 		{fieldsets.FIELDSET}
@@ -23,12 +27,15 @@
 		# IF C_BBCODE_TINYMCE_MODE #
 		tinyMCE.triggerSave();
 		# ENDIF #
+
+		# START check_constraints #
+		if (!{check_constraints.ONSUBMIT_CONSTRAINTS})
+		{
+			return false;
+		}
+		# END check_constraints #
 		
-		return checkForms(new Array(
-			# START check_form #
-			{check_form.COMA} '{check_form.FIELD_ID}', "{check_form.FIELD_REQUIRED_ALERT}" 
-			# END check_form #
-		));
+		return true;
 	}
 -->
 </script>

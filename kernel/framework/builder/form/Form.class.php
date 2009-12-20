@@ -96,6 +96,8 @@ class Form implements ValidableFormComponent
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
 	private $display_reset = true;
 
+	private static $js_already_included = false;
+	
 	/**
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
@@ -184,6 +186,7 @@ class Form implements ValidableFormComponent
 		}
 			
 		$template->assign_vars(array(
+			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
 			'C_DISPLAY_RESET' => $this->display_reset, 
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
@@ -195,18 +198,24 @@ class Form implements ValidableFormComponent
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
 		));
-
+        self::$js_already_included = true;
+        
 		$i = 0;
 		foreach($this->form_fieldsets as $fieldset)
 		{
-			$template->assign_block_vars('check_constraints', array(
-				'COMA' => ($i++ > 0 ? ', ' : ''),
-				'ONSUBMIT_CONSTRAINTS' => $fieldset->get_onsubmit_validations()
-			));
-			
 			$template->assign_block_vars('fieldsets', array(
 				'FIELDSET' => $fieldset->display()
 			));
+			
+			foreach($fieldset->get_onsubmit_validations() as $constraints)
+			{
+				foreach($constraints as $constraint)
+				{
+					$template->assign_block_vars('check_constraints', array(
+						'ONSUBMIT_CONSTRAINTS' => $constraint
+					));
+				}
+			}
 		}
 
 		return $template;
