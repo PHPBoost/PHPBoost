@@ -506,7 +506,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 	$template = new Template('framework/confirm.tpl');
 
 	$template->assign_vars(array(
-		'URL_ERROR' => !empty($url_error) ? $url_error : get_start_page(),
+		'URL_ERROR' => !empty($url_error) ? $url_error : get_home_page(),
 		'DELAY_REDIRECT' => $delay_redirect,
 		'L_ERROR' => $l_error,
 		'L_REDIRECT' => $LANG['redirect']
@@ -519,7 +519,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
  * @desc Retrieves the site start page.
  * @return The absolute start page URL.
  */
-function get_start_page()
+function get_home_page()
 {
 	global $CONFIG;
 

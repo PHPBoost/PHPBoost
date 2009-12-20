@@ -119,7 +119,7 @@ if (in_array($id_error, $array_error))
 		$Template->pparse('error');
 	}
 	else
-		redirect(get_start_page());
+		redirect(get_home_page());
 }
 elseif (!empty($id_error))
 {
@@ -136,7 +136,7 @@ elseif (!empty($id_error))
 		'THEME' => get_utheme(),
 		'L_ERROR' => $LANG['error'],
 		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
-		'U_INDEX' => '<a href="' . url(get_start_page()) .'">' . $LANG['home'] . '</a>',
+		'U_INDEX' => '<a href="' . url(get_home_page()) .'">' . $LANG['home'] . '</a>',
 	));
 	
 	$Template->assign_vars(array(
@@ -169,7 +169,7 @@ elseif ($User->get_attribute('user_id') === -1)
 	$Template->pparse('error');
 }
 else
-	redirect(get_start_page());
+	redirect(get_home_page());
 
 require_once('../kernel/footer.php');
 

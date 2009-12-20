@@ -94,7 +94,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		// FAIRE EN TEST WEB
 	}
 	
-	function test_get_start_page()
+	function test_get_home_page()
 	{
 		TODO(__METHOD__);
 	}

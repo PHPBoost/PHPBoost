@@ -211,7 +211,7 @@ elseif ($user)
 	}
 	else
 	{
-		redirect(get_start_page());
+		redirect(get_home_page());
 		exit;
 	}
 }

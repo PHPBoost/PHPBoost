@@ -125,7 +125,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		redirect('/member/forget.php?error=forget_echec_change');
 }
 else
-	redirect(get_start_page());
+	redirect(get_home_page());
 
 require_once('../kernel/footer.php'); 
 

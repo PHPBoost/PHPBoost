@@ -31,7 +31,7 @@ include_once('../kernel/header_no_display.php');
 
 if ($CONFIG['maintain'] != -1 && $CONFIG['maintain'] <= time())
 {	
-	header('location: ' . get_start_page());
+	header('location: ' . get_home_page());
 	exit;
 }
 
@@ -83,7 +83,7 @@ $Template->assign_vars(array(
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 	'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 	'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['home'] . '</a>',	
+	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_home_page() . '">' . $LANG['home'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? second_parse($CONFIG['maintain_text']) : $LANG['maintain']),
 	'L_MAINTAIN_TITLE' => $LANG['title_maintain'],

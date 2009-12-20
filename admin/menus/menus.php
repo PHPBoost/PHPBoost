@@ -280,7 +280,7 @@ $tpl->assign_vars(array(
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'C_LEFT_COLUMN' => $left_column,
     'C_RIGHT_COLUMN' => $right_column,
-    'START_PAGE' => get_start_page(),
+    'START_PAGE' => get_home_page(),
 	'L_INDEX' => $LANG['home'],
     'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
     'L_ACTIVATION' => $LANG['activation'],

@@ -33,7 +33,7 @@ require_once('../kernel/header.php');
 $user_accounts_config = UserAccountsConfig::load();
 
 if (!$user_accounts_config->is_registration_enabled())
-	redirect(get_start_page());
+	redirect(get_home_page());
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
 $valid = retrieve(POST, 'valid', false);
@@ -274,7 +274,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					unset($password, $password_hash);
 					
 					//Affichage de la confirmation d'inscription.
-					redirect_confirm(get_start_page(), sprintf($l_register_confirm, stripslashes($login)), 5);
+					redirect_confirm(get_home_page(), sprintf($l_register_confirm, stripslashes($login)), 5);
 				}
 			}
 			elseif (!empty($_POST['register_valid']) && $password !== $password_bis)
@@ -291,7 +291,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 elseif (!empty($user_mail))
 	redirect('/member/register' . url('.php?error=invalid_mail') . '#errorh');
 else
-	redirect(get_start_page());
+	redirect(get_home_page());
 	
 require_once('../kernel/footer.php');
 
