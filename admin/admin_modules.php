@@ -36,24 +36,15 @@ $error = retrieve(GET, 'error', '');
 //Modification des propriétés des modules (activés et autorisations globales d'accès)
 if (isset($_POST['valid']))
 {
-	//Listage des modules
-	$result = $Sql->query_while("SELECT id, name, auth, activ
-	FROM " . PREFIX . "modules", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	foreach (ModulesManager::get_installed_modules_map() as $module)
 	{
-		//Récupération des propriétés du module courant
-		$activ = retrieve(POST, 'activ' . $row['id'], 0);
-		$array_auth_all = Authorizations::auth_array_simple(ACCESS_MODULE, $row['id']);
-		
-		//Enregistrement en base de données
-		$Sql->query_inject("UPDATE " . DB_TABLE_MODULES . " SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-	}
-	//Génération du cache des modules
-	$Cache->Generate_file('modules');
-	$Cache->Load('modules', RELOAD_CACHE);
-	
+		$request = AppContext::get_request();
+		$module_id = $module->get_id();
+		$activated = $request->get_bool('activ' . $module_id, false);
+		$authorizations = Authorizations::auth_array_simple(ACCESS_MODULE, $module_id);
+		ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+	}	
 	MenuService::generate_cache();
-	
 	redirect(HOST . SCRIPT);
 }
 elseif ($uninstall) //Désinstallation du module

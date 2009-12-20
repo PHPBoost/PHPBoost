@@ -55,6 +55,16 @@ class Module
         return $this->authorizations;
     }
 
+    public function set_activated($activated)
+    {
+        $this->activated = $activated;
+    }
+
+    public function set_authorizations($authorizations)
+    {
+        $this->authorizations = $authorizations;
+    }
+
     /**
      * @return ModuleConfiguration
      */
