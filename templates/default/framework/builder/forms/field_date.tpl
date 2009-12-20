@@ -17,5 +17,7 @@
 					onclick="xmlhttprequest_calendar('calendarf{INSTANCE}', '?input_field={NAME}&amp;field=calendarf{INSTANCE}&amp;lyear=1&amp;d={CALENDAR_DAY}&amp;m={CALENDAR_MONTH}&amp;y={CALENDAR_YEAR}');display_calendar({INSTANCE});">
 					<img class="valign_middle" id="imgcalendarf{INSTANCE}" src="../templates/{THEME}/images/calendar.png" alt="" />
 				</a>
+				&nbsp;<span id="onblurContainerResponse{ID}" style="display:none"></span>
+			 	<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
 			</dd>
 		</dl>

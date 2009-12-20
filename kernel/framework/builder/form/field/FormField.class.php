@@ -159,10 +159,7 @@ abstract class FormField implements ValidableFormComponent
 					break;
 				case 'required' :
 					$this->required = true;
-					if ($this->required)
-					{
-						$this->constraints[] = new NotEmptyFormFieldConstraint($value);
-					}
+					$this->constraints[] = new NotEmptyFormFieldConstraint($value);
 					unset($field_options['required']);
 					break;
 				case 'onblur' :

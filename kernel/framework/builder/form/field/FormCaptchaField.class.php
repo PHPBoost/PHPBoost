@@ -44,8 +44,7 @@ class FormCaptchaField extends FormField
 		global $LANG;
 		
 		$this->title = $LANG['verif_code'];
-		$this->required_alert = $LANG['require_verif_code'];
-		$this->required = true;
+		$field_options['required'] = $LANG['require_verif_code'];
 		
 		parent::__construct($field_id . $captcha->get_instance(), '', $field_options, $constraints);
 		$this->captcha = $captcha;
@@ -62,9 +61,13 @@ class FormCaptchaField extends FormField
 	{
 		$this->captcha->save_user();
 		
-		$Template = new Template('framework/builder/forms/field_captcha.tpl');
+		$template = new Template('framework/builder/forms/field_captcha.tpl');
 			
-		$Template->assign_vars(array(
+		$validations = $this->get_onblur_validations();
+		$onblur = !empty($this->on_blur) || !empty($validations);
+
+		$template->assign_vars(array(
+			'NAME' => $this->name,
 			'ID' => $this->id,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
@@ -72,10 +75,11 @@ class FormCaptchaField extends FormField
 			'CAPTCHA_WIDTH' => $this->captcha->get_width(),
 			'CAPTCHA_HEIGHT' => $this->captcha->get_height(),
 			'CAPTCHA_FONT' => $this->captcha->get_font(),
-			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty()
+			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty(),
+			'CAPTCHA_ONBLUR' => $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : ''
 		));	
 		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
