@@ -115,8 +115,9 @@ class Form implements ValidableFormComponent
 	 * @desc Add fieldset in the form.
 	 * @param FormFieldset The fieldset object.
 	 */
-	public function add_fieldset($fieldset)
+	public function add_fieldset(FormFieldset $fieldset)
 	{
+		$fieldset->set_form_name($this->form_name);
 		$this->form_fieldsets[] = $fieldset;
 	}
 	
