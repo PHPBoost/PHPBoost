@@ -37,7 +37,7 @@ class DeprecatedEnvironment
 	public static function check_page_auth()
 	{
 		$running_module_name = Environment::get_running_module_name();
-		if (!in_array($running_module_name, array('member', 'admin', 'kernel')))
+		if (!in_array($running_module_name, array('member', 'admin', 'kernel', '')))
 		{
 			if (ModulesManager::is_module_installed($running_module_name))
 			{
