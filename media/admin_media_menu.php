@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : March 03, 2008
  *   copyright         	  : (C) 2008 Gsgsd
- *   email                :  gsetgsd@hotmail.fr
+ *   email                : gsetgsd@hotmail.fr
  *
  *
 ###################################################

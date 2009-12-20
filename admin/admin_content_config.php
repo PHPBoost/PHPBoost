@@ -49,7 +49,7 @@ else
 	
 	$j = 0;
 	
-	foreach (ContentFormattingFactory::get_available_tags() as $code => $name)
+	foreach (FormattingTagsList::get_available_tags() as $code => $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,

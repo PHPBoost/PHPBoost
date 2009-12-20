@@ -83,7 +83,7 @@ else
 	}
 	
 	$j = 0;
-	foreach (ContentFormattingFactory::get_available_tags() as $identifier => $name)
+	foreach (FormattingTagsList::get_available_tags() as $identifier => $name)
 	{	
 		$Template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,

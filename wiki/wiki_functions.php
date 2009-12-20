@@ -33,7 +33,7 @@ define('WIKI_MENU_MAX_DEPTH', 5);
 function wiki_parse($var)
 {
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
+	$content_manager = new BBCodeParserFactory();
 	$parser = $content_manager->get_parser();
     $parser->set_content($var, MAGIC_QUOTES);
     $parser->parse();
@@ -49,7 +49,7 @@ function wiki_unparse($var)
 	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentFormattingFactory(ContentFormattingFactory::BBCODE_LANGUAGE);
+	$content_manager = new BBCodeParserFactory();
 	$unparser = $content_manager->get_unparser();
     $unparser->set_content($var, Parser::DONT_STRIP_SLASHES);
     $unparser->parse();

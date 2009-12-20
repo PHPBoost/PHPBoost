@@ -98,7 +98,7 @@ else
 			
 	//Forbidden tags
 	$i = 0;
-	foreach (ContentFormattingFactory::get_available_tags() as $name => $value)
+	foreach (FormattingTagsList::get_available_tags() as $name => $value)
 	{
 		$selected = '';
 		if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
