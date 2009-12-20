@@ -94,6 +94,7 @@ class Environment
 
 	public static function init_services()
 	{
+		LangLoader::init();
 		AppContext::set_request(new HTTPRequest());
 		AppContext::init_session();
 	}

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           ApcRAMCache.class.php
+ *                           RAMCacheException.class.php
  *                            -------------------
- *   begin                : December 09, 2009
+ *   begin                : December 20, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
  *   email                : ben.popeye@phpboost.com, horn@phpboost.com
  *
@@ -32,33 +32,11 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class DefaultRAMCache implements RAMCache
+class RAMCacheException extends Exception
 {
-	private $data = array();
-
-	public function get($id)
+	public function __construct($id)
 	{
-		if ($this->contains($id))
-		{
-			return $this->data[$id];
-		}
-		// TODO specialize exception here
-		throw new RAMCacheException($id);
-	}
-
-	public function contains($id)
-	{
-		return isset($this->data[$id]);
-	}
-
-	public function store($id, $data)
-	{
-		$this->data[$id] = $data;
-	}
-
-	public function delete($id)
-	{
-		unset($this->data[$id]);
+		parent::__construct('Cache doesn\'t contains element "' . $id . '"');
 	}
 }
 ?>
