@@ -21,7 +21,12 @@
 [*] Possibilité de trier les membres par date de dernière connexion dans l'administration.
 [*] Récupération du chemin complet du fichier dans les logs d'erreurs.
 
-[b]Galerie:[/b]
+[b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
 [*] Tri des images conservé dans la pagination
+
+
+[b]Thèmes :[/b]
+- Ajout d'une variable js THEME dans header.tpl
+- Modification de la classe xmlhttprequest_preview (border-radius en plus).
