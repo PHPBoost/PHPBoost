@@ -98,6 +98,34 @@ abstract class FormField implements ValidableFormComponent
 		$this->id = $prefix . $this->id;
 	}
 
+	public function generate_onsubmit_validation()
+	{
+		$validations = array();
+		foreach ($this->constraints as $constraint)
+		{
+			$validation = $constraint->generate_onsubmit_validation($this);
+			if (!empty($validation))
+			{
+				$validations[] =  $validation;
+			}
+		}
+		return $validations;
+	}
+
+	protected function generate_onblur_validation()
+	{
+		$validations = array();
+		foreach ($this->constraints as $constraint)
+		{
+			$validation = $constraint->generate_onblur_validation($this);
+			if (!empty($validation))
+			{
+				$validations[] =  $validation;
+			}
+		}
+		return $validations;
+	}
+
 	## Getters and Setters ##
 	/**
 	 * @return string The fied identifier.
