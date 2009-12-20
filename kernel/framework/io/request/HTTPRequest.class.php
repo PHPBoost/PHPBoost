@@ -80,7 +80,7 @@ class HTTPRequest
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
-	public function set_rawvalue($varname, $value, &$array)
+	private function set_rawvalue($varname, $value, &$array)
 	{
 		$array[$varname] = $value;
 	}
