@@ -39,7 +39,7 @@ class FormSelect extends FormField
 	private $options = array();
 	private $multiple = false;
 
-	public function __construct($field_id, array $field_option = array(), array $constraints = array())
+	public function __construct($field_id, array $field_options = array(), array $options = array(), array $constraints = array())
 	{
 		parent::__construct($field_id, '', $field_options, $constraints);
 		foreach($field_options as $attribute => $value)
@@ -89,16 +89,16 @@ class FormSelect extends FormField
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
+		));
+
+		foreach ($this->options as $option)
+		{
+			$template->assign_block_vars('field_options', array(
+				'OPTION' => $option->display(),
 			));
+		}
 
-			foreach ($this->options as $option)
-			{
-				$template->assign_block_vars('field_options', array(
-					'OPTION' => $option->display(),
-				));
-			}
-
-			return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

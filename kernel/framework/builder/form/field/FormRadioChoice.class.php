@@ -47,7 +47,7 @@ class FormRadioChoice extends FormField
 		{
 			throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
 		}
-		$this->options[] = $options;
+		$this->options = $options;
 	}
 
 	/**
@@ -67,18 +67,18 @@ class FormRadioChoice extends FormField
 		$template = new Template('framework/builder/forms/field_box.tpl');
 			
 		$template->assign_vars(array(
-		'ID' => $this->id,
-		'FIELD' => $this->options,
-		'L_FIELD_TITLE' => $this->title,
-		'L_EXPLAIN' => $this->sub_title,
-		'L_REQUIRE' => $this->required ? '* ' : ''
+			'ID' => $this->id,
+			'FIELD' => $this->options,
+			'L_FIELD_TITLE' => $this->title,
+			'L_EXPLAIN' => $this->sub_title,
+			'L_REQUIRE' => $this->required ? '* ' : ''
 		));
 
 		foreach ($this->options as $option)
 		{
 			$option->set_name($this->name); //Set the same field name for each option.
 			$template->assign_block_vars('field_options', array(
-			'OPTION' => $option->display(),
+				'OPTION' => $option->display(),
 			));
 		}
 
