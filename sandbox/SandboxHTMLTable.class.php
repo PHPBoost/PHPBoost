@@ -1,10 +1,11 @@
 <?php
 /*##################################################
- *                             HTMLTableRowCell.class.php
+ *                          SandboxHTMLTable.class.php
  *                            -------------------
  *   begin                : December 21, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
+ *
  *
  ###################################################
  *
@@ -24,26 +25,29 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
- * @package builder
- * @subpackage table
- */
-class HTMLTableRowCell extends HTMLElement
+class SandboxHTMLTable extends HTMLTable
 {
-	private $value;
-	
-	public function __construct($value, array $classes = array('row2'))
+	public function __construct()
 	{
-		$this->value = $value;
-		$this->set_css_classes($classes);
+		$columns = array(new HTMLTableColumn('toto'), new HTMLTableColumn('tata'));
+		$model = new HTMLTableModel($columns);
+		parent::__construct($model);
 	}
 	
-	public function get_value()
+	protected function fill_data(array $sort_parameters = array())
 	{
-		return $this->value;
+		$rows = array(
+			array('cell1' => 'Coucou', 'cell2' => 'ben àordure'),
+			array('cell1' => 'ça va', 'cell2' => 'pouet'),
+			array('cell1' => '<a href="http://www.google.com" title="Google">Google</a>', 'cell2' => 'un lien'),
+			array('cell1' => '<i>rien</i>', 'cell2' => 'prout'),
+		);
+		foreach ($rows as $row)
+		{
+			$cells = array(new HTMLTableRowCell($row['cell1'], array('row1')), new HTMLTableRowCell($row['cell2']));
+			$table_row = new HTMLTableRow($cells);
+			$this->generate_row($table_row);
+		}
 	}
 }
-
 ?>

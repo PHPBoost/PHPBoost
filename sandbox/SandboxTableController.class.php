@@ -1,10 +1,11 @@
 <?php
 /*##################################################
- *                             HTMLTableRowCell.class.php
+ *                          SandboxTableController.class.php
  *                            -------------------
  *   begin                : December 21, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
+ *
  *
  ###################################################
  *
@@ -24,26 +25,20 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
- * @package builder
- * @subpackage table
- */
-class HTMLTableRowCell extends HTMLElement
+class SandboxTableController extends ModuleController
 {
-	private $value;
-	
-	public function __construct($value, array $classes = array('row2'))
+	public function execute(HTTPRequest $request)
 	{
-		$this->value = $value;
-		$this->set_css_classes($classes);
+		$view = new View('sandbox/SandboxTableController.tpl');
+		$table = $this->build_table();
+		$view->add_subtemplate('table', $table->export());
+		return new SiteDisplayResponse($view);
 	}
-	
-	public function get_value()
+
+	private function build_table()
 	{
-		return $this->value;
+		$table = new SandboxHTMLTable();
+		return $table;
 	}
 }
-
 ?>

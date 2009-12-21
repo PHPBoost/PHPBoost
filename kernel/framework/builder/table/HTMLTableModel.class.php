@@ -30,14 +30,24 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableModel
+class HTMLTableModel extends HTMLElement
 {
+	/**
+	 * @var HTMLTableColumn[]
+	 */
+	private $columns;
+	
+	public function __construct(array $columns)
+	{
+		$this->columns = $columns;
+	}
+	
 	/**
 	 * @return HTMLTableColumn[]
 	 */
 	public function get_columns()
 	{
-		
+		return $this->columns;
 	}
 }
 

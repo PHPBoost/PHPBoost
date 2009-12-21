@@ -1,20 +1,30 @@
-<table>
+<table
+	class="module_table # IF C_CSS_CLASSES #{CSS_CLASSES}# ENDIF #"
+	# IF C_CSS_STYLE # style="{CSS_STYLE}"# ENDIF #>
 	<thead>
 		<tr>
 			# START header_column #
-			<th>{header_column.NAME}</th>
+			<th
+			# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
+			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
+				{header_column.NAME}
+			</th>
 			# END header_column #
 		</tr>
 	</thead>
 	<tbody>
 		# START row #
-		<tr>
-			# START row.column #
-			<td>
-				# START row.column.VALUE #
+		<tr
+		# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+		# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+			# START row.cell #
+			<td
+			# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+			# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+				{row.cell.VALUE}
 			</td>
-			# END row.column #
+			# END row.cell #
 		</tr>
-		# END rows #
+		# END row #
 	</tbody>
 </table>

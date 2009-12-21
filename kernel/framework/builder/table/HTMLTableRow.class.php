@@ -30,14 +30,21 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableRow
+class HTMLTableRow extends HTMLElement
 {
+	private $cells;
+	
+	public function __construct(array $cells)
+	{
+		$this->cells = $cells;
+	}
+	
 	/**
 	 * @return HTMLTableRowCell[]
 	 */
 	public function get_cells()
 	{
-		
+		return $this->cells;
 	}
 }
 

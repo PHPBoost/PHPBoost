@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             HTMLTableRowCell.class.php
+ *                             HTMLElement.class.php
  *                            -------------------
  *   begin                : December 21, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -26,23 +26,42 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
+ * @desc This class allows you to manage easily html elements.
  * @package builder
- * @subpackage table
  */
-class HTMLTableRowCell extends HTMLElement
+abstract class HTMLElement
 {
-	private $value;
+	private $css_style = '';
+	private $css_classes = array();
 	
-	public function __construct($value, array $classes = array('row2'))
+	public function has_css_style()
 	{
-		$this->value = $value;
-		$this->set_css_classes($classes);
+		return !empty($this->css_style);
 	}
 	
-	public function get_value()
+	public function get_css_style()
 	{
-		return $this->value;
+		return $this->css_style;
+	}
+	
+	public function set_css_style($style)
+	{
+		$this->css_style = $style;
+	}
+	
+	public function has_css_classes()
+	{
+		return !empty($this->css_classes);
+	}
+	
+	public function get_css_classes()
+	{
+		return $this->css_classes;
+	}
+	
+	public function set_css_classes(array $classes)
+	{
+		$this->css_classes = $classes;
 	}
 }
 
