@@ -53,6 +53,15 @@ class ModulesManager
 	{
 		return ModulesConfig::load()->get_modules();
 	}
+	
+	/**
+	 * @return Module[string] the Modules map (name => module) of the uninstalled modules (activated or not)
+	 */
+	public static function get_uninstalled_modules_map()
+	{
+		$installed = self::get_installed_modules_map();
+		return $not_installed;
+	}
 
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)

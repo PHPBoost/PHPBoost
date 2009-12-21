@@ -34,16 +34,17 @@ $install = !empty($_GET['install']) ? true : false;
 if ($install) //Installation du module
 {	
 	//Récupération de l'identifiant du module
-	$module_name = '';
+	$module_id = '';
 	foreach ($_POST as $key => $value)
-		if ($value == $LANG['install'])
-			$module_name = str_replace('module_', '', $key);
+	{
+	if ($value == $LANG['install'])
+		{
+			$module_id = str_replace('module_', '', $key);
+		}
+}
 
-	$enable_module = retrieve(POST, $module_name . 'activ', false);
-	
-	
-	
-	switch (ModulesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
+	$enable_module = AppContext::get_request()->get_bool($module_id . 'activ', false);
+	switch (ModulesManager::install_module($module_id, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
 		case CONFIG_CONFLICT:
 			redirect('/admin/admin_modules_add.php?error=e_config_conflict#errorh');
@@ -63,7 +64,7 @@ if ($install) //Installation du module
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
-	$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
+	$module_id = str_replace($ext_name, '', $_FILES['upload_module']['name']);
 	
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
@@ -78,7 +79,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-		if (empty($ckeck_module) && !is_dir('../' . $module_name))
+		if (empty($ckeck_module) && !is_dir('../' . $module_id))
 		{
 			
 			$Upload = new Upload($dir);
@@ -155,9 +156,13 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict', 'e_php_version_conflict');
 	if (in_array($get_error, $array_error))
+	{
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+	}
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
 		
 	//Modules installé
 	$i = 0;
@@ -166,7 +171,9 @@ else
 	FROM " . PREFIX . "modules", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
+	{
 		$installed_modules[] = $row['name'];
+	}
 	
 	$Sql->query_close($result);
 	
@@ -175,7 +182,6 @@ else
 	$uninstalled_modules = array();
 	if (is_dir($root)) //Si le dossier existe
 	{
-		
 		$dir_array = array();
 		$lang_folder_path = new Folder($root);
 		foreach ($lang_folder_path->get_folders() as $odir)
