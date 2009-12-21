@@ -29,24 +29,33 @@ class SandboxHTMLTable extends HTMLTable
 {
 	public function __construct()
 	{
-		$columns = array(new HTMLTableColumn('toto'), new HTMLTableColumn('tata'));
+		$columns = array(
+		new HTMLTableColumn('pseudo'),
+		new HTMLTableColumn('email'),
+		new HTMLTableColumn('inscrit le'),
+		new HTMLTableColumn('messages'),
+		new HTMLTableColumn('dernière connexion'),
+		new HTMLTableColumn('messagerie privée'),
+		);
 		$model = new HTMLTableModel($columns);
 		parent::__construct($model);
 	}
-	
+
 	protected function fill_data(array $sort_parameters = array())
 	{
-		$rows = array(
-			array('cell1' => 'Coucou', 'cell2' => 'ben àordure'),
-			array('cell1' => 'ça va', 'cell2' => 'pouet'),
-			array('cell1' => '<a href="http://www.google.com" title="Google">Google</a>', 'cell2' => 'un lien'),
-			array('cell1' => '<i>rien</i>', 'cell2' => 'prout'),
-		);
-		foreach ($rows as $row)
+		$query = "SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect
+			FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1";
+		foreach (AppContext::get_sql_querier()->select($query) as $row)
 		{
-			$cells = array(new HTMLTableRowCell($row['cell1'], array('row1')), new HTMLTableRowCell($row['cell2']));
-			$table_row = new HTMLTableRow($cells);
-			$this->generate_row($table_row);
+			$login = new HTMLTableRowCell($row['login'], array('row1'));
+			$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;');
+			$timestamp = new HTMLTableRowCell(gmdate_format('date_format_short', $row['timestamp']));
+			$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
+			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_short', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
+			$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
+			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)"></a>');
+			
+			$this->generate_row(new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm)));
 		}
 	}
 }
