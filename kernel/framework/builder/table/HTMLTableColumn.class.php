@@ -30,9 +30,19 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableColumn
+class HTMLTableColumn extends HTMLElement
 {
+	private $name = '';
 	
+	public function __construct($name)
+	{
+		$this->name = $name;
+	}
+	
+	public function get_name()
+	{
+		return $this->name;
+	}
 }
 
 ?>

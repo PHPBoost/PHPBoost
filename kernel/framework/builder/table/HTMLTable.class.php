@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage table
  */
-abstract class HTMLTable
+abstract class HTMLTable extends HTMLElement
 {
 	/**
 	 * @var Template
@@ -56,34 +56,62 @@ abstract class HTMLTable
 	 */
 	public function export()
 	{
+		$this->generate_table_structure();
 		$this->generate_header();
 		$this->generate_rows();
 		return $this->tpl;
+	}
+
+	protected function generate_table_structure()
+	{
+		$css_vars = array();
+		$this->add_css_vars($this->model, $css_vars);
+		$this->tpl->assign_vars($css_vars);
 	}
 
 	protected function generate_header()
 	{
 		foreach ($this->model->get_columns() as $column)
 		{
-			$this->tpl->assign_block_vars('header_column', array('name' => ''));
+			$values = array('NAME' => $column->get_name());
+			$this->add_css_vars($column, $values);
+			$this->tpl->assign_block_vars('header_column', $values);
 		}
 	}
 
 	protected function generate_rows()
 	{
+		$sort_parameters = array();
 		$this->fill_data($sort_parameters);
 	}
 
 	protected function generate_row(HTMLTableRow $row)
 	{
-		$this->tpl->assign_block_vars('row', array());
+		$row_values = array();
+		$this->add_css_vars($row, $row_values);
+		$this->tpl->assign_block_vars('row', $row_values);
 		foreach ($row->get_cells() as $cell)
 		{
-			$this->tpl->assign_block_vars('row.column', array('VALUE' => ''));
+			$this->generate_cell($cell);
 		}
 	}
 
+	protected function generate_cell(HTMLTableRowCell $cell)
+	{
+		$cell_values = array('VALUE' => $cell->get_value());
+		$this->add_css_vars($cell, $cell_values);
+		$this->tpl->assign_block_vars('row.cell', $cell_values);
+	}
+
 	abstract protected function fill_data(array $sort_parameters = array());
+
+	private function add_css_vars(HTMLElement $element, array &$tpl_vars)
+	{
+		$tpl_vars['C_CSS_STYLE'] = $element->has_css_style();
+		$tpl_vars['CSS_STYLE'] = $element->get_css_style();
+		$tpl_vars['C_CSS_CLASSES'] = $element->has_css_classes();
+		$tpl_vars['CSS_CLASSES'] = implode(' ', $element->get_css_classes());
+	}
 }
 
 ?>
