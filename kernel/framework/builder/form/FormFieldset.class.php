@@ -62,7 +62,8 @@ class FormFieldset implements ValidableFormComponent
 	{
 		if (isset($this->fields[$form_field->get_id()]))
 		{
-			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->get_id()), E_USER_WARNING);
+			throw new FormBuilderException('Field with identifier "<strong>' . $form_field->get_id() . '</strong>" already exists, 
+			please chose a different one!');
 		}
 		else
 		{
