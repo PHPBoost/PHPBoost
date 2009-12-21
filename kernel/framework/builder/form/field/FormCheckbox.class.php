@@ -34,9 +34,9 @@ class FormCheckbox extends FormField
 {
 	private $options = array();
 
-	public function __construct($field_id, array $field_options, array $options)
+	public function __construct($field_id, array $field_options = array(), array $options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options);
+		parent::__construct($field_id, '', $field_options, $constraints);
 		foreach($field_options as $attribute => $value)
 		{
 			throw new FormBuilderException(sprintf(
