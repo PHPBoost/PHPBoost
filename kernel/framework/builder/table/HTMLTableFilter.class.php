@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             HTMLTableModel.class.php
+ *                             HTMLTableFilter.class.php
  *                            -------------------
  *   begin                : December 21, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -30,15 +30,9 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableModel
+class HTMLTableFilter
 {
-	/**
-	 * @return HTMLTableColumn[]
-	 */
-	public function get_columns()
-	{
-		
-	}
+	
 }
 
 ?>
