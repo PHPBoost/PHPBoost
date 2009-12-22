@@ -40,7 +40,7 @@ $nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
 
-$Pagination = new Pagination();
+$Pagination = new DeprecatedPagination();
 
 $Template->assign_vars(array(
 	'THEME' => get_utheme(),

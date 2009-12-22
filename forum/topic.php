@@ -124,7 +124,7 @@ if (!empty($idm))
 	
 //On crée une pagination si le nombre de msg est trop important.
  
-$Pagination = new Pagination();	
+$Pagination = new DeprecatedPagination();	
 
 //Affichage de l'arborescence des catégories.
 $i = 0;

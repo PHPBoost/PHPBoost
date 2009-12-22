@@ -170,7 +170,7 @@ else
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	$nbr_media = 0;
 	$result = $Sql->query_while("SELECT * FROM " . PREFIX . "media WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where) . " ORDER BY infos ASC, timestamp DESC" . $Sql->limit($Pagination->get_first_msg(NUM_MODO_MEDIA, 'p'), NUM_MODO_MEDIA), __LINE__, __FILE__);

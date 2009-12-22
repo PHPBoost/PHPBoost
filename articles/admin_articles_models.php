@@ -509,7 +509,7 @@ else
 
 	//On crée une pagination si le nombre d'articles est trop important.
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$tpl->assign_block_vars('models_management', array(
 			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
 			'L_ARTICLES_TPL' => $ARTICLES_LANG['articles_tpl'],

@@ -88,7 +88,7 @@ else
 	$Template->assign_block_vars('arch_title', array());
 	
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$i = 0;	
 	$result = $Sql->query_while("SELECT id, title, message, timestamp, type, nbr

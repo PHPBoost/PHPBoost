@@ -163,7 +163,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 
 	//On crée une pagination si le nombre de lien est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 		
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
@@ -207,7 +207,7 @@ else
 	
 	//On crée une pagination si le nombre de catégories est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
 	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;

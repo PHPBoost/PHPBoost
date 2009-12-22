@@ -297,7 +297,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$pagination_pm = 25;
 
 	//Conversation présente chez les deux membres: user_convers_status => 0.
@@ -515,7 +515,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//On récupère les info de la conversation.
 	$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $User->get_attribute('user_id') . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
@@ -752,7 +752,7 @@ else //Liste des conversation, dans la boite du membre.
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	$pagination_pm = 25;
 	$pagination_msg = 25;

@@ -55,7 +55,7 @@ $Sql->query_close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
  
-$Pagination = new Pagination();
+$Pagination = new DeprecatedPagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table(DB_TABLE_COM, __LINE__, __FILE__);
 $Template->assign_vars(array(

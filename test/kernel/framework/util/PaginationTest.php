@@ -11,7 +11,7 @@ class PaginationTest extends PHPBoostUnitTestCase
 	{
 		if (!empty($_GET['p'])) unset($_GET['p']);
 		
-		$page = new Pagination();
+		$page = new DeprecatedPagination();
 		$ret = $page->display('toto', 1, 'p', 11, 5);
 		self::assertEquals($ret, '');		
 		
@@ -40,7 +40,7 @@ class PaginationTest extends PHPBoostUnitTestCase
 	{
 		if (!empty($_GET['p'])) unset($_GET['p']);
 
-		$page = new Pagination();
+		$page = new DeprecatedPagination();
 
 		$ret = $page->get_first_msg(2, 'p');
 		self::assertEquals($ret, 0);

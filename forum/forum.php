@@ -200,7 +200,7 @@ if (!empty($id_get))
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;

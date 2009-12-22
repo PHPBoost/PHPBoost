@@ -248,7 +248,7 @@ else //Affichage.
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],

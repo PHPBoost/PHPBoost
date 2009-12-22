@@ -85,7 +85,7 @@ if (!empty($search_string)) //recherche
 	$num_rows = $Sql->num_rows($result, $query_rows, __LINE__, __FILE__);
 	
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$pages_links = $Pagination->display('search' . url('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
 	if ($num_rows > 0)

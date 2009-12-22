@@ -319,7 +319,7 @@ elseif ($archives) //Archives.
 	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$Template->assign_vars(array(
 		'C_POLL_ARCHIVES' => true,

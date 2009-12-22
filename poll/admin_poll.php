@@ -246,7 +246,7 @@ else
 	$nbr_poll = $Sql->count_table(PREFIX . 'poll', __LINE__, __FILE__);
 
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),

@@ -37,7 +37,7 @@ $tpl = new Template('news/admin_news.tpl');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 //On crée une pagination si le nombre de news est trop important.
 
-$Pagination = new Pagination();
+$Pagination = new DeprecatedPagination();
 
 $result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.user_id, n.timestamp, n.start, n.end, n.visible, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n

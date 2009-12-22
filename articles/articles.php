@@ -61,7 +61,7 @@ if (!empty($idart) && isset($cat) )
 	
 	//On crée une pagination si il y plus d'une page.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
 	if (substr(trim($articles['contents']), 0, 6) != '[page]')

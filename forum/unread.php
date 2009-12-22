@@ -49,7 +49,7 @@ $Template->set_filenames(array(
 ));
 
  
-$Pagination = new Pagination();
+$Pagination = new DeprecatedPagination();
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 $max_time_msg = forum_limit_time_msg();

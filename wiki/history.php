@@ -107,7 +107,7 @@ else //On affiche la liste des modifications
 	
 	//On instancie la classe de pagination
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$show_pagin = $Pagination->display(url('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
 	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));

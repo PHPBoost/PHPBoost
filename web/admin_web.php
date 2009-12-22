@@ -233,7 +233,7 @@ else
 	
 	//On crée une pagination si le nombre de web est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	$Template->assign_vars(array(	
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	

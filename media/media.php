@@ -162,7 +162,7 @@ if (empty($id_media) && $id_cat >= 0)
 
 		//On crée une pagination si le nombre de fichiers est trop important.
 		
-		$Pagination = new Pagination();
+		$Pagination = new DeprecatedPagination();
 
 		//Notes
 		
