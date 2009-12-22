@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                                index.php
+ *                        AdminSitemapResponse.class.php
  *                            -------------------
- *   begin                : December 08 2009
+ *   begin                : December 09 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,17 +25,23 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('XMLSitemapController', '`^/view/xml/?$`'),
-	new UrlControllerMapper('SitemapController', '`^/view(?:/html)?/?$`'),
-	new UrlControllerMapper('AdminSitemapController', '`^/admin/?$`'),
-	new UrlControllerMapper('SitemapController', '`^/?$`')
-);
-
-DispatchManager::dispatch($url_controller_mappers);
+class AdminSitemapResponse extends AdminMenuDisplayResponse
+{
+	private $lang = array();
+	
+	public function __construct(Template $view)
+	{
+		parent::__construct($view);
+		
+		$this->lang = LangLoader::get('main', 'sitemap');
+		
+		$this->prepare_menu();
+	}
+	
+	private function prepare_menu()
+	{
+		$this->set_title($this->lang['sitemap']);
+	}
+}
 
 ?>

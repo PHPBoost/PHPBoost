@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        SitemapAdminController.class.php
+ *                        AdminSitemapController.class.php
  *                            -------------------
  *   begin                : December 09 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SitemapAdminController extends AdminController
+class AdminSitemapController extends AdminController
 {
 	private $lang = array();
 	
@@ -40,8 +40,7 @@ class SitemapAdminController extends AdminController
 		
 		$tpl = new Template('sitemap/sitemap.tpl');
 		
-		$response = new AdminMenuDisplayResponse($tpl);
-		$response->set_title($this->lang['sitemap']);
+		$response = new AdminSitemapResponse($tpl);
 		
 		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
 
