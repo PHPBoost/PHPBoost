@@ -32,6 +32,28 @@
  */
 class HTMLTableSortRule
 {
+	const ASC = 0;
+	const DESC = 1;
+
+	private $way;
+	private $sort_parameter;
+
+	public function __construct($sort_parameter, $way)
+	{
+		$this->way = $way;
+		$this->sort_parameter = $sort_parameter;
+	}
+
+	public function get_sort_parameter()
+	{
+		return $this->sort_parameter;
+	}
+
+	public function get_order_way()
+	{
+		return $this->way;
+	}
+
 }
 
 ?>

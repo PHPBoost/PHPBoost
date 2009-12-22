@@ -91,7 +91,7 @@ class Pagination
 	{
 		$start = $this->current_page - $this->before_links_nb;
 		$end = $this->current_page + $this->after_links_nb;
-		for ($i = $start; $i < $end; $i++)
+		for ($i = $start; $i <= $end; $i++)
 		{
 			if ($i >= 1 && $i <= $this->nb_pages)
 			{

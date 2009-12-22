@@ -39,6 +39,8 @@ abstract class HTMLTable extends HTMLElement
 	private $number_of_displayed_rows = 0;
 	private $parameters;
 	private $url_parameters;
+	private $sorting_rules = array();
+	private $filters = array();
 
 	/**
 	 * @var Template
@@ -86,6 +88,7 @@ abstract class HTMLTable extends HTMLElement
 	{
 		$this->parameters = $this->url_parameters->get_parameters();
 		$this->compute_page_number();
+		$this->compute_sorting_rules();
 		$this->url_parameters->set_parameters($this->parameters);
 		Debug::dump($this->parameters);
 	}
@@ -108,6 +111,34 @@ abstract class HTMLTable extends HTMLElement
 					}
 				}
 				$this->parameters['page'] = $this->current_page_number;
+			}
+		}
+	}
+
+	private function compute_sorting_rules()
+	{
+		if (isset($this->parameters['sort']) && is_array($this->parameters['sort']))
+		{
+			$sort_parameters = $this->parameters['sort'];
+			foreach ($sort_parameters as $param)
+			{
+				if (preg_match('`(?:!|-)\w+`', $param))
+				{
+					$order_way = HTMLTableSortRule::ASC;
+					if ($param[0] == '!')
+					{
+						$order_way = HTMLTableSortRule::DESC;
+					}
+					$sort_parameter = substr($param, 1);
+					if ($this->model->is_sort_parameter_allowed($sort_parameter))
+					{
+						$this->sorting_rules[] = new HTMLTableSortRule($sort_parameter, $order_way);
+					}
+					else
+					{
+						echo 'sort parameter ' . $sort_parameter . ' is not allowed<br />';
+					}
+				}
 			}
 		}
 	}
@@ -145,11 +176,9 @@ abstract class HTMLTable extends HTMLElement
 
 	private function generate_rows()
 	{
-		$sorting_rules = array();
-		$filters = array();
 		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
 		$this->first_row_index = ($this->current_page_number - 1) * $nb_rows_per_page;
-		$this->fill_data($nb_rows_per_page, $this->first_row_index, $sorting_rules, $filters);
+		$this->fill_data($nb_rows_per_page, $this->first_row_index, $this->sorting_rules, $this->filters);
 	}
 
 	protected final function generate_row(HTMLTableRow $row)

@@ -33,15 +33,27 @@
 class HTMLTableColumn extends HTMLElement
 {
 	private $name = '';
+	private $sort_parameter_id = '';
 	
-	public function __construct($name)
+	public function __construct($name, $sort_parameter_id = '')
 	{
 		$this->name = $name;
+		$this->sort_parameter_id = $sort_parameter_id;
 	}
 	
 	public function get_name()
 	{
 		return $this->name;
+	}
+	
+	public function is_sortable()
+	{
+		return !empty($this->sort_parameter_id);
+	}
+	
+	public function get_sort_parameter_id()
+	{
+		return $this->sort_parameter_id;
 	}
 }
 

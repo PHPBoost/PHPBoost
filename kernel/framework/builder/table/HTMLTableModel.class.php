@@ -37,6 +37,7 @@ class HTMLTableModel extends HTMLElement
 	private $id = '';
 	private $caption = '';
 	private $rows_per_page;
+	private $allowed_sort_parameters = array();
 	
 	/**
 	 * @var HTMLTableColumn[]
@@ -45,7 +46,10 @@ class HTMLTableModel extends HTMLElement
 	
 	public function __construct(array $columns, $rows_per_page = self::NO_PAGINATION)
 	{
-		$this->columns = $columns;
+		foreach ($columns as $column)
+		{
+			$this->add_column($column);
+		}
 		$this->rows_per_page = $rows_per_page;
 	}
 
@@ -90,6 +94,20 @@ class HTMLTableModel extends HTMLElement
 	public function set_caption($caption)
 	{
 		$this->caption = $caption;
+	}
+	
+	public function is_sort_parameter_allowed($parameter)
+	{
+		return in_array($parameter, $this->allowed_sort_parameters);
+	}
+	
+	private function add_column(HTMLTableColumn $column)
+	{
+		$this->columns[] = $column;
+		if ($column->is_sortable())
+		{
+			$this->allowed_sort_parameters[] = $column->get_sort_parameter_id();
+		}
 	}
 }
 
