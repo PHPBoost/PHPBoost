@@ -922,7 +922,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 elseif ($referer)
 {
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
@@ -979,7 +979,7 @@ elseif ($referer)
 elseif ($keyword)
 {
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update

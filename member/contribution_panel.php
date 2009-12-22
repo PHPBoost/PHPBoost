@@ -216,7 +216,7 @@ else
 {
 	
 	
-	$pagination = new Pagination();
+	$pagination = new DeprecatedPagination();
 	
 	$template->assign_vars(array(
 		'C_CONTRIBUTION_LIST' => true

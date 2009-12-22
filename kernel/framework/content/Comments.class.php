@@ -481,7 +481,7 @@ class Comments
 				
 				//On crée une pagination si le nombre de commentaires est trop important.
 				
-				$pagination = new Pagination();
+				$pagination = new DeprecatedPagination();
 				
 				$Template->assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,

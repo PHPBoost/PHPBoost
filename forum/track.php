@@ -45,7 +45,7 @@ if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 if (!empty($_POST['valid']))
 {
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM " . PREFIX . "forum_topics t
@@ -77,7 +77,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 
 	
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();

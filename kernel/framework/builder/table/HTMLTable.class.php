@@ -194,48 +194,13 @@ abstract class HTMLTable extends HTMLElement
 
 	private function generate_footer_pagination()
 	{
-		$this->generate_first_page_pagination();
-		$this->generate_near_pages_pagination();
-		$this->generate_last_page_pagination();
+		$pagination = new Pagination($this->nb_of_pages, $this->current_page_number);
+		$pagination->set_url_builder_callback(array($this, 'get_pagination_url'));
+		$this->tpl->add_subtemplate('pagination', $pagination->export());
 	}
-
-	private function generate_first_page_pagination()
+	public function get_pagination_url($page_number)
 	{
-		if ($this->current_page_number > 1)
-		{
-			$this->add_pagination_page('&laquo;', 1);
-		}
-	}
-
-	private function generate_near_pages_pagination()
-	{
-		$start = $this->current_page_number - 3;
-		$end = $this->current_page_number + 3;
-		for ($i = $start; $i < $end; $i++)
-		{
-			if ($i >= 1 && $i <= $this->nb_of_pages)
-			{
-				$is_current_page = $i == $this->current_page_number;
-				$this->add_pagination_page($i, $i, $is_current_page);
-			}
-		}
-	}
-
-	private function generate_last_page_pagination()
-	{
-		if ($this->current_page_number < $this->nb_of_pages)
-		{
-			$this->add_pagination_page('&raquo;', $this->nb_of_pages);
-		}
-	}
-
-	private function add_pagination_page($name, $page_number, $is_current_page = false)
-	{
-		$this->tpl->assign_block_vars('page', array(
-			'URL' => $this->url_parameters->get_url(array('page' => $page_number)),
-			'NUMBER' => $name,
-			'C_CURRENT_PAGE' => $is_current_page
-		));
+		return $this->url_parameters->get_url(array('page' => $page_number));
 	}
 }
 

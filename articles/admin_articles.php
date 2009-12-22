@@ -40,7 +40,7 @@ $nbr_articles = $Sql->count_table(PREFIX . 'articles', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre d'articles est trop important.
 
-$Pagination = new Pagination();
+$Pagination = new DeprecatedPagination();
 
 $tpl->assign_vars(array(
 	'THEME' => get_utheme(),

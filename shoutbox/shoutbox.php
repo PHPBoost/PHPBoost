@@ -216,7 +216,7 @@ else //Affichage.
 	//On crée une pagination si le nombre de messages est trop important.
 	$nbr_shout = $Sql->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 		
 	$Template->assign_vars(array(
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],

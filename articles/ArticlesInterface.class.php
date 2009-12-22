@@ -349,7 +349,7 @@ class ArticlesInterface extends ModuleInterface
 
 		//On crée une pagination si le nombre de fichiers est trop important.
 		
-		$Pagination = new Pagination();
+		$Pagination = new DeprecatedPagination();
 
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();

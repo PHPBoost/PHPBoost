@@ -1000,7 +1000,7 @@ else //Show all member!
 
 	//On crée une pagination si le nombre de membre est trop important.
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 		
 	$Template->assign_vars(array(
 		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)

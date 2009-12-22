@@ -35,7 +35,7 @@ define('LINK_START_PAGE', false); //Lien sur la première page.
  * It also can generate the where clause to insert in your SQL query which selects the items.
  * @package util
  */
-class Pagination
+class DeprecatedPagination
 {
 	private $page; //Valeur courante de la page.
 	private $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.

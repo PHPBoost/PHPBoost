@@ -296,7 +296,7 @@ else
 
 	//On crée une pagination si le nombre de catégories est trop important.
 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//Colonnes des catégories.
 	$nbr_column_cats = ($total_cat > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $total_cat;
@@ -645,7 +645,7 @@ else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
 
-			$Pagination = new Pagination();
+			$Pagination = new DeprecatedPagination();
 
 			$sort = retrieve(GET, 'sort', '');
 			$Template->assign_vars(array(

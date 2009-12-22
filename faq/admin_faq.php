@@ -57,7 +57,7 @@ if ($page > 0)
 	));
 	
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$result = $Sql->query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name
 	FROM " . PREFIX . "faq q

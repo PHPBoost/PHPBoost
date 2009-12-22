@@ -61,7 +61,7 @@ if (!empty($table) && $action == 'data')
 {
 	//On crée une pagination (si activé) si le nombre de news est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	

@@ -857,7 +857,7 @@ else
 	$nbr_membre = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	 
 	$get_sort = retrieve(GET, 'sort', '');	
 	switch ($get_sort)

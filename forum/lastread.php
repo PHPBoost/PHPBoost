@@ -51,7 +51,7 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 	));
 	
 	 
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time = (time() - $CONFIG_FORUM['view_time']);

@@ -68,7 +68,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
 		 
-		$Pagination = new Pagination();
+		$Pagination = new DeprecatedPagination();
 
 		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
 		$Template->assign_vars(array(

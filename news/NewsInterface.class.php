@@ -233,7 +233,7 @@ class NewsInterface extends ModuleInterface
 
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-		$Pagination = new Pagination();
+		$Pagination = new DeprecatedPagination();
 
 		// Classe des catégories.
 		$news_cat = new NewsCats();

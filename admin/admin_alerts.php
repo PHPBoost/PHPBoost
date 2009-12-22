@@ -37,7 +37,7 @@ define('NUM_ALERTS_PER_PAGE', 20);
 
 
 
-$pagination = new Pagination();
+$pagination = new DeprecatedPagination();
 
 //Gestion des critères de tri
 $criteria = retrieve(GET, 'criteria', 'current_status');

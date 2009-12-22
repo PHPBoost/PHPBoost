@@ -182,7 +182,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$array_group = unserialize($group['auth']);
 	
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
-		$Pagination = new Pagination();
+		$Pagination = new DeprecatedPagination();
 		$Template->assign_vars(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
@@ -304,7 +304,7 @@ else //Liste des groupes.
 	 
 	$nbr_group = $Sql->count_table(DB_TABLE_GROUP, __LINE__, __FILE__);
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
