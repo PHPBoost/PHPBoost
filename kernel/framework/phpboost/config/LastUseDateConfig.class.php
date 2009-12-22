@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                 last_use_date_config.class.php
+ *		                   LastUseDateConfig.class.php
  *                            -------------------
  *   begin                : October 18, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -93,3 +93,4 @@ class LastUseDateConfig extends DefaultConfigData
 		ConfigManager::save('kernel', $config, 'last-use-date');
 	}
 }
+?>

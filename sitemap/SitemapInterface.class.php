@@ -34,7 +34,7 @@ class SitemapInterface extends ModuleInterface
 	
 	public function on_changeday()
 	{
-		
+		SitemapXMLFileService::generate_if_needed();
 	}
 }
 ?>

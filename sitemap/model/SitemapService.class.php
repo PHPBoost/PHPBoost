@@ -25,6 +25,10 @@
  *
  ###################################################*/
 
+/**
+ * This service handles all the needed operations that deals with the site map data.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 class SitemapService
 {
 	/**
@@ -45,35 +49,6 @@ class SitemapService
 		$sitemap = new Sitemap();
 		$sitemap->build(Sitemap::USER_MODE, Sitemap::AUTH_USER);
 		return $sitemap;
-	}
-
-	public static function write_sitemap_xml_file()
-	{
-		$sitemap = self::get_public_sitemap();
-		$export_config = self::get_xml_file_export_config();
-
-		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
-
-		try
-		{
-			$file->write($sitemap->export($export_config)->parse(Template::TEMPLATE_PARSER_STRING));
-		}
-		catch(IOException $ex)
-		{
-			$lang = LangLoader::get('main', 'sitemap');
-			ErrorHandler::add_error_in_log($lang['sitemap_xml_could_not_been_written'], __FILE__, __LINE__);
-		}
-	}
-
-	/**
-	 * @return SitemapExportConfig
-	 */
-	public static function get_xml_file_export_config()
-	{
-		$export_config = new SitemapExportConfig('framework/content/sitemap/sitemap.xml.tpl',
-		 'framework/content/sitemap/module_map.xml.tpl', 'framework/content/sitemap/sitemap_section.xml.tpl',
-		 'framework/content/sitemap/sitemap_link.xml.tpl');
-		return $export_config;
 	}
 }
 ?>

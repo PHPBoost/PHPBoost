@@ -36,7 +36,7 @@ class SitemapAdminController extends AdminController
 	
 	public function execute(HTTPRequest $request)
 	{
-		SitemapService::write_sitemap_xml_file();
+		SitemapXMLFileService::try_to_generate();
 		
 		$tpl = new Template('sitemap/sitemap.tpl');
 		
