@@ -46,7 +46,7 @@ class SitemapConfig extends DefaultConfigData
 	 */
 	public function set_last_generation_date(Date $date)
 	{
-		$this->set_property('last_generation_date', $date->get_timestamp());
+		$this->set_property('last_generation_date', $date);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ class SitemapConfig extends DefaultConfigData
 	 * Saves the configuration in the database. Has it become persistent.
 	 * @param SitemapConfig $config The configuration to push in the database.
 	 */
-	public static function save(LastUseDateConfig $config)
+	public static function save(SitemapConfig $config)
 	{
 		ConfigManager::save('sitemap', $config, 'config');
 	}
