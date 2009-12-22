@@ -32,14 +32,31 @@
  */
 class HTMLTableModel extends HTMLElement
 {
+	const NO_PAGINATION = 0;
+	
+	private $id = '';
+	private $caption = '';
+	private $row_per_page;
+	
 	/**
 	 * @var HTMLTableColumn[]
 	 */
 	private $columns;
 	
-	public function __construct(array $columns)
+	public function __construct(array $columns, $row_per_page = self::NO_PAGINATION)
 	{
 		$this->columns = $columns;
+		$this->row_per_page = $row_per_page;
+	}
+
+	public function get_id()
+	{
+		return $this->id;		
+	}
+	
+	public function set_id($id)
+	{
+		$this->id = $id;
 	}
 	
 	/**
@@ -48,6 +65,31 @@ class HTMLTableModel extends HTMLElement
 	public function get_columns()
 	{
 		return $this->columns;
+	}
+	
+	public function is_pagination_activated()
+	{
+		return $this->row_per_page > 0;		
+	}
+	
+	public function get_number_of_row_per_page()
+	{
+		return $this->row_per_page;		
+	}
+	
+	public function has_caption()
+	{
+		return !empty($this->caption);		
+	}
+	
+	public function get_caption()
+	{
+		return $this->caption;		
+	}
+	
+	public function set_caption($caption)
+	{
+		$this->caption = $caption;
 	}
 }
 

@@ -37,14 +37,21 @@ class SandboxHTMLTable extends HTMLTable
 		new HTMLTableColumn('dernière connexion'),
 		new HTMLTableColumn('messagerie privée'),
 		);
-		$model = new HTMLTableModel($columns);
+		$model = new HTMLTableModel($columns, 2);
+		$model->set_id('42');
+		$model->set_caption('Liste des membres');
 		parent::__construct($model);
 	}
 
-	protected function fill_data(array $sort_parameters = array())
+	protected function get_number_of_elements()
 	{
-		$query = "SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect
-			FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1";
+		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER, 'WHERE user_aprob=1');
+	}
+
+	protected function fill_data($limit, $offset, array $sorting_rules, array $filters)
+	{
+		$query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect
+			FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1 LIMIT ' . $limit . ' OFFSET ' . $offset;
 		foreach (AppContext::get_sql_querier()->select($query) as $row)
 		{
 			$login = new HTMLTableRowCell($row['login'], array('row1'));
@@ -54,7 +61,7 @@ class SandboxHTMLTable extends HTMLTable
 			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_short', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
 			$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
 			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)"></a>');
-			
+				
 			$this->generate_row(new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm)));
 		}
 	}
