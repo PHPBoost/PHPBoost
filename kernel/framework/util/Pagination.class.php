@@ -40,11 +40,15 @@ class Pagination
 	private $before_links_nb = self::LINKS_NB;
 	private $after_links_nb = self::LINKS_NB;
 
-	public function __construct($nb_pages, $current_page)
+	public function __construct($nb_pages, $current_page, $tpl_path = '')
 	{
 		$this->nb_pages = $nb_pages;
 		$this->current_page = $current_page;
-		$this->tpl = new Template('framework/util/pagination.tpl');
+		if ($tpl_path === '')
+		{
+			$tpl_path = 'framework/util/pagination.tpl';
+		}
+		$this->tpl = new Template($tpl_path);
 	}
 
 	public function set_url_sprintf_pattern($url_pattern)
