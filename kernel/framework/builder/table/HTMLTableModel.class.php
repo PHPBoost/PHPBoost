@@ -107,7 +107,7 @@ class HTMLTableModel extends HTMLElement
 		return array_key_exists($parameter, $this->allowed_filter_parameters);
 	}
 	
-	public function add_filter(HTMLTableFilter $filter)
+	public function add_filter(HTMLTableFilterForm $filter)
 	{
 		$this->allowed_filter_parameters[$filter->get_filter_parameter()] = $filter;
 	}
@@ -118,10 +118,6 @@ class HTMLTableModel extends HTMLElement
 		if ($column->is_sortable())
 		{
 			$this->allowed_sort_parameters[] = $column->get_parameter_id();
-		}
-		if ($column->could_be_filtered())
-		{
-			$this->allowed_filter_parameters[] = $column->get_parameter_id();
 		}
 	}
 }

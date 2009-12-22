@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             HTMLTableFilter.class.php
+ *                           HTMLTableFilterForm.class.php
  *                            -------------------
- *   begin                : December 21, 2009
+ *   begin                : December 22, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -30,19 +30,16 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableFilter
-{
-	const EQUALS = 'equals';
-	const LIKE = 'like';
-	
+class HTMLTableFilterForm
+{	
 	private $mode;
-	private $value;
+	private $name;
 	private $filter_parameter;
 	
-	public function __construct($filter_parameter, $value, $mode)
+	public function __construct($name, $filter_parameter, $mode)
 	{
 		$this->mode = $mode;
-		$this->value = $value;
+		$this->name = $name;
 		$this->filter_parameter = $filter_parameter;
 	}
 	
@@ -51,9 +48,9 @@ class HTMLTableFilter
 		return $this->mode;
 	}
 	
-	public function get_value()
+	public function get_name()
 	{
-		return $this->value;
+		return $this->name;
 	}
 	
 	public function get_filter_parameter()

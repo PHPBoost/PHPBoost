@@ -27,6 +27,9 @@
 
 class SandboxHTMLTable extends HTMLTable
 {
+	private $query;
+	private $parameters;
+	
 	public function __construct()
 	{
 		$columns = array(
@@ -37,15 +40,18 @@ class SandboxHTMLTable extends HTMLTable
 		new HTMLTableColumn('dernière connexion'),
 		new HTMLTableColumn('messagerie'),
 		);
-		$model = new HTMLTableModel($columns, 10);
+		$model = new HTMLTableModel($columns, 1);
 		$model->set_id('42');
 		$model->set_caption('Liste des membres');
+		$model->add_filter(new HTMLTableFilterForm('Pseudo', 'login', HTMLTableFilter::EQUALS));
 		parent::__construct($model);
 	}
 
-	protected function get_number_of_elements()
+	protected function get_number_of_elements(array $filters)
 	{
-		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER, 'WHERE user_aprob=1');
+		$this->parameters = array();
+		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
+			'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
 	}
 
 	protected function default_sort_rule()
@@ -55,10 +61,9 @@ class SandboxHTMLTable extends HTMLTable
 
 	protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
 	{
-		$query = $this->build_query($limit, $offset, $sorting_rule, $filters);
-		Debug::dump($query);
-		//				exit;
-		$result = AppContext::get_sql_querier()->select($query);
+		$this->build_query($limit, $offset, $sorting_rule, $filters);
+		echo $this->query .'<hr />';
+		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
 		foreach ($result as $row)
 		{
 			$login = new HTMLTableRowCell($row['login'], array('row1'));
@@ -77,12 +82,41 @@ class SandboxHTMLTable extends HTMLTable
 
 	private function build_query($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
 	{
-		$query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
+		$this->parameters = array();
+		$this->query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
 		'FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1';
-		$query .= $this->get_order_clause($sorting_rule);
-		return $query . ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+		$this->query .= $this->get_filtered_clause($filters);
+		$this->query .= $this->get_order_clause($sorting_rule);
+		$this->query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
 	}
 
+	private function get_filtered_clause(array $filters)
+	{
+		$clause = '';
+		if (!empty($filters))
+		{
+			$sql_filters = array();
+			foreach ($filters as $filter)
+			{
+				$value = $filter->get_value();
+				$parameter = $filter->get_filter_parameter();
+				$sql_column = $this->get_filter_parameter_column($filter);
+				if ($filter->get_mode() == HTMLTableFilter::EQUALS)
+				{
+					$sql_filters[] = $sql_column . '=:' . $parameter;
+					$this->parameters[$parameter] = $value;
+				}
+				else
+				{
+					$sql_filters[] = $sql_column . ' LIKE :' . $parameter;
+					$this->parameters[$parameter] = $value . '%';
+				}
+			}
+			$clause .= ' AND ' . implode(' AND ', $sql_filters);
+		}
+		return $clause;
+	}
+	
 	private function get_order_clause(HTMLTableSortRule $rule)
 	{
 		$order_clause = ' ORDER BY ';
@@ -109,6 +143,17 @@ class SandboxHTMLTable extends HTMLTable
 			case 'user_id':
 			default:
 				return 'user_id';
+				break;
+		}
+	}
+	
+	private function get_filter_parameter_column(HTMLTableFilter $filter)
+	{
+		switch ($filter->get_filter_parameter())
+		{
+			case 'login':
+			default:
+				return 'login';
 				break;
 		}
 	}
