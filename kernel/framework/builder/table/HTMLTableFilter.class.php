@@ -26,13 +26,47 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
+ * @desc 
  * @package builder
  * @subpackage table
  */
 class HTMLTableFilter
 {
+	const EQUALS = 'equals';
+	const LIKE = 'like';
 	
+	private $mode;
+	private $value;
+	private $name;
+	private $filter_parameter;
+	
+	public function __construct($name, $filter_parameter, $value, $mode)
+	{
+		$this->mode = $mode;
+		$this->value = $value;
+		$this->name = $name;
+		$this->filter_parameter = $filter_parameter;
+	}
+	
+	public function get_mode()
+	{
+		return $this->mode;
+	}
+	
+	public function get_value()
+	{
+		return $this->value;
+	}
+	
+	public function get_name()
+	{
+		return $this->name;
+	}
+	
+	public function get_filter_parameter()
+	{
+		return $this->filter_parameter;
+	}
 }
 
 ?>

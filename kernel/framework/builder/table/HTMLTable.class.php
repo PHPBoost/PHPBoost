@@ -39,7 +39,7 @@ abstract class HTMLTable extends HTMLElement
 	private $number_of_displayed_rows = 0;
 	private $parameters;
 	private $url_parameters;
-	private $sorting_rules = array();
+	private $sorting_rule;
 	private $filters = array();
 
 	/**
@@ -77,18 +77,21 @@ abstract class HTMLTable extends HTMLElement
 
 	abstract protected function get_number_of_elements();
 
+	abstract protected function default_sort_rule();
+
 	/**
 	 * @desc generate rows matching the filters and ordered with rules
-	 * @param HTMLTableSortRule[] $sorting_rules
+	 * @param HTMLTableSortRule $sorting_rules
 	 * @param HTMLTableFilter[] $filters
 	 */
-	abstract protected function fill_data($limit, $offset, array $sorting_rules, array $filters);
+	abstract protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters);
 
 	private function compute_request_parameters()
 	{
 		$this->parameters = $this->url_parameters->get_parameters();
 		$this->compute_page_number();
-		$this->compute_sorting_rules();
+		$this->compute_sorting_rule();
+		$this->compute_filters();
 		$this->url_parameters->set_parameters($this->parameters);
 		Debug::dump($this->parameters);
 	}
@@ -115,32 +118,61 @@ abstract class HTMLTable extends HTMLElement
 		}
 	}
 
-	private function compute_sorting_rules()
+	private function compute_sorting_rule()
 	{
-		if (isset($this->parameters['sort']) && is_array($this->parameters['sort']))
+		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
 		{
-			$sort_parameters = $this->parameters['sort'];
-			foreach ($sort_parameters as $param)
+			$regex = '`(' . HTMLTableSortRule::ASC . '|' . HTMLTableSortRule::DESC . ')(\w+)`';
+			$param = array();
+			if (preg_match($regex, $this->parameters['sort'], $param))
 			{
-				if (preg_match('`(?:!|-)\w+`', $param))
+				$order_way = $param[1];
+				if ($order_way != HTMLTableSortRule::ASC)
 				{
-					$order_way = HTMLTableSortRule::ASC;
-					if ($param[0] == '!')
+					$order_way = HTMLTableSortRule::DESC;
+				}
+				$sort_parameter = $param[2];
+				if ($this->model->is_sort_parameter_allowed($sort_parameter))
+				{
+					$this->sorting_rule = new HTMLTableSortRule($sort_parameter, $order_way);
+					return;
+				}
+			}
+		}
+		$this->sorting_rule = $this->default_sort_rule();
+	}
+
+	private function compute_filters()
+	{
+		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
+		{
+			$filter_parameters = $this->parameters['filters'];
+			Debug::dump($filter_parameters);
+			foreach ($filter_parameters as $filter_param)
+			{
+				$regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
+				$param = array();
+				if (preg_match($regex, $filter_param, $param))
+				{
+					$filter_mode = HTMLTableFilter::EQUALS;
+					if ($param[0] != HTMLTableFilter::EQUALS)
 					{
-						$order_way = HTMLTableSortRule::DESC;
+						$filter_mode = HTMLTableFilter::LIKE;
 					}
-					$sort_parameter = substr($param, 1);
-					if ($this->model->is_sort_parameter_allowed($sort_parameter))
+					$filter_parameter = $param[2];
+					$value = $param[3];
+					if ($this->model->is_filter_parameter_allowed($filter_parameter))
 					{
-						$this->sorting_rules[] = new HTMLTableSortRule($sort_parameter, $order_way);
+						$this->filters = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
 					}
 					else
 					{
-						echo 'sort parameter ' . $sort_parameter . ' is not allowed<br />';
+						echo 'filter ' . $filter_parameter . ' is not allowed<br />';
 					}
 				}
 			}
 		}
+		Debug::dump($this->filters);
 	}
 
 	private function generate_table_structure()
@@ -159,7 +191,14 @@ abstract class HTMLTable extends HTMLElement
 	{
 		foreach ($this->model->get_columns() as $column)
 		{
-			$values = array('NAME' => $column->get_name());
+			$values = array(
+				'NAME' => $column->get_name(),
+				'C_SORTABLE' => $column->is_sortable(),
+				'U_SORT_ASC' => $this->url_parameters->get_url(array(
+					'sort' => '!' . $column->get_parameter_id())),
+				'U_SORT_DESC' => $this->url_parameters->get_url(array(
+					'sort' => '-' . $column->get_parameter_id()))
+			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
 		}
@@ -178,7 +217,7 @@ abstract class HTMLTable extends HTMLElement
 	{
 		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
 		$this->first_row_index = ($this->current_page_number - 1) * $nb_rows_per_page;
-		$this->fill_data($nb_rows_per_page, $this->first_row_index, $this->sorting_rules, $this->filters);
+		$this->fill_data($nb_rows_per_page, $this->first_row_index, $this->sorting_rule, $this->filters);
 	}
 
 	protected final function generate_row(HTMLTableRow $row)
@@ -227,6 +266,7 @@ abstract class HTMLTable extends HTMLElement
 		$pagination->set_url_builder_callback(array($this, 'get_pagination_url'));
 		$this->tpl->add_subtemplate('pagination', $pagination->export());
 	}
+
 	public function get_pagination_url($page_number)
 	{
 		return $this->url_parameters->get_url(array('page' => $page_number));

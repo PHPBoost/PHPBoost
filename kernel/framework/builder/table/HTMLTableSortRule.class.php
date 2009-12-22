@@ -32,8 +32,8 @@
  */
 class HTMLTableSortRule
 {
-	const ASC = 0;
-	const DESC = 1;
+	const ASC = '!';
+	const DESC = '-';
 
 	private $way;
 	private $sort_parameter;

@@ -38,6 +38,7 @@ class HTMLTableModel extends HTMLElement
 	private $caption = '';
 	private $rows_per_page;
 	private $allowed_sort_parameters = array();
+	private $allowed_filter_parameters = array();
 	
 	/**
 	 * @var HTMLTableColumn[]
@@ -101,12 +102,26 @@ class HTMLTableModel extends HTMLElement
 		return in_array($parameter, $this->allowed_sort_parameters);
 	}
 	
+	public function is_filter_parameter_allowed($parameter)
+	{
+		return array_key_exists($parameter, $this->allowed_filter_parameters);
+	}
+	
+	public function add_filter(HTMLTableFilter $filter)
+	{
+		$this->allowed_filter_parameters[$filter->get_filter_parameter()] = $filter;
+	}
+	
 	private function add_column(HTMLTableColumn $column)
 	{
 		$this->columns[] = $column;
 		if ($column->is_sortable())
 		{
-			$this->allowed_sort_parameters[] = $column->get_sort_parameter_id();
+			$this->allowed_sort_parameters[] = $column->get_parameter_id();
+		}
+		if ($column->could_be_filtered())
+		{
+			$this->allowed_filter_parameters[] = $column->get_parameter_id();
 		}
 	}
 }

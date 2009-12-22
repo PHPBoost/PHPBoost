@@ -48,11 +48,16 @@ class SandboxHTMLTable extends HTMLTable
 		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER, 'WHERE user_aprob=1');
 	}
 
-	protected function fill_data($limit, $offset, array $sorting_rules, array $filters)
+	protected function default_sort_rule()
 	{
-		$query = $this->build_query($limit, $offset, $sorting_rules, $filters);
+		return new HTMLTableSortRule('user_id', HTMLTableSortRule::ASC);
+	}
+
+	protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
+	{
+		$query = $this->build_query($limit, $offset, $sorting_rule, $filters);
 		Debug::dump($query);
-//		exit;
+		//				exit;
 		$result = AppContext::get_sql_querier()->select($query);
 		foreach ($result as $row)
 		{
@@ -70,32 +75,29 @@ class SandboxHTMLTable extends HTMLTable
 		}
 	}
 
-	private function build_query($limit, $offset, array $sorting_rules, array $filters)
+	private function build_query($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
 	{
 		$query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
 		'FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1';
-
-		$order_clauses = array();
-		foreach ($sorting_rules as $rule)
-		{
-			$order_clause = $this->get_sort_parameter_column($rule) . ' ';
-			if ($rule->get_order_way() == HTMLTableSortRule::ASC)
-			{
-				$order_clause .= 'ASC';
-			}
-			else
-			{
-				$order_clause .= 'DESC';
-			}
-			$order_clauses[] = $order_clause;
-		}
-		if (!empty($order_clauses))
-		{
-			$query .= ' ORDER BY ' . implode(', ', $order_clauses);
-		}
+		$query .= $this->get_order_clause($sorting_rule);
 		return $query . ' LIMIT ' . $limit . ' OFFSET ' . $offset;
 	}
-	
+
+	private function get_order_clause(HTMLTableSortRule $rule)
+	{
+		$order_clause = ' ORDER BY ';
+		$order_clause .= $this->get_sort_parameter_column($rule) . ' ';
+		if ($rule->get_order_way() == HTMLTableSortRule::ASC)
+		{
+			$order_clause .= 'ASC';
+		}
+		else
+		{
+			$order_clause .= 'DESC';
+		}
+		return $order_clause;
+	}
+
 	private function get_sort_parameter_column(HTMLTableSortRule $rule)
 	{
 		switch ($rule->get_sort_parameter())
@@ -103,8 +105,10 @@ class SandboxHTMLTable extends HTMLTable
 			case 'pseudo':
 				return 'login';
 			case 'register_date':
-			default:
 				return 'timestamp';
+			case 'user_id':
+			default:
+				return 'user_id';
 				break;
 		}
 	}
