@@ -124,7 +124,6 @@ abstract class SQLDAO implements DAO
 
 	public function save(PropertiesMapInterface $object)
 	{
-		$this->before_save($object);
 		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
 		{
@@ -144,7 +143,6 @@ abstract class SQLDAO implements DAO
 
 	public function delete(PropertiesMapInterface $object)
 	{
-		$this->before_delete($object);
 		if ($this->delete_query === null)
 		{
 			$this->delete_query = 'DELETE FROM ' . $this->table .

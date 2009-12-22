@@ -72,7 +72,7 @@ class LangLoader
      * @param string $module the module to look for languages files in
 	 * @return string the localized message
 	 */
-	public static function get_class_message($message_id, $class_file, $module = '')
+	public static function get_class_message($message_id, $filename, $module = '')
 	{
 		$lang = self::get_class($filename, $module);
 		return $lang[$message_id];
