@@ -32,8 +32,6 @@
 interface DAO
 {
 	const FIND_ALL = 0;
-	const ORDER_BY_ASC = 'ASC';
-	const ORDER_BY_DESC = 'DESC';
 	const WHERE_ALL = 'WHERE 1';
 
     /**
@@ -89,7 +87,7 @@ interface DAO
 	 * This parameter is an array with nested associative subarrays for each column:
 	 * <code>array(array('column' => $column1, 'way' => $way1), ...)</code>
 	 * <code>$column1</code> must be a column name or an alias and <code>$way</code> could be
-	 * ascending (<code>DAO::ORDER_BY_ASC</code>) or descending (<code>DAO::ORDER_BY_DESC</code>)
+	 * ascending (<code>SQLQuerier::ORDER_BY_ASC</code>) or descending (<code>SQLQuerier::ORDER_BY_DESC</code>)
 	 * @return QueryResultMapper the objects list
 	 */
 	function find_all($limit = 100, $offset = 0, $order_by = array());

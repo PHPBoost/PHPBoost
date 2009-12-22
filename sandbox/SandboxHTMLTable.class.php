@@ -30,14 +30,14 @@ class SandboxHTMLTable extends HTMLTable
 	public function __construct()
 	{
 		$columns = array(
-		new HTMLTableColumn('pseudo'),
+		new HTMLTableColumn('pseudo', 'pseudo'),
 		new HTMLTableColumn('email'),
-		new HTMLTableColumn('inscrit le'),
+		new HTMLTableColumn('inscrit le', 'register_date'),
 		new HTMLTableColumn('messages'),
 		new HTMLTableColumn('dernière connexion'),
-		new HTMLTableColumn('messagerie privée'),
+		new HTMLTableColumn('messagerie'),
 		);
-		$model = new HTMLTableModel($columns, 2);
+		$model = new HTMLTableModel($columns, 10);
 		$model->set_id('42');
 		$model->set_caption('Liste des membres');
 		parent::__construct($model);
@@ -50,19 +50,62 @@ class SandboxHTMLTable extends HTMLTable
 
 	protected function fill_data($limit, $offset, array $sorting_rules, array $filters)
 	{
-		$query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect
-			FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1 LIMIT ' . $limit . ' OFFSET ' . $offset;
-		foreach (AppContext::get_sql_querier()->select($query) as $row)
+		$query = $this->build_query($limit, $offset, $sorting_rules, $filters);
+		Debug::dump($query);
+//		exit;
+		$result = AppContext::get_sql_querier()->select($query);
+		foreach ($result as $row)
 		{
 			$login = new HTMLTableRowCell($row['login'], array('row1'));
 			$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;');
-			$timestamp = new HTMLTableRowCell(gmdate_format('date_format_short', $row['timestamp']));
+			$user_mail->set_css_style('width:50px;text-align:center;');
+			$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
 			$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
-			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_short', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
+			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
 			$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
 			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)"></a>');
-				
+			$pm->set_css_style('width:50px;text-align:center;');
+
 			$this->generate_row(new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm)));
+		}
+	}
+
+	private function build_query($limit, $offset, array $sorting_rules, array $filters)
+	{
+		$query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
+		'FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1';
+
+		$order_clauses = array();
+		foreach ($sorting_rules as $rule)
+		{
+			$order_clause = $this->get_sort_parameter_column($rule) . ' ';
+			if ($rule->get_order_way() == HTMLTableSortRule::ASC)
+			{
+				$order_clause .= 'ASC';
+			}
+			else
+			{
+				$order_clause .= 'DESC';
+			}
+			$order_clauses[] = $order_clause;
+		}
+		if (!empty($order_clauses))
+		{
+			$query .= ' ORDER BY ' . implode(', ', $order_clauses);
+		}
+		return $query . ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+	}
+	
+	private function get_sort_parameter_column(HTMLTableSortRule $rule)
+	{
+		switch ($rule->get_sort_parameter())
+		{
+			case 'pseudo':
+				return 'login';
+			case 'register_date':
+			default:
+				return 'timestamp';
+				break;
 		}
 	}
 }

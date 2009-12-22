@@ -43,10 +43,10 @@ class UrlSerializedParameter
 
 	public function get_parameters()
 	{
-		return $this->parameters;
+		return is_array($this->parameters) ? $this->parameters : array();
 	}
 
-	public function set_parameters(array $parameters)
+	public function set_parameters($parameters)
 	{
 		$this->parameters = $parameters;
 	}
@@ -80,14 +80,29 @@ class UrlSerializedParameter
 
 	private function parse_parameters()
 	{
+		urlencode('+');
 		$args = AppContext::get_request()->get_value($this->arg_id, '');
-		foreach (explode('&', $args) as $param)
+		foreach (preg_split('`,`', $args) as $param)
 		{
-			$idx = strpos($param, '=');
 			$matches = array();
-			if (preg_match('`^(.+)=(.+)$`iU', $param, $matches))
+			if (preg_match('`^(\w+):(.+)$`i', $param, $matches))
 			{
-				$this->parameters[$matches[1]] = urldecode($matches[2]);
+				$param_name = $matches[1];
+				$param_value = $matches[2];
+				if (preg_match('`^{.*}$`i', $param_value))
+				{
+					$values = explode(':', substr($param_value, 1, strlen($param_value) - 2));
+					$decoded_values = array();
+					foreach ($values as $value)
+					{
+						$decoded_values[] = urldecode($value);
+					}
+					$this->parameters[$param_name] = $decoded_values;
+				}
+				else
+				{
+					$this->parameters[$param_name] = urldecode($param_value);
+				}
 			}
 		}
 	}
@@ -97,9 +112,27 @@ class UrlSerializedParameter
 		$result = array();
 		foreach ($parameters as $key => $value)
 		{
-			$result[] = $key . '=' . urlencode($value);
+			$param = $key . ':';
+			if (is_array($value))
+			{
+				$values = array();
+				foreach ($value as $a_value)
+				{
+					$values[] = $a_value;
+					//						$values[] = urlencode($a_value);
+				}
+				$param .= '{' . implode(':', $values) . '}';
+				//				$param .= urlencode('{' . implode(':', $value) . '}');
+			}
+			else
+			{
+				$param .= $value;
+				//				$param .= urlencode($value);
+			}
+			$result[] = $param;
 		}
-		return urlencode(implode('&', $result));
+		return implode(',', $result);
+		//		return urlencode(implode(',', $result));
 	}
 }
 

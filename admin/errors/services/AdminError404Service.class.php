@@ -33,7 +33,7 @@ class AdminError404Service
 {
 	public static function list_404_errors()
 	{
-		return AdminError404DAO::instance()->find_all(100, 0, array(array('column' => 'times', 'way' => DAO::ORDER_BY_DESC)));
+		return AdminError404DAO::instance()->find_all(100, 0, array(array('column' => 'times', 'way' => SQLQuerier::ORDER_BY_DESC)));
 	}
 
 	public static function clear_404_errors_list()
