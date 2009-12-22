@@ -146,16 +146,16 @@ class CommonQuery
 	 * @param string[string] $parameters the query_var map
 	 * @return int the number of rows returned
 	 */
-	public function count($table_name, $condition = '', $parameters = array(),
+	public function count($table_name, $condition = 'WHERE 1', $parameters = array(),
 	$count_column = '*')
 	{
 		$query = 'SELECT COUNT(' . $count_column . ') FROM ' . $table_name;
 		if (!empty($condition))
 		{
-			$query .= ' WHERE ' . $condition;
+			$query .= ' ' . $condition;
 		}
 		$row = $this->querier->select($query, $parameters, SelectQueryResult::FETCH_NUM)->fetch();
-		return $row[0];
+		return (int) $row[0];
 	}
 }
 

@@ -237,7 +237,7 @@ class Search
         foreach ($module_ids as $module_id)
         {
             // Checks search cache.
-            if (array_keys_exists($module_id, $this->id_search))
+            if (array_key_exists($module_id, $this->id_search))
             {
                 // Search conditions
                 if ($num_modules > 0)
