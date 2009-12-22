@@ -355,7 +355,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_to_remove . "'", __LINE__, __FILE__);
 	
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_to_remove . "'", __LINE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_to_remove . "'", __LINE__, __FILE__);
 	
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
