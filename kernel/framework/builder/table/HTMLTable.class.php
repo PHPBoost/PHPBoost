@@ -37,9 +37,8 @@ abstract class HTMLTable extends HTMLElement
 	private $nb_elements = 0;
 	private $first_row_index = 0;
 	private $number_of_displayed_rows = 0;
-	private $args_id;
-	private $query_args;
-	private $parameters = array();
+	private $parameters;
+	private $url_parameters;
 
 	/**
 	 * @var Template
@@ -58,7 +57,7 @@ abstract class HTMLTable extends HTMLElement
 			$tpl_path = 'framework/builder/table/table.tpl';
 		}
 		$this->tpl = new Template($tpl_path);
-		$this->args_id = 'table' . $this->model->get_id();
+		$this->url_parameters = new UrlSerializedParameter('table' . $this->model->get_id());
 	}
 
 	/**
@@ -85,57 +84,10 @@ abstract class HTMLTable extends HTMLElement
 
 	private function compute_request_parameters()
 	{
-		$this->parse_parameters();
+		$this->parameters = $this->url_parameters->get_parameters();
 		$this->compute_page_number();
-		$this->prepare_query_args();
-
-		//		echo $this->serialize_parameters($this->get_parameters()) . '<br />';
-		Debug::dump($this->get_parameters());
-		Debug::dump($this->query_args);
-	}
-
-	private function prepare_query_args()
-	{
-		$query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-		$query_string = preg_replace('`((^|&)' . $this->args_id . '=[^&]*(&|$))`', '$3', $query_string);
-		$query_string = trim($query_string, '&');
-		if (!empty($query_string))
-		{
-			$this->query_args = explode('&', $query_string);
-		}
-		else
-		{
-			$this->query_args = array();
-		}
-	}
-
-	private function parse_parameters()
-	{
-		$args = AppContext::get_request()->get_value($this->args_id, '');
-		foreach (explode('&', $args) as $param)
-		{
-			$idx = strpos($param, '=');
-			$matches = array();
-			if (preg_match('`^(.+)=(.+)$`iU', $param, $matches))
-			{
-				$this->parameters[$matches[1]] = urldecode($matches[2]);
-			}
-		}
-	}
-
-	private function serialize_parameters($parameters)
-	{
-		$result = array();
-		foreach ($parameters as $key => $value)
-		{
-			$result[] = $key . '=' . urlencode($value);
-		}
-		return urlencode(implode('&', $result));
-	}
-
-	private function get_parameters()
-	{
-		return $this->parameters;
+		$this->url_parameters->set_parameters($this->parameters);
+		Debug::dump($this->parameters);
 	}
 
 	private function compute_page_number()
@@ -280,22 +232,10 @@ abstract class HTMLTable extends HTMLElement
 	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
 		$this->tpl->assign_block_vars('page', array(
-			'URL' => $this->get_url(array('page' => $page_number)),
+			'URL' => $this->url_parameters->get_url(array('page' => $page_number)),
 			'NUMBER' => $name,
 			'C_CURRENT_PAGE' => $is_current_page
 		));
-	}
-
-	private function get_url(array $parameters)
-	{
-		$url_params = $this->get_parameters();
-		foreach ($parameters as $parameter => $value)
-		{
-			$url_params[$parameter] = $value;
-		}
-		$query_args = $this->query_args;
-		$query_args[] = $this->args_id . '=' . $this->serialize_parameters($url_params);
-		return '?' . implode('&amp;', $query_args);
 	}
 }
 
