@@ -51,11 +51,6 @@ class HTMLTableColumn extends HTMLElement
 		return !empty($this->parameter_id);
 	}
 	
-	public function could_be_filtered()
-	{
-		return !empty($this->parameter_id);
-	}
-	
 	public function get_parameter_id()
 	{
 		return $this->parameter_id;

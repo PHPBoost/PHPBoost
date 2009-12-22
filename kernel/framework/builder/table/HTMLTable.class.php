@@ -75,7 +75,7 @@ abstract class HTMLTable extends HTMLElement
 		return $this->tpl;
 	}
 
-	abstract protected function get_number_of_elements();
+	abstract protected function get_number_of_elements(array $filters);
 
 	abstract protected function default_sort_rule();
 
@@ -89,18 +89,17 @@ abstract class HTMLTable extends HTMLElement
 	private function compute_request_parameters()
 	{
 		$this->parameters = $this->url_parameters->get_parameters();
+		$this->compute_filters();
 		$this->compute_page_number();
 		$this->compute_sorting_rule();
-		$this->compute_filters();
 		$this->url_parameters->set_parameters($this->parameters);
-		Debug::dump($this->parameters);
 	}
 
 	private function compute_page_number()
 	{
 		if ($this->model->is_pagination_activated())
 		{
-			$this->nb_elements = $this->get_number_of_elements();
+			$this->nb_elements = $this->get_number_of_elements($this->filters);
 			$this->nb_of_pages = ceil($this->nb_elements / $this->model->get_nb_rows_per_page());
 			if (isset($this->parameters['page']))
 			{
@@ -147,32 +146,26 @@ abstract class HTMLTable extends HTMLElement
 		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
 		{
 			$filter_parameters = $this->parameters['filters'];
-			Debug::dump($filter_parameters);
 			foreach ($filter_parameters as $filter_param)
 			{
 				$regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
 				$param = array();
 				if (preg_match($regex, $filter_param, $param))
 				{
-					$filter_mode = HTMLTableFilter::EQUALS;
-					if ($param[0] != HTMLTableFilter::EQUALS)
+					$filter_mode = $param[1];
+					if ($filter_mode != HTMLTableFilter::EQUALS)
 					{
 						$filter_mode = HTMLTableFilter::LIKE;
 					}
 					$filter_parameter = $param[2];
-					$value = $param[3];
+					$value = str_replace('%', '', $param[3]);
 					if ($this->model->is_filter_parameter_allowed($filter_parameter))
 					{
-						$this->filters = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
-					}
-					else
-					{
-						echo 'filter ' . $filter_parameter . ' is not allowed<br />';
+						$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
 					}
 				}
 			}
 		}
-		Debug::dump($this->filters);
 	}
 
 	private function generate_table_structure()
@@ -195,9 +188,9 @@ abstract class HTMLTable extends HTMLElement
 				'NAME' => $column->get_name(),
 				'C_SORTABLE' => $column->is_sortable(),
 				'U_SORT_ASC' => $this->url_parameters->get_url(array(
-					'sort' => '!' . $column->get_parameter_id())),
+					'sort' => '!' . $column->get_parameter_id(), 'page' => 1)),
 				'U_SORT_DESC' => $this->url_parameters->get_url(array(
-					'sort' => '-' . $column->get_parameter_id()))
+					'sort' => '-' . $column->get_parameter_id(), 'page' => 1))
 			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
