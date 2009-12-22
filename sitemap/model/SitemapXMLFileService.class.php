@@ -106,6 +106,15 @@ class SitemapXMLFileService
 		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
 
 		$file->write($sitemap->export($export_config)->parse(Template::TEMPLATE_PARSER_STRING));
+		
+		self::update_last_generation_date();
+	}
+	
+	private static function update_last_generation_date()
+	{
+		$sitemap_config = SitemapConfig::load();
+		$sitemap_config->set_last_generation_date(new Date());
+		SitemapConfig::save($sitemap_config);
 	}
 }
 ?>
