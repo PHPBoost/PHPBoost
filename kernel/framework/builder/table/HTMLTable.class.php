@@ -32,11 +32,14 @@
  */
 abstract class HTMLTable extends HTMLElement
 {
-	private $current_page_number = 1;
 	private $nb_of_pages = 1;
+	private $current_page_number = 1;
+	private $nb_elements = 0;
 	private $first_row_index = 0;
-	private $number_of_elements = 0;
 	private $number_of_displayed_rows = 0;
+	private $args_id;
+	private $query_args;
+	private $parameters = array();
 
 	/**
 	 * @var Template
@@ -55,6 +58,7 @@ abstract class HTMLTable extends HTMLElement
 			$tpl_path = 'framework/builder/table/table.tpl';
 		}
 		$this->tpl = new Template($tpl_path);
+		$this->args_id = 'table' . $this->model->get_id();
 	}
 
 	/**
@@ -70,8 +74,90 @@ abstract class HTMLTable extends HTMLElement
 		return $this->tpl;
 	}
 
+	abstract protected function get_number_of_elements();
+
+	/**
+	 * @desc generate rows matching the filters and ordered with rules
+	 * @param HTMLTableSortRule[] $sorting_rules
+	 * @param HTMLTableFilter[] $filters
+	 */
+	abstract protected function fill_data($limit, $offset, array $sorting_rules, array $filters);
+
 	private function compute_request_parameters()
 	{
+		$this->parse_parameters();
+		$this->compute_page_number();
+		$this->prepare_query_args();
+
+		//		echo $this->serialize_parameters($this->get_parameters()) . '<br />';
+		Debug::dump($this->get_parameters());
+		Debug::dump($this->query_args);
+	}
+
+	private function prepare_query_args()
+	{
+		$query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		$query_string = preg_replace('`((^|&)' . $this->args_id . '=[^&]*(&|$))`', '$3', $query_string);
+		$query_string = trim($query_string, '&');
+		if (!empty($query_string))
+		{
+			$this->query_args = explode('&', $query_string);
+		}
+		else
+		{
+			$this->query_args = array();
+		}
+	}
+
+	private function parse_parameters()
+	{
+		$args = AppContext::get_request()->get_value($this->args_id, '');
+		foreach (explode('&', $args) as $param)
+		{
+			$idx = strpos($param, '=');
+			$matches = array();
+			if (preg_match('`^(.+)=(.+)$`iU', $param, $matches))
+			{
+				$this->parameters[$matches[1]] = urldecode($matches[2]);
+			}
+		}
+	}
+
+	private function serialize_parameters($parameters)
+	{
+		$result = array();
+		foreach ($parameters as $key => $value)
+		{
+			$result[] = $key . '=' . urlencode($value);
+		}
+		return urlencode(implode('&', $result));
+	}
+
+	private function get_parameters()
+	{
+		return $this->parameters;
+	}
+
+	private function compute_page_number()
+	{
+		if ($this->model->is_pagination_activated())
+		{
+			$this->nb_elements = $this->get_number_of_elements();
+			$this->nb_of_pages = ceil($this->nb_elements / $this->model->get_nb_rows_per_page());
+			if (isset($this->parameters['page']))
+			{
+				$page = $this->parameters['page'];
+				if (is_numeric($page))
+				{
+					$page = numeric($page);
+					if (is_int($page) && $page >= 1 && $page <= $this->nb_of_pages)
+					{
+						$this->current_page_number = $page;
+					}
+				}
+				$this->parameters['page'] = $this->current_page_number;
+			}
+		}
 	}
 
 	private function generate_table_structure()
@@ -100,7 +186,6 @@ abstract class HTMLTable extends HTMLElement
 	{
 		if ($this->model->is_pagination_activated())
 		{
-			$this->number_of_elements = $this->get_number_of_elements();
 			$this->generate_footer_stats();
 			$this->generate_footer_pagination();
 		}
@@ -110,7 +195,7 @@ abstract class HTMLTable extends HTMLElement
 	{
 		$sorting_rules = array();
 		$filters = array();
-		$nb_rows_per_page = $this->model->get_number_of_row_per_page();
+		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
 		$this->first_row_index = ($this->current_page_number - 1) * $nb_rows_per_page;
 		$this->fill_data($nb_rows_per_page, $this->first_row_index, $sorting_rules, $filters);
 	}
@@ -145,10 +230,10 @@ abstract class HTMLTable extends HTMLElement
 	private function generate_footer_stats()
 	{
 		$end = $this->first_row_index + $this->number_of_displayed_rows;
-		$elements = StringVars::replace_vars(':start to :end of :total elements', array(
+		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __FILE__), array(
 			'start' => $this->first_row_index + 1,
 			'end' => $end,
-			'total' => $this->number_of_elements
+			'total' => $this->nb_elements
 		));
 		$this->tpl->assign_vars(array(
 			'NUMBER_OF_ELEMENTS' => $elements
@@ -157,7 +242,6 @@ abstract class HTMLTable extends HTMLElement
 
 	private function generate_footer_pagination()
 	{
-		$this->nb_of_pages = $this->number_of_elements / $this->model->get_number_of_row_per_page();
 		$this->generate_first_page_pagination();
 		$this->generate_near_pages_pagination();
 		$this->generate_last_page_pagination();
@@ -167,7 +251,7 @@ abstract class HTMLTable extends HTMLElement
 	{
 		if ($this->current_page_number > 1)
 		{
-			$this->add_pagination_page('&laquo;', '');
+			$this->add_pagination_page('&laquo;', 1);
 		}
 	}
 
@@ -177,11 +261,10 @@ abstract class HTMLTable extends HTMLElement
 		$end = $this->current_page_number + 3;
 		for ($i = $start; $i < $end; $i++)
 		{
-			if ($i >= 1 && $i <= ($this->nb_of_pages + 1))
+			if ($i >= 1 && $i <= $this->nb_of_pages)
 			{
-				$url = '';
 				$is_current_page = $i == $this->current_page_number;
-				$this->add_pagination_page($i, $url, $is_current_page);
+				$this->add_pagination_page($i, $i, $is_current_page);
 			}
 		}
 	}
@@ -190,27 +273,30 @@ abstract class HTMLTable extends HTMLElement
 	{
 		if ($this->current_page_number < $this->nb_of_pages)
 		{
-			$this->add_pagination_page('&raquo;', '');
+			$this->add_pagination_page('&raquo;', $this->nb_of_pages);
 		}
 	}
 
-	private function add_pagination_page($name, $url, $is_current_page = false)
+	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
 		$this->tpl->assign_block_vars('page', array(
-			'URL' => $url,
+			'URL' => $this->get_url(array('page' => $page_number)),
 			'NUMBER' => $name,
 			'C_CURRENT_PAGE' => $is_current_page
 		));
 	}
 
-	abstract protected function get_number_of_elements();
-
-	/**
-	 * @desc generate rows matching the filters and ordered with rules
-	 * @param HTMLTableSortRule[] $sorting_rules
-	 * @param HTMLTableFilter[] $filters
-	 */
-	abstract protected function fill_data($limit, $offset, array $sorting_rules, array $filters);
+	private function get_url(array $parameters)
+	{
+		$url_params = $this->get_parameters();
+		foreach ($parameters as $parameter => $value)
+		{
+			$url_params[$parameter] = $value;
+		}
+		$query_args = $this->query_args;
+		$query_args[] = $this->args_id . '=' . $this->serialize_parameters($url_params);
+		return '?' . implode('&amp;', $query_args);
+	}
 }
 
 ?>
