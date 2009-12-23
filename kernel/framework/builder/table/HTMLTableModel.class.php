@@ -117,7 +117,7 @@ class HTMLTableModel extends HTMLElement
 		$this->columns[] = $column;
 		if ($column->is_sortable())
 		{
-			$this->allowed_sort_parameters[] = $column->get_parameter_id();
+			$this->allowed_sort_parameters[] = $column->get_sortable_parameter();
 		}
 	}
 }

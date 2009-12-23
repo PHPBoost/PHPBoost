@@ -30,30 +30,24 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableColumn extends HTMLElement
+class HTMLTableColumn extends HTMLTableRowCell
 {
-	private $name = '';
-	private $parameter_id = '';
+	private $sortable_parameter = '';
 	
-	public function __construct($name, $parameter_id = '')
+	public function __construct($name, $sortable_parameter = '')
 	{
-		$this->name = $name;
-		$this->parameter_id = $parameter_id;
-	}
-	
-	public function get_name()
-	{
-		return $this->name;
+		$this->sortable_parameter = $sortable_parameter;
+		parent::__construct($name, array('row1'));
 	}
 	
 	public function is_sortable()
 	{
-		return !empty($this->parameter_id);
+		return !empty($this->sortable_parameter);
 	}
 	
-	public function get_parameter_id()
+	public function get_sortable_parameter()
 	{
-		return $this->parameter_id;
+		return $this->sortable_parameter;
 	}
 }
 

@@ -40,7 +40,7 @@ class SandboxHTMLTable extends HTMLTable
 		new HTMLTableColumn('dernière connexion'),
 		new HTMLTableColumn('messagerie'),
 		);
-		$model = new HTMLTableModel($columns, 1);
+		$model = new HTMLTableModel($columns, 3);
 		$model->set_id('42');
 		$model->set_caption('Liste des membres');
 		$model->add_filter(new HTMLTableFilterForm('Pseudo', 'login', HTMLTableFilter::EQUALS));
@@ -62,19 +62,22 @@ class SandboxHTMLTable extends HTMLTable
 	protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
 	{
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
-		echo $this->query .'<hr />';
+//		echo $this->query .'<hr />';
 		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
 		foreach ($result as $row)
 		{
 			$login = new HTMLTableRowCell($row['login'], array('row1'));
 			$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;');
-			$user_mail->set_css_style('width:50px;text-align:center;');
+			$user_mail->add_css_style('width:50px');
+			$user_mail->center();
 			$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
 			$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
+			$user_msg->center();
 			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
 			$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
-			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)"></a>');
-			$pm->set_css_style('width:50px;text-align:center;');
+			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)" /></a>');
+			$pm->center();
+			$pm->add_css_style('width:50px');
 
 			$this->generate_row(new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm)));
 		}
