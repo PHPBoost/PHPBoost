@@ -35,7 +35,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 {
 	private $full_view;
 
-	public function __construct($view)
+	public function __construct(Template $view)
 	{
 		$env = new AdminDisplayGraphicalEnvironment();
 

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                UrlSerializedParameter.class.php
+ *                     UrlSerializedParameter.class.php
  *                            -------------------
  *   begin                : December 22, 2009
  *   copyright            : (C) 2009 Loïc Rouchon

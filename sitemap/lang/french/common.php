@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        AdminSitemapResponse.class.php
+ *                                 common.php
  *                            -------------------
- *   begin                : December 09 2009
+ *   begin                : December 23, 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,25 +25,8 @@
  *
  ###################################################*/
 
-class AdminSitemapResponse extends AdminMenuDisplayResponse
-{
-	private $lang = array();
-	
-	public function __construct(Template $view)
-	{
-		parent::__construct($view);
-		
-		$this->lang = LangLoader::get('common', 'sitemap');
-		
-		$this->prepare_menu();
-	}
-	
-	private function prepare_menu()
-	{
-		$this->set_title($this->lang['sitemap']);
-		
-		$this->add_link('Configuration générale', SitemapUrlBuilder::menu_general_config()->absolute(), 'sitemap/sitemap.png');
-	}
-}
+$lang = array();
+$lang['sitemap'] = 'Plan du site';
+$lang['sitemap_xml_could_not_been_written'] = 'Le fichier sitemap.xml généré par le module sitemap n\'a pas pu être écrit probablement à cause d\'un problème d\'autorisation à la racine du site.';
 
 ?>

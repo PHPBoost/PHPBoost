@@ -31,7 +31,7 @@ class AdminSitemapController extends AdminController
 	
 	public function __construct()
 	{
-		$this->lang = LangLoader::get('main', 'sitemap');
+		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 	
 	public function execute(HTTPRequest $request)
