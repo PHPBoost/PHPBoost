@@ -1,14 +1,14 @@
 # IF C_VALIDATION_ERROR #
 <div class="error">{VALIDATION_ERROR}</div>
 # ENDIF #
-<form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="return check_generated_form_{L_FORMNAME}();" class="{FORMCLASS}">
+<form action="{U_FORMACTION}" method="post" onsubmit="return check_generated_form_{EL_FORMNAME}();" class="{FORMCLASS}">
 	# START fieldsets #
 		{fieldsets.FIELDSET}
 	# END fieldsets #
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
-		<input type="submit" name="{L_FORMNAME}" value="{L_SUBMIT}" class="submit" />
+		<input type="submit" name="{EL_FORMNAME}" value="{L_SUBMIT}" class="submit" />
 		# IF C_DISPLAY_PREVIEW #
 		<script type="text/javascript">
 		<!--				
@@ -37,7 +37,9 @@
 			return false;
 		}
 		# END check_constraints #
-		
+		# IF C_PERSONAL_SUBMIT #
+		return {PERSONAL_SUBMIT}();
+		# ENDIF #
 		return true;
 	}
 -->

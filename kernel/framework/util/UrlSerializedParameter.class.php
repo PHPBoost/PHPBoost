@@ -51,12 +51,16 @@ class UrlSerializedParameter
 		$this->parameters = $parameters;
 	}
 
-	public function get_url(array $parameters)
+	public function get_url(array $parameters, array $to_remove = array())
 	{
 		$url_params = $this->get_parameters();
 		foreach ($parameters as $parameter => $value)
 		{
 			$url_params[$parameter] = $value;
+		}
+		foreach ($to_remove as $param)
+		{
+			unset($url_params[$param]);
 		}
 		$query_args = array();
 		foreach ($this->query_args as $query_arg => $value)

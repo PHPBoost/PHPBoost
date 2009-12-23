@@ -1,19 +1,27 @@
 # IF C_FILTERS #
-<div id="filters">
-	<form action="">
-		# START filter #
-		<div>
-			<input type="text" name="" value="" />
-			<input type="submit" value="submit" />
-		</div>
-		# ENDIF #
-	</form>
+<div
+	id="show_filters_{TABLE_ID}"
+	onclick="toggleTableFilters();">
+	SHOW_FILTERS
+</div>
+<div
+	id="hide_filters_{TABLE_ID}"
+	onclick="toggleTableFilters();"
+	style="display:none;">
+	HIDE_FILTERS
+</div>
+<div id="filters_{TABLE_ID}" style="display:none;">
+	# INCLUDE filters #
 </div>
 # ENDIF #
 <table
 	class="module_table # IF C_CSS_CLASSES #{CSS_CLASSES}# ENDIF #"
 	# IF C_CSS_STYLE # style="{CSS_STYLE}"# ENDIF #>
-	# IF C_CAPTION #<caption>{CAPTION}</caption># ENDIF #
+	# IF C_CAPTION #
+	<caption>
+		<a href="{U_TABLE_DEFAULT_OPIONS}" title="{E_CAPTION}">{E_CAPTION}</a>
+	</caption>
+	# ENDIF #
 	<thead>
 		<tr>
 			# START header_column #
@@ -79,3 +87,35 @@
 		# END row #
 	</tbody>
 </table>
+# IF C_FILTERS #
+<script type="text/javascript">
+<!--
+function toggleTableFilters() {
+	Effect.toggle('show_filters_{TABLE_ID}', 'appear', { duration: 0 });
+	Effect.toggle('hide_filters_{TABLE_ID}', 'appear', { duration: 0 });
+	Effect.toggle('filters_{TABLE_ID}', 'appear', { duration: 0.5 });
+}
+
+function {SUBMIT_FUNCTION}() {
+	submitUrl = {J_SUBMIT_URL};
+	filtersList = '';
+	# START filter #
+	eltName = '{filter.NAME}';
+	elt = $(eltName);
+	if (elt) {
+		window.alert(elt.id + ' = ' + elt.value);
+		filtersList += 'equals-' + elt.name + '-' + elt.value + ',';
+	} else {
+		window.alert('element ' + eltName + ' not found');
+	}
+	# END filter #
+	if (submitUrl.charAt(submitUrl.length - 1)) {
+		submitUrl += ',';
+	}
+	window.alert('URL: ' + submitUrl + 'filters:{' + filtersList + '}');
+	// window.location = submitUrl;
+	return false;
+}
+-->
+</script>
+# ENDIF #

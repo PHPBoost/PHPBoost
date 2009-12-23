@@ -96,6 +96,7 @@ class Form implements ValidableFormComponent
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
 	private $display_reset = true;
 	private $validation_error_message = '';
+	private $personal_submit_function = '';
 
 	private static $js_already_included = false;
 
@@ -124,6 +125,11 @@ class Form implements ValidableFormComponent
 		$this->form_fieldsets[] = $fieldset;
 	}
 
+	public function set_personal_submit_function($personal_submit_function)
+	{
+		$this->personal_submit_function = $personal_submit_function;
+	}
+	
 	public function validate()
 	{
 		$validation_result = true;
@@ -211,6 +217,8 @@ class Form implements ValidableFormComponent
 			'L_RESET' => $LANG['reset'],
 			'C_VALIDATION_ERROR' => !empty($this->validation_error_message),
 			'VALIDATION_ERROR' => $this->validation_error_message,
+			'C_PERSONAL_SUBMIT' => !empty($this->personal_submit_function),
+			'PERSONAL_SUBMIT' => $this->personal_submit_function
 		));
 		self::$js_already_included = true;
 

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            FormFieldComposite.class.php
+ *                         HTMLTableSelectFilterForm.class.php
  *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : December 23, 2009
+ *   copyright            : (C) 2009 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
  *
@@ -24,18 +24,40 @@
  *
  ###################################################*/
 
-abstract class FormFieldComposite
-{
-	protected $label = '';
-	protected $name = '';
-	protected $value = '';
-	protected $id = '';
-
-	public abstract function display();
-
-	public function get_value() { return $this->value; }
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc 
+ * @package builder
+ * @subpackage table
+ */
+class HTMLTableSelectFilterForm extends HTMLTableFilterForm
+{	
+	private $options = array();
 	
-	public function set_name($var) { $this->name = $var; }
+	public function __construct($name, $filter_parameter, array $options)
+	{
+		$this->options = $options;
+		parent::__construct($name, $filter_parameter);
+	}
+	
+	public function get_form_field()
+	{
+		return new FormSelect($this->get_filter_parameter(), array(), $this->options);
+	}
+	
+	public function is_filter_value_allowed($value)
+	{
+		// TODO temporary
+		return true;
+		foreach ($this->options as $option)
+		{
+			if ($value === $option->get_value())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 ?>

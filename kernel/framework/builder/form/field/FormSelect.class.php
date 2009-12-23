@@ -72,16 +72,6 @@ class FormSelect extends FormField
 	public function display()
 	{
 		$template = new Template('framework/builder/forms/field_select.tpl');
-
-		if ($this->multiple)
-		{
-			$field = '<select name="' . $this->name . '[]" multiple="multiple">' . $this->options . '</select>';
-		}
-		else
-		{
-			$field = '<select name="' . $this->name . '">' . $this->options . '</select>';
-		}
-			
 		$template->assign_vars(array(
 			'ID' => $this->id,
 			'C_SELECT_MULTIPLE' => $this->multiple,
