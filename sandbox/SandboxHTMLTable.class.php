@@ -29,7 +29,7 @@ class SandboxHTMLTable extends HTMLTable
 {
 	private $query;
 	private $parameters;
-	
+
 	public function __construct()
 	{
 		$columns = array(
@@ -43,7 +43,12 @@ class SandboxHTMLTable extends HTMLTable
 		$model = new HTMLTableModel($columns, 3);
 		$model->set_id('42');
 		$model->set_caption('Liste des membres');
-		$model->add_filter(new HTMLTableFilterForm('Pseudo', 'login', HTMLTableFilter::EQUALS));
+		$options = array(
+			new FormSelectOption('tous', ''),
+			new FormSelectOption('Horn', 'horn'),
+			new FormSelectOption('CouCou', 'coucou')
+		);
+		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
 		parent::__construct($model);
 	}
 
@@ -62,7 +67,7 @@ class SandboxHTMLTable extends HTMLTable
 	protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
 	{
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
-//		echo $this->query .'<hr />';
+		//		echo $this->query .'<hr />';
 		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
 		foreach ($result as $row)
 		{
@@ -119,7 +124,7 @@ class SandboxHTMLTable extends HTMLTable
 		}
 		return $clause;
 	}
-	
+
 	private function get_order_clause(HTMLTableSortRule $rule)
 	{
 		$order_clause = ' ORDER BY ';
@@ -149,7 +154,7 @@ class SandboxHTMLTable extends HTMLTable
 				break;
 		}
 	}
-	
+
 	private function get_filter_parameter_column(HTMLTableFilter $filter)
 	{
 		switch ($filter->get_filter_parameter())

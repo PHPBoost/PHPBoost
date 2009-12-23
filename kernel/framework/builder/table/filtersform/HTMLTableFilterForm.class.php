@@ -30,22 +30,15 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableFilterForm
+abstract class HTMLTableFilterForm
 {	
-	private $mode;
 	private $name;
 	private $filter_parameter;
 	
-	public function __construct($name, $filter_parameter, $mode)
+	public function __construct($name, $filter_parameter)
 	{
-		$this->mode = $mode;
 		$this->name = $name;
 		$this->filter_parameter = $filter_parameter;
-	}
-	
-	public function get_mode()
-	{
-		return $this->mode;
 	}
 	
 	public function get_name()
@@ -57,6 +50,10 @@ class HTMLTableFilterForm
 	{
 		return $this->filter_parameter;
 	}
+	
+	abstract public function get_form_field();
+	
+	abstract public function is_filter_value_allowed($value);
 }
 
 ?>

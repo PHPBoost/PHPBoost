@@ -32,6 +32,7 @@
  */
 abstract class HTMLTable extends HTMLElement
 {
+	private $arg_id = 1;
 	private $nb_of_pages = 1;
 	private $current_page_number = 1;
 	private $nb_elements = 0;
@@ -59,7 +60,8 @@ abstract class HTMLTable extends HTMLElement
 			$tpl_path = 'framework/builder/table/table.tpl';
 		}
 		$this->tpl = new Template($tpl_path);
-		$this->url_parameters = new UrlSerializedParameter('table' . $this->model->get_id());
+		$this->arg_id = 'table' . $this->model->get_id();
+		$this->url_parameters = new UrlSerializedParameter($this->arg_id);
 	}
 
 	/**
@@ -68,6 +70,7 @@ abstract class HTMLTable extends HTMLElement
 	public function export()
 	{
 		$this->compute_request_parameters();
+		$this->generate_filters_form();
 		$this->generate_table_structure();
 		$this->generate_header();
 		$this->generate_rows();
@@ -159,7 +162,7 @@ abstract class HTMLTable extends HTMLElement
 					}
 					$filter_parameter = $param[2];
 					$value = str_replace('%', '', $param[3]);
-					if ($this->model->is_filter_parameter_allowed($filter_parameter))
+					if ($this->model->is_filter_allowed($filter_parameter, $value))
 					{
 						$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
 					}
@@ -168,13 +171,42 @@ abstract class HTMLTable extends HTMLElement
 		}
 	}
 
+	private function generate_filters_form()
+	{
+		$filters_form = $this->model->get_filters_form();
+		$has_filters = !empty($filters_form);
+		if ($has_filters)
+		{
+			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
+			$fieldset = new FormFieldset(LangLoader::get_class_message('filters', __FILE__));
+			foreach ($filters_form as $filter_form)
+			{
+				$fieldset->add_field($filter_form->get_form_field());
+				$this->tpl->assign_block_vars('filter', array(
+					'NAME' => 'filters' . $this->arg_id . $filter_form->get_filter_parameter()
+				));
+			}
+			$form = new Form('filters' . $this->arg_id);
+			$form->add_fieldset($fieldset);
+			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
+			$form->set_personal_submit_function($submit_function);
+			$this->tpl->add_subtemplate('filters', $form->export());
+			$this->tpl->assign_vars(array(
+				'SUBMIT_FUNCTION' => $submit_function,
+				'SUBMIT_URL' => $this->get_js_submit_url()
+			));
+		}
+	}
+
 	private function generate_table_structure()
 	{
 		$tpl_vars = array(
+			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->model->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->model->get_columns()),
 			'C_CAPTION' => $this->model->has_caption(),
-			'CAPTION' => $this->model->get_caption()
+			'CAPTION' => $this->model->get_caption(),
+			'U_TABLE_DEFAULT_OPIONS' => $this->get_default_table_url()
 		);
 		$this->add_css_vars($this->model, $tpl_vars);
 		$this->tpl->assign_vars($tpl_vars);
@@ -267,6 +299,20 @@ abstract class HTMLTable extends HTMLElement
 	public function get_pagination_url($page_number)
 	{
 		return $this->url_parameters->get_url(array('page' => $page_number));
+	}
+	
+	private function get_default_table_url()
+	{
+		$default_options = array('page' => 1);
+		$params_to_remove = array('sort', 'filters');
+		return $this->url_parameters->get_url($default_options, $params_to_remove);
+	}
+	
+	private function get_js_submit_url()
+	{
+		$default_options = array();
+		$params_to_remove = array('page', 'filters');
+		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 }
 

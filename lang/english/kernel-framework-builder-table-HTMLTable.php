@@ -30,7 +30,8 @@
 ####################################################
 
 $lang = array(
-    'footer_stats' => ':start to :end of :total elements'
+    'footer_stats' => ':start to :end of :total elements',
+    'filters' => 'Filters'
 );
 
 ?>
