@@ -54,16 +54,16 @@ class SitemapConfig extends DefaultConfigData
 	 * this duration (in number of days).
 	 * @return int The number of days of validity.
 	 */
-	public function get_sitemap_xml_time_lenght()
+	public function get_sitemap_xml_life_time()
 	{
-		return $this->get_property('sitemap_xml_time_lenght');
+		return $this->get_property('sitemap_xml_life_time');
 	}
 	
 	/**
 	 * Sets the sitemap.xml file time life.
 	 * @param int $num_days The number of days of validity.
 	 */
-	public function set_sitemap_xml_time_length($num_days)
+	public function set_sitemap_xml_life_time($num_days)
 	{
 		$this->set_property('sitemap_xml_time_lenght', $num_days);
 	}

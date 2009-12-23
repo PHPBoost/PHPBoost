@@ -29,7 +29,7 @@ class XMLSitemapController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$export_config = SitemapService::get_xml_file_export_config();
+		$export_config = SitemapService::get_export_config();
 		
 		$sitemap = SitemapService::get_public_sitemap();
 		

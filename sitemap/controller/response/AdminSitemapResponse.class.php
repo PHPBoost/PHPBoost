@@ -42,7 +42,7 @@ class AdminSitemapResponse extends AdminMenuDisplayResponse
 	{
 		$this->set_title($this->lang['sitemap']);
 		
-		$this->add_link('Configuration générale', SitemapUrlBuilder::menu_general_config()->absolute(), 'sitemap/sitemap.png');
+		$this->add_link('Configuration générale', SitemapUrlBuilder::get_general_config()->absolute(), 'sitemap/sitemap.png');
 	}
 }
 

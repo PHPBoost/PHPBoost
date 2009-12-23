@@ -104,7 +104,7 @@ class Form implements ValidableFormComponent
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
 	 * @param string $form_title The tite displayed for the form.
-	 * @param string $form_action The url where the form send the data.
+	 * @param string $form_action The url where the form sends data.
 	 */
 	public function __construct($form_name, $form_action = '')
 	{
