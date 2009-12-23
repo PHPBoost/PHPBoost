@@ -36,21 +36,6 @@
 			# END header_column #
 		</tr>
 	</thead>
-	<tbody>
-		# START row #
-		<tr
-		# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
-		# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-			# START row.cell #
-			<td
-			# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-			# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
-				{row.cell.VALUE}
-			</td>
-			# END row.cell #
-		</tr>
-		# END row #
-	</tbody>
 	# IF C_PAGINATION_ACTIVATED #
 	<tfoot>
 	    <tr>
@@ -65,4 +50,32 @@
 	    </tr>
     </tfoot>
     # ENDIF #
+	<tbody>
+		# IF C_PAGINATION_ACTIVATED #
+	    <tr>
+	      	<td colspan="{NUMBER_OF_COLUMNS}" class="row2">
+	      		<div style="float:left;">
+	      			{NUMBER_OF_ELEMENTS}
+      			</div>
+	      		<div style="float:right;">
+	      			# INCLUDE pagination #
+      			</div>
+			</td>
+	    </tr>
+	    # ENDIF #
+		# START row #
+		<tr
+		# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+		# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+			# START row.cell #
+			<td
+			# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+			# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+			# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+				{row.cell.VALUE}
+			</td>
+			# END row.cell #
+		</tr>
+		# END row #
+	</tbody>
 </table>

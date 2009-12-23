@@ -58,23 +58,25 @@ class UrlSerializedParameter
 		{
 			$url_params[$parameter] = $value;
 		}
-		$query_args = $this->query_args;
+		$query_args = array();
+		foreach ($this->query_args as $query_arg => $value)
+		{
+			$query_args[] = $query_arg . '=' . $value;
+		}
 		$query_args[] = $this->arg_id . '=' . $this->serialize_parameters($url_params);
 		return '?' . implode('&amp;', $query_args);
 	}
 
 	private function prepare_query_args()
 	{
-		$query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-		$query_string = preg_replace('`((^|&)' . $this->arg_id . '=[^&]*(&|$))`', '$3', $query_string);
-		$query_string = trim($query_string, '&');
-		if (!empty($query_string))
+		$this->query_args = array();
+		$uri = $_SERVER['REQUEST_URI'];
+		$params_string_begin = strpos($uri, '?');
+		if ($params_string_begin !== false && strlen($uri) > $params_string_begin)
 		{
-			$this->query_args = explode('&', $query_string);
-		}
-		else
-		{
-			$this->query_args = array();
+			$params_string = substr($uri, $params_string_begin + 1);
+			parse_str($params_string, $this->query_args);
+			unset($this->query_args[$this->arg_id]);
 		}
 	}
 

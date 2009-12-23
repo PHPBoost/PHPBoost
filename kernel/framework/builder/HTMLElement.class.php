@@ -49,6 +49,11 @@ abstract class HTMLElement
 		$this->css_style = $style;
 	}
 	
+	public function add_css_style($style)
+	{
+		$this->css_style = rtrim($this->css_style, ';') . ';' . trim($style, ';');
+	}
+	
 	public function has_css_classes()
 	{
 		return !empty($this->css_classes);

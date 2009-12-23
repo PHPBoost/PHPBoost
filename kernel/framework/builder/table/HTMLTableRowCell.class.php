@@ -33,6 +33,7 @@
 class HTMLTableRowCell extends HTMLElement
 {
 	private $value;
+	private $colspan = 1;
 	
 	public function __construct($value, array $classes = array('row2'))
 	{
@@ -43,6 +44,26 @@ class HTMLTableRowCell extends HTMLElement
 	public function get_value()
 	{
 		return $this->value;
+	}
+	
+	public function is_multi_column()
+	{
+		return $this->colspan > 1;
+	}
+	
+	public function get_colspan()
+	{
+		return $this->colspan;
+	}
+	
+	public function set_colspan($colspan)
+	{
+		$this->colspan = $colspan;
+	}
+	
+	public function center()
+	{
+		$this->add_css_style('text-align:center;');
 	}
 }
 

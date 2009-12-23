@@ -185,12 +185,12 @@ abstract class HTMLTable extends HTMLElement
 		foreach ($this->model->get_columns() as $column)
 		{
 			$values = array(
-				'NAME' => $column->get_name(),
+				'NAME' => $column->get_value(),
 				'C_SORTABLE' => $column->is_sortable(),
 				'U_SORT_ASC' => $this->url_parameters->get_url(array(
-					'sort' => '!' . $column->get_parameter_id(), 'page' => 1)),
+					'sort' => '!' . $column->get_sortable_parameter(), 'page' => 1)),
 				'U_SORT_DESC' => $this->url_parameters->get_url(array(
-					'sort' => '-' . $column->get_parameter_id(), 'page' => 1))
+					'sort' => '-' . $column->get_sortable_parameter(), 'page' => 1))
 			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
@@ -227,7 +227,11 @@ abstract class HTMLTable extends HTMLElement
 
 	private function generate_cell(HTMLTableRowCell $cell)
 	{
-		$cell_values = array('VALUE' => $cell->get_value());
+		$cell_values = array(
+			'VALUE' => $cell->get_value(),
+			'C_COLSPAN' => $cell->is_multi_column(),
+			'COLSPAN' => $cell->get_colspan(),
+		);
 		$this->add_css_vars($cell, $cell_values);
 		$this->tpl->assign_block_vars('row.cell', $cell_values);
 	}
