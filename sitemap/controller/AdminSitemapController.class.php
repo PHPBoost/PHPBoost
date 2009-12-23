@@ -36,15 +36,29 @@ class AdminSitemapController extends AdminController
 	
 	public function execute(HTTPRequest $request)
 	{
-		SitemapXMLFileService::try_to_generate();
+		$response = new AdminSitemapResponse(self::get_form()->export());
 		
-		$tpl = new Template('sitemap/sitemap.tpl');
-		
-		$response = new AdminSitemapResponse($tpl);
-		
-		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
+		$response->get_graphical_environment()->set_page_title($this->lang['general_config']);
 
 		return $response;
+	}
+	
+	/**
+	 * @return Form
+	 */
+	private function get_form()
+	{
+		$form = new Form('sitemap_global_config', 'toto', SitemapUrlBuilder::get_general_config());
+		$fieldset = new FormFieldset($this->lang['general_config']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormCheckbox('toto', array('title' => 'Enable sitemap.xml'),
+			array(new FormCheckboxOption('toto', 'enabled', array('title' => 'Enable')))));
+			
+		$fieldset->add_field(new FormTextEdit('file_life_time', SitemapXMLFileService::get_life_time(), array('title' => 'Life time'), array(
+		new IntegerIntervalFormFieldConstraint(1, 50, 'message qui devrait être généré automatiquement'))));
+		
+		return $form;
 	}
 }
 ?>

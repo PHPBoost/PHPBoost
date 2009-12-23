@@ -40,13 +40,11 @@ class FormFieldset implements ValidableFormComponent
 	
 	/**
 	 * @desc constructor
-	 * @param string $form_name The name of the form.
-	 * @param string $form_title The tite displayed for the form.
-	 * @param string $form_action The url where the form send the data.
+	 * @param string $name The name of the fieldset
 	 */
-	public function __construct($title)
+	public function __construct($name)
 	{
-		$this->title = $title;
+		$this->title = $name;
 	}
 	
 	public function set_form_name($form_name)

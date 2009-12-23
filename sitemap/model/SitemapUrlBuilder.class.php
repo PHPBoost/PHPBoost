@@ -32,7 +32,7 @@ class SitemapUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function menu_general_config()
+	public static function get_general_config()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}

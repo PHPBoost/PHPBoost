@@ -45,7 +45,7 @@ class SitemapXMLFileService
 	/**
 	 * @return SitemapExportConfig
 	 */
-	public static function get_xml_file_export_config()
+	public static function get_export_config()
 	{
 		$export_config = new SitemapExportConfig('framework/content/sitemap/sitemap.xml.tpl',
 		 'framework/content/sitemap/module_map.xml.tpl', 'framework/content/sitemap/sitemap_section.xml.tpl',
@@ -76,6 +76,11 @@ class SitemapXMLFileService
 		$reference_date->set_day($reference_date->get_day() - $life_time);
 		return $reference_date;
 	}
+	
+	public static function get_life_time()
+	{
+		return SitemapConfig::load()->get_sitemap_xml_life_time();
+	}
 
 	/**
 	 * @desc Tries to generate the file and if errors occur, writes them in the log file
@@ -101,7 +106,7 @@ class SitemapXMLFileService
 	public static function generate()
 	{
 		$sitemap = SitemapService::get_public_sitemap();
-		$export_config = self::get_xml_file_export_config();
+		$export_config = self::get_export_config();
 
 		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
 
