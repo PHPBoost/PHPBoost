@@ -35,7 +35,7 @@ class NoUrlMatchException extends DispatcherException
 {
 	public function __construct($url)
 	{
-		parent::__construct('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
+		parent::__construct('No pattern matching this url "' . $url . '" in the dispatcher\'s list');
 	}
 }
 

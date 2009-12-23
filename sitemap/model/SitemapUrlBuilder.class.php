@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        AdminSitemapResponse.class.php
+ *                          SitemapUrlBuilder.class.php
  *                            -------------------
- *   begin                : December 09 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : December 23, 2009
+ *   copyright            : (C) 2009 Loïc Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,24 +25,16 @@
  *
  ###################################################*/
 
-class AdminSitemapResponse extends AdminMenuDisplayResponse
+class SitemapUrlBuilder
 {
-	private $lang = array();
+	private static $dispatcher = '/sitemap/index.php';
 	
-	public function __construct(Template $view)
+	/**
+	 * @return Url
+	 */
+	public static function menu_general_config()
 	{
-		parent::__construct($view);
-		
-		$this->lang = LangLoader::get('common', 'sitemap');
-		
-		$this->prepare_menu();
-	}
-	
-	private function prepare_menu()
-	{
-		$this->set_title($this->lang['sitemap']);
-		
-		$this->add_link('Configuration générale', SitemapUrlBuilder::menu_general_config()->absolute(), 'sitemap/sitemap.png');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 }
 
