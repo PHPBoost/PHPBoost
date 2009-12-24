@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          SitemapController.class.php
+ *                      ViewXMLSitemapController.class.php
  *                            -------------------
- *   begin                : December 09 2009
+ *   begin                : December 08 2009
  *   copyright            : (C) 2009 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,31 +25,12 @@
  *
  ###################################################*/
 
-class SitemapController extends ModuleController
+class ViewXMLSitemapController extends ModuleController
 {
-	private $lang = array();
-	
-	public function __construct()
-	{
-		$this->lang = LangLoader::get('common', 'sitemap');
-	}
-	
 	public function execute(HTTPRequest $request)
 	{
-		$config_html = new SitemapExportConfig('sitemap/export/sitemap.html.tpl',
-			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
-
-		$sitemap = SitemapService::get_personal_sitemap();
+		$sitemap = SitemapService::get_public_sitemap();
 		
-		$tpl = new Template('sitemap/sitemap.tpl');
-		$tpl->add_lang($this->lang);
-		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
-		
-		$response = new SiteDisplayResponse($tpl);
-		
-		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
-
-		return $response;
+		return new SiteNodisplayResponse($sitemap->export(SitemapXMLFileService::get_export_config()));
 	}
 }
-?>

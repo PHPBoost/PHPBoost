@@ -28,37 +28,79 @@
 class AdminSitemapController extends AdminController
 {
 	private $lang = array();
-	
+	/**
+	 * @var Form
+	 */
+	private $form = null;
+	/**
+	 * @return View
+	 */
+	private $view;
+
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('common', 'sitemap');
 	}
-	
+
 	public function execute(HTTPRequest $request)
 	{
-		$response = new AdminSitemapResponse(self::get_form()->export());
-		
-		$response->get_graphical_environment()->set_page_title($this->lang['general_config']);
+		$this->init();
 
-		return $response;
+		if ($request->is_post_method() && $this->form->validate())
+		{
+			$this->handle_form();
+		}
+
+		$this->view->add_subtemplate('FORM', $this->form->export());
+
+		return $this->build_response();
 	}
-	
+
+	private function init()
+	{
+		$this->build_form();
+		$this->view = new View('sitemap/' . __CLASS__ . '.tpl');
+	}
+
 	/**
 	 * @return Form
 	 */
-	private function get_form()
+	private function build_form()
 	{
-		$form = new Form('sitemap_global_config', 'toto', SitemapUrlBuilder::get_general_config());
+		$form = new Form('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());
 		$fieldset = new FormFieldset($this->lang['general_config']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormCheckbox('toto', array('title' => 'Enable sitemap.xml'),
-			array(new FormCheckboxOption('toto', 'enabled', array('title' => 'Enable')))));
-			
+
+		$fieldset->add_field(new FormCheckbox('enable_sitemap_xml', array('title' => 'Enable sitemap.xml'),
+		array(new FormCheckboxOption('toto', 'enabled', array('title' => 'Enable')))));
+
 		$fieldset->add_field(new FormTextEdit('file_life_time', SitemapXMLFileService::get_life_time(), array('title' => 'Life time'), array(
 		new IntegerIntervalFormFieldConstraint(1, 50, 'message qui devrait être généré automatiquement'))));
-		
-		return $form;
+
+		$this->form = $form;
+	}
+
+	private function handle_form()
+	{
+		$config = SitemapConfig::load();
+		if ($this->form->get_value('enable_sitemap_xml'))
+		{
+			$config->enable_sitemap_xml_generation();
+		}
+		else
+		{
+			$config->disable_sitemap_xml_generation();
+		}
+
+		$config->set_sitemap_xml_life_time((int)$this->form->get_value('file_life_time'));
+		SitemapConfig::save($config);
+	}
+
+	private function build_response()
+	{
+		$response = new AdminSitemapResponse($this->view);
+		$response->get_graphical_environment()->set_page_title($this->lang['general_config']);
+		return $response;
 	}
 }
 ?>

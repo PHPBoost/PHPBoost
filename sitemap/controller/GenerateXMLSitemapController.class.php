@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          SitemapUrlBuilder.class.php
+ *                     GenerateXMLSitemapController.class.php
  *                            -------------------
- *   begin                : December 23, 2009
- *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : December 08 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,12 @@
  *
  ###################################################*/
 
-class SitemapUrlBuilder
+class GenerateXMLSitemapController extends AdminController
 {
-	private static $dispatcher = '/sitemap/index.php';
-	
-	/**
-	 * @return Url
-	 */
-	public static function get_general_config()
+	public function execute(HTTPRequest $request)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/');
-	}
-	
-	public static function get_xml_file_generation()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/generate/');
+		SitemapXMLFileService::generate();
+		
+		//return new SiteNodisplayResponse($sitemap->export($export_config));
 	}
 }
-
-?>
