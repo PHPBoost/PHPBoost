@@ -65,7 +65,7 @@ class SitemapConfig extends DefaultConfigData
 	 */
 	public function set_sitemap_xml_life_time($num_days)
 	{
-		$this->set_property('sitemap_xml_time_lenght', $num_days);
+		$this->set_property('sitemap_xml_life_time', $num_days);
 	}
 	
 	/**
@@ -101,7 +101,7 @@ class SitemapConfig extends DefaultConfigData
 	{
 		$this->set_last_generation_date(new Date());
 		$this->disable_sitemap_xml_generation();
-		$this->set_sitemap_xml_time_length(3);
+		$this->set_sitemap_xml_life_time(3);
 	}
 
 	/**
