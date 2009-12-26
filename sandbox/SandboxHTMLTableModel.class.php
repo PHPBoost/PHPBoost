@@ -57,27 +57,13 @@ class SandboxHTMLTableModel implements HTMLTableModel
 		);
 	}
 
-	//	public function __construct()
-	//	{
-	//		$columns = array(
-	//		new HTMLTableColumn('pseudo', 'pseudo'),
-	//		new HTMLTableColumn('email'),
-	//		new HTMLTableColumn('inscrit le', 'register_date'),
-	//		new HTMLTableColumn('messages'),
-	//		new HTMLTableColumn('dernière connexion'),
-	//		new HTMLTableColumn('messagerie'),
-	//		);
-	//		$model = new HTMLTableModel($columns, 3);
-	//		$model->set_id('42');
-	//		$model->set_caption('Liste des membres');
+
 	//		$options = array(
 	//			new FormSelectOption('tous', ''),
 	//			new FormSelectOption('Horn', 'horn'),
 	//			new FormSelectOption('CouCou', 'coucou')
 	//		);
 	//		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
-	//		parent::__construct($model);
-	//	}
 
 	public function default_sort_rule()
 	{

@@ -54,12 +54,12 @@ class HTMLTableParameters
 	 */
 	private $builder;
 
-	public function __construct(HTMLTableModel $model)
+	public function __construct(HTMLTableModel $model, $allowed_sorting_rules)
 	{
 		$this->model = $model;
 		$this->arg_id = 't' . $this->model->get_id();
 		$this->url_parameters = new UrlSerializedParameter($this->arg_id);
-		$this->compute_request_parameters();
+		$this->compute_request_parameters($allowed_sorting_rules);
 	}
 
 	public function get_page_number()
@@ -106,11 +106,11 @@ class HTMLTableParameters
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
-	public function compute_request_parameters()
+	public function compute_request_parameters($allowed_sorting_rules)
 	{
 		$this->parameters = $this->url_parameters->get_parameters();
 		$this->compute_page_number();
-		$this->compute_sorting_rule();
+		$this->compute_sorting_rule($allowed_sorting_rules);
 		$this->compute_filters();
 	}
 
@@ -130,7 +130,7 @@ class HTMLTableParameters
 		}
 	}
 
-	private function compute_sorting_rule()
+	private function compute_sorting_rule($allowed_sorting_rules)
 	{
 		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
 		{
@@ -144,7 +144,7 @@ class HTMLTableParameters
 					$order_way = HTMLTableSortRule::DESC;
 				}
 				$sort_parameter = $param[2];
-				if ($this->model->is_sort_parameter_allowed($sort_parameter))
+				if (in_array($sort_parameter, $allowed_sorting_rules))
 				{
 					$this->sorting_rule = new HTMLTableSortRule($sort_parameter, $order_way);
 					return;

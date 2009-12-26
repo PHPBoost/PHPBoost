@@ -68,7 +68,8 @@ class HTMLTable extends HTMLElement
 		}
 		$this->tpl = new Template($tpl_path);
 		$this->model = $model;
-		$this->parameters = new HTMLTableParameters($this->model);
+		$this->get_columns();
+		$this->parameters = new HTMLTableParameters($this->model, $this->get_allowed_sorting_rules());
 	}
 
 	/**
@@ -76,7 +77,6 @@ class HTMLTable extends HTMLElement
 	 */
 	public function export()
 	{
-		$this->get_columns();
 		$this->get_rows();
 		//		$this->generate_filters_form();
 		$this->generate_table_structure();
@@ -89,6 +89,19 @@ class HTMLTable extends HTMLElement
 	private function get_columns()
 	{
 		$this->columns = $this->model->get_columns();
+	}
+
+	private function get_allowed_sorting_rules()
+	{
+		$allowed_sorting_rules = array();
+		foreach ($this->columns as $column)
+		{
+			if ($column->is_sortable())
+			{
+				$allowed_sorting_rules[] = $column->get_sortable_parameter();
+			}
+		}
+		return $allowed_sorting_rules;
 	}
 
 	private function get_rows()
@@ -159,7 +172,7 @@ class HTMLTable extends HTMLElement
 				'NAME' => $column->get_value(),
 				'C_SORTABLE' => $column->is_sortable(),
 				'U_SORT_ASC' => $this->parameters->get_ascending_sort_url($column->get_sortable_parameter()),
-				'U_SORT_DESC' => $this->parameters->get_ascending_sort_url($column->get_sortable_parameter())
+				'U_SORT_DESC' => $this->parameters->get_descending_sort_url($column->get_sortable_parameter())
 			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
