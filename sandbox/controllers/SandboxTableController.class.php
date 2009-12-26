@@ -37,7 +37,7 @@ class SandboxTableController extends ModuleController
 
 	private function build_table()
 	{
-		$table = new SandboxHTMLTable();
+		$table = new HTMLTable(new SandboxHTMLTableModel());
 		return $table;
 	}
 }

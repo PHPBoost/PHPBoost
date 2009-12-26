@@ -2,7 +2,7 @@
 /*##################################################
  *                             HTMLTable.class.php
  *                            -------------------
- *   begin                : December 21, 2009
+ *   begin                : December 26, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -30,38 +30,45 @@
  * @package builder
  * @subpackage table
  */
-abstract class HTMLTable extends HTMLElement
+class HTMLTable extends HTMLElement
 {
 	private $arg_id = 1;
 	private $nb_of_pages = 1;
-	private $current_page_number = 1;
-	private $nb_elements = 0;
-	private $first_row_index = 0;
-	private $number_of_displayed_rows = 0;
+
+	/**
+	 * @var HTMLTableParameters
+	 */
 	private $parameters;
-	private $url_parameters;
-	private $sorting_rule;
-	private $filters = array();
 
 	/**
 	 * @var Template
 	 */
 	private $tpl;
+
 	/**
 	 * @var HTMLTableModel
 	 */
 	private $model;
 
+	/**
+	 * @var HTMLTableColumn[]
+	 */
+	private $columns;
+
+	/**
+	 * @var HTMLTableRow[]
+	 */
+	private $rows;
+
 	public function __construct(HTMLTableModel $model, $tpl_path = '')
 	{
-		$this->model = $model;
 		if ($tpl_path === '')
 		{
 			$tpl_path = 'framework/builder/table/table.tpl';
 		}
 		$this->tpl = new Template($tpl_path);
-		$this->arg_id = 'table' . $this->model->get_id();
-		$this->url_parameters = new UrlSerializedParameter($this->arg_id);
+		$this->model = $model;
+		$this->parameters = new HTMLTableParameters($this->model);
 	}
 
 	/**
@@ -69,106 +76,33 @@ abstract class HTMLTable extends HTMLElement
 	 */
 	public function export()
 	{
-		$this->compute_request_parameters();
-		$this->generate_filters_form();
+		$this->get_columns();
+		$this->get_rows();
+		//		$this->generate_filters_form();
 		$this->generate_table_structure();
-		$this->generate_header();
+		$this->generate_headers();
 		$this->generate_rows();
-		$this->generate_footer();
+		$this->generate_rows_stats();
 		return $this->tpl;
 	}
 
-	abstract protected function get_number_of_elements(array $filters);
-
-	abstract protected function default_sort_rule();
-
-	/**
-	 * @desc generate rows matching the filters and ordered with rules
-	 * @param HTMLTableSortRule $sorting_rules
-	 * @param HTMLTableFilter[] $filters
-	 */
-	abstract protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters);
-
-	private function compute_request_parameters()
+	private function get_columns()
 	{
-		$this->parameters = $this->url_parameters->get_parameters();
-		$this->compute_filters();
-		$this->compute_page_number();
-		$this->compute_sorting_rule();
-		$this->url_parameters->set_parameters($this->parameters);
+		$this->columns = $this->model->get_columns();
 	}
 
-	private function compute_page_number()
+	private function get_rows()
 	{
-		if ($this->model->is_pagination_activated())
-		{
-			$this->nb_elements = $this->get_number_of_elements($this->filters);
-			$this->nb_of_pages = ceil($this->nb_elements / $this->model->get_nb_rows_per_page());
-			if (isset($this->parameters['page']))
-			{
-				$page = $this->parameters['page'];
-				if (is_numeric($page))
-				{
-					$page = numeric($page);
-					if (is_int($page) && $page >= 1 && $page <= $this->nb_of_pages)
-					{
-						$this->current_page_number = $page;
-					}
-				}
-				$this->parameters['page'] = $this->current_page_number;
-			}
-		}
+		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
+		$first_row_index = $this->get_first_row_index();
+		$sorting_rule = $this->parameters->get_sorting_rule();
+		$filters = $this->parameters->get_filters();
+		$this->rows = $this->model->get_rows($nb_rows_per_page, $first_row_index, $sorting_rule, $filters);
 	}
 
-	private function compute_sorting_rule()
+	private function get_first_row_index()
 	{
-		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
-		{
-			$regex = '`(' . HTMLTableSortRule::ASC . '|' . HTMLTableSortRule::DESC . ')(\w+)`';
-			$param = array();
-			if (preg_match($regex, $this->parameters['sort'], $param))
-			{
-				$order_way = $param[1];
-				if ($order_way != HTMLTableSortRule::ASC)
-				{
-					$order_way = HTMLTableSortRule::DESC;
-				}
-				$sort_parameter = $param[2];
-				if ($this->model->is_sort_parameter_allowed($sort_parameter))
-				{
-					$this->sorting_rule = new HTMLTableSortRule($sort_parameter, $order_way);
-					return;
-				}
-			}
-		}
-		$this->sorting_rule = $this->default_sort_rule();
-	}
-
-	private function compute_filters()
-	{
-		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
-		{
-			$filter_parameters = $this->parameters['filters'];
-			foreach ($filter_parameters as $filter_param)
-			{
-				$regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
-				$param = array();
-				if (preg_match($regex, $filter_param, $param))
-				{
-					$filter_mode = $param[1];
-					if ($filter_mode != HTMLTableFilter::EQUALS)
-					{
-						$filter_mode = HTMLTableFilter::LIKE;
-					}
-					$filter_parameter = $param[2];
-					$value = str_replace('%', '', $param[3]);
-					if ($this->model->is_filter_allowed($filter_parameter, $value))
-					{
-						$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
-					}
-				}
-			}
-		}
+		return ($this->parameters->get_page_number() - 1) * $this->model->get_nb_rows_per_page();
 	}
 
 	private function generate_filters_form()
@@ -200,54 +134,57 @@ abstract class HTMLTable extends HTMLElement
 
 	private function generate_table_structure()
 	{
+		$caption = $this->model->get_caption();
 		$tpl_vars = array(
 			'TABLE_ID' => $this->arg_id,
-			'C_PAGINATION_ACTIVATED' => $this->model->is_pagination_activated(),
-			'NUMBER_OF_COLUMNS' => count($this->model->get_columns()),
-			'C_CAPTION' => $this->model->has_caption(),
-			'CAPTION' => $this->model->get_caption(),
-			'U_TABLE_DEFAULT_OPIONS' => $this->get_default_table_url()
+			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
+			'NUMBER_OF_COLUMNS' => count($this->columns),
+			'C_CAPTION' => !empty($caption),
+			'CAPTION' => $caption,
+			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url()
 		);
-		$this->add_css_vars($this->model, $tpl_vars);
 		$this->tpl->assign_vars($tpl_vars);
 	}
 
-	private function generate_header()
+	public function is_pagination_activated()
+	{
+		return $this->model->get_nb_rows_per_page() > 0;
+	}
+
+	private function generate_headers()
 	{
 		foreach ($this->model->get_columns() as $column)
 		{
 			$values = array(
 				'NAME' => $column->get_value(),
 				'C_SORTABLE' => $column->is_sortable(),
-				'U_SORT_ASC' => $this->url_parameters->get_url(array(
-					'sort' => '!' . $column->get_sortable_parameter(), 'page' => 1)),
-				'U_SORT_DESC' => $this->url_parameters->get_url(array(
-					'sort' => '-' . $column->get_sortable_parameter(), 'page' => 1))
+				'U_SORT_ASC' => $this->parameters->get_ascending_sort_url($column->get_sortable_parameter()),
+				'U_SORT_DESC' => $this->parameters->get_ascending_sort_url($column->get_sortable_parameter())
 			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
 		}
 	}
 
-	private function generate_footer()
+	private function generate_rows_stats()
 	{
-		if ($this->model->is_pagination_activated())
+		if ($this->is_pagination_activated())
 		{
-			$this->generate_footer_stats();
-			$this->generate_footer_pagination();
+			$this->generate_stats();
+			$this->generate_pagination();
 		}
 	}
 
 	private function generate_rows()
 	{
-		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
-		$this->first_row_index = ($this->current_page_number - 1) * $nb_rows_per_page;
-		$this->fill_data($nb_rows_per_page, $this->first_row_index, $this->sorting_rule, $this->filters);
+		foreach ($this->rows as $row)
+		{
+			$this->generate_row($row);
+		}
 	}
 
 	protected final function generate_row(HTMLTableRow $row)
 	{
-		$this->number_of_displayed_rows++;
 		$row_values = array();
 		$this->add_css_vars($row, $row_values);
 		$this->tpl->assign_block_vars('row', $row_values);
@@ -276,43 +213,26 @@ abstract class HTMLTable extends HTMLElement
 		$tpl_vars['CSS_CLASSES'] = implode(' ', $element->get_css_classes());
 	}
 
-	private function generate_footer_stats()
+	private function generate_stats()
 	{
-		$end = $this->first_row_index + $this->number_of_displayed_rows;
+		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
+		$end = $this->get_first_row_index() + count($this->rows);
 		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __FILE__), array(
-			'start' => $this->first_row_index + 1,
+			'start' => $this->get_first_row_index() + 1,
 			'end' => $end,
-			'total' => $this->nb_elements
+			'total' => $this->nb_rows
 		));
 		$this->tpl->assign_vars(array(
 			'NUMBER_OF_ELEMENTS' => $elements
 		));
 	}
 
-	private function generate_footer_pagination()
+	private function generate_pagination()
 	{
-		$pagination = new Pagination($this->nb_of_pages, $this->current_page_number);
-		$pagination->set_url_builder_callback(array($this, 'get_pagination_url'));
+		$nb_pages =  ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
+		$pagination = new Pagination($nb_pages, $this->parameters->get_page_number());
+		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
 		$this->tpl->add_subtemplate('pagination', $pagination->export());
-	}
-
-	public function get_pagination_url($page_number)
-	{
-		return $this->url_parameters->get_url(array('page' => $page_number));
-	}
-	
-	private function get_default_table_url()
-	{
-		$default_options = array('page' => 1);
-		$params_to_remove = array('sort', 'filters');
-		return $this->url_parameters->get_url($default_options, $params_to_remove);
-	}
-	
-	private function get_js_submit_url()
-	{
-		$default_options = array();
-		$params_to_remove = array('page', 'filters');
-		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 }
 

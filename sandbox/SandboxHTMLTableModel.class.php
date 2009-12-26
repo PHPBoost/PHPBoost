@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          SandboxHTMLTable.class.php
+ *                          SandboxHTMLTableModel.class.php
  *                            -------------------
  *   begin                : December 21, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,14 +25,29 @@
  *
  ###################################################*/
 
-class SandboxHTMLTable extends HTMLTable
+class SandboxHTMLTableModel implements HTMLTableModel
 {
 	private $query;
 	private $parameters;
 
-	public function __construct()
+	public function get_id()
 	{
-		$columns = array(
+		return '42';
+	}
+
+	public function get_caption()
+	{
+		return 'Liste des membres';
+	}
+
+	public function get_nb_rows_per_page()
+	{
+		return 3;
+	}
+
+	public function get_columns()
+	{
+		return array(
 		new HTMLTableColumn('pseudo', 'pseudo'),
 		new HTMLTableColumn('email'),
 		new HTMLTableColumn('inscrit le', 'register_date'),
@@ -40,32 +55,45 @@ class SandboxHTMLTable extends HTMLTable
 		new HTMLTableColumn('dernière connexion'),
 		new HTMLTableColumn('messagerie'),
 		);
-		$model = new HTMLTableModel($columns, 3);
-		$model->set_id('42');
-		$model->set_caption('Liste des membres');
-		$options = array(
-			new FormSelectOption('tous', ''),
-			new FormSelectOption('Horn', 'horn'),
-			new FormSelectOption('CouCou', 'coucou')
-		);
-		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
-		parent::__construct($model);
 	}
 
-	protected function get_number_of_elements(array $filters)
-	{
-		$this->parameters = array();
-		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
-			'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
-	}
+	//	public function __construct()
+	//	{
+	//		$columns = array(
+	//		new HTMLTableColumn('pseudo', 'pseudo'),
+	//		new HTMLTableColumn('email'),
+	//		new HTMLTableColumn('inscrit le', 'register_date'),
+	//		new HTMLTableColumn('messages'),
+	//		new HTMLTableColumn('dernière connexion'),
+	//		new HTMLTableColumn('messagerie'),
+	//		);
+	//		$model = new HTMLTableModel($columns, 3);
+	//		$model->set_id('42');
+	//		$model->set_caption('Liste des membres');
+	//		$options = array(
+	//			new FormSelectOption('tous', ''),
+	//			new FormSelectOption('Horn', 'horn'),
+	//			new FormSelectOption('CouCou', 'coucou')
+	//		);
+	//		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
+	//		parent::__construct($model);
+	//	}
 
-	protected function default_sort_rule()
+	public function default_sort_rule()
 	{
 		return new HTMLTableSortRule('user_id', HTMLTableSortRule::ASC);
 	}
 
-	protected function fill_data($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
+	public function get_number_of_matching_rows(array $filters)
 	{
+		$this->parameters = array();
+		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
+        	'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
+	}
+
+	public function get_rows($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
+	{
+		$results = array();
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
 		//		echo $this->query .'<hr />';
 		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
@@ -84,8 +112,9 @@ class SandboxHTMLTable extends HTMLTable
 			$pm->center();
 			$pm->add_css_style('width:50px');
 
-			$this->generate_row(new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm)));
+			$results[] = new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm));
 		}
+		return $results;
 	}
 
 	private function build_query($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)

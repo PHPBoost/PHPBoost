@@ -26,7 +26,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc 
+ * @desc
  * @package builder
  * @subpackage table
  */
@@ -34,28 +34,28 @@ class HTMLTableFilter
 {
 	const EQUALS = 'equals';
 	const LIKE = 'like';
-	
+
 	private $mode;
 	private $value;
 	private $filter_parameter;
-	
+
 	public function __construct($filter_parameter, $value, $mode)
 	{
 		$this->mode = $mode;
 		$this->value = $value;
 		$this->filter_parameter = $filter_parameter;
 	}
-	
+
 	public function get_mode()
 	{
 		return $this->mode;
 	}
-	
+
 	public function get_value()
 	{
 		return $this->value;
 	}
-	
+
 	public function get_filter_parameter()
 	{
 		return $this->filter_parameter;
