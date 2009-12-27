@@ -32,6 +32,8 @@
  */
 class HTMLTableParameters
 {
+	private $filter_capture_regex;
+
 	private $arg_id;
 	private $parameters;
 	private $url_parameters;
@@ -101,8 +103,8 @@ class HTMLTableParameters
 
 	public function get_js_submit_url()
 	{
-		$default_options = array();
-		$params_to_remove = array('page', 'filters');
+		$default_options = array('page' => 1);
+		$params_to_remove = array('filters');
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
@@ -156,28 +158,38 @@ class HTMLTableParameters
 
 	private function compute_filters()
 	{
+		$this->filter_capture_regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
 		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
 		{
 			$filter_parameters = $this->parameters['filters'];
 			foreach ($filter_parameters as $filter_param)
 			{
-				$regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
-				$param = array();
-				if (preg_match($regex, $filter_param, $param))
-				{
-					$filter_mode = $param[1];
-					if ($filter_mode != HTMLTableFilter::EQUALS)
-					{
-						$filter_mode = HTMLTableFilter::LIKE;
-					}
-					$filter_parameter = $param[2];
-					$value = str_replace('%', '', $param[3]);
-					if ($this->model->is_filter_allowed($filter_parameter, $value))
-					{
-						$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
-					}
-				}
+				$this->add_filter($filter_param);
 			}
+		}
+	}
+
+	private function add_filter($filter_param)
+	{
+		$param = array();
+		if (preg_match($this->filter_capture_regex, $filter_param, $param))
+		{
+			$filter_mode = $param[1];
+			$filter_parameter = $param[2];
+			$value = str_replace('%', '', $param[3]);
+			$this->check_and_add_filter($filter_parameter, $filter_mode, $value);
+		}
+	}
+
+	private function check_and_add_filter($filter_parameter, $filter_mode, $value)
+	{
+		if ($filter_mode != HTMLTableFilter::EQUALS)
+		{
+			$filter_mode = HTMLTableFilter::LIKE;
+		}
+		if ($this->model->is_filter_allowed($filter_parameter, $value))
+		{
+			$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
 		}
 	}
 }
