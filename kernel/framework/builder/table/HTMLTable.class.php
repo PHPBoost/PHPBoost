@@ -33,7 +33,8 @@
 class HTMLTable extends HTMLElement
 {
 	private $arg_id = 1;
-	private $nb_of_pages = 1;
+    private $nb_of_pages = 1;
+    private $page_number = 1;
 
 	/**
 	 * @var HTMLTableParameters
@@ -77,7 +78,8 @@ class HTMLTable extends HTMLElement
 	 */
 	public function export()
 	{
-		$this->get_rows();
+        $this->extract_parameters();
+        $this->get_rows();
 		//		$this->generate_filters_form();
 		$this->generate_table_structure();
 		$this->generate_headers();
@@ -104,18 +106,25 @@ class HTMLTable extends HTMLElement
 		return $allowed_sorting_rules;
 	}
 
-	private function get_rows()
-	{
+    private function extract_parameters()
+    {
+        $this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
+        $last_page_number = ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
+        $this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
+    }
+
+    private function get_rows()
+    {
 		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
 		$first_row_index = $this->get_first_row_index();
-		$sorting_rule = $this->parameters->get_sorting_rule();
-		$filters = $this->parameters->get_filters();
+        $sorting_rule = $this->parameters->get_sorting_rule();
+        $filters = $this->parameters->get_filters();
 		$this->rows = $this->model->get_rows($nb_rows_per_page, $first_row_index, $sorting_rule, $filters);
 	}
 
 	private function get_first_row_index()
 	{
-		return ($this->parameters->get_page_number() - 1) * $this->model->get_nb_rows_per_page();
+		return ($this->page_number - 1) * $this->model->get_nb_rows_per_page();
 	}
 
 	private function generate_filters_form()
@@ -228,7 +237,6 @@ class HTMLTable extends HTMLElement
 
 	private function generate_stats()
 	{
-		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
 		$end = $this->get_first_row_index() + count($this->rows);
 		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __FILE__), array(
 			'start' => $this->get_first_row_index() + 1,
@@ -243,7 +251,7 @@ class HTMLTable extends HTMLElement
 	private function generate_pagination()
 	{
 		$nb_pages =  ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
-		$pagination = new Pagination($nb_pages, $this->parameters->get_page_number());
+		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
 		$this->tpl->add_subtemplate('pagination', $pagination->export());
 	}
