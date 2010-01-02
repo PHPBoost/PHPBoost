@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-
-
-
 /**
  * This class contains the date of the last day where PHPBoost was used.
  * It's useful to know when to launch daily tasks.
@@ -86,11 +83,10 @@ class LastUseDateConfig extends DefaultConfigData
 
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
-	 * @param LastUseDateConfig $config The configuration to push in the database.
 	 */
-	public static function save(LastUseDateConfig $config)
+	public static function save()
 	{
-		ConfigManager::save('kernel', $config, 'last-use-date');
+		ConfigManager::save('kernel', self::load(), 'last-use-date');
 	}
 }
 ?>

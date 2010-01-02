@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                    writing_pad_config.class.php
+ *		                  WritingPadConfig.class.php
  *                            -------------------
  *   begin                : October 17, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -29,7 +29,6 @@
  * This class contains the content of the writing pad which is on the home page 
  * of the administration panel.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
  */
 class WritingPadConfig extends DefaultConfigData
 {
@@ -79,10 +78,9 @@ class WritingPadConfig extends DefaultConfigData
 
 	/**
 	 * Saves the configuration
-	 * @param WritingPadConfig $config The configuration to save.
 	 */
-	public static function save(WritingPadConfig $config)
+	public static function save()
 	{
-		ConfigManager::save('kernel', $config, 'writing-pad');
+		ConfigManager::save('kernel', self::load(), 'writing-pad');
 	}
 }

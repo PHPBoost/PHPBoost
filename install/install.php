@@ -719,7 +719,7 @@ switch($step)
 
 				$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
 
-				UserAccountsConfig::save($user_account_config);
+				UserAccountsConfig::save();
 
 				//On envoie un mail à l'administrateur
 				$LANG['admin'] = '';
