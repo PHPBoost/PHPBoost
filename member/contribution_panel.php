@@ -279,24 +279,23 @@ else
 	//Liste des modules proposant de contribuer
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
-    $modules_names = ModulesManager::get_installed_modules_ids_list();
-	foreach ($modules_names as $name)
+    $modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+	foreach ($modules as $name => $module)
 	{
-		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());
-		
-		//Si le module a une interface de contribution
-		if (!empty($module_ini['contribution_interface']))
+		$contribution_interface = $module->get_configuration()->get_contribution_interface();
+		if (!empty($contribution_interface))
 		{
-			//Nouvelle ligne
 			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
+			{
 				$template->assign_block_vars('row', array());
+			}
 			
 			$template->assign_block_vars('row.module', array(
 				'WIDTH' => (int)(100. / (NUMBER_OF_MODULES_PER_LINE)),
-				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module_name . '/' . url($module_ini['contribution_interface']),
-				'MODULE_ID' => $module_name,
-				'MODULE_NAME' => $module_ini['name'],
-				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module_ini['name'])
+				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $name . '/' . url($contribution_interface),
+				'MODULE_ID' => $module->get_id(),
+				'MODULE_NAME' => $module->get_configuration()->get_name(),
+				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())
 			));
 			$i_module++;
 		}
