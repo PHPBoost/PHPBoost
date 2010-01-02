@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-
 /**
  * This class contains all the data related to the user accounts configuration.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -484,10 +483,9 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
-	 * @param UserAccountsConfig $config The configuration to push in the database.
 	 */
-	public static function save(UserAccountsConfig $config)
+	public static function save()
 	{
-		ConfigManager::save('kernel', $config, 'user-accounts');
+		ConfigManager::save('kernel', self::load(), 'user-accounts');
 	}
 }

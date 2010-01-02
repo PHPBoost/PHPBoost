@@ -40,7 +40,7 @@ if (!empty($writingpad))
 	
 	$writing_pad_content = WritingPadConfig::load();
 	$writing_pad_content->set_content($content);
-	WritingPadConfig::save($writing_pad_content);
+	WritingPadConfig::save();
 	
 	redirect(HOST . SCRIPT);
 }

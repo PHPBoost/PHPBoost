@@ -353,7 +353,7 @@ class Environment
 				if ((int) $num_entry_today == 0)
 				{
 					$last_use_config->set_last_use_date(new Date());
-					LastUseDateConfig::save($last_use_config);
+					LastUseDateConfig::save();
 
 					self::perform_changeday();
 				}

@@ -49,7 +49,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	$user_account_config->set_max_avatar_height(retrieve(POST, 'height_max', 120));
 	$user_account_config->set_max_avatar_weight(retrieve(POST, 'weight_max', 20));
 	
-	UserAccountsConfig::save($user_account_config);
+	UserAccountsConfig::save();
 	
 	redirect(HOST . SCRIPT); 	
 }

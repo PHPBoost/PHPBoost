@@ -35,7 +35,7 @@ if (!empty($_POST['msg_register'])) //Message à l'inscription.
 
 	$user_accounts_config->set_registration_agreement(stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE)));
 	
-	UserAccountsConfig::save($user_accounts_config);
+	UserAccountsConfig::save();
 	
 	redirect(HOST . SCRIPT); 	
 }
