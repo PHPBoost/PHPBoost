@@ -17,7 +17,7 @@
 						-->
 						</script>
 					</p>
-					<p style="text-align: center;"><a href="?token={TOKEN}&amp;switchtheme={DEFAULT_THEME}">{L_DEFAULT_THEME}</a></p>&nbsp;
+					<a href="?token={TOKEN}&amp;switchtheme={DEFAULT_THEME}">{L_DEFAULT_THEME}</a>
 				</div>
 			</form>
 			<div class="module_mini_bottom">

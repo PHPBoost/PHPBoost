@@ -19,7 +19,7 @@
 						-->
 						</script>
 					</p>
-					<p style="text-align: center;"><a href="?token={TOKEN}&amp;switchlang={DEFAULT_LANG}">{L_DEFAULT_LANG}</a></p>&nbsp;
+					<a href="?token={TOKEN}&amp;switchlang={DEFAULT_LANG}">{L_DEFAULT_LANG}</a>
 				</div>
 			</form>
 			<div class="module_mini_bottom">

@@ -132,17 +132,17 @@
 				<label for="shout_contents"><span class="text_small">{L_MESSAGE}</span></label>
 				<textarea class="post" id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>					
 				
-				<input type="submit" name="shoutbox" id="shoutbox_submit" value="{L_SUBMIT}" class="submit" />
-				<script type="text/javascript">
-				<!--				
-				document.getElementById('shoutbox_submit').style.display = 'none';
-				document.write('<input value="{L_SUBMIT}" onclick="XMLHttpRequest_shoutmsg();" type="button" class="submit" />');
-				-->
-				</script>
-				<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
-				<p style="margin:0;margin-top:10px;">
-					<a class="small_link" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
+				<p style="margin:0;margin-bottom:10px;">
+					<input type="submit" name="shoutbox" id="shoutbox_submit" value="{L_SUBMIT}" class="submit" />
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('shoutbox_submit').style.display = 'none';
+					document.write('<input value="{L_SUBMIT}" onclick="XMLHttpRequest_shoutmsg();" type="button" class="submit" />');
+					-->
+					</script>
+					<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
 				</p>
+				<a class="small_link" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
 			</div>
 			<div class="module_mini_bottom">
 			</div>

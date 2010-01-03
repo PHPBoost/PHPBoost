@@ -9,7 +9,7 @@
 				# ELSE #
 				<p class="text_small">{L_NO_MESSAGE_GESTBOOK}</p>
 				# ENDIF #
-				<p><a class="small_link" href="{PATH_TO_ROOT}/guestbook/guestbook.php">{L_RANDOM_GESTBOOK}</a></p>
+				<a class="small_link" href="{PATH_TO_ROOT}/guestbook/guestbook.php">{L_RANDOM_GESTBOOK}</a>
 			</div>
 			<div class="module_mini_bottom">
 			</div>
