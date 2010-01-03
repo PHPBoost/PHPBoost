@@ -43,7 +43,6 @@ class FileTemplateLoader implements TemplateLoader
 
 	public function __construct(Template $template)
 	{
-
 		$this->filepath = $template->get_identifier();
 		$this->check_file();
 		$template->assign_vars(array('PICTURES_DATA_PATH' => $this->pictures_data_path));
