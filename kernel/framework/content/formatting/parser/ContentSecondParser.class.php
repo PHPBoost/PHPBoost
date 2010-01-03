@@ -27,7 +27,7 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @desc This class ensures the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
  * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
  * which replaces the code by a lot of html code which formats the code.
@@ -115,9 +115,9 @@ class ContentSecondParser extends AbstractParser
 		if (strtolower($language) == 'bbcode')
 		{
 			$bbcode_highlighter = new BBCodeHighlighter();
-			$bbcode_highlighter->set_content($contents, Parser::DONT_STRIP_SLASHES);
+			$bbcode_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
 			$bbcode_highlighter->parse($inline_code);
-			$contents = $bbcode_highlighter->get_content(Parser::DONT_ADD_SLASHES);
+			$contents = $bbcode_highlighter->get_content(self::DONT_ADD_SLASHES);
 		}
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
@@ -125,9 +125,16 @@ class ContentSecondParser extends AbstractParser
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();
-			$template_highlighter->set_content($contents, Parser::DONT_STRIP_SLASHES);
+			$template_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-			$contents = $template_highlighter->get_content(Parser::DONT_ADD_SLASHES);
+			$contents = $template_highlighter->get_content(self::DONT_ADD_SLASHES);
+		}
+		elseif( strtolower($language) == 'plain')
+		{
+			$plain_code_highlighter = new PlainCodeHighlighter();
+			$plain_code_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
+			$plain_code_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+			$contents = $plain_code_highlighter->get_content(self::DONT_ADD_SLASHES);
 		}
 		elseif ($language != '')
 		{
@@ -135,11 +142,15 @@ class ContentSecondParser extends AbstractParser
 			$Geshi = new GeSHi($contents, $language);
 
 			if ($line_number) //Affichage des numéros de lignes.
-			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			{
+				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			}
 
 			//No container if we are in an inline tag
 			if ($inline_code)
-			$Geshi->set_header_type(GESHI_HEADER_NONE);
+			{
+				$Geshi->set_header_type(GESHI_HEADER_NONE);
+			}
 
 			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
 		}

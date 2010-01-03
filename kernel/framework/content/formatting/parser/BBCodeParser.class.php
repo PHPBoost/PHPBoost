@@ -27,7 +27,7 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc Converts the PHPBoost BBCode language to the XHTML language which is stocked in
  * the database and can be displayed nearly directly.

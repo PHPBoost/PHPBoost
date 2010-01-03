@@ -27,11 +27,11 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This is a syntax highlighter for the PHPBoost template syntax.
  */
-class TemplateHighlighter extends FormattingParser
+class TemplateHighlighter extends AbstractParser
 {
 	const TPL_BRACES_STYLE = 'color:#7F3300;';
 	const TPL_VARIABLE_STYLE = 'color:#FF6600; font-weight: bold;';

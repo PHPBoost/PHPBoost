@@ -27,7 +27,7 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
  */
