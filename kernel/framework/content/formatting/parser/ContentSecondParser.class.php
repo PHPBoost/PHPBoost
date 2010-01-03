@@ -133,7 +133,7 @@ class ContentSecondParser extends AbstractParser
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
 			$plain_code_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
-			$plain_code_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+			$plain_code_highlighter->parse();
 			$contents = $plain_code_highlighter->get_content(self::DONT_ADD_SLASHES);
 		}
 		elseif ($language != '')
