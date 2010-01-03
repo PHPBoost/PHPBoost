@@ -27,12 +27,12 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is a highlighter for the PHPBoost BBCode language.
  * It supplies the highlighted code written in XHTML.
  */
-class BBCodeHighlighter extends FormattingParser
+class BBCodeHighlighter implements FormattingParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;

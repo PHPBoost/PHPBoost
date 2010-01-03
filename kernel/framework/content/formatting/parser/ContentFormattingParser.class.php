@@ -27,7 +27,7 @@
 
 /**
  * @package content
- * @subpackage parser
+ * @subpackage formatting/parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is abstract. It contains tools that are usefull for implement a content parser.
  */
