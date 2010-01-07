@@ -41,7 +41,7 @@ class ViewSitemapController extends ModuleController
 
 		$sitemap = SitemapService::get_personal_sitemap();
 		
-		$tpl = new Template('sitemap/sitemap.tpl');
+		$tpl = new Template('sitemap/ViewSitemapController.tpl');
 		$tpl->add_lang($this->lang);
 		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
 		
