@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                     GenerateXMLSitemapController.class.php
+ *                        AdminSitemapController.php
  *                            -------------------
- *   begin                : December 08 2009
- *   copyright            : (C) 2009 Benoit Sautel
+ *   begin                : January 7, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -25,13 +25,8 @@
  *
  ###################################################*/
 
-class GenerateXMLSitemapController extends AdminController
-{
-	public function execute(HTTPRequest $request)
-	{
-		SitemapXMLFileService::try_to_generate();
+$lang = array();
+$lang['xml_file_generation'] = 'Génération manuelle du fichier sitemap.xml';
+$lang['generate_xml_file'] = 'Générer manuellement le fichier sitemap.xml';
 
-		$result_controller = new AdminSitemapController();
-		return $result_controller->execute($request);
-	}
-}
+?>

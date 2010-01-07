@@ -32,26 +32,18 @@
  */
 class FormCheckbox extends FormField
 {
-	private $options = array();
+	private $checked = false;
 
-	public function __construct($field_id, array $field_options = array(), array $options = array(), array $constraints = array())
+	const CHECKED = true;
+	const UNCHECKED = false;
+
+	public function __construct($field_id, $title, $checked = self::UNCHECKED, array $field_options = array(), array $options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options, $constraints);
-		foreach($field_options as $attribute => $value)
-		{
-			throw new FormBuilderException(sprintf(
-				'Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
-		}
+		parent::__construct(__CLASS__ . $field_id, '', $field_options, $constraints);
+		$this->title = $title;
 		$this->options = $options;
-	}
-
-	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option.
-	 */
-	public function add_option($option)
-	{
-		$this->options[] = $option;
+		$this->checked = $checked;
+		$this->constraints = $constraints;
 	}
 
 	/**
@@ -68,16 +60,24 @@ class FormCheckbox extends FormField
 		'L_EXPLAIN' => $this->sub_title,
 		'L_REQUIRE' => $this->required ? '* ' : ''
 		));
-
-		foreach($this->options as $option)
-		{
-			$option->set_name($this->name); //Set the same field name for each option.
-			$template->assign_block_vars('field_options', array(
-				'OPTION' => $option->display(),
-			));
-		}
+		
+		$template->assign_block_vars('field_options', array(
+			'OPTION' => $this->generate_html_code()
+		));
 
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+	}
+
+	private function generate_html_code()
+	{
+		$option = '<input type="checkbox" ';
+		$option .= 'name="' . $this->name . '" ';
+		$option .= 'id="' . $this->id . '" ';
+		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
+		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
+		$option .= '/><br />' . "\n";
+
+		return $option;
 	}
 }
 

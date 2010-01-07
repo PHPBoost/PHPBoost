@@ -28,7 +28,7 @@
 class SitemapUrlBuilder
 {
 	private static $dispatcher = '/sitemap/index.php';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -36,7 +36,10 @@ class SitemapUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/');
 	}
-	
+
+	/**
+	 * @return Url
+	 */
 	public static function get_xml_file_generation()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/generate/');
