@@ -82,7 +82,7 @@ class DispatchManager
 			{
 				$url = '.';
 			}
-			return new Url($dispatcher_url->relative() . '/' . $url);
+			return new Url(self::get_dispatcher_path($dispatcher_url->relative()) . $url);
 		}
 		else if (strpos($url, '?') !== false)
 		{
@@ -95,6 +95,11 @@ class DispatchManager
 			return new Url($dispatcher_url->relative() . '?' . Dispatcher::URL_PARAM_NAME .
 			    '=/' . $url);
 		}
+	}
+	
+	private static function get_dispatcher_path($dispatcher_name)
+	{
+		return preg_replace('`(.*/)[a-z0-9]+\.php`','$1', $dispatcher_name);
 	}
 
 	private static function handle_dispatch_exception($exception)
