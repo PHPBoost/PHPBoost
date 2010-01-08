@@ -81,7 +81,7 @@
  * @package builder
  * @subpackage form
  */
-class Form implements ValidableFormComponent
+class Form
 {
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
@@ -200,7 +200,7 @@ class Form implements ValidableFormComponent
 
 		if (!is_object($template) || strtolower(get_class($template)) != 'template')
 		{
-			$template = new Template('framework/builder/forms/form.tpl');
+			$template = new Template('framework/builder/form/' . __CLASS__ . '.tpl');
 		}
 			
 		$template->assign_vars(array(
@@ -208,6 +208,7 @@ class Form implements ValidableFormComponent
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
 			'C_DISPLAY_RESET' => $this->display_reset, 
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
+			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->form_class,
 			'U_FORMACTION' => $this->form_action,
 			'L_FORMNAME' => $this->form_name,
@@ -215,6 +216,7 @@ class Form implements ValidableFormComponent
 			'L_SUBMIT' => $this->form_submit,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
+			'L_REQUIRED_FIELDS' => $LANG['require'],
 			'C_VALIDATION_ERROR' => !empty($this->validation_error_message),
 			'VALIDATION_ERROR' => $this->validation_error_message,
 			'C_PERSONAL_SUBMIT' => !empty($this->personal_submit_function),
@@ -273,6 +275,12 @@ class Form implements ValidableFormComponent
 	public function get_form_submit() { return $this->form_submit; }
 	public function get_form_action() { return $this->form_action; }
 	public function get_form_class() { return $this->form_class; }
+	
+	private function has_required_fields()
+	{
+		// TODO implement this by browsing all the fields and checking if at least one of them is required
+		return true;
+	}
 }
 
 ?>

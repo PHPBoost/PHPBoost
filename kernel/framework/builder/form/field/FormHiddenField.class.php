@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormHiddenField extends FormField
+class FormHiddenField implements FormField
 {
 	public function __construct($name, $value)
 	{

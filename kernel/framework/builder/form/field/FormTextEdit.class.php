@@ -36,15 +36,14 @@
  * @package builder
  * @subpackage form
  */
-class FormTextEdit extends FormField
+class FormTextEdit extends AbstractFormField
 {
 	private $size = '';
 	private $maxlength = '';
 
-	public function __construct($field_id, $value, $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, $value, $field_options, $constraints);
-		$this->compute_fields_options($field_options);
+		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
 	/**
@@ -52,7 +51,7 @@ class FormTextEdit extends FormField
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/forms/field.tpl');
+		$template = new Template('framework/builder/form/FormField.tpl');
 			
 		$validations = $this->get_onblur_validations();
 		$onblur = !empty($this->on_blur) || !empty($validations);
@@ -60,7 +59,7 @@ class FormTextEdit extends FormField
 		$field = '<input type="text" ';
 		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
 		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
-		$field .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
+		$field .= 'name="' . $this->get_real_id() . '" ';
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= 'value="' . $this->value . '" ';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
@@ -68,18 +67,22 @@ class FormTextEdit extends FormField
 		$field .= '/>';
 
 		$template->assign_vars(array(
-			'ID' => $this->id,
-			'FIELD' => $field,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'ID' => $this->get_id(),
+			'LABEL' => $this->get_label(),
+			'DESCRIPTION' => $this->get_description(),
+			'C_REQUIRED' => $this->is_required()
+		));
+		
+		$template->assign_block_vars('fieldelements', array(
+			'ELEMENT' => $field
 		));
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template;
 	}
 
-	private function compute_fields_options(array $field_options)
+	protected function compute_fields_options(array $field_options)
 	{
+		parent::compute_options($field_options);
 		foreach ($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -87,9 +90,11 @@ class FormTextEdit extends FormField
 			{
 				case 'size' :
 					$this->size = $value;
+					unset($field_options['size']);
 					break;
 				case 'maxlength' :
 					$this->maxlength = $value;
+					unset($field_options['maxlength']);
 					break;
 				default :
 					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));

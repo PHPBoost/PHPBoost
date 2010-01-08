@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormTextarea extends FormField
+class FormTextarea implements FormField
 {
 	private $rows = 10; //Rows for the textarea.
 	private $cols = 47; //Cols for the textarea.
@@ -69,7 +69,7 @@ class FormTextarea extends FormField
 			'KERNEL_EDITOR' => $this->editor ? display_editor($this->id, $this->forbidden_tags) : '',
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));	
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);

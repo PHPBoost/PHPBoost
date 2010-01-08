@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormField.class.php
+ *                           FormField.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,153 +24,46 @@
  *
  ###################################################*/
 
-/**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc Abstract class which manage Fields.
- * You can specify several option with the argument $field_options :
- * <ul>
- * 	<li>title : The field title</li>
- * 	<li>subtitle : The field subtitle</li>
- * 	<li>value : The default value for the field</li>
- * 	<li>id : The field identifier</li>
- * 	<li>class : The css class used for the field</li>
- * 	<li>required : Specify if the field is required.</li>
- * 	<li>onblur : Action performed when cursor is clicked outside the field area. (javascript)</li>
- * </ul>
- * @package builder
- * @subpackage form
- * @abstract
- */
-abstract class FormField implements ValidableFormComponent
+interface FormField
 {
-	protected $title = '';
-	protected $sub_title = '';
-	protected $name = '';
-	protected $value = '';
-	protected $id = '';
-	protected $css_class = '';
-	protected $required = false;
-	protected $on_blur = '';
-	private $constraints = array();
-
-	public abstract function display();
+	/**
+	 * @return Template
+	 */
+	function display();
 
 	/**
-	 * @param string $field_id Name of the field.
-	 * @param array $field_options Option for the field.
+	 * @return mixed
 	 */
-	protected function __construct($field_id, $value, array &$field_options, array $constraints)
-	{
-		$this->name = $field_id;
-		$this->id = $field_id;
-		$this->value = $value;
-		$this->constraints = $constraints;
-		$this->compute_options($field_options);
-	}
+	function get_value();
 
-	public function validate()
-	{
-		$this->retrieve_value();
-		$validation_result = true;
-		foreach ($this->constraints as $constraint)
-		{
-			if (!$constraint->validate($this))
-			{
-				$validation_result = false;;
-			}
-		}
-		return $validation_result;
-	}
-
-	public function retrieve_value()
-	{
-		$request = AppContext::get_request();
-		if ($request->has_parameter($this->name))
-		{
-			$this->value = $request->get_value($this->name);
-		}
-		else
-		{
-			$this->value = null;
-		}
-	}
-
-	public function prefix_id($prefix)
-	{
-		$this->id = $prefix . $this->id;
-	}
-
-	public function get_onsubmit_validations()
-	{
-		$validations = array();
-		foreach ($this->constraints as $constraint)
-		{
-			$validation = $constraint->get_onsubmit_validation($this);
-			if (!empty($validation))
-			{
-				$validations[] =  $validation;
-			}
-		}
-		return $validations;
-	}
-
-	protected function get_onblur_validations()
-	{
-		$validations = array();
-		foreach ($this->constraints as $constraint)
-		{
-			$validation = $constraint->get_onblur_validation($this);
-			if (!empty($validation))
-			{
-				$validations[] =  $validation;
-			}
-		}
-		return $validations;
-	}
-
-	## Getters and Setters ##
 	/**
-	 * @return string The fied identifier.
+	 * @desc Sets the value
+	 * @param string $value The value
 	 */
-	public function get_id() { return $this->id;}
-	public function get_value() { return $this->value; }
-	public function set_value($var) { $this->value = $var; }
+	function set_value($value);
 
-	private function compute_options(array &$field_options)
-	{
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'title' :
-					$this->title = $value;
-					unset($field_options['title']);
-					break;
-				case 'subtitle' :
-					$this->sub_title = $value;
-					unset($field_options['subtitle']);
-					break;
-				case 'id' :
-					$this->id = $value;
-					unset($field_options['id']);
-					break;
-				case 'class' :
-					$this->css_class = $value;
-					unset($field_options['class']);
-					break;
-				case 'required' :
-					$this->required = true;
-					$this->constraints[] = new NotEmptyFormFieldConstraint($value);
-					unset($field_options['required']);
-					break;
-				case 'onblur' :
-					$this->maxlength = $value;
-					unset($field_options['onblur']);
-					break;
-			}
-		}
-	}
+	/**
+	 * @desc Tries to retrieve the value in the HTTP request's parameters.
+	 */
+	public function retrieve_value();
+
+	/**
+	 * @desc Validates the field by cheching if all the constraints are satisfied.
+	 * @return bool true if the form is valid
+	 */
+	function validate();
+
+	/**
+	 * @desc Adds a constraint to the field constraints.
+	 * @param FormFieldConstraint $constraint The constraint to add
+	 */
+	function add_constraint(FormFieldConstraint $constraint);
+
+	/**
+	 * @desc Returns the javascript onsubmit code.
+	 * @return string The javascript code that makes the validation when the form is submitted
+	 */
+	function get_onsubmit_validations();
 }
 
 ?>

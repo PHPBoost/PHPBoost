@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormRadioChoice extends FormField
+class FormRadioChoice implements FormField
 {
 	private $options = array(); //Array of FormRadioChoiceOption
 
@@ -71,7 +71,7 @@ class FormRadioChoice extends FormField
 			'FIELD' => $this->options,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));
 
 		foreach ($this->options as $option)

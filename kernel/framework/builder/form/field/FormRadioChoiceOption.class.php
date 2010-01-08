@@ -35,7 +35,7 @@
  * @package builder
  * @subpackage form
  */
-class FormRadioChoiceOption extends FormFieldComposite
+class FormRadioChoiceOption implements FormFieldComposite
 {
 	private $checked = false;
 	
