@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormSelectOption extends FormFieldComposite
+class FormSelectOption implements FormFieldComposite
 {
 	private $selected = false;
 	

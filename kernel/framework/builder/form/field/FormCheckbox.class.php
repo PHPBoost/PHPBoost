@@ -30,20 +30,14 @@
  * @package builder
  * @subpackage form
  */
-class FormCheckbox extends FormField
+class FormCheckbox extends AbstractFormField
 {
-	private $checked = false;
-
 	const CHECKED = true;
 	const UNCHECKED = false;
 
-	public function __construct($field_id, $title, $checked = self::UNCHECKED, array $field_options = array(), array $options = array(), array $constraints = array())
+	public function __construct($id, $label, $checked = self::UNCHECKED, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct(__CLASS__ . $field_id, '', $field_options, $constraints);
-		$this->title = $title;
-		$this->options = $options;
-		$this->checked = $checked;
-		$this->constraints = $constraints;
+		parent::__construct($id, $label, $checked, $field_options, $constraints);
 	}
 
 	/**
@@ -51,31 +45,47 @@ class FormCheckbox extends FormField
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/forms/field_box.tpl');
-			
+		$template = new Template('framework/builder/form/FormField.tpl');
+
 		$template->assign_vars(array(
-		'ID' => $this->id,
-		'FIELD' => $this->options,
-		'L_FIELD_TITLE' => $this->title,
-		'L_EXPLAIN' => $this->sub_title,
-		'L_REQUIRE' => $this->required ? '* ' : ''
-		));
-		
-		$template->assign_block_vars('field_options', array(
-			'OPTION' => $this->generate_html_code()
+			'ID' => $this->get_real_id(),
+			'LABEL' => $this->get_label(),
+			'DESCRIPTION' => $this->get_description(),
+			'C_REQUIRED' => $this->is_required()
 		));
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		$template->assign_block_vars('fieldelements', array(
+			'ELEMENT' => $this->generate_html_code()
+		));
+
+		return $template;
+	}
+
+	public function is_checked()
+	{
+		return $this->get_value() == self::CHECKED;
+	}
+
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_real_id()))
+		{
+			$this->set_value($request->get_value($this->get_real_id()) == 'on' ? true : false);
+		}
+		else
+		{
+			$this->set_value(false);
+		}
 	}
 
 	private function generate_html_code()
 	{
 		$option = '<input type="checkbox" ';
-		$option .= 'name="' . $this->name . '" ';
-		$option .= 'id="' . $this->id . '" ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
-		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
-		$option .= '/><br />' . "\n";
+		$option .= 'name="' . $this->get_real_id() . '" ';
+		$option .= 'id="' . $this->get_real_id() . '" ';
+		$option .= $this->is_checked() ? 'checked="checked" ' : '';
+		$option .= '/>';
 
 		return $option;
 	}

@@ -34,7 +34,7 @@
  * @package builder
  * @subpackage form
  */
-class FormSelect extends FormField
+class FormSelect implements FormField
 {
 	private $options = array();
 	private $multiple = false;
@@ -78,7 +78,7 @@ class FormSelect extends FormField
 			'L_FIELD_NAME' => $this->name,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));
 
 		foreach ($this->options as $option)

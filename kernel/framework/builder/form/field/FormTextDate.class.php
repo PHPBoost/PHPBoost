@@ -34,7 +34,7 @@
  * @package builder
  * @subpackage form
  */
-class FormTextDate extends FormField
+class FormTextDate implements FormField
 {	
 	private $calendar_day = 1;
 	private $calendar_month = 1;
@@ -87,7 +87,7 @@ class FormTextDate extends FormField
 			'CALENDAR_YEAR' => $this->calendar_year,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));	
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);

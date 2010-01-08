@@ -34,7 +34,7 @@
  * @package builder
  * @subpackage form
  */
-class FormFileUploader extends FormField
+class FormFileUploader implements FormField
 {
 	private $size = '';
 	private $extended_text = '';
@@ -80,7 +80,7 @@ class FormFileUploader extends FormField
 			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));	
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);

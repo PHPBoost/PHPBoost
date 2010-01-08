@@ -35,7 +35,7 @@
  * @package builder
  * @subpackage form
  */
-class FormFreeField extends FormField
+class FormFreeField implements FormField
 {
 	private $content = ''; //Content of the free field
 	private $template = ''; //Optionnal template
@@ -79,7 +79,7 @@ class FormFreeField extends FormField
 			'FIELD' => $this->content,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'C_REQUIRED' => $this->is_required()
 		));	
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);

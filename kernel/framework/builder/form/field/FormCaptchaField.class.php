@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormCaptchaField extends FormField
+class FormCaptchaField implements FormField
 {
 	private $captcha = ''; //Captcha object
 	

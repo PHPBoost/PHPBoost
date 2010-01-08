@@ -59,7 +59,7 @@ class SitemapXMLFileService
 	 */
 	public static function is_xml_file_generation_enabled()
 	{
-		return SitemapConfig::load()->is_generation_enabled();
+		return SitemapConfig::load()->is_sitemap_xml_generation_enabled();
 	}
 
 	private static function is_out_of_date()
