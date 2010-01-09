@@ -51,7 +51,7 @@ class ContentFormattingMetaFactory
 	{
 		if (self::$instance === null)
 		{
-			self::$instance = self::create_factory(self::get_default_language());
+			self::$instance = self::create_factory(self::get_user_language());
 		}
 		return self::$instance;
 	}
@@ -70,7 +70,7 @@ class ContentFormattingMetaFactory
 			case self::TINYMCE_LANGUAGE:
 				return new TinyMCEParserFactory();
 			default:
-				return self::create_factory(self::get_default_language());
+				return self::create_factory(self::get_user_language());
 		}
 	}
 
@@ -78,7 +78,7 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
-	public static function get_default_language()
+	public static function get_user_language()
 	{
 		return AppContext::get_user()->get_attribute('user_editor');
 	}
