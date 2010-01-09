@@ -246,7 +246,7 @@ abstract class AbstractFormField implements FormField
 		return implode(' ;', $validations);
 	}
 
-	protected function compute_options(array $field_options)
+	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
 		{
