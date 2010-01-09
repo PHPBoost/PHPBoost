@@ -32,27 +32,47 @@
  * @desc This class is a factory which generates every formatting element required by the TinyMCE
  * formatting system.
  */
-class TinyMCEParserFactory implements ContentParserFactory
+class TinyMCEParserFactory extends AbstractContentFormattingFactory
 {
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_parser()
+	 */
 	public function get_parser()
 	{
-		return new TinyMCEParser();
+		$parser = new TinyMCEParser();
+		$parser->set_forbidden_tags($this->get_forbidden_tags());
+		$parser->set_html_auth($this->get_html_auth());
+		return $parser;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_unparser()
+	 */
 	public function get_unparser()
 	{
 		return new TinyMCEUnparser();
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_second_parser()
+	 */
 	public function get_second_parser()
 	{
 		return new ContentSecondParser();
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_editor()
+	 */
 	public function get_editor()
 	{
-		return new TinyMCEEditor();
+		$editor = new TinyMCEEditor();
+		$editor->set_forbidden_tags($this->get_forbidden_tags());
+		return $editor;
 	}
 }
-
 ?>

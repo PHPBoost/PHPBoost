@@ -115,7 +115,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
     		}
     		if (!empty($this->array_tags['code_unparse']))
     		{
-    			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
+    			$this->array_tags['code_unparse'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
     		}
 
     		//reimplanting html and code tags
