@@ -33,15 +33,10 @@
  */
 abstract class ContentEditor
 {
-    function ContentEditor($language_type = null)
+    function ContentEditor()
     {
         global $CONFIG;
-        if ($language_type !== null)
-        {
-            $this->set_language($language_type);
-        }
-
-        $this->forbidden_tags =& $CONFIG['forbidden_tags'];
+        $this->forbidden_tags = $CONFIG['forbidden_tags'];
     }
 
     /**
@@ -88,7 +83,7 @@ abstract class ContentEditor
     {
         if (!is_object($this->template) || strtolower(get_class($this->template)) != 'template')
         {
-            return new template('framework/content/editor.tpl');
+            return new Template('framework/content/editor.tpl');
         }
         else
         {
@@ -97,7 +92,6 @@ abstract class ContentEditor
     }
 
     ## Private ##
-    var $language_type = ContentFormattingFactory::DEFAULT_LANGUAGE; //Langage type
     var $forbidden_tags = array();
     var $identifier = 'contents';
     var $template = null;

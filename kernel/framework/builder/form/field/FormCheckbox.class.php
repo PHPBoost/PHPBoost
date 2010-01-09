@@ -47,12 +47,7 @@ class FormCheckbox extends AbstractFormField
 	{
 		$template = new Template('framework/builder/form/FormField.tpl');
 
-		$template->assign_vars(array(
-			'ID' => $this->get_html_id(),
-			'LABEL' => $this->get_label(),
-			'DESCRIPTION' => $this->get_description(),
-			'C_REQUIRED' => $this->is_required()
-		));
+		$this->assign_common_template_variables($template);
 
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->generate_html_code()
