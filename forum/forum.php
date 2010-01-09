@@ -205,7 +205,7 @@ if (!empty($id_get))
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
 	$forum_cats = '';	
-	foreach ($Bread_crumb->array_links as $key => $array)
+	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i == 2)
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
