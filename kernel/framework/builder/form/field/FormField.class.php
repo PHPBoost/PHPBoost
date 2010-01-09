@@ -27,9 +27,16 @@
 interface FormField
 {
 	/**
-	 * @return Template
+	 * @desc Returns the id.
+	 * @return string
 	 */
-	function display();
+	public function get_id();
+	
+	/**
+	 * @desc Sets the id
+	 * @param string $id The id.
+	 */
+	public function set_id($id);
 
 	/**
 	 * @return mixed
@@ -46,6 +53,17 @@ interface FormField
 	 * @desc Tries to retrieve the value in the HTTP request's parameters.
 	 */
 	public function retrieve_value();
+	
+	/**
+	 * @desc Returns the effective HTML id.
+	 * @return string
+	 */
+	public function get_html_id();
+
+	/**
+	 * @return Template
+	 */
+	function display();
 
 	/**
 	 * @desc Validates the field by cheching if all the constraints are satisfied.

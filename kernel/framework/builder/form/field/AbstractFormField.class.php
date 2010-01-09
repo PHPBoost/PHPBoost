@@ -83,8 +83,8 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * @desc Returns the HTML id
-	 * @return string The HTML id
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#get_id()
 	 */
 	public function get_id()
 	{
@@ -92,8 +92,8 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * @desc Sets the HTML id
-	 * @param string $id The HTML id.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#set_id($id)
 	 */
 	public function set_id($id)
 	{
@@ -197,13 +197,17 @@ abstract class AbstractFormField implements FormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		if ($request->has_parameter($this->get_real_id()))
+		if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->value = $request->get_value($this->get_real_id());
+			$this->value = $request->get_value($this->get_html_id());
 		}
 	}
 
-	protected function get_real_id()
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#get_html_id()
+	 */
+	public function get_html_id()
 	{
 		return 'form_builder_' . $this->get_id();
 	}
