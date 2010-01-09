@@ -73,7 +73,7 @@ class FormTextEdit extends AbstractFormField
 		return $template;
 	}
 
-	protected function compute_options(array $field_options)
+	protected function compute_options(array &$field_options)
 	{
 		foreach ($field_options as $attribute => $value)
 		{
@@ -90,7 +90,7 @@ class FormTextEdit extends AbstractFormField
 					break;
 			}
 		}
-		parent::compute_options(&$field_options);
+		parent::compute_options($field_options);
 	}
 }
 
