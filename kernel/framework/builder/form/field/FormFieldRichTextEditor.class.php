@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          FormRichTextEdit.class.php
+ *                          FormFieldRichTextEditor.class.php
  *                            -------------------
  *   begin                : January 09, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -30,13 +30,24 @@
  * @package builder
  * @subpackage form
  */
-class FormRichTextEdit extends FormMultiLineTextEdit
+class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 {
 	/**
 	 * @var ContentFormattingFactory
 	 */
 	private $formatter = null;
 
+	/**
+	 * @desc Constructs a rich text edit field.
+	 * In addition to the parameters of the FormMultiLineEdit ones, there is the formatter which
+	 * is an instance of the ContentFormattingFactory which ensures the formatting. The default value
+	 * corresponds to the user's default configuration and will be the one to use 99% of the time.
+	 * @param string $id Field id
+	 * @param string $label Field label
+	 * @param string $value Default value
+	 * @param string[] $field_options options
+	 * @param FormFieldConstraint[] $constraints The constraints
+	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		$this->formatter = ContentFormattingMetaFactory::get_default_factory();

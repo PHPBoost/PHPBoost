@@ -50,39 +50,39 @@ class SandboxController extends ModuleController
 		$form = new Form('sandboxForm');
 		$fieldset = new FormFieldset('This is a fieldset');
 
-		$fieldset->add_field(new FormTextEdit('pseudo', 'This is a text field', 'toto', array(
+		$fieldset->add_field(new FormFieldTextEditor('pseudo', 'This is a text field', 'toto', array(
 			'class' => 'text', 'required' => 'Le pseudo est obligatoire',
 			'maxlength' => 25, 'description' => 'nom'),
 			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
 		));
-		$fieldset->add_field(new FormMultiLineTextEdit('content', 'This is a textarea', 'toto', array(
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('content', 'This is a textarea', 'toto', array(
 			'rows' => 6, 'cols' => 47, 'description' => 'Description'
 		)));
 		
-		$fieldset->add_field(new FormRichTextEdit('rich_content', 'This is a rich text editor', 'toto <strong>tata</strong>'));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_content', 'This is a rich text editor', 'toto <strong>tata</strong>'));
 		
-//		$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
+//		$fieldset->add_field(new FormFieldRadio('choice', array('title' => 'Answer'),
 //			array(
-//				new FormRadioChoiceOption('Choix1', 1),
-//				new FormRadioChoiceOption('Choix2', 2, FormRadioChoiceOption::CHECKED)
+//				new FormFieldRadioOption('Choix1', 1),
+//				new FormFieldRadioOption('Choix2', 2, FormFieldRadioOption::CHECKED)
 //			)
 //		));
-		$fieldset->add_field(new FormCheckbox('checkbox', 'This is a checkbox', FormCheckbox::CHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'This is a checkbox', FormFieldCheckbox::CHECKED));
 		
-//		$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
+//		$fieldset->add_field(new FormFieldSelect('sex', array('title' => 'Sex'),
 //			array(
-//				new FormSelectOption('Men', 1),
-//				new FormSelectOption('Women', 2),
-//				new FormSelectOption('?', -1, FormSelectOption::SELECTED)
+//				new FormFieldSelectOption('Men', 1),
+//				new FormFieldSelectOption('Women', 2),
+//				new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
 //			)
 //		));
 		
 		//Select field
-//		$fieldset->add_field(new FormSelect('sex2', array('title' => 'Sex', 'multiple' => true),
+//		$fieldset->add_field(new FormFieldSelect('sex2', array('title' => 'Sex', 'multiple' => true),
 //			array(
-//				new FormSelectOption('Men', 1),
-//				new FormSelectOption('Women', 2),
-//				new FormSelectOption('?', -1, FormSelectOption::SELECTED)
+//				new FormFieldSelectOption('Men', 1),
+//				new FormFieldSelectOption('Women', 2),
+//				new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
 //			)
 //		));
 		
@@ -90,13 +90,13 @@ class SandboxController extends ModuleController
 		
 //		$fieldset_up = new FormFieldset('Upload file');
 //		//File field
-//		$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
+//		$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
 //		//Radio button field
-//		$fieldset_up->add_field(new FormHiddenField('test', 1));
+//		$fieldset_up->add_field(new FormFieldHidden('test', 1));
 		
 //		//Captcha
 //		$captcha = new Captcha();
-//		$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+//		$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 //		
 //		$form->add_fieldset($fieldset_up);
 //				

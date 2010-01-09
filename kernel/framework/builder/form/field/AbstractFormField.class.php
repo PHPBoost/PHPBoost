@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class that proposes a default implementation for the FormField interface.
- * @package builder
+ * @package builder/field
  * @subpackage form
  */
 abstract class AbstractFormField implements FormField
@@ -62,8 +62,19 @@ abstract class AbstractFormField implements FormField
 	protected $constraints = array();
 
 	/**
-	 * @param string $field_id Name of the field.
-	 * @param array $field_options Option for the field.
+	 * @desc Constructs and set parameters to the field.
+	 * The specific parameters of this abstract class (common with many fields) are the following:
+	 * <ul>
+	 * 	<li>description at which you must associate the description of the field</li>
+	 * 	<li>class which corresponds to the HTML class of the field</li>
+	 * 	<li>required which tells whether this field must be completed. If it's the case, it will display a * beside the label and will add a non empty constraint to the constraints.</li>
+	 * </ul>
+	 * None of these parameters is required.
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param mixed $value Field value 
+	 * @param string[] $field_options Map associating the parameters values to the parameters names.
+	 * @param FormFieldConstraint[] $constraints List of the constraints which must be checked when the form is been validated
 	 */
 	protected function __construct($id, $label, $value, array $field_options, array $constraints)
 	{
@@ -190,7 +201,7 @@ abstract class AbstractFormField implements FormField
 	 * (non-PHPdoc)
 	 * @see kernel/framework/builder/form/field/FormField#retrieve_value()
 	 */
-	public function retrieve_value()
+	function retrieve_value()
 	{
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
@@ -263,7 +274,10 @@ abstract class AbstractFormField implements FormField
 					break;
 				case 'required':
 					$this->set_required($value);
-					$this->add_constraint(new NotEmptyFormFieldConstraint($this->get_label()));
+					if ($value)
+					{
+						$this->add_constraint(new NotEmptyFormFieldConstraint($this->get_label()));
+					}
 					unset($field_options['required']);
 					break;
 				default :

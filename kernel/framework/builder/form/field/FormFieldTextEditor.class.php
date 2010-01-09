@@ -27,20 +27,27 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line text fields.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>size : The maximum size for the field</li>
- * 	<li>maxlength : The maximum length for the field</li>
- * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
- * </ul>
  * @package builder
  * @subpackage form
  */
-class FormTextEdit extends AbstractFormField
+class FormFieldTextEditor extends AbstractFormField
 {
 	private $size = 30;
 	private $maxlength = 255;
 
+	/**
+	 * @desc Constructs a FormFieldTextEditor.
+	 * It has these options in addition to the AbstractFormField ones:
+	 * <ul>
+	 * 	<li>size: The size (width) of the HTML field</li>
+	 * 	<li>maxlength: The maximum length for the field</li>
+	 * </ul>
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param string $value Default value
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
 		$this->css_class = "text";
@@ -53,7 +60,7 @@ class FormTextEdit extends AbstractFormField
 	public function display()
 	{
 		$template = new Template('framework/builder/form/FormField.tpl');
-		
+
 		$field = '<input type="text" ';
 		$field .= 'size="' . $this->size;
 		$field .= 'maxlength="' . $this->maxlength . '" ';
@@ -65,7 +72,7 @@ class FormTextEdit extends AbstractFormField
 		$field .= '/>';
 
 		$this->assign_common_template_variables($template);
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field
 		));

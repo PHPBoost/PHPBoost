@@ -37,26 +37,26 @@
  *	//####### First fieldset ######//
  *	$fieldset = new FormFieldset('Form Test');
  *
- *	$fieldset->add_field(new FormTextEdit('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
+ *	$fieldset->add_field(new FormFieldTextEditor('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
  *	//Textarea field
  *	$fieldset->add_field(new FormTextarea('contents', '', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
  *	$fieldset->add_field(new FormTextarea('comments', '', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
  *	//Radio button field
- *	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
- *		new FormRadioChoiceOption('Choix1', 1),
- *		new FormRadioChoiceOption('Choix2', 2, FormRadioChoiceOption::CHECKED)
+ *	$fieldset->add_field(new FormFieldRadio('choice', array('title' => 'Answer'),
+ *		new FormFieldRadioOption('Choix1', 1),
+ *		new FormFieldRadioOption('Choix2', 2, FormFieldRadioOption::CHECKED)
  *	));
  *
  *	//Checkbox button field
- *	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
- *		new FormCheckboxOption('Choix3', 1),
- *		new FormCheckboxOption('Choix4', 2, FormCheckboxOption::CHECKED)
+ *	$fieldset->add_field(new FormFieldCheckbox('multiplechoice', array('title' => 'Answer2'),
+ *		new FormFieldCheckboxOption('Choix3', 1),
+ *		new FormFieldCheckboxOption('Choix4', 2, FormFieldCheckboxOption::CHECKED)
  *	));
  *	//Select field
- *	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
- *		new FormSelectOption('Men', 1),
- *		new FormSelectOption('Women', 2),
- *		new FormSelectOption('?', -1, FormSelectOption::SELECTED)
+ *	$fieldset->add_field(new FormFieldSelect('sex', array('title' => 'Sex'),
+ *		new FormFieldSelectOption('Men', 1),
+ *		new FormFieldSelectOption('Women', 2),
+ *		new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
  *	));
  *
  *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
@@ -64,14 +64,14 @@
  *	//####### Second fieldset #######//
  *	$fieldset_up = new FormFieldset('Upload file');
  *	//File field
- *	$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
+ *	$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
  *	//Radio button field
- *	$fieldset_up->add_field(new FormHiddenField('test', 1));
+ *	$fieldset_up->add_field(new FormFieldHidden('test', 1));
  *
  *	//Captcha
  *
  *	$captcha = new Captcha();
- *	$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+ *	$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
  *
  *	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
  *

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormSelectOption.class.php
+ *                             FormFieldSelectOption.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormSelectOption implements FormFieldComposite
+class FormFieldSelectOption implements FormFieldComposite
 {
 	private $selected = false;
 	

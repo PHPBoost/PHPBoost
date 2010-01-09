@@ -26,22 +26,31 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manages checkbox input fields.
+ * @desc The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
  * @package builder
  * @subpackage form
  */
-class FormCheckbox extends AbstractFormField
+class FormFieldCheckbox extends AbstractFormField
 {
 	const CHECKED = true;
 	const UNCHECKED = false;
 
+	/**
+	 * @desc Constructs a FormFieldCheckbox.
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param bool $checked FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
 	public function __construct($id, $label, $checked = self::UNCHECKED, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $checked, $field_options, $constraints);
 	}
 
 	/**
-	 * @return string The html code for the checkbox input.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#display()
 	 */
 	public function display()
 	{
@@ -56,11 +65,19 @@ class FormCheckbox extends AbstractFormField
 		return $template;
 	}
 
+	/**
+	 * Tells whether the checkbox is checked
+	 * @return bool
+	 */
 	public function is_checked()
 	{
 		return $this->get_value() == self::CHECKED;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 */
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();

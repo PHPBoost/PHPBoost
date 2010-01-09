@@ -106,7 +106,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormTextEdit('shoutbox_pseudo', $row['login'], array(
+				$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $row['login'], array(
 					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
@@ -202,7 +202,7 @@ else //Affichage.
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
-		$fieldset->add_field(new FormTextEdit('shoutbox_pseudo', $LANG['guest'], array(
+		$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
 		));
 	}

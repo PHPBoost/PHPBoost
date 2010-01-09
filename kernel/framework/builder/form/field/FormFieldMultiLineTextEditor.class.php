@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       FormMultiLineTextEdit.class.php
+ *                       FormFieldMultiLineTextEditor.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -26,26 +26,40 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage multi-line text fields.
+ * @desc This class manage multi-line text fields, but the text can't be formatted.
  * @package builder
  * @subpackage form
  */
-class FormMultiLineTextEdit extends AbstractFormField
+class FormFieldMultiLineTextEditor extends AbstractFormField
 {
 	protected $rows = 5;
 	protected $cols = 40;
 
+	/**
+	 * @desc Constructs a multi line text edit.
+	 * In addition to the FormField parameters, there are these ones:
+	 * <ul>
+	 * 	<li>rows: the number of rows of the texarea</li>
+	 * 	<li>cols: the number of cols of the textarea</li>
+	 * </ul>
+	 * @param string $id Field id
+	 * @param string $label Field label
+	 * @param string $value Default value 
+	 * @param string[] $field_options Options
+	 * @param FormFieldConstraint[] $constraints List of the constraints
+	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
 	/**
-	 * @return string The html code for the textarea.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#display()
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/form/FormMultiLineTextEdit.tpl');
+		$template = new Template('framework/builder/form/FormFieldMultiLineTextEditor.tpl');
 			
 		$this->assign_common_template_variables($template);
 		$this->assign_textarea_template_variables($template);

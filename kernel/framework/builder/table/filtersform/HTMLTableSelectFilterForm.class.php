@@ -42,7 +42,7 @@ class HTMLTableSelectFilterForm extends HTMLTableFilterForm
 	
 	public function get_form_field()
 	{
-		return new FormSelect($this->get_filter_parameter(), array(), $this->options);
+		return new FormFieldSelect($this->get_filter_parameter(), array(), $this->options);
 	}
 	
 	public function is_filter_value_allowed($value)
