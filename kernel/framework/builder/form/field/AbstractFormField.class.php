@@ -57,10 +57,6 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $required = false;
 	/**
-	 * @var string
-	 */
-	protected $on_blur = '';
-	/**
 	 * @var FormFieldConstraint[]
 	 */
 	protected $constraints = array();
@@ -75,7 +71,7 @@ abstract class AbstractFormField implements FormField
 		$this->set_label($label);
 		$this->set_value($value);
 		$this->compute_options($field_options);
-		
+
 		foreach ($constraints as $constraint)
 		{
 			$this->add_constraint($constraint);
@@ -153,7 +149,7 @@ abstract class AbstractFormField implements FormField
 	{
 		$this->value = $value;
 	}
-	
+
 	/**
 	 * @desc Tells whether the field is required
 	 * @return true if it is, false otherwise
@@ -162,7 +158,7 @@ abstract class AbstractFormField implements FormField
 	{
 		return $this->required;
 	}
-	
+
 	/**
 	 * @desc Changes the fact that the field is required or not.
 	 * @param bool $required true if it's required, false otherwise
@@ -236,7 +232,7 @@ abstract class AbstractFormField implements FormField
 		return $validations;
 	}
 
-	protected function get_onblur_validations()
+	protected function get_onblur_action()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
@@ -244,10 +240,10 @@ abstract class AbstractFormField implements FormField
 			$validation = $constraint->get_onblur_validation($this);
 			if (!empty($validation))
 			{
-				$validations[] =  $validation;
+				$validations[] =  htmlspecialchars($validation);
 			}
 		}
-		return $validations;
+		return implode(' ;', $validations);
 	}
 
 	protected function compute_options(array $field_options)
@@ -270,20 +266,41 @@ abstract class AbstractFormField implements FormField
 					unset($field_options['id']);
 					break;
 				case 'class':
-					$this->css_class = $value;
+					$this->set_css_class($value);
 					unset($field_options['class']);
 					break;
 				case 'required':
 					$this->set_required($value);
-					$this->constraints[] = new NotEmptyFormFieldConstraint($value);
+					$this->add_constraint(new NotEmptyFormFieldConstraint($this->get_label()));
 					unset($field_options['required']);
 					break;
-				case 'onblur':
-					$this->maxlength = $value;
-					unset($field_options['onblur']);
-					break;
+				default :
+					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
 			}
 		}
+	}
+
+	protected function assign_common_template_variables(Template $template)
+	{
+		$template->assign_vars(array(
+			'ID' => $this->id,
+			'LABEL' => $this->get_label(),
+			'DESCRIPTION' => $this->get_description(),
+			'C_REQUIRED' => $this->is_required(),
+			'VALUE' => $this->get_value(),
+			'ONBLUR' => $this->get_onblur_action(),
+			'CLASS' => $this->get_css_class()
+		));
+	}
+
+	protected function get_css_class()
+	{
+		return $this->css_class;
+	}
+
+	protected function set_css_class($css_class)
+	{
+		$this->css_class = $css_class;
 	}
 }
 

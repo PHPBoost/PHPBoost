@@ -10,7 +10,9 @@
 			<dd>
 				# START fieldelements #
 					{fieldelements.ELEMENT}
-					&nbsp;<span id="onblurContainerResponse{ID}"></span><div id="onblurMesssageResponse{ID}"></div>
+					&nbsp;
+					<span id="onblurContainerResponse{ID}"></span>
+					<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
 				# END fieldelements #
 			</dd>
 		</dl>

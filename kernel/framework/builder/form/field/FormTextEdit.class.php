@@ -43,6 +43,7 @@ class FormTextEdit extends AbstractFormField
 
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
+		$this->css_class = "text";
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
@@ -52,9 +53,6 @@ class FormTextEdit extends AbstractFormField
 	public function display()
 	{
 		$template = new Template('framework/builder/form/FormField.tpl');
-			
-		$validations = $this->get_onblur_validations();
-		$onblur = !empty($this->on_blur) || !empty($validations);
 		
 		$field = '<input type="text" ';
 		$field .= 'size="' . $this->size;
@@ -62,16 +60,11 @@ class FormTextEdit extends AbstractFormField
 		$field .= 'name="' . $this->get_html_id() . '" ';
 		$field .= 'id="' . $this->get_html_id() . '" ';
 		$field .= 'value="' . htmlspecialchars($this->value) . '" ';
-		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : '';
+		$field .= 'class="' . $this->css_class . '" ';
+		$field .= 'onblur="' . $this->get_onblur_action() . '" ';
 		$field .= '/>';
 
-		$template->assign_vars(array(
-			'ID' => $this->get_html_id(),
-			'LABEL' => $this->get_label(),
-			'DESCRIPTION' => $this->get_description(),
-			'C_REQUIRED' => $this->is_required()
-		));
+		$this->assign_common_template_variables($template);
 		
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field
@@ -80,9 +73,8 @@ class FormTextEdit extends AbstractFormField
 		return $template;
 	}
 
-	protected function compute_fields_options(array $field_options)
+	protected function compute_options(array $field_options)
 	{
-		parent::compute_options($field_options);
 		foreach ($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -96,10 +88,9 @@ class FormTextEdit extends AbstractFormField
 					$this->maxlength = $value;
 					unset($field_options['maxlength']);
 					break;
-				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
 			}
 		}
+		parent::compute_options(&$field_options);
 	}
 }
 
