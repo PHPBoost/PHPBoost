@@ -130,6 +130,11 @@ class BreadCrumb
         $this->array_links = array();
     }
     
+    public function get_links()
+    {
+    	return $this->array_links;
+    }
+    
     /**
      * Sets the reference to the parent graphical environment
      * @param SiteDisplayGraphicalEnvironment $env The parent environment
