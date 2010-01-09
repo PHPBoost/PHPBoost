@@ -49,11 +49,11 @@ class SandboxController extends ModuleController
 
 		$fieldset->add_field(new FormTextEdit('pseudo', 'This is a text field', 'toto', array(
 			'class' => 'text', 'required' => 'Le pseudo est obligatoire',
-			'maxlength' => 25),
+			'maxlength' => 25, 'description' => 'nom'),
 			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
 		));
-		$fieldset->add_field(new FormTextArea('content', 'This is a textarea', 'toto', array(
-			'rows' => 10, 'cols' => 47
+		$fieldset->add_field(new FormMultiLineTextEdit('content', 'This is a textarea', 'toto', array(
+			'rows' => 6, 'cols' => 47, 'description' => 'Description'
 		)));
 		
 //		$fieldset->add_field(new FormTextArea('rich_content', 'This is a rich text editor', 'toto', array(
