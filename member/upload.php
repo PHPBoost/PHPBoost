@@ -444,23 +444,29 @@ else
 			$width_source = !empty($width_source) ? $width_source + 30 : 0;
 			$height_source = !empty($height_source) ? $height_source + 30 : 0;
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			break;
 			//Image svg
 			case 'svg':
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
 			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
 			break;
 			//Sons
 			case 'mp3':
 			$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
+			$tinymce = '<a href="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
 			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
 			break;
 			default:
 			$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
+			$tinymce = '<a href="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 		}
 		
+		$displayed_code = (ContentFormattingFactory::get_parser() == ContentFormattingFactory::BBCODE_LANGUAGE) ? $bbcode : '/upload/' . $row['path'];
+		$inserted_code = (ContentFormattingFactory::get_parser() == ContentFormattingFactory::BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce);
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
@@ -469,9 +475,9 @@ else
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
+			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '" />',
 			'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
+			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
 		));

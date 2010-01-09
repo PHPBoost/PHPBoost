@@ -4,18 +4,18 @@
 		displayed['{FIELD}'] = false;
 		function XMLHttpRequest_preview(field)
 		{
-			if( XMLHttpRequest_preview.arguments.length == 0 )
+			if (XMLHttpRequest_preview.arguments.length == 0)
  			    field = '{FIELD}';
 
 			{TINYMCE_TRIGGER}
 			var contents = document.getElementById(field).value;
 			
-			if( contents != "" )
+			if (contents != "")
 			{
-				if( !displayed[field] ) 
+				if (!displayed[field]) 
 					Effect.BlindDown('xmlhttprequest_preview' + field, { duration: 0.5 });
 					
-				if( document.getElementById('loading_preview' + field) )
+				if (document.getElementById('loading_preview' + field))
 					document.getElementById('loading_preview' + field).style.display = 'block';
 				displayed[field] = true;			
 
@@ -34,7 +34,7 @@
 						onSuccess: function(response)
 						{
 							document.getElementById('xmlhttprequest_preview' + field).innerHTML = response.responseText;
-							if( document.getElementById('loading_preview' + field) )
+							if (document.getElementById('loading_preview' + field))
 								document.getElementById('loading_preview' + field).style.display = 'none';
 						}
 					}
@@ -43,8 +43,16 @@
 			else
 				alert("{L_REQUIRE_TEXT}");
 		}
+		
+		function insertTinyMceContent(content)
+		{
+			# IF C_BBCODE_TINYMCE_MODE #	
+			tinyMCE.execCommand('mceInsertContent', false, content, {skip_undo : 1});
+			# ENDIF #
+		}
 		-->
-		</script>
+		</script>	
+		<span onclick="test();">test1</span>	
 		<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 		
@@ -111,16 +119,16 @@
 			var head = document.getElementById('bb_head{FIELD}').checked;
 			var code = '';
 			
-			if( cols >= 0 && lines >= 0 )
+			if (cols >= 0 && lines >= 0)
 			{
 				var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
 				var pointor = head ? (59 + colspan.length) : 22;
 				code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']{L_TABLE_HEAD}[/head]\n\t[/row]\n' : '[table]\n';
 				
-				for(var i = 0; i < lines; i++)
+				for (var i = 0; i < lines; i++)
 				{
 					code += '\t[row]\n';
-					for(var j = 0; j < cols; j++)
+					for (var j = 0; j < cols; j++)
 						code += '\t\t[col][/col]\n';
 					code += '\t[/row]\n';
 				}				
@@ -133,13 +141,13 @@
 		{
 			var elements = document.getElementById('bb_list{FIELD}').value;
 			var ordered_list = document.getElementById('bb_ordered_list{FIELD}').checked;
-			if( elements <= 0 )
+			if (elements <= 0)
 				elements = 1;
 			
 			var pointor = ordered_list ? 19 : 11;
 			
 			code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
-			for(var j = 0; j < elements; j++)
+			for (var j = 0; j < elements; j++)
 				code += '\t[*]\n';
 			code += '[/list]';
 			insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), '{FIELD}');
@@ -147,7 +155,7 @@
 		function bbcode_url_{FIELD}()
 		{
 			var url = prompt("{L_URL_PROMPT}");
-			if( url != null && url != '' )
+			if (url != null && url != '')
 				insertbbcode('[url=' + url + ']', '[/url]', '{FIELD}');
 			else
 				insertbbcode('[url]', '[/url]', '{FIELD}');
