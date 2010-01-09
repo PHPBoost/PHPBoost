@@ -124,7 +124,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-			$this->array_tags['code'] = array_map(array('TinyMCEParser', 'clear_html_and_code_tag'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code']);
 
 			$this->reimplant_tag('code');
 		}

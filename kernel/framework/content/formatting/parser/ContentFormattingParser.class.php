@@ -33,13 +33,7 @@
  */
 abstract class ContentFormattingParser extends AbstractParser
 {
-    /**
-    @var string[] List of the BBCode supported tags
-    */
-    private static $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url',
-    'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup',
-    'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym');
-    /**
+	/**
      * @var string[] Authorization of the HTML BBCode tag.
      */
     protected $html_auth = array();
@@ -73,7 +67,7 @@ abstract class ContentFormattingParser extends AbstractParser
      * @desc Sets the tags which mustn't be parsed.
      * @param string[] $forbidden_tags list of the name of the tags which mustn't be parsed.
      */
-    public function set_forbidden_tags($forbidden_tags)
+    public function set_forbidden_tags(array $forbidden_tags)
     {
         if (is_array($forbidden_tags))
         {
@@ -95,17 +89,26 @@ abstract class ContentFormattingParser extends AbstractParser
      * will be displayed by the web browser.
      * @param mixed[] $array_auth authorization array
      */
-    public function set_html_auth($array_auth)
+    public function set_html_auth(array $array_auth)
     {
         global $CONFIG;
         if (is_array($array_auth))
         {
-            $this->auth = $array_auth;
+            $this->html_auth = $array_auth;
         }
         else
         {
-            $this->auth = $CONFIG['html_auth'];
+            $this->html_auth = $CONFIG['html_auth'];
         }
+    }
+    
+    /**
+     * @desc Returns the HTML tag auth
+     * @return mixed[]
+     */
+    public function get_html_auth()
+    {
+    	return $this->html_auth;
     }
 
     /**
