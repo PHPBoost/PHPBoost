@@ -78,7 +78,7 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
-	private static function get_default_language()
+	public static function get_default_language()
 	{
 		return AppContext::get_user()->get_attribute('user_editor');
 	}
