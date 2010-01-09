@@ -35,7 +35,10 @@ class SandboxController extends ModuleController
 		{
 			if ($form->validate())
 			{
-				echo $form->get_value('pseudo') . ' poste ' . $form->get_value('content');
+				$view->assign_vars(array(
+					'C_RESULT' => true, 
+					'RESULT' => $form->get_value('pseudo') . ' poste ' . $form->get_value('content') . ' et ' . $form->get_value('rich_content')
+				));
 			}
 		}
 		$view->add_subtemplate('form', $form->export());
@@ -56,9 +59,7 @@ class SandboxController extends ModuleController
 			'rows' => 6, 'cols' => 47, 'description' => 'Description'
 		)));
 		
-//		$fieldset->add_field(new FormTextArea('rich_content', 'This is a rich text editor', 'toto', array(
-//			'rows' => 10, 'cols' => 47, 'editor' => ContentFormattingFactory::get_editor())
-//		));
+		$fieldset->add_field(new FormRichTextEdit('rich_content', 'This is a rich text editor', 'toto <strong>tata</strong>'));
 		
 //		$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
 //			array(
