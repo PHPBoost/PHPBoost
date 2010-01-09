@@ -7,11 +7,9 @@
 		# IF C_EDITOR_ENABLED #
 			{EDITOR}
 		# ENDIF #
-		<textarea id="{ID}" name="{ID}" rows="{ROWS}" cols="{COLS}" class="{CLASS}" onblur="{ONBLUR}">
-			{VALUE}
-		</textarea>
+		<textarea id="{ID}" name="{ID}" rows="{ROWS}" cols="{COLS}" class="{CLASS}" onblur="{ONBLUR}">{VALUE}</textarea>
 		# IF C_EDITOR_ENABLED #
-			Bouton preview
+			<div style="text-align:center;">{PREVIEW_BUTTON}</div>
 		# ENDIF #
 		<br />
 		<span id="onblurContainerResponse{ID}"></span>

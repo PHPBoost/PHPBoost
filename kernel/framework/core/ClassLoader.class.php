@@ -65,6 +65,8 @@ class ClassLoader
 			{
 				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
+			// TODO throw an exception to have an error explaining that the class hasn't been found
+			// currently, there is a require error!
 		}
 	}
 

@@ -1,1 +1,5 @@
+# IF C_RESULT #
+{RESULT}
+# ENDIF #
+
 # INCLUDE form #
