@@ -465,8 +465,8 @@ else
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 		}
 		
-		$displayed_code = (ContentFormattingMetaFactory::get_default_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = (ContentFormattingMetaFactory::get_default_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce);
+		$displayed_code = (ContentFormattingMetaFactory::get_user_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? $bbcode : '/upload/' . $row['path'];
+		$inserted_code = (ContentFormattingMetaFactory::get_user_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce);
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
