@@ -29,6 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
 $popup = retrieve(GET, 'popup', '');
+$editor = retrieve(GET, 'edt', '');
 if (!empty($popup)) //Popup.
 {
 	require_once('../kernel/header_no_display.php');
@@ -64,8 +65,8 @@ if (!empty($popup)) //Popup.
 		</fieldset>
 	</body>
 </html>';
-	$popup = '&amp;popup=1&amp;fd=' . $field;
-	$popup_noamp = '&popup=1&fd=' . $field;
+	$popup = '&amp;popup=1&amp;fd=' . $field . '&amp;edt=' . $editor;
+	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor;
 }
 else //Affichage de l'interface de gestion.
 {
@@ -80,16 +81,18 @@ else //Affichage de l'interface de gestion.
 }
 
 if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
+{
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
+}
 
 //Chargement de la configuration.
 $Cache->load('uploads');
 
 //Droit d'accès?.
 if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
+{
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
-
-
+}
 
 $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);
@@ -465,8 +468,9 @@ else
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 		}
 		
-		$displayed_code = (ContentFormattingMetaFactory::get_user_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = (ContentFormattingMetaFactory::get_user_language() == ContentFormattingMetaFactory::BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce);
+		$is_bbcode_editor = ($editor == ContentFormattingMetaFactory::BBCODE_LANGUAGE);
+		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
+		$inserted_code = $is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce);
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
