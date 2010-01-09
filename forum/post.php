@@ -70,7 +70,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	$i = 0;
 	$forum_cats = '';
 	$Bread_crumb->remove_last();
-	foreach ($Bread_crumb->array_links as $key => $array)
+	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i == 2)
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
