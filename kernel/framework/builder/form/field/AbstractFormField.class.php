@@ -253,17 +253,9 @@ abstract class AbstractFormField implements FormField
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'title':
-					$this->set_value($value);
-					unset($field_options['title']);
-					break;
-				case 'subtitle':
+				case 'description':
 					$this->set_description($value);
 					unset($field_options['subtitle']);
-					break;
-				case 'id':
-					$this->set_id($value);
-					unset($field_options['id']);
 					break;
 				case 'class':
 					$this->set_css_class($value);

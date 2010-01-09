@@ -5,7 +5,7 @@
 					{LABEL}
 				</label>
 				<br />
-				<span>{DESCRIPTION}</span>
+				<span class="text_small">{DESCRIPTION}</span>
 			</dt>
 			<dd>
 				# START fieldelements #
