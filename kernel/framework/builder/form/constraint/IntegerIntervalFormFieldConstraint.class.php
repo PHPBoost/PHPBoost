@@ -34,6 +34,7 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 {
 	private $js_message;
 	private $rboundary;
+	private $lboundary;
 	
 	public function __construct($lboundary, $rboundary, $js_message)
 	{
@@ -44,19 +45,23 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 	
 	public function validate(FormField $field)
 	{
-		$value = (int)$field->get_value();
+		if (!is_numeric($field->get_value()))
+		{
+			return false;
+		}
+		$value = (int)$field->get_value();		
 		return ($value >= $this->lboundary && $value <= $this->rboundary);
 	}
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'integerIntervalFormFieldOnblurValidator(' . to_js_string($field->get_id()) . ', 
+		return 'integerIntervalFormFieldOnblurValidator(' . to_js_string($field->get_html_id()) . ', 
 		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'integerIntervalFormFieldOnsubmitValidator("' . $field->get_id() . '", 
+		return 'integerIntervalFormFieldOnsubmitValidator("' . $field->get_html_id() . '", 
 		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
 	}
 }

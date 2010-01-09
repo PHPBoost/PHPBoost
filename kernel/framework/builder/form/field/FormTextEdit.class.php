@@ -38,8 +38,8 @@
  */
 class FormTextEdit extends AbstractFormField
 {
-	private $size = '';
-	private $maxlength = '';
+	private $size = 30;
+	private $maxlength = 255;
 
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
@@ -57,17 +57,17 @@ class FormTextEdit extends AbstractFormField
 		$onblur = !empty($this->on_blur) || !empty($validations);
 		
 		$field = '<input type="text" ';
-		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
-		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
-		$field .= 'name="' . $this->get_real_id() . '" ';
-		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
-		$field .= 'value="' . $this->value . '" ';
+		$field .= 'size="' . $this->size;
+		$field .= 'maxlength="' . $this->maxlength . '" ';
+		$field .= 'name="' . $this->get_html_id() . '" ';
+		$field .= 'id="' . $this->get_html_id() . '" ';
+		$field .= 'value="' . htmlspecialchars($this->value) . '" ';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
 		$field .= $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : '';
 		$field .= '/>';
 
 		$template->assign_vars(array(
-			'ID' => $this->get_id(),
+			'ID' => $this->get_html_id(),
 			'LABEL' => $this->get_label(),
 			'DESCRIPTION' => $this->get_description(),
 			'C_REQUIRED' => $this->is_required()

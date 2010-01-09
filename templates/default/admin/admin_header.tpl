@@ -23,6 +23,7 @@
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 			var TOKEN = "{TOKEN}";
+			var THEME = "{THEME}";
 		-->
 		</script>
 		# IF C_BBCODE_TINYMCE_MODE # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #

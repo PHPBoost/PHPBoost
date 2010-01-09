@@ -48,7 +48,7 @@ class FormCheckbox extends AbstractFormField
 		$template = new Template('framework/builder/form/FormField.tpl');
 
 		$template->assign_vars(array(
-			'ID' => $this->get_real_id(),
+			'ID' => $this->get_html_id(),
 			'LABEL' => $this->get_label(),
 			'DESCRIPTION' => $this->get_description(),
 			'C_REQUIRED' => $this->is_required()
@@ -69,9 +69,9 @@ class FormCheckbox extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		if ($request->has_parameter($this->get_real_id()))
+		if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->set_value($request->get_value($this->get_real_id()) == 'on' ? true : false);
+			$this->set_value($request->get_value($this->get_html_id()) == 'on' ? true : false);
 		}
 		else
 		{
@@ -82,8 +82,8 @@ class FormCheckbox extends AbstractFormField
 	private function generate_html_code()
 	{
 		$option = '<input type="checkbox" ';
-		$option .= 'name="' . $this->get_real_id() . '" ';
-		$option .= 'id="' . $this->get_real_id() . '" ';
+		$option .= 'name="' . $this->get_html_id() . '" ';
+		$option .= 'id="' . $this->get_html_id() . '" ';
 		$option .= $this->is_checked() ? 'checked="checked" ' : '';
 		$option .= '/>';
 

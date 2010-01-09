@@ -5,11 +5,11 @@ function displayFormFieldOnsubmitValidatorMessage(message)
 }
 function displayFormFieldOnblurValidatorMessage(field_id, message)
 {
-	if (document.getElementById('onblurContainerResponse' + field_id))
+	if ($('onblurContainerResponse' + field_id) && $('onblurMesssageResponse' + field_id))
 	{
-		document.getElementById('onblurContainerResponse' + field_id).innerHTML = 
+		$('onblurContainerResponse' + field_id).innerHTML = 
 		'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/forbidden_mini.png" alt="" class="valign_middle" />';
-		document.getElementById('onblurMesssageResponse' + field_id).innerHTML = message;
+		$('onblurMesssageResponse' + field_id).innerHTML = message;
 	
 		Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.5 });
 		Effect.Appear('onblurMesssageResponse' + field_id, { duration: 0.5 });
@@ -17,7 +17,7 @@ function displayFormFieldOnblurValidatorMessage(field_id, message)
 }
 function clearFormFieldOnblurValidatorMessage(field_id)
 {
-	if (document.getElementById('onblurContainerResponse' + field_id))
+	if ($('onblurContainerResponse' + field_id))
 	{
 		Effect.Fade('onblurContainerResponse' + field_id, { duration: 0.2 });
 		Effect.Fade('onblurMesssageResponse' + field_id, { duration: 0.2 });
@@ -39,9 +39,9 @@ function integerIntervalValidator(value, lbound, rbound)
 /* #### Onsubmit validator #### */
 function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, message)
 {
-	if (document.getElementById(field_id))
+	if ($(field_id))
 	{
-		value = document.getElementById(field_id).value;
+		value = $(field_id).value;
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -58,9 +58,9 @@ function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, messag
  */
 function notEmptyFormFieldOnsubmitValidator(field_id, message)
 {
-	if (document.getElementById(field_id))
+	if ($(field_id))
 	{
-		if (document.getElementById(field_id).value == '')
+		if ($(field_id).value == '')
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -70,9 +70,9 @@ function notEmptyFormFieldOnsubmitValidator(field_id, message)
 }
 function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, message)
 {
-	if (document.getElementById(field_id))
+	if ($(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value, lbound, rbound))
+		if (!integerIntervalValidator($(field_id).value, lbound, rbound))
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -85,9 +85,9 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, mes
 /* #### Onblur validator #### */
 function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
 {
-	if (document.getElementById(field_id))
+	if ($(field_id))
 	{
-		value = document.getElementById(field_id).value;
+		value = $(field_id).value;
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -101,9 +101,9 @@ function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
 
 function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, message)
 {
-	if (document.getElementById(field_id))
+	if ($(field_id))
 	{
-		if (!integerIntervalValidator(document.getElementById(field_id).value, lbound, rbound))
+		if (!integerIntervalValidator($(field_id).value, lbound, rbound))
 		{
 			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
