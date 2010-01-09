@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormRadioChoiceOption.class.php
+ *                             FormFieldRadioOption.class.php
  *                            -------------------
  *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -35,7 +35,7 @@
  * @package builder
  * @subpackage form
  */
-class FormRadioChoiceOption implements FormFieldComposite
+class FormFieldRadioOption implements FormFieldComposite
 {
 	private $checked = false;
 	

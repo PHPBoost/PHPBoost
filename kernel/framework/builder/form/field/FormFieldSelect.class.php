@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormSelect.class.php
+ *                             FormFieldSelect.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -34,7 +34,7 @@
  * @package builder
  * @subpackage form
  */
-class FormSelect implements FormField
+class FormFieldSelect implements FormField
 {
 	private $options = array();
 	private $multiple = false;
@@ -59,7 +59,7 @@ class FormSelect implements FormField
 
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormSelectOption option The new option.
+	 * @param FormFieldSelectOption option The new option.
 	 */
 	public function add_option($option)
 	{

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             FormFileUploader.class.php
+ *                             FormFieldDate.class.php
  *                            -------------------
- *   begin                : April 28, 2009
+ *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -26,58 +26,65 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage file input fields.
+ * @desc This class manage single-line text fields for date input.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>size : The size for the field</li>
+ * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormFileUploader implements FormField
-{
-	private $size = '';
-	private $extended_text = '';
+class FormFieldDate implements FormField
+{	
+	private $calendar_day = 1;
+	private $calendar_month = 1;
+	private $calendar_year = 2009;
+	private $num_instance = 0;
+	private static $num_instances = 0;
 	
 	public function __construct($field_id, $field_options = array(), array $constraints = array())
 	{
+		$this->num_instance = ++self::$num_instances;
+
 		parent::__construct($field_id, '', $field_options, $constraints);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'size' :
-					$this->size = $value;
+				case 'calendar_day' :
+					$this->calendar_day = $value;
 				break;
-				case 'extended_text':
-					$this->extended_text = $value;
-				break; 
+				case 'calendar_month' :
+					$this->calendar_month = $value;
+				break;
+				case 'calendar_year' :
+					$this->calendar_year = $value;
+				break;
 				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
+					new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
 			}
 		}
 	}
 	
 	/**
-	 * @return string The html code for the file input.
+	 * @return string The html code for the input.
 	 */
-	function display()
+	public function display()
 	{
-		$template = new Template('framework/builder/forms/field.tpl');
-			
-		$field = '<input type="file" ';
-		$field .= 'name="' . $this->name . '" ';
-		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
-		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
-		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= '/>
-		<input name="max_file_size" value="2000000" type="hidden">'
-		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
+		$template = new Template('framework/builder/forms/field_date.tpl');
 		
 		$template->assign_vars(array(
+			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
+			'INSTANCE' => $this->num_instance,
 			'ID' => $this->id,
-			'FIELD' => $field,
+			'NAME' => $this->name,
+			'VALUE' => $this->value,
+			'CLASS' => !empty($this->css_class) ? ' ' . $this->css_class : '',
+			'ONBLUR' => $this->on_blur,
+			'CALENDAR_DAY' => $this->calendar_day,
+			'CALENDAR_MONTH' => $this->calendar_month,
+			'CALENDAR_YEAR' => $this->calendar_year,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'C_REQUIRED' => $this->is_required()

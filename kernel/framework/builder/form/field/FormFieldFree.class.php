@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             FormRadioChoice.class.php
+ *                             FormFieldFree.class.php
  *                            -------------------
- *   begin                : April 28, 2009
+ *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -26,62 +26,62 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage radio input fields.
+ * @desc This class manage free contents fields.
+ * It provides you additionnal field options :
+ * <ul>
+ * 	<li>template : A template object to personnalize the field</li>
+ * 	<li>content : The field html content if you don't use a personnal template</li>
+ * </ul>
  * @package builder
  * @subpackage form
  */
-class FormRadioChoice implements FormField
+class FormFieldFree implements FormField
 {
-	private $options = array(); //Array of FormRadioChoiceOption
-
-	/**
-	 * @desc constructor It takes a variable number of parameters. The first two are required.
-	 * @param string $field_id Name of the field.
-	 * @param array $field_options Option for the field.
-	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
-	 */
-	public function __construct($field_id, array $field_options = array(), array $options = array(), array $constraints = array())
+	private $content = ''; //Content of the free field
+	private $template = ''; //Optionnal template
+	
+	public function __construct($field_id, array $field_options)
 	{
-		parent::__construct($field_id, '', $field_options, $constraints);
+		parent::__construct($field_id, '', $field_options, array());
 		foreach($field_options as $attribute => $value)
 		{
-			throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'template' :
+					$this->template = $value;
+				break;
+				case 'content' :
+					$this->content = $value;
+				break;
+				default :
+					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
+			}
 		}
-		$this->options = $options;
 	}
-
+	
 	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option.
-	 */
-	public function add_option($option)
-	{
-		$this->options[] = $option;
-	}
-
-	/**
-	 * @return string The html code for the radio input.
+	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/forms/field_box.tpl');
+		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template')
+		{
+			$template = $this->template;
+		}
+		else
+		{
+			$template = new Template('framework/builder/forms/field.tpl');
+		}
 			
 		$template->assign_vars(array(
 			'ID' => $this->id,
-			'FIELD' => $this->options,
+			'FIELD' => $this->content,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'C_REQUIRED' => $this->is_required()
-		));
-
-		foreach ($this->options as $option)
-		{
-			$option->set_name($this->name); //Set the same field name for each option.
-			$template->assign_block_vars('field_options', array(
-				'OPTION' => $option->display(),
-			));
-		}
-
+		));	
+		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }

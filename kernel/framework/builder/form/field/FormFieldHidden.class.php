@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          FormHiddenField.class.php
+ *                          FormFieldHidden.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormHiddenField implements FormField
+class FormFieldHidden implements FormField
 {
 	public function __construct($name, $value)
 	{

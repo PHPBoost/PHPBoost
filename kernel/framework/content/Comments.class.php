@@ -298,7 +298,7 @@ class Comments
 						$fieldset = new FormFieldset($LANG['edit_comment']);
 						if ($is_guest) //Visiteur
 						{
-							$fieldset->add_field(new FormTextEdit($this->script . 'login', $row['login'], array(
+							$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $row['login'], array(
 								'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 								'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 							));
@@ -307,9 +307,9 @@ class Comments
 							'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
 							'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 						));
-						$fieldset->add_field(new FormHiddenField('idprov', $row['idprov']));
-						$fieldset->add_field(new FormHiddenField('idcom', $row['idcom']));
-						$fieldset->add_field(new FormHiddenField('script', $this->script));
+						$fieldset->add_field(new FormFieldHidden('idprov', $row['idprov']));
+						$fieldset->add_field(new FormFieldHidden('idcom', $row['idcom']));
+						$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				
 						$form->add_fieldset($fieldset);
 						$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
@@ -459,7 +459,7 @@ class Comments
 				$fieldset = new FormFieldset($LANG['add_comment']);
 				if ($is_guest) //Visiteur
 				{
-					$fieldset->add_field(new FormTextEdit($this->script . 'login', $LANG['guest'], array(
+					$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $LANG['guest'], array(
 						'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 					));
@@ -470,11 +470,11 @@ class Comments
 				));
 				if ($is_guest && $CONFIG_COM['com_verif_code']) //Code de vérification, anti-bots.
 				{
-					$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+					$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 				}
-				$fieldset->add_field(new FormHiddenField('idprov', $this->idprov));
-				$fieldset->add_field(new FormHiddenField('idcom', ''));
-				$fieldset->add_field(new FormHiddenField('script', $this->script));
+				$fieldset->add_field(new FormFieldHidden('idprov', $this->idprov));
+				$fieldset->add_field(new FormFieldHidden('idcom', ''));
+				$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				
 				$form->add_fieldset($fieldset);
 				$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).

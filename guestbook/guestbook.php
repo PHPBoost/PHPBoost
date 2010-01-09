@@ -130,7 +130,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormTextEdit('pseudo', $row['login'], array(
+				$fieldset->add_field(new FormFieldTextEditor('pseudo', $row['login'], array(
 					'title' => $LANG['pseudo'], 'class' => 'text', 
 					'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 				));
@@ -227,7 +227,7 @@ else //Affichage.
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur
 	{
-		$fieldset->add_field(new FormTextEdit('pseudo', $LANG['guest'], array(
+		$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['guest'], array(
 			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
 			'maxlength' => 25)
 		));
@@ -238,7 +238,7 @@ else //Affichage.
 	));
 	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
 	{
-		$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+		$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 	}
 	$form->add_fieldset($fieldset);
 	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).

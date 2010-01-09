@@ -59,9 +59,9 @@ class SandboxHTMLTableModel implements HTMLTableModel
 
 
 	//		$options = array(
-	//			new FormSelectOption('tous', ''),
-	//			new FormSelectOption('Horn', 'horn'),
-	//			new FormSelectOption('CouCou', 'coucou')
+	//			new FormFieldSelectOption('tous', ''),
+	//			new FormFieldSelectOption('Horn', 'horn'),
+	//			new FormFieldSelectOption('CouCou', 'coucou')
 	//		);
 	//		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
 

@@ -52,13 +52,13 @@ interface FormField
 	/**
 	 * @desc Tries to retrieve the value in the HTTP request's parameters.
 	 */
-	public function retrieve_value();
+	function retrieve_value();
 	
 	/**
 	 * @desc Returns the effective HTML id.
 	 * @return string
 	 */
-	public function get_html_id();
+	function get_html_id();
 
 	/**
 	 * @return Template

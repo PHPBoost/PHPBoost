@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFreeField.class.php
+ *                             field_captcha_field.class.php
  *                            -------------------
  *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -26,37 +26,31 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage free contents fields.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>template : A template object to personnalize the field</li>
- * 	<li>content : The field html content if you don't use a personnal template</li>
- * </ul>
+ * @desc This class manage captcha validation fields to avoid bot spam.
  * @package builder
  * @subpackage form
  */
-class FormFreeField implements FormField
+class FormFieldCaptcha implements FormField
 {
-	private $content = ''; //Content of the free field
-	private $template = ''; //Optionnal template
+	private $captcha = ''; //Captcha object
 	
-	public function __construct($field_id, array $field_options)
+	/**
+	 * @param $field_id string The html field identifier
+	 * @param $captcha Captcha The captcha object
+	 * @param $field_options array Field's options
+	 */
+	public function __construct($field_id, $captcha, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options, array());
+		global $LANG;
+		
+		$this->title = $LANG['verif_code'];
+		$field_options['required'] = $LANG['require_verif_code'];
+		
+		parent::__construct($field_id . $captcha->get_instance(), '', $field_options, $constraints);
+		$this->captcha = $captcha;
 		foreach($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'template' :
-					$this->template = $value;
-				break;
-				case 'content' :
-					$this->content = $value;
-				break;
-				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
-			}
+			throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
 		}
 	}
 	
@@ -65,21 +59,24 @@ class FormFreeField implements FormField
 	 */
 	public function display()
 	{
-		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template')
-		{
-			$template = $this->template;
-		}
-		else
-		{
-			$template = new Template('framework/builder/forms/field.tpl');
-		}
+		$this->captcha->save_user();
+		
+		$template = new Template('framework/builder/forms/field_captcha.tpl');
 			
+		$validations = $this->get_onblur_validations();
+		$onblur = !empty($this->on_blur) || !empty($validations);
+
 		$template->assign_vars(array(
+			'NAME' => $this->name,
 			'ID' => $this->id,
-			'FIELD' => $this->content,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'C_REQUIRED' => $this->is_required()
+			'CAPTCHA_INSTANCE' => $this->captcha->get_instance(),
+			'CAPTCHA_WIDTH' => $this->captcha->get_width(),
+			'CAPTCHA_HEIGHT' => $this->captcha->get_height(),
+			'CAPTCHA_FONT' => $this->captcha->get_font(),
+			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty(),
+			'CAPTCHA_ONBLUR' => $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : ''
 		));	
 		
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);
