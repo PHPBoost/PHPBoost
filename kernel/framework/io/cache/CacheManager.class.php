@@ -35,7 +35,7 @@
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the
  * beginning of the current page generation. This cache has a short life span: it's flushed
  * as of the PHP interpreter reaches the end of the page generation.</li>
- * 	<li>A filesystem cache to avoid querying the database every time to obtain the same value.
+ * 	<li>A filesystem or shared RAM (via APC) cache to avoid querying the database every time to obtain the same value.
  * This cache is less powerful than the previous but has an infinite life span. Indeed, it's
  * valid until the value changes and the manager is asked to store it</li>
  * </ul>
@@ -56,7 +56,7 @@ class CacheManager
 
 	protected function __construct()
 	{
-		$this->ram_cache = RAMCacheFactory::get('CacheManager');
+		$this->ram_cache = new DefaultRAMCache();
 	}
 
 	/**
@@ -203,6 +203,7 @@ class CacheManager
 	 */
 	protected function get_file_cached_data($name)
 	{
+		// TODO Make a cache system that uses either the filesystem or the RAM via APC 
 		$file = $this->get_file($name);
 		$content = $file->read();
 		$data = unserialize($content);
