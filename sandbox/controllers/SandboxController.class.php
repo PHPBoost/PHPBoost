@@ -56,6 +56,7 @@ class SandboxController extends ModuleController
 		
 		// FIELDSET
 		$fieldset = new FormFieldset('Fieldset');
+		$form->add_fieldset($fieldset);
 
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
@@ -100,8 +101,8 @@ class SandboxController extends ModuleController
 			)
 		));
 		
-		$fieldset2 = new FormFieldset('Fieldset 2');
-		$form->add_fieldset($fieldset2);
+		//$fieldset2 = new FormFieldset('Fieldset 2');
+		//$form->add_fieldset($fieldset2);
 		
 		// CAPTCHA
 //		$fieldset2->add_field($fieldset->add_field(new FormFieldCaptcha('captcha')));
