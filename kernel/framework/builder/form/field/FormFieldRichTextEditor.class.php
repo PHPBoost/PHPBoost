@@ -74,11 +74,11 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$template->assign_vars(array(
 				'C_EDITOR_ENABLED' => true,
 				'EDITOR' => $editor->display(),
-				'VALUE' => $this->value,
+				'VALUE' => $this->get_raw_value(),
 				'PREVIEW_BUTTON' => $this->get_preview_button_code()
 		));
 	}
-	
+
 	private function get_preview_button_code()
 	{
 		global $LANG;
@@ -91,7 +91,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	 */
 	public function get_value()
 	{
-		return $this->parse_value(parent::get_value());
+		return $this->parse_value($this->get_raw_value());
 	}
 
 	private function parse_value($value)
@@ -101,6 +101,11 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$parser->parse();
 		return $parser->get_content(ContentFormattingParser::DONT_ADD_SLASHES);
 	}
+	
+	private function get_raw_value()
+	{
+		return parent::get_value();
+	}
 
 	/**
 	 * (non-PHPdoc)
@@ -108,7 +113,12 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	 */
 	public function set_value($value)
 	{
-		parent::set_value($this->unparse_value($value));
+		$this->set_raw_value($this->unparse_value($value));
+	}
+	
+	private function set_raw_value($value)
+	{
+		parent::set_value($value);
 	}
 
 	private function unparse_value($value)
@@ -118,17 +128,30 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$unparser->parse();
 		return $unparser->get_content(ContentFormattingParser::DONT_ADD_SLASHES);
 	}
-	
+
 	protected function get_onblur_action()
 	{
 		// This is a patch for TinyMCE, it shouldn't be there but it's difficult not to process it here
 		if ($this->formatter instanceof TinyMCEParserFactory)
 		{
-			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_action();	
+			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_action();
 		}
 		else
 		{
 			return parent::get_onblur_action();
+		}
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 */
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
+		{
+			$this->set_raw_value($request->get_value($this->get_html_id()));
 		}
 	}
 

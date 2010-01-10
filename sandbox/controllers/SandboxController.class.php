@@ -37,7 +37,11 @@ class SandboxController extends ModuleController
 			{
 				$view->assign_vars(array(
 					'C_RESULT' => true, 
-					'RESULT' => $form->get_value('pseudo') . ' poste ' . $form->get_value('content') . ' et ' . $form->get_value('rich_content')
+					'TEXT' => $form->get_value('text'),
+					'MULTI_LINE_TEXT' => $form->get_value('multi_line_text'),
+					'RICH_TEXT' => $form->get_value('rich_text'),
+					'RADIO' => $form->get_value('radio')->get_label(),
+					'CHECKBOX' => var_export($form->get_value('checkbox'), true)
 				));
 			}
 		}
@@ -48,26 +52,34 @@ class SandboxController extends ModuleController
 	private function build_form(HTTPRequest $request)
 	{
 		$form = new Form('sandboxForm');
-		$fieldset = new FormFieldset('This is a fieldset');
+		
+		// FIELDSET
+		$fieldset = new FormFieldset('Fieldset');
 
-		$fieldset->add_field(new FormFieldTextEditor('pseudo', 'This is a text field', 'toto', array(
-			'class' => 'text', 'required' => 'Le pseudo est obligatoire',
-			'maxlength' => 25, 'description' => 'nom'),
+		// SINGLE LINE TEXT
+		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'nom'),
 			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
 		));
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('content', 'This is a textarea', 'toto', array(
+		
+		// MULTI LINE TEXT
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ text multi lignes', 'toto', array(
 			'rows' => 6, 'cols' => 47, 'description' => 'Description'
 		)));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_content', 'This is a rich text editor', 'toto <strong>tata</strong>'));
+		// RICH TEXT
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
 		
-//		$fieldset->add_field(new FormFieldRadio('choice', array('title' => 'Answer'),
-//			array(
-//				new FormFieldRadioOption('Choix1', 1),
-//				new FormFieldRadioOption('Choix2', 2, FormFieldRadioOption::CHECKED)
-//			)
-//		));
-		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'This is a checkbox', FormFieldCheckbox::CHECKED));
+		// RADIO
+		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
+		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, array(
+				$default_option,
+				new FormFieldRadioChoiceOption('Choix 2', '2')
+			)
+		));
+		
+		// CHECKBOX
+		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 		
 //		$fieldset->add_field(new FormFieldSelect('sex', array('title' => 'Sex'),
 //			array(

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            FormFieldComposite.class.php
+ *                    AbstractFormFieldEnumOption.class.php
  *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : January 10, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -24,18 +24,55 @@
  *
  ###################################################*/
 
-abstract class FormFieldComposite
+abstract class AbstractFormFieldEnumOption
 {
-	protected $label = '';
-	protected $name = '';
-	protected $value = '';
-	protected $id = '';
-
-	public abstract function display();
-
-	public function get_value() { return $this->value; }
+	private $label = '';
 	
-	public function set_name($var) { $this->name = $var; }
+	private $raw_value = '';
+	
+	/**
+	 * @var FormField
+	 */
+	private $field;
+	
+	public function __construct($label, $raw_value)
+	{
+		$this->set_label($label);
+		$this->set_raw_value($raw_value);
+	}
+	
+	public function get_label()
+	{
+		return $this->label;
+	}
+	
+	public function set_label($label)
+	{
+		$this->label = $label;
+	}
+	
+	public function get_raw_value()
+	{
+	return $this->raw_value;	
+	}
+
+	public function set_raw_value($value)
+	{
+		$this->raw_value = $value;
+	}
+	
+	/**
+	 * @return FormField
+	 */
+	public function get_field()
+	{
+		return $this->field;
+	}
+	
+	public function set_field(FormField $field)
+	{
+		$this->field = $field;
+	}
 }
 
 ?>
