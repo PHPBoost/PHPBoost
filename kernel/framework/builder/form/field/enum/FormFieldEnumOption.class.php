@@ -39,6 +39,8 @@ interface FormFieldEnumOption
 	function get_field();
 	
 	function set_field(FormField $field);
+	
+	function get_option($raw_option);
 }
 
 ?>
