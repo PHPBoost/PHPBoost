@@ -88,7 +88,15 @@ class SandboxController extends ModuleController
 			array(
 				$default_select_option,
 				new FormFieldSelectChoiceOption('Choix 2', '2'),
-				new FormFieldSelectChoiceOption('Choix 3', '3')
+				new FormFieldSelectChoiceOption('Choix 3', '3'),
+				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+					new FormFieldSelectChoiceOption('Choix 4', '4'),
+					new FormFieldSelectChoiceOption('Choix 5', '5'),
+				)),
+				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+					new FormFieldSelectChoiceOption('Choix 6', '6'),
+					new FormFieldSelectChoiceOption('Choix 7', '7'),
+				))
 			)
 		));
 		

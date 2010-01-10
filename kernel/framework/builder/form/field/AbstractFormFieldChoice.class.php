@@ -91,7 +91,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		}
 	}
 	
-	private function get_option($raw_option)
+	protected function get_option($raw_option)
 	{
 		foreach ($this->options as $option)
 		{
