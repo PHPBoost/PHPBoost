@@ -8,6 +8,8 @@
 	{RADIO}
 	<br />
 	{CHECKBOX}
+	<br />
+	{SELECT}
 # ENDIF #
 
 # INCLUDE form #

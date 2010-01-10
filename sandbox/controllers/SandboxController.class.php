@@ -41,7 +41,8 @@ class SandboxController extends ModuleController
 					'MULTI_LINE_TEXT' => $form->get_value('multi_line_text'),
 					'RICH_TEXT' => $form->get_value('rich_text'),
 					'RADIO' => $form->get_value('radio')->get_label(),
-					'CHECKBOX' => var_export($form->get_value('checkbox'), true)
+					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
+					'SELECT' => $form->get_value('select')->get_label()
 				));
 			}
 		}
@@ -81,13 +82,15 @@ class SandboxController extends ModuleController
 		// CHECKBOX
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 		
-//		$fieldset->add_field(new FormFieldSelect('sex', array('title' => 'Sex'),
-//			array(
-//				new FormFieldSelectOption('Men', 1),
-//				new FormFieldSelectOption('Women', 2),
-//				new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
-//			)
-//		));
+		// SELECT
+		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
+		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+			array(
+				$default_select_option,
+				new FormFieldSelectChoiceOption('Choix 2', '2'),
+				new FormFieldSelectChoiceOption('Choix 3', '3')
+			)
+		));
 		
 		//Select field
 //		$fieldset->add_field(new FormFieldSelect('sex2', array('title' => 'Sex', 'multiple' => true),

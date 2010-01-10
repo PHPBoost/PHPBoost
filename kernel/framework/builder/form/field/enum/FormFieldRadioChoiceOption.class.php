@@ -43,22 +43,12 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 	public function display()
 	{
 		$option = '<label><input type="radio" ';
-		$option .= 'name="' . $this->get_radio_choice_name() . '" ';
+		$option .= 'name="' . $this->get_field_id() . '" ';
 		$option .= 'value="' . $this->get_raw_value() . '" ';
-		$option .= $this->is_checked() ? 'checked="checked" ' : '';
+		$option .= $this->is_active() ? 'checked="checked" ' : '';
 		$option .= '/> ' . $this->get_label() . '</label>';
 
 		return $option;
-	}
-
-	private function is_checked()
-	{
-		return $this->get_field()->get_value() == $this;
-	}
-
-	private function get_radio_choice_name()
-	{
-		return $this->get_field()->get_html_id();
 	}
 }
 

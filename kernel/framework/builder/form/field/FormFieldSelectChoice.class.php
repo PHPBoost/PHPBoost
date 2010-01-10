@@ -34,36 +34,20 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldSelect implements FormField
+class FormFieldSelectChoice extends AbstractFormFieldChoice
 {
-	private $options = array();
-	private $multiple = false;
-
-	public function __construct($field_id, array $field_options = array(), array $options = array(), array $constraints = array())
-	{
-		parent::__construct($field_id, '', $field_options, $constraints);
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'multiple' :
-					$this->multiple = $value;
-					break;
-				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute));
-			}
-		}
-		$this->options = $options;
-	}
-
 	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormFieldSelectOption option The new option.
+	 * @desc Constructs a FormFieldSelectChoice.
+	 * @param string $id Field id
+	 * @param string $label Field label
+	 * @param FormFieldSelectChoiceOption Default value
+	 * @param FormFieldSelectChoiceOption[] $options Enumeration of the possible values
+	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function add_option($option)
+	public function __construct($id, $label, FormFieldSelectChoiceOption $value, array $options, array $field_options = array(), array $constraints = array())
 	{
-		$this->options[] = $option;
+		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
 	}
 
 	/**
@@ -71,24 +55,26 @@ class FormFieldSelect implements FormField
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/forms/field_select.tpl');
-		$template->assign_vars(array(
-			'ID' => $this->id,
-			'C_SELECT_MULTIPLE' => $this->multiple,
-			'L_FIELD_NAME' => $this->name,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'C_REQUIRED' => $this->is_required()
+		$template = new Template('framework/builder/form/FormField.tpl');
+
+		$this->assign_common_template_variables($template);
+
+		$template->assign_block_vars('fieldelements', array(
+			'ELEMENT' => $this->get_html_code(),
 		));
 
-		foreach ($this->options as $option)
-		{
-			$template->assign_block_vars('field_options', array(
-				'OPTION' => $option->display(),
-			));
-		}
+		return $template;
+	}
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+	private function get_html_code()
+	{
+		$code = '<select name="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '">';
+		foreach ($this->get_options() as $option)
+		{
+			$code .= $option->display();
+		}
+		$code .= '</select>';
+		return $code;
 	}
 }
 
