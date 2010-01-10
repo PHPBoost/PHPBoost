@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    AbstractFormFieldEnumOption.class.php
+ *                       FormFieldEnumOption.class.php
  *                            -------------------
  *   begin                : January 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -24,65 +24,21 @@
  *
  ###################################################*/
 
-abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
+interface FormFieldEnumOption
 {
-	private $label = '';
-
-	private $raw_value = '';
-
-	/**
-	 * @var FormField
-	 */
-	private $field;
-
-	public function __construct($label, $raw_value)
-	{
-		$this->set_label($label);
-		$this->set_raw_value($raw_value);
-	}
-
-	public function get_label()
-	{
-		return $this->label;
-	}
-
-	public function set_label($label)
-	{
-		$this->label = $label;
-	}
-
-	public function get_raw_value()
-	{
-		return $this->raw_value;
-	}
-
-	public function set_raw_value($value)
-	{
-		$this->raw_value = $value;
-	}
-
-	/**
-	 * @return FormField
-	 */
-	public function get_field()
-	{
-		return $this->field;
-	}
-
-	public function set_field(FormField $field)
-	{
-		$this->field = $field;
-	}
-
-	protected function is_active()
-	{
-		return $this->get_field()->get_value() == $this;
-	}
-
-	protected function get_field_id()
-	{
-		return $this->get_field()->get_html_id();
-	}
+	function display();
+	
+	function get_label();
+	
+	function set_label($label);
+	
+	function get_raw_value();
+	
+	function set_raw_value($raw_value);
+	
+	function get_field();
+	
+	function set_field(FormField $field);
 }
 
 ?>

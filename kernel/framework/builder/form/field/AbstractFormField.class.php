@@ -201,7 +201,7 @@ abstract class AbstractFormField implements FormField
 	 * (non-PHPdoc)
 	 * @see kernel/framework/builder/form/field/FormField#retrieve_value()
 	 */
-	function retrieve_value()
+	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))

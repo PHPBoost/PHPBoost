@@ -30,22 +30,15 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldSelectOption implements FormFieldComposite
+class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 {
-	private $selected = false;
-	
-	const SELECTED = true;
-	
 	/**
-	 * @param $label string The label for the select option
-	 * @param $value string The value for the select option
-	 * @param $checked boolean set to FORM__SELECT_SELECTED to select the option
+	 * @param $label string The label
+	 * @param $raw_value string The raw value
 	 */
-	public function __construct($label, $value = '', $selected = false)
+	public function __construct($label, $raw_value)
 	{
-		$this->label = $label;
-		$this->value = $value;
-		$this->selected = $selected;
+		parent::__construct($label, $raw_value);
 	}
 		
 	/**
@@ -54,9 +47,9 @@ class FormFieldSelectOption implements FormFieldComposite
 	public function display()
 	{
 		$option = '<option ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
-		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
-		$option .= '>' . $this->label . '</option>' . "\n";
+		$option .= 'value="' . $this->get_raw_value() . '" ';
+		$option .= $this->is_active() ? 'selected="selected" ' : '';
+		$option .= '>' . $this->get_label(). '</option>';
 		
 		return $option;
 	}

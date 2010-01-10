@@ -30,39 +30,77 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldRadioChoice extends AbstractFormFieldChoice
+abstract class AbstractFormFieldChoice extends AbstractFormField
 {
 	/**
-	 * @desc Constructs a FormFieldRadioChoice.
+	 * @var FormFieldEnumOption[]
+	 */
+	private $options = array();
+
+	/**
+	 * @desc Constructs a FormFieldRadio.
 	 * @param string $id Field id
 	 * @param string $label Field label
-	 * @param FormFieldRadioChoiceOption Default value
-	 * @param FormFieldRadioChoiceOption[] $options Enumeration of the possible values
+	 * @param FormFieldEnumOption Default value
+	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
 	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, FormFieldRadioChoiceOption $value, $options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+		foreach ($options as $option)
+		{
+			$this->add_option($option);
+		}
+	}
+	
+	/**
+	 * @return FormFieldEnumOption[]
+	 */
+	protected function get_options()
+	{
+		return $this->options;
 	}
 
 	/**
-	 * @return string The html code for the radio input.
+	 * @desc Adds an option for the radio field.
+	 * @param FormFieldEnumOption option The new option.
 	 */
-	public function display()
+	protected function add_option(FormFieldEnumOption $option)
 	{
-		$template = new Template('framework/builder/form/FormField.tpl');
+		$option->set_field($this);
+		$this->options[] = $option;
+	}
 
-		$this->assign_common_template_variables($template);
-
-		foreach ($this->get_options() as $option)
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 */
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
 		{
-			$template->assign_block_vars('fieldelements', array(
-				'ELEMENT' => $option->display(),
-			));
+			$raw_value = $request->get_value($this->get_html_id());
+			$option = $this->get_option($raw_value);
+			if ($option !== null)
+			{
+				$this->set_value($option);
+			}
 		}
-
-		return $template;
+	}
+	
+	private function get_option($raw_option)
+	{
+		foreach ($this->options as $option)
+		{
+			if ($option->get_raw_value() == $raw_option)
+			{
+				return $option;
+			}
+		}
+		return null;
 	}
 }
 ?>
