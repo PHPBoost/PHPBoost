@@ -64,7 +64,7 @@ class SandboxController extends ModuleController
 		));
 		
 		// MULTI LINE TEXT
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ text multi lignes', 'toto', array(
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', array(
 			'rows' => 6, 'cols' => 47, 'description' => 'Description'
 		)));
 		
@@ -100,16 +100,11 @@ class SandboxController extends ModuleController
 			)
 		));
 		
-		//Select field
-//		$fieldset->add_field(new FormFieldSelect('sex2', array('title' => 'Sex', 'multiple' => true),
-//			array(
-//				new FormFieldSelectOption('Men', 1),
-//				new FormFieldSelectOption('Women', 2),
-//				new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
-//			)
-//		));
+		$fieldset2 = new FormFieldset('Fieldset 2');
+		$form->add_fieldset($fieldset2);
 		
-		$form->add_fieldset($fieldset);
+		// CAPTCHA
+//		$fieldset2->add_field($fieldset->add_field(new FormFieldCaptcha('captcha')));
 		
 //		$fieldset_up = new FormFieldset('Upload file');
 //		//File field
@@ -117,10 +112,6 @@ class SandboxController extends ModuleController
 //		//Radio button field
 //		$fieldset_up->add_field(new FormFieldHidden('test', 1));
 		
-//		//Captcha
-//		$captcha = new Captcha();
-//		$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
-//		
 //		$form->add_fieldset($fieldset_up);
 //				
 //		$form->display_preview_button('contents');

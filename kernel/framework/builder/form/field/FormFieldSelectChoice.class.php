@@ -68,7 +68,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 
 	private function get_html_code()
 	{
-		$code = '<select name="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '">';
+		$code = '<select name="' . $this->get_html_id() . '" id="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '">';
 		foreach ($this->get_options() as $option)
 		{
 			$code .= $option->display();
@@ -77,25 +77,14 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 		return $code;
 	}
 
-	protected function get_option($raw_option)
+	protected function get_option($raw_value)
 	{
 		foreach ($this->get_options() as $option)
 		{
-			// TODO find a solution to avoid differentiate the object's class
-			if ($option instanceof FormFieldSelectChoiceOption)
+			$result = $option->get_option($raw_value); 
+			if ($result !== null)
 			{
-				if ($option->get_raw_value() == $raw_option)
-				{
-					return $option;
-				}
-			}
-			else if ($option instanceof FormFieldSelectChoiceGroupOption)
-			{
-				$contained_option = $option->get_option($raw_option);
-				if ($contained_option !== null)
-				{
-					return $contained_option;
-				}
+				return $result;
 			}
 		}
 		return null;

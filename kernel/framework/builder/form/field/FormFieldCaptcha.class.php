@@ -30,42 +30,43 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldCaptcha implements FormField
+class FormFieldCaptcha implements AbstractFormField
 {
-	private $captcha = ''; //Captcha object
-	
+	/**
+	 * @var Captcha
+	 */
+	private $captcha = '';
+
 	/**
 	 * @param $field_id string The html field identifier
 	 * @param $captcha Captcha The captcha object
 	 * @param $field_options array Field's options
 	 */
-	public function __construct($field_id, $captcha, array $field_options = array(), array $constraints = array())
+	public function __construct(Captcha $captcha = null)
 	{
 		global $LANG;
-		
-		$this->title = $LANG['verif_code'];
-		$field_options['required'] = $LANG['require_verif_code'];
-		
-		parent::__construct($field_id . $captcha->get_instance(), '', $field_options, $constraints);
-		$this->captcha = $captcha;
-		foreach($field_options as $attribute => $value)
-		{
-			throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)));
-		}
+		parent::__construct('captcha', $LANG['verif_code'], false, array('required' => true));
 	}
 	
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
+		{
+			$this->captcha->
+			$this->set_value($request->get_value($this->get_html_id()));
+		}
+	}
+
 	/**
 	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
 		$this->captcha->save_user();
-		
-		$template = new Template('framework/builder/forms/field_captcha.tpl');
-			
-		$validations = $this->get_onblur_validations();
-		$onblur = !empty($this->on_blur) || !empty($validations);
 
+		$template = new Template('framework/builder/form/FormFieldCaptcha.tpl');
+			
 		$template->assign_vars(array(
 			'NAME' => $this->name,
 			'ID' => $this->id,
@@ -77,9 +78,9 @@ class FormFieldCaptcha implements FormField
 			'CAPTCHA_FONT' => $this->captcha->get_font(),
 			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty(),
 			'CAPTCHA_ONBLUR' => $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : ''
-		));	
-		
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		));
+
+		return $template;
 	}
 }
 
