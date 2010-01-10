@@ -206,7 +206,7 @@ abstract class AbstractFormField implements FormField
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->value = $request->get_value($this->get_html_id());
+			$this->set_value($request->get_value($this->get_html_id()));
 		}
 	}
 

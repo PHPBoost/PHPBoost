@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldRadioOption.class.php
+ *                        FormFieldRadioOption.class.php
  *                            -------------------
  *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -27,44 +27,38 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage radio input field options.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify if the option has to be checked.</li>
- * </ul>
  * @package builder
- * @subpackage form
+ * @subpackage form/field/enum
  */
-class FormFieldRadioOption implements FormFieldComposite
+class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 {
-	private $checked = false;
-	
-	const CHECKED = true;
-	
-	/**
-	 * @param $label string The label for the radio option
-	 * @param $value string The value for the radio option
-	 * @param $checked boolean set to FORM__RADIO_CHECKED to check the option
-	 */
-	public function __construct($label, $value = '', $checked = false)
+	public function __construct($label, $raw_value)
 	{
-		$this->label = $label;
-		$this->value = $value;
-		$this->checked = $checked;
+		parent::__construct($label, $raw_value);
 	}
-	
+
 	/**
 	 * @return string The html code for the radio input.
 	 */
 	public function display()
 	{
 		$option = '<label><input type="radio" ';
-		$option .= 'name="' . $this->name . '" ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
-		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
-		$option .= '/> ' . $this->label . '</label><br />' . "\n";
-		
+		$option .= 'name="' . $this->get_radio_choice_name() . '" ';
+		$option .= 'value="' . $this->get_raw_value() . '" ';
+		$option .= $this->is_checked() ? 'checked="checked" ' : '';
+		$option .= '/> ' . $this->get_label() . '</label>';
+
 		return $option;
+	}
+
+	private function is_checked()
+	{
+		return $this->get_field()->get_value() == $this;
+	}
+
+	private function get_radio_choice_name()
+	{
+		return $this->get_field()->get_html_id();
 	}
 }
 

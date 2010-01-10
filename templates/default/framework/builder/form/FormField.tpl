@@ -7,12 +7,12 @@
 				<br />
 				<span class="text_small">{DESCRIPTION}</span>
 			</dt>
-			<dd>
-				# START fieldelements #
+			# START fieldelements #
+				<dd>
 					{fieldelements.ELEMENT}
 					&nbsp;
 					<span id="onblurContainerResponse{ID}"></span>
 					<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
-				# END fieldelements #
-			</dd>
+				</dd>
+			# END fieldelements #
 		</dl>
