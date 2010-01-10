@@ -40,12 +40,12 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 	 * @desc Constructs a FormFieldSelectChoice.
 	 * @param string $id Field id
 	 * @param string $label Field label
-	 * @param FormFieldSelectChoiceOption Default value
-	 * @param FormFieldSelectChoiceOption[] $options Enumeration of the possible values
+	 * @param FormFieldEnumOption Default value
+	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
 	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, FormFieldSelectChoiceOption $value, array $options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, FormFieldEnumOption $value, array $options, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
 	}
@@ -75,6 +75,30 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 		}
 		$code .= '</select>';
 		return $code;
+	}
+
+	protected function get_option($raw_option)
+	{
+		foreach ($this->get_options() as $option)
+		{
+			// TODO find a solution to avoid differentiate the object's class
+			if ($option instanceof FormFieldSelectChoiceOption)
+			{
+				if ($option->get_raw_value() == $raw_option)
+				{
+					return $option;
+				}
+			}
+			else if ($option instanceof FormFieldSelectChoiceGroupOption)
+			{
+				$contained_option = $option->get_option($raw_option);
+				if ($contained_option !== null)
+				{
+					return $contained_option;
+				}
+			}
+		}
+		return null;
 	}
 }
 
