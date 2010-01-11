@@ -42,7 +42,7 @@ class LangLoader
 
 	public static function init()
 	{
-		self::$ram_cache = new RAMCacheContainer('lang');
+		self::$ram_cache = new RAMDataStore('lang');
 	}
 	
 	/**

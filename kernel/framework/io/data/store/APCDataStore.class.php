@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        APCCacheContainer.class.php
+ *                        APCDataStore.class.php
  *                            -------------------
  *   begin                : December 09, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
@@ -27,15 +27,19 @@
 
 /**
  * @package io
- * @subpackage cache/container
- * @desc
+ * @subpackage data/store
+ * @desc This data store is not already available, the APC PHP extension must be enabled for you yo use it.
+ * When it's available, it provides a memory area that is persistent (its life span is no the page execution) and
+ * shared by all simultaneous page executions.
+ * This is very efficient and has an infinite life span (in fact it's the Web server's one).
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  */
-class APCCacheContainer implements CacheContainer
+class APCDataStore implements DataStore
 {
 	private static $website_id = false;
 
 	private $cache_id;
+	
 	private static $apc_fields_id = '_apc_fields';
 
 	private $apc_fields = array();
@@ -46,6 +50,10 @@ class APCCacheContainer implements CacheContainer
 		$this->retrieve_apc_fields();
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#get($id)
+	 */
 	public function get($id)
 	{
 		$id = $this->get_full_object_id($id);
@@ -59,6 +67,10 @@ class APCCacheContainer implements CacheContainer
 		return $object;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#contains($id)
+	 */
 	public function contains($id)
 	{
 		$id = $this->get_full_object_id($id);
@@ -67,6 +79,10 @@ class APCCacheContainer implements CacheContainer
 		return $found;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#store($id, $object)
+	 */
 	public function store($id, $object)
 	{
 		$this->add_apc_field($id);
@@ -74,6 +90,10 @@ class APCCacheContainer implements CacheContainer
 		return (bool) apc_store($id, $object);
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#delete($id)
+	 */
 	public function delete($id)
 	{
 		$this->delete_apc_field($id);
@@ -106,6 +126,10 @@ class APCCacheContainer implements CacheContainer
 		return self::$website_id;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#clear()
+	 */
 	public function clear()
 	{
 		// Copy the apc_fields array to avoid exceptions due to elements removed during foreach

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       CacheContainerFatory.class.php
+ *                        RAMDataStore.class.php
  *                            -------------------
  *   begin                : December 09, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
@@ -27,52 +27,65 @@
 
 /**
  * @package io
- * @subpackage cache/container
- * @desc
+ * @subpackage data/store
+ * @desc This is a very efficient data store, but its principal weakness is that it's life span
+ * is very short, in fact it's the page's execution.
+ * It's to use when you know that the data you want to store will be accessed several times during
+ * the page execution. 
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class CacheContainerFactory
+class RAMDataStore implements DataStore
 {
-	private static $apc_enabled = null;
+	private $data = array();
 
 	/**
-	 * @param $id
-	 * @return CacheContainer
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#get($id)
 	 */
-	public static function get_ram_container($id)
+	public function get($id)
 	{
-		if (self::is_apc_enabled())
+		if ($this->contains($id))
 		{
-			return new APCCacheContainer($id);
+			return $this->data[$id];
 		}
-		return new RAMCacheContainer();
+		throw new DataStoreException($id);
 	}
 
-	public static function get_file_system_container($id)
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#contains($id)
+	 */
+	public function contains($id)
 	{
-		if (self::is_apc_enabled())
-		{
-			return new APCCacheContainer($id);
-		}
-		return new FileSystemCacheContainer($id);
+		return isset($this->data[$id]);
 	}
 
-	private static function is_apc_enabled()
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#store($id, $object)
+	 */
+	public function store($id, $data)
 	{
-		if (self::$apc_enabled === null)
-		{
-			if (function_exists('apc_cache_info') && @apc_cache_info('user') !== false)
-			{
-				// TODO find another way to see if APC is enabled or not
-				self::$apc_enabled = true;
-			}
-			else
-			{
-				self::$apc_enabled = false;
-			}
-		}
-		return self::$apc_enabled;
+		$this->data[$id] = $data;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#delete($id)
+	 */
+	public function delete($id)
+	{
+		unset($this->data[$id]);
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/data/store/DataStore#clear()
+	 */
+	public function clear()
+	{
+		$this->data = array();
 	}
 }
 ?>

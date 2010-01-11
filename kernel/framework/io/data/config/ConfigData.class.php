@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-
-
 /**
  * @package io
- * @subpackage config
+ * @subpackage data/config
  * @desc This interface represents configuration data which are stored automatically by the
  * config manager. The storage mode is very powerful, it uses a two-level cache and the database.
  * <p>They are stored in a map associating a value to a property</p>

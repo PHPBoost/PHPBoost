@@ -30,7 +30,7 @@
 class ModuleConfigurationManager
 {
 	/**
-	 * @var CacheContainer
+	 * @var DataStore
 	 */
 	private static $cache_manager = null;
 
@@ -51,13 +51,13 @@ class ModuleConfigurationManager
 	}
 
 	/**
-	 * @return CacheContainer
+	 * @return DataStore
 	 */
 	private static function get_cache_manager()
 	{
 		if (self::$cache_manager === null)
 		{
-			self::$cache_manager = CacheContainerFactory::get_ram_container(__CLASS__);
+			self::$cache_manager = DataStoreFactory::get_ram_store(__CLASS__);
 		}
 		return self::$cache_manager;
 	}

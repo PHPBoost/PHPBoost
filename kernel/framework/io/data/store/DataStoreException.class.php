@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        RAMCacheContainer.class.php
+ *                      DataStoreException.class.php
  *                            -------------------
- *   begin                : December 09, 2009
+ *   begin                : December 20, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
  *   email                : ben.popeye@phpboost.com, horn@phpboost.com
  *
@@ -27,42 +27,16 @@
 
 /**
  * @package io
- * @subpackage cache/container
+ * @subpackage data/store
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class RAMCacheContainer implements CacheContainer
+class DataStoreException extends Exception
 {
-	private $data = array();
-
-	public function get($id)
+	public function __construct($id)
 	{
-		if ($this->contains($id))
-		{
-			return $this->data[$id];
-		}
-		throw new CacheContainerException($id);
-	}
-
-	public function contains($id)
-	{
-		return isset($this->data[$id]);
-	}
-
-	public function store($id, $data)
-	{
-		$this->data[$id] = $data;
-	}
-
-	public function delete($id)
-	{
-		unset($this->data[$id]);
-	}
-	
-	public function clear()
-	{
-		$this->data = array();
+		parent::__construct('Cache container doesn\'t contains element "' . $id . '"');
 	}
 }
 ?>
