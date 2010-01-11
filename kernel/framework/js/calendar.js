@@ -76,34 +76,27 @@ function insert_date(field, date)
 //Fonction Ajax d'affichage du calendrier.
 function xmlhttprequest_calendar(field, vars)
 {
-	var xhr_object = null;
-	var data = null;
-	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
+	filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
+	default_image = PATH_TO_ROOT + '/templates/' + THEME + '/images/calendar.png';
 	
-	if (document.getElementById('img' + field))
-		document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif';
-
-	if (window.XMLHttpRequest) // Firefox
-	   xhr_object = new XMLHttpRequest();
-	else if (window.ActiveXObject) // Internet Explorer
-	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-	else // XMLHttpRequest non supporté par le navigateur
-		return;
-	
-	xhr_object.open('POST', filename, true);
-	xhr_object.onreadystatechange = function() 
+	if ($('img' + field))
 	{
-		if (xhr_object.readyState == 4) 
-		{
-			document.getElementById(field).innerHTML = xhr_object.responseText;
-			show_div(field);
-			if (document.getElementById('img' + field))
-				document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/calendar.png';
-		}
+		default_image = $('img' + field).src;
+		$('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif';
 	}
-
-	xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr_object.send(data);		
+	
+	new Ajax.Request(filename,
+			{
+			method: 'get',
+			parameters: {},
+			onSuccess: function(response)
+			{
+				$(field).innerHTML = response.responseText;
+				show_div(field, true);
+				$('img' + field).src = default_image;
+			}
+		}
+	);
 }
 
 function check_mini_calendar_form(name)

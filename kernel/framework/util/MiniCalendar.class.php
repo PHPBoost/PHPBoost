@@ -62,11 +62,19 @@ class MiniCalendar
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
-	public function __construct($form_name)
+	public function __construct($form_name, Date $date = null)
 	{
 		$this->form_name = $form_name;
 		$this->num_instance = ++self::$num_instances;
-		$this->date = new Date(DATE_NOW);
+		
+		if ($date !== null)
+		{
+			$this->set_date($date);
+		}
+		else
+		{
+			$this->set_date(new Date(DATE_NOW));
+		}
 	}
 	
 	/**
@@ -140,7 +148,7 @@ class MiniCalendar
 	 * @param string $calendar_name Name of the calendar (HTML identifier).
 	 * @return Date The date of the calendar.
 	 */
-	public function retrieve_date($calendar_name)
+	public static function retrieve_date($calendar_name)
 	{
 		global $LANG;
 		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);

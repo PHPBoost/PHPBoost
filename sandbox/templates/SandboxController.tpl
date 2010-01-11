@@ -12,6 +12,8 @@
 	{SELECT}
 	<br />
 	{HIDDEN}
+	<br />
+	{DATE}
 # ENDIF #
 
 # INCLUDE form #
