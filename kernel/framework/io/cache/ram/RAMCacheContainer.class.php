@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           ApcRAMCache.class.php
+ *                        RAMCacheContainer.class.php
  *                            -------------------
  *   begin                : December 09, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
@@ -32,7 +32,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class DefaultRAMCache implements RAMCache
+class RAMCacheContainer implements CacheContainer
 {
 	private $data = array();
 
@@ -42,7 +42,6 @@ class DefaultRAMCache implements RAMCache
 		{
 			return $this->data[$id];
 		}
-		// TODO specialize exception here
 		throw new RAMCacheException($id);
 	}
 
@@ -59,6 +58,11 @@ class DefaultRAMCache implements RAMCache
 	public function delete($id)
 	{
 		unset($this->data[$id]);
+	}
+	
+	public function clear()
+	{
+		$this->data = array();
 	}
 }
 ?>

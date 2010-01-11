@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           RAMCache.class.php
+ *                       CacheContainerFatory.class.php
  *                            -------------------
  *   begin                : December 09, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
@@ -32,15 +32,48 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-interface RAMCache
+class CacheContainerFactory
 {
-    function get($id);
+	private static $apc_enabled = null;
 
-    function contains($id);
+	/**
+	 * @param $id
+	 * @return CacheContainer
+	 */
+	public static function get_ram_container($id)
+	{
+		if (self::is_apc_enabled())
+		{
+			return new APCCacheContainer($id);
+		}
+		return new RAMCacheContainer();
+	}
 
-    function store($id, $object);
-    
-    function delete($id);
+	public static function get_disk_container($id)
+	{
+		if (self::is_apc_enabled())
+		{
+			return new APCCacheContainer($id);
+		}
+		// TODO implement this class
+		return new DiskCacheContainer();
+	}
+
+	private static function is_apc_enabled()
+	{
+		if (self::$apc_enabled === null)
+		{
+			if (function_exists('apc_cache_info') && @apc_cache_info('user') !== false)
+			{
+				// TODO find another way to see if APC is enabled or not
+				self::$apc_enabled = true;
+			}
+			else
+			{
+				self::$apc_enabled = false;
+			}
+		}
+		return self::$apc_enabled;
+	}
 }
-
 ?>

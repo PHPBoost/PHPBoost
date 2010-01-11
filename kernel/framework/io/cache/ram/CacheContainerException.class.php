@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           RAMCacheFatory.class.php
+ *                      CacheContainerException.class.php
  *                            -------------------
- *   begin                : December 09, 2009
+ *   begin                : December 20, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
  *   email                : ben.popeye@phpboost.com, horn@phpboost.com
  *
@@ -32,34 +32,11 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class RAMCacheFactory
+class CacheContainerException extends Exception
 {
-	private static $apc_enabled = null;
-
-	public static function get($id)
+	public function __construct($id)
 	{
-		if (self::is_apc_enabled())
-		{
-			return new ApcRAMCache($id);
-		}
-		return new DefaultRAMCache();
-	}
-
-	private static function is_apc_enabled()
-	{
-		if (self::$apc_enabled === null)
-		{
-			if (function_exists('apc_cache_info') && @apc_cache_info('user') !== false)
-			{
-				// TODO find another way to see if APC is enabled or not
-				self::$apc_enabled = true;
-			}
-			else
-			{
-				self::$apc_enabled = false;
-			}
-		}
-		return self::$apc_enabled;
+		parent::__construct('Cache container doesn\'t contains element "' . $id . '"');
 	}
 }
 ?>

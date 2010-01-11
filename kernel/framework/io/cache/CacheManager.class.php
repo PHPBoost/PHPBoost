@@ -50,13 +50,13 @@ class CacheManager
 	private static $cache_manager_instance = null;
 
 	/**
-	 * @var RAMCache The RAM cache
+	 * @var CacheContainer The RAM cache
 	 */
 	protected $ram_cache = null;
 
 	protected function __construct()
 	{
-		$this->ram_cache = new DefaultRAMCache();
+		$this->ram_cache = new RAMCacheContainer();
 	}
 
 	/**
