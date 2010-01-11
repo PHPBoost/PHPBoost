@@ -101,6 +101,8 @@ class File extends FileSystemElement
 			$content .= fread($this->fd, min($len, self::$BUFFER_SIZE));
 			$len -= self::$BUFFER_SIZE;
 		}
+		
+		fseek($this->fd, 0);
 
 		return $content;
 	}
