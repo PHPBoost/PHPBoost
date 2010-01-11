@@ -35,54 +35,27 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldFree implements FormField
+class FormFieldFree extends AbstractFormField
 {
-	private $content = ''; //Content of the free field
-	private $template = ''; //Optionnal template
-	
-	public function __construct($field_id, array $field_options)
+	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options, array());
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'template' :
-					$this->template = $value;
-				break;
-				case 'content' :
-					$this->content = $value;
-				break;
-				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
-			}
-		}
+		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
-	
+
 	/**
 	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
-		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template')
-		{
-			$template = $this->template;
-		}
-		else
-		{
-			$template = new Template('framework/builder/forms/field.tpl');
-		}
+		$template = new Template('framework/builder/form/FormField.tpl');
+
+		$this->assign_common_template_variables($template);
 			
-		$template->assign_vars(array(
-			'ID' => $this->id,
-			'FIELD' => $this->content,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'C_REQUIRED' => $this->is_required()
-		));	
-		
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		$template->assign_block_vars('fieldelements', array(
+				'ELEMENT' => $this->get_value()
+		));
+
+		return $template;
 	}
 }
 
