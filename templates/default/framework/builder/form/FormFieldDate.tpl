@@ -1,4 +1,4 @@
-		<dl>
+		<dl class="overflow_visible">
 			<dt>
 				<label for="{ID}">
 					# IF C_REQUIRED # * # ENDIF #
