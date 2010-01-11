@@ -76,7 +76,7 @@ abstract class AbstractFormField implements FormField
 	 * @param string[] $field_options Map associating the parameters values to the parameters names.
 	 * @param FormFieldConstraint[] $constraints List of the constraints which must be checked when the form is been validated
 	 */
-	protected function __construct($id, $label, $value, array $field_options, array $constraints)
+	protected function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		$this->set_id($id);
 		$this->set_label($label);

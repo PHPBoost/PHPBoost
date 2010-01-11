@@ -1,3 +1,4 @@
+		# IF C_IS_ENABLED #
 		<script type="text/javascript">
 		<!--
 		function refresh_img_{CAPTCHA_INSTANCE}()
@@ -11,15 +12,20 @@
 		-->
 		</script>
 		<dl>
-			<dt><label for="{ID}">* {L_FIELD_TITLE}</label># IF L_EXPLAIN # <br /><span>{L_EXPLAIN}</span> # ENDIF #</dt>
+			<dt>
+				<label for="{ID}">* {LABEL}</label>
+				# IF DESCRIPTION # <br /><span class="text_small">{DESCRIPTION}</span> # ENDIF #
+			</dt>
 			<dd>
 				<img src="{PATH_TO_ROOT}/kernel/framework/ajax/captcha.php?instance={CAPTCHA_INSTANCE}&amp;width={CAPTCHA_WIDTH}&amp;height={CAPTCHA_HEIGHT}&amp;difficulty={CAPTCHA_DIFFICULTY}&amp;font={CAPTCHA_FONT}" id="verif_code_img{CAPTCHA_INSTANCE}" alt="" style="padding:2px;" />
 				<br />
-				<input size="30" type="text" class="text" name="{NAME}" id="{ID}" onblur="{CAPTCHA_ONBLUR}" />
+				<input size="30" type="text" class="text" name="{ID}" id="{ID}" onblur="{ONBLUR}" />
 				<a href="javascript:refresh_img_{CAPTCHA_INSTANCE}()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
 				<div>
-					<span id="onblurContainerResponse{ID}" style="display:none"></span>
-			 		<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
+					<span id="onblurContainerResponse{ID}"></span>
+					<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
 			 	</div>
 			</dd>
 		</dl>
+		
+		# ENDIF #
