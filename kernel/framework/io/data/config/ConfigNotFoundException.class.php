@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                 PropertyNotFoundException.class.php
+ *                 ConfigNotFoundException.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -27,16 +27,17 @@
 
 /**
  * @package io
- * @subpackage config
- * @desc This exception is raised when a not existing property is asked in a ConfigData object.
+ * @subpackage data/config
+ * @desc This exception is raised when a configuration entry is load whereas it doesn't exists in the
+ * database.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class PropertyNotFoundException extends Exception
+class ConfigNotFoundException extends Exception
 {
-	public function __construct($property_name)
+	public function __construct($config_name)
 	{
-		parent::__construct('The property "' . $property_name . '" was not found');
+		parent::__construct('The configuration "' . $config_name . '" was not found in the database');
 	}
 }
 

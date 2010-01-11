@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      FileSystemCacheContainer.class.php
+ *                      FileSystemDataStore.class.php
  *                            -------------------
  *   begin                : January 11, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -27,28 +27,30 @@
 
 /**
  * @package io
- * @subpackage cache/container
- * @desc
+ * @subpackage data/store
+ * @desc This data store is not very efficient but is the only one which has an infinite life span
+ * when APC is not available.
+ * It stores data in the /cache folder.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class FileSystemCacheContainer implements CacheContainer
+class FileSystemDataStore implements DataStore
 {
 	private $prefix;
 	/**
-	 * @var RAMCacheContainer
+	 * @var RAMDataStore
 	 */
 	private $files_cache;
 
 	public function __construct($id)
 	{
 		$this->prefix = $id;
-		$this->files_cache = new RAMCacheContainer();
+		$this->files_cache = new RAMDataStore();
 	}
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/CacheContainer#get($id)
+	 * @see kernel/framework/io/cache/container/DataStore#get($id)
 	 */
 	public function get($id)
 	{
@@ -69,7 +71,7 @@ class FileSystemCacheContainer implements CacheContainer
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/CacheContainer#contains($id)
+	 * @see kernel/framework/io/cache/container/DataStore#contains($id)
 	 */
 	public function contains($id)
 	{
@@ -78,7 +80,7 @@ class FileSystemCacheContainer implements CacheContainer
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/CacheContainer#store($id, $object)
+	 * @see kernel/framework/io/cache/container/DataStore#store($id, $object)
 	 */
 	public function store($id, $data)
 	{
@@ -90,7 +92,7 @@ class FileSystemCacheContainer implements CacheContainer
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/CacheContainer#delete($id)
+	 * @see kernel/framework/io/cache/container/DataStore#delete($id)
 	 */
 	public function delete($id)
 	{
@@ -105,7 +107,7 @@ class FileSystemCacheContainer implements CacheContainer
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/CacheContainer#clear()
+	 * @see kernel/framework/io/cache/container/DataStore#clear()
 	 */
 	public function clear()
 	{
@@ -116,11 +118,6 @@ class FileSystemCacheContainer implements CacheContainer
 		}
 	}
 
-	/**
-	 *
-	 * @param $id
-	 * @return File
-	 */
 	private function get_file($id)
 	{
 		if ($this->files_cache->contains($id))

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           cache_data.class.php
+ *                 PropertyNotFoundException.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,25 +25,19 @@
  *
  ###################################################*/
 
-
-
 /**
  * @package io
- * @subpackage cache
- * @desc This interface represents data which are stored automatically by the cache manager.
- * The storage mode is very powerful, it uses a two-level cache and the database.
- * <p>The cache manager is able to manager very well configuration values. They are stored
- * in a map associating a value to a property</p>
+ * @subpackage data/config
+ * @desc This exception is raised when a not existing property is asked in a ConfigData object.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-interface CacheData
+class PropertyNotFoundException extends Exception
 {
-	/**
-	 * This method is called when the data needs to be sychronized.
-	 * For instance,
-	 */
-	function synchronize();
+	public function __construct($property_name)
+	{
+		parent::__construct('The property "' . $property_name . '" was not found');
+	}
 }
 
 ?>

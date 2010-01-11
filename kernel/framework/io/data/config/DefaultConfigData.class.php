@@ -25,13 +25,9 @@
  *
  ###################################################*/
 
-
-
-
-
 /**
  * @package io
- * @subpackage config
+ * @subpackage data/config
  * @desc This is a default and minimal implementation of the ConfigData interface.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *

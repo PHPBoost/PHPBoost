@@ -88,7 +88,7 @@ class ClassLoader
 			$paths = array(
 				'/',
 				'/kernel/framework/phpboost/cache',
-				'/kernel/framework/io/cache',
+				'/kernel/framework/io/data/cache',
 				'/kernel/framework/core/lang',
 			);
 

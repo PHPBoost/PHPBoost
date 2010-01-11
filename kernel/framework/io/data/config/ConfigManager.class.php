@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-
-
 /**
  * @package io
- * @subpackage config
+ * @subpackage data/config
  * @desc This class manages config loading and saving. It makes a two-level lazy loading:
  * <ul>
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the
