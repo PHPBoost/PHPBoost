@@ -30,23 +30,25 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldHidden implements FormField
+class FormFieldHidden extends AbstractFormField
 {
-	public function __construct($name, $value)
+	public function __construct($id, $value)
 	{
-		$this->name = $name;
-		$this->id = $name;
-		$this->value = $value;
+		parent::__construct($id, '', $value);
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#display()
+	 */
 	public function display()
 	{
-		$field = '<input type="hidden" ';
-		$field .= 'name="' . $this->name . '" ';
-		$field .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
-		$field .= '/>';
+		// TODO Make a StringTemplate when it will be supported
+		$template = new Template('framework/builder/form/FormFieldHidden.tpl');
 		
-		return $field;
+		$this->assign_common_template_variables($template);
+		
+		return $template;
 	}
 }
 

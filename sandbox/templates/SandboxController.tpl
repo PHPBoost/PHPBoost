@@ -10,6 +10,8 @@
 	{CHECKBOX}
 	<br />
 	{SELECT}
+	<br />
+	{HIDDEN}
 # ENDIF #
 
 # INCLUDE form #

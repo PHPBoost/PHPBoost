@@ -42,7 +42,8 @@ class SandboxController extends ModuleController
 					'RICH_TEXT' => $form->get_value('rich_text'),
 					'RADIO' => $form->get_value('radio')->get_label(),
 					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
-					'SELECT' => $form->get_value('select')->get_label()
+					'SELECT' => $form->get_value('select')->get_label(),
+					'HIDDEN' => $form->get_value('hidden')
 				));
 			}
 		}
@@ -107,11 +108,15 @@ class SandboxController extends ModuleController
 		// CAPTCHA
 		$fieldset2->add_field(new FormFieldCaptcha());
 		
+		// HIDDEN
+		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
+		
+		// FREE FIELD
+		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
+		
 //		$fieldset_up = new FormFieldset('Upload file');
 //		//File field
 //		$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
-//		//Radio button field
-//		$fieldset_up->add_field(new FormFieldHidden('test', 1));
 		
 //		$form->add_fieldset($fieldset_up);
 //				
