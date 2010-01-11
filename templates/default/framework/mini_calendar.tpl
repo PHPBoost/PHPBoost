@@ -1,10 +1,5 @@
 		# IF C_INCLUDE_JS #
-			<script type="text/javascript">
-			<!--
-				var theme = '{THEME}';
-			-->
-			</script>
-			<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/calendar.js"></script>
 		# ENDIF #
 		
 		<input type="text" size="8" maxlength="8" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text" />

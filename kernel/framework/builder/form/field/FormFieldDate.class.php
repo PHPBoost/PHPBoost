@@ -34,63 +34,40 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldDate implements FormField
-{	
-	private $calendar_day = 1;
-	private $calendar_month = 1;
-	private $calendar_year = 2009;
-	private $num_instance = 0;
-	private static $num_instances = 0;
-	
-	public function __construct($field_id, $field_options = array(), array $constraints = array())
+class FormFieldDate extends AbstractFormField
+{
+	public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
 	{
-		$this->num_instance = ++self::$num_instances;
-
-		parent::__construct($field_id, '', $field_options, $constraints);
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'calendar_day' :
-					$this->calendar_day = $value;
-				break;
-				case 'calendar_month' :
-					$this->calendar_month = $value;
-				break;
-				case 'calendar_year' :
-					$this->calendar_year = $value;
-				break;
-				default :
-					new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
-			}
-		}
+		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
-	
+
 	/**
 	 * @return string The html code for the input.
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/forms/field_date.tpl');
+		$template = new Template('framework/builder/form/FormFieldDate.tpl');
+
+		$this->assign_common_template_variables($template);
 		
 		$template->assign_vars(array(
-			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
-			'INSTANCE' => $this->num_instance,
-			'ID' => $this->id,
-			'NAME' => $this->name,
-			'VALUE' => $this->value,
-			'CLASS' => !empty($this->css_class) ? ' ' . $this->css_class : '',
-			'ONBLUR' => $this->on_blur,
-			'CALENDAR_DAY' => $this->calendar_day,
-			'CALENDAR_MONTH' => $this->calendar_month,
-			'CALENDAR_YEAR' => $this->calendar_year,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'C_REQUIRED' => $this->is_required()
-		));	
-		
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+			'CALENDAR' => $this->get_calendar()->display()
+		));
+
+		return $template;
+	}
+	
+	public function retrieve_value()
+	{
+		$this->set_value(MiniCalendar::retrieve_date($this->get_html_id()));
+	}
+	
+	/**
+	 * @return MiniCalendar
+	 */
+	private function get_calendar()
+	{
+		return new MiniCalendar($this->get_html_id(), $this->get_value());
 	}
 }
 

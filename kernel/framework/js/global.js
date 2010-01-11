@@ -55,19 +55,19 @@ for(var i = 0; i < max_level; i++)
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function showMenu(idmenu, level)
 {
-	if( !menu_started[level] )
+	if (!menu_started[level])
 	{	// On ouvre le menu avec le délais
 		menu_timeout_tmp[level] = setTimeout('temporiseMenu(\'' + idmenu + '\', ' + level + ')', menu_delay_onmouseover);
 	}
-	else if( menu_previous[level] != idmenu )
+	else if (menu_previous[level] != idmenu)
 	{	// On ouvre le menu sans délais car le niveau est déjà ouvert
 		temporiseMenu(idmenu, level);
 	}
 	else	
 	{	// Le menu actuel est déjà ouvert, on enlève les timeout
-		if( menu_timeout[level] )
+		if (menu_timeout[level])
 			clearTimeout(menu_timeout[level]);
-		if( menu_timeout_tmp[level] )
+		if (menu_timeout_tmp[level])
 			clearTimeout(menu_timeout_tmp[level]);
 	}
 }
@@ -75,28 +75,28 @@ function showMenu(idmenu, level)
 //Fonction d'affichage du menu déroulant.
 function temporiseMenu(idmenu, level) 
 {
-	var	id = document.getElementById(idmenu);
+	var	id = $(idmenu);
 	//Destruction du timeout.
-	if( menu_timeout[level] )
+	if (menu_timeout[level])
 		clearTimeout(menu_timeout[level]);
-	if( menu_timeout_tmp[level] )
+	if (menu_timeout_tmp[level])
 		clearTimeout(menu_timeout_tmp[level]);
 	
 	//Masque les menus
-	if( document.getElementById(menu_previous[level]) ) 
+	if ($(menu_previous[level])) 
 	{
-		document.getElementById(menu_previous[level]).style.visibility = 'hidden';
+		$(menu_previous[level]).style.visibility = 'hidden';
 		menu_started[level] = false;
 		
 		for(var i = level; i < max_level; i++) //Masque le sous menus.
 		{
-			if( document.getElementById(menu_previous[i]) )
-				document.getElementById(menu_previous[i]).style.visibility = 'hidden';
+			if ($(menu_previous[i]))
+				$(menu_previous[i]).style.visibility = 'hidden';
 		}
 	}
 	
 	//Affichage du menu, et enregistrement dans le tableau de gestion.
-	if( id ) 
+	if (id) 
 	{	
 		id.style.visibility = 'visible';
 		menu_previous[level] = idmenu;
@@ -110,27 +110,27 @@ function hideMenu(level)
 	//Destruction du timeout lors du départ de la souris.
 	for(var i = 0; i < max_level; i++)
 	{
-		if( menu_timeout_tmp[i] && !menu_started[i] )
+		if (menu_timeout_tmp[i] && !menu_started[i])
 			clearTimeout(menu_timeout_tmp[i]);
 	}
 	
 	//Masque le menu, après le délai défini.
-	if( menu_started[level] )
+	if (menu_started[level])
 		menu_timeout[level] = setTimeout('temporiseMenu(\'\', ' + level + ')', menu_delay);
 }
 
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function show_menu(idmenu, level)
 {
-	if( !menu_started[level] )
+	if (!menu_started[level])
 		menu_timeout_tmp[level] = setTimeout('temporise_menu(\'' + idmenu + '\', ' + level + ')', menu_delay_onmouseover);
-	else if( menu_previous[level] != idmenu )
+	else if (menu_previous[level] != idmenu)
 		temporise_menu(idmenu, level);
 	else
 	{
-		if( menu_timeout[level] )
+		if (menu_timeout[level])
 			clearTimeout(menu_timeout[level]);
-		if( menu_timeout_tmp[level] )
+		if (menu_timeout_tmp[level])
 			clearTimeout(menu_timeout_tmp[level]);
 	}
 }
@@ -139,30 +139,30 @@ function show_menu(idmenu, level)
 function temporise_menu(idmenu, level) 
 {
 	var divID = str_repeat('s', level) + 'smenu';
-	var	id = document.getElementById(divID + idmenu);
+	var	id = $(divID + idmenu);
 
 	//Destruction du timeout.
-	if( menu_timeout[level] )
+	if (menu_timeout[level])
 		clearTimeout(menu_timeout[level]);
-	if( menu_timeout_tmp[level] )
+	if (menu_timeout_tmp[level])
 		clearTimeout(menu_timeout_tmp[level]);
 	
 	//Masque les menus
-	if( document.getElementById(divID + menu_previous[level]) ) 
+	if ($(divID + menu_previous[level])) 
 	{
-		document.getElementById(divID + menu_previous[level]).style.visibility = 'hidden';
+		$(divID + menu_previous[level]).style.visibility = 'hidden';
 		menu_started[level] = false;
 		
 		for(var i = level; i < max_level; i++) //Masque le sous menus.
 		{
 			var divID2 = str_repeat('s', i) + 'smenu';
-			if( document.getElementById(divID2 + menu_previous[i]) )
-				document.getElementById(divID2 + menu_previous[i]).style.visibility = 'hidden';
+			if ($(divID2 + menu_previous[i]))
+				$(divID2 + menu_previous[i]).style.visibility = 'hidden';
 		}
 	}
 	
 	//Affichage du menu, et enregistrement dans le tableau de gestion.
-	if( id ) 
+	if (id) 
 	{	
 		id.style.visibility = 'visible';
 		menu_previous[level] = idmenu;
@@ -176,12 +176,12 @@ function hide_menu(level)
 	//Destruction du timeout lors du départ de la souris.
 	for(var i = 0; i < max_level; i++)
 	{
-		if( menu_timeout_tmp[i] && !menu_started[i] )
+		if (menu_timeout_tmp[i] && !menu_started[i])
 			clearTimeout(menu_timeout_tmp[i]);
 	}
 	
 	//Masque le menu, après le délai défini.
-	if( menu_started[level] )
+	if (menu_started[level])
 		menu_timeout[level] = setTimeout('temporise_menu(\'\', ' + level + ')', menu_delay);
 }
 
@@ -219,7 +219,7 @@ function bb_hide(div2)
 {
 	var divs = div2.getElementsByTagName('div');
 	var div3 = divs[0];
-	if( div3.style.visibility == 'visible' )
+	if (div3.style.visibility == 'visible')
 	{
 		div3.style.visibility = 'hidden';
 		div2.style.height = '10px';
@@ -237,13 +237,13 @@ function bb_hide(div2)
 function hide_div(divID, useEffects)
 {
     var use_effects = false
-    if( arguments.length > 1 )
+    if (arguments.length > 1)
         use_effects = useEffects;
     
-    if( document.getElementById(divID) )
+    if ($(divID))
     {
-        if( useEffects ) Effect.SwitchOff(divID);
-        document.getElementById(divID).style.display = 'none';
+        if (useEffects) Effect.SwitchOff(divID);
+        $(divID).style.display = 'none';
     }
 }
 
@@ -251,70 +251,78 @@ function hide_div(divID, useEffects)
 function show_div(divID, useEffects)
 {
     var use_effects = false
-    if( arguments.length > 1 )
-        use_effects = useEffects;
-    
-    if( document.getElementById(divID) )
+    if (arguments.length > 1)
     {
-        if( useEffects ) Effect.Appear(divID, { duration: 0.5 });
-        document.getElementById(divID).style.display = 'block';
+        use_effects = useEffects;
+    }
+    
+    if ($(divID))
+    {
+        if (useEffects)
+    	{
+        	Effect.Appear(divID, { duration: 0.5 });
+    	}
+        else
+        {
+        	$(divID).style.display = 'block';
+        }
     }
 }
 
 //Masque un bloc.
 function hide_inline(divID)
 {
-	if( document.getElementById(divID) )
+	if ($(divID))
 	{
 		Effect.SwitchOff(divID);
-		document.getElementById(divID).style.visibility = 'hidden';
+		$(divID).style.visibility = 'hidden';
 	}
 }
 
 //Affiche un bloc
 function show_inline(divID)
 {
-	if( document.getElementById(divID) )
+	if ($(divID))
 	{	
 		Effect.Appear(divID, { duration: 0.5 });
-		document.getElementById(divID).style.visibility = 'visible';
+		$(divID).style.visibility = 'visible';
 	}
 }
 
 //Change l'adresse d'une image
 function change_img_path(id, path)
 {
-	if( document.getElementById(id) )
-		document.getElementById(id).src = path;
+	if ($(id))
+		$(id).src = path;
 }
 
 //Switch entre deux images.
 function switch_img(id, path, path2)
 {
-	if( document.getElementById(id) )
+	if ($(id))
 	{	
-		if( strpos(document.getElementById(id).src, path.replace(/\.\./g, '')) != false )	
-			document.getElementById(id).src = path2;
+		if (strpos($(id).src, path.replace(/\.\./g, '')) != false)	
+			$(id).src = path2;
 		else
-			document.getElementById(id).src = path;
+			$(id).src = path;
 	}
 }
 
 //Afffiche/masque automatiquement un bloc.
 function display_div_auto(divID, type)
 {
-	if( document.getElementById(divID) )
+	if ($(divID))
 	{	
-		if( type == '')
+		if (type == '')
 			type = 'block';
 			
-		if( document.getElementById(divID).style.display == type )
+		if ($(divID).style.display == type)
 		{	
 			Effect.SwitchOff(divID);
-			document.getElementById(divID).style.display = 'none';
+			$(divID).style.display = 'none';
 		}
-		else if( document.getElementById(divID).style.display == 'none' )
-			document.getElementById(divID).style.display = type;
+		else if ($(divID).style.display == 'none')
+			$(divID).style.display = type;
 	}
 }
 
@@ -324,11 +332,11 @@ function popup(page,name)
    var screen_height = screen.height;
    var screen_width = screen.width;
 
-	if( screen_height == 600 && screen_width == 800 )
+	if (screen_height == 600 && screen_width == 800)
 		window.open(page, name, "width=680, height=540,location=no,status=no,toolbar=no,scrollbars=yes");
-	else if( screen_height == 768 && screen_width == 1024 )
+	else if (screen_height == 768 && screen_width == 1024)
 		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
-	else if( screen_height == 864 && screen_width == 1152 )
+	else if (screen_height == 864 && screen_width == 1152)
 		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
 	else
 		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
@@ -339,7 +347,7 @@ function inArray(aValue, anArray)
 {
     for( var i = 0; i < anArray.length; i++)
     {
-        if( anArray[i] == aValue )
+        if (anArray[i] == aValue)
             return true;
     }
     return false;
@@ -362,7 +370,7 @@ function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
 	restart_progress = true;
 	theme = theme_tmp;
 	progressbar_id = progressbar_id_tmp;
-	if( arguments.length == 4 ) //Argument optionnel.
+	if (arguments.length == 4) //Argument optionnel.
 		progressbar_size = arguments[3];
 }
 
@@ -370,41 +378,41 @@ function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
 function progress_bar(percent_progress, info_progress, result_msg, result_id)
 {
 	bar_progress = (percent_progress * progressbar_size) / 100;
-	if( arguments.length < 4 )
+	if (arguments.length < 4)
 	{
 		result_id = "";
 		result_msg = "";
 	}
     
 	// Déclaration et initialisation d'une variable statique
-	if( restart_progress )
+	if (restart_progress)
 	{	
 		clearTimeout(timeout_progress_bar);
 		this.percent_begin = 0;
 		max_percent = 0;
-		if( document.getElementById('progress_bar' + progressbar_id) )
-			document.getElementById('progress_bar' + progressbar_id).innerHTML = '';
+		if ($('progress_bar' + progressbar_id))
+			$('progress_bar' + progressbar_id).innerHTML = '';
 		restart_progress = false;
 	}
 
-	if( this.percent_begin <= bar_progress )
+	if (this.percent_begin <= bar_progress)
 	{
-		if( document.getElementById('progress_bar' + progressbar_id) )
-			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/progress.png" alt="" />';
-		if( document.getElementById('progress_percent' + progressbar_id) )
-			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
-		if( document.getElementById('progress_info' + progressbar_id) )
+		if ($('progress_bar' + progressbar_id))
+			$('progress_bar' + progressbar_id).innerHTML += '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/progress.png" alt="" />';
+		if ($('progress_percent' + progressbar_id))
+			$('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
+		if ($('progress_info' + progressbar_id))
 		{	
-			if( percent_progress > max_percent )
+			if (percent_progress > max_percent)
 			{	
 				max_percent = percent_progress;
 				info_progress_tmp = info_progress;
 			}
-			document.getElementById('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
+			$('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
 		}
 		//Message de fin
-		if( this.percent_begin == progressbar_size && result_id != "" && result_msg != "" )
-			document.getElementById(result_id).innerHTML = result_msg;
+		if (this.percent_begin == progressbar_size && result_id != "" && result_msg != "")
+			$(result_id).innerHTML = result_msg;
             
 		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}
@@ -417,9 +425,9 @@ function progress_bar(percent_progress, info_progress, result_msg, result_id)
 function xmlhttprequest_init(filename)
 {
 	var xhr_object = null;
-	if( window.XMLHttpRequest ) //Firefox
+	if (window.XMLHttpRequest) //Firefox
 	   xhr_object = new XMLHttpRequest();
-	else if( window.ActiveXObject ) //Internet Explorer
+	else if (window.ActiveXObject) //Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 
 	xhr_object.open('POST', filename, true);
@@ -446,7 +454,7 @@ function escape_xmlhttprequest(contents)
 //Informe sur la capacité du navigateur à supporter AJAX
 function browserAJAXFriendly()
 {
-    if ( window.XMLHttpRequest || window.ActiveXObject )
+    if ( window.XMLHttpRequest || window.ActiveXObject)
         return true;
     else
         return false;
@@ -455,27 +463,27 @@ function browserAJAXFriendly()
 //Fonction de recherche des membres.
 function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty_login)
 {
-	var login = document.getElementById('login' + searchid).value;
-	if( login != '' )
+	var login = $('login' + searchid).value;
+	if (login != '')
 	{
-		if( document.getElementById('search_img' + searchid) )
-			document.getElementById('search_img' + searchid).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
+		if ($('search_img' + searchid))
+			$('search_img' + searchid).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
 		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 
 		{
-			if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
+			if (xhr_object.readyState == 4 && xhr_object.status == 200) 
 			{
-				if( document.getElementById('search_img' + searchid) )
-					document.getElementById('search_img' + searchid).innerHTML = '';
-				if( document.getElementById("xmlhttprequest_result_search" + searchid) )
-					document.getElementById("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
+				if ($('search_img' + searchid))
+					$('search_img' + searchid).innerHTML = '';
+				if ($("xmlhttprequest_result_search" + searchid))
+					$("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
 				Effect.BlindDown('xmlhttprequest_result_search' + searchid, { duration: 0.5 });
 			}
-			else if( xhr_object.readyState == 4 ) 
+			else if (xhr_object.readyState == 4) 
 			{
-				if( document.getElementById('search_img' + searchid) )
-					document.getElementById('search_img' + searchid).innerHTML = '';
+				if ($('search_img' + searchid))
+					$('search_img' + searchid).innerHTML = '';
 			}
 		}
 		xmlhttprequest_sender(xhr_object, data);
@@ -487,10 +495,10 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 //Fonction d'ajout de membre dans les autorisations.
 function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
 {
-    var selectid = document.getElementById('members_auth' + searchid);
+    var selectid = $('members_auth' + searchid);
     for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
     {
-        if( selectid[i].value == user_id )
+        if (selectid[i].value == user_id)
         {
             alert(alert_already_auth);
             return;
@@ -500,8 +508,8 @@ function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_
     oOption.id = searchid + 'm' + (selectid.length - 1);
         oOption.selected = true;
 
-    if( document.getElementById('members_auth' + searchid) ) //Ajout du membre.
-        document.getElementById('members_auth' + searchid).options[selectid.length] = oOption;
+    if ($('members_auth' + searchid)) //Ajout du membre.
+        $('members_auth' + searchid).options[selectid.length] = oOption;
 }
 
 //Sélection des formulaires.
@@ -510,18 +518,18 @@ function check_select_multiple(id, status)
 	var i;	
 
 	//Sélection des groupes.
-	var selectidgroups = document.getElementById('groups_auth' + id);
+	var selectidgroups = $('groups_auth' + id);
 	for(i = 0; i < selectidgroups.length; i++)
 	{	
-		if( selectidgroups[i] )
+		if (selectidgroups[i])
 			selectidgroups[i].selected = status;
 	}
 	
 	//Sélection des membres.
-	var selectidmember = document.getElementById('members_auth' + id);
+	var selectidmember = $('members_auth' + id);
 	for(i = 0; i < selectidmember.length; i++)
 	{	
-		if( selectidmember[i] )
+		if (selectidmember[i])
 			selectidmember[i].selected = status;
 	}	
 }
@@ -532,8 +540,8 @@ function check_select_multiple_ranks(id, start)
 	var i;			
 	for(i = start; i <= 2; i++)
 	{	
-		if( document.getElementById(id + i) )
-			document.getElementById(id + i).selected = true;
+		if ($(id + i))
+			$(id + i).selected = true;
 	}
 }
 
@@ -541,7 +549,7 @@ function check_select_multiple_ranks(id, start)
 function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 {
     pagin = '<span class="pagination';
-    if ( isCurrentPage )
+    if ( isCurrentPage)
         pagin += ' pagination_current_page text_strong';
     pagin += '">';
     pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
@@ -552,12 +560,12 @@ function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 
 // Crée la pagination à partir du nom du bloc de page, du bloc de pagination, du nombre de résultats
 // du nombre de résultats par page ...
-function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter )
+function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter)
 {
     var pagin = '';
-    if ( nbPages > 1 )
+    if ( nbPages > 1)
     {
-        if( arguments.length < 5 )
+        if (arguments.length < 5)
         {
             nbPagesBefore = 3;
             nbPagesAfter = 3;
@@ -570,41 +578,41 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
         var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
         
         // Début
-        if( page != 0 )
+        if (page != 0)
             pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
         
         // Before
-        for ( var i = before; i < page; i++ )
-            pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+        for ( var i = before; i < page; i++)
+            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
         
         // Page courante
-        pagin += writePagin(fctName, fctArgs, true, page + 1, page );
+        pagin += writePagin(fctName, fctArgs, true, page + 1, page);
         
         // After
-        for ( var i = page + 1; i < after; i++ )
-            pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+        for ( var i = page + 1; i < after; i++)
+            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
         
         // Fin
-        if( page != nbPages - 1 )
-            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
+        if (page != nbPages - 1)
+            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1);
     }
     
     // On cache tous les autre résultats du module
-    for ( var i = 0; i < nbPages; i++ )
+    for ( var i = 0; i < nbPages; i++)
         hide_div(blocName + '_' + i);
         
     // On montre la page demandée
     show_div(blocName + '_' + page);
     
     // Mise à jour de la pagination
-    document.getElementById(blocPagin).innerHTML = pagin;
+    $(blocPagin).innerHTML = pagin;
 }
 
 // Teste si une chaine est numerique
 function isNumeric(number)
 {
     var numbers = "0123456789.";
-    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++ );
+    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++);
     return i == number.length ;
 }
 
@@ -612,7 +620,7 @@ function isNumeric(number)
 function isInteger(number)
 {
     var numbers = "0123456789";
-    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++ );
+    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++);
     return i == number.length ;
 }
 
@@ -624,14 +632,15 @@ var feed_menu_elt = null;
 var feed_menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 
 // Print the syndication's choice menu
-function ShowSyndication(element) {
-    if( feed_menu_elt )
+function ShowSyndication(element)
+{
+    if (feed_menu_elt)
         feed_menu_elt.style.visibility = 'hidden';
     feed_menu_elt = null;
     var elts = null;
     elts = element.parentNode.getElementsByTagName('div');
-    for( var i = 0; i < elts.length; i++ ) {
-        if( elts[i].title == 'L_SYNDICATION_CHOICES') {
+    for( var i = 0; i < elts.length; i++) {
+        if (elts[i].title == 'L_SYNDICATION_CHOICES') {
             feed_menu_elt = elts[i];
             break;
         }
@@ -639,27 +648,33 @@ function ShowSyndication(element) {
 	feed_menu_elt.style.visibility = 'visible';
     clearTimeout(feed_menu_timeout_out);
 }
-function ShowSyndicationMenu(element) {
+function ShowSyndicationMenu(element)
+{
 	element.style.visibility = 'visible';
     clearTimeout(feed_menu_timeout_out);
 }
-function HideSyndication(element) {
+function HideSyndication(element)
+{
     feed_menu_elt = element;
     feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', feed_menu_delay);
     clearTimeout(feed_menu_timeout_in);
 }
 
 //Pour savoir si une fonction existe
-function functionExists(function_name) {
+function functionExists(function_name)
+{
     // http://kevin.vanzonneveld.net
     // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // +   improved by: Steve Clay
     // +   improved by: Legaev Andrey
     // *     example 1: function_exists('isFinite');
     // *     returns 1: true 
-    if (typeof function_name == 'string'){
+    if (typeof function_name == 'string')
+    {
         return (typeof window[function_name] == 'function');
-    } else{
+    }
+    else
+    {
         return (function_name instanceof Function);
     }
 }
@@ -678,8 +693,10 @@ function include(file)
 
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
-function insertMoviePlayer(id) {
-	if (!playerflowPlayerRequired) {
+function insertMoviePlayer(id)
+{
+	if (!playerflowPlayerRequired)
+	{
 		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
@@ -711,7 +728,7 @@ function checkForms(arrayChecks)
 {
 	for(var i = 0; i < arrayChecks.length; i += 2)
 	{
-		if (document.getElementById(arrayChecks[i]).value == '') 
+		if ($(arrayChecks[i]).value == '') 
 		{
 			alert(arrayChecks[i+1]);
 			return false;
