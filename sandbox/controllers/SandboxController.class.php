@@ -101,11 +101,11 @@ class SandboxController extends ModuleController
 			)
 		));
 		
-		//$fieldset2 = new FormFieldset('Fieldset 2');
-		//$form->add_fieldset($fieldset2);
+		$fieldset2 = new FormFieldset('Fieldset 2');
+		$form->add_fieldset($fieldset2);
 		
 		// CAPTCHA
-//		$fieldset2->add_field($fieldset->add_field(new FormFieldCaptcha('captcha')));
+		$fieldset2->add_field(new FormFieldCaptcha());
 		
 //		$fieldset_up = new FormFieldset('Upload file');
 //		//File field

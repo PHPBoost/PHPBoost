@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                             field_captcha_field.class.php
+ *                         FormFieldCaptcha.class.php
  *                            -------------------
- *   begin                : September 19, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : January 11, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldCaptcha implements AbstractFormField
+class FormFieldCaptcha extends AbstractFormField
 {
 	/**
 	 * @var Captcha
@@ -38,49 +38,76 @@ class FormFieldCaptcha implements AbstractFormField
 	private $captcha = '';
 
 	/**
-	 * @param $field_id string The html field identifier
-	 * @param $captcha Captcha The captcha object
-	 * @param $field_options array Field's options
+	 * @param Captcha $captcha The captcha to use. If not given, a default captcha will be used.
 	 */
 	public function __construct(Captcha $captcha = null)
 	{
 		global $LANG;
 		parent::__construct('captcha', $LANG['verif_code'], false, array('required' => true));
+		if ($captcha !== null)
+		{
+			$this->captcha = $captcha;
+		}
+		else
+		{
+			$this->captcha = new Captcha();
+		}
+		$this->captcha->set_html_id($this->get_html_id());
 	}
-	
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 */
 	public function retrieve_value()
 	{
-		$request = AppContext::get_request();
-		if ($request->has_parameter($this->get_html_id()))
+		if ($this->is_enabled())
 		{
-			$this->captcha->
-			$this->set_value($request->get_value($this->get_html_id()));
+			$this->set_value($this->captcha->is_valid());
+		}
+		else
+		{
+			$this->set_value(true);
 		}
 	}
 
 	/**
-	 * @return string The html code for the free field.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#display()
 	 */
 	public function display()
 	{
 		$this->captcha->save_user();
 
 		$template = new Template('framework/builder/form/FormFieldCaptcha.tpl');
+
+		$this->assign_common_template_variables($template);
 			
 		$template->assign_vars(array(
-			'NAME' => $this->name,
-			'ID' => $this->id,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
+			'C_IS_ENABLED' => $this->is_enabled(),
 			'CAPTCHA_INSTANCE' => $this->captcha->get_instance(),
 			'CAPTCHA_WIDTH' => $this->captcha->get_width(),
 			'CAPTCHA_HEIGHT' => $this->captcha->get_height(),
 			'CAPTCHA_FONT' => $this->captcha->get_font(),
 			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty(),
-			'CAPTCHA_ONBLUR' => $onblur ? 'onblur="' . implode(';', $validations) . $this->on_blur . '" ' : ''
 		));
 
 		return $template;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#validate()
+	 */
+	public function validate()
+	{
+		$this->retrieve_value();
+		return $this->get_value();
+	}
+	
+	private function is_enabled()
+	{
+		return !AppContext::get_user()->check_level(MEMBER_LEVEL);
 	}
 }
 
