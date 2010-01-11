@@ -27,10 +27,9 @@
 
 /**
  * @package io
- * @subpackage cache/ram
+ * @subpackage cache/container
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
- *
  */
 class APCCacheContainer implements CacheContainer
 {

@@ -47,7 +47,7 @@ class UnreadContributionsCache implements CacheData
 	 */
 	public function synchronize()
 	{
-		$numbers = ContributionService::compute_number_contrib_for_each_profile();
+		$result = ContributionService::compute_number_contrib_for_each_profile();
 
 		$this->set_values($result);
 	}
