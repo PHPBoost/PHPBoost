@@ -176,9 +176,9 @@ class ConfigManager extends CacheManager
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/cache/CacheManager#get_file($name)
 	 */
-	protected function get_file($name)
+	protected function get_file_name($name)
 	{
-		return new File(PATH_TO_ROOT . '/cache/' . $name . '.cfg');
+		return $name . '.cfg';
 	}
 }
 

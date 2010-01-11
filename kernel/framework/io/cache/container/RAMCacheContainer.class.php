@@ -27,7 +27,7 @@
 
 /**
  * @package io
- * @subpackage cache/ram
+ * @subpackage cache/container
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
@@ -42,7 +42,7 @@ class RAMCacheContainer implements CacheContainer
 		{
 			return $this->data[$id];
 		}
-		throw new RAMCacheException($id);
+		throw new CacheContainerException($id);
 	}
 
 	public function contains($id)

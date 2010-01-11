@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      CacheContainerException.class.php
+ *                          CacheContainer.class.php
  *                            -------------------
- *   begin                : December 20, 2009
+ *   begin                : December 09, 2009
  *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
  *   email                : ben.popeye@phpboost.com, horn@phpboost.com
  *
@@ -27,16 +27,22 @@
 
 /**
  * @package io
- * @subpackage cache/ram
+ * @subpackage cache/container
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
  */
-class CacheContainerException extends Exception
+interface CacheContainer
 {
-	public function __construct($id)
-	{
-		parent::__construct('Cache container doesn\'t contains element "' . $id . '"');
-	}
+    function get($id);
+
+    function contains($id);
+
+    function store($id, $object);
+    
+    function delete($id);
+    
+    function clear();
 }
+
 ?>

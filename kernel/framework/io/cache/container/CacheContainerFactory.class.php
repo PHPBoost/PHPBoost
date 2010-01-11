@@ -27,7 +27,7 @@
 
 /**
  * @package io
- * @subpackage cache/ram
+ * @subpackage cache/container
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *
@@ -49,14 +49,13 @@ class CacheContainerFactory
 		return new RAMCacheContainer();
 	}
 
-	public static function get_disk_container($id)
+	public static function get_file_system_container($id)
 	{
 		if (self::is_apc_enabled())
 		{
 			return new APCCacheContainer($id);
 		}
-		// TODO implement this class
-		return new DiskCacheContainer();
+		return new FileSystemCacheContainer($id);
 	}
 
 	private static function is_apc_enabled()

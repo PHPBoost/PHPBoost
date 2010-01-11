@@ -54,9 +54,16 @@ class CacheManager
 	 */
 	protected $ram_cache = null;
 
+	/**
+	 *
+	 * @var CacheContainer
+	 */
+	protected $fs_cache = null;
+
 	protected function __construct()
 	{
 		$this->ram_cache = new RAMCacheContainer();
+		$this->fs_cache = CacheContainerFactory::get_file_system_container('CacheManager');
 	}
 
 	/**
@@ -126,23 +133,6 @@ class CacheManager
 		return $data;
 	}
 
-	protected function invalidate_file_cache($name)
-	{
-		try
-		{
-			$this->get_file($name)->delete();
-		}
-		catch(IOException $ex)
-		{
-
-		}
-	}
-
-	protected function invalidate_memory_cache($name)
-	{
-		$this->ram_cache->delete($name);
-	}
-
 	/**
 	 * @return string
 	 */
@@ -177,16 +167,17 @@ class CacheManager
 
 	protected function memory_cache_data($name, CacheData  $value)
 	{
-		return $this->ram_cache->store($name, $value);
+		$this->ram_cache->store($name, $value);
 	}
 
-	//Filesystem cache
-	/**
-	 * @return File
-	 */
-	protected function get_file($name)
+	protected function invalidate_memory_cache($name)
 	{
-		return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
+		$this->ram_cache->delete($name);
+	}
+
+	protected function get_file_name($name)
+	{
+		return $name . '.data';
 	}
 
 	/**
@@ -194,27 +185,25 @@ class CacheManager
 	 */
 	protected function is_file_cached($name)
 	{
-		$file = $this->get_file($name);
-		return $file->exists();
+		return $this->fs_cache->contains($this->get_file_name($name));
 	}
 
 	/**
-	 * @return string
+	 * @return CacheData
 	 */
 	protected function get_file_cached_data($name)
 	{
-		// TODO Make a cache system that uses either the filesystem or the RAM via APC 
-		$file = $this->get_file($name);
-		$content = $file->read();
-		$data = unserialize($content);
-		return $data;
+		return $this->fs_cache->get($this->get_file_name($name));
 	}
 
 	protected function file_cache_data($name, CacheData $value)
 	{
-		$file = $this->get_file($name);
-		$data_to_write = serialize($value);
-		$file->write($data_to_write);
+		$this->fs_cache->store($this->get_file_name($name), $value);
+	}
+
+	protected function invalidate_file_cache($name)
+	{
+		$this->fs_cache->delete($this->get_file_name($name));
 	}
 }
 
