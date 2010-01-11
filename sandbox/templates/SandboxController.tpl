@@ -10,8 +10,6 @@
 	{CHECKBOX}
 	<br />
 	{SELECT}
-	<br />
-	{CAPTCHA}
 # ENDIF #
 
 # INCLUDE form #

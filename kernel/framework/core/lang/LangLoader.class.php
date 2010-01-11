@@ -36,13 +36,13 @@ class LangLoader
 
 	private static $locale = self::DEFAULT_LOCALE;
 	/**
-	 * @var RAMCache
+	 * @var CacheFactory
 	 */
 	private static $ram_cache = null;
 
 	public static function init()
 	{
-		self::$ram_cache = RAMCacheFactory::get('lang');
+		self::$ram_cache = new RAMCacheContainer('lang');
 	}
 	
 	/**
