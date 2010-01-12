@@ -466,6 +466,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::FORCE_USERS_THEME_PROPERTY => false,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => true,
+			self::DEFAULT_AVATAR_ENABLED_PROPERTY => true,
 			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,

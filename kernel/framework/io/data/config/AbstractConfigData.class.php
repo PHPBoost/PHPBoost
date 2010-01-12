@@ -57,7 +57,7 @@ abstract class AbstractConfigData implements ConfigData
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/config/ConfigData#set_default_values()
 	 */
-	public final function set_default_values()
+	public function set_default_values()
 	{
 		foreach ($this->get_default_values() as $property => $value)
 		{
