@@ -32,12 +32,12 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class DefaultConfigData implements ConfigData
+abstract class AbstractConfigData implements ConfigData
 {
 	private $properties_map = array();
 
 	/**
-	 * Constructs a DefaultConfigData object
+	 * Constructs a AbstractConfigData object
 	 */
 	public function __construct()
 	{
@@ -48,15 +48,21 @@ class DefaultConfigData implements ConfigData
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/cache/CacheData#synchronize()
 	 */
-	public final function synchronize() {}
+	public final function synchronize()
+	{
+	}
 
 	/**
 	 * Redefine this method if you want to avoid getting errors while asking values.
 	 * (non-PHPdoc)
 	 * @see kernel/framework/io/config/ConfigData#set_default_values()
 	 */
-	public function set_default_values()
+	public final function set_default_values()
 	{
+		foreach ($this->get_default_values() as $property => $value)
+		{
+			$this->set_property($property, $value);
+		}
 	}
 
 	/**
@@ -71,7 +77,20 @@ class DefaultConfigData implements ConfigData
 		}
 		else
 		{
-			throw new PropertyNotFoundException($name);
+			return $this->get_default_value($name);
+		}
+	}
+
+	private function get_default_value($property)
+	{
+		$default_values = $this->get_default_values();
+		if (array_key_exists($property, $default_values))
+		{
+			return $default_values[$property];
+		}
+		else
+		{
+			throw new PropertyNotFoundException($property);
 		}
 	}
 
@@ -83,6 +102,12 @@ class DefaultConfigData implements ConfigData
 	{
 		$this->properties_map[$name] = $value;
 	}
+
+	/**
+	 * @desc Returns a map associating to each property name the corresponding default value
+	 * @return string[mixed]
+	 */
+	abstract protected function get_default_values();
 }
 
 ?>

@@ -31,7 +31,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class LastUseDateConfig extends DefaultConfigData
+class LastUseDateConfig extends AbstractConfigData
 {
 	/**
 	 * Sets the date of the last time PHPBoost executed the daily tasks.
@@ -59,17 +59,24 @@ class LastUseDateConfig extends DefaultConfigData
 		}
 		catch(PropertyNotFoundException $ex)
 		{
-			return new Date();
+			return $this->get_date_far_in_the_past();
 		}
 	}
-	
+
+	private function get_date_far_in_the_past()
+	{
+		$date = new Date();
+		$date->set_year($date->get_year() - 1);
+		return $date;
+	}
+
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
 	 */
-	public function set_default_values()
+	public function get_default_values()
 	{
-		$this->set_last_use_date(new Date());
+		return array();
 	}
 
 	/**
