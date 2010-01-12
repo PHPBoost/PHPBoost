@@ -311,7 +311,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 						else
 						{
 							$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id . '/' .
-							$value . '" style="background-image:url(' . PATH_TO_ROOT .
+							$value . '" style="background-image:url(' . TPL_PATH_TO_ROOT .
 									'/' . $module_id . '/' . $module_id . '_mini.png);">' . $key .
 									'</a></li>' . "\n";
 						}

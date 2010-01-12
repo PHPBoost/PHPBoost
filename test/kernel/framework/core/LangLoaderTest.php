@@ -70,8 +70,7 @@ class LangLoaderTest extends PHPBoostUnitTestCase {
 
 	public function test_get_class()
 	{
-		$class_file = Path::phpboost_path() .
-			'/admin/menus/controllers/MenuControllerConfigurationsList.class.php';
-		LangLoader::get_class($class_file, '/test/data/');
+		$classname = 'MenuControllerConfigurationsList';
+		LangLoader::get($classname, '/test/data/');
 	}
 }

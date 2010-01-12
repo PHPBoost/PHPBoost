@@ -182,6 +182,7 @@ CREATE TABLE `phpboost_menu_configuration` (
   PRIMARY KEY (`id`),
   KEY `priority` (`priority`)
 ) ENGINE = MyISAM DEFAULT CHARSET=latin1;
+INSERT INTO phpboost_menu_configuration VALUES (1, 'default', '`.*`', 1);
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (

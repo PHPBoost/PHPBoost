@@ -68,13 +68,13 @@ class LangLoader
 	
 	/**
 	 * @param string $message_id the language message identifier
-     * @param string $class_file the class file that you want to load associated languages messages
+     * @param string $classname the name of the class for which you want to load associated languages message
      * @param string $module the module to look for languages files in
 	 * @return string the localized message
 	 */
-	public static function get_class_message($message_id, $filename, $module = '')
+	public static function get_class_message($message_id, $classname, $module = '')
 	{
-		$lang = self::get_class($filename, $module);
+		$lang = self::get_class($classname, $module);
 		return $lang[$message_id];
 	}
 
@@ -97,18 +97,16 @@ class LangLoader
      * @desc Retrieves the language file associated to the <code>$class_file</code>
      * If module is empty, the kernel lang folder will be used
      * <p>Usage:
-     * LangLoader::get_class(__FILE__, $module); // if called inside the class
+     * LangLoader::get_class(__CLASS__, $module); // if called inside the class
      * </p>
-     * @param string $class_file the class file that you want to load associated languages messages
+     * @param string $classname the name of the class for which you want to load associated languages messages
      * @param string $module the module to look for languages files in
      * @return string[string] the lang array which keys are languages identifiers and values the
      * translated messages
      */
-	public static function get_class($class_file, $module = '')
+	public static function get_class($classname, $module = '')
 	{
-		$package = Path::get_package($class_file);
-		$classname = Path::get_classname($class_file);
-		$lang_file = str_replace('/', '-', $package) . '-' . $classname;
+		$lang_file = 'classes/' . $classname;
 		return self::get($lang_file, $module);
 	}
 

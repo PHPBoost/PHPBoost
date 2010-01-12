@@ -37,7 +37,7 @@ class File extends FileSystemElement
 	private static $WRITE = 0x2;
 	private static $APPEND = 0x3;
 	private static $BUFFER_SIZE = 8192;
-	
+
 	/**
 	 * @var string Content of the file
 	 */
@@ -86,10 +86,8 @@ class File extends FileSystemElement
 	{
 		$this->open(self::$READ);
 
-		if ($start > 0)
-		{
-			fseek($this->fd, $start);
-		}
+		fseek($this->fd, $start);
+
 		if ($len == -1)
 		{
 			$len = filesize($this->get_path());
@@ -101,8 +99,6 @@ class File extends FileSystemElement
 			$content .= fread($this->fd, min($len, self::$BUFFER_SIZE));
 			$len -= self::$BUFFER_SIZE;
 		}
-		
-		fseek($this->fd, 0);
 
 		return $content;
 	}
@@ -282,13 +278,13 @@ class File extends FileSystemElement
 			$bytes_written += $bytes;
 		}
 	}
-	
+
 	private function check_file_descriptor($message)
 	{
-			if ($this->fd === false)
-			{
-				throw new IOException($message . ' : ' . $this->get_path());
-			}
+		if ($this->fd === false)
+		{
+			throw new IOException($message . ' : ' . $this->get_path());
+		}
 	}
 }
 
