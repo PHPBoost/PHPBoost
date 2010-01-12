@@ -30,7 +30,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class UserAccountsConfig extends DefaultConfigData
+class UserAccountsConfig extends AbstractConfigData
 {
 	/**
 	 * Name of the property indicating if member accounts have to be validated and how.
@@ -450,26 +450,27 @@ class UserAccountsConfig extends DefaultConfigData
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
 	 */
-	public function set_default_values()
+	public function get_default_values()
 	{
 		global $LANG;
 
-		$this->enable_registration();
-		$this->set_member_accounts_validation_method(1);
-		$this->set_welcome_message($LANG['site_config_msg_mbr']);
-		$this->set_registration_agreement($LANG['register_agreement']);
-		$this->enable_registration_captcha();
-		$this->set_registration_captcha_difficulty(1);
-		$this->set_unactivated_accounts_timeout(20);
-		$this->dont_force_users_theme();
-		$this->enable_avatar_upload();
-		$this->enable_default_avatar();
-		$this->set_default_avatar_name('no_avatar.png');
-		$this->set_max_avatar_width(120);
-		$this->set_max_avatar_height(120);
-		$this->set_max_avatar_weight(20);
+		return array(
+			self::REGISTRATION_ENABLED_PROPERTY => true,
+			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => 1,
+			self::WELCOME_MESSAGE_PROPERTY => $LANG['site_config_msg_mbr'],
+			self::REGISTRATION_AGREEMENT_PROPERTY => $LANG['register_agreement'],
+			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => true,
+			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 1,
+			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
+			self::FORCE_USERS_THEME_PROPERTY => false,
+			self::ENABLE_AVATAR_UPLOAD_PROPERTY => true,
+			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
+			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
+			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
+			self::MAX_AVATAR_WEIGHT_PROPERTY => 20
+		);
 	}
 
 	/**

@@ -30,7 +30,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class ModulesConfig extends DefaultConfigData
+class ModulesConfig extends AbstractConfigData
 {
 	private static $default_modules_value = array();
 
@@ -38,11 +38,13 @@ class ModulesConfig extends DefaultConfigData
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
 	 */
-	public function set_default_values()
+	public function get_default_values()
 	{
-		$this->set_property(self::$modules_property, array());
+		return array(
+			self::$modules_property => array()
+		);
 	}
 
 	/**

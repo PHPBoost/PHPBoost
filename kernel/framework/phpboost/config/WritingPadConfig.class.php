@@ -30,7 +30,7 @@
  * of the administration panel.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class WritingPadConfig extends DefaultConfigData
+class WritingPadConfig extends AbstractConfigData
 {
 	/**
 	 * Sets the content of the writing pad
@@ -59,12 +59,15 @@ class WritingPadConfig extends DefaultConfigData
 	
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
 	 */
-	public function set_default_values()
+	public function get_default_values()
 	{
 		global $LANG;
-		$this->set_content($LANG['writing_pad_explain']);
+		
+		return array(
+			'content' => $LANG['writing_pad_explain']
+		);
 	}
 
 	/**

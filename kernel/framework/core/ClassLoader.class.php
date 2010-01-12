@@ -58,15 +58,17 @@ class ClassLoader
 	 */
 	public static function autoload($classname)
 	{
-		if (!(isset(self::$autoload[$classname]) && self::inc(PATH_TO_ROOT . self::$autoload[$classname])))
+		if (!isset(self::$autoload[$classname]) || !self::inc(PATH_TO_ROOT . self::$autoload[$classname]))
 		{
 			self::generate_classlist();
 			if (isset(self::$autoload[$classname]))
 			{
 				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
-			// TODO throw an exception to have an error explaining that the class hasn't been found
-			// currently, there is a require error!
+			else
+			{
+				die('Unable to load class "' . $classname . '"');
+			}
 		}
 	}
 

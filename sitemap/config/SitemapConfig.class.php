@@ -29,7 +29,7 @@
  * @desc This class represents the sitemap module's configuration.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class SitemapConfig extends DefaultConfigData
+class SitemapConfig extends AbstractConfigData
 {
 	/**
 	 * Returns the last generation date
@@ -95,13 +95,15 @@ class SitemapConfig extends DefaultConfigData
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/DefaultConfigData#set_default_values()
+	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
 	 */
-	public function set_default_values()
+	public function get_default_values()
 	{
-		$this->set_last_generation_date(new Date());
-		$this->disable_sitemap_xml_generation();
-		$this->set_sitemap_xml_life_time(3);
+		return array(
+			'last_generation_date' => new Date(),
+			'sitemap_xml_life_time' => 3,
+			'enable_sitemap_xml' => false
+		);
 	}
 
 	/**
