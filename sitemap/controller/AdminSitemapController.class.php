@@ -64,7 +64,7 @@ class AdminSitemapController extends AdminController
 		$this->view->assign_vars(array(
 			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
 		));
-		$this->view->add_lang(LangLoader::get_class(__FILE__, 'sitemap'));
+		$this->view->add_lang(LangLoader::get_class(__CLASS__, 'sitemap'));
 	}
 
 	/**

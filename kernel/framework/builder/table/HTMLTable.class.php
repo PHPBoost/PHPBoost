@@ -134,7 +134,7 @@ class HTMLTable extends HTMLElement
 		if ($has_filters)
 		{
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
-			$fieldset = new FormFieldset(LangLoader::get_class_message('filters', __FILE__));
+			$fieldset = new FormFieldset(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters_form as $filter_form)
 			{
 				$fieldset->add_field($filter_form->get_form_field());
@@ -238,7 +238,7 @@ class HTMLTable extends HTMLElement
 	private function generate_stats()
 	{
 		$end = $this->get_first_row_index() + count($this->rows);
-		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __FILE__), array(
+		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __CLASS__), array(
 			'start' => $this->get_first_row_index() + 1,
 			'end' => $end,
 			'total' => $this->nb_rows

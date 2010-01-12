@@ -67,9 +67,8 @@ class DataStoreFactory
 	{
 		if (self::$apc_enabled === null)
 		{
-			if (function_exists('apc_cache_info') && @apc_cache_info('user') !== false)
+			if (function_exists('apc_cache_info'))
 			{
-				// TODO find another way to see if APC is enabled or not
 				self::$apc_enabled = true;
 			}
 			else
