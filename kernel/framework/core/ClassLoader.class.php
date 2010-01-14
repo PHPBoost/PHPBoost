@@ -65,10 +65,6 @@ class ClassLoader
 			{
 				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
-			else
-			{
-				die('Unable to load class "' . $classname . '"');
-			}
 		}
 	}
 

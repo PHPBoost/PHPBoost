@@ -52,7 +52,7 @@ class Folder extends FileSystemElement
 	{
 		parent::__construct(rtrim($path, '/'));
 	}
-	
+
 	/**
 	 * @desc Returns true if the folder exists after this call, else, false
 	 * @return bool true if the folder exists after this call, else, false
@@ -200,11 +200,10 @@ class Folder extends FileSystemElement
 			$fse->delete();
 		}
 
-		if (!@rmdir($this->get_path()))
+		if (!@rmdir($this->get_path() && !file_exists($this->get_path())))
 		{
-			return false;
+			throw new IOException('The folder ' . $this->get_path() . ' couldn\'t been deleted');
 		}
-		return true;
 	}
 }
 
