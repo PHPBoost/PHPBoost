@@ -63,7 +63,7 @@ function menu_langswitcher_langswitcher($position, $block)
     {
     	if ($User->check_level($array_info['secure']))
     	{
-    		$info_lang = load_ini_file('../lang/', $lang);
+    		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
     		
 			$selected = ($ulang == $lang) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(
