@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 $install = !empty($_GET['install']) ? true : false;
 
 if ($install) //Installation du module
-{	
+{
 	//Récupération de l'identifiant du module
 	$module_id = '';
 	foreach ($_POST as $key => $value)
@@ -60,12 +60,12 @@ if ($install) //Installation du module
 		default:
 			redirect('/admin/admin_modules.php');
 	}
-}			
+}
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
 	$module_id = str_replace($ext_name, '', $_FILES['upload_module']['name']);
-	
+
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../';
@@ -73,18 +73,18 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 		@chmod($dir, 0755);
 	if (!is_writable($dir . $module_name))
 		@chmod($dir . $module_name, 0755);
-		
-	@clearstatcache();	
+
+	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if (empty($ckeck_module) && !is_dir('../' . $module_id))
 		{
-			
+
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
-			{					
+			{
 				$archive_path = '../' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
@@ -102,7 +102,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				}
 				else
 					$error = 'e_upload_invalid_format';
-				
+
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
 					$error = 'unlink_disabled';
@@ -115,12 +115,12 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
-	
+
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	redirect(HOST . SCRIPT . $error);
 }
 else
-{			
+{
 	$Template->set_filenames(array(
 		'admin_modules_add'=> 'admin/admin_modules_add.tpl'
 	));
@@ -163,20 +163,7 @@ else
 	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	}
-		
-	//Modules installé
-	$i = 0;
-	$installed_modules = array();
-	$result = $Sql->query_while("SELECT id, name
-	FROM " . PREFIX . "modules", __LINE__, __FILE__);
-	
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$installed_modules[] = $row['name'];
-	}
-	
-	$Sql->query_close($result);
-	
+
 	//Modules disponibles
 	$root = PATH_TO_ROOT . '/';
 	$uninstalled_modules = array();
@@ -185,28 +172,31 @@ else
 		$dir_array = array();
 		$lang_folder_path = new Folder($root);
 		foreach ($lang_folder_path->get_folders() as $odir)
-		{	
+		{
 			$dir = $odir->get_name();
-			if (!in_array($dir, $installed_modules) && $dir != 'lang')
+			if (!in_array($dir, ModulesManager::get_installed_modules_ids_list()) && $dir != 'lang')
 			{
-				//Récupération des infos de config.
-				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-				if (!empty($info_module) && is_array($info_module))
+				try
 				{
-					$info_module['module_name'] = $dir;
-					$uninstalled_modules[$info_module['name']] = $info_module;
+					$module_configuration = ModuleConfigurationManager::get($dir);
+					$info_module['module_name'] = $module_configuration->get_name();
+					$uninstalled_modules[$module_configuration->get_name()] = $module_configuration;
+				}
+				catch (Exception $ex)
+				{
+					continue;
 				}
 			}
-		}	
+		}
 	}
-	
+
 	//Tri du tableau
 	ksort($uninstalled_modules);
-	
+
 	$i = 0;
-	foreach ($uninstalled_modules as $name => $info_module)
+	foreach ($uninstalled_modules as $name => $configuration)
 	{
-		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
+		// TODO refactor
 		$Template->assign_block_vars('available', array(
 			'ID' => $info_module['module_name'],
 			'NAME' => ucfirst($info_module['name']),
@@ -216,27 +206,29 @@ else
 			'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 			'DESC' => $info_module['info'],
 			'COMPAT' => $info_module['compatibility'],
-			'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
-			'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
 			'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
+			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),
 			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
 			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
 			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
 		));
 		$i++;
 	}
-	
+
 	if ($i == 0)
+	{
 		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
 		));
+	}
 	else
+	{
 		$Template->assign_vars( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
-	
-	$Template->pparse('admin_modules_add'); 
+	}
+
+	$Template->pparse('admin_modules_add');
 }
 
 require_once('../admin/admin_footer.php');

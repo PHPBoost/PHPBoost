@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
@@ -43,7 +43,7 @@ if (isset($_POST['valid']))
 		$activated = $request->get_bool('activ' . $module_id, false);
 		$authorizations = Authorizations::auth_array_simple(ACCESS_MODULE, $module_id);
 		ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
-	}	
+	}
 	MenuService::generate_cache();
 	redirect(HOST . SCRIPT);
 }
@@ -51,12 +51,13 @@ elseif ($uninstall) //Désinstallation du module
 {
 	if (!empty($_POST['valid_del']))
 	{
-		$idmodule = retrieve(POST, 'idmodule', 0);
+		$idmodule = AppContext::get_request()->get_string('idmodule', '');
 		$drop_files = retrieve(POST, 'drop_files', false);
-		
+
 		switch (ModulesManager::uninstall_module($idmodule, $drop_files))
 		{
 			case NOT_INSTALLED_MODULE:
+				die('module not installed');
 				redirect('/admin/admin_modules.php?error=incomplete#errorh');
 				break;
 			case MODULE_FILES_COULD_NOT_BE_DROPPED:
@@ -78,11 +79,11 @@ elseif ($uninstall) //Désinstallation du module
 				$idmodule = $key;
 			}
 		}
-				
+
 		$Template->set_filenames(array(
 			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 		));
-		
+
 		$Template->assign_vars(array(
 			'C_MODULES_DEL' => true,
 			'THEME' => get_utheme(),
@@ -108,7 +109,7 @@ else
 	$Template->set_filenames(array(
 		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 	));
-	
+
 	$Template->assign_vars(array(
 		'C_MODULES_LIST' => true,
 		'THEME' => get_utheme(),
@@ -137,7 +138,7 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
@@ -148,7 +149,7 @@ else
 	{
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	}
-		
+
 	// Installed modules
 	$i = 0;
 	$array_modules = array();
@@ -158,7 +159,7 @@ else
 	{
 		$configuration = $module->get_configuration();
 		$array_auth = $module->get_authorizations();
-		
+
 		$Template->assign_block_vars('installed', array(
 			'ID' => $module->get_id(),
 			'NAME' => ucfirst($configuration->get_name()),
@@ -189,7 +190,7 @@ else
 			'C_MODULES_INSTALLED' => true
 		));
 	}
-	
+
 	$Template->pparse('admin_modules_management');
 }
 

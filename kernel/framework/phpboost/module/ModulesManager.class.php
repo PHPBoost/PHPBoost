@@ -53,7 +53,7 @@ class ModulesManager
 	{
 		return ModulesConfig::load()->get_modules();
 	}
-	
+
 	/**
 	 * @return Module[string] the Modules map (name => module) of the uninstalled modules (activated or not)
 	 */
@@ -156,7 +156,9 @@ class ModulesManager
 		{
 			return PHP_VERSION_CONFLICT;
 		}
-			
+
+		self::execute_module_installation_script($module_identifier);
+		// @deprecated
 		//Insertion de la configuration du module.
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 
@@ -206,6 +208,8 @@ class ModulesManager
 				}
 			}
 		}
+		// @endDeprecated
+
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 
@@ -215,8 +219,10 @@ class ModulesManager
 		//Génération du cache des modules
 		if ($generate_cache)
 		{
+			// @deprecated
 			$Cache->Generate_file('modules');
 			$Cache->load('modules', RELOAD_CACHE);
+			// @endDeprecated
 
 			ModulesCssFilesCache::invalidate();
 
@@ -253,28 +259,22 @@ class ModulesManager
 
 		if (!empty($module_id))
 		{
-			ModulesConfig::load()->remove_module_by_id($module_id);
-			ModulesConfig::save();
+			self::execute_module_uninstallation_script($module_id);
 
+			// @deprecated
 			//Récupération des infos de config.
 			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
 
-			// TODO suppress deprecated block
 			//Suppression du fichier cache
 			$Cache->delete_file($module_id);
 
 			//Suppression des commentaires associés.
 			if (!empty($info_module['com']))
 			{
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = '" . addslashes($info_module['com']) . "'");
 			}
 
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'", __LINE__, __FILE__);
-			// END DEPRECATED BLOCK suppress deprecated block
-				
-			//Suppression du module mini.
-			MenuService::delete_mini_module($module_id);
-			MenuService::delete_module_feeds_menus($module_id);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'");
 
 			$dir_db_module = get_ulang();
 			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
@@ -296,8 +296,7 @@ class ModulesManager
 			{   //Parsage fichier php de désinstallation.
 				@include_once(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.php');
 			}
-
-			$Cache->Generate_file('modules');
+			// @endDeprecated
 
 
 			ModulesCssFilesCache::invalidate();
@@ -305,7 +304,7 @@ class ModulesManager
 			MenuService::generate_cache();
 
 			//Régénération des feeds.
-			ModuleFeedBuilder::clear_cache();
+			Feed::clear_cache($module_id);
 
 			$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
 			if ($CONFIG['rewrite'] == 1 && !empty($rewrite_rules))
@@ -313,11 +312,21 @@ class ModulesManager
 				HtaccessFileCache::regenerate();
 			}
 
+			MenuService::delete_mini_module($module_id);
+			MenuService::delete_module_feeds_menus($module_id);
+
+			ModulesConfig::load()->remove_module_by_id($module_id);
+			ModulesConfig::save();
+
 			//Suppression des fichiers du module
 			if ($drop_files)
 			{
 				$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
-				if (!$folder->delete())
+				try
+				{
+					$folder->delete();
+				}
+				catch (IOException $ex)
 				{
 					return MODULE_FILES_COULD_NOT_BE_DROPPED;
 				}
@@ -337,6 +346,36 @@ class ModulesManager
 		$module->set_activated($activated);
 		$module->set_authorizations($authorizations);
 		ModulesConfig::save($module);
+	}
+
+	private static function execute_module_installation_script($module_id)
+	{
+		$module_setup_classname = self::compute_module_setup_classname($module_id);
+		if (self::module_setup_exists($module_setup_classname))
+		{
+			$module_setup = new $module_setup_classname();
+			$module_setup->install();
+		}
+	}
+
+	private static function execute_module_uninstallation_script($module_id)
+	{
+		$module_setup_classname = self::compute_module_setup_classname($module_id);
+		if (self::module_setup_exists($module_setup_classname))
+		{
+			$module_setup = new $module_setup_classname();
+			$module_setup->uninstall();
+		}
+	}
+
+	private static function compute_module_setup_classname($module_id)
+	{
+		return ucfirst($module_id) . 'Setup';
+	}
+
+	private static function module_setup_exists($module_setup_classname)
+	{
+		return class_exists($module_setup_classname);
 	}
 }
 
