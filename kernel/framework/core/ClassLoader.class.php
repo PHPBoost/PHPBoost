@@ -72,6 +72,11 @@ class ClassLoader
 		}
 	}
 
+	public static function is_class_registered($classname)
+	{
+		return array_key_exists($classname, self::$autoload);
+	}
+
 	/**
 	 * @desc Generates the autoload cache file by exploring phpboost folders
 	 */
@@ -101,6 +106,13 @@ class ClassLoader
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`');
 			self::generate_autoload_cache();
 		}
+	}
+
+	public static function clear_cache()
+	{
+		$file = new File(PATH_TO_ROOT . self::$cache_file);
+		$file->delete();
+		self::$already_reloaded = false;
 	}
 
 	private static function add_classes($directory, $pattern, $recursive = true)
