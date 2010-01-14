@@ -141,7 +141,7 @@ class ModulesDiscoveryService
 	{
 		$classname = ucfirst($module_id) . 'Interface';
 
-		if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/' . $classname . '.class.php'))
+		if (ClassLoader::is_class_registered($classname))
 		{   // The Interface exists
 			$module = new $classname();
 
