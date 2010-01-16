@@ -178,9 +178,9 @@ else
 			{
 				try
 				{
-					$module_configuration = ModuleConfigurationManager::get($dir);
-					$info_module['module_name'] = $module_configuration->get_name();
-					$uninstalled_modules[$module_configuration->get_name()] = $module_configuration;
+					$module = new Module($dir);
+					$module_configuration = $module->get_configuration();
+					$uninstalled_modules[$module_configuration->get_name()] = $module;
 				}
 				catch (Exception $ex)
 				{
@@ -189,33 +189,9 @@ else
 			}
 		}
 	}
+//	ksort($uninstalled_modules);
 
-	//Tri du tableau
-	ksort($uninstalled_modules);
-
-	$i = 0;
-	foreach ($uninstalled_modules as $name => $configuration)
-	{
-		// TODO refactor
-		$Template->assign_block_vars('available', array(
-			'ID' => $info_module['module_name'],
-			'NAME' => ucfirst($info_module['name']),
-			'ICON' => $info_module['module_name'],
-			'VERSION' => $info_module['version'],
-			'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-			'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-			'DESC' => $info_module['info'],
-			'COMPAT' => $info_module['compatibility'],
-			'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),
-			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
-			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
-			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
-		));
-		$i++;
-	}
-
-	if ($i == 0)
+	if (empty($uninstalled_modules))
 	{
 		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
@@ -226,6 +202,27 @@ else
 		$Template->assign_vars( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
+		foreach ($uninstalled_modules as $name => $module)
+		{
+			$configuration = $module->get_configuration();
+
+			$author_name = $configuration->get_author();
+			$author_email = $configuration->get_author_email();
+			$author_website = $configuration->get_author_website();
+
+			$Template->assign_block_vars('available', array(
+				'ID' => $module->get_id(),
+				'NAME' => ucfirst($configuration->get_name()),
+				'ICON' => $module->get_id(),
+				'VERSION' => $configuration->get_version(),
+				'AUTHOR' => (!empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author_name . '</a>' : $author_name),
+				'AUTHOR_WEBSITE' => (!empty($author_website) ? '<a href="' . $author_website . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+				'DESC' => $configuration->get_description(),
+				'COMPAT' => $configuration->get_compatibility(),
+				'ACTIV_ENABLED' => (!empty($row) && $row['activ'] == 1 ? 'checked="checked"' : ''),
+				'ACTIV_DISABLED' => (!empty($row) && $row['activ'] == 0 ? 'checked="checked"' : '')
+			));
+		}
 	}
 
 	$Template->pparse('admin_modules_add');

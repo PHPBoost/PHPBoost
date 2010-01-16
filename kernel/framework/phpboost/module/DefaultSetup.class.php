@@ -1,9 +1,9 @@
 <?php
 /*##################################################
 /*
- *                             ModuleSetup.class.php
+ *                           DefaultSetup.class.php
  *                            -------------------
- *   begin                : January 14, 2009
+ *   begin                : January 16, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -27,22 +27,30 @@
  *###################################################
  */
 
-interface ModuleSetup
+class DefaultSetup implements ModuleSetup
 {
-	/**
-	 * @desc Returns a validation result containing environment errors
-	 * @return ValidationResult a validation result containing environment errors
+	/* (non-PHPdoc)
+	 * @see kernel/framework/phpboost/module/ModuleSetup#check_environment()
 	 */
-	function check_environment();
+	public function check_environment()
+	{
+		return new ValidationResult();
+	}
 
-	/**
-	 * @desc Install the module
+	/* (non-PHPdoc)
+	 * @see kernel/framework/phpboost/module/ModuleSetup#install()
 	 */
-	function install();
+	public function install()
+	{
 
-	/**
-	 * @desc Uninstall the module
+	}
+
+	/* (non-PHPdoc)
+	 * @see kernel/framework/phpboost/module/ModuleSetup#uninstall()
 	 */
-	function uninstall();
+	public function uninstall()
+	{
+
+	}
 }
 ?>
