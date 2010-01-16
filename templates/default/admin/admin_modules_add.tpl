@@ -87,9 +87,6 @@
 							<strong>{L_AUTHOR}:</strong> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
 							<strong>{L_DESC}:</strong> {available.DESC}<br />
 							<strong>{L_COMPAT}:</strong> PHPBoost {available.COMPAT}<br />
-							<strong>{L_USE_SQL}:</strong> {available.USE_SQL} <em>{available.SQL_TABLE}</em><br />
-							<strong>{L_USE_CACHE}:</strong> {available.USE_CACHE}<br />
-							<strong>{L_ALTERNATIVE_CSS}:</strong> {available.ALTERNATIVE_CSS}<br />
 						</td>
 						<td class="row2">	
 							<input type="radio" name="{available.ID}activ" value="1" checked="checked" /> {L_YES}

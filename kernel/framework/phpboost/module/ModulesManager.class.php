@@ -157,7 +157,7 @@ class ModulesManager
 			return PHP_VERSION_CONFLICT;
 		}
 
-		self::execute_module_installation_script($module_identifier);
+		self::execute_module_installation($module_identifier);
 		// @deprecated
 		//Insertion de la configuration du module.
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
@@ -259,7 +259,7 @@ class ModulesManager
 
 		if (!empty($module_id))
 		{
-			self::execute_module_uninstallation_script($module_id);
+			self::execute_module_uninstallation($module_id);
 
 			// @deprecated
 			//Récupération des infos de config.
@@ -348,17 +348,21 @@ class ModulesManager
 		ModulesConfig::save($module);
 	}
 
-	private static function execute_module_installation_script($module_id)
+	private static function execute_module_installation($module_id)
 	{
 		$module_setup_classname = self::compute_module_setup_classname($module_id);
 		if (self::module_setup_exists($module_setup_classname))
 		{
 			$module_setup = new $module_setup_classname();
-			$module_setup->install();
+			$environment_check = $module_setup->check_environment();
+			if (!$environment_check->has_errors())
+			{
+				$module_setup->install();
+			}
 		}
 	}
 
-	private static function execute_module_uninstallation_script($module_id)
+	private static function execute_module_uninstallation($module_id)
 	{
 		$module_setup_classname = self::compute_module_setup_classname($module_id);
 		if (self::module_setup_exists($module_setup_classname))
