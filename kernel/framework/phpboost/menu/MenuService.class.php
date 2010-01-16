@@ -389,7 +389,8 @@ class MenuService
 		if ($return_string)
 		return $cache_str;
 
-		Cache::write('menus', $cache_str);
+		global $Cache;
+		$Cache->write('menus', $cache_str);
 		return '';
 
 	}

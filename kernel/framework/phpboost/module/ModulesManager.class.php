@@ -35,9 +35,6 @@ define('NOT_INSTALLED_MODULE', 				4);
 define('MODULE_FILES_COULD_NOT_BE_DROPPED',	5);
 define('PHP_VERSION_CONFLICT', 				6);
 
-define('GENERATE_CACHE_AFTER_THE_OPERATION',		true);
-define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
-
 /**
  * @package modules
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -46,6 +43,9 @@ define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
  */
 class ModulesManager
 {
+	const GENERATE_CACHE_AFTER_THE_OPERATION = true;
+	const DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION = false;
+
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
 	 */
@@ -130,9 +130,12 @@ class ModulesManager
 	 * 	<li>CONFIG_CONFLICT: the configuration field is already used</i>
 	 * </ul>
 	 */
-	public static function install_module($module_identifier, $enable_module = true)
+	public static function install_module($module_identifier, $enable_module = true, $generate_cache = true)
 	{
+		self::update_class_list();
+
 		global $Cache, $Sql, $CONFIG;
+
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return UNEXISTING_MODULE;
@@ -212,20 +215,11 @@ class ModulesManager
 
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
-
-		//Installation du mini module s'il existe
 		MenuService::add_mini_module($module_identifier);
 
-		//Génération du cache des modules
 		if ($generate_cache)
 		{
-			// @deprecated
-			$Cache->Generate_file('modules');
-			$Cache->load('modules', RELOAD_CACHE);
-			// @endDeprecated
-
 			ModulesCssFilesCache::invalidate();
-
 			MenuService::generate_cache();
 
 			$rewrite_rules = $configuration->get_url_rewrite_rules();
@@ -235,7 +229,6 @@ class ModulesManager
 			}
 		}
 
-		//Génération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 
 		return MODULE_INSTALLED;
@@ -338,6 +331,8 @@ class ModulesManager
 		{
 			return NOT_INSTALLED_MODULE;
 		}
+
+		self::update_class_list();
 	}
 
 	public static function update_module_authorizations($module_id, $activated, array $authorizations)
@@ -380,6 +375,11 @@ class ModulesManager
 	private static function module_setup_exists($module_setup_classname)
 	{
 		return class_exists($module_setup_classname);
+	}
+
+	private function update_class_list()
+	{
+		ClassLoader::generate_classlist();
 	}
 }
 

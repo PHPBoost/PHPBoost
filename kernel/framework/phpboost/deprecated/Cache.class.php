@@ -157,7 +157,7 @@ class Cache
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 
-		if ((!$module->get_errors() || $module->got_error(ACCES_DENIED)) && $module->has_functionality('get_cache')) //Le module implémente bien la fonction.
+		if (!$module->get_errors() && $module->has_functionality('get_cache')) //Le module implémente bien la fonction.
 		{
 			$module_cache = $module->functionality('get_cache');
 			$this->write($module_name, $module_cache);
@@ -257,7 +257,7 @@ class Cache
 
 	## Private Methods ##
 	########## Fonctions de génération des fichiers un à un ##########
-	
+
 	/**
 	 * @desc Method which is called to generate the menus file cache.
 	 * @return The content of the menus file cache.

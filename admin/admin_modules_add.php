@@ -44,7 +44,7 @@ if ($install) //Installation du module
 }
 
 	$enable_module = AppContext::get_request()->get_bool($module_id . 'activ', false);
-	switch (ModulesManager::install_module($module_id, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
+	switch (ModulesManager::install_module($module_id, $enable_module, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
 		case CONFIG_CONFLICT:
 			redirect('/admin/admin_modules_add.php?error=e_config_conflict#errorh');
