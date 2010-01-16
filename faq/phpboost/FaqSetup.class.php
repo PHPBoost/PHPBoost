@@ -27,8 +27,13 @@
 
 class FaqSetup extends DefaultSetup
 {
-	protected static $faq_table;
-	protected static $faq_cats_table;
+	private static $faq_table;
+	private static $faq_cats_table;
+	
+	/**
+	 * @var string[string] localized messages
+	 */
+	private $messages;
 
 	public function __construct()
 	{
@@ -99,19 +104,20 @@ class FaqSetup extends DefaultSetup
 
 	private function insert_data()
 	{
+        $this->messages = LangLoader::get('install', 'faq');
 		$this->insert_faq_data();
 		$this->insert_faq_cats_data();
 	}
 
-	protected function insert_faq_data()
+	private function insert_faq_data()
 	{
 		$common_query = AppContext::get_sql_common_query();
 		$common_query->insert(self::$faq_table, array(
 			'id' => 1,
 			'idcat' => 2,
 			'q_order' => 1,
-			'question' => 'What is a CMS ?',
-			'answer' => 'A content management system (CMS) is a computer application used to manage work flow needed to collaboratively create, edit, review, index, search, publish and archive various kinds of digital media and electronic text',
+			'question' => $this->messages['what_is_a_cms'],
+			'answer' => $this->messages['what_is_a_cms__answer'],
 			'user_id' => 1,
 			'timestamp' => 1242496334
 		));
@@ -119,14 +125,14 @@ class FaqSetup extends DefaultSetup
 			'id' => 2,
 			'idcat' => 1,
 			'q_order' => 1,
-			'question' => 'What is PHPBoost ?',
-			'answer' => 'PHPBoost is a french CMS (Content Management System). This software allows anybody to create easily their website. Designed to satisfy beginners, it should also delight users who would like to push its functionning or develop theirn own modules.',
+			'question' => $this->messages['what_is_phpboost'],
+			'answer' => $this->messages['what_is_phpboost__answer'],
 			'user_id' => 1,
 			'timestamp' => 1242496518
 		));
 	}
 
-	protected function insert_faq_cats_data()
+	private function insert_faq_cats_data()
 	{
 		$common_query = AppContext::get_sql_common_query();
 		$common_query->insert(self::$faq_cats_table, array(
@@ -134,10 +140,10 @@ class FaqSetup extends DefaultSetup
 			'id_parent' => 0,
 			'c_order' => 1,
 			'auth' => null,
-			'name' => 'PHPBoost',
+			'name' => $this->messages['phpboost_cat_title'],
 			'visible' => 1,
 			'display_mode' => 0,
-			'description' => 'Any question about PHPBoost?',
+			'description' => $this->messages['phpboost_cat_desc'],
 			'image' => 'faq.png',
 			'num_questions' => 1
 		));
@@ -146,10 +152,10 @@ class FaqSetup extends DefaultSetup
 			'id_parent' => 0,
 			'c_order' => 2,
 			'auth' => null,
-			'name' => 'Dictionary',
+			'name' => $this->messages['dictionary_cat_title'],
 			'visible' => 1,
 			'display_mode' => 0,
-			'description' => '',
+			'description' => $this->messages['dictionary_cat_desc'],
 			'image' => 'faq.png',
 			'num_questions' => 1
 		));

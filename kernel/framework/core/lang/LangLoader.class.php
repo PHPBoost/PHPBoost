@@ -35,16 +35,12 @@ class LangLoader
 	const DEFAULT_LOCALE = 'english';
 
 	private static $locale = self::DEFAULT_LOCALE;
+
 	/**
 	 * @var CacheFactory
 	 */
 	private static $ram_cache = null;
 
-	public static function init()
-	{
-		self::$ram_cache = new RAMDataStore('lang');
-	}
-	
 	/**
 	 * @desc sets the language locale
 	 * @param string $locale the locale
@@ -53,7 +49,7 @@ class LangLoader
 	{
 		self::$locale = $locale;
 	}
-	
+
 	/**
 	 * @param string $message_id the language message identifier
 	 * @param string $filename the language filename
@@ -65,11 +61,11 @@ class LangLoader
 		$lang = self::get($filename, $module);
 		return $lang[$message_id];
 	}
-	
+
 	/**
 	 * @param string $message_id the language message identifier
-     * @param string $classname the name of the class for which you want to load associated languages message
-     * @param string $module the module to look for languages files in
+	 * @param string $classname the name of the class for which you want to load associated languages message
+	 * @param string $module the module to look for languages files in
 	 * @return string the localized message
 	 */
 	public static function get_class_message($message_id, $classname, $module = '')
@@ -93,17 +89,17 @@ class LangLoader
 		return self::get_raw($module_name, $filename);
 	}
 
-    /**
-     * @desc Retrieves the language file associated to the <code>$class_file</code>
-     * If module is empty, the kernel lang folder will be used
-     * <p>Usage:
-     * LangLoader::get_class(__CLASS__, $module); // if called inside the class
-     * </p>
-     * @param string $classname the name of the class for which you want to load associated languages messages
-     * @param string $module the module to look for languages files in
-     * @return string[string] the lang array which keys are languages identifiers and values the
-     * translated messages
-     */
+	/**
+	 * @desc Retrieves the language file associated to the <code>$class_file</code>
+	 * If module is empty, the kernel lang folder will be used
+	 * <p>Usage:
+	 * LangLoader::get_class(__CLASS__, $module); // if called inside the class
+	 * </p>
+	 * @param string $classname the name of the class for which you want to load associated languages messages
+	 * @param string $module the module to look for languages files in
+	 * @return string[string] the lang array which keys are languages identifiers and values the
+	 * translated messages
+	 */
 	public static function get_class($classname, $module = '')
 	{
 		$lang_file = 'classes/' . $classname;
@@ -112,18 +108,19 @@ class LangLoader
 
 	private static function get_raw($folder, $filename)
 	{
-		$langfile = $folder . '/' . $filename;
-		if (!self::$ram_cache->contains($langfile))
+		$lang_id = $folder . '/' . $filename;
+		$ram_cache = self::get_ram_cache();
+		if (!$ram_cache->contains($lang_id))
 		{
-			self::load($langfile, $folder, $filename);
+			self::load($lang_id, $folder, $filename);
 		}
-		return self::$ram_cache->get($langfile);
+		return $ram_cache->get($lang_id);
 	}
 
-	private static function load($langfile, $folder, $filename)
+	private static function load($lang_id, $folder, $filename)
 	{
 		include self::get_real_lang_path($folder, $filename);
-		self::$ram_cache->store($langfile, $lang);
+		self::get_ram_cache()->store($lang_id, $lang);
 	}
 
 	/**
@@ -159,12 +156,24 @@ class LangLoader
 		throw new LangNotFoundException($folder, $filename);
 	}
 
-    /**
-     * @desc clear the lang cache (for unit test only)
-     */
-    public static function clear_lang_cache()
-    {
-        self::$langs = array();
-    }
+	/**
+	 * @desc clear the lang cache (for unit test only)
+	 */
+	public static function clear_lang_cache()
+	{
+		self::$langs = array();
+	}
+
+	/**
+	 * @return RAMDataStore
+	 */
+	private static function get_ram_cache()
+	{
+		if (self::$ram_cache === null)
+		{
+			self::$ram_cache = new RAMDataStore('lang');
+		}
+		return self::$ram_cache;
+	}
 }
 ?>

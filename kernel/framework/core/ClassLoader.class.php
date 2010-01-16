@@ -81,6 +81,7 @@ class ClassLoader
 		if (!self::$already_reloaded)
 		{
 			self::$already_reloaded = true;
+            self::$autoload = array();
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
