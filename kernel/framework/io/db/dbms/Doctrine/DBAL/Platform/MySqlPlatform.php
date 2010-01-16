@@ -456,10 +456,11 @@ class MySqlPlatform extends AbstractPlatform
 
         // get the type of the table
         if (isset($options['engine'])) {
-            $optionStrings[] = 'ENGINE = ' . $engine;
+            $optionStrings[] = 'ENGINE = ' . $options['engine'];
         } else {
             // default to innodb
-            $optionStrings[] = 'ENGINE = InnoDB';
+//            $optionStrings[] = 'ENGINE = InnoDB';
+            $optionStrings[] = 'ENGINE = MyISAM';
         }
 
         if ( ! empty($optionStrings)) {
@@ -700,13 +701,17 @@ class MySqlPlatform extends AbstractPlatform
     /** @override */
     protected function _getCommonIntegerTypeDeclarationSql(array $columnDef)
     {
+    	$length = '';
+    	if (isset($columnDef['length'])) {
+    		$length = '(' . $columnDef['length'] . ')';
+    	}
         $autoinc = '';
         if ( ! empty($columnDef['autoincrement'])) {
             $autoinc = ' AUTO_INCREMENT';
         }
         $unsigned = (isset($columnDef['unsigned']) && $columnDef['unsigned']) ? ' UNSIGNED' : '';
 
-        return $unsigned . $autoinc;
+        return $length . $unsigned . $autoinc;
     }
 
     /**
@@ -716,6 +721,7 @@ class MySqlPlatform extends AbstractPlatform
      * @param string $charset       name of the index
      * @param array $definition     index definition
      * @return string  DBMS specific SQL code portion needed to set an index
+     * @pacthed by PHPBoost
      * @override
      */
     public function getIndexDeclarationSql($name, array $definition)
@@ -724,9 +730,11 @@ class MySqlPlatform extends AbstractPlatform
         if (isset($definition['type'])) {
             switch (strtolower($definition['type'])) {
                 case 'fulltext':
+                    $type = strtoupper($definition['type']) . ' KEY';
+               		break;
                 case 'unique':
-                    $type = strtoupper($definition['type']) . ' ';
-                break;
+                    $type = strtoupper($definition['type']) . ' INDEX';
+                	break;
                 default:
                     throw DoctrineException::invalidIndexType($definition['type']);
             }
@@ -739,7 +747,7 @@ class MySqlPlatform extends AbstractPlatform
             $definition['fields'] = array($definition['fields']);
         }
 
-        $query = $type . 'INDEX ' . $name;
+        $query = $type . ' `' . $name . '`';
 
         $query .= ' (' . $this->getIndexFieldDeclarationListSql($definition['fields']) . ')';
 
@@ -758,7 +766,7 @@ class MySqlPlatform extends AbstractPlatform
         $declFields = array();
 
         foreach ($fields as $fieldName => $field) {
-            $fieldString = $fieldName;
+            $fieldString = '`' . $fieldName . '`';
 
             if (is_array($field)) {
                 if (isset($field['length'])) {
@@ -777,7 +785,7 @@ class MySqlPlatform extends AbstractPlatform
                     }
                 }
             } else {
-                $fieldString = $field;
+                $fieldString = '`' . $field . '`';
             }
             $declFields[] = $fieldString;
         }

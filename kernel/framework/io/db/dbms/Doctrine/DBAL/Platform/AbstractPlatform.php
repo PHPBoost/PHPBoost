@@ -744,7 +744,7 @@ abstract class AbstractPlatform
 
 		$typeDecl = Type::getType($field['type'])->getSqlDeclaration($field, $this);
 
-		return $name . ' ' . $typeDecl . $charset . $default . $notnull . $unique . $check . $collation;
+		return '`' . $name . '` ' . $typeDecl . $charset . $default . $notnull . $unique . $check . $collation;
 	}
 
 	/**
