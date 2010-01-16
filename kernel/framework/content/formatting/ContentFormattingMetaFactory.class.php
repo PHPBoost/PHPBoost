@@ -84,26 +84,10 @@ class ContentFormattingMetaFactory
 	}
 
 	/**
-	 * @param string $editor
-	 * @return string
-	 */
-	private static function get_existing_editor($editor)
-	{
-		if (in_array($editor, array(self::BBCODE_LANGUAGE, self::TINYMCE_LANGUAGE)))
-		{
-			return $editor;
-		}
-		else
-		{
-			return self::get_default_editor();
-		}
-	}
-
-	/**
 	 * @desc Returns the parser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	static public static function get_default_parser()
+	public static function get_default_parser()
 	{
 		return self::get_default_factory()->get_parser();
 	}
@@ -112,7 +96,7 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the unparser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	static public function get_default_unparser()
+	public static function get_default_unparser()
 	{
 		return self::get_default_factory()->get_unparser();
 	}
@@ -121,7 +105,7 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the second parser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	static public function get_default_second_parser()
+	public static function get_default_second_parser()
 	{
 		return self::get_default_factory()->get_second_parser();
 	}
@@ -131,9 +115,25 @@ class ContentFormattingMetaFactory
 	 * if you use the default configuration.
 	 * @return ContentEditor
 	 */
-	static public function get_default_editor()
+	public static function get_default_editor()
 	{
 		return self::get_default_factory()->get_editor();
 	}
+
+    /**
+     * @param string $editor
+     * @return string
+     */
+    private static function get_existing_editor($editor)
+    {
+        if (in_array($editor, array(self::BBCODE_LANGUAGE, self::TINYMCE_LANGUAGE)))
+        {
+            return $editor;
+        }
+        else
+        {
+            return self::get_default_editor();
+        }
+    }
 }
 ?>

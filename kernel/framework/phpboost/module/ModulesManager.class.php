@@ -369,14 +369,7 @@ class ModulesManager
 
 	private static function compute_module_setup_classname($module_id)
 	{
-		global $CONFIG;
-		$default_classname = ucfirst($module_id) . 'Setup';
-		$localized_classname = $default_classname . ucfirst($CONFIG['lang']);
-		if (ClassLoader::is_class_registered($localized_classname))
-		{
-			return $localized_classname;
-		}
-		return $default_classname;
+		return ucfirst($module_id) . 'Setup';
 	}
 
 	private static function module_setup_exists($module_setup_classname)

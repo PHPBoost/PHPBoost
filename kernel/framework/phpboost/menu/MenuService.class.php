@@ -645,9 +645,6 @@ class MenuService
 	public static function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
 	{
 		$modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
-		// Création d'un menu contenant des liens vers tous les modules
-		$modules_discovery_service = new ModulesDiscoveryService();
-		// Récupère tous les modules même ceux n'ayant pas d'interface
 		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		foreach ($modules as $module)
 		{

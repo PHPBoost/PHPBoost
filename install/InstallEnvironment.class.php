@@ -69,6 +69,8 @@ class InstallEnvironment
             $prefered_lang = DEFAULT_LANGUAGE;
         }
         @include_once(PATH_TO_ROOT . '/lang/' . $prefered_lang . '/errors.php');
+        
+        LangLoader::set_locale($prefered_lang);
     }
 
     public static function load_distribution_properties($prefered_lang)
