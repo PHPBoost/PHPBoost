@@ -41,7 +41,6 @@ class FaqSetup extends DefaultSetup
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
-//		exit;
 	}
 
 	public function uninstall()
