@@ -137,12 +137,7 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
 		{
-//			echo '<hr />' . $query;
-//			try {
-				$this->inject($query);
-//			} catch (Exception $ex) {
-//				echo '<br />' . $ex->getMessage();
-//			}
+			$this->inject($query);
 		}
 	}
 
