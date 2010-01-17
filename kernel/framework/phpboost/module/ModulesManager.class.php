@@ -345,31 +345,37 @@ class ModulesManager
 
 	private static function execute_module_installation($module_id)
 	{
-		$module_setup_classname = self::compute_module_setup_classname($module_id);
-		if (self::module_setup_exists($module_setup_classname))
+		$module_setup = self::get_module_setup($module_id);
+		$environment_check = $module_setup->check_environment();
+		if (!$environment_check->has_errors())
 		{
-			$module_setup = new $module_setup_classname();
-			$environment_check = $module_setup->check_environment();
-			if (!$environment_check->has_errors())
-			{
-				$module_setup->install();
-			}
+			$module_setup->install();
+		}
+		else
+		{
+			// TODO process module installation errors
 		}
 	}
 
 	private static function execute_module_uninstallation($module_id)
 	{
-		$module_setup_classname = self::compute_module_setup_classname($module_id);
-		if (self::module_setup_exists($module_setup_classname))
-		{
-			$module_setup = new $module_setup_classname();
-			$module_setup->uninstall();
-		}
+		$module_setup = self::get_module_setup($module_id);
+		$module_setup->uninstall();
 	}
 
-	private static function compute_module_setup_classname($module_id)
+	/**
+	 * @desc
+	 * @param string $module_id
+	 * @return ModuleSetup
+	 */
+	private static function get_module_setup($module_id)
 	{
-		return ucfirst($module_id) . 'Setup';
+		$module_setup_classname = ucfirst($module_id) . 'Setup';
+		if (self::module_setup_exists($module_setup_classname))
+		{
+			return new $module_setup_classname();
+		}
+		return new DefaultModuleSetup();
 	}
 
 	private static function module_setup_exists($module_setup_classname)

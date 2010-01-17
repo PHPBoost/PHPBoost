@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-class FaqSetup extends DefaultSetup
+class FaqSetup extends DefaultModuleSetup
 {
 	private static $faq_table;
 	private static $faq_cats_table;
-	
+
 	/**
 	 * @var string[string] localized messages
 	 */
