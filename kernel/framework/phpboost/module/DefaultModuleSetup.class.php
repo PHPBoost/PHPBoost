@@ -1,7 +1,7 @@
 <?php
 /*##################################################
 /*
- *                           DefaultSetup.class.php
+ *                           DefaultModuleSetup.class.php
  *                            -------------------
  *   begin                : January 16, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -27,7 +27,7 @@
  *###################################################
  */
 
-class DefaultSetup implements ModuleSetup
+class DefaultModuleSetup implements ModuleSetup
 {
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#check_environment()
