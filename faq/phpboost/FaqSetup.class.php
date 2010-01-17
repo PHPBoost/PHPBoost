@@ -2,7 +2,7 @@
 /*##################################################
  *                             FaqSetup.class.php
  *                            -------------------
- *   begin                : January 16, 2009
+ *   begin                : January 16, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -73,13 +73,13 @@ class FaqSetup extends DefaultModuleSetup
 			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'answer' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
 				'question' => array('type' => 'fulltext', 'fields' => 'question'),
-				'answer' => array('type' => 'fulltext', 'fields' => 'answer'),
+				'answer' => array('type' => 'fulltext', 'fields' => 'answer')
 		));
 		AppContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
 	}
@@ -96,7 +96,7 @@ class FaqSetup extends DefaultModuleSetup
 			'display_mode' => array('type' => 'integer', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'num_questions' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'num_questions' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array('primary' => array('id'));
 		AppContext::get_dbms_utils()->create_table(self::$faq_cats_table, $fields, $options);
@@ -104,7 +104,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-        $this->messages = LangLoader::get('install', 'faq');
+		$this->messages = LangLoader::get('install', 'faq');
 		$this->insert_faq_data();
 		$this->insert_faq_cats_data();
 	}
