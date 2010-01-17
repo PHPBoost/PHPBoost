@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              calendar_interface.class.php
+ *                          CalendarInterface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -25,40 +25,25 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true) exit;
-
-// Inclusion du fichier contenant la classe ModuleInterface
-
-
-// Classe ForumInterface qui hérite de la classe ModuleInterface
 class CalendarInterface extends ModuleInterface
 {
-    ## Public Methods ##
     function CalendarInterface() //Constructeur de la classe ForumInterface
     {
         parent::__construct('calendar');
     }
-    
-	//Récupération du cache.
+
 	function get_cache()
 	{
 		$code = 'global $CONFIG_CALENDAR;' . "\n";
-			
+
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_CALENDAR = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'calendar'", __LINE__, __FILE__));
 		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
-		
+
 		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
-		
+
 		return $code;
 	}
-
-	//Actions journalière.
-	/*
-	function on_changeday()
-	{
-	}
-	*/
 }
 
 ?>
