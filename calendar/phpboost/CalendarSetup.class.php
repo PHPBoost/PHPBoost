@@ -2,7 +2,7 @@
 /*##################################################
  *                          CalendarSetup.class.php
  *                            -------------------
- *   begin                : January 17, 2009
+ *   begin                : January 17, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *

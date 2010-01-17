@@ -46,11 +46,12 @@ class DoctrineException extends Exception
      * @param string $message
      * @param Exception $cause Optional Exception
      */
-    public function __construct($message = "", \Exception $cause = null)
+    public function __construct($message = "", Exception $cause = null)
     {
         $code = ($cause instanceof Exception) ? $cause->getCode() : 0;
 
-        parent::__construct($message, $code, $cause);
+//        parent::__construct($message, $code, $cause); // PHP 5.3
+        parent::__construct($message, $code);
     }
 
     /**
@@ -92,7 +93,7 @@ class DoctrineException extends Exception
         $end = end($arguments);
         $innerException = null;
 
-        if ($end instanceof \Exception) {
+        if ($end instanceof Exception) {
             $innerException = $end;
             unset($arguments[count($arguments) - 1]);
         }
@@ -135,5 +136,15 @@ class DoctrineException extends Exception
         }
 
         return false;
+    }
+
+    public static function unknownColumnType($type)
+    {
+    	return new DoctrineException('Unknown column type "' . $type . '"');
+    }
+
+    public static function typeExists($type)
+    {
+    	return new DoctrineException('Unknown column type "' . $type . '"');
     }
 }

@@ -784,10 +784,13 @@ class MySqlPlatform extends AbstractPlatform
         if (isset($definition['type'])) {
             switch (strtolower($definition['type'])) {
                 case 'fulltext':
-                    $type = strtoupper($definition['type']) . ' KEY';
+                    $type = 'FULLTEXT KEY';
                		break;
                 case 'unique':
-                    $type = strtoupper($definition['type']) . ' INDEX';
+                    $type = 'UNIQUE INDEX';
+                	break;
+                case 'key':
+                	$type = 'KEY';
                 	break;
                 default:
                     throw DoctrineException::invalidIndexType($definition['type']);
