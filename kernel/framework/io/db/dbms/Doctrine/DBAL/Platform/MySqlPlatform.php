@@ -479,6 +479,60 @@ class MySqlPlatform extends AbstractPlatform
         return $sql;
     }
 
+/**
+	 * Obtain DBMS specific SQL code portion needed to declare a generic type
+	 * field to be used in statements like CREATE TABLE.
+	 *
+	 * @param string $name   name the field to be declared.
+	 * @param array  $field  associative array with the name of the properties
+	 *      of the field being declared as array indexes. Currently, the types
+	 *      of supported field properties are as follows:
+	 *
+	 *      length
+	 *          Integer value that determines the maximum length of the text
+	 *          field. If this argument is missing the field should be
+	 *          declared to have the longest length allowed by the DBMS.
+	 *
+	 *      default
+	 *          Text value to be used as default for this field.
+	 *
+	 *      notnull
+	 *          Boolean flag that indicates whether this field is constrained
+	 *          to not be set to null.
+	 *      charset
+	 *          Text value with the default CHARACTER SET for this field.
+	 *      collation
+	 *          Text value with the default COLLATION for this field.
+	 *      unique
+	 *          unique constraint
+	 *      check
+	 *          column check constraint
+	 *
+	 * @return string  DBMS specific SQL code portion that should be used to declare the column.
+	 */
+	public function getColumnDeclarationSql($name, array $field)
+	{
+		$default = $this->getDefaultValueDeclarationSql($field);
+
+		$charset = (isset($field['charset']) && $field['charset']) ?
+                ' ' . $this->getColumnCharsetDeclarationSql($field['charset']) : '';
+
+		$collation = (isset($field['collation']) && $field['collation']) ?
+                ' ' . $this->getColumnCollationDeclarationSql($field['collation']) : '';
+
+		$notnull = (isset($field['notnull']) && $field['notnull']) ? ' NOT NULL' : '';
+
+		$unique = (isset($field['unique']) && $field['unique']) ?
+                ' ' . $this->getUniqueFieldDeclarationSql() : '';
+
+		$check = (isset($field['check']) && $field['check']) ?
+                ' ' . $field['check'] : '';
+
+		$typeDecl = Type::getType($field['type'])->getSqlDeclaration($field, $this);
+
+		return '`' . $name . '` ' . $typeDecl . $charset . $default . $notnull . $unique . $check . $collation;
+	}
+
     /**
      * Gets the SQL to alter an existing table.
      *
