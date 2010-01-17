@@ -162,8 +162,8 @@ class DownloadSetup extends DefaultModuleSetup
 		$common_query = AppContext::get_sql_common_query();
 		$common_query->insert(self::$download_cats_table, array(
 			'id' => 1,
-			'id_parent' => 1,
-			'c_order' => 0,
+			'id_parent' => 0,
+			'c_order' => 1,
 			'auth' => '',
 			'name' => $this->messages['download_cats_title'],
 			'contents' => $this->messages['download_cats_desc'],
