@@ -120,6 +120,8 @@ class ContentSecondParser extends Parser
 	 */
 	function _highlight_code($contents, $language, $line_number, $inline_code)
 	{
+		$contents = htmlspecialchars_decode($contents);
+		
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')
 		{
