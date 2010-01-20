@@ -135,8 +135,6 @@ class ContentUnparser extends Parser
 						$this->array_tags['code_unparse'][] = '[code' . $content_split[$i - 1] . ']' . $content_split[$i] . '[/code]';
 					}
 				}
-				//On protège le code HTML à l'affichage qui vient non protégé de la base de données
-				$this->array_tags['code_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['code_unparse']);
 			}
 			return true;
 		}
