@@ -26,8 +26,6 @@
  ###################################################*/
 
 
-
-
 /**
  * @package io
  * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
@@ -171,16 +169,7 @@ class Template
 	 */
 	public function copy()
 	{
-		$copy = new Template();
-
-		$copy->identifier = $this->identifier;
-		$copy->loader = $this->loader;
-		$copy->langs = $this->langs;
-		$copy->vars = $this->vars;
-		$copy->blocks = $this->blocks;
-		$copy->subtemplates = $this->subtemplates;
-
-		return $copy;
+		return clone $this;
 	}
 
 	/**

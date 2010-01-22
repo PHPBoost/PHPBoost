@@ -99,7 +99,6 @@ class ContentSecondParser extends AbstractParser
 	}
 
 	/**
-	 * @static
 	 * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
 	 * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
 	 * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
@@ -109,7 +108,7 @@ class ContentSecondParser extends AbstractParser
 	 * @param bool $line_number Indicate whether or not the line number must be added to the code.
 	 * @param bool $inline_code Indicate if the code is multi line.
 	 */
-	private function highlight_code($contents, $language, $line_number, $inline_code)
+	private static function highlight_code($contents, $language, $line_number, $inline_code)
 	{
 		$contents = htmlspecialchars_decode($contents);
 		
