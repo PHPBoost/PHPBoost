@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         config_manager.class.php
+ *                         ConfigManager.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -33,25 +33,15 @@
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the
  * beginning of the current page generation. This cache has a short life span: it's flushed
  * as of the PHP interpreter reaches the end of the page generation.</li>
- * 	<li>A filesystem cache to avoid querying the database every time to obtain the same value.
- * This cache is less powerful than the previous but has an infinite life span. Indeed, it's
+ * 	<li>A filesystem or shared RAM cache to avoid querying the database many times to obtain the same value.
+ * This cache is less powerful than the previous one but it has an infinite life span. Indeed, it's
  * valid until the value changes and the manager is asked to store it</li>
  * </ul>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class ConfigManager extends CacheManager
+class ConfigManager
 {
-	/**
-	 * @var ConfigManager
-	 */
-	private static $config_manager_instance = null;
-
-	/**
-	 * @var Sql
-	 */
-	private $db_connection;
-
 	/**
 	 * Loads the data identified by the parameters.
 	 * @param $classname Name of the class which is expected to be returned
@@ -62,7 +52,63 @@ class ConfigManager extends CacheManager
 	 */
 	public static function load($classname, $module_name, $entry_name = '')
 	{
-		return self::get_config_manager_instance()->load_config($classname, $module_name, $entry_name);
+		try
+		{
+			return CacheManager::try_load($classname, $module_name, $entry_name);
+		}
+		catch(CacheDataNotFoundException $ex)
+		{
+			try
+			{
+				$data = self::load_in_db($module_name, $entry_name);
+			}
+			catch(ConfigNotFoundException $ex)
+			{
+				$data = new $classname();
+				$data->set_default_values();
+				self::save_in_db($name, $data);
+			}
+			CacheManager::save($data, $module_name, $entry_name);
+			return $data;
+		}
+	}
+
+	/**
+	 * @return ConfigData
+	 */
+	private static function load_in_db($module_name, $entry_name = '')
+	{
+		$name = self::compute_entry_name($module_name, $entry_name);
+
+		$result = AppContext::get_sql()->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" . $name . "'", __LINE__, __FILE__);
+
+		if ($result === false)
+		{
+			throw new ConfigNotFoundException($name);
+		}
+
+		$required_value = @unserialize($result['value']);
+		if ($required_value === false)
+		{
+			throw new ConfigNotFoundException($name);
+		}
+
+		return $required_value;
+	}
+
+	/**
+	 * @return string
+	 */
+	private static function compute_entry_name($module_name, $entry_name)
+	{
+		if (!empty($entry_name))
+		{
+			return url_encode_rewrite($module_name . '-' . $entry_name);
+		}
+		else
+		{
+			return url_encode_rewrite($module_name);
+		}
 	}
 
 	/**
@@ -73,110 +119,33 @@ class ConfigManager extends CacheManager
 	 */
 	public static function save($module_name, ConfigData $data, $entry_name = '')
 	{
-		self::get_config_manager_instance()->save_config($module_name, $data, $entry_name);
-	}
-
-	/**
-	 * @return ConfigManager
-	 */
-	private static function get_config_manager_instance()
-	{
-		if (self::$config_manager_instance === null)
-		{
-			self::$config_manager_instance = new ConfigManager();
-			self::$config_manager_instance->db_connection = AppContext::get_sql();
-		}
-		return self::$config_manager_instance;
-	}
-
-	/**
-	 * @return ConfigData
-	 */
-	private function load_config($classname, $module_name, $entry_name = '')
-	{
-		$name = $this->compute_entry_name($module_name, $entry_name);
-		if ($this->is_memory_cached($name))
-		{
-			return $this->get_memory_cached_data($name);
-		}
-		else if ($this->is_file_cached($name))
-		{
-			$data = $this->get_file_cached_data($name);
-			$this->memory_cache_data($name, $data);
-			return $data;
-		}
-		else
-		{
-			try
-			{
-				$data = $this->load_in_db($name);
-			}
-			catch(ConfigNotFoundException $ex)
-			{
-				$data = new $classname();
-				$data->set_default_values();
-				$this->save_in_db($name, $data);
-			}
-			$this->file_cache_data($name, $data);
-			$this->memory_cache_data($name, $data);
-			return $data;
-		}
-	}
-
-	private function save_config($module_name, ConfigData $data, $entry_name = '')
-	{
-		$name = $this->compute_entry_name($module_name, $entry_name);
+		$name = self::compute_entry_name($module_name, $entry_name);
 			
-		$this->save_in_db($name, $data);
-		$this->invalidate_file_cache($name);
-		$this->memory_cache_data($name, $data);
+		self::save_in_db($name, $data);
+
+		CacheManager::save($data, $module_name, $entry_name);
 	}
 
-	/**
-	 * @return ConfigData
-	 */
-	private function load_in_db($name)
-	{
-		$result = $this->db_connection->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" .
-		$name . "'", __LINE__, __FILE__);
-
-		if ($result === false)
-		{
-			throw new ConfigNotFoundException($name);
-		}
-		$required_value = unserialize($result['value']);
-		return $required_value;
-	}
-
-	private function save_in_db($name, ConfigData $data)
+	private static function save_in_db($name, ConfigData $data)
 	{
 		$serialized_data = addslashes(serialize($data));
 		$secure_name = addslashes($name);
 
-		$resource = $this->db_connection->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
+		$resource = AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
 		. $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 
 		// If no entry exists in the data base, we create it
-		if ($this->db_connection->affected_rows($resource) == 0)
+		if (AppContext::get_sql()->affected_rows($resource) == 0)
 		{
-			$count = (int) $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
+			$count = (int) AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
 		    	" WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 			if ($count == 0)
 			{
-				$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
+				AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
     				"VALUES('" . $secure_name . "', '" . $serialized_data . "')",
 				__LINE__, __FILE__);
 			}
 		}
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheManager#get_file($name)
-	 */
-	protected function get_file_name($name)
-	{
-		return $name . '.cfg';
 	}
 }
 

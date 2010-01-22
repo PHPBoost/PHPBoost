@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         cache_manager.class.php
+ *                          CacheManager.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -43,98 +43,124 @@
 class CacheManager
 {
 	/**
-	 * @var CacheManager
-	 */
-	private static $cache_manager_instance = null;
-
-	/**
 	 * @var DataStore The RAM cache
 	 */
-	protected $ram_cache = null;
+	private static $ram_cache = null;
 
 	/**
-	 *
 	 * @var DataStore
 	 */
-	protected $fs_cache = null;
+	private static $fs_cache = null;
 
-	protected function __construct()
+	/**
+	 * @return DataStore
+	 */
+	private static function get_ram_cache()
 	{
-		$this->ram_cache = new RAMDataStore();
-		$this->fs_cache = DataStoreFactory::get_filesystem_store('CacheManager');
+		if (self::$ram_cache == null)
+		{
+			self::$ram_cache = new RAMDataStore();
+		}
+		return self::$ram_cache;
+	}
+
+	/**
+	 * @return DataStore
+	 */
+	private static function get_fs_cache()
+	{
+		if (self::$fs_cache === null)
+		{
+			self::$fs_cache = DataStoreFactory::get_filesystem_store(__CLASS__);
+		}
+		return self::$fs_cache;
 	}
 
 	/**
 	 * Loads the data which is identified by the parameters
-	 * @param $classname Name of the class of which the result will be an instance
-	 * @param $module_name Name of the module owning the entry to load
-	 * @param $entry_name If the module wants to manage several entries,
+	 * @param string $classname Name of the class of which the result will be an instance
+	 * @param string $module_name Name of the module owning the entry to load
+	 * @param string $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to load
 	 * @return CacheData The loaded data
 	 */
 	public static function load($classname, $module_name, $entry_name = '')
 	{
-		return self::get_cache_manager_instance()->load_data($classname, $module_name, $entry_name);
+		$name = self::compute_entry_name($module_name, $entry_name);
+		try
+		{
+			return self::try_load($classname, $module_name, $entry_name);
+		}
+		catch(CacheDataNotFoundException $ex)
+		{
+			//Not cached anywhere, we create it
+			$data = new $classname();
+			$data->synchronize();
+			self::file_cache_data($name, $data);
+			self::memory_cache_data($name, $data);
+			return $data;
+		}
+	}
+
+	/**
+	 * Tries to load the data which is identified by the parameters
+	 * @param string $classname Name of the class of which the result will be an instance
+	 * @param string $module_name Name of the module
+	 * @param string $entry_name Name of the entry of the module
+	 * @return CacheData The loaded data
+	 * @throws CacheDataNotFoundException if the cache doesn't exist
+	 */
+	public static function try_load($classname, $module_name, $entry_name)
+	{
+		$name = self::compute_entry_name($module_name, $entry_name);
+
+		if (self::is_memory_cached($name))
+		{
+			return self::get_memory_cached_data($name);
+		}
+		else if (self::is_file_cached($name))
+		{
+			$data = self::get_file_cached_data($name);
+			if ($data instanceof $classname)
+			{
+				self::memory_cache_data($name, $data);
+				return $data;
+			}
+		}
+		throw new CacheDataNotFoundException($name);
 	}
 
 	/**
 	 * Invalidates an entry which is cached. If the corresponding data are loaded agin,
 	 * they will be regenerated.
-	 * @param $module_name Name of the module owning the entry to invalidate
-	 * @param $entry_name If the module wants to manage several entries,
+	 * @param string $module_name Name of the module owning the entry to invalidate
+	 * @param string $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to invalidate
 	 */
 	public static function invalidate($module_name, $entry_name = '')
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
-		self::get_cache_manager_instance()->invalidate_file_cache($name);
-		self::get_cache_manager_instance()->invalidate_memory_cache($name);
+		self::invalidate_file_cache($name);
+		self::invalidate_memory_cache($name);
 	}
 
 	/**
-	 * @return CacheManager
+	 * Caches the data corresponding to the given identifier
+	 * @param mixed $data The data to cache
+	 * @param string $module_name Name of the module owning the entry to save
+	 * @param string $entry_name Name of the entry to save
 	 */
-	private static function get_cache_manager_instance()
-	{
-		if (self::$cache_manager_instance === null)
-		{
-			self::$cache_manager_instance = new CacheManager();
-		}
-		return self::$cache_manager_instance;
-	}
-
-	/**
-	 * @return CacheData
-	 */
-	protected function load_data($classname, $module_name, $entry_name = '')
+	public static function save($data, $module_name, $entry_name = '')
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
-		if ($this->is_memory_cached($name))
-		{
-			return $this->get_memory_cached_data($name);
-		}
-		else if ($this->is_file_cached($name))
-		{
-			$data = $this->get_file_cached_data($name);
-			if ($data instanceof $classname)
-			{
-				$this->memory_cache_data($name, $data);
-				return $data;
-			}
-		}
-
-		//Not cached anywhere, we create it
-		$data = new $classname();
-		$data->synchronize();
-		$this->file_cache_data($name, $data);
-		$this->memory_cache_data($name, $data);
-		return $data;
+		self::file_cache_data($name, $data);
+		self::memory_cache_data($name, $data);
 	}
 
 	/**
 	 * @return string
 	 */
-	protected static function compute_entry_name($module_name, $entry_name)
+	private static function compute_entry_name($module_name, $entry_name)
 	{
 		if (!empty($entry_name))
 		{
@@ -150,30 +176,30 @@ class CacheManager
 	/**
 	 * @return bool
 	 */
-	protected function is_memory_cached($name)
+	private static function is_memory_cached($name)
 	{
-		return $this->ram_cache->contains($name);
+		return self::get_ram_cache()->contains($name);
 	}
 
 	/**
 	 * @return CacheData
 	 */
-	protected function get_memory_cached_data($name)
+	private static function get_memory_cached_data($name)
 	{
-		return $this->ram_cache->get($name);
+		return self::get_ram_cache()->get($name);
 	}
 
-	protected function memory_cache_data($name, CacheData  $value)
+	private static function memory_cache_data($name, CacheData  $value)
 	{
-		$this->ram_cache->store($name, $value);
+		self::get_ram_cache()->store($name, $value);
 	}
 
-	protected function invalidate_memory_cache($name)
+	private static function invalidate_memory_cache($name)
 	{
-		$this->ram_cache->delete($name);
+		self::get_ram_cache()->delete($name);
 	}
 
-	protected function get_file_name($name)
+	private static function get_file_name($name)
 	{
 		return $name . '.data';
 	}
@@ -181,27 +207,27 @@ class CacheManager
 	/**
 	 * @return bool
 	 */
-	protected function is_file_cached($name)
+	private static function is_file_cached($name)
 	{
-		return $this->fs_cache->contains($this->get_file_name($name));
+		return self::get_fs_cache()->contains(self::get_file_name($name));
 	}
 
 	/**
 	 * @return CacheData
 	 */
-	protected function get_file_cached_data($name)
+	private static function get_file_cached_data($name)
 	{
-		return $this->fs_cache->get($this->get_file_name($name));
+		return self::get_fs_cache()->get(self::get_file_name($name));
 	}
 
-	protected function file_cache_data($name, CacheData $value)
+	private static function file_cache_data($name, CacheData $value)
 	{
-		$this->fs_cache->store($this->get_file_name($name), $value);
+		self::get_fs_cache()->store(self::get_file_name($name), $value);
 	}
 
-	protected function invalidate_file_cache($name)
+	private static function invalidate_file_cache($name)
 	{
-		$this->fs_cache->delete($this->get_file_name($name));
+		self::get_fs_cache()->delete(self::get_file_name($name));
 	}
 }
 
