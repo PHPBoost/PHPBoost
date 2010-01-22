@@ -230,9 +230,12 @@ class Environment
 
 	public static function write_http_headers()
 	{
-		header('Content-type: text/html; charset=iso-8859-1');
-		header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
-		header('Pragma: no-cache');
+		header('Content-type: text/html; charset=iso-8859-1');		
+		header("Expires: Mon, 1 Dec 2003 01:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
 	}
 
 	public static function load_cache()
