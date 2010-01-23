@@ -31,6 +31,46 @@
  */
 class Debug
 {
+	private static $enabled = null;
+
+	/**
+	 * Tells whether the debug mode is enabled
+	 * @return bool true if enabled, false otherwise
+	 */
+	public static function is_debug_mode_enabled()
+	{
+		if (self::$enabled === null)
+		{
+			$debug = false;
+			@include PATH_TO_ROOT . '/cache/debug.php';
+			self::$enabled = $debug;
+		}
+		return self::$enabled;
+	}
+
+	/**
+	 * Enables the debug mode
+	 */
+	public static function enabled_debug_mode()
+	{
+		self::write_debug_file(true);
+	}
+
+	/**
+	 * Disabled the debug mode
+	 */
+	public static function disable_debug_mode()
+	{
+		self::write_debug_file(false);
+	}
+
+	private static function write_debug_file($enabled)
+	{
+		$file = new File(PATH_TO_ROOT . '/cache/debug.php');
+		$file->write('<?php $debug = ' . var_export($enabled, true) . '; ?>');
+		$file->close();
+	}
+
 	/**
 	 * @desc Displays information on an exception and exits
 	 * @param Exception $exception the exception to display information on

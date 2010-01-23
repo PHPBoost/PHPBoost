@@ -67,7 +67,7 @@ class Cache
 		$include = false;
 		if ($reload_cache)
 		{
-			if (!DEBUG)
+			if (!Debug::is_debug_mode_enabled())
 			{
 				$include = @include($cache_file);
 			}
@@ -81,7 +81,7 @@ class Cache
 		}
 		else
 		{
-			if (!DEBUG)
+			if (!Debug::is_debug_mode_enabled())
 			{
 				$include = @include_once($cache_file);
 			}
@@ -100,7 +100,7 @@ class Cache
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois
-				if (!DEBUG)
+				if (!Debug::is_debug_mode_enabled())
 				{
 					$include2 = @include($cache_file);
 				}
@@ -118,7 +118,7 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if (!DEBUG)
+				if (!Debug::is_debug_mode_enabled())
 				{
 					$include3 = @include($cache_file);
 				}
@@ -285,19 +285,6 @@ class Cache
 		}
 
 		return $config;
-	}
-
-	/**
-	 * @desc Method which is called to generate the debug file cache (it cannot be in the configuration file because it must be loaded before the PHPBoost environment).
-	 * @return The content of the debug file cache.
-	 */
-	function _get_debug()
-	{
-		$this->load('config');
-		global $CONFIG;
-
-		$debug_mode = empty($CONFIG['debug_mode']) ? 0 : (int)$CONFIG['debug_mode'];
-		return 'global $DEBUG;' . "\n" . '$DEBUG[\'debug_mode\'] = ' . $debug_mode . ';';
 	}
 
 	/**
@@ -481,7 +468,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('config', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

@@ -281,7 +281,7 @@ class Feed
 				self::update_cache($module_id, $name, $data, $idcat);
 			}
 		}
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			$result = @include($feed_data_cache_file);
 		}

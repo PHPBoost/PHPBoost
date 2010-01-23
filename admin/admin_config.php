@@ -138,8 +138,8 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
 		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
 		'SITE_SESSION_VISIT'=> !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',
-	    'DEBUG_ENABLED'     => (DEBUG == 1) ? 'checked="checked"' : '',
-        'DEBUG_DISABLED'    => (DEBUG == 0) ? 'checked="checked"' : '',
+	    'DEBUG_ENABLED'     => Debug::is_debug_mode_enabled() ? 'checked="checked"' : '',
+        'DEBUG_DISABLED'    => !Debug::is_debug_mode_enabled() ? 'checked="checked"' : '',
 		'L_SECONDS' 		=> $LANG['unit_seconds'],
 		'L_REQUIRE_SERV' 	=> $LANG['require_serv'],
 		'L_REQUIRE_NAME' 	=> $LANG['require_name'],
@@ -161,7 +161,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_HTACCESS_MANUAL_CONTENT_EXPLAIN' => $LANG['htaccess_manual_content_explain'],
 		'L_TIMEZONE_CHOOSE' => $LANG['timezone_choose'],
 		'L_TIMEZONE_CHOOSE_EXPLAIN' => $LANG['timezone_choose_explain'],
-	    'L_DEBUG' => $LANG['debug_mode'],
+	    'L_DEBUG' 			=> $LANG['debug_mode'],
         'L_DEBUG_EXPLAIN' => $LANG['debug_mode_explain'],
 		'L_ACTIV' 			=> $LANG['activ'],
 		'L_UNACTIVE' 		=> $LANG['unactiv'],
@@ -177,9 +177,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_CONFIRM_UNLOCK_ADMIN' 	=> $LANG['confirm_unlock_admin'],
 		'L_UNLOCK_ADMIN' 	=> $LANG['unlock_admin'],
 		'L_UNLOCK_ADMIN_EXPLAIN' 	=> $LANG['unlock_admin_explain'],
-		'L_UNLOCK_LINK' => $LANG['send_unlock_admin'],
-		'L_UPDATE' 		=> $LANG['update'],
-		'L_RESET' 		=> $LANG['reset']	
+		'L_UNLOCK_LINK' 	=> $LANG['send_unlock_admin'],
+		'L_UPDATE' 			=> $LANG['update'],
+		'L_RESET' 			=> $LANG['reset']	
 	));
 	
 	$Template->pparse('admin_config2');
@@ -215,7 +215,16 @@ elseif (!empty($_POST['advanced']))
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
-		$Cache->generate_file('debug');
+		
+		// TODO remove it when the $CONFIG variable will be managed by the new config manager
+		if ($CONFIG['debug_mode'])
+		{
+			Debug::enabled_debug_mode();
+		}
+		else
+		{
+			Debug::disable_debug_mode();
+		}
 		
 		//Régénération du htaccess.
 		

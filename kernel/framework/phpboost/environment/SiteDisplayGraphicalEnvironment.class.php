@@ -136,7 +136,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		global $THEME_CONFIG, $MENUS;
 
 		//Inclusion des blocs
-		if (DEBUG)
+		if (Debug::is_debug_mode_enabled())
 		{
 			$result = include_once(PATH_TO_ROOT . '/cache/menus.php');
 		}

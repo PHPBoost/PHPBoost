@@ -104,9 +104,12 @@ class DispatchManager
 
 	private static function handle_dispatch_exception($exception)
 	{
-		if (DEBUG) {
+		if (Debug::is_debug_mode_enabled())
+		{
 			self::show_error($exception);
-		} else {
+		}
+		else
+		{
 			self::redirect404();
 		}
 	}
