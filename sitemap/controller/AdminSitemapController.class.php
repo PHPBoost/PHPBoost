@@ -44,35 +44,21 @@ class AdminSitemapController extends AdminController
 
 	public function execute(HTTPRequest $request)
 	{
-		$this->init();
+		$this->build_form();
 
 		if ($request->is_post_method() && $this->form->validate())
 		{
 			$this->handle_form();
 		}
 
-		$this->view->add_subtemplate('FORM', $this->form->export());
-
-		return $this->build_response();
+		return $this->build_response($this->form->export());
 	}
-
-	private function init()
-	{
-		$this->build_form();
-		$this->view = new View('sitemap/' . __CLASS__ . '.tpl');
-
-		$this->view->assign_vars(array(
-			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
-		));
-		$this->view->add_lang(LangLoader::get_class(__CLASS__, 'sitemap'));
-	}
-
 	/**
 	 * @return Form
 	 */
 	private function build_form()
 	{
-		$this->form = new Form('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());
+		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());
 		$fieldset = new FormFieldset($this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
@@ -98,9 +84,9 @@ class AdminSitemapController extends AdminController
 		SitemapConfig::save($config);
 	}
 
-	private function build_response()
+	private function build_response(Template $view)
 	{
-		$response = new AdminSitemapResponse($this->view);
+		$response = new AdminSitemapResponse($view);
 		$response->get_graphical_environment()->set_page_title($this->lang['general_config']);
 		return $response;
 	}

@@ -142,7 +142,7 @@ class HTMLTable extends HTMLElement
 					'NAME' => 'filters' . $this->arg_id . $filter_form->get_filter_parameter()
 				));
 			}
-			$form = new Form('filters' . $this->arg_id);
+			$form = new HTMLForm('filters' . $this->arg_id);
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			$form->set_personal_submit_function($submit_function);

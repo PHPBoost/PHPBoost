@@ -83,14 +83,14 @@ class SitemapXMLFileService
 	}
 
 	/**
-	 * @desc Tries to generate the file and if errors occur, writes them in the log file
+	 * @desc Generates if possible the file and if errors occur, writes them in the log file
 	 * without throwing any exception.
 	 */
-	public static function try_to_generate()
+	public static function generate()
 	{
 		try
 		{
-			self::generate();
+			self::try_to_generate();
 		}
 		catch(IOException $ex)
 		{
@@ -100,10 +100,10 @@ class SitemapXMLFileService
 	}
 
 	/**
-	 * @desc Generates the sitemap.xml file and throws an exception if it can't be done.
+	 * @desc Tries to generate the sitemap.xml file and throws an exception if it can't be done.
 	 * @throws IOException 
 	 */
-	public static function generate()
+	public static function try_to_generate()
 	{
 		$sitemap = SitemapService::get_public_sitemap();
 		$export_config = self::get_export_config();

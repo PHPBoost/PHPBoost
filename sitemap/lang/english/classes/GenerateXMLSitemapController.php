@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        AdminSitemapController.php
+ *                      GenerateXMLSitemapController.php
  *                            -------------------
  *   begin                : January 7, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -26,7 +26,9 @@
  ###################################################*/
 
 $lang = array();
-$lang['xml_file_generation'] = 'Génération manuelle du fichier sitemap.xml';
-$lang['generate_xml_file'] = 'Générer manuellement le fichier sitemap.xml';
+$lang['generation_failed'] = 'The sitemap.xml file located at your server\'s root couldn\'t been generated, probably because of a write permission problem.
+Please try to create manually and empty sitemap.xml file at you server\'s root and try to generate it again.';
+$lang['generation_succeeded'] = 'Yhe sitemap.xml file has been generated sucessfully.';
+$lang['try_again'] = 'Try again';
 
 ?>

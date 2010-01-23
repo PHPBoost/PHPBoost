@@ -81,7 +81,7 @@
  * @package builder
  * @subpackage form
  */
-class Form
+class HTMLForm
 {
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
@@ -200,7 +200,7 @@ class Form
 
 		if (!is_object($template) || strtolower(get_class($template)) != 'template')
 		{
-			$template = new Template('framework/builder/form/' . __CLASS__ . '.tpl');
+			$template = new Template('framework/builder/form/Form.tpl');
 		}
 			
 		$template->assign_vars(array(
@@ -281,6 +281,8 @@ class Form
 		// TODO implement this by browsing all the fields and checking if at least one of them is required
 		return true;
 	}
+	
+	// TODO add automatic CSRF protection
 }
 
 ?>
