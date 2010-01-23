@@ -143,6 +143,15 @@ class CacheManager
 		self::invalidate_file_cache($name);
 		self::invalidate_memory_cache($name);
 	}
+	
+	/**
+	 * Invalidates all the cached data
+	 */
+	public static function clear()
+	{
+		self::get_ram_cache()->clear();
+		self::get_fs_cache()->clear();
+	}
 
 	/**
 	 * Caches the data corresponding to the given identifier

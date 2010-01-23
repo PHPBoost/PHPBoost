@@ -61,8 +61,7 @@ class APCDataStore implements DataStore
 		$object = apc_fetch($id, $found);
 		if (!$found)
 		{
-			// TODO specialize exception
-			throw new Exception();
+			throw new DataStoreException($id);
 		}
 		return $object;
 	}
