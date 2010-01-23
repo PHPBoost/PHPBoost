@@ -47,7 +47,12 @@ $formatting_factory = ContentFormattingMetaFactory::create_factory($editor);
 //On prend le bon parseur avec la bonne configuration
 $parser = $formatting_factory->get_parser();
 
-$parser->set_content($contents, MAGIC_QUOTES);
+if (MAGIC_QUOTES)
+{
+	$contents = stripslashes($contents);
+}
+
+$parser->set_content($contents);
 $parser->set_path_to_root($page_path_to_root);
 $parser->set_page_path($page_path);
 
@@ -60,13 +65,13 @@ $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
 $second_parser = $formatting_factory->get_second_parser();
-$second_parser->set_content($parser->get_content(FormattingParser::DONT_ADD_SLASHES), FormattingParser::DONT_STRIP_SLASHES);
+$second_parser->set_content($parser->get_content());
 $second_parser->set_path_to_root($page_path_to_root);
 $second_parser->set_page_path($page_path);
 
 $second_parser->parse();
 
-$contents = $second_parser->get_content(FormattingParser::DONT_ADD_SLASHES);
+$contents = $second_parser->get_content();
 
 echo $contents;
 

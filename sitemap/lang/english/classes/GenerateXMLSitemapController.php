@@ -28,7 +28,7 @@
 $lang = array();
 $lang['generation_failed'] = 'The sitemap.xml file located at your server\'s root couldn\'t been generated, probably because of a write permission problem.
 Please try to create manually and empty sitemap.xml file at you server\'s root and try to generate it again.';
-$lang['generation_succeeded'] = 'Yhe sitemap.xml file has been generated sucessfully.';
+$lang['generation_succeeded'] = 'The sitemap.xml file has been generated sucessfully.';
 $lang['try_again'] = 'Try again';
 
 ?>

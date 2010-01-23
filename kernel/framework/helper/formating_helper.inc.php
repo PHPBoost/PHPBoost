@@ -36,8 +36,13 @@ function strparse($content, $forbidden_tags = array(), $addslashes = true)
 {
 	$parser = ContentFormattingMetaFactory::get_default_parser();
 
+	if (MAGIC_QUOTES)
+	{
+		$content = stripslashes($content);	
+	}
+	
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
-	$parser->set_content($content, MAGIC_QUOTES);
+	$parser->set_content($content);
 
 	//Si il y a des balises interdites, on lui signale
 	if (!empty($forbidden_tags))
@@ -48,7 +53,14 @@ function strparse($content, $forbidden_tags = array(), $addslashes = true)
 	$parser->parse();
 
 	//Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
-	return $parser->get_content($addslashes);
+	$result = $parser->get_content();
+	
+	if ($addslashes)
+	{
+		$result = addslashes($result);
+	}
+	
+	return $result;
 }
 
 /**
@@ -62,10 +74,9 @@ function strparse($content, $forbidden_tags = array(), $addslashes = true)
 function unparse($content)
 {
 	$parser = ContentFormattingMetaFactory::get_default_unparser();
-	$parser->set_content($content, FormattingParser::DONT_STRIP_SLASHES);
+	$parser->set_content($content);
 	$parser->parse();
-
-	return $parser->get_content(FormattingParser::DONT_ADD_SLASHES);
+	return $parser->get_content();
 }
 
 /**
@@ -79,10 +90,10 @@ function unparse($content)
 function second_parse($content)
 {
 	$parser = ContentFormattingMetaFactory::get_default_second_parser();
-	$parser->set_content($content, FormattingParser::DONT_STRIP_SLASHES);
+	$parser->set_content($content);
 	$parser->parse();
 
-	return $parser->get_content(FormattingParser::DONT_ADD_SLASHES);
+	return $parser->get_content();
 }
 
 /**
