@@ -62,10 +62,11 @@ class AdminSitemapController extends AdminController
 		$fieldset = new FormFieldset($this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', 'Enable sitemap.xml', SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED));
 
-		$fieldset->add_field(new FormFieldTextEditor('file_life_time', 'Life time', SitemapXMLFileService::get_life_time(), array('required' => true, 'size' => 2, 'maxlength' => 2), array(
-		new IntegerIntervalFormFieldConstraint(1, 50, 'message qui devrait être généré automatiquement'))));
+		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
+		array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain']),
+		array(new IntegerIntervalFormFieldConstraint(1, 50, 'message qui devrait être généré automatiquement'))));
 	}
 
 	private function handle_form()

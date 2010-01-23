@@ -30,7 +30,7 @@ class GenerateXMLSitemapController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$view = new Template('sitemap/GenerateXMLSitemapController.tpl');
-		$view->add_lang(LangLoader::get_class(__CLASS__, 'sitemap'));
+		$view->add_lang(LangLoader::get('common', 'sitemap'));
 		
 		try
 		{
