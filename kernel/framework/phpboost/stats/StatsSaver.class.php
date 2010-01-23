@@ -302,6 +302,14 @@ class StatsSaver
 	}
 	
 	/**
+	 * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour.
+	 */
+	public static function update_pages_displayed()
+	{
+		self::write_stats('pages', gmdate_format('G'));
+	}
+		
+	/**
 	 * @desc Retrieve stats from file
 	 * @param string $file_path The path to the stats file.
 	 */
