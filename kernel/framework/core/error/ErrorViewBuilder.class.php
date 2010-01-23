@@ -76,7 +76,7 @@ class ErrorViewBuilder
 	{
 		if (empty($message))
 		{
-			if ($exception !== null && DEBUG)
+			if ($exception !== null && Debug::is_debug_mode_enabled())
 			{
 				$message = htmlspecialchars($exception->getMessage()) . '<br /><br /><i>' .
 				$exception->getFile() . ':' . $exception->getLine() .
@@ -95,7 +95,7 @@ class ErrorViewBuilder
 	{
 		if (empty($code))
 		{
-			if ($exception !== null && DEBUG)
+			if ($exception !== null && Debug::is_debug_mode_enabled())
 			{
 				$code = $exception->getCode();
 			}

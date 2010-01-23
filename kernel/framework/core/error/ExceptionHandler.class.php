@@ -102,7 +102,7 @@ class ExceptionHandler
 
 	private function raw_display()
 	{
-		if (DEBUG)
+		if (Debug::is_debug_mode_enabled())
 		{
 			Debug::fatal($this->exception);
 		}

@@ -570,6 +570,15 @@ switch($step)
 
 			$Cache->load('themes', RELOAD_CACHE);
 
+			// TODO remove it when the $CONFIG variable will be managed by the new config manager
+			if (DISTRIBUTION_ENABLE_DEBUG_MODE)
+			{
+				Debug::enabled_debug_mode();
+			}
+			else
+			{
+				Debug::disable_debug_mode();
+			}
 
 			ModulesCssFilesCache::invalidate();
 

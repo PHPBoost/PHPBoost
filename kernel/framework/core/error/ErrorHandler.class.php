@@ -136,7 +136,7 @@ class ErrorHandler
 
 	private function display()
 	{
-		if (DEBUG)
+		if (Debug::is_debug_mode_enabled())
 		{
 			$this->display_debug();
 		}

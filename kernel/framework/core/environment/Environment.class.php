@@ -152,19 +152,6 @@ class Environment
 
 	public static function load_static_constants()
 	{
-		if (!defined('DEBUG'))
-		{
-			$debug_cache_file = PATH_TO_ROOT . '/cache/debug.php';
-			if (file_exists($debug_cache_file) && @include $debug_cache_file)
-			{
-				define('DEBUG', (bool) $DEBUG['debug_mode']);
-			}
-			else
-			{
-				define('DEBUG', true);
-			}
-		}
-
 		### Common constants ###
 		define('GUEST_LEVEL', 		-1);
 		define('MEMBER_LEVEL', 		0);

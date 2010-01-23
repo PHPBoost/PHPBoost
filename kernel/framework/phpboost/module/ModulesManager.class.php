@@ -201,7 +201,7 @@ class ModulesManager
 			$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
 			if (file_exists($php_file))
 			{
-				if (!DEBUG)
+				if (!Debug::is_debug_mode_enabled())
 				{
 					@include_once($php_file);
 				}

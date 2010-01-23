@@ -107,7 +107,8 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 	global $LANG;
 
 	$file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
-	if (!DEBUG) {
+	if (!Debug::is_debug_mode_enabled())
+	{
 		$result = @include_once($file);
 	}
 	else
@@ -120,7 +121,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
 		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
 
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			$result2 = @include_once($file2);
 		}
@@ -162,7 +163,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
 	$dir = find_require_dir($dir_path, $require_dir, false);
 	$file = $dir_path . $dir . '/' . $ini_name;
-	if (!DEBUG)
+	if (!Debug::is_debug_mode_enabled())
 	{
 		$result = @parse_ini_file($file);
 	}
@@ -480,7 +481,7 @@ function req($file, $once = true)
 	$file = '/' . ltrim($file, '/');
 	if ($once)
 	{
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			@require_once PATH_TO_ROOT . $file ;
 		}
@@ -491,7 +492,7 @@ function req($file, $once = true)
 	}
 	else
 	{
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			@require PATH_TO_ROOT . $file ;
 		}
@@ -514,7 +515,7 @@ function inc($file, $once = true)
 	$file = '/' . ltrim($file, '/');
 	if ($once)
 	{
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			return (@include_once(PATH_TO_ROOT . $file)) !== false;
 		}
@@ -525,7 +526,7 @@ function inc($file, $once = true)
 	}
 	else
 	{
-		if (!DEBUG)
+		if (!Debug::is_debug_mode_enabled())
 		{
 			return (@include(PATH_TO_ROOT . $file)) !== false;
 		}
