@@ -29,9 +29,24 @@ class GenerateXMLSitemapController extends AdminController
 {
 	public function execute(HTTPRequest $request)
 	{
-		SitemapXMLFileService::try_to_generate();
+		$view = new Template('sitemap/GenerateXMLSitemapController.tpl');
+		$view->add_lang(LangLoader::get_class(__CLASS__, 'sitemap'));
+		
+		try
+		{
+			SitemapXMLFileService::try_to_generate();
+		}
+		catch(IOException $ex)
+		{
+			$view->assign_vars(
+				array('C_GOT_ERROR' => true)
+			);
+		}
+		
+		$view->assign_vars(array(
+			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
+		));
 
-		$result_controller = new AdminSitemapController();
-		return $result_controller->execute($request);
+		return new AdminSitemapResponse($view);
 	}
 }

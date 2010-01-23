@@ -54,7 +54,7 @@ class SandboxController extends ModuleController
 
 	private function build_form(HTTPRequest $request)
 	{
-		$form = new Form('sandboxForm');
+		$form = new HTMLForm('sandboxForm');
 		
 		// FIELDSET
 		$fieldset = new FormFieldset('Fieldset');

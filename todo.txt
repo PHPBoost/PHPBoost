@@ -1,6 +1,6 @@
- ################################################################################
+#################################################################################
 ##                                   BENOIT                                   ##
- ################################################################################
+#################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
 - [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
@@ -8,20 +8,23 @@
 - Reprendre la gestion du formulaire des autorisations qui est super mal foutue. Faire ça proprement en objet avec possibilité de générer un élément de formulaire pour insérer dans le builder
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 Réparer le générateur de la documentation (lien.html#ancre non remplacé parfois)
-Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisation (différencier null et array vide)
+Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)
 Essayer d'intégrer une balise flux en BBCode.
+Refonte de l'installateur : mettre un fichier /cache/.install indiquant que l'installation est en cours à l'étape 4 et le supprimer à la fin. Les étapes 5 à 7 ne pourront être exécutées que si il y a ce fichier.
+Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
+Corriger l'export BDD qui fait un out of memory si la BDD est trop grosse (vider les buffers de string de temps en temps) 
 
 ------------------------------------ MODULES -----------------------------------
 
 
- ################################################################################
+#################################################################################
 
 
 
 
- ################################################################################
+#################################################################################
 ##                                   REGIS                                    ##
- ################################################################################
+#################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
 - Déplacer la gestion des posts dans la config vers l'admin des contenus
@@ -34,7 +37,7 @@ Essayer d'intégrer une balise flux en BBCode.
 - [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 ------------------------------------ MODULES -----------------------------------
 
- #################################################################################
+##################################################################################
 [b]Galerie:[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
@@ -45,9 +48,9 @@ Essayer d'intégrer une balise flux en BBCode.
 
 
 
- ################################################################################
+#################################################################################
 ##                                    LOIC                                    ##
- ################################################################################
+#################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
 - [color=red]Nouveauté:[/color] Framework MVC.
@@ -59,7 +62,7 @@ Essayer d'intégrer une balise flux en BBCode.
 - [color=red]Nouveauté:[/color] Gestionnaire d'évenements permettant au noyau de communiquer avec les modules.
 ------------------------------------ MODULES -----------------------------------
 
- ################################################################################
+#################################################################################
 
 
 ######################################DOSSIERS##################################

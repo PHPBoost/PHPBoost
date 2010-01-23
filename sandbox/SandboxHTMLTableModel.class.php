@@ -63,7 +63,7 @@ class SandboxHTMLTableModel implements HTMLTableModel
 	//			new FormFieldSelectOption('Horn', 'horn'),
 	//			new FormFieldSelectOption('CouCou', 'coucou')
 	//		);
-	//		$model->add_filter(new HTMLTableSelectFilterForm('Pseudo', 'login', $options));
+	//		$model->add_filter(new HTMLTableSelectFilterHTMLForm('Pseudo', 'login', $options));
 
 	public function default_sort_rule()
 	{
