@@ -112,7 +112,7 @@ class FileSystemDataStore implements DataStore
 	public function clear()
 	{
 		$cache_dir = new Folder(PATH_TO_ROOT . '/cache');
-		foreach ($cache_dir->get_files('^`' . $this->prefix . '-.*`') as $file)
+		foreach ($cache_dir->get_files('`^' . $this->prefix . '-.*`') as $file)
 		{
 			$file->delete();
 		}

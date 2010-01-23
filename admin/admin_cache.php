@@ -7,7 +7,6 @@
  *   email                : crowkait@phpboost.com
  *
  *
- *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
@@ -38,6 +37,7 @@ if (empty($cache_mode))    // Génération du cache de la configuration
     if (!empty($_POST['cache']))
     {
         $Cache->Generate_all_files();
+        CacheManager::clear();
         redirect('/admin/admin_cache.php?s=1');
     }
     else //Sinon on rempli le formulaire
@@ -49,7 +49,9 @@ if (empty($cache_mode))    // Génération du cache de la configuration
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
         if ($get_error == 1)
-            $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
+        {
+        	//$Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
+        }
         
         $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],
