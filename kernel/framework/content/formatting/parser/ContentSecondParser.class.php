@@ -116,9 +116,9 @@ class ContentSecondParser extends AbstractParser
 		if (strtolower($language) == 'bbcode')
 		{
 			$bbcode_highlighter = new BBCodeHighlighter();
-			$bbcode_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
+			$bbcode_highlighter->set_content($contents);
 			$bbcode_highlighter->parse($inline_code);
-			$contents = $bbcode_highlighter->get_content(self::DONT_ADD_SLASHES);
+			$contents = $bbcode_highlighter->get_content();
 		}
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
@@ -126,16 +126,16 @@ class ContentSecondParser extends AbstractParser
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();
-			$template_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
+			$template_highlighter->set_content($contents);
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-			$contents = $template_highlighter->get_content(self::DONT_ADD_SLASHES);
+			$contents = $template_highlighter->get_content();
 		}
 		elseif( strtolower($language) == 'plain')
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
-			$plain_code_highlighter->set_content($contents, self::DONT_STRIP_SLASHES);
+			$plain_code_highlighter->set_content($contents);
 			$plain_code_highlighter->parse();
-			$contents = $plain_code_highlighter->get_content(self::DONT_ADD_SLASHES);
+			$contents = $plain_code_highlighter->get_content();
 		}
 		elseif ($language != '')
 		{

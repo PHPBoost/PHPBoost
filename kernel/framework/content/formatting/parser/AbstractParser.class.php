@@ -33,117 +33,103 @@
  */
 abstract class AbstractParser implements FormattingParser
 {
-    const PICK_UP = true;
-    const REIMPLANT = false;
-    /**
-     * @var string Content of the parser
-     */
-    protected $content = '';
-    /**
-     * @var string[] List of the tags which have been picked up by the parser
-     */
-    protected $array_tags = array();
-    /**
-     * @var string Path to root of the page in which has been written the content to parse.
-     */
-    protected $path_to_root = PATH_TO_ROOT;
+	const PICK_UP = true;
+	const REIMPLANT = false;
+	/**
+	 * @var string Content of the parser
+	 */
+	protected $content = '';
+	/**
+	 * @var string[] List of the tags which have been picked up by the parser
+	 */
+	protected $array_tags = array();
+	/**
+	 * @var string Path to root of the page in which has been written the content to parse.
+	 */
+	protected $path_to_root = PATH_TO_ROOT;
 
-    /**
-     * @var string Path of the page in which has been written the content to parse.
-     */
-    protected $page_path = '';
+	/**
+	 * @var string Path of the page in which has been written the content to parse.
+	 */
+	protected $page_path = '';
 
-    /**
-     * @desc Builds a Parser object.
-     */
-    public function __construct()
-    {
-        $this->content = '';
-        $this->page_path = $_SERVER['PHP_SELF'];
-    }
+	/**
+	 * @desc Builds a Parser object.
+	 */
+	public function __construct()
+	{
+		$this->content = '';
+		$this->page_path = $_SERVER['PHP_SELF'];
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#get_content($addslashes)
-     */
-    public function get_content($addslashes = FormattingParser::ADD_SLASHES)
-    {
-        if ($addslashes)
-        {
-            return addslashes(trim($this->content));
-        }
-        else
-        {
-            return trim($this->content);
-        }
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_content()
+	 */
+	public function get_content()
+	{
+		return trim($this->content);
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#set_content($content, $stripslashes)
-     */
-    public function set_content($content, $stripslashes = FormattingParser::DONT_STRIP_SLASHES)
-    {
-        if ($stripslashes)
-        {
-            $this->content = stripslashes($content);
-        }
-        else
-        {
-            $this->content = $content;
-        }
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_content($content)
+	 */
+	public function set_content($content)
+	{
+		$this->content = $content;
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#set_path_to_root($path)
-     */
-    public function set_path_to_root($path)
-    {
-        $this->path_to_root = $path;
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_path_to_root($path)
+	 */
+	public function set_path_to_root($path)
+	{
+		$this->path_to_root = $path;
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#get_path_to_root()
-     */
-    public function get_path_to_root()
-    {
-        return $this->path_to_root;
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_path_to_root()
+	 */
+	public function get_path_to_root()
+	{
+		return $this->path_to_root;
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#set_page_path($page_path)
-     */
-    public function set_page_path($page_path)
-    {
-        $this->page_path = $page_path;
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_page_path($page_path)
+	 */
+	public function set_page_path($page_path)
+	{
+		$this->page_path = $page_path;
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see kernel/framework/content/formatting/parser/FormattingParser#get_page_path()
-     */
-    public function get_page_path()
-    {
-        return $this->page_path;
-    }
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_page_path()
+	 */
+	public function get_page_path()
+	{
+		return $this->page_path;
+	}
 
-    /**
-     * @desc Parses a nested tag
-     * @param string $match The regular expression which matches the tag to replace
-     * @param string $regex The regular expression which matches the replacement
-     * @param string $replace The replacement syntax.
-     */
-    protected function _parse_imbricated($match, $regex, $replace)
-    {
-        $nbr_match = substr_count($this->content, $match);
-        for ($i = 0; $i <= $nbr_match; $i++)
-        {
-            $this->content = preg_replace($regex, $replace, $this->content);
-        }
-    }
+	/**
+	 * @desc Parses a nested tag
+	 * @param string $match The regular expression which matches the tag to replace
+	 * @param string $regex The regular expression which matches the replacement
+	 * @param string $replace The replacement syntax.
+	 */
+	protected function _parse_imbricated($match, $regex, $replace)
+	{
+		$nbr_match = substr_count($this->content, $match);
+		for ($i = 0; $i <= $nbr_match; $i++)
+		{
+			$this->content = preg_replace($regex, $replace, $this->content);
+		}
+	}
 }
 
 ?>

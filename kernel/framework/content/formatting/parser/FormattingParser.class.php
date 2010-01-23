@@ -27,11 +27,6 @@
 
 interface FormattingParser
 {
-    const DONT_ADD_SLASHES = false;
-    const ADD_SLASHES = true;
-    const DONT_STRIP_SLASHES = false;
-    const STRIP_SLASHES = true;
-
     /**
      * Parses the content of the parser.
      */
@@ -39,19 +34,15 @@ interface FormattingParser
 
     /**
      * @desc Returns the content of the parser. If you called a method which parses the content, this content will be parsed.
-     * @param bool $addslashes FormattingParser::ADD_SLASHES if you want to escape the slashes in your string
-     * (you often save a parsed content into the database when you parse it), otherwise FormattingParser::DONT_ADD_SLASHES.
      * @return string The content of the parser.
      */
-    function get_content($addslashes = FormattingParser::ADD_SLASHES);
+    function get_content();
 
     /**
      * @desc Sets the content of the parser. When you will call a parse method, it will deal with this content.
      * @param string $content Content
-     * @param bool $stripslashes FormattingParser::DONT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser,
-     * otherwise FormattingParser::STRIP_SLASHES.
      */
-    function set_content($content, $stripslashes = FormattingParser::DONT_STRIP_SLASHES);
+    function set_content($content);
 
     /**
      * Sets the reference path for relative URL

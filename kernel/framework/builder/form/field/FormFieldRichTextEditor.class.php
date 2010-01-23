@@ -99,7 +99,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$parser = $this->formatter->get_parser();
 		$parser->set_content($value);
 		$parser->parse();
-		return $parser->get_content(ContentFormattingParser::DONT_ADD_SLASHES);
+		return $parser->get_content();
 	}
 	
 	private function get_raw_value()
@@ -126,7 +126,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$unparser = $this->formatter->get_unparser();
 		$unparser->set_content($value);
 		$unparser->parse();
-		return $unparser->get_content(ContentFormattingParser::DONT_ADD_SLASHES);
+		return $unparser->get_content();
 	}
 
 	protected function get_onblur_action()
