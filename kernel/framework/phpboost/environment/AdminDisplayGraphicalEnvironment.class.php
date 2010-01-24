@@ -139,7 +139,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
-			$template = new Template('admin/admin_connect.tpl');
+			$template = new Template('admin/AdminLoginController.tpl');
 
 			$template->assign_vars(array(
 				'L_XML_LANGUAGE' => $LANG['xml_lang'],
