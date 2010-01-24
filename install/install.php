@@ -471,8 +471,8 @@ switch($step)
 		//Enregistrement de la réponse
 		if (retrieve(POST, 'submit', false))
 		{
-			$server_url = TextHelper::strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-			$server_path = trim(TextHelper::strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
+			$server_url = TextHelper::strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+			$server_path = trim(TextHelper::strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
 			$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 			$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 			$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));

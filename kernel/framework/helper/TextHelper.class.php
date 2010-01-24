@@ -43,7 +43,7 @@ class TextHelper
 	 * If you want to escape them only if they have not been escaped automatically by the magic quotes option, use the ADDSLASHES_AUTO constant.
 	 * @return string The protected string.
 	 */
-	public static function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES_AUTO)
+	public static function strprotect($var, $html_protect = self::HTML_PROTECT, $addslashes = self::ADDSLASHES_AUTO)
 	{
 		$var = trim((string)$var);
 	
@@ -57,16 +57,16 @@ class TextHelper
 	
 		switch ($addslashes)
 		{
-			case ADDSLASHES_FORCE:
+			case self::ADDSLASHES_FORCE:
 				//On force l'échappement de caractères
 				$var = addslashes($var);
 				break;
-			case ADDSLASHES_NONE:
+			case self::ADDSLASHES_NONE:
 				//On ne touche pas la chaîne
 				$var = stripslashes($var);
 				break;
 				//Mode automatique
-			case ADDSLASHES_AUTO:
+			case self::ADDSLASHES_AUTO:
 			default:
 				//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
 				if (!MAGIC_QUOTES)

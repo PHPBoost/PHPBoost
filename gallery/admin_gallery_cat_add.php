@@ -85,7 +85,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 			$level = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . TextHelper::strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . TextHelper::strprotect(serialize($array_auth_all), TextHelper::HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('gallery');
