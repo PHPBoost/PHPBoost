@@ -74,7 +74,7 @@ class HTTPResponse
 	
 	public function HTTPResponse($status_code = 200)
 	{
-		$this->send_status_code($status_code);
+		$this->set_status_code($status_code);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ class HTTPResponse
 	 * @desc Send the status code
 	 * @param int $status_code
 	 */
-	private function send_status_code($status_code)
+	private function set_status_code($status_code)
 	{
 		if (isset(self::$status_list[$status_code]))
 		{
