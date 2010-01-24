@@ -46,7 +46,7 @@ class ModuleMiniMenu extends Menu
     public function __construct($module, $filename)
     {
         parent::__construct($module);
-        $this->filename = strprotect($filename);
+        $this->filename = TextHelper::strprotect($filename);
     }
     
     public function display($tpl = false)

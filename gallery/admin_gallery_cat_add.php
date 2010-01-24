@@ -43,8 +43,8 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 	$Cache->load('gallery');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
+	$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
+	$contents = !empty($_POST['desc']) ? TextHelper::strprotect($_POST['desc']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;   
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
 		
@@ -85,7 +85,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 			$level = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . TextHelper::strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('gallery');

@@ -185,7 +185,7 @@ class DownloadInterface extends ModuleInterface
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
             'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
             'U_IMG' => $result_data['image'],
-            'E_TITLE' => strprotect($result_data['title']),
+            'E_TITLE' => TextHelper::strprotect($result_data['title']),
             'TITLE' => $result_data['title'],
             'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),

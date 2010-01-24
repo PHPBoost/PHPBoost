@@ -52,7 +52,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 
-	$login = !empty($_POST['name']) ?  strprotect(substr($_POST['name'], 0, 25)) : '';
+	$login = !empty($_POST['name']) ?  TextHelper::strprotect(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
 	if (check_mail($user_mail))
 	{	
@@ -171,7 +171,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			
 			if (!empty($_POST['avatar']))
 			{
-				$path = strprotect($_POST['avatar']);
+				$path = TextHelper::strprotect($_POST['avatar']);
 				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
@@ -245,7 +245,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$array_field = is_array($field) ? $field : array();
 							$field = '';
 							foreach ($array_field as $value)
-								$field .= strprotect($value) . '|';
+								$field .= TextHelper::strprotect($value) . '|';
 						}
 						elseif ($row['field'] == 6)
 						{
@@ -254,12 +254,12 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$array_possible_values = explode('|', $row['possible_values']);
 							foreach ($array_possible_values as $value)
 							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($value) . '|' : '';
+								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? TextHelper::strprotect($value) . '|' : '';
 								$i++;
 							}
 						}
 						else
-							$field = strprotect($field);
+							$field = TextHelper::strprotect($field);
 							
 						if (!empty($field))
 						{
@@ -293,7 +293,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 }
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
-	$login = !empty($_POST['login2']) ? strprotect(substr($_POST['login2'], 0, 25)) : '';
+	$login = !empty($_POST['login2']) ? TextHelper::strprotect(substr($_POST['login2'], 0, 25)) : '';
 	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
 	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
 	$password_hash = !empty($password) ? strhash($password) : '';

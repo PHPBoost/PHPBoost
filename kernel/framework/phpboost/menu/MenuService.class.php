@@ -437,7 +437,7 @@ class MenuService
 		global $Sql;
 		$query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MiniMenu::MINI_MENU__CLASS) . "' AND
-            title LIKE '" . strtolower(strprotect($menu))  . "/%';";
+            title LIKE '" . strtolower(TextHelper::strprotect($menu))  . "/%';";
 		$result = $Sql->query_while($query, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -557,7 +557,7 @@ class MenuService
 		global $Sql;
 		$query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS) . "' AND
-            title LIKE '" . strtolower(strprotect($module))  . "/%';";
+            title LIKE '" . strtolower(TextHelper::strprotect($module))  . "/%';";
 		$result = $Sql->query_while($query, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{

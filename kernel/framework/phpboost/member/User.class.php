@@ -211,11 +211,11 @@ class User
 		{
 			if ($this->user_data['level'] > -1)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . TextHelper::strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
 			}
 			else
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . TextHelper::strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
 			}
 		}
 	}
@@ -239,11 +239,11 @@ class User
 
 		if ($this->user_data['level'] > -1)
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . TextHelper::strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
 		}
 		else
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_lang = '" . strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_lang = '" . TextHelper::strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
 		}
 	}
 

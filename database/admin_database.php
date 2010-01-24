@@ -118,7 +118,7 @@ if (!empty($_GET['query']))
 				//On parse les valeurs de sortie
 				foreach ($row as $field_name => $field_value)
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => strprotect($field_value),
+					'FIELD' => TextHelper::strprotect($field_value),
 					'CLASS' => 'row1',
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));
@@ -151,7 +151,7 @@ elseif ($action == 'restore')
 	{
 		$Session->csrf_get_protect(); //Protection csrf
 		
-		$file = strprotect($_GET['del']);
+		$file = TextHelper::strprotect($_GET['del']);
 		$file_path = '../cache/backup/' . $file;
 		//Si le fichier existe
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
@@ -171,7 +171,7 @@ elseif ($action == 'restore')
 	{
 		$Session->csrf_get_protect(); //Protection csrf
 		
-		$file = strprotect($_GET['file']);
+		$file = TextHelper::strprotect($_GET['file']);
 		$file_path = '../cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{

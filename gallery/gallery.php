@@ -572,7 +572,7 @@ else
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-				$html_protected_name = strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = TextHelper::strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);
 
 				//Affichage de l'image et de ses informations.
 				$Template->assign_vars(array(
@@ -693,13 +693,13 @@ else
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
 
-				$html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = TextHelper::strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', $row['name']) . '" class="gallery_image" />',
 					'PATH' => $row['path'],
-					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
+					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . Comments::com_display_link($row['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',

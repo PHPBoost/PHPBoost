@@ -108,7 +108,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 		case TINTEGER:
 			return (int)$var;
 		case TSTRING:
-			return strprotect($var); //Chaine protégée.
+			return TextHelper::strprotect($var); //Chaine protégée.
 		case TSTRING_UNCHANGE:
 			if (MAGIC_QUOTES)
 			{
@@ -130,7 +130,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			$var = (double)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
-			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+			return TextHelper::strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
 		case TSTRING_AS_RECEIVED:
 			return (string)$var;
 		case TARRAY:

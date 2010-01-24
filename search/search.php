@@ -59,7 +59,7 @@ $Template->assign_vars(Array(
     'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
     'L_SEARCH_SPECIALIZED_FORM' => $LANG['search_specialized_form'],
     'L_SEARCH_SPECIALIZED_FORM_EXPLAIN' => $LANG['search_specialized_form_explain'],
-    'L_WARNING_LENGTH_STRING_SEARCH' => to_js_string($LANG['warning_length_string_searched']),
+    'L_WARNING_LENGTH_STRING_SEARCH' => TextHelper::to_js_string($LANG['warning_length_string_searched']),
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
     'L_SIMPLE_SEARCH' => $LANG['simple_search'],

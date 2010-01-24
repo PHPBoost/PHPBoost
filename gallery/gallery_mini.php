@@ -135,7 +135,7 @@ function gallery_mini($position, $block)
     		$tpl->assign_block_vars('pics_mini', array(
     			'ID' => $i,
     			'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
-    			'NAME' => strprotect($row['name'],HTML_PROTECT,ADDSLASHES_FORCE),
+    			'NAME' => TextHelper::strprotect($row['name'],HTML_PROTECT,ADDSLASHES_FORCE),
     			'HEIGHT' => $row['height'],
     			'WIDTH' => $row['width'],
     			'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')

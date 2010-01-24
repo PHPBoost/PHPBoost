@@ -85,8 +85,8 @@ lateral_menu();
 $tpl = new Template('admin/menus/feed.tpl');
 
 $tpl->assign_vars(array(
-	'JL_REQUIRE_TITLE' => to_js_string($LANG['require_title']),
-	'JL_REQUIRE_FEED' => to_js_string($LANG['choose_feed_in_list']),
+	'JL_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
+	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
 	'L_FEED' => $LANG['feed'],
 	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],
 	'L_NAME' => $LANG['name'],

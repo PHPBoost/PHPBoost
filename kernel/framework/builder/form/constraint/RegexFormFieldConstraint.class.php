@@ -50,7 +50,7 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 		{
 			$js_message = LangLoader::get_message('doesnt_match_regex', 'builder-form-Validator');
 		}
-		$this->js_message = to_js_string($js_message);
+		$this->js_message = TextHelper::to_js_string($js_message);
 
 	}
 	
@@ -72,13 +72,13 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'regexFormFieldOnblurValidator(' . to_js_string($field->get_id()) .
+		return 'regexFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_id()) .
 			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'regexFormFieldOnsubmitValidator(' . to_js_string($field->get_id()) .
+		return 'regexFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_id()) .
 			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 }

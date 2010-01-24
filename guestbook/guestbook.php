@@ -70,11 +70,11 @@ if ($guestbook && empty($id_get)) //Enregistrement
 			}
 
 			$guestbook_contents = FormatingHelper::strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-			if (!check_nbr_links($guestbook_pseudo, 0)) //Nombre de liens max dans le pseudo.
+			if (!TextHelper::check_nbr_links($guestbook_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			}
-			if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
+			if (!TextHelper::check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 			{
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			}
@@ -158,7 +158,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 			if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 			{
 				$guestbook_contents = FormatingHelper::strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-				if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
+				if (!TextHelper::check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 				{
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 				}
@@ -292,11 +292,11 @@ else //Affichage.
 		//Pseudo.
 		if (!$is_guest)
 		{
-			$guestbook_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			$guestbook_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		}
 		else
 		{
-			$guestbook_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+			$guestbook_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 		}
 
 		//Rang de l'utilisateur.

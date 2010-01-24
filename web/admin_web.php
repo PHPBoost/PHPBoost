@@ -266,7 +266,7 @@ else
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$title = $row['title'];
-		$title = strlen($title) > 45 ? substr_html($title, 0, 45) . '...' : $title;
+		$title = strlen($title) > 45 ? TextHelper::substr_html($title, 0, 45) . '...' : $title;
 
 		$Template->assign_block_vars('web', array(
 			'IDWEB' => $row['id'],

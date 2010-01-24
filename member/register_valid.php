@@ -40,7 +40,7 @@ $valid = retrieve(POST, 'valid', false);
 if ($valid && !empty($user_mail) && check_mail($user_mail))
 {
 	//Info de connexion
-	$login = !empty($_POST['log']) ? strprotect(substr($_POST['log'], 0, 25)) : '';
+	$login = !empty($_POST['log']) ? TextHelper::strprotect(substr($_POST['log'], 0, 25)) : '';
 	$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 	$password_hash = strhash($password);
 	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNCHANGE);
@@ -205,7 +205,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 								$array_field = is_array($field) ? $field : array();
 								$field = '';
 								foreach ($array_field as $value)
-									$field .= strprotect($value) . '|';
+									$field .= TextHelper::strprotect($value) . '|';
 							}
 							elseif ($row['field'] == 6)
 							{
@@ -221,7 +221,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 							}
 							else
-								$field = strprotect($field);
+								$field = TextHelper::strprotect($field);
 								
 							if (!empty($field))
 							{

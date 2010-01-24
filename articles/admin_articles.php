@@ -115,7 +115,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$aprob = $LANG['no'];
 
 	//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-	$title = strlen($row['title']) > 45 ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
+	$title = strlen($row['title']) > 45 ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
 
 	$visible = '';
 	if ($row['start'] > 0)

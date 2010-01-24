@@ -187,20 +187,20 @@ $tpl->assign_vars(array(
     'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
-    'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(
+    'J_AUTH_FORM' => TextHelper::to_js_string(Authorizations::generate_select(
         AUTH_MENUS, array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' =>AUTH_MENUS),
         array(), 'menu_element_##UID##_auth'
      )),
-    'JL_AUTHORIZATIONS' => to_js_string($LANG['authorizations']),
-    'JL_PROPERTIES' => to_js_string($LANG['properties']),
-    'JL_NAME' => to_js_string($LANG['name']),
-    'JL_URL' => to_js_string($LANG['url']),
-    'JL_IMAGE' => to_js_string($LANG['img']),
-    'JL_DELETE_ELEMENT' => to_js_string($LANG['confirm_delete_element']),
-    'JL_MORE' => to_js_string($LANG['more_details']),
-    'JL_DELETE' => to_js_string($LANG['delete']),
-    'JL_ADD_SUB_ELEMENT' => to_js_string($LANG['add_sub_element']),
-    'JL_ADD_SUB_MENU' => to_js_string($LANG['add_sub_menu']),
+    'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),
+    'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
+    'JL_NAME' => TextHelper::to_js_string($LANG['name']),
+    'JL_URL' => TextHelper::to_js_string($LANG['url']),
+    'JL_IMAGE' => TextHelper::to_js_string($LANG['img']),
+    'JL_DELETE_ELEMENT' => TextHelper::to_js_string($LANG['confirm_delete_element']),
+    'JL_MORE' => TextHelper::to_js_string($LANG['more_details']),
+    'JL_DELETE' => TextHelper::to_js_string($LANG['delete']),
+    'JL_ADD_SUB_ELEMENT' => TextHelper::to_js_string($LANG['add_sub_element']),
+    'JL_ADD_SUB_MENU' => TextHelper::to_js_string($LANG['add_sub_menu']),
 ));
 
 //Localisation possibles.

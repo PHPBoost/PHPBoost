@@ -55,14 +55,14 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'integerIntervalFormFieldOnblurValidator(' . to_js_string($field->get_html_id()) . ', 
-		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
+		return 'integerIntervalFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', 
+		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . TextHelper::to_js_string($this->js_message) . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
 		return 'integerIntervalFormFieldOnsubmitValidator("' . $field->get_html_id() . '", 
-		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . to_js_string($this->js_message) . ')';
+		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . TextHelper::to_js_string($this->js_message) . ')';
 	}
 }
 

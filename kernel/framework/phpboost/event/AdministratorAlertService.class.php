@@ -87,12 +87,12 @@ class AdministratorAlertService
 		
 		if ($type != null)
 		{
-		    $criterias[] = "type = '" . strprotect($type) . "'";
+		    $criterias[] = "type = '" . TextHelper::strprotect($type) . "'";
 		}
 			
 		if ($identifier != null)
 		{
-			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+			$criterias[] = "identifier = '" . TextHelper::strprotect($identifier). "'";
 		}
 		
 		//Restrictive criteria

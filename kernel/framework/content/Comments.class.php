@@ -50,8 +50,8 @@ class Comments
 	 */
 	 function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
 	{
-		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
-		list($this->script, $this->idprov, $this->vars, $this->path) = array(strprotect($script), numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
+		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
+		list($this->script, $this->idprov, $this->vars, $this->path) = array(TextHelper::strprotect($script), numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 		
 		$this->is_kernel_script = $is_kernel_script;
 	}
@@ -66,7 +66,7 @@ class Comments
 	{
 		global $Sql, $User;
 		
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . TextHelper::strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . DB_TABLE_COM);
 		
 		//Incrémente le nombre de commentaire dans la table du script concerné.
@@ -245,9 +245,9 @@ class Comments
 						}
 						$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
-						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
+						if (!TextHelper::check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
-						if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
+						if (!TextHelper::check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 						
 						//Récupération de l'adresse de la page.
@@ -333,7 +333,7 @@ class Comments
 						{
 							$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
 							
-							if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
+							if (!TextHelper::check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 
 							$this->update($contents, $login);
@@ -529,9 +529,9 @@ class Comments
 					
 					//Pseudo.
 					if (!$is_guest)
-						$com_pseudo = '<a class="msg_link_pseudo" href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+						$com_pseudo = '<a class="msg_link_pseudo" href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 					else
-						$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+						$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 					
 					//Rang de l'utilisateur.
 					$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
@@ -604,7 +604,7 @@ class Comments
 					if (!empty($row['user_local']))
 					{
 						$user_local = $LANG['place'] . ': ' . $row['user_local'];
-						$user_local = $user_local > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
+						$user_local = $user_local > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
 					}
 					else $user_local = '';
 						
@@ -695,12 +695,12 @@ class Comments
 		{
 			if ($info_module['com'] == $this->script)
 			{
-				$info_sql_module = $Sql->query_array(PREFIX . strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$info_sql_module = $Sql->query_array(PREFIX . TextHelper::strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 				if ($info_sql_module['id'] == $this->idprov)
 					$check_script = true;
 			}
 		}
-		return $check_script ? array(strprotect($info_module['com']), $info_sql_module['nbr_com'], (bool)$info_sql_module['lock_com']) : array('', 0, 0);
+		return $check_script ? array(TextHelper::strprotect($info_module['com']), $info_sql_module['nbr_com'], (bool)$info_sql_module['lock_com']) : array('', 0, 0);
 	}
 	
 	//Initialisation des paramètres quand il s'agit du noyau qui appelle

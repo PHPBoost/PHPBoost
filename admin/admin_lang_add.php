@@ -41,7 +41,7 @@ if ($install)
 	$lang = '';
 	foreach ($_POST as $key => $value)
 		if ($value == $LANG['install'])
-			$lang = strprotect($key);
+			$lang = TextHelper::strprotect($key);
 			
 	$secure = retrieve(POST, $lang . 'secure', -1);
 	$activ = retrieve(POST, $lang . 'activ', 0);
@@ -71,7 +71,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . TextHelper::strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_lang))
 		{
 			

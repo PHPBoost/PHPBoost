@@ -347,7 +347,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			
 	//Localisation.
 	if (!empty($row['user_local'])) 
-		$user_local = $LANG['place'] . ': ' . (strlen($row['user_local']) > 15 ? substr_html($row['user_local'], 0, 15) . '...<br />' : $row['user_local'] . '<br />');	
+		$user_local = $LANG['place'] . ': ' . (strlen($row['user_local']) > 15 ? TextHelper::substr_html($row['user_local'], 0, 15) . '...<br />' : $row['user_local'] . '<br />');	
 	else 
 		$user_local = '';
 
@@ -361,7 +361,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
-		'FORUM_USER_LOGIN' => wordwrap_html($row['login'], 13),			
+		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['login'], 13),			
 		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse($row['contents']),
 		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],

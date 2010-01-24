@@ -42,7 +42,7 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
 {
     $id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
     $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
-    $name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
+    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
 
     if (!empty($user_id) && $User->get_attribute('user_id') != $user_id)
     {
@@ -63,9 +63,9 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
 elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
 {
     $id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
-    $name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
+    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
     $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
-    $previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
+    $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 
     if (!empty($id_folder) && !empty($name))
     {
@@ -92,8 +92,8 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
 {
     $id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
     $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
-    $name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
-    $previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
+    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
+    $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 
     if (!empty($id_file) && !empty($name))
     {

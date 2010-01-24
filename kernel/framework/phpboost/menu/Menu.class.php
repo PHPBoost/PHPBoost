@@ -89,7 +89,7 @@ abstract class Menu
 	 */
     public function __construct($title)
     {
-       $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
+       $this->title = TextHelper::strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
     }
     
     /**
@@ -163,7 +163,7 @@ abstract class Menu
     /**
 	 * @param string $image the value to set
 	 */
-    public function set_title($title) { $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE); }
+    public function set_title($title) { $this->title = TextHelper::strprotect($title, HTML_PROTECT, ADDSLASHES_NONE); }
     /**
 	 * @param array $url the authorisation array to set
 	 */
