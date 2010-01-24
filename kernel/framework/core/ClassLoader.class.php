@@ -93,7 +93,7 @@ class ClassLoader
 				'/',
 				'/kernel/framework/phpboost/cache',
 				'/kernel/framework/io/data/cache',
-				'/kernel/framework/io/request/upload',
+				'/kernel/framework/io/http/upload',
 				'/kernel/framework/core/lang',
 			);
 
