@@ -121,9 +121,9 @@ class HTTPResponse
 	 */
 	private function send_status_code($status_code)
 	{
-		if (isset($this->status_list[$status_code]))
+		if (isset(self::$status_list[$status_code]))
 		{
-			header(PROTOCOL . $status_code . $this->status_list[$status_code]);
+			header(self::PROTOCOL . $status_code . self::$status_list[$status_code]);
 		}
 	}
 }
