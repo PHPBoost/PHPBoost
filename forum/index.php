@@ -184,7 +184,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('forums_list.subcats', array(
 			'IMG_ANNOUNCE' => $img_announce,
 			'NAME' => $row['name'],
-			'DESC' => second_parse($row['subname']),
+			'DESC' => FormatingHelper::second_parse($row['subname']),
 			'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
 			'NBR_TOPIC' => $row['nbr_topic'],
 			'NBR_MSG' => $row['nbr_msg'],

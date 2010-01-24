@@ -187,7 +187,7 @@ class DownloadInterface extends ModuleInterface
             'U_IMG' => $result_data['image'],
             'E_TITLE' => strprotect($result_data['title']),
             'TITLE' => $result_data['title'],
-            'SHORT_DESCRIPTION' => second_parse($result_data['short_contents']),
+            'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
             'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
@@ -238,7 +238,7 @@ class DownloadInterface extends ModuleInterface
             $item->set_title($row['title']);
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(second_parse($row['contents']));
+            $item->set_desc(FormatingHelper::second_parse($row['contents']));
             $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($row['image']);
             $item->set_auth($cats->compute_heritated_auth($row['idcat'], DOWNLOAD_READ_CAT_AUTH_BIT, Authorizations::AUTH_PARENT_PRIORITY));

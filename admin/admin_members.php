@@ -239,7 +239,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					{
 						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
 						if ($row['field'] == 2)
-							$field = strparse($field);
+							$field = FormatingHelper::strparse($field);
 						elseif ($row['field'] == 4)
 						{
 							$array_field = is_array($field) ? $field : array();
@@ -648,8 +648,8 @@ elseif (!empty($id))
 		'BORN_YEAR' => $born_year,
 		'OCCUPATION' => $mbr['user_occupation'],
 		'HOBBIES' => $mbr['user_hobbies'],
-		'SIGN' => FormatingHelper::unparse($mbr['user_sign'], FormatingHelper::NO_EDITOR_UNPARSE),
-		'BIOGRAPHY' => FormatingHelper::unparse($mbr['user_desc'], FormatingHelper::NO_EDITOR_UNPARSE),
+		'SIGN' => FormatingHelper::FormatingHelper::unparse($mbr['user_sign'], FormatingHelper::NO_EDITOR_UNPARSE),
+		'BIOGRAPHY' => FormatingHelper::FormatingHelper::unparse($mbr['user_desc'], FormatingHelper::NO_EDITOR_UNPARSE),
 		'USER_AVATAR' => !empty($mbr['user_avatar']) ? '<img src="' . $mbr['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',
@@ -752,7 +752,7 @@ elseif (!empty($id))
 				$field = '<label><input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
 				break;
 				case 2:
-				$field = '<label><textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . unparse($row[$row['field_name']]) . '</textarea></label>';
+				$field = '<label><textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . FormatingHelper::unparse($row[$row['field_name']]) . '</textarea></label>';
 				break;
 				case 3:
 				$field = '<label><select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';

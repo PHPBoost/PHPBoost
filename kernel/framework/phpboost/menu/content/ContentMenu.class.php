@@ -64,7 +64,7 @@ class ContentMenu extends Menu
             'C_DISPLAY_TITLE' => $this->display_title,
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
             'TITLE' => $this->title,
-        	'CONTENT' => second_parse($this->content)
+        	'CONTENT' => FormatingHelper::second_parse($this->content)
         ));
         return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
@@ -83,7 +83,7 @@ class ContentMenu extends Menu
     /**
      * @param string $content the content to set
      */
-    public function set_content($content) { $this->content = strparse($content, array(), false); }
+    public function set_content($content) { $this->content = FormatingHelper::strparse($content, array(), false); }
     
     ## Getters ##
     /**

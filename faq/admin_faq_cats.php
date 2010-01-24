@@ -154,7 +154,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	if ($id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS))	
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
-			'DESCRIPTION' => unparse($FAQ_CATS[$id_edit]['description']),
+			'DESCRIPTION' => FormatingHelper::unparse($FAQ_CATS[$id_edit]['description']),
 			'IMAGE' => $FAQ_CATS[$id_edit]['image'],
 			'CATEGORIES_TREE' => $faq_categories->build_select_form($FAQ_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit

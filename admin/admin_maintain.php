@@ -105,7 +105,7 @@ else //Sinon on rempli le formulaire
 		'KERNEL_EDITOR' => display_editor(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'AUTH_WEBSITE' => Authorizations::generate_select(AUTH_MAINTAIN, (!empty($CONFIG['maintain_auth']) ? $CONFIG['maintain_auth'] : array())),
-		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
+		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? FormatingHelper::unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_DELAY_DISABLED' => ($CONFIG['maintain_delay'] == 0) ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_ENABLED' => ($CONFIG['maintain_display_admin'] == 1) ? 'checked="checked"' : '',

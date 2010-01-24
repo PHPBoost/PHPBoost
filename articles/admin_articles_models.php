@@ -234,7 +234,7 @@ elseif ($new_model XOR $id_edit > 0)
 
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $models['name'],
-			'DESCRIPTION' => unparse($models['description']),
+			'DESCRIPTION' => FormatingHelper::unparse($models['description']),
 			'ID_MODEL'=>$models['id'],
 			'TAB'=> $models['pagination_tab'] == 1 ? ' checked ' : '',
 			'NO_TAB'=>  $models['pagination_tab'] != 1 ? ' checked ' : '',
@@ -555,7 +555,7 @@ else
 		$tpl->assign_block_vars('models', array(
 			'NAME' => $row['name'],
 			'ID_MODEL'=>$row['id'],
-			'DESC' => second_parse($row['description']),
+			'DESC' => FormatingHelper::second_parse($row['description']),
 			'USE_TAB'=> $row['pagination_tab'] == 1 ? $LANG['yes'] :  $LANG['no'],
 			'TPL_ARTICLES' => $row['tpl_articles'],
 			'EXTEND_FIELD'=>!empty($extend_field) ? $extend_field : 'Aucun',

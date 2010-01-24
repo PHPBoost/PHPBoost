@@ -236,7 +236,7 @@ if ($edit_file_id > 0)
 			$file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
-				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
+				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . FormatingHelper::strparse($file_contents) . "', short_contents = '" . FormatingHelper::strparse($file_short_contents) . "', " .
 				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
 				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = " . (int)$file_approved . " " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
@@ -315,7 +315,7 @@ if ($edit_file_id > 0)
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
@@ -352,7 +352,7 @@ if ($edit_file_id > 0)
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
+			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
@@ -400,8 +400,8 @@ if ($edit_file_id > 0)
 			'C_CONTRIBUTION' => false,
 			'TITLE' => $file_infos['title'],
 			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,
-			'DESCRIPTION' => unparse($file_infos['contents']),
-			'SHORT_DESCRIPTION' => unparse($file_infos['short_contents']),
+			'DESCRIPTION' => FormatingHelper::unparse($file_infos['contents']),
+			'SHORT_DESCRIPTION' => FormatingHelper::unparse($file_infos['short_contents']),
 			'FILE_IMAGE' => $file_infos['image'],
 			'URL' => $file_infos['url'],
 			'SIZE_FORM' => $file_infos['size'],
@@ -465,7 +465,7 @@ else
             $file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, users_note) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '')", __LINE__, __FILE__);
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . FormatingHelper::strparse($file_contents) . "', '" . FormatingHelper::strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			
@@ -562,7 +562,7 @@ else
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
@@ -574,7 +574,7 @@ else
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
 			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
-			'CONTRIBUTION_COUNTERPART_PREVIEW' => second_parse(stripslashes($contribution_counterpart)),
+			'CONTRIBUTION_COUNTERPART_PREVIEW' => FormatingHelper::second_parse(stripslashes($contribution_counterpart)),
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
@@ -604,7 +604,7 @@ else
 			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
+			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',

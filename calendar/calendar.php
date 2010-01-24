@@ -251,7 +251,7 @@ if ($checkdate === true && empty($id) && !$add)
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
-				'CONTENTS' => second_parse($row['contents']),
+				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				'COM' => Comments::com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
@@ -358,7 +358,7 @@ elseif (!empty($id))
 				'YEAR_DATE' => !empty($row['timestamp']) ? gmdate_format('Y', $row['timestamp']) : '',
 				'HOUR' => !empty($row['timestamp']) ? gmdate_format('h', $row['timestamp']) : '',
 				'MIN' => !empty($row['timestamp']) ? gmdate_format('i', $row['timestamp']) : '',
-				'CONTENTS' => unparse($row['contents']),
+				'CONTENTS' => FormatingHelper::unparse($row['contents']),
 				'TITLE'	 => $row['title'],
 				'L_REQUIRE_TITLE' => $LANG['require_title'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],

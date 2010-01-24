@@ -160,7 +160,7 @@ class FaqInterface extends ModuleInterface
         $tpl->assign_vars(array(
             'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result_data['idcat'] . '&amp;question=' . $result_data['id'] . '#q' . $result_data['id'],
             'QUESTION' => $result_data['question'],
-            'ANSWER' => second_parse($result_data['answer'])
+            'ANSWER' => FormatingHelper::second_parse($result_data['answer'])
         ));
         
         return $tpl->parse(Template::TEMPLATE_PARSER_STRING);

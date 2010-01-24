@@ -74,7 +74,7 @@ else
 		'PAGINATION' => !empty($NEWS_CONFIG['pagination_news']) ? $NEWS_CONFIG['pagination_news'] : 6,
 		'PAGINATION_ARCH' => !empty($NEWS_CONFIG['pagination_arch']) ? $NEWS_CONFIG['pagination_arch'] : 15,
 		'TITLE' => !empty($NEWS_CONFIG['edito_title']) ? $NEWS_CONFIG['edito_title'] : '',
-		'CONTENTS' => !empty($NEWS_CONFIG['edito']) ? unparse($NEWS_CONFIG['edito']) : '',
+		'CONTENTS' => !empty($NEWS_CONFIG['edito']) ? FormatingHelper::unparse($NEWS_CONFIG['edito']) : '',
 		'BLOCK_ENABLED' => ($NEWS_CONFIG['type'] == '1') ? 1 : 0,
 		'BLOCK_DISABLED' => ($NEWS_CONFIG['type'] == '0') ? 1 : 0,
 		'PAGIN_ENABLED' => ($NEWS_CONFIG['activ_pagin'] == '1') ? 1 : 0,

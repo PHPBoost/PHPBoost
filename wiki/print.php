@@ -72,7 +72,7 @@ $template->assign_vars(array(
 	'PAGE_TITLE' => $article_infos['title'] . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),
 	'TITLE' => $article_infos['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENT' => second_parse($article_infos['content'])
+	'CONTENT' => FormatingHelper::second_parse($article_infos['content'])
 ));
 
 $template->parse();

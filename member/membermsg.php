@@ -92,7 +92,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
-				'CONTENTS' => ucfirst(second_parse($row['contents'])),
+				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 				'U_TITLE' => url($row['path'] . '#' . $row['script'])
 			));
 		}

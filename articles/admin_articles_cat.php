@@ -147,7 +147,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
-			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
+			'DESCRIPTION' => FormatingHelper::unparse($ARTICLES_CAT[$id_edit]['description']),
 			'MODELS'=>$models,
 			'IMG_PATH' => $img_direct_path ? $ARTICLES_CAT[$id_edit]['image'] : '',
 			'IMG_ICON' => !empty($ARTICLES_CAT[$id_edit]['image']) ? '<img src="' . $ARTICLES_CAT[$id_edit]['image'] . '" alt="" class="valign_middle" />' : '',		
@@ -211,7 +211,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'IMG_LIST' => $image_list,
 			'TPL_CAT_LIST'=>$tpl_cat_list,
 			'MODELS'=>$models,
-			'IMG_PREVIEW' => second_parse_url($img_default),
+			'IMG_PREVIEW' => FormatingHelper::second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => 'false',

@@ -211,7 +211,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	
 	$Template->assign_block_vars('post_convers.show_convers', array(
 		'DATE' => gmdate_format('date_format'),
-		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents'])))
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents'])))
 	));
 	
 	$Template->assign_block_vars('post_convers.user_id_dest', array(
@@ -241,7 +241,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	
 	$Template->assign_block_vars('show_pm', array(
 		'DATE' => gmdate_format('date_format'),
-		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
 		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
@@ -468,7 +468,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				
 				$Template->assign_block_vars('edit_pm', array(
-					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
+					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . $Session->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 					'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
@@ -478,7 +478,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				{
 					$Template->assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => gmdate_format('date_format'),
-						'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
+						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
 					));
 				}
 
@@ -667,7 +667,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$Template->assign_block_vars('pm.msg', array(
 			'C_MODERATION_TOOLS' => (($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'ID' => $row['id'],
-			'CONTENTS' => second_parse($row['contents']),
+			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
@@ -683,7 +683,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
 			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . second_parse($row['user_sign']) : '',
+			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
 			'U_USER_ID' => ($is_admin) ? '' : url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -705,7 +705,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$quote_msg = $Sql->query_array(DB_TABLE_PM_MSG, 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
 		$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);
 		
-		$contents = '[quote=' . $pseudo . ']' . unparse($quote_msg['contents']) . '[/quote]';
+		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 	}
 	else
 		$contents = '';

@@ -90,7 +90,7 @@ class NewsletterService
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
-		$message = stripslashes(strparse(addslashes($message)));
+		$message = stripslashes(FormatingHelper::strparse(addslashes($message)));
 
 		$message = ContentSecondFormattingParser::export_html_text($message);
 		

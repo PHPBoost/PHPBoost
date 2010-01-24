@@ -135,7 +135,7 @@ if ($edit)
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
-		'CONTENTS' => !empty($content) ? unparse($content) : '',
+		'CONTENTS' => !empty($content) ? FormatingHelper::unparse($content) : '',
 	    'DISPLAY_TITLE_CHECKED' => $menu->get_display_title() ? 'checked="checked"' : ''
 	));
 }

@@ -50,7 +50,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 	$status = retrieve(POST, 'status', 0);
 
 	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-	$subname = strparse($subname, array(
+	$subname = FormatingHelper::strparse($subname, array(
 	    4 => 'title',
 	    5 => 'style',
 	    8 => 'quote',

@@ -199,7 +199,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 							}
 						
 							if ($row['field'] == 2)
-								$field = strparse($field);
+								$field = FormatingHelper::strparse($field);
 							elseif ($row['field'] == 4)
 							{
 								$array_field = is_array($field) ? $field : array();

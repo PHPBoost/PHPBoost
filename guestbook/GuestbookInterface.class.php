@@ -62,7 +62,7 @@ class GuestbookInterface extends ModuleInterface
 		" . $this->sql_querier->limit(0, 10), __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(nl2br(substr_html(strip_tags(second_parse($row['contents'])), 0, 150)), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
+			$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(nl2br(substr_html(strip_tags(FormatingHelper::second_parse($row['contents'])), 0, 150)), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
 		}
 		$this->sql_querier->query_close($result);
 		

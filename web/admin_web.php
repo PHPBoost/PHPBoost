@@ -51,7 +51,7 @@ if (!empty($id) && !$del)
 	$Template->assign_vars(array(
 		'IDWEB' => $row['id'],
 		'NAME' => $row['title'],
-		'CONTENTS' => unparse($row['contents']),
+		'CONTENTS' => FormatingHelper::unparse($row['contents']),
 		'URL' => $row['url'],
 		'COMPT' => $row['compt'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -124,7 +124,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
-		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,

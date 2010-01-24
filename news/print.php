@@ -50,7 +50,7 @@ if ($id > 0) //Si on connait son titre
 		'PAGE_TITLE' => $news['title'] . ' - ' . $CONFIG['site_name'],
 		'TITLE' => $news['title'],
 		'L_XML_LANGUAGE' => $LANG['xml_lang'],
-		'CONTENT' => second_parse($news['contents']) . '<br />' . second_parse($news['extend_contents'])
+		'CONTENT' => FormatingHelper::second_parse($news['contents']) . '<br />' . FormatingHelper::second_parse($news['extend_contents'])
 	));
 	
 	$template->parse();

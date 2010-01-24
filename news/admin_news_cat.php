@@ -184,9 +184,9 @@ elseif ($new_cat XOR $id_edit > 0)
 
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $NEWS_CAT[$id_edit]['name'],
-			'DESCRIPTION' => unparse($NEWS_CAT[$id_edit]['description']),
+			'DESCRIPTION' => FormatingHelper::unparse($NEWS_CAT[$id_edit]['description']),
 			'IMAGE' => $NEWS_CAT[$id_edit]['image'],
-			'IMG_PREVIEW' => second_parse_url($NEWS_CAT[$id_edit]['image']),
+			'IMG_PREVIEW' => FormatingHelper::second_parse_url($NEWS_CAT[$id_edit]['image']),
 			'CATEGORIES_TREE' => $news_categories->build_select_form($NEWS_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
@@ -207,7 +207,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
-			'IMG_PREVIEW' => second_parse_url($img_default),
+			'IMG_PREVIEW' => FormatingHelper::second_parse_url($img_default),
 			'CATEGORIES_TREE' => $news_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => 'false',

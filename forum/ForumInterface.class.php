@@ -325,7 +325,7 @@ class ForumInterface extends ModuleInterface
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
             'TITLE' => ucfirst($result_data['title']),
             'DATE' => gmdate_format('d/m/y', $result_data['date']),
-            'CONTENTS' => second_parse($result_data['contents']),
+            'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
             'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" />'
             ));
 
@@ -419,7 +419,7 @@ class ForumInterface extends ModuleInterface
             );
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(second_parse($row['contents']));
+            $item->set_desc(FormatingHelper::second_parse($row['contents']));
             $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
             $item->set_auth(unserialize($row['auth']));
 

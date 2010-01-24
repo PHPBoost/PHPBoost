@@ -34,7 +34,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	$user_account_config = UserAccountsConfig::load();
 	
 	$user_account_config->set_registration_enabled(retrieve(POST, 'activ_register', false));
-	$user_account_config->set_welcome_message(stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED))));
+	$user_account_config->set_welcome_message(stripslashes(FormatingHelper::strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED))));
 	$user_account_config->set_member_accounts_validation_method(retrieve(POST, 'activ_mbr', 0));
 	$user_account_config->set_registration_captcha_enabled(retrieve(POST, 'verif_code', false));
 	$user_account_config->set_registration_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
@@ -95,7 +95,7 @@ else
 		'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
 		'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
 		'AVATAR_URL' => $user_account_config->get_default_avatar_name(),
-		'CONTENTS' => unparse($user_account_config->get_welcome_message()),
+		'CONTENTS' => FormatingHelper::unparse($user_account_config->get_welcome_message()),
 		'KERNEL_EDITOR' => display_editor(),
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
 		'L_KB' => $LANG['unit_kilobytes'],

@@ -50,7 +50,7 @@ if (!empty($_POST['valid']) && !empty($id))
 	$status = retrieve(POST, 'status', 1);
 	$aprob = retrieve(POST, 'aprob', 0);
 
-	$subname = strparse($subname, array(
+	$subname = FormatingHelper::strparse($subname, array(
 	    4 => 'title',
 	    5 => 'style',
 	    8 => 'quote',
@@ -296,7 +296,7 @@ elseif (!empty($id))
 		'CATEGORIES' => $forums,
 		'NAME' => $forum_info['name'],
 		'URL' => $forum_info['url'],
-		'DESC' => unparse($forum_info['subname']),
+		'DESC' => FormatingHelper::unparse($forum_info['subname']),
 		'CHECKED_APROB' => ($forum_info['aprob'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',

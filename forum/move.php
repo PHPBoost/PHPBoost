@@ -233,7 +233,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$Template->assign_vars(array(
 			'TITLE' => '',
 			'DESC' => '',
-			'CONTENTS' => unparse($msg['contents']),
+			'CONTENTS' => FormatingHelper::unparse($msg['contents']),
 			'IDM' => $id_get_msg,
 			'CHECKED_NORMAL' => 'checked="checked"',
 			'SELECTED_SIMPLE' => 'checked="checked"',
@@ -292,7 +292,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'QUESTION' => $question,
 			'IDM' => $id_post_msg,
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
-			'CONTENTS_PREVIEW' => second_parse(stripslashes(strparse($contents))),
+			'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 			'CHECKED_NORMAL' => $checked_normal,
 			'CHECKED_POSTIT' => $checked_postit,
 			'CHECKED_ANNONCE' => $checked_annonce,

@@ -71,7 +71,7 @@ if (!empty($contents)) //On enregistre un article
 	if ($preview)//Prévisualisation
 	{
 		$Template->assign_block_vars('preview', array(
-			'CONTENTS' => second_parse(wiki_no_rewrite(stripslashes($contents))),
+			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
 			'TITLE' => stripslashes($title)
 		));
 		if (!empty($menu))
@@ -271,7 +271,7 @@ $Template->assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
-	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
+	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_FormatingHelper::unparse(trim($contents)) : ''),
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,

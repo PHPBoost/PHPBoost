@@ -87,7 +87,7 @@ if (empty($id_media) && $id_cat >= 0)
 		'U_ADD_FILE' => 'media_action.php?add=' . $id_cat,
 		'L_ADD_FILE' => $MEDIA_LANG['add_media'],
 		'C_DESCRIPTION' => !empty($MEDIA_CATS[$id_cat]['desc']),
-		'DESCRIPTION' => second_parse($MEDIA_CATS[$id_cat]['desc']),
+		'DESCRIPTION' => FormatingHelper::second_parse($MEDIA_CATS[$id_cat]['desc']),
 		'C_SUB_CATS' => $i > 1
 	));
 
@@ -187,7 +187,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
 				'C_DESCRIPTION' => !empty($row['contents']),
-				'DESCRIPTION' => second_parse($row['contents']),
+				'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
 				'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], '../member/member' . url('.php?id=' . $row['iduser'], '-' . $row['iduser'] . '.php'), $level[$row['level']]) : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
@@ -248,7 +248,7 @@ elseif ($id_media > 0)
 		'C_MODO' => $User->check_level(MODO_LEVEL),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
-		'CONTENTS' => second_parse($media['contents']),
+		'CONTENTS' => FormatingHelper::second_parse($media['contents']),
 		'COUNT' => $media['counter'],
 		'THEME' => $CONFIG['theme'],
 		'KERNEL_NOTATION' => $Note->display_form(),

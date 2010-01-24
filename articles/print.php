@@ -74,7 +74,7 @@ $tpl->assign_vars(array(
 	'PAGE_TITLE' => $articles['title'] . ' - ' . $CONFIG['site_name'],
 	'TITLE' => $articles['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENT' => second_parse($contents).$sources,
+	'CONTENT' => FormatingHelper::second_parse($contents).$sources,
 ));
 
 $tpl->parse();

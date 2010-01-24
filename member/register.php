@@ -56,7 +56,7 @@ if (empty($key))
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
 			'L_HAVE_TO_ACCEPT' => !empty($register_valid) ? $LANG['register_have_to_accept'] : '',
-			'MSG_REGISTER' => second_parse($registration_agreement),
+			'MSG_REGISTER' => FormatingHelper::second_parse($registration_agreement),
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
 			'L_ACCEPT' => $LANG['register_accept'],
@@ -301,7 +301,7 @@ if (empty($key))
 					$field = '<input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' .  $row['default_values'] . '" />';
 					break;
 					case 2:
-					$field = '<textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . unparse($row['default_values']) . '</textarea>';
+					$field = '<textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . FormatingHelper::unparse($row['default_values']) . '</textarea>';
 					break;
 					case 3:
 					$field = '<select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';

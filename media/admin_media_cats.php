@@ -178,7 +178,7 @@ elseif ($new_cat XOR $id_edit > 0)
 
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $MEDIA_CATS[$id_edit]['name'],
-			'DESCRIPTION' => unparse($MEDIA_CATS[$id_edit]['desc']),
+			'DESCRIPTION' => FormatingHelper::unparse($MEDIA_CATS[$id_edit]['desc']),
 			'IMAGE' => $MEDIA_CATS[$id_edit]['image'],
 			'CATEGORIES_TREE' => $media_categories->build_select_form($MEDIA_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
