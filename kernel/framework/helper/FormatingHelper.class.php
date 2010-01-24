@@ -24,7 +24,13 @@
  *
  ###################################################*/
 
-class FormatingHelper {
+/**
+ * @desc Formating helper
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @package helper
+ */
+class FormatingHelper 
+{
 	const NO_EDITOR_UNPARSE = false;
 	
 	/**

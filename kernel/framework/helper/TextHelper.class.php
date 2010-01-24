@@ -25,6 +25,11 @@
  *
  ###################################################*/
 
+/**
+ * @desc Text helper
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @package helper
+ */
 class TextHelper 
 {
 	const HTML_NO_PROTECT = false;
