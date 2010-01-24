@@ -125,7 +125,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		AppContext::get_response()->redirect('/member/forget.php?error=forget_echec_change');
 }
 else
-	AppContext::get_response()->redirect(get_home_page());
+	AppContext::get_response()->redirect(Environment::get_home_page());
 
 require_once('../kernel/footer.php'); 
 

@@ -371,4 +371,204 @@ function delete_file($filepath)
 	}
 }
 
+/**
+ * @desc Displays a confirmation message during a defined delay and then redirects the user.
+ * @param string $url_error Url at which you want to redirect him.
+ * @param string $l_error The message to show him
+ * @param int $delay_redirect Number of seconds after which you want him to be redirected.
+ */
+function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
+{
+	global $LANG;
+
+	$template = new Template('framework/confirm.tpl');
+
+	$template->assign_vars(array(
+		'URL_ERROR' => !empty($url_error) ? $url_error : Environment::get_home_page(),
+		'DELAY_REDIRECT' => $delay_redirect,
+		'L_ERROR' => $l_error,
+		'L_REDIRECT' => $LANG['redirect']
+	));
+
+	$template->parse();
+}
+
+/**
+ * @desc Returns the current user's theme.
+ * @return string The theme identifier (name of its folder).
+ */
+function get_utheme()
+{
+	$user = AppContext::get_user();
+	return $user->get_attribute('user_theme');
+}
+
+/**
+ * @desc Returns the current user's language.
+ * @return string The lang identifier (name of its folder).
+ */
+function get_ulang()
+{
+	$user = AppContext::get_user();
+	return $user->get_attribute('user_lang');
+}
+
+/**
+ * @desc Returns the HTML code of the user editor. It uses the ContentFormattingFactory class, it allows you to write less code lines.
+ * @param string $field The name of the HTTP parameter which you will retrieve the value entered by the user.
+ * @param string[] $forbidden_tags The list of the tags you don't want to appear in the editor.
+ * @return The HTML code of the editor that you can directly display in a template.
+ */
+function display_editor($field = 'contents', $forbidden_tags = array())
+{
+	$editor = ContentFormattingMetaFactory::get_default_editor();
+	if (!empty($forbidden_tags) && is_array($forbidden_tags))
+	{
+		$editor->set_forbidden_tags($forbidden_tags);
+	}
+	$editor->set_identifier($field);
+
+	return $editor->display();
+}
+
+/**
+ * @desc Returns the HTML code of the comments manager.
+ * @param string $script
+ * @param int $idprov The data base id of the item for which you want to display the commenting interface.
+ * @param string $vars The URL of the curent page (the comments API will always redirect the user to the current page). You just have to add a 'com' HTTP parameter
+ * for which the value must be %s (it will be used by the comments API).
+ * @param string $module_folder The identifier of your module (the name of its folder).
+ * @return The HTML code of the commenting interface that you can directly display in a template.
+ */
+function display_comments($script, $idprov, $vars, $module_folder = '')
+{
+	$comments = new Comments($script, $idprov, $vars, $module_folder);
+
+	return $comments->display();
+}
+
+/**
+ * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
+ * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
+ * @param string $module_name The identifier of the module for which you want to load the lang file.
+ * @param string Path of the folder in which is the file. This path mustn't finish by the / character.
+ */
+function load_module_lang($module_name, $path = PATH_TO_ROOT)
+{
+	global $LANG;
+
+	$file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
+	if (!Debug::is_debug_mode_enabled()) {
+		$result = @include_once($file);
+	}
+	else
+	{
+		$result = include_once($file);
+	}
+
+	if (!$result)
+	{
+		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), false);
+		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
+
+		if (!Debug::is_debug_mode_enabled())
+		{
+			$result2 = @include_once($file2);
+		}
+		else
+		{
+			$result2 = include_once($file2);
+		}
+
+		if (!$result2)
+		{
+			global $Errorh;
+
+			//Déclenchement d'une erreur fatale.
+			$Errorh->handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+			exit;
+		}
+	}
+}
+
+/**
+ * @desc Loads a menu lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
+ * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this menu.
+ * @param string $menu_name The identifier of the menu for which you want to load the lang file.
+ */
+function load_menu_lang($menu_name)
+{
+	load_module_lang($menu_name, PATH_TO_ROOT . '/menus');
+}
+
+/**
+ * @desc Loads a configuration file. You choose a bases path, and you specify a folder name in which you file should be found, if it doesn't exist, it will take a file in another folder.
+ * It's very interesting when you want to
+ * @param string $dir_path Path of the file (relative from this page).
+ * @param string $require_dir The name of the folder in which the configuration file should be. This folder must be in the bases file ($dir_path). If this directory doesn't exist, another will be read.
+ * @param string $ini_name The name of the configuration file you want to know.
+ * @return string[] The configuration values contained in the file $dir_path/$require_dir/$ini_name.
+ */
+function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
+{
+	$dir = find_require_dir($dir_path, $require_dir, false);
+	$file = $dir_path . $dir . '/' . $ini_name;
+	if (!Debug::is_debug_mode_enabled())
+	{
+		$result = @parse_ini_file($file);
+	}
+	elseif(file_exists($file))
+	{
+		$result = parse_ini_file($file);
+	}
+	else
+	{
+		$result = false;
+	}
+	return $result;
+}
+
+//Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
+/**
+ * @desc Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.
+ * If it doesn't exist, you want to choose the file in another language.
+ * This function returns the path of an existing file (if the required lang exists, it will be it, otherwise it will be one of the existing files).
+ * @param string $dir_path Path of the folder in which you want to search
+ * @param string $require_dir Default folder
+ * @param string $fatal_error true if you want to throw a fatal error if no file could be found, false otherwise.
+ * @return string The path of the folder you search.
+ */
+function find_require_dir($dir_path, $require_dir, $fatal_error = true)
+{
+	//Si le dossier n'existe pas on prend le suivant exisant.
+	if (!@file_exists($dir_path . $require_dir))
+	{
+		if (@is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
+		{
+			while (!is_bool($dir = readdir($dh)))
+			{
+				if (strpos($dir, '.') === false  )
+				{
+					closedir($dh);
+					return $dir;
+				}
+			}
+			closedir($dh);
+		}
+	}
+	else
+	{
+		return $require_dir;
+	}
+
+	if ($fatal_error)
+	{
+		global $Errorh;
+
+		//Déclenchement d'une erreur fatale.
+		$Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__);
+		exit;
+	}
+}
+
 ?>

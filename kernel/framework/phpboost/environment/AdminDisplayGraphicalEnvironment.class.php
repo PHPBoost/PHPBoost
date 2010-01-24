@@ -60,7 +60,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (retrieve(GET, 'disconnect', false))
 		{
 			AppContext::get_session()->end();
-			AppContext::get_response()->redirect(get_home_page());
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 
 		$sql = AppContext::get_sql();
@@ -253,7 +253,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_CACHE' => $LANG['cache'],
 			'L_SYNDICATION' => $LANG['syndication'],
 			'L_CONTENT_CONFIG' => $LANG['content_config'],
-			'U_INDEX_SITE' => get_home_page(),
+			'U_INDEX_SITE' => Environment::get_home_page(),
 		    'L_WEBSITE_UPDATES' => $LANG['website_updates']
 		));
 
