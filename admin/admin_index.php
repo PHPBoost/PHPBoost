@@ -71,7 +71,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	$Template->assign_block_vars('com_list', array(
 		'ID' => $row['idcom'],
-		'CONTENTS' => ucfirst(second_parse($row['contents'])),
+		'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 		'COM_SCRIPT' => $row['script'],
 		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 		'USER_PSEUDO' => $com_pseudo,			

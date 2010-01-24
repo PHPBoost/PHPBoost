@@ -138,7 +138,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		{
 			if ($article_infos['defined_status'] < 0 && !empty($article_infos['undefined_status']))
 			$Template->assign_block_vars('status', array(
-				'ARTICLE_STATUS' => second_parse(wiki_no_rewrite($article_infos['undefined_status']))
+				'ARTICLE_STATUS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['undefined_status']))
 			));
 			elseif ($article_infos['defined_status'] > 0 && is_array($LANG['wiki_status_list'][$article_infos['defined_status'] - 1]))
 			$Template->assign_block_vars('status', array(
@@ -154,7 +154,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	
 	$Template->assign_vars(array(
 		'TITLE' => $article_infos['title'],
-		'CONTENTS' => second_parse(wiki_no_rewrite($article_infos['content'])),
+		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
@@ -281,7 +281,7 @@ else
 	
 	$Template->assign_vars(array(
 		'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
+		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 		'L_EXPLORER' => $LANG['wiki_explorer'],
 		'U_EXPLORER' => url('explorer.php'),
         ));

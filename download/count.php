@@ -64,7 +64,7 @@ if (!empty($idurl))
 	//Si le téléchargement est forcé et que le fichier est local au serveur
 	if ($info_file['force_download'] == DOWNLOAD_FORCE_DL && strpos($info_file['url'], '://') === false)	
 	{
-		$info_file['url'] = second_parse_url($info_file['url']);
+		$info_file['url'] = FormatingHelper::second_parse_url($info_file['url']);
 		
 		//Redirection vers le fichier demandé
     	$filesize = @filesize($info_file['url']);

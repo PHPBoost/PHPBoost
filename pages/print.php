@@ -69,7 +69,7 @@ $template->assign_vars(array(
 	'PAGE_TITLE' => $page_infos['title'] . ' - ' . $CONFIG['site_name'],
 	'TITLE' => $page_infos['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENT' => second_parse($page_infos['contents'])
+	'CONTENT' => FormatingHelper::second_parse($page_infos['contents'])
 ));
 
 $template->parse();

@@ -46,7 +46,7 @@ if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 	echo $Note->add($note); //add a note
 }
 elseif (retrieve(GET,'img_preview',false)) // image preview
-	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
+	echo FormatingHelper::second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 elseif (retrieve(POST,'preview',false))
 {
 	
@@ -86,7 +86,7 @@ elseif (retrieve(POST,'preview',false))
 		'IDCAT' => $articles['idcat'],
 		'DESCRIPTION'=>$articles['description'],
 		'NAME' => stripslashes($articles['title']),
-		'CONTENTS' => second_parse(stripslashes($articles['contents'])),
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes($articles['contents'])),
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'DATE' =>   $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
@@ -136,7 +136,7 @@ elseif (retrieve(POST,'model_extend_field',false))
 
 	$tpl_model->assign_vars(array(
 		'C_EXTEND_FIELD'=>	!empty($extend_field_tab),
-		'MODEL_DESCRIPTION'=>second_parse($model['description']),
+		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
 	
@@ -152,7 +152,7 @@ elseif (retrieve(POST,'model_desc',false))
 	
 	$tpl_model->assign_vars(array(
 		'C_EXTEND_FIELD'=>	false,
-		'MODEL_DESCRIPTION'=>second_parse($model['description']),
+		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
 	

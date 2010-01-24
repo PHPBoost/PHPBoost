@@ -69,7 +69,7 @@ elseif (!empty($_POST['previs']))
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
-		'PREVIEWED_CONTENTS' => second_parse(stripslashes($contents)),
+		'PREVIEWED_CONTENTS' => FormatingHelper::second_parse(stripslashes($contents)),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,

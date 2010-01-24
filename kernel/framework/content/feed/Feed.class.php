@@ -118,7 +118,7 @@ class Feed
 		{
 			if (!empty($this->data))
 			{
-                $desc = second_parse($this->data->get_desc());
+                $desc = FormatingHelper::second_parse($this->data->get_desc());
 				$tpl->assign_vars(array(
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
@@ -134,7 +134,7 @@ class Feed
 				$items = $this->data->subitems($number, $begin_at);
 				foreach ($items as $item)
 				{
-					$desc = second_parse($item->get_desc());
+					$desc = FormatingHelper::second_parse($item->get_desc());
 					$tpl->assign_block_vars('item', array(
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),

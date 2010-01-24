@@ -61,7 +61,7 @@ function shoutbox_mini($position, $block)
     				}
     				
     				//Vérifie que le message ne contient pas du flood de lien.
-    				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
+    				$shout_contents = FormatingHelper::strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
     				if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
     				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
@@ -136,7 +136,7 @@ function shoutbox_mini($position, $block)
     		$tpl->assign_block_vars('shout', array(
     			'IDMSG' => $row['id'],
     			'PSEUDO' => $row['login'],
-    			'CONTENTS' => ucfirst(second_parse($row['contents'])) //Majuscule premier caractère.
+    			'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])) //Majuscule premier caractère.
     		));
     	}
     	$Sql->query_close($result);

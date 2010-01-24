@@ -213,7 +213,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	{
 		$Template->assign_vars(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
-			'DESCRIPTION' => unparse($DOWNLOAD_CATS[$id_edit]['description']),
+			'DESCRIPTION' => FormatingHelper::unparse($DOWNLOAD_CATS[$id_edit]['description']),
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
 			'CATEGORIES_TREE' => $download_categories->build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,

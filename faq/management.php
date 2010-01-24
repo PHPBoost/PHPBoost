@@ -98,7 +98,7 @@ if ($edit_question > 0)
 {
 	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => $question_infos['question'],
-		'ANSWER' => unparse($question_infos['answer']),
+		'ANSWER' => FormatingHelper::unparse($question_infos['answer']),
 		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'ID_QUESTION' => $edit_question
 	));
@@ -152,7 +152,7 @@ else
 		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
 		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
 		'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
-		'DESCRIPTION' => unparse($FAQ_CATS[$id_faq]['description']),
+		'DESCRIPTION' => FormatingHelper::unparse($FAQ_CATS[$id_faq]['description']),
 		'L_CAT_PROPERTIES' => $FAQ_LANG['cat_properties'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
 		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],

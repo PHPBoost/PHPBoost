@@ -32,7 +32,7 @@ require_once('../kernel/header_no_display.php');
 
 if (isset($_GET['img_preview'])) // Prévisualisation des images.
 {
-	echo second_parse_url(retrieve(GET, 'img_preview', '/news/news.png', TSTRING));
+	echo FormatingHelper::second_parse_url(retrieve(GET, 'img_preview', '/news/news.png', TSTRING));
 }
 elseif (isset($_GET['img_url']))
 {
@@ -86,11 +86,11 @@ elseif (isset($_POST['preview']))
 		'C_ICON' => $NEWS_CONFIG['activ_icon'],
 		'ID' => $news['id'],
 		'IDCAT' => $news['idcat'],
-		'ICON' => second_parse_url($NEWS_CAT[$news['idcat']]['image']),
+		'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']),
 		'TITLE' => stripslashes($news['title']),
-		'CONTENTS' => stripslashes(second_parse($news['desc'])),
-		'EXTEND_CONTENTS' => stripslashes(second_parse($news['extend_desc'])),
-		'IMG' => second_parse_url($news['img']),
+		'CONTENTS' => stripslashes(FormatingHelper::second_parse($news['desc'])),
+		'EXTEND_CONTENTS' => stripslashes(FormatingHelper::second_parse($news['extend_desc'])),
+		'IMG' => FormatingHelper::second_parse_url($news['img']),
 		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'LEVEL' =>	$level[$user['level']],

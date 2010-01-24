@@ -104,9 +104,9 @@ if (!empty($id_get)) //Espace membre
 			'BORN_MONTH' => $born_month,
 			'BORN_YEAR' => $born_year,
 			'USER_SEX' => !empty($user_sex) ? '<img src="../templates/' . get_utheme() . '/images/' . $user_sex . '" alt="" />' : '',
-			'USER_SIGN' => unparse($row['user_sign']),
+			'USER_SIGN' => FormatingHelper::unparse($row['user_sign']),
 			'USER_SIGN_EDITOR' => display_editor('user_sign'),
-			'USER_DESC' => unparse($row['user_desc']),
+			'USER_DESC' => FormatingHelper::unparse($row['user_desc']),
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
@@ -294,7 +294,7 @@ if (!empty($id_get)) //Espace membre
 					$field = '<label><input type="text" size="30" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
 					break;
 					case 2:
-					$field = '<label><textarea class="post" rows="4" cols="27" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '"> ' . unparse($row[$row['field_name']]) . '</textarea></label>';
+					$field = '<label><textarea class="post" rows="4" cols="27" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '"> ' . FormatingHelper::unparse($row[$row['field_name']]) . '</textarea></label>';
 					break;
 					case 3:
 					$field = '<label><select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';
@@ -576,7 +576,7 @@ if (!empty($id_get)) //Espace membre
 						}
 						
 						if ($row['field'] == 2)
-							$field = strparse($field);
+							$field = FormatingHelper::strparse($field);
 						elseif ($row['field'] == 4)
 						{
 							$array_field = is_array($field) ? $field : array();
@@ -636,7 +636,7 @@ if (!empty($id_get)) //Espace membre
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
 		//Info membre
-		$msg_mbr = second_parse(UserAccountsConfig::load()->get_welcome_message());
+		$msg_mbr = FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message());
 	
 		//Chargement de la configuration.
 		$Cache->load('uploads');
@@ -762,7 +762,7 @@ if (!empty($id_get)) //Espace membre
 			'HOBBIES' => !empty($row['user_hobbies']) ? $row['user_hobbies'] : '&nbsp;',
 			'USER_SEX' =>  $user_sex,
 			'USER_AGE' => ($row['user_born'] != '0000-00-00' && $user_born > 0 && $user_born < 125 ) ? $user_born . ' ' . $LANG['years_old'] : $LANG['unknow'],
-			'USER_DESC' => !empty($row['user_desc']) ? second_parse($row['user_desc']) : '&nbsp;',
+			'USER_DESC' => !empty($row['user_desc']) ? FormatingHelper::second_parse($row['user_desc']) : '&nbsp;',
 			'USER_MSN' => !empty($row['user_msn']) ? $row['user_msn'] : '&nbsp;',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? $row['user_yahoo'] : '&nbsp;',
 			'L_PROFIL' => $LANG['profile'],
@@ -815,7 +815,7 @@ if (!empty($id_get)) //Espace membre
 						$field = $row[$row['field_name']];
 					break;
 					case 2:
-						$field = second_parse($row[$row['field_name']]);
+						$field = FormatingHelper::second_parse($row[$row['field_name']]);
 					break;
 					case 3:
 						$field = $row[$row['field_name']];

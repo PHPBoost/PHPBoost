@@ -66,7 +66,7 @@ $template->assign_vars(array(
 
 if (!empty($FAQ_CATS[$id_faq]['description']))
 	$template->assign_block_vars('description', array(
-		'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['description'])
+		'DESCRIPTION' => FormatingHelper::second_parse($FAQ_CATS[$id_faq]['description'])
 	));
 
 if ($auth_write)
@@ -147,7 +147,7 @@ if ($num_rows > 0)
 			$template->assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
-				'ANSWER' => second_parse($row['answer']),
+				'ANSWER' => FormatingHelper::second_parse($row['answer']),
 				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
 				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_DOWN' => url('action.php?down=' . $row['id']),
@@ -169,7 +169,7 @@ if ($num_rows > 0)
 				'ID' => $row['id']
 			));
 			$template->assign_block_vars('questions_block.contents', array(
-				'ANSWER' => second_parse($row['answer']),
+				'ANSWER' => FormatingHelper::second_parse($row['answer']),
 				'QUESTION' => $row['question'],
 				'ID' => $row['id'],
 				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),

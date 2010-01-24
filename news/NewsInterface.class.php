@@ -252,7 +252,7 @@ class NewsInterface extends ModuleInterface
 			$tpl->assign_vars(array(
 				'C_EDITO' => true,
 				'EDITO_NAME' => $NEWS_CONFIG['edito_title'],
-				'EDITO_CONTENTS' => second_parse($NEWS_CONFIG['edito'])
+				'EDITO_CONTENTS' => FormatingHelper::second_parse($NEWS_CONFIG['edito'])
 			));
 		}
 		elseif ($cat > 0)
@@ -261,7 +261,7 @@ class NewsInterface extends ModuleInterface
 				'C_EDITO' => !empty($NEWS_CAT[$cat]['desc']) ? true : false,
 				'C_CAT' => true,
 				'EDITO_NAME' => $NEWS_CAT[$cat]['name'],
-				'EDITO_CONTENTS' => !empty($NEWS_CAT[$cat]['desc']) ? second_parse($NEWS_CAT[$cat]['desc']) : ''
+				'EDITO_CONTENTS' => !empty($NEWS_CAT[$cat]['desc']) ? FormatingHelper::second_parse($NEWS_CAT[$cat]['desc']) : ''
 				));
 		}
 		else
@@ -384,12 +384,12 @@ class NewsInterface extends ModuleInterface
 						'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 						'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
 						'C_IMG' => !empty($row['img']),
-						'IMG' => second_parse_url($row['img']),
+						'IMG' => FormatingHelper::second_parse_url($row['img']),
 						'IMG_DESC' => $row['alt'],
 						'C_ICON' => $NEWS_CONFIG['activ_icon'],
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
-						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
-						'CONTENTS' => second_parse($row['contents']),
+						'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']),
+						'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 						'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 						'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -438,7 +438,7 @@ class NewsInterface extends ModuleInterface
 
 					$tpl->assign_block_vars('list', array(
 						'C_NEWS_ROW' => $new_row,
-						'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
+						'ICON' => $NEWS_CONFIG['activ_icon'] ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
 						'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),

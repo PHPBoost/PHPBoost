@@ -95,7 +95,7 @@ if (!empty($idart) && isset($cat) )
 		{	
 			$c_tab=true;
 			$tpl->assign_block_vars('tab', array(
-				'CONTENTS_TAB'=>isset($array_contents[$i]) ? second_parse($array_contents[$i]) : '',
+				'CONTENTS_TAB'=>isset($array_contents[$i]) ? FormatingHelper::second_parse($array_contents[$i]) : '',
 				'ID_TAB' =>$i,
 				'DISPLAY' => ( $i == 1 )? "yes" : "none",
 				'STYLE' => ($i == 1)? 'style="margin-left: 1px"' : '',
@@ -162,7 +162,7 @@ if (!empty($idart) && isset($cat) )
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
 		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
-		'CONTENTS' => isset($array_contents[$page]) ? second_parse($array_contents[$page]) : '',
+		'CONTENTS' => isset($array_contents[$page]) ? FormatingHelper::second_parse($array_contents[$page]) : '',
 		'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
 		'PAGES_LIST' => $page_list,

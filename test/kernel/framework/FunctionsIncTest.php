@@ -112,17 +112,17 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		self::assertFalse($ret);
 	}
 	
-	function test_strparse()
+	function test_FormatingHelper::strparse()
 	{
 		TODO(__METHOD__);
 	}
 	
-	function test_unparse()
+	function test_FormatingHelper::unparse()
 	{
 		TODO(__METHOD__);
 	}
 	
-	function test_second_parse()
+	function test_FormatingHelper::second_parse()
 	{
 		TODO(__METHOD__);
 	}

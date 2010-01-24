@@ -83,7 +83,7 @@ else
 		'MODULE_NAME' => $MEDIA_CATS[0]['name'],
 		'L_MODULE_DESC' => $MEDIA_LANG['module_desc'],
 		'KERNEL_EDITOR'	=> display_editor(),
-		'CONTENTS' => unparse($MEDIA_CATS[0]['desc']),
+		'CONTENTS' => FormatingHelper::unparse($MEDIA_CATS[0]['desc']),
 		'L_CONFIG_DISPLAY' => $MEDIA_LANG['config_display'],
 		'L_NBR_COLS' => $MEDIA_LANG['nbr_cols'],
 		'NBR_COLS' => $MEDIA_CONFIG['nbr_column'],

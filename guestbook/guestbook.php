@@ -69,7 +69,7 @@ if ($guestbook && empty($id_get)) //Enregistrement
 				}
 			}
 
-			$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+			$guestbook_contents = FormatingHelper::strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 			if (!check_nbr_links($guestbook_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
@@ -135,7 +135,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 					'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 				));
 			}
-			$fieldset->add_field(new FormTextarea('contents', unparse($row['contents']), array(
+			$fieldset->add_field(new FormTextarea('contents', FormatingHelper::unparse($row['contents']), array(
 				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 				'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
@@ -157,7 +157,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 			{
-				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+				$guestbook_contents = FormatingHelper::strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 				if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 				{
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
@@ -391,7 +391,7 @@ else //Affichage.
 
 		$Template->assign_block_vars('guestbook',array(
 			'ID' => $row['id'],
-			'CONTENTS' => ucfirst(second_parse($row['contents'])),
+			'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 			'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
@@ -407,7 +407,7 @@ else //Affichage.
 			'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
 			'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . second_parse($row['user_sign']) : '',
+			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 			'PUNISHMENT' => $readonly,

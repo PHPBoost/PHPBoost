@@ -55,7 +55,7 @@ else
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	$Template->assign_vars(array(
-		'CONTENTS' => unparse($user_accounts_config->get_registration_agreement()),
+		'CONTENTS' => FormatingHelper::unparse($user_accounts_config->get_registration_agreement()),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],

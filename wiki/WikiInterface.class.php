@@ -228,7 +228,7 @@ class WikiInterface extends ModuleInterface
 			$link = new Url('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($row['title']), Url::encode_rewrite($row['title'])));
 			$item->set_link($link);
 			$item->set_guid($link);
-			$item->set_desc(second_parse($row['content']));
+			$item->set_desc(FormatingHelper::second_parse($row['content']));
 			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
 
 			$data->add_item($item);
@@ -314,7 +314,7 @@ class WikiInterface extends ModuleInterface
 
 			$Template->assign_vars(array(
 			'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
+			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 			'L_EXPLORER' => $LANG['wiki_explorer'],
 			'U_EXPLORER' => url('explorer.php'),
 			));

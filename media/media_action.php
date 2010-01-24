@@ -170,7 +170,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
-			'DESCRIPTION' => unparse($media['contents']),
+			'DESCRIPTION' => FormatingHelper::unparse($media['contents']),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
@@ -335,7 +335,7 @@ elseif (!empty($_POST['submit']))
 	// Édition
 	if ($media['idedit'] && $User->check_level(MODO_LEVEL))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
 		$media_categories->recount_media_per_cat($media['idcat']);
 
@@ -364,7 +364,7 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height, users_note) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "', '')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height, users_note) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "', '')", __LINE__, __FILE__);
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);

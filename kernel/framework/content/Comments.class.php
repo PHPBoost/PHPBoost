@@ -243,7 +243,7 @@ class Comments
 						{
 							AppContext::get_response()->redirect($path_redirect . '&errorh=verif#errorh');
 						}
-						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
+						$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
 						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
@@ -303,7 +303,7 @@ class Comments
 								'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 							));
 						}
-						$fieldset->add_field(new FormTextarea($this->script . 'contents', unparse($row['contents']), array(
+						$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($row['contents']), array(
 							'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
 							'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 						));
@@ -331,7 +331,7 @@ class Comments
 			
 						if (!empty($contents) && !empty($login))
 						{
-							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
+							$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
 							
 							if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
@@ -464,7 +464,7 @@ class Comments
 						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 					));
 				}
-				$fieldset->add_field(new FormTextarea($this->script . 'contents', unparse($contents), array(
+				$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($contents), array(
 					'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
 					'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 				));
@@ -608,7 +608,7 @@ class Comments
 					}
 					else $user_local = '';
 						
-					$contents = ucfirst(second_parse($row['contents']));
+					$contents = ucfirst(FormatingHelper::second_parse($row['contents']));
 						
 					//Correction des chemins du BBCode
 					if (!$integrated_in_environment && !empty($page_path_to_root))
@@ -632,7 +632,7 @@ class Comments
 						'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
 						'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-						'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . second_parse($row['user_sign']) : '',
+						'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'USER_WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0'),
 						'C_COM_MSG_EDIT' => $del,

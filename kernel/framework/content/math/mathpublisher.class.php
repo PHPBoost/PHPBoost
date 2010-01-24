@@ -745,10 +745,10 @@ class expression_math extends  expression
 	{
 		$this->texte = "&$";
 		$this->noeuds = $exp;
-		$this->noeuds = $this->strparse();
+		$this->noeuds = $this->FormatingHelper::strparse();
 	}
 
-	function strparse()
+	function FormatingHelper::strparse()
 	{
 		if (count($this->noeuds) <= 3) return $this->noeuds;
 		$ret = array();

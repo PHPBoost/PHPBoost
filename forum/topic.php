@@ -363,7 +363,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
 		'FORUM_USER_LOGIN' => wordwrap_html($row['login'], 13),			
 		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
-		'FORUM_MSG_CONTENTS' => second_parse($row['contents']),
+		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse($row['contents']),
 		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
 		'FORUM_USER_EDITOR_DATE' => gmdate_format('date_format', $row['timestamp_edit']),
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
@@ -377,7 +377,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
 		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . second_parse($row['user_sign']) : '',
+		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 		'USER_WEB' => (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_web']  . '" /></a>' : '',
 		'USER_WARNING' => $row['user_warning'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
@@ -457,7 +457,7 @@ if (!empty($quote_get))
 {	
 	$quote_msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
 	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);	
-	$contents = '[quote=' . $pseudo . ']' . unparse($quote_msg['contents']) . '[/quote]';
+	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }
 
 //Formulaire de réponse, non présent si verrouillé.

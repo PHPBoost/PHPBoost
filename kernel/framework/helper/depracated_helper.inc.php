@@ -120,7 +120,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			}
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:
-			return strparse($var); //Chaine parsée.
+			return FormatingHelper::strparse($var); //Chaine parsée.
 		case TBOOL:
 			return (bool)$var;
 		case TUNSIGNED_INT:

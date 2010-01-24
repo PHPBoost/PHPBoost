@@ -70,7 +70,7 @@ else
 		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
 		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
 		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-		'DESCRIPTION' => unparse($CONFIG_DOWNLOAD['root_contents']),
+		'DESCRIPTION' => FormatingHelper::unparse($CONFIG_DOWNLOAD['root_contents']),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],

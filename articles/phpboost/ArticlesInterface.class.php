@@ -181,7 +181,7 @@ class ArticlesInterface extends ModuleInterface
                 $item->set_title($row['title']);
                 $item->set_link($link);
                 $item->set_guid($link);
-                $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', second_parse($row['contents'])));
+                $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));
                 $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
                 $item->set_image_url($row['icon']);
                 $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['global_auth'] : unserialize($row['auth']));
@@ -381,7 +381,7 @@ class ArticlesInterface extends ModuleInterface
 				$tpl->assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
-				'DESC' => second_parse($row['description']),
+				'DESC' => FormatingHelper::second_parse($row['description']),
 				'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
 				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
@@ -421,7 +421,7 @@ class ArticlesInterface extends ModuleInterface
 				'COMPT' => $row['views'],
 				'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'COM' => $row['nbr_com'],
-				'DESCRIPTION'=>second_parse($row['description']),
+				'DESCRIPTION'=>FormatingHelper::second_parse($row['description']),
 				'U_ARTICLES_PSEUDO'=>'<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
 				'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
 				'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
