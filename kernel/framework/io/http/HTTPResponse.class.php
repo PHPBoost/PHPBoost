@@ -85,6 +85,16 @@ class HTTPResponse
 	{
 		header($name . ' : ' . $value);
 	}
+	
+	public function set_default_attributes()
+	{
+		$this->set_header('Content-type', 'text/html; charset=iso-8859-1');
+		$this->set_header('Expires', 'Mon, 1 Dec 2003 01:00:00 GMT');
+		$this->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
+		$this->set_header('Cache-Control', 'no-store, no-cache, must-revalidate');
+		$this->set_header('Cache-Control', 'post-check=0, pre-check=0');
+		$this->set_header('Pragma', 'no-cache');
+	}
 
 	/**
 	 * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).

@@ -90,23 +90,13 @@ class Environment
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
 	}
-
-	public static function set_default_http_response()
-	{
-		$response = new HTTPResponse();
-		$response->set_header('Content-type', 'text/html; charset=iso-8859-1');
-		$response->set_header('Expires', 'Mon, 1 Dec 2003 01:00:00 GMT');
-		$response->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
-		$response->set_header('Cache-Control', 'no-store, no-cache, must-revalidate');
-		$response->set_header('Cache-Control', 'post-check=0, pre-check=0');
-		$response->set_header('Pragma', 'no-cache');
-		AppContext::set_response($response);
-	}
 	
 	public static function init_services()
 	{
 		AppContext::set_request(new HTTPRequest());
-		self::set_default_http_response();
+		$response = new HTTPResponse();
+		$response->set_default_attributes();
+		AppContext::set_response($response);
 		AppContext::init_session();
 	}
 

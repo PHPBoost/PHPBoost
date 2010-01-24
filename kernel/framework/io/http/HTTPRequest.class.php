@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           http_request.class.php
+ *                           HTTPRequest.class.php
  *                            -------------------
  *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loïc Rouchon
