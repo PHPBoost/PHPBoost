@@ -62,7 +62,7 @@ if ($action_post == 'save')
 		$menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3]);
 	}
 
-	if (!of_class($menu, FeedMenu::FEED_MENU__CLASS))
+	if (!($menu instanceof FeedMenu))
 	AppContext::get_response()->redirect('menus.php');
 
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
@@ -124,7 +124,7 @@ if ($edit)
 {
 	$menu = MenuService::load($id);
 
-	if (!of_class($menu, FeedMenu::FEED_MENU__CLASS))
+	if (!($menu instanceof FeedMenu))
 	AppContext::get_response()->redirect('menus.php');
 
 	$block = $menu->get_block();

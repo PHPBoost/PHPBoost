@@ -234,7 +234,7 @@ if ($menu_id > 0)
 {
 	$menu = MenuService::load($menu_id);
 	
-    if (!of_class($menu, LinksMenu::LINKS_MENU__CLASS))
+    if (!($menu instanceof LinksMenu))
         AppContext::get_response()->redirect('menus.php');
 	
 	$block = $menu->get_block();

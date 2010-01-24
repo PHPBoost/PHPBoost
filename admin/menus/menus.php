@@ -44,17 +44,17 @@ function menu_admin_link($menu, $mode)
     switch ($mode)
     {
         case 'edit':
-            if (of_class($menu, LinksMenu::LINKS_MENU__CLASS))
+            if (($menu instanceof LinksMenu))
                 $link = 'links.php?';
-            elseif (of_class($menu, ContentMenu::CONTENT_MENU__CLASS))
+            elseif (($menu instanceof ContentMenu))
                 $link = 'content.php?';
-            elseif (of_class($menu, FeedMenu::FEED_MENU__CLASS))
+            elseif (($menu instanceof FeedMenu))
                 $link = 'feed.php?';
             else
                 $link = 'auth.php?';
             break;
         case 'delete':
-            if (of_class($menu, ContentMenu::CONTENT_MENU__CLASS) || of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, FeedMenu::FEED_MENU__CLASS))
+            if (($menu instanceof ContentMenu) || ($menu instanceof LinksMenu) || ($menu instanceof FeedMenu))
                 $link = 'menus.php?action=delete&amp;';
             else
             	return '';

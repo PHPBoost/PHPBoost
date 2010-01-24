@@ -84,11 +84,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_AppContext::get_response()->redirect()
-	{
-		// FAIRE EN TEST WEB
-	}
-	
 	function test_redirect_confirm()
 	{
 		// FAIRE EN TEST WEB
@@ -133,10 +128,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	}
 	
 	function test_url()
-	{
-		TODO(__METHOD__);
-	}
-	function test_Url::encode_rewrite()
 	{
 		TODO(__METHOD__);
 	}
@@ -229,17 +220,5 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	{
         TODO(__METHOD__);
 	}
-	
-	function test_of_class()
-	{
-		Global $User;
-		
-		$ret = of_class($User, 'User');
-		self::assertTrue($ret);
-		
-		$ret = of_class($User, 'Sql');
-		self::assertFalse($ret);	
-	}
-
 }
 ?>

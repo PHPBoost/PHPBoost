@@ -73,7 +73,7 @@ class FeedItem
      */
     function set_link($value)
     {
-        if (!of_class($value, URL__CLASS))
+        if (!($value instanceof Url))
         {
             $value = new Url($value);
         }
@@ -85,7 +85,7 @@ class FeedItem
      */
     function set_guid($value)
     {
-        if (of_class($value, URL__CLASS))
+        if ($value instanceof Url)
         {
             $this->guid = $value->absolute();
         }
