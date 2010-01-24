@@ -180,7 +180,7 @@ if (!empty($valid_search) && !empty($search))
 		{ 
 			$title = $row['title'];
 			if (!empty($row['title']))
-				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
+				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
 			
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($row['title']) : '';
@@ -201,7 +201,7 @@ if (!empty($valid_search) && !empty($search))
 			
 			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
+				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => FormatingHelper::second_parse($contents),
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : number_round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),

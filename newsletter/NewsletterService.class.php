@@ -159,7 +159,7 @@ class NewsletterService
 		{
 			$nbr = $Sql->count_table(PREFIX . 'newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . strprotect($mail_object, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . strprotect($message, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . TextHelper::strprotect($mail_object, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . TextHelper::strprotect($message, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 

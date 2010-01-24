@@ -49,9 +49,9 @@ class Note
 	 */
 	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0)
 	{
-		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
+		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
 		$this->options = (int)$options;
-		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
+		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(TextHelper::strprotect($script), numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 		$this->sql_table = $this->_get_table_module();
 	}
 	

@@ -125,7 +125,7 @@ class ForumInterface extends ModuleInterface
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
-		$where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'all';
+		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
 		$Tpl->assign_vars(Array(
@@ -192,7 +192,7 @@ class ForumInterface extends ModuleInterface
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
-		$where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
+		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'title';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
@@ -321,7 +321,7 @@ class ForumInterface extends ModuleInterface
 		$tpl->assign_vars(array(
             'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result_data['user_id'],'-'.$result_data['user_id'].'.php') : '',
-            'USER_PSEUDO' => !empty($result_data['login']) ? wordwrap_html($result_data['login'], 13) : $LANG['guest'],
+            'USER_PSEUDO' => !empty($result_data['login']) ? TextHelper::wordwrap_html($result_data['login'], 13) : $LANG['guest'],
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
             'TITLE' => ucfirst($result_data['title']),
             'DATE' => gmdate_format('d/m/y', $result_data['date']),

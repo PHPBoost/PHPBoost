@@ -471,8 +471,8 @@ switch($step)
 		//Enregistrement de la réponse
 		if (retrieve(POST, 'submit', false))
 		{
-			$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-			$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
+			$server_url = TextHelper::strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+			$server_path = trim(TextHelper::strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
 			$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 			$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 			$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
@@ -711,7 +711,7 @@ switch($step)
 				$Cache->load('config');
 
 				//On enregistre le membre (l'entrée était au préalable créée)
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
 
 				//Génération de la clé d'activation, en cas de verrouillage de l'administration
 				$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);

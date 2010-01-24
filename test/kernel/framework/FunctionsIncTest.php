@@ -8,7 +8,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_strprotect()
+	function test_TextHelper::strprotect()
 	{
 		TODO(__METHOD__);
 	}
@@ -33,12 +33,12 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_wordwrap_html()
+	function test_TextHelper::wordwrap_html()
 	{
 		TODO(__METHOD__);
 	}
 	
-	function test_substr_html()
+	function test_TextHelper::substr_html()
 	{
 		TODO(__METHOD__);
 	}
@@ -94,7 +94,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_check_nbr_links()
+	function test_TextHelper::check_nbr_links()
 	{
 		TODO(__METHOD__);
 	}

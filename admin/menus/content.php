@@ -87,8 +87,8 @@ $tpl = new Template('admin/menus/content.tpl');
 
 $tpl->assign_vars(array(
 	'KERNEL_EDITOR' => display_editor(),
-	'L_REQUIRE_TITLE' => to_js_string($LANG['require_title']),
-	'L_REQUIRE_TEXT' => to_js_string($LANG['require_text']),
+	'L_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
+	'L_REQUIRE_TEXT' => TextHelper::to_js_string($LANG['require_text']),
 	'L_NAME' => $LANG['name'],
 	'L_STATUS' => $LANG['status'],
 	'L_AUTHS' => $LANG['auths'],

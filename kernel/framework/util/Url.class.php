@@ -394,17 +394,17 @@ class Url
 			$protocol_regex_secured = self::PROTOCOL_REGEX;
 		}
 
-		$regex = set_subregex_multiplicity($protocol_regex_secured, $protocol) .
-		set_subregex_multiplicity(self::USER_REGEX, $user) .
-		set_subregex_multiplicity(self::DOMAIN_REGEX, $domain) .
-		set_subregex_multiplicity(self::FOLDERS_REGEX, $folders) .
-		set_subregex_multiplicity(self::FILE_REGEX, $file);
+		$regex = RegexHelper::set_subregex_multiplicity($protocol_regex_secured, $protocol) .
+		RegexHelper::set_subregex_multiplicity(self::USER_REGEX, $user) .
+		RegexHelper::set_subregex_multiplicity(self::DOMAIN_REGEX, $domain) .
+		RegexHelper::set_subregex_multiplicity(self::FOLDERS_REGEX, $folders) .
+		RegexHelper::set_subregex_multiplicity(self::FILE_REGEX, $file);
 		if ($anchor == REGEX_MULTIPLICITY_OPTIONNAL)
 		{
-			$regex .= set_subregex_multiplicity(self::ANCHOR_REGEX, REGEX_MULTIPLICITY_OPTIONNAL);
+			$regex .= RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, REGEX_MULTIPLICITY_OPTIONNAL);
 		}
-		$regex .= set_subregex_multiplicity(self::ARGS_REGEX, $args) .
-		set_subregex_multiplicity(self::ANCHOR_REGEX, $anchor);
+		$regex .= RegexHelper::set_subregex_multiplicity(self::ARGS_REGEX, $args) .
+		RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, $anchor);
 
 		return $regex;
 	}

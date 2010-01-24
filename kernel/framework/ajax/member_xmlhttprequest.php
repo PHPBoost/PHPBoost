@@ -37,8 +37,8 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['add_member_auth']) || !empty($_GET['admin_member']) || !empty($_GET['warning_member']) || !empty($_GET['punish_member'])) //Recherche d'un membre
 {
-    $login = !empty($_POST['login']) ? strprotect(utf8_decode($_POST['login'])) : '';
-    $divid = !empty($_POST['divid']) ? strprotect(utf8_decode($_POST['divid'])) : '';
+    $login = !empty($_POST['login']) ? TextHelper::strprotect(utf8_decode($_POST['login'])) : '';
+    $divid = !empty($_POST['divid']) ? TextHelper::strprotect(utf8_decode($_POST['divid'])) : '';
     $login = str_replace('*', '%', $login);
     if (!empty($login))
     {
@@ -84,7 +84,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
 }
 elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty($_GET['ban_user'])) //Recherche d'un membre
 {
-    $login = !empty($_POST['login']) ? strprotect(utf8_decode($_POST['login'])) : '';
+    $login = !empty($_POST['login']) ? TextHelper::strprotect(utf8_decode($_POST['login'])) : '';
     $login = str_replace('*', '%', $login);
     $admin = !empty($_POST['admin']) ? true : false;
     if (!empty($login))

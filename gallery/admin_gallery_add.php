@@ -62,7 +62,7 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#errorh');
 
-			$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
+			$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
 			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), $User->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#errorh');
@@ -79,10 +79,10 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 	for ($i = 1; $i <= $nbr_pics_post; $i++)
 	{
 		$activ = !empty($_POST[$i . 'activ']) ? trim($_POST[$i . 'activ']) : '';
-		$uniq = !empty($_POST[$i . 'uniq']) ? strprotect($_POST[$i . 'uniq']) : '';
+		$uniq = !empty($_POST[$i . 'uniq']) ? TextHelper::strprotect($_POST[$i . 'uniq']) : '';
 		if ($activ && !empty($uniq)) //Sélectionné.
 		{
-			$name = !empty($_POST[$i . 'name']) ? strprotect($_POST[$i . 'name']) : 0;
+			$name = !empty($_POST[$i . 'name']) ? TextHelper::strprotect($_POST[$i . 'name']) : 0;
 			$cat = !empty($_POST[$i . 'cat']) ? numeric($_POST[$i . 'cat']) : 0;
 			$del = !empty($_POST[$i . 'del']) ? numeric($_POST[$i . 'del']) : 0;
 

@@ -314,10 +314,10 @@ class Template
 	 * Special operations will be done if the variable is not registered in $list. If $varname begins with
 	 * <ul>
 	 *	<li><E_: the variable will be search without its prefix and will be escaped using <code>htmlspecialchars()</code></li>
-	 *	<li><J_: the variable will be search without its prefix and will be escaped using <code>to_js_string()</code></li>
+	 *	<li><J_: the variable will be search without its prefix and will be escaped using <code>TextHelper::to_js_string()</code></li>
 	 *	<li><L_: the variable will be search without its prefix in every languages maps registered using <code>Template->add_lang($language)</code></li>
 	 *	<li><EL_: the variable will be search without its prefix like languages variables and will be escaped using <code>htmlspecialchars()</code></li>
-	 *	<li><JL_: the variable will be search without its prefix like languages variables and will be escaped using <code>to_js_string()</code></li>
+	 *	<li><JL_: the variable will be search without its prefix like languages variables and will be escaped using <code>TextHelper::to_js_string()</code></li>
 	 * </ul>
 	 * Each time one of these operation is requested, the variable is registered in order to speed up next calls. If nothing is found, then an empty string is returned
 	 * @param string $varname the name of the variable to retrieve
@@ -357,7 +357,7 @@ class Template
 		{
 			$list[$varname] = '';
 		}
-		return $this->register_var($full_varname, to_js_string($list[$varname]), $list);
+		return $this->register_var($full_varname, TextHelper::to_js_string($list[$varname]), $list);
 	}
 
 	public function get_js_lang_var($varname)
@@ -374,7 +374,7 @@ class Template
 		}
 
 		$lang_var = $this->get_lang_var_from_list($varname, $list);
-		return $this->register_var($full_varname, to_js_string($lang_var), $list);
+		return $this->register_var($full_varname, TextHelper::to_js_string($lang_var), $list);
 	}
 
 	public function get_htmlescaped_lang_var($varname)

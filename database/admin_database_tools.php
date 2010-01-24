@@ -121,7 +121,7 @@ if (!empty($table) && $action == 'data')
 			}
 			
 			$Template->assign_block_vars('line.field', array(
-				'FIELD' => str_replace("\n", '<br />', strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE)),
+				'FIELD' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE)),
 				'CLASS' => 'row2',
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
@@ -199,7 +199,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 				'FIELD_NAME' => $field_name,
 				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
 				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
-				'FIELD_VALUE' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE),
+				'FIELD_VALUE' => TextHelper::strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text') ? true : false
 			));
 			$i++;
@@ -263,7 +263,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 				'FIELD_NAME' => $fields_info['name'],
 				'FIELD_TYPE' => $fields_info['type'],
 				'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
-				'FIELD_VALUE' => strprotect($fields_info['default']),
+				'FIELD_VALUE' => TextHelper::strprotect($fields_info['default']),
 				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text') ? true : false
 			));
 		}
@@ -326,7 +326,7 @@ elseif (!empty($table) && $action == 'query')
 				//On parse les valeurs de sortie
 				foreach ($row as $field_name => $field_value)
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => strprotect($field_value),
+					'FIELD' => TextHelper::strprotect($field_value),
 					'CLASS' => 'row1',
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));

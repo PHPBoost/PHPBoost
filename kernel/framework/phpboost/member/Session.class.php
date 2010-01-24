@@ -458,7 +458,7 @@ class Session
 			$this->data['modules_parameters'] = serialize($modules_parameters);
 
 			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" .
-			strprotect($this->data['modules_parameters'], false) .
+			TextHelper::strprotect($this->data['modules_parameters'], false) .
 				"' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
 		}
 		else
@@ -530,7 +530,7 @@ class Session
 				$session_data = array();
 			}
 
-			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
+			$this->data['session_id'] = isset($session_data['session_id']) ? TextHelper::strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
 		}
 		########SID Existe?########
@@ -561,7 +561,7 @@ class Session
 				$session_autoconnect = array();
 			}
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
-			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
+			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? TextHelper::strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $this->sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			if (!empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '')
 			{

@@ -123,7 +123,7 @@ class ContributionService
 			return array();
 		}
 		
-		$criterias[] = "module = '" . strprotect($module) . "'";
+		$criterias[] = "module = '" . TextHelper::strprotect($module) . "'";
 		
 		if ($id_in_module != null)
 		{
@@ -132,12 +132,12 @@ class ContributionService
 		
 		if ($type != null)
 		{
-			$criterias[] = "type = '" . strprotect($type) . "'";
+			$criterias[] = "type = '" . TextHelper::strprotect($type) . "'";
 		}
 			
 		if ($identifier != null)
 		{
-			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+			$criterias[] = "identifier = '" . TextHelper::strprotect($identifier). "'";
 		}
 			
 		if ($poster_id != null)

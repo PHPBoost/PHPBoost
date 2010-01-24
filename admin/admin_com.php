@@ -112,9 +112,9 @@ while ($row = $Sql->fetch_assoc($result))
 
 	//Pseudo.
 	if (!$is_guest) 
-		$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+		$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 	else
-		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 	
 	//Rang de l'utilisateur.
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
@@ -197,7 +197,7 @@ while ($row = $Sql->fetch_assoc($result))
 	if (!empty($row['user_local'])) 
 	{
 		$user_local = $LANG['place'] . ': ' . $row['user_local'];
-		$user_local = $user_local > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';			
+		$user_local = $user_local > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';			
 	}
 	else $user_local = '';
 	

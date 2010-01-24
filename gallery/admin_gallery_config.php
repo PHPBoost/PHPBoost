@@ -44,7 +44,7 @@ if (!empty($_POST['valid']))
 	$config_gallery['weight_max'] = isset($_POST['weight_max']) ? numeric($_POST['weight_max']) : '1024';
 	$config_gallery['quality'] = isset($_POST['quality']) ? numeric($_POST['quality']) : '80';
 	$config_gallery['trans'] = isset($_POST['trans']) ? numeric($_POST['trans']) : '40';
-	$config_gallery['logo'] = strprotect(retrieve(POST, 'logo', ''), HTML_PROTECT, ADDSLASHES_NONE);
+	$config_gallery['logo'] = TextHelper::strprotect(retrieve(POST, 'logo', ''), HTML_PROTECT, ADDSLASHES_NONE);
 	$config_gallery['activ_logo'] = isset($_POST['activ_logo']) ? numeric($_POST['activ_logo']) : '0';
 	$config_gallery['d_width'] = isset($_POST['d_width']) ? numeric($_POST['d_width']) : '5';
 	$config_gallery['d_height'] = isset($_POST['d_height']) ? numeric($_POST['d_height']) : '5';

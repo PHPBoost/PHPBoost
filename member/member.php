@@ -506,7 +506,7 @@ if (!empty($id_get)) //Espace membre
 			
 			if (!empty($_POST['avatar']))
 			{
-				$path = strprotect($_POST['avatar']);
+				$path = TextHelper::strprotect($_POST['avatar']);
 				$error = Util::check_img_dimension($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
@@ -582,7 +582,7 @@ if (!empty($id_get)) //Espace membre
 							$array_field = is_array($field) ? $field : array();
 							$field = '';
 							foreach ($array_field as $value)
-								$field .= strprotect($value) . '|';
+								$field .= TextHelper::strprotect($value) . '|';
 						}
 						elseif ($row['field'] == 6)
 						{
@@ -591,14 +591,14 @@ if (!empty($id_get)) //Espace membre
 							$array_possible_values = explode('|', $row['possible_values']);
 							foreach ($array_possible_values as $value)
 							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($value) . '|' : '';
+								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? TextHelper::strprotect($value) . '|' : '';
 								$i++;
 							}
 							if ($row['required'] && empty($field))
 								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 						}
 						else
-							$field = strprotect($field);
+							$field = TextHelper::strprotect($field);
 							
 						if (!empty($field))
 						{

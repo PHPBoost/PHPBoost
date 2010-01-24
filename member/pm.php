@@ -656,7 +656,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if (!empty($row['user_local']))
 		{
 			$user_local = $LANG['place'] . ': ' . $row['user_local'];
-			$user_local = strlen($row['user_local']) > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
+			$user_local = strlen($row['user_local']) > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
 		}
 		else $user_local = '';
 
@@ -671,7 +671,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
-			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']),
+			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
 			'USER_RANK' => ($is_admin) ? '' : (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 			'USER_IMG_ASSOC' => ($is_admin) ? '' : $user_assoc_img,
 			'USER_AVATAR' => ($is_admin) ? '' : $user_avatar,

@@ -37,8 +37,8 @@ if (!empty($_POST['valid']) && !empty($id))
 	$Cache->load('gallery');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
+	$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
+	$contents = !empty($_POST['desc']) ? TextHelper::strprotect($_POST['desc']) : '';
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 1;  
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
 
@@ -47,7 +47,7 @@ if (!empty($_POST['valid']) && !empty($id))
 
 	if (!empty($name))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET name = '" . $name . "', contents = '" . $contents . "', aprob = '" . $aprob . "', status = '" . $status . "', auth = '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET name = '" . $name . "', contents = '" . $contents . "', aprob = '" . $aprob . "', status = '" . $status . "', auth = '" . TextHelper::strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
 		$to = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
