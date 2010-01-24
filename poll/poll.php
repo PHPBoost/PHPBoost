@@ -61,13 +61,13 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
 				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
 	
-				setcookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght'], '/');						
+				AppContext::get_response()->set_cookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght'], '/');						
 			}
 		}
 		else //Génération d'un cookie.
 		{	
 			$check_cookie = false;
-			setcookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght'], '/');
+			AppContext::get_response()->set_cookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght'], '/');
 		}
 		
 		$check_bdd = true;
@@ -96,7 +96,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		
 		//Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		if ($check_bdd || $check_cookie)
-			redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
+			AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
 		
 		//Récupération du vote.
 		$check_answer = false;
@@ -138,7 +138,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
-		redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
+		AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {

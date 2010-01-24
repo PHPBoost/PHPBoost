@@ -115,10 +115,10 @@ if (!empty($_POST['valid']) && !empty($id))
 			$Cache->Generate_module_file('forum'); //Régénération du cache.
 	}
 	else
-		redirect('/forum/admin_forum.php?id=' . $id . '&error=incomplete');
+		AppContext::get_response()->redirect('/forum/admin_forum.php?id=' . $id . '&error=incomplete');
 
     forum_generate_feeds();
-	redirect('/forum/admin_forum.php');
+	AppContext::get_response()->redirect('/forum/admin_forum.php');
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
@@ -141,7 +141,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 			$admin_forum->del_cat($idcat, $confirm_delete);
 
 			forum_generate_feeds();
-			redirect(HOST . SCRIPT);
+			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
 		else //Sinon on propose de déplacer les topics existants dans une autre catégorie.
 		{
@@ -224,12 +224,12 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 				$admin_forum->del_cat($idcat, $confirm_delete);
 
 				forum_generate_feeds();
-				redirect(HOST . SCRIPT);
+				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
 		}
 	}
 	else
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
@@ -239,7 +239,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 
 	//Catégorie existe?
 	if (!isset($CAT_FORUM[$id]))
-		redirect('/forum/admin_forum.php');
+		AppContext::get_response()->redirect('/forum/admin_forum.php');
 
 	$admin_forum = new Admin_forum();
 
@@ -247,7 +247,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		$admin_forum->move_updown_cat($id, $move);
 
 	forum_generate_feeds();
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id))
 {
@@ -393,7 +393,7 @@ else
 			'INDENT' => $row['level'] * 75, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['lock'] . '" />' : '',
 			'URL' => !empty($row['url']) ? '<a href="' . $row['url'] . '"><img src="./forum_mini.png" alt="" class="valign_middle" /></a> ' : '',
-			'U_FORUM_VARS' => !empty($row['url']) ? $row['url'] : (($row['level'] > 0) ? 'forum' . url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') : url('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'))
+			'U_FORUM_VARS' => !empty($row['url']) ? $row['url'] : (($row['level'] > 0) ? 'forum' . url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') : url('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'))
 		));
 
 		$list_cats_js .= $row['id'] . ', ';

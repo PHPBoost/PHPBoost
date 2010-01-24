@@ -37,15 +37,15 @@ $topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle'
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->add($cat_name, 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($cat_name) . '.php'));
-$Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'));
+$Bread_crumb->add($cat_name, 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . Url::encode_rewrite($cat_name) . '.php'));
+$Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($LANG['alert_topic'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
 if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
-	redirect('/forum/index' . url('.php'));
+	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
 if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
     $Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -75,7 +75,7 @@ if (!empty($alert) && empty($alert_post))
 
 		$Template->assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,
-			'U_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'),
+			'U_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
 			'ID_ALERT' => $alert,
 		));
 	}
@@ -84,7 +84,7 @@ if (!empty($alert) && empty($alert_post))
 		$Template->assign_vars(array(
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
-			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php')
+			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php')
 		));
 
 		$Template->assign_block_vars('alert_confirm', array(
@@ -99,7 +99,7 @@ if (!empty($alert_post))
 	$Template->assign_vars(array(
 		'L_ALERT' => $LANG['alert_topic'],
 		'L_BACK_TOPIC' => $LANG['alert_back'],
-		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . url_encode_rewrite($topic_name) . '.php')
+		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée

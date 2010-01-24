@@ -43,7 +43,7 @@ if (!empty($_POST['valid']) )
 		foreach ($auth_extensions_sup as $extension)
 		{
 		    //Suppression de tous les caractères interdits dans les extensions
-		    $extension = str_replace('-', '', url_encode_rewrite($extension));
+		    $extension = str_replace('-', '', Url::encode_rewrite($extension));
 		    
 			if ($extension != '' && !isset($auth_extensions[$extension]) && $extension != 'php') 
 			{
@@ -66,7 +66,7 @@ if (!empty($_POST['valid']) )
 	
 	HtaccessFileCache::regenerate();
 	
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

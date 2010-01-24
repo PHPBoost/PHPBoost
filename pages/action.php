@@ -56,9 +56,9 @@ if (!empty($new_title) && $id_rename_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
-	$encoded_title = url_encode_rewrite($new_title);
+	$encoded_title = Url::encode_rewrite($new_title);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
@@ -73,16 +73,16 @@ if (!empty($new_title) && $id_rename_post > 0)
 		}
 		else
 			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect('/pages/action.php?rename=' . $id_rename_post . '&error=title_already_exists');
+		AppContext::get_response()->redirect('/pages/action.php?rename=' . $id_rename_post . '&error=title_already_exists');
 }
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
@@ -94,19 +94,19 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
-	$encoded_title = url_encode_rewrite($redirection_name);
+	$encoded_title = Url::encode_rewrite($redirection_name);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0)
 	{
 		$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
-		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect('/pages/action.php?new=' . $id_new_post . '&error=title_already_exists');
+		AppContext::get_response()->redirect('/pages/action.php?new=' . $id_new_post . '&error=title_already_exists');
 }
 //Suppression des redirections
 elseif ($del_redirection > 0)
@@ -121,13 +121,13 @@ elseif ($del_redirection > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
 		
-	redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
 //Suppression d'une catégorie
 elseif ($del_cat_post > 0 && $report_cat >= 0)
@@ -150,7 +150,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	{
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
-			redirect('/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
+			AppContext::get_response()->redirect('/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
 	}
 	
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
@@ -165,10 +165,10 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		if (array_key_exists($page_infos['id_cat'], $_PAGES_CATS) && $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] > 0)
 		{
 			$title = $_PAGES_CATS[$_PAGES_CATS[$page_infos['id_cat']]['id_parent']]['name'];
-			redirect('/pages/' . url('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
+			AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
-			redirect('/pages/' . url('pages.php', '', '&'));
+			AppContext::get_response()->redirect('/pages/' . url('pages.php', '', '&'));
 	}
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
@@ -183,10 +183,10 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		if (array_key_exists($report_cat, $_PAGES_CATS))
 		{
 			$title = $_PAGES_CATS[$report_cat]['name'];
-			redirect('/pages/' . url('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
+			AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
-			redirect('/pages/' . url('pages.php', '', '&'));
+			AppContext::get_response()->redirect('/pages/' . url('pages.php', '', '&'));
 	}
 }
 
@@ -199,7 +199,7 @@ if ($id_page > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	if ($id_redirection > 0)
 		$Bread_crumb->add($LANG['pages_redirection_management'], url('action.php?id=' . $id_redirection));
@@ -214,7 +214,7 @@ if ($id_page > 0)
 	while ($id > 0)
 	{
 	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -237,7 +237,7 @@ if ($del_cat > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	$cats = array();
 	$cat_list = display_cat_explorer($page_infos['id_cat'], $cats);
@@ -361,7 +361,7 @@ elseif ($id_redirection > 0)
 else
 {
 	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 
 	$Template->assign_block_vars('redirections', array());
 	

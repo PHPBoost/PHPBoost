@@ -225,7 +225,7 @@ class Comments
 				{
 					//Status des commentaires, verrouillé/déverrouillé?
 					if ($this->lock_com >= 1 && !$User->check_level(MODO_LEVEL))
-						redirect($path_redirect);
+						AppContext::get_response()->redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires?
 					if ($User->check_level($CONFIG_COM['com_auth']))
@@ -235,32 +235,32 @@ class Comments
 						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{
 							if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcule la fin du delai.
-								redirect($path_redirect . '&errorh=flood#errorh');
+								AppContext::get_response()->redirect($path_redirect . '&errorh=flood#errorh');
 						}
 						
 						//Code de vérification anti-bots.
 						if ($CONFIG_COM['com_verif_code'] && !$captcha->is_valid())
 						{
-							redirect($path_redirect . '&errorh=verif#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=verif#errorh');
 						}
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
 						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
-							redirect($path_redirect . '&errorh=l_pseudo#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
 						if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
-							redirect($path_redirect . '&errorh=l_flood#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 						
 						//Récupération de l'adresse de la page.
 						$last_idcom = $this->add($contents, $login);
 						
 						//Rédirection vers la page pour éviter le double post!
-						redirect($path_redirect . '#m' . $last_idcom);
+						AppContext::get_response()->redirect($path_redirect . '#m' . $last_idcom);
 					}
 					else //utilisateur non autorisé!
-						redirect($path_redirect . '&errorh=auth#errorh');
+						AppContext::get_response()->redirect($path_redirect . '&errorh=auth#errorh');
 				}
 				else
-					redirect($path_redirect . '&errorh=incomplete#errorh');
+					AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
 			}
 			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
 			{
@@ -280,7 +280,7 @@ class Comments
 						$lastid_com = !empty($lastid_com) ? '#m' . $lastid_com : '';
 						
 						//Succès redirection.
-						redirect($path_redirect . $lastid_com);
+						AppContext::get_response()->redirect($path_redirect . $lastid_com);
 					}
 					elseif ($editcom > 0) //Edition du commentaire.
 					{
@@ -334,18 +334,18 @@ class Comments
 							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 							
 							if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
-								redirect($path_redirect . '&errorh=l_flood#errorh');
+								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 
 							$this->update($contents, $login);
 							
 							//Succès redirection.
-							redirect($path_redirect . '#m' . $this->idcom);
+							AppContext::get_response()->redirect($path_redirect . '#m' . $this->idcom);
 						}
 						else //Champs incomplet!
-							redirect($path_redirect . '&errorh=incomplete#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
 					}
 					else
-						redirect($path_redirect . '&errorh=incomplete#errorh');
+						AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
 				}
 				else
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -359,7 +359,7 @@ class Comments
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
 				}
-				redirect($path_redirect . '#anchor_' . $this->script);
+				AppContext::get_response()->redirect($path_redirect . '#anchor_' . $this->script);
 			}
 			else
 			{

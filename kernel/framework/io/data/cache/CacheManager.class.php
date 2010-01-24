@@ -173,11 +173,11 @@ class CacheManager
 	{
 		if (!empty($entry_name))
 		{
-			return url_encode_rewrite($module_name . '-' . $entry_name);
+			return Url::encode_rewrite($module_name . '-' . $entry_name);
 		}
 		else
 		{
-			return url_encode_rewrite($module_name);
+			return Url::encode_rewrite($module_name);
 		}
 	}
 

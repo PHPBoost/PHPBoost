@@ -46,10 +46,10 @@ function menu_langswitcher_langswitcher($position, $block)
     		{
 				$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
 				$query_string = preg_replace('`&switchlang=[^&]+`', '', $query_string);
-				redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+				AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
     		}
     		else
-    			redirect(HOST . SCRIPT);
+    			AppContext::get_response()->redirect(HOST . SCRIPT);
     	}
     }
     

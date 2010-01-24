@@ -130,9 +130,9 @@ if ($random)//Recherche d'une page aléatoire
 {
 	$page = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE redirect = 0 ORDER BY rand() " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	if (!empty($page)) //On redirige
-		redirect('/wiki/' . url('wiki.php?title=' . $page, $page));
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $page, $page));
 	else
-		redirect('/wiki/' . url('wiki.php'));
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 }
 elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
@@ -311,10 +311,10 @@ elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {	
 	if (empty($article_infos['title']))//Si l'article n'existe pas
-		redirect('/wiki/' . url('wiki.php'));
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 	
 	if ($article_infos['is_cat'] == 0)//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
-		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 	else //Catégorie
 	{
 		$cats = array();
@@ -360,7 +360,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 	}
 }
 else
-	redirect('/wiki/' . url('wiki.php'));
+	AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = new BBCodeParserFactory();

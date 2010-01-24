@@ -34,7 +34,7 @@ $user_accounts_config = UserAccountsConfig::load();
 
 if (!$user_accounts_config->is_registration_enabled())
 {
-	redirect(get_home_page());
+	AppContext::get_response()->redirect(get_home_page());
 }
 
 $key = retrieve(GET, 'key', '');
@@ -370,7 +370,7 @@ if (empty($key))
 		$Template->pparse('register');
 	}
 	else
-		redirect(get_home_page());
+		AppContext::get_response()->redirect(get_home_page());
 }
 elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation du compte membre
 {
@@ -403,7 +403,7 @@ elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation 
 	$Template->pparse('register');
 }
 else
-	redirect(get_home_page());
+	AppContext::get_response()->redirect(get_home_page());
 
 require_once('../kernel/footer.php'); 
 

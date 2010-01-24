@@ -60,7 +60,7 @@ if (!empty($g_del)) //Suppression d'une image.
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
 
-	redirect('/gallery/gallery' . url('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
+	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
@@ -72,14 +72,14 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
 
-	redirect('/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
+	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
 }
 elseif (isset($_FILES['gallery'])) //Upload
 {
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
+			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 	}
 	else //Racine.
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
@@ -90,7 +90,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
-		redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 
 	$dir = 'pics/';
 
@@ -102,30 +102,30 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
-		redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
-			redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
+			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
 		else
 		{
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 
 			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
-				redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
 
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
 		}
 	}
 
-	redirect('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
+	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
 }
 elseif ($g_add)
 {
@@ -136,7 +136,7 @@ elseif ($g_add)
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
+			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 
 		$cat_links = '';
 		foreach ($CAT_GALLERY as $id => $array_info_cat)
@@ -259,7 +259,7 @@ else
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
+			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 
 		$cat_links = '';
 		foreach ($CAT_GALLERY as $id => $array_info_cat)
@@ -312,7 +312,7 @@ else
 	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 
 	$module_data_path = $Template->get_module_data_path('gallery');
-	$rewrite_title = url_encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
+	$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 
 	//Ordonnement.
 	$array_order = array('name' => $LANG['name'], 'date' => $LANG['date'], 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
@@ -416,7 +416,7 @@ else
 				'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 				'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
-				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
+				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 			));
 		}
 		$Sql->query_close($result);

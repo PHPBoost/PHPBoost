@@ -56,7 +56,7 @@ if ($guestbook && empty($id_get)) //Enregistrement
 		{
 			if ($CONFIG_GUESTBOOK['guestbook_verifcode'] && !$captcha->is_valid())
 			{
-				redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
 			}
 
 			//Mod anti-flood
@@ -65,18 +65,18 @@ if ($guestbook && empty($id_get)) //Enregistrement
 			{
 				if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcul la fin du delai.
 				{
-					redirect(HOST . SCRIPT . url('?error=flood', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=flood', '', '&') . '#errorh');
 				}
 			}
 
 			$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 			if (!check_nbr_links($guestbook_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{
-				redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			}
 			if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 			{
-				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			}
 
 			$Sql->query_inject("INSERT INTO " . PREFIX . "guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
@@ -84,16 +84,16 @@ if ($guestbook && empty($id_get)) //Enregistrement
 
 			$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 
-			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
 		else //utilisateur non autorisé!
 		{
-			redirect(HOST . SCRIPT . url('?error=auth', '', '&') . '#errorh');
+			AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=auth', '', '&') . '#errorh');
 		}
 	}
 	else
 	{
-		redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
+		AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 	}
 }
 elseif (!empty($id_get)) //Edition + suppression!
@@ -116,7 +116,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 
-			redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 		}
 		elseif ($edit)
 		{
@@ -160,14 +160,14 @@ elseif (!empty($id_get)) //Edition + suppression!
 				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 				if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 				{
-					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 				}
 
 				$Sql->query_inject("UPDATE " . PREFIX . "guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 
 				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 
-				redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
+				AppContext::get_response()->redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
 			else
 			{
@@ -176,12 +176,12 @@ elseif (!empty($id_get)) //Edition + suppression!
 		}
 		else
 		{
-			redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
 	}
 	else
 	{
-		redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}
 }
 else //Affichage.

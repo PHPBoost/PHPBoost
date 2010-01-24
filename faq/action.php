@@ -69,7 +69,7 @@ if ($faq_del_id > 0)
 			}
 			
 			$Cache->Generate_module_file('faq');
-			redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
 		}
 	}
 	else
@@ -88,7 +88,7 @@ elseif ($down > 0)
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] + 1), '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] + 1), '', '&'));
 		}
 	}
 	else
@@ -105,7 +105,7 @@ elseif ($up > 0)
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE id = '" . $up . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] - 1), '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] - 1), '', '&'));
 		}
 	}
 	else
@@ -122,7 +122,7 @@ elseif (!empty($entitled) && !empty($answer))
 		if ($auth_write)//If authorized user
 		{			
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-			redirect('/faq/' . url('faq.php?id=' . $faq_infos['idcat'] . '&question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
+			AppContext::get_response()->redirect('/faq/' . url('faq.php?id=' . $faq_infos['idcat'] . '&question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . Url::encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
 			
 		}
 		else
@@ -152,7 +152,7 @@ elseif (!empty($entitled) && !empty($answer))
 			//On recupère les informations.
 			$Cache->load('faq', RELOAD_CACHE);
 	
-			redirect('/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
+			AppContext::get_response()->redirect('/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -190,7 +190,7 @@ elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
 			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 		}
 		$Cache->Generate_module_file('faq');
-		redirect(HOST . DIR . url('/faq/management.php?faq=' . $id_cat, '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $id_cat, '', '&'));
 	}
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
@@ -235,12 +235,12 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 				if ($question_infos['idcat'] != 0 || $target != 0)
 					$Cache->Generate_module_file('faq');
 			}
-			redirect(HOST . DIR . url('/faq/management.php?faq=' . $target, '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $target, '', '&'));
 		}
 	}
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
-	redirect(HOST . DIR . url('/faq/faq.php', '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/faq/faq.php', '', '&'));
 
 ?>

@@ -59,22 +59,22 @@ $Template->assign_vars(array(
 if ($id_up > 0)
 {
 	$faq_categories->move($id_up, MOVE_CATEGORY_UP);
-	redirect(url('admin_faq_cats.php'));
+	AppContext::get_response()->redirect(url('admin_faq_cats.php'));
 }
 elseif ($id_down > 0)
 {
 	$faq_categories->move($id_down, MOVE_CATEGORY_DOWN);
-	redirect(url('admin_faq_cats.php'));
+	AppContext::get_response()->redirect(url('admin_faq_cats.php'));
 }
 elseif ($id_show > 0)
 {
 	$faq_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
-	redirect(url('admin_faq_cats.php'));
+	AppContext::get_response()->redirect(url('admin_faq_cats.php'));
 }
 elseif ($id_hide > 0)
 {
 	$faq_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	redirect(url('admin_faq_cats.php'));
+	AppContext::get_response()->redirect(url('admin_faq_cats.php'));
 }
 elseif ($cat_to_del > 0)
 {
@@ -117,7 +117,7 @@ elseif (!empty($_POST['submit']))
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		
 		if (empty($name))
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		
 		if ($id_cat > 0)
 			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
@@ -127,13 +127,13 @@ elseif (!empty($_POST['submit']))
 
 	$Cache->Generate_module_file('faq');
 	
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
 elseif (!empty($_GET['recount']))
 {
 	$faq_categories->Recount_subquestions();
-	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
 elseif ($new_cat XOR $id_edit > 0)
 {

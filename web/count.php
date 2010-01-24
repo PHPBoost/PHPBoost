@@ -34,6 +34,6 @@ if (!empty($idweb))
 //Redirection vers le site demandé!
 $url_web = $Sql->query("SELECT url FROM " . PREFIX . "web WHERE id = '" . $idweb . "'", __LINE__, __FILE__);
 if (!empty($url_web))
-	redirect($url_web);
+	AppContext::get_response()->redirect($url_web);
 
 ?>

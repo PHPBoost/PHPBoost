@@ -70,7 +70,7 @@ if (!empty($_POST['valid']))
         $Cache->Generate_file('config');
         $Cache->Generate_module_file('search');
 
-        redirect(HOST . SCRIPT);
+        AppContext::get_response()->redirect(HOST . SCRIPT);
     }
     else
     {
@@ -86,14 +86,14 @@ if (!empty($_POST['valid']))
         // Génération des nouveaux fichiers de cache
         $Cache->Generate_module_file('search');
 
-        redirect(HOST . SCRIPT . '?weighting=true');
+        AppContext::get_response()->redirect(HOST . SCRIPT . '?weighting=true');
     }
 }
 elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 {
     $Sql->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
     $Sql->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
-    redirect(HOST.SCRIPT);
+    AppContext::get_response()->redirect(HOST.SCRIPT);
 }
 else
 {

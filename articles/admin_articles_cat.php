@@ -57,7 +57,7 @@ if ($cat_to_del > 0)
 		
 		// Feeds Regeneration		
 		Feed::clear_cache('articles');
-		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
 	}
 	else
 	{
@@ -259,7 +259,7 @@ elseif (retrieve(POST,'submit',false))
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 	
 		if ($id_cat > 0)
 			$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
@@ -272,7 +272,7 @@ elseif (retrieve(POST,'submit',false))
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 else
 {

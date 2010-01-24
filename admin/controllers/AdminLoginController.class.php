@@ -33,12 +33,12 @@ class AdminLoginController extends AbstractController
 		$lang = LangLoader::get_class(__CLASS__);
 		$view->add_lang($lang);
 
-		$flood =$request->get_getint('flood', 5); 
+		$flood = $request->get_getint('flood', 5); 
 		if ($flood > 0)
 		{
 			$view->assign_vars(array(
 				'ERROR' => (($flood > 0) ? StringVars::replace_vars($lang['flood_block'],
-			array('remaining_tries' => 5 - $flood)) : $lang['flood_max']),
+				array('remaining_tries' => 5 - $flood)) : $lang['flood_max']),
 				'C_UNLOCK' => $flood == 5
 			));
 		}

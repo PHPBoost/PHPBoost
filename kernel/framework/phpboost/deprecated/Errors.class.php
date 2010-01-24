@@ -166,7 +166,7 @@ class Errors
 					self::log_error($errfile, $errline, $errno, $errstr, $archive);
 					if (!$_err_stop)
 					{
-						redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
+						AppContext::get_response()->redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
 					}
 					else
 					{

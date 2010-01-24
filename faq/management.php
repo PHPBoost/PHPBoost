@@ -177,7 +177,7 @@ else
 		'L_PREVIEW' => $LANG['preview'],
 		'L_CAT_NAME' => $FAQ_LANG['cat_name'],
 		'L_REQUIRE_CAT_NAME' => $FAQ_LANG['require_cat_name'],
-		'U_GO_BACK_TO_CAT' => url('faq.php' . ($id_faq > 0 ? '?id=' . $id_faq : ''), $id_faq > 0 ? 'faq-' . $id_faq . '+' . url_encode_rewrite($FAQ_CATS[$id_faq]['name']) . '.php' : 'faq.php')
+		'U_GO_BACK_TO_CAT' => url('faq.php' . ($id_faq > 0 ? '?id=' . $id_faq : ''), $id_faq > 0 ? 'faq-' . $id_faq . '+' . Url::encode_rewrite($FAQ_CATS[$id_faq]['name']) . '.php' : 'faq.php')
 	));
 	
 	//Special authorization

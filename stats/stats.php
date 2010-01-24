@@ -522,7 +522,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 
 	//On affiche les visiteurs totaux et du jour
 	$compteur_total = $Sql->query("SELECT SUM(pages) FROM " . PREFIX . "stats", __LINE__, __FILE__);
-	$compteur_day = array_sum(pages_displayed(NO_UPDATE_PAGES)) + 1;
+	$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 	$compteur_total = $compteur_total + $compteur_day;
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 

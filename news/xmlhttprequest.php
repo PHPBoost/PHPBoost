@@ -96,8 +96,8 @@ elseif (isset($_POST['preview']))
 		'LEVEL' =>	$level[$user['level']],
 		'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 		'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
-		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php')
+		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
+		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php')
 	));
 
 	echo $preview->parse(Template::TEMPLATE_PARSER_STRING);

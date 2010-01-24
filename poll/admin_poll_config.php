@@ -43,7 +43,7 @@ if (!empty($_POST['valid']))
 	###### Régénération du cache des sondages #######
 	$Cache->Generate_module_file('poll');
 	
-	redirect(HOST . SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . SCRIPT); 	
 }
 else	
 {		

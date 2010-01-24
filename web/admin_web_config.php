@@ -49,7 +49,7 @@ if (!empty($_POST['valid']))
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('web');
 	
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

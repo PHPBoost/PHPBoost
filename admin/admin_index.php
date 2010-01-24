@@ -42,7 +42,7 @@ if (!empty($writingpad))
 	$writing_pad_content->set_content($content);
 	WritingPadConfig::save();
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 
 $Template->set_filenames(array(

@@ -102,7 +102,7 @@ function wiki_explode_menu(&$content)
 				
 				//Réinsertion
 				$class_level = $level - 1;
-				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
 		}
 		$i++;
@@ -129,7 +129,7 @@ function wiki_display_menu($menu_list)
 		$current_level = $title[0];
 		
 		$title_name = stripslashes($title[1]);		
-		$title_link = '<a href="#paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
+		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
 		{

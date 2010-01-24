@@ -47,7 +47,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 			{
 				if (SCRIPT !== (DIR . '/member/maintain.php'))
 				{
-					redirect('/member/maintain.php');
+					AppContext::get_response()->redirect('/member/maintain.php');
 				}
 			}
 		}

@@ -52,7 +52,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	{
 		// Bread crumb.
 		$news_cat->bread_crumb($news['idcat']);
-		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
+		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 
 		// Titre de la page.
 		define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($news['title']));
@@ -91,7 +91,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		{
 			$tpl->assign_block_vars('suggested', array(
 				'TITLE' => $row['title'],
-				'URL' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+				'URL' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php')
 			));
 			$nbr_suggested++;
 		}
@@ -119,13 +119,13 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
-			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
-			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
+			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
+			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
-			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php'),
-			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php'),
+			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
+			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . Url::encode_rewrite($next_news['title']) . '.php'),
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'L_EDIT' => $LANG['edit'],
 			'L_DELETE' => $LANG['delete'],
@@ -171,7 +171,7 @@ elseif ($user)
 			$tpl->assign_block_vars('news', array(
 				'ID' => $row['id'],
 				'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
-				'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'TITLE' => $row['title'],
 				'C_EDIT' => true,
 				'C_DELETE' => true,
@@ -179,7 +179,7 @@ elseif ($user)
 				'IMG' => second_parse_url($row['img']),
 				'IMG_DESC' => $row['alt'],
 				'C_ICON' => $NEWS_CONFIG['activ_icon'],
-				'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
+				'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 				'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 				'CONTENTS' => second_parse($row['contents']),
 				'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
@@ -211,7 +211,7 @@ elseif ($user)
 	}
 	else
 	{
-		redirect(get_home_page());
+		AppContext::get_response()->redirect(get_home_page());
 		exit;
 	}
 }

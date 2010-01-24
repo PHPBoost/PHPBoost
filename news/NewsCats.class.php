@@ -150,7 +150,7 @@ class NewsCats extends CategoriesManager
 		while ($id > 0)
 		{
 			if ($User->check_auth($NEWS_CAT[$id]['auth'], AUTH_NEWS_READ))
-				$Bread_crumb->add($NEWS_CAT[$id]['name'], url('news.php?cat=' . $id, 'news-' . $id . '+' . url_encode_rewrite($NEWS_CAT[$id]['name']) . '.php'));
+				$Bread_crumb->add($NEWS_CAT[$id]['name'], url('news.php?cat=' . $id, 'news-' . $id . '+' . Url::encode_rewrite($NEWS_CAT[$id]['name']) . '.php'));
 			$id = $NEWS_CAT[$id]['id_parent'];
 		}
 

@@ -97,7 +97,7 @@ switch ($action)
 				}
 			}
 			
-			redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -116,9 +116,9 @@ switch ($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 			}	
 					
 			$moderation_panel_template->assign_vars(array(
@@ -252,7 +252,7 @@ switch ($action)
 					$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}			
 			}		
-			redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -271,9 +271,9 @@ switch ($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 			}	
 			
 			$moderation_panel_template->assign_vars(array(
@@ -396,7 +396,7 @@ switch ($action)
 				}	
 			}
 			
-			redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -415,9 +415,9 @@ switch ($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
+					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 			}		
 			
 			$moderation_panel_template->assign_vars(array(

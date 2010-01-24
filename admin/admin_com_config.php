@@ -51,7 +51,7 @@ if (!empty($_POST['valid']) )
 	###### Régénération du cache dela configuration #######
 	$Cache->Generate_file('config');
 	
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

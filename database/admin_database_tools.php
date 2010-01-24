@@ -154,7 +154,7 @@ elseif (!empty($table) && $action == 'delete')
 	
 	if (!empty($value) && !empty($field))
 		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
-	redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
+	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
@@ -172,7 +172,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 			$request .= $fields_info['name'] . " = '" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
 		
 		$Sql->query_inject("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
-		redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
+		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
 	{
@@ -240,7 +240,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 		}
 		
 		$Sql->query_inject("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
-		redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
+		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	else
 	{
@@ -272,21 +272,21 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 elseif (!empty($table) && $action == 'optimize')
 {
 	$Sql->optimize_tables(array($table));	
-	redirect('/database/admin_database_tools.php?table=' . $table);
+	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'truncate')
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$Sql->truncate_tables(array($table));
-	redirect('/database/admin_database_tools.php?table=' . $table);
+	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$Sql->drop_tables(array($table));
-	redirect('/database/admin_database_tools.php?table=' . $table);
+	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'query')
 {
@@ -358,7 +358,7 @@ elseif (!empty($table))
 {
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	if (!isset($backup->tables[$table])) //Table non existante.
-		redirect('/database/admin_database.php');
+		AppContext::get_response()->redirect('/database/admin_database.php');
 		
 	foreach ($table_structure['fields'] as $fields_info)
 	{
@@ -444,7 +444,7 @@ elseif (!empty($table))
 	));
 }
 else
-	redirect('/database/admin_database.php');
+	AppContext::get_response()->redirect('/database/admin_database.php');
 
 $Template->pparse('admin_database_tools');
 

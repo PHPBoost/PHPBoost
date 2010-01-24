@@ -93,7 +93,7 @@ function articles_mini($position, $block)
 			'VIEW'=> $view ? ($LANG['views']." : ".$row['views']) : '',
 			'COM'=> $com ? ($LANG['com']. " : ".$row['nbr_com']) : '',
 			'DESCRIPTION'=>$row['description'],
-			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
+			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
 		));
 	}
 	

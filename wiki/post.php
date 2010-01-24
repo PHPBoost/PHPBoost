@@ -109,7 +109,7 @@ if (!empty($contents)) //On enregistre un article
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
-			redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
+			AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
 		}
 		elseif (!empty($title)) //On crée un article
 		{
@@ -120,7 +120,7 @@ if (!empty($contents)) //On enregistre un article
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
-			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
+			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . Url::encode_rewrite($title) . "'", __LINE__, __FILE__);
 			
 			
 			//Si il existe: message d'erreur
@@ -128,7 +128,7 @@ if (!empty($contents)) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat, undefined_status, auth) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "', '', '')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat, undefined_status, auth) VALUES ('" . $title . "', '" . Url::encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "', '', '')", __LINE__, __FILE__);
 				//On récupère le numéro de l'article créé
 				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu
@@ -152,7 +152,7 @@ if (!empty($contents)) //On enregistre un article
                 Feed::clear_cache('wiki');
                 
 				$redirect = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
-				redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
+				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
 	}

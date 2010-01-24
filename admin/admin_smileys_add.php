@@ -47,13 +47,13 @@ if (!empty($_POST['add']))
 			###### Régénération du cache des smileys #######	
 			$Cache->Generate_file('smileys');	
 		
-			redirect('/admin/admin_smileys.php');
+			AppContext::get_response()->redirect('/admin/admin_smileys.php');
 		}
 		else
-			redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
+			AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
 	}
 	else
-		redirect('/admin/admin_smileys_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
@@ -76,7 +76,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
 }
 else
 {

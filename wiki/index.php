@@ -29,6 +29,6 @@ include_once('../kernel/begin.php');
 define('TITLE', '');
 include_once('../kernel/header.php'); 
 
-redirect('/wiki/wiki.php');
+AppContext::get_response()->redirect('/wiki/wiki.php');
 
 ?>

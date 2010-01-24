@@ -86,7 +86,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if (empty($list_cats))
-				redirect(HOST . SCRIPT);
+				AppContext::get_response()->redirect(HOST . SCRIPT);
 			
 			//Galeries parentes de la galerie cible.
 			if (!empty($to))
@@ -180,9 +180,9 @@ if (!empty($_POST['valid']) && !empty($id))
 		$Cache->Generate_module_file('gallery');
 	}
 	else
-		redirect('/gallery/admin_gallery_cat.php?id=' . $id . '&error=incomplete');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php?id=' . $id . '&error=incomplete');
 
-	redirect('/gallery/admin_gallery_cat.php');
+	AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la racine.
 {
@@ -195,7 +195,7 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 	$Cache->Generate_module_file('gallery');
 	
-	redirect('/gallery/admin_gallery_cat.php');
+	AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
@@ -369,7 +369,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						
 						//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 						if (empty($list_sub_cats))
-							redirect(HOST . SCRIPT);
+							AppContext::get_response()->redirect(HOST . SCRIPT);
 
 						//Galeries parentes de la galerie cible.
 						if (!empty($f_to))
@@ -471,7 +471,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					
 					$Cache->Generate_module_file('gallery');
 					
-					redirect(HOST . SCRIPT);
+					AppContext::get_response()->redirect(HOST . SCRIPT);
 				}	
 			}
 		}
@@ -507,11 +507,11 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 			###### Regénération du cache #######
 			$Cache->Generate_module_file('gallery');
 			
-			redirect('/gallery/admin_gallery_cat.php');
+			AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');
 		}		
 	}
 	else
-		redirect('/gallery/admin_gallery_cat.php');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
@@ -521,7 +521,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	
 	//Catégorie existe?
 	if (!isset($CAT_GALLERY[$id]))
-		redirect('/gallery/admin_gallery_cat.php');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');
 	
 	//Galeries parentes de la galerie à déplacer.
 	$list_parent_cats = '';
@@ -680,7 +680,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		$Cache->Generate_module_file('gallery');
 	}
 		
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id)) //Edition des catégories.
 {
@@ -693,7 +693,7 @@ elseif (!empty($id)) //Edition des catégories.
 	$gallery_info = $Sql->query_array(PREFIX . "gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (!isset($CAT_GALLERY[$id]))
-		redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galeries = '<option value="0">' . $LANG['root'] . '</option>';
@@ -867,7 +867,7 @@ else
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
-			'U_GALLERY_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
+			'U_GALLERY_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 		));
 		
 		$list_cats_js .= $row['id'] . ', ';

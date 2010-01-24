@@ -45,7 +45,7 @@ if (!empty($idurl))
     //Bread_crumb : we read categories list recursively
     while ($id_cat_for_download > 0)
     {
-    	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+    	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
     	if (!empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
     	{
     		//If we can't read a category, we can't read sub elements.
@@ -77,12 +77,12 @@ if (!empty($idurl))
     	header('Cache-Control:must-revalidate');
     	header('Pragma:public');
     	if (@readfile($info_file['url']) === false)
-    		redirect($info_file['url']);
+    		AppContext::get_response()->redirect($info_file['url']);
 	}
 	//Si c'est une adresse absolue, ce n'est pas la peine d'aller chercher les informations du fichier
 	else
 	{
-	    redirect($info_file['url']);
+	    AppContext::get_response()->redirect($info_file['url']);
 	}
 }
 else

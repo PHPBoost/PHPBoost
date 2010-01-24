@@ -68,7 +68,7 @@ if (!empty($id))
 {
     $menu = MenuService::load($id);
     if ($menu == null)
-        redirect('menus.php');
+        AppContext::get_response()->redirect('menus.php');
     
     // In GET mode so we check it
     $Session->csrf_get_protect();
@@ -97,7 +97,7 @@ if (!empty($id))
     
     ModulesCssFilesCache::invalidate();
     
-    redirect('menus.php#m' . $id);
+    AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
 // Try to find out new mini-modules and delete old ones
@@ -207,7 +207,7 @@ if ($action == 'save') //Save menus positions.
 	$Cache->Generate_file('themes'); //Régénération du cache.
 	*/
 	
-	redirect('menus.php');
+	AppContext::get_response()->redirect('menus.php');
 }
 
 

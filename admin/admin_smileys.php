@@ -47,10 +47,10 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		###### Régénération du cache des smileys #######
 		$Cache->Generate_file('smileys');
 		
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
 }
 elseif (!empty($id) && $del) //Suppression.
 {
@@ -62,7 +62,7 @@ elseif (!empty($id) && $del) //Suppression.
 	###### Régénération du cache des smileys #######
 	$Cache->Generate_file('smileys');
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id) && $edit) //Edition.
 {

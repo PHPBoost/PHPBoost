@@ -119,7 +119,7 @@ class MediaInterface extends ModuleInterface
             // Rewriting
             $link = new Url('/media/media' . url(
                 '.php?id=' . $row['id'],
-                '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'
+                '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'
             ));
             
             // Adding item's informations

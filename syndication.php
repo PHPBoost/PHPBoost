@@ -74,7 +74,7 @@ if (!empty($module_id))
 		}
 		else
 		{
-			redirect('member/error.php?e=e_uninstalled_module');
+			AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
 		}
 	}
 }

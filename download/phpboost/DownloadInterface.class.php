@@ -233,7 +233,7 @@ class DownloadInterface extends ModuleInterface
         {
             $item = new FeedItem();
             
-            $link = new Url('/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
+            $link = new Url('/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
             // Adding item's informations
             $item->set_title($row['title']);
             $item->set_link($link);

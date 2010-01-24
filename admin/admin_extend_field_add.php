@@ -59,7 +59,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 		function rewrite_field($field)
 		{
 			$field = strtolower($field);
-			$field = url_encode_rewrite($field);
+			$field = Url::encode_rewrite($field);
 			$field = str_replace('-', '_', $field);
 			return 'f_' . $field;
 		}
@@ -73,13 +73,13 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
 			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
 			
-			redirect('/admin/admin_extend_field.php');
+			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 		}
 		else
-			redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
+			AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-		redirect('/admin/admin_extend_field_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=incomplete#errorh');
 }
 else
 {

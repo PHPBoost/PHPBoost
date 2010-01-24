@@ -69,7 +69,7 @@ class Session
 			$this->csrf_get_protect();
 
 			$this->end();
-			redirect(get_home_page());
+			AppContext::get_response()->redirect(get_home_page());
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
@@ -98,21 +98,21 @@ class Session
 					}
 					else //plus d'essais
 					{
-						redirect('/member/error.php?e=e_member_flood#errorh');
+						AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#errorh');
 					}
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					redirect('/member/error.php?e=e_unactiv_member#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_unactiv_member#errorh');
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					redirect('/member/error.php?e=e_member_ban_w#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban_w#errorh');
 				}
 				else
 				{
 					$delay_ban = ceil((0 - $delay_ban)/60);
-					redirect('/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
 				}
 
 				if (!empty($error_report)) //Erreur
@@ -120,7 +120,7 @@ class Session
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 					$info_connect['test_connect']++;
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-					redirect('/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
 				}
 				elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 				{
@@ -129,7 +129,7 @@ class Session
 			}
 			else
 			{
-				redirect('/member/error.php?e=e_unexist_member#errorh');
+				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#errorh');
 			}
 
 			$query_string = QUERY_STRING;
@@ -138,11 +138,11 @@ class Session
 			//Redirection avec les variables de session dans l'url.
 			if (SCRIPT != DIR . '/member/error.php')
 			{
-				redirect(HOST . SCRIPT . $query_string);
+				AppContext::get_response()->redirect(HOST . SCRIPT . $query_string);
 			}
 			else
 			{
-				redirect(get_home_page());
+				AppContext::get_response()->redirect(get_home_page());
 			}
 		}
 	}
@@ -215,7 +215,7 @@ class Session
 			//En cas de double connexion, on supprime le cookie et la session associée de la base de données!
 			if (isset($_COOKIE[$CONFIG['site_cookie'] . '_data']))
 			{
-				setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/');
+				AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/');
 			}
 			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 
@@ -255,7 +255,7 @@ class Session
 		$data['user_id'] = isset($user_id) ? numeric($user_id) : -1;
 		$data['session_id'] = $session_uniq_id;
 
-		setcookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
+		AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
 
 		########Génération du cookie d'autoconnection########
 		if ($autoconnect === true)
@@ -263,7 +263,7 @@ class Session
 			$session_autoconnect['user_id'] = $user_id;
 			$session_autoconnect['pwd'] = $password;
 
-			setcookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
+			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
 		}
 
 		unset($pwd);
@@ -368,17 +368,17 @@ class Session
 				{
 					if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
 					{
-						setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
+						AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
 					}
 
 					//Redirection une fois la session lancée.
 					if (QUERY_STRING != '')
 					{
-						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
+						AppContext::get_response()->redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 					}
 					else
 					{
-						redirect(HOST . SCRIPT);
+						AppContext::get_response()->redirect(HOST . SCRIPT);
 					}
 				}
 			}
@@ -401,7 +401,7 @@ class Session
 			{
 				if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
 				{
-					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
+					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
 				}
 				$this->start('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
@@ -422,12 +422,12 @@ class Session
 
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_data'])) //Session cookie?
 		{
-			setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //On supprime le cookie.
+			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //On supprime le cookie.
 		}
 
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']))
 		{
-			setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 		}
 
 		$this->garbage_collector();
@@ -522,7 +522,7 @@ class Session
 			if (isset($_GET['sid']) && isset($_GET['suid']))
 			{
 				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
-				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));
+				AppContext::get_response()->redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));
 			}
 			$session_data = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_data', '', TSTRING_UNCHANGE));
 			if ($session_data === false)
@@ -574,16 +574,16 @@ class Session
 
 					$test_connect = $this->sql->query("SELECT test_connect FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 
-					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 
-					redirect('/member/error.php?flood=' . (5 - ($test_connect + 1)));
+					AppContext::get_response()->redirect('/member/error.php?flood=' . (5 - ($test_connect + 1)));
 				}
 				elseif (is_numeric($error_report))
 				{
-					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 
 					$error_report = ceil($error_report/60);
-					redirect('/member/error.php?ban=' . $error_report);
+					AppContext::get_response()->redirect('/member/error.php?ban=' . $error_report);
 				}
 				else //Succès on recharge la page.
 				{
@@ -592,11 +592,11 @@ class Session
 
 					if (QUERY_STRING != '')
 					{
-						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
+						AppContext::get_response()->redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 					}
 					else
 					{
-						redirect(HOST . SCRIPT);
+						AppContext::get_response()->redirect(HOST . SCRIPT);
 					}
 				}
 			}
@@ -732,7 +732,7 @@ class Session
 
 		if ($redirect !== false && !empty($redirect))
 		{
-			redirect($redirect);
+			AppContext::get_response()->redirect($redirect);
 		}
 	}
 

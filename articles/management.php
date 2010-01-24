@@ -77,7 +77,7 @@ if ($delete > 0)
 	
 	Feed::clear_cache('articles');
 
-	redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . url_encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
+	AppContext::get_response()->redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . Url::encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
 }
 elseif(retrieve(POST,'submit',false))
 {
@@ -288,7 +288,7 @@ elseif(retrieve(POST,'submit',false))
 					ContributionService::save_contribution($articles_contribution);
 
 					//Redirection to the contribution confirmation page
-					redirect(HOST . DIR . '/articles/contribution.php');
+					AppContext::get_response()->redirect(HOST . DIR . '/articles/contribution.php');
 				}
 			}
 
@@ -297,9 +297,9 @@ elseif(retrieve(POST,'submit',false))
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
-			redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
+			AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			else
-			redirect(url('articles.php'));
+			AppContext::get_response()->redirect(url('articles.php'));
 		}
 	}
 	else
@@ -318,7 +318,7 @@ else
 		{
 			$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->remove_last();
-			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'].'&amp;cat='.$articles['idcat'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
+			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'].'&amp;cat='.$articles['idcat'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			$Bread_crumb->add($ARTICLES_LANG['edit_articles'], url('management.php?edit=' . $articles['id']));
 
 			$special_auth = (unserialize($articles['auth']) !== $ARTICLES_CAT[$articles['idcat']]['auth']) && ($articles['auth'] != '')  ? true : false;

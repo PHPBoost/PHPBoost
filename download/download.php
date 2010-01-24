@@ -68,7 +68,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => Comments::com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
+		'U_COM' => Comments::com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -82,7 +82,7 @@ if ($file_id > 0) //Contenu
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
 		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . $Session->get_token()),
-		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php')
+		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php')
 	));
 	
 	//Affichage commentaires.
@@ -143,7 +143,7 @@ else
 					'SRC' => $value['icon'],
 					'IMG_NAME' => addslashes($value['name']),
 					'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
-					'U_CAT' => url('download.php?cat=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+					'U_CAT' => url('download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
 					'U_ADMIN_CAT' => url('admin_download_cat.php?edit=' . $id),
 					'C_CAT_IMG' => !empty($value['icon'])
 				));
@@ -257,10 +257,10 @@ else
 				'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (number_round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
-				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
+				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
 			));
 		}
 		$Sql->query_close($result);

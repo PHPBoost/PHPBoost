@@ -37,7 +37,7 @@ if (!empty($_POST['msg_register'])) //Message à l'inscription.
 	
 	UserAccountsConfig::save();
 	
-	redirect(HOST . SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . SCRIPT); 	
 }
 else
 {			

@@ -55,25 +55,25 @@ if ($id_up > 0)
 {
 	$Session->csrf_get_protect();
 	$news_categories->move($id_up, MOVE_CATEGORY_UP);
-	redirect(url('admin_news_cat.php'));
+	AppContext::get_response()->redirect(url('admin_news_cat.php'));
 }
 elseif ($id_down > 0)
 {
 	$Session->csrf_get_protect();
 	$news_categories->move($id_down, MOVE_CATEGORY_DOWN);
-	redirect(url('admin_news_cat.php'));
+	AppContext::get_response()->redirect(url('admin_news_cat.php'));
 }
 elseif ($id_show > 0)
 {
 	$Session->csrf_get_protect();
 	$news_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
-	redirect(url('admin_news_cat.php'));
+	AppContext::get_response()->redirect(url('admin_news_cat.php'));
 }
 elseif ($id_hide > 0)
 {
 	$Session->csrf_get_protect();
 	$news_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	redirect(url('admin_news_cat.php'));
+	AppContext::get_response()->redirect(url('admin_news_cat.php'));
 }
 elseif ($cat_to_del > 0)
 {
@@ -90,7 +90,7 @@ elseif ($cat_to_del > 0)
 		
 		Feed::clear_cache('news');
 
-		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
 	}
 	else
 	{
@@ -139,7 +139,7 @@ elseif (!empty($_POST['submit']))
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE))) : '';
 
 		if (empty($name))
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
 		if ($id_cat > 0)
 			$error_string = $news_categories->Update_category($id_cat, $id_parent, $name, $description, $image, $auth);
@@ -153,7 +153,7 @@ elseif (!empty($_POST['submit']))
 
 	$Cache->Generate_module_file('news');
 
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 elseif ($new_cat XOR $id_edit > 0)
 {

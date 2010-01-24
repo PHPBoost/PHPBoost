@@ -48,7 +48,7 @@ if ($id_up > 0)
     // Feeds Regeneration
 
     Feed::clear_cache('download');
-	redirect(url('admin_download_cat.php'));
+	AppContext::get_response()->redirect(url('admin_download_cat.php'));
 }
 elseif ($id_down > 0)
 {
@@ -56,7 +56,7 @@ elseif ($id_down > 0)
     // Feeds Regeneration
 
     Feed::clear_cache('download');
-	redirect(url('admin_download_cat.php'));
+	AppContext::get_response()->redirect(url('admin_download_cat.php'));
 }
 elseif ($cat_to_del > 0)
 {
@@ -132,7 +132,7 @@ elseif (retrieve(POST, 'submit', false))
 
 		if (empty($name))
 		{
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		}
 
 		if ($id_cat > 0)
@@ -151,7 +151,7 @@ elseif (retrieve(POST, 'submit', false))
 
 	$Cache->Generate_module_file('download');
 
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
 elseif (retrieve(GET, 'recount', false))
@@ -160,7 +160,7 @@ elseif (retrieve(GET, 'recount', false))
 	// Feeds Regeneration
 
     Feed::clear_cache('download');
-	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
 elseif ($new_cat XOR $id_edit > 0)
 {

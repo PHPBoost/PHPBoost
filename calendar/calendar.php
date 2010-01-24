@@ -70,10 +70,10 @@ if ($checkdate === true && empty($id) && !$add)
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
-			redirect('/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
+			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
 	elseif ($get_event == 'down')
 	{
@@ -90,10 +90,10 @@ if ($checkdate === true && empty($id) && !$add)
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
-			redirect('/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
+			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
 	$Template->set_filenames(array(
@@ -301,7 +301,7 @@ elseif (!empty($id))
 		//Suppression des commentaires associés.
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
 		
-		redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}
 	elseif ($edit)
 	{
@@ -331,13 +331,13 @@ elseif (!empty($id))
 					$month = gmdate_format('m', $timestamp);
 					$year = gmdate_format('Y', $timestamp);
 					
-					redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+					AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
-					redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
 			}
 			else
-				redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
 		}
 		else //Formulaire d'édition
 		{
@@ -392,7 +392,7 @@ elseif (!empty($id))
 		}
 	}
 	else
-		redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 }
 elseif ($add) //Ajout d'un évenement
 {
@@ -425,13 +425,13 @@ elseif ($add) //Ajout d'un évenement
 				$month = gmdate_format('m', $timestamp);
 				$year = gmdate_format('Y', $timestamp);
 				
-				redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+				AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
 			else //Champs incomplet!
-				redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#errorh');
 		}
 		else
-			redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
+			AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
 	}
 	else
 	{
@@ -493,7 +493,7 @@ elseif ($add) //Ajout d'un évenement
 	}
 }
 else
-	redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#errorh');
+	AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#errorh');
 
 require_once('../kernel/footer.php');
 

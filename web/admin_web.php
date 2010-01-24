@@ -206,10 +206,10 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {
@@ -221,7 +221,7 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }		
 else
 {			

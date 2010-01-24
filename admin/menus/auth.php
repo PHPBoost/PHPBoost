@@ -39,7 +39,7 @@ $post = retrieve(POST, 'id', -1) >= 0 ? true : false;
 $menu = MenuService::load($id);
 
 if ($menu == null)
-    redirect('auth.php');
+    AppContext::get_response()->redirect('auth.php');
         
 if ($post)
 {   // Edit a Menu authorizations
@@ -49,7 +49,7 @@ if ($post)
     MenuService::save($menu);
     MenuService::generate_cache();
     
-    redirect('menus.php#m' . $id);
+    AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
 // Display the Menu dispositions

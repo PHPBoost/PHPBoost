@@ -84,7 +84,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_redirect()
+	function test_AppContext::get_response()->redirect()
 	{
 		// FAIRE EN TEST WEB
 	}
@@ -136,7 +136,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	{
 		TODO(__METHOD__);
 	}
-	function test_url_encode_rewrite()
+	function test_Url::encode_rewrite()
 	{
 		TODO(__METHOD__);
 	}

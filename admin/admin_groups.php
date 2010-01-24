@@ -52,7 +52,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
-	redirect('/admin/admin_groups.php?id=' . $idgroup_post);
+	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
 elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
@@ -71,11 +71,11 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 		
 		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
-		redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
+		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
 	}
 	else
 	{
-		redirect('/admin/admin_groups.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_groups.php?error=incomplete#errorh');
 	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
@@ -90,7 +90,7 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 		
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
@@ -103,16 +103,16 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
 		{
 			GroupsCache::invalidate();
-			redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
+			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 		}
 		else
 		{
-			redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
+			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
 		}
 	}
 	else
 	{
-		redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
 	}
 }
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
@@ -121,7 +121,7 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membr
 	
 	GroupsService::remove_member($user_id, $idgroup);
 	GroupsCache::invalidate();
-	redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
+	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 {
@@ -148,7 +148,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '&error=' . $error : '';
-	redirect(HOST . SCRIPT . '?add=1' . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);	
 }
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
@@ -243,7 +243,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		}
 	}
 	else
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	
 	$Template->pparse('admin_groups_management2');
 }

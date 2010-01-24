@@ -411,10 +411,10 @@ if (!empty($id_get)) //Espace membre
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					}
 					else //Longueur minimale du password
-						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
+						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
 				}
 				else //Password non identiques.
-					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
 			}
 		}
 		
@@ -481,14 +481,14 @@ if (!empty($id_get)) //Espace membre
 				{
 					if ($Upload->get_error() != '') //Erreur, on arrête ici
 					{
-						redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
+						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
 					}
 					else
 					{
 						$path = $dir . $Upload->get_filename();
 						$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
-							redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+							AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -509,7 +509,7 @@ if (!empty($id_get)) //Espace membre
 				$path = strprotect($_POST['avatar']);
 				$error = Util::check_img_dimension($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -520,7 +520,7 @@ if (!empty($id_get)) //Espace membre
 				$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);
 				$user_mail = "user_mail = '" . $user_mail . "', ";
 				if ($check_mail >= 1) //Autre utilisateur avec le même mail!
-					redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
 				//Suppression des images des stats concernant les membres, si l'info a été modifiée.
 				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
@@ -551,7 +551,7 @@ if (!empty($id_get)) //Espace membre
 						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
 						//Champs requis, si vide redirection.
 						if ($row['required'] && $row['field'] != 6 && empty($field))
-							redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+							AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 				
 						//Validation par expressions régulières.
 						if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
@@ -595,7 +595,7 @@ if (!empty($id_get)) //Espace membre
 								$i++;
 							}
 							if ($row['required'] && empty($field))
-								redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 						}
 						else
 							$field = strprotect($field);
@@ -625,13 +625,13 @@ if (!empty($id_get)) //Espace membre
 					}
 				}
 				
-				redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
+				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}
 			else
-				redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 		}
 		else
-			redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
+			AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
@@ -686,7 +686,7 @@ if (!empty($id_get)) //Espace membre
 			{	
 				$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				if ($check_member)
-					redirect('/admin/admin_members.php?id=' . $id_get);
+					AppContext::get_response()->redirect('/admin/admin_members.php?id=' . $id_get);
 				else
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
@@ -853,7 +853,7 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 	
 	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
 	if (empty($group['id'])) //Groupe inexistant.
-		redirect('/member/member.php');
+		AppContext::get_response()->redirect('/member/member.php');
 		
 	$Template->assign_vars(array(
 		'SID' => SID,
@@ -932,7 +932,7 @@ else //Show all member!
 	{
 		$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if (!empty($user_id))
-			redirect('/member/member' . url('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
+			AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
 		else
 			$login = $LANG['no_result'];
 	}

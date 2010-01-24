@@ -333,7 +333,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		));
 
 		//We add a page to the page displayed counter
-		pages_displayed();
+		StatsSaver::update_pages_displayed('pages');
 
 		if ($CONFIG['bench'])
 		{

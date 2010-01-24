@@ -225,7 +225,7 @@ class WikiInterface extends ModuleInterface
 			$item = new FeedItem();
 
 			$item->set_title($row['title']);
-			$link = new Url('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($row['title']), url_encode_rewrite($row['title'])));
+			$link = new Url('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($row['title']), Url::encode_rewrite($row['title'])));
 			$item->set_link($link);
 			$item->set_guid($link);
 			$item->set_desc(second_parse($row['content']));
@@ -301,7 +301,7 @@ class WikiInterface extends ModuleInterface
 					{
 						$Template->assign_block_vars('cat_list.list', array(
 						'CAT' => $infos['name'],
-						'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($infos['name']), url_encode_rewrite($infos['name']))
+						'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
 						));
 						$i++;
 					}
@@ -358,7 +358,7 @@ class WikiInterface extends ModuleInterface
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;
 		
-		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.url_encode_rewrite($_WIKI_CATS[$id_cat]['name']), url_encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
+		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']), Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
 			
 		$category = new SitemapSection($this_category);
 		

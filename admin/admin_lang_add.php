@@ -54,10 +54,10 @@ if ($install)
 		//Régénération du cache.
 		$Cache->Generate_file('langs');
 		
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
+		AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
 }
 elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
@@ -110,7 +110,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
 }
 else
 {

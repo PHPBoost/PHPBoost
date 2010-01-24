@@ -49,7 +49,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		//On régénère le cache
 		$Cache->Generate_file('stats');
 			
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 
 	$login = !empty($_POST['name']) ?  strprotect(substr($_POST['name'], 0, 25)) : '';
@@ -60,9 +60,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		$check_user = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif ($check_mail >= 1) 
-			redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
 		else
 		{
 			//Vérification des password.
@@ -80,10 +80,10 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                     }
 					else //Longueur minimale du password
-						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
 				else
-					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
 			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
@@ -148,13 +148,13 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			if ($Upload->get_size() > 0)
 			{
 				if ($Upload->get_error() != '') //Erreur, on arrête ici
-					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#errorh');
 				else
 				{
 					$path = $dir . $Upload->get_filename();
 					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 					else
 					{
 						//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -174,7 +174,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				$path = strprotect($_POST['avatar']);
 				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -282,14 +282,14 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}	
-				redirect(HOST . SCRIPT);	
+				AppContext::get_response()->redirect(HOST . SCRIPT);	
 			}
 			else
-				redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 		}
 	}
 	else
-		redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 }
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
@@ -306,9 +306,9 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif ($check_mail >= 1) 
-			redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
 		else
 		{
 			if (strlen($password) >= 6 && strlen($password_bis) >= 6)
@@ -322,17 +322,17 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					//On régénère le cache
 					$Cache->Generate_file('stats');
 						
-					redirect(HOST . SCRIPT); 	
+					AppContext::get_response()->redirect(HOST . SCRIPT); 	
 				}
 				else
-					redirect('/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
 			}
 			else //Longueur minimale du password
-				redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
 		}
 	}
 	else
-		redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
 }
 elseif (!empty($id) && $delete) //Suppression du membre.
 {
@@ -347,7 +347,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	//On régénère le cache
 	$Cache->Generate_file('stats');
 		
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($add)
 {
@@ -648,8 +648,8 @@ elseif (!empty($id))
 		'BORN_YEAR' => $born_year,
 		'OCCUPATION' => $mbr['user_occupation'],
 		'HOBBIES' => $mbr['user_hobbies'],
-		'SIGN' => unparse($mbr['user_sign'], NO_EDITOR_UNPARSE),
-		'BIOGRAPHY' => unparse($mbr['user_desc'], NO_EDITOR_UNPARSE),
+		'SIGN' => FormatingHelper::unparse($mbr['user_sign'], FormatingHelper::NO_EDITOR_UNPARSE),
+		'BIOGRAPHY' => FormatingHelper::unparse($mbr['user_desc'], FormatingHelper::NO_EDITOR_UNPARSE),
 		'USER_AVATAR' => !empty($mbr['user_avatar']) ? '<img src="' . $mbr['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',

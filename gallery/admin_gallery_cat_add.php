@@ -90,10 +90,10 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('gallery');
 			
-		redirect('/gallery/admin_gallery_cat.php');	
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');	
 	}	
 	else
-		redirect('/gallery/admin_gallery_cat_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat_add.php?error=incomplete#errorh');
 }
 else	
 {		

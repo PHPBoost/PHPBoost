@@ -90,11 +90,11 @@ if (!empty($id_topic_get))
 	$Cache->load('forum');
 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
+	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['title']) : '';
+	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($topic['title']) : '';
 
-	redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
 }
 
 if ($action == 'alert') //Gestion des alertes
@@ -127,7 +127,7 @@ if ($action == 'alert') //Gestion des alertes
 		else
 			$get_id = '&id=' . $id_get;
 
-		redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
+		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
 	}
 
 	$Template->assign_vars(array(
@@ -181,7 +181,7 @@ if ($action == 'alert') //Gestion des alertes
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
-				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
+				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
 				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
@@ -229,7 +229,7 @@ if ($action == 'alert') //Gestion des alertes
 				$Forumfct = new Forum();
 
 				$Forumfct->Del_alert_topic($id_get);
-				redirect('/forum/moderation_forum' . url('.php?action=alert', '', '&'));
+				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=alert', '', '&'));
 			}
 
 			if ($row['status'] == 0)
@@ -240,12 +240,12 @@ if ($action == 'alert') //Gestion des alertes
 			$Template->assign_vars(array(
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
-				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
+				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'CONTENTS' => second_parse($row['contents']),
 				'STATUS' => $status,
 				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
-				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
+				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
 				'U_CHANGE_STATUS' => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . $Session->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . $Session->get_token()),
 				'L_CHANGE_STATUS' => ($row['status'] == '0') ? $LANG['change_status_to_1'] : $LANG['change_status_to_0'],
@@ -298,7 +298,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			forum_history_collector(H_READONLY_USER, $info_mbr['user_id'], 'moderation_forum.php?action=punish&id=' . $info_mbr['user_id']);
 		}
 
-		redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
+		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 	}
 
 	$Template->assign_vars(array(
@@ -319,9 +319,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
+				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
 			else
-				redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
+				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 		}
 
 		$Template->assign_vars(array(
@@ -480,7 +480,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 		}
 
-		redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
+		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 	}
 
 	$Template->assign_vars(array(
@@ -501,9 +501,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_member', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
+				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
-				redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
+				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 		}
 
 		$Template->assign_vars(array(
@@ -581,7 +581,7 @@ elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Supp
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
 
-	redirect('/forum/moderation_forum' . url('.php', '', '&'));
+	AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php', '', '&'));
 }
 else //Panneau de modération
 {

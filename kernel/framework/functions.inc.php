@@ -478,7 +478,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
  * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
  * @param string $url URL at which you want to redirect the user.
  */
-function redirect($url)
+function AppContext::get_response()->redirect($url)
 {
 	global $CONFIG;
 
@@ -689,7 +689,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
  * @param string $string String to encode.
  * @return string The encoded string.
  */
-function url_encode_rewrite($string)
+function Url::encode_rewrite($string)
 {
 	$string = strtolower(html_entity_decode($string));
 	$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
@@ -1174,7 +1174,7 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
 	}
 }
 
-function check_for_maintain_redirect()
+function check_for_maintain_AppContext::get_response()->redirect()
 {
 	global $CONFIG, $User;
 
@@ -1184,7 +1184,7 @@ function check_for_maintain_redirect()
 		{
 			if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
 			{
-				redirect('/member/maintain.php');
+				AppContext::get_response()->redirect('/member/maintain.php');
 			}
 		}
 	}

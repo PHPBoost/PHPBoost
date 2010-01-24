@@ -197,6 +197,22 @@ class Url
 	}
 
 	/**
+	 * @desc Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
+	 * @param string $string String to encode.
+	 * @return string The encoded string.
+	 */
+	public static function encode_rewrite($url)
+	{
+		$url = strtolower(html_entity_decode($url));
+		$url = strtr($url, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
+		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
+		$url = preg_replace('`[-]{2,}`', '-', $url);
+		$url = trim($url, ' -');
+	
+		return $url;
+	}
+	
+	/**
 	 * @desc Compress a url by removing all "folder/.." occurrences
 	 * @param string $url the url to compress
 	 * @return string the compressed url

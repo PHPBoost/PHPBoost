@@ -195,7 +195,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			{
 				$Template->assign_block_vars('cat.list_cats', array(
 					'NAME' => $value['name'],
-					'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($value['name']), url_encode_rewrite($value['name']))
+					'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($value['name']), Url::encode_rewrite($value['name']))
 				));
 				$i++;
 			}
@@ -214,7 +214,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 //Si l'article n'existe pas
 elseif (!empty($encoded_title) && $num_rows == 0)
 {
-	redirect('/wiki/' . url('post.php?title=' . $encoded_title, '', '&'));
+	AppContext::get_response()->redirect('/wiki/' . url('post.php?title=' . $encoded_title, '', '&'));
 }
 //Sinon c'est l'accueil
 else
@@ -266,7 +266,7 @@ else
 			{
 				$Template->assign_block_vars('cat_list.list', array(
 					'CAT' => $infos['name'],
-					'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($infos['name']), url_encode_rewrite($infos['name']))
+					'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
 				));
 				$i++;
 			}

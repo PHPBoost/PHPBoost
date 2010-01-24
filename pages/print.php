@@ -55,7 +55,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
-		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 
 if (empty($page_infos['id']))

@@ -40,6 +40,10 @@ class AppContext
 	 * @var HTTPRequest
 	 */
 	private static $request;
+	/**
+	 * @var HTTPRequest
+	 */
+	private static $response;
 
 	/**
 	 * @var BreadCrumb
@@ -91,7 +95,24 @@ class AppContext
 	{
 		return self::$request;
 	}
+	
+	/**
+	 * @desc set the <code>HTTPResponse</code>
+	 * @param HTTPResponse $response
+	 */
+	public static function set_response(HTTPResponse $response)
+	{
+		self::$response = $response;
+	}
 
+	/**
+	 * @desc Returns the <code>HTTPResponse</code> object
+	 * @return HTTPResponse
+	 */
+	public static function get_response()
+	{
+		return self::$response;
+	}
 
 	/**
 	 * Inits the bench

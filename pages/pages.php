@@ -59,7 +59,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
 		if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -82,7 +82,7 @@ elseif ($id_com > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -96,7 +96,7 @@ else
 	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	elseif (!$auth_index && empty($error))
-		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 require_once('../kernel/header.php');
 
@@ -111,7 +111,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
-		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
@@ -181,20 +181,20 @@ if (!empty($encoded_title) && $num_rows == 1)
 }
 //Page non trouvée
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
-	redirect(HOST . DIR . url('/pages/pages.php?error=e_page_not_found'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_page_not_found'));
 //Commentaires
 elseif ($id_com > 0)
 {
 	//Commentaires activés pour cette page ?
 	if ($page_infos['activ_com'] == 0)
-		redirect('/pages/pages.php?error=e_unactiv_com');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_unactiv_com');
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
-		redirect('/pages/pages.php?error=e_auth_com');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth_com');
 	
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	
@@ -234,7 +234,7 @@ elseif (!empty($error))
 			$Errorh->handler($LANG['pages_delete_failure'], E_USER_NOTICE);
 			break;
 		default :
-			redirect(HOST . DIR . url('/pages/pages.php'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php'));
 	}
 	$Template->pparse('error');
 }

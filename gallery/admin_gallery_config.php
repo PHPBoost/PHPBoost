@@ -73,7 +73,7 @@ if (!empty($_POST['valid']))
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
 
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 {
@@ -86,7 +86,7 @@ elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 
 	$Cache->Generate_module_file('gallery');
 
-	redirect('/gallery/admin_gallery_config.php');
+	AppContext::get_response()->redirect('/gallery/admin_gallery_config.php');
 }
 else
 {

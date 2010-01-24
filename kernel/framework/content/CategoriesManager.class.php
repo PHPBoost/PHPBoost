@@ -674,7 +674,7 @@ class CategoriesManager
 									(!empty($this->display_config['url']['rewrited']) ?
 									//The rewriting mask contains title
 									(strpos($this->display_config['url']['rewrited'], '%s') !== false ?
-										url(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id, url_encode_rewrite($values['name']))) :
+										url(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id, Url::encode_rewrite($values['name']))) :
 										//Only id
 										url(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id)))
 									: '')

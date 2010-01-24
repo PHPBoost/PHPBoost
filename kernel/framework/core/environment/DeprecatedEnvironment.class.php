@@ -44,16 +44,16 @@ class DeprecatedEnvironment
 				$module = ModulesManager::get_module($running_module_name);
 				if (!$module->is_activated())
 				{
-					DispatchManager::redirect(PHPBoostErrors::module_not_activated());
+					DispatchManager::AppContext::get_response()->redirect(PHPBoostErrors::module_not_activated());
 				}
 				else if(!$module->check_auth())
 				{
-					DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
+					DispatchManager::AppContext::get_response()->redirect(PHPBoostErrors::user_not_authorized());
 				}
 			}
 			else
 			{
-				DispatchManager::redirect(PHPBoostErrors::module_not_installed());
+				DispatchManager::AppContext::get_response()->redirect(PHPBoostErrors::module_not_installed());
 			}
 		}
 	}
