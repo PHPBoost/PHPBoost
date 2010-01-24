@@ -40,8 +40,8 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {
-    $id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
-    $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
+    $id_parent = !empty($_POST['id_parent']) ? NumberHelper::numeric($_POST['id_parent']) : '0';
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $User->get_attribute('user_id');
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
 
     if (!empty($user_id) && $User->get_attribute('user_id') != $user_id)
@@ -62,9 +62,9 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
 }
 elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
 {
-    $id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
+    $id_folder = !empty($_POST['id_folder']) ? NumberHelper::numeric($_POST['id_folder']) : '0';
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
-    $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $User->get_attribute('user_id');
     $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 
     if (!empty($id_folder) && !empty($name))
@@ -90,8 +90,8 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
 }
 elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
-    $id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
-    $user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
+    $id_file = !empty($_POST['id_file']) ? NumberHelper::numeric($_POST['id_file']) : '0';
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $User->get_attribute('user_id');
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
     $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 

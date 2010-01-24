@@ -79,6 +79,16 @@ class AppContext
 	private static $user;
 
 	/**
+	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
+	 * @return int Id
+	 */
+	public static function get_uid()
+	{
+		static $uid = 1764;
+		return $uid++;
+	}
+	
+	/**
 	 * @desc set the <code>HTTPRequest</code>
 	 * @param HTTPRequest $request
 	 */

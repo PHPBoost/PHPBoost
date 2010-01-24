@@ -36,9 +36,9 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
-	$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-	$get_parent_up = !empty($_GET['g_up']) ? numeric($_GET['g_up']) : 0;
-	$get_parent_down = !empty($_GET['g_down']) ? numeric($_GET['g_down']) : 0;
+	$id = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : 0;
+	$get_parent_up = !empty($_GET['g_up']) ? NumberHelper::numeric($_GET['g_up']) : 0;
+	$get_parent_down = !empty($_GET['g_down']) ? NumberHelper::numeric($_GET['g_down']) : 0;
 
 	//Récupération de la catégorie d'échange.
 	if (!empty($get_parent_up))

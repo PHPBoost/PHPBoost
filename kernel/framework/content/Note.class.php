@@ -51,7 +51,7 @@ class Note
 	{
 		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
 		$this->options = (int)$options;
-		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(TextHelper::strprotect($script), numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
+		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(TextHelper::strprotect($script), NumberHelper::numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 		$this->sql_table = $this->_get_table_module();
 	}
 	
@@ -95,7 +95,7 @@ class Note
 	{
 		global $CONFIG, $Sql, $LANG, $Session;
 		
-		$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
+		$note = !empty($_POST['note']) ? NumberHelper::numeric($_POST['note']) : 0;
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->script_path), 0);
 
 		//Notes chargées?

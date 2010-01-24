@@ -45,7 +45,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
+	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
@@ -61,7 +61,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
+	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 	
 	if (!empty($name))
 	{
@@ -195,7 +195,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
 			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
-			'DATA_GROUP_LIMIT' => number_round($array_group['data_group_limit']/1024, 2),
+			'DATA_GROUP_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
 			'COLOR_GROUP' => $group['color'],
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_LOGIN' => $LANG['require_name'],
@@ -227,11 +227,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		));
 		
 		//Liste des membres du groupe.
-		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . numeric($group['id']) . "'", __LINE__, __FILE__);
+		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
 		foreach ($members as $key => $user_id)
 		{
-			$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+			$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . NumberHelper::numeric($user_id) . "'", __LINE__, __FILE__);
 			if (!empty($login))
 			{
 				$Template->assign_block_vars('member', array(

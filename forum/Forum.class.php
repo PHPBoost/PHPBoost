@@ -243,7 +243,7 @@ class Forum
 		//On ne supprime pas de msg aux membres ayant postés dans le topic => trop de requêtes.
 		//On compte le nombre de messages du topic.
 		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
-		$nbr_msg = !empty($nbr_msg) ? numeric($nbr_msg) : 1;
+		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//On rippe le topic ainsi que les messages du topic.
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
@@ -369,7 +369,7 @@ class Forum
 
 		//On va chercher le nombre de messages dans la table topics
 		$topic = $Sql->query_array(PREFIX . "forum_topics", "user_id", "nbr_msg", "WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-		$topic['nbr_msg'] = !empty($topic['nbr_msg']) ? numeric($topic['nbr_msg']) : 1;
+		$topic['nbr_msg'] = !empty($topic['nbr_msg']) ? NumberHelper::numeric($topic['nbr_msg']) : 1;
 
 		//On déplace le topic dans la nouvelle catégorie
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET idcat = '" . $idcat_dest . "' WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
@@ -395,7 +395,7 @@ class Forum
 
 		//Calcul du nombre de messages déplacés.
 		$nbr_msg = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'", __LINE__, __FILE__);
-		$nbr_msg = !empty($nbr_msg) ? numeric($nbr_msg) : 1;
+		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//Insertion nouveau topic.
 		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob) VALUES ('" . $idcat_dest . "', '" . $title . "', '" . $subtitle . "', '" . $msg_user_id . "', '" . $nbr_msg . "', 0, '" . $last_user_id . "', '" . $last_msg_id . "', '" . $last_timestamp . "', '" . $id_msg_cut . "', '" . $type . "', 1, 0)", __LINE__, __FILE__);
@@ -555,7 +555,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . implode('|', $answers) . "', '0', '" . trim(str_repeat('0|', $nbr_votes), '|') . "', '" . numeric($type) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . implode('|', $answers) . "', '0', '" . trim(str_repeat('0|', $nbr_votes), '|') . "', '" . NumberHelper::numeric($type) . "')", __LINE__, __FILE__);
 	}
 
 	//Edition d'un sondage.
@@ -600,7 +600,7 @@ class Forum
 		foreach ($CAT_FORUM as $id => $cat)
 		{   // Sort by id_left
 			$cat['id'] = $id;
-			$ordered_cats[numeric($cat['id_left'])] = array('this' => $cat, 'children' => array());
+			$ordered_cats[NumberHelper::numeric($cat['id_left'])] = array('this' => $cat, 'children' => array());
 		}
 	  
 		$level = 0;

@@ -31,10 +31,10 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
+$idcat = !empty($_GET['cat']) ? NumberHelper::numeric($_GET['cat']) : 0;
+$idpics = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : 0;
+$del = !empty($_GET['del']) ? NumberHelper::numeric($_GET['del']) : 0;
+$move = !empty($_GET['move']) ? NumberHelper::numeric($_GET['move']) : 0;
 
 $Gallery = new Gallery();
 
@@ -321,7 +321,7 @@ else
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
-					'SIZE' => number_round($info_pics['weight']/1024, 1),
+					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),

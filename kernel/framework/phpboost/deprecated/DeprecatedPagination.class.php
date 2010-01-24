@@ -138,7 +138,7 @@ class DeprecatedPagination
 	 */
 	public function get_first_msg($nbr_msg_page, $var_page)
 	{
-		$page = !empty($_GET[$var_page]) ? numeric($_GET[$var_page]) : 1;
+		$page = !empty($_GET[$var_page]) ? NumberHelper::numeric($_GET[$var_page]) : 1;
 		$page = $page > 0 ? $page : 1;
 		return (($page - 1) * $nbr_msg_page);
 	}
@@ -157,7 +157,7 @@ class DeprecatedPagination
 	*/
 	public function get_var_page($var_page)
 	{
-		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
+		$_GET[$var_page] = isset($_GET[$var_page]) ? NumberHelper::numeric($_GET[$var_page]) : 0;
 		if (!empty($_GET[$var_page]))
 		{
 			return $_GET[$var_page];

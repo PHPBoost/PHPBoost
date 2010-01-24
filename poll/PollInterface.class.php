@@ -64,7 +64,7 @@ class PollInterface extends ModuleInterface
 					
 					$array_votes = array_combine($array_answer, $array_vote);
 					foreach ($array_votes as $answer => $nbrvote)
-						$array_votes[$answer] = number_round(($nbrvote * 100 / $total_vote), 1);
+						$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $total_vote), 1);
 						
 					$_array_poll .= $key . ' => array(\'id\' => ' . var_export($poll['id'], true) . ', \'question\' => ' . var_export($poll['question'], true) . ', \'votes\' => ' . var_export($array_votes, true) . ', \'total\' => ' . var_export($total_vote, true) . ', \'type\' => ' . var_export($poll['type'], true) . '),' . "\n";
 				}

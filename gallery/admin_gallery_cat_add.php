@@ -31,7 +31,7 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
+$idcat = !empty($_GET['idcat']) ? NumberHelper::numeric($_GET['idcat']) : 0;
 
 define('READ_CAT_GALLERY', 0x01);
 define('WRITE_CAT_GALLERY', 0x02);
@@ -42,11 +42,11 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 {
 	$Cache->load('gallery');
 	
-	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
+	$parent_category = !empty($_POST['category']) ? NumberHelper::numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
 	$contents = !empty($_POST['desc']) ? TextHelper::strprotect($_POST['desc']) : '';
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;   
-	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
+	$aprob = isset($_POST['aprob']) ? NumberHelper::numeric($_POST['aprob']) : 0;   
+	$status = isset($_POST['status']) ? NumberHelper::numeric($_POST['status']) : 0;   
 		
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);

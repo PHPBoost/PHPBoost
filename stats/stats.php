@@ -98,10 +98,10 @@ if ($members)
 	{
 		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->assign_block_vars('templates', array(
-			'NBR_THEME' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
+			'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 			'THEME' => ($name == 'Other') ? $LANG['other'] : $name,
-			'PERCENT' => number_round(($angle_value/3.6), 1)
+			'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 		));
 	}
 
@@ -134,10 +134,10 @@ if ($members)
 	{
 		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->assign_block_vars('sex', array(
-			'NBR_MBR' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
+			'NBR_MBR' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 			'SEX' => ($name == 'Other') ? $LANG['other'] : $name,
-			'PERCENT' => number_round(($angle_value/3.6), 1)
+			'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 		));
 	}
 	
@@ -208,7 +208,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			'COLSPAN' => 14,
 			'SUM_NBR' => $info['sum_month'],
 			'MAX_NBR' => $info['max_month'],
-			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_month']/$info['nbr_month'], 1) : 1,
+			'MOY_NBR' => !empty($info['nbr_month']) ? NumberHelper::round($info['sum_month']/$info['nbr_month'], 1) : 1,
 			'U_NEXT_LINK' =>  url('.php?year=' . $next_year),
 			'U_PREVIOUS_LINK' => url('.php?year=' . $previous_year)
 		));
@@ -353,7 +353,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
-			'MOY_NBR' => number_round($info['avg_nbr'], 1),
+			'MOY_NBR' => NumberHelper::round($info['avg_nbr'], 1),
 			'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;visit=1', '-visit.php?m=' . $next_month . '&amp;y=' . $next_year),
 			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1', '-visit.php?m=' . $previous_month . '&amp;y=' . $previous_year),
 			'U_YEAR' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $year . '</a>',
@@ -559,7 +559,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'COLSPAN' => 13,
 			'SUM_NBR' => $info['sum_nbr'],
 			'MAX_NBR' => $info['max_nbr'],
-			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_nbr']/$info['nbr_month'], 1) : 0,
+			'MOY_NBR' => !empty($info['nbr_month']) ? NumberHelper::round($info['sum_nbr']/$info['nbr_month'], 1) : 0,
 			'U_NEXT_LINK' =>  url('.php?pages_year=' . $next_year),
 			'U_PREVIOUS_LINK' => url('.php?pages_year=' . $previous_year)
 		));
@@ -703,7 +703,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'SUM_NBR' => !empty($info['pages']) ? $info['pages'] : 0,
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
-			'MOY_NBR' => number_round($info['pages']/24, 1),
+			'MOY_NBR' => NumberHelper::round($info['pages']/24, 1),
 			'U_NEXT_LINK' => url('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year),
 			'U_PREVIOUS_LINK' => url('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year),
 			'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
@@ -780,7 +780,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
-			'MOY_NBR' => number_round($info['avg_nbr'], 1),
+			'MOY_NBR' => NumberHelper::round($info['avg_nbr'], 1),
 			'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?m=' . $next_month . '&amp;y=' . $next_year),
 			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?m=' . $previous_month . '&amp;y=' . $previous_year),
 			'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
@@ -938,13 +938,13 @@ elseif ($referer)
 		{
 			$trend_img = 'up.png';
 			$sign = '+';
-			$trend = number_round((($row['yesterday_visit'] * 100) / $average) - 100, 1);
+			$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average) - 100, 1);
 		}
 		elseif ($row['yesterday_visit'] < $average)
 		{
 			$trend_img = 'down.png';
 			$sign = '-';
-			$trend = number_round(100 - (($row['yesterday_visit'] * 100) / $average), 1);
+			$trend = NumberHelper::round(100 - (($row['yesterday_visit'] * 100) / $average), 1);
 		}
 		else
 		{
@@ -959,7 +959,7 @@ elseif ($referer)
 			'IMG_MORE' => '<img src="../templates/' . get_utheme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
-			'AVERAGE_VISIT' => number_round($average, 1),
+			'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
 			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
@@ -995,13 +995,13 @@ elseif ($keyword)
 		{
 			$trend_img = 'up.png';
 			$sign = '+';
-			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+			$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 		}
 		elseif ($row['yesterday_visit'] < $average)
 		{
 			$trend_img = 'down.png';
 			$sign = '-';
-			$trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+			$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
 		}
 		else
 		{
@@ -1016,7 +1016,7 @@ elseif ($keyword)
 			'IMG_MORE' => '<img src="../templates/' . get_utheme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
-			'AVERAGE_VISIT' => number_round($average, 1),
+			'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
 			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
@@ -1115,7 +1115,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 			'COLOR' => 'RGB(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
 			'IMG' => $array_stats_tmp[$value_name][2],
 			'L_NAME' => $array_stats_tmp[$value_name][0],
-			'PERCENT' => number_round(($angle_value/3.6), 1),
+			'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
 		));
 	}
 }

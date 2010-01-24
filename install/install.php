@@ -593,7 +593,7 @@ switch($step)
 		));
 
 		//Balayage des fuseaux horaires
-		$site_timezone = number_round(date('Z')/3600, 0) - (int)date('I');
+		$site_timezone = NumberHelper::round(date('Z')/3600, 0) - (int)date('I');
 		for ($i = -12; $i <= 14; $i++)
 		{
 			$timezone_name = '';

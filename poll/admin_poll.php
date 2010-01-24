@@ -218,7 +218,7 @@ elseif (!empty($id))
 	$array_poll = array_combine($array_answer, $array_vote);
 	foreach ($array_poll as $answer => $nbrvote)
 	{
-		$percent = number_round(($nbrvote * 100 / $sum_vote), 1);
+		$percent = NumberHelper::round(($nbrvote * 100 / $sum_vote), 1);
 		$Template->assign_block_vars('answers', array(
 			'ID' => $i,
 			'ANSWER' => !empty($answer) ? $answer : ''

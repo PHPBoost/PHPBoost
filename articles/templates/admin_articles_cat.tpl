@@ -132,7 +132,8 @@
 					{edition_interface.CATEGORIES_TREE}
 				</dd>
 			</dl>
-			<dt><label for="icon">* {L_CAT_ICON}</label></dt>
+			<dl>
+				<dt><label for="icon">* {L_CAT_ICON}</label></dt>
 				<dd><label>
 					<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
 						{edition_interface.IMG_LIST}

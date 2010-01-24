@@ -243,8 +243,8 @@ while ( $row = $Sql->fetch_assoc($result) )
 				$Template->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
 					'NBRVOTE' => $array_vote[$key],
-					'WIDTH' => number_round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
-					'PERCENT' => number_round(($array_vote[$key] * 100 / $sum_vote), 1)
+					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
 				));
 			}
 		}

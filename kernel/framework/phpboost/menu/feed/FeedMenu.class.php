@@ -113,7 +113,7 @@ class FeedMenu extends Menu
 	/**
 	 * @param int $value the feed's category
 	 */
-	public function set_cat($value) { $this->category = is_numeric($value) ? numeric($value) : 0; }
+	public function set_cat($value) { $this->category = is_numeric($value) ? NumberHelper::numeric($value) : 0; }
 	/**
 	 * @param string $value the feed's name
 	 */

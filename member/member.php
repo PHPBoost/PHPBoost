@@ -523,7 +523,7 @@ if (!empty($id_get)) //Espace membre
 					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
 				//Suppression des images des stats concernant les membres, si l'info a été modifiée.
-				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
 					@unlink('../cache/sex.png');
 				if ($info_mbr['user_theme'] != $user_theme)
@@ -534,7 +534,7 @@ if (!empty($id_get)) //Espace membre
 				" . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "',
 				user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "',
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
-				user_sign = '" . $user_sign . "' WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				
 				//Champs supplémentaires.
 				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
@@ -612,16 +612,16 @@ if (!empty($id_get)) //Espace membre
 					}
 					$Sql->query_close($result);
 					
-					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 					if ($check_member)
 					{
 						if (!empty($req_update))
-							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 					}
 					else
 					{
 						if (!empty($req_insert))
-							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . NumberHelper::numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}
 				
@@ -736,7 +736,7 @@ if (!empty($id_get)) //Espace membre
 		$i = 0;
 		foreach ($user_groups as $key => $group_id)
 		{
-			$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
+			$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', "WHERE id = '" . NumberHelper::numeric($group_id) . "'", __LINE__, __FILE__);
 			if (!empty($group['id']))
 				$user_group_list .= '<li><a href="member' . url('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : $group['name']) . '</a></li>';
 		}
@@ -882,11 +882,11 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 		
 	//Liste des membres appartenant au groupe.
 	//Liste des membres du groupe.
-	$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . numeric($user_group) . "'", __LINE__, __FILE__);
+	$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($user_group) . "'", __LINE__, __FILE__);
 	$members = explode('|', $members);
 	foreach ($members as $key => $user_id)
 	{
-		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', 'level', 'user_avatar', 'user_warning', 'user_ban', "WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', 'level', 'user_avatar', 'user_warning', 'user_ban', "WHERE user_id = '" . NumberHelper::numeric($user_id) . "'", __LINE__, __FILE__);
 		if (!empty($row['user_id']))
 		{
 			//Gestion des rangs

@@ -212,8 +212,8 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			$Template->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
-				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
-				'PERCENT' => number_round(($nbrvote * 100 / $sum_vote), 1)
+				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1)
 			));
 		}
 
@@ -365,8 +365,8 @@ elseif ($archives) //Archives.
 			$Template->assign_block_vars('list.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
-				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
-				'PERCENT' => number_round(($nbrvote * 100 / $sum_vote), 1),
+				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1),
 				'L_VOTE' => (($nbrvote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 			));
 		}

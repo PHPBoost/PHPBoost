@@ -61,7 +61,7 @@ function poll_mini($position, $block)
     		{
     			$tpl->assign_block_vars('result.answers', array(
     				'ANSWERS' => $answer,
-    				'WIDTH' => number_round($width, 0),
+    				'WIDTH' => NumberHelper::round($width, 0),
     				'PERCENT' => $width
     			));
     		}

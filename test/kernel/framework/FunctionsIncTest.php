@@ -7,19 +7,14 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	{
 		TODO(__METHOD__);
 	}
-	
-	function test_TextHelper::strprotect()
-	{
-		TODO(__METHOD__);
-	}
-	
+
 	function test_numeric()
 	{
-		$ret = numeric(10);
+		$ret = NumberHelper::numeric(10);
 		self::assertTrue(is_int($ret) AND $ret == 10);
-		$ret = numeric(10.55, 'float');
+		$ret = NumberHelper::numeric(10.55, 'float');
 		self::assertTrue(is_float($ret) AND $ret == 10.55);
-		$ret = numeric('bidon');
+		$ret = NumberHelper::numeric('bidon');
 		self::assertTrue(is_int($ret) AND $ret == 0);
 	}
 	
@@ -29,16 +24,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	}
 	
 	function test_get_ulang()
-	{
-		TODO(__METHOD__);
-	}
-	
-	function test_TextHelper::wordwrap_html()
-	{
-		TODO(__METHOD__);
-	}
-	
-	function test_TextHelper::substr_html()
 	{
 		TODO(__METHOD__);
 	}
@@ -93,12 +78,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	{
 		TODO(__METHOD__);
 	}
-	
-	function test_TextHelper::check_nbr_links()
-	{
-		TODO(__METHOD__);
-	}
-	
+
 	function test_com_display_link()
 	{
 		TODO(__METHOD__);
@@ -110,21 +90,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		self::assertTrue($ret);
 		$ret = check_mail('toto_bidon');
 		self::assertFalse($ret);
-	}
-	
-	function test_FormatingHelper::strparse()
-	{
-		TODO(__METHOD__);
-	}
-	
-	function test_FormatingHelper::unparse()
-	{
-		TODO(__METHOD__);
-	}
-	
-	function test_FormatingHelper::second_parse()
-	{
-		TODO(__METHOD__);
 	}
 	
 	function test_url()
@@ -162,11 +127,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		TODO(__METHOD__);
 	}
 	
-	function test_number_round()
-	{
-		TODO(__METHOD__);
-	}
-	
 	function test_file_get_contents_emulate()
 	{
 		TODO(__METHOD__);
@@ -199,9 +159,9 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_get_uid()
 	{
-		$ret = get_uid();
+		$ret = AppContext::get_uid();
 		self::assertEquals($ret, 1764);
-		$ret = get_uid();
+		$ret = AppContext::get_uid();
 		self::assertEquals($ret, 1765);		
 	}
 	

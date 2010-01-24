@@ -35,7 +35,7 @@ $error = retrieve(GET, 'error', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
-	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
@@ -44,7 +44,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
-	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');

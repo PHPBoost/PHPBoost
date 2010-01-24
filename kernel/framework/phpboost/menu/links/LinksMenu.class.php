@@ -196,7 +196,7 @@ class LinksMenu extends LinksMenuElement
                 '.\'' . parent::cache_export_end();
             $cache_str = str_replace(
                 array('#GET_UID#', '#GET_UID_VAR#', '##'),
-                array('($__uid = get_uid())', '$__uid', '\''),
+                array('($__uid = AppContext::get_uid())', '$__uid', '\''),
                 $cache_str
             );
             return $cache_str;

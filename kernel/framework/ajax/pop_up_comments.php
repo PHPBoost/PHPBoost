@@ -40,7 +40,7 @@ if (!empty($_GET['com']))
     {
         $array_get = array('', '', '', '');
     }
-    $idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];
+    $idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? NumberHelper::numeric($_POST['idcom']) : $array_get[3];
 
     
     $Comments = new Comments($array_get[2], $array_get[1], url('?com=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);

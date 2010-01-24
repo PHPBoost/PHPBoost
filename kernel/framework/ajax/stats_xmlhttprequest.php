@@ -37,7 +37,7 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
-    $idurl = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+    $idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
     $url = $Sql->query("SELECT url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
     $result = $Sql->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
@@ -51,13 +51,13 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
         {
             $trend_img = 'up.png';
             $sign = '+';
-            $trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+            $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
         }
         elseif ($row['yesterday_visit'] < $average)
         {
             $trend_img = 'down.png';
             $sign = '-';
-            $trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+            $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
         }
         else
         {
@@ -75,7 +75,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 					' . $row['total_visit'] . '
 				</td>
 				<td style="width:112px;text-align:center;">
-					' . number_round($average, 1) . '
+					' . NumberHelper::round($average, 1) . '
 				</td>
 				<td style="width:102px;text-align:center;">
 					' . gmdate_format('date_format_short', $row['last_update']) . '
@@ -90,7 +90,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 }
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
-    $idkeyword = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+    $idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
     $keyword = $Sql->query("SELECT relative_url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
 
     $result = $Sql->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
@@ -104,13 +104,13 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
         {
             $trend_img = 'up.png';
             $sign = '+';
-            $trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+            $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
         }
         elseif ($row['yesterday_visit'] < $average)
         {
             $trend_img = 'down.png';
             $sign = '-';
-            $trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+            $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
         }
         else
         {
@@ -128,7 +128,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 					' . $row['total_visit'] . '
 				</td>
 				<td style="width:112px;text-align:center;">
-					' . number_round($average, 1) . '
+					' . NumberHelper::round($average, 1) . '
 				</td>
 				<td style="width:102px;text-align:center;">
 					' . gmdate_format('date_format_short', $row['last_update']) . '

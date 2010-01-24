@@ -243,7 +243,7 @@ class Upload
 	 */
 	public function get_human_readable_size($round = 1) 
 	{ 
-		return (float)number_round($this->size/1024, $round); 
+		return (float)NumberHelper::round($this->size/1024, $round); 
 	}
 	
 	public function get_error() { return $this->error; }

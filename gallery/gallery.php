@@ -585,7 +585,7 @@ else
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
-					'SIZE' => number_round($info_pics['weight']/1024, 1),
+					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 					'COM' => Comments::com_display_link($info_pics['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
 					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),

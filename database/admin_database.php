@@ -262,7 +262,7 @@ elseif ($action == 'restore')
 				{
 					$Template->assign_block_vars('file', array(
 						'FILE_NAME' => $file,
-						'WEIGHT' => number_round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo',
+						'WEIGHT' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo',
 						'FILE_DATE' => gmdate_format('date_format_short', filemtime($dir . '/' . $file))
 					));
 					$i++;
@@ -416,10 +416,10 @@ else
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
 		foreach ($backup->get_tables_properties_list() as $key => $table_info)
 		{	
-			$free = number_round($table_info['data_free']/1024, 1);
-			$data = number_round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
-			$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';
-			$data = ($data > 1024) ? number_round($data/1024, 1) . ' MB' : $data . ' kB';
+			$free = NumberHelper::round($table_info['data_free']/1024, 1);
+			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
+			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' MB' : $free . ' kB';
+			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 			
 			$Template->assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
@@ -437,10 +437,10 @@ else
 			$i++;
 		} 
 		
-		$nbr_free = number_round($nbr_free/1024, 1);
-		$nbr_data = number_round($nbr_data/1024, 1);
-		$nbr_free = ($nbr_free > 1024) ? number_round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
-		$nbr_data = ($nbr_data > 1024) ? number_round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
+		$nbr_free = NumberHelper::round($nbr_free/1024, 1);
+		$nbr_data = NumberHelper::round($nbr_data/1024, 1);
+		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
+		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
 		
 		$Template->assign_vars(array(
 			'C_DATABASE_INDEX' => true,

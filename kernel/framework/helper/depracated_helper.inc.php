@@ -230,7 +230,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	//TODO S'occuper de ce problème de timezone
 	date_default_timezone_set('Europe/Paris');
 	// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
-	$serveur_hour = number_round(date('Z')/3600, 0) - date('I');
+	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I');
 
 	if ($timezone_system == 1) //Timestamp du site, non dépendant de l'utilisateur.
 	{
@@ -278,13 +278,13 @@ function strtotimestamp($str, $date_format)
 		switch ($array_date[$i])
 		{
 			case 'd':
-				$day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				$day = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
 				break;
 			case 'm':
-				$month = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				$month = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
 				break;
 			case 'y':
-				$year = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				$year = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
 				break;
 		}
 	}
@@ -299,7 +299,7 @@ function strtotimestamp($str, $date_format)
 		$timestamp = time();
 	}
 
-	$serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
+	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
 	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
@@ -327,13 +327,13 @@ function strtodate($str, $date_format)
 		switch ($array_format[$i])
 		{
 			case 'DD':
-				$day = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				$day = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
 				break;
 			case 'MM':
-				$month = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				$month = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
 				break;
 			case 'YYYY':
-				$year = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				$year = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
 				break;
 		}
 	}
