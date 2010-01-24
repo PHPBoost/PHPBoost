@@ -54,7 +54,7 @@ class RawExceptionHandler
 
 	private function clean_output_buffer()
 	{
-		@ob_clean();
+		AppContext::get_response()->clean_output();
 	}
 
 	private function log()

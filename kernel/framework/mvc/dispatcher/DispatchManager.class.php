@@ -55,7 +55,7 @@ class DispatchManager
 	 */
 	public static function redirect(Controller $controller)
 	{
-		ob_clean();
+		AppContext::get_response()->clean_output();
 		$request = AppContext::get_request();
         $response = $controller->execute($request);
         $response->send();

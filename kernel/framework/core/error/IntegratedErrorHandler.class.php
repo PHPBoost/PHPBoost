@@ -40,7 +40,7 @@ class IntegratedErrorHandler extends ErrorHandler
 	protected function display_fatal()
 	{
 		// TODO manage languages here
-        ob_clean();
+        AppContext::get_response()->clean_output();
 		die(ErrorHandler::FATAL_MESSAGE);
 	}
 }
