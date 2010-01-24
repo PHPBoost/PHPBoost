@@ -44,7 +44,8 @@ class SandboxController extends ModuleController
 					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
 					'SELECT' => $form->get_value('select')->get_label(),
 					'HIDDEN' => $form->get_value('hidden'),
-					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT)
+					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
+					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT)
 				));
 			}
 		}
@@ -117,6 +118,9 @@ class SandboxController extends ModuleController
 		
 		// DATE
 		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
+		
+		// DATE TIME
+		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
 	
 //		$fieldset_up = new FormFieldset('Upload file');
 //		//File field

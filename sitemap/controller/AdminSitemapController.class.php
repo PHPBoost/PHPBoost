@@ -53,9 +53,7 @@ class AdminSitemapController extends AdminController
 
 		return $this->build_response($this->form->export());
 	}
-	/**
-	 * @return Form
-	 */
+
 	private function build_form()
 	{
 		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());

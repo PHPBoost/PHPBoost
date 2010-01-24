@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Provides access to the HTTP request parameters

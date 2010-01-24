@@ -45,7 +45,7 @@ $LANG['unit_megabytes'] = 'Mo';
 $LANG['unit_kilobytes'] = 'Ko';
 $LANG['unit_bytes'] = 'Octets';
 $LANG['unit_pixels'] = 'px';
-$LANG['unit_hour'] = 'H';
+$LANG['unit_hour'] = 'h';
 $LANG['unit_seconds'] = 'Secondes';
 $LANG['unit_seconds_short'] = 's';
 	
