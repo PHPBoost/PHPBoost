@@ -25,6 +25,12 @@
  *
  ###################################################*/
 
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc Manages response via the HTTP protocol
+ * @package io
+ * @subpackage http
+ */
 class HTTPResponse 
 {
 	const PROTOCOL = 'HTTP/1.0';
@@ -86,6 +92,10 @@ class HTTPResponse
 		header($name . ' : ' . $value);
 	}
 	
+	/**
+	 * @desc Set defaut headers for the response.
+	 * @param string $url
+	 */
 	public function set_default_attributes()
 	{
 		$this->set_header('Content-type', 'text/html; charset=iso-8859-1');
@@ -112,6 +122,15 @@ class HTTPResponse
 		exit;
 	}
 	
+	/**
+	 * Set cookies for the application's client.
+	 * @param string $name The cookie name
+	 * @param string $value The cookie value
+	 * @param int $expires The timestamp for cookie expiration
+	 * @param string $path
+	 * @param string $domain
+	 * @return unknown_type
+	 */
 	public function set_cookie($name, $value, $expires, $path = '/', $domain = '')
 	{
 		setcookie($name, $value, $expires, $path, $domain);

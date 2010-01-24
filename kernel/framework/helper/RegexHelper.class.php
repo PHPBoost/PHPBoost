@@ -25,7 +25,13 @@
  *
  ###################################################*/
 
-class RegexHelper {
+/**
+ * @desc Regex helper
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @package helper
+ */
+class RegexHelper 
+{
 	/**
 	 * @desc Returns the sub-regex with its multiplicity option
 	 * @param string $sub_regex the sub-regex on which add the multiplicity

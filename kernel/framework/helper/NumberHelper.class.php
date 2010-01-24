@@ -25,6 +25,11 @@
  *
  ###################################################*/
 
+/**
+ * @desc Number helper
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @package helper
+ */
 class NumberHelper 
 {
 	/**
