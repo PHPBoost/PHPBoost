@@ -50,6 +50,16 @@ class FormFieldHidden extends AbstractFormField
 		
 		return $template;
 	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 */
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		$this->set_value($request->get_value($this->get_html_id(), ''));
+	}
 }
 
 ?>
