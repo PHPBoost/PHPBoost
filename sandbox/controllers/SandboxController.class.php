@@ -30,7 +30,7 @@ class SandboxController extends ModuleController
 	public function execute(HTTPRequest $request)
 	{
 		$view = new View('sandbox/SandboxController.tpl');
-		$form = $this->build_form($request);
+		$form = $this->build_form();
 		if ($request->is_post_method())
 		{
 			if ($form->validate())
@@ -59,7 +59,7 @@ class SandboxController extends ModuleController
 		return new SiteDisplayResponse($view);
 	}
 
-	private function build_form(HTTPRequest $request)
+	private function build_form()
 	{
 		$form = new HTMLForm('sandboxForm');
 
@@ -70,68 +70,69 @@ class SandboxController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'nom'),
-		array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
 		));
 
 		// MULTI LINE TEXT
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', array(
-			'rows' => 6, 'cols' => 47, 'description' => 'Description'
-			)));
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', 
+			array('rows' => 6, 'cols' => 47, 'description' => 'Description')
+		));
 
-			// RICH TEXT
-			$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
+		// RICH TEXT
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
 
-			// RADIO
-			$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-			$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, array(
-			$default_option,
-			new FormFieldRadioChoiceOption('Choix 2', '2')
-			)
-			));
-
-			// CHECKBOX
-			$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
-
-			// SELECT
-			$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-			$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+		// RADIO
+		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
+		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, 
 			array(
-			$default_select_option,
-			new FormFieldSelectChoiceOption('Choix 2', '2'),
-			new FormFieldSelectChoiceOption('Choix 3', '3'),
-			new FormFieldSelectChoiceGroupOption('Groupe 1', array(
-			new FormFieldSelectChoiceOption('Choix 4', '4'),
-			new FormFieldSelectChoiceOption('Choix 5', '5'),
-			)),
-			new FormFieldSelectChoiceGroupOption('Groupe 2', array(
-			new FormFieldSelectChoiceOption('Choix 6', '6'),
-			new FormFieldSelectChoiceOption('Choix 7', '7'),
-			))
+				$default_option,
+				new FormFieldRadioChoiceOption('Choix 2', '2')
 			)
-			));
+		));
 
-			$fieldset2 = new FormFieldset('Fieldset 2');
-			$form->add_fieldset($fieldset2);
+		// CHECKBOX
+		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 
-			// CAPTCHA
-			$fieldset2->add_field(new FormFieldCaptcha());
+		// SELECT
+		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
+		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+			array(
+				$default_select_option,
+					new FormFieldSelectChoiceOption('Choix 2', '2'),
+					new FormFieldSelectChoiceOption('Choix 3', '3'),
+					new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+					new FormFieldSelectChoiceOption('Choix 4', '4'),
+					new FormFieldSelectChoiceOption('Choix 5', '5'),
+				)),
+					new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+					new FormFieldSelectChoiceOption('Choix 6', '6'),
+					new FormFieldSelectChoiceOption('Choix 7', '7'),
+				))
+			)
+		));
 
-			// HIDDEN
-			$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
+		$fieldset2 = new FormFieldset('Fieldset 2');
+		$form->add_fieldset($fieldset2);
 
-			// FREE FIELD
-			$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
+		// CAPTCHA
+		$fieldset2->add_field(new FormFieldCaptcha());
 
-			// DATE
-			$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
+		// HIDDEN
+		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
 
-			// DATE TIME
-			$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
+		// FREE FIELD
+		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
 
-			// FILE PICKER
-			$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+		// DATE
+		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
 
-			return $form;
+		// DATE TIME
+		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
+
+		// FILE PICKER
+		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+
+		return $form;
 	}
 }
 ?>
