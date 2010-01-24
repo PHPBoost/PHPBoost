@@ -127,7 +127,7 @@ class LinksMenu extends LinksMenuElement
         }
         
         // Get the good Template object
-        if (!is_object($template) || strtolower(get_class($template)) != 'template')
+        if (!is_object($template) || !($template instanceof Template))
         {
             $tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
         }
@@ -162,7 +162,7 @@ class LinksMenu extends LinksMenuElement
     public function cache_export($template = false)
     {
         // Get the good Template object
-        if (!is_object($template) || strtolower(get_class($template)) != 'template')
+        if (!is_object($template) || !($template instanceof Template))
         {
             $tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
         }
