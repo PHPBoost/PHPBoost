@@ -33,7 +33,7 @@ class NumberHelper
 	 * @param string $type 'int' if you want to convert to an integer value, 'float' if you want a floating value.
 	 * @return mixed The integer or floating value (according to the type you chose).
 	 */
-	function numeric($var, $type = 'int')
+	public static function numeric($var, $type = 'int')
 	{
 		if (is_numeric($var)) //Retourne un nombre
 		{
@@ -58,7 +58,7 @@ class NumberHelper
 	 * @param int $dec The number of decilam points
 	 * @return string The rounded number.
 	 */
-	function round($number, $dec)
+	public static function round($number, $dec)
 	{
 		return trim(number_format($number, $dec, '.', ''));
 	}
