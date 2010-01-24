@@ -198,7 +198,7 @@ class HTMLForm
 	{
 		global $LANG;
 
-		if (!is_object($template) || strtolower(get_class($template)) != 'template')
+		if (!is_object($template) || !($template instanceof Template))
 		{
 			$template = new Template('framework/builder/form/Form.tpl');
 		}

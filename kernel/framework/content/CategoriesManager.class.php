@@ -493,7 +493,7 @@ class CategoriesManager
 		
 		$general_auth = false;
 		
-		if (is_null($template) || !is_object($template) || strtolower(get_class($template)) != 'template')
+		if (is_null($template) || !is_object($template) || !($template instanceof Template))
 			$template = new Template('framework/content/categories_select_form.tpl');
 		
 		if ($num_auth != 0)
