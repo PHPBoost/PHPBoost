@@ -43,12 +43,12 @@ class HTTPRequest
 	{
 		return $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
-	
+
 	public function is_get_method()
 	{
 		return $_SERVER['REQUEST_METHOD'] == 'GET';
 	}
-	
+
 	public function has_parameter($parameter)
 	{
 		return $this->has_rawparameter($parameter, $_REQUEST);
@@ -116,6 +116,25 @@ class HTTPRequest
 	public function get_string($varname, $default_value = null)
 	{
 		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
+	}
+
+	/**
+	 * @param string $varname
+	 * @return UploadedFile The uploaded file
+	 * @throws UnexistingHTTPParameterException if the file was not found in the request
+	 * @throws UploadedFileTooLargeException if the uploaded file is too large
+	 * @throws Exception if any other error occurs
+	 */
+	public function get_file($varname)
+	{
+		if (isset($_FILES[$varname]))
+		{
+			return FileUploadServiceService::retrieve_file($varname);
+		}
+		else
+		{
+			throw new UnexistingHTTPParameterException($varname);
+		}
 	}
 
 	public function get_getvalue($varname, $default_value = null)
@@ -187,12 +206,12 @@ class HTTPRequest
 	private function get_raw_var($mode, $type, $varname, $default_value)
 	{
 		$value = $mode[$varname];
-		
+
 		if (MAGIC_QUOTES)
 		{
 			$value = stripslashes($value);
 		}
-		
+
 		switch ($type)
 		{
 			case self::bool:
