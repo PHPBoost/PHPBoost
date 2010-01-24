@@ -329,7 +329,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'C_DISPLAY_REAL_IMG' => $display_real_img,	
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
+			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
 		$Template->assign_vars(array(
@@ -480,7 +480,7 @@ else
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '" />',
-			'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
+			'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
@@ -497,10 +497,10 @@ else
 	
 	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->assign_vars(array(
-		'PERCENT' => !$unlimited_data ? '(' . number_round($total_size/$group_limit, 3) * 100 . '%)' : '',
-		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? number_round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],
-		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
-		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? number_round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
+		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
+		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],
+		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
+		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDERS' => $total_directories,
 		'TOTAL_FILES' => $total_files
 	));

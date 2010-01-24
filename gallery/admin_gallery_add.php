@@ -34,10 +34,10 @@ require_once('../admin/admin_header.php');
 $Cache->load('gallery');
 $Gallery = new Gallery();
 
-$idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$idcat_post = !empty($_POST['idcat_post']) ? numeric($_POST['idcat_post']) : 0;
-$add_pic = !empty($_GET['add']) ? numeric($_GET['add']) : 0;
-$nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
+$idcat = !empty($_GET['cat']) ? NumberHelper::numeric($_GET['cat']) : 0;
+$idcat_post = !empty($_POST['idcat_post']) ? NumberHelper::numeric($_POST['idcat_post']) : 0;
+$add_pic = !empty($_GET['add']) ? NumberHelper::numeric($_GET['add']) : 0;
+$nbr_pics_post = !empty($_POST['nbr_pics']) ? NumberHelper::numeric($_POST['nbr_pics']) : 0;
 
 if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 {
@@ -83,8 +83,8 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 		if ($activ && !empty($uniq)) //Sélectionné.
 		{
 			$name = !empty($_POST[$i . 'name']) ? TextHelper::strprotect($_POST[$i . 'name']) : 0;
-			$cat = !empty($_POST[$i . 'cat']) ? numeric($_POST[$i . 'cat']) : 0;
-			$del = !empty($_POST[$i . 'del']) ? numeric($_POST[$i . 'del']) : 0;
+			$cat = !empty($_POST[$i . 'cat']) ? NumberHelper::numeric($_POST[$i . 'cat']) : 0;
+			$del = !empty($_POST[$i . 'del']) ? NumberHelper::numeric($_POST[$i . 'del']) : 0;
 
 			if ($del)
 				delete_file('pics/' . $uniq);

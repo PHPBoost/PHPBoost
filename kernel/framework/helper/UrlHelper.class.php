@@ -25,7 +25,8 @@
  *
  ###################################################*/
 
-class UrlHelper {
+class UrlHelper 
+{
 	/**
 	 * @desc Adds the session ID to an URL if the user doesn't accepts cookies.
 	 * This functions allows you to generate an URL according to the site configuration concerning the URL rewriting.

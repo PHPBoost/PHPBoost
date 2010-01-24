@@ -83,7 +83,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'CAT' => $row['idcat'] > 0 ? $DOWNLOAD_CATS[$row['idcat']]['name'] : $LANG['root'],
 		'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
 		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-		'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'] * 2524, 1) . ' ' . $LANG['unit_kilobytes'],
+		'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'] * 2524, 1) . ' ' . $LANG['unit_kilobytes'],
 		'APROBATION' => $aprob,
 		'U_FILE' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 		'U_EDIT_FILE' => url('management.php?edit=' . $row['id']),

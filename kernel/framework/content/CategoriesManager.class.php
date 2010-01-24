@@ -134,7 +134,7 @@ class CategoriesManager
 			$visible = (int)$visible;
 		
 		$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
-		$max_order = numeric($max_order);
+		$max_order = NumberHelper::numeric($max_order);
 		
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{

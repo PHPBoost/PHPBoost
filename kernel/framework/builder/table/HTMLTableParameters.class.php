@@ -123,7 +123,7 @@ class HTMLTableParameters
 			$page = $this->parameters['page'];
 			if (is_numeric($page))
 			{
-				$page = numeric($page);
+				$page = NumberHelper::numeric($page);
 				if (is_int($page) && $page >= 1)
 				{
 					$this->current_page_number = $page;

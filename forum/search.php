@@ -203,7 +203,7 @@ if (!empty($valid_search) && !empty($search))
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => FormatingHelper::second_parse($contents),
-				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : number_round(($relevance * 100) / $max_relevance, 2),
+				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
 				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
 			));

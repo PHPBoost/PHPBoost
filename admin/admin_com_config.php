@@ -35,7 +35,7 @@ if (!empty($_POST['valid']) )
 	$config_com = array();
 	$config_com['com_auth'] = retrieve(POST, 'com_auth', -1);
 	$config_com['com_max'] = retrieve(POST, 'com_max', 10);
-	$config_com['com_verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
+	$config_com['com_verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? NumberHelper::numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
 	$config_com['com_verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
 	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	$config_com['max_link'] = retrieve(POST, 'max_link', -1);

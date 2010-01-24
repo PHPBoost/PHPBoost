@@ -131,7 +131,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
 	global $Sql, $User;
 	
-	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . $User->get_attribute('user_id') . "', '" . numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . $User->get_attribute('user_id') . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 //Gestion du rss du forum.

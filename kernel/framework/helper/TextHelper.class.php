@@ -25,7 +25,8 @@
  *
  ###################################################*/
 
-class TextHelper {
+class TextHelper 
+{
 	const HTML_NO_PROTECT = false;
 	const HTML_PROTECT = true;
 	

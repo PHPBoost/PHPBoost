@@ -68,7 +68,7 @@ if (!empty($idurl))
 		
 		//Redirection vers le fichier demandé
     	$filesize = @filesize($info_file['url']);
-    	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size'] * 1048576, 0) : false);
+    	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? NumberHelper::round($info_file['size'] * 1048576, 0) : false);
     	if ($filesize !== false)
     		header('Content-Length: ' . $filesize);
     	header('content-type:application/force-download');

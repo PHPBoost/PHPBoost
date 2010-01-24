@@ -198,15 +198,15 @@ class Date
 					switch ($array_date[$i])
 					{
 						case 'd':
-							$day = (isset($given_times[$i])) ? numeric($given_times[$i]) : 0;
+							$day = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
 							break;
 
 						case 'm':
-							$month = (isset($given_times[$i])) ? numeric($given_times[$i]) : 0;
+							$month = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
 							break;
 
 						case 'y':
-							$year = (isset($given_times[$i])) ? numeric($given_times[$i]) : 0;
+							$year = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
 							break;
 					}
 				}

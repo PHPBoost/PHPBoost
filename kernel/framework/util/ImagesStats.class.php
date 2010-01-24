@@ -166,7 +166,7 @@ class Stats
 					$y_string = ($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse;				
 					
 					//Texte
-					$text = ($angle_value != 360) ? self::number_round(($angle_value/3.6), 1) . '%' : '100%';
+					$text = ($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%';
 					
 					//Centrage du texte.	
 					$array_size_ttf = imagettfbbox($font_size, 0, $font, $text);
@@ -217,7 +217,7 @@ class Stats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 						
 						//Texte
-						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? self::number_round(($angle_value/3.6), 1) . '%' : '100%') . ')';
+						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 						
 						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
 						$i++;
@@ -328,7 +328,7 @@ class Stats
 			$array_scale = array();
 			$this->generate_scale($array_scale, $max_element);
 			$scale_pos = $margin;
-			$scale_iteration = self::number_round(($h_histo_content+1)/15, 2);
+			$scale_iteration = NumberHelper::round(($h_histo_content+1)/15, 2);
 			$j = 0;
 			for ($i = 0; $i < 16; $i++)
 			{
@@ -362,7 +362,7 @@ class Stats
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
-			$space_bar = self::number_round(($w_histo_content - 4)/count($this->data_stats), 0);
+			$space_bar = NumberHelper::round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
@@ -468,7 +468,7 @@ class Stats
 	 */
 	private function value_to_angle($value)
 	{
-		return self::number_round(($value * 360)/$this->nbr_entry, $this->decimal);
+		return NumberHelper::round(($value * 360)/$this->nbr_entry, $this->decimal);
 	}
 		
 	/**
@@ -513,7 +513,7 @@ class Stats
 		$scale_iteration = $max_element/3;
 		for ($i = 0; $i < 4; $i++)
 		{	
-			$array_scale[$i] = self::number_round(abs($scale), 0);
+			$array_scale[$i] = NumberHelper::round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
 	}
@@ -527,7 +527,7 @@ class Stats
 	 private function number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
-		$number = self::number_round($number, 1) * 10;
+		$number = NumberHelper::round($number, 1) * 10;
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
@@ -548,7 +548,7 @@ class Stats
 				$number = $number - $decimal + 10;
 		}
 		
-		return self::number_round($number, 0);
+		return NumberHelper::round($number, 0);
 	}
 	
 	/**
@@ -578,17 +578,6 @@ class Stats
 		header('Content-type: image/png');
 		imagepng($thumbtail);
 		imagedestroy($thumbtail);
-	}
-	
-	/**
-	 * @desc Round with a number of decimal specified.
-	 * @param int $number Number to round.
-	 * @param int $dec Number of decimal used to round.
-	 * @return int The number rounded.
-	 */
-	private static function number_round($number, $dec)
-	{
-		return trim(number_format($number, $dec, '.', ''));
 	}
 }
 

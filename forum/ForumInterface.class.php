@@ -123,8 +123,8 @@ class ForumInterface extends ModuleInterface
 		$Cache->load('forum');
 
 		$search = $args['search'];
-		$idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
-		$time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
+		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
+		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
@@ -190,8 +190,8 @@ class ForumInterface extends ModuleInterface
 		$Cache->load('forum');
 
 		$search = $args['search'];
-		$idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
-		$time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
+		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
+		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'title';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 

@@ -252,7 +252,7 @@ class Session
 
 		########Génération du cookie de session########
 		$data = array();
-		$data['user_id'] = isset($user_id) ? numeric($user_id) : -1;
+		$data['user_id'] = isset($user_id) ? NumberHelper::numeric($user_id) : -1;
 		$data['session_id'] = $session_uniq_id;
 
 		AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
@@ -531,7 +531,7 @@ class Session
 			}
 
 			$this->data['session_id'] = isset($session_data['session_id']) ? TextHelper::strprotect($session_data['session_id']) : ''; //Validité du session id.
-			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
+			$this->data['user_id'] = isset($session_data['user_id']) ? NumberHelper::numeric($session_data['user_id']) : ''; //Validité user id?
 		}
 		########SID Existe?########
 		elseif (!empty($sid) && $suid > 0)
@@ -560,7 +560,7 @@ class Session
 			{
 				$session_autoconnect = array();
 			}
-			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
+			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? NumberHelper::numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? TextHelper::strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $this->sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			if (!empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '')

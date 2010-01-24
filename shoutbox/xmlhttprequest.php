@@ -122,7 +122,7 @@ elseif ($del)
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$shout_id = !empty($_POST['idmsg']) ? numeric($_POST['idmsg']) : '';
+	$shout_id = !empty($_POST['idmsg']) ? NumberHelper::numeric($_POST['idmsg']) : '';
 	if (!empty($shout_id))
 	{
 		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);

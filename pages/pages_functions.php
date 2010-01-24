@@ -124,14 +124,14 @@ function pages_parse($contents)
 }
 
 //Fonction unparse
-function pages_FormatingHelper::unparse($contents)
+function pages_unparse($contents)
 {
-	$contents = link_FormatingHelper::unparse($contents);
+	$contents = link_unparse($contents);
 	return html_entity_decode(FormatingHelper::unparse($contents));
 }
 
 //Second parse -> à l'affichage
-function pages_FormatingHelper::second_parse($contents)
+function pages_second_parse($contents)
 {
 	global $CONFIG;
 	
@@ -144,7 +144,7 @@ function pages_FormatingHelper::second_parse($contents)
 }
 
 //On remplace la balise link
-function link_FormatingHelper::unparse($contents)
+function link_unparse($contents)
 {
 	$contents = is_array($contents) ? $contents[0] : $contents;
 	return preg_replace('`<a href="(?:/pages/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);

@@ -102,7 +102,7 @@ if (!empty($search_string)) //recherche
 			$Template->assign_block_vars('search_result.item', array(
 				'TITLE' => $row['title'],
 				'U_TITLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
-				'RELEVANCE' => number_round(($row['relevance'] / 5.5), 2) * 100 . ' %'
+				'RELEVANCE' => NumberHelper::round(($row['relevance'] / 5.5), 2) * 100 . ' %'
 			));	
 		$i++;
 		if ($i > $page * 10)

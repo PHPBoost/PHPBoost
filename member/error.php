@@ -45,34 +45,34 @@ if (in_array($id_error, $array_error))
 		switch ($id_error)
 		{
 			case 'e_member_ban':
-				$ban = !empty($_GET['ban']) ? numeric($_GET['ban']) : '';
+				$ban = !empty($_GET['ban']) ? NumberHelper::numeric($_GET['ban']) : '';
 				if ($ban > 0)
 				{
 					if ($ban < 60)
 						$delay_ban = $ban . ' ' . (($ban > 1) ? $LANG['minutes'] : $LANG['minute']);
 					elseif ($ban < 1440)
 					{
-						$delay_ban = number_round($ban/60, 0);
+						$delay_ban = NumberHelper::round($ban/60, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['hours'] : $LANG['hour']);
 					}
 					elseif ($ban < 10080)
 					{
-						$delay_ban = number_round($ban/1440, 0);
+						$delay_ban = NumberHelper::round($ban/1440, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['days'] : $LANG['day']);
 					}
 					elseif ($ban < 43200)
 					{
-						$delay_ban = number_round($ban/10080, 0);
+						$delay_ban = NumberHelper::round($ban/10080, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['weeks'] : $LANG['week']);
 					}
 					elseif ($ban < 525600)
 					{
-						$delay_ban = number_round($ban/43200, 0);
+						$delay_ban = NumberHelper::round($ban/43200, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['months'] : $LANG['month']);
 					}
 					else
 					{
-						$delay_ban = number_round($ban/525600, 0);
+						$delay_ban = NumberHelper::round($ban/525600, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['years'] : $LANG['year']);
 					}
 				}

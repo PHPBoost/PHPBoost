@@ -53,8 +53,8 @@ $Stats = new Stats();
 $array_stats = array('other' => 0);
 if ($get_visit_month)
 {
-    $year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
-    $month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
+    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
     $array_stats = array();
     $result = $Sql->query_while("SELECT nbr, stats_day
@@ -83,7 +83,7 @@ if ($get_visit_month)
 }
 elseif ($get_visit_year)
 {
-    $year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
+    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
     $array_stats = array();
     $result = $Sql->query_while ("SELECT SUM(nbr) as total, stats_month
@@ -110,9 +110,9 @@ elseif ($get_visit_year)
 }
 elseif ($get_pages_day)
 {
-    $year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
-    $month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
-    $day = !empty($_GET['day']) ? numeric($_GET['day']) : '1';
+    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+    $day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
 
     $array_stats = array();
     $pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
@@ -138,8 +138,8 @@ elseif ($get_pages_day)
 }
 elseif ($get_pages_month)
 {
-    $year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
-    $month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
+    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
     $array_stats = array();
     $result = $Sql->query_while("SELECT pages, stats_day
@@ -168,7 +168,7 @@ elseif ($get_pages_month)
 }
 elseif ($get_pages_year)
 {
-    $year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
+    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
     $array_stats = array();
     $result = $Sql->query_while ("SELECT SUM(pages) as total, stats_month

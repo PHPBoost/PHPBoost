@@ -33,7 +33,7 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid']) )
 {
 	$CONFIG_UPLOADS = array();
-	$CONFIG_UPLOADS['size_limit'] = isset($_POST['size_limit']) ? max(numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
+	$CONFIG_UPLOADS['size_limit'] = isset($_POST['size_limit']) ? max(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
 	$CONFIG_UPLOADS['bandwidth_protect'] = retrieve(POST, 'bandwidth_protect', 1);
 	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
 	$auth_extensions_sup = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
@@ -111,7 +111,7 @@ else
 	$Template->assign_vars(array(
 		'NBR_EXTENSIONS' => $i,
 		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $array_auth, array(2 => true)),
-		'SIZE_LIMIT' => isset($CONFIG_UPLOADS['size_limit']) ? number_round($CONFIG_UPLOADS['size_limit']/1024, 2) : '0.5',
+		'SIZE_LIMIT' => isset($CONFIG_UPLOADS['size_limit']) ? NumberHelper::round($CONFIG_UPLOADS['size_limit']/1024, 2) : '0.5',
 		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
 		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 0 ? 'checked="checked"' : '',
 		'AUTH_EXTENSIONS' => $auth_extensions,

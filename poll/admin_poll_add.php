@@ -83,7 +83,7 @@ if (!empty($_POST['valid']))
 		else //Ajout des heures et minutes
 			$timestamp = time();
 			
-		$poll_type = (isset($_POST['poll_type']) && ($_POST['poll_type'] == 0 || $_POST['poll_type'] == 1)) ? numeric($_POST['poll_type']) : '0';
+		$poll_type = (isset($_POST['poll_type']) && ($_POST['poll_type'] == 0 || $_POST['poll_type'] == 1)) ? NumberHelper::numeric($_POST['poll_type']) : '0';
 		$answers = '';
 		$votes = '';
 		for ($i = 0; $i < 20; $i++)

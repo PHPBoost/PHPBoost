@@ -38,7 +38,7 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 	
@@ -48,7 +48,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 		

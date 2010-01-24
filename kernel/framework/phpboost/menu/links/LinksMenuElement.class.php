@@ -208,7 +208,7 @@ abstract class LinksMenuElement extends Menu
 	 */
 	public function update_uid()
 	{
-		$this->uid = get_uid();
+		$this->uid = AppContext::get_uid();
 	}
 	/**
 	 * @param bool $compute_relative_url If true, computes relative urls to the website root

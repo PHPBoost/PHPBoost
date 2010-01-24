@@ -218,7 +218,7 @@ class HTTPRequest
 	{
 		if (is_numeric($value))
 		{
-			return numeric($value, 'int');
+			return NumberHelper::numeric($value, 'int');
 		}
 		if ($default_value !== null)
 		{
@@ -234,7 +234,7 @@ class HTTPRequest
 	{
 		if (is_float($value))
 		{
-			return numeric($value, 'float');
+			return NumberHelper::numeric($value, 'float');
 		}
 		if ($default_value !== null)
 		{

@@ -53,9 +53,9 @@ if ($calendar_type == 'date')
     $month = gmdate_format('n');
     $day = gmdate_format('j');
 
-    $year = !empty($_GET['y']) ? numeric($_GET['y']) : $year;
-    $month = !empty($_GET['m']) ? numeric($_GET['m']) : $month;
-    $day = !empty($_GET['d']) ? numeric($_GET['d']) : $day;
+    $year = !empty($_GET['y']) ? NumberHelper::numeric($_GET['y']) : $year;
+    $month = !empty($_GET['m']) ? NumberHelper::numeric($_GET['m']) : $month;
+    $day = !empty($_GET['d']) ? NumberHelper::numeric($_GET['d']) : $day;
     if (!checkdate($month, $day, $year))
     {
         list($year, $month, $day) = array(gmdate_format('Y'), gmdate_format('n'), gmdate_format('j'));

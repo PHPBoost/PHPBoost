@@ -49,7 +49,7 @@ function wiki_parse($var)
 }
 
 //Retour au BBCode en tenant compte de [link]
-function wiki_FormatingHelper::unparse($var)
+function wiki_unparse($var)
 {
 	//Unparse de la balise link
 	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);

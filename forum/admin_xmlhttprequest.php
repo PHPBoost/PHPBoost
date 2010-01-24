@@ -241,7 +241,7 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 				//On modifie les bornes droites et le last_topic_id des parents.
 				if (!empty($list_parent_cats))
 				{
-					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . numeric($max_topic_id_parent) . "', id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . NumberHelper::numeric($max_topic_id_parent) . "', id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 				}
 				
 				//On réduit la taille de l'arbre du nombre de forum supprimé à partir de la position de celui-ci.
@@ -277,7 +277,7 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 				}
 						
 				//On met à jour le nouveau forum.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . numeric($max_topic_id) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . NumberHelper::numeric($max_topic_id) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 				
 				$Cache->Generate_module_file('forum');
 			}

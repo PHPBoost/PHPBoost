@@ -277,7 +277,7 @@ foreach ($array_location as $key => $name)
 }
 
 $tpl->assign_vars(array(
-    'ID_MAX' => get_uid()
+    'ID_MAX' => AppContext::get_uid()
 ));
 $tpl->parse();
 
