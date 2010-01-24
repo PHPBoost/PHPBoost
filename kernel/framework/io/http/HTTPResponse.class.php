@@ -104,7 +104,7 @@ class HTTPResponse
 	
 	public function set_cookie($name, $value, $expires, $path = '/', $domain = '')
 	{
-		setcookie($name, $value, $expires, $vapathlue, $domain);
+		setcookie($name, $value, $expires, $path, $domain);
 	}
 
 	/**
