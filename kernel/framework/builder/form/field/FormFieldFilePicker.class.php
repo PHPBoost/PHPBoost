@@ -39,7 +39,7 @@ class FormFieldFilePicker extends AbstractFormField
 	private $max_size = 0;
 	private $exception = null;
 
-	public function __construct($id, $label, $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, null, $field_options, $constraints);
 	}
@@ -92,6 +92,7 @@ class FormFieldFilePicker extends AbstractFormField
 				case 'max_size':
 					$this->max_size = $value;
 					unset($field_options['max_size']);
+					// TODO add max size constraint
 					break;
 			}
 		}

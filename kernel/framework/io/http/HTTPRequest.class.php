@@ -129,7 +129,7 @@ class HTTPRequest
 	{
 		if (isset($_FILES[$varname]))
 		{
-			return FileUploadServiceService::retrieve_file($varname);
+			return FileUploadService::retrieve_file($varname);
 		}
 		else
 		{
