@@ -132,8 +132,10 @@ class Captcha
 
 		$this->save_user();
 
-		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
-		$Template = new Template('framework/captcha.tpl');
+		if (!is_object($Template) || !($Template instanceof Template))
+		{
+			$Template = new Template('framework/captcha.tpl');
+		}
 
 		if ($this->is_available())
 		{

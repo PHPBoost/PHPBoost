@@ -81,7 +81,7 @@ abstract class ContentEditor
 	 */
     function get_template()
     {
-        if (!is_object($this->template) || strtolower(get_class($this->template)) != 'template')
+        if (!is_object($this->template) || !($this->template instanceof Template))
         {
             return new Template('framework/content/editor.tpl');
         }

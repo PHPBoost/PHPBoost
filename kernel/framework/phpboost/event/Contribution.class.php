@@ -145,7 +145,7 @@ class Contribution extends Event
 	 */
 	public function set_fixing_date($date)
 	{
-		if (is_object($date) && strtolower(get_class($date)) == 'date')
+		if (is_object($date) && $date instanceof Date)
 		{
 			$this->fixing_date = $date;
 		}

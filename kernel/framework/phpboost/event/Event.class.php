@@ -159,7 +159,7 @@ class Event
 	 */
 	public function set_creation_date($date)
 	{
-		if (is_object($date) && strtolower(get_class($date)) == 'date')
+		if (is_object($date) && $date instanceof Date)
 		$this->creation_date = $date;
 	}
 

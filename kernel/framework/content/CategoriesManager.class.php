@@ -440,7 +440,7 @@ class CategoriesManager
 	{
 		global $CONFIG, $LANG;
 		
-		if (is_null($category_template) || !is_object($category_template) || !strtolower(get_class($category_template)) == 'template')
+		if (is_null($category_template) || !is_object($category_template) || !($category_template instanceof Template))
 			$category_template = new Template('framework/content/category.tpl');
 		
 		$template = new Template('framework/content/categories.tpl');
