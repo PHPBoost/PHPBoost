@@ -62,7 +62,6 @@ class Environment
 	 */
 	public static function init()
 	{
-		self::write_default_http_headers();
 		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();
@@ -92,7 +91,7 @@ class Environment
 		self::enable_errors_and_exceptions_management();
 	}
 
-	public static function write_default_http_headers()
+	public static function set_default_http_response()
 	{
 		$response = new HTTPResponse();
 		$response->set_header('Content-type', 'text/html; charset=iso-8859-1');
@@ -106,6 +105,8 @@ class Environment
 	
 	public static function init_services()
 	{
+		AppContext::set_request(new HTTPRequest());
+		self::set_default_http_response();
 		AppContext::init_session();
 	}
 
