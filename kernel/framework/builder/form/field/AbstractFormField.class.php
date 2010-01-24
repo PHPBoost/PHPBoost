@@ -186,15 +186,14 @@ abstract class AbstractFormField implements FormField
 	public function validate()
 	{
 		$this->retrieve_value();
-		$validation_result = true;
 		foreach ($this->constraints as $constraint)
 		{
 			if (!$constraint->validate($this))
 			{
-				$validation_result = false;;
+				return false;
 			}
 		}
-		return $validation_result;
+		return true;
 	}
 
 	/**

@@ -45,8 +45,14 @@ class SandboxController extends ModuleController
 					'SELECT' => $form->get_value('select')->get_label(),
 					'HIDDEN' => $form->get_value('hidden'),
 					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
-					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT)
+					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT)					 
 				));
+
+				$file = $form->get_value('file');
+				if ( $file !== null)
+				{
+					$view->assign_vars(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+				}
 			}
 		}
 		$view->add_subtemplate('form', $form->export());
@@ -56,7 +62,7 @@ class SandboxController extends ModuleController
 	private function build_form(HTTPRequest $request)
 	{
 		$form = new HTMLForm('sandboxForm');
-		
+
 		// FIELDSET
 		$fieldset = new FormFieldset('Fieldset');
 		$form->add_fieldset($fieldset);
@@ -64,73 +70,68 @@ class SandboxController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'nom'),
-			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+		array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
 		));
-		
+
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', array(
 			'rows' => 6, 'cols' => 47, 'description' => 'Description'
-		)));
-		
-		// RICH TEXT
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
-		
-		// RADIO
-		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, array(
-				$default_option,
-				new FormFieldRadioChoiceOption('Choix 2', '2')
-			)
-		));
-		
-		// CHECKBOX
-		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
-		
-		// SELECT
-		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
-			array(
-				$default_select_option,
-				new FormFieldSelectChoiceOption('Choix 2', '2'),
-				new FormFieldSelectChoiceOption('Choix 3', '3'),
-				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
-					new FormFieldSelectChoiceOption('Choix 4', '4'),
-					new FormFieldSelectChoiceOption('Choix 5', '5'),
-				)),
-				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
-					new FormFieldSelectChoiceOption('Choix 6', '6'),
-					new FormFieldSelectChoiceOption('Choix 7', '7'),
-				))
-			)
-		));
-		
-		$fieldset2 = new FormFieldset('Fieldset 2');
-		$form->add_fieldset($fieldset2);
-		
-		// CAPTCHA
-		$fieldset2->add_field(new FormFieldCaptcha());
-		
-		// HIDDEN
-		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
-		
-		// FREE FIELD
-		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
-		
-		// DATE
-		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
-		
-		// DATE TIME
-		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
-	
-//		$fieldset_up = new FormFieldset('Upload file');
-//		//File field
-//		$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
-		
-//		$form->add_fieldset($fieldset_up);
-//				
-//		$form->display_preview_button('contents');
+			)));
 
-		return $form;
+			// RICH TEXT
+			$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
+
+			// RADIO
+			$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
+			$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, array(
+			$default_option,
+			new FormFieldRadioChoiceOption('Choix 2', '2')
+			)
+			));
+
+			// CHECKBOX
+			$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
+
+			// SELECT
+			$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
+			$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+			array(
+			$default_select_option,
+			new FormFieldSelectChoiceOption('Choix 2', '2'),
+			new FormFieldSelectChoiceOption('Choix 3', '3'),
+			new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+			new FormFieldSelectChoiceOption('Choix 4', '4'),
+			new FormFieldSelectChoiceOption('Choix 5', '5'),
+			)),
+			new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+			new FormFieldSelectChoiceOption('Choix 6', '6'),
+			new FormFieldSelectChoiceOption('Choix 7', '7'),
+			))
+			)
+			));
+
+			$fieldset2 = new FormFieldset('Fieldset 2');
+			$form->add_fieldset($fieldset2);
+
+			// CAPTCHA
+			$fieldset2->add_field(new FormFieldCaptcha());
+
+			// HIDDEN
+			$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
+
+			// FREE FIELD
+			$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
+
+			// DATE
+			$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
+
+			// DATE TIME
+			$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
+
+			// FILE PICKER
+			$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+
+			return $form;
 	}
 }
 ?>
