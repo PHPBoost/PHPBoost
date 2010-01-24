@@ -89,13 +89,13 @@ class LinksMenu extends LinksMenuElement
 	*/
     public function add($element)
     {
-        if (get_class($element) == get_class($this))
+        if ($element instanceof _CLASS_)
         {
         	$element->_parent($this->type);
         }
         else
         {
-        	$element->_parent();
+        	$element->_parent($this->type);
         }
         
         $this->elements[] = $element;
