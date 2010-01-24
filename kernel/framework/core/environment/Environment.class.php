@@ -490,6 +490,7 @@ class Environment
 			self::$running_module_name = '';
 		}
 	}
+	
 	/**
 	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
 	 * @return string The module identifier.
@@ -508,6 +509,17 @@ class Environment
 		}
 	}
 
+	/**
+	 * @desc Retrieves the site start page.
+	 * @return The absolute start page URL.
+	 */
+	public static function get_home_page()
+	{
+		global $CONFIG;
+	
+		return (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
+	}
+	
 	/**
 	 * @desc Returns the full phpboost version with its build number
 	 * @return string the full phpboost version with its build number

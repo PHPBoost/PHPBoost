@@ -69,7 +69,7 @@ class Session
 			$this->csrf_get_protect();
 
 			$this->end();
-			AppContext::get_response()->redirect(get_home_page());
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
@@ -142,7 +142,7 @@ class Session
 			}
 			else
 			{
-				AppContext::get_response()->redirect(get_home_page());
+				AppContext::get_response()->redirect(Environment::get_home_page());
 			}
 		}
 	}

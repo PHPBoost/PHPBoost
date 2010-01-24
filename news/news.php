@@ -211,7 +211,7 @@ elseif ($user)
 	}
 	else
 	{
-		AppContext::get_response()->redirect(get_home_page());
+		AppContext::get_response()->redirect(Environment::get_home_page());
 		exit;
 	}
 }

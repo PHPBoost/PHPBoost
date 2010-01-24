@@ -67,7 +67,7 @@ AppContext::get_response()->redirect(get_server_url_page('member/member.php'));
 }
 
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
-$start_page = get_home_page();
+$start_page = Environment::get_home_page();
 
 if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
 AppContext::get_response()->redirect($start_page);
