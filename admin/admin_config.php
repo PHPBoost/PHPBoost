@@ -187,9 +187,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 elseif (!empty($_POST['advanced']))
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = trim(TextHelper::strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
+	$CONFIG['server_name'] = trim(TextHelper::strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
 	 
-	$CONFIG['server_path'] = trim(TextHelper::strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
+	$CONFIG['server_path'] = trim(TextHelper::strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
 	//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 	if ($CONFIG['server_path'] != '')
 	{
@@ -198,7 +198,7 @@ elseif (!empty($_POST['advanced']))
 		  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
-	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE); //Session par defaut.
+	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
 	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);

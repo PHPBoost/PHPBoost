@@ -572,7 +572,7 @@ else
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-				$html_protected_name = TextHelper::strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = TextHelper::strprotect($info_pics['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE);
 
 				//Affichage de l'image et de ses informations.
 				$Template->assign_vars(array(
@@ -693,7 +693,7 @@ else
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
 
-				$html_protected_name = TextHelper::strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = TextHelper::strprotect($row['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE);
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],

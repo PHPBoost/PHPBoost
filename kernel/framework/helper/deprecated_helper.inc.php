@@ -130,7 +130,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			$var = (double)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
-			return TextHelper::strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+			return TextHelper::strprotect($var, TextHelper::HTML_NO_PROTECT); //Chaine non protégée pour l'html.
 		case TSTRING_AS_RECEIVED:
 			return (string)$var;
 		case TARRAY:
@@ -143,6 +143,45 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			return $default_value;
 	}
 }
+/**
+ * @deprecated
+ * @desc Adds the session ID to an URL if the user doesn't accepts cookies.
+ * This functions allows you to generate an URL according to the site configuration concerning the URL rewriting.
+ * @param string $url URL if the URL rewriting is disabled
+ * @param string $mod_rewrite URL if the URL rewriting is enabled
+ * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
+ * @return string The URL to use.
+ */
+function url($url, $mod_rewrite = '', $ampersand = '&amp;')
+{
+	global $CONFIG, $Session;
+
+	if (!is_object($Session))
+	{
+		$session_mod = 0;
+	}
+	else
+	{
+		$session_mod = $Session->supports_cookies();
+	}
+
+	if ($session_mod == 0)
+	{
+		if ($CONFIG['rewrite'] == 1 && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
+		{
+			return $mod_rewrite;
+		}
+		else
+		{
+			return $url;
+		}
+	}
+	elseif ($session_mod == 1)
+	{
+		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+	}
+}
+
 
 /**
  * @deprecated
