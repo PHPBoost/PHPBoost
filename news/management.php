@@ -57,7 +57,7 @@ if ($delete > 0)
 	    
 	    Feed::clear_cache('news');
 
-		redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
+		AppContext::get_response()->redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
 	}
 	elseif (empty($news['id']))
 	{
@@ -219,7 +219,7 @@ elseif (!empty($_POST['submit']))
 					ContributionService::save_contribution($news_contribution);
 
 					//Redirection to the contribution confirmation page
-					redirect('/news/contribution.php');
+					AppContext::get_response()->redirect('/news/contribution.php');
 				}
 			}
 
@@ -229,11 +229,11 @@ elseif (!empty($_POST['submit']))
 
 			if ($news['visible'] && $news['start'] == 0)
 			{
-				redirect('news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
+				AppContext::get_response()->redirect('news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 			}
 			else
 			{
-				redirect(url('news.php'));
+				AppContext::get_response()->redirect(url('news.php'));
 			}
 		}
 	}
@@ -254,7 +254,7 @@ else
 		{
 			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . addslashes($news['title']));
 			$news_categories->bread_crumb($news['idcat']);
-			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
+			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 			$Bread_crumb->add($NEWS_LANG['edit_news'], url('management.php?edit=' . $news['id']));
 
 			// Calendrier.

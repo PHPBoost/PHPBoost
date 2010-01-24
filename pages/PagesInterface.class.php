@@ -183,7 +183,7 @@ class PagesInterface extends ModuleInterface
 	{
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG;
 		
-		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.url_encode_rewrite($_PAGES_CATS[$id_cat]['name']), url_encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
+		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']), Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
 			
 		$category = new SitemapSection($this_category);
 		

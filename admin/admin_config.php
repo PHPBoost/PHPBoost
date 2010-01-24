@@ -80,11 +80,11 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
 		
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
 	{
-		redirect('/admin/admin_config.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_config.php?error=incomplete#errorh');
 	}
 }
 elseif ($check_advanced && empty($_POST['advanced']))
@@ -230,11 +230,11 @@ elseif (!empty($_POST['advanced']))
 		
 		HtaccessFileCache::regenerate();
 			
-		redirect($host . $dir . '/admin/admin_config.php?adv=1');
+		AppContext::get_response()->redirect($host . $dir . '/admin/admin_config.php?adv=1');
 	}
 	else
 	{
-		redirect('/admin/admin_config.php?adv=1&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&error=incomplete#errorh');
 	}
 }
 else //Sinon on rempli le formulaire	 
@@ -450,7 +450,7 @@ if (!empty($_GET['unlock']))
 	
 	$Mail->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
 
-	redirect('/admin/admin_config.php?adv=1&mail=1');
+	AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&mail=1');
 }
 
 require_once('../admin/admin_footer.php');

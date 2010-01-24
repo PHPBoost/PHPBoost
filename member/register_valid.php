@@ -33,7 +33,7 @@ require_once('../kernel/header.php');
 $user_accounts_config = UserAccountsConfig::load();
 
 if (!$user_accounts_config->is_registration_enabled())
-	redirect(get_home_page());
+	AppContext::get_response()->redirect(get_home_page());
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
 $valid = retrieve(POST, 'valid', false);
@@ -92,13 +92,13 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					{
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 						if ($Upload->get_error() != '') //Erreur, on arrête ici
-							redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
+							AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->get_filename();
 							$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 							if (!empty($error)) //Erreur, on arrête ici
-								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+								AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 							else
 								$user_avatar = $path; //Avatar uploadé et validé.
 						}
@@ -110,7 +110,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				{
 					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-						redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+						AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 					else
 						$user_avatar = $path; //Avatar posté et validé.
 				}
@@ -121,9 +121,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
 				if ($check_user >= 1)
-					redirect('/member/register' . url('.php?error=pseudo_auth') . '#errorh');
+					AppContext::get_response()->redirect('/member/register' . url('.php?error=pseudo_auth') . '#errorh');
 				elseif ($check_mail >= 1)
-					redirect('/member/register' . url('.php?error=mail_auth') . '#errorh');
+					AppContext::get_response()->redirect('/member/register' . url('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
 					$user_aprob = ($user_accounts_config->get_member_accounts_validation_method() == 0) ? 1 : 0;
@@ -174,7 +174,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 							
 							//Champs requis, si vide redirection.
 							if ($row['required'] && $row['field'] != 6 && empty($field))
-								redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+								AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 							
 							//Validation par expressions régulières.
 							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
@@ -218,7 +218,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									$i++;
 								}
 								if ($row['required'] && empty($field))
-									redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+									AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 							}
 							else
 								$field = strprotect($field);
@@ -278,20 +278,20 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				}
 			}
 			elseif (!empty($_POST['register_valid']) && $password !== $password_bis)
-				redirect('/member/register' . url('.php?error=pass_same') . '#errorh');
+				AppContext::get_response()->redirect('/member/register' . url('.php?error=pass_same') . '#errorh');
 			else
-				redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 		}
 		else
-			redirect('/member/register' . url('.php?error=lenght_mini') . '#errorh');
+			AppContext::get_response()->redirect('/member/register' . url('.php?error=lenght_mini') . '#errorh');
 	}
 	else
-		redirect('/member/register' . url('.php?error=verif_code') . '#errorh');
+		AppContext::get_response()->redirect('/member/register' . url('.php?error=verif_code') . '#errorh');
 }
 elseif (!empty($user_mail))
-	redirect('/member/register' . url('.php?error=invalid_mail') . '#errorh');
+	AppContext::get_response()->redirect('/member/register' . url('.php?error=invalid_mail') . '#errorh');
 else
-	redirect(get_home_page());
+	AppContext::get_response()->redirect(get_home_page());
 	
 require_once('../kernel/footer.php');
 

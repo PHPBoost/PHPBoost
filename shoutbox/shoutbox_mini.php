@@ -57,22 +57,22 @@ function shoutbox_mini($position, $block)
     				if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
     				{
     					if ($check_time >= (time() - $CONFIG['delay_flood']))
-    						redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
+    						AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
     				}
     				
     				//Vérifie que le message ne contient pas du flood de lien.
     				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
     				if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
-    					redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
+    					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
     				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
-    					redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
+    					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
     					
     				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
     				
-    				redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
+    				AppContext::get_response()->redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
     			}
     			else //utilisateur non autorisé!
-    				redirect('/shoutbox/shoutbox.php' . url('?error=auth', '', '&'));
+    				AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=auth', '', '&'));
     		}
     	}
     	

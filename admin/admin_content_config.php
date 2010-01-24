@@ -40,7 +40,7 @@ if (!empty($_POST['submit']) )
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	$Cache->Generate_file('config');
 		
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

@@ -211,7 +211,7 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
-		$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
+		$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
 			
 		$category = new SitemapSection($this_category);
 		

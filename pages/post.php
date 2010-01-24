@@ -57,7 +57,7 @@ if ($id_edit > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -94,7 +94,7 @@ if (!empty($contents))
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-				redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
 			if ($page_infos['is_cat'] == 1)
@@ -112,7 +112,7 @@ if (!empty($contents))
 				//On met à jour la table
 				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
-				redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 			//catégories : risque de boucle infinie
 			elseif ($page_infos['is_cat'] == 1 && empty($error))
@@ -127,16 +127,16 @@ if (!empty($contents))
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
-				redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 		}
 		//Création d'une page
 		elseif (!empty($title))
 		{
 			if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-				redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
-			$encoded_title = url_encode_rewrite($title);
+			$encoded_title = Url::encode_rewrite($title);
 			$is_already_page = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 			
 			//Si l'article n'existe pas déjà, on enregistre
@@ -154,7 +154,7 @@ if (!empty($contents))
 					$Cache->Generate_module_file('pages');
 				}
 				//On redirige vers la page mise à jour
-				redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 			}
 			//Sinon, message d'erreur
 			else
@@ -178,7 +178,7 @@ elseif ($del_article > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
 	if (!empty($page_infos['title']))
@@ -186,10 +186,10 @@ elseif ($del_article > 0)
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . url('/pages/pages.php?error=delete_success', '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=delete_success', '', '&'));
 	}
 	else
-		redirect(HOST . DIR . url('/pages/pages.php?error=delete_failure', '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
 $Template->set_filenames(array('post'=> 'pages/post.tpl'));
@@ -201,7 +201,7 @@ if ($id_edit > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
 	if ($error == 'cat_contains_cat')
@@ -236,7 +236,7 @@ else
 {
 	//Autorisations
 	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//La page existe déjà !
 	if ($error == 'page_already_exists')

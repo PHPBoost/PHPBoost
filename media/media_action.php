@@ -57,7 +57,7 @@ if ($unvisible > 0)
 	}
 
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . $Session->get_token()));
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
@@ -105,7 +105,7 @@ elseif ($delete > 0)
 	$media_categories->recount_media_per_cat($media['idcat']);
 
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
+	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . Url::encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
 
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
@@ -207,7 +207,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 
 	if (!empty($media))
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['id']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -244,7 +244,7 @@ elseif (!empty($_POST['submit']))
 
 	if ($media['idedit'])
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['idedit']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -388,7 +388,7 @@ elseif (!empty($_POST['submit']))
 
 			ContributionService::save_contribution($media_contribution);
 
-			redirect('/media/contribution.php?cat=' . $media['idcat']);
+			AppContext::get_response()->redirect('/media/contribution.php?cat=' . $media['idcat']);
 		}
 		else
 		{

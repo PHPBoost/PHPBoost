@@ -112,10 +112,10 @@ if ($update) //Mise à jour du module
 			HtaccessFileCache::regenerate();
 		}	
 		
-		redirect(HOST . SCRIPT);	
+		AppContext::get_response()->redirect(HOST . SCRIPT);	
 	}
 	else
-		redirect('/admin/admin_modules_update.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#errorh');
 }			
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
@@ -172,7 +172,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
 }
 else
 {			

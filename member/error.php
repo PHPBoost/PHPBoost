@@ -119,7 +119,7 @@ if (in_array($id_error, $array_error))
 		$Template->pparse('error');
 	}
 	else
-		redirect(get_home_page());
+		AppContext::get_response()->redirect(get_home_page());
 }
 elseif (!empty($id_error))
 {
@@ -169,7 +169,7 @@ elseif ($User->get_attribute('user_id') === -1)
 	$Template->pparse('error');
 }
 else
-	redirect(get_home_page());
+	AppContext::get_response()->redirect(get_home_page());
 
 require_once('../kernel/footer.php');
 

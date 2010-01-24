@@ -50,7 +50,7 @@ if (!empty($_POST['update']))  //Mise à jour
 	//Régénération du cache
 	$Cache->Generate_module_file('pages');
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 
 $Template->set_filenames(array(

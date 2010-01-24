@@ -102,7 +102,7 @@ if ($num_subcats > 0)
 				'SRC' => $value['image'],
 				'IMG_NAME' => addslashes($value['name']),
 				'NUM_QUESTIONS' => sprintf(((int)$value['num_questions'] > 1 ? $FAQ_LANG['num_questions_plural'] : $FAQ_LANG['num_questions_singular']), (int)$value['num_questions']),
-				'U_CAT' => url('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+				'U_CAT' => url('faq.php?id=' . $id, 'faq-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
 				'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
 			));
 			
@@ -148,7 +148,7 @@ if ($num_rows > 0)
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'ANSWER' => second_parse($row['answer']),
-				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
+				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
 				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_DOWN' => url('action.php?down=' . $row['id']),
 				'U_UP' => url('action.php?up=' . $row['id']),
@@ -177,7 +177,7 @@ if ($num_rows > 0)
 				'U_UP' => url('action.php?up=' . $row['id']),
 				'U_EDIT' => url('management.php?edit=' . $row['id']),
 				'U_MOVE' => url('management.php?move=' . $row['id']),
-				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
+				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
 			
 			if ($row['q_order'] > 1)

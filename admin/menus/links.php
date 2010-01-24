@@ -153,7 +153,7 @@ if ($action == 'save')
         MenuService::save($menu);
     }
    	MenuService::generate_cache();
-    redirect('menus.php#m' . $menu->get_id());
+    AppContext::get_response()->redirect('menus.php#m' . $menu->get_id());
 }
 
 // Display the Menu administration
@@ -235,7 +235,7 @@ if ($menu_id > 0)
 	$menu = MenuService::load($menu_id);
 	
     if (!of_class($menu, LinksMenu::LINKS_MENU__CLASS))
-        redirect('menus.php');
+        AppContext::get_response()->redirect('menus.php');
 	
 	$block = $menu->get_block();
 }

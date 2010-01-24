@@ -146,7 +146,7 @@ class ArticlesCats extends CategoriesManager
 		while ($id > 0)
 		{
 			if ($User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
-			$Bread_crumb->add($ARTICLES_CAT[$id]['name'], url('articles.php?cat=' . $id, 'articles-' . $id . '+' . url_encode_rewrite($ARTICLES_CAT[$id]['name']) . '.php'));
+			$Bread_crumb->add($ARTICLES_CAT[$id]['name'], url('articles.php?cat=' . $id, 'articles-' . $id . '+' . Url::encode_rewrite($ARTICLES_CAT[$id]['name']) . '.php'));
 			$id = $ARTICLES_CAT[$id]['id_parent'];
 		}
 

@@ -116,7 +116,7 @@ if (!empty($_POST['submit']))
 	}
 	else
 	{
-		redirect(url('moderation_media.php'));
+		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 }
 elseif (!empty($_GET['recount']))
@@ -183,7 +183,7 @@ else
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
-			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php'),
+			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
 			'CAT' => !empty($MEDIA_CATS[$row['idcat']]) ? $MEDIA_CATS[$row['idcat']]['name'] : $LANG['unknow'],
 			'U_CAT' => url('media.php?cat=' . $row['idcat']),

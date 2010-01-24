@@ -63,7 +63,7 @@ if (!empty($_POST['valid']))
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
@@ -76,7 +76,7 @@ elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du l
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
@@ -93,7 +93,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
 		
-		redirect(HOST . SCRIPT . '#w' . $id);
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#w' . $id);
 	}
 	elseif (!empty($bottom))
 	{
@@ -106,7 +106,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
 		
-		redirect(HOST . SCRIPT . '#w' . $id);
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#w' . $id);
 	}
 }
 //On ajoute la nouvelle catégorie
@@ -133,10 +133,10 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
 	
-		redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		redirect('/web/admin_web_cat.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#errorh');
 }
 //Sinon on rempli le formulaire
 else	

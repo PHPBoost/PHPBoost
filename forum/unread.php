@@ -36,10 +36,10 @@ require_once('../kernel/header.php');
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
-	redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 {	
-	redirect('/member/error.php'); 
+	AppContext::get_response()->redirect('/member/error.php'); 
 }
 	
 $Template->set_filenames(array(
@@ -107,7 +107,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}	
 	
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
+	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($row['title']) : '';
 	
 	//Affichage du dernier message posté.
 	$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite .  $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');

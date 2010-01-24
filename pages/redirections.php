@@ -49,9 +49,9 @@ if (!empty($new_title) && $id_rename_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
-	$encoded_title = url_encode_rewrite($new_title);
+	$encoded_title = Url::encode_rewrite($new_title);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
@@ -66,16 +66,16 @@ if (!empty($new_title) && $id_rename_post > 0)
 		}
 		else
 			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect('/pages/redirections.php?rename=' . $id_rename_post . '&error=title_already_exists');
+		AppContext::get_response()->redirect('/pages/redirections.php?rename=' . $id_rename_post . '&error=title_already_exists');
 }
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
@@ -87,19 +87,19 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
-	$encoded_title = url_encode_rewrite($redirection_name);
+	$encoded_title = Url::encode_rewrite($redirection_name);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0)
 	{
 		$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
-		redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect('/pages/redirections.php?new=' . $id_new_post . '&error=title_already_exists');
+		AppContext::get_response()->redirect('/pages/redirections.php?new=' . $id_new_post . '&error=title_already_exists');
 }
 //Suppression des redirections
 elseif ($del_redirection > 0)
@@ -111,12 +111,12 @@ elseif ($del_redirection > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
-	redirect(HOST . DIR . url('/pages/redirections.php?id=' . $page_infos['redirect'], '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/pages/redirections.php?id=' . $page_infos['redirect'], '', '&'));
 }
 
 if ($id_page > 0)
@@ -128,7 +128,7 @@ if ($id_page > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	if ($id_redirection > 0)
 		$Bread_crumb->add($LANG['pages_redirection_management'], url('redirections.php?id=' . $id_redirection));
@@ -141,7 +141,7 @@ if ($id_page > 0)
 	while ($id > 0)
 	{
 		if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))	
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -225,7 +225,7 @@ elseif ($id_redirection > 0)
 else
 {
 	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-		redirect('/pages/pages.php?error=e_auth');
+		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 
 	$Template->assign_block_vars('redirections', array());
 	

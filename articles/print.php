@@ -47,7 +47,7 @@ if ($idart > 0)
 }
 
 if (empty($articles['title']))
-	redirect(url('articles.php'));
+	AppContext::get_response()->redirect(url('articles.php'));
 
 $array_sources = unserialize($articles['sources']);
 $sources='';

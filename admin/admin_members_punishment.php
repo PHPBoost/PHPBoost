@@ -75,7 +75,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 			}
 		}
 		
-		redirect('/admin/admin_members_punishment.php?action=punish');
+		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
 	}
 	
 	$Template->assign_vars(array(
@@ -92,9 +92,9 @@ if ($action == 'punish') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect('/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
 			else
-				redirect('/admin/admin_members_punishment.php?action=punish');
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
 		}	
 		
 		$Template->assign_vars(array(
@@ -243,7 +243,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}	
 		}
 		
-		redirect('/admin/admin_members_punishment.php?action=warning');
+		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 	}
 	
 	$Template->assign_vars(array(
@@ -260,9 +260,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect('/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
 			else
-				redirect('/admin/admin_members_punishment.php?action=warning');
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 		}		
 		
 		$Template->assign_vars(array(
@@ -358,7 +358,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}				
 		}		
-		redirect('/admin/admin_members_punishment.php?action=ban');
+		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 	}
 	
 	$Template->assign_vars(array(
@@ -375,9 +375,9 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect('/admin/admin_members_punishment.php?action=ban&id=' . $user_id);
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban&id=' . $user_id);
 			else
-				redirect('/admin/admin_members_punishment.php?action=ban');
+				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 		}	
 		
 		$Template->assign_vars(array(

@@ -70,7 +70,7 @@ if (!empty($_POST['valid']))
 
 	$Cache->Generate_module_file('media');
 
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 else
 {

@@ -100,11 +100,11 @@ elseif ($id_to_update > 0)
 		//Enregistrement en base de données
 		ContributionService::save_contribution($contribution);
 		
-		redirect(HOST . DIR . url('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
 	}
 	//Erreur
 	else
-		redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
@@ -120,7 +120,7 @@ elseif ($id_to_delete > 0)
 	
 	ContributionService::delete_contribution($contribution);
 	
-	redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }
 else
 {

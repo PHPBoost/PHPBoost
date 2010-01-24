@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           config_data.class.php
+ *                           ConfigData.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel

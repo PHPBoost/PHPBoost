@@ -155,7 +155,7 @@ class NewsInterface extends ModuleInterface
 	            while ($row = $this->sql_querier->fetch_assoc($result))
 	            {
 	            	// Rewriting
-	            	$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
+	            	$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
 
 	            	$item = new FeedItem();
 	            	$item->set_title($row['title']);
@@ -378,16 +378,16 @@ class NewsInterface extends ModuleInterface
 						'ID' => $row['id'],
 						'C_NEWS_ROW' => $new_row,
 						'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
-						'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+						'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 						'TITLE' => $row['title'],
-						'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
+						'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
 						'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 						'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
 						'C_IMG' => !empty($row['img']),
 						'IMG' => second_parse_url($row['img']),
 						'IMG_DESC' => $row['alt'],
 						'C_ICON' => $NEWS_CONFIG['activ_icon'],
-						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
+						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 						'CONTENTS' => second_parse($row['contents']),
 						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
@@ -439,9 +439,9 @@ class NewsInterface extends ModuleInterface
 					$tpl->assign_block_vars('list', array(
 						'C_NEWS_ROW' => $new_row,
 						'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
-						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
+						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
-						'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+						'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 						'TITLE' => $row['title'],
 						'C_COM' => $NEWS_CONFIG['activ_com'] ? true : false,
 						'COM' => $row['nbr_com']
@@ -471,7 +471,7 @@ class NewsInterface extends ModuleInterface
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
 
-		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), Sitemap::FREQ_WEEKLY);
+		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . Url::encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), Sitemap::FREQ_WEEKLY);
 
 		$category = new SitemapSection($this_category);
 

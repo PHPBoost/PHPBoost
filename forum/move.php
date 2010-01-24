@@ -129,7 +129,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 
 			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
 
-			redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
+			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
 			$Errorh->handler('e_incomplete', E_USER_REDIRECT);
@@ -383,10 +383,10 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 				$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 			}
 
-			redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
+			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
 		}
 		else
-			redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
 	}
 	else
 		$Errorh->handler('e_incomplete', E_USER_REDIRECT);

@@ -63,7 +63,7 @@ if ($action_post == 'save')
 	}
 
 	if (!of_class($menu, FeedMenu::FEED_MENU__CLASS))
-	redirect('menus.php');
+	AppContext::get_response()->redirect('menus.php');
 
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
 	if ($menu->is_enabled())
@@ -73,7 +73,7 @@ if ($action_post == 'save')
 	MenuService::save($menu);
 	MenuService::generate_cache();
 
-	redirect('menus.php#m' . $id_post);
+	AppContext::get_response()->redirect('menus.php#m' . $id_post);
 }
 
 // Display the Menu administration
@@ -125,7 +125,7 @@ if ($edit)
 	$menu = MenuService::load($id);
 
 	if (!of_class($menu, FeedMenu::FEED_MENU__CLASS))
-	redirect('menus.php');
+	AppContext::get_response()->redirect('menus.php');
 
 	$block = $menu->get_block();
 	$feed_url = $menu->get_url(true);

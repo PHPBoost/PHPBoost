@@ -47,22 +47,22 @@ $error = retrieve(GET, 'error', '');
 if ($id_up > 0)
 {
 	$media_categories->move($id_up, MOVE_CATEGORY_UP);
-	redirect(url('admin_media_cats.php'));
+	AppContext::get_response()->redirect(url('admin_media_cats.php'));
 }
 elseif ($id_down > 0)
 {
 	$media_categories->move($id_down, MOVE_CATEGORY_DOWN);
-	redirect(url('admin_media_cats.php'));
+	AppContext::get_response()->redirect(url('admin_media_cats.php'));
 }
 elseif ($id_show > 0)
 {
 	$media_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
-	redirect(url('admin_media_cats.php'));
+	AppContext::get_response()->redirect(url('admin_media_cats.php'));
 }
 elseif ($id_hide > 0)
 {
 	$media_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	redirect(url('admin_media_cats.php'));
+	AppContext::get_response()->redirect(url('admin_media_cats.php'));
 }
 elseif ($cat_to_del > 0)
 {
@@ -121,7 +121,7 @@ elseif (!empty($_POST['submit']))
 
 		if (empty($name))
 		{
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		}
 
 		if ($id_cat > 0)
@@ -136,7 +136,7 @@ elseif (!empty($_POST['submit']))
 
 	$Cache->Generate_module_file('media');
 
-	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 elseif ($new_cat XOR $id_edit > 0)
 {

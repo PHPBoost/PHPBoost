@@ -44,7 +44,7 @@ class InstallEnvironment
     {
         Environment::fit_to_php_configuration();
         Environment::load_static_constants();
-        Environment::write_http_headers();
+        Environment::write_default_http_headers();
         self::load_dynamic_constants();
         Environment::init_output_bufferization();
     }

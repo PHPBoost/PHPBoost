@@ -45,7 +45,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . Url::encode_rewrite($_WIKI_CATS[$id]['name']), Url::encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while ($id > 0);
@@ -62,7 +62,7 @@ switch ($bread_crumb_key)
 	case 'wiki_history_article':
 		$Cache->load('wiki');
 		$Bread_crumb->add($LANG['wiki_history'], url('history.php?id=' . $id_article));
-		$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . url_encode_rewrite($article_infos['title'])), url_encode_rewrite($article_infos['title']));
+		$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . Url::encode_rewrite($article_infos['title'])), Url::encode_rewrite($article_infos['title']));
 
 		$id_cat = (int)$article_infos['id_cat'];
 		if (!empty($id_cat)  && is_array($_WIKI_CATS)) //Catégories infinies
@@ -70,7 +70,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . Url::encode_rewrite($_WIKI_CATS[$id]['name']), Url::encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while ($id > 0);
@@ -102,7 +102,7 @@ switch ($bread_crumb_key)
 			$Bread_crumb->add($LANG['wiki_remove_cat'], url('property.php?del=' . $del_article));
 			
 		if (isset($article_infos) && $article_infos['is_cat'] == 0)
-			$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+			$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . Url::encode_rewrite($article_infos['title']), Url::encode_rewrite($article_infos['title'])));
 			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
 		if ($id_cat > 0 && is_array($_WIKI_CATS)) //Catégories infinies
@@ -110,7 +110,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat;
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . Url::encode_rewrite($_WIKI_CATS[$id]['name']), Url::encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while ($id > 0);

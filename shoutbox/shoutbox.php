@@ -50,25 +50,25 @@ if ($shoutbox && empty($shout_id)) //Insertion
 			if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - $CONFIG['delay_flood']))
-					redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&') . '#errorh');
+					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&') . '#errorh');
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
 			$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 			if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
-				redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
-				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
-			redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
+			AppContext::get_response()->redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
 		else //utilisateur non autorisé!
-			redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
 	}
 	else //Champs incomplet!
-		redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 }
 elseif (!empty($shout_id)) //Edition + suppression!
 {
@@ -91,7 +91,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
-			redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
 		elseif ($edit_message)
 		{
@@ -136,22 +136,22 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				//Vérifie que le message ne contient pas du flood de lien.
 				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 				if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
-					redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
-					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->query_inject("UPDATE " . PREFIX . "shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
-				redirect(HOST . SCRIPT. SID2);
+				AppContext::get_response()->redirect(HOST . SCRIPT. SID2);
 			}
 			else //Champs incomplet!
-				redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 		}
 		else
-			redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}
 	else
-		redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 }
 else //Affichage.
 {

@@ -45,7 +45,7 @@ if (isset($_POST['valid']))
 		ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
 	}
 	MenuService::generate_cache();
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($uninstall) //Désinstallation du module
 {
@@ -58,14 +58,14 @@ elseif ($uninstall) //Désinstallation du module
 		{
 			case NOT_INSTALLED_MODULE:
 				die('module not installed');
-				redirect('/admin/admin_modules.php?error=incomplete#errorh');
+				AppContext::get_response()->redirect('/admin/admin_modules.php?error=incomplete#errorh');
 				break;
 			case MODULE_FILES_COULD_NOT_BE_DROPPED:
-				redirect('/admin/admin_modules.php?error=files_del_failed#errorh');
+				AppContext::get_response()->redirect('/admin/admin_modules.php?error=files_del_failed#errorh');
 				break;
 			case MODULE_UNINSTALLED:
 			default:
-				redirect(HOST . SCRIPT . $error);
+				AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 		}
 	}
 	else

@@ -48,7 +48,6 @@ class Environment
 	 */
 	public static function load_imports()
 	{
-		require_once PATH_TO_ROOT . '/kernel/framework/util/Bench.class.php';
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
 		import('core/ClassLoader');
@@ -56,13 +55,13 @@ class Environment
 
 		AppContext::init_bench();
 	}
-
+	
 	/**
 	 * Inits the environment and all its services.
 	 */
 	public static function init()
 	{
-		self::write_http_headers();
+		self::write_default_http_headers();
 		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();
@@ -92,9 +91,20 @@ class Environment
 		self::enable_errors_and_exceptions_management();
 	}
 
+	public static function write_default_http_headers()
+	{
+		$response = new HTTPResponse();
+		$response->set_header('Content-type', 'text/html; charset=iso-8859-1');
+		$response->set_header('Expires', 'Mon, 1 Dec 2003 01:00:00 GMT');
+		$response->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
+		$response->set_header('Cache-Control', 'no-store, no-cache, must-revalidate');
+		$response->set_header('Cache-Control', 'post-check=0, pre-check=0');
+		$response->set_header('Pragma', 'no-cache');
+		AppContext::set_response($response);
+	}
+	
 	public static function init_services()
 	{
-		AppContext::set_request(new HTTPRequest());
 		AppContext::init_session();
 	}
 
@@ -213,16 +223,6 @@ class Environment
 		define('REGEX_MULTIPLICITY_ALL', 0x05);
 
 		@include PATH_TO_ROOT . '/kernel/db/config.php';
-	}
-
-	public static function write_http_headers()
-	{
-		header('Content-type: text/html; charset=iso-8859-1');		
-		header("Expires: Mon, 1 Dec 2003 01:00:00 GMT");
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Cache-Control: no-store, no-cache, must-revalidate");
-		header("Cache-Control: post-check=0, pre-check=0", false);
-		header("Pragma: no-cache");
 	}
 
 	public static function load_cache()
@@ -368,7 +368,7 @@ class Environment
 
 	private static function perform_stats_changeday()
 	{
-		$yesterday_timestamp =self::get_yesterday_timestamp();
+		$yesterday_timestamp = self::get_yesterday_timestamp();
 
 		//We insert today's entry in the stats table
 		AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
@@ -389,7 +389,7 @@ class Environment
 		" WHERE last_update < '" . (self::get_yesterday_timestamp()) . "'", __LINE__, __FILE__);
 
 		//We retrieve the number of pages seen until now
-		$pages_displayed = pages_displayed();
+		$pages_displayed = StatsSaver::retrieve_stats('pages');
 
 		//We delete the file containing the displayed pages
 
@@ -526,6 +526,7 @@ class Environment
 	 */
 	public static function display_header()
 	{
+		
 		self::get_graphical_environment()->display_header();
 	}
 

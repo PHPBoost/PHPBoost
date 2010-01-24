@@ -69,7 +69,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'SRC' => !empty($array['image']) ? $array['image'] : 'media_mini.png',
 				'IMG_NAME' => addslashes($array['name']),
 				'NUM_MEDIA' => ($array['active'] & MEDIA_NBR) !== 0 ? sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']) : '',
-				'U_CAT' => url('media.php?cat=' . $id, 'media-0-' . $id . '+' . url_encode_rewrite($array['name']) . '.php'),
+				'U_CAT' => url('media.php?cat=' . $id, 'media-0-' . $id . '+' . Url::encode_rewrite($array['name']) . '.php'),
 				'U_ADMIN_CAT' => url('admin_media_cats.php?edit=' . $id)
 			));
 
@@ -169,7 +169,7 @@ if (empty($id_media) && $id_cat >= 0)
 		
 
 		$Template->assign_vars(array(
-			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . url_encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
+			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 		));
@@ -192,11 +192,11 @@ if (empty($id_media) && $id_cat >= 0)
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 				'NOTE' => $row['nbrnote'] ? Note::display_img($row['note'], $MEDIA_CONFIG['note_max'], $MEDIA_CONFIG['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
-				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php'),
+				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
+				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
 			));
 		}
 
@@ -229,7 +229,7 @@ elseif ($id_media > 0)
 	}
 
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 
 	define('TITLE', $media['name']);
 	require_once('../kernel/header.php');
@@ -239,7 +239,7 @@ elseif ($id_media > 0)
 
 	//Affichage notation.
 	
-	$Note = new Note('media', $id_media, url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'), $MEDIA_CONFIG['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
+	$Note = new Note('media', $id_media, url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'), $MEDIA_CONFIG['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
 	
 	
@@ -255,7 +255,7 @@ elseif ($id_media > 0)
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$media['nbrnote'] > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$media['nbrnote']) : sprintf($MEDIA_LANG['num_note'], (int)$media['nbrnote']),
 		'LANG' => $CONFIG['lang'],
-		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
+		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
@@ -288,7 +288,7 @@ elseif ($id_media > 0)
 	//Affichage commentaires.
 	if (isset($_GET['com']) && ($MEDIA_CATS[$media['idcat']]['active'] & (MEDIA_DV_COM + MEDIA_DL_COM)) !== 0)
 	{
-		$Template->assign_vars(array('COMMENTS' => display_comments('media', $id_media, url('media.php?id=' . $id_media . '&amp;com=%s', 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php?com=%s'))));
+		$Template->assign_vars(array('COMMENTS' => display_comments('media', $id_media, url('media.php?id=' . $id_media . '&amp;com=%s', 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=%s'))));
 	}
 }
 

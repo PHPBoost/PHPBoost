@@ -42,7 +42,7 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 	
-	redirect(HOST . SCRIPT . '#t' . $id);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
@@ -52,7 +52,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 		
-	redirect(HOST . SCRIPT . '#t' . $id);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
 {	
@@ -71,7 +71,7 @@ elseif (isset($_POST['valid'])) //Modification de tous les thèmes.
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 		
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 elseif ($edit && (!empty($id) || !empty($name))) //Edition
 {
@@ -89,7 +89,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
 		
-		redirect(HOST . SCRIPT . '#t' . $id);	
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 	}
 	else
 	{
@@ -138,7 +138,7 @@ elseif ($uninstall) //Désinstallation.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
 		}
 		else
-			redirect('/admin/admin_themes.php?error=incomplete#errorh');
+			AppContext::get_response()->redirect('/admin/admin_themes.php?error=incomplete#errorh');
 		
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))
@@ -159,7 +159,7 @@ elseif ($uninstall) //Désinstallation.
     	ModulesCssFilesCache::invalidate();
 	
 		$error = !empty($error) ? '?error=' . $error : '';
-		redirect(HOST . SCRIPT . $error);
+		AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 	}
 	else
 	{

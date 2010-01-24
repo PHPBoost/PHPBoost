@@ -38,7 +38,7 @@ if (!empty($g_idpics))
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			redirect('/gallery/gallery.php?error=unexist_cat');
+			AppContext::get_response()->redirect('/gallery/gallery.php?error=unexist_cat');
 	}
 	else //Racine.
 	{

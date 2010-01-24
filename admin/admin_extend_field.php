@@ -46,7 +46,7 @@ if ($del && !empty($id))
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);
 	}
-	redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($_POST['valid']))
 {
@@ -77,7 +77,7 @@ elseif (!empty($_POST['valid']))
 		function rewrite_field($field)
 		{
 			$field = strtolower($field);
-			$field = url_encode_rewrite($field);
+			$field = Url::encode_rewrite($field);
 			$field = str_replace('-', '_', $field);
 			return 'f_' . $field;
 		}
@@ -92,13 +92,13 @@ elseif (!empty($_POST['valid']))
 				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			redirect('/admin/admin_extend_field.php');
+			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 		}
 		else
-			redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
+			AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-		redirect('/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
@@ -110,7 +110,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
-		redirect(HOST . SCRIPT . '#e' . $id);
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
 	elseif (!empty($bottom))
 	{
@@ -120,7 +120,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
-		redirect(HOST . SCRIPT . '#e' . $id);
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
 elseif (!empty($id))

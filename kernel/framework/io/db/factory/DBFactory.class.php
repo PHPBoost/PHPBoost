@@ -111,7 +111,7 @@ class DBFactory
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
 			import('util/unusual_functions', INC_IMPORT);
-			redirect(get_server_url_page('install/install.php'));
+			AppContext::get_response()->redirect(get_server_url_page('install/install.php'));
 		}
 		return $db_connection_data;
 	}

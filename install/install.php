@@ -68,7 +68,7 @@ if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') |
 //Reprise de l'installation depuis le début
 if (retrieve(GET, 'restart', false))
 {
-	redirect(HOST . add_lang(FILE, true));
+	AppContext::get_response()->redirect(HOST . add_lang(FILE, true));
 }
 
 //Template d'installation
@@ -101,7 +101,7 @@ $new_language = retrieve(POST, 'new_language', '');
 if (!empty($new_language) && is_file('lang/' . $new_language . '/install_' . $new_language . '.php') && $new_language != $lang)
 {
 	$lang = $new_language;
-	redirect(HOST . FILE . add_lang('?step=' . $step, true));
+	AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
 //TODO create a real class extending the User one
@@ -158,7 +158,7 @@ switch($step)
 		//On vérifie l'étape et si elle est validée on passe à la suivante
 		if ($submit && $license_agreement)
 		{
-			redirect(HOST . FILE . add_lang('?step=' . (STEP_LICENSE + 1), true));
+			AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_LICENSE + 1), true));
 		}
 
 		$template->assign_vars(array(
@@ -245,7 +245,7 @@ switch($step)
 			}
 			else
 			{
-				redirect(HOST . FILE . add_lang('?step=' . (STEP_SERVER_CONFIG + 1), true));
+				AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_SERVER_CONFIG + 1), true));
 			}
 		}
 
@@ -371,7 +371,7 @@ switch($step)
 					//Insertion des données variables selon la langue
 					$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
 
-					redirect(HOST . FILE . add_lang('?step=' . (STEP_DB_CONFIG + 1), true));
+					AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_DB_CONFIG + 1), true));
 					break;
 					//This case has been treated before the switch
 				case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
@@ -582,7 +582,7 @@ switch($step)
 
 			ModulesCssFilesCache::invalidate();
 
-			redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
+			AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
 		}
 
 		//Interface configuration du site
@@ -759,7 +759,7 @@ switch($step)
 				$Cache->generate_file('stats');
 
 				//On redirige vers l'étape suivante
-				redirect(HOST . FILE . add_lang('?step=' . (STEP_ADMIN_ACCOUNT + 1), true));
+				AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_ADMIN_ACCOUNT + 1), true));
 			}
 			else
 			{

@@ -157,12 +157,12 @@ elseif ($action == 'restore')
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
 			if (@unlink($file_path))
-				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_success', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_success', '', '&'));
 			else
-				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_failure', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_failure', '', '&'));
 		}
 		else
-			redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
 	}
 	
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
@@ -182,7 +182,7 @@ elseif ($action == 'restore')
 			$Sql->repair_tables($tables_list);
 			$Cache->generate_all_files();
 			
-			redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
 	}
 	//Fichier envoyé par post
@@ -200,15 +200,15 @@ elseif ($action == 'restore')
 				$Sql->repair_tables($tables_list);
 				$Cache->generate_all_files();
 				
-				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif (is_file($file_path))//Le fichier existe déjà, on ne peut pas le copier
-				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_already_exists', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
-				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=upload_failure', '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=upload_failure', '', '&'));
 		}
 		else
-			redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=failure', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
 	$Template->assign_vars(array(
@@ -294,7 +294,7 @@ else
 		
 		//Erreur, la liste des fichiers est vide
 		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
-			redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
 		foreach ($backup->get_tables_properties_list() as $table => $properties)
 		{
@@ -346,7 +346,7 @@ else
 
 		$backup->export_file($file_path); //Exportation de la bdd.
 		
-		redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
+		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
 	}
 
 	if ($tables_backup) //Liste des tables pour les sauvegarder

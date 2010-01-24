@@ -40,7 +40,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
 		
-	redirect(HOST . SCRIPT . '#t' . $id);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
@@ -49,7 +49,7 @@ if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
 		
-	redirect(HOST . SCRIPT . '#t' . $id);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Mise à jour
 {
@@ -67,7 +67,7 @@ elseif (isset($_POST['valid'])) //Mise à jour
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
 		
-	redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 elseif ($uninstall) //Désinstallation.
 {
@@ -86,7 +86,7 @@ elseif ($uninstall) //Désinstallation.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
-			redirect('/admin/admin_lang.php?error=incomplete#errorh');
+			AppContext::get_response()->redirect('/admin/admin_lang.php?error=incomplete#errorh');
 		
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_lang))
@@ -101,7 +101,7 @@ elseif ($uninstall) //Désinstallation.
 		$Cache->Generate_file('langs');
 		
 		$error = !empty($error) ? '?error=' . $error : '';
-		redirect(HOST . SCRIPT . $error);
+		AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 	}
 	else
 	{

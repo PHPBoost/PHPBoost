@@ -60,7 +60,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (retrieve(GET, 'disconnect', false))
 		{
 			AppContext::get_session()->end();
-			redirect(get_home_page());
+			AppContext::get_response()->redirect(get_home_page());
 		}
 
 		$sql = AppContext::get_sql();
@@ -95,21 +95,21 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					}
 					else //plus d'essais
 					{
-						redirect('/admin/admin_index.php?flood=0');
+						AppContext::get_response()->redirect('/admin/admin_index.php?flood=0');
 					}
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					redirect('/member/error.php?activ=1');
+					AppContext::get_response()->redirect('/member/error.php?activ=1');
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					redirect('/member/error.php?ban_w=1');
+					AppContext::get_response()->redirect('/member/error.php?ban_w=1');
 				}
 				else
 				{
 					$delay_ban = ceil((0 - $delay_ban)/60);
-					redirect('/member/error.php?ban=' . $delay_ban);
+					AppContext::get_response()->redirect('/member/error.php?ban=' . $delay_ban);
 				}
 
 				if (!empty($error_report)) //Erreur
@@ -117,12 +117,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					$info_connect['test_connect']++;
 					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-					redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
+					AppContext::get_response()->redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 				}
 				elseif (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
 				{
 					AppContext::get_session()->end();
-					redirect('/admin/admin_index.php?flood=0');
+					AppContext::get_response()->redirect('/admin/admin_index.php?flood=0');
 				}
 				else //Succès redonne tous les essais.
 				{
@@ -130,9 +130,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 			}
 			else
-			redirect('/member/error.php?unexist=1');
+			AppContext::get_response()->redirect('/member/error.php?unexist=1');
 
-			redirect(HOST . SCRIPT);
+			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
 
 		$flood = retrieve(GET, 'flood', 0);

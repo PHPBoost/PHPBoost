@@ -116,7 +116,7 @@ class DispatchManager
 
 	private static function redirect404()
 	{
-		redirect(PATH_TO_ROOT . '/member/404.php');
+		AppContext::get_response()->redirect(PATH_TO_ROOT . '/member/404.php');
 	}
 
 	private static function show_error($exception)

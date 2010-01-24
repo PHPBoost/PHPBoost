@@ -43,7 +43,7 @@ if ($check_updates === true)
 {
 	$Session->csrf_get_protect();
 	new Updates();
-	redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
+	AppContext::get_response()->redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
 }
 $tpl = new Template('admin/updates/updates.tpl');
 $updates_availables = 0;

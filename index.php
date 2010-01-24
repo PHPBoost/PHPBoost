@@ -57,21 +57,21 @@ Environment::init();
 if (!defined('PHPBOOST_INSTALLED'))
 {
 	import('util/unusual_functions', INC_IMPORT);
-	redirect(get_server_url_page('install/install.php'));
+	AppContext::get_response()->redirect(get_server_url_page('install/install.php'));
 }
 elseif (empty($CONFIG))
 {   // Si la configuration n'existe pas mais que PHPBoost est installé
 // on renvoie vers la page membre du noyau dont on est sûr qu'elle existe
 import('util/unusual_functions', INC_IMPORT);
-redirect(get_server_url_page('member/member.php'));
+AppContext::get_response()->redirect(get_server_url_page('member/member.php'));
 }
 
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
 $start_page = get_home_page();
 
 if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
-redirect($start_page);
+AppContext::get_response()->redirect($start_page);
 else
-redirect('/member/member.php');
+AppContext::get_response()->redirect('/member/member.php');
 
 ?>

@@ -47,10 +47,10 @@ if (!empty($_POST['add']))
 		###### Régénération du cache des rangs #######
 		$Cache->Generate_file('ranks');
 		
-		redirect('/admin/admin_ranks.php');	
+		AppContext::get_response()->redirect('/admin/admin_ranks.php');	
 	}
 	else
-		redirect('/admin/admin_ranks_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
@@ -73,7 +73,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
 }
 else //Sinon on rempli le formulaire	 
 {	

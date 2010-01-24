@@ -47,18 +47,18 @@ if ($install) //Installation du module
 	switch (ModulesManager::install_module($module_id, $enable_module, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
 		case CONFIG_CONFLICT:
-			redirect('/admin/admin_modules_add.php?error=e_config_conflict#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_config_conflict#errorh');
 			break;
 		case UNEXISTING_MODULE:
 		case MODULE_ALREADY_INSTALLED:
-			redirect('/admin/admin_modules_add.php?error=incomplete#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=incomplete#errorh');
 			break;
 		case PHP_VERSION_CONFLICT:
-			redirect('/admin/admin_modules_add.php?error=e_php_version_conflict#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_php_version_conflict#errorh');
 			break;
 		case MODULE_INSTALLED:
 		default:
-			redirect('/admin/admin_modules.php');
+			AppContext::get_response()->redirect('/admin/admin_modules.php');
 	}
 }
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
@@ -117,7 +117,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 		$error = 'e_upload_failed_unwritable';
 
 	$error = !empty($error) ? '?error=' . $error : '';
-	redirect(HOST . SCRIPT . $error);
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 }
 else
 {

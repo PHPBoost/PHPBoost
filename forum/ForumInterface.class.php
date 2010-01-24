@@ -317,7 +317,7 @@ class ForumInterface extends ModuleInterface
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
 		));
-		$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result_data['title']) : '';
+		$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($result_data['title']) : '';
 		$tpl->assign_vars(array(
             'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result_data['user_id'],'-'.$result_data['user_id'].'.php') : '',
@@ -409,7 +409,7 @@ class ForumInterface extends ModuleInterface
 
 			$link = new Url('/forum/topic' . url(
 			        '.php?' . $last_page .  'id=' . $row['id'],
-                    '-' . $row['id'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php'
+                    '-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
                     ) . '#m' .  $row['last_msg_id']
                     );
             $item->set_title(

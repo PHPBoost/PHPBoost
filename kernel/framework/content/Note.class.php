@@ -110,7 +110,7 @@ class Note
 				if (!empty($note))
 					$this->add($note); //Ajout de la note.
 				
-				redirect($path_redirect);
+				AppContext::get_response()->redirect($path_redirect);
 			}
 			else
 			{

@@ -60,7 +60,7 @@ if (isset($ARTICLES_CAT[$idartcat]) )
 
 		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($articles['title']));
 
-		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
+		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 
 		if (!empty($get_note))
 		$Bread_crumb->add($LANG['note'], '');

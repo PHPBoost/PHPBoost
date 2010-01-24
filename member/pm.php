@@ -76,7 +76,7 @@ if ($read)
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
-	redirect(HOST . DIR . url('/member/pm.php', '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/member/pm.php', '', '&'));
 }
 
 $convers = retrieve(POST, 'convers', false);
@@ -89,7 +89,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
 	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
-		redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
@@ -100,13 +100,13 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
 			list($pm_convers_id, $pm_msg_id) = PrivateMsg::start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
 			//Succès redirection vers la conversation.
-			redirect('/member/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
+			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Destinataire non trouvé.
-			redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
+			AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
 	}
 	else //Champs manquants.
-		redirect('/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('user_id')) && $pm_get > '0') //Interface pour poster la conversation.
 {
@@ -284,13 +284,13 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
-			redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
+			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
-			redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
+			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
 	}
 	else //Champs manquants.
-		redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
@@ -346,7 +346,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 		}
 	}
 	
-	redirect('/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
+	AppContext::get_response()->redirect('/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
@@ -382,12 +382,12 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
-					redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
+					AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
 				}
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
 					PrivateMsg::delete_conversation($pm_to, $pm['idconvers'], $expd, PrivateMsg::DEL_PM_CONVERS, PrivateMsg::UPDATE_MBR_PM);
-					redirect('/member/pm.php' . SID2);
+					AppContext::get_response()->redirect('/member/pm.php' . SID2);
 				}
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
@@ -442,7 +442,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					$Errorh->handler('e_incomplete', E_USER_REDIRECT);
 				
 				//Succès redirection vers la conversation.
-				redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
+				AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
 			}
 			else //Interface d'édition
 			{
