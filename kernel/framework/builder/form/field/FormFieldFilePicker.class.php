@@ -34,56 +34,103 @@
  * @package builder
  * @subpackage form
  */
-class FormFieldFilePicker implements FormField
+class FormFieldFilePicker extends AbstractFormField
 {
-	private $size = '';
-	private $extended_text = '';
-	
-	public function __construct($field_id, $field_options = array(), array $constraints = array())
+	private $max_size = 0;
+	private $exception = null;
+
+	public function __construct($id, $label, $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($field_id, '', $field_options, $constraints);
+		parent::__construct($id, $label, null, $field_options, $constraints);
+	}
+
+	/**
+	 * @return Template The html code for the file input.
+	 */
+	function display()
+	{
+		$template = new Template('framework/builder/form/FormField.tpl');
+
+		$field = '<input name="max_file_size" value="' . $this->get_max_file_size() . '" type="hidden">';
+		$field .= '<input type="file" ';
+		$field .= 'name="' . $this->get_html_id() . '" ';
+		$field .= 'id="' . $this->get_html_id() . '" ';
+		$field .= '/>';
+
+		$field .= '<script type="text/javascript"><!--' . "\n";
+		$field .= '$("' . $this->get_html_id() . '").form.enctype = "multipart/form-data";' . "\n";
+		$field .= '--></script>';
+
+		$this->assign_common_template_variables($template);
+
+		$template->assign_block_vars('fieldelements', array(
+			'ELEMENT' => $field
+		));
+
+		return $template;
+	}
+
+	private function get_max_file_size()
+	{
+		if ($this->max_size > 0)
+		{
+			return $this->max_size;
+		}
+		else
+		{
+			return 10000000000;
+		}
+	}
+
+	protected function compute_options(array &$field_options)
+	{
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'size' :
-					$this->size = $value;
-				break;
-				case 'extended_text':
-					$this->extended_text = $value;
-				break; 
-				default :
-					throw new FormBuilderException(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute));
+				case 'max_size':
+					$this->max_size = $value;
+					unset($field_options['max_size']);
+					break;
+			}
+		}
+		parent::compute_options($field_options);
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#validate()
+	 */
+	public function validate()
+	{
+		try
+		{
+			$this->retrieve_value();
+			return true;
+		}
+		catch(Exception $ex)
+		{
+			if ($this->is_required())
+			{
+				return false;
+			}
+			else
+			{
+				return true;
 			}
 		}
 	}
-	
+
 	/**
-	 * @return string The html code for the file input.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
 	 */
-	function display()
+	public function retrieve_value()
 	{
-		$template = new Template('framework/builder/forms/field.tpl');
-			
-		$field = '<input type="file" ';
-		$field .= 'name="' . $this->name . '" ';
-		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
-		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
-		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
-		$field .= '/>
-		<input name="max_file_size" value="2000000" type="hidden">'
-		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
-		
-		$template->assign_vars(array(
-			'ID' => $this->id,
-			'FIELD' => $field,
-			'L_FIELD_TITLE' => $this->title,
-			'L_EXPLAIN' => $this->sub_title,
-			'C_REQUIRED' => $this->is_required()
-		));	
-		
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		$request = AppContext::get_request();
+		$file = $request->get_file($this->get_html_id());
+		$this->set_value($file);
 	}
 }
 

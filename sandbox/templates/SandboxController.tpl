@@ -16,6 +16,8 @@
 	{DATE}
 	<br />
 	{DATE_TIME}
+	<br />
+	{FILE}
 # ENDIF #
 
 # INCLUDE form #

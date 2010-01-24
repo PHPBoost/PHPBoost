@@ -45,6 +45,10 @@ abstract class FileSystemElement
 	 */
 	protected function __construct($path)
 	{
+		if ($path[0] == '/')
+		{
+			$path = PATH_TO_ROOT . $path;
+		}
 		$this->path = Path::uniformize_path($path);
 	}
 
