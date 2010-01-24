@@ -66,6 +66,7 @@ class ConfigManager
 			{
 				$data = new $classname();
 				$data->set_default_values();
+				$name = self::compute_entry_name($module_name, $entry_name);
 				self::save_in_db($name, $data);
 			}
 			CacheManager::save($data, $module_name, $entry_name);
