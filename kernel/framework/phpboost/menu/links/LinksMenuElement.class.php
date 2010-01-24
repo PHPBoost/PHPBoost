@@ -75,7 +75,7 @@ abstract class LinksMenuElement extends Menu
 		parent::__construct($title);
 		$this->set_url($url);
 		$this->set_image($image);
-		$this->uid = get_uid();
+		$this->uid = AppContext::get_uid();
 	}
 
 	/**
