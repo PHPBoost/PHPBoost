@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-define('URL__CLASS','url');
 define('SERVER_URL', $_SERVER['PHP_SELF']);
 
 /**

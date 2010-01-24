@@ -88,7 +88,7 @@ class FeedData
      */
     function set_link($value)
     {
-        if (!of_class($value, URL__CLASS))
+        if (!($value instanceof Url))
         {
             $value = new Url($value);
         }

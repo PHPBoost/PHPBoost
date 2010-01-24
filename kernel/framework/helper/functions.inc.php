@@ -30,23 +30,6 @@ define('TIMEZONE_SYSTEM', 2);
 define('TIMEZONE_USER', 3);
 
 /**
- * @desc Tells if an object is an instance of a class
- * @param object $object the object to check its type
- * @param string $classname the classname you want to compare with
- * @return bool true if the $object is an instance of the $classname class
- */
-function of_class($object, $classname)
-{
-	if (!is_object($object))
-	{
-		return false;
-	}
-
-	return strtolower(get_class($object)) == strtolower($classname) ||
-	is_subclass_of(strtolower(get_class($object)), strtolower($classname));
-}
-
-/**
  * @desc Returns true if the object $object implements the interface named $interface_name
  * @param object $object the object
  * @param string $interface_name the interface
