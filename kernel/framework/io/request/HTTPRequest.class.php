@@ -186,7 +186,13 @@ class HTTPRequest
 
 	private function get_raw_var($mode, $type, $varname, $default_value)
 	{
-		$value =& $mode[$varname];
+		$value = $mode[$varname];
+		
+		if (MAGIC_QUOTES)
+		{
+			$value = stripslashes($value);
+		}
+		
 		switch ($type)
 		{
 			case self::bool:

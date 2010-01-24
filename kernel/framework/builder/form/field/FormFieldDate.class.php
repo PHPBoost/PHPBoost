@@ -51,7 +51,7 @@ class FormFieldDate extends AbstractFormField
 		$this->assign_common_template_variables($template);
 		
 		$template->assign_vars(array(
-			'CALENDAR' => $this->get_calendar()->display(),
+			'CALENDAR' => $this->get_calendar()->display()
 		));
 
 		return $template;
