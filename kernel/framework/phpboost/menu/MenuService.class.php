@@ -762,7 +762,7 @@ class MenuService
 		$menu->set_block($db_result['block']);
 		$menu->set_block_position($db_result['position']);
 
-		if (of_class($menu, LinksMenu::LINKS_MENU__CLASS) || of_class($menu, LinksMenuLink::LINKS_MENU_LINK__CLASS))
+		if (($menu instanceof LinksMenu) || ($menu instanceof LinksMenuLink))
 		{
 			$menu->update_uid();
 		}
