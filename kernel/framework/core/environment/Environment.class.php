@@ -49,6 +49,7 @@ class Environment
 	public static function load_imports()
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
+		require_once PATH_TO_ROOT . '/kernel/framework/helper/depracated_helper.inc.php';
 
 		import('core/ClassLoader');
 		ClassLoader::init_autoload();
