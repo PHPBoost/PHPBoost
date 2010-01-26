@@ -78,7 +78,7 @@ class HTTPResponse
  	    '505' => 'HTTP Version Not Supported'
 	);
 	
-	public function HTTPResponse($status_code = 200)
+	public function __construct($status_code = 200)
 	{
 		$this->set_status_code($status_code);
 	}

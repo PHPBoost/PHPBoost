@@ -65,7 +65,16 @@ abstract class FileSystemElement
 	{
 		return $this->path;
 	}
-
+	
+	/**
+	 * @desc Returns the element path from the phpboost root.
+	 * @return string The element from the phpboost root.
+	 */
+	public function get_path_from_root()
+	{
+		return Path::get_path_from_root($this->path);
+	}
+	
 	/**
 	 * @desc Returns the element name.
 	 * @return string The element name.
