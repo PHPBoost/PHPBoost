@@ -35,10 +35,12 @@ class ClassLoader
 	private static $autoload;
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
-		'cache', 'images', 'lang', 'upload', 'templates',
-		'tinymce', //kernel
-		'.svn' //Dev
+		'/cache', '/images', '/lang', '/upload', '/templates',
+		'/kernel/data', '/kernel/framework/js', '/kernel/framework/content/tinymce',
+		'/kernel/framework/content/geshi', '/kernel/framework/io/db/dbms/Doctrine', 
 	);
+
+	private static $exclude_folders_names = array('.svn', 'templates', 'lang');
 
 	/**
 	 * @desc initializes the autoload class list
@@ -81,7 +83,7 @@ class ClassLoader
 		if (!self::$already_reloaded)
 		{
 			self::$already_reloaded = true;
-            self::$autoload = array();
+			self::$autoload = array();
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
@@ -89,13 +91,7 @@ class ClassLoader
 			import('util/Path');
 
 			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
-			$paths = array(
-				'/',
-				'/kernel/framework/phpboost/cache',
-				'/kernel/framework/io/data/cache',
-				'/kernel/framework/io/http/upload',
-				'/kernel/framework/core/lang',
-			);
+			$paths = array('/', '/kernel/framework/core/lang');
 
 			foreach ($paths as $path)
 			{
@@ -127,11 +123,11 @@ class ClassLoader
 
 		if ($recursive)
 		{
-			foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $folder)
+			foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $a_folder)
 			{
-				if (!in_array($folder->get_name(), self::$exclude_paths))
+				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths) && !in_array($a_folder->get_name(), self::$exclude_folders_names))
 				{
-					self::add_classes($folder->get_path(), $pattern);
+					self::add_classes($a_folder->get_path(), $pattern);
 				}
 			}
 		}

@@ -145,7 +145,7 @@ class HTMLForm
 		{
 			if (!$constraint->validate($this))
 			{
-				$validation_result = false;;
+				$validation_result = false;
 			}
 		}
 		if (!$validation_result)
