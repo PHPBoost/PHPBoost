@@ -61,13 +61,13 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
 				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
 	
-				AppContext::get_response()->set_cookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght'], '/');						
+				setcookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght'], '/');						
 			}
 		}
 		else //Génération d'un cookie.
 		{	
 			$check_cookie = false;
-			AppContext::get_response()->set_cookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght'], '/');
+			setcookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght'], '/');
 		}
 		
 		$check_bdd = true;

@@ -35,6 +35,7 @@ class SandboxController extends ModuleController
 			echo AppContext::get_request()->get_cookie('session_data');
 			AppContext::get_response()->set_cookie(new HTTPCookie('testcookie', 'test'));
 			echo AppContext::get_request()->get_cookie('testcookie');
+			echo AppContext::get_request()->get_cookie('testcookie2', 'default');
 		}
 		catch (UnexistingHTTPParameterException $ex) {}
 		
