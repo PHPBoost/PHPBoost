@@ -123,19 +123,15 @@ class HTTPResponse
 	}
 	
 	/**
-	 * Set cookies for the application's client.
-	 * @param string $name The cookie name
-	 * @param string $value The cookie value
-	 * @param int $expires The timestamp for cookie expiration
-	 * @param string $path
-	 * @param string $domain
-	 * @return unknown_type
+	 * Set cookie for the application's client.
+	 * @param HTTPCookie $cookie
 	 */
-	public function set_cookie($name, $value, $expires, $path = '/', $domain = '')
+	public function set_cookie(HTTPCookie $cookie)
 	{
-		setcookie($name, $value, $expires, $path, $domain);
+		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(), 
+		$cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
 	}
-
+	
 	/**
 	 * @desc Clean the output buffer.
 	 */
