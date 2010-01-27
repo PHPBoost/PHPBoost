@@ -91,12 +91,17 @@ class Environment
 		self::enable_errors_and_exceptions_management();
 	}
 	
-	public static function init_services()
+	public static function init_http_services()
 	{
 		AppContext::set_request(new HTTPRequest());
 		$response = new HTTPResponse();
 		$response->set_default_attributes();
-		AppContext::set_response($response);
+		AppContext::set_response($response);		
+	}
+	
+	public static function init_services()
+	{
+		Environment::init_http_services();
 		AppContext::init_session();
 	}
 
