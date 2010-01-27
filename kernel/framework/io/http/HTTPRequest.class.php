@@ -123,17 +123,9 @@ class HTTPRequest
 		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
 	}
 
-	public function get_cookie($varname)
+	public function get_cookie($varname, $default_value = null)
 	{
-		if (isset($_COOKIE[$varname]))
-		{
-			$cookie = new HTTPCookie($varname, $_COOKIE[$varname]);
-			return $cookie->get_value();
-		}
-		else
-		{
-			throw new UnexistingHTTPParameterException($varname);
-		}
+		return $this->get_var($_COOKIE, self::none, $varname, $default_value);
 	}
 	
 	/**

@@ -215,7 +215,7 @@ class Session
 			//En cas de double connexion, on supprime le cookie et la session associée de la base de données!
 			if (isset($_COOKIE[$CONFIG['site_cookie'] . '_data']))
 			{
-				AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/');
+				setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/');
 			}
 			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 
@@ -255,7 +255,7 @@ class Session
 		$data['user_id'] = isset($user_id) ? NumberHelper::numeric($user_id) : -1;
 		$data['session_id'] = $session_uniq_id;
 
-		AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
+		setcookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
 
 		########Génération du cookie d'autoconnection########
 		if ($autoconnect === true)
@@ -263,7 +263,7 @@ class Session
 			$session_autoconnect['user_id'] = $user_id;
 			$session_autoconnect['pwd'] = $password;
 
-			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
+			setcookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
 		}
 
 		unset($pwd);
@@ -368,7 +368,7 @@ class Session
 				{
 					if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
 					{
-						AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
+						setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
 					}
 
 					//Redirection une fois la session lancée.
@@ -401,7 +401,7 @@ class Session
 			{
 				if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
 				{
-					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
+					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
 				}
 				$this->start('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
@@ -422,12 +422,12 @@ class Session
 
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_data'])) //Session cookie?
 		{
-			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //On supprime le cookie.
+			setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //On supprime le cookie.
 		}
 
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']))
 		{
-			AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+			setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 		}
 
 		$this->garbage_collector();
@@ -574,13 +574,13 @@ class Session
 
 					$test_connect = $this->sql->query("SELECT test_connect FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 
-					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 
 					AppContext::get_response()->redirect('/member/error.php?flood=' . (5 - ($test_connect + 1)));
 				}
 				elseif (is_numeric($error_report))
 				{
-					AppContext::get_response()->set_cookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
+					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 
 					$error_report = ceil($error_report/60);
 					AppContext::get_response()->redirect('/member/error.php?ban=' . $error_report);
