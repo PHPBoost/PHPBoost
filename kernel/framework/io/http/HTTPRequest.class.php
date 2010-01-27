@@ -63,8 +63,13 @@ class HTTPRequest
 	{
 		return $this->has_rawparameter($parameter, $_POST);
 	}
+	
+	public function has_cookieparameter($parameter)
+	{
+		return $this->has_rawparameter($parameter, $_COOKIE);
+	}
 
-	private function has_rawparameter($parameter, $array)
+	private function has_rawparameter($parameter, &$array)
 	{
 		return !empty($array[$parameter]);
 	}
@@ -118,6 +123,19 @@ class HTTPRequest
 		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
 	}
 
+	public function get_cookie($varname)
+	{
+		if (isset($_COOKIE[$varname]))
+		{
+			$cookie = new HTTPCookie($varname, $_COOKIE[$varname]);
+			return $cookie->get_value();
+		}
+		else
+		{
+			throw new UnexistingHTTPParameterException($varname);
+		}
+	}
+	
 	/**
 	 * @param string $varname
 	 * @return UploadedFile The uploaded file
