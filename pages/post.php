@@ -210,7 +210,7 @@ if ($id_edit > 0)
 	{
 		$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
 		$Template->assign_block_vars('previewing', array(
-			'PREVIEWING' => pages_FormatingHelper::second_parse(stripslashes(pages_parse($contents))),
+			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
 	}
@@ -222,7 +222,7 @@ if ($id_edit > 0)
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
 	$Template->assign_vars(array(
-		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_FormatingHelper::unparse($page_infos['contents']),
+		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => !empty($page_infos['auth']) ? 'checked="checked"' : '',
@@ -245,7 +245,7 @@ else
 	{
 		$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
 		$Template->assign_block_vars('previewing', array(
-			'PREVIEWING' => pages_FormatingHelper::second_parse(stripslashes(pages_parse($contents))),
+			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
 	}
