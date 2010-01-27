@@ -43,8 +43,8 @@ class InstallEnvironment
     public static function init()
     {
         Environment::fit_to_php_configuration();
+        Environment::init_http_services();
         Environment::load_static_constants();
-        Environment::set_default_http_response();
         self::load_dynamic_constants();
         Environment::init_output_bufferization();
     }
