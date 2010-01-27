@@ -127,7 +127,7 @@ function pages_parse($contents)
 function pages_unparse($contents)
 {
 	$contents = link_unparse($contents);
-	return html_entity_decode(FormatingHelper::unparse($contents));
+	return FormatingHelper::unparse($contents);
 }
 
 //Second parse -> à l'affichage
