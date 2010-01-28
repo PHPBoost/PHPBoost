@@ -251,7 +251,7 @@ else
 	}
 	if (!empty($error))
 		$Template->assign_vars(array(
-			'CONTENTS' => stripslashes($contents),
+			'CONTENTS' => htmlspecialchars(stripslashes($contents)),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
