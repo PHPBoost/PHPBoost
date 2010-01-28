@@ -162,7 +162,7 @@ elseif ($wiki_status > 0)
 {
 	$Template->assign_block_vars('status', array(
 		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], $article_infos['title']),
-		'UNDEFINED_STATUS' => ($article_infos['defined_status'] < 0 ) ? wiki_FormatingHelper::unparse($article_infos['undefined_status']) : '',
+		'UNDEFINED_STATUS' => ($article_infos['defined_status'] < 0 ) ? wiki_unparse($article_infos['undefined_status']) : '',
 		'ID_ARTICLE' => $wiki_status,
 		'NO_STATUS' => str_replace('"', '\"', $LANG['wiki_no_status']),
 		'CURRENT_STATUS' => ($article_infos['defined_status'] == -1  ? $LANG['wiki_undefined_status'] : (($article_infos['defined_status'] > 0 ) ? $LANG['wiki_status_list'][$article_infos['defined_status'] - 1][1] : $LANG['wiki_no_status'])),

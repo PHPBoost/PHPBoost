@@ -243,7 +243,7 @@ else
 		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	elseif ($error == 'preview')
 	{
-		$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		//$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
 		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
@@ -251,7 +251,7 @@ else
 	}
 	if (!empty($error))
 		$Template->assign_vars(array(
-			'CONTENTS' => stripslashes($contents),
+			'CONTENTS' => stripslashes(htmlspecialchars($contents)),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
