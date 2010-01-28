@@ -42,7 +42,7 @@ $id_edit = retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$contents_preview = htmlspecialchars(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 $id_cat = retrieve(GET, 'id_parent', 0);
 $new_id_cat = retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
@@ -271,7 +271,7 @@ $Template->assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
-	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_FormatingHelper::unparse(trim($contents)) : ''),
+	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,

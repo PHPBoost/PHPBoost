@@ -72,7 +72,7 @@ $Template->assign_vars(array(
 	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
 	'DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] != 0 ) ? 'checked="checked"' : '',
 	'LAST_ARTICLES' => $_WIKI_CONFIG['last_articles'],
-	'DESCRIPTION' => wiki_FormatingHelper::unparse($_WIKI_CONFIG['index_text']),
+	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text']),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
