@@ -122,7 +122,7 @@ elseif (!empty($_POST['previs']))
 	$icon = retrieve(POST, 'icon', '', TSTRING_UNCHANGE);
 	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNCHANGE);
 	$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
-	$contents_preview = retrieve(POST, 'contents', '' , TSTRING_UNCHANGE);
+	$contents_preview = htmlspecialchars(retrieve(POST, 'contents', '' , TSTRING_UNCHANGE));
 	$idcat = retrieve(POST, 'idcat', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
 	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
