@@ -107,15 +107,17 @@ if ($update) //Mise à jour du module
 		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		
-		redirect(HOST . SCRIPT);	
+		redirect(HOST . SCRIPT . '?s=1');	
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_modules_update.php?error=incomplete#errorh');
+		redirect(HOST . SCRIPT . '?error=incomplete#errorh');
 }			
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
-	$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
+	$module_name = '';
+	if ($ext_name !== FALSE)
+		$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
 	
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
@@ -155,7 +157,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
-					$error = 'e_unlink_disabled';
+					$error = ''; /*'e_unlink_disabled';*/
 			}
 			else
 				$error = 'e_upload_error';
@@ -287,6 +289,10 @@ else
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	
+	$get_error = retrieve(GET, 's', 0, TINTEGER);
+	if ($get_error == 1)
+		$Errorh->handler($LANG['admin_module_update_success'], E_USER_SUCCESS);
 		
 	$Template->assign_vars(array(
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
