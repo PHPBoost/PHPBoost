@@ -705,5 +705,5 @@ $LANG['incompatible_php_version'] = 'Can\'t check for updates.
 Please upgrade to PHP version %s or above.<br />If you can\'t use PHP5,
 check for updates on our <a href="http://www.phpboost.com">official website</a>.';
 $LANG['check_for_updates_now'] = 'Check for updates now!';
-
+$LANG['admin_module_update_success'] = 'Modifications uploaded and database updated';
 ?>
