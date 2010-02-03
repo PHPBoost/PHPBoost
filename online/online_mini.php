@@ -37,7 +37,7 @@ function online_mini($position, $block)
     	load_module_lang('online');
     	$Cache->load('online');
     	
-    	$tpl = new Template('online/online_mini.tpl');
+    	$tpl = new FileTemplate('online/online_mini.tpl');
         
         MenuService::assign_positions_conditions($tpl, $block);
     
@@ -113,7 +113,7 @@ function online_mini($position, $block)
     		'L_ONLINE' => $LANG['online'],
     		'L_TOTAL' => $LANG['total']
     	));
-		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $tpl->to_string();
     }
 	
     return '';

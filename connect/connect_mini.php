@@ -32,7 +32,7 @@ function connect_mini($position, $block)
 {
     global $LANG, $ADMINISTRATOR_ALERTS, $Session;
     
-    $tpl = new Template('connect/connect_mini.tpl');
+    $tpl = new FileTemplate('connect/connect_mini.tpl');
     $user = AppContext::get_user();
     
     MenuService::assign_positions_conditions($tpl, $block);
@@ -116,6 +116,6 @@ function connect_mini($position, $block)
     	));
     }
     
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 ?>

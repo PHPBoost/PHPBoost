@@ -45,7 +45,7 @@ if ($check_updates === true)
 	new Updates();
 	AppContext::get_response()->redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
 }
-$tpl = new Template('admin/updates/updates.tpl');
+$tpl = new FileTemplate('admin/updates/updates.tpl');
 $updates_availables = 0;
 
 if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -153,7 +153,7 @@ $tpl->assign_vars(array(
     'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
 ));
 
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

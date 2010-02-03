@@ -44,7 +44,7 @@ if ($id > 0) //Si on connait son titre
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
-	$template = new Template('framework/content/print.tpl');
+	$template = new FileTemplate('framework/content/print.tpl');
 
 	$template->assign_vars(array(
 		'PAGE_TITLE' => $news['title'] . ' - ' . $CONFIG['site_name'],
@@ -53,7 +53,7 @@ if ($id > 0) //Si on connait son titre
 		'CONTENT' => FormatingHelper::second_parse($news['contents']) . '<br />' . FormatingHelper::second_parse($news['extend_contents'])
 	));
 	
-	$template->parse();
+	$template->display();
 }
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

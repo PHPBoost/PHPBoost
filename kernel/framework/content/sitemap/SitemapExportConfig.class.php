@@ -68,10 +68,10 @@ class SitemapExportConfig
 	public function __construct($site_map_file, $module_map_file, $section_file, $link_file)
 	{
 		//If we receive a string it's the path of the template, otherwise it's already the Template object
-		$this->site_map_file = is_string($site_map_file) ? new Template($site_map_file) : $site_map_file;
-		$this->module_map_file = is_string($module_map_file) ? new Template($module_map_file) : $module_map_file;
-		$this->section_file = is_string($section_file) ? new Template($section_file) : $section_file;
-		$this->link_file = is_string($link_file) ? new Template($link_file) : $link_file;
+		$this->site_map_file = is_string($site_map_file) ? new FileTemplate($site_map_file) : $site_map_file;
+		$this->module_map_file = is_string($module_map_file) ? new FileTemplate($module_map_file) : $module_map_file;
+		$this->section_file = is_string($section_file) ? new FileTemplate($section_file) : $section_file;
+		$this->link_file = is_string($link_file) ? new FileTemplate($link_file) : $link_file;
 	}
 
 	/**
@@ -116,7 +116,7 @@ class SitemapExportConfig
 	 */
 	public function set_site_map_stream($site_map_file)
 	{
-		$this->site_map_file = is_string($site_map_file) ? new Template($site_map_file) : $site_map_file;
+		$this->site_map_file = is_string($site_map_file) ? new FileTemplate($site_map_file) : $site_map_file;
 	}
 
 	/**
@@ -125,7 +125,7 @@ class SitemapExportConfig
 	 */
 	public function set_module_map_stream($module_map_file)
 	{
-		$this->module_map_file = is_string($module_map_file) ? new Template($module_map_file) : $module_map_file;
+		$this->module_map_file = is_string($module_map_file) ? new FileTemplate($module_map_file) : $module_map_file;
 	}
 
 	/**
@@ -134,7 +134,7 @@ class SitemapExportConfig
 	 */
 	public function set_section_stream($section_file)
 	{
-		$this->section_file = is_string($section_file) ? new Template($section_file) : $section_file;
+		$this->section_file = is_string($section_file) ? new FileTemplate($section_file) : $section_file;
 	}
 
 	/**
@@ -143,7 +143,7 @@ class SitemapExportConfig
 	 */
 	public function set_link_stream($link_file)
 	{
-		$this->link_file = is_string($link_file) ? new Template($link_file) : $link_file;
+		$this->link_file = is_string($link_file) ? new FileTemplate($link_file) : $link_file;
 	}
 }
 

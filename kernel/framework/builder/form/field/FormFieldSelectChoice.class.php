@@ -55,7 +55,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/form/FormField.tpl');
+		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
 		$this->assign_common_template_variables($template);
 

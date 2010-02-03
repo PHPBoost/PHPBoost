@@ -68,7 +68,7 @@ class WikiInterface extends ModuleInterface
 		load_module_lang('wiki');
 		global $CONFIG, $LANG;
 
-		$tpl = new Template('wiki/wiki_search_form.tpl');
+		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
 
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
 		$args['WikiWhere'] = 'title';
@@ -82,7 +82,7 @@ class WikiInterface extends ModuleInterface
             'L_CONTENTS' => $LANG['wiki_search_where_contents']
 		));
 
-		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $tpl->to_string();
 	}
 
 	public function get_search_args()
@@ -248,7 +248,7 @@ class WikiInterface extends ModuleInterface
 		require_once('../wiki/wiki_bread_crumb.php');
 
 		unset($Template);
-		$Template = new Template();
+		$Template = new FileTemplate();
 		$Template->set_filenames(array(
 			'wiki'=> 'wiki/wiki.tpl',
 			'index'=> 'wiki/index.tpl'

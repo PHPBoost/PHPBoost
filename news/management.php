@@ -239,7 +239,7 @@ elseif (!empty($_POST['submit']))
 }
 else
 {
-	$tpl = new Template('news/management.tpl');
+	$tpl = new FileTemplate('news/management.tpl');
 
 	if ($edit > 0)
 	{
@@ -390,7 +390,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 
-	$tpl->parse();
+	$tpl->display();
 }
 
 require_once('../kernel/footer.php');

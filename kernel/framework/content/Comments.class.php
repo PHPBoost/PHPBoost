@@ -200,7 +200,7 @@ class Comments
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '');
 		
 		if (!is_object($Template) || !($Template instanceof Template))
-			$Template = new Template('framework/content/com.tpl');
+			$Template = new FileTemplate('framework/content/com.tpl');
 		
 		if ($this->is_loaded()) //Commentaires chargés?
 		{
@@ -649,7 +649,7 @@ class Comments
 				}
 				$Sql->query_close($result);
 			}
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			return $Template->to_string();
 		}
 		else
 			return 'error : class Comments loaded uncorrectly';

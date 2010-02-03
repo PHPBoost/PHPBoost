@@ -45,7 +45,7 @@ $Bread_crumb->add($DOWNLOAD_LANG['contribution_confirmation'], url('contribution
 require_once('../kernel/header.php');
 
 //Template
-$download_template = new Template('download/contribution.tpl');
+$download_template = new FileTemplate('download/contribution.tpl');
 
 $download_template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $DOWNLOAD_LANG['contribution_confirmation'],
@@ -53,7 +53,7 @@ $download_template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $DOWNLOAD_LANG['contribution_confirmation_explain']
 ));
 
-$download_template->parse();
+$download_template->display();
 
 require_once('../kernel/footer.php'); 
 

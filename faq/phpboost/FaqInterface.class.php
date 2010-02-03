@@ -155,7 +155,7 @@ class FaqInterface extends ModuleInterface
      */
     function parse_search_result($result_data)
     {
-        $tpl = new Template('faq/search_result.tpl');
+        $tpl = new FileTemplate('faq/search_result.tpl');
         
         $tpl->assign_vars(array(
             'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result_data['idcat'] . '&amp;question=' . $result_data['id'] . '#q' . $result_data['id'],
@@ -163,7 +163,7 @@ class FaqInterface extends ModuleInterface
             'ANSWER' => FormatingHelper::second_parse($result_data['answer'])
         ));
         
-        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+        return $tpl->to_string();
     }
 
     /**

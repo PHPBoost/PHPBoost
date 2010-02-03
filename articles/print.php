@@ -66,7 +66,7 @@ if(count($array_sources) != 0)
 }
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
-$tpl = new Template('framework/content/print.tpl');
+$tpl = new FileTemplate('framework/content/print.tpl');
 
 $contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
 
@@ -77,7 +77,7 @@ $tpl->assign_vars(array(
 	'CONTENT' => FormatingHelper::second_parse($contents).$sources,
 ));
 
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

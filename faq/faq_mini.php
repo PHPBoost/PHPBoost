@@ -36,7 +36,7 @@ function faq_mini($position, $block)
     
     include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
     
-    $tpl = new Template('faq/faq_mini.tpl');
+    $tpl = new FileTemplate('faq/faq_mini.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     
@@ -50,7 +50,7 @@ function faq_mini($position, $block)
     if (empty($RANDOM_QUESTIONS))
     {
     	$tpl->assign_vars($no_random_question);
-    	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    	return $tpl->to_string();
     }
     
     $random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
@@ -82,6 +82,6 @@ function faq_mini($position, $block)
     	$tpl->assign_vars($no_random_question);
     }
     //On retourne le contenu du bloc
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 ?>

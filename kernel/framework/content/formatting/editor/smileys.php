@@ -124,6 +124,6 @@ foreach($_array_smiley_code as $code_smile => $url_smile)
     }
 }
 
-$tpl_smileys->parse();
+$tpl_smileys->display();
 
 ?>

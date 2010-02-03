@@ -82,7 +82,7 @@ $edit = !empty($id);
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new Template('admin/menus/feed.tpl');
+$tpl = new FileTemplate('admin/menus/feed.tpl');
 
 $tpl->assign_vars(array(
 	'JL_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
@@ -228,7 +228,7 @@ foreach ($array_location as $key => $name)
 }
 
 $tpl->assign_vars(array('LOCATIONS' => $locations));
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

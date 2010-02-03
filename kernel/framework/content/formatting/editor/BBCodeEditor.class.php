@@ -212,7 +212,7 @@ class BBCodeEditor extends ContentEditor
         	self::$editor_already_included = true;
         }
 
-        return $template->parse(Template::TEMPLATE_PARSER_STRING);
+        return $template->to_string();
     }
 }
 

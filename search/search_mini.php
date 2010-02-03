@@ -34,7 +34,7 @@ function search_mini($position, $block)
     
     $search = retrieve(REQUEST, 'q', '');
     
-    $tpl = new Template('search/search_mini.tpl');
+    $tpl = new FileTemplate('search/search_mini.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     $tpl->assign_vars(Array(
@@ -47,7 +47,7 @@ function search_mini($position, $block)
         'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
     ));
     
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 
 ?>

@@ -38,7 +38,7 @@ $Bread_crumb->add($ARTICLES_LANG['contribution_confirmation'], url('contribution
 require_once('../kernel/header.php');
 
 //Template
-$tpl = new Template('articles/contribution.tpl');
+$tpl = new FileTemplate('articles/contribution.tpl');
 
 $tpl->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $ARTICLES_LANG['contribution_confirmation'],
@@ -46,7 +46,7 @@ $tpl->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $ARTICLES_LANG['contribution_confirmation_explain']
 ));
 
-$tpl->parse();
+$tpl->display();
 
 require_once('../kernel/footer.php');
 

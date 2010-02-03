@@ -58,7 +58,7 @@ if (!$auth_read)
 
 include_once('../kernel/header.php');
 
-$template = new Template('faq/faq.tpl');
+$template = new FileTemplate('faq/faq.tpl');
 
 $template->assign_vars(array(
 	'TITLE' => $TITLE,
@@ -209,7 +209,7 @@ $template->assign_vars(array(
 	'U_ADMIN_CAT' => $id_faq > 0 ? url('admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php')
 ));
 
-$template->parse();
+$template->display();
 
 include_once('../kernel/footer.php'); 
 

@@ -131,7 +131,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 //Sinon on rempli le formulaire
 else
 {
-	$tpl = new Template('articles/admin_articles_config.tpl');
+	$tpl = new FileTemplate('articles/admin_articles_config.tpl');
 	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
 	$Cache->load('articles');
@@ -207,7 +207,7 @@ else
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$CONFIG_ARTICLES['global_auth']),
 		));
 		
-	$tpl->parse();
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

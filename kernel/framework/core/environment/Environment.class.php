@@ -535,7 +535,6 @@ class Environment
 	 */
 	public static function display_header()
 	{
-		
 		self::get_graphical_environment()->display_header();
 	}
 

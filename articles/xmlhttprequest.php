@@ -51,7 +51,7 @@ elseif (retrieve(POST,'preview',false))
 {
 	
 	$level = array('', ' class="modo"', ' class="admin"');
-	$preview = new Template('articles/articles.tpl');
+	$preview = new FileTemplate('articles/articles.tpl');
 	$Cache->load('articles');
 	//loading module language
 	load_module_lang('articles');
@@ -94,14 +94,14 @@ elseif (retrieve(POST,'preview',false))
 		'L_ON' => $LANG['on'],
 	));
 
-	echo $preview->parse(TEMPLATE_STRING_MODE);
+	echo $preview->to_string();
 }
 elseif (retrieve(POST,'model_extend_field',false))
 {
 	$id_model = retrieve(POST, 'models', 1, TINTEGER);
 	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);	
 	
-	$tpl_model = new Template('articles/extend_field.tpl');
+	$tpl_model = new FileTemplate('articles/extend_field.tpl');
 
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
 	
@@ -140,13 +140,13 @@ elseif (retrieve(POST,'model_extend_field',false))
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
 	
-	echo $tpl_model->parse(TEMPLATE_STRING_MODE);
+	echo $tpl_model->to_string();
 }
 elseif (retrieve(POST,'model_desc',false))
 {
 	$id_model = retrieve(POST, 'models', 1, TINTEGER);    
 	
-	$tpl_model = new Template('articles/extend_field.tpl');
+	$tpl_model = new FileTemplate('articles/extend_field.tpl');
 	
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
 	
@@ -156,7 +156,7 @@ elseif (retrieve(POST,'model_desc',false))
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
 	
-	echo $tpl_model->parse(TEMPLATE_STRING_MODE);
+	echo $tpl_model->to_string();
 }
 else
 	echo -2;

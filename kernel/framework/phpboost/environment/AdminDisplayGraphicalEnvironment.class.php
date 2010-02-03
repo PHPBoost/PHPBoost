@@ -139,7 +139,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
-			$template = new Template('admin/AdminLoginController.tpl');
+			$template = new FileTemplate('admin/AdminLoginController.tpl');
 
 			$template->assign_vars(array(
 				'L_XML_LANGUAGE' => $LANG['xml_lang'],
@@ -166,7 +166,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				));
 			}
 
-			$template->parse();
+			$template->display();
 			Environment::destroy();
 			exit;
 		}
@@ -182,7 +182,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		self::set_page_localization($this->get_page_title());
 
-		$header_tpl = new Template('admin/admin_header.tpl');
+		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 
 		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
@@ -198,14 +198,14 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$header_tpl->add_subtemplate('subheader_menu', self::get_subheader_tpl());
 
-		$header_tpl->parse();
+		$header_tpl->display();
 	}
 
 	private static function get_subheader_tpl()
 	{
 		global $LANG, $MODULES;
 
-		$subheader_tpl = new Template('admin/subheader_menu.tpl');
+		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 
 		$subheader_tpl->assign_vars(array(
 			'L_ADMINISTRATION' => $LANG['administration'],
@@ -350,7 +350,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		global $CONFIG, $LANG;
 
-		$tpl = new Template('admin/admin_footer.tpl');
+		$tpl = new FileTemplate('admin/admin_footer.tpl');
 
 		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
@@ -382,7 +382,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			));
 		}
 
-		$tpl->parse();
+		$tpl->display();
 	}
 }
 

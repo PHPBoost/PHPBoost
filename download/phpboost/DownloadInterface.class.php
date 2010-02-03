@@ -175,7 +175,7 @@ class DownloadInterface extends ModuleInterface
         $Cache->load('download');
         
         load_module_lang('download'); //Chargement de la langue du module.
-        $tpl = new Template('download/download_generic_results.tpl');
+        $tpl = new FileTemplate('download/download_generic_results.tpl');
         
         
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
@@ -193,7 +193,7 @@ class DownloadInterface extends ModuleInterface
             'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
         
-        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+        return $tpl->to_string();
     }
     
 	

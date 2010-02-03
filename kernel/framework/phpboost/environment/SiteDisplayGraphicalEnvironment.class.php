@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @package core
  * @subpackage environment
@@ -64,7 +62,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		self::set_page_localization($this->get_page_title());
 
-		$template =  new Template('header.tpl');
+		$template =  new FileTemplate('header.tpl');
 
 		$this->display_site_maintenance($template);
 
@@ -90,7 +88,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//Bread crumb
 		$this->get_breadcrumb()->display($template);
 
-		$template->parse();
+		$template->display();
 	}
 
 	protected function add_menus_css_files()
@@ -308,7 +306,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	function display_footer()
 	{
 		global $CONFIG, $MENUS, $LANG;
-		$template = new Template('footer.tpl');
+		$template = new FileTemplate('footer.tpl');
 
 		$theme = load_ini_file(
 		PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
@@ -348,7 +346,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			));
 		}
 
-		$template->parse();
+		$template->display();
 	}
 	
 	/**

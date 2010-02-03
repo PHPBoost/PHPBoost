@@ -131,7 +131,7 @@ else
 
 require_once('../kernel/header.php');
 
-$template = new Template('member/contribution_panel.tpl');
+$template = new FileTemplate('member/contribution_panel.tpl');
 
 if ($contribution_id > 0)
 {
@@ -350,7 +350,7 @@ else
 	));
 }
 
-$template->parse();
+$template->display();
 
 require_once('../kernel/footer.php');
 

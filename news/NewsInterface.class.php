@@ -244,7 +244,7 @@ class NewsInterface extends ModuleInterface
 
 		// Gestion du tpl en fonction du type d'affichage.
 		$tpl_path = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' : 'news/news_list.tpl';
-		$tpl = new Template($tpl_path);
+		$tpl = new FileTemplate($tpl_path);
 
 		// Affichage de l'édito
 		if ($NEWS_CONFIG['activ_edito'] && $cat == 0)
@@ -464,7 +464,7 @@ class NewsInterface extends ModuleInterface
 			}
 		}
 
-		return $tpl->parse(true);
+		return $tpl->display();
 	}
 
 	private function create_module_map_sections($id_cat, $auth_mode)

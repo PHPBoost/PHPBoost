@@ -45,7 +45,7 @@ if (!empty($_POST['submit']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$template = new Template('admin/admin_content_config.tpl');
+	$template = new FileTemplate('admin/admin_content_config.tpl');
 	
 	$j = 0;
 	
@@ -79,7 +79,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$template->parse(); // traitement du modele	
+	$template->display(); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

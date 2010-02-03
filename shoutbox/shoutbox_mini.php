@@ -77,7 +77,7 @@ function shoutbox_mini($position, $block)
     	}
     	
     	###########################Affichage##############################
-    	$tpl = new Template('shoutbox/shoutbox_mini.tpl');
+    	$tpl = new FileTemplate('shoutbox/shoutbox_mini.tpl');
         
         MenuService::assign_positions_conditions($tpl, $block);
     
@@ -141,7 +141,7 @@ function shoutbox_mini($position, $block)
     	}
     	$Sql->query_close($result);
     	
-    	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    	return $tpl->to_string();
     }
     return '';
 }

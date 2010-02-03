@@ -58,7 +58,7 @@ class ContentMenu extends Menu
     {
 		if ($tpl === false)
 		{
-			$tpl = new Template('framework/menus/content/display.tpl');
+			$tpl = new FileTemplate('framework/menus/content/display.tpl');
 		}
         $tpl->assign_vars(array(
             'C_DISPLAY_TITLE' => $this->display_title,
@@ -66,7 +66,7 @@ class ContentMenu extends Menu
             'TITLE' => $this->title,
         	'CONTENT' => FormatingHelper::second_parse($this->content)
         ));
-        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+        return $tpl->to_string();
     }
     
     public function cache_export($template = false)

@@ -200,7 +200,7 @@ class HTMLForm
 
 		if (!is_object($template) || !($template instanceof Template))
 		{
-			$template = new Template('framework/builder/form/Form.tpl');
+			$template = new FileTemplate('framework/builder/form/Form.tpl');
 		}
 			
 		$template->assign_vars(array(

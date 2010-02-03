@@ -54,7 +54,7 @@ if (!empty($idart) && isset($cat) )
 	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 
-	$tpl = new Template('articles/'.$articles['tpl_articles']);
+	$tpl = new FileTemplate('articles/'.$articles['tpl_articles']);
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -231,7 +231,7 @@ if (!empty($idart) && isset($cat) )
 		else
 			$Errorh->handler($ARTICLES_LANG['error_send_mail'], E_USER_WARNING);
 	}
-	$tpl->parse();
+	$tpl->display();
 }
 else
 {

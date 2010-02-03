@@ -49,7 +49,7 @@ class FormFieldFilePicker extends AbstractFormField
 	 */
 	function display()
 	{
-		$template = new Template('framework/builder/form/FormField.tpl');
+		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
 		$field = '<input name="max_file_size" value="' . $this->get_max_file_size() . '" type="hidden">';
 		$field .= '<input type="file" ';

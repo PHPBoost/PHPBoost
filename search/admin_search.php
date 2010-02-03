@@ -97,7 +97,7 @@ elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 }
 else
 {
-    $Tpl = new Template('search/admin_search.tpl');
+    $Tpl = new FileTemplate('search/admin_search.tpl');
 
     
 
@@ -175,7 +175,7 @@ else
         ));
     }
 
-    $Tpl->parse();
+    $Tpl->display();
 }
 
 //--------------------------------------------------------------------- Footer

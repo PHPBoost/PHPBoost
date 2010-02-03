@@ -115,7 +115,7 @@ class ForumInterface extends ModuleInterface
 	{
 		global $User, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
-		$Tpl = new Template('forum/forum_search_form.tpl');
+		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
@@ -169,7 +169,7 @@ class ForumInterface extends ModuleInterface
 				}
 			}
 		}
-		return $Tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $Tpl->to_string();
 	}
 
 	function get_search_args()
@@ -311,7 +311,7 @@ class ForumInterface extends ModuleInterface
 
 		load_module_lang('forum'); //Chargement de la langue du module.
 
-		$tpl = new Template('forum/forum_generic_results.tpl');
+		$tpl = new FileTemplate('forum/forum_generic_results.tpl');
 
 		$tpl->assign_vars(Array(
             'L_ON' => $LANG['on'],
@@ -329,7 +329,7 @@ class ForumInterface extends ModuleInterface
             'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" />'
             ));
 
-            return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+            return $tpl->to_string();
 	}
 
 	function _feeds_add_category($cat_tree, $category)

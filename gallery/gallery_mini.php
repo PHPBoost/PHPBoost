@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 function gallery_mini($position, $block)
 {
     global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics, $Sql;
-    $tpl = new Template('gallery/gallery_mini.tpl');
+    $tpl = new FileTemplate('gallery/gallery_mini.tpl');
 
     MenuService::assign_positions_conditions($tpl, $block);
 
@@ -164,6 +164,6 @@ function gallery_mini($position, $block)
     	'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
     	'L_GALLERY' => $LANG['gallery']
     ));
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 ?>

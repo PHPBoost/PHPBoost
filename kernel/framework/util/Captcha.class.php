@@ -134,7 +134,7 @@ class Captcha
 
 		if (!is_object($Template) || !($Template instanceof Template))
 		{
-			$Template = new Template('framework/captcha.tpl');
+			$Template = new FileTemplate('framework/captcha.tpl');
 		}
 
 		if ($this->is_available())
@@ -146,7 +146,7 @@ class Captcha
 				'CAPTCHA_FONT' => $this->font,
 				'CAPTCHA_DIFFICULTY' => $this->difficulty
 			));
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			return $Template->to_string();
 		}
 		return '';
 	}

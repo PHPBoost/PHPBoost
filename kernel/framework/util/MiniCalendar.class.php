@@ -124,7 +124,7 @@ class MiniCalendar
 		global $CONFIG;
 		
 		//On crée le code selon le template
-		$template = new Template('framework/mini_calendar.tpl');
+		$template = new FileTemplate('framework/mini_calendar.tpl');
 		
 		$template->assign_vars(array(
 			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
@@ -140,7 +140,7 @@ class MiniCalendar
 		
 		self::$js_inclusion_already_done = true;
 		
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->to_string();
 	}
 	
 	/**
