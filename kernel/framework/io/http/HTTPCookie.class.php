@@ -42,13 +42,21 @@ class HTTPCookie
 	private $secure = false;
 	private $httponly = true;
 	
-	public function __construct($name, $value)
+	public function __construct($name, $value, $timestamp = null)
 	{
 		$this->name = $name;
 		$this->value = stripslashes($value);
-		$this->expiration_date = time() + 3600*744; //1 month
+		
+		if ($timestamp == null)
+		{
+			$this->expiration_date = time() + 3600*744; //1 month
+		}
+		else
+		{
+			$this->expiration_date = $timestamp;
+		}
 	}
-	
+
 	/**
 	 * The time the cookie expires. This is a Unix timestamp so is
 	 * in number of seconds since the epoch. In other words, you'll

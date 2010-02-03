@@ -29,15 +29,7 @@ class SandboxController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{
-		try 
-		{
-			//Exemple d'utilisation des cookies
-			echo AppContext::get_request()->get_cookie('session_data');
-			AppContext::get_response()->set_cookie(new HTTPCookie('testcookie', 'test'));
-			echo AppContext::get_request()->get_cookie('testcookie');
-			echo AppContext::get_request()->get_cookie('testcookie2', 'default');
-		}
-		catch (UnexistingHTTPParameterException $ex) {}
+		global $CONFIG;
 		
 		$view = new View('sandbox/SandboxController.tpl');
 		$form = $this->build_form();

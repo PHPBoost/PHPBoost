@@ -49,9 +49,9 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 	if ($User->check_level($CONFIG_POLL['poll_auth']))
 	{
 		//On note le passage du visiteur par un cookie.
-		if (isset($_COOKIE[$CONFIG_POLL['poll_cookie']])) //Recherche dans le cookie existant.
+		if (AppContext::get_request()->has_cookieparameter($CONFIG_POLL['poll_cookie'])) //Recherche dans le cookie existant.
 		{
-			$array_cookie = explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]);
+			$array_cookie = explode('/', AppContext::get_request()->get_cookie($CONFIG_POLL['poll_cookie']));
 			if (in_array($poll['id'], $array_cookie))
 				$check_cookie = true;
 			else
@@ -61,13 +61,13 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
 				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
 	
-				setcookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght'], '/');						
+				AppContext::get_response()->set_cookie(new HTTPCookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght']));
 			}
 		}
 		else //Génération d'un cookie.
 		{	
 			$check_cookie = false;
-			setcookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght'], '/');
+			AppContext::get_response()->set_cookie(new HTTPCookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght']));
 		}
 		
 		$check_bdd = true;
@@ -182,7 +182,11 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Errorh->handler($errstr, $type);
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
-	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
+	$array_cookie = array();
+    if (AppContext::get_request()->has_cookieparameter($CONFIG_POLL['poll_cookie']))
+    {
+    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($CONFIG_POLL['poll_cookie']));
+    }
 	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
 	{		
 		$array_answer = explode('|', $poll['answers']);
@@ -318,7 +322,6 @@ elseif ($archives) //Archives.
 		
 	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
-	 
 	$Pagination = new DeprecatedPagination();
 	
 	$Template->assign_vars(array(
