@@ -28,8 +28,8 @@
 define('TIMEZONE_SITE', 1);
 define('TIMEZONE_SYSTEM', 2);
 define('TIMEZONE_USER', 3);
-	
-	/**
+
+/**
  * @deprecated
  * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
  * @param int $var_type The origin of the variable: GET if it's a parameter in the request URL, POST if the variable was in a formulary,
@@ -120,6 +120,10 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			}
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:
+			if (MAGIC_QUOTES)
+			{
+				$var = stripslashes($var);
+			}
 			return FormatingHelper::strparse($var); //Chaine parsée.
 		case TBOOL:
 			return (bool)$var;
@@ -420,7 +424,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 {
 	global $LANG;
 
-	$template = new Template('framework/confirm.tpl');
+	$template = new FileTemplate('framework/confirm.tpl');
 
 	$template->assign_vars(array(
 		'URL_ERROR' => !empty($url_error) ? $url_error : Environment::get_home_page(),
@@ -429,7 +433,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 		'L_REDIRECT' => $LANG['redirect']
 	));
 
-	$template->parse();
+	$template->display();
 }
 
 /**
