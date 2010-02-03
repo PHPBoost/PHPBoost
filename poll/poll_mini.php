@@ -43,7 +43,11 @@ function poll_mini($position, $block)
     		
     	#####################Résultats######################
     	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
-    	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
+    	$array_cookie = array();
+    	if (AppContext::get_request()->has_cookieparameter($CONFIG_POLL['poll_cookie']))
+    	{
+    		$array_cookie = explode('/', AppContext::get_request()->get_cookie($CONFIG_POLL['poll_cookie']));
+    	}
     	if (in_array($poll_mini['id'], $array_cookie))
     	{
     		$tpl->assign_vars(array(
