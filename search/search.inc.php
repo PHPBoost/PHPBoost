@@ -94,7 +94,7 @@ function get_html_results($results, $html_results, $results_name)
     $modules = new ModulesDiscoveryService();
     $display_all_results = ($results_name == 'all' ? true : false);
     
-    $tpl_results = new Template('search/search_generic_pagination_results.tpl');
+    $tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
     $tpl_results->assign_vars(Array(
         'RESULTS_NAME' => $results_name,
         'C_ALL_RESULTS' => $display_all_results
@@ -131,7 +131,7 @@ function get_html_results($results, $html_results, $results_name)
             
             if ($display_all_results || !$personnal_parse_results)
             {
-                $tpl_result = new Template('search/search_generic_results.tpl');
+                $tpl_result = new FileTemplate('search/search_generic_results.tpl');
                 if ($display_all_results)
                 {
                     $module = $modules->get_module($results[$num_item]['module']);
@@ -153,7 +153,7 @@ function get_html_results($results, $html_results, $results_name)
                 ));
                 
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $tpl_result->parse(Template::TEMPLATE_PARSER_STRING)
+                    'result' => $tpl_result->to_string()
                 ));
             }
             else
@@ -164,7 +164,7 @@ function get_html_results($results, $html_results, $results_name)
             }
         }
     }
-    $html_results = $tpl_results->parse(Template::TEMPLATE_PARSER_STRING);
+    $html_results = $tpl_results->to_string();
 }
 
 ?>

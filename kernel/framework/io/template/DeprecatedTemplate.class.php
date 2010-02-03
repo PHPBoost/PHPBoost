@@ -27,13 +27,13 @@
  ###################################################*/
 
 
-
-class DeprecatedTemplate extends Template
+class DeprecatedTemplate extends FileTemplate
 {
 	private $modules = array();
 	
 	public function __construct()
 	{
+		parent::__construct('');
 		$this->auto_load_frequent_vars();
 	}
 
@@ -47,7 +47,7 @@ class DeprecatedTemplate extends Template
 	{
 		foreach ($array_tpl as $identifier => $filename)
 		{
-			$new_template = new Template($filename, Template::DO_NOT_LOAD_FREQUENT_VARS);
+			$new_template = new FileTemplate($filename, Template::DO_NOT_LOAD_FREQUENT_VARS);
             $module_data_path = $new_template->get_var('PICTURES_DATA_PATH');
 			
             $this->bind_vars($new_template);
@@ -82,7 +82,7 @@ class DeprecatedTemplate extends Template
 		$template = $this->get_subtemplate($identifier);
 		if ($template != null)
 		{
-			$template->parse();
+			$template->display();
 		}
 	}
 	

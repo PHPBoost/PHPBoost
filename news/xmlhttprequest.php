@@ -42,7 +42,7 @@ elseif (isset($_POST['preview']))
 {
 	
 	$level = array('', ' class="modo"', ' class="admin"');
-	$preview = new Template('news/news.tpl');
+	$preview = new FileTemplate('news/news.tpl');
 	$Cache->load('news');
 	//Chargement de la langue du module.
 	load_module_lang('news');
@@ -100,7 +100,7 @@ elseif (isset($_POST['preview']))
 		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php')
 	));
 
-	echo $preview->parse(Template::TEMPLATE_PARSER_STRING);
+	echo $preview->to_string();
 }
 
 require_once('../kernel/footer_no_display.php');

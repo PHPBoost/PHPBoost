@@ -58,7 +58,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($news['title']));
 		require_once('../kernel/header.php');
 
-		$tpl = new Template('news/news.tpl');
+		$tpl = new FileTemplate('news/news.tpl');
 		
 		// Gestion du timezone pour la date de la news.
 		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
@@ -133,7 +133,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'L_NEWS_SUGGESTED' => $NEWS_LANG['news_suggested']
 		));
 
-		$tpl->parse();
+		$tpl->display();
 	}
 	else
 	{
@@ -150,7 +150,7 @@ elseif ($user)
 	define('TITLE', $NEWS_LANG['news']);
 	require_once('../kernel/header.php');
 
-	$tpl = new Template('news/news_cat.tpl');
+	$tpl = new FileTemplate('news/news_cat.tpl');
 	$i = 0;
 
 	// Build array with the children categories.
@@ -207,7 +207,7 @@ elseif ($user)
 			));
 		}
 
-		$tpl->parse();
+		$tpl->display();
 	}
 	else
 	{

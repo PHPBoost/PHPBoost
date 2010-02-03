@@ -127,7 +127,7 @@ class Authorizations
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 		
-		$Template = new Template('framework/groups_auth.tpl');
+		$Template = new FileTemplate('framework/groups_auth.tpl');
        
 		$Template->assign_vars(array(
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
@@ -237,7 +237,7 @@ class Authorizations
 			$Sql->query_close($result);
 		}
 
-        return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+        return $Template->to_string();
     }
 	
     /**

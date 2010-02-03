@@ -53,7 +53,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	}
     }
     
-    $tpl = new Template('menus/themeswitcher/themeswitcher.tpl');
+    $tpl = new FileTemplate('menus/themeswitcher/themeswitcher.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     
@@ -79,7 +79,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	'L_SUBMIT' => $LANG['submit']
     ));
     
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 
 ?>

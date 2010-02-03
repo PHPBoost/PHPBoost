@@ -56,7 +56,7 @@ if ($post)
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new Template('admin/menus/auth.tpl');
+$tpl = new FileTemplate('admin/menus/auth.tpl');
 $Cache->load('themes');
 
 $tpl->assign_vars(array(
@@ -88,7 +88,7 @@ $tpl->assign_vars(array(
     'C_ENABLED' => $menu->is_enabled(),
 ));
 
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

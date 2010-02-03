@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;

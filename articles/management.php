@@ -308,7 +308,7 @@ elseif(retrieve(POST,'submit',false))
 }
 else
 {
-	$tpl = new Template('articles/management.tpl');
+	$tpl = new FileTemplate('articles/management.tpl');
 
 	if ($edit > 0)
 	{
@@ -571,7 +571,7 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	$tpl->parse();
+	$tpl->display();
 }
 
 require_once('../kernel/footer.php');

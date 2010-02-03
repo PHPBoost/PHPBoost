@@ -44,7 +44,7 @@ $id_edit = retrieve(GET, 'edit', 0);
 $new_cat = retrieve(GET, 'new', false);
 $error = retrieve(GET, 'error', '');
 
-$tpl = new Template('news/admin_news_cat.tpl');
+$tpl = new FileTemplate('news/admin_news_cat.tpl');
 $Errorh->set_template($tpl);
 
 // Chargement du menu de l'administration.
@@ -260,7 +260,7 @@ else
 	));
 }
 
-$tpl->parse();
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

@@ -42,7 +42,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 
 	protected $resource = null;
 
-	public function parse($template_object, $template_loader)
+	public function parse(Template $template_object, TemplateLoader $template_loader)
 	{
 		$this->template = $template_object;
 		$this->loader = $template_loader;

@@ -91,7 +91,7 @@ class FormFieldset
 	{
 		global $LANG;
 
-		$template = new Template('framework/builder/form/' . __CLASS__ . '.tpl');
+		$template = new FileTemplate('framework/builder/form/' . __CLASS__ . '.tpl');
 		
 		$template->assign_vars(array(
 			'L_FORMTITLE' => $this->title
@@ -101,11 +101,11 @@ class FormFieldset
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(
-				'FIELD' => $field->display()->parse(Template::TEMPLATE_PARSER_STRING),
+				'FIELD' => $field->display()->to_string(),
 			));
 		}
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->to_string();
 	}
 
 	public function get_onsubmit_validations()

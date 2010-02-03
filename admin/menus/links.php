@@ -161,7 +161,7 @@ if ($action == 'save')
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new Template('admin/menus/links.tpl');
+$tpl = new FileTemplate('admin/menus/links.tpl');
 
 $tpl->assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -216,7 +216,7 @@ $array_location = array(
     Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
-$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
+$edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
 $edit_menu_tpl->assign_vars(array(
     'L_NAME' => $LANG['name'],
     'L_IMAGE' => $LANG['img'],
@@ -279,7 +279,7 @@ foreach ($array_location as $key => $name)
 $tpl->assign_vars(array(
     'ID_MAX' => AppContext::get_uid()
 ));
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

@@ -36,7 +36,7 @@ function articles_mini($position, $block)
 	$Cache->load('articles'); 
 	load_module_lang('articles');
 	
-	$tpl = new Template('articles/articles_mini.tpl');
+	$tpl = new FileTemplate('articles/articles_mini.tpl');
 	
 	MenuService::assign_positions_conditions($tpl, $block);
 
@@ -103,7 +103,7 @@ function articles_mini($position, $block)
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
 	));
 
-	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+	return $tpl->to_string();
 }
 
 ?>

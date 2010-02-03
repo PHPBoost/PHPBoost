@@ -79,7 +79,7 @@ class FormFieldCaptcha extends AbstractFormField
 	{
 		$this->captcha->save_user();
 
-		$template = new Template('framework/builder/form/FormFieldCaptcha.tpl');
+		$template = new FileTemplate('framework/builder/form/FormFieldCaptcha.tpl');
 
 		$this->assign_common_template_variables($template);
 			

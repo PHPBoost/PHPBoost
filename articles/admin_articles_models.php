@@ -40,7 +40,7 @@ $error = retrieve(GET, 'error', '');
 
 $articles_categories = new ArticlesCats();
 
-$tpl = new Template('articles/admin_articles_models.tpl');
+$tpl = new FileTemplate('articles/admin_articles_models.tpl');
 
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
@@ -573,7 +573,7 @@ else
 	}
 }
 
-$tpl->parse();
+$tpl->display();
 require_once('../admin/admin_footer.php');
 
 ?>

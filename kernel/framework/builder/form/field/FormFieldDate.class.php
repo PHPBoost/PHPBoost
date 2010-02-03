@@ -26,11 +26,7 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage single-line text fields for date input.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
- * </ul>
+ * @desc This class embeds a calendar
  * @package builder
  * @subpackage form
  */
@@ -46,7 +42,7 @@ class FormFieldDate extends AbstractFormField
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/form/FormFieldDate.tpl');
+		$template = new FileTemplate('framework/builder/form/FormFieldDate.tpl');
 
 		$this->assign_common_template_variables($template);
 		

@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-$tpl_menu = new Template('articles/admin_articles_menu.tpl');
+$tpl_menu = new FileTemplate('articles/admin_articles_menu.tpl');
 
 $tpl_menu->Assign_vars(array(
 	'L_ARTICLES_MANAGEMENT' => $ARTICLES_LANG['articles_management'],
@@ -40,6 +40,6 @@ $tpl_menu->Assign_vars(array(
 	'L_MODELS_MANAGEMENT'=>$ARTICLES_LANG['models_management']
 ));
 
-$admin_menu = $tpl_menu->parse(TEMPLATE_STRING_MODE);
+$admin_menu = $tpl_menu->to_string();
 
 ?>

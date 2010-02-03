@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-$tpl_menu = new Template('news/admin_news_menu.tpl');
+$tpl_menu = new FileTemplate('news/admin_news_menu.tpl');
 
 $tpl_menu->Assign_vars(array(
 	'L_NEWS_MANAGEMENT' => $NEWS_LANG['news_management'],
@@ -38,6 +38,6 @@ $tpl_menu->Assign_vars(array(
 	'L_ADD_CAT' => $NEWS_LANG['add_category']
 ));
 
-$admin_menu = $tpl_menu->parse(Template::TEMPLATE_PARSER_STRING);
+$admin_menu = $tpl_menu->to_string();
 
 ?>

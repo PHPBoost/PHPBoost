@@ -48,7 +48,7 @@ class Pagination
 		{
 			$tpl_path = 'framework/util/pagination.tpl';
 		}
-		$this->tpl = new Template($tpl_path);
+		$this->tpl = new FileTemplate($tpl_path);
 	}
 
 	public function set_url_sprintf_pattern($url_pattern)

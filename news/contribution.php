@@ -42,7 +42,7 @@ $Bread_crumb->add($NEWS_LANG['contribution_confirmation'], url('contribution.php
 require_once('../kernel/header.php');
 
 //Template
-$template = new Template('news/contribution.tpl');
+$template = new FileTemplate('news/contribution.tpl');
 
 $template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $NEWS_LANG['contribution_confirmation'],
@@ -50,7 +50,7 @@ $template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $NEWS_LANG['contribution_confirmation_explain']
 ));
 
-$template->parse();
+$template->display();
 
 require_once('../kernel/footer.php');
 

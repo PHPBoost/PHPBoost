@@ -72,7 +72,7 @@ if (retrieve(GET, 'restart', false))
 }
 
 //Template d'installation
-$template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
+$template = new FileTemplate('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
@@ -924,7 +924,7 @@ for ($i = 1; $i <= STEPS_NUMBER; $i++)
 	));
 }
 
-$template->parse();
+$template->display();
 
 InstallEnvironment::destroy();
 

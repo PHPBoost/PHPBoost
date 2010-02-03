@@ -99,7 +99,7 @@ class TinyMCEEditor extends ContentEditor
 			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))
         ));
 
-        return $template->parse(Template::TEMPLATE_PARSER_STRING);
+        return $template->to_string();
     }
 
     //Private attribute

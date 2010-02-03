@@ -2,7 +2,7 @@
 
 
 
-class View extends Template {
+class View extends FileTemplate {
 }
 
 ?>

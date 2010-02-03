@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 
 ob_start();
 
-$template = new Template('admin/admin_phpinfo.tpl');
+$template = new FileTemplate('admin/admin_phpinfo.tpl');
 
 phpinfo();
 $phpinfo = ob_get_contents();
@@ -49,7 +49,7 @@ $template->assign_vars(array(
     'L_PHPINFO' => $LANG['phpinfo']
 ));
 
-$template->parse();
+$template->display();
 
 require_once('../admin/admin_footer.php');
 

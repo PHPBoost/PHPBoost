@@ -96,7 +96,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 	{
 		$this->content = preg_replace('`# INCLUDE ([\w]+) #`',
 			'<?php $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
-			'if ($_subtemplate !== null) {$_subtemplate->parse();} ?>', $this->content);
+			'if ($_subtemplate !== null) {$_subtemplate->display();} ?>', $this->content);
 		$this->content = preg_replace_callback('`# INCLUDE ([\w.]+)\.([\w]+) #`',
 		array($this, 'callback_parse_blocks_includes'), $this->content);
 	}
@@ -175,7 +175,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 		$second_param = '$_tmp_' .  array_pop($array_block) . '_value[\'subtemplates\']';
 		return '<?php $_subtemplate = $this->template->get_subtemplate_from_list(\'' . $varname .
 			'\', ' . $second_param . ');' . "\n" .
-			'if ($_subtemplate !== null) {$_subtemplate->parse();} ?>';
+			'if ($_subtemplate !== null) {$_subtemplate->display();} ?>';
 	}
 }
 

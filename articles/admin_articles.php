@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 require_once('articles_constants.php');
 
-$tpl = new Template('articles/admin_articles_management.tpl');
+$tpl = new FileTemplate('articles/admin_articles_management.tpl');
 require_once('admin_articles_menu.php');
 $tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 
@@ -139,7 +139,7 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $Sql->query_close($result);
 
-$tpl->parse();
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

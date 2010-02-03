@@ -44,7 +44,7 @@ class FormFieldHidden extends AbstractFormField
 	public function display()
 	{
 		// TODO Make a StringTemplate when it will be supported
-		$template = new Template('framework/builder/form/FormFieldHidden.tpl');
+		$template = new FileTemplate('framework/builder/form/FormFieldHidden.tpl');
 		
 		$this->assign_common_template_variables($template);
 		

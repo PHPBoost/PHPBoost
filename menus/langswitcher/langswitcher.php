@@ -53,7 +53,7 @@ function menu_langswitcher_langswitcher($position, $block)
     	}
     }
     
-    $tpl = new Template('menus/langswitcher/langswitcher.tpl');
+    $tpl = new FileTemplate('menus/langswitcher/langswitcher.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     
@@ -83,7 +83,7 @@ function menu_langswitcher_langswitcher($position, $block)
     	'L_SUBMIT' => $LANG['submit']
     ));
     
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 
 ?>

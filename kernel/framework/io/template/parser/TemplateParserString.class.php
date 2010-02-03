@@ -90,7 +90,7 @@ class TemplateParserString extends AbstractTemplateParser
 		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '\';' .
 			'$_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
 			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING .
-			'.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING .
+			'.=$_subtemplate->to_string();}' . self::TPL_VAR_STRING .
 			'.=\'', $this->content);
 		$this->content = preg_replace_callback('`# INCLUDE ([\w.]+)\.([\w]+) #`',
 		array($this, 'callback_parse_blocks_includes'), $this->content);
@@ -166,7 +166,7 @@ class TemplateParserString extends AbstractTemplateParser
 		return '\';$_subtemplate = $this->template->get_subtemplate_from_list(\'' . $varname .
 			'\', ' . $second_param . ');' . "\n" .
 			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING .
-			'.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING .
+			'.=$_subtemplate->to_string();}' . self::TPL_VAR_STRING .
 			'.=\'';
 	}
 }

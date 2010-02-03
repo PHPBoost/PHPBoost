@@ -211,9 +211,9 @@ if ($action == 'save') //Save menus positions.
 }
 
 
-$tpl = new Template('admin/menus/menus.tpl');
+$tpl = new FileTemplate('admin/menus/menus.tpl');
 
-$menu_template = new Template('admin/menus/menu.tpl');
+$menu_template = new FileTemplate('admin/menus/menu.tpl');
 $menu_template->assign_vars(array(
     'THEME' => get_utheme(),
     'L_ENABLED' => $LANG['enabled'],
@@ -271,7 +271,7 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_MOVE' => menu_admin_link($menu, 'move'),
         ));
         
-        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(Template::TEMPLATE_PARSER_STRING)));
+        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->to_string()));
         $i++;
     }
 }
@@ -315,7 +315,7 @@ $tpl->assign_vars(array(
     'L_RESET' => $LANG['reset'],
 	'U_TOKEN' => $Session->get_token()
 ));
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

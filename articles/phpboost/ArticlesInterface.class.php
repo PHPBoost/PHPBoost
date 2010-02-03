@@ -227,7 +227,7 @@ class ArticlesInterface extends ModuleInterface
 
 		$models = $this->sql_querier->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $ARTICLES_CAT[$idartcat]['models'] . "'", __LINE__, __FILE__);
 
-		$tpl = new Template('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
+		$tpl = new FileTemplate('articles/'.$ARTICLES_CAT[$idartcat]['tpl_cat']);
 
 		//Niveau d'autorisation de la catégorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))

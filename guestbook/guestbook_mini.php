@@ -38,7 +38,7 @@ function guestbook_mini($position, $block)
     	$Cache->load('guestbook'); //Chargement du cache
     	
     	###########################Affichage##############################
-    	$tpl = new Template('guestbook/guestbook_mini.tpl');
+    	$tpl = new FileTemplate('guestbook/guestbook_mini.tpl');
         
         MenuService::assign_positions_conditions($tpl, $block);
 
@@ -70,7 +70,7 @@ function guestbook_mini($position, $block)
 	    		'L_BY' => $LANG['by']
 	    	));
 		}
-		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $tpl->to_string();
     }
 	return '';
 }

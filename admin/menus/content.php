@@ -83,7 +83,7 @@ $edit = !empty($id);
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new Template('admin/menus/content.tpl');
+$tpl = new FileTemplate('admin/menus/content.tpl');
 
 $tpl->assign_vars(array(
 	'KERNEL_EDITOR' => display_editor(),
@@ -152,7 +152,7 @@ foreach ($array_location as $key => $name)
     $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 
 $tpl->assign_vars(array('LOCATIONS' => $locations));
-$tpl->parse();
+$tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

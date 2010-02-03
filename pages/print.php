@@ -63,7 +63,7 @@ if (empty($page_infos['id']))
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$template = new Template('framework/content/print.tpl');
+$template = new FileTemplate('framework/content/print.tpl');
 
 $template->assign_vars(array(
 	'PAGE_TITLE' => $page_infos['title'] . ' - ' . $CONFIG['site_name'],
@@ -72,7 +72,7 @@ $template->assign_vars(array(
 	'CONTENT' => FormatingHelper::second_parse($page_infos['contents'])
 ));
 
-$template->parse();
+$template->display();
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

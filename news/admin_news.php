@@ -31,7 +31,7 @@ require_once('news_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$tpl = new Template('news/admin_news.tpl');
+$tpl = new FileTemplate('news/admin_news.tpl');
 
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -121,7 +121,7 @@ $tpl->assign_vars(array(
 	'L_DELETE' => $LANG['delete']
 ));
 
-$tpl->parse();
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

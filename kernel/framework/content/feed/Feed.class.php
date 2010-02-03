@@ -150,7 +150,7 @@ class Feed
 				}
 			}
 		}
-		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+		return $tpl->to_string();
 	}
 
 	/**
@@ -255,7 +255,7 @@ class Feed
 		else
 		{
 
-			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
+			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
 		}
@@ -317,7 +317,7 @@ class Feed
 	{
 	    global $LANG, $CONFIG;
 
-	    $feed_menu = new Template('framework/content/syndication/menu.tpl');
+	    $feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
 	    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
 
@@ -330,7 +330,7 @@ class Feed
 	        'L_ATOM' => $LANG['atom']
 	    ));
 
-	    return $feed_menu->parse(Template::TEMPLATE_PARSER_STRING);
+	    return $feed_menu->to_string();
 	}
 }
 ?>

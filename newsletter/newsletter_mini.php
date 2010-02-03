@@ -33,7 +33,7 @@ function newsletter_mini($position, $block)
     //Chargement de la langue du module.
     load_module_lang('newsletter');
     
-    $tpl = new Template('newsletter/newsletter_mini.tpl');
+    $tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     
@@ -46,6 +46,6 @@ function newsletter_mini($position, $block)
     	'L_ARCHIVES' => $LANG['archives']
     ));
     
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 ?>

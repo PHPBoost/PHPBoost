@@ -51,7 +51,7 @@ require_once('../kernel/header.php');
 if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-$moderation_panel_template = new Template('member/moderation_panel.tpl');	
+$moderation_panel_template = new FileTemplate('member/moderation_panel.tpl');	
 
 $moderation_panel_template->assign_vars(array(
 	'SID' => SID,
@@ -492,7 +492,7 @@ switch ($action)
 		break;	
 }
 
-$moderation_panel_template->parse();
+$moderation_panel_template->display();
 
 require_once('../kernel/footer.php');
 

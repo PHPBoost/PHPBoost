@@ -110,7 +110,7 @@ class SitemapXMLFileService
 
 		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
 
-		$file->write($sitemap->export($export_config)->parse(Template::TEMPLATE_PARSER_STRING));
+		$file->write($sitemap->export($export_config)->to_string());
 		
 		self::update_last_generation_date();
 	}

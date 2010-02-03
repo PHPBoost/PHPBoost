@@ -39,7 +39,7 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
 
 $params = htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : '');
 
-$tpl = new Template('test/test.tpl');
+$tpl = new FileTemplate('test/test.tpl');
 
 $tpl->assign_vars(array(
 	'PARAMS' => $params
@@ -59,7 +59,7 @@ foreach (list_test_suite('./kernel/framework') as $ts)
     ));
 }
 
-$tpl->parse();
+$tpl->display();
 
 require_once PATH_TO_ROOT . '/kernel/footer.php';
 ?>

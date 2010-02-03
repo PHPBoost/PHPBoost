@@ -266,7 +266,7 @@ class Errors
 			<br />
 			</div>';
 			//			global $LANG;
-			//			$Template = new Template('framework/errors.tpl');
+			//			$Template = new FileTemplate('framework/errors.tpl');
 			//			switch ($errno)
 			//			{
 			//				//Message de succès, étrange pour une classe d'erreur non?
@@ -299,7 +299,7 @@ class Errors
 			//					));
 			//					break;
 			//			}
-			//			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			//			return $Template->to_string();
 
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)

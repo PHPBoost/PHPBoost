@@ -441,9 +441,9 @@ class CategoriesManager
 		global $CONFIG, $LANG;
 		
 		if (is_null($category_template) || !is_object($category_template) || !($category_template instanceof Template))
-			$category_template = new Template('framework/content/category.tpl');
+			$category_template = new FileTemplate('framework/content/category.tpl');
 		
-		$template = new Template('framework/content/categories.tpl');
+		$template = new FileTemplate('framework/content/categories.tpl');
 		
 		$this->_clear_error();
 		//If displaying configuration hasn't bee already set
@@ -460,7 +460,7 @@ class CategoriesManager
 				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
 				'C_NO_CATEGORY' => true
 			));
-			return $template->parse(Template::TEMPLATE_PARSER_STRING);
+			return $template->to_string();
 		}
 		
 		$template->assign_vars(array(
@@ -472,7 +472,7 @@ class CategoriesManager
 			'NESTED_CATEGORIES' => $this->_create_row_interface(0, 0, $ajax_mode, $category_template)
 		));
 				
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->to_string();
 	}
 	
 	/**
@@ -494,7 +494,7 @@ class CategoriesManager
 		$general_auth = false;
 		
 		if (is_null($template) || !is_object($template) || !($template instanceof Template))
-			$template = new Template('framework/content/categories_select_form.tpl');
+			$template = new FileTemplate('framework/content/categories_select_form.tpl');
 		
 		if ($num_auth != 0)
 			$general_auth = $User->check_auth($array_auth, $num_auth);
@@ -508,7 +508,7 @@ class CategoriesManager
 				
 		$this->_create_select_row(0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->to_string();
 	}
 	
 	/**
@@ -701,7 +701,7 @@ class CategoriesManager
 					break;
 			}
 		}
-		return $template->parse(Template::TEMPLATE_PARSER_STRING);
+		return $template->to_string();
 	}
 	
 	/**

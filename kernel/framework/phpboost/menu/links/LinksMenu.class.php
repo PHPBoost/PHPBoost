@@ -129,7 +129,7 @@ class LinksMenu extends LinksMenuElement
         // Get the good Template object
         if (!is_object($template) || !($template instanceof Template))
         {
-            $tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
+            $tpl = new FileTemplate('framework/menus/links/' . $this->type . '.tpl');
         }
         else
         {
@@ -152,7 +152,7 @@ class LinksMenu extends LinksMenuElement
             'C_HAS_CHILD' => count($this->elements) > 0
         ));
         
-        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+        return $tpl->to_string();
     }
     
 
@@ -164,7 +164,7 @@ class LinksMenu extends LinksMenuElement
         // Get the good Template object
         if (!is_object($template) || !($template instanceof Template))
         {
-            $tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
+            $tpl = new FileTemplate('framework/menus/links/' . $this->type . '.tpl');
         }
         else
         {
@@ -192,7 +192,7 @@ class LinksMenu extends LinksMenuElement
         if ($this->depth == 0)
         {   // We protect and unprotect only on the top level
             $cache_str = parent::cache_export_begin() . '\'.' .
-                var_export($tpl->parse(Template::TEMPLATE_PARSER_STRING), true) .
+                var_export($tpl->to_string(), true) .
                 '.\'' . parent::cache_export_end();
             $cache_str = str_replace(
                 array('#GET_UID#', '#GET_UID_VAR#', '##'),
@@ -201,7 +201,7 @@ class LinksMenu extends LinksMenuElement
             );
             return $cache_str;
         }
-        return parent::cache_export_begin() . $tpl->parse(Template::TEMPLATE_PARSER_STRING) . parent::cache_export_end();
+        return parent::cache_export_begin() . $tpl->to_string() . parent::cache_export_end();
     }   
      
     /**

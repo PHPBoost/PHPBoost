@@ -66,7 +66,7 @@ if (empty($article_infos['id']))
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$template = new Template('framework/content/print.tpl');
+$template = new FileTemplate('framework/content/print.tpl');
 
 $template->assign_vars(array(
 	'PAGE_TITLE' => $article_infos['title'] . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),
@@ -75,7 +75,7 @@ $template->assign_vars(array(
 	'CONTENT' => FormatingHelper::second_parse($article_infos['content'])
 ));
 
-$template->parse();
+$template->display();
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

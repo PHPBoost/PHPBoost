@@ -67,7 +67,7 @@ class HTMLTable extends HTMLElement
 		{
 			$tpl_path = 'framework/builder/table/table.tpl';
 		}
-		$this->tpl = new Template($tpl_path);
+		$this->tpl = new FileTemplate($tpl_path);
 		$this->model = $model;
 		$this->get_columns();
 		$this->parameters = new HTMLTableParameters($this->model, $this->get_allowed_sorting_rules());

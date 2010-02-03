@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $identifier = retrieve(GET, 'identifier', '');
-$tpl = new Template('admin/updates/detail.tpl');
+$tpl = new FileTemplate('admin/updates/detail.tpl');
 
 $tpl->assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates'],
@@ -125,7 +125,7 @@ if ($app !== null && $app->check_compatibility())
 }
 else $tpl->assign_vars((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));
     
-$tpl->parse();
+$tpl->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 
 ?>

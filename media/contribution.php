@@ -36,7 +36,7 @@ $Bread_crumb->add($MEDIA_LANG['contribution_confirmation'], url('contribution.ph
 
 require_once('../kernel/header.php');
 
-$media_template = new Template('media/contribution.tpl');
+$media_template = new FileTemplate('media/contribution.tpl');
 
 $media_template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $MEDIA_LANG['contribution_confirmation'],
@@ -44,7 +44,7 @@ $media_template->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $MEDIA_LANG['contribution_confirmation_explain']
 ));
 
-$media_template->parse();
+$media_template->display();
 
 require_once('../kernel/footer.php');
 

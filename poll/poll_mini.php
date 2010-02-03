@@ -37,7 +37,7 @@ function poll_mini($position, $block)
     	load_module_lang('poll');
     	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
     	
-    	$tpl = new Template('poll/poll_mini.tpl');
+    	$tpl = new FileTemplate('poll/poll_mini.tpl');
         
         MenuService::assign_positions_conditions($tpl, $block);
     		
@@ -110,7 +110,7 @@ function poll_mini($position, $block)
     			}
     		}
     	}
-        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+        return $tpl->to_string();
     }
     return '';
 }

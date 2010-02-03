@@ -35,7 +35,7 @@ function stats_mini($position, $block)
     load_module_lang('stats');
     
     #########################Stats.tpl###########################
-    $tpl = new Template('stats/stats_mini.tpl');
+    $tpl = new FileTemplate('stats/stats_mini.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
     
@@ -50,6 +50,6 @@ function stats_mini($position, $block)
     	'L_LAST_REGISTERED_USER' => $LANG['last_member'],
     	'U_LINK_LAST_USER' => '<a href="' . HOST . DIR . '/member/member' . url('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
     ));
-    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
+    return $tpl->to_string();
 }
 ?>

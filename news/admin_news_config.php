@@ -61,7 +61,7 @@ if (!empty($_POST['submit']))
 //Sinon on rempli le formulaire
 else
 {
-	$tpl = new Template('news/admin_news_config.tpl');
+	$tpl = new FileTemplate('news/admin_news_config.tpl');
 
 	$Cache->load('news');
 
@@ -128,7 +128,7 @@ else
 		'L_AUTH_CONTRIBUTION' => $NEWS_LANG['auth_contribute']
 	));
 
-	$tpl->parse(); // traitement du modele
+	$tpl->display(); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');

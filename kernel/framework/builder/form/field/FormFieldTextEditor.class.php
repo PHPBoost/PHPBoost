@@ -59,7 +59,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 */
 	public function display()
 	{
-		$template = new Template('framework/builder/form/FormField.tpl');
+		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
 		$field = '<input type="text" ';
 		$field .= 'size="' . $this->size;

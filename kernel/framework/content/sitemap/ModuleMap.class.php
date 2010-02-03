@@ -101,7 +101,7 @@ class ModuleMap extends SitemapSection
 			'MODULE_ID' => $this->get_module_id(),
 			'C_MODULE_ID' => $this->get_module_id() != '',
 			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
-			'MODULE_DESCRIPTION' => $this->description,
+			'MODULE_DESCRIPTION' => FormatingHelper::second_parse($this->description),
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'C_MODULE_MAP' => true

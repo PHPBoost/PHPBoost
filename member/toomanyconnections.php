@@ -78,13 +78,13 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 
-$tpl = new Template('framework/fatal.tpl');
+$tpl = new FileTemplate('framework/fatal.tpl');
 $tpl->assign_vars(array(
     'ERROR_TITLE' => $LANG['too_many_connections'],
     'ERROR_EXPLAIN' => $LANG['too_many_connections_explain'],
     'PREVIOUS_PAGE' =>  $LANG['previous_page']
 ));
-$tpl->parse();
+$tpl->display();
 
 
 ?>

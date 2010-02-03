@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$template = new Template('admin/admin_alerts.tpl');
+$template = new FileTemplate('admin/admin_alerts.tpl');
 
 
 
@@ -125,7 +125,7 @@ $template->assign_vars(array(
 
 ));
 	
-$template->parse();
+$template->display();
 
 require_once('../admin/admin_footer.php');
 
