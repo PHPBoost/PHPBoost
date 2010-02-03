@@ -29,8 +29,6 @@ class SandboxController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{
-		global $CONFIG;
-		
 		$view = new View('sandbox/SandboxController.tpl');
 		$form = $this->build_form();
 		if ($request->is_post_method())
@@ -100,13 +98,13 @@ class SandboxController extends ModuleController
 		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
 			array(
 				$default_select_option,
-					new FormFieldSelectChoiceOption('Choix 2', '2'),
-					new FormFieldSelectChoiceOption('Choix 3', '3'),
-					new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+				new FormFieldSelectChoiceOption('Choix 2', '2'),
+				new FormFieldSelectChoiceOption('Choix 3', '3'),
+				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
 					new FormFieldSelectChoiceOption('Choix 4', '4'),
 					new FormFieldSelectChoiceOption('Choix 5', '5'),
 				)),
-					new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
 					new FormFieldSelectChoiceOption('Choix 6', '6'),
 					new FormFieldSelectChoiceOption('Choix 7', '7'),
 				))
