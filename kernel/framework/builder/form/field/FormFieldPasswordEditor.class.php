@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             FormFieldTextEditor.class.php
+ *                             FormFieldPasswordEditor.class.php
  *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   begin                : Februar 04, 2010
+ *   copyright            : (C) 2010 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -26,17 +26,17 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage single-line text fields.
+ * @desc This class manage single-line password fields.
  * @package builder
  * @subpackage form
  */
-class FormFieldTextEditor extends AbstractFormField
+class FormFieldPasswordEditor extends AbstractFormField
 {
 	private $size = 30;
 	private $maxlength = 255;
 
 	/**
-	 * @desc Constructs a FormFieldTextEditor.
+	 * @desc Constructs a FormFieldPasswordEditor.
 	 * It has these options in addition to the AbstractFormField ones:
 	 * <ul>
 	 * 	<li>size: The size (width) of the HTML field</li>
@@ -61,7 +61,7 @@ class FormFieldTextEditor extends AbstractFormField
 	{
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
-		$field = '<input type="text" ';
+		$field = '<input type="password" ';
 		$field .= 'size="' . $this->size;
 		$field .= 'maxlength="' . $this->maxlength . '" ';
 		$field .= 'name="' . $this->get_html_id() . '" ';
