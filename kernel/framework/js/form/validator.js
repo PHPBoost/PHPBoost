@@ -35,6 +35,15 @@ function integerIntervalValidator(value, lbound, rbound)
 	}
 	return true;
 }
+function lengthIntervalValidator(value, lbound, rbound)
+{
+	var value = value.length;
+	if (value < lbound || value > rbound)
+	{
+		return false;
+	}
+	return true;
+}
 
 /* #### Onsubmit validator #### */
 function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, message)
@@ -73,6 +82,18 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, mes
 	if ($(field_id))
 	{
 		if (!integerIntervalValidator($F(field_id), lbound, rbound))
+		{
+			displayFormFieldOnsubmitValidatorMessage(message);
+			return false;
+		}
+	}
+	return true;
+}
+function lengthFormFieldOnsubmitValidator(field_id, lbound, rbound, message)
+{
+	if ($(field_id))
+	{
+		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -126,6 +147,22 @@ function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, messa
 	clearFormFieldOnblurValidatorMessage(field_id);
 	return true;
 }
+
+function lengthFormFieldOnblurValidator(field_id, lbound, rbound, message)
+{
+	if ($(field_id))
+	{
+		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
+		{
+			displayFormFieldOnblurValidatorMessage(field_id, message);
+			return false;
+		}
+	}
+	clearFormFieldOnblurValidatorMessage(field_id);
+	return true;
+}
+
+
 
 function equalityFormFieldOnblurValidator(field_id, field_id_equality, message)
 {

@@ -32,6 +32,7 @@
 $lang = array(
     'doesnt_equal' => 'Both fields "%s" and "%s" has to be set to the same value',
     'doesnt_match_regex' => 'The entered value does not fit the proper format',
+    'doesnt_match_length_intervall' => 'The entered value does not fit the specified length',
     'doesnt_match_integer_intervall' => 'The entered value does not fit the specified interval',
     'has_to_be_filled' => 'The field "%s" has to be filled',
     'this_has_to_be_filled' => 'This field has to be filled',

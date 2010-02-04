@@ -32,7 +32,7 @@
  */ 
 interface FormConstraint 
 {
-	function validate(Form $form);
+	function validate();
 
 	function generate_js_validation();
 }

@@ -82,7 +82,8 @@ class SandboxController extends ModuleController
 		
 		// PASSWORD
 		$fieldset->add_field(new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion')
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
+			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
 		$fieldset->add_field(new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion')
