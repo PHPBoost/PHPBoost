@@ -11,7 +11,7 @@
 			# START fieldelements #
 				{fieldelements.ELEMENT}
 			# END fieldelements #
-			# IF C_HAS_CONSTRAINT #
+			# IF C_HAS_CONSTRAINTS #
 				&nbsp;
 				<span id="onblurContainerResponse{ID}"></span>
 				<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
