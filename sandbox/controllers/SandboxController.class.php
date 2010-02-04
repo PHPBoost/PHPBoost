@@ -79,7 +79,15 @@ class SandboxController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 15'),
 			array(new IntegerIntervalFormFieldConstraint(10, 15))
 		));
-
+		
+		// PASSWORD
+		$fieldset->add_field(new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion')
+		));
+		$fieldset->add_field(new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion')
+		));
+		
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', 
 			array('rows' => 6, 'cols' => 47, 'description' => 'Description')
@@ -138,7 +146,9 @@ class SandboxController extends ModuleController
 
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
-
+		
+		//$form->add_constraint(new EqualityFormFieldConstraint(, ));
+		
 		return $form;
 	}
 }
