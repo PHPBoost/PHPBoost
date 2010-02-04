@@ -78,6 +78,12 @@ interface FormField
 	function add_constraint(FormFieldConstraint $constraint);
 
 	/**
+	 * @desc Return true if the field has one or more constraints, false otherwise.
+	 * @return boolean
+	 */	
+	function has_constraints();
+	
+	/**
 	 * @desc Returns the javascript onsubmit code.
 	 * @return string The javascript code that makes the validation when the form is submitted
 	 */

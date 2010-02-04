@@ -227,7 +227,15 @@ abstract class AbstractFormField implements FormField
 		$this->constraints[] = $constraint;
 	}
 
-
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/builder/form/field/FormField#has_constraints()
+	 */
+	public function has_constraints()
+	{
+		return (count($this->constraints) > 0);
+	}
+	
 	public function get_onsubmit_validations()
 	{
 		$validations = array();
