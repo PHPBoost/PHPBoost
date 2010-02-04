@@ -343,5 +343,13 @@ class DefaultTemplateData implements TemplateData
 		$list[$name] = $value;
 		return $value;
 	}
+	
+	public function bind_vars(TemplateData $data)
+	{
+		$data->vars =& $this->vars;
+		$data->blocks =& $this->blocks;
+		$data->langs =& $this->langs;
+		$data->subtemplates =& $this->subtemplates;
+	}
 }
 ?>
