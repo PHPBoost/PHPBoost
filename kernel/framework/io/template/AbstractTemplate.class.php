@@ -34,11 +34,22 @@
 class AbstractTemplate implements Template
 {
 	protected $identifier = '';
-	protected $langs = array();
-	protected $vars = array();
-	protected $blocks = array();
-	protected $subtemplates = array();
+	/**
+	 * @var TemplateLoader
+	 */
 	protected $loader;
+	/**
+	 * @var TemplateParser
+	 */
+	protected $display_parser;
+	/**
+	 * @var TemplateParser
+	 */
+	protected $to_string_parser;
+	/**
+	 * @var TemplateData
+	 */
+	protected $data;
 
 	/**
 	 * @desc Builds a Template object.
@@ -46,13 +57,15 @@ class AbstractTemplate implements Template
 	 */
 	public function __construct($identifier, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
+		$this->data = new DefaultTemplateData();
+
 		if ($identifier != null)
 		{
 			$this->identifier = $identifier;
 
 			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 			{
-				$this->auto_load_frequent_vars();
+				$this->data->auto_load_frequent_vars();
 			}
 		}
 	}
@@ -61,17 +74,24 @@ class AbstractTemplate implements Template
 	{
 		$this->loader = $loader;
 	}
+	
+	protected function set_display_parser(TemplateParser $parser)
+	{
+		$this->display_parser = $parser;
+	}
+	
+	protected function set_to_string_parser(TemplateParser $parser)
+	{
+		$this->to_string_parser = $parser;
+	}
 
 	/**
 	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 */
-	public function assign_vars($array_vars)
+	public function assign_vars(array $array_vars)
 	{
-		foreach ($array_vars as $key => $val)
-		{
-			$this->vars[$key] = $val;
-		}
+		$this->data->assign_vars($array_vars);
 	}
 
 	/**
@@ -80,31 +100,9 @@ class AbstractTemplate implements Template
 	 * @param string $block_name Block name.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 */
-	public function assign_block_vars($block_name, $array_vars, $subtemplates = array())
+	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
-		if (strpos($block_name, '.') !== false) //Bloc imbriqué.
-		{
-			$blocks = explode('.', $block_name);
-			$blockcount = count($blocks) - 1;
-
-			$str = &$this->blocks;
-			for ($i = 0; $i < $blockcount; $i++)
-			{
-				$str = &$str[$blocks[$i]];
-				$str = &$str[count($str) - 1];
-			}
-			$str[$blocks[$blockcount]][] = array(
-				'vars' => $array_vars,
-				'subtemplates' => $subtemplates
-			);
-		}
-		else
-		{
-			$this->blocks[$block_name][] = array(
-				'vars' => $array_vars,
-				'subtemplates' => $subtemplates
-			);
-		}
+		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
 	}
 
 	/**
@@ -133,16 +131,13 @@ class AbstractTemplate implements Template
 	 */
 	public function display()
 	{
-		$parser = new TemplateParserEcho();
-		return $parser->parse($this, $this->loader);
+		$this->display_parser->parse($this, $this->loader);
 	}
 
 	public function to_string()
 	{
-		$parser = new TemplateParserString();
-		return $parser->parse($this, $this->loader);
+		return $this->to_string_parser->parse($this, $this->loader);
 	}
-
 
 	/**
 	 * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
@@ -150,7 +145,7 @@ class AbstractTemplate implements Template
 	 */
 	public function add_lang(array $lang)
 	{
-		$this->langs[] = $lang;
+		$this->data->add_lang($lang);
 	}
 
 	/**
@@ -160,7 +155,7 @@ class AbstractTemplate implements Template
 	 */
 	public function add_subtemplate($identifier, Template $template)
 	{
-		$this->subtemplates[$identifier] =& $template;
+		$this->data->add_subtemplate($identifier, $template);
 	}
 
 	/**
@@ -170,11 +165,7 @@ class AbstractTemplate implements Template
 	 */
 	public function get_subtemplate($identifier)
 	{
-		if (isset($this->subtemplates[$identifier]))
-		{
-			return $this->subtemplates[$identifier];
-		}
-		return null;
+		return $this->data->get_subtemplate($identifier);
 	}
 
 	/**
@@ -186,11 +177,7 @@ class AbstractTemplate implements Template
 	 */
 	public function get_subtemplate_from_list($identifier, $list)
 	{
-		if (isset($list[$identifier]))
-		{
-			return $list[$identifier];
-		}
-		return null;
+		return $this->data->get_subtemplate_from_list($identifier, $list);
 	}
 
 
@@ -201,7 +188,7 @@ class AbstractTemplate implements Template
 	 */
 	public function get_block($blockname)
 	{
-		return $this->get_block_from_list($blockname, $this->blocks);
+		return $this->data->get_block($blockname);
 	}
 
 	/**
@@ -212,11 +199,7 @@ class AbstractTemplate implements Template
 	 */
 	public function get_block_from_list($blockname, $parent_block)
 	{
-		if (isset($parent_block[$blockname]) && is_array($parent_block[$blockname]))
-		{
-			return $parent_block[$blockname];
-		}
-		return array();
+		return $this->data->get_block_from_list($blockname, $parent_block);
 	}
 
 	/**
@@ -226,26 +209,20 @@ class AbstractTemplate implements Template
 	 */
 	public function is_true($varname)
 	{
-		return $this->is_true_from_list($varname, $this->vars);
+		return $this->data->is_true($varname);
 	}
 
 	/**
-	 * @desc rReturns true if the variable $varname exists and is not considered as false
+	 * @desc Returns true if the variable $varname exists and is not considered as false
 	 * @param string $varname the name of the variable to check if it is true
 	 * @param mixed[] $list the array in which we varname will be searched for
 	 * @return bool true if the variable $varname exists and is not considered as false
 	 */
 	public function is_true_from_list($varname, $list)
 	{
-		return isset($list[$varname]) && $list[$varname];
+		return $this->data->is_true_from_list($varname, $list);
 	}
 
-	/**
-	 * @desc Returns the $varname variable content
-	 * @param string $varname the name of the variable to retrieve
-	 * @return string the $varname variable content
-	 * @see get_var_from_list($varname, $list)
-	 */
 	/**
 	 * @desc Returns the $varname variable content searched in from the $list
 	 * Special operations will be done if the variable is not registered in $list. If $varname begins with
@@ -264,151 +241,67 @@ class AbstractTemplate implements Template
 
 	public function get_var($varname)
 	{
-		return $this->get_var_from_list($varname, $this->vars);
+		return $this->data->get_var($varname);
 	}
 
 	public function get_var_from_list($varname, &$list)
 	{
-		if (isset($list[$varname]))
-		{
-			return $list[$varname];
-		}
-		$empty_value = '';
-		return $this->register_var($varname, $empty_value, $list);
+		return $this->data->get_var_from_list($varname, $list);
 	}
 
 	public function get_js_var($varname)
 	{
-		return $this->get_js_var_from_list($varname, $this->vars);
+		return $this->data->get_js_var($varname);
 	}
 
 	public function get_js_var_from_list($varname, &$list)
 	{
-		$full_varname = 'J_' . $varname;
-		if (!empty($list[$full_varname]))
-		{
-			return $list[$full_varname];
-		}
-
-		if (!isset($list[$varname]))
-		{
-			$list[$varname] = '';
-		}
-		return $this->register_var($full_varname, TextHelper::to_js_string($list[$varname]), $list);
+		return $this->data->get_js_var_from_list($varname, $list);
 	}
 
 	public function get_js_lang_var($varname)
 	{
-		return $this->get_js_lang_var_from_list($varname, $this->vars);
+		return $this->data->get_js_lang_var($varname);
 	}
 
 	public function get_js_lang_var_from_list($varname, &$list)
 	{
-		$full_varname = 'JL_' . $varname;
-		if (!empty($list[$full_varname]))
-		{
-			return $list[$full_varname];
-		}
-
-		$lang_var = $this->get_lang_var_from_list($varname, $list);
-		return $this->register_var($full_varname, TextHelper::to_js_string($lang_var), $list);
+		return $this->data->get_js_var_from_list($varname, $list);
 	}
 
 	public function get_htmlescaped_lang_var($varname)
 	{
-		return $this->get_htmlescaped_lang_var_from_list($varname, $this->vars);
+		return $this->data->get_htmlescaped_lang_var($varname);
 	}
 
 	public function get_htmlescaped_lang_var_from_list($varname, &$list)
 	{
-		$full_varname = 'EL_' . $varname;
-		if (!empty($list[$full_varname]))
-		{
-			return $list[$full_varname];
-		}
-
-		$lang_var = $this->get_lang_var_from_list($varname, $list);
-		return $this->register_var($full_varname, htmlspecialchars($lang_var), $list);
+		return $this->data->get_htmlescaped_lang_var_from_list($varname, $list);
 	}
 
 	public function get_htmlescaped_var($varname)
 	{
-		return $this->get_htmlescaped_var_from_list($varname, $this->vars);
+		return $this->data->get_htmlescaped_var($varname);
 	}
 
 	public function get_htmlescaped_var_from_list($varname, &$list)
 	{
-		$full_varname = 'E_' . $varname;
-		if (!empty($list[$full_varname]))
-		{
-			return $list[$full_varname];
-		}
-
-		if (!isset($list[$varname]))
-		{
-			$list[$varname] = '';
-		}
-
-		$value = htmlspecialchars($list[$varname]);
-		return $this->register_var($full_varname, $value, $list);
+		return $this->data->get_htmlescaped_var_from_list($varname, $list);
 	}
 
 	public function get_lang_var($varname)
 	{
-		return $this->get_lang_var_from_list($varname, $this->vars);
+		return $this->data->get_lang_var($varname);
 	}
 
 	public function get_lang_var_from_list($varname, &$list)
 	{
-		$full_varname = 'L_' . $varname;
-		if (!empty($list[$full_varname]))
-		{
-			return $list[$full_varname];
-		}
-		$varname= strtolower($varname);
-		foreach ($this->langs as $lang)
-		{
-			if (isset($lang[$varname]))
-			{
-				return $this->register_var($full_varname, $lang[$varname], $list);
-			}
-		}
-		$empty_string = '';
-		return $this->register_var($full_varname, $empty_string, $list);
+		return $this->data->get_lang_var_from_list($varname, $list);
 	}
 
-	protected function auto_load_frequent_vars()
+	public function auto_load_frequent_vars()
 	{
-		global $User, $Session;
-		$member_connected = $User->check_level(MEMBER_LEVEL);
-		$this->assign_vars(array(
-			'SID' => SID,
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
-			'C_USER_CONNECTED' => $member_connected,
-			'C_USER_NOTCONNECTED' => !$member_connected,
-			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
-			'TOKEN' => !empty($Session) ? $Session->get_token() : ''
-			));
-	}
-
-	private function find_lang_var($varname)
-	{
-		foreach ($this->langs as $lang)
-		{
-			if (isset($lang[$varname]))
-			{
-				return $lang[$varname];
-			}
-		}
-		return '';
-	}
-
-	private function register_var($name, $value, &$list)
-	{
-		$list[$name] = $value;
-		return $value;
+		$this->data->auto_load_frequent_vars();
 	}
 }
 ?>
