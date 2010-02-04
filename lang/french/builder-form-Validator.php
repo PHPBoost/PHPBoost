@@ -32,9 +32,10 @@
 $lang = array(
     'doesnt_equal' => 'Les deux champs "%s" et "%s" doivent avoir la même valeur',
     'doesnt_match_regex' => 'La valeur saisie n\'est pas au bon format',
+    'doesnt_match_length_intervall' => 'La valeur saisie ne respecte par la longueur définie',
     'doesnt_match_integer_intervall' => 'La valeur saisie ne respecte pas l\'intervalle défini',
-    'has_to_be_filled' => 'Le champs "%s" doit être renseigné',
-    'this_has_to_be_filled' => 'Ce champs doit être renseigné',
+    'has_to_be_filled' => 'Le champ "%s" doit être renseigné',
+    'this_has_to_be_filled' => 'Ce champ doit être renseigné',
 	'validation_error' => 'Veuillez corriger les erreurs du formulaire'
 );
 
