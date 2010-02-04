@@ -41,7 +41,7 @@ function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, messag
 {
 	if ($(field_id))
 	{
-		value = $(field_id).value;
+		value = $F(field_id);
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -60,7 +60,7 @@ function notEmptyFormFieldOnsubmitValidator(field_id, message)
 {
 	if ($(field_id))
 	{
-		if ($(field_id).value == '')
+		if ($F(field_id) == '')
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -72,7 +72,7 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, mes
 {
 	if ($(field_id))
 	{
-		if (!integerIntervalValidator($(field_id).value, lbound, rbound))
+		if (!integerIntervalValidator($F(field_id), lbound, rbound))
 		{
 			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
@@ -83,11 +83,25 @@ function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, mes
 
 
 /* #### Onblur validator #### */
+function nonEmptyFormFieldOnblurValidator(field_id, message)
+{
+	if ($(field_id))
+	{
+		if ($F(field_id) == '')
+		{
+			displayFormFieldOnblurValidatorMessage(field_id, message);
+			return false;
+		}
+	}
+	clearFormFieldOnblurValidatorMessage(field_id);
+	return true;
+}
+
 function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
 {
 	if ($(field_id))
 	{
-		value = $(field_id).value;
+		value = $F(field_id);
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -103,7 +117,7 @@ function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, messa
 {
 	if ($(field_id))
 	{
-		if (!integerIntervalValidator($(field_id).value, lbound, rbound))
+		if (!integerIntervalValidator($F(field_id), lbound, rbound))
 		{
 			displayFormFieldOnblurValidatorMessage(field_id, message);
 			return false;
@@ -112,4 +126,20 @@ function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, messa
 	clearFormFieldOnblurValidatorMessage(field_id);
 	return true;
 }
+
+function equalityFormFieldOnblurValidator(field_id, field_id_equality, message)
+{
+	if ($(field_id) && $(field_id_equality))
+	{
+		if ($F(field_id) != $F(field_id_equality))
+		{
+			displayFormFieldOnblurValidatorMessage(field_id, message);
+			return false;
+		}
+	}
+	clearFormFieldOnblurValidatorMessage(field_id);
+	return true;
+}
+
+
 
