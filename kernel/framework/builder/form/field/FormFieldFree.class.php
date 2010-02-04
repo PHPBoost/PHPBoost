@@ -50,9 +50,13 @@ class FormFieldFree extends AbstractFormField
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
 		$this->assign_common_template_variables($template);
-			
+
+		$template->assign_vars(array(
+			'C_HAS_CONSTRAINT' => (bool)$this->has_constraints(),
+		));
+		
 		$template->assign_block_vars('fieldelements', array(
-				'ELEMENT' => $this->get_value()
+			'ELEMENT' => $this->get_value()
 		));
 
 		return $template;

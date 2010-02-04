@@ -47,6 +47,10 @@ class FormFieldDate extends AbstractFormField
 		$this->assign_common_template_variables($template);
 		
 		$template->assign_vars(array(
+			'C_HAS_CONSTRAINT' => (bool)$this->has_constraints(),
+		));
+		
+		$template->assign_vars(array(
 			'CALENDAR' => $this->get_calendar()->display()
 		));
 

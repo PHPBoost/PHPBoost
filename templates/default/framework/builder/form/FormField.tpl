@@ -8,11 +8,13 @@
 				<span class="text_small">{DESCRIPTION}</span>
 			</dt>
 			<dd>
-				# START fieldelements #
-						{fieldelements.ELEMENT}
-				# END fieldelements #
+			# START fieldelements #
+				{fieldelements.ELEMENT}
+			# END fieldelements #
+			# IF C_HAS_CONSTRAINT #
 				&nbsp;
 				<span id="onblurContainerResponse{ID}"></span>
 				<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
+			# ENDIF #
 			</dd>
 		</dl>
