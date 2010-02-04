@@ -72,13 +72,13 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 
 	public function get_onblur_validation(FormField $field)
 	{
-		return 'regexFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_id()) .
+		return 'regexFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 
 	public function get_onsubmit_validation(FormField $field)
 	{
-		return 'regexFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_id()) .
+		return 'regexFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 }
