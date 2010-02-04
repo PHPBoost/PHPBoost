@@ -88,10 +88,7 @@ class DeprecatedTemplate extends FileTemplate
 	
 	private function bind_vars($template)
 	{
-		$template->vars =& $this->vars;
-		$template->blocks =& $this->blocks;
-		$template->langs =& $this->langs;
-		$template->subtemplates =& $this->subtemplates;
+		$this->data->bind_vars($template->data);
 	}
 
 	private function find_module($identifier, $real_identifier)

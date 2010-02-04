@@ -142,5 +142,7 @@ interface TemplateData
 	function get_lang_var_from_list($varname, &$list);
 	
 	function auto_load_frequent_vars();
+	
+	function bind_vars(TemplateData $data);
 }
 ?>
