@@ -69,8 +69,15 @@ class SandboxController extends ModuleController
 
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'nom'),
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
 			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+		));
+		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
+		));
+		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ texte3', 'toto3', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 15'),
+			array(new IntegerIntervalFormFieldConstraint(10, 15))
 		));
 
 		// MULTI LINE TEXT

@@ -283,7 +283,7 @@ abstract class AbstractFormField implements FormField
 					$this->set_required($value);
 					if ($value)
 					{
-						$this->add_constraint(new NotEmptyFormFieldConstraint($this->get_label()));
+						$this->add_constraint(new NotEmptyFormFieldConstraint());
 					}
 					unset($field_options['required']);
 					break;
