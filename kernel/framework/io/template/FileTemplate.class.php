@@ -58,6 +58,8 @@ class FileTemplate extends AbstractTemplate
 	{
 		parent::__construct($file_name, $auto_load_vars);
 		$this->set_loader(new FileTemplateLoader($this));
+		$this->set_display_parser(new TemplateDisplayParser());
+		$this->set_to_string_parser(new TemplateToStringParser());
 	}
 }
 ?>

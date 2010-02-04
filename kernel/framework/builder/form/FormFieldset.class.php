@@ -104,7 +104,6 @@ class FormFieldset
 				'FIELD' => $field->display()->to_string(),
 			));
 		}
-
 		return $template->to_string();
 	}
 
