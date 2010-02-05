@@ -148,7 +148,9 @@ class ErrorHandler
 
 	protected function display_debug()
 	{
-		echo '<span id="errorh"></span>
+		if (Debug::is_output_html())
+		{
+			echo '<span id="errorh"></span>
 			<div class="' . $this->errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
 				<img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
 					alt="" style="float:left;padding-right:6px;" />
@@ -156,6 +158,12 @@ class ErrorHandler
 				. Path::get_path_from_root($this->errfile) . '</em>:' . $this->errline . '
 				<br />
 			</div>';
+		}
+		else
+		{
+			echo "\n" . $this->errdesc . ': ' . $this->errstr .
+				"\n" . Path::get_path_from_root($this->errfile) . ':' . $this->errline . "\n";
+		}
 	}
 
 	protected function display_fatal()

@@ -87,7 +87,7 @@ class AppContext
 		static $uid = 1764;
 		return $uid++;
 	}
-	
+
 	/**
 	 * @desc set the <code>HTTPRequest</code>
 	 * @param HTTPRequest $request
@@ -105,7 +105,7 @@ class AppContext
 	{
 		return self::$request;
 	}
-	
+
 	/**
 	 * @desc set the <code>HTTPResponse</code>
 	 * @param HTTPResponse $response
@@ -141,7 +141,7 @@ class AppContext
 	{
 		return self::$bench;
 	}
-	
+
 	/**
 	 * @deprecated de merde pour toi benoit
 	 */

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          IntegratedErrorHandler.class.php
+ *                          install-cli.php
  *                            -------------------
- *   begin                : November 11, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : February 3, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,22 +25,13 @@
  *
  ###################################################*/
 
-/**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package core
- * @desc
- */
-class IntegratedErrorHandler extends ErrorHandler
-{
-	protected function display_debug()
-	{
-		parent::display_debug();
-	}
 
-	protected function display_fatal()
-	{
-		// TODO manage languages here
-		AppContext::get_response()->clean_output();
-		die(ErrorHandler::FATAL_MESSAGE);
-	}
-}
+
+define('PATH_TO_ROOT', '..');
+require_once PATH_TO_ROOT . '/install/environment/CLIEnvironment.class.php';
+
+CLIEnvironment::load_imports();
+
+CLIEnvironment::init();
+
+?>

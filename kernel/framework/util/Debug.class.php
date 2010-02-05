@@ -32,6 +32,7 @@
 class Debug
 {
 	private static $enabled = null;
+	private static $html_output = true;
 
 	/**
 	 * Tells whether the debug mode is enabled
@@ -54,6 +55,24 @@ class Debug
 	public static function enabled_debug_mode()
 	{
 		self::write_debug_file(true);
+	}
+
+	/**
+	 * Enables the debug mode
+	 */
+	public static function enabled_current_script_debug()
+	{
+		self::$enabled = true;
+	}
+
+	public static function is_output_html()
+	{
+		return self::$html_output;
+	}
+
+	public static function set_plain_text_output_mode()
+	{
+		self::$html_output = false;
 	}
 
 	/**
@@ -82,7 +101,7 @@ class Debug
 		{
 			$message = 'An exception has been thrown';
 		}
-		echo '<br />' . $message . '<br /><br />Stack<hr />';
+		echo to_plain_text('<br />' . $message . '<br /><br />Stack<hr />');
 		Debug::print_stacktrace(0, $exception);
 		exit;
 	}
@@ -141,7 +160,7 @@ class Debug
 			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' .
 			self::get_file($trace) . ' - ' . self::get_method_prototype($trace) . '<br />';
 		}
-		return $string_stacktrace;
+		return to_plain_text($string_stacktrace);
 	}
 
 	/**
@@ -231,6 +250,29 @@ class Debug
 			$i++;
 		}
 		return $string_stacktrace;
+	}
+	
+	private static function get_line_break_string($times = 1)
+	{
+		$line_break = self::$html_output ? '<br />' : "\n";
+		$out = '';
+		for ($i = 0; $i < 1; $i++)
+		{
+			$out += $line_break;
+		}
+		return $out;
+	}
+	
+	private static function get_hr_string()
+	{
+		return self::$html_output ? '<hr />' : "\n----------------------------------------\n";
+	}
+	
+	private static function to_plain_text($text)
+	{
+//		$text = str_replace(array('<br />', '<hr />'), array("\n", "\n----------------------------------------\n"), $text);
+//		return strip_tags($text);
+return $text;
 	}
 }
 ?>
