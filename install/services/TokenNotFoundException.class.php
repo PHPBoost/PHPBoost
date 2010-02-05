@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          IntegratedErrorHandler.class.php
+ *                          TokenNotFoundException.class.php
  *                            -------------------
- *   begin                : November 11, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : February 3, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,22 +25,12 @@
  *
  ###################################################*/
 
-/**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package core
- * @desc
- */
-class IntegratedErrorHandler extends ErrorHandler
+class TokenNotFoundException extends Exception
 {
-	protected function display_debug()
+	public function __construct($token_name)
 	{
-		parent::display_debug();
-	}
-
-	protected function display_fatal()
-	{
-		// TODO manage languages here
-		AppContext::get_response()->clean_output();
-		die(ErrorHandler::FATAL_MESSAGE);
+		parent::__construct('Token "' . $token_name . '" was not found');
 	}
 }
+
+?>

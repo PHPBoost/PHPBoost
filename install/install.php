@@ -37,9 +37,8 @@ define('STEP_SITE_CONFIG', 5);
 define('STEP_ADMIN_ACCOUNT', 6);
 define('STEP_END', 7);
 
-define('DEBUG', true);
 define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/InstallEnvironment.class.php';
+require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
 
 InstallEnvironment::load_imports();
 
