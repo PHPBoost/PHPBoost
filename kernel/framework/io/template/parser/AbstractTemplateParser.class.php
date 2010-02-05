@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           abstract_template_parser.class.php
+ *                       AbstractTemplateParser.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon

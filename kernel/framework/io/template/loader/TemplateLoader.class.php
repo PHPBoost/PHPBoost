@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          template_loader.class.php
+ *                          TemplateLoader.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright         : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

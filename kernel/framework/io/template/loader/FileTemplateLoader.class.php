@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          file_template_loader.class.php
+ *                        FileTemplateLoader.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
