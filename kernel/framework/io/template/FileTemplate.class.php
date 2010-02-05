@@ -34,7 +34,7 @@
  * 
  * To be more efficient, this class uses a cache and parses each file only once.
  * <h1>File paths</h1>
- * The web site can have several themes whose files aren't in the same folders. When you load a file, you just have to load the generic file and the good template file will
+ * The web site can have several themes whose files aren't in the same folders. When you load a file, you just have to load the generic file and the right template file will
  * be loaded dinamically.
  * <h2>Kernel template file</h2>
  * When you want to load a kernel template file, the path you must indicate is only the name of the file, for example header.tpl loads /template/your_theme/header.tpl and

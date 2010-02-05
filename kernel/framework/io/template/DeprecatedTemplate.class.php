@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                            deprecated_template.class.php
+ *                         DeprecatedTemplate.class.php
  *                            -------------------
  *   begin                : September 17, 2009
- *   copyright         : Loïc Rouchon
+ *   copyright            : Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -23,10 +23,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * The PHPboost template engine is actually based on sections of code from phpBB3 templates
  ###################################################*/
 
-
+/**
+ * @deprecated
+ * @desc This class exists only to be compliant with legacy code. It manages several templates in the same objet.
+ * In fact, one instance of this class loads several templates which share the same data.
+ * As of PHPBoost 3.1, it's forbidden to use it, but if won't be removed while the legacy code will use it.
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ */
 class DeprecatedTemplate extends FileTemplate
 {
 	private $modules = array();

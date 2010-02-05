@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           template_parser_echo.class.php
+ *                       TemplateDisplayParser.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
