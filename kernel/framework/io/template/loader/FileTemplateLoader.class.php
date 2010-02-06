@@ -36,9 +36,6 @@ class FileTemplateLoader implements TemplateLoader
 	private $file;
 	private $folder;
 
-	// TODO is used ?
-	private $filename;
-
 	private $default_templates_folder;
 	private $theme_templates_folder;
 
