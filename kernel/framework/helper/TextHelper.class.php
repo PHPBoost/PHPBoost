@@ -127,7 +127,7 @@ class TextHelper
 	 */
 	public static function to_js_string($string)
 	{
-		return '\'' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
+		return '\'' . str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'),
 		addcslashes($string, '\'')) . '\'';
 	}
 	
