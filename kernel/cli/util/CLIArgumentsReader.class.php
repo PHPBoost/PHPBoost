@@ -36,7 +36,7 @@ class CLIArgumentsReader
 		$this->nb_args = count($this->args);
 	}
 
-	public function get($option)
+	public function get($option, $default_value = null)
 	{
 		try
 		{
@@ -45,6 +45,10 @@ class CLIArgumentsReader
 		}
 		catch (Exception $ex)
 		{
+			if ($default_value !== null)
+			{
+				return $default_value;
+			}
 			throw new ArgumentNotFoundException($option, $this->args);
 		}
 	}
@@ -69,7 +73,7 @@ class CLIArgumentsReader
 		{
 			return $this->args[$index];
 		}
-		throw new OutOfBoundsException($index, $this->nb_args);
+		throw new OutOfBoundsException($index . '/' . $this->nb_args);
 	}
 
 	public function get_nb_args()
