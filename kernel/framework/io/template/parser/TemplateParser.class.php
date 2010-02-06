@@ -27,6 +27,11 @@
 
 interface TemplateParser
 {
-	function parse(Template $template_object, TemplateLoader $template_loader);
+	/**
+	 * @desc
+	 * @param string $content The content to parse
+	 * @return The parsed content
+	 */
+	function parse($content);
 }
 ?>

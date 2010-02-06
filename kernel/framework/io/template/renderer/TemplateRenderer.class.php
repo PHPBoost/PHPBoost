@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          TemplateLoader.class.php
+ *                          TemplateRenderer.class.php
  *                            -------------------
- *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : February 6, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,12 +25,8 @@
  *
  ###################################################*/
 
-interface TemplateLoader
+interface TemplateRenderer
 {
-	/**
-	 * 
-	 * @return string
-	 */
-	function load();
+	function render(TemplateData $data, TemplateLoader $loader);
 }
 ?>

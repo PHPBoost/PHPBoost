@@ -25,63 +25,19 @@
  *
  ###################################################*/
 
-
-
 abstract class AbstractTemplateParser implements TemplateParser
 {
-	protected $cache_filepath;
 	protected $content;
-	/**
-	 * @var TemplateLoader
-	 */
-	protected $loader;
-	/**
-	 * @var Template
-	 */
-	protected $template;
 
-	protected $resource = null;
-
-	public function parse(Template $template_object, TemplateLoader $template_loader)
+	public function parse($content)
 	{
-		$this->template = $template_object;
-		$this->loader = $template_loader;
-
-		$this->compute_cache_filepath();
-		if (!$this->is_cache_valid())
-		{
-			$this->generate_cache();
-		}
-		$this->execute();
-		return $this->resource;
-	}
-
-	protected abstract function compute_cache_filepath();
-
-	private function is_cache_valid()
-	{
-		return $this->loader->is_cache_file_valid($this->cache_filepath);
-	}
-
-	private function generate_cache()
-	{
-		$this->load();
+		$this->content = $content;
 		$this->do_parse();
-		$this->clean();
-		$this->optimize();
-		$this->save();
+		return $this->content;
 	}
-
-	protected abstract function execute();
-
-	private function load()
-	{
-		$this->loader->load();
-		$this->content = $this->loader->get_resource_as_string();
-	}
-
-	protected abstract function do_parse();
-
+	
+	abstract protected function do_parse();
+	
 	protected function clean()
 	{
 		$this->content = preg_replace(
@@ -89,10 +45,6 @@ abstract class AbstractTemplateParser implements TemplateParser
 		array('', '', '', ''),
 		$this->content
 		);
-	}
-
-	protected function optimize()
-	{
 	}
 
 	protected function get_getvar_method_name($varname)
@@ -135,18 +87,5 @@ abstract class AbstractTemplateParser implements TemplateParser
 
 		return array('method' => 'get_' . $method, 'varname' => $tiny_varname);
 	}
-
-	private function save()
-	{
-
-		$file = new File($this->cache_filepath);
-		$file->lock();
-		$file->write($this->content);
-		$file->unlock();
-		$file->close();
-		$file->change_chmod(0666);
-	}
 }
-
-
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                   site_display_graphical_environment.class.php
+ *                   SiteDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 01, 2009
  *   copyright            : (C) 2009 Benoit Sautel

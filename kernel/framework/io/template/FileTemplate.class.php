@@ -57,8 +57,8 @@ class FileTemplate extends AbstractTemplate
 	public function __construct($file_name, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
 		parent::__construct($file_name, $auto_load_vars);
-		$this->set_loader(new FileTemplateLoader($this));
-		$this->set_to_string_parser(new TemplateToStringParser());
+		$this->set_loader(new FileTemplateLoader($file_name, $this->data));
+		$this->set_renderer(new DefaultTemplateRenderer());
 	}
 }
 ?>
