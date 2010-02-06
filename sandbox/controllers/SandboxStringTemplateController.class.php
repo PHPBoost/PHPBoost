@@ -36,18 +36,55 @@ class SandboxStringTemplateController extends ModuleController
 
 	private $fruits = array('apple', 'pear', 'banana');
 
+	private $result_tpl = 'Non cached: {NON_CACHED_TIME} s - Cached: {CACHED_TIME} s';
+
 	public function execute(HTTPRequest $request)
 	{
-		$tpl = new StringTemplate($this->test);
+		$tpl = new CachedStringTemplate($this->result_tpl);
 
+		$bench_non_cached = new Bench();
+		$bench_non_cached->start();
+		$this->run_non_cached_parsing();
+		$bench_non_cached->stop();
+		$tpl->assign_vars(array('NON_CACHED_TIME' => $bench_non_cached->to_string(5)));
+
+		$bench_cached = new Bench();
+		$bench_cached->start();
+		$this->run_cached_parsing();
+		$bench_cached->stop();
+		$tpl->assign_vars(array('CACHED_TIME' => $bench_cached->to_string(5)));
+
+		return new SiteDisplayResponse($tpl);
+	}
+
+	private function assign_template(Template $tpl)
+	{
 		$tpl->assign_vars(array('CONTENT' => 'fruits:'));
 
 		foreach ($this->fruits as $fruit)
 		{
 			$tpl->assign_block_vars('elements', array('NAME' => $fruit));
 		}
+	}
 
-		return new SiteDisplayResponse($tpl);
+	private function run_cached_parsing()
+	{
+		for ($i = 0; $i < 1000; $i++)
+		{
+			$tpl = new CachedStringTemplate($this->test);
+			$this->assign_template($tpl);
+			$tpl->to_string();
+		}
+	}
+
+	private function run_non_cached_parsing()
+	{
+		for ($i = 0; $i < 1000; $i++)
+		{
+			$tpl = new StringTemplate($this->test);
+			$this->assign_template($tpl);
+			$tpl->to_string();
+		}
 	}
 }
 ?>
