@@ -60,6 +60,10 @@ abstract class AbstractFormField implements FormField
 	 * @var FormFieldConstraint[]
 	 */
 	protected $constraints = array();
+	/**
+	 * @var FormConstraint[]
+	 */
+	protected $form_constraints = array();
 
 	/**
 	 * @desc Constructs and set parameters to the field.
@@ -220,20 +224,25 @@ abstract class AbstractFormField implements FormField
 
 	/**
 	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/ValidableFormComponent#add_constraint($constraint)
+	 * @see kernel/framework/builder/form/field/FormField#add_constraint($constraint)
 	 */
 	public function add_constraint(FormFieldConstraint $constraint)
 	{
 		$this->constraints[] = $constraint;
 	}
-
+	
+	public function add_form_constraint(FormConstraint $constraint)
+	{
+		$this->form_constraints[] = $constraint;
+	}
+	
 	/**
 	 * (non-PHPdoc)
 	 * @see kernel/framework/builder/form/field/FormField#has_constraints()
 	 */
 	public function has_constraints()
 	{
-		return (count($this->constraints) > 0);
+		return (count($this->constraints) > 0 || count($this->form_constraints) > 0);
 	}
 	
 	public function get_onsubmit_validations()
@@ -259,6 +268,14 @@ abstract class AbstractFormField implements FormField
 			if (!empty($validation))
 			{
 				$validations[] =  htmlspecialchars($validation);
+			}
+		}
+		foreach ($this->form_constraints as $constraint)
+		{
+			$validation = $constraint->get_onblur_validation();
+			if (!empty($validation))
+			{
+				$validations[] =  $validation;
 			}
 		}
 		return implode(' ;', $validations);
