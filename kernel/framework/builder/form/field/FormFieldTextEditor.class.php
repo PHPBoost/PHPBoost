@@ -73,9 +73,6 @@ class FormFieldTextEditor extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_vars(array(
-			'C_HAS_CONSTRAINTS' => (bool)$this->has_constraints(),
-		));
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field
 		));
