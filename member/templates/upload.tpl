@@ -6,6 +6,8 @@
 		var area = opener.document.getElementById("{FIELD}");
 		var nav = navigator.appName; //Recupère le nom du navigateur
 
+		window.opener.insertTinyMceContent(code); //insertion pour tinymce.
+		
 		area.focus();
 		if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
 			ie_sel(area, code, 'smile');
@@ -13,7 +15,7 @@
 			netscape_sel(area, code, 'smile');
 		else //insertion normale (autres navigateurs)
 			opener.document.getElementById("{FIELD}").value += ' ' + code;
-	}	
+	}
 	function close_popup()
 	{
 		opener=self;
