@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           index.php
+ *                        StringTemplateLoader.class.php
  *                            -------------------
- *   begin                : December 13 2009
- *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : February 6, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,15 +25,19 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SandboxTableController', '`^/table/?$`'),
-	new UrlControllerMapper('SandboxStringTemplateController', '`^/template/?`'),
-	new UrlControllerMapper('SandboxController', '`^.*$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+class StringTemplateLoader implements TemplateLoader
+{
+	private $content = '';
+	
+	public function __construct($content)
+	{
+		$this->content = $content;
+	}
+	
+	public function load()
+	{
+		$parser = new TemplateToStringParser();
+		return $parser->parse($this->content);
+	}
+}
 ?>

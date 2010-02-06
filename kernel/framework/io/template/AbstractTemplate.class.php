@@ -28,12 +28,11 @@
 /**
  * @package io
  * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
- * @desc This class is a default implementation of the Template interface using a TemplateLoader, 
+ * @desc This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
  */
 class AbstractTemplate implements Template
 {
-	protected $identifier = '';
 	/**
 	 * @var TemplateLoader
 	 */
@@ -51,18 +50,13 @@ class AbstractTemplate implements Template
 	 * @desc Builds a Template object.
 	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
 	 */
-	public function __construct($identifier, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	public function __construct($auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
 		$this->data = new DefaultTemplateData();
 
-		if ($identifier != null)
+		if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 		{
-			$this->identifier = $identifier;
-
-			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
-			{
-				$this->data->auto_load_frequent_vars();
-			}
+			$this->data->auto_load_frequent_vars();
 		}
 	}
 
@@ -70,12 +64,12 @@ class AbstractTemplate implements Template
 	{
 		$this->loader = $loader;
 	}
-	
+
 	protected function set_renderer(TemplateRenderer $renderer)
 	{
 		$this->renderer = $renderer;
 	}
-	
+
 	protected function set_data(TemplateData $data)
 	{
 		$this->data = $data;
@@ -127,7 +121,7 @@ class AbstractTemplate implements Template
 	 */
 	public function display()
 	{
-        echo $this->renderer->render($this->data, $this->loader);
+		echo $this->renderer->render($this->data, $this->loader);
 	}
 
 	public function to_string()
@@ -158,7 +152,7 @@ class AbstractTemplate implements Template
 	{
 		$this->data->auto_load_frequent_vars();
 	}
-	
+
 	public function get_data()
 	{
 		return $this->data;
