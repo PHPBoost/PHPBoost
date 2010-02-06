@@ -59,8 +59,7 @@ class ModulesManager
 	 */
 	public static function get_uninstalled_modules_map()
 	{
-		$installed = self::get_installed_modules_map();
-		return $not_installed;
+        throw new NotYetImplementedException();
 	}
 
 	/**

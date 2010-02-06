@@ -26,18 +26,15 @@
  ###################################################*/
 
 class CLILauncher
-{
+{	
 	private $args;
 	private $command = '';
-	private $commands = array(
-       'install' => 'CLIInstallCommand');
-	private $commands_help = array(
-       'install' => 'install phpboost');
+	private $commands = array();
 	
 	/**
 	 * @var CLILauncher
 	 */
-	private $launcher;
+	private $cli;
 
 	public function __construct(array $args = array())
 	{
@@ -47,6 +44,7 @@ class CLILauncher
 		{
 			$this->command = $this->args[0];
 		}
+		$this->load_commands_list();
 	}
 
 	public function launch()
@@ -69,29 +67,40 @@ class CLILauncher
 		}
 	}
 
-	public function find_command()
-	{
-		if (array_key_exists($this->command, $this->commands))
-		{
-			$this->launcher = new $this->commands[$this->command]();
-			return true;
-		}
-		return false;
-	}
+    private function load_commands_list()
+    {
+        $mds = new ModulesDiscoveryService();
+        foreach ($mds->get_available_modules(CLICommand::EXTENSION_POINT) as $extension_provider)
+        {
+        	$new_commands = $extension_provider->call(CLICommand::EXTENSION_POINT);
+        	$this->commands = array_merge($this->commands, $new_commands);
+        }
+    }
 
-	public function execute_command()
+    private function find_command()
+    {
+        if (array_key_exists($this->command, $this->commands))
+        {
+            $this->cli = new $this->commands[$this->command]();
+            return true;
+        }
+        return false;
+    }
+
+	private function execute_command()
 	{
 		$args = $this->args;
         array_shift($args);
-		$this->launcher->execute($args);
+		$this->cli->execute($args);
 	}
 
-	public function display_commands()
+	private function display_commands()
 	{
 		CLIOutput::writeln('availables commands are:', 2);
-		foreach ($this->commands_help as $command => $help)
+		foreach ($this->commands as $command => $cli_classname)
 		{
-			CLIOutput::writeln("\t" . '- ' . $command . ': ' . $help, 2);
+			$cli = new $cli_classname();
+			CLIOutput::writeln("\t" . '- ' . $command . ': ' . $cli->short_description(), 2);
 		}
 	}
 }

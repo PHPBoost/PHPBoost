@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          CLICommand.class.php
+ *                          KernelInterface.class.php
  *                            -------------------
  *   begin                : February 06, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
@@ -25,14 +25,16 @@
  *
  ###################################################*/
 
-interface CLICommand
+class KernelInterface extends ModuleInterface
 {
-	const EXTENSION_POINT = 'get_commands';
-    
-    function short_description();
-    
-    function help(array $args);
+	public function __construct()
+	{
+		parent::__construct('kernel');
+	}
 	
-	function execute(array $args);
+	public function get_commands()
+	{
+		return array('help' => 'CLIHelpCommand');
+	}
 }
 ?>

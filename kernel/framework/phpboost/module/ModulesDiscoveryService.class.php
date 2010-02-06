@@ -53,6 +53,11 @@ class ModulesDiscoveryService
 				$this->availables_modules[] = $module_id;
 			}
 		}
+		$this->availables_modules[] = 'kernel';
+		if (ClassLoader::is_class_registered_and_valid('CLIInstallCommand'))
+		{
+			$this->availables_modules[] = 'install';
+		}
 	}
 
 
@@ -109,9 +114,10 @@ class ModulesDiscoveryService
 		$modules = array();
 		if ($modules_list === array())
 		{
-			foreach (ModulesManager::get_installed_modules_ids_list() as $module_id)
+			//            foreach (ModulesManager::get_installed_modules_ids_list() as $extension_provider_id)
+			foreach ($this->availables_modules as $extension_provider_id)
 			{
-				$module = $this->get_module($module_id);
+				$module = $this->get_module($extension_provider_id);
 				if (!$module->got_error() && ($functionality === 'none' || $module->has_functionality($functionality)))
 				{
 					$modules[$module->get_id()] = $module;
@@ -140,28 +146,28 @@ class ModulesDiscoveryService
 	public function get_module($module_id = '')
 	{
 		$classname = ucfirst($module_id) . 'Interface';
-
+		$module = null;
 		if (ClassLoader::is_class_registered($classname))
 		{   // The Interface exists
-			$module = new $classname();
 
 			if (isset($this->loaded_modules[$module_id]))
 			{
 				return $this->loaded_modules[$module_id];
 			}
+            $module = new $classname();
 
-			if (in_array($module_id, $this->availables_modules))
-			{   // The interface is available
-				$user = AppContext::get_user();
-				if (!ModulesManager::get_module($module_id)->check_auth())
-				{   // ACCESS DENIED
-					$module->set_error(ACCES_DENIED);
-				}
-			}
-			else
-			{   // NOT AVAILABLE
-				$module->set_error(MODULE_NOT_AVAILABLE);
-			}
+			//			if (in_array($module_id, $this->availables_modules))
+			//			{   // The interface is available
+			//				$user = AppContext::get_user();
+			//				if (!ModulesManager::get_module($module_id)->check_auth())
+			//				{   // ACCESS DENIED
+			//					$module->set_error(ACCES_DENIED);
+			//				}
+			//			}
+			//			else
+			//			{   // NOT AVAILABLE
+			//				$module->set_error(MODULE_NOT_AVAILABLE);
+			//			}
 		}
 		else
 		{   // NOT IMPLEMENTED

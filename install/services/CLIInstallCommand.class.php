@@ -49,9 +49,19 @@ class CLIInstallCommand implements CLICommand
 	 */
 	private $arg_reader;
 
-	public function execute(array $arguments = array())
+    public function short_description()
+    {
+        return 'install phpboost development environment';
+    }
+    
+    public function help(array $args)
+    {
+    	CLIOutput::writeln('help string');
+    }
+
+	public function execute(array $args)
 	{
-		$this->arg_reader = new CLIArgumentsReader($arguments);
+		$this->arg_reader = new CLIArgumentsReader($args);
 		$this->check_parameters();
 		$this->show_parameters();
 		$this->check_env();

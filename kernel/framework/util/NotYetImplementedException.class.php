@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          CLICommand.class.php
+ *                          NotYetImplementedException.class.php
  *                            -------------------
  *   begin                : February 06, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
@@ -25,14 +25,11 @@
  *
  ###################################################*/
 
-interface CLICommand
+class NotYetImplementedException extends Exception
 {
-	const EXTENSION_POINT = 'get_commands';
-    
-    function short_description();
-    
-    function help(array $args);
-	
-	function execute(array $args);
+	public function __construct()
+	{
+		parent::__construct('not yet implemented');
+	}
 }
 ?>
