@@ -131,7 +131,7 @@ class AbstractTemplate implements Template
 	 */
 	public function display()
 	{
-		$this->display_parser->parse($this, $this->loader);
+        echo $this->to_string_parser->parse($this, $this->loader);
 	}
 
 	public function to_string()
