@@ -76,7 +76,12 @@ interface FormField
 	 * @param FormFieldConstraint $constraint The constraint to add
 	 */
 	function add_constraint(FormFieldConstraint $constraint);
-
+	
+	/**
+	 * @desc Add javascript code on the onblur field parameter that makes validation
+	 */
+	function add_form_constraint(FormConstraint $constraint);
+	
 	/**
 	 * @desc Return true if the field has one or more constraints, false otherwise.
 	 * @return boolean

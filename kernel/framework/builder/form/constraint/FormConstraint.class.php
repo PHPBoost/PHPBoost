@@ -34,7 +34,7 @@ interface FormConstraint
 {
 	function validate();
 
-	function generate_js_validation();
+	function get_onblur_validation();
 }
 
 ?>

@@ -171,13 +171,19 @@ function equalityFormFieldOnblurValidator(field_id, field_id_equality, message)
 {
 	if ($(field_id) && $(field_id_equality))
 	{
+		if ($F(field_id) == '' || $F(field_id_equality) == '')
+		{
+			return false;
+		}
 		if ($F(field_id) != $F(field_id_equality))
 		{
 			displayFormFieldOnblurValidatorMessage(field_id, message);
+			displayFormFieldOnblurValidatorMessage(field_id_equality, message);
 			return false;
 		}
 	}
 	clearFormFieldOnblurValidatorMessage(field_id);
+	clearFormFieldOnblurValidatorMessage(field_id_equality);
 	return true;
 }
 

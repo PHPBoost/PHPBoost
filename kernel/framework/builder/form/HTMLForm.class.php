@@ -143,7 +143,7 @@ class HTMLForm
 		}
 		foreach ($this->constraints as $constraint)
 		{
-			if (!$constraint->validate($this))
+			if (!$constraint->validate())
 			{
 				$validation_result = false;
 			}
