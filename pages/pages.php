@@ -117,15 +117,15 @@ if (!empty($encoded_title) && $num_rows == 1)
 	$links = array();
 	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 	{
-		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $Template->get_var('PICTURES_DATA_PATH') . '/images/edit.png');
-		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $Template->get_var('PICTURES_DATA_PATH') . '/images/rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $Template->get_var('PICTURES_DATA_PATH') . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
-		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $Template->get_var('PICTURES_DATA_PATH') . '/images/redirect.png');
-		$links[$LANG['pages_create']] = array(url('post.php'), $Template->get_var('PICTURES_DATA_PATH') . '/images/create_page.png');
+		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/edit.png');
+		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/rename.png');
+		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
+		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/redirect.png');
+		$links[$LANG['pages_create']] = array(url('post.php'), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/create_page.png');
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE))
-		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_var('PICTURES_DATA_PATH') . '/images/explorer.png');
+		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_data()->get_var('PICTURES_DATA_PATH') . '/images/explorer.png');
 		
 	$nbr_values = count($links);
 	$i = 1;
