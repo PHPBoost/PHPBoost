@@ -319,6 +319,7 @@ abstract class AbstractFormField implements FormField
 			'C_REQUIRED' => $this->is_required(),
 			'VALUE' => $this->get_value(),
 			'ONBLUR' => $this->get_onblur_action(),
+			'C_HAS_CONSTRAINTS' => (bool)$this->has_constraints(),
 			'CLASS' => $this->get_css_class()
 		));
 	}
