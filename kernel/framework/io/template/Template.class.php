@@ -101,5 +101,11 @@ interface Template
 	 * @param Template $template the template
 	 */
 	function add_subtemplate($identifier, Template $template);
+	
+	/**
+	 * @desc Returns the template data
+	 * @return TemplateData
+	 */
+	function get_data();
 }
 ?>

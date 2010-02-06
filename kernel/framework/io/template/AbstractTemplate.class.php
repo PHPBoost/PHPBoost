@@ -39,13 +39,9 @@ class AbstractTemplate implements Template
 	 */
 	protected $loader;
 	/**
-	 * @var TemplateParser
+	 * @var TemplateRenderer
 	 */
-	protected $display_parser;
-	/**
-	 * @var TemplateParser
-	 */
-	protected $to_string_parser;
+	protected $renderer;
 	/**
 	 * @var TemplateData
 	 */
@@ -75,14 +71,14 @@ class AbstractTemplate implements Template
 		$this->loader = $loader;
 	}
 	
-	protected function set_display_parser(TemplateParser $parser)
+	protected function set_renderer(TemplateRenderer $renderer)
 	{
-		$this->display_parser = $parser;
+		$this->renderer = $renderer;
 	}
 	
-	protected function set_to_string_parser(TemplateParser $parser)
+	protected function set_data(TemplateData $data)
 	{
-		$this->to_string_parser = $parser;
+		$this->data = $data;
 	}
 
 	/**
@@ -131,12 +127,12 @@ class AbstractTemplate implements Template
 	 */
 	public function display()
 	{
-        echo $this->to_string_parser->parse($this, $this->loader);
+        echo $this->renderer->render($this->data, $this->loader);
 	}
 
 	public function to_string()
 	{
-		return $this->to_string_parser->parse($this, $this->loader);
+		return $this->renderer->render($this->data, $this->loader);
 	}
 
 	/**
@@ -302,6 +298,11 @@ class AbstractTemplate implements Template
 	public function auto_load_frequent_vars()
 	{
 		$this->data->auto_load_frequent_vars();
+	}
+	
+	public function get_data()
+	{
+		return $this->data;
 	}
 }
 ?>

@@ -29,57 +29,87 @@ class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
 	private $real_filepath = '';
+	private $cache_filepath = '';
 	private $pictures_data_path = '';
 
 	private $module;
 	private $file;
 	private $folder;
+
+	// TODO is used ?
 	private $filename;
 
 	private $default_templates_folder;
 	private $theme_templates_folder;
 
-	public function __construct(Template $template)
+	public function __construct($identifier, TemplateData $data)
 	{
-		$this->filepath = $template->get_identifier();
-		$this->check_file();
-		$template->assign_vars(array('PICTURES_DATA_PATH' => $this->pictures_data_path));
+		$this->filepath = $identifier;
+		$this->compute_real_file_path();
+		$this->compute_cache_file_path();
+		$data->assign_vars(array(
+			'PICTURES_DATA_PATH' => $this->pictures_data_path)
+		);
 	}
 
-	public function is_cache_file_valid($cache_filepath)
+	private function compute_cache_file_path()
 	{
-		if (file_exists($cache_filepath))
-		{
-			return @filemtime($this->real_filepath) <= @filemtime($cache_filepath) && @filesize($cache_filepath) !== 0;
-		}
-		return false;
-	}
+		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
+		array('/', '.', '..', 'tpl', 'templates'),
+		array('_', '', '', '', 'tpl'),
+		$this->filepath
+		), '_') . '.php';
 
-
-	public function get_identifier()
-	{
-		return $this->real_filepath;
 	}
 
 	public function load()
 	{
-		$this->template_resource = @file_get_contents_emulate($this->real_filepath);
-		if ($this->template_resource === false)
+		if (!$this->is_cache_file_up_to_date())
+		{
+			$this->generate_cache_file();
+		}
+
+		return $this->get_file_cache_content();
+	}
+
+	private function is_cache_file_up_to_date()
+	{
+		if (file_exists($this->cache_filepath))
+		{
+			return @filemtime($this->real_filepath) <= @filemtime($this->cache_filepath) && @filesize($this->cache_filepath) !== 0;
+		}
+		return false;
+	}
+
+	private function generate_cache_file()
+	{
+		$real_file_content = @file_get_contents_emulate($this->real_filepath);
+		if ($real_file_content === false)
 		{
 			throw new TemplateLoaderException($this->filepath, $this->real_filepath . ' template loading failed.');
 		}
+
+		$parser = new TemplateToStringParser();
+		$result = $parser->parse($real_file_content);
+
+		$cache_file = new File($this->cache_filepath);
+		$cache_file->lock();
+		$cache_file->write($result);
+		$cache_file->unlock();
+		$cache_file->close();
+		$cache_file->change_chmod(0666);
 	}
 
-	public function get_resource_as_string()
+	private function get_file_cache_content()
 	{
-		return $this->template_resource;
+		return @file_get_contents_emulate($this->cache_filepath);
 	}
 
 	/**
 	 * @desc Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
 	 * @return string The path to load.
 	 */
-	private function check_file()
+	private function compute_real_file_path()
 	{
 		if (strpos($this->filepath, '/') === 0)
 		{
@@ -168,7 +198,7 @@ class FileTemplateLoader implements TemplateLoader
 			//      /templates/$theme/framework/.../$file.tpl
 			//      /$module/templates/framework/.../$file.tpl
 			//      /templates/default/framework/.../$file.tpl
-				
+
 			$this->get_template_real_filepaths_and_data_path(array(
 			$theme_module_templates_folder . $this->file,
 			$module_templates_folder . 'framework/' . $this->file,

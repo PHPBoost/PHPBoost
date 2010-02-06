@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          TemplateLoader.class.php
+ *                       DefaultTemplateRenderer.class.php
  *                            -------------------
- *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : February 6, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,12 +25,17 @@
  *
  ###################################################*/
 
-interface TemplateLoader
+class DefaultTemplateRenderer implements TemplateRenderer
 {
-	/**
-	 * 
-	 * @return string
-	 */
-	function load();
+	public function render(TemplateData $data, TemplateLoader $loader)
+	{
+		$_result = '';
+		$_data = $data;
+
+		eval($loader->load());
+		return $_result;
+	}
 }
+
+
 ?>
