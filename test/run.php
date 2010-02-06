@@ -6,6 +6,7 @@ require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.clas
 Environment::load_imports();
 Environment::load_static_constants();
 
+AppContext::set_request(new HTTPRequest());
 AppContext::init_session();
 AppContext::get_session()->load();
 AppContext::get_session()->act();

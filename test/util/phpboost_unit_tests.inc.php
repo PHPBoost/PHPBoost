@@ -38,7 +38,7 @@ function list_tu_recursive($directory, $recursive = false)
 	$folder = new Folder($directory);
 	foreach ($folder->get_files('`^.+Test\.php$`') as $file)
 	{
-		$files[] = preg_replace('`^[\./]*kernel/framework/`', '', $file->get_path());
+		$files[] = preg_replace('`^[\./]*kernel/`', '', $file->get_path());
 	}
 
 	if ($recursive)
@@ -53,7 +53,7 @@ function list_tu_recursive($directory, $recursive = false)
 
 function list_test_suite($directory)
 {
-	$directory_name = preg_replace('`^[\./]*kernel/framework`', '', $directory);
+	$directory_name = preg_replace('`^[\./]*kernel`', '', $directory);
 	$directories = list_test_suite_recursive($directory, true);
 	$directories[] = '/' . trim($directory_name, '/');
 	sort($directories);
@@ -66,7 +66,7 @@ function list_test_suite_recursive($directory, $recursive = false)
 	$folder = new Folder($directory);
 	foreach ($folder->get_folders('`^[^.].+$`') as $folder)
 	{
-		$folders[] = preg_replace('`^[\./]*kernel/framework`', '', $folder->get_path());
+		$folders[] = preg_replace('`^[\./]*kernel`', '', $folder->get_path());
 		if ($recursive)
 		{
 			$folders = array_merge($folders, list_test_suite_recursive($folder->get_path(), true));
