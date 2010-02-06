@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          CLICommand.class.php
+ *                          InstallInterface.class.php
  *                            -------------------
  *   begin                : February 06, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
@@ -25,14 +25,16 @@
  *
  ###################################################*/
 
-interface CLICommand
+class InstallInterface extends ModuleInterface
 {
-	const EXTENSION_POINT = 'get_commands';
+    public function __construct()
+    {
+        parent::__construct('install');
+    }
     
-    function short_description();
-    
-    function help(array $args);
-	
-	function execute(array $args);
+    public function get_commands()
+    {
+    	return array('install' => 'CLIInstallCommand');
+    }
 }
 ?>

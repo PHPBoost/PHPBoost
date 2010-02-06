@@ -43,23 +43,12 @@ define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
  */
 class ModuleInterface
 {
-	protected $sql_querier;
-
 	/**
      * @access protected
      * @var string the module identifier
      */
     protected $id;
-    /**
-     * @access protected
-     * @var string the module full name
-     */
-    protected $name;
-    /**
-     * @access protected
-     * @var mixed module's informations contained in ini files
-     */
-    protected $infos;
+    
     /**
      * @access protected
      * @var string[] list of the functionalities provided
@@ -70,60 +59,31 @@ class ModuleInterface
      * @var int error flag
      */
     protected $errors;
-    /**
-     * @access protected
-     * @var mixed[string] the attributes dictionary
-     */
-    protected $attributes;
-
-    protected $enabled = false;
-    
+        
     /**
      * @desc ModuleInterface constructor
-     * @param string $moduleId the module id. It's the name of the folder in witch the module is
+     * @param string $extension_provider_id the module id. It's the name of the folder in witch
+     * the extension provider is
      * @param int $error allow you to instanciate your module with an error code
      */
-    public function __construct($moduleId = '', $error = 0)
+    public function __construct($extension_provider_id = '', $error = 0)
     {
-        global $CONFIG, $MODULES;
-        $this->id = $moduleId;
-        $this->name = $this->id;
+        $this->id = $extension_provider_id;
         $this->attributes =array();
-        $this->infos = array();
         $this->functionalities = array();
-        $this->enabled = !empty($MODULES[strtolower($this->get_id())]) && ($MODULES[strtolower($this->get_id())]['activ'] == '1');
-
-        // Get the config.ini informations
-        $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
-        if (isset($this->infos['name']))
-        {
-        	$this->name = $this->infos['name'];
-        }
 
         if ($error == 0)
         {
-            $class = ucfirst($moduleId).'Interface';
-            // Get modules methods
-            $module_methods = get_class_methods($class); // PHP4 returns it in lower case
-            // generics module Methods from ModuleInterface
-            $generics_methods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
-            $generics_methods[] = $class;
+            $class = ucfirst($this->id) . 'Interface';
+            $module_methods = get_class_methods($class);
+            $generics_methods = get_class_methods('ModuleInterface');
+            $generics_methods[] = '__construct';
             
-            $methods_diff = array_diff($module_methods, $generics_methods);
-            
-            // keep only public methods from the functionalities list
-            foreach ($methods_diff as $method)
-            {
-                if (substr($method, 0, 1) != '_')
-                {
-                	$this->functionalities[] = $method;
-                }
-            }
+            $this->functionalities = array_diff($module_methods, $generics_methods);
             $this->functionalities[] = 'none';
+            $this->functionalities = array_values($this->functionalities);
         }
         $this->errors = $error;
-        
-        $this->sql_querier = AppContext::get_sql();
     }
 
     /**
@@ -135,70 +95,6 @@ class ModuleInterface
     }
 
     /**
-     * @return bool Return the true if the module is enabled
-     */
-    public function is_enabled()
-    {
-        return $this->enabled;
-    }
-    
-    /**
-     * @return string Return the name of the module
-     */
-    public function get_name()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed[] All informations that you could find in the .ini file of the module,  his functionalities and his name
-     */
-    public function get_infos()
-    {
-        return array(
-            'name' => $this->name,
-            'infos' => $this->infos,
-            'functionalities' => $this->functionalities,
-        );
-    }
-
-    /**
-     * @param $attribute the attribute identifier in the dictionary
-     * @return mixed The value of the attribute identified by the string $attribute
-     *  in the intern dictionary if existing. Else, the MODULE_ATTRIBUTE_DOES_NOT_EXIST flag is raised and it
-     *  returns -1
-     */
-    public function get_attribute($attribute)
-
-    {
-        $this->_clear_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
-        if ( isset($this->attributes[$attribute]) )
-            return $this->attributes[$attribute];
-        
-        $this->_set_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
-        return -1;
-    }
-
-    /**
-     * @desc Set the $value of the attribute identified by the string $attribute.
-     * @param string $attribute the attribute identifier
-     * @param mixed $value the value to set
-     */
-    public function set_attribute($attribute, $value)
-    {
-        $this->attributes[$attribute] = $value;
-    }
-
-    /**
-     * @desc Delete the attribute and free its memory.
-     * @param string $attribute the attribute identifier
-     */
-    public function unset_attribute($attribute)
-    {
-        unset($this->attributes[$attribute]);
-    }
-
-    /**
      * @desc Returns the last error. If called with no arguments, returns true if an error has occured
      *  otherwise, false. If the method got an argument,
      * @param int $error to check a specific error, 0 otherwise
@@ -207,9 +103,13 @@ class ModuleInterface
     public function got_error($error = 0)
     {
         if ( $error == 0 )
-            return $this->errors != 0;
+        {
+        	return $this->errors != 0;
+        }
         else
-            return ($this->errors & $error) != 0;
+        {
+        	return ($this->errors & $error) != 0;
+        }
     }
 
     /**
@@ -227,14 +127,23 @@ class ModuleInterface
      * @param mixed $args the args you want to pass to the $functionality method
      * @return mixed the $functionality returns or if non-existing, false
      */
-    public function functionality($functionality, $args = null)
+    public function call($functionality, $args = null)
     {
         $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         if ($this->has_functionality($functionality))
-            return $this->$functionality($args);
+        {
+        	return $this->$functionality($args);
+        }
         $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         return false;
     }
+    
+    
+    public function functionality($functionality, $args = null)
+    {   // TODO remove this method
+    	return $this->call($functionality, $args);
+    }
+    
 
     /**
      * @desc Check the availability of the functionality (hook)
@@ -243,7 +152,7 @@ class ModuleInterface
      */
     public function has_functionality($functionality)
     {
-        return in_array(strtolower($functionality), $this->functionalities);
+        return in_array($functionality, $this->functionalities);
     }
 
     /**
@@ -255,10 +164,11 @@ class ModuleInterface
     {
         $nbFunctionnalities = count($functionalities);
         for ( $i = 0; $i < $nbFunctionnalities; $i++ )
-            $functionalities[$i] = strtolower($functionalities[$i]);
+        {
+        	$functionalities[$i] = $functionalities[$i];
+        }
         return $functionalities === array_intersect($functionalities, $this->functionalities);
     }
-
 
     /**
      * @desc Set the flag error.

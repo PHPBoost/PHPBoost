@@ -42,9 +42,9 @@ class CLIEnvironment extends Environment
 
 	public static function setup_server_env()
 	{
-        $_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_FILENAME'];
-        $_SERVER['QUERY_STRING'] = '';
-        $_SERVER['REMOTE_ADDR'] = '';
+		$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_FILENAME'];
+		$_SERVER['QUERY_STRING'] = '';
+		$_SERVER['REMOTE_ADDR'] = '';
 	}
 
 	public static function init()
@@ -55,7 +55,12 @@ class CLIEnvironment extends Environment
 		self::setup_server_env();
 		self::fit_to_php_configuration();
 		self::load_static_constants();
-		        self::load_dynamic_constants();
+		self::load_dynamic_constants();
+		AppContext::set_request(new HTTPRequest());
+        AppContext::init_session();
+        AppContext::get_session()->load();
+        AppContext::get_session()->act();
+        AppContext::set_user(new AdminUser());
 	}
 
 	public static function load_dynamic_constants()

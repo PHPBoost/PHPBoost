@@ -70,10 +70,15 @@ class ClassLoader
 		}
 	}
 
-	public static function is_class_registered($classname)
-	{
-		return array_key_exists($classname, self::$autoload);
-	}
+    public static function is_class_registered($classname)
+    {
+        return array_key_exists($classname, self::$autoload);
+    }
+
+    public static function is_class_registered_and_valid($classname)
+    {
+        return self::is_class_registered($classname) && file_exists(PATH_TO_ROOT . self::$autoload[$classname]);
+    }
 
 	/**
 	 * @desc Generates the autoload cache file by exploring phpboost folders
