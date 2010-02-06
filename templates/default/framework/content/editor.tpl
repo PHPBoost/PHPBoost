@@ -43,6 +43,12 @@
 			else
 				alert("{L_REQUIRE_TEXT}");
 		}
+		function insertTinyMceContent(content)
+		{ 
+			# IF C_BBCODE_TINYMCE_MODE #
+			tinyMCE.execCommand('mceInsertContent', false, content, {skip_undo : 1});
+			# ENDIF #
+		}
 		-->
 		</script>
 		<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
@@ -365,7 +371,7 @@
 				</td>
 				<td style="vertical-align:top;padding-left:8px;padding-top:5px;">
 					# IF C_UPLOAD_MANAGEMENT #
-					<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+					<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}&amp;edt={EDITOR_NAME}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 					# ENDIF #
 				</td>
 			</tr>
