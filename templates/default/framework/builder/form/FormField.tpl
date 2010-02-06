@@ -13,7 +13,7 @@
 			# END fieldelements #
 			# IF C_HAS_CONSTRAINTS #
 				&nbsp;
-				<span id="onblurContainerResponse{ID}"></span>
+				<span style="display:none" id="onblurContainerResponse{ID}"></span>
 				<div style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></div>
 			# ENDIF #
 			</dd>
