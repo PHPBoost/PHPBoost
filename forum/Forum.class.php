@@ -657,8 +657,7 @@ class Forum
 		//Récupération du timestamp du dernier message de la catégorie.
 		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause, __LINE__, __FILE__);
 		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'", __LINE__, __FILE__);
-		if (!empty($last_topic_id))
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $last_topic_id . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . (int)$last_topic_id . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			
 		if ($CAT_FORUM[$idcat]['level'] > 1) //Appel recursif si sous-forum.
 		{
