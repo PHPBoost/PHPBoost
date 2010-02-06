@@ -101,7 +101,7 @@ class Debug
 		{
 			$message = 'An exception has been thrown';
 		}
-		echo to_plain_text('<br />' . $message . '<br /><br />Stack<hr />');
+
 		Debug::print_stacktrace(0, $exception);
 		exit;
 	}
@@ -138,8 +138,7 @@ class Debug
 	/**
 	 * @desc print the current stacktrace
 	 */
-	public static function get_stacktrace_as_string($start_trace_index = 0,
-	Exception $exception = null)
+	public static function get_stacktrace_as_string($start_trace_index = 0,	Exception $exception = null)
 	{
 		$string_stacktrace = '';
 		$stacktrace = null;
@@ -160,7 +159,15 @@ class Debug
 			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' .
 			self::get_file($trace) . ' - ' . self::get_method_prototype($trace) . '<br />';
 		}
-		return to_plain_text($string_stacktrace);
+		
+		if (self::is_output_html())
+		{
+			return $string_stacktrace;
+		}
+		else
+		{
+			return self::to_plain_text($string_stacktrace);
+		}
 	}
 
 	/**
