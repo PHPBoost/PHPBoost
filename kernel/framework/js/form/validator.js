@@ -19,7 +19,10 @@ function clearFormFieldOnblurValidatorMessage(field_id)
 {
 	if ($('onblurContainerResponse' + field_id))
 	{
-		Effect.Fade('onblurContainerResponse' + field_id, { duration: 0.2 });
+		$('onblurContainerResponse' + field_id).innerHTML = 
+			'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/processed_mini.png" alt="" class="valign_middle" />';
+		Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.2 });
+		
 		Effect.Fade('onblurMesssageResponse' + field_id, { duration: 0.2 });
 	}
 }
