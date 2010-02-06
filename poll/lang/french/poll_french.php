@@ -81,4 +81,5 @@ $LANG['poll_result'] = 'Résultats';
 $LANG['alert_delete_poll'] = 'Supprimer ce sondage ?';
 $LANG['question'] = 'Question';
 $LANG['answers'] = 'Réponses';
+$LANG['archives'] = 'Archives';
 ?>
