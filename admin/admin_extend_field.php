@@ -203,7 +203,7 @@ elseif (!empty($id))
 		'L_TYPE' => $LANG['type'],
 		'L_DESC' => $LANG['description'],		
 		'L_REQUIRED_FIELD' => $LANG['require_field'],
-		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['require_field_explain'],
+		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
 		'L_REQUIRED' => $LANG['required'],
 		'L_NOT_REQUIRED' => $LANG['not_required'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
