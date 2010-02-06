@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          environment.class.php
+ *                          CLIEnvironment.class.php
  *                            -------------------
- *   begin                : September 28, 2009
- *   copyright            : (C) 2009 Benoit Sautel, Loïc Rouchon
- *   email                : ben.popeye@phpboost.com, loic.rouchon@phpboost.com
+ *   begin                : February 03, 2010
+ *   copyright            : (C) 2010 Loïc Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -42,19 +42,20 @@ class CLIEnvironment extends Environment
 
 	public static function setup_server_env()
 	{
-		$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_FILENAME'];
-
-throw new Exception();
+        $_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_FILENAME'];
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['REMOTE_ADDR'] = '';
 	}
 
 	public static function init()
 	{
 		Debug::enabled_current_script_debug();
 		Debug::set_plain_text_output_mode();
+		set_exception_handler(array('Debug', 'fatal'));
 		self::setup_server_env();
 		self::fit_to_php_configuration();
 		self::load_static_constants();
-		//        self::load_dynamic_constants();
+		        self::load_dynamic_constants();
 	}
 
 	public static function load_dynamic_constants()

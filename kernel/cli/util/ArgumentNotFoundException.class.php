@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          install-cli.php
+ *                          ArgumentNotFoundException.class.php
  *                            -------------------
- *   begin                : February 3, 2010
- *   copyright            : (C) 2010 Loic Rouchon
+ *   begin                : February 06, 2010
+ *   copyright            : (C) 2010 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,13 +25,12 @@
  *
  ###################################################*/
 
-
-
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/CLIEnvironment.class.php';
-
-CLIEnvironment::load_imports();
-
-CLIEnvironment::init();
-
+class ArgumentNotFoundException extends Exception
+{
+	public function __construct($argument, $args)
+	{
+		parent::__construct('argument ' . $argument . ' was not found in arguments: ' .
+		  '("' . implode('", "', $args) . '")');
+	}
+}
 ?>

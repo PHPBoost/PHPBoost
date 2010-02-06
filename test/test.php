@@ -45,14 +45,14 @@ $tpl->assign_vars(array(
 	'PARAMS' => $params
 ));
 
-foreach (list_tu('./kernel/framework') as $tu)
+foreach (list_tu('./kernel') as $tu)
 {
     $tpl->assign_block_vars('tests', array(
         'NAME' => $tu
     ));
 }
 
-foreach (list_test_suite('./kernel/framework') as $ts)
+foreach (list_test_suite('./kernel') as $ts)
 {
     $tpl->assign_block_vars('tests_suite', array(
         'NAME' => $ts

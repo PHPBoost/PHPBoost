@@ -2,9 +2,8 @@
 define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
-import('io/filesystem/FileSystemElement');
-import('io/filesystem/Folder');
-import('io/filesystem/File');
+require_once PATH_TO_ROOT . '/kernel/framework/core/ClassLoader.class.php';
+ClassLoader::init_autoload();
 
 import('/test/util/phpboost_unit_tests', INC_IMPORT);
 
@@ -53,8 +52,8 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
                     <td class="options-set">
                         <select id="tus" name="tus">
 <?php
-foreach (list_tu('./kernel/framework') as $tu) {
-    echo '<option value="./kernel/framework/' . $tu . '">' . $tu . '</option>';
+foreach (list_tu('./kernel') as $tu) {
+    echo '<option value="./kernel/' . $tu . '">' . $tu . '</option>';
 }
 ?>
                         </select>
@@ -70,8 +69,8 @@ foreach (list_tu('./kernel/framework') as $tu) {
                     <td class="options-set">
                         <select id="ts" name="ts">
 <?php
-foreach (list_test_suite('./kernel/framework') as $ts) {
-    echo '<option value="./kernel/framework/' . $ts . '">' . $ts . '</option>';
+foreach (list_test_suite('./kernel') as $ts) {
+    echo '<option value="./kernel/' . $ts . '">' . $ts . '</option>';
 }
 ?>
                         </select>
