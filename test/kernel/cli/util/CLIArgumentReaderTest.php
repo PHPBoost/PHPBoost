@@ -52,19 +52,19 @@ class CLIArgumentsReaderTest extends PHPBoostUnitTestCase
 		self::assertEquals(3, $arg_reader->find_arg_index('6'));
 	}
 
-    public function test_find_arg_index_false()
-    {
-        $arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
-        try
-        {
-            $arg_reader->find_arg_index('42');
-            self::assertTrue(false);
-        }
-        catch (Exception $ex)
-        {
-            self::assertTrue($ex instanceof ArgumentNotFoundException);
-        }
-    }
+	public function test_find_arg_index_false()
+	{
+		$arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
+		try
+		{
+			$arg_reader->find_arg_index('42');
+			self::assertTrue(false);
+		}
+		catch (Exception $ex)
+		{
+			self::assertTrue($ex instanceof ArgumentNotFoundException);
+		}
+	}
 
     public function test_get()
     {
@@ -72,19 +72,31 @@ class CLIArgumentsReaderTest extends PHPBoostUnitTestCase
         self::assertEquals('12', $arg_reader->get('6'));
     }
 
-    public function test_get_not_found()
+    public function test_get_default_value()
     {
         $arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
-        try
-        {
-            $arg_reader->get('42');
-            self::assertTrue(false);
-        }
-        catch (Exception $ex)
-        {
-            self::assertTrue($ex instanceof ArgumentNotFoundException);
-        }
+        self::assertEquals('12', $arg_reader->get('6', 'coucou'));
     }
+
+	public function test_get_not_found()
+	{
+		$arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
+		try
+		{
+			$arg_reader->get('42');
+			self::assertTrue(false);
+		}
+		catch (Exception $ex)
+		{
+			self::assertTrue($ex instanceof ArgumentNotFoundException);
+		}
+	}
+
+	public function test_get_not_found_default_value()
+	{
+		$arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
+		self::assertEquals('coucou', $arg_reader->get('42', 'coucou'));
+	}
 
     public function test_get_out_of_bounds()
     {
@@ -98,6 +110,12 @@ class CLIArgumentsReaderTest extends PHPBoostUnitTestCase
         {
             self::assertTrue($ex instanceof ArgumentNotFoundException);
         }
+    }
+
+    public function test_get_out_of_bounds_default_value()
+    {
+        $arg_reader = new CLIArgumentsReader(array('1', '2', '3', '6', '12'));
+        self::assertEquals('coucou', $arg_reader->get('12', 'coucou'));
     }
 }
 ?>

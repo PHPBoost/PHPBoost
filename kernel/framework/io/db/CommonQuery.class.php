@@ -48,7 +48,7 @@ class CommonQuery
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
 	 */
-	public function insert($table_name, $columns)
+	public function insert($table_name, array $columns)
 	{
 		$columns_names = array_keys($columns);
 		$query = 'INSERT INTO ' . $table_name . ' (' . implode(', ', $columns_names) .
@@ -65,7 +65,7 @@ class CommonQuery
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */
-	public function update($table_name, $columns, $condition, $parameters = array())
+	public function update($table_name, array $columns, $condition, $parameters = array())
 	{
 		$columns_names = array_keys($columns);
 		foreach (array_keys($columns) as $column)

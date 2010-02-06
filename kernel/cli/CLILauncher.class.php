@@ -41,8 +41,7 @@ class CLILauncher
 
 	public function __construct(array $args = array())
 	{
-		unset($args[0]);
-		sort($args);
+		array_shift($args);
 		$this->args = $args;
 		if (count($this->args) > 0)
 		{
@@ -83,8 +82,7 @@ class CLILauncher
 	public function execute_command()
 	{
 		$args = $this->args;
-        unset($args[0]);
-        sort($args);
+        array_shift($args);
 		$this->launcher->execute($args);
 	}
 
