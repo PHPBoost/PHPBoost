@@ -86,12 +86,15 @@ class HTMLForm
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
 
+	const SMALL_FORM_CLASS = 'fieldset_mini';
+	const NORMAL_FORM_CLASS = 'fieldset_content';
+	
 	private $constraints = array();
 	private $form_fieldsets = array(); //Fieldsets stored
 	private $form_name = '';
 	private $form_submit = '';
 	private $form_action = '';
-	private $form_class = 'fieldset_mini';
+	private $form_class = self::NORMAL_FORM_CLASS;
 	private $display_preview = false; //Field identifier of textarea for preview.
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
 	private $display_reset = true;

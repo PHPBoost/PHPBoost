@@ -66,7 +66,7 @@ class SandboxController extends ModuleController
 		// FIELDSET
 		$fieldset = new FormFieldset('Fieldset');
 		$form->add_fieldset($fieldset);
-
+		
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
@@ -86,7 +86,7 @@ class SandboxController extends ModuleController
 			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion'),
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
 		
@@ -150,6 +150,7 @@ class SandboxController extends ModuleController
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
 		// FORM CONSTRAINTS
+		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		
 		return $form;
