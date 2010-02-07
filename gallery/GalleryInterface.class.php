@@ -27,11 +27,9 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class GalleryInterface extends ModuleInterface
+class GalleryInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function GalleryInterface() //Constructeur de la classe ForumInterface

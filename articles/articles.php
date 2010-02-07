@@ -236,11 +236,11 @@ if (!empty($idart) && isset($cat) )
 else
 {
 	
-	$modulesLoader = new ModulesDiscoveryService();
+	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'articles';
-	$module = $modulesLoader->get_module($module_name);
-	if ($module->has_functionality('get_home_page'))
-		echo $module->functionality('get_home_page');
+	$module = $modulesLoader->get_provider($module_name);
+	if ($module->has_extension_point('get_home_page'))
+		echo $module->call('get_home_page');
 	elseif (!$no_alert_on_error) 
 	{
 		global $Errorh;

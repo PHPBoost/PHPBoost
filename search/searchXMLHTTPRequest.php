@@ -43,7 +43,7 @@ require_once(PATH_TO_ROOT . '/search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$modules = new ModulesDiscoveryService();
+$modules = AppContext::get_extension_provider_service();
 $modules_args = array();
 
 if (($id_search >= 0) && ($module_id != ''))
@@ -72,10 +72,10 @@ if (($id_search >= 0) && ($module_id != ''))
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach ($forms_module as $form_module)
         {
-            if ($form_module->has_functionality('get_search_args'))
+            if ($form_module->has_extension_point('get_search_args'))
             {
                 // Récupération de la liste des paramètres
-                $form_module_args = $form_module->functionality('get_search_args');
+                $form_module_args = $form_module->call('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach ($form_module_args as $arg)
@@ -111,7 +111,7 @@ if (($id_search >= 0) && ($module_id != ''))
     $nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);;
     if ($nb_results > 0)
     {
-        $module = $modules->get_module($module_id);
+        $module = $modules->get_provider($module_id);
         $html_results = '';
         get_html_results($results, $html_results, $module_id);
     

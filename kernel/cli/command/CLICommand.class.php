@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-interface CLICommand
+interface CLICommand extends ExtensionPoint
 {
 	const EXTENSION_POINT = 'get_commands';
     

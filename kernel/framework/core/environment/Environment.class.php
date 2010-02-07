@@ -103,6 +103,7 @@ class Environment
 	{
 		Environment::init_http_services();
 		AppContext::init_session();
+        AppContext::init_extension_provider_service();
 	}
 
 	public static function enable_errors_and_exceptions_management()
@@ -435,13 +436,13 @@ class Environment
 	private static function execute_modules_changedays_tasks()
 	{
 
-		$modules_loader = new ModulesDiscoveryService();
+		$modules_loader = AppContext::get_extension_provider_service();
 		$modules = $modules_loader->get_available_modules('on_changeday');
 		foreach ($modules as $module)
 		{
 			if ($module->is_enabled())
 			{
-				$module->functionality('on_changeday');
+				$module->call('on_changeday');
 			}
 		}
 	}

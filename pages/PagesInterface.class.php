@@ -25,12 +25,10 @@
  *
  ###################################################*/
  
-// Inclusion du fichier contenant la classe ModuleInterface
 
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
-// Classe WikiInterface qui hérite de la classe ModuleInterface
-class PagesInterface extends ModuleInterface
+class PagesInterface extends ExtensionPointProvider
 {
     public function __construct() //Constructeur de la classe WikiInterface
     {

@@ -52,7 +52,7 @@ function execute_search($search, $search_modules, &$modules_args)
             $modules_args[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modules_args[$module->get_id()]['id_search'] = !empty($search->id_search[$module->get_id()]) ? $search->id_search[$module->get_id()] : 0;
-            $requests[$module->get_id()] = $module->functionality('get_search_request', $modules_args[$module->get_id()]);
+            $requests[$module->get_id()] = $module->call('get_search_request', $modules_args[$module->get_id()]);
         }
     }
     
@@ -91,7 +91,7 @@ function get_search_results($search_string, $search_modules, &$modules_args, &$r
 function get_html_results($results, $html_results, $results_name)
 {
     global $CONFIG;
-    $modules = new ModulesDiscoveryService();
+    $modules = AppContext::get_extension_provider_service();
     $display_all_results = ($results_name == 'all' ? true : false);
     
     $tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
@@ -105,13 +105,13 @@ function get_html_results($results, $html_results, $results_name)
     
     if (!$display_all_results)
     {
-        $module = $modules->get_module(strtolower($results_name));
+        $module = $modules->get_provider(strtolower($results_name));
         
         $results_data = array();
-        $personnal_parse_results = $module->has_functionality('compute_search_results') && $module->has_functionality('parse_search_result');
+        $personnal_parse_results = $module->has_extension_point('compute_search_results') && $module->has_extension_point('parse_search_result');
         if ($personnal_parse_results && $results_name != 'all')
         {
-            $results_data = $module->functionality('compute_search_results', array('results' => $results));
+            $results_data = $module->call('compute_search_results', array('results' => $results));
             $nb_results = min($nb_results, count($results_data));
         }
     }
@@ -134,7 +134,7 @@ function get_html_results($results, $html_results, $results_name)
                 $tpl_result = new FileTemplate('search/search_generic_results.tpl');
                 if ($display_all_results)
                 {
-                    $module = $modules->get_module($results[$num_item]['module']);
+                    $module = $modules->get_provider($results[$num_item]['module']);
                     $tpl_result->assign_vars(array(
                         'C_ALL_RESULTS' => true,
                         'L_MODULE_NAME' => $module->get_name()
@@ -159,7 +159,7 @@ function get_html_results($results, $html_results, $results_name)
             else
             {
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $module->functionality('parse_search_result', $results_data[$num_item])
+                    'result' => $module->call('parse_search_result', $results_data[$num_item])
                 ));
             }
         }

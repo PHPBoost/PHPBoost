@@ -73,10 +73,14 @@ class AppContext
 	 * @var Session
 	 */
 	private static $session;
-	/**
-	 * @var User
-	 */
-	private static $user;
+    /**
+     * @var User
+     */
+    private static $user;
+    /**
+     * @var ExtensionPointProviderService
+     */
+    private static $extension_provider_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -249,6 +253,22 @@ class AppContext
 		// TODO ben, supprime ça, mais casse pas l'installateur
 		self::$user = $user;
 	}
+
+    /**
+     * Inits the extension provider service
+     */
+    public static function init_extension_provider_service()
+    {
+        self::$extension_provider_service = new ExtensionPointProviderService();
+    }
+	
+    /**
+     * @return ExtensionPointProviderService
+     */
+    public static function get_extension_provider_service()
+    {
+        return self::$extension_provider_service;
+    }
 }
 
 ?>

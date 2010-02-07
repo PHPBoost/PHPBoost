@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class InstallInterface extends ModuleInterface
+class InstallInterface extends ExtensionPointProvider
 {
     public function __construct()
     {

@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class NewsletterInterface extends ModuleInterface
+class NewsletterInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function NewsletterInterface() //Constructeur de la classe ForumInterface

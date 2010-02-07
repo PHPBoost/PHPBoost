@@ -69,7 +69,7 @@ class CLILauncher
 
     private function load_commands_list()
     {
-        $mds = new ModulesDiscoveryService();
+        $mds = AppContext::get_extension_provider_service();
         foreach ($mds->get_available_modules(CLICommand::EXTENSION_POINT) as $extension_provider)
         {
         	$new_commands = $extension_provider->call(CLICommand::EXTENSION_POINT);

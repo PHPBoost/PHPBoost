@@ -1,16 +1,16 @@
 <?php
 
-class ModuleInterfaceTest extends PHPBoostUnitTestCase
+class ExtensionPointProviderTest extends PHPBoostUnitTestCase
 {
 	function test_constructor()
 	{
-		$ret = new ModuleInterface('news', 1);
+		$ret = new ExtensionPointProvider('news', 1);
 		self::assertTrue(is_object($ret));
 		self::assertEquals($ret->get_id(), 'news');
 		self::assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
 		self::assertTrue($ret->get_errors() != 0);
 		
-		$ret = new ModuleInterface('news');
+		$ret = new ExtensionPointProvider('news');
 		self::assertTrue(is_object($ret));
 		self::assertEquals($ret->get_id(), 'news');
 		self::assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities) > 0);
@@ -18,21 +18,21 @@ class ModuleInterfaceTest extends PHPBoostUnitTestCase
 
 	function test_get_id()
 	{
-		$ret = new ModuleInterface('news', 1);
+		$ret = new ExtensionPointProvider('news', 1);
 		self::assertTrue(is_object($ret));
 		self::assertEquals($ret->get_id(), 'news');
 	}
 	
 	function test_get_name()
 	{
-		$ret = new ModuleInterface('news', 1);
+		$ret = new ExtensionPointProvider('news', 1);
 		self::assertTrue(is_object($ret));
 		self::assertEquals($ret->get_name(), 'News');
 	}
 	
 	function test_get_infos()
 	{
-		$ret = new ModuleInterface('news', 1);
+		$ret = new ExtensionPointProvider('news', 1);
 		self::assertTrue(is_object($ret));
 		
 		$tmp = $ret->get_infos();

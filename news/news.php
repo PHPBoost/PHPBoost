@@ -221,12 +221,12 @@ else
 	$news_cat->bread_crumb($idcat);
 	require_once('../kernel/header.php');
 	
-	$modulesLoader = new ModulesDiscoveryService();
+	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'news';
-	$module = $modulesLoader->get_module($module_name);
-	if ($module->has_functionality('get_home_page'))
+	$module = $modulesLoader->get_provider($module_name);
+	if ($module->has_extension_point('get_home_page'))
 	{
-		echo $module->functionality('get_home_page', $idcat);
+		echo $module->call('get_home_page', $idcat);
 	}
 	elseif (!$no_alert_on_error)
 	{

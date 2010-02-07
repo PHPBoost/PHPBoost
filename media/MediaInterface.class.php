@@ -26,13 +26,11 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class MediaInterface extends ModuleInterface
+class MediaInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function MediaInterface() //Constructeur de la classe ForumInterface

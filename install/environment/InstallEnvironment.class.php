@@ -46,6 +46,7 @@ class InstallEnvironment extends Environment
 		Environment::init_http_services();
 		Environment::load_static_constants();
 		self::load_dynamic_constants();
+        AppContext::init_extension_provider_service();
 		Environment::init_output_bufferization();
 	}
 

@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class ShoutboxInterface extends ModuleInterface
+class ShoutboxInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function ShoutboxInterface() //Constructeur de la classe ForumInterface

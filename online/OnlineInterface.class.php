@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class OnlineInterface extends ModuleInterface
+class OnlineInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function OnlineInterface() //Constructeur de la classe ForumInterface

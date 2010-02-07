@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class PollInterface extends ModuleInterface
+class PollInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function PollInterface() //Constructeur de la classe ForumInterface

@@ -41,16 +41,16 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	));
 	
 	
-	$modulesLoader = new ModulesDiscoveryService();
+	$modulesLoader = AppContext::get_extension_provider_service();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach ($modules as $module)
 	{
-		$img = $module->functionality('get_member_msg_img');
+		$img = $module->call('get_member_msg_img');
 		$Template->assign_block_vars('available_modules_msg', array(
-			'NAME_USER_MSG' => $module->functionality('get_member_msg_name'),
+			'NAME_USER_MSG' => $module->call('get_member_msg_name'),
 			'IMG_USER_MSG' => $img,
 			'C_IMG_USER_MSG' => !empty($img) ? true : false,
-			'U_LINK_USER_MSG' => $module->functionality('get_member_msg_link', array($memberId))
+			'U_LINK_USER_MSG' => $module->call('get_member_msg_link', array($memberId))
 		));
 	}
 	

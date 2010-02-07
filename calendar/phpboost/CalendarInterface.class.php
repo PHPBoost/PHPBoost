@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CalendarInterface extends ModuleInterface
+class CalendarInterface extends ExtensionPointProvider
 {
     function CalendarInterface() //Constructeur de la classe ForumInterface
     {
