@@ -1,6 +1,11 @@
 # IF C_VALIDATION_ERROR #
-<div class="error">{VALIDATION_ERROR}</div>
+<div class="error">
+# START validation_error_messages #
+	{validation_error_messages.ERROR_MESSAGE}<br />
+# END validation_error_messages #
+</div>
 # ENDIF #
+
 <form action="{U_FORMACTION}" method="post" onsubmit="return check_generated_form_{EL_FORMNAME}();" class="{FORMCLASS}">
 	# IF C_HAS_REQUIRED_FIELDS #
 	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>

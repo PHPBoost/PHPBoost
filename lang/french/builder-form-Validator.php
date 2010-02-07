@@ -35,6 +35,7 @@ $lang = array(
     'doesnt_match_length_intervall' => 'La valeur saisie ne respecte par la longueur définie',
     'doesnt_match_integer_intervall' => 'La valeur saisie ne respecte pas l\'intervalle défini',
     'has_to_be_filled' => 'Ce champ doit être renseigné',
+	'captcha_validation_error' => 'Le champs de vérification visuel n\'a pas été saisi correctement !',
 	'validation_error' => 'Veuillez corriger les erreurs du formulaire'
 );
 

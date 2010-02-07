@@ -61,6 +61,10 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $required = false;
 	/**
+	 * @var string
+	 */
+	protected $validation_error_message = '';
+	/**
 	 * @var FormFieldConstraint[]
 	 */
 	protected $constraints = array();
@@ -204,6 +208,16 @@ abstract class AbstractFormField implements FormField
 		return true;
 	}
 
+	public function get_validation_error_message()
+	{
+		return $this->validation_error_message;
+	}
+	
+	public function set_validation_error_message($error_message)
+	{
+		$this->validation_error_message = $error_message;
+	}
+	
 	/**
 	 * (non-PHPdoc)
 	 * @see kernel/framework/builder/form/field/FormField#retrieve_value()

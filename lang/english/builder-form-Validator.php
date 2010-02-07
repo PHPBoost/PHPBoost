@@ -35,6 +35,7 @@ $lang = array(
     'doesnt_match_length_intervall' => 'The entered value does not fit the specified length',
     'doesnt_match_integer_intervall' => 'The entered value does not fit the specified interval',
     'has_to_be_filled' => 'This field has to be filled',
+	'captcha_validation_error' => 'The visual confirmation field has not been properly filled !',
 	'validation_error' => 'Please, correct the form errors'
 );
 
