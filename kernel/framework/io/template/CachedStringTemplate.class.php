@@ -35,9 +35,7 @@ class CachedStringTemplate extends AbstractTemplate
 {
 	public function __construct($content, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
-		parent::__construct($auto_load_vars);
-		$this->set_loader(new CachedStringTemplateLoader($content));
-		$this->set_renderer(new DefaultTemplateRenderer());
+		parent::__construct(new CachedStringTemplateLoader($content), new DefaultTemplateRenderer(), new DefaultTemplateData(), $auto_load_vars);
 	}
 }
 ?>

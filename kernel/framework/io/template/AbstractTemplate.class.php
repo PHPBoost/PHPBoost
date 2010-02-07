@@ -31,7 +31,7 @@
  * @desc This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
  */
-class AbstractTemplate implements Template
+abstract class AbstractTemplate implements Template
 {
 	/**
 	 * @var TemplateLoader
@@ -50,9 +50,11 @@ class AbstractTemplate implements Template
 	 * @desc Builds a Template object.
 	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
 	 */
-	public function __construct($auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	public function __construct(TemplateLoader $loader, TemplateRenderer $renderer, TemplateData $data, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
-		$this->data = new DefaultTemplateData();
+		$this->set_loader($loader);
+		$this->set_renderer($renderer);
+		$this->set_data($data);
 
 		if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 		{
