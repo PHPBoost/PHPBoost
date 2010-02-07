@@ -96,6 +96,7 @@ class FormFieldCheckbox extends AbstractFormField
 		$option = '<input type="checkbox" ';
 		$option .= 'name="' . $this->get_html_id() . '" ';
 		$option .= 'id="' . $this->get_html_id() . '" ';
+		$option .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
 		$option .= $this->is_checked() ? 'checked="checked" ' : '';
 		$option .= '/>';
 

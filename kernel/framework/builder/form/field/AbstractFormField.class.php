@@ -49,6 +49,10 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $value = null;
 	/**
+	 * @var boolean
+	 */
+	protected $disabled = false;
+	/**
 	 * @var string
 	 */
 	protected $css_class = '';
@@ -303,8 +307,12 @@ abstract class AbstractFormField implements FormField
 					unset($field_options['subtitle']);
 					break;
 				case 'onblur':
-					$this->set_onblur($onblur);
+					$this->set_onblur($value);
 					unset($field_options['onblur']);
+					break;
+				case 'disabled':
+					$this->set_disabled($value);
+					unset($field_options['disabled']);
 					break;
 				case 'class':
 					$this->set_css_class($value);
@@ -355,6 +363,16 @@ abstract class AbstractFormField implements FormField
 	protected function set_css_class($css_class)
 	{
 		$this->css_class = $css_class;
+	}
+	
+	protected function get_disabled()
+	{
+		return $this->disabled;
+	}
+
+	protected function set_disabled($disabled)
+	{
+		$this->disabled = $disabled;
 	}
 }
 

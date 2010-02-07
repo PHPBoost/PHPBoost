@@ -55,6 +55,7 @@ class FormFieldFilePicker extends AbstractFormField
 		$field .= '<input type="file" ';
 		$field .= 'name="' . $this->get_html_id() . '" ';
 		$field .= 'id="' . $this->get_html_id() . '" ';
+		$field .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
 		$field .= '/>';
 
 		$field .= '<script type="text/javascript"><!--' . "\n";

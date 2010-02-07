@@ -68,7 +68,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 
 	private function get_html_code()
 	{
-		$code = '<select name="' . $this->get_html_id() . '" id="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '">';
+		$code = '<select name="' . $this->get_html_id() . '" id="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '" ' . ($this->get_disabled() ? 'disabled="disabled" ' : '') . '>';
 		foreach ($this->get_options() as $option)
 		{
 			$code .= $option->display();
