@@ -196,69 +196,9 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
         return $tpl->to_string();
     }
     
-	
-    // Generate the feed data structure used by RSS, ATOM and feed informations on the website
-    function get_feed_data_struct($idcat = 0, $name = '')
-    {
-        require_once(PATH_TO_ROOT . '/download/download_auth.php');
-        
-        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		load_module_lang('download');
-        $Cache->load('download');
-        $data = new FeedData();
-        
-        // Meta-informations generation
-        $data->set_title($DOWNLOAD_LANG['xml_download_desc']);
-        $data->set_date(new Date());
-        $data->set_link(new Url('/syndication.php?m=download&amp;cat=' . $idcat));
-        $data->set_host(HOST);
-        $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
-        $data->set_lang($LANG['xml_lang']);
-        $data->set_auth_bit(DOWNLOAD_READ_CAT_AUTH_BIT);
-		
-        
-        // Building Categories to look in
-        $cats = new DownloadCats();
-        $children_cats = array();
-        $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
-        
-        $req = "SELECT id, idcat, title, contents, timestamp, image
-        FROM " . PREFIX . "download
-        WHERE visible = 1 AND idcat IN (" . implode($children_cats, ','). " )
-        ORDER BY timestamp DESC" . $this->sql_querier->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
-        $result = $this->sql_querier->query_while ($req, __LINE__, __FILE__);
-        
-        // Generation of the feed's items
-        while ($row = $this->sql_querier->fetch_assoc($result))
-        {
-            $item = new FeedItem();
-            
-            $link = new Url('/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
-            // Adding item's informations
-            $item->set_title($row['title']);
-            $item->set_link($link);
-            $item->set_guid($link);
-            $item->set_desc(FormatingHelper::second_parse($row['contents']));
-            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-            $item->set_image_url($row['image']);
-            $item->set_auth($cats->compute_heritated_auth($row['idcat'], DOWNLOAD_READ_CAT_AUTH_BIT, Authorizations::AUTH_PARENT_PRIORITY));
-            
-            // Adding the item to the list
-            $data->add_item($item);
-        }
-        $this->sql_querier->query_close($result);
-        
-        return $data;
-    }
-    
-    /**
-     * @desc Return the list of the feeds available for this module.
-     * @return FeedsList The list
-     */
-    function get_feeds_list()
+	public function feeds()
 	{
-        $dl_cats = new DownloadCats();
-        return $dl_cats->get_feeds_list();
+		return new DownloadFeedProvider();
 	}
     
     ## Private ##

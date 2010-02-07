@@ -26,14 +26,11 @@
  ###################################################*/
 
 define('PATH_TO_ROOT', '.');
-//Header's generation
 header("Content-Type: application/xml; charset=iso-8859-1");
 
-define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
+define('NO_SESSION_LOCATION', true);
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
-
-
 
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
@@ -58,16 +55,16 @@ if (!empty($module_id))
 		echo $feed->read();
 	}
 	else
-	{   // Otherwise, we regenerate it before printing it
-		// Feeds Regeneration
+	{
 		$modules_discovery_service = AppContext::get_extension_provider_service();
 		$not_installed = false;
 		try
 		{
 			$module = $modules_discovery_service->get_provider($module_id);
-			if ($module->has_extension_point('get_feed_data_struct'))
+			if ($module->has_extension_point(FeedProvider::EXTENSION_POINT))
 			{
-				$feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
+				$feeds = $module->feeds();
+				$feed->load_data($feeds->get_feed_data_struct($category_id, $feed_name));
 				$feed->cache();
 
 				// Print the feed
@@ -84,6 +81,7 @@ if (!empty($module_id))
 		}
 		if ($not_installed)
 		{
+			die('not installed');
             AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
 		}
 	}

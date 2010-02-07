@@ -99,77 +99,9 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
             return $request;
 	}
 
-	/**
-	 * @desc Return the list of the feeds available for this module.
-	 * @return FeedsList The list
-	 */
-	public function get_feeds_list()
+	public function feeds()
 	{
-		$news_cats = new NewsCats();
-		return $news_cats->get_feeds_list();
-	}
-
-	public function get_feed_data_struct($idcat = 0, $name = '')
-	{
-		global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
-
-		// Load the new's config
-		$Cache->load('news');
-
-		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
-
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
-		load_module_lang('news');
-
-		$site_name = $idcat > 0 ? $CONFIG['site_name'] . ' : ' . $NEWS_CAT[$idcat]['name'] : $CONFIG['site_name'];
-
-		$data = new FeedData();
-
-		$data->set_title($NEWS_LANG['xml_news_desc'] . $site_name);
-		$data->set_date(new Date());
-		$data->set_link(new Url('/syndication.php?m=news&amp;cat=' . $idcat));
-		$data->set_host(HOST);
-		$data->set_desc($NEWS_LANG['xml_news_desc'] . $site_name);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(AUTH_NEWS_READ);
-
-		$news_cat = new NewsCats();
-
-		// Build array with the children categories.
-		$array_cat = array();
-		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ($idcat == 0 ? DO_NOT_ADD_THIS_CATEGORY_IN_LIST : ADD_THIS_CATEGORY_IN_LIST));
-
-		if (!empty($array_cat))
-		{
-			// Last news
-			$result = $this->sql_querier->query_while("SELECT id, idcat, title, contents, extend_contents, timestamp, img
-	            FROM " . DB_TABLE_NEWS . "
-	            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1 AND idcat IN(" . implode(", ", $array_cat) . ")
-	            ORDER BY timestamp DESC"
-	            . $this->sql_querier->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
-
-	            // Generation of the feed's items
-	            while ($row = $this->sql_querier->fetch_assoc($result))
-	            {
-	            	// Rewriting
-	            	$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
-
-	            	$item = new FeedItem();
-	            	$item->set_title($row['title']);
-	            	$item->set_link($link);
-	            	$item->set_guid($link);
-	            	$item->set_desc($row['contents'] . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
-	            	$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-	            	$item->set_image_url($row['img']);
-	            	$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, Authorizations::AUTH_PARENT_PRIORITY));
-
-	            	$data->add_item($item);
-	            }
-	            $this->sql_querier->query_close($result);
-		}
-
-		return $data;
+		return new NewsFeedProvider();
 	}
 
 	/**
