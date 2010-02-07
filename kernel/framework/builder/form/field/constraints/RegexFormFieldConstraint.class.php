@@ -60,7 +60,8 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 		$end_delimiter_position = strrpos($regex, $delimiter);
 		$js_regex = substr($regex, 1, $end_delimiter_position - 1);
 		$js_options = substr($regex, $end_delimiter_position + 1);
-		$this->js_regex = '\'' . str_replace('\'', '\\\'', $js_regex) . '\'';
+		$this->js_regex = str_replace('\.', '\\\.', $js_regex);
+		$this->js_regex = '\'' . str_replace('\'', '\\\'', $this->js_regex) . '\'';
 		$this->js_options = '\'' . str_replace('\'', '\\\'', $js_options) . '\'';
 	}
 
