@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              articles_interface.class.php
+ *                              articlesExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : April 9, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -28,7 +28,7 @@
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
 require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
-class ArticlesInterface extends ExtensionPointProvider
+class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
 	## Public Methods ##
 	function ArticlesInterface() //Constructeur de la classe ForumInterface

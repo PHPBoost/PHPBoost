@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              gallery_interface.class.php
+ *                              galleryExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 
 
-class GalleryInterface extends ExtensionPointProvider
+class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function GalleryInterface() //Constructeur de la classe ForumInterface

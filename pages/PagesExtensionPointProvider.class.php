@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         pages_interface.class.php
+ *                         pagesExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -28,7 +28,7 @@
 
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
-class PagesInterface extends ExtensionPointProvider
+class PagesExtensionPointProvider extends ExtensionPointProvider
 {
     public function __construct() //Constructeur de la classe WikiInterface
     {

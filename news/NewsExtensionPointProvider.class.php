@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              news_interface.class.php
+ *                              newsExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : April 9, 2008
  *   copyright            : (C) 2008 Loïc Rouchon, Roguelon Geoffrey
@@ -31,7 +31,7 @@ define('NEWS_MAX_SEARCH_RESULTS', 100);
 
 require_once PATH_TO_ROOT . '/news/news_constant.php';
 
-class NewsInterface extends ExtensionPointProvider
+class NewsExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct() //Constructeur de la classe ForumInterface
 	{

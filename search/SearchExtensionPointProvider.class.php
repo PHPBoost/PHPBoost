@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              newsletter_interface.class.php
+ *                              searchExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,30 +27,29 @@
 
 
 
-class NewsletterInterface extends ExtensionPointProvider
+class SearchExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
-    function NewsletterInterface() //Constructeur de la classe ForumInterface
+    function SearchInterface() //Constructeur de la classe ForumInterface
     {
-        parent::__construct('newsletter');
+        parent::__construct('search');
     }
     
     //Récupération du cache.
 	function get_cache()
 	{
-		global $CONFIG;
+		//Configuration
+		$search_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'search'", __LINE__, __FILE__));
 		
-		//Configuration de la newsletter
-		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
-		$NEWSLETTER_CONFIG = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'newsletter'", __LINE__, __FILE__));
-		if (is_array($NEWSLETTER_CONFIG))
-		{
-			$mails = explode(';', $CONFIG['mail']);
-			$code .= '$_NEWSLETTER_CONFIG[\'sender_mail\'] = ' . var_export(!empty($NEWSLETTER_CONFIG['sender_mail']) ? $NEWSLETTER_CONFIG['sender_mail'] : $mails[0], true) . ';' . "\n";
-			$code .= '$_NEWSLETTER_CONFIG[\'newsletter_name\'] = ' . var_export(!empty($NEWSLETTER_CONFIG['newsletter_name']) ? $NEWSLETTER_CONFIG['newsletter_name'] : $CONFIG['site_name'], true) . ';' . "\n";
-		}
-		
-		return $code;
+		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
+	}
+
+	//Actions journalières
+	function on_changeday()
+	{
+		// Délestage du cache des recherches
+		$this->sql_querier->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
 	}
 }
 

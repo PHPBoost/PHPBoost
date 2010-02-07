@@ -52,7 +52,7 @@ function execute_search($search, $search_modules, &$modules_args)
             $modules_args[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modules_args[$module->get_id()]['id_search'] = !empty($search->id_search[$module->get_id()]) ? $search->id_search[$module->get_id()] : 0;
-            $requests[$module->get_id()] = $module->call('get_search_request', $modules_args[$module->get_id()]);
+            $requests[$module->get_id()] = $module->get_extension_point('get_search_request', $modules_args[$module->get_id()]);
         }
     }
     
@@ -111,7 +111,7 @@ function get_html_results($results, $html_results, $results_name)
         $personnal_parse_results = $module->has_extension_point('compute_search_results') && $module->has_extension_point('parse_search_result');
         if ($personnal_parse_results && $results_name != 'all')
         {
-            $results_data = $module->call('compute_search_results', array('results' => $results));
+            $results_data = $module->get_extension_point('compute_search_results', array('results' => $results));
             $nb_results = min($nb_results, count($results_data));
         }
     }
@@ -159,7 +159,7 @@ function get_html_results($results, $html_results, $results_name)
             else
             {
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $module->call('parse_search_result', $results_data[$num_item])
+                    'result' => $module->get_extension_point('parse_search_result', $results_data[$num_item])
                 ));
             }
         }

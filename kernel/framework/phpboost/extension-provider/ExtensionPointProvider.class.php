@@ -79,7 +79,7 @@ abstract class ExtensionPointProvider
 	 * @return mixed the $extension_point returns
 	 * @throws ExtensionPointNotFoundException
 	 */
-	public function call($extension_point, $args = null)
+	public function get_extension_point($extension_point, $args = null)
 	{
 		if ($this->has_extension_point($extension_point))
 		{

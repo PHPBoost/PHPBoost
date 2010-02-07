@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              forum_interface.class.php
+ *                     ForumExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
  *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
@@ -29,7 +29,7 @@
 
 define('FORUM_MAX_SEARCH_RESULTS', 50);
 
-class ForumInterface extends ExtensionPointProvider
+class ForumExtensionPointProvider extends ExtensionPointProvider
 {
 	## Public Methods ##
 	function ForumInterface() //Constructeur de la classe ForumInterface

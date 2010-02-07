@@ -442,7 +442,7 @@ class Environment
 		{
 			if ($module->is_enabled())
 			{
-				$module->call('on_changeday');
+				$module->get_extension_point('on_changeday');
 			}
 		}
 	}

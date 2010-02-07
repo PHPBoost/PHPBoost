@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              guestbook_interface.class.php
+ *                              guestbookExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 
 
-class GuestbookInterface extends ExtensionPointProvider
+class GuestbookExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function GuestbookInterface() //Constructeur de la classe ForumInterface

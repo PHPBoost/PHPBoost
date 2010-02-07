@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          KernelInterface.class.php
+ *                        SitemapExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : February 06, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : December 10, 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,16 +25,16 @@
  *
  ###################################################*/
 
-class KernelInterface extends ExtensionPointProvider
+class SitemapExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
 	{
-		parent::__construct('kernel');
+		parent::__construct('sitemap');
 	}
 	
-	public function get_commands()
+	public function on_changeday()
 	{
-		return array('help' => 'CLIHelpCommand');
+		SitemapXMLFileService::generate_if_needed();
 	}
 }
 ?>

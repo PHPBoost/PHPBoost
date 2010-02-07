@@ -196,7 +196,7 @@ ksort($sorted_modules);
 
 foreach ($sorted_modules as $module)
 {
-	$list = $module->call('get_feeds_list');
+	$list = $module->get_extension_point('get_feeds_list');
 	$list = $list->get_feeds_list();
 	$urls = array();
 	foreach ($list as $feed_type => $elt)

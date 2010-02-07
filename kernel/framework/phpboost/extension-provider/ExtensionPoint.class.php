@@ -28,6 +28,5 @@
 
 interface ExtensionPoint
 {
-	
 }
 ?>

@@ -75,7 +75,7 @@ if (($id_search >= 0) && ($module_id != ''))
             if ($form_module->has_extension_point('get_search_args'))
             {
                 // Récupération de la liste des paramètres
-                $form_module_args = $form_module->call('get_search_args');
+                $form_module_args = $form_module->get_extension_point('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach ($form_module_args as $arg)

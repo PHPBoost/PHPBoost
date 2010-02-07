@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          CalendarInterface.class.php
+ *                          CalendarExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CalendarInterface extends ExtensionPointProvider
+class CalendarExtensionPointProvider extends ExtensionPointProvider
 {
     function CalendarInterface() //Constructeur de la classe ForumInterface
     {

@@ -240,7 +240,7 @@ else
 	$module_name = 'articles';
 	$module = $modulesLoader->get_provider($module_name);
 	if ($module->has_extension_point('get_home_page'))
-		echo $module->call('get_home_page');
+		echo $module->get_extension_point('get_home_page');
 	elseif (!$no_alert_on_error) 
 	{
 		global $Errorh;

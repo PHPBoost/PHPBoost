@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          CLICommand.class.php
+ *                          KernelExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : February 06, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
@@ -25,24 +25,16 @@
  *
  ###################################################*/
 
-interface CLICommand
-{    
-    /**
-     * @desc Returns the commands short description
-     * @return string the commands short description
-     */
-    function short_description();
-    
-    /**
-     * @desc prints the help corresponding to this command
-     * @param array $args precises the help message to print
-     */
-    function help(array $args);
+class KernelExtensionPointProvider extends ExtensionPointProvider
+{
+	public function __construct()
+	{
+		parent::__construct('kernel');
+	}
 	
-	/**
-	 * @desc executes the command with the given arguments
-	 * @param array $args arguments
-	 */
-	function execute(array $args);
+	public function commands()
+	{
+		return new CLICommandsList(array('help' => 'CLIHelpCommand'));
+	}
 }
 ?>

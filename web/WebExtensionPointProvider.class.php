@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              web_interface.class.php
+ *                              webExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,7 +27,7 @@
 
 
 
-class WebInterface extends ExtensionPointProvider
+class WebExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function WebInterface() //Constructeur de la classe ForumInterface

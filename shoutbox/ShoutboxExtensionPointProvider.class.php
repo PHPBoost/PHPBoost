@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        shoutbox_interface.class.php
+ *                        shoutboxExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,7 +27,7 @@
 
 
 
-class ShoutboxInterface extends ExtensionPointProvider
+class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function ShoutboxInterface() //Constructeur de la classe ForumInterface

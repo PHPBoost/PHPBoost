@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              media_interface.class.php
+ *                              mediaExtensionPointProvider.class.php
  *                            -------------------
  *   begin               	: October 20, 2008
  *   copyright        	: (C) 2007 Geoffrey ROGUELON
@@ -30,7 +30,7 @@
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
-class MediaInterface extends ExtensionPointProvider
+class MediaExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function MediaInterface() //Constructeur de la classe ForumInterface

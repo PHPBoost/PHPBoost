@@ -144,7 +144,7 @@ $MEDIA_LANG = array(
 'require_name' => 'Please enter a title for your multimedia file!',
 'require_url' => 'Please enter a link for your multimedia file!',
 
-// media_interface.class.php
+// mediaExtensionPointProvider.class.php
 'media' => 'Multimedia file',
 'all_cats' => 'All categories',
 'xml_media_desc' => 'Last multimedia file',

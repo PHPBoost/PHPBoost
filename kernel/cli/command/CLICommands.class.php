@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          InstallInterface.class.php
+ *                          CLICommands.class.php
  *                            -------------------
  *   begin                : February 06, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
@@ -25,16 +25,35 @@
  *
  ###################################################*/
 
-class InstallInterface extends ExtensionPointProvider
+interface CLICommands extends ExtensionPoint
 {
-    public function __construct()
-    {
-        parent::__construct('install');
-    }
+	const EXTENSION_POINT = 'commands';
     
-    public function get_commands()
-    {
-    	return array('install' => 'CLIInstallCommand');
-    }
+    /**
+     * @desc Returns the commands list
+     * @return string[] the commands list
+     */
+    function get_commands();
+    
+    /**
+     * @desc Returns the command short description
+     * @param string $command
+     * @return string the command short description
+     */
+    function get_short_description($command);
+    
+    /**
+     * @desc Displays the command help
+     * @param string $command the command
+     * @param array $args the arguments taht will help to precise the help
+     */
+    function help($command, array $args);
+    
+    /**
+     * @desc Launches the command with given arguments
+     * @param string $command the command
+     * @param array $args arguments
+     */
+    function execute($command, array $args);
 }
 ?>

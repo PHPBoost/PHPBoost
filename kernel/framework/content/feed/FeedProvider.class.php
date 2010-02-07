@@ -1,13 +1,13 @@
 <?php
 /*##################################################
- *                        SitemapInterface.class.php
+ *                          FeedProvider.class.php
  *                            -------------------
- *   begin                : December 10, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 07, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
- ###################################################
+ *###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+ *###################################################
+ */
 
-class SitemapInterface extends ExtensionPointProvider
+interface FeedProvider extends ExtensionPoint
 {
-	public function __construct()
-	{
-		parent::__construct('sitemap');
-	}
+	const EXTENSION_POINT = 'feeds';
 	
-	public function on_changeday()
-	{
-		SitemapXMLFileService::generate_if_needed();
-	}
+	function get_feeds_list();
+	
+	function get_feed_data_struct();
 }
 ?>
