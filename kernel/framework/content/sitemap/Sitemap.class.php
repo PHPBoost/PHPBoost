@@ -180,7 +180,7 @@ class Sitemap
 	public function build_modules_maps($auth_mode = self::AUTH_GUEST)
 	{
 		$Modules = AppContext::get_extension_provider_service();
-		foreach ($Modules->get_available_modules('get_module_map') as $module)
+		foreach ($Modules->get_providers('get_module_map') as $module)
 		{
 			$module_map = $module->get_module_map(self::AUTH_USER);
 			$this->add($module_map);

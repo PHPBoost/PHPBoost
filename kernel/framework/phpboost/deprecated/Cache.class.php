@@ -191,7 +191,7 @@ class Cache
 
 
 		$modulesLoader = AppContext::get_extension_provider_service();
-		$modules = $modulesLoader->get_available_modules('get_cache');
+		$modules = $modulesLoader->get_providers('get_cache');
 		foreach ($modules as $module)
 		{
 			if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé

@@ -119,7 +119,7 @@ else
         $SEARCH_CONFIG['unauthorized_modules'] = isset($SEARCH_CONFIG['unauthorized_modules']) && is_array($SEARCH_CONFIG['unauthorized_modules']) ? $SEARCH_CONFIG['unauthorized_modules'] : array();
 
         $Modules = AppContext::get_extension_provider_service();
-        $searchModules = $Modules->get_available_modules('get_search_request');
+        $searchModules = $Modules->get_providers('get_search_request');
 
         foreach ($searchModules as $module)
         {
@@ -153,7 +153,7 @@ else
     else
     {
         $modules = AppContext::get_extension_provider_service();
-        $all_modules = $modules->get_available_modules('get_search_request');
+        $all_modules = $modules->get_providers('get_search_request');
         $authorized_modules = array_diff(array_keys($all_modules), $SEARCH_CONFIG['unauthorized_modules']);
         foreach ($authorized_modules as $module_id)
         {

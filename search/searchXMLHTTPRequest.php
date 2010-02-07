@@ -55,7 +55,7 @@ if (($id_search >= 0) && ($module_id != ''))
     {   // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
         $search_modules = array();
-        $all_search_modules = $modules->get_available_modules('get_search_request');
+        $all_search_modules = $modules->get_providers('get_search_request');
         foreach ($all_search_modules as $search_module)
         {
             if (in_array($search_module->get_id(), $selected_modules))
@@ -63,7 +63,7 @@ if (($id_search >= 0) && ($module_id != ''))
         }
         
         // Chargement des modules avec formulaires
-        $forms_module = $modules->get_available_modules('get_search_form', $search_modules);
+        $forms_module = $modules->get_providers('get_search_form', $search_modules);
         
         // Ajout du paramètre search à tous les modules
         foreach ($search_modules as $module)
