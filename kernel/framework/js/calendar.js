@@ -82,7 +82,7 @@ function xmlhttprequest_calendar(field, vars)
 	if ($('img' + field))
 	{
 		default_image = $('img' + field).src;
-		$('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif';
+		$('img' + field).src = PATH_TO_ROOT + '/templates/' + THEME + '/images/loading_mini.gif';
 	}
 	
 	new Ajax.Request(filename,
