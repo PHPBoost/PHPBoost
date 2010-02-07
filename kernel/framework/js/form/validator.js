@@ -52,9 +52,9 @@ function lengthIntervalValidator(value, lbound, rbound)
 /* #### Onblur validator #### */
 function nonEmptyFormFieldValidator(field_id, message)
 {
-	if (field_id)
+	if ($(field_id))
 	{
-		if (field_id.value == '')
+		if ($F(field_id) == '')
 		{
 			return message;
 		}
@@ -64,9 +64,9 @@ function nonEmptyFormFieldValidator(field_id, message)
 
 function regexFormFieldValidator(field_id, regexPattern, options, message)
 {
-	if (field_id)
+	if ($(field_id))
 	{
-		value = field_id.value;
+		value = $F(field_id);
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -78,9 +78,9 @@ function regexFormFieldValidator(field_id, regexPattern, options, message)
 
 function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 {
-	if (field_id)
+	if ($(field_id))
 	{
-		if (!integerIntervalValidator(field_id.value, lbound, rbound))
+		if (!integerIntervalValidator($F(field_id), lbound, rbound))
 		{
 			return message;
 		}
@@ -90,9 +90,9 @@ function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 
 function lengthFormFieldValidator(field_id, lbound, rbound, message)
 {
-	if (field_id)
+	if ($(field_id))
 	{
-		if (!lengthIntervalValidator(field_id.value, lbound, rbound))
+		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
 		{
 			return message;
 		}

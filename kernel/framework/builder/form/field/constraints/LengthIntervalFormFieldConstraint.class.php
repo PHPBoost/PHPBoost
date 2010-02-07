@@ -55,7 +55,7 @@ class LengthIntervalFormFieldConstraint implements FormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'lengthFormFieldValidator(this, ' . $this->lboundary . ', ' . 
+		return 'lengthFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . $this->lboundary . ', ' . 
 		$this->rboundary . ', ' . $this->js_onblur_message . ')';
 	}
 }
