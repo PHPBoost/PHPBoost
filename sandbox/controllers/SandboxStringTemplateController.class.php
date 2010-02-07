@@ -42,6 +42,8 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		$tpl = new CachedStringTemplate($this->result_tpl);
 
+		$this->test = str_repeat($this->test, 5);
+		
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();
 		$this->run_non_cached_parsing();
@@ -69,7 +71,7 @@ class SandboxStringTemplateController extends ModuleController
 
 	private function run_cached_parsing()
 	{
-		for ($i = 0; $i < 1000; $i++)
+		for ($i = 0; $i < 100; $i++)
 		{
 			$tpl = new CachedStringTemplate($this->test);
 			$this->assign_template($tpl);
@@ -79,7 +81,7 @@ class SandboxStringTemplateController extends ModuleController
 
 	private function run_non_cached_parsing()
 	{
-		for ($i = 0; $i < 1000; $i++)
+		for ($i = 0; $i < 100; $i++)
 		{
 			$tpl = new StringTemplate($this->test);
 			$this->assign_template($tpl);
