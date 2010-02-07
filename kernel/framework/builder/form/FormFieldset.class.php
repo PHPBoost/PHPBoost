@@ -37,7 +37,7 @@ class FormFieldset
 	private $title = '';
 	private $form_name = '';
 	private $fields = array();
-	private $validation_error_message = array();
+	private $validation_error_messages = array();
 	
 	/** 
 	 * @desc constructor
