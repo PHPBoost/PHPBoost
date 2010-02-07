@@ -86,7 +86,6 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
-		$this->uniq_id = rand(150, 900);		
 		$this->set_id($id);
 		$this->set_label($label);
 		$this->set_value($value);
