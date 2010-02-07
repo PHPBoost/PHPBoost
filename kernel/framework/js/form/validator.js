@@ -131,7 +131,7 @@ function equalityFormFieldValidator(object_field, field_id, field_id_equality, m
 }
 
 
-/* #### Validation function #### */
+/* #### Validation functions #### */
 function formFieldConstraintsOnblurValidation(othis, constraints)
 {
 	var message = '';
