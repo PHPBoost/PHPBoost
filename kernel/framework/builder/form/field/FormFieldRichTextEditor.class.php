@@ -72,10 +72,10 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$editor->set_identifier($this->get_html_id());
 
 		$template->assign_vars(array(
-				'C_EDITOR_ENABLED' => true,
-				'EDITOR' => $editor->display(),
-				'VALUE' => $this->get_raw_value(),
-				'PREVIEW_BUTTON' => $this->get_preview_button_code()
+			'C_EDITOR_ENABLED' => true,
+			'EDITOR' => $editor->display(),
+			'VALUE' => $this->get_raw_value(),
+			'PREVIEW_BUTTON' => $this->get_preview_button_code()
 		));
 	}
 
@@ -129,16 +129,16 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		return $unparser->get_content();
 	}
 
-	protected function get_onblur_action()
+	public function get_onblur_validations()
 	{
 		// This is a patch for TinyMCE, it shouldn't be there but it's difficult not to process it here
 		if ($this->formatter instanceof TinyMCEParserFactory)
 		{
-			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_action();
+			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_validations();
 		}
 		else
 		{
-			return parent::get_onblur_action();
+			return parent::get_onblur_validations();
 		}
 	}
 

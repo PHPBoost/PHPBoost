@@ -53,15 +53,9 @@ class LengthIntervalFormFieldConstraint implements FormFieldConstraint
 		return ($value >= $this->lboundary && $value <= $this->rboundary);
 	}
 
-	public function get_onblur_validation(FormField $field)
+	public function get_js_validation(FormField $field)
 	{
-		return 'lengthFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . $this->lboundary . ', ' . 
-		$this->rboundary . ', ' . $this->js_onblur_message . ')';
-	}
-
-	public function get_onsubmit_validation(FormField $field)
-	{
-		return 'lengthFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . $this->lboundary . ', ' . 
+		return 'lengthFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . $this->lboundary . ', ' . 
 		$this->rboundary . ', ' . $this->js_onblur_message . ')';
 	}
 }

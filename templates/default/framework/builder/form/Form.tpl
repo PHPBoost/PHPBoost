@@ -29,15 +29,30 @@
 
 <script type="text/javascript">
 <!--
+	# START check_onblur_constraints #
+	function check_onblur_{check_onblur_constraints.INDENTIFIER}(othis)
+	{
+		var constraints = Array();
+		# START check_onblur_constraints.constraints #
+		constraints.push({check_onblur_constraints.constraints.FUNCTION});
+		# END check_onblur_constraints.constraints #
+		
+		constraints_validation(othis, constraints);
+	}
+	# END check_onblur_constraints #
+	
 	function check_generated_form_{L_FORMNAME}()
 	{
+		var message;
 		# IF C_BBCODE_TINYMCE_MODE #
 		tinyMCE.triggerSave();
 		# ENDIF #
 
 		# START check_constraints #
-		if (!{check_constraints.ONSUBMIT_CONSTRAINTS})
+		message = {check_constraints.ONSUBMIT_CONSTRAINTS};
+		if (message != '')
 		{
+			displayFormFieldOnsubmitValidatorMessage(message);
 			return false;
 		}
 		# END check_constraints #

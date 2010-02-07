@@ -71,7 +71,8 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 	{
 		$template->assign_vars(array(
 			'ROWS' => $this->rows,
-			'COLS' => $this->cols
+			'COLS' => $this->cols,
+			'ONBLUR' => $this->get_onblur()
 		));
 	}
 	

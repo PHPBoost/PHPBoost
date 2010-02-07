@@ -62,13 +62,13 @@ class FormFieldTextEditor extends AbstractFormField
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
 		$field = '<input type="text" ';
-		$field .= 'size="' . $this->size;
+		$field .= 'size="' . $this->size . '" ';
 		$field .= 'maxlength="' . $this->maxlength . '" ';
 		$field .= 'name="' . $this->get_html_id() . '" ';
 		$field .= 'id="' . $this->get_html_id() . '" ';
 		$field .= 'value="' . htmlspecialchars($this->value) . '" ';
 		$field .= 'class="' . $this->css_class . '" ';
-		$field .= 'onblur="' . $this->get_onblur_action() . '" ';
+		$field .= 'onblur="' . $this->get_onblur_validation() . $this->get_onblur() . '" ';
 		$field .= '/>';
 
 		$this->assign_common_template_variables($template);

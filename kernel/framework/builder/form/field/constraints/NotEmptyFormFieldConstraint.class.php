@@ -39,7 +39,7 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 	{
 		if (empty($js_onblur_message))
 		{
-			$js_onblur_message = LangLoader::get_message('this_has_to_be_filled', 'builder-form-Validator');
+			$js_onblur_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
 		}
 		$this->js_onblur_message = TextHelper::to_js_string($js_onblur_message);
 		
@@ -52,20 +52,10 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 		return $value !== null && $value != '';
 	}
 
-	public function get_onblur_validation(FormField $field)
+	public function get_js_validation(FormField $field)
 	{
-		return 'nonEmptyFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_html_id()) .
+		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $this->js_onblur_message . ')';
-	}
-
-	public function get_onsubmit_validation(FormField $field)
-	{
-		if (empty($this->js_onsubmit_message))
-		{
-			$this->js_onsubmit_message = sprintf(LangLoader::get_message('has_to_be_filled', 'builder-form-Validator'), $field->get_label());
-		}
-		
-		return 'notEmptyFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . TextHelper::to_js_string($this->js_onsubmit_message) . ')';
 	}
 }
 

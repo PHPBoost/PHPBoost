@@ -48,80 +48,21 @@ function lengthIntervalValidator(value, lbound, rbound)
 	return true;
 }
 
-/* #### Onsubmit validator #### */
-function regexFormFieldOnsubmitValidator(field_id, regexPattern, options, message)
-{
-	if ($(field_id))
-	{
-		value = $F(field_id);
-		regex = new RegExp(regexPattern, options);
-		if (!regex.test(value))
-		{
-			displayFormFieldOnsubmitValidatorMessage(message);
-			return false;
-		}
-	}
-	return true;
-}
-
-/**
- * @desc validate not empty field
- * @return bool  
- */
-function notEmptyFormFieldOnsubmitValidator(field_id, message)
-{
-	if ($(field_id))
-	{
-		if ($F(field_id) == '')
-		{
-			displayFormFieldOnsubmitValidatorMessage(message);
-			return false;
-		}
-	}
-	return true;
-}
-function integerIntervalFormFieldOnsubmitValidator(field_id, lbound, rbound, message)
-{
-	if ($(field_id))
-	{
-		if (!integerIntervalValidator($F(field_id), lbound, rbound))
-		{
-			displayFormFieldOnsubmitValidatorMessage(message);
-			return false;
-		}
-	}
-	return true;
-}
-function lengthFormFieldOnsubmitValidator(field_id, lbound, rbound, message)
-{
-	if ($(field_id))
-	{
-		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
-		{
-			displayFormFieldOnsubmitValidatorMessage(message);
-			return false;
-		}
-	}
-	return true;
-}
-
 
 /* #### Onblur validator #### */
-function nonEmptyFormFieldOnblurValidator(field_id, message)
+function nonEmptyFormFieldValidator(field_id, message)
 {
 	if ($(field_id))
 	{
 		if ($F(field_id) == '')
 		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-			return false;
+			return message;
 		}
 	}
-	clearFormFieldOnblurValidatorMessage(field_id);
-	return true;
+	return '';
 }
 
-function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
+function regexFormFieldValidator(field_id, regexPattern, options, message)
 {
 	if ($(field_id))
 	{
@@ -129,63 +70,102 @@ function regexFormFieldOnblurValidator(field_id, regexPattern, options, message)
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-			return false;
+			message;
 		}
 	}
-	clearFormFieldOnblurValidatorMessage(field_id);
-	return true;
+	return '';
 }
 
-function integerIntervalFormFieldOnblurValidator(field_id, lbound, rbound, message)
+function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 {
 	if ($(field_id))
 	{
 		if (!integerIntervalValidator($F(field_id), lbound, rbound))
 		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-			return false;
+			return message;
 		}
 	}
-	clearFormFieldOnblurValidatorMessage(field_id);
-	return true;
+	return '';
 }
 
-function lengthFormFieldOnblurValidator(field_id, lbound, rbound, message)
+function lengthFormFieldValidator(field_id, lbound, rbound, message)
 {
 	if ($(field_id))
 	{
 		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
 		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-			return false;
+			return message;
 		}
 	}
-	clearFormFieldOnblurValidatorMessage(field_id);
-	return true;
+	return '';
 }
 
-
-
-function equalityFormFieldOnblurValidator(field_id, field_id_equality, message)
+function equalityFormFieldValidator(object_field, field_id, field_id_equality, message)
 {
+	var answer = '';
 	if ($(field_id) && $(field_id_equality))
 	{
-		if ($F(field_id) == '' || $F(field_id_equality) == '')
+		if (($F(field_id) != '' && $F(field_id_equality) != '') && $F(field_id) != $F(field_id_equality))
 		{
-			return false;
-		}
-		if ($F(field_id) != $F(field_id_equality))
-		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-			displayFormFieldOnblurValidatorMessage(field_id_equality, message);
-			return false;
+			answer = message;
 		}
 	}
-	clearFormFieldOnblurValidatorMessage(field_id);
-	clearFormFieldOnblurValidatorMessage(field_id_equality);
-	return true;
+	if (object_field.id == field_id_equality)
+	{
+		if ($F(field_id) != '')
+		{
+			return Array(field_id, answer);
+		}
+	}
+	else
+	{
+		if ($F(field_id_equality) != '')
+		{
+			return Array(field_id_equality, answer);
+		}
+	}
+	return Array('', '');
 }
 
 
+/* #### Validation function #### */
+function formFieldConstraintsValidation(othis, constraints)
+{
+	var message = '';
+	var field_id = '';
 
+	has_constraint = constraints.length;
+	for (var i = 0; i < has_constraint; i++)
+	{
+		message = constraints[i];
+		if (message != '')
+		{
+			break;
+		}
+	}
+	if (message instanceof Array) //Multiple constraints
+	{
+		field_id = message[0];
+		message = message[1];
+		if (message == '') //All validations checked.
+		{
+			clearFormFieldOnblurValidatorMessage(othis.id);
+			clearFormFieldOnblurValidatorMessage(field_id);
+		}
+		else
+		{
+			displayFormFieldOnblurValidatorMessage(field_id, message);
+		}
+	}
+	else
+	{
+		if (message == '') //All validations checked.
+		{
+			clearFormFieldOnblurValidatorMessage(othis.id);
+		}
+		else
+		{
+			displayFormFieldOnblurValidatorMessage(othis.id, message);
+		}
+	}
+}

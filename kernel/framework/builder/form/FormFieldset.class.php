@@ -112,7 +112,7 @@ class FormFieldset
 		$validations = array();
 		foreach ($this->fields as $field)
 		{
-			$validations[] = $field->get_onsubmit_validations();
+			$validations[] = $field->get_js_validations();
 		}
 		return $validations;
 	}

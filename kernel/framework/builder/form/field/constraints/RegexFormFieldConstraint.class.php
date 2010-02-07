@@ -70,15 +70,9 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 		return preg_match($this->php_regex, $value) > 0;
 	}
 
-	public function get_onblur_validation(FormField $field)
+	public function get_js_validation(FormField $field)
 	{
-		return 'regexFormFieldOnblurValidator(' . TextHelper::to_js_string($field->get_html_id()) .
-			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
-	}
-
-	public function get_onsubmit_validation(FormField $field)
-	{
-		return 'regexFormFieldOnsubmitValidator(' . TextHelper::to_js_string($field->get_html_id()) .
+		return 'regexFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 }
