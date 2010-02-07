@@ -72,8 +72,8 @@ class RegexFormFieldConstraint implements FormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'regexFormFieldValidator(this, ' . $this->js_regex . ', ' . $this->js_options . ', 
-		' . $this->js_message . ')';
+		return 'regexFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
+			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
 	}
 }
 

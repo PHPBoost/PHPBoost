@@ -54,7 +54,8 @@ class NotEmptyFormFieldConstraint implements FormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'nonEmptyFormFieldValidator(this, ' . $this->js_onblur_message . ')';
+		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
+			', ' . $this->js_onblur_message . ')';
 	}
 }
 

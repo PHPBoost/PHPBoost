@@ -59,7 +59,7 @@ class IntegerIntervalFormFieldConstraint implements FormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'integerIntervalFormFieldValidator(this, 
+		return 'integerIntervalFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', 
 		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . $this->js_message . ')';
 	}
 }
