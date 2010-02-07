@@ -35,7 +35,7 @@ class NewsletterService
 		$message = stripslashes($message);
 		$message = str_replace('"../', '"' . HOST . DIR . '/' , $message);
 		$message = NewsletterService::clean_html($message);
-		$message = ContentSecondFormattingParser::export_html_text($message);
+		$message = ContentSecondParser::export_html_text($message);
 				
 		if ($email_test == '') // envoi définitif
 		{
@@ -92,7 +92,7 @@ class NewsletterService
 		$error_mailing_list = array();
 		$message = stripslashes(FormatingHelper::strparse(addslashes($message)));
 
-		$message = ContentSecondFormattingParser::export_html_text($message);
+		$message = ContentSecondParser::export_html_text($message);
 		
 		$mail_contents = '<html>
 <head><title>' . $mail_object . '</title></head><body>';

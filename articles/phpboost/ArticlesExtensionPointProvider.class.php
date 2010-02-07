@@ -124,67 +124,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 	             return $request;
 	}
-
-    function get_feeds_list()
-	{
-        $articles_cats = new ArticlesCats();
-        return $articles_cats->get_feeds_list();
-	}
 	
-	function get_feed_data_struct($idcat = 0, $name = '')
+	public function feeds()
 	{
-
-		global $Cache, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
-
-		$Cache->load('articles');
-
-		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
-
-		
-		
-		
-
-		$data = new FeedData();
-
-		$data->set_title($ARTICLES_LANG['xml_articles_desc']);
-		$data->set_date(new Date());
-		$data->set_link(new Url('/syndication.php?m=articles&amp;cat=' . $idcat));
-		$data->set_host(HOST);
-		$data->set_desc($ARTICLES_LANG['xml_articles_desc']);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(AUTH_ARTICLES_READ);
-
-		$cat_clause = !empty($idcat) ? " AND a.idcat = '". $idcat . "'" : '';
-		$result = $this->sql_querier->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
-        FROM " . DB_TABLE_ARTICLES . " a
-        LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
-        WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) " . $cat_clause . "
-        ORDER BY a.timestamp DESC
-        " . $this->sql_querier->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-
-		// Generation of the feed's items
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			$item = new FeedItem();
-
-			$link = new Url('/articles/articles' . url(
-                '.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'],
-                '-' . $row['idcat'] . '-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'
-                ));
-
-                $item->set_title($row['title']);
-                $item->set_link($link);
-                $item->set_guid($link);
-                $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));
-                $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-                $item->set_image_url($row['icon']);
-                $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['global_auth'] : unserialize($row['auth']));
-
-                $data->add_item($item);
-		}
-		$this->sql_querier->query_close($result);
-
-		return $data;
+		return new ArticlesFeedProvider();
 	}
 
 	function get_cat()

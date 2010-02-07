@@ -78,7 +78,7 @@ class ContentSecondParser extends AbstractParser
 	 * @param string $html Content to transform
 	 * @return string The exportable content
 	 */
-	public function export_html_text($html_content)
+	public static function export_html_text($html_content)
 	{
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',

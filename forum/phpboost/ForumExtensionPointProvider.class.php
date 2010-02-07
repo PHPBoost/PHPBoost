@@ -330,7 +330,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
             return $tpl->to_string();
 	}
 
-	function _feeds_add_category($cat_tree, $category)
+	private function _feeds_add_category($cat_tree, $category)
 	{
 		$child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
 		foreach ($category['children'] as $sub_category)
@@ -340,92 +340,9 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$cat_tree->add_child($child);
 	}
 
-	function get_feeds_list()
+	public function feeds()
 	{
-		global $LANG;
-		$feed = array();
-		$forum = new Forum();
-		$categories = $forum->get_cats_tree();
-
-
-
-
-		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
-
-		ForumInterface::_feeds_add_category($cat_tree, $categories);
-
-		$children = $cat_tree->get_children();
-		$feeds = new FeedsList();
-		if (count($children) > 0)
-		{
-			$feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
-		}
-		return $feeds;
-	}
-
-	function get_feed_data_struct($idcat = 0, $name = '')
-	{
-		global $Cache, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
-
-		$_idcat = $idcat;
-		require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-		$idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
-
-		$data = new FeedData();
-
-
-
-
-
-		$data->set_title($LANG['xml_forum_desc']);
-		$data->set_date(new Date());
-		$data->set_link(new Url('/syndication.php?m=forum&amp;cat=' . $_idcat));
-		$data->set_host(HOST);
-		$data->set_desc($LANG['xml_forum_desc']);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(READ_CAT_FORUM);
-
-		$req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? " AND c.id_left >= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$idcat]['id_right'] . "' " : "";
-
-		$req = "SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents, c.auth
-		FROM " . PREFIX . "forum_topics t
-		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		LEFT JOIN " . PREFIX . "forum_msg msg ON msg.id = t.last_msg_id
-		WHERE c.level != 0 AND c.aprob = 1 " . $req_cats . "
-		ORDER BY t.last_timestamp DESC
-		" . $this->sql_querier->limit(0, 2 * $CONFIG_FORUM['pagination_msg']);
-		$result = $this->sql_querier->query_while ($req, __LINE__, __FILE__);
-		// Generation of the feed's items
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			$item = new FeedItem();
-
-			//Link
-			$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
-			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
-
-			$link = new Url('/forum/topic' . url(
-			        '.php?' . $last_page .  'id=' . $row['id'],
-                    '-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
-                    ) . '#m' .  $row['last_msg_id']
-                    );
-            $item->set_title(
-            	(($CONFIG_FORUM['activ_display_msg'] && !empty($row['display_msg'])) ?
-            	html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
-                ucfirst($row['title'])
-            );
-            $item->set_link($link);
-            $item->set_guid($link);
-            $item->set_desc(FormatingHelper::second_parse($row['contents']));
-            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
-            $item->set_auth(unserialize($row['auth']));
-
-            $data->add_item($item);
-		}
-		$this->sql_querier->query_close($result);
-
-		return $data;
+		return new ForumFeedProvider();
 	}
 }
 

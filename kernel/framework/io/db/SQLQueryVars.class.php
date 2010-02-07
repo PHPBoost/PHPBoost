@@ -57,7 +57,7 @@ class SQLQueryVars extends StringVars
             $nb_value = count($parameter);
             for ($i = 0; $i < $nb_value; $i++)
             {
-                $parameter[$i] = '\'' . $this->querier->escape($parameter) . '\'';
+                $parameter[$i] = '\'' . $this->querier->escape($parameter[$i]) . '\'';
             }
             return '(' . implode(', ', $parameter) . ')';
         }

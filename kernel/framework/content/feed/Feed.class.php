@@ -118,7 +118,7 @@ class Feed
 		{
 			if (!empty($this->data))
 			{
-                $desc = FormatingHelper::second_parse($this->data->get_desc());
+				$desc = FormatingHelper::second_parse($this->data->get_desc());
 				$tpl->assign_vars(array(
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
@@ -126,7 +126,7 @@ class Feed
                     'TITLE' => $this->data->get_title(),
                     'U_LINK' => $this->data->get_link(),
                     'HOST' => $this->data->get_host(),
-                    'DESC' => htmlspecialchars(ContentSecondFormattingParser::export_html_text($desc)),
+                    'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
                     'RAW_DESC' => $desc,
                     'LANG' => $this->data->get_lang()
 				));
@@ -139,7 +139,7 @@ class Feed
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => htmlspecialchars(ContentSecondFormattingParser::export_html_text($desc)),
+                        'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
                         'RAW_DESC' => $desc,
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
@@ -183,13 +183,19 @@ class Feed
 	 * @desc Returns true if the feed data are in the cache
 	 * @return bool true if the feed data are in the cache
 	 */
-	public function is_in_cache() { return file_exists($this->get_cache_file_name()); }
+	public function is_in_cache()
+	{
+		return file_exists($this->get_cache_file_name());
+	}
 
 	/**
 	 * @desc Returns the feed data cache filename
 	 * @return string the feed data cache filename
 	 */
-	public function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
+	public function get_cache_file_name()
+	{
+		return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php';
+	}
 
 	/**
 	 * @desc Clear the cache of the specified module_id.
@@ -226,7 +232,6 @@ class Feed
 	 */
 	private static function update_cache($module_id, $name, $data, $idcat = 0)
 	{
-
 		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php');
 		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
 		$file->close();
@@ -247,14 +252,12 @@ class Feed
 	 */
 	private static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
 	{
-		// Choose the correct template
 		if ($tpl instanceof Template)
 		{
 			$template = $tpl->copy();
 		}
 		else
 		{
-
 			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
@@ -266,20 +269,17 @@ class Feed
 		if ($result === false)
 		{
 
-			$modules = AppContext::get_extension_provider_service();
-			$module = $modules->get_provider($module_id);
+			$extension_provider_service = AppContext::get_extension_provider_service();
+			$provider = $extension_provider_service->get_provider($module_id);
 
-			if ( $module->got_error() || !$module->has_extension_point('get_feed_data_struct') )
+			if (!$provider->has_extension_point(FeedProvider::EXTENSION_POINT) )
 			{   // If the module is not installed or doesn't have the get_feed_data_struct
 				// functionality we break
 				return '';
 			}
-
-			$data = $module->get_extension_point('get_feed_data_struct', $idcat);
-			if (!$module->got_error())
-			{
-				self::update_cache($module_id, $name, $data, $idcat);
-			}
+			$feed_provider = $provider->get_extension_point(FeedProvider::EXTENSION_POINT);
+			$data = $feed_provider->get_feed_data_struct($idcat);
+			self::update_cache($module_id, $name, $data, $idcat);
 		}
 		if (!Debug::is_debug_mode_enabled())
 		{
@@ -315,22 +315,22 @@ class Feed
 	 */
 	public static function get_feed_menu($feed_url)
 	{
-	    global $LANG, $CONFIG;
+		global $LANG, $CONFIG;
 
-	    $feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
+		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
-	    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
+		$feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
 
-	    $feed_menu->assign_vars(array(
+		$feed_menu->assign_vars(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,
 	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
 	        'L_RSS' => $LANG['rss'],
 	        'L_ATOM' => $LANG['atom']
-	    ));
+		));
 
-	    return $feed_menu->to_string();
+		return $feed_menu->to_string();
 	}
 }
 ?>
