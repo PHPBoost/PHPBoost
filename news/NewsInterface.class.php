@@ -25,15 +25,13 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
 require_once PATH_TO_ROOT . '/news/news_constant.php';
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class NewsInterface extends ModuleInterface
+class NewsInterface extends ExtensionPointProvider
 {
 	public function __construct() //Constructeur de la classe ForumInterface
 	{

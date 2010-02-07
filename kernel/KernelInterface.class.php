@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class KernelInterface extends ModuleInterface
+class KernelInterface extends ExtensionPointProvider
 {
 	public function __construct()
 	{

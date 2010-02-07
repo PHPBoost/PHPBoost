@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SitemapInterface extends ModuleInterface
+class SitemapInterface extends ExtensionPointProvider
 {
 	public function __construct()
 	{

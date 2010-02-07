@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe WikiInterface qui hérite de la classe ModuleInterface
-class WikiInterface extends ModuleInterface
+class WikiInterface extends ExtensionPointProvider
 {
 	public function __construct()
 	{
@@ -354,7 +352,7 @@ class WikiInterface extends ModuleInterface
 		return $module_map; 
 	}
 
-	function _create_module_map_sections($id_cat, $auth_mode)
+	private function _create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;
 		

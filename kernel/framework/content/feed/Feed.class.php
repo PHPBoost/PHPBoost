@@ -266,16 +266,16 @@ class Feed
 		if ($result === false)
 		{
 
-			$modules = new ModulesDiscoveryService();
-			$module = $modules->get_module($module_id);
+			$modules = AppContext::get_extension_provider_service();
+			$module = $modules->get_provider($module_id);
 
-			if ( $module->got_error() || !$module->has_functionality('get_feed_data_struct') )
+			if ( $module->got_error() || !$module->has_extension_point('get_feed_data_struct') )
 			{   // If the module is not installed or doesn't have the get_feed_data_struct
 				// functionality we break
 				return '';
 			}
 
-			$data = $module->functionality('get_feed_data_struct', $idcat);
+			$data = $module->call('get_feed_data_struct', $idcat);
 			if (!$module->got_error())
 			{
 				self::update_cache($module_id, $name, $data, $idcat);

@@ -25,13 +25,11 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
 define('FORUM_MAX_SEARCH_RESULTS', 50);
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class ForumInterface extends ModuleInterface
+class ForumInterface extends ExtensionPointProvider
 {
 	## Public Methods ##
 	function ForumInterface() //Constructeur de la classe ForumInterface

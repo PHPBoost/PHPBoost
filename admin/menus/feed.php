@@ -150,7 +150,7 @@ else
 
 
 
-$modules = new ModulesDiscoveryService();
+$modules = AppContext::get_extension_provider_service();
 $feeds_modules = $modules->get_available_modules('get_feeds_list');
 
 function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
@@ -196,7 +196,7 @@ ksort($sorted_modules);
 
 foreach ($sorted_modules as $module)
 {
-	$list = $module->functionality('get_feeds_list');
+	$list = $module->call('get_feeds_list');
 	$list = $list->get_feeds_list();
 	$urls = array();
 	foreach ($list as $feed_type => $elt)

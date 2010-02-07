@@ -154,12 +154,12 @@ class Cache
 		global $Errorh;
 
 
-		$modulesLoader = new ModulesDiscoveryService();
-		$module = $modulesLoader->get_module($module_name);
+		$modulesLoader = AppContext::get_extension_provider_service();
+		$module = $modulesLoader->get_provider($module_name);
 
-		if (!$module->get_errors() && $module->has_functionality('get_cache')) //Le module implémente bien la fonction.
+		if (!$module->get_errors() && $module->has_extension_point('get_cache')) //Le module implémente bien la fonction.
 		{
-			$module_cache = $module->functionality('get_cache');
+			$module_cache = $module->call('get_cache');
 			$this->write($module_name, $module_cache);
 		}
 		elseif (!$no_alert_on_error)
@@ -190,13 +190,13 @@ class Cache
 		global $MODULES;
 
 
-		$modulesLoader = new ModulesDiscoveryService();
+		$modulesLoader = AppContext::get_extension_provider_service();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach ($modules as $module)
 		{
 			if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé
 			{
-				$this->write(strtolower($module->get_id()), $module->functionality('get_cache'));
+				$this->write(strtolower($module->get_id()), $module->call('get_cache'));
 			}
 		}
 	}

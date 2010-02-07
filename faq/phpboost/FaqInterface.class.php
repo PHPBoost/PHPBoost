@@ -25,13 +25,11 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class FaqInterface extends ModuleInterface
+class FaqInterface extends ExtensionPointProvider
 {
     public function __construct() //Constructeur de la classe ForumInterface
     {

@@ -118,7 +118,7 @@ else
         $SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
         $SEARCH_CONFIG['unauthorized_modules'] = isset($SEARCH_CONFIG['unauthorized_modules']) && is_array($SEARCH_CONFIG['unauthorized_modules']) ? $SEARCH_CONFIG['unauthorized_modules'] : array();
 
-        $Modules = new ModulesDiscoveryService();
+        $Modules = AppContext::get_extension_provider_service();
         $searchModules = $Modules->get_available_modules('get_search_request');
 
         foreach ($searchModules as $module)
@@ -152,7 +152,7 @@ else
     }
     else
     {
-        $modules = new ModulesDiscoveryService();
+        $modules = AppContext::get_extension_provider_service();
         $all_modules = $modules->get_available_modules('get_search_request');
         $authorized_modules = array_diff(array_keys($all_modules), $SEARCH_CONFIG['unauthorized_modules']);
         foreach ($authorized_modules as $module_id)

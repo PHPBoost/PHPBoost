@@ -60,21 +60,31 @@ if (!empty($module_id))
 	else
 	{   // Otherwise, we regenerate it before printing it
 		// Feeds Regeneration
-		
-		$modules_discovery_service = new ModulesDiscoveryService();
-		$module = $modules_discovery_service->get_module($module_id);
-
-		if (is_object($module) && $module->got_error() == 0 && $module->has_functionality('get_feed_data_struct'))
+		$modules_discovery_service = AppContext::get_extension_provider_service();
+		$not_installed = false;
+		try
 		{
-			$feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
-			$feed->cache();
+			$module = $modules_discovery_service->get_provider($module_id);
+			if ($module->has_extension_point('get_feed_data_struct'))
+			{
+				$feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
+				$feed->cache();
 
-			// Print the feed
-			echo $feed->export();
+				// Print the feed
+				echo $feed->export();
+			}
+			else
+			{
+				$not_installed = true;
+			}
 		}
-		else
+		catch (UnexistingExtensionPointProviderException $ex)
 		{
-			AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
+			$not_installed = true;
+		}
+		if ($not_installed)
+		{
+            AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
 		}
 	}
 }

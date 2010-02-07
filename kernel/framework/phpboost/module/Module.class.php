@@ -1,6 +1,5 @@
 <?php
 /*##################################################
-/**
  *                             Module.class.php
  *                            -------------------
  *   begin                : December 12, 2009
@@ -71,11 +70,6 @@ class Module
     public function get_configuration()
     {
         return ModuleConfigurationManager::get($this->module_id);
-    }
-
-    public function get_interface()
-    {
-        return ModulesDiscoveryService::get_module($this->module_id);
     }
     
     public function check_auth()

@@ -25,11 +25,9 @@
  *
  ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
-class ContactInterface extends ModuleInterface
+class ContactInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function ContactInterface() //Constructeur de la classe ForumInterface

@@ -30,7 +30,7 @@ define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
-class DownloadInterface extends ModuleInterface
+class DownloadInterface extends ExtensionPointProvider
 {
     ## Public Methods ##
     function DownloadInterface()

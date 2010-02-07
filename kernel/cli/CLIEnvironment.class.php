@@ -61,6 +61,8 @@ class CLIEnvironment extends Environment
         AppContext::get_session()->load();
         AppContext::get_session()->act();
         AppContext::set_user(new AdminUser());
+        AppContext::init_extension_provider_service();
+        AppContext::set_response(new HTTPResponse());
 	}
 
 	public static function load_dynamic_constants()
