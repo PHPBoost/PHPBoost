@@ -70,7 +70,7 @@ function regexFormFieldValidator(field_id, regexPattern, options, message)
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
-			message;
+			return message;
 		}
 	}
 	return '';
