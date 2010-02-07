@@ -102,7 +102,12 @@ class FormFieldCaptcha extends AbstractFormField
 	public function validate()
 	{
 		$this->retrieve_value();
-		return $this->get_value();
+		$result = $this->get_value();
+		if (!$result)
+		{
+			$this->set_validation_error_message(LangLoader::get_message('captcha_validation_error', 'builder-form-Validator'));
+		}
+		return $result;
 	}
 	
 	private function is_enabled()

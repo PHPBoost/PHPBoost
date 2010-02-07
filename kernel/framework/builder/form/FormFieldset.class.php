@@ -37,8 +37,9 @@ class FormFieldset
 	private $title = '';
 	private $form_name = '';
 	private $fields = array();
-
-	/**
+	private $validation_error_message = array();
+	
+	/** 
 	 * @desc constructor
 	 * @param string $name The name of the fieldset
 	 */
@@ -76,7 +77,8 @@ class FormFieldset
 		{
 			if (!$field->validate())
 			{
-				$validation_result = false;;
+				$validation_result = false;
+				$this->validation_error_messages[] = $field->get_validation_error_message();
 			}
 		}
 		return $validation_result;
@@ -117,6 +119,11 @@ class FormFieldset
 		return $validations;
 	}
 
+	public function get_validation_error_messages()
+	{
+		return $this->validation_error_messages;
+	}
+	
 	/**
 	 * @param string $title The fieldset title
 	 */

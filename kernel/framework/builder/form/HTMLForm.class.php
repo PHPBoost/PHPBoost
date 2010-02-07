@@ -98,7 +98,7 @@ class HTMLForm
 	private $display_preview = false; //Field identifier of textarea for preview.
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
 	private $display_reset = true;
-	private $validation_error_message = '';
+	private $validation_error_messages = array();
 	private $personal_submit_function = '';
 
 	private static $js_already_included = false;
@@ -141,7 +141,12 @@ class HTMLForm
 		{
 			if (!$fieldset->validate())
 			{
-				$validation_result = false;;
+				$validation_error_message = $fieldset->get_validation_error_messages();
+				if (!empty($validation_error_message))
+				{
+					$this->validation_error_messages = array_merge($this->validation_error_messages, $validation_error_message);
+				}
+				$validation_result = false;
 			}
 		}
 		foreach ($this->constraints as $constraint)
@@ -153,7 +158,7 @@ class HTMLForm
 		}
 		if (!$validation_result)
 		{
-			$this->validation_error_message = LangLoader::get_message('validation_error', 'builder-form-Validator');
+			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
 		}
 		return $validation_result;
 	}
@@ -220,11 +225,18 @@ class HTMLForm
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-			'C_VALIDATION_ERROR' => !empty($this->validation_error_message),
-			'VALIDATION_ERROR' => $this->validation_error_message,
+			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
 			'C_PERSONAL_SUBMIT' => !empty($this->personal_submit_function),
 			'PERSONAL_SUBMIT' => $this->personal_submit_function
 		));
+
+		foreach ($this->validation_error_messages as $error_message)
+		{
+			$template->assign_block_vars('validation_error_messages', array(
+				'ERROR_MESSAGE' => $error_message
+			));
+		}
+		
 		self::$js_already_included = true;
 
 		foreach ($this->form_fieldsets as $fieldset)

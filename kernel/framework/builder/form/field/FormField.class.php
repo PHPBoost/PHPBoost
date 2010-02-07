@@ -70,6 +70,17 @@ interface FormField
 	 * @return bool true if the form is valid
 	 */
 	function validate();
+	
+	/**
+	 * @desc Returns validation error message.
+	 */
+	function get_validation_error_message();
+
+	/**
+	 * @desc Set the validation error message.
+	 * @param string $error_message The message to set
+	 */
+	function set_validation_error_message($error_message);
 
 	/**
 	 * @desc Adds a constraint to the field constraints.
