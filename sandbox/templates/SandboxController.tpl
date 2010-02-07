@@ -1,23 +1,29 @@
 # IF C_RESULT #
-	{TEXT}
+	<strong>TEXT :</strong> {TEXT}
 	<br />
-	{MULTI_LINE_TEXT}
+	<strong>MAIL :</strong> {MAIL}
 	<br />
-	{RICH_TEXT}
+	<strong>WEB :</strong> {WEB}
 	<br />
-	{RADIO}
+	<strong>AGE :</strong> {AGE}
 	<br />
-	{CHECKBOX}
+	<strong>MULTI_LINE_TEXT :</strong> {MULTI_LINE_TEXT}
 	<br />
-	{SELECT}
+	<strong>RICH_TEXT :</strong> {RICH_TEXT}
 	<br />
-	{HIDDEN}
+	<strong>RADIO :</strong> {RADIO}
 	<br />
-	{DATE}
+	<strong>CHECKBOX :</strong> {CHECKBOX}
 	<br />
-	{DATE_TIME}
+	<strong>SELECT :</strong> {SELECT}
 	<br />
-	{FILE}
+	<strong>HIDDEN :</strong> {HIDDEN}
+	<br />
+	<strong>DATE :</strong> {DATE}
+	<br />
+	<strong>DATE_TIME :</strong> {DATE_TIME}
+	<br />
+	<strong>FILE :</strong> {FILE}
 # ENDIF #
 
 # INCLUDE form #

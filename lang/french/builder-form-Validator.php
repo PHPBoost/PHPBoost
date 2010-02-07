@@ -32,6 +32,8 @@
 $lang = array(
     'doesnt_equal' => 'Les champs "%s" et "%s" doivent avoir la même valeur',
     'doesnt_match_regex' => 'La valeur saisie n\'est pas au bon format',
+	'doesnt_match_url_regex' => 'La valeur saisie doit être une url valide',
+	'doesnt_match_mail_regex' => 'La valeur saisie doit être un mail valide',
     'doesnt_match_length_intervall' => 'La valeur saisie ne respecte par la longueur définie',
     'doesnt_match_integer_intervall' => 'La valeur saisie ne respecte pas l\'intervalle défini',
     'has_to_be_filled' => 'Ce champ doit être renseigné',
