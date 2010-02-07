@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              faq_interface.class.php
+ *                              faqExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : April 9, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -29,7 +29,7 @@
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
-class FaqInterface extends ExtensionPointProvider
+class FaqExtensionPointProvider extends ExtensionPointProvider
 {
     public function __construct() //Constructeur de la classe ForumInterface
     {

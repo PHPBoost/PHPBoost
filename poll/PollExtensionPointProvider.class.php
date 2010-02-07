@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              poll_interface.class.php
+ *                              pollExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,7 +27,7 @@
 
 
 
-class PollInterface extends ExtensionPointProvider
+class PollExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function PollInterface() //Constructeur de la classe ForumInterface

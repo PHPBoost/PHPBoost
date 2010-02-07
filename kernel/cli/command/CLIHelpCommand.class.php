@@ -38,6 +38,7 @@ class CLIHelpCommand implements CLICommand
 		CLIOutput::writeln('where command is the name of the command that you want to know more about');
 		CLIOutput::writeln('[args ...] are the optionnal help parameters that can be given to the ' .
 		'help command operation (depends of the command)');
+		$this->print_commands_descriptions();
 	}
 
 	public function execute(array $args)
@@ -49,24 +50,43 @@ class CLIHelpCommand implements CLICommand
 		else
 		{
 			$command = array_shift($args);
-			$cli = $this->call($command, $args);
+			$this->call($command, $args);
 		}
 	}
 
+    public function print_commands_descriptions()
+    {
+        CLIOutput::writeln('availables commands are:');
+        $provider_service = AppContext::get_extension_provider_service();
+        foreach ($provider_service->get_available_modules(CLICommands::EXTENSION_POINT) as $provider)
+        {
+            $commands = $provider->get_extension_point(CLICommands::EXTENSION_POINT);
+            foreach ($commands->get_commands() as $command)
+            {
+                $this->display_short_description($command, $commands->get_short_description($command));
+            }
+        }
+    }
+
 	private function call($command, array $args)
 	{
-		$mds = AppContext::get_extension_provider_service();
-		foreach ($mds->get_available_modules(CLICommand::EXTENSION_POINT) as $extension_provider)
+		$provider_service = AppContext::get_extension_provider_service();
+		foreach ($provider_service->get_available_modules(CLICommands::EXTENSION_POINT) as $provider)
 		{
-			$new_commands = $extension_provider->call(CLICommand::EXTENSION_POINT);
-			if (array_key_exists($command, $new_commands))
+			$commands = $provider->get_extension_point(CLICommands::EXTENSION_POINT);
+			if (in_array($command, $commands->get_commands()))
 			{
-				$cli = new $new_commands[$command]();
-				$cli->help($args);
+				$commands->help($command, $args);
 				return;
 			}
 		}
 		CLIOutput::writeln('command ' . $command . ' does not exist');
+		$this->help(array());
+	}
+	
+	private function display_short_description($command, $description)
+	{
+		CLIOutput::writeln("\t" . '- ' . $command . ': ' . $description);
 	}
 }
 ?>

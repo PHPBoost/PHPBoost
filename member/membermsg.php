@@ -45,12 +45,12 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach ($modules as $module)
 	{
-		$img = $module->call('get_member_msg_img');
+		$img = $module->get_extension_point('get_member_msg_img');
 		$Template->assign_block_vars('available_modules_msg', array(
-			'NAME_USER_MSG' => $module->call('get_member_msg_name'),
+			'NAME_USER_MSG' => $module->get_extension_point('get_member_msg_name'),
 			'IMG_USER_MSG' => $img,
 			'C_IMG_USER_MSG' => !empty($img) ? true : false,
-			'U_LINK_USER_MSG' => $module->call('get_member_msg_link', array($memberId))
+			'U_LINK_USER_MSG' => $module->get_extension_point('get_member_msg_link', array($memberId))
 		));
 	}
 	

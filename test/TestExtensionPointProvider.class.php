@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              online_interface.class.php
+ *                        TestExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : November 29, 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,29 +25,11 @@
  *
  ###################################################*/
 
-
-
-class OnlineInterface extends ExtensionPointProvider
+class TestExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function OnlineInterface() //Constructeur de la classe ForumInterface
-    {
-        parent::__construct('online');
-    }
-    
-    //Récupération du cache.
-	function get_cache()
+	public function __construct()
 	{
-		$online_config = 'global $CONFIG_ONLINE;' . "\n";
-		
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_ONLINE = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'online'", __LINE__, __FILE__));
-		$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
-		
-		$online_config .= '$CONFIG_ONLINE = ' . var_export($CONFIG_ONLINE, true) . ';' . "\n";
-		
-		return $online_config;	
+		parent::__construct('test');
 	}
 }
-
 ?>

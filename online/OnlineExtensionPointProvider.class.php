@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              contact_interface.class.php
+ *                              onlineExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,26 +27,26 @@
 
 
 
-class ContactInterface extends ExtensionPointProvider
+class OnlineExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
-    function ContactInterface() //Constructeur de la classe ForumInterface
+    function OnlineInterface() //Constructeur de la classe ForumInterface
     {
-        parent::__construct('contact');
+        parent::__construct('online');
     }
     
     //Récupération du cache.
 	function get_cache()
 	{
-		$contact_config = 'global $CONFIG_CONTACT;' . "\n";
-			
+		$online_config = 'global $CONFIG_ONLINE;' . "\n";
+		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CONTACT = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'contact'", __LINE__, __FILE__));
-		$CONFIG_CONTACT = is_array($CONFIG_CONTACT) ? $CONFIG_CONTACT : array();
+		$CONFIG_ONLINE = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'online'", __LINE__, __FILE__));
+		$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
 		
-		$contact_config .= '$CONFIG_CONTACT = ' . var_export($CONFIG_CONTACT, true) . ';' . "\n";
+		$online_config .= '$CONFIG_ONLINE = ' . var_export($CONFIG_ONLINE, true) . ';' . "\n";
 		
-		return $contact_config;	
+		return $online_config;	
 	}
 }
 

@@ -275,7 +275,7 @@ class Feed
 				return '';
 			}
 
-			$data = $module->call('get_feed_data_struct', $idcat);
+			$data = $module->get_extension_point('get_feed_data_struct', $idcat);
 			if (!$module->got_error())
 			{
 				self::update_cache($module_id, $name, $data, $idcat);

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          download_interface.class.php
+ *                          downloadExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : June 22, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -30,7 +30,7 @@ define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
-class DownloadInterface extends ExtensionPointProvider
+class DownloadExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
     function DownloadInterface()

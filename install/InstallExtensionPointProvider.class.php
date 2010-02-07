@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        TestInterface.class.php
+ *                          InstallExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : November 29, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 06, 2010
+ *   copyright            : (C) 2010 Loïc Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,11 +25,16 @@
  *
  ###################################################*/
 
-class TestInterface extends ExtensionPointProvider
+class InstallExtensionPointProvider extends ExtensionPointProvider
 {
-	public function __construct()
-	{
-		parent::__construct('test');
-	}
+    public function __construct()
+    {
+        parent::__construct('install');
+    }
+    
+    public function commands()
+    {
+    	return new CLICommandsList(array('install' => 'CLIInstallCommand'));
+    }
 }
 ?>

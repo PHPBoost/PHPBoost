@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              wiki_interface.class.php
+ *                              wikiExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
  *   copyright            : (C) 2008 Loïc ROUCHON
@@ -27,7 +27,7 @@
 
 
 
-class WikiInterface extends ExtensionPointProvider
+class WikiExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
 	{

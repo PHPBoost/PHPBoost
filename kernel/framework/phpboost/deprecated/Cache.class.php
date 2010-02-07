@@ -159,7 +159,7 @@ class Cache
 
 		if (!$module->get_errors() && $module->has_extension_point('get_cache')) //Le module implémente bien la fonction.
 		{
-			$module_cache = $module->call('get_cache');
+			$module_cache = $module->get_extension_point('get_cache');
 			$this->write($module_name, $module_cache);
 		}
 		elseif (!$no_alert_on_error)
@@ -196,7 +196,7 @@ class Cache
 		{
 			if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé
 			{
-				$this->write(strtolower($module->get_id()), $module->call('get_cache'));
+				$this->write(strtolower($module->get_id()), $module->get_extension_point('get_cache'));
 			}
 		}
 	}

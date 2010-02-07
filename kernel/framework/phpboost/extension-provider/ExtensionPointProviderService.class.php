@@ -34,9 +34,12 @@
  */
 class ExtensionPointProviderService
 {
-	const EXTENSION_POINT_PROVIDER_SUFFIX = 'Interface';
+	const EXTENSION_POINT_PROVIDER_SUFFIX = 'ExtensionPointProvider';
 
-	private $loaded_providers = array();
+	/**
+	 * @var RAMDataStore
+	 */
+	private $loaded_providers;
 	private $available_providers_ids = array();
 
 	/**
@@ -44,6 +47,7 @@ class ExtensionPointProviderService
 	 */
 	public function __construct()
 	{
+		$this->loaded_providers = new RAMDataStore();
 		foreach (ModulesManager::get_installed_modules_map() as $provider_id => $module)
 		{
 			if ($module->is_activated())
@@ -53,29 +57,6 @@ class ExtensionPointProviderService
 		}
 		$this->register_provider('kernel');
 		$this->register_provider('install');
-	}
-
-	/**
-	 * @desc Call the method called $extension_point on each speficied ExtensionPointProvider
-	 * @param string $extension_point The method name to call on ExtensionPointProviders
-	 * @param mixed[string] $providers The modules arguments in an array which keys
-	 * are modules ids and values specifics arguments for those modules.
-	 * @return mixed[string] The results of the call method on all
-	 * modules. This array has keys that are the modules ids and the associated
-	 * value is the return value for this particular module.
-	 */
-	public function call($extension_point, $providers)
-	{
-		$results = array();
-		foreach ($providers as $provider_id => $args)
-		{
-			$provider = $this->get_provider($provider_id);
-			if ($provider->has_extension_point($extension_point) == true)
-			{
-				$results[$provider_id] = $provider->call($extension_point, $args);
-			}
-		}
-		return $results;
 	}
 
 	/**
@@ -123,16 +104,16 @@ class ExtensionPointProviderService
 	 */
 	public function get_provider($provider_id = '')
 	{
-		if (!array_key_exists($provider_id, $this->loaded_providers))
+		if (!$this->loaded_providers->contains($provider_id))
 		{
 			if (!in_array($provider_id, $this->available_providers_ids))
 			{
 				throw new UnexistingExtensionPointProviderException($provider_id);
 			}
 			$classname = $this->compute_provider_classname($provider_id);
-			$this->loaded_providers[$provider_id] = new $classname();
+			$this->loaded_providers->store($provider_id, new $classname());
 		}
-		return $this->loaded_providers[$provider_id];
+		return $this->loaded_providers->get($provider_id);
 	}
 
 	public function get_provider_extensions_points($provider)
@@ -161,5 +142,4 @@ class ExtensionPointProviderService
 		return ucfirst($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
 	}
 }
-
 ?>
