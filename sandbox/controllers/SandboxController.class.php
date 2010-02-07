@@ -81,11 +81,11 @@ class SandboxController extends ModuleController
 		));
 		
 		// PASSWORD
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
@@ -150,7 +150,6 @@ class SandboxController extends ModuleController
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
 		// FORM CONSTRAINTS
-		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		
 		return $form;
