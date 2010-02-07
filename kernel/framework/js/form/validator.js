@@ -1,6 +1,8 @@
 /* #### Affichage #### */
 function displayFormFieldOnsubmitValidatorMessage(message)
 {
+	message = message.replace(/&quot;/g, '"');
+	message = message.replace(/&amp;/g,'&');
 	alert(message);
 }
 function displayFormFieldOnblurValidatorMessage(field_id, message)
@@ -128,18 +130,6 @@ function equalityFormFieldValidator(object_field, field_id, field_id_equality, m
 	return Array('', '');
 }
 
-function equalityFormFieldOnsubmitValidator(field_id, field_id_equality, message)
-{
-	if ($(field_id) && $(field_id_equality))
-	{
-		if ($F(field_id) == '' || $F(field_id_equality) == '' || $F(field_id) != $F(field_id_equality))
-		{
-			return message;
-		}
-	}
-	return '';
-}
-
 
 /* #### Validation function #### */
 function formFieldConstraintsOnblurValidation(othis, constraints)
@@ -188,10 +178,21 @@ function formFieldConstraintsOnsubmitValidation(constraints)
 	has_constraint = constraints.length;
 	for (var i = 0; i < has_constraint; i++)
 	{
-		if (constraints[i] != '')
+		if (constraints[i] instanceof Array) //Multiple constraints
 		{
-			displayFormFieldOnsubmitValidatorMessage(constraints[i]);
-			return false;
+			if (constraints[i][1] != '')
+			{
+				displayFormFieldOnsubmitValidatorMessage(constraints[i][1]);
+				return false;
+			}
+		}
+		else
+		{
+			if (constraints[i] != '')
+			{
+				displayFormFieldOnsubmitValidatorMessage(constraints[i]);
+				return false;
+			}
 		}
 	}
 	return true;
