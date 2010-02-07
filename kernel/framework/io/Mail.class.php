@@ -247,7 +247,7 @@ class Mail
      */
     public static function check_validity($mail_address)
     {
-        return preg_match('`^(?:[a-z0-9_!#$%&\'*+/=?^|~-].?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', $mail_address);
+        return preg_match('`^(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', $mail_address);
     }
     
 
