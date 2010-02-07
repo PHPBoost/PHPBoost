@@ -68,6 +68,7 @@ class FormFieldTextEditor extends AbstractFormField
 		$field .= 'id="' . $this->get_html_id() . '" ';
 		$field .= 'value="' . htmlspecialchars($this->value) . '" ';
 		$field .= 'class="' . $this->css_class . '" ';
+		$field .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
 		$field .= 'onblur="' . $this->get_onblur_validation() . $this->get_onblur() . '" ';
 		$field .= '/>';
 
