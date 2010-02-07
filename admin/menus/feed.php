@@ -151,7 +151,7 @@ else
 
 
 $modules = AppContext::get_extension_provider_service();
-$feeds_modules = $modules->get_available_modules('get_feeds_list');
+$feeds_modules = $modules->get_providers('get_feeds_list');
 
 function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 {

@@ -68,7 +68,7 @@ class ExtensionPointProviderService
 	 * availables modules interfaces.
 	 * @return ExtensionPointProvider[] the ExtensionPointProvider list.
 	 */
-	public function get_available_modules($extension_point, $providers_list = array())
+	public function get_providers($extension_point, $providers_list = array())
 	{
 		$providers = array();
 		if (empty($providers_list))
@@ -94,7 +94,6 @@ class ExtensionPointProviderService
 		}
 		return $providers;
 	}
-
 
 	/**
 	 * @desc Returns the ExtensionPointProvider of the provider which id is $provider_id.

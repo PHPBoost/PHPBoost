@@ -437,7 +437,7 @@ class Environment
 	{
 
 		$modules_loader = AppContext::get_extension_provider_service();
-		$modules = $modules_loader->get_available_modules('on_changeday');
+		$modules = $modules_loader->get_providers('on_changeday');
 		foreach ($modules as $module)
 		{
 			if ($module->is_enabled())

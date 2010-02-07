@@ -42,7 +42,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	
 	
 	$modulesLoader = AppContext::get_extension_provider_service();
-	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
+	$modules = $modulesLoader->get_providers('get_member_msg_link');
 	foreach ($modules as $module)
 	{
 		$img = $module->get_extension_point('get_member_msg_img');
