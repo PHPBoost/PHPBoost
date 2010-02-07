@@ -100,6 +100,7 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 	return '';
 }
 
+/* #### Multiple Field Constraints #### */
 function equalityFormFieldValidator(object_field, field_id, field_id_equality, message)
 {
 	var answer = '';
@@ -127,9 +128,21 @@ function equalityFormFieldValidator(object_field, field_id, field_id_equality, m
 	return Array('', '');
 }
 
+function equalityFormFieldOnsubmitValidator(field_id, field_id_equality, message)
+{
+	if ($(field_id) && $(field_id_equality))
+	{
+		if ($F(field_id) == '' || $F(field_id_equality) == '' || $F(field_id) != $F(field_id_equality))
+		{
+			return message;
+		}
+	}
+	return '';
+}
+
 
 /* #### Validation function #### */
-function formFieldConstraintsValidation(othis, constraints)
+function formFieldConstraintsOnblurValidation(othis, constraints)
 {
 	var message = '';
 	var field_id = '';
@@ -168,4 +181,18 @@ function formFieldConstraintsValidation(othis, constraints)
 			displayFormFieldOnblurValidatorMessage(othis.id, message);
 		}
 	}
+}
+
+function formFieldConstraintsOnsubmitValidation(constraints)
+{
+	has_constraint = constraints.length;
+	for (var i = 0; i < has_constraint; i++)
+	{
+		if (constraints[i] != '')
+		{
+			displayFormFieldOnsubmitValidatorMessage(constraints[i]);
+			return false;
+		}
+	}
+	return true;
 }

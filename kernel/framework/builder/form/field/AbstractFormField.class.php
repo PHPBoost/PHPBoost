@@ -273,7 +273,7 @@ abstract class AbstractFormField implements FormField
 	
 	public function get_onblur_validation()
 	{
-		return 'formFieldConstraintsValidation(this, Array(' . 
+		return 'formFieldConstraintsOnblurValidation(this, Array(' . 
 			implode(",", $this->get_js_validations()) . '));';
 	}
 

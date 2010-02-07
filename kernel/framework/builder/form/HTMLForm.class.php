@@ -233,7 +233,7 @@ class HTMLForm
 				'FIELDSET' => $fieldset->display()
 			));
 
-			//Onsubmit constraits
+			//Onsubmit constraints
 			foreach ($fieldset->get_onsubmit_validations() as $constraints)
 			{
 				foreach ($constraints as $constraint)

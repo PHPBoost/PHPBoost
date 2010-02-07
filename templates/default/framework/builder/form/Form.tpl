@@ -29,37 +29,23 @@
 
 <script type="text/javascript">
 <!--
-	# START check_onblur_constraints #
-	function check_onblur_{check_onblur_constraints.INDENTIFIER}(othis)
-	{
-		var constraints = Array();
-		# START check_onblur_constraints.constraints #
-		constraints.push({check_onblur_constraints.constraints.FUNCTION});
-		# END check_onblur_constraints.constraints #
-		
-		constraints_validation(othis, constraints);
-	}
-	# END check_onblur_constraints #
-	
 	function check_generated_form_{L_FORMNAME}()
 	{
-		var message;
 		# IF C_BBCODE_TINYMCE_MODE #
 		tinyMCE.triggerSave();
 		# ENDIF #
 
+		var return_value = true;
+		var constraints = Array();
 		# START check_constraints #
-		message = {check_constraints.ONSUBMIT_CONSTRAINTS};
-		if (message != '')
-		{
-			displayFormFieldOnsubmitValidatorMessage(message);
-			return false;
-		}
+		constraints.push({check_constraints.ONSUBMIT_CONSTRAINTS});
 		# END check_constraints #
+		return_value = formFieldConstraintsOnsubmitValidation(constraints);
+		
 		# IF C_PERSONAL_SUBMIT #
-		return {PERSONAL_SUBMIT}();
+		return_value = {PERSONAL_SUBMIT}();
 		# ENDIF #
-		return true;
+		return return_value;
 	}
 -->
 </script>
