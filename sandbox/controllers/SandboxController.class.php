@@ -38,6 +38,9 @@ class SandboxController extends ModuleController
 				$view->assign_vars(array(
 					'C_RESULT' => true, 
 					'TEXT' => $form->get_value('text'),
+					'MAIL' => $form->get_value('mail'),
+					'WEB' => $form->get_value('siteweb'),
+					'AGE' => $form->get_value('age'),
 					'MULTI_LINE_TEXT' => $form->get_value('multi_line_text'),
 					'RICH_TEXT' => $form->get_value('rich_text'),
 					'RADIO' => $form->get_value('radio')->get_label(),
@@ -71,6 +74,14 @@ class SandboxController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
 			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+		));
+		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
+			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
+			array(new UrlFormFieldConstraint())
+		));
+		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
+			'class' => 'text', 'maxlength' => 255, 'description' => 'Mail valide'),
+			array(new MailFormFieldConstraint())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
