@@ -59,7 +59,7 @@ interface FormField
 	 * @return string
 	 */
 	function get_html_id();
-
+	
 	/**
 	 * @return Template
 	 */
@@ -92,7 +92,7 @@ interface FormField
 	 * @desc Returns the javascript onsubmit code.
 	 * @return string The javascript code that makes the validation when the form is submitted
 	 */
-	function get_onsubmit_validations();
+	function get_js_validations();
 }
 
 ?>

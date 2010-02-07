@@ -55,6 +55,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	protected $onblur = '';
+	/**
+	 * @var string
+	 */
 	protected $required = false;
 	/**
 	 * @var FormFieldConstraint[]
@@ -82,6 +86,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
+		$this->uniq_id = rand(150, 900);		
 		$this->set_id($id);
 		$this->set_label($label);
 		$this->set_value($value);
@@ -245,40 +250,32 @@ abstract class AbstractFormField implements FormField
 		return (count($this->constraints) > 0 || count($this->form_constraints) > 0);
 	}
 	
-	public function get_onsubmit_validations()
+	public function get_js_validations()
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
 		{
-			$validation = $constraint->get_onsubmit_validation($this);
+			$validation = $constraint->get_js_validation($this);
 			if (!empty($validation))
 			{
-				$validations[] =  $validation;
-			}
-		}
-		return $validations;
-	}
-
-	protected function get_onblur_action()
-	{
-		$validations = array();
-		foreach ($this->constraints as $constraint)
-		{
-			$validation = $constraint->get_onblur_validation($this);
-			if (!empty($validation))
-			{
-				$validations[] =  htmlspecialchars($validation);
+				$validations[] = $validation;
 			}
 		}
 		foreach ($this->form_constraints as $constraint)
 		{
-			$validation = $constraint->get_onblur_validation();
+			$validation = $constraint->get_js_validation();
 			if (!empty($validation))
 			{
-				$validations[] =  $validation;
+				$validations[] = $validation;
 			}
 		}
-		return implode(' ;', $validations);
+		return $validations;
+	}
+	
+	public function get_onblur_validation()
+	{
+		return 'formFieldConstraintsValidation(this, Array(' . 
+			implode(",", $this->get_js_validations()) . '));';
 	}
 
 	protected function compute_options(array &$field_options)
@@ -291,6 +288,10 @@ abstract class AbstractFormField implements FormField
 				case 'description':
 					$this->set_description($value);
 					unset($field_options['subtitle']);
+					break;
+				case 'onblur':
+					$this->set_onblur($onblur);
+					unset($field_options['onblur']);
 					break;
 				case 'class':
 					$this->set_css_class($value);
@@ -318,12 +319,21 @@ abstract class AbstractFormField implements FormField
 			'DESCRIPTION' => $this->get_description(),
 			'C_REQUIRED' => $this->is_required(),
 			'VALUE' => $this->get_value(),
-			'ONBLUR' => $this->get_onblur_action(),
-			'C_HAS_CONSTRAINTS' => (bool)$this->has_constraints(),
+			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'CLASS' => $this->get_css_class()
 		));
 	}
+	
+	protected function get_onblur()
+	{
+		return $this->onblur;
+	}
 
+	protected function set_onblur($onblur)
+	{
+		$this->onblur = $onblur;
+	}
+	
 	protected function get_css_class()
 	{
 		return $this->css_class;

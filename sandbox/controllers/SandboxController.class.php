@@ -75,18 +75,19 @@ class SandboxController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
-		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ texte3', 'toto3', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 15'),
-			array(new IntegerIntervalFormFieldConstraint(10, 15))
+		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
+			array(new IntegerIntervalFormFieldConstraint(10, 100))
 		));
 		
 		// PASSWORD
-		$fieldset->add_field(new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
-		$fieldset->add_field(new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion')
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Mot de passe de connexion'),
+			array(new LengthIntervalFormFieldConstraint(6, 12))
 		));
 		
 		// MULTI LINE TEXT
@@ -148,7 +149,8 @@ class SandboxController extends ModuleController
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
-		//$form->add_constraint(new EqualityFormFieldConstraint(, ));
+		// FORM CONSTRAINTS
+		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		
 		return $form;
 	}

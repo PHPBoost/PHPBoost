@@ -224,16 +224,16 @@ class HTMLForm
 		));
 		self::$js_already_included = true;
 
-		$i = 0;
-		foreach($this->form_fieldsets as $fieldset)
+		foreach ($this->form_fieldsets as $fieldset)
 		{
 			$template->assign_block_vars('fieldsets', array(
 				'FIELDSET' => $fieldset->display()
 			));
-				
-			foreach($fieldset->get_onsubmit_validations() as $constraints)
+
+			//Onsubmit constraits
+			foreach ($fieldset->get_onsubmit_validations() as $constraints)
 			{
-				foreach($constraints as $constraint)
+				foreach ($constraints as $constraint)
 				{
 					$template->assign_block_vars('check_constraints', array(
 						'ONSUBMIT_CONSTRAINTS' => $constraint

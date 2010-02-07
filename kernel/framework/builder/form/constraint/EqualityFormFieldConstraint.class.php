@@ -51,7 +51,7 @@ class EqualityFormFieldConstraint implements FormConstraint
 		return $this->first_field->get_value() == $this->second_field->get_value();
 	}
 
-	public function get_onblur_validation()
+	public function get_js_validation()
 	{
 		if (empty($this->js_message))
 		{
@@ -59,7 +59,7 @@ class EqualityFormFieldConstraint implements FormConstraint
 			$this->second_field->get_label());
 		}
 		
-		return 'equalityFormFieldOnblurValidator(' . TextHelper::to_js_string($this->first_field->get_html_id()) .
+		return 'equalityFormFieldValidator(this, ' . TextHelper::to_js_string($this->first_field->get_html_id()) .
 			', ' . TextHelper::to_js_string($this->second_field->get_html_id()) . ', ' . TextHelper::to_js_string($this->js_message) . ')';
 	}
 }
