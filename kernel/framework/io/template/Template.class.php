@@ -56,7 +56,7 @@
 interface Template
 {
 	const AUTO_LOAD_FREQUENT_VARS = true;
-	const DO_NOT_LOAD_FREQUENT_VARS = false;
+	const DONOT_LOAD_FREQUENT_VARS = false;
 
 	/**
 	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.

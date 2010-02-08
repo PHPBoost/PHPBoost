@@ -36,26 +36,29 @@ class SandboxStringTemplateController extends ModuleController
 
 	private $fruits = array('apple', 'pear', 'banana');
 
-	private $result_tpl = 'Non cached: {NON_CACHED_TIME} s - Cached: {CACHED_TIME} s';
+	private $result_tpl = 'Non cached: {NON_CACHED_TIME} s - Cached: {CACHED_TIME} s<br />lenght of the parsed string: {STRING_LENGTH} chars';
 
 	public function execute(HTTPRequest $request)
 	{
-		$tpl = new CachedStringTemplate($this->result_tpl);
+		$tpl = new StringTemplate($this->result_tpl);
 
-		$this->test = str_repeat($this->test, 5);
+		$this->test = str_repeat($this->test, 2);
 		
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();
 		$this->run_non_cached_parsing();
 		$bench_non_cached->stop();
-		$tpl->assign_vars(array('NON_CACHED_TIME' => $bench_non_cached->to_string(5)));
 
 		$bench_cached = new Bench();
 		$bench_cached->start();
 		$this->run_cached_parsing();
 		$bench_cached->stop();
-		$tpl->assign_vars(array('CACHED_TIME' => $bench_cached->to_string(5)));
-
+		$tpl->assign_vars(array(
+			'CACHED_TIME' => $bench_cached->to_string(5),
+			'NON_CACHED_TIME' => $bench_non_cached->to_string(5),
+			'STRING_LENGTH' => strlen($this->test)
+		));
+		
 		return new SiteDisplayResponse($tpl);
 	}
 
@@ -73,7 +76,7 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		for ($i = 0; $i < 100; $i++)
 		{
-			$tpl = new CachedStringTemplate($this->test);
+			$tpl = new StringTemplate($this->test);
 			$this->assign_template($tpl);
 			$tpl->to_string();
 		}
@@ -83,7 +86,7 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		for ($i = 0; $i < 100; $i++)
 		{
-			$tpl = new StringTemplate($this->test);
+			$tpl = new StringTemplate($this->test, StringTemplate::DONT_USE_CACHE);
 			$this->assign_template($tpl);
 			$tpl->to_string();
 		}
