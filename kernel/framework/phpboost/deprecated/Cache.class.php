@@ -157,7 +157,7 @@ class Cache
 		$modulesLoader = AppContext::get_extension_provider_service();
 		$module = $modulesLoader->get_provider($module_name);
 
-		if (!$module->get_errors() && $module->has_extension_point('get_cache')) //Le module implémente bien la fonction.
+		if ($module->has_extension_point('get_cache')) //Le module implémente bien la fonction.
 		{
 			$module_cache = $module->get_extension_point('get_cache');
 			$this->write($module_name, $module_cache);
