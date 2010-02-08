@@ -214,13 +214,21 @@ class AppContext
 		DBFactory::get_db_connection()->disconnect();
 	}
 
-	/**
-	 * Inits the session
-	 */
-	public static function init_session()
-	{
-		self::$session = new Session();
-	}
+    /**
+     * Inits the session
+     */
+    public static function init_session()
+    {
+        self::set_session(new Session());
+    }
+
+    /**
+     * Sets the session
+     */
+    public static function set_session(Session $session)
+    {
+        self::$session = $session;
+    }
 
 	/**
 	 * Returns the current user's session
