@@ -8,7 +8,6 @@ class ExtensionPointProviderTest extends PHPBoostUnitTestCase
 		self::assertTrue(is_object($ret));
 		self::assertEquals($ret->get_id(), 'news');
 		self::assertTrue(is_array($ret->functionnalities) AND count($ret->functionnalities)==0);
-		self::assertTrue($ret->get_errors() != 0);
 		
 		$ret = new ExtensionPointProvider('news');
 		self::assertTrue(is_object($ret));

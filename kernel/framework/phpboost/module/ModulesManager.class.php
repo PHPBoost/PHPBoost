@@ -228,7 +228,7 @@ class ModulesManager
 			}
 		}
 
-		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
+//		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 
 		return MODULE_INSTALLED;
 	}
