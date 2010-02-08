@@ -33,9 +33,31 @@
  */
 class StringTemplate extends AbstractTemplate
 {
-	public function __construct($content, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	const DONT_USE_CACHE = false;
+	const USE_CACHE_IF_FASTER = true;
+	
+	public function __construct($content, $use_cache = self::USE_CACHE_IF_FASTER, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
 	{
-		parent::__construct(new StringTemplateLoader($content), new DefaultTemplateRenderer(), new DefaultTemplateData(), $auto_load_vars);
+		parent::__construct($this->get_appropriate_loader($content, $use_cache), new DefaultTemplateRenderer(), new DefaultTemplateData(), $auto_load_vars);
+	}
+	
+	private function get_appropriate_loader($content, $use_cache)
+	{
+		if ($use_cache == self::DONT_USE_CACHE)
+		{
+			return new StringTemplateLoader($content);
+		}
+		else
+		{
+			if (strlen($content) > 200)
+			{
+				return new CachedStringTemplateLoader($content);
+			}
+			else
+			{
+				return new StringTemplateLoader($content);
+			}
+		}
 	}
 }
 ?>

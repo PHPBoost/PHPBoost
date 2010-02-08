@@ -154,8 +154,8 @@ class Cache
 		global $Errorh;
 
 
-		$modulesLoader = AppContext::get_extension_provider_service();
-		$module = $modulesLoader->get_provider($module_name);
+		$modules_loader = AppContext::get_extension_provider_service();
+		$module = $modules_loader->get_provider($module_name);
 
 		if ($module->has_extension_point('get_cache')) //Le module implémente bien la fonction.
 		{
