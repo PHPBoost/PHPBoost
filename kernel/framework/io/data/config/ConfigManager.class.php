@@ -38,7 +38,6 @@
  * valid until the value changes and the manager is asked to store it</li>
  * </ul>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
  */
 class ConfigManager
 {
@@ -81,9 +80,11 @@ class ConfigManager
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
 
-		$result = AppContext::get_sql()->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" . $name . "'", __LINE__, __FILE__);
-
-		if ($result === false)
+		try
+		{
+			$result = AppContext::get_sql_common_query()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
+		}
+		catch(RowNotFoundException $ex)
 		{
 			throw new ConfigNotFoundException($name);
 		}
