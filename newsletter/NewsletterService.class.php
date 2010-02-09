@@ -55,7 +55,7 @@ class NewsletterService
 			
 			$mail_sender = new Mail();
 			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-			$mail_sender->set_mime(MIME_FORMAT_HTML);
+			$mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
 			$mail_sender->set_object($mail_object);
 			 
 			foreach ($mailing_list as $array_mail)
@@ -75,7 +75,7 @@ class NewsletterService
 		{
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-		    $mail_sender->set_mime(MIME_FORMAT_HTML);
+		    $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
 		    $mail_sender->set_recipients($email_test);
 		    $mail_sender->set_content($message);
 		    $mail_sender->set_object($mail_object);
@@ -116,7 +116,7 @@ class NewsletterService
 			
 			$mail_sender = new Mail();
 			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-			$mail_sender->set_mime(MIME_FORMAT_HTML);
+			$mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
             $mail_sender->set_object($mail_object);
            
             foreach ($mailing_list as $array_mail)
@@ -137,7 +137,7 @@ class NewsletterService
 		{
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-		    $mail_sender->set_mime(MIME_FORMAT_HTML);
+		    $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
             $mail_sender->set_recipients($email_test);
             $mail_sender->set_content($mail_contents . '</body></html>');
             $mail_sender->set_object($mail_object);
@@ -173,7 +173,7 @@ class NewsletterService
 			
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-            $mail_sender->set_mime(MIME_FORMAT_TEXT);
+            $mail_sender->set_mime(Mail::MIME_FORMAT_TEXT);
             $mail_sender->set_object($mail_object);
            
             foreach ($mailing_list as $array_mail)
@@ -193,7 +193,7 @@ class NewsletterService
 		{
             $mail_sender = new Mail();
             $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-            $mail_sender->set_mime(MIME_FORMAT_HTML);
+            $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
             $mail_sender->set_recipients($email_test);
             $mail_sender->set_content($message);
             $mail_sender->set_object($mail_object);
