@@ -2,7 +2,6 @@
 /**
 * @package db
 */
-
 /**
 * Constant definition
 */
