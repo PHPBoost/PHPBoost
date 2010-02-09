@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldSelectOption.class.php
+ *                       FormFieldSelectOption.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -46,12 +46,16 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function display()
 	{
-		$option = '<option ';
-		$option .= 'value="' . $this->get_raw_value() . '" ';
-		$option .= $this->is_active() ? 'selected="selected" ' : '';
-		$option .= '>' . $this->get_label(). '</option>';
+		$tpl_src = '<option value="{VALUE}" # IF C_SELECTED # selected="selected" # ENDIF # >{LABEL}</option>';
 		
-		return $option;
+		$tpl = new StringTemplate($tpl_src);
+		$tpl->assign_vars(array(
+			'VALUE' => $this->get_raw_value(),
+			'C_SELECTED' => $this->is_active(),
+			'LABEL' => $this->get_label()
+		));
+		
+		return $tpl;
 	}
 }
 

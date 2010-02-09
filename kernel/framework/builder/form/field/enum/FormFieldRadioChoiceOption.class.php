@@ -42,13 +42,18 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function display()
 	{
-		$option = '<label><input type="radio" ';
-		$option .= 'name="' . $this->get_field_id() . '" ';
-		$option .= 'value="' . $this->get_raw_value() . '" ';
-		$option .= $this->is_active() ? 'checked="checked" ' : '';
-		$option .= '/> ' . $this->get_label() . '</label>';
-
-		return $option;
+		$tpl_src = '<label><input type="radio" name="{NAME}" value="{VALUE}" # IF C_CHECKED # checked="checked" # ENDIF #/>{LABEL}</label>';
+		
+		$tpl = new StringTemplate($tpl_src);
+		
+		$tpl->assign_vars(array(
+			'NAME' => $this->get_field_id(),
+			'VALUE' => $this->get_raw_value(),
+			'C_CHECKED' => $this->is_active(),
+			'LABEL' => $this->get_label()
+		));
+		
+		return $tpl;
 	}
 }
 

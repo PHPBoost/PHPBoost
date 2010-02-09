@@ -60,7 +60,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 		$this->assign_common_template_variables($template);
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $this->get_html_code(),
+			'ELEMENT' => $this->get_html_code()->to_string(),
 		));
 
 		return $template;
@@ -68,13 +68,27 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 
 	private function get_html_code()
 	{
-		$code = '<select name="' . $this->get_html_id() . '" id="' . $this->get_html_id() . '" class="' . $this->get_css_class() . '" ' . ($this->get_disabled() ? 'disabled="disabled" ' : '') . '>';
+		$tpl_src = '<select name="{NAME}" id="{ID}" class="{CSS_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
+			'# START options # # INCLUDE options.OPTION # # END options #' .
+			'</select>';
+		
+		$tpl = new StringTemplate($tpl_src);
+		
+		$tpl->assign_vars(array(
+			'NAME' => $this->get_html_id(),
+			'ID' => $this->get_html_id(),
+			'CSS_CLASS' => $this->get_css_class(),
+			'C_DISABLED' => $this->get_disabled()
+		));
+		
 		foreach ($this->get_options() as $option)
 		{
-			$code .= $option->display();
+			$tpl->assign_block_vars('options', array(), array(
+				'OPTION' => $option->display()
+			));
 		}
-		$code .= '</select>';
-		return $code;
+		
+		return $tpl;
 	}
 
 	protected function get_option($raw_value)

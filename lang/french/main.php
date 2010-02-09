@@ -479,7 +479,7 @@ Mot de passe : %s
 %s';
 
 //Mp
-$LANG['pm_box'] = 'Boite de réception';
+$LANG['pm_box'] = 'Boîte de réception';
 $LANG['pm_track'] = 'Non lu par le destinataire';
 $LANG['recipient'] = 'Destinataire';
 $LANG['post_new_convers'] = 'Créer une nouvelle conversation';

@@ -26,6 +26,9 @@
 
 interface FormFieldEnumOption
 {
+	/**
+	 * @return Template
+	 */
 	function display();
 	
 	function get_label();
