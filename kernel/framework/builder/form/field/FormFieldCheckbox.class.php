@@ -59,7 +59,7 @@ class FormFieldCheckbox extends AbstractFormField
 		$this->assign_common_template_variables($template);
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $this->generate_html_code()
+			'ELEMENT' => $this->generate_html_code()->to_string()
 		));
 
 		return $template;
@@ -93,14 +93,17 @@ class FormFieldCheckbox extends AbstractFormField
 
 	private function generate_html_code()
 	{
-		$option = '<input type="checkbox" ';
-		$option .= 'name="' . $this->get_html_id() . '" ';
-		$option .= 'id="' . $this->get_html_id() . '" ';
-		$option .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
-		$option .= $this->is_checked() ? 'checked="checked" ' : '';
-		$option .= '/>';
+		$tpl_src = '<input type="checkbox" name="{NAME}" id="{ID}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # />';
 
-		return $option;
+		$tpl = new StringTemplate($tpl_src);
+		$tpl->assign_vars(array(
+			'NAME' => $this->get_html_id(),
+			'ID' => $this->get_html_id(),
+			'C_DISABLED' => $this->get_disabled(),
+			'C_CHECKED' => $this->is_checked()
+		));
+
+		return $tpl;
 	}
 }
 

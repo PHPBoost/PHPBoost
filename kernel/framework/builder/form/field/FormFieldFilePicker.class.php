@@ -51,6 +51,7 @@ class FormFieldFilePicker extends AbstractFormField
 	{
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
+		// TODO switch to a real template
 		$field = '<input name="max_file_size" value="' . $this->get_max_file_size() . '" type="hidden">';
 		$field .= '<input type="file" ';
 		$field .= 'name="' . $this->get_html_id() . '" ';
