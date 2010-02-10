@@ -32,6 +32,8 @@
  */
 class FormFieldHidden extends AbstractFormField
 {
+	private static $tpl_src = '<input type="hidden" id="{ID}" name="{ID}" value="{VALUE}" />';
+	
 	public function __construct($id, $value)
 	{
 		parent::__construct($id, '', $value);
@@ -43,8 +45,7 @@ class FormFieldHidden extends AbstractFormField
 	 */
 	public function display()
 	{
-		// TODO Make a StringTemplate when it will be supported
-		$template = new FileTemplate('framework/builder/form/FormFieldHidden.tpl');
+		$template = new StringTemplate(self::$tpl_src);
 		
 		$this->assign_common_template_variables($template);
 		
