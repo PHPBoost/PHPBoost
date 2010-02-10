@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          Template.class.php
+ *                             Template.class.php
  *                            -------------------
  *   begin                : February 3, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -25,9 +25,14 @@
  *
  ###################################################*/
 
-
 /**
- * @desc Here are the PHPBoost template syntax specifications:
+ * @package io
+ * @subpackage template
+ * @desc This class represents a PHPBoost template. Templates are used to generate text which
+ * have a common structure. You just have to write your text with tags at the place you want to insert
+ * values and assign values in the objet, when you will display them, the tags will be replaced by
+ * the corresponding value.
+ * PHPBoost's template engine is home made and has its own syntax which is the described below: 
  * <h1>Simple variables</h1>
  * A simple variable is accessible with the {NAME} syntax where NAME is its template name. If the variable is not assigned, nothing will be displayed (no error message).
  * Simple variables are assigned by the assign_vars() method.
@@ -50,17 +55,19 @@
  * This text will be displayed only if the C_MY_TEST variable is true
  * # ENDIF #
  * You can nest some conditions.</li>
+ * <li>Nestings</li>
+ * You can embed a template in another one. For that, you have to use the INCLUDE instruction like that: # INCLUDE template #
+ * where template is the identifier of a template added with the add_subtemplate() method. When the template will be displayed, this 
+ * instruction will be replaced by the content of the template you have attached to this identifier or nothing if the template hasn't been set.
+ * You also can include templates in a loop, for that you have to place them in the third parameter of the asssign_block_vars() method.
  * </ul>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
 interface Template
 {
-	const AUTO_LOAD_FREQUENT_VARS = true;
-	const DONOT_LOAD_FREQUENT_VARS = false;
-
 	/**
-	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
-	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {VAR_NAME} syntax.
+	 * @param string[] $array_vars A map VAR_NAME => var_value. Generally, <code>VAR_NAME</code> is written in caps characters.
 	 */
 	function assign_vars(array $array_vars);
 
@@ -69,6 +76,7 @@ interface Template
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
 	 * @param string $block_name Block name.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * @param Template[] $subtemplates A list 
 	 */
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
 
@@ -79,26 +87,25 @@ interface Template
 	function copy();
 
 	/**
-	 * @desc Displays the template. It will use the variables you assigned.
+	 * @desc Displays the template.
 	 */
 	function display();
 
 	/**
-	 * @desc Returns the result of the template interpretation
-	 * @returns string
+	 * @desc Returns the result of the template interpretation.
 	 */
 	function to_string();
 
 	/**
-	 * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-	 * @param string[string] $lang the language map
+	 * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
+	 * @param string[] $lang the language map
 	 */
 	function add_lang(array $lang);
 
 	/**
-	 * @desc add a subtemplate that could be used using the following template code <code># include identifier #</code>
+	 * @desc Adds a subtemplate to embed with the INCLUDE instruction
 	 * @param string $identifier the identifier
-	 * @param Template $template the template
+	 * @param Template $template the template to include (variables must be set in this template)
 	 */
 	function add_subtemplate($identifier, Template $template);
 	

@@ -85,7 +85,7 @@ class UserErrorController extends AbstractController
 
 	private function create_view()
 	{
-		$this->view = new View('member/UserErrorController.tpl');
+		$this->view = new FileTemplate('member/UserErrorController.tpl');
 	}
 
 	private function fill_view()

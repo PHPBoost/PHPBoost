@@ -58,7 +58,7 @@ class ErrorViewBuilder
 
 	private function init_view()
 	{
-		$this->view = new View('member/error_controller.tpl');
+		$this->view = new FileTemplate('member/error_controller.tpl');
 		$this->lang = LangLoader::get(get_class());
 		$this->view->add_lang($this->lang);
 	}

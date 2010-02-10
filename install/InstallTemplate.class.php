@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          SandboxTableController.class.php
+ *                        InstallTemplate.class.php
  *                            -------------------
- *   begin                : December 21, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 10, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : benoit.sautel@phpboost.com
  *
  *
  ###################################################
@@ -25,20 +25,14 @@
  *
  ###################################################*/
 
-class SandboxTableController extends ModuleController
+class InstallTemplate extends AbstractTemplate
 {
-	public function execute(HTTPRequest $request)
+	public function __construct($file_identifier)
 	{
-		$view = new FileTemplate('sandbox/SandboxTableController.tpl');
-		$table = $this->build_table();
-		$view->add_subtemplate('table', $table->export());
-		return new SiteDisplayResponse($view);
-	}
-
-	private function build_table()
-	{
-		$table = new HTMLTable(new SandboxHTMLTableModel());
-		return $table;
+		$data = new DefaultTemplateData();
+		$loader = new FileTemplateLoader($file_identifier, $data);
+		$renderer = new DefaultTemplateRenderer();
+		parent::__construct($loader, $renderer, $data);
 	}
 }
 ?>

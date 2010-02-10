@@ -27,7 +27,7 @@
 
 class SandboxHomeController extends ModuleController
 {
-	private static $tpl_src = 'Sandbox parts:
+	private static $tpl_src = '<h1>Sandbox parts</h1>
 	<ul class="bb_ul">
 	# START parts #
 		<li><a href="{parts.URL}">{parts.NAME}</a>

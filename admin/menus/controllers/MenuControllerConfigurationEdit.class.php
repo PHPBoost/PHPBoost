@@ -93,7 +93,7 @@ class MenuControllerConfigurationEdit extends AdminController
 	{
 		global $LANG;
 
-		$this->view = new View('admin/menus/configuration/edit.tpl');
+		$this->view = new FileTemplate('admin/menus/configuration/edit.tpl');
 		$this->response = new AdminMenusDisplayResponse($this->view);
 		$env = $this->response->get_graphical_environment();
 

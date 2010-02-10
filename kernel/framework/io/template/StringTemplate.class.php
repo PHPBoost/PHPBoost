@@ -29,16 +29,34 @@
  * @package io
  * @subpackage template
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class enables you to handle a template string.
+ * @desc This class enables you to handle a template whose input is not a file but directly a string.
+ * To be always as efficient as possible, it uses cache if it evaluates that it could be faster.
+ * But when string templates are cached, they are saved on the filesystem and use some disk space. It's the reason
+ * why there is an option enabling to forbid it to cache a template if you think that it's not required to have 
+ * a big efficiency. It will be the case for instance when you know that a string template will be used only once a month.
  */
 class StringTemplate extends AbstractTemplate
 {
+	/**
+	 * @var bool It chooses if it has to cache or not the string according to its length.
+	 */
 	const DONT_USE_CACHE = false;
+	/**
+	 * @var bool Forbids it to cache this string template.
+	 */
 	const USE_CACHE_IF_FASTER = true;
 	
-	public function __construct($content, $use_cache = self::USE_CACHE_IF_FASTER, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	/**
+	 * @desc Constructs a StringTemplate
+	 * @param string $content The content of the template (a string containing PHPBoost's template engine syntax).
+	 * @param bool $use_cache Controls if it has or not to use cache
+	 * @param bool $auto_load_vars Tells whether it has to load or not the most common variables.
+	 */
+	public function __construct($content, $use_cache = self::USE_CACHE_IF_FASTER)
 	{
-		parent::__construct($this->get_appropriate_loader($content, $use_cache), new DefaultTemplateRenderer(), new DefaultTemplateData(), $auto_load_vars);
+		$data = new DefaultTemplateData();
+		$data->auto_load_frequent_vars();
+		parent::__construct($this->get_appropriate_loader($content, $use_cache), new DefaultTemplateRenderer(), $data);
 	}
 	
 	private function get_appropriate_loader($content, $use_cache)
