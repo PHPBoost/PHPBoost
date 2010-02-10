@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          TemplateRenderer.class.php
+ *                      CacherTemplateLoader.class.php
  *                            -------------------
- *   begin                : February 6, 2010
+ *   begin                : February 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,23 +25,11 @@
  *
  ###################################################*/
 
-/**
- * @package io
- * @subpackage template/renderer
- * @desc Represents a template renderer as its names shows. Its able to get the result of the template
- * interpration from a TemplateLoader which gives it the template source and a TemplateData which 
- * contains the data to assign in the template.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
- */
-interface TemplateRenderer
+interface CacherTemplateLoader extends TemplateLoader
 {
 	/**
-	 * @desc Returns the result of the interpretation of a template
-	 * @param TemplateData $data The data
-	 * @param TemplateLoader $loader The loader to use
-	 * @return string The parsed template
+	 * @return string
 	 */
-	function render(TemplateData $data, TemplateLoader $loader);
+	function get_cache_file_path();
 }
 ?>

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CachedStringTemplateLoader implements TemplateLoader
+class CachedStringTemplateLoader implements CacherTemplateLoader
 {
 	private $content = '';
 	private $cache_file_path = '';
@@ -41,6 +41,16 @@ class CachedStringTemplateLoader implements TemplateLoader
 		$this->cache_file_path = PATH_TO_ROOT . '/cache/tpl/string-' . md5($this->content) . '.php';
 	}
 
+	public function get_cache_file_path()
+	{
+		if (!$this->file_cache_exists())
+		{
+			$content = $this->get_parsed_content();
+			$this->generate_cache_file($content);
+		}
+		return $this->cache_file_path;
+	}
+
 	public function load()
 	{
 		if (!$this->file_cache_exists())
@@ -49,7 +59,7 @@ class CachedStringTemplateLoader implements TemplateLoader
 			$this->generate_cache_file($content);
 			return $content;
 		}
-		
+
 		return file_get_contents_emulate($this->cache_file_path);
 	}
 
@@ -57,7 +67,7 @@ class CachedStringTemplateLoader implements TemplateLoader
 	{
 		return file_exists($this->cache_file_path) && @filesize($this->cache_file_path) !== 0;
 	}
-	
+
 	private function generate_cache_file()
 	{
 		$cache_file = new File($this->cache_file_path);
@@ -67,12 +77,12 @@ class CachedStringTemplateLoader implements TemplateLoader
 		$cache_file->close();
 		$cache_file->change_chmod(0666);
 	}
-	
+
 	private function get_parsed_content()
 	{
-		$parser = new TemplateToStringParser();
+		$parser = new DefaultTemplateParser();
 		return $parser->parse($this->content);
 	}
-	
+
 }
 ?>

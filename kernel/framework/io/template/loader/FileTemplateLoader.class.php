@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class FileTemplateLoader implements TemplateLoader
+class FileTemplateLoader implements CacherTemplateLoader
 {
 	private $filepath;
 	private $real_filepath = '';
@@ -58,6 +58,11 @@ class FileTemplateLoader implements TemplateLoader
 		), '_') . '.php';
 
 	}
+	
+	public function get_cache_file_path()
+	{
+		return $this->cache_filepath;
+	}
 
 	public function load()
 	{
@@ -86,7 +91,7 @@ class FileTemplateLoader implements TemplateLoader
 			throw new TemplateLoaderException($this->filepath, $this->real_filepath . ' template loading failed.');
 		}
 
-		$parser = new TemplateToStringParser();
+		$parser = new DefaultTemplateParser();
 		$result = $parser->parse($real_file_content);
 
 		$cache_file = new File($this->cache_filepath);

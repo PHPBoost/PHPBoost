@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      TemplateToStringParser.class.php
+ *                      DefaultTemplateParser.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class TemplateToStringParser extends AbstractTemplateParser
+class DefaultTemplateParser extends AbstractTemplateParser
 {
 	const TPL_RESULT_STRING = '$_result';
 	const TPL_DATA_STRING = '$_data';
@@ -47,7 +47,7 @@ class TemplateToStringParser extends AbstractTemplateParser
 	
 	private function prepare_parse()
 	{
-		$this->content = self::TPL_RESULT_STRING . ' = \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $this->content) . '\';';
+		$this->content = '<?php ' . self::TPL_RESULT_STRING . ' = \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $this->content) . '\'; ?>';
 	}
 	
 	private function parse_vars()

@@ -31,7 +31,7 @@ class InstallTemplate extends AbstractTemplate
 	{
 		$data = new DefaultTemplateData();
 		$loader = new FileTemplateLoader($file_identifier, $data);
-		$renderer = new DefaultTemplateRenderer();
+		$renderer = new EvalTemplateRenderer();
 		parent::__construct($loader, $renderer, $data);
 	}
 }
