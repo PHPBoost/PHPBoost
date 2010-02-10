@@ -58,9 +58,13 @@ class FileTemplateLoader implements CacherTemplateLoader
 		), '_') . '.php';
 
 	}
-	
+
 	public function get_cache_file_path()
 	{
+		if (!$this->is_cache_file_up_to_date())
+		{
+			$this->generate_cache_file();
+		}
 		return $this->cache_filepath;
 	}
 
