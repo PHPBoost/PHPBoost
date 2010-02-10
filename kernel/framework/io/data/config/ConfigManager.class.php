@@ -130,22 +130,18 @@ class ConfigManager
 
 	private static function save_in_db($name, ConfigData $data)
 	{
-		$serialized_data = addslashes(serialize($data));
-		$secure_name = addslashes($name);
+		$serialized_data = serialize($data);
 
-		$resource = AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
-		. $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
+		$update = AppContext::get_sql_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', array('value' => $serialized_data, 'name' => $name));
 
-		// If no entry exists in the data base, we create it
-		if (AppContext::get_sql()->affected_rows($resource) == 0)
+		if ($update->get_affected_rows() == 0)
 		{
-			$count = (int) AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
-		    	" WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
+			// If the update requests finds the row but has nothing to update, it affects 0 rows
+			$count = AppContext::get_sql_common_query()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
+				
 			if ($count == 0)
 			{
-				AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
-    				"VALUES('" . $secure_name . "', '" . $serialized_data . "')",
-				__LINE__, __FILE__);
+				AppContext::get_sql_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', array('name' => $name, 'value' => $serialized_data));
 			}
 		}
 	}
