@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          SandboxController.class.php
+ *                       SandboxFormController.class.php
  *                            -------------------
  *   begin                : December 20, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SandboxController extends ModuleController
+class SandboxFormController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{

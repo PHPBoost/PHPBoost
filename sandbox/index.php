@@ -32,7 +32,8 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('SandboxTableController', '`^/table/?$`'),
 	new UrlControllerMapper('SandboxStringTemplateController', '`^/template/?`'),
-	new UrlControllerMapper('SandboxController', '`^.*$`')
+	new UrlControllerMapper('SandboxFormController', '`^/form/?`'),
+	new UrlControllerMapper('SandboxHomeController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 
