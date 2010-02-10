@@ -99,7 +99,7 @@ class FormFieldCheckbox extends AbstractFormField
 		$tpl->assign_vars(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->get_disabled(),
+			'C_DISABLED' => $this->is_disabled(),
 			'C_CHECKED' => $this->is_checked()
 		));
 

@@ -34,6 +34,8 @@ class FormFieldTextEditor extends AbstractFormField
 {
 	private $size = 30;
 	private $maxlength = 255;
+	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="{NAME}" id="{ID}" value="{VALUE}"
+	class="{CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # onblur="{ONBLUR_ACTION}" />';
 
 	/**
 	 * @desc Constructs a FormFieldTextEditor.
@@ -61,21 +63,24 @@ class FormFieldTextEditor extends AbstractFormField
 	{
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
 
-		$field = '<input type="text" ';
-		$field .= 'size="' . $this->size . '" ';
-		$field .= 'maxlength="' . $this->maxlength . '" ';
-		$field .= 'name="' . $this->get_html_id() . '" ';
-		$field .= 'id="' . $this->get_html_id() . '" ';
-		$field .= 'value="' . htmlspecialchars($this->value) . '" ';
-		$field .= 'class="' . $this->css_class . '" ';
-		$field .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
-		$field .= 'onblur="' . $this->get_onblur_validation() . $this->get_onblur() . '" ';
-		$field .= '/>';
+
+		$field = new StringTemplate(self::$tpl_src);
+
+		$field->assign_vars(array(
+			'SIZE' => $this->size,
+			'MAX_LENGTH' => $this->maxlength,
+			'NAME' => $this->get_html_id(),
+			'ID' => $this->get_html_id(),
+			'VALUE' => htmlspecialchars($this->get_value()),
+			'CLASS' => $this->get_css_class(),
+			'C_DISABLED' => $this->is_disabled(),
+			'ONBLUR_ACTION' => $this->get_onblur_validation() . $this->get_onblur()
+		));
 
 		$this->assign_common_template_variables($template);
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $field
+			'ELEMENT' => $field->to_string()
 		));
 
 		return $template;

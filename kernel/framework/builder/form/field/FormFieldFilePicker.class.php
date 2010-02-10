@@ -37,7 +37,13 @@
 class FormFieldFilePicker extends AbstractFormField
 {
 	private $max_size = 0;
-	private $exception = null;
+	private static $tpl_src = '<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden" />
+		<input type="file" name="{NAME}" id="{ID}" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+		<script type="text/javascript">
+		<!--
+		$("{ID}").form.enctype = "multipart/form-data";
+		-->
+		</script>';
 
 	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
 	{
@@ -50,23 +56,19 @@ class FormFieldFilePicker extends AbstractFormField
 	function display()
 	{
 		$template = new FileTemplate('framework/builder/form/FormField.tpl');
-
-		// TODO switch to a real template
-		$field = '<input name="max_file_size" value="' . $this->get_max_file_size() . '" type="hidden">';
-		$field .= '<input type="file" ';
-		$field .= 'name="' . $this->get_html_id() . '" ';
-		$field .= 'id="' . $this->get_html_id() . '" ';
-		$field .= ($this->get_disabled()) ? 'disabled="disabled" ' : '';
-		$field .= '/>';
-
-		$field .= '<script type="text/javascript"><!--' . "\n";
-		$field .= '$("' . $this->get_html_id() . '").form.enctype = "multipart/form-data";' . "\n";
-		$field .= '--></script>';
+		
+		$file_field_tpl = new StringTemplate(self::$tpl_src);
+		$file_field_tpl->assign_vars(array(
+			'MAX_FILE_SIZE' => $this->get_max_file_size(),
+			'NAME' => $this->get_html_id(),
+			'ID' => $this->get_html_id(),
+			'C_DISABLED' => $this->is_disabled()
+		));
 
 		$this->assign_common_template_variables($template);
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $field
+			'ELEMENT' => $file_field_tpl->to_string()
 		));
 
 		return $template;

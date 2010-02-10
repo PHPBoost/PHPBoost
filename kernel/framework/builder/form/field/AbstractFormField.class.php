@@ -365,7 +365,7 @@ abstract class AbstractFormField implements FormField
 		$this->css_class = $css_class;
 	}
 	
-	protected function get_disabled()
+	protected function is_disabled()
 	{
 		return $this->disabled;
 	}
