@@ -29,7 +29,7 @@ class SandboxFormController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxController.tpl');
+		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$form = $this->build_form();
 		if ($request->is_post_method())
 		{
