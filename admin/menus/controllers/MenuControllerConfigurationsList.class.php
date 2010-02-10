@@ -71,7 +71,7 @@ class MenuControllerConfigurationsList extends AdminController
 	{
 		global $LANG;
 
-		$this->view = new View('admin/menus/configuration/list.tpl');
+		$this->view = new FileTemplate('admin/menus/configuration/list.tpl');
 		$this->response = new AdminMenusDisplayResponse($this->view);
 		$env = $this->response->get_graphical_environment();
 

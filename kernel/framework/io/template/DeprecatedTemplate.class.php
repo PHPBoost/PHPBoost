@@ -26,25 +26,27 @@
  ###################################################*/
 
 /**
+ * @package io
+ * @subpackage template
  * @deprecated
  * @desc This class exists only to be compliant with legacy code. It manages several templates in the same objet.
- * In fact, one instance of this class loads several templates which share the same data.
- * As of PHPBoost 3.1, it's forbidden to use it, but if won't be removed while the legacy code will use it.
+ * In fact, a single instance of this class loads several templates which share the same data.
+ * As of PHPBoost 3.1, it's forbidden to use it, but it won't be removed while the legacy code will use it.
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  */
 class DeprecatedTemplate extends FileTemplate
 {
 	private $modules = array();
-	
+
 	public function __construct()
 	{
 		parent::__construct('');
-		$this->auto_load_frequent_vars();
+		$this->data->auto_load_frequent_vars();
 	}
 
 	/**
-	 * @desc Loads several files in the same Template instance.
 	 * @deprecated
+	 * @desc Loads several files in the same Template instance.
 	 * @param string[] $array_tpl A map file_identifier => file_path where file_identifier is the name you give to your file and file_path its path.
 	 * See the class description to learn how to write the path.
 	 */
@@ -53,18 +55,18 @@ class DeprecatedTemplate extends FileTemplate
 		foreach ($array_tpl as $identifier => $filename)
 		{
 			$new_template = new FileTemplate($filename, Template::DONOT_LOAD_FREQUENT_VARS);
-            $module_data_path = $new_template->get_data()->get_var('PICTURES_DATA_PATH');
-			
-            $this->bind_vars($new_template);
+			$module_data_path = $new_template->get_data()->get_var('PICTURES_DATA_PATH');
+				
+			$this->bind_vars($new_template);
 			$this->add_subtemplate($identifier, $new_template);
 			$this->find_module($filename, $identifier);
-			
+				
 			// Auto assign the module data path
 			// Use of MODULE_DATA_PATH is deprecated
 			$new_template->assign_vars(array('PICTURES_DATA_PATH' => $module_data_path));
 		}
 	}
-	
+
 	/**
 	 * @deprecated
 	 * @desc Retrieves the path of the module. This path will be used to write the relative paths in your templates.
@@ -75,7 +77,7 @@ class DeprecatedTemplate extends FileTemplate
 	{
 		return '';
 	}
-	
+
 	/**
 	 * @deprecated
 	 * @desc Parses the file whose name is $parse_name and which has been declared with the set_filenames_method. It uses the variables you assigned (when you assign a
@@ -90,7 +92,7 @@ class DeprecatedTemplate extends FileTemplate
 			$template->display();
 		}
 	}
-	
+
 	private function bind_vars($template)
 	{
 		$this->data->bind_vars($template->data);
@@ -108,7 +110,7 @@ class DeprecatedTemplate extends FileTemplate
 		{
 			$module =& $trimmed_identifier;
 		}
-		
+
 		if (empty($this->modules[$module]))
 		{
 			$this->modules[$module] =& $this->subtemplates[$real_identifier];

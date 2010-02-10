@@ -60,7 +60,7 @@ class AdminErrorsController404List extends AdminController
 	{
         $lang = LangLoader::get_class(__CLASS__);
         
-		$this->view = new View('admin/errors/AdminErrorsController404List.tpl');
+		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
         $this->view->add_lang($lang);
         
 		$this->response = new AdminErrorsDisplayResponse($this->view);

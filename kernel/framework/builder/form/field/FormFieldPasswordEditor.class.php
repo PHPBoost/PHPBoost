@@ -70,7 +70,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
-			'VALUE' => '',
+			'VALUE' => htmlspecialchars($this->get_value()),
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'ONBLUR_ACTION' => $this->get_onblur_validation() . $this->get_onblur()

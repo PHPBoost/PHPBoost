@@ -29,7 +29,7 @@ class AdminLoginController extends AbstractController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$view = new View('admin/AdminLoginController.tpl');
+		$view = new FileTemplate('admin/AdminLoginController.tpl');
 		$lang = LangLoader::get_class(__CLASS__);
 		$view->add_lang($lang);
 

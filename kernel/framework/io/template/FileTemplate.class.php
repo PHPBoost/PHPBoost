@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        FileTemplate.class.php
+ *                           FileTemplate.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -30,12 +30,11 @@
  * @subpackage template
  * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to handle a template file.
- * Your template files should have the .tpl extension.
- * 
+ * Your template files should have the .tpl extension. 
  * To be more efficient, this class uses a cache and parses each file only once.
- * <h1>File paths</h1>
+ * <h1>File identifiers</h1>
  * The web site can have several themes whose files aren't in the same folders. When you load a file, you just have to load the generic file and the right template file will
- * be loaded dinamically.
+ * be loaded dynamically.
  * <h2>Kernel template file</h2>
  * When you want to load a kernel template file, the path you must indicate is only the name of the file, for example header.tpl loads /template/your_theme/header.tpl and
  * if it doesn't exist, it will load /template/default/header.tpl.
@@ -51,15 +50,17 @@
 class FileTemplate extends AbstractTemplate
 {
 	/**
-	 * @desc Builds a Template object.
-	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
+	 * @desc Builds a FileTemplate object
+	 * @param string $file_identifier The identifier of the file you want to load (see this class' description)
+	 * to know how to compose a indentifier.
 	 */
-	public function __construct($file_name, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	public function __construct($file_identifier)
 	{
 		$data = new DefaultTemplateData();
-		$loader = new FileTemplateLoader($file_name, $data);
+		$data->auto_load_frequent_vars();
+		$loader = new FileTemplateLoader($file_identifier, $data);
 		$renderer = new DefaultTemplateRenderer();
-		parent::__construct($loader, $renderer, $data, $auto_load_vars);
+		parent::__construct($loader, $renderer, $data);
 	}
 }
 ?>

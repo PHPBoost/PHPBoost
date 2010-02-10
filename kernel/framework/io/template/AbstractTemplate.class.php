@@ -27,6 +27,7 @@
 
 /**
  * @package io
+ * @subpackage template
  * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
@@ -47,19 +48,16 @@ abstract class AbstractTemplate implements Template
 	protected $data;
 
 	/**
-	 * @desc Builds a Template object.
-	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
+	 * @desc Builds an AbstractTemplate from the different services it has to use.
+	 * @param TemplateLoader $loader The loader
+	 * @param TemplateRenderer $renderer The renderer
+	 * @param TemplateData $data The data
 	 */
-	public function __construct(TemplateLoader $loader, TemplateRenderer $renderer, TemplateData $data, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS)
+	public function __construct(TemplateLoader $loader, TemplateRenderer $renderer, TemplateData $data)
 	{
 		$this->set_loader($loader);
 		$this->set_renderer($renderer);
 		$this->set_data($data);
-
-		if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
-		{
-			$this->data->auto_load_frequent_vars();
-		}
 	}
 
 	protected function set_loader(TemplateLoader $loader)
@@ -78,8 +76,8 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
-	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#assign_vars($array_vars)
 	 */
 	public function assign_vars(array $array_vars)
 	{
@@ -87,10 +85,8 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
-	 * To know what syntax to use to browse a loop, see the class description, there are examples.
-	 * @param string $block_name Block name.
-	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#assign_block_vars($block_name, $array_vars, $subtemplates)
 	 */
 	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
@@ -98,8 +94,8 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * @desc Clones this object.
-	 * @return Template A clone of this object.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#copy()
 	 */
 	public function copy()
 	{
@@ -107,33 +103,26 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * @desc Returns the template identifier
-	 * @return string the template identifier
-	 */
-	public function get_identifier()
-	{
-		return $this->identifier;
-	}
-
-	/**
-	 * @desc Parses the file. It will use the variables you assigned.
-	 * @param mixed $parser In its default behaviour (self::TEMPLATE_PARSER_ECHO), this class write what it parses in the PHP standard output.
-	 * If you want to retrieve the parsed content and not to write it, use the self::TEMPLATE_PARSER_STRING variable.
-	 * @return string The TemplateParser resource (depends of the template parser)
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#display()
 	 */
 	public function display()
 	{
 		echo $this->renderer->render($this->data, $this->loader);
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#to_string()
+	 */
 	public function to_string()
 	{
 		return $this->renderer->render($this->data, $this->loader);
 	}
 
 	/**
-	 * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-	 * @param string[string] $lang the language map
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#add_lang($lang)
 	 */
 	public function add_lang(array $lang)
 	{
@@ -141,20 +130,18 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * @desc add a subtemplate that could be used using the following template code <code># include identifier #</code>
-	 * @param string $identifier the identifier
-	 * @param Template $template the template
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#add_subtemplate($identifier, $template)
 	 */
 	public function add_subtemplate($identifier, Template $template)
 	{
 		$this->data->add_subtemplate($identifier, $template);
 	}
 
-	public function auto_load_frequent_vars()
-	{
-		$this->data->auto_load_frequent_vars();
-	}
-
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/Template#get_data()
+	 */
 	public function get_data()
 	{
 		return $this->data;
