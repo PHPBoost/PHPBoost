@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          TemplateRenderer.class.php
+ *                   FileIncludeTemplateRenderer.class.php
  *                            -------------------
- *   begin                : February 6, 2010
+ *   begin                : February 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -26,22 +26,31 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage template/renderer
- * @desc Represents a template renderer as its names shows. Its able to get the result of the template
- * interpration from a TemplateLoader which gives it the template source and a TemplateData which 
- * contains the data to assign in the template.
+ * @desc This template renderer uses the fact that APC can optimize a PHP file inclusion, it's 
+ * the fastest way to render a template that is cached on the filesystem. This last constraint 
+ * means that the TemplateLoader it's gonna work with is a 
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
  */
-interface TemplateRenderer
+class FileIncludeTemplateRenderer implements TemplateRenderer
 {
 	/**
-	 * @desc Returns the result of the interpretation of a template
-	 * @param TemplateData $data The data
-	 * @param TemplateLoader $loader The loader to use
-	 * @return string The parsed template
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/renderer/TemplateRenderer#render($data, $loader)
 	 */
-	function render(TemplateData $data, TemplateLoader $loader);
+	public function render(TemplateData $data, TemplateLoader $loader)
+	{
+		if (!$loader instanceof CacherTemplateLoader)
+		{
+			throw new TemplateLoaderException('A FileIncludeTemplateRenderer must work with an instance of the CacherTemplateLoader interface');
+		}
+		
+		$_data = $data;
+
+		include $loader->get_cache_file_path();
+		
+		return $_result;
+	}
 }
+
+
 ?>

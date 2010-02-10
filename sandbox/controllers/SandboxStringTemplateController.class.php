@@ -42,7 +42,7 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		$tpl = new StringTemplate($this->result_tpl);
 
-		$this->test = str_repeat($this->test, 2);
+		$this->test = str_repeat($this->test, 1);
 		
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();

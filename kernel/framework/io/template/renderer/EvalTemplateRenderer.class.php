@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       DefaultTemplateRenderer.class.php
+ *                       EvalTemplateRenderer.class.php
  *                            -------------------
  *   begin                : February 6, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -25,15 +25,31 @@
  *
  ###################################################*/
 
-class DefaultTemplateRenderer implements TemplateRenderer
+/**
+ * @desc This template renderer is an universal one which can work in any situation, but under
+ * certain conditions it exists more efficient ways to render a template.
+ * This one asks to the loader the template under its PHP parsed form and executes this code.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
+class EvalTemplateRenderer implements TemplateRenderer
 {
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/template/renderer/TemplateRenderer#render($data, $loader)
+	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
 	{
-		$_result = '';
 		$_data = $data;
 
-		eval($loader->load());
+		eval($this->get_code_to_eval($loader));
 		return $_result;
+	}
+	
+	private function get_code_to_eval(TemplateLoader $loader)
+	{
+		$template_code = $loader->load();
+		// Removes the <?php and the ? > tags
+		return substr($template_code, 6, strlen($template_code) - 9);
 	}
 }
 

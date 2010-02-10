@@ -32,7 +32,7 @@
  * @desc This class enables you to handle a template whose input is not a file but directly a string.
  * To be always as efficient as possible, it uses cache if it evaluates that it could be faster.
  * But when string templates are cached, they are saved on the filesystem and use some disk space. It's the reason
- * why there is an option enabling to forbid it to cache a template if you think that it's not required to have 
+ * why there is an option enabling to forbid it to cache a template if you think that it's not required to have
  * a big efficiency. It will be the case for instance when you know that a string template will be used only once a month.
  */
 class StringTemplate extends AbstractTemplate
@@ -45,7 +45,7 @@ class StringTemplate extends AbstractTemplate
 	 * @var bool Forbids it to cache this string template.
 	 */
 	const USE_CACHE_IF_FASTER = true;
-	
+
 	/**
 	 * @desc Constructs a StringTemplate
 	 * @param string $content The content of the template (a string containing PHPBoost's template engine syntax).
@@ -56,24 +56,35 @@ class StringTemplate extends AbstractTemplate
 	{
 		$data = new DefaultTemplateData();
 		$data->auto_load_frequent_vars();
-		parent::__construct($this->get_appropriate_loader($content, $use_cache), new DefaultTemplateRenderer(), $data);
-	}
-	
-	private function get_appropriate_loader($content, $use_cache)
-	{
-		if ($use_cache == self::DONT_USE_CACHE)
+
+		if ($this->has_to_cache($content, $use_cache))
 		{
-			return new StringTemplateLoader($content);
+			$loader = new CachedStringTemplateLoader($content);
+			$renderer = new FileIncludeTemplateRenderer();
 		}
 		else
 		{
-			if (strlen($content) > 200)
+			$loader = new StringTemplateLoader($content);
+			$renderer = new EvalTemplateRenderer();
+		}
+		parent::__construct($loader, $renderer, $data);
+	}
+
+	private function has_to_cache($content, $use_cache)
+	{
+		if ($use_cache == self::DONT_USE_CACHE)
+		{
+			return false;
+		}
+		else
+		{
+			if (strlen($content) > 100)
 			{
-				return new CachedStringTemplateLoader($content);
+				return true;
 			}
 			else
 			{
-				return new StringTemplateLoader($content);
+				return false;
 			}
 		}
 	}

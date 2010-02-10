@@ -36,7 +36,7 @@ class StringTemplateLoader implements TemplateLoader
 	
 	public function load()
 	{
-		$parser = new TemplateToStringParser();
+		$parser = new DefaultTemplateParser();
 		return $parser->parse($this->content);
 	}
 }

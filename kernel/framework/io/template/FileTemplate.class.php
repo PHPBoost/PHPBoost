@@ -59,7 +59,7 @@ class FileTemplate extends AbstractTemplate
 		$data = new DefaultTemplateData();
 		$data->auto_load_frequent_vars();
 		$loader = new FileTemplateLoader($file_identifier, $data);
-		$renderer = new DefaultTemplateRenderer();
+		$renderer = new FileIncludeTemplateRenderer();
 		parent::__construct($loader, $renderer, $data);
 	}
 }
