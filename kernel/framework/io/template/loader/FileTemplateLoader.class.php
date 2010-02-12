@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class FileTemplateLoader implements CacherTemplateLoader
+class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
 	private $real_filepath = '';
@@ -57,15 +57,6 @@ class FileTemplateLoader implements CacherTemplateLoader
 		$this->filepath
 		), '_') . '.php';
 
-	}
-
-	public function get_cache_file_path()
-	{
-		if (!$this->is_cache_file_up_to_date())
-		{
-			$this->generate_cache_file();
-		}
-		return $this->cache_filepath;
 	}
 
 	public function load()
@@ -251,6 +242,20 @@ class FileTemplateLoader implements CacherTemplateLoader
 	private function convert_to_tpl_path($path_to_root_filepath)
 	{
 		return TPL_PATH_TO_ROOT . substr($path_to_root_filepath, strlen(PATH_TO_ROOT));
+	}
+
+	public function supports_caching()
+	{
+		return true;
+	}
+
+	public function get_cache_file_path()
+	{
+		if (!$this->is_cache_file_up_to_date())
+		{
+			$this->generate_cache_file();
+		}
+		return $this->cache_filepath;
 	}
 }
 ?>

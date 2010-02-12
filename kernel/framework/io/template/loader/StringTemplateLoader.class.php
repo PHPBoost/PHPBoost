@@ -39,5 +39,15 @@ class StringTemplateLoader implements TemplateLoader
 		$parser = new DefaultTemplateParser();
 		return $parser->parse($this->content);
 	}
+	
+	public function supports_caching()
+	{
+		return false;
+	}
+	
+	public function get_cache_file_path()
+	{
+		return null;
+	}
 }
 ?>

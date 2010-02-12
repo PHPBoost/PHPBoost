@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CachedStringTemplateLoader implements CacherTemplateLoader
+class CachedStringTemplateLoader implements TemplateLoader
 {
 	private $content = '';
 	private $cache_file_path = '';
@@ -39,16 +39,6 @@ class CachedStringTemplateLoader implements CacherTemplateLoader
 	private function compute_cache_file_path()
 	{
 		$this->cache_file_path = PATH_TO_ROOT . '/cache/tpl/string-' . md5($this->content) . '.php';
-	}
-
-	public function get_cache_file_path()
-	{
-		if (!$this->file_cache_exists())
-		{
-			$content = $this->get_parsed_content();
-			$this->generate_cache_file($content);
-		}
-		return $this->cache_file_path;
 	}
 
 	public function load()
@@ -84,5 +74,19 @@ class CachedStringTemplateLoader implements CacherTemplateLoader
 		return $parser->parse($this->content);
 	}
 
+	public function supports_caching()
+	{
+		return true;
+	}
+
+	public function get_cache_file_path()
+	{
+		if (!$this->file_cache_exists())
+		{
+			$content = $this->get_parsed_content();
+			$this->generate_cache_file($content);
+		}
+		return $this->cache_file_path;
+	}
 }
 ?>
