@@ -60,12 +60,12 @@ class StringTemplate extends AbstractTemplate
 		if ($this->has_to_cache($content, $use_cache))
 		{
 			$loader = new CachedStringTemplateLoader($content);
-			$renderer = new FileIncludeTemplateRenderer();
+			$renderer = new DefaultTemplateRenderer();
 		}
 		else
 		{
 			$loader = new StringTemplateLoader($content);
-			$renderer = new EvalTemplateRenderer();
+			$renderer = new DefaultTemplateRenderer();
 		}
 		parent::__construct($loader, $renderer, $data);
 	}

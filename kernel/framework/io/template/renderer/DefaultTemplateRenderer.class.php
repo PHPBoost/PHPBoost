@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       EvalTemplateRenderer.class.php
+ *                     DefaultTemplateRenderer.class.php
  *                            -------------------
  *   begin                : February 6, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -26,12 +26,12 @@
  ###################################################*/
 
 /**
- * @desc This template renderer is an universal one which can work in any situation, but under
- * certain conditions it exists more efficient ways to render a template.
- * This one asks to the loader the template under its PHP parsed form and executes this code.
+ * @desc This template renderer is able to deal with both loader which cache and don't cache.
+ * When the loader supports caching, it includes the cached file to use APC's optimization, but
+ * if it doesn't support it, it simply evals the template code.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class EvalTemplateRenderer implements TemplateRenderer
+class DefaultTemplateRenderer implements TemplateRenderer
 {
 	/**
 	 * (non-PHPdoc)
@@ -39,12 +39,31 @@ class EvalTemplateRenderer implements TemplateRenderer
 	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
 	{
+		if ($loader->supports_caching())
+		{
+			return $this->parse($loader, $data);
+		}
+		else
+		{
+			return $this->execute($loader, $data);
+		}
+	}
+
+	private function parse(TemplateLoader $loader, TemplateData $data)
+	{
+		$_data = $data;
+		include $loader->get_cache_file_path();
+		return $_result;
+	}
+
+	private function execute(TemplateLoader $loader, TemplateData $data)
+	{
 		$_data = $data;
 
 		eval($this->get_code_to_eval($loader));
 		return $_result;
 	}
-	
+
 	private function get_code_to_eval(TemplateLoader $loader)
 	{
 		$template_code = $loader->load();
