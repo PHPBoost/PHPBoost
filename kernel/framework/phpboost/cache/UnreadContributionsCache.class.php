@@ -42,8 +42,7 @@ class UnreadContributionsCache implements CacheData
 	private $users = array();
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{

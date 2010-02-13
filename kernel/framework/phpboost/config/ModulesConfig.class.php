@@ -37,8 +37,7 @@ class ModulesConfig extends AbstractConfigData
 	private static $modules_property = 'modules';
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
+	 * {@inheritdoc}
 	 */
 	public function get_default_values()
 	{

@@ -56,8 +56,7 @@ class FormFieldCaptcha extends AbstractFormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{
@@ -72,8 +71,7 @@ class FormFieldCaptcha extends AbstractFormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#display()
+	 * {@inheritdoc}
 	 */
 	public function display()
 	{
@@ -96,8 +94,7 @@ class FormFieldCaptcha extends AbstractFormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#validate()
+	 * {@inheritdoc}
 	 */
 	public function validate()
 	{

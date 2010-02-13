@@ -25,6 +25,20 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @subpackage template/data
+ * @desc This interface describes data which are assigned to a template. There are two types of data:
+ * <ul>
+ * 	<li>Variables: there are string that are directly displayed</li>
+ * 	<li>Templates: you can embed a template in another one. When a subtemplate is displayed, 
+ * it's parsed using its own data and the result is inserted where the subtemplate is embedded.</li>
+ * </ul>
+ * A template contains global variables which are available in the whole template and local variable
+ * which are only defined into a loop. To define a loop, you just have to use assign_block_vars with the
+ * same loop identifier for each loop iteration. Loops can be nested and embed both variables and subtemplates.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 interface TemplateData
 {
 	/**
@@ -38,31 +52,32 @@ interface TemplateData
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
 	 * @param string $block_name Block name.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * @param Template[] $subtemplates The list of subtemplates to embed in the loop's iteration.
 	 */
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
 	
 	/**
-	 * @desc add a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
+	 * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
 	 * @param string[string] $lang the language map
 	 */
 	function add_lang(array $lang);
 
 	/**
-	 * @desc add a subtemplate that could be used using the following template code <code># include identifier #</code>
+	 * @desc Adds a subtemplate that could be used using the following template code <code># include identifier #</code>
 	 * @param string $identifier the identifier
 	 * @param Template $template the template
 	 */
 	function add_subtemplate($identifier, Template $template);
 
 	/**
-	 * @desc returns the subtemplate identified by the $identifier tag
+	 * @desc Returns the subtemplate identified by the $identifier tag
 	 * @param string $identifier the template identifier
 	 * @return Template the subtemplate identified by the $identifier tag
 	 */
 	function get_subtemplate($identifier);
 
 	/**
-	 * @desc returns the subtemplate identified by the $identifier tag
+	 * @desc Returns the subtemplate identified by the $identifier tag
 	 * @param string $identifier the template identifier
 	 * @param Template[string] $list the template list in which we will the search for the
 	 * template identifier
@@ -72,29 +87,29 @@ interface TemplateData
 
 
 	/**
-	 * @desc returns the block "blockname" in the template block list
+	 * @desc Returns the block $blockname in the template block list
 	 * @param string $blockname the blockname of the block to retrieve
 	 * @return mixed[] the requested block
 	 */
 	function get_block($blockname);
 
 	/**
-	 * @desc returns the block "blockname" in the parent_block
+	 * @desc Returns the block $blockname in the parent_block
 	 * @param string $blockname the blockname of the block to retrieve
 	 * @param mixed[] $parent_block the parent block in which $blockname will be searched for
-	 * @return mixed[] the requested block
+	 * @return mixed[] The requested block
 	 */
 	function get_block_from_list($blockname, $parent_block);
 
 	/**
-	 * @desc Returns true if the variable $varname exists and is not considered as false
+	 * @desc Tells whether a condition is true. Conditions are global boolean variables.
 	 * @param string $varname the name of the variable to check if it is true
 	 * @return bool true if the variable $varname exists and is not considered as false
 	 */
 	function is_true($varname);
 
 	/**
-	 * @desc rReturns true if the variable $varname exists and is not considered as false
+	 * @desc Tells whether a condition is true in a block. It works for loop conditions.
 	 * @param string $varname the name of the variable to check if it is true
 	 * @param mixed[] $list the array in which we varname will be searched for
 	 * @return bool true if the variable $varname exists and is not considered as false
@@ -103,26 +118,33 @@ interface TemplateData
 
 	/**
 	 * @desc Returns the $varname variable content searched in from the $list
-	 * Special operations will be done if the variable is not registered in $list. If $varname begins with
-	 * <ul>
-	 *	<li><E_: the variable will be search without its prefix and will be escaped using <code>htmlspecialchars()</code></li>
-	 *	<li><J_: the variable will be search without its prefix and will be escaped using <code>TextHelper::to_js_string()</code></li>
-	 *	<li><L_: the variable will be search without its prefix in every languages maps registered using <code>Template->add_lang($language)</code></li>
-	 *	<li><EL_: the variable will be search without its prefix like languages variables and will be escaped using <code>htmlspecialchars()</code></li>
-	 *	<li><JL_: the variable will be search without its prefix like languages variables and will be escaped using <code>TextHelper::to_js_string()</code></li>
-	 * </ul>
-	 * Each time one of these operation is requested, the variable is registered in order to speed up next calls. If nothing is found, then an empty string is returned
 	 * @param string $varname the name of the variable to retrieve
 	 * @param mixed[] $list the list in which the variable will be searched for
 	 * @return string the $varname variable content
 	 */
-
 	function get_var($varname);
 
+	/**
+	 * @desc Similar from the get_var method but it works with loop variables instead of global variables.
+	 * @param string $varname The name of the variable to retrieve
+	 * @param mixed[] $list The list into which retrieve the variable
+	 * @return string The variable content
+	 */
 	function get_var_from_list($varname, &$list);
 
+	/**
+	 * @desc Returns the var $varname ready to be placed in Javascript string definition.
+	 * @param string $varname The name of the variable to retrieve.
+	 * @return string The variable's value
+	 */
 	function get_js_var($varname);
 
+	/**
+	 * @desc Does the same thing as {@link get_js_var()} but for a loop.
+	 * @param string $varname Name of the var
+	 * @param mixed[] $list List into which look for
+	 * @return string The variable's value
+	 */
 	function get_js_var_from_list($varname, &$list);
 
 	function get_js_lang_var($varname);
@@ -141,8 +163,27 @@ interface TemplateData
 
 	function get_lang_var_from_list($varname, &$list);
 	
+	/**
+	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
+	 * <ul>
+	 * 	<li>SID for the session id</li>
+	 * 	<li>THEME the theme used by the current user</li>
+	 * 	<li>LANG the lang used by the current user</li>
+	 * 	<li>C_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
+	 * 	<li>C_USER_NOTCONNECTED is the negation of C_USER_CONNECTED</li>
+	 * 	<li>PATH_TO_ROOT is the path which starts from the domain root (in HTTP context) and goes to the PHPBoost
+	 * root. For instance if PHPBoost is installed at www.example.com/directory/, its value will be /directory.</li>
+	 * 	<li>PHP_PATH_TO_ROOT is the server side path, it's the path which goes to the PHPBoost's root.</li>
+	 * 	<li>TOKEN is the CSRF protection token. It's to use in the critical actions to show that the user really
+	 * intended doing the action</li>
+	 * </ul>
+	 */
 	function auto_load_frequent_vars();
 	
+	/**
+	 * @desc Binds vars on another {@link TemplateData} object. The two instances will share the same data.
+	 * @param TemplateData $data The data to use.
+	 */
 	function bind_vars(TemplateData $data);
 }
 ?>

@@ -40,8 +40,7 @@ class FormFieldHidden extends AbstractFormField
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#display()
+	 * {@inheritdoc}
 	 */
 	public function display()
 	{
@@ -53,8 +52,7 @@ class FormFieldHidden extends AbstractFormField
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{

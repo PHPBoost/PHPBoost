@@ -34,8 +34,7 @@
 class DefaultTemplateRenderer implements TemplateRenderer
 {
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/renderer/TemplateRenderer#render($data, $loader)
+	 * {@inheritdoc}
 	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
 	{

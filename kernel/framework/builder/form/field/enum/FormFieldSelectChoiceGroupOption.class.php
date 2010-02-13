@@ -73,8 +73,7 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/AbstractFormFieldEnumOption#get_option($raw_value)
+	 * {@inheritdoc}
 	 */
 	public function get_option($raw_value)
 	{

@@ -54,8 +54,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#display()
+	 * {@inheritdoc}
 	 */
 	public function display()
 	{

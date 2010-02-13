@@ -86,8 +86,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#get_value()
+	 * {@inheritdoc}
 	 */
 	public function get_value()
 	{
@@ -108,8 +107,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#set_value($value)
+	 * {@inheritdoc}
 	 */
 	public function set_value($value)
 	{
@@ -143,8 +141,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{

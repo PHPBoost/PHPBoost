@@ -42,8 +42,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/FormFieldEnumOption#get_label()
+	 * {@inheritdoc}
 	 */
 	public function get_label()
 	{
@@ -51,8 +50,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/FormFieldEnumOption#set_label($label)
+	 * {@inheritdoc}
 	 */
 	public function set_label($label)
 	{
@@ -60,8 +58,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/FormFieldEnumOption#get_raw_value()
+	 * {@inheritdoc}
 	 */
 	public function get_raw_value()
 	{
@@ -69,8 +66,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/FormFieldEnumOption#set_raw_value($raw_value)
+	 * {@inheritdoc}
 	 */
 	public function set_raw_value($value)
 	{
@@ -101,8 +97,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/enum/FormFieldEnumOption#get_option($raw_option)
+	 * {@inheritdoc}
 	 */
 	public function get_option($raw_value)
 	{

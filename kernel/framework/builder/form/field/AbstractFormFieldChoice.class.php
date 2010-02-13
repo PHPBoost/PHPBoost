@@ -74,8 +74,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/AbstractFormField#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{

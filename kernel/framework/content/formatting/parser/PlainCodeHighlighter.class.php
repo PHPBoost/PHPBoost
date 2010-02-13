@@ -45,8 +45,7 @@ class PlainCodeHighlighter extends AbstractParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#parse()
+	 * {@inheritdoc}
 	 */
 	public function parse()
 	{

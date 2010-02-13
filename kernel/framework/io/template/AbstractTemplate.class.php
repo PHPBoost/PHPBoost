@@ -76,8 +76,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#assign_vars($array_vars)
+	 * {@inheritdoc}
 	 */
 	public function assign_vars(array $array_vars)
 	{
@@ -85,8 +84,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#assign_block_vars($block_name, $array_vars, $subtemplates)
+	 * {@inheritdoc}
 	 */
 	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
@@ -94,8 +92,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#copy()
+	 * {@inheritdoc}
 	 */
 	public function copy()
 	{
@@ -103,8 +100,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#display()
+	 * {@inheritdoc}
 	 */
 	public function display()
 	{
@@ -112,8 +108,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#to_string()
+	 * {@inheritdoc}
 	 */
 	public function to_string()
 	{
@@ -121,8 +116,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#add_lang($lang)
+	 * {@inheritdoc}
 	 */
 	public function add_lang(array $lang)
 	{
@@ -130,8 +124,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#add_subtemplate($identifier, $template)
+	 * {@inheritdoc}
 	 */
 	public function add_subtemplate($identifier, Template $template)
 	{
@@ -139,8 +132,7 @@ abstract class AbstractTemplate implements Template
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/template/Template#get_data()
+	 * {@inheritdoc}
 	 */
 	public function get_data()
 	{

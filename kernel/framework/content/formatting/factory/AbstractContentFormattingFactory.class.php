@@ -45,8 +45,7 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#set_forbidden_tags($tags)
+	 * {@inheritdoc}
 	 */
 	public function set_forbidden_tags(array $tags)
 	{
@@ -54,8 +53,7 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_forbidden_tags()
+	 * {@inheritdoc}
 	 */
 	public function get_forbidden_tags()
 	{
@@ -63,8 +61,7 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#add_forbidden_tag($tag)
+	 * {@inheritdoc}
 	 */
 	public function add_forbidden_tag($tag)
 	{
@@ -72,8 +69,7 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#set_html_auth($array_auth)
+	 * {@inheritdoc}
 	 */
 	public function set_html_auth(array $auth)
 	{
@@ -81,8 +77,7 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_html_auth()
+	 * {@inheritdoc}
 	 */
 	public function get_html_auth()
 	{

@@ -51,8 +51,7 @@ class APCDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#get($id)
+	 * {@inheritdoc}
 	 */
 	public function get($id)
 	{
@@ -67,8 +66,7 @@ class APCDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#contains($id)
+	 * {@inheritdoc}
 	 */
 	public function contains($id)
 	{
@@ -79,8 +77,7 @@ class APCDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#store($id, $object)
+	 * {@inheritdoc}
 	 */
 	public function store($id, $object)
 	{
@@ -90,8 +87,7 @@ class APCDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#delete($id)
+	 * {@inheritdoc}
 	 */
 	public function delete($id)
 	{
@@ -126,8 +122,7 @@ class APCDataStore implements DataStore
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#clear()
+	 * {@inheritdoc}
 	 */
 	public function clear()
 	{

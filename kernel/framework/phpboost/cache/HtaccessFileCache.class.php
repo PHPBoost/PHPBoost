@@ -36,8 +36,7 @@ class HtaccessFileCache implements CacheData
 	private $htaccess_file_content = '';
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
