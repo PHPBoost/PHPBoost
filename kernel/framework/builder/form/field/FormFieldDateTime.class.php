@@ -58,8 +58,7 @@ class FormFieldDateTime extends FormFieldDate
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormFieldDate#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{

@@ -38,8 +38,7 @@ class ModulesCssFilesCache implements CacheData
 	private $themes_files = array();
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{

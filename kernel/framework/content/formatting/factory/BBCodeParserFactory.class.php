@@ -35,8 +35,7 @@
 class BBCodeParserFactory extends AbstractContentFormattingFactory
 {
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_parser()
+	 * {@inheritdoc}
 	 */
 	public function get_parser()
 	{
@@ -47,8 +46,7 @@ class BBCodeParserFactory extends AbstractContentFormattingFactory
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_unparser()
+	 * {@inheritdoc}
 	 */
 	public function get_unparser()
 	{
@@ -56,8 +54,7 @@ class BBCodeParserFactory extends AbstractContentFormattingFactory
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_second_parser()
+	 * {@inheritdoc}
 	 */
 	public function get_second_parser()
 	{
@@ -65,8 +62,7 @@ class BBCodeParserFactory extends AbstractContentFormattingFactory
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/factory/ContentFormattingFactory#get_editor()
+	 * {@inheritdoc}
 	 */
 	public function get_editor()
 	{

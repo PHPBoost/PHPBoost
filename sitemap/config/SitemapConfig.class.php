@@ -94,8 +94,7 @@ class SitemapConfig extends AbstractConfigData
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/config/AbstractConfigData#get_default_values()
+	 * {@inheritdoc}
 	 */
 	public function get_default_values()
 	{

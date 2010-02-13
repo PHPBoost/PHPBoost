@@ -40,8 +40,7 @@ class RAMDataStore implements DataStore
 	private $data = array();
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#get($id)
+	 * {@inheritdoc}
 	 */
 	public function get($id)
 	{
@@ -53,8 +52,7 @@ class RAMDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#contains($id)
+	 * {@inheritdoc}
 	 */
 	public function contains($id)
 	{
@@ -62,8 +60,7 @@ class RAMDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#store($id, $object)
+	 * {@inheritdoc}
 	 */
 	public function store($id, $data)
 	{
@@ -71,8 +68,7 @@ class RAMDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#delete($id)
+	 * {@inheritdoc}
 	 */
 	public function delete($id)
 	{
@@ -80,8 +76,7 @@ class RAMDataStore implements DataStore
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/data/store/DataStore#clear()
+	 * {@inheritdoc}
 	 */
 	public function clear()
 	{

@@ -37,8 +37,7 @@ class GroupsCache implements CacheData
 	private $groups = array();
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{

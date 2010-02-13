@@ -45,8 +45,7 @@ abstract class AbstractConfigData implements ConfigData
 
 	/**
 	 * This method is not used in the configuration context.
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 * {@inheritdoc}
 	 */
 	public final function synchronize()
 	{
@@ -54,8 +53,7 @@ abstract class AbstractConfigData implements ConfigData
 
 	/**
 	 * Redefine this method if you want to avoid getting errors while asking values.
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/ConfigData#set_default_values()
+	 * {@inheritdoc}
 	 */
 	public function set_default_values()
 	{
@@ -66,8 +64,7 @@ abstract class AbstractConfigData implements ConfigData
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/ConfigData#get_property($name)
+	 * {@inheritdoc}
 	 */
 	public function get_property($name)
 	{
@@ -95,8 +92,7 @@ abstract class AbstractConfigData implements ConfigData
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/config/ConfigData#set_property($name, $value)
+	 * {@inheritdoc}
 	 */
 	public function set_property($name, $value)
 	{

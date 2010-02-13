@@ -49,8 +49,7 @@ class FileSystemDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/DataStore#get($id)
+	 * {@inheritdoc}
 	 */
 	public function get($id)
 	{
@@ -70,8 +69,7 @@ class FileSystemDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/DataStore#contains($id)
+	 * {@inheritdoc}
 	 */
 	public function contains($id)
 	{
@@ -79,8 +77,7 @@ class FileSystemDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/DataStore#store($id, $object)
+	 * {@inheritdoc}
 	 */
 	public function store($id, $data)
 	{
@@ -91,8 +88,7 @@ class FileSystemDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/DataStore#delete($id)
+	 * {@inheritdoc}
 	 */
 	public function delete($id)
 	{
@@ -106,8 +102,7 @@ class FileSystemDataStore implements DataStore
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/io/cache/container/DataStore#clear()
+	 * {@inheritdoc}
 	 */
 	public function clear()
 	{

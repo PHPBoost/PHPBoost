@@ -63,8 +63,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_content()
+	 * {@inheritdoc}
 	 */
 	public function get_content()
 	{
@@ -72,8 +71,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_content($content)
+	 * {@inheritdoc}
 	 */
 	public function set_content($content)
 	{
@@ -81,8 +79,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_path_to_root($path)
+	 * {@inheritdoc}
 	 */
 	public function set_path_to_root($path)
 	{
@@ -90,8 +87,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_path_to_root()
+	 * {@inheritdoc}
 	 */
 	public function get_path_to_root()
 	{
@@ -99,8 +95,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#set_page_path($page_path)
+	 * {@inheritdoc}
 	 */
 	public function set_page_path($page_path)
 	{
@@ -108,8 +103,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/content/formatting/parser/FormattingParser#get_page_path()
+	 * {@inheritdoc}
 	 */
 	public function get_page_path()
 	{

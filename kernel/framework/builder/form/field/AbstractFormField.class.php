@@ -106,8 +106,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#get_id()
+	 * {@inheritdoc}
 	 */
 	public function get_id()
 	{
@@ -115,8 +114,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#set_id($id)
+	 * {@inheritdoc}
 	 */
 	public function set_id($id)
 	{
@@ -160,8 +158,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#get_value()
+	 * {@inheritdoc}
 	 */
 	public function get_value()
 	{
@@ -169,8 +166,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#set_value($value)
+	 * {@inheritdoc}
 	 */
 	public function set_value($value)
 	{
@@ -196,8 +192,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#validate()
+	 * {@inheritdoc}
 	 */
 	public function validate()
 	{
@@ -223,8 +218,7 @@ abstract class AbstractFormField implements FormField
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#retrieve_value()
+	 * {@inheritdoc}
 	 */
 	public function retrieve_value()
 	{
@@ -236,8 +230,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#get_html_id()
+	 * {@inheritdoc}
 	 */
 	public function get_html_id()
 	{
@@ -245,8 +238,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#add_constraint($constraint)
+	 * {@inheritdoc}
 	 */
 	public function add_constraint(FormFieldConstraint $constraint)
 	{
@@ -259,8 +251,7 @@ abstract class AbstractFormField implements FormField
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/builder/form/field/FormField#has_constraints()
+	 * {@inheritdoc}
 	 */
 	public function has_constraints()
 	{

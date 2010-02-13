@@ -53,8 +53,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/core/environment/GraphicalEnvironment#display_header()
+	 * {@inheritdoc}
 	 */
 	function display_header()
 	{
@@ -300,8 +299,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see kernel/framework/core/environment/GraphicalEnvironment#display_footer()
+	 * {@inheritdoc}
 	 */
 	function display_footer()
 	{
