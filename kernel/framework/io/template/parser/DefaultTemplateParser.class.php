@@ -25,6 +25,13 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @subpackage template/parser
+ * @desc This class is a default implementation of the {@link TemplateParser} interface that is based
+ * on the {@link AbstractTemplateParser} implementation. 
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ */
 class DefaultTemplateParser extends AbstractTemplateParser
 {
 	const TPL_RESULT_STRING = '$_result';

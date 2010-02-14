@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          TemplateParser.class.php
+ *                          TemplateLoadingException.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -27,18 +27,19 @@
 
 /**
  * @package io
- * @subpackage template/parser
- * @desc This interfaces represents a class that is able to parse a template source and transform it
- * to a syntax that the PHP engine is able to run.
+ * @subpackage template/loader
+ * @desc This exception is thrown when the template cannot been loaded.
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  */
-interface TemplateParser
+class TemplateLoadingException extends Exception
 {
 	/**
-	 * @desc Parses the $content string.
-	 * @param string $content The content to parse
-	 * @return The parsed content
+	 * @desc Constructs an exception 
+	 * @param string $message The error message
 	 */
-	function parse($content);
+	public function __construct($message)
+	{
+		parent::__construct($message);
+	}
 }
 ?>

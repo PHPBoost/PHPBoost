@@ -25,6 +25,19 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @subpackage template/loader
+ * @desc This loader is the most used. It takes a file identifier as input. This identifier corresponds
+ * to a file that can be different from the user's theme. In fact, when it loads a template, its looks for
+ * it at several places. For a module template, it can be the default one which is in the /module/templates directory,
+ * but if the file is specialized by the theme, it loads it from the theme directory. All that is explained
+ * in the {@link FileTemplate} class description.
+ * This loader supports caching and stores cache files in the /cache/tpl directory, their name are related to
+ * their source's real path.
+ * @see FileTemplate
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ */
 class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
@@ -39,6 +52,13 @@ class FileTemplateLoader implements TemplateLoader
 	private $default_templates_folder;
 	private $theme_templates_folder;
 
+	/**
+	 * @desc Constructs a {@link FileTemplateLoader} from the file's identifier.
+	 * @param string $identifier The file's identifier
+	 * @param TemplateData $data The data which is associated to the loader. It is used to assign
+	 * the PICTURES_DATA_PATH variable that corresponds the the module's pictures data path (it depends on
+	 * whether the theme redefines them or not).
+	 */
 	public function __construct($identifier, TemplateData $data)
 	{
 		$this->filepath = $identifier;
@@ -59,6 +79,9 @@ class FileTemplateLoader implements TemplateLoader
 
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function load()
 	{
 		if (!$this->is_cache_file_up_to_date())
@@ -83,18 +106,25 @@ class FileTemplateLoader implements TemplateLoader
 		$real_file_content = @file_get_contents_emulate($this->real_filepath);
 		if ($real_file_content === false)
 		{
-			throw new TemplateLoaderException($this->filepath, $this->real_filepath . ' template loading failed.');
+			throw new FileTemplateLoadingException($this->filepath, $this->real_filepath);
 		}
 
 		$parser = new DefaultTemplateParser();
 		$result = $parser->parse($real_file_content);
 
-		$cache_file = new File($this->cache_filepath);
-		$cache_file->lock();
-		$cache_file->write($result);
-		$cache_file->unlock();
-		$cache_file->close();
-		$cache_file->change_chmod(0666);
+		try
+		{
+			$cache_file = new File($this->cache_filepath);
+			$cache_file->lock();
+			$cache_file->write($result);
+			$cache_file->unlock();
+			$cache_file->close();
+			$cache_file->change_chmod(0666);
+		}
+		catch(IOException $ex)
+		{
+			throw new TemplateLoadingException('The template file cache couldn\'t been written due to this problem :' . $ex->getMessage());
+		}
 	}
 
 	private function get_file_cache_content()
@@ -244,11 +274,17 @@ class FileTemplateLoader implements TemplateLoader
 		return TPL_PATH_TO_ROOT . substr($path_to_root_filepath, strlen(PATH_TO_ROOT));
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function supports_caching()
 	{
 		return true;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_cache_file_path()
 	{
 		if (!$this->is_cache_file_up_to_date())
