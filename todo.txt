@@ -7,7 +7,6 @@
 - Ajouter dans l'administration la liste des hôtes autorisés pour le proxy
 - Reprendre la gestion du formulaire des autorisations qui est super mal foutue. Faire ça proprement en objet avec possibilité de générer un élément de formulaire pour insérer dans le builder
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
-- Réparer le générateur de la documentation (lien.html#ancre non remplacé parfois)
 - Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)
 - Essayer d'intégrer une balise flux en BBCode.
 - Refonte de l'installateur : mettre un fichier /cache/.install indiquant que l'installation est en cours à l'étape 4 et le supprimer à la fin. Les étapes 5 à 7 ne pourront être exécutées que si il y a ce fichier.
