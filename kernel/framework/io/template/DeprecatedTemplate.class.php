@@ -54,7 +54,7 @@ class DeprecatedTemplate extends FileTemplate
 	{
 		foreach ($array_tpl as $identifier => $filename)
 		{
-			$new_template = new FileTemplate($filename, Template::DONOT_LOAD_FREQUENT_VARS);
+			$new_template = new FileTemplate($filename);
 			$module_data_path = $new_template->get_data()->get_var('PICTURES_DATA_PATH');
 				
 			$this->bind_vars($new_template);
