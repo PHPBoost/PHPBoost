@@ -25,10 +25,19 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @package template/parser
+ * @desc This is an abstract implementation of the {@link TemplateParser} interface.
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ */
 abstract class AbstractTemplateParser implements TemplateParser
 {
 	protected $content;
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function parse($content)
 	{
 		$this->content = $content;

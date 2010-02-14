@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          TemplateLoaderException.class.php
+ *                          TemplateLoadingException.class.php
  *                            -------------------
  *   begin                : June 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,12 +25,23 @@
  *
  ###################################################*/
 
-class TemplateLoaderException extends Exception
+/**
+ * @package io
+ * @subpackage template/loader
+ * @desc This exception is thrown when the template cannot been loaded.
+ * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ */
+class FileTemplateLoadingException extends TemplateLoadingException
 {
-	public function __construct($template_identifier, $reason)
+	/**
+	 * @desc Constructs
+	 * @param $template_identifier
+	 * @param $reason
+	 * @return unknown_type
+	 */
+	public function __construct($message)
 	{
-		parent::__construct('Template loading failed for template "' . $template_identifier .
-			'"<br />' . $reason);
+		parent::__construct($message);
 	}
 }
 ?>

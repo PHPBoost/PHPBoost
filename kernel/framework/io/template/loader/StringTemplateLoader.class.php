@@ -25,26 +25,46 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @subpackage template/loader
+ * @desc This loader is a very simple one. Its input is a string containing the template source.
+ * It doesn't supports caching so it always parses the input source.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 class StringTemplateLoader implements TemplateLoader
 {
 	private $content = '';
 	
+	/**
+	 * @desc Constructs the {@link StringTemplateLoader} from the input source.
+	 * @param string $content The input source
+	 */
 	public function __construct($content)
 	{
 		$this->content = $content;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function load()
 	{
 		$parser = new DefaultTemplateParser();
 		return $parser->parse($this->content);
 	}
-	
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function supports_caching()
 	{
 		return false;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_cache_file_path()
 	{
 		return null;

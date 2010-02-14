@@ -25,11 +25,23 @@
  *
  ###################################################*/
 
+/**
+ * @package io
+ * @package template/loader
+ * @desc This loader is to use when you load a template whose source is directly a PHP string
+ * and not a file. It supports caching and saves cache files in the /cache/tpl directory, using
+ * a md5 hash to distinguish eache string input.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 class CachedStringTemplateLoader implements TemplateLoader
 {
 	private $content = '';
 	private $cache_file_path = '';
 
+	/**
+	 * @desc Constructs a {@link CachedStringTemplateLoader} from the source string.
+	 * @param string $content The template's source as a string.
+	 */
 	public function __construct($content)
 	{
 		$this->content = $content;
@@ -41,6 +53,9 @@ class CachedStringTemplateLoader implements TemplateLoader
 		$this->cache_file_path = PATH_TO_ROOT . '/cache/tpl/string-' . md5($this->content) . '.php';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function load()
 	{
 		if (!$this->file_cache_exists())
@@ -60,12 +75,19 @@ class CachedStringTemplateLoader implements TemplateLoader
 
 	private function generate_cache_file()
 	{
-		$cache_file = new File($this->cache_file_path);
-		$cache_file->lock();
-		$cache_file->write($this->get_parsed_content());
-		$cache_file->unlock();
-		$cache_file->close();
-		$cache_file->change_chmod(0666);
+		try
+		{
+			$cache_file = new File($this->cache_file_path);
+			$cache_file->lock();
+			$cache_file->write($this->get_parsed_content());
+			$cache_file->unlock();
+			$cache_file->close();
+			$cache_file->change_chmod(0666);
+		}
+		catch(IOException $ex)
+		{
+			throw new TemplateLoadingException('The template file cache couldn\'t been written due to this problem: ' . $ex->getMessage());
+		}
 	}
 
 	private function get_parsed_content()
@@ -74,11 +96,17 @@ class CachedStringTemplateLoader implements TemplateLoader
 		return $parser->parse($this->content);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function supports_caching()
 	{
 		return true;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_cache_file_path()
 	{
 		if (!$this->file_cache_exists())
