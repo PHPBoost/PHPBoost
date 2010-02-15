@@ -124,7 +124,7 @@ class HTMLForm
 	 */
 	public function add_fieldset(HTMLFormFieldset $fieldset)
 	{
-		$fieldset->set_form_name($this->form_name);
+		$fieldset->set_form($this);
 		$this->form_fieldsets[] = $fieldset;
 	}
 
@@ -280,7 +280,7 @@ class HTMLForm
 	}
 
 	//Setteurs
-	public function set_form_name($form_name) { $this->form_name = $form_name; }
+	public function set_form($form_name) { $this->form_name = $form_name; }
 	public function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
 	public function set_form_action($form_action) { $this->form_action = $form_action; }
 	public function set_form_class($form_class) { $this->form_class = $form_class; }
