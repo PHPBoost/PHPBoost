@@ -30,7 +30,7 @@
  * @desc
  * @author Régis Viarre <crowkait@phpboost.com>
  */
-class HTMLFormFieldset
+class HTMLFormFieldset implements FormFieldset
 {
 	private $title = '';
 	private $form_name = '';
@@ -46,7 +46,7 @@ class HTMLFormFieldset
 		$this->title = $name;
 	}
 
-	public function set_form_name($form_name)
+	public function set_form(HTMLForm $form_name)
 	{
 		$this->form_name = $form_name;
 	}
@@ -55,7 +55,7 @@ class HTMLFormFieldset
 	 * @desc Store fields in the fieldset.
 	 * @param FormField $form_field
 	 */
-	public function add_field($form_field)
+	public function add_field(FormField $form_field)
 	{
 		if (isset($this->fields[$form_field->get_id()]))
 		{
@@ -125,27 +125,42 @@ class HTMLFormFieldset
 	/**
 	 * @param string $title The fieldset title
 	 */
-	public function set_title($title) { $this->title = $title; }
+	public function set_title($title)
+	{
+		$this->title = $title;
+	}
 
 	/**
 	 * @param boolean $display_required
 	 */
-	public function set_display_required($display_required) { $this->display_required = $display_required; }
+	public function set_display_required($display_required)
+	{
+		$this->display_required = $display_required;
+	}
 
 	/**
 	 * @return string The fieldset title
 	 */
-	public function get_title() { return $this->title; }
+	public function get_title()
+	{
+		return $this->title;
+	}
 
 	/**
 	 * @return bool
 	 */
-	public function has_field($field_id) { return isset($this->fields[$field_id]); }
+	public function has_field($field_id)
+	{
+		return isset($this->fields[$field_id]);
+	}
 
 	/**
 	 * @return FormField
 	 */
-	public function get_field($field_id) { return $this->fields[$field_id]; }
+	public function get_field($field_id)
+	{
+		return $this->fields[$field_id];
+	}
 }
 
 ?>
