@@ -35,7 +35,7 @@
  *	$form = new FormBuilder('test', '');
  *
  *	//####### First fieldset ######//
- *	$fieldset = new FormFieldset('Form Test');
+ *	$fieldset = new HTMLFormFieldset('Form Test');
  *
  *	$fieldset->add_field(new FormFieldTextEditor('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
  *	//Textarea field
@@ -62,7 +62,7 @@
  *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
  *
  *	//####### Second fieldset #######//
- *	$fieldset_up = new FormFieldset('Upload file');
+ *	$fieldset_up = new HTMLFormFieldset('Upload file');
  *	//File field
  *	$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
  *	//Radio button field
@@ -120,9 +120,9 @@ class HTMLForm
 
 	/**
 	 * @desc Add fieldset in the form.
-	 * @param FormFieldset The fieldset object.
+	 * @param HTMLFormFieldset The fieldset object.
 	 */
-	public function add_fieldset(FormFieldset $fieldset)
+	public function add_fieldset(HTMLFormFieldset $fieldset)
 	{
 		$fieldset->set_form_name($this->form_name);
 		$this->form_fieldsets[] = $fieldset;

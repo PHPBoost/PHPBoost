@@ -126,7 +126,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			//Update form
 			$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
-			$fieldset = new FormFieldset($LANG['update_msg']);
+			$fieldset = new HTMLFormFieldset($LANG['update_msg']);
 
 			if ($row['user_id'] == -1) //Visiteur
 			{
@@ -224,7 +224,7 @@ else //Affichage.
 
 	//Post form
 	$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
-	$fieldset = new FormFieldset($LANG['add_msg']);
+	$fieldset = new HTMLFormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur
 	{
 		$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['guest'], array(
