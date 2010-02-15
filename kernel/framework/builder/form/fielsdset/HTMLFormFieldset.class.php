@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldset.class.php
+ *                             HTMLFormFieldset.class.php
  *                            -------------------
  *   begin                : May 01, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,22 +24,20 @@
  *
  ###################################################*/
 
-
-
 /**
+ * @package builder
+ * @subpackage form/fieldset
  * @desc
  * @author Régis Viarre <crowkait@phpboost.com>
- * @package builder
- * @subpackage form
  */
-class FormFieldset
+class HTMLFormFieldset
 {
 	private $title = '';
 	private $form_name = '';
 	private $fields = array();
 	private $validation_error_messages = array();
-	
-	/** 
+
+	/**
 	 * @desc constructor
 	 * @param string $name The name of the fieldset
 	 */
@@ -93,8 +91,8 @@ class FormFieldset
 	{
 		global $LANG;
 
-		$template = new FileTemplate('framework/builder/form/' . __CLASS__ . '.tpl');
-		
+		$template = new FileTemplate('framework/builder/form/FormFieldset.tpl');
+
 		$template->assign_vars(array(
 			'L_FORMTITLE' => $this->title
 		));
@@ -123,7 +121,7 @@ class FormFieldset
 	{
 		return $this->validation_error_messages;
 	}
-	
+
 	/**
 	 * @param string $title The fieldset title
 	 */

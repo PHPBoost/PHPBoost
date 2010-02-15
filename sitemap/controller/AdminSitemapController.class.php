@@ -57,7 +57,7 @@ class AdminSitemapController extends AdminController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());
-		$fieldset = new FormFieldset($this->lang['general_config']);
+		$fieldset = new HTMLFormFieldset($this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED));

@@ -67,7 +67,7 @@ class SandboxFormController extends ModuleController
 		$form = new HTMLForm('sandboxForm');
 
 		// FIELDSET
-		$fieldset = new FormFieldset('Fieldset');
+		$fieldset = new HTMLFormFieldset('Fieldset');
 		$form->add_fieldset($fieldset);
 		
 		// SINGLE LINE TEXT
@@ -142,7 +142,7 @@ class SandboxFormController extends ModuleController
 			)
 		));
 
-		$fieldset2 = new FormFieldset('Fieldset 2');
+		$fieldset2 = new HTMLFormFieldset('Fieldset 2');
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA
