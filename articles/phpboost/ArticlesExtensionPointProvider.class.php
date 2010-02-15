@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              articlesExtensionPointProvider.class.php
+ *                        ArticlesExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : April 9, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -84,45 +84,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			$this->sql_querier->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
-
-	function get_search_request($args = null)
+	
+	public function search()
 	{
-		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $User, $LANG,$ARTICLES_LANG;
-		$Cache->load('articles');
-		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
-
-		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-
-		//Catégories non autorisées.
-		$unauth_cats_sql = array();
-		foreach ($ARTICLES_CAT as $idcat => $key)
-		{
-			if ($ARTICLES_CAT[$idcat]['visible'] == 1)
-			{
-				if (!$User->check_auth($ARTICLES_CAT[$idcat]['auth'], AUTH_ARTICLES_READ))
-				{
-					$clause_level = !empty($g_idcat) ? ($ARTICLES_CAT[$idcat]['order'] == ($ARTICLES_CAT[$g_idcat]['order'] + 1)) : ($ARTICLES_CAT[$idcat]['order'] == 0);
-					if ($clause_level)
-					$unauth_cats_sql[] = $idcat;
-				}
-			}
-		}
-		$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
-
-		$request = "SELECT
-				" . $args['id_search'] . " AS id_search,
-	             a.id AS id_content,
-	             a.title AS title,
-	             ( 2 * FT_SEARCH_RELEVANCE(a.title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(a.contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-	             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
-				FROM " . PREFIX . "articles a
-				LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
-				WHERE
-					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
-					AND (FT_SEARCH(a.title, '" . $args['search'] . "') OR FT_SEARCH(a.contents, '" . $args['search'] . "'))
-				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
-
-	             return $request;
+		return new ArticlesSearchable();
 	}
 	
 	public function feeds()
