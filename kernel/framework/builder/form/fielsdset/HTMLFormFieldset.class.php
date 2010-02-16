@@ -43,7 +43,6 @@ class HTMLFormFieldset extends AbstractFormFieldset
 		$this->title = $name;
 	}
 
-
 	/**
 	 * @desc Return the form
 	 * @param Template $Template Optionnal template
@@ -82,7 +81,6 @@ class HTMLFormFieldset extends AbstractFormFieldset
 	{
 		return $this->title;
 	}
-
 }
 
 ?>

@@ -48,7 +48,8 @@ class SandboxFormController extends ModuleController
 					'SELECT' => $form->get_value('select')->get_label(),
 					'HIDDEN' => $form->get_value('hidden'),
 					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
-					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT)					 
+					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT),
+					'H_T_TEXT_FIELD' => $form->get_value('alone')			 
 				));
 
 				$file = $form->get_value('file');

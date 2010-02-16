@@ -24,6 +24,8 @@
 	<strong>DATE_TIME :</strong> {DATE_TIME}
 	<br />
 	<strong>FILE :</strong> {FILE}
+	<br />
+	<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
 # ENDIF #
 
 # INCLUDE form #

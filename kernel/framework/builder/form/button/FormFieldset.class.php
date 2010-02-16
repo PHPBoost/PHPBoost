@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          FormFieldset.class.php
+ *                          FormButton.class.php
  *                            -------------------
- *   begin                : February 15, 2010
+ *   begin                : February 16, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -26,43 +26,18 @@
 
 /**
  * @package builder
- * @subpackage form/fieldset
+ * @subpackage form/button
  * @desc
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-interface FormFieldset
+interface FormButton
 {
 	/**
-	 * @desc Adds a list in the container
-	 * @param FormField $form_field The field to add
-	 */
-	function add_field(FormField $form_field);
-
-	function validate();
-
-	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
+	 * @return Template
 	 */
 	function display();
-
-	function get_onsubmit_validations();
-
-	function get_validation_error_messages();
-
-
-	/**
-	 * @return bool
-	 */
-	function has_field($field_id);
-
-	/**
-	 * @return FormField
-	 */
-	function get_field($field_id);
 	
-	function get_fields();
+	function get_onsubmit_action();
 }
 
 ?>
