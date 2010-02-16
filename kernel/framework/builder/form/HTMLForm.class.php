@@ -86,35 +86,39 @@ class HTMLForm
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
 
-	const SMALL_FORM_CLASS = 'fieldset_mini';
-	const NORMAL_FORM_CLASS = 'fieldset_content';
-	
+	const SMALL_css_class = 'fieldset_mini';
+	const NORMAL_css_class = 'fieldset_content';
+
 	private $constraints = array();
-	private $form_fieldsets = array(); //Fieldsets stored
-	private $form_name = '';
+	private $fieldsets = array(); //Fieldsets stored
+	private $html_id = '';
 	private $form_submit = '';
-	private $form_action = '';
-	private $form_class = self::NORMAL_FORM_CLASS;
+	private $target = '';
+	private $css_class = self::NORMAL_css_class;
+	// TODO remove
 	private $display_preview = false; //Field identifier of textarea for preview.
+	// TODO remove
 	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
+	// TODO remove
 	private $display_reset = true;
 	private $validation_error_messages = array();
+	// TODO remove
 	private $personal_submit_function = '';
 
 	private static $js_already_included = false;
 
 	/**
 	 * @desc constructor
-	 * @param string $form_name The name of the form.
+	 * @param string $html_id The name of the form.
 	 * @param string $form_title The tite displayed for the form.
-	 * @param string $form_action The url where the form sends data.
+	 * @param string $target The url where the form sends data.
 	 */
-	public function __construct($form_name, $form_action = '')
+	public function __construct($html_id, $target = '')
 	{
 		global $LANG;
 
-		$this->form_name = $form_name;
-		$this->form_action = $form_action;
+		$this->set_html_id($html_id);
+		$this->set_target($target);
 		$this->form_submit = $LANG['submit'];
 	}
 
@@ -124,19 +128,19 @@ class HTMLForm
 	 */
 	public function add_fieldset(FormFieldset $fieldset)
 	{
-		$this->form_fieldsets[] = $fieldset;
+		$this->fieldsets[] = $fieldset;
 	}
 
 	public function set_personal_submit_function($personal_submit_function)
 	{
 		$this->personal_submit_function = $personal_submit_function;
 	}
-	
+
 	public function validate()
 	{
 		$validation_result = true;
 
-		foreach ($this->form_fieldsets as $fieldset)
+		foreach ($this->fieldsets as $fieldset)
 		{
 			if (!$fieldset->validate())
 			{
@@ -185,7 +189,7 @@ class HTMLForm
 	 */
 	private function get_field_by_id($field_id)
 	{
-		foreach ($this->form_fieldsets as $fieldset)
+		foreach ($this->fieldsets as $fieldset)
 		{
 			if ($fieldset->has_field($field_id))
 			{
@@ -193,7 +197,7 @@ class HTMLForm
 			}
 		}
 		throw new FormBuilderException('The field "' . $field_id .
-			'" doesn\'t exists in the "' . $this->form_name . '" form');
+			'" doesn\'t exists in the "' . $this->html_id . '" form');
 	}
 
 	/**
@@ -204,7 +208,7 @@ class HTMLForm
 	public function display()
 	{
 		global $LANG;
-		
+
 		$template = new FileTemplate('framework/builder/form/Form.tpl');
 
 		$template->assign_vars(array(
@@ -213,9 +217,9 @@ class HTMLForm
 			'C_DISPLAY_RESET' => $this->display_reset, 
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
-			'FORMCLASS' => $this->form_class,
-			'U_FORMACTION' => $this->form_action,
-			'L_FORMNAME' => $this->form_name,
+			'FORMCLASS' => $this->css_class,
+			'U_FORMACTION' => $this->target,
+			'L_FORMNAME' => $this->html_id,
 			'L_FIELD_CONTENT_PREVIEW' => $this->field_identifier_preview,
 			'L_SUBMIT' => $this->form_submit,
 			'L_PREVIEW' => $LANG['preview'],
@@ -232,10 +236,10 @@ class HTMLForm
 				'ERROR_MESSAGE' => $error_message
 			));
 		}
-		
+
 		self::$js_already_included = true;
 
-		foreach ($this->form_fieldsets as $fieldset)
+		foreach ($this->fieldsets as $fieldset)
 		{
 			$template->assign_block_vars('fieldsets', array(), array(
 				'FIELDSET' => $fieldset->display()
@@ -263,7 +267,7 @@ class HTMLForm
 	public function display_preview_button($field_identifier_preview)
 	{
 		$this->display_preview = true;
-		$this->field_identifier_preview = $this->form_name . $field_identifier_preview;
+		$this->field_identifier_preview = $this->html_id . $field_identifier_preview;
 	}
 
 	/**
@@ -275,24 +279,38 @@ class HTMLForm
 		$this->display_reset = $value;
 	}
 
-	//Setteurs
-	public function set_form($form_name) { $this->form_name = $form_name; }
+	public function set_html_id($html_id)
+	{
+		$this->html_id = $html_id;
+	}
+	// TODO refactor
 	public function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
-	public function set_form_action($form_action) { $this->form_action = $form_action; }
-	public function set_form_class($form_class) { $this->form_class = $form_class; }
 
-	//Getteurs
-	public function get_form_name() { return $this->form_name; }
-	public function get_form_submit() { return $this->form_submit; }
-	public function get_form_action() { return $this->form_action; }
-	public function get_form_class() { return $this->form_class; }
-	
+	public function set_target($target)
+	{
+		$this->target = $target;
+	}
+
+	public function set_css_class($css_class)
+	{
+		$this->css_class = $css_class;
+	}
+
 	private function has_required_fields()
 	{
-		// TODO implement this by browsing all the fields and checking if at least one of them is required
-		return true;
+		foreach ($this->fieldsets as $fieldset)
+		{
+			foreach($fieldset->get_fields() as $field)
+			{
+				if ($field->is_required())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
-	
+
 	// TODO add automatic CSRF protection
 }
 
