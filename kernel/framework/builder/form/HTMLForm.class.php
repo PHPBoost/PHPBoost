@@ -120,11 +120,10 @@ class HTMLForm
 
 	/**
 	 * @desc Add fieldset in the form.
-	 * @param HTMLFormFieldset The fieldset object.
+	 * @param FormFieldset The fieldset object.
 	 */
-	public function add_fieldset(HTMLFormFieldset $fieldset)
+	public function add_fieldset(FormFieldset $fieldset)
 	{
-		$fieldset->set_form($this);
 		$this->form_fieldsets[] = $fieldset;
 	}
 
@@ -202,15 +201,12 @@ class HTMLForm
 	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
-	public function export($template = false)
+	public function display()
 	{
 		global $LANG;
+		
+		$template = new FileTemplate('framework/builder/form/Form.tpl');
 
-		if (!is_object($template) || !($template instanceof Template))
-		{
-			$template = new FileTemplate('framework/builder/form/Form.tpl');
-		}
-			
 		$template->assign_vars(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
@@ -241,7 +237,7 @@ class HTMLForm
 
 		foreach ($this->form_fieldsets as $fieldset)
 		{
-			$template->assign_block_vars('fieldsets', array(
+			$template->assign_block_vars('fieldsets', array(), array(
 				'FIELDSET' => $fieldset->display()
 			));
 

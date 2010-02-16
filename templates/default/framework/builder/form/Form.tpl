@@ -12,7 +12,7 @@
 	# ENDIF #
 	
 	# START fieldsets #
-		{fieldsets.FIELDSET}
+		# INCLUDE fieldsets.FIELDSET #
 	# END fieldsets #
 	
 	<fieldset class="fieldset_submit">

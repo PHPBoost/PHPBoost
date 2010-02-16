@@ -146,7 +146,7 @@ class HTMLTable extends HTMLElement
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			$form->set_personal_submit_function($submit_function);
-			$this->tpl->add_subtemplate('filters', $form->export());
+			$this->tpl->add_subtemplate('filters', $form->display());
 			$this->tpl->assign_vars(array(
 				'SUBMIT_FUNCTION' => $submit_function,
 				'SUBMIT_URL' => $this->get_js_submit_url()
@@ -253,7 +253,7 @@ class HTMLTable extends HTMLElement
 		$nb_pages =  ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
-		$this->tpl->add_subtemplate('pagination', $pagination->export());
+		$this->tpl->add_subtemplate('pagination', $pagination->display());
 	}
 }
 

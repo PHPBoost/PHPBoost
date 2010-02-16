@@ -6,6 +6,6 @@
 		<legend>{L_FORMTITLE}</legend>
 			 	
 		# START fields #
-			{fields.FIELD}
+			# INCLUDE fields.FIELD #
 		# END fields #
 	</fieldset>
