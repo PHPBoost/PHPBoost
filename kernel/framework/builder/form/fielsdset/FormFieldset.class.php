@@ -32,8 +32,6 @@
  */
 interface FormFieldset
 {
-	function set_form(HTMLForm  $form_name);
-
 	/**
 	 * @desc Adds a list in the container
 	 * @param FormField $form_field The field to add
@@ -53,21 +51,6 @@ interface FormFieldset
 
 	function get_validation_error_messages();
 
-	/**
-	 * @param string $title The fieldset title
-	 */
-	function set_title($title);
-
-	/**
-	 * @param boolean $display_required
-	 */
-	function set_display_required($display_required);
-	
-
-	/**
-	 * @return string The fieldset title
-	 */
-	function get_title();
 
 	/**
 	 * @return bool

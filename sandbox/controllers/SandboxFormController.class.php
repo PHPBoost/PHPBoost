@@ -58,7 +58,7 @@ class SandboxFormController extends ModuleController
 				}
 			}
 		}
-		$view->add_subtemplate('form', $form->export());
+		$view->add_subtemplate('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 
@@ -162,6 +162,10 @@ class SandboxFormController extends ModuleController
 
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+		
+		$hidden_fieldset = new NoDisplayFormFieldset();
+		$form->add_fieldset($hidden_fieldset);
+		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		
 		// FORM CONSTRAINTS
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
