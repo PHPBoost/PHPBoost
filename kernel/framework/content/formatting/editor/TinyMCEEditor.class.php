@@ -33,6 +33,8 @@
  */
 class TinyMCEEditor extends ContentEditor
 {
+	private static $js_included = false;
+	
     function TinyMCEEditor()
     {
         parent::ContentEditor();
@@ -56,6 +58,7 @@ class TinyMCEEditor extends ContentEditor
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
+        	'C_NOT_JS_INCLUDED' => self::$js_included,
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
@@ -64,6 +67,8 @@ class TinyMCEEditor extends ContentEditor
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_UPLOAD' => $LANG['bb_upload']
         ));
+        
+        self::$js_included = true;
 
         list($theme_advanced_buttons1, $theme_advanced_buttons2, $theme_advanced_buttons3) = array('', '', '');
         foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
