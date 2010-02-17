@@ -176,13 +176,17 @@ class SandboxFormController extends ModuleController
 
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
-		
+
+		// VERTICAL FIELDSET
 		$hidden_fieldset = new FormFieldsetVertical();
 		$form->add_fieldset($hidden_fieldset);
 		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		
-		// FORM CONSTRAINTS
-		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
+		// HORIZONTAL FIELDSET
+		$vertical_fieldset = new FormFieldsetHorizontal();
+		$form->add_fieldset($vertical_fieldset);
+		$vertical_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
+		$vertical_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
 		
 		// BUTTONS
 		$form->add_button(new FormButtonReset());
@@ -190,6 +194,9 @@ class SandboxFormController extends ModuleController
 		$form->add_button($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+
+		// FORM CONSTRAINTS
+		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
 		
 		return $form;
 	}

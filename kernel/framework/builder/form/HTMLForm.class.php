@@ -285,8 +285,5 @@ class HTMLForm
 	{
 		$this->buttons[] = $button;
 	}
-
-	// TODO add automatic CSRF protection
 }
-
 ?>
