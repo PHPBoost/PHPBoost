@@ -302,6 +302,24 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
     font-size:80%;
 }
 
+/* Fieldsets */
+div.horizontal_fieldset, div.vertical_fieldset {
+	margin:20px 0;
+}
+	
+div.horizontal_fieldset dl {
+	float:left;
+	margin:0 5px;
+}
+
+div.horizontal_fieldset dl dd, div.vertical_fieldset dl dd {
+	float:left;
+	margin:0 3px;
+}
+
+div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label {
+	font-weight:bold;
+}
 
 /* Lightbox*/
 #lightbox{	position:absolute;	left:0; width:100%; z-index:100; text-align:center; line-height:0;}
