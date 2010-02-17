@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                     FormFieldsetNoDisplay.class.php
+ *                       FormFieldsetVertical.class.php
  *                            -------------------
  *   begin                : February 16, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -30,7 +30,7 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormFieldsetNoDisplay extends AbstractFormFieldset
+class FormFieldsetVertical extends AbstractFormFieldset
 {
 	private static $tpl_src = '# START fields #	 # INCLUDE fields.FIELD # # END fields #';
 	
@@ -41,12 +41,8 @@ class FormFieldsetNoDisplay extends AbstractFormFieldset
 	{
 		$template = new StringTemplate(self::$tpl_src);
 
-		foreach($this->fields as $field)
-		{
-			$template->assign_block_vars('fields', array(), array(
-				'FIELD' => $field->display(),
-			));
-		}
+		$this->assign_template_fields($template);
+		
 		return $template;
 	}
 }

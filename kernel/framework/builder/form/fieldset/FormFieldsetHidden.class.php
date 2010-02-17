@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                       FormFieldsetHTML.class.php
+ *                         FormFieldsetHidden.class.php
  *                            -------------------
- *   begin                : May 01, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : February 16, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -28,54 +28,22 @@
  * @package builder
  * @subpackage form/fieldset
  * @desc
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormFieldsetHTML extends AbstractFormFieldset
+class FormFieldsetHidden extends AbstractFormFieldset
 {
-	private $title = '';
-
+	private static $tpl_src = '<div style="display:none;"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
+	
 	/**
-	 * @desc constructor
-	 * @param string $name The name of the fieldset
-	 */
-	public function __construct($name)
-	{
-		$this->title = $name;
-	}
-
-	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
+	 * @return Template
 	 */
 	public function display()
 	{
-		$template = new FileTemplate('framework/builder/form/FormFieldset.tpl');
-
-		$template->assign_vars(array(
-			'L_FORMTITLE' => $this->title
-		));
+		$template = new StringTemplate(self::$tpl_src);
 
 		$this->assign_template_fields($template);
 		
 		return $template;
 	}
-
-	/**
-	 * @param string $title The fieldset title
-	 */
-	public function set_title($title)
-	{
-		$this->title = $title;
-	}
-
-	/**
-	 * @return string The fieldset title
-	 */
-	public function get_title()
-	{
-		return $this->title;
-	}
 }
-
 ?>
