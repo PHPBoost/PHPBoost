@@ -363,7 +363,7 @@ else
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new BBCodeParserFactory();
+$content_editor = new BBCodeFormattingFactory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	

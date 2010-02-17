@@ -66,9 +66,9 @@ class ContentFormattingMetaFactory
 		switch (self::get_existing_editor($language))
 		{
 			case self::BBCODE_LANGUAGE:
-				return new BBCodeParserFactory();
+				return new BBCodeFormattingFactory();
 			case self::TINYMCE_LANGUAGE:
-				return new TinyMCEParserFactory();
+				return new TinyMCEFormattingFactory();
 			default:
 				return self::create_factory(self::get_user_language());
 		}
