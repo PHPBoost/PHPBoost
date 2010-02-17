@@ -95,10 +95,20 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		return $this->fields[$field_id];
 	}
-	
+
 	public function get_fields()
 	{
 		return $this->fields;
+	}
+
+	protected function assign_template_fields(Template $template)
+	{
+		foreach($this->fields as $field)
+		{
+			$template->assign_block_vars('fields', array(), array(
+				'FIELD' => $field->display(),
+			));
+		}
 	}
 }
 

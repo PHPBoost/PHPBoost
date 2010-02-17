@@ -177,7 +177,7 @@ class SandboxFormController extends ModuleController
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
-		$hidden_fieldset = new FormFieldsetNoDisplay();
+		$hidden_fieldset = new FormFieldsetVertical();
 		$form->add_fieldset($hidden_fieldset);
 		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		

@@ -109,8 +109,17 @@ class HTMLForm
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
+		$this->add_csrf_protection();
 	}
 
+	private function add_csrf_protection()
+	{
+		$csrf_protection_field = new FormFieldCSRFToken();
+		$csrf_protection_fieldset = new FormFieldsetHidden();
+		$csrf_protection_fieldset->add_field($csrf_protection_field);
+		$this->add_fieldset($csrf_protection_fieldset);
+	}
+	
 	/**
 	 * @desc Add fieldset in the form.
 	 * @param FormFieldset The fieldset object.
@@ -199,7 +208,7 @@ class HTMLForm
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->css_class,
-			'U_FORMACTION' => $this->target,
+			'TARGET' => $this->target,
 			'L_FORMNAME' => $this->html_id,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages)

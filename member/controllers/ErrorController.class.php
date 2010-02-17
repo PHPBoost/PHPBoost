@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class ErrorController extends AbstractController
 {
 	private $level = E_UNKNOWN;
@@ -43,7 +41,7 @@ class ErrorController extends AbstractController
 	private $lang;
 
 	/**
-	 * @var View
+	 * @var Template
 	 */
 	private $view;
 
@@ -110,7 +108,7 @@ class ErrorController extends AbstractController
 		$this->set_response(new SiteDisplayResponse($this->view));
 	}
 	/**
-	 * @return View
+	 * @return Template
 	 */
 	protected function get_view()
 	{

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       FormFieldsetHTML.class.php
+ *                        FormFieldCSRFToken.class.php
  *                            -------------------
- *   begin                : May 01, 2009
+ *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -25,56 +25,16 @@
  ###################################################*/
 
 /**
- * @package builder
- * @subpackage form/fieldset
- * @desc
  * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class manage hidden input fields.
+ * @package builder
+ * @subpackage form
  */
-class FormFieldsetHTML extends AbstractFormFieldset
+class FormFieldCSRFToken extends FormFieldHidden
 {
-	private $title = '';
-
-	/**
-	 * @desc constructor
-	 * @param string $name The name of the fieldset
-	 */
-	public function __construct($name)
+	public function __construct()
 	{
-		$this->title = $name;
-	}
-
-	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
-	 */
-	public function display()
-	{
-		$template = new FileTemplate('framework/builder/form/FormFieldset.tpl');
-
-		$template->assign_vars(array(
-			'L_FORMTITLE' => $this->title
-		));
-
-		$this->assign_template_fields($template);
-		
-		return $template;
-	}
-
-	/**
-	 * @param string $title The fieldset title
-	 */
-	public function set_title($title)
-	{
-		$this->title = $title;
-	}
-
-	/**
-	 * @return string The fieldset title
-	 */
-	public function get_title()
-	{
-		return $this->title;
+		parent::__construct('token', AppContext::get_session()->get_token());
 	}
 }
 

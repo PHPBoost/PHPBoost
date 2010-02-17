@@ -725,6 +725,7 @@ class Session
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
+		// TODO remove ErrorH
 		$Errorh->handler(StringVars::replace_vars('CRSF Attack detected' . "\n" .
         'token received: :bad_token' . "\n" .
         'token expected: :good_token' . "\n",
