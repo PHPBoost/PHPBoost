@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        FormButtonSubmit.class.php
+ *                     FormButtonDefaultSubmit.class.php
  *                            -------------------
  *   begin                : February 16, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -30,53 +30,15 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormButtonSubmit implements FormButton
+class FormButtonDefaultSubmit extends FormButtonSubmit
 {
-	private $name = 'submit';
-	private $label = '';
-	
-	public function __construct($label, $name)
-	{
-		$this->label = $label;
-		$this->name = $name;
-	}
+	private static $button_name = 'submit';
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
+	public function __construct()
 	{
 		global $LANG;
-
-		$template = new StringTemplate('<input type="submit" name="{BUTTON_NAME}" value="{L_SUBMIT}" class="submit" />');
-
-		$template->assign_vars(array(
-			'L_SUBMIT' => $this->label,
-			'BUTTON_NAME' => $this->name
-		));
-
-		return $template;
-	}
-
-	public function has_been_submited()
-	{
-		$request = AppContext::get_request();
-
-		$button_attribute = $request->get_string($this->name, '');
-		if (!empty($button_attribute))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public function get_onsubmit_action()
-	{
-
+		
+		parent::__construct($LANG['submit'], self::$button_name);
 	}
 }
-
 ?>

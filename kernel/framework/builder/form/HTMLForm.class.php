@@ -86,26 +86,18 @@ class HTMLForm
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
 
-	const SMALL_css_class = 'fieldset_mini';
-	const NORMAL_css_class = 'fieldset_content';
+	const SMALL_CSS_CLASS = 'fieldset_mini';
+	const NORMAL_CSS_CLASS = 'fieldset_content';
 
 	private $constraints = array();
-	private $fieldsets = array(); //Fieldsets stored
+	private $fieldsets = array();
+	private $buttons = array();
 	private $html_id = '';
-	private $form_submit = '';
 	private $target = '';
-	private $css_class = self::NORMAL_css_class;
-	// TODO remove
-	private $display_preview = false; //Field identifier of textarea for preview.
-	// TODO remove
-	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
-	// TODO remove
-	private $display_reset = true;
-	private $validation_error_messages = array();
-	// TODO remove
-	private $personal_submit_function = '';
-
+	private $css_class = self::NORMAL_CSS_CLASS;
 	private static $js_already_included = false;
+
+	private $validation_error_messages = array();
 
 	/**
 	 * @desc constructor
@@ -115,11 +107,8 @@ class HTMLForm
 	 */
 	public function __construct($html_id, $target = '')
 	{
-		global $LANG;
-
 		$this->set_html_id($html_id);
 		$this->set_target($target);
-		$this->form_submit = $LANG['submit'];
 	}
 
 	/**
@@ -129,11 +118,6 @@ class HTMLForm
 	public function add_fieldset(FormFieldset $fieldset)
 	{
 		$this->fieldsets[] = $fieldset;
-	}
-
-	public function set_personal_submit_function($personal_submit_function)
-	{
-		$this->personal_submit_function = $personal_submit_function;
 	}
 
 	public function validate()
@@ -213,21 +197,14 @@ class HTMLForm
 
 		$template->assign_vars(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
-			'C_DISPLAY_PREVIEW' => $this->display_preview,
-			'C_DISPLAY_RESET' => $this->display_reset, 
+			// TODO can be removed?
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->css_class,
 			'U_FORMACTION' => $this->target,
 			'L_FORMNAME' => $this->html_id,
-			'L_FIELD_CONTENT_PREVIEW' => $this->field_identifier_preview,
-			'L_SUBMIT' => $this->form_submit,
-			'L_PREVIEW' => $LANG['preview'],
-			'L_RESET' => $LANG['reset'],
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
-			'C_PERSONAL_SUBMIT' => !empty($this->personal_submit_function),
-			'PERSONAL_SUBMIT' => $this->personal_submit_function
+			'C_VALIDATION_ERROR' => count($this->validation_error_messages)
 		));
 
 		foreach ($this->validation_error_messages as $error_message)
@@ -257,34 +234,20 @@ class HTMLForm
 			}
 		}
 
+		foreach ($this->buttons as $button)
+		{
+			$template->assign_block_vars('buttons', array(), array(
+				'BUTTON' => $button->display() 
+			));
+		}
+
 		return $template;
-	}
-
-	/**
-	 * @desc Display a preview button for the specified field.
-	 * @param string $fieldset_title The fieldset title
-	 */
-	public function display_preview_button($field_identifier_preview)
-	{
-		$this->display_preview = true;
-		$this->field_identifier_preview = $this->html_id . $field_identifier_preview;
-	}
-
-	/**
-	 * @desc Display a reset button for the form.
-	 * @param boolean $value True to display, false to hide.
-	 */
-	public function display_reset($value)
-	{
-		$this->display_reset = $value;
 	}
 
 	public function set_html_id($html_id)
 	{
 		$this->html_id = $html_id;
 	}
-	// TODO refactor
-	public function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
 
 	public function set_target($target)
 	{
@@ -309,6 +272,11 @@ class HTMLForm
 			}
 		}
 		return false;
+	}
+
+	public function add_button(FormButton $button)
+	{
+		$this->buttons[] = $button;
 	}
 
 	// TODO add automatic CSRF protection
