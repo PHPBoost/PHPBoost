@@ -1,3 +1,7 @@
+# IF C_PREVIEW #
+<div class="notice">Prévisualisation</div>
+# ENDIF #
+
 # IF C_RESULT #
 	<strong>TEXT :</strong> {TEXT}
 	<br />

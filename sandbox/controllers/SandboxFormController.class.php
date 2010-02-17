@@ -27,11 +27,20 @@
 
 class SandboxFormController extends ModuleController
 {
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $preview_button;
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
+	
 	public function execute(HTTPRequest $request)
 	{
 		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$form = $this->build_form();
-		if ($request->is_post_method())
+		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
 			if ($form->validate())
 			{
@@ -49,7 +58,8 @@ class SandboxFormController extends ModuleController
 					'HIDDEN' => $form->get_value('hidden'),
 					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
 					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT),
-					'H_T_TEXT_FIELD' => $form->get_value('alone')			 
+					'H_T_TEXT_FIELD' => $form->get_value('alone'),
+					'C_PREVIEW' => $this->preview_button->has_been_submited()		 
 				));
 
 				$file = $form->get_value('file');
@@ -170,6 +180,13 @@ class SandboxFormController extends ModuleController
 		
 		// FORM CONSTRAINTS
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
+		
+		// BUTTONS
+		$form->add_button(new FormButtonReset());
+		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview');
+		$form->add_button($this->preview_button);
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
 		
 		return $form;
 	}
