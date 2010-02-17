@@ -83,7 +83,8 @@ if ($update) //Mise à jour du module
 		//Tri du tableau par odre des mises à jour.
 		uksort($filesupdate, 'version_compare');
 		
-		//Execution des fichiers de mise à jour.	
+		//Execution des fichiers de mise à jour.
+		$_GET['filesupdate_errors'] = false;
 		foreach ($filesupdate as $key => $module_update_name)
 		{	
 			if (strpos($module_update_name, '.php') !== false) //Parsage fichier php.
@@ -107,7 +108,9 @@ if ($update) //Mise à jour du module
 		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		
-		redirect(HOST . SCRIPT . '?s=1');	
+		if (empty($_GET['filesupdate_errors']))
+			redirect(HOST . SCRIPT . '?s=1');	
+		unset($_GET['filesupdate_errors']);
 	}
 	else
 		redirect(HOST . SCRIPT . '?error=incomplete#errorh');
