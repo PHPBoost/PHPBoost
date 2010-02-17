@@ -304,17 +304,26 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 
 /* Fieldsets */
 div.horizontal_fieldset, div.vertical_fieldset {
-	margin:20px 0;
+	margin:20px 5px;
 }
-	
+
+div.vertical_fieldset dl {
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
 div.horizontal_fieldset dl {
 	float:left;
 	margin:0 5px;
 }
 
-div.horizontal_fieldset dl dd, div.vertical_fieldset dl dd {
+div.vertical_fieldset dl dd {
+	margin:0 5px;
+}
+
+div.horizontal_fieldset dl dd{
 	float:left;
-	margin:0 3px;
+	margin:0 5px;
 }
 
 div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label {

@@ -181,6 +181,7 @@ class SandboxFormController extends ModuleController
 		$hidden_fieldset = new FormFieldsetVertical();
 		$form->add_fieldset($hidden_fieldset);
 		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
+		$hidden_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
 		
 		// HORIZONTAL FIELDSET
 		$vertical_fieldset = new FormFieldsetHorizontal();
@@ -190,7 +191,7 @@ class SandboxFormController extends ModuleController
 		
 		// BUTTONS
 		$form->add_button(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview');
+		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
 		$form->add_button($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

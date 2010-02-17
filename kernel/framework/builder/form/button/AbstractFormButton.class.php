@@ -58,7 +58,7 @@ class AbstractFormButton implements FormButton
 			'L_SUBMIT' => $this->label,
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
-			'ONCLICK_ACTION' => $this->onclick_action
+			'ONCLICK_ACTION' => htmlspecialchars($this->onclick_action)
 		));
 
 		return $template;
