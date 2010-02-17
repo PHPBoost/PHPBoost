@@ -355,7 +355,7 @@ class CategoriesManager
 			
 		if ($category_id > 0 && array_key_exists($category_id, $this->cache_var))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
 
 			//Regeneration of the cache file
 			if ($generate_cache)
