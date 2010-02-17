@@ -30,10 +30,6 @@
 <!--
 	function check_generated_form_{L_FORMNAME}()
 	{
-		# IF C_BBCODE_TINYMCE_MODE #
-		tinyMCE.triggerSave();
-		# ENDIF #
-
 		var return_value = true;
 		var constraints = Array();
 		# START check_constraints #

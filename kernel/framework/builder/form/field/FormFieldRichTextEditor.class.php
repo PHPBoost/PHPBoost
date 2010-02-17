@@ -163,6 +163,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 					if ($value instanceof ContentFormattingFactory)
 					{
 						$this->formatter = $value;
+						unset($field_options['formatter']);
 					}
 					else
 					{

@@ -197,8 +197,6 @@ class HTMLForm
 
 		$template->assign_vars(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
-			// TODO can be removed?
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->css_class,
 			'U_FORMACTION' => $this->target,
