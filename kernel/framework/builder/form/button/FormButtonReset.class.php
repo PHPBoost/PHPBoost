@@ -47,11 +47,6 @@ class FormButtonReset implements FormButton
 
 		return $template;
 	}
-
-	public function get_onsubmit_action()
-	{
-
-	}
 }
 
 ?>

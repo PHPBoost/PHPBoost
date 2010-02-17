@@ -30,39 +30,17 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormButtonSubmit implements FormButton
+class FormButtonSubmit extends AbstractFormButton
 {
-	private $name = 'submit';
-	private $label = '';
-	
-	public function __construct($label, $name)
+	public function __construct($label, $name, $onclick_action = '')
 	{
-		$this->label = $label;
-		$this->name = $name;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
-	{
-		global $LANG;
-
-		$template = new StringTemplate('<input type="submit" name="{BUTTON_NAME}" value="{L_SUBMIT}" class="submit" />');
-
-		$template->assign_vars(array(
-			'L_SUBMIT' => $this->label,
-			'BUTTON_NAME' => $this->name
-		));
-
-		return $template;
+		parent::__construct('submit', $label, $name, $onclick_action);
 	}
 
 	public function has_been_submited()
 	{
 		$request = AppContext::get_request();
-
-		$button_attribute = $request->get_string($this->name, '');
+		$button_attribute = $request->get_string($this->get_name(), '');
 		if (!empty($button_attribute))
 		{
 			return true;
@@ -71,11 +49,6 @@ class FormButtonSubmit implements FormButton
 		{
 			return false;
 		}
-	}
-
-	public function get_onsubmit_action()
-	{
-
 	}
 }
 

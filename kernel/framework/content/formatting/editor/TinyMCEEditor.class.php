@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class provides an interface editor for contents.
