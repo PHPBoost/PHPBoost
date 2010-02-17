@@ -51,7 +51,9 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		$this->formatter = ContentFormattingMetaFactory::get_default_factory();
-		parent::__construct($id, $label, $value, $field_options, $constraints);
+		parent::__construct($id, $label, '', $field_options, $constraints);
+
+		$this->set_value($value);
 	}
 
 	/**
@@ -100,7 +102,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$parser->parse();
 		return $parser->get_content();
 	}
-	
+
 	private function get_raw_value()
 	{
 		return parent::get_value();
@@ -113,7 +115,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	{
 		$this->set_raw_value($this->unparse_value($value));
 	}
-	
+
 	private function set_raw_value($value)
 	{
 		parent::set_value($value);
@@ -130,7 +132,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	public function get_onblur_validations()
 	{
 		// This is a patch for TinyMCE, it shouldn't be there but it's difficult not to process it here
-		if ($this->formatter instanceof TinyMCEParserFactory)
+		if ($this->formatter instanceof TinyMCEFormattingFactory)
 		{
 			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_validations();
 		}

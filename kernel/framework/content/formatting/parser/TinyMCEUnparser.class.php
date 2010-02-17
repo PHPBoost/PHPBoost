@@ -52,8 +52,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
-		//The URL must be absolutes otherwise TinyMCE won't be able to display  images for instance.
-
+		//The URL must be absolute otherwise TinyMCE won't be able to display  images for instance.
 		$this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
 
 		//Extracting HTML and code tags
