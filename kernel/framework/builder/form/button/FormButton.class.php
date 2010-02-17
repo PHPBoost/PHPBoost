@@ -36,8 +36,6 @@ interface FormButton
 	 * @return Template
 	 */
 	function display();
-	
-	function get_onsubmit_action();
 }
 
 ?>
