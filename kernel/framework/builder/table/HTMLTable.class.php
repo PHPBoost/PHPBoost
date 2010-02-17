@@ -134,7 +134,7 @@ class HTMLTable extends HTMLElement
 		if ($has_filters)
 		{
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
-			$fieldset = new HTMLFormFieldset(LangLoader::get_class_message('filters', __CLASS__));
+			$fieldset = new FormFieldsetHTML(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters_form as $filter_form)
 			{
 				$fieldset->add_field($filter_form->get_form_field());

@@ -102,7 +102,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			//Update form
 			
 			$form = new FormBuilder('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
-			$fieldset = new HTMLFormFieldset($LANG['update_msg']);
+			$fieldset = new FormFieldsetHTML($LANG['update_msg']);
 			
 			if ($row['user_id'] == -1) //Visiteur
 			{
@@ -199,7 +199,7 @@ else //Affichage.
 	//Post form
 	
 	$form = new FormBuilder('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
-	$fieldset = new HTMLFormFieldset($LANG['add_msg']);
+	$fieldset = new FormFieldsetHTML($LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
 		$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['guest'], array(
