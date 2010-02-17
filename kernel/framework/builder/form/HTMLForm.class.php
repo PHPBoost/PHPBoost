@@ -35,7 +35,7 @@
  *	$form = new FormBuilder('test', '');
  *
  *	//####### First fieldset ######//
- *	$fieldset = new HTMLFormFieldset('Form Test');
+ *	$fieldset = new FormFieldsetHTML('Form Test');
  *
  *	$fieldset->add_field(new FormFieldTextEditor('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
  *	//Textarea field
@@ -62,7 +62,7 @@
  *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
  *
  *	//####### Second fieldset #######//
- *	$fieldset_up = new HTMLFormFieldset('Upload file');
+ *	$fieldset_up = new FormFieldsetHTML('Upload file');
  *	//File field
  *	$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
  *	//Radio button field

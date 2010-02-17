@@ -78,7 +78,7 @@ class SandboxFormController extends ModuleController
 		$form = new HTMLForm('sandboxForm');
 
 		// FIELDSET
-		$fieldset = new HTMLFormFieldset('Fieldset');
+		$fieldset = new FormFieldsetHTML('Fieldset');
 		$form->add_fieldset($fieldset);
 		
 		// SINGLE LINE TEXT
@@ -153,7 +153,7 @@ class SandboxFormController extends ModuleController
 			)
 		));
 
-		$fieldset2 = new HTMLFormFieldset('Fieldset 2');
+		$fieldset2 = new FormFieldsetHTML('Fieldset 2');
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA
@@ -174,7 +174,7 @@ class SandboxFormController extends ModuleController
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
-		$hidden_fieldset = new NoDisplayFormFieldset();
+		$hidden_fieldset = new FormFieldsetNoDisplay();
 		$form->add_fieldset($hidden_fieldset);
 		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		
