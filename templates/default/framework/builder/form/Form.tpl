@@ -6,7 +6,7 @@
 </div>
 # ENDIF #
 
-<form action="{TARGET}" method="post" onsubmit="return check_generated_form_{EL_FORMNAME}();" class="{FORMCLASS}">
+<form action="{TARGET}" method="{METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{FORMCLASS}">
 	# IF C_HAS_REQUIRED_FIELDS #
 	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
 	# ENDIF #
@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
 <!--
-	function check_generated_form_{L_FORMNAME}()
+	function check_generated_form_{E_HTML_ID}()
 	{
 		var return_value = true;
 		var constraints = Array();
