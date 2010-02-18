@@ -26,84 +26,63 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class allows you to manage easily the forms in your modules.
- * A lot of fields and options are supported, for further details refer yourself to each field class.
- *
- * Example of use :
- *<code>
- *
- *	$form = new FormBuilder('test', '');
- *
- *	//####### First fieldset ######//
- *	$fieldset = new FormFieldsetHTML('Form Test');
- *
- *	$fieldset->add_field(new FormFieldTextEditor('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
- *	//Textarea field
- *	$fieldset->add_field(new FormTextarea('contents', '', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
- *	$fieldset->add_field(new FormTextarea('comments', '', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
- *	//Radio button field
- *	$fieldset->add_field(new FormFieldRadio('choice', array('title' => 'Answer'),
- *		new FormFieldRadioOption('Choix1', 1),
- *		new FormFieldRadioOption('Choix2', 2, FormFieldRadioOption::CHECKED)
- *	));
- *
- *	//Checkbox button field
- *	$fieldset->add_field(new FormFieldCheckbox('multiplechoice', array('title' => 'Answer2'),
- *		new FormFieldCheckboxOption('Choix3', 1),
- *		new FormFieldCheckboxOption('Choix4', 2, FormFieldCheckboxOption::CHECKED)
- *	));
- *	//Select field
- *	$fieldset->add_field(new FormFieldSelect('sex', array('title' => 'Sex'),
- *		new FormFieldSelectOption('Men', 1),
- *		new FormFieldSelectOption('Women', 2),
- *		new FormFieldSelectOption('?', -1, FormFieldSelectOption::SELECTED)
- *	));
- *
- *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
- *
- *	//####### Second fieldset #######//
- *	$fieldset_up = new FormFieldsetHTML('Upload file');
- *	//File field
- *	$fieldset_up->add_field(new FormFieldFilePicker('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
- *	//Radio button field
- *	$fieldset_up->add_field(new FormFieldHidden('test', 1));
- *
- *	//Captcha
- *
- *	$captcha = new Captcha();
- *	$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
- *
- *	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
- *
- *	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
- *	echo $form->display(); //Display form.
- *</code>
+ * @desc This class enables you to handle all the operations regarding forms. Indeed, you build a
+ * form using object components (fieldsets, fields, buttons) and it's able to display, to retrieve
+ * the posted values and also validate the entered data from constraints you define. The validation
+ * is done in PHP when the form is received, but also in live thanks to Javascript (each field is
+ * validated when it looses the focus and the whole form is validated when the user submits it).
  * @package builder
  * @subpackage form
  */
 class HTMLForm
 {
-	const METHOD_POST = 'post';
-	const METHOD_GET = 'get';
+	const HTTP_METHOD_POST = 'post';
+	const HTTP_METHOD_GET = 'get';
 
 	const SMALL_CSS_CLASS = 'fieldset_mini';
 	const NORMAL_CSS_CLASS = 'fieldset_content';
 
+	/**
+	 * @var FormConstraint[]
+	 */
 	private $constraints = array();
+	/**
+	 * @var FormFieldset[]
+	 */
 	private $fieldsets = array();
+	/**
+	 * @var FormButton[]
+	 */
 	private $buttons = array();
+	/**
+	 * @var string
+	 */
 	private $html_id = '';
+	/**
+	 * @var string
+	 */
 	private $target = '';
+	/**
+	 * @var string
+	 */
+	private $method = self::HTTP_METHOD_POST;
+	/**
+	 * @var string
+	 */
 	private $css_class = self::NORMAL_CSS_CLASS;
+	/**
+	 * @var boolean
+	 */
 	private static $js_already_included = false;
-
+	/**
+	 * @var string[]
+	 */
 	private $validation_error_messages = array();
 
 	/**
-	 * @desc constructor
-	 * @param string $html_id The name of the form.
-	 * @param string $form_title The tite displayed for the form.
-	 * @param string $target The url where the form sends data.
+	 * @desc Constructs a HTMLForm object
+	 * @param string $html_id The HTML name of the form
+	 * @param string $target The url where the form sends data
 	 */
 	public function __construct($html_id, $target = '')
 	{
@@ -119,54 +98,38 @@ class HTMLForm
 		$csrf_protection_fieldset->add_field($csrf_protection_field);
 		$this->add_fieldset($csrf_protection_fieldset);
 	}
-	
+
 	/**
-	 * @desc Add fieldset in the form.
-	 * @param FormFieldset The fieldset object.
+	 * @desc Adds fieldset in the form
+	 * @param FormFieldset The fieldset to add
 	 */
 	public function add_fieldset(FormFieldset $fieldset)
 	{
 		$this->fieldsets[] = $fieldset;
 	}
 
-	public function validate()
-	{
-		$validation_result = true;
-
-		foreach ($this->fieldsets as $fieldset)
-		{
-			if (!$fieldset->validate())
-			{
-				$validation_error_message = $fieldset->get_validation_error_messages();
-				if (!empty($validation_error_message))
-				{
-					$this->validation_error_messages = array_merge($this->validation_error_messages, $validation_error_message);
-				}
-				$validation_result = false;
-			}
-		}
-		foreach ($this->constraints as $constraint)
-		{
-			if (!$constraint->validate())
-			{
-				$validation_result = false;
-			}
-		}
-		if (!$validation_result)
-		{
-			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
-		}
-		return $validation_result;
-	}
-
+	/**
+	 * @desc Adds a constraint on the form. This kind of constraints are rules regarding several fields.
+	 * @param FormConstraint $constraint The constraint to add
+	 */
 	public function add_constraint(FormConstraint $constraint)
 	{
 		$this->constraints[] = $constraint;
 	}
 
 	/**
-	 * @param string $field_id
-	 * @return mixed
+	 * @desc Adds a button to the form
+	 * @param FormButton $button The button to add
+	 */
+	public function add_button(FormButton $button)
+	{
+		$this->buttons[] = $button;
+	}
+
+	/**
+	 * @desc Returns the value of a form field.
+	 * @param string $field_id The HTML id of the field
+	 * @return mixed The value of the field (the type depends of the field)
 	 * @throws FormBuilderException
 	 */
 	public function get_value($field_id)
@@ -175,11 +138,6 @@ class HTMLForm
 		return $field->get_value();
 	}
 
-	/**
-	 * @param string $field_id
-	 * @return FormField
-	 * @throws FormBuilderException
-	 */
 	private function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -194,9 +152,8 @@ class HTMLForm
 	}
 
 	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
+	 * @desc Displays the form
+	 * @return Template The template containing all the form elements which is ready to be displayed.
 	 */
 	public function display()
 	{
@@ -209,9 +166,10 @@ class HTMLForm
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
-			'L_FORMNAME' => $this->html_id,
+			'HTML_ID' => $this->html_id,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-			'C_VALIDATION_ERROR' => count($this->validation_error_messages)
+			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
+			'METHOD' => $this->method
 		));
 
 		foreach ($this->validation_error_messages as $error_message)
@@ -251,21 +209,6 @@ class HTMLForm
 		return $template;
 	}
 
-	public function set_html_id($html_id)
-	{
-		$this->html_id = $html_id;
-	}
-
-	public function set_target($target)
-	{
-		$this->target = $target;
-	}
-
-	public function set_css_class($css_class)
-	{
-		$this->css_class = $css_class;
-	}
-
 	private function has_required_fields()
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -281,9 +224,83 @@ class HTMLForm
 		return false;
 	}
 
-	public function add_button(FormButton $button)
+	/**
+	 * @desc Validates the form from all its constraints. If the constraints are satisfied, the
+	 * validation errors will be displayed at the top of the form.
+	 * @return boolean true if the form is valid, false otherwise
+	 */
+	public function validate()
 	{
-		$this->buttons[] = $button;
+		$validation_result = true;
+
+		foreach ($this->fieldsets as $fieldset)
+		{
+			if (!$fieldset->validate())
+			{
+				$validation_error_message = $fieldset->get_validation_error_messages();
+				if (!empty($validation_error_message))
+				{
+					$this->validation_error_messages = array_merge($this->validation_error_messages, $validation_error_message);
+				}
+				$validation_result = false;
+			}
+		}
+		foreach ($this->constraints as $constraint)
+		{
+			if (!$constraint->validate())
+			{
+				$validation_result = false;
+			}
+		}
+		if (!$validation_result)
+		{
+			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
+		}
+		return $validation_result;
+	}
+
+	/**
+	 * @desc Sets the form's HTML id
+	 * @param string $html_id the HTML id
+	 */
+	public function set_html_id($html_id)
+	{
+		$this->html_id = $html_id;
+	}
+
+	/**
+	 * @desc Sets the form's target
+	 * @param string $target The URL at which the form will be submited
+	 */
+	public function set_target($target)
+	{
+		$this->target = $target;
+	}
+
+	/**
+	 * @desc Sets the form's CSS class
+	 * @param string $css_class The CSS class (see the HTMLForm::SMALL_CSS_CLASS and
+	 * HTMLForm::NORMAL_CSS_CLASS constants)
+	 */
+	public function set_css_class($css_class)
+	{
+		$this->css_class = $css_class;
+	}
+	
+	/**
+	 * @desc Sets the HTTP method with which the form will be submited
+	 * @param string $method The method name (HTMLForm::HTTP_METHOD_POST or HTMLForm::HTTP_METHOD_POST).
+	 */
+	public function set_method($method)
+	{
+		if ($method == self::HTTP_METHOD_POST)
+		{
+			$this->method = self::HTTP_METHOD_POST;
+		}
+		else
+		{
+			$this->method = self::HTTP_METHOD_GET;
+		}
 	}
 }
 ?>
