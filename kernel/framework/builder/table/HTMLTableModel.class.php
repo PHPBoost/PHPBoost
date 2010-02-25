@@ -31,32 +31,85 @@
  */
 interface HTMLTableModel
 {
+	/**
+	 * @desc Returns the table id used to identify the table in the page
+	 * @return string the table id
+	 */
 	function get_id();
+	
+	/**
+	 * @desc Returns true if there is a caption
+	 * @return bool true if there is a caption
+	 */
+	function has_caption();
 
+	/**
+	 * @desc Returns the table caption
+	 * @return string the table caption
+	 */
 	function get_caption();
+	
+	/**
+	 * @desc Returns true if the pagination is activated
+	 * @return bool true if the pagination is activated
+	 */
+	function is_pagination_activated();
 
+	/**
+	 * @desc Returns the default number of items to print per page
+	 * @return int the default number of items to print per page
+	 */
 	function get_nb_rows_per_page();
+	
+	/**
+	 * @desc Returns true if it is possible to change the number of rows to display
+	 * @return bool true if it is possible to change the number of rows to display
+	 */
+	function has_nb_rows_options();
+	
+	/**
+	 * @desc Returns an array with the differents number of rows that could be displayed
+	 * @return int[] the differents number of rows that could be displayed
+	 */
+	function get_nb_rows_options();
 
+	/**
+	 * @desc Returns the columns of the table
+	 * @return HTMLColumn[] the columns of the table
+	 */
 	function get_columns();
 
 	/**
 	 * @desc Returns the default sorting rule if none is specified
-	 * @return HTMLTableSortRule the default sorting rule if none is specified
+	 * @return HTMLTableSortingRule the default sorting rule if none is specified
 	 */
 	function default_sort_rule();
+	
+	/**
+	 * @desc Returns true if the sort parameter is allowed
+	 * @param string $parameter the sort parameter name
+	 * @return bool true if the sort parameter is allowed
+	 */
+	function is_sort_parameter_allowed($parameter);
 
+	/**
+	 * @desc Returns the number of matching rows
+	 * @param HTMLTableFilter[] $filters filters
+	 * @return int the number of matching rows
+	 */
 	function get_number_of_matching_rows(array $filters);
 
 	/**
 	 * @desc Returns up to <code>$limit</code> rows starting from the <code>$offset</code> one.
-	 * Rows are sorted using the <code>$sorting_rule</code> and filtered with <code>$filters</code> rules
+	 * Rows are sorted using the <code>$sorting_rule</code> and filtered with <code>$filters</code>
+	 * rules
 	 * @param int $limit the maximum number of rows to retrieve
 	 * @param int $offset the offset from which rows will be retrieved
-	 * @param HTMLTableSortRule $sorting_rule the sorting rule
+	 * @param HTMLTableSortingRule $sorting_rule the sorting rule (<code>null</code> if no rule specified)
 	 * @param HTMLTableFilter[] $filters the filter to apply
 	 * @return HTMLTableRow[] the requested rows
 	 */
-	function get_rows($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters);
+	function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters);
 }
 
 ?>

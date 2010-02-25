@@ -38,6 +38,7 @@ class HTMLTableParameters
 	private $parameters;
 	private $url_parameters;
 	private $current_page_number = 1;
+	private $nb_items_per_page = 0;
 	private $sorting_rule;
 	private $filters = array();
 
@@ -56,17 +57,22 @@ class HTMLTableParameters
 	 */
 	private $builder;
 
-	public function __construct(HTMLTableModel $model, $allowed_sorting_rules)
+	public function __construct(HTMLTableModel $model)
 	{
 		$this->model = $model;
-		$this->arg_id = 't' . $this->model->get_id();
+		$this->arg_id = $this->model->get_id();
 		$this->url_parameters = new UrlSerializedParameter($this->arg_id);
-		$this->compute_request_parameters($allowed_sorting_rules);
+		$this->compute_request_parameters();
 	}
 
 	public function get_page_number()
 	{
 		return $this->current_page_number;
+	}
+
+	public function get_nb_items_per_page()
+	{
+		return $this->nb_items_per_page;
 	}
 
 	public function get_sorting_rule()
@@ -84,6 +90,11 @@ class HTMLTableParameters
 		return $this->url_parameters->get_url(array('page' => $page_number));
 	}
 
+	public function get_nb_items_per_page_url($value)
+	{
+		return $this->url_parameters->get_url(array('items' => $value));
+	}
+	
 	public function get_default_table_url()
 	{
 		$default_options = array('page' => 1);
@@ -108,11 +119,12 @@ class HTMLTableParameters
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
-	public function compute_request_parameters($allowed_sorting_rules)
+	private function compute_request_parameters()
 	{
 		$this->parameters = $this->url_parameters->get_parameters();
 		$this->compute_page_number();
-		$this->compute_sorting_rule($allowed_sorting_rules);
+		$this->compute_nb_items_per_page();
+		$this->compute_sorting_rule();
 		$this->compute_filters();
 	}
 
@@ -132,23 +144,39 @@ class HTMLTableParameters
 		}
 	}
 
-	private function compute_sorting_rule($allowed_sorting_rules)
+	private function compute_nb_items_per_page()
+	{
+		if (isset($this->parameters['items']))
+		{
+			$items_per_page = $this->parameters['items'];
+			if (is_numeric($items_per_page))
+			{
+				$items_per_page = NumberHelper::numeric($items_per_page);
+				if (is_int($items_per_page) && $items_per_page > 0)
+				{
+					$this->nb_items_per_page = $items_per_page;
+				}
+			}
+		}
+	}
+
+	private function compute_sorting_rule()
 	{
 		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
 		{
-			$regex = '`(' . HTMLTableSortRule::ASC . '|' . HTMLTableSortRule::DESC . ')(\w+)`';
+			$regex = '`(' . HTMLTableSortingRule::ASC . '|' . HTMLTableSortingRule::DESC . ')(\w+)`';
 			$param = array();
 			if (preg_match($regex, $this->parameters['sort'], $param))
 			{
 				$order_way = $param[1];
-				if ($order_way != HTMLTableSortRule::ASC)
+				if ($order_way != HTMLTableSortingRule::ASC)
 				{
-					$order_way = HTMLTableSortRule::DESC;
+					$order_way = HTMLTableSortingRule::DESC;
 				}
 				$sort_parameter = $param[2];
-				if (in_array($sort_parameter, $allowed_sorting_rules))
+				if ($this->model->is_sort_parameter_allowed($sort_parameter))
 				{
-					$this->sorting_rule = new HTMLTableSortRule($sort_parameter, $order_way);
+					$this->sorting_rule = new HTMLTableSortingRule($sort_parameter, $order_way);
 					return;
 				}
 			}

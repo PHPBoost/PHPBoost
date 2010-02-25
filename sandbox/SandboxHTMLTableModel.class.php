@@ -2,9 +2,9 @@
 /*##################################################
  *                          SandboxHTMLTableModel.class.php
  *                            -------------------
- *   begin                : December 21, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 25, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,38 +25,25 @@
  *
  ###################################################*/
 
-class SandboxHTMLTableModel implements HTMLTableModel
+class SandboxHTMLTableModel extends DefaultHTMLTableModel
 {
 	private $query;
 	private $parameters;
 
-	public function get_id()
+	public function __construct()
 	{
-		return '42';
-	}
-
-	public function get_caption()
-	{
-		return 'Liste des membres';
-	}
-
-	public function get_nb_rows_per_page()
-	{
-		return 3;
-	}
-
-	public function get_columns()
-	{
-		return array(
-		new HTMLTableColumn('pseudo', 'pseudo'),
-		new HTMLTableColumn('email'),
-		new HTMLTableColumn('inscrit le', 'register_date'),
-		new HTMLTableColumn('messages'),
-		new HTMLTableColumn('dernière connexion'),
-		new HTMLTableColumn('messagerie'),
+		$columns = array(
+			new HTMLTableColumn('pseudo', 'pseudo'),
+			new HTMLTableColumn('email'),
+			new HTMLTableColumn('inscrit le', 'register_date'),
+			new HTMLTableColumn('messages'),
+			new HTMLTableColumn('dernière connexion'),
+			new HTMLTableColumn('messagerie')
 		);
+		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
+		parent::__construct($columns, $default_sorting_rule, 3);
+		$this->set_caption('Liste des membres');
 	}
-
 
 	//		$options = array(
 	//			new FormFieldSelectOption('tous', ''),
@@ -65,11 +52,6 @@ class SandboxHTMLTableModel implements HTMLTableModel
 	//		);
 	//		$model->add_filter(new HTMLTableSelectFilterHTMLForm('Pseudo', 'login', $options));
 
-	public function default_sort_rule()
-	{
-		return new HTMLTableSortRule('user_id', HTMLTableSortRule::ASC);
-	}
-
 	public function get_number_of_matching_rows(array $filters)
 	{
 		$this->parameters = array();
@@ -77,7 +59,7 @@ class SandboxHTMLTableModel implements HTMLTableModel
         	'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
 	}
 
-	public function get_rows($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
+	public function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
 		$results = array();
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
@@ -103,7 +85,7 @@ class SandboxHTMLTableModel implements HTMLTableModel
 		return $results;
 	}
 
-	private function build_query($limit, $offset, HTMLTableSortRule $sorting_rule, array $filters)
+	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
 		$this->parameters = array();
 		$this->query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
@@ -140,11 +122,11 @@ class SandboxHTMLTableModel implements HTMLTableModel
 		return $clause;
 	}
 
-	private function get_order_clause(HTMLTableSortRule $rule)
+	private function get_order_clause(HTMLTableSortingRule $rule)
 	{
 		$order_clause = ' ORDER BY ';
 		$order_clause .= $this->get_sort_parameter_column($rule) . ' ';
-		if ($rule->get_order_way() == HTMLTableSortRule::ASC)
+		if ($rule->get_order_way() == HTMLTableSortingRule::ASC)
 		{
 			$order_clause .= 'ASC';
 		}
@@ -155,7 +137,7 @@ class SandboxHTMLTableModel implements HTMLTableModel
 		return $order_clause;
 	}
 
-	private function get_sort_parameter_column(HTMLTableSortRule $rule)
+	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
 	{
 		switch ($rule->get_sort_parameter())
 		{

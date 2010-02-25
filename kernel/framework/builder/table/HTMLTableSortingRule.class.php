@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             HTMLTableSortRule.class.php
+ *                             HTMLTableSortingRule.class.php
  *                            -------------------
  *   begin                : December 21, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage table
  */
-class HTMLTableSortRule
+class HTMLTableSortingRule
 {
 	const ASC = '!';
 	const DESC = '-';

@@ -51,6 +51,18 @@
 	      		<div style="float:left;">
 	      			{NUMBER_OF_ELEMENTS}
       			</div>
+      			# IF C_NB_ROWS_OPTIONS #
+	      		<div style="float:right;padding:0 10px;">
+	      			<select name="nbItemsPerPage" onchange="window.location=this.value">
+	      				# START nbItemsOption #
+	      				<option value="{nbItemsOption.URL}"
+	      					# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
+	      					{nbItemsOption.VALUE}
+      					</option>
+	      				# END nbItemsOption #
+	      			</select>
+      			</div>
+      			# END IF #
 	      		<div style="float:right;">
 	      			# INCLUDE pagination #
       			</div>
@@ -65,6 +77,18 @@
 	      		<div style="float:left;">
 	      			{NUMBER_OF_ELEMENTS}
       			</div>
+      			# IF C_NB_ROWS_OPTIONS #
+	      		<div style="float:right;padding:0 10px;">
+	      			<select name="nbItemsPerPage" onchange="window.location=this.value">
+	      				# START nbItemsOption #
+	      				<option value="{nbItemsOption.URL}"
+	      					# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
+	      					{nbItemsOption.VALUE}
+      					</option>
+	      				# END nbItemsOption #
+	      			</select>
+      			</div>
+      			# END IF #
 	      		<div style="float:right;">
 	      			# INCLUDE pagination #
       			</div>
