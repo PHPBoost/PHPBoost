@@ -253,7 +253,7 @@ class HTMLTable extends HTMLElement
 		$nb_pages =  ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
-		$this->tpl->add_subtemplate('pagination', $pagination->display());
+		$this->tpl->add_subtemplate('pagination', $pagination->export());
 	}
 }
 
