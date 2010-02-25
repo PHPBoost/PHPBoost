@@ -33,28 +33,29 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 	public function __construct()
 	{
 		$columns = array(
-			new HTMLTableColumn('pseudo', 'pseudo'),
-			new HTMLTableColumn('email'),
-			new HTMLTableColumn('inscrit le', 'register_date'),
-			new HTMLTableColumn('messages'),
-			new HTMLTableColumn('dernière connexion'),
-			new HTMLTableColumn('messagerie')
+		new HTMLTableColumn('pseudo', 'pseudo'),
+		new HTMLTableColumn('email'),
+		new HTMLTableColumn('inscrit le', 'register_date'),
+		new HTMLTableColumn('messages'),
+		new HTMLTableColumn('dernière connexion'),
+		new HTMLTableColumn('messagerie')
 		);
 		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
-		parent::__construct($columns, $default_sorting_rule, 3);
+		$nb_items_per_page = 3;
+		parent::__construct($columns, $default_sorting_rule, $nb_items_per_page);
 		$this->set_caption('Liste des membres');
-	}
+		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 
-	//		$options = array(
-	//			new FormFieldSelectOption('tous', ''),
-	//			new FormFieldSelectOption('Horn', 'horn'),
-	//			new FormFieldSelectOption('CouCou', 'coucou')
-	//		);
-	//		$model->add_filter(new HTMLTableSelectFilterHTMLForm('Pseudo', 'login', $options));
+		//		$options = array(
+		//			new FormFieldSelectOption('tous', ''),
+		//			new FormFieldSelectOption('Horn', 'horn'),
+		//			new FormFieldSelectOption('CouCou', 'coucou')
+		//		);
+		//		$model->add_filter(new HTMLTableSelectFilterHTMLForm('Pseudo', 'login', $options));
+	}
 
 	public function get_number_of_matching_rows(array $filters)
 	{
-		$this->parameters = array();
 		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
         	'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
 	}
@@ -63,31 +64,17 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 	{
 		$results = array();
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
-		//		echo $this->query .'<hr />';
 		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
 		foreach ($result as $row)
 		{
-			$login = new HTMLTableRowCell($row['login'], array('row1'));
-			$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;');
-			$user_mail->add_css_style('width:50px');
-			$user_mail->center();
-			$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
-			$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
-			$user_msg->center();
-			$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
-			$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
-			$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)" /></a>');
-			$pm->center();
-			$pm->add_css_style('width:50px');
-
-			$results[] = new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm));
+			$table_row = $this->build_table_row($row);
+			$results[] = $table_row;
 		}
 		return $results;
 	}
 
 	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
-		$this->parameters = array();
 		$this->query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
 		'FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1';
 		$this->query .= $this->get_filtered_clause($filters);
@@ -97,6 +84,7 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 
 	private function get_filtered_clause(array $filters)
 	{
+		$this->parameters = array();
 		$clause = '';
 		if (!empty($filters))
 		{
@@ -139,28 +127,41 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 
 	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
 	{
-		switch ($rule->get_sort_parameter())
-		{
-			case 'pseudo':
-				return 'login';
-			case 'register_date':
-				return 'timestamp';
-			case 'user_id':
-			default:
-				return 'user_id';
-				break;
-		}
+		$values = array(
+			'pseudo' => 'login',
+			'register_date' => 'timestamp'
+			);
+			$default = 'user_id';
+			return Arrays::find($rule->get_sort_parameter(), $values, $default);
 	}
 
 	private function get_filter_parameter_column(HTMLTableFilter $filter)
 	{
-		switch ($filter->get_filter_parameter())
-		{
-			case 'login':
-			default:
-				return 'login';
-				break;
-		}
+		$values = array();
+		$default = 'login';
+		return Arrays::find($filter->get_filter_parameter(), $values, $default);
+	}
+
+	/**
+	 * @param array $row
+	 * @return HTMLTableRow
+	 */
+	private function build_table_row(array $row)
+	{
+		$login = new HTMLTableRowCell($row['login'], array('row1'));
+		$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;');
+		$user_mail->add_css_style('width:50px');
+		$user_mail->center();
+		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
+		$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
+		$user_msg->center();
+		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
+		$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
+		$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)" /></a>');
+		$pm->center();
+		$pm->add_css_style('width:50px');
+			
+		return new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm));
 	}
 }
 ?>
