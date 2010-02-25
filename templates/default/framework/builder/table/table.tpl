@@ -1,16 +1,16 @@
 # IF C_FILTERS #
-<div
-	id="show_filters_{TABLE_ID}"
-	onclick="toggleTableFilters();">
-	SHOW_FILTERS
-</div>
-<div
-	id="hide_filters_{TABLE_ID}"
-	onclick="toggleTableFilters();"
-	style="display:none;">
-	HIDE_FILTERS
-</div>
-<div id="filters_{TABLE_ID}" style="display:none;">
+<!--<div-->
+<!--	id="show_filters_{TABLE_ID}"-->
+<!--	onclick="toggleTableFilters();">-->
+<!--	SHOW_FILTERS-->
+<!--</div>-->
+<!--<div-->
+<!--	id="hide_filters_{TABLE_ID}"-->
+<!--	onclick="toggleTableFilters();"-->
+<!--	style="display:none;">-->
+<!--	HIDE_FILTERS-->
+<!--</div>-->
+<div id="filters_{TABLE_ID}" style="border:1px #aaa solid;">
 	# INCLUDE filters #
 </div>
 # ENDIF #

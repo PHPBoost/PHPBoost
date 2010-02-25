@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SandboxHTMLTableModel extends DefaultHTMLTableModel
+class SandboxHTMLTableModel extends AbstractHTMLTableModel
 {
 	private $query;
 	private $parameters;
@@ -46,18 +46,21 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 		$this->set_caption('Liste des membres');
 		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 
-		//		$options = array(
-		//			new FormFieldSelectOption('tous', ''),
-		//			new FormFieldSelectOption('Horn', 'horn'),
-		//			new FormFieldSelectOption('CouCou', 'coucou')
-		//		);
-		//		$model->add_filter(new HTMLTableSelectFilterHTMLForm('Pseudo', 'login', $options));
+		$default_value = new FormFieldSelectChoiceOption('tous', '');
+		$options = array(
+		$default_value,
+		new FormFieldSelectChoiceOption('Horn', 'horn'),
+		new FormFieldSelectChoiceOption('CouCou', 'coucou')
+		);
+		$select = new FormFieldSelectChoice('login', 'Pseudo', $default_value, $options);
+		$allowed_values = array('tous', 'Horn', 'Coucou');
+		$this->add_filter(new HTMLTableEqualsFilterForm($select, $allowed_values));
 	}
 
 	public function get_number_of_matching_rows(array $filters)
 	{
 		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
-        	'WHERE user_aprob=1' . $this->get_filtered_clause($filters) , $this->parameters);
+		$this->get_filtered_clause($filters), $this->parameters);
 	}
 
 	public function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
@@ -76,7 +79,7 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
 		$this->query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
-		'FROM ' . DB_TABLE_MEMBER . ' WHERE user_aprob = 1';
+		'FROM ' . DB_TABLE_MEMBER;
 		$this->query .= $this->get_filtered_clause($filters);
 		$this->query .= $this->get_order_clause($sorting_rule);
 		$this->query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
@@ -85,7 +88,7 @@ class SandboxHTMLTableModel extends DefaultHTMLTableModel
 	private function get_filtered_clause(array $filters)
 	{
 		$this->parameters = array();
-		$clause = '';
+		$clause = ' WHERE user_aprob=1';
 		if (!empty($filters))
 		{
 			$sql_filters = array();

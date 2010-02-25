@@ -80,7 +80,7 @@ class HTMLTable extends HTMLElement
 	{
 		$this->extract_parameters();
 		$this->get_rows();
-		//		$this->generate_filters_form();
+		$this->generate_filters_form();
 		$this->generate_table_structure();
 		$this->generate_headers();
 		$this->generate_rows();
@@ -121,22 +121,23 @@ class HTMLTable extends HTMLElement
 		if ($has_filters)
 		{
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
-			$fieldset = new FormFieldsetHTML(LangLoader::get_class_message('filters', __CLASS__));
+			$fieldset = new FormFieldsetHorizontal(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters_form as $filter_form)
 			{
 				$fieldset->add_field($filter_form->get_form_field());
 				$this->tpl->assign_block_vars('filter', array(
-					'NAME' => 'filters' . $this->arg_id . $filter_form->get_filter_parameter()
+					'NAME' => 'filters' . $filter_form->get_filter_parameter()
 				));
 			}
-			$form = new HTMLForm('filters' . $this->arg_id);
+			$form = new HTMLForm('filters' . $this->arg_id, '#');
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
-			$form->set_personal_submit_function($submit_function);
+			$submit = new FormButtonSubmit('Soumettre', 'submit', 'return ' . $submit_function . '()');
+			$form->add_button($submit);
 			$this->tpl->add_subtemplate('filters', $form->display());
 			$this->tpl->assign_vars(array(
 				'SUBMIT_FUNCTION' => $submit_function,
-				'SUBMIT_URL' => $this->get_js_submit_url()
+				'SUBMIT_URL' => $this->parameters->get_js_submit_url()
 			));
 		}
 	}
