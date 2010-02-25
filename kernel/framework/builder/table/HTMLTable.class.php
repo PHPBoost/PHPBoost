@@ -33,8 +33,8 @@
 class HTMLTable extends HTMLElement
 {
 	private $arg_id = 1;
-    private $nb_of_pages = 1;
-    private $page_number = 1;
+	private $nb_of_pages = 1;
+	private $page_number = 1;
 
 	/**
 	 * @var HTMLTableParameters
@@ -70,7 +70,7 @@ class HTMLTable extends HTMLElement
 		$this->tpl = new FileTemplate($tpl_path);
 		$this->model = $model;
 		$this->get_columns();
-		$this->parameters = new HTMLTableParameters($this->model, $this->get_allowed_sorting_rules());
+		$this->parameters = new HTMLTableParameters($this->model);
 	}
 
 	/**
@@ -78,8 +78,8 @@ class HTMLTable extends HTMLElement
 	 */
 	public function export()
 	{
-        $this->extract_parameters();
-        $this->get_rows();
+		$this->extract_parameters();
+		$this->get_rows();
 		//		$this->generate_filters_form();
 		$this->generate_table_structure();
 		$this->generate_headers();
@@ -93,38 +93,25 @@ class HTMLTable extends HTMLElement
 		$this->columns = $this->model->get_columns();
 	}
 
-	private function get_allowed_sorting_rules()
+	private function extract_parameters()
 	{
-		$allowed_sorting_rules = array();
-		foreach ($this->columns as $column)
-		{
-			if ($column->is_sortable())
-			{
-				$allowed_sorting_rules[] = $column->get_sortable_parameter();
-			}
-		}
-		return $allowed_sorting_rules;
+		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
+		$last_page_number = ceil($this->nb_rows / $this->get_nb_rows_per_page());
+		$this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
 	}
 
-    private function extract_parameters()
-    {
-        $this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
-        $last_page_number = ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
-        $this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
-    }
-
-    private function get_rows()
-    {
-		$nb_rows_per_page = $this->model->get_nb_rows_per_page();
+	private function get_rows()
+	{
+		$nb_rows_per_page = $this->get_nb_rows_per_page();
 		$first_row_index = $this->get_first_row_index();
-        $sorting_rule = $this->parameters->get_sorting_rule();
-        $filters = $this->parameters->get_filters();
+		$sorting_rule = $this->parameters->get_sorting_rule();
+		$filters = $this->parameters->get_filters();
 		$this->rows = $this->model->get_rows($nb_rows_per_page, $first_row_index, $sorting_rule, $filters);
 	}
 
 	private function get_first_row_index()
 	{
-		return ($this->page_number - 1) * $this->model->get_nb_rows_per_page();
+		return ($this->page_number - 1) * $this->get_nb_rows_per_page();
 	}
 
 	private function generate_filters_form()
@@ -156,16 +143,26 @@ class HTMLTable extends HTMLElement
 
 	private function generate_table_structure()
 	{
-		$caption = $this->model->get_caption();
 		$tpl_vars = array(
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
-			'C_CAPTION' => !empty($caption),
-			'CAPTION' => $caption,
-			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url()
+			'C_CAPTION' => $this->model->has_caption(),
+			'CAPTION' => $this->model->get_caption(),
+			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
+			'C_NB_ROWS_OPTIONS' => $this->model->has_nb_rows_options()
 		);
 		$this->tpl->assign_vars($tpl_vars);
+
+		if ($this->model->has_nb_rows_options())
+		{
+			foreach ($this->model->get_nb_rows_options() as $value)
+			{
+				$url = $this->parameters->get_nb_items_per_page_url($value);
+				$selected = $value == $this->get_nb_rows_per_page();
+				$this->tpl->assign_block_vars('nbItemsOption', array('URL' => $url, 'VALUE' => $value, 'C_SELECTED' => $selected));
+			}
+		}
 	}
 
 	public function is_pagination_activated()
@@ -250,10 +247,20 @@ class HTMLTable extends HTMLElement
 
 	private function generate_pagination()
 	{
-		$nb_pages =  ceil($this->nb_rows / $this->model->get_nb_rows_per_page());
+		$nb_pages =  ceil($this->nb_rows / $this->get_nb_rows_per_page());
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
 		$this->tpl->add_subtemplate('pagination', $pagination->export());
+	}
+
+	private function get_nb_rows_per_page()
+	{
+		$nb_rows_per_page = $this->parameters->get_nb_items_per_page();
+		if ($nb_rows_per_page < 1)
+		{
+			$nb_rows_per_page = $this->model->get_nb_rows_per_page();
+		}
+		return $nb_rows_per_page;
 	}
 }
 
