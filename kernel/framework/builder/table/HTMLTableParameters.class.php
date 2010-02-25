@@ -189,7 +189,7 @@ class HTMLTableParameters
 	{
 		$this->filter_capture_regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
 		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
-		{
+		{ 
 			$filter_parameters = $this->parameters['filters'];
 			foreach ($filter_parameters as $filter_param)
 			{

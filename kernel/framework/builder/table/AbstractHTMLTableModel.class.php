@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        DefaultHTMLTableModel.class.php
+ *                        AbstractHTMLTableModel.class.php
  *                            -------------------
  *   begin                : February 25, 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage table
  */
-abstract class DefaultHTMLTableModel implements HTMLTableModel
+abstract class AbstractHTMLTableModel implements HTMLTableModel
 {
 	const NO_PAGINATION = 0;
 
@@ -139,6 +139,18 @@ abstract class DefaultHTMLTableModel implements HTMLTableModel
 		return in_array($parameter, $this->allowed_sort_parameters);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_filter_allowed($filter_parameter, $value)
+	{
+		if ($this->is_filter_parameter_allowed($filter_parameter))
+		{
+			return $this->allowed_filter_parameters[$filter_parameter]->is_filter_value_allowed($value);
+		}
+		return false;
+	}
+
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -163,29 +175,22 @@ abstract class DefaultHTMLTableModel implements HTMLTableModel
 		}
 	}
 
-	//	public function add_filter(HTMLTableFilterForm $filter)
-	//	{
-	//		$this->allowed_filter_parameters[$filter->get_filter_parameter()] = $filter;
-	//	}
-	//
-	//	public function get_filters_form()
-	//	{
-	//		return $this->allowed_filter_parameters;
-	//	}
-	//
-	//	public function is_filter_allowed($filter_parameter, $value)
-	//	{
-	//		if ($this->is_filter_parameter_allowed($filter_parameter))
-	//		{
-	//			return $this->allowed_filter_parameters[$filter_parameter]->is_filter_value_allowed($value);
-	//		}
-	//		return false;
-	//	}
-	//
-	//	private function is_filter_parameter_allowed($parameter)
-	//	{
-	//		return array_key_exists($parameter, $this->allowed_filter_parameters);
-	//	}
+	public function add_filter(HTMLTableFilterForm $filter)
+	{
+		$this->allowed_filter_parameters[$filter->get_filter_parameter()] = $filter;
+	}
+
+	public function get_filters_form()
+	{
+		return $this->allowed_filter_parameters;
+	}
+
+	private function is_filter_parameter_allowed($parameter)
+	{
+//		Debug::dump($parameter);
+//		Debug::dump($this->allowed_filter_parameters);
+		return array_key_exists($parameter, $this->allowed_filter_parameters);
+	}
 
 	private function add_column(HTMLTableColumn $column)
 	{

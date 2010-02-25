@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           HTMLTableFilterForm.class.php
+ *                        AbstractHTMLTableFilterForm.class.php
  *                            -------------------
  *   begin                : December 22, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -30,13 +30,32 @@
  * @package builder
  * @subpackage table
  */
-interface HTMLTableFilterForm
+abstract class AbstractHTMLTableFilterForm implements HTMLTableFilterForm
 {
-	function get_filter_parameter();
+	/**
+	 * @var FormField
+	 */
+	private $field;
 
-	function get_form_field();
+	public function __construct(FormField $field)
+	{
+		$this->field = $field;
+	}
 
-	function is_filter_value_allowed($value);
+	public function get_filter_parameter()
+	{
+		return $this->field->get_id();
+	}
+
+	public function get_form_field()
+	{
+		return $this->field;
+	}
+
+	public function get_value()
+	{
+		return $this->field->get_value();
+	}
 }
 
 ?>
