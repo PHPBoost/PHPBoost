@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                bench.class.php
+ *                               Bench.class.php
  *                            -------------------
  *   begin                : March 14, 2006
  *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
