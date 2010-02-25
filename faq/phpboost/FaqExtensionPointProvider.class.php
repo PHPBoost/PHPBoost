@@ -31,8 +31,11 @@ define('FAQ_MAX_SEARCH_RESULTS', 100);
 
 class FaqExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    public function __construct()
     {
+        $this->sql_querier = AppContext::get_sql();
         parent::__construct('faq');
     }
     

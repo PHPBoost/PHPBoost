@@ -30,9 +30,11 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
 class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
-	## Public Methods ##
-	function ArticlesInterface() //Constructeur de la classe ForumInterface
-	{
+	private $sql_querier;
+	
+    public function __construct()
+    {
+        $this->sql_querier = AppContext::get_sql();
 		parent::__construct('articles');
 	}
 

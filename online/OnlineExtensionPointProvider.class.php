@@ -29,9 +29,11 @@
 
 class OnlineExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function OnlineInterface() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    public function __construct()
     {
+        $this->sql_querier = AppContext::get_sql();
         parent::__construct('online');
     }
     
