@@ -158,7 +158,7 @@ class HTMLTable extends HTMLElement
 		{
 			foreach ($this->model->get_nb_rows_options() as $value)
 			{
-				$url = $this->parameters->get_nb_items_per_page_url($value);
+				$url = $this->parameters->get_nb_items_per_page_url($value, $this->get_first_row_index());
 				$selected = $value == $this->get_nb_rows_per_page();
 				$this->tpl->assign_block_vars('nbItemsOption', array('URL' => $url, 'VALUE' => $value, 'C_SELECTED' => $selected));
 			}

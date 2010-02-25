@@ -90,9 +90,10 @@ class HTMLTableParameters
 		return $this->url_parameters->get_url(array('page' => $page_number));
 	}
 
-	public function get_nb_items_per_page_url($value)
+	public function get_nb_items_per_page_url($nb_items, $current_item_index)
 	{
-		return $this->url_parameters->get_url(array('items' => $value));
+		$page = $this->compute_first_row_new_page($nb_items, $current_item_index);
+		return $this->url_parameters->get_url(array('items' => $nb_items, 'page' => $page));
 	}
 	
 	public function get_default_table_url()
@@ -219,6 +220,11 @@ class HTMLTableParameters
 		{
 			$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
 		}
+	}
+	
+	private function compute_first_row_new_page($nb_items, $current_item_index)
+	{
+		return ceil(($current_item_index + 1) / $nb_items);
 	}
 }
 
