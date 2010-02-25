@@ -29,9 +29,11 @@
 
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function PollInterface() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    public function __construct()
     {
+        $this->sql_querier = AppContext::get_sql();
         parent::__construct('poll');
     }
     

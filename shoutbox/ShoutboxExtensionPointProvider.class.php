@@ -29,9 +29,11 @@
 
 class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function ShoutboxInterface() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    public function __construct()
     {
+        $this->sql_querier = AppContext::get_sql();
         parent::__construct('shoutbox');
     }
     

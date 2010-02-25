@@ -31,9 +31,11 @@ if (defined('PHPBOOST') !== true) exit;
 
 class GuestbookExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function GuestbookInterface() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    public function __construct()
     {
+        $this->sql_querier = AppContext::get_sql();
         parent::__construct('guestbook');
     }
     
