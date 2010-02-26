@@ -30,13 +30,19 @@ interface FormField
 	 * @desc Returns the id.
 	 * @return string
 	 */
-	public function get_id();
+	function get_id();
 	
 	/**
 	 * @desc Sets the id
 	 * @param string $id The id.
 	 */
-	public function set_id($id);
+	function set_id($id);
+	
+	/**
+	 * @desc Sets the id prefix
+	 * @param string $prefix The new id prefix.
+	 */
+	function set_prefix($prefix);
 
 	/**
 	 * @return mixed

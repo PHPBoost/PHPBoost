@@ -105,6 +105,7 @@ class HTMLForm
 	 */
 	public function add_fieldset(FormFieldset $fieldset)
 	{
+		$fieldset->set_prefix($this->html_id);
 		$this->fieldsets[] = $fieldset;
 	}
 
