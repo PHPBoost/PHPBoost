@@ -32,39 +32,44 @@
  */
 class FormFieldDate extends AbstractFormField
 {
-	public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
-	{
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-	}
+    public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
+    {
+        parent::__construct($id, $label, $value, $field_options, $constraints);
+    }
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
-	{
-		$template = new FileTemplate('framework/builder/form/FormFieldDate.tpl');
+    /**
+     * @return string The html code for the input.
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
 
-		$this->assign_common_template_variables($template);
-		
-		$template->assign_vars(array(
+        $this->assign_common_template_variables($template);
+
+        $template->assign_vars(array(
 			'CALENDAR' => $this->get_calendar()->display()
-		));
+        ));
 
-		return $template;
-	}
-	
-	public function retrieve_value()
-	{
-		$this->set_value(MiniCalendar::retrieve_date($this->get_html_id()));
-	}
-	
-	/**
-	 * @return MiniCalendar
-	 */
-	private function get_calendar()
-	{
-		return new MiniCalendar($this->get_html_id(), $this->get_value());
-	}
+        return $template;
+    }
+
+    public function retrieve_value()
+    {
+        $this->set_value(MiniCalendar::retrieve_date($this->get_html_id()));
+    }
+
+    /**
+     * @return MiniCalendar
+     */
+    private function get_calendar()
+    {
+        return new MiniCalendar($this->get_html_id(), $this->get_value());
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormFieldDate.tpl');
+    }
 }
 
 ?>

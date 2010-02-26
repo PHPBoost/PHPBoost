@@ -39,11 +39,16 @@ class FormFieldsetHidden extends AbstractFormFieldset
 	 */
 	public function display()
 	{
-		$template = new StringTemplate(self::$tpl_src);
+		$template = $this->get_template_to_use();
 
 		$this->assign_template_fields($template);
 		
 		return $template;
+	}
+	
+	protected function get_default_template()
+	{
+	    return new StringTemplate(self::$tpl_src);
 	}
 }
 ?>

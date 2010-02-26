@@ -110,6 +110,11 @@ interface FormField
 	 * @return string The javascript code that makes the validation when the form is submitted
 	 */
 	function get_js_validations();
+	
+	/**
+	 * @desc Sets the template to use to display the field
+	 */
+	function set_template(Template $template);
 }
 
 ?>

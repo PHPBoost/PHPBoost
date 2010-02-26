@@ -32,69 +32,74 @@
  */
 class FormFieldMultiLineTextEditor extends AbstractFormField
 {
-	protected $rows = 5;
-	protected $cols = 40;
+    protected $rows = 5;
+    protected $cols = 40;
 
-	/**
-	 * @desc Constructs a multi line text edit.
-	 * In addition to the FormField parameters, there are these ones:
-	 * <ul>
-	 * 	<li>rows: the number of rows of the texarea</li>
-	 * 	<li>cols: the number of cols of the textarea</li>
-	 * </ul>
-	 * @param string $id Field id
-	 * @param string $label Field label
-	 * @param string $value Default value 
-	 * @param string[] $field_options Options
-	 * @param FormFieldConstraint[] $constraints List of the constraints
-	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
-	{
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-	}
+    /**
+     * @desc Constructs a multi line text edit.
+     * In addition to the FormField parameters, there are these ones:
+     * <ul>
+     * 	<li>rows: the number of rows of the texarea</li>
+     * 	<li>cols: the number of cols of the textarea</li>
+     * </ul>
+     * @param string $id Field id
+     * @param string $label Field label
+     * @param string $value Default value
+     * @param string[] $field_options Options
+     * @param FormFieldConstraint[] $constraints List of the constraints
+     */
+    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    {
+        parent::__construct($id, $label, $value, $field_options, $constraints);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
-	{
-		$template = new FileTemplate('framework/builder/form/FormFieldMultiLineTextEditor.tpl');
-			
-		$this->assign_common_template_variables($template);
-		$this->assign_textarea_template_variables($template);
-		
-		return $template;
-	}
-	
-	private function assign_textarea_template_variables(Template $template)
-	{
-		$template->assign_vars(array(
+    /**
+     * {@inheritdoc}
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
+        	
+        $this->assign_common_template_variables($template);
+        $this->assign_textarea_template_variables($template);
+
+        return $template;
+    }
+
+    private function assign_textarea_template_variables(Template $template)
+    {
+        $template->assign_vars(array(
 			'ROWS' => $this->rows,
 			'COLS' => $this->cols,
 			'DISABLED' => ($this->is_disabled() ? 'disabled="disabled" ' : ''),
 			'ONBLUR' => $this->get_onblur()
-		));
-	}
-	
-	protected function compute_options(array &$field_options)
-	{
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'rows':
-					$this->rows = $value;
-					unset($field_options['rows']);
-					break;
-				case 'cols':
-					$this->cols = $value;
-					unset($field_options['cols']);
-					break;
-			}
-		}
-		parent::compute_options($field_options);
-	}
+        ));
+    }
+
+    protected function compute_options(array &$field_options)
+    {
+        foreach($field_options as $attribute => $value)
+        {
+            $attribute = strtolower($attribute);
+            switch ($attribute)
+            {
+                case 'rows':
+                    $this->rows = $value;
+                    unset($field_options['rows']);
+                    break;
+                case 'cols':
+                    $this->cols = $value;
+                    unset($field_options['cols']);
+                    break;
+            }
+        }
+        parent::compute_options($field_options);
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormFieldMultiLineTextEditor.tpl');
+    }
 }
 
 ?>

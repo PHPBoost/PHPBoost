@@ -78,6 +78,10 @@ class HTMLForm
 	 * @var string[]
 	 */
 	private $validation_error_messages = array();
+	/**
+	 * @var Template
+	 */
+	private $template = null;
 
 	/**
 	 * @desc Constructs a HTMLForm object
@@ -160,7 +164,7 @@ class HTMLForm
 	{
 		global $LANG;
 
-		$template = new FileTemplate('framework/builder/form/Form.tpl');
+		$template = $this->get_template_to_use();
 
 		$template->assign_vars(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
@@ -210,6 +214,21 @@ class HTMLForm
 		return $template;
 	}
 
+	/**
+	 * @return Template
+	 */
+	private function get_template_to_use()
+	{
+	    if ($this->template !== null)
+	    {
+	        return $this->template;
+	    }
+	    else
+	    {
+	        return new FileTemplate('framework/builder/form/Form.tpl');
+	    }
+	}
+	
 	private function has_required_fields()
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -302,6 +321,16 @@ class HTMLForm
 		{
 			$this->method = self::HTTP_METHOD_GET;
 		}
+	}
+	
+	/**
+	 * @desc Sets the template to use to display the form. If this method is not called,
+	 * a default template will be used (<code>/template/default/framework/builder/form/Form.tpl</code>).
+	 * @param Template $template The template to use
+	 */
+	public function set_template(Template $template)
+	{
+	    $this->template = $template;
 	}
 }
 ?>

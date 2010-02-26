@@ -69,6 +69,8 @@ interface FormFieldset
 	function get_field($field_id);
 	
 	function get_fields();
+	
+	function set_template(Template $template);
 }
 
 ?>

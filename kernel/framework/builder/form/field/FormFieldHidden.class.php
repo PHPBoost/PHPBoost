@@ -32,33 +32,38 @@
  */
 class FormFieldHidden extends AbstractFormField
 {
-	private static $tpl_src = '<input type="hidden" id="{ID}" name="{ID}" value="{VALUE}" />';
-	
-	public function __construct($id, $value)
-	{
-		parent::__construct($id, '', $value);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
-	{
-		$template = new StringTemplate(self::$tpl_src);
-		
-		$this->assign_common_template_variables($template);
-		
-		return $template;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
-	{
-		$request = AppContext::get_request();
-		$this->set_value($request->get_value($this->get_html_id(), ''));
-	}
+    private static $tpl_src = '<input type="hidden" id="{ID}" name="{ID}" value="{VALUE}" />';
+
+    public function __construct($id, $value)
+    {
+        parent::__construct($id, '', $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
+
+        $this->assign_common_template_variables($template);
+
+        return $template;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retrieve_value()
+    {
+        $request = AppContext::get_request();
+        $this->set_value($request->get_value($this->get_html_id(), ''));
+    }
+
+    protected function get_default_template()
+    {
+        return new StringTemplate(self::$tpl_src);
+    }
 }
 
 ?>

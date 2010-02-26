@@ -51,7 +51,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 	 */
 	public function display()
 	{
-		$template = new FileTemplate('framework/builder/form/FormField.tpl');
+		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
 
@@ -63,6 +63,11 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 		}
 
 		return $template;
+	}
+	
+	protected function get_default_template()
+	{
+	    return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
 }
 ?>
