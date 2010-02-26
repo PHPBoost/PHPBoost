@@ -107,7 +107,7 @@ class TinyMCEEditor extends ContentEditor
 
     //Private attribute
     var $array_tags = array('align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|1' => '|', 'title' => 'formatselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', '|4' => '|', 'quote' => 'blockquote', 'line' => 'hr', '|5' => '|', '_cut' => 'cut', '_copy' => 'copy', '_paste' => 'paste', '|6' => '|', '_undo' => 'undo', '_redo' => 'redo');
-    var $array_tags2 = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', '|2' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '|4' => '|', 'url1' => 'link', 'url2' => 'unlink', '|5' => '|', 'img' => 'image', 'swf' => 'flash');
+    var $array_tags2 = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', '|2' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '|4' => '|', 'url1' => 'link', 'url2' => 'unlink', '|5' => '|', 'img' => 'image');
     var $array_tags3 = array('emotions' => 'emotions', 'table' => 'tablecontrols',  '|2' => '|', 'image', 'anchor' => 'anchor', '_charmap' => 'charmap', '3|' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', '_search' => 'search', '_replace' => 'replace', '|5' => '|', '_fullscreen' => 'fullscreen');
 }
 
