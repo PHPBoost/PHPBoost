@@ -32,20 +32,25 @@
  */
 class FormFieldsetHorizontal extends AbstractFormFieldset
 {
-	// TODO add CSS rules to display dd inline
-	private static $tpl_src = '<div class="horizontal_fieldset"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>
+    // TODO add CSS rules to display dd inline
+    private static $tpl_src = '<div class="horizontal_fieldset"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>
 	<div class="spacer"></div>';
-	
-	/**
-	 * @return Template
-	 */
-	public function display()
-	{
-		$template = new StringTemplate(self::$tpl_src);
 
-		$this->assign_template_fields($template);
-		
-		return $template;
-	}
+    /**
+     * @return Template
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
+
+        $this->assign_template_fields($template);
+
+        return $template;
+    }
+
+    protected function get_default_template()
+    {
+        return new StringTemplate(self::$tpl_src);
+    }
 }
 ?>

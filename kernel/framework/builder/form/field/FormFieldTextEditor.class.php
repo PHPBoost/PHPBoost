@@ -61,8 +61,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 */
 	public function display()
 	{
-		$template = new FileTemplate('framework/builder/form/FormField.tpl');
-
+		$template = $this->get_template_to_use(); 
 
 		$field = new StringTemplate(self::$tpl_src);
 
@@ -105,6 +104,10 @@ class FormFieldTextEditor extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
+	
+	protected function get_default_template()
+	{
+	    return new FileTemplate('framework/builder/form/FormField.tpl');
+	}
 }
-
 ?>

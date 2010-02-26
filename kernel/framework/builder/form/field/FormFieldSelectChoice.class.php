@@ -55,7 +55,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 	 */
 	public function display()
 	{
-		$template = new FileTemplate('framework/builder/form/FormField.tpl');
+		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
 
@@ -102,6 +102,11 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 			}
 		}
 		return null;
+	}
+	
+	protected function get_default_template()
+	{
+	    return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
 }
 

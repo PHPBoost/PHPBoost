@@ -32,50 +32,55 @@
  */
 class FormFieldsetHTML extends AbstractFormFieldset
 {
-	private $title = '';
+    private $title = '';
 
-	/**
-	 * @desc constructor
-	 * @param string $name The name of the fieldset
-	 */
-	public function __construct($name)
-	{
-		$this->title = $name;
-	}
+    /**
+     * @desc constructor
+     * @param string $name The name of the fieldset
+     */
+    public function __construct($name)
+    {
+        $this->title = $name;
+    }
 
-	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
-	 */
-	public function display()
-	{
-		$template = new FileTemplate('framework/builder/form/FormFieldset.tpl');
+    /**
+     * @desc Return the form
+     * @param Template $Template Optionnal template
+     * @return string
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
 
-		$template->assign_vars(array(
+        $template->assign_vars(array(
 			'L_FORMTITLE' => $this->title
-		));
+        ));
 
-		$this->assign_template_fields($template);
-		
-		return $template;
-	}
+        $this->assign_template_fields($template);
 
-	/**
-	 * @param string $title The fieldset title
-	 */
-	public function set_title($title)
-	{
-		$this->title = $title;
-	}
+        return $template;
+    }
 
-	/**
-	 * @return string The fieldset title
-	 */
-	public function get_title()
-	{
-		return $this->title;
-	}
+    /**
+     * @param string $title The fieldset title
+     */
+    public function set_title($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string The fieldset title
+     */
+    public function get_title()
+    {
+        return $this->title;
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormFieldset.tpl');
+    }
 }
 
 ?>

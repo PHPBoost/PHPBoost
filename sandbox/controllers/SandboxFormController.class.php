@@ -199,7 +199,7 @@ class SandboxFormController extends ModuleController
 
 		// FORM CONSTRAINTS
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
-		
+
 		return $form;
 	}
 }
