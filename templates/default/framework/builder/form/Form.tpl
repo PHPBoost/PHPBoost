@@ -6,7 +6,8 @@
 </div>
 # ENDIF #
 
-<form action="{TARGET}" method="{METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{FORMCLASS}">
+<form id="{HTML_ID}" name="{HTML_ID}"
+	action="{TARGET}" method="{METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{FORMCLASS}">
 	# IF C_HAS_REQUIRED_FIELDS #
 	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
 	# ENDIF #

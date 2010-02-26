@@ -39,6 +39,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	private $prefix = '';
+	/**
+	 * @var string
+	 */
 	protected $label = '';
 	/**
 	 * @var string
@@ -119,6 +123,14 @@ abstract class AbstractFormField implements FormField
 	public function set_id($id)
 	{
 		$this->id = $id;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_prefix($prefix)
+	{
+		$this->prefix = $prefix;
 	}
 
 	/**
@@ -234,7 +246,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_html_id()
 	{
-		return 'form_builder_' . $this->get_id();
+		return $this->prefix . '_' . $this->get_id();
 	}
 
 	/**

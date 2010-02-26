@@ -45,6 +45,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		parent::__construct($columns, $default_sorting_rule, $nb_items_per_page);
 		$this->set_caption('Liste des membres');
 		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
+		$this->set_id('t42');
 
 		$default_value = new FormFieldSelectChoiceOption('tous', '');
 		$options = array(

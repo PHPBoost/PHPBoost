@@ -120,16 +120,18 @@ class HTMLTable extends HTMLElement
 		$has_filters = !empty($filters_form);
 		if ($has_filters)
 		{
+			$form_id = 'filters_form_' . $this->arg_id;
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
 			$fieldset = new FormFieldsetHorizontal(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters_form as $filter_form)
 			{
 				$fieldset->add_field($filter_form->get_form_field());
-				$this->tpl->assign_block_vars('filter', array(
-					'NAME' => 'filters' . $filter_form->get_filter_parameter()
+				$this->tpl->assign_block_vars('filterElt', array(
+					'FORM_ID' => $form_id . '_' . $filter_form->get_filter_parameter(),
+					'TABLE_ID' => $filter_form->get_filter_parameter()
 				));
 			}
-			$form = new HTMLForm('filters' . $this->arg_id, '#');
+			$form = new HTMLForm($form_id, '#');
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			$submit = new FormButtonSubmit('Soumettre', 'submit', 'return ' . $submit_function . '()');

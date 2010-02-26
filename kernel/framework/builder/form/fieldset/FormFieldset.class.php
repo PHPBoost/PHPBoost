@@ -37,6 +37,12 @@ interface FormFieldset
 	 * @param FormField $form_field The field to add
 	 */
 	function add_field(FormField $form_field);
+	
+	/**
+	 * @desc Sets the id prefix for fields
+	 * @param string $prefix The new id prefix for fields.
+	 */
+	function set_prefix($prefix);
 
 	function validate();
 

@@ -32,6 +32,7 @@
  */
 abstract class AbstractFormFieldset implements FormFieldset
 {
+	private $prefix = '';
 	protected $fields = array();
 
 	/**
@@ -45,9 +46,19 @@ abstract class AbstractFormFieldset implements FormFieldset
 			throw new FormBuilderException('Field with identifier "<strong>' . $form_field->get_id() . '</strong>" already exists,
 			please chose a different one!');
 		}
-		else
+		$this->fields[$form_field->get_id()] = $form_field;
+		$form_field->set_prefix($this->prefix);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_prefix($prefix)
+	{
+		$this->prefix = $prefix;
+		foreach ($this->fields as $field)
 		{
-			$this->fields[$form_field->get_id()] = $form_field;
+			$field->set_prefix($prefix);
 		}
 	}
 
