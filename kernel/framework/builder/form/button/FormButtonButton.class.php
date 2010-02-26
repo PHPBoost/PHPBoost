@@ -26,7 +26,7 @@
 
 class FormButtonButton extends AbstractFormButton
 {
-    public function __construct($label, $name, $onclick_action = '')
+    public function __construct($label, $onclick_action = '', $name = '')
     {
         parent::__construct('button', $label, $name, $onclick_action);
     }
