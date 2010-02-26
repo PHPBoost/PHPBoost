@@ -76,7 +76,7 @@
 			theme_advanced_toolbar_location : "top", 
 			theme_advanced_toolbar_align : "center", 
 			theme_advanced_statusbar_location : "bottom",
-			plugins : "table,flash,searchreplace,inlinepopups,fullscreen,emotions",
+			plugins : "table,searchreplace,inlinepopups,fullscreen,emotions",
 			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
 			theme_advanced_resize_horizontal : false, 
 			theme_advanced_resizing : true
