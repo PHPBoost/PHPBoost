@@ -32,10 +32,10 @@
  */
 interface FormButton
 {
-	/**
-	 * @return Template
-	 */
-	function display();
+    /**
+     * @return Template
+     */
+    function display();
 }
 
 ?>

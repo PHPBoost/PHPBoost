@@ -36,78 +36,78 @@
  */
 class FormFieldSelectChoice extends AbstractFormFieldChoice
 {
-	/**
-	 * @desc Constructs a FormFieldSelectChoice.
-	 * @param string $id Field id
-	 * @param string $label Field label
-	 * @param FormFieldEnumOption Default value
-	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
-	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
-	 * @param FormFieldConstraint List of the constraints
-	 */
-	public function __construct($id, $label, FormFieldEnumOption $value, array $options, array $field_options = array(), array $constraints = array())
-	{
-		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
-	}
+    /**
+     * @desc Constructs a FormFieldSelectChoice.
+     * @param string $id Field id
+     * @param string $label Field label
+     * @param FormFieldEnumOption Default value
+     * @param FormFieldEnumOption[] $options Enumeration of the possible values
+     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+     * @param FormFieldConstraint List of the constraints
+     */
+    public function __construct($id, $label, FormFieldEnumOption $value, array $options, array $field_options = array(), array $constraints = array())
+    {
+        parent::__construct($id, $label, $value, $options, $field_options, $constraints);
+    }
 
-	/**
-	 * @return string The html code for the select.
-	 */
-	public function display()
-	{
-		$template = $this->get_template_to_use();
+    /**
+     * @return string The html code for the select.
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
 
-		$this->assign_common_template_variables($template);
+        $this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+        $template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->get_html_code()->to_string(),
-		));
+        ));
 
-		return $template;
-	}
+        return $template;
+    }
 
-	private function get_html_code()
-	{
-		$tpl_src = '<select name="{E_NAME}" id="{E_ID}" class="{E_CSS_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
+    private function get_html_code()
+    {
+        $tpl_src = '<select name="{E_NAME}" id="{E_ID}" class="{E_CSS_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
 			'# START options # # INCLUDE options.OPTION # # END options #' .
 			'</select>';
-		
-		$tpl = new StringTemplate($tpl_src);
-		
-		$tpl->assign_vars(array(
+
+        $tpl = new StringTemplate($tpl_src);
+
+        $tpl->assign_vars(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled()
-		));
-		
-		foreach ($this->get_options() as $option)
-		{
-			$tpl->assign_block_vars('options', array(), array(
-				'OPTION' => $option->display()
-			));
-		}
-		
-		return $tpl;
-	}
+        ));
 
-	protected function get_option($raw_value)
-	{
-		foreach ($this->get_options() as $option)
-		{
-			$result = $option->get_option($raw_value); 
-			if ($result !== null)
-			{
-				return $result;
-			}
-		}
-		return null;
-	}
-	
-	protected function get_default_template()
-	{
-	    return new FileTemplate('framework/builder/form/FormField.tpl');
-	}
+        foreach ($this->get_options() as $option)
+        {
+            $tpl->assign_block_vars('options', array(), array(
+				'OPTION' => $option->display()
+            ));
+        }
+
+        return $tpl;
+    }
+
+    protected function get_option($raw_value)
+    {
+        foreach ($this->get_options() as $option)
+        {
+            $result = $option->get_option($raw_value);
+            if ($result !== null)
+            {
+                return $result;
+            }
+        }
+        return null;
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormField.tpl');
+    }
 }
 
 ?>

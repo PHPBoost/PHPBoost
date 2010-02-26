@@ -32,45 +32,45 @@
  */
 class FormFieldDateTime extends FormFieldDate
 {
-	public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
-	{
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-	}
+    public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
+    {
+        parent::__construct($id, $label, $value, $field_options, $constraints);
+    }
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
-	{
-		global $LANG;
-		
-		$template = parent::display();
+    /**
+     * @return string The html code for the input.
+     */
+    public function display()
+    {
+        global $LANG;
 
-		$template->assign_vars(array(
+        $template = parent::display();
+
+        $template->assign_vars(array(
 			'C_HOUR' => true,
 			'HOURS' => $this->get_value()->get_hours(),
 			'MINUTES' => $this->get_value()->get_minutes(),
 			'L_AT' => $LANG['at'],
 			'L_H' => $LANG['unit_hour']
-		));
+        ));
 
-		return $template;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
-	{
-		parent::retrieve_value();
-		
-		$request = AppContext::get_request();
-		$date = $this->get_value();
-		$date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
-		$date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
-		// TODO Add a range constraint for the hours and minutes
-		$this->set_value($date);
-	}
+        return $template;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retrieve_value()
+    {
+        parent::retrieve_value();
+
+        $request = AppContext::get_request();
+        $date = $this->get_value();
+        $date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
+        $date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
+        // TODO Add a range constraint for the hours and minutes
+        $this->set_value($date);
+    }
 }
 
 ?>

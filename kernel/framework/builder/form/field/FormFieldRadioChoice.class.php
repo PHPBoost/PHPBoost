@@ -32,42 +32,42 @@
  */
 class FormFieldRadioChoice extends AbstractFormFieldChoice
 {
-	/**
-	 * @desc Constructs a FormFieldRadioChoice.
-	 * @param string $id Field id
-	 * @param string $label Field label
-	 * @param FormFieldRadioChoiceOption Default value
-	 * @param FormFieldRadioChoiceOption[] $options Enumeration of the possible values
-	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
-	 * @param FormFieldConstraint List of the constraints
-	 */
-	public function __construct($id, $label, FormFieldRadioChoiceOption $value, $options, array $field_options = array(), array $constraints = array())
-	{
-		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
-	}
+    /**
+     * @desc Constructs a FormFieldRadioChoice.
+     * @param string $id Field id
+     * @param string $label Field label
+     * @param FormFieldRadioChoiceOption Default value
+     * @param FormFieldRadioChoiceOption[] $options Enumeration of the possible values
+     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+     * @param FormFieldConstraint List of the constraints
+     */
+    public function __construct($id, $label, FormFieldRadioChoiceOption $value, $options, array $field_options = array(), array $constraints = array())
+    {
+        parent::__construct($id, $label, $value, $options, $field_options, $constraints);
+    }
 
-	/**
-	 * @return string The html code for the radio input.
-	 */
-	public function display()
-	{
-		$template = $this->get_template_to_use();
+    /**
+     * @return string The html code for the radio input.
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
 
-		$this->assign_common_template_variables($template);
+        $this->assign_common_template_variables($template);
 
-		foreach ($this->get_options() as $option)
-		{
-			$template->assign_block_vars('fieldelements', array(
+        foreach ($this->get_options() as $option)
+        {
+            $template->assign_block_vars('fieldelements', array(
 				'ELEMENT' => $option->display()->to_string(),
-			));
-		}
+            ));
+        }
 
-		return $template;
-	}
-	
-	protected function get_default_template()
-	{
-	    return new FileTemplate('framework/builder/form/FormField.tpl');
-	}
+        return $template;
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormField.tpl');
+    }
 }
 ?>

@@ -32,20 +32,20 @@
  */
 class FormButtonReset implements FormButton
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
-	{
-		global $LANG;
+    /**
+     * {@inheritdoc}
+     */
+    public function display()
+    {
+        global $LANG;
 
-		$template = new StringTemplate('<input type="reset" value="{L_RESET}" class="reset" />');
+        $template = new StringTemplate('<input type="reset" value="{L_RESET}" class="reset" />');
 
-		$template->assign_vars(array(
+        $template->assign_vars(array(
 			'L_RESET' => $LANG['reset']
-		));
+        ));
 
-		return $template;
-	}
+        return $template;
+    }
 }
 ?>

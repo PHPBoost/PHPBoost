@@ -59,7 +59,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
     public function display()
     {
         $template = $this->get_template_to_use();
-        	
+         
         $this->assign_common_template_variables($template);
         $this->assign_textarea_template_variables($template);
 

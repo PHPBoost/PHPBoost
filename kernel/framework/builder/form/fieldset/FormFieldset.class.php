@@ -32,45 +32,45 @@
  */
 interface FormFieldset
 {
-	/**
-	 * @desc Adds a list in the container
-	 * @param FormField $form_field The field to add
-	 */
-	function add_field(FormField $form_field);
-	
-	/**
-	 * @desc Sets the id prefix for fields
-	 * @param string $prefix The new id prefix for fields.
-	 */
-	function set_prefix($prefix);
+    /**
+     * @desc Adds a list in the container
+     * @param FormField $form_field The field to add
+     */
+    function add_field(FormField $form_field);
 
-	function validate();
+    /**
+     * @desc Sets the id prefix for fields
+     * @param string $prefix The new id prefix for fields.
+     */
+    function set_prefix($prefix);
 
-	/**
-	 * @desc Return the form
-	 * @param Template $Template Optionnal template
-	 * @return string
-	 */
-	function display();
+    function validate();
 
-	function get_onsubmit_validations();
+    /**
+     * @desc Return the form
+     * @param Template $Template Optionnal template
+     * @return string
+     */
+    function display();
 
-	function get_validation_error_messages();
+    function get_onsubmit_validations();
+
+    function get_validation_error_messages();
 
 
-	/**
-	 * @return bool
-	 */
-	function has_field($field_id);
+    /**
+     * @return bool
+     */
+    function has_field($field_id);
 
-	/**
-	 * @return FormField
-	 */
-	function get_field($field_id);
-	
-	function get_fields();
-	
-	function set_template(Template $template);
+    /**
+     * @return FormField
+     */
+    function get_field($field_id);
+
+    function get_fields();
+
+    function set_template(Template $template);
 }
 
 ?>

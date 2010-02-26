@@ -32,11 +32,11 @@
  */
 class FormButtonDefaultSubmit extends FormButtonSubmit
 {
-	public function __construct()
-	{
-		global $LANG;
-		
-		parent::__construct($LANG['submit'], 'submit');
-	}
+    public function __construct()
+    {
+        global $LANG;
+
+        parent::__construct($LANG['submit'], 'submit');
+    }
 }
 ?>

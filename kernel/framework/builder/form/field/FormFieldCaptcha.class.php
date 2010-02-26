@@ -80,7 +80,7 @@ class FormFieldCaptcha extends AbstractFormField
         $template = $this->get_template_to_use();
 
         $this->assign_common_template_variables($template);
-        	
+         
         $template->assign_vars(array(
 			'C_IS_ENABLED' => $this->is_enabled(),
 			'CAPTCHA_INSTANCE' => $this->captcha->get_instance(),

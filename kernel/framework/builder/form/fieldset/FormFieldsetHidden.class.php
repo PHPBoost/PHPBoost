@@ -32,23 +32,23 @@
  */
 class FormFieldsetHidden extends AbstractFormFieldset
 {
-	private static $tpl_src = '<div style="display:none;"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
-	
-	/**
-	 * @return Template
-	 */
-	public function display()
-	{
-		$template = $this->get_template_to_use();
+    private static $tpl_src = '<div style="display:none;"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
 
-		$this->assign_template_fields($template);
-		
-		return $template;
-	}
-	
-	protected function get_default_template()
-	{
-	    return new StringTemplate(self::$tpl_src);
-	}
+    /**
+     * @return Template
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
+
+        $this->assign_template_fields($template);
+
+        return $template;
+    }
+
+    protected function get_default_template()
+    {
+        return new StringTemplate(self::$tpl_src);
+    }
 }
 ?>
