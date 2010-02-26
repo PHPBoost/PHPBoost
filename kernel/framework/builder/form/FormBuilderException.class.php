@@ -26,10 +26,10 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>, Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc 
+ * @desc
  * @package builder
  * @subpackage form
- */ 
+ */
 class FormBuilderException extends Exception { }
 
 ?>

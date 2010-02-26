@@ -32,24 +32,24 @@
  */
 class FormButtonSubmit extends AbstractFormButton
 {
-	public function __construct($label, $name, $onclick_action = '')
-	{
-		parent::__construct('submit', $label, $name, $onclick_action);
-	}
+    public function __construct($label, $name, $onclick_action = '')
+    {
+        parent::__construct('submit', $label, $name, $onclick_action);
+    }
 
-	public function has_been_submited()
-	{
-		$request = AppContext::get_request();
-		$button_attribute = $request->get_string($this->get_name(), '');
-		if (!empty($button_attribute))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+    public function has_been_submited()
+    {
+        $request = AppContext::get_request();
+        $button_attribute = $request->get_string($this->get_name(), '');
+        if (!empty($button_attribute))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 ?>

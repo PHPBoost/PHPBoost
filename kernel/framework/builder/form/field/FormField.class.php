@@ -26,95 +26,95 @@
 
 interface FormField
 {
-	/**
-	 * @desc Returns the id.
-	 * @return string
-	 */
-	function get_id();
-	
-	/**
-	 * @desc Sets the id
-	 * @param string $id The id.
-	 */
-	function set_id($id);
-	
-	/**
-	 * @desc Sets the id prefix
-	 * @param string $prefix The new id prefix.
-	 */
-	function set_prefix($prefix);
+    /**
+     * @desc Returns the id.
+     * @return string
+     */
+    function get_id();
 
-	/**
-	 * @return mixed
-	 */
-	function get_value();
+    /**
+     * @desc Sets the id
+     * @param string $id The id.
+     */
+    function set_id($id);
 
-	/**
-	 * @desc Sets the value
-	 * @param string $value The value
-	 */
-	function set_value($value);
+    /**
+     * @desc Sets the id prefix
+     * @param string $prefix The new id prefix.
+     */
+    function set_prefix($prefix);
 
-	/**
-	 * @desc Tries to retrieve the value in the HTTP request's parameters.
-	 */
-	function retrieve_value();
-	
-	/**
-	 * @desc Returns the effective HTML id.
-	 * @return string
-	 */
-	function get_html_id();
-	
-	/**
-	 * @return Template
-	 */
-	function display();
+    /**
+     * @return mixed
+     */
+    function get_value();
 
-	/**
-	 * @desc Validates the field by cheching if all the constraints are satisfied.
-	 * @return bool true if the form is valid
-	 */
-	function validate();
-	
-	/**
-	 * @desc Returns validation error message.
-	 */
-	function get_validation_error_message();
+    /**
+     * @desc Sets the value
+     * @param string $value The value
+     */
+    function set_value($value);
 
-	/**
-	 * @desc Set the validation error message.
-	 * @param string $error_message The message to set
-	 */
-	function set_validation_error_message($error_message);
+    /**
+     * @desc Tries to retrieve the value in the HTTP request's parameters.
+     */
+    function retrieve_value();
 
-	/**
-	 * @desc Adds a constraint to the field constraints.
-	 * @param FormFieldConstraint $constraint The constraint to add
-	 */
-	function add_constraint(FormFieldConstraint $constraint);
-	
-	/**
-	 * @desc Add javascript code on the onblur field parameter that makes validation
-	 */
-	function add_form_constraint(FormConstraint $constraint);
-	
-	/**
-	 * @desc Return true if the field has one or more constraints, false otherwise.
-	 * @return boolean
-	 */	
-	function has_constraints();
-	
-	/**
-	 * @desc Returns the javascript onsubmit code.
-	 * @return string The javascript code that makes the validation when the form is submitted
-	 */
-	function get_js_validations();
-	
-	/**
-	 * @desc Sets the template to use to display the field
-	 */
-	function set_template(Template $template);
+    /**
+     * @desc Returns the effective HTML id.
+     * @return string
+     */
+    function get_html_id();
+
+    /**
+     * @return Template
+     */
+    function display();
+
+    /**
+     * @desc Validates the field by cheching if all the constraints are satisfied.
+     * @return bool true if the form is valid
+     */
+    function validate();
+
+    /**
+     * @desc Returns validation error message.
+     */
+    function get_validation_error_message();
+
+    /**
+     * @desc Set the validation error message.
+     * @param string $error_message The message to set
+     */
+    function set_validation_error_message($error_message);
+
+    /**
+     * @desc Adds a constraint to the field constraints.
+     * @param FormFieldConstraint $constraint The constraint to add
+     */
+    function add_constraint(FormFieldConstraint $constraint);
+
+    /**
+     * @desc Add javascript code on the onblur field parameter that makes validation
+     */
+    function add_form_constraint(FormConstraint $constraint);
+
+    /**
+     * @desc Return true if the field has one or more constraints, false otherwise.
+     * @return boolean
+     */
+    function has_constraints();
+
+    /**
+     * @desc Returns the javascript onsubmit code.
+     * @return string The javascript code that makes the validation when the form is submitted
+     */
+    function get_js_validations();
+
+    /**
+     * @desc Sets the template to use to display the field
+     */
+    function set_template(Template $template);
 }
 
 ?>

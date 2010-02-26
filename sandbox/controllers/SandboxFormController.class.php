@@ -27,24 +27,24 @@
 
 class SandboxFormController extends ModuleController
 {
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $preview_button;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-	
-	public function execute(HTTPRequest $request)
-	{
-		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
-		$form = $this->build_form();
-		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
-		{
-			if ($form->validate())
-			{
-				$view->assign_vars(array(
+    /**
+     * @var FormButtonSubmit
+     */
+    private $preview_button;
+    /**
+     * @var FormButtonDefaultSubmit
+     */
+    private $submit_button;
+
+    public function execute(HTTPRequest $request)
+    {
+        $view = new FileTemplate('sandbox/SandboxFormController.tpl');
+        $form = $this->build_form();
+        if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
+        {
+            if ($form->validate())
+            {
+                $view->assign_vars(array(
 					'C_RESULT' => true, 
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -61,146 +61,146 @@ class SandboxFormController extends ModuleController
 					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT),
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
 					'C_PREVIEW' => $this->preview_button->has_been_submited()		 
-				));
+                ));
 
-				$file = $form->get_value('file');
-				if ( $file !== null)
-				{
-					$view->assign_vars(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
-				}
-			}
-		}
-		$view->add_subtemplate('form', $form->display());
-		return new SiteDisplayResponse($view);
-	}
+                $file = $form->get_value('file');
+                if ( $file !== null)
+                {
+                    $view->assign_vars(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+                }
+            }
+        }
+        $view->add_subtemplate('form', $form->display());
+        return new SiteDisplayResponse($view);
+    }
 
-	private function build_form()
-	{
-		$form = new HTMLForm('sandboxForm');
+    private function build_form()
+    {
+        $form = new HTMLForm('sandboxForm');
 
-		// FIELDSET
-		$fieldset = new FormFieldsetHTML('Fieldset');
-		$form->add_fieldset($fieldset);
-		
-		// SINGLE LINE TEXT
-		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
+        // FIELDSET
+        $fieldset = new FormFieldsetHTML('Fieldset');
+        $form->add_fieldset($fieldset);
+
+        // SINGLE LINE TEXT
+        $fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
-			array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
-		));
-		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
+        array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+        ));
+        $fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
-		));
-		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
+        ));
+        $fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
-			array(new UrlFormFieldConstraint())
-		));
-		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
+        array(new UrlFormFieldConstraint())
+        ));
+        $fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Mail valide'),
-			array(new MailFormFieldConstraint())
-		));
-		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
+        array(new MailFormFieldConstraint())
+        ));
+        $fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
-		));
-		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
+        ));
+        $fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
-			array(new IntegerIntervalFormFieldConstraint(10, 100))
-		));
-		
-		// PASSWORD
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
+        array(new IntegerIntervalFormFieldConstraint(10, 100))
+        ));
+
+        // PASSWORD
+        $fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-			array(new LengthIntervalFormFieldConstraint(6, 12))
-		));
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
+        array(new LengthIntervalFormFieldConstraint(6, 12))
+        ));
+        $fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-			array(new LengthIntervalFormFieldConstraint(6, 12))
-		));
-		
-		// MULTI LINE TEXT
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto', 
-			array('rows' => 6, 'cols' => 47, 'description' => 'Description')
-		));
+        array(new LengthIntervalFormFieldConstraint(6, 12))
+        ));
 
-		// RICH TEXT
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
-		
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche', 'toto <strong>tata</strong>', array('formatter' => ContentFormattingMetaFactory::create_factory(ContentFormattingMetaFactory::TINYMCE_LANGUAGE))));
+        // MULTI LINE TEXT
+        $fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
+        array('rows' => 6, 'cols' => 47, 'description' => 'Description')
+        ));
 
-		// RADIO
-		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option, 
-			array(
-				$default_option,
-				new FormFieldRadioChoiceOption('Choix 2', '2')
-			)
-		));
+        // RICH TEXT
+        $fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
 
-		// CHECKBOX
-		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
+        $fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche', 'toto <strong>tata</strong>', array('formatter' => ContentFormattingMetaFactory::create_factory(ContentFormattingMetaFactory::TINYMCE_LANGUAGE))));
 
-		// SELECT
-		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
-			array(
-				$default_select_option,
-				new FormFieldSelectChoiceOption('Choix 2', '2'),
-				new FormFieldSelectChoiceOption('Choix 3', '3'),
-				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
-					new FormFieldSelectChoiceOption('Choix 4', '4'),
-					new FormFieldSelectChoiceOption('Choix 5', '5'),
-				)),
-				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
-					new FormFieldSelectChoiceOption('Choix 6', '6'),
-					new FormFieldSelectChoiceOption('Choix 7', '7'),
-				))
-			)
-		));
+        // RADIO
+        $default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
+        $fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option,
+        array(
+        $default_option,
+        new FormFieldRadioChoiceOption('Choix 2', '2')
+        )
+        ));
 
-		$fieldset2 = new FormFieldsetHTML('Fieldset 2');
-		$form->add_fieldset($fieldset2);
+        // CHECKBOX
+        $fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 
-		// CAPTCHA
-		$fieldset2->add_field(new FormFieldCaptcha());
+        // SELECT
+        $default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
+        $fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+        array(
+        $default_select_option,
+        new FormFieldSelectChoiceOption('Choix 2', '2'),
+        new FormFieldSelectChoiceOption('Choix 3', '3'),
+        new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+        new FormFieldSelectChoiceOption('Choix 4', '4'),
+        new FormFieldSelectChoiceOption('Choix 5', '5'),
+        )),
+        new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+        new FormFieldSelectChoiceOption('Choix 6', '6'),
+        new FormFieldSelectChoiceOption('Choix 7', '7'),
+        ))
+        )
+        ));
 
-		// HIDDEN
-		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
+        $fieldset2 = new FormFieldsetHTML('Fieldset 2');
+        $form->add_fieldset($fieldset2);
 
-		// FREE FIELD
-		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
+        // CAPTCHA
+        $fieldset2->add_field(new FormFieldCaptcha());
 
-		// DATE
-		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
+        // HIDDEN
+        $fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
 
-		// DATE TIME
-		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
+        // FREE FIELD
+        $fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
 
-		// FILE PICKER
-		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+        // DATE
+        $fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
 
-		// VERTICAL FIELDSET
-		$hidden_fieldset = new FormFieldsetVertical();
-		$form->add_fieldset($hidden_fieldset);
-		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
-		$hidden_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
-		
-		// HORIZONTAL FIELDSET
-		$vertical_fieldset = new FormFieldsetHorizontal();
-		$form->add_fieldset($vertical_fieldset);
-		$vertical_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
-		$vertical_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
-		
-		// BUTTONS
-		$form->add_button(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
-		$form->add_button($this->preview_button);
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+        // DATE TIME
+        $fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
 
-		// FORM CONSTRAINTS
-		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
+        // FILE PICKER
+        $fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 
-		return $form;
-	}
+        // VERTICAL FIELDSET
+        $hidden_fieldset = new FormFieldsetVertical();
+        $form->add_fieldset($hidden_fieldset);
+        $hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
+        $hidden_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
+
+        // HORIZONTAL FIELDSET
+        $vertical_fieldset = new FormFieldsetHorizontal();
+        $form->add_fieldset($vertical_fieldset);
+        $vertical_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
+        $vertical_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
+
+        // BUTTONS
+        $form->add_button(new FormButtonReset());
+        $this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
+        $form->add_button($this->preview_button);
+        $this->submit_button = new FormButtonDefaultSubmit();
+        $form->add_button($this->submit_button);
+        $form->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+
+        // FORM CONSTRAINTS
+        $form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
+
+        return $form;
+    }
 }
 ?>

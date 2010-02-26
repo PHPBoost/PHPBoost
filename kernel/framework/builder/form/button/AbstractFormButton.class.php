@@ -32,56 +32,56 @@
  */
 abstract class AbstractFormButton implements FormButton
 {
-	private $name = '';
-	private $label = '';
-	private $type = '';
-	private $onclick_action = '';
-	
-	public function __construct($type, $label, $name, $onclick_action = '')
-	{
-		$this->type = $type;
-		$this->label = $label;
-		$this->name = $name;
-		$this->onclick_action = $onclick_action;
-	}
+    private $name = '';
+    private $label = '';
+    private $type = '';
+    private $onclick_action = '';
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
-	{
-		global $LANG;
+    public function __construct($type, $label, $name, $onclick_action = '')
+    {
+        $this->type = $type;
+        $this->label = $label;
+        $this->name = $name;
+        $this->onclick_action = $onclick_action;
+    }
 
-		$template = new StringTemplate('<input type="{E_TYPE}" name="{E_BUTTON_NAME}" value="{EL_VALUE}" class="submit" onclick="{E_ONCLICK_ACTION}" />');
+    /**
+     * {@inheritdoc}
+     */
+    public function display()
+    {
+        global $LANG;
 
-		$template->assign_vars(array(
+        $template = new StringTemplate('<input type="{E_TYPE}" name="{E_BUTTON_NAME}" value="{EL_VALUE}" class="submit" onclick="{E_ONCLICK_ACTION}" />');
+
+        $template->assign_vars(array(
 			'L_VALUE' => $this->label,
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
-		));
+        ));
 
-		return $template;
-	}
-	
-	public function get_name()
-	{
-		return $this->name;
-	}
-	
-	public function set_name($name)
-	{
-		$this->name = $name;
-	}
-	
-	public function get_label()
-	{
-		return $this->label;
-	}
-	
-	public function set_label($label)
-	{
-		$this->label = $label;
-	}
+        return $template;
+    }
+
+    public function get_name()
+    {
+        return $this->name;
+    }
+
+    public function set_name($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get_label()
+    {
+        return $this->label;
+    }
+
+    public function set_label($label)
+    {
+        $this->label = $label;
+    }
 }
 ?>

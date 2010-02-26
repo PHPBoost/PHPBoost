@@ -32,40 +32,40 @@
  */
 class FormFieldTextEditor extends AbstractFormField
 {
-	private $size = 30;
-	private $maxlength = 255;
-	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="{E_NAME}" id="{E_ID}" value="{E_VALUE}"
+    private $size = 30;
+    private $maxlength = 255;
+    private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="{E_NAME}" id="{E_ID}" value="{E_VALUE}"
 	class="{E_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # onblur="{E_ONBLUR_ACTION}" />';
 
-	/**
-	 * @desc Constructs a FormFieldTextEditor.
-	 * It has these options in addition to the AbstractFormField ones:
-	 * <ul>
-	 * 	<li>size: The size (width) of the HTML field</li>
-	 * 	<li>maxlength: The maximum length for the field</li>
-	 * </ul>
-	 * @param string $id Field identifier
-	 * @param string $label Field label
-	 * @param string $value Default value
-	 * @param string[] $field_options Map containing the options
-	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-	 */
-	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
-	{
-		$this->css_class = "text";
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-	}
+    /**
+     * @desc Constructs a FormFieldTextEditor.
+     * It has these options in addition to the AbstractFormField ones:
+     * <ul>
+     * 	<li>size: The size (width) of the HTML field</li>
+     * 	<li>maxlength: The maximum length for the field</li>
+     * </ul>
+     * @param string $id Field identifier
+     * @param string $label Field label
+     * @param string $value Default value
+     * @param string[] $field_options Map containing the options
+     * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+     */
+    public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+    {
+        $this->css_class = "text";
+        parent::__construct($id, $label, $value, $field_options, $constraints);
+    }
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
-	{
-		$template = $this->get_template_to_use(); 
+    /**
+     * @return string The html code for the input.
+     */
+    public function display()
+    {
+        $template = $this->get_template_to_use();
 
-		$field = new StringTemplate(self::$tpl_src);
+        $field = new StringTemplate(self::$tpl_src);
 
-		$field->assign_vars(array(
+        $field->assign_vars(array(
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -74,40 +74,40 @@ class FormFieldTextEditor extends AbstractFormField
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'ONBLUR_ACTION' => $this->get_onblur_validation() . $this->get_onblur()
-		));
+        ));
 
-		$this->assign_common_template_variables($template);
+        $this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+        $template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field->to_string()
-		));
+        ));
 
-		return $template;
-	}
+        return $template;
+    }
 
-	protected function compute_options(array &$field_options)
-	{
-		foreach ($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'size' :
-					$this->size = $value;
-					unset($field_options['size']);
-					break;
-				case 'maxlength' :
-					$this->maxlength = $value;
-					unset($field_options['maxlength']);
-					break;
-			}
-		}
-		parent::compute_options($field_options);
-	}
-	
-	protected function get_default_template()
-	{
-	    return new FileTemplate('framework/builder/form/FormField.tpl');
-	}
+    protected function compute_options(array &$field_options)
+    {
+        foreach ($field_options as $attribute => $value)
+        {
+            $attribute = strtolower($attribute);
+            switch ($attribute)
+            {
+                case 'size' :
+                    $this->size = $value;
+                    unset($field_options['size']);
+                    break;
+                case 'maxlength' :
+                    $this->maxlength = $value;
+                    unset($field_options['maxlength']);
+                    break;
+            }
+        }
+        parent::compute_options($field_options);
+    }
+
+    protected function get_default_template()
+    {
+        return new FileTemplate('framework/builder/form/FormField.tpl');
+    }
 }
 ?>
