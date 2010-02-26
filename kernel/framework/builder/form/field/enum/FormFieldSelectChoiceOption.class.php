@@ -46,7 +46,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function display()
 	{
-		$tpl_src = '<option value="{VALUE}" # IF C_SELECTED # selected="selected" # ENDIF # >{LABEL}</option>';
+		$tpl_src = '<option value="{E_VALUE}" # IF C_SELECTED # selected="selected" # ENDIF # >{LABEL}</option>';
 		
 		$tpl = new StringTemplate($tpl_src);
 		$tpl->assign_vars(array(

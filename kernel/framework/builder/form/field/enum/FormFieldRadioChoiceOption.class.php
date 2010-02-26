@@ -42,7 +42,7 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function display()
 	{
-		$tpl_src = '<label><input type="radio" name="{NAME}" value="{VALUE}" # IF C_CHECKED # checked="checked" # ENDIF #/> {LABEL}</label>';
+		$tpl_src = '<label><input type="radio" name="{E_NAME}" value="{E_VALUE}" # IF C_CHECKED # checked="checked" # ENDIF #/> {LABEL}</label>';
 		
 		$tpl = new StringTemplate($tpl_src);
 		

@@ -91,7 +91,7 @@ class FormFieldCheckbox extends AbstractFormField
 
     private function generate_html_code()
     {
-        $tpl_src = '<input type="checkbox" name="{NAME}" id="{ID}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # />';
+        $tpl_src = '<input type="checkbox" name="{E_NAME}" id="{E_ID}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # />';
 
         $tpl = new StringTemplate($tpl_src);
         $tpl->assign_vars(array(

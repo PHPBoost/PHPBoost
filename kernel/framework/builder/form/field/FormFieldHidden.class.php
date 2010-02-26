@@ -32,7 +32,7 @@
  */
 class FormFieldHidden extends AbstractFormField
 {
-    private static $tpl_src = '<input type="hidden" id="{ID}" name="{ID}" value="{VALUE}" />';
+    private static $tpl_src = '<input type="hidden" id="{E_ID}" name="{E_ID}" value="{E_VALUE}" />';
 
     public function __construct($id, $value)
     {

@@ -1,4 +1,4 @@
-		<label for="{ID}">
+		<label for="{E_ID}">
 			# IF C_REQUIRED # * # ENDIF #
 			{LABEL}
 		</label>
@@ -7,10 +7,10 @@
 		# IF C_EDITOR_ENABLED #
 			{EDITOR}
 		# ENDIF #
-		<textarea id="{ID}" name="{ID}" rows="{ROWS}" cols="{COLS}" class="{CLASS}" onblur="{ONBLUR}"{DISABLED}>{VALUE}</textarea>
+		<textarea id="{E_ID}" name="{E_ID}" rows="{ROWS}" cols="{COLS}" class="{E_CLASS}" onblur="{ONBLUR}"{DISABLED}>{VALUE}</textarea>
 		<br />
-		<span id="onblurContainerResponse{ID}"></span>
-		<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
+		<span id="onblurContainerResponse{E_ID}"></span>
+		<span style="font-weight:bold;display:none" id="onblurMesssageResponse{E_ID}"></span>
 		# IF C_EDITOR_ENABLED #
 			<div style="text-align:center;">{PREVIEW_BUTTON}</div>
 			<br />

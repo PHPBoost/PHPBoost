@@ -68,7 +68,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 
 	private function get_html_code()
 	{
-		$tpl_src = '<select name="{NAME}" id="{ID}" class="{CSS_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
+		$tpl_src = '<select name="{E_NAME}" id="{E_ID}" class="{E_CSS_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
 			'# START options # # INCLUDE options.OPTION # # END options #' .
 			'</select>';
 		
