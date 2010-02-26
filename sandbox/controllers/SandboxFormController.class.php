@@ -195,6 +195,7 @@ class SandboxFormController extends ModuleController
 		$form->add_button($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonButton('toto', 'Bouton', 'alert("coucou");'));
 
 		// FORM CONSTRAINTS
 		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));

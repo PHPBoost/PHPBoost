@@ -30,7 +30,7 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class AbstractFormButton implements FormButton
+abstract class AbstractFormButton implements FormButton
 {
 	private $name = '';
 	private $label = '';
