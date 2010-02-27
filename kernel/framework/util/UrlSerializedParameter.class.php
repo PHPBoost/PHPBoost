@@ -32,7 +32,7 @@ class UrlSerializedParameter
 {
 	private $arg_id;
 	private $query_args;
-	private $parameters;
+	private $parameters = array();
 
 	public function __construct($arg_id)
 	{
@@ -43,7 +43,7 @@ class UrlSerializedParameter
 
 	public function get_parameters()
 	{
-		return is_array($this->parameters) ? $this->parameters : array();
+		return $this->parameters;
 	}
 
 	public function set_parameters($parameters)
@@ -86,31 +86,9 @@ class UrlSerializedParameter
 
 	private function parse_parameters()
 	{
-		urlencode('+');
 		$args = AppContext::get_request()->get_value($this->arg_id, '');
-		foreach (preg_split('`,`', $args) as $param)
-		{
-			$matches = array();
-			if (preg_match('`^(\w+):(.+)$`i', $param, $matches))
-			{
-				$param_name = $matches[1];
-				$param_value = $matches[2];
-				if (preg_match('`^{.*}$`i', $param_value))
-				{
-					$values = explode(':', substr($param_value, 1, strlen($param_value) - 2));
-					$decoded_values = array();
-					foreach ($values as $value)
-					{
-						$decoded_values[] = urldecode($value);
-					}
-					$this->parameters[$param_name] = $decoded_values;
-				}
-				else
-				{
-					$this->parameters[$param_name] = urldecode($param_value);
-				}
-			}
-		}
+		$parser = new UrlSerializedParameterParser($args);
+		$this->parameters = $parser->get_parameters();
 	}
 
 	private function serialize_parameters($parameters)
@@ -118,27 +96,28 @@ class UrlSerializedParameter
 		$result = array();
 		foreach ($parameters as $key => $value)
 		{
-			$param = $key . ':';
+			$param = '';
+			if (!is_int($key))
+			{
+				$param = $key . ':';
+			}
 			if (is_array($value))
 			{
-				$values = array();
-				foreach ($value as $a_value)
-				{
-					$values[] = $a_value;
-					//						$values[] = urlencode($a_value);
-				}
-				$param .= '{' . implode(':', $values) . '}';
-				//				$param .= urlencode('{' . implode(':', $value) . '}');
+				$param .= '{' . $this->serialize_parameters($value) . '}';
+				//				$values = array();
+				//				foreach ($value as $a_value)
+				//				{
+				//					$values[] = $a_value;
+				//				}
+				//				$param .= '{' . implode(':', $values) . '}';
 			}
 			else
 			{
 				$param .= $value;
-				//				$param .= urlencode($value);
 			}
 			$result[] = $param;
 		}
 		return implode(',', $result);
-		//		return urlencode(implode(',', $result));
 	}
 }
 

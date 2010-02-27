@@ -42,7 +42,7 @@ class Debug
 	{
 		if (self::$enabled === null)
 		{
-			$debug = false;
+			$debug = true;
 			@include PATH_TO_ROOT . '/cache/debug.php';
 			self::$enabled = $debug;
 		}
