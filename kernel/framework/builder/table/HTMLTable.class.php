@@ -116,19 +116,19 @@ class HTMLTable extends HTMLElement
 
 	private function generate_filters_form()
 	{
-		$filters_form = $this->model->get_filters_form();
-		$has_filters = !empty($filters_form);
-		if ($has_filters)
+		$filters = $this->model->get_filters();
+		$has_filters = !empty($filters);
+		if ($filters)
 		{
 			$form_id = 'filters_form_' . $this->arg_id;
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
 			$fieldset = new FormFieldsetHorizontal(LangLoader::get_class_message('filters', __CLASS__));
-			foreach ($filters_form as $filter_form)
+			foreach ($filters as $filter)
 			{
-				$fieldset->add_field($filter_form->get_form_field());
+				$fieldset->add_field($filter->get_form_field());
 				$this->tpl->assign_block_vars('filterElt', array(
-					'FORM_ID' => $form_id . '_' . $filter_form->get_filter_parameter(),
-					'TABLE_ID' => $filter_form->get_filter_parameter()
+					'FORM_ID' => $form_id . '_' . $filter->get_id(),
+					'TABLE_ID' => $filter->get_id()
 				));
 			}
 			$form = new HTMLForm($form_id, '#');

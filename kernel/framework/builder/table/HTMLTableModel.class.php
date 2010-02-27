@@ -93,12 +93,25 @@ interface HTMLTableModel
 	function is_sort_parameter_allowed($parameter);
 	
 	/**
-	 * @desc Returns true if the value is allowed for this filter parameter
-	 * @param string $parameter the filter parameter name
+	 * @desc Returns true if the value is allowed for this filter and sets its filter value
+	 * @param string $id the filter id
 	 * @param string $value the filter value
-	 * @return bool true if the value is allowed for this filter parameter
+	 * @return bool true if the value is allowed for this filter
 	 */
-	function is_filter_allowed($filter_parameter, $value);
+    function is_filter_allowed($id, $value);
+    
+    /**
+     * @desc Returns the filter identified by the given id
+     * @param string $id the filter id
+     * @return HTMLTableFilter the filter identified by the given id
+     */
+    function get_filter($id);
+    
+    /**
+     * @desc Returns all this model filters
+     * @return HTMLTableFilter all this model filters
+     */
+    function get_filters();
 
 	/**
 	 * @desc Returns the number of matching rows
