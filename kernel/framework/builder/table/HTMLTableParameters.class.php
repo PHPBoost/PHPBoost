@@ -95,7 +95,7 @@ class HTMLTableParameters
 		$page = $this->compute_first_row_new_page($nb_items, $current_item_index);
 		return $this->url_parameters->get_url(array('items' => $nb_items, 'page' => $page));
 	}
-	
+
 	public function get_default_table_url()
 	{
 		$default_options = array('page' => 1);
@@ -187,41 +187,36 @@ class HTMLTableParameters
 
 	private function compute_filters()
 	{
-		$this->filter_capture_regex = '`(' . HTMLTableFilter::EQUALS . '|' . HTMLTableFilter::LIKE . ')-([^-]+)-(.+)`';
 		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
-		{ 
-			$filter_parameters = $this->parameters['filters'];
-			foreach ($filter_parameters as $filter_param)
+		{
+			$filters = $this->parameters['filters'];
+			foreach ($filters as $filter)
 			{
-				$this->add_filter($filter_param);
+				$this->add_filter($filter);
 			}
 		}
 	}
 
-	private function add_filter($filter_param)
+	private function add_filter($filter)
 	{
 		$param = array();
-		if (preg_match($this->filter_capture_regex, $filter_param, $param))
+		echo '<hr />' . $filter . '<hr />';
+		if (preg_match('`^([a-z0-9]+):(.+)$`iU', $filter, $param))
 		{
-			$filter_mode = $param[1];
-			$filter_parameter = $param[2];
-			$value = str_replace('%', '', $param[3]);
-			$this->check_and_add_filter($filter_parameter, $filter_mode, $value);
+			$filter_id = $param[1];
+			$filter_value = $param[2];
+			$this->check_and_add_filter($filter_id, $filter_value);
 		}
 	}
 
-	private function check_and_add_filter($filter_parameter, $filter_mode, $value)
+	private function check_and_add_filter($id, $value)
 	{
-		if ($filter_mode != HTMLTableFilter::EQUALS)
+		if ($this->model->is_filter_allowed($id, $value))
 		{
-			$filter_mode = HTMLTableFilter::LIKE;
-		}
-		if ($this->model->is_filter_allowed($filter_parameter, $value))
-		{
-			$this->filters[] = new HTMLTableFilter($filter_parameter, $value, $filter_mode);
+			$this->filters[] = $this->model->get_filter($id);
 		}
 	}
-	
+
 	private function compute_first_row_new_page($nb_items, $current_item_index)
 	{
 		return ceil(($current_item_index + 1) / $nb_items);

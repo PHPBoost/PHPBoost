@@ -40,7 +40,7 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 	private $nb_rows_options = array(10, 25, 100);
 	private $default_sorting_rule;
 	private $allowed_sort_parameters = array();
-	private $allowed_filter_parameters = array();
+	private $filters = array();
 
 	/**
 	 * @var HTMLTableColumn[]
@@ -142,14 +142,29 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 	/**
 	 * {@inheritdoc}
 	 */
-	public function is_filter_allowed($filter_parameter, $value)
+	public function is_filter_allowed($id, $value)
 	{
-		if ($this->is_filter_parameter_allowed($filter_parameter))
+		if (array_key_exists($id, $this->filters))
 		{
-			return $this->allowed_filter_parameters[$filter_parameter]->is_filter_value_allowed($value);
+			return $this->filters[$id]->is_value_allowed($value);
 		}
-		return false;
 	}
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get_filter($id)
+    {
+       return $this->filters[$id];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get_filters()
+    {
+       return $this->filters;
+    }
 
 	public function set_id($id)
 	{
@@ -175,21 +190,9 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 		}
 	}
 
-	public function add_filter(HTMLTableFilterForm $filter)
+	public function add_filter(HTMLTableFilter $filter)
 	{
-		$this->allowed_filter_parameters[$filter->get_filter_parameter()] = $filter;
-	}
-
-	public function get_filters_form()
-	{
-		return $this->allowed_filter_parameters;
-	}
-
-	private function is_filter_parameter_allowed($parameter)
-	{
-//		Debug::dump($parameter);
-//		Debug::dump($this->allowed_filter_parameters);
-		return array_key_exists($parameter, $this->allowed_filter_parameters);
+		$this->filters[$filter->get_id()] = $filter;
 	}
 
 	private function add_column(HTMLTableColumn $column)
