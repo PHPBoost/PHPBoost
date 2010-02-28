@@ -11,6 +11,7 @@
 <!--	HIDE_FILTERS-->
 <!--</div>-->
 <div id="filters_{TABLE_ID}" style="border:1px #aaa solid;">
+   <script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/UrlSerializedParameterEncoder.js"></script>
 	# INCLUDE filters #
 </div>
 # ENDIF #
