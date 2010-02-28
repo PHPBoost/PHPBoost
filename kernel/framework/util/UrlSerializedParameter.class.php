@@ -90,35 +90,5 @@ class UrlSerializedParameter
 		$parser = new UrlSerializedParameterParser($args);
 		$this->parameters = $parser->get_parameters();
 	}
-
-	private function serialize_parameters($parameters)
-	{
-		$result = array();
-		foreach ($parameters as $key => $value)
-		{
-			$param = '';
-			if (!is_int($key))
-			{
-				$param = $key . ':';
-			}
-			if (is_array($value))
-			{
-				$param .= '{' . $this->serialize_parameters($value) . '}';
-				//				$values = array();
-				//				foreach ($value as $a_value)
-				//				{
-				//					$values[] = $a_value;
-				//				}
-				//				$param .= '{' . implode(':', $values) . '}';
-			}
-			else
-			{
-				$param .= $value;
-			}
-			$result[] = $param;
-		}
-		return implode(',', $result);
-	}
 }
-
 ?>

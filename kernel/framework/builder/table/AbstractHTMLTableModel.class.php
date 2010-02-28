@@ -150,21 +150,21 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 		}
 	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get_filter($id)
-    {
-       return $this->filters[$id];
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_filter($id)
+	{
+		return $this->filters[$id];
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get_filters()
-    {
-       return $this->filters;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_filters()
+	{
+		return $this->filters;
+	}
 
 	public function set_id($id)
 	{
