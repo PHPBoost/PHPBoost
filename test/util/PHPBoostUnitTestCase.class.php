@@ -1,5 +1,7 @@
 <?php
 
+define('MAGIC_QUOTES', false);
+
 class PHPBoostUnitTestCase extends PHPUnit_Framework_TestCase {
 
 	function MY_todo($file='', $method='')

@@ -47,15 +47,8 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 		$this->set_id('t42');
 
-		$default_value = new FormFieldSelectChoiceOption('tous', '');
-		$options = array(
-		$default_value,
-		new FormFieldSelectChoiceOption('Horn', 'horn'),
-		new FormFieldSelectChoiceOption('CouCou', 'coucou')
-		);
-		$select = new FormFieldSelectChoice('login', 'Pseudo', $default_value, $options);
-		$allowed_values = array('tous', 'Horn', 'Coucou');
-		$this->add_filter(new HTMLTableEqualsFilterForm($select, $allowed_values));
+		$options = array('horn' => 'Horn', 'coucou' => 'Coucou');
+		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'login', 'Pseudo', $options));
 	}
 
 	public function get_number_of_matching_rows(array $filters)
@@ -95,19 +88,9 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 			$sql_filters = array();
 			foreach ($filters as $filter)
 			{
-				$value = $filter->get_value();
-				$parameter = $filter->get_filter_parameter();
-				$sql_column = $this->get_filter_parameter_column($filter);
-				if ($filter->get_mode() == HTMLTableFilter::EQUALS)
-				{
-					$sql_filters[] = $sql_column . '=:' . $parameter;
-					$this->parameters[$parameter] = $value;
-				}
-				else
-				{
-					$sql_filters[] = $sql_column . ' LIKE :' . $parameter;
-					$this->parameters[$parameter] = $value . '%';
-				}
+				$query_fragment = $filter->get_sql();
+				$query_fragment->add_parameters_to_map($this->parameters);
+				$sql_filters[] = $query_fragment->get_query();
 			}
 			$clause .= ' AND ' . implode(' AND ', $sql_filters);
 		}
@@ -131,20 +114,17 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
 	{
-		$values = array(
-			'pseudo' => 'login',
-			'register_date' => 'timestamp'
-			);
-			$default = 'user_id';
-			return Arrays::find($rule->get_sort_parameter(), $values, $default);
+		$values = array('pseudo' => 'login', 'register_date' => 'timestamp');
+		$default = 'user_id';
+		return Arrays::find($rule->get_sort_parameter(), $values, $default);
 	}
 
-	private function get_filter_parameter_column(HTMLTableFilter $filter)
-	{
-		$values = array();
-		$default = 'login';
-		return Arrays::find($filter->get_filter_parameter(), $values, $default);
-	}
+	//	private function get_filter_parameter_column(HTMLTableFilter $filter)
+	//	{
+	//		$values = array();
+	//		$default = 'login';
+	//		return Arrays::find($filter->get_filter_parameter(), $values, $default);
+	//	}
 
 	/**
 	 * @param array $row
