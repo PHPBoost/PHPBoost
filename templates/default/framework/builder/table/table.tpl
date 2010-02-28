@@ -1,15 +1,4 @@
 # IF C_FILTERS #
-<!--<div-->
-<!--	id="show_filters_{TABLE_ID}"-->
-<!--	onclick="toggleTableFilters();">-->
-<!--	SHOW_FILTERS-->
-<!--</div>-->
-<!--<div-->
-<!--	id="hide_filters_{TABLE_ID}"-->
-<!--	onclick="toggleTableFilters();"-->
-<!--	style="display:none;">-->
-<!--	HIDE_FILTERS-->
-<!--</div>-->
 <div id="filters_{TABLE_ID}" style="border:1px #aaa solid;">
    <script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/UrlSerializedParameterEncoder.js"></script>
 	# INCLUDE filters #
@@ -115,12 +104,6 @@
 # IF C_FILTERS #
 <script type="text/javascript">
 <!--
-function toggleTableFilters() {
-	Effect.toggle('show_filters_{TABLE_ID}', 'appear', { duration: 0 });
-	Effect.toggle('hide_filters_{TABLE_ID}', 'appear', { duration: 0 });
-	Effect.toggle('filters_{TABLE_ID}', 'appear', { duration: 0.5 });
-}
-
 function {SUBMIT_FUNCTION}() {
     var filters = new Array();
 	var filtersObjects = new Array();
@@ -135,17 +118,16 @@ function {SUBMIT_FUNCTION}() {
 		var domFilter = $(filter.formId);
 		if (domFilter) {
 			var filterValue = $F(domFilter);
-			filters.push(filter.tableId + ':' + filterValue);
-			//window.alert(filter.tableId + ' = ' + filterValue);
+			filters[filter.tableId] = filterValue;
 		} else {
 			window.alert('element ' + filter.formId + ' not found');
 		}
 	}
-	var submitUrl = {J_SUBMIT_URL};
-	window.alert('URL: ' + submitUrl + ',filters:{' + filters.join(',') + '}');
-	//submitUrl = '?url=/table&t42=page:1,filters:{equals-login-Horn}';
+    var serializer = new UrlSerializedParameterEncoder();
+	var submitUrl = {J_SUBMIT_URL} + ',filters:{' + serializer.encode(filters) + '}';
+	//window.alert('URL: ' + submitUrl);
 	window.location = submitUrl;
-	return false;
+    return false;
 }
 -->
 </script>

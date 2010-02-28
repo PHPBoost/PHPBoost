@@ -48,7 +48,7 @@ class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter imp
 		$parameter_name = $this->db_field . '_value';
 		$query = $this->db_field . '=:' . $parameter_name;
 		$parameters = array($parameter_name => $this->get_value());
-		return new SQLFragmentBuilder($query, $parameters);
+		return new SQLFragment($query, $parameters);
 	}
 }
 

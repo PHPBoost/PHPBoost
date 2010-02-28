@@ -190,22 +190,10 @@ class HTMLTableParameters
 		if (isset($this->parameters['filters']) && is_array($this->parameters['filters']))
 		{
 			$filters = $this->parameters['filters'];
-			foreach ($filters as $filter)
+			foreach ($filters as $id => $value)
 			{
-				$this->add_filter($filter);
+				$this->check_and_add_filter($id, $value);
 			}
-		}
-	}
-
-	private function add_filter($filter)
-	{
-		$param = array();
-		echo '<hr />' . $filter . '<hr />';
-		if (preg_match('`^([a-z0-9]+):(.+)$`iU', $filter, $param))
-		{
-			$filter_id = $param[1];
-			$filter_value = $param[2];
-			$this->check_and_add_filter($filter_id, $filter_value);
 		}
 	}
 
