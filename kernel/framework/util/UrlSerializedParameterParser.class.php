@@ -30,7 +30,7 @@
  */
 class UrlSerializedParameterParser
 {
-	private static $param_name_regex = '`^([a-z0-9-]+):`i';
+	private static $param_name_regex = '`^([a-z][a-z0-9-]*):`i';
 	private static $escape_char = '\\';
 	private static $parameter_separator = ',';
 	private static $composed_parameter_start_char = '{';

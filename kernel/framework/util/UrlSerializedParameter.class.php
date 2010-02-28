@@ -67,7 +67,7 @@ class UrlSerializedParameter
 		{
 			$query_args[] = $query_arg . '=' . $value;
 		}
-		$query_args[] = $this->arg_id . '=' . $this->serialize_parameters($url_params);
+		$query_args[] = $this->arg_id . '=' . UrlSerializedParameterEncoder::encode($url_params);
 		return '?' . implode('&', $query_args);
 	}
 
