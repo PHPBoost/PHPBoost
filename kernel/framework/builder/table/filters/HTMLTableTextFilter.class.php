@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         HTMLTableEqualsFromListFilter.class.php
+ *                         HTMLTableTextFilter.class.php
  *                            -------------------
- *   begin                : February 25, 2010
+ *   begin                : February 28, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -30,26 +30,20 @@
  * @package builder
  * @subpackage table
  */
-abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
+abstract class HTMLTableTextFilter extends AbstractHTMLTableFilter
 {
-	private $allowed_values;
+	private $match_regex;
 
-	public function __construct($name, $label, array $allowed_values)
+	public function __construct($name, $label, $match_regex = null)
 	{
-		$this->allowed_values = array_keys($allowed_values);
-		$default_value = new FormFieldSelectChoiceOption('tous', '');
-		$options = array($default_value);
-		foreach ($allowed_values as $value => $label)
-		{
-			$options[] = new FormFieldSelectChoiceOption($label, $value);
-		}
-		$select = new FormFieldSelectChoice($name, $label, $default_value, $options);
-		parent::__construct($name, $select);
+		$this->match_regex = $match_regex;
+		$input_text = new FormFieldTextEditor($name, $label, '');
+		parent::__construct($name, $input_text);
 	}
 
 	public function is_value_allowed($value)
 	{
-		if (in_array($value, $this->allowed_values))
+		if (empty($this->match_regex) || preg_match($this->match_regex, $value))
 		{
 			$this->set_value($value);
 			return true;

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         HTMLTableEqualsFromListFilter.class.php
+ *                         HTMLTableBeginsWithTextSQLFilter.class.php
  *                            -------------------
- *   begin                : February 25, 2010
+ *   begin                : February 27, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -28,33 +28,32 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package builder
- * @subpackage table
+ * @subpackage table/sql
  */
-abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
+class HTMLTableBeginsWithTextSQLFilter extends HTMLTableTextFilter implements SQLFragmentBuilder
 {
-	private $allowed_values;
+	private $db_field;
 
-	public function __construct($name, $label, array $allowed_values)
+	public function __construct($db_field, $name, $label, $match_regex)
 	{
-		$this->allowed_values = array_keys($allowed_values);
-		$default_value = new FormFieldSelectChoiceOption('tous', '');
-		$options = array($default_value);
-		foreach ($allowed_values as $value => $label)
-		{
-			$options[] = new FormFieldSelectChoiceOption($label, $value);
-		}
-		$select = new FormFieldSelectChoice($name, $label, $default_value, $options);
-		parent::__construct($name, $select);
+		$this->db_field = $db_field;
+		parent::__construct($name, $label, $match_regex);
 	}
 
-	public function is_value_allowed($value)
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_sql()
 	{
-		if (in_array($value, $this->allowed_values))
-		{
-			$this->set_value($value);
-			return true;
-		}
-		return false;
+		$parameter_name = $this->db_field . '_value';
+		$query = $this->db_field . ' LIKE :' . $parameter_name;
+		$parameters = array($parameter_name => $this->get_value() . '%');
+		return new SQLFragment($query, $parameters);
+	}
+	
+	protected function set_value($value)
+	{
+		parent::set_value(str_replace('%', '', $value));
 	}
 }
 

@@ -48,7 +48,9 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$this->set_id('t42');
 
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou');
-		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'login', 'Pseudo', $options));
+		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'loginList', 'Pseudo', $options));
+		$this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'loginText', 'Pseudo', '`^(?!%).+$`'));
+		
 	}
 
 	public function get_number_of_matching_rows(array $filters)
