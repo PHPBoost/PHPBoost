@@ -121,32 +121,27 @@ function toggleTableFilters() {
 }
 
 function {SUBMIT_FUNCTION}() {
-	var filtersList = '';
-	var filters = new Array();
+    var filters = new Array();
+	var filtersObjects = new Array();
 	# START filterElt #
-	var filterObject = {
+	filtersObjects.push({
 		formId: {filterElt.J_FORM_ID},
-		tableId: {filterElt.J_TABLE_ID},
-		mode: 'equals'
-	};
-	filters.push(filterObject);
+		tableId: {filterElt.J_TABLE_ID}
+	});
 	# END filterElt #
-	for (var i = 0; i < filters.length; i++) {
-		var filter = filters[i];
+	for (var i = 0; i < filtersObjects.length; i++) {
+		var filter = filtersObjects[i];
 		var domFilter = $(filter.formId);
 		if (domFilter) {
 			var filterValue = $F(domFilter);
-			filtersList += filter.mode + '-' + filter.tableId + '-' + filterValue + ',';
+			filters.push(filter.tableId + ':' + filterValue);
 			//window.alert(filter.tableId + ' = ' + filterValue);
 		} else {
 			window.alert('element ' + filter.formId + ' not found');
 		}
 	}
-	if (filtersList.charAt(filtersList.length - 1) == ',') {
-		filtersList = filtersList.substr(0, filtersList.length - 1);
-	}
 	var submitUrl = {J_SUBMIT_URL};
-	window.alert('URL: ' + submitUrl + ',filters:{' + filtersList + '}');
+	window.alert('URL: ' + submitUrl + ',filters:{' + filters.join(',') + '}');
 	//submitUrl = '?url=/table&t42=page:1,filters:{equals-login-Horn}';
 	window.location = submitUrl;
 	return false;

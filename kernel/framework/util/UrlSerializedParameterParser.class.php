@@ -37,11 +37,14 @@ class UrlSerializedParameterParser
 	private static $composed_parameter_end_char = '}';
 
 	private $args;
+	private $args_length;
+	private $args_index = 0;
 	private $parameters = array();
 
 	public function __construct($args)
 	{
 		$this->args = $args;
+		$this->args_length = strlen($this->args);
 		$this->parse();
 	}
 
@@ -52,7 +55,7 @@ class UrlSerializedParameterParser
 
 	private function parse()
 	{
-		while (!empty($this->args))
+		while (!$this->is_ended())
 		{
 			$this->parse_next_parameter($this->parameters);
 		}
@@ -75,7 +78,7 @@ class UrlSerializedParameterParser
 
 	private function is_named()
 	{
-		if (preg_match(self::$param_name_regex, $this->args))
+		if (preg_match(self::$param_name_regex, $this->get_remaining_args()))
 		{
 			return true;
 		}
@@ -84,9 +87,9 @@ class UrlSerializedParameterParser
 	private function parse_parameter_name()
 	{
 		$matches = array();
-		preg_match(self::$param_name_regex, $this->args, $matches);
+		preg_match(self::$param_name_regex, $this->get_remaining_args(), $matches);
 		$name = $matches[1];
-		$this->consume_args_characters(strlen($name) + 1);
+		$this->consume_chars(strlen($name) + 1);
 		return $name;
 	}
 
@@ -104,60 +107,99 @@ class UrlSerializedParameterParser
 
 	private function is_parameter_composed()
 	{
-		return !empty($this->args) && $this->args[0] == self::$composed_parameter_start_char;
+		return !$this->is_ended() && $this->assert_next_character_is(self::$composed_parameter_start_char);
 	}
 
 	private function parse_composed_parameter()
 	{
 		$values = array();
-		$this->consume_args_characters(1);
+		$this->consume_next_char();
 		while (!$this->is_composed_parameter_ended())
 		{
 			$this->parse_next_parameter($values);
 		}
-		$this->consume_args_characters(2);
+		$this->consume_if(self::$composed_parameter_end_char);
+		$this->consume_if(self::$parameter_separator);
 		return $values;
 	}
 
 	private function is_composed_parameter_ended()
 	{
-		return empty($this->args) || $this->args[0] == self::$composed_parameter_end_char;
+		return $this->is_ended() || $this->assert_next_character_is(self::$composed_parameter_end_char);
 	}
 
 	private function parse_simple_parameter()
 	{
 		$value = '';
-		$args = $this->args;
-		$length = strlen($args);
+		$length = $this->get_nb_remaining_chars();
 		$escaped = false;
-		$i = 0;
-		for (; $i < $length; $i++)
+		for ($i = 0; $i < $length; $i++)
 		{
-			$current = $args[$i];
-			if ($current == self::$escape_char)
+			$current = $this->consume_next_char();
+			if (!$escaped)
 			{
-				$escaped = true;
-				continue;
+				if ($current == self::$escape_char)
+				{
+					$escaped = true;
+					continue;
+				}
+				if ($current == self::$parameter_separator)
+				{
+					break;
+				}
+				if ($current == self::$composed_parameter_end_char)
+				{
+					$this->rollback_last_char_consumed();
+					break;
+				}
 			}
 			$escaped = false;
-			if ($current == self::$parameter_separator && !$escaped)
-			{
-				$i++;
-				break;
-			}
-			if ($current == self::$composed_parameter_end_char && !$escaped)
-			{
-				break;
-			}
 			$value .= $current;
 		}
-		$this->consume_args_characters($i);
 		return $value;
 	}
 
-	private function consume_args_characters($nb_characters_to_consume)
+	private function consume_chars($nb_characters_to_consume)
 	{
-		$this->args = substr($this->args, $nb_characters_to_consume);
+		$this->args_index += $nb_characters_to_consume;
+	}
+
+	private function consume_next_char()
+	{
+		return $this->args[$this->args_index++];
+	}
+
+	private function rollback_last_char_consumed()
+	{
+		$this->args_index--;
+	}
+
+	private function is_ended()
+	{
+		return $this->args_index >= $this->args_length;
+	}
+
+	private function assert_next_character_is($char)
+	{
+		return $this->args[$this->args_index] == $char;
+	}
+
+	private function consume_if($char)
+	{
+		if (!$this->is_ended() && $this->assert_next_character_is($char))
+		{
+			$this->consume_next_char();
+		}
+	}
+
+	private function get_nb_remaining_chars()
+	{
+		return $this->args_length - $this->args_index;
+	}
+
+	private function get_remaining_args()
+	{
+		return substr($this->args, $this->args_index);
 	}
 
 	private function serialize_parameters($parameters)
