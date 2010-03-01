@@ -42,9 +42,9 @@ class AdminSitemapResponse extends AdminMenuDisplayResponse
 	{
 		$this->set_title($this->lang['sitemap']);
 		
-		$this->add_menu_link('Configuration générale', SitemapUrlBuilder::get_general_config());
+		$this->add_menu_link($this->lang['general_config'], SitemapUrlBuilder::get_general_config());
 		
-		$this->add_menu_link('Régénérer le fichier sitemap.xml', SitemapUrlBuilder::get_xml_file_generation());
+		$this->add_menu_link($this->lang['generate_xml_file'], SitemapUrlBuilder::get_xml_file_generation());
 	}
 	
 	private function add_menu_link($label, Url $url)
