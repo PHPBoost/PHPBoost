@@ -51,6 +51,9 @@ class HTMLTableBeginsWithTextSQLFilter extends HTMLTableTextFilter implements SQ
 		return new SQLFragment($query, $parameters);
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function set_value($value)
 	{
 		parent::set_value(str_replace('%', '', $value));

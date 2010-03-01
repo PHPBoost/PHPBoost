@@ -88,7 +88,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 
 	protected function is_active()
 	{
-		return $this->get_field()->get_value() == $this;
+		return $this->get_field()->get_value() === $this;
 	}
 
 	protected function get_field_id()
