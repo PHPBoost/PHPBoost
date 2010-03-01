@@ -29,7 +29,7 @@ class AdminSitemapController extends AdminController
 {
 	private $lang = array();
 	/**
-	 * @var Form
+	 * @var HTMLForm
 	 */
 	private $form = null;
 	/**
@@ -51,7 +51,7 @@ class AdminSitemapController extends AdminController
 			$this->handle_form();
 		}
 
-		return $this->build_response($this->form->export());
+		return $this->build_response($this->form->display());
 	}
 
 	private function build_form()
@@ -64,7 +64,9 @@ class AdminSitemapController extends AdminController
 
 		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
 		array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain']),
-		array(new IntegerIntervalFormFieldConstraint(1, 50, 'message qui devrait être généré automatiquement'))));
+		array(new IntegerIntervalFormFieldConstraint(1, 50))));
+		$this->form->add_button(new FormButtonReset());
+		$this->form->add_button(new FormButtonDefaultSubmit());
 	}
 
 	private function handle_form()
