@@ -176,6 +176,12 @@ class SandboxFormController extends ModuleController
 
         // FILE PICKER
         $fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+        
+        // AUTH
+        $fieldset3 = new FormFieldsetHTML('Autorisations');
+        $fieldset3->add_field(new FormFieldAuthorizationsSetter('auth', new AuthorizationsSettings(array(
+        	new ActionAuthorization('Action 1', 1, 'Autorisations pour l\'action 1'), new ActionAuthorization('Action 2', 2)))));
+        $form->add_fieldset($fieldset3);
 
         // VERTICAL FIELDSET
         $hidden_fieldset = new FormFieldsetVertical();

@@ -37,7 +37,8 @@ class HTTPRequest
 	const int = 0x01;
 	const float = 0x02;
 	const string = 0x03;
-	const none = 0x04;
+	const t_array = 0x04;
+	const none = 0x05;
 
 	public function is_post_method()
 	{
@@ -63,7 +64,7 @@ class HTTPRequest
 	{
 		return $this->has_rawparameter($parameter, $_POST);
 	}
-	
+
 	public function has_cookieparameter($parameter)
 	{
 		return $this->has_rawparameter($parameter, $_COOKIE);
@@ -125,9 +126,14 @@ class HTTPRequest
 
 	public function get_cookie($varname, $default_value = null)
 	{
-		return $this->get_var($_COOKIE, self::none, $varname, $default_value);
+		return $this->get_var($_COOKIE, self::string, $varname, $default_value);
 	}
-	
+
+	public function get_array($varname, $default_value = array())
+	{
+		return $this->get_var($_REQUEST, self::t_array, $varname, $default_value);
+	}
+
 	/**
 	 * @param string $varname
 	 * @return UploadedFile The uploaded file
@@ -172,6 +178,11 @@ class HTTPRequest
 		return $this->get_var($_GET, self::string, $varname, $default_value);
 	}
 
+	public function get_getarray($varname, $default_value = array())
+	{
+		return $this->get_var($_GET, self::t_array, $varname, $default_value);
+	}
+
 	public function get_postvalue($varname, $default_value = null)
 	{
 		return $this->get_var($_POST, self::none, $varname, $default_value);
@@ -197,6 +208,11 @@ class HTTPRequest
 		return $this->get_var($_POST, self::string, $varname, $default_value);
 	}
 
+	public function get_postarray($varname, $default_value = array())
+	{
+		return $this->get_var($_POST, self::t_array, $varname, $default_value);
+	}
+
 	private function get_var($mode, $type, $varname, $default_value)
 	{
 		if (!isset($mode[$varname]) && $default_value === null)
@@ -217,11 +233,6 @@ class HTTPRequest
 	{
 		$value = $mode[$varname];
 
-		if (MAGIC_QUOTES)
-		{
-			$value = stripslashes($value);
-		}
-
 		switch ($type)
 		{
 			case self::bool:
@@ -232,6 +243,7 @@ class HTTPRequest
 				return $this->get_raw_float($value, $varname, $default_value);
 			case self::string:
 				return $this->get_raw_string($value);
+			case self::t_array:
 			case self::none:
 			default:
 				return $value;
@@ -277,7 +289,25 @@ class HTTPRequest
 
 	private function get_raw_string($value)
 	{
+		$value = self::strip_value_slashes_if_needed($value);
 		return (string) $value;
+	}
+
+	private static function strip_value_slashes_if_needed($value)
+	{
+		if (MAGIC_QUOTES)
+		{
+			$value = stripslashes($value);
+		}
+		return $value;
+	}
+	
+	private function get_raw_array($value)
+	{
+		foreach ($value as &$v)
+		{
+			$v = self::strip_value_slashes_if_needed($v);
+		}
 	}
 }
 ?>

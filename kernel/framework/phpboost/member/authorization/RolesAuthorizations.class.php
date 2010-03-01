@@ -68,7 +68,7 @@ class RolesAuthorizations
 		{
 			if ($auth)
 			{
-				$auth_array['g' . $group_id] = 1;
+				$auth_array[$group_id] = 1;
 			}
 		}
 	}
@@ -113,11 +113,7 @@ class RolesAuthorizations
 		{
 			if ($auth)
 			{
-				if ($role[0] == 'g')
-				{
-					$this->groups[substr($role, 1)] = 1;
-				}
-				else if (is_numeric($role))
+				if (is_numeric($role))
 				{
 					$this->groups[$role] = 1;
 				}
