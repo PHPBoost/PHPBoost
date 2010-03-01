@@ -32,7 +32,7 @@ class ActionAuthorization
 	/**
 	 * @var RolesAuthorizations
 	 */
-	private $profiles = null;
+	private $roles = null;
 
 	public function __construct($label, $bit, $description = '')
 	{
@@ -74,19 +74,19 @@ class ActionAuthorization
 	/**
 	 * @return RolesAuthorizations
 	 */
-	public function get_profiles()
+	public function get_roles_auths()
 	{
-		return $this->profiles;
+		return $this->roles;
 	}
 
-	public function set_profiles(RolesAuthorizations $profiles)
+	public function set_roles_auths(RolesAuthorizations $roles)
 	{
-		$this->profiles = $profiles;
+		$this->roles = $roles;
 	}
 
 	public function get_auth_array()
 	{
- 		$auth_array = $this->profiles->build_auth_array();
+ 		$auth_array = $this->roles->build_auth_array();
 		foreach ($auth_array as &$profile)
 		{
 			$profile *= $this->bit;
@@ -100,7 +100,7 @@ class ActionAuthorization
 		{
 			$profile &= $this->bit;
 		}
-		$this->profiles = new RolesAuthorizations($auth_array);
+		$this->roles = new RolesAuthorizations($auth_array);
 	}
 }
 ?>
