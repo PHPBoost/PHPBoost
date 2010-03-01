@@ -47,7 +47,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 		$this->set_id('t42');
 
-		$options = array('horn' => 'Horn', 'coucou' => 'Coucou');
+		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
 		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'loginList', 'Pseudo', $options));
 		$this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'loginText', 'Pseudo', '`^(?!%).+$`'));
 		
