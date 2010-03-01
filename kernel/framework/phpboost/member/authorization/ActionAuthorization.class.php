@@ -32,13 +32,21 @@ class ActionAuthorization
 	/**
 	 * @var RolesAuthorizations
 	 */
-	private $roles = null;
+	private $roles;
 
-	public function __construct($label, $bit, $description = '')
+	public function __construct($label, $bit, $description = '', RolesAuthorizations $roles = null)
 	{
 		$this->label = $label;
 		$this->bit = $bit;
 		$this->description = $description;
+		if ($roles != null)
+		{
+			$this->roles = $roles;
+		}
+		else
+		{
+			$this->roles = new RolesAuthorizations();
+		}
 	}
 
 	public function get_label()
@@ -86,7 +94,7 @@ class ActionAuthorization
 
 	public function get_auth_array()
 	{
- 		$auth_array = $this->roles->build_auth_array();
+		$auth_array = $this->roles->build_auth_array();
 		foreach ($auth_array as &$profile)
 		{
 			$profile *= $this->bit;
