@@ -26,7 +26,7 @@
 
 class FormFieldAuthorizationsSetter extends AbstractFormField
 {
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, AuthorizationsSettings $value)
     {
         parent::__construct($id, '', $value, $field_options, $constraints);
     }

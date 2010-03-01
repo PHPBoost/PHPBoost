@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         ActionAuthorization.class.php
+ *                     AuthorizationsSettings.class.php
  *                            -------------------
  *   begin                : March, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -24,46 +24,25 @@
  *
  ###################################################*/
 
-class ActionAuthorization
+class AuthorizationsSettings
 {
-	private $label;
-	private $description = '';
-	private $bit;
+	private $actions;
 	
-	public function __construct($label, $bit, $description = '')
+	public function __construct(array $actions = array())
 	{
-		$this->label = $label;
-		$this->bit = $bit;
-		$this->description = $description;
+		$this->actions = $actions;
 	}
 	
-	public function get_label()
+	/**
+	 * @return ActionAuthorization[]
+	 */
+	public function get_actions()
 	{
-		return $this->label;
+		return $this->actions;
 	}
 	
-	public function set_label($label)
+	public function add_action(ActionAuthorization $action)
 	{
-		$this->label  = $label;
-	}
-	
-	public function get_bit()
-	{
-		return $this->bit;
-	}
-	
-	public function set_bit($bit)
-	{
-		$this->bit = $bit;
-	}
-	
-	public function get_description()
-	{
-		return $this->description;
-	}
-	
-	public function set_description($description)
-	{
-		$this->description = $description;
+		$this->actions[] = $action;
 	}
 }
