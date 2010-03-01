@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                     AuthorizationsSettings.class.php
+ *                        AuthorizationsSettings.class.php
  *                            -------------------
  *   begin                : March, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -27,12 +27,12 @@
 class AuthorizationsSettings
 {
 	private $actions;
-	
+
 	public function __construct(array $actions = array())
 	{
 		$this->actions = $actions;
 	}
-	
+
 	/**
 	 * @return ActionAuthorization[]
 	 */
@@ -40,9 +40,42 @@ class AuthorizationsSettings
 	{
 		return $this->actions;
 	}
-	
+
 	public function add_action(ActionAuthorization $action)
 	{
 		$this->actions[] = $action;
+	}
+
+	public function build_auth_array()
+	{
+		$auth_array = array();
+		foreach ($this->actions as $action)
+		{
+			self::merge_auth_array($auth_array, $action);
+		}
+		return $auth_array;
+	}
+
+	private static function merge_auth_array(array & $global, ActionAuthorization $action)
+	{
+		foreach ($action->get_auth_array() as $role => $value)
+		{
+			if (!empty($global[$role]))
+			{
+				$global[$role] |= $value;
+			}
+			else
+			{
+				$global[$role] = $value;
+			}
+		}
+	}
+	
+	public function build_from_auth_array(array $auth_array)
+	{
+		foreach ($this->actions as $action)
+		{
+			$action->set_auth_array($auth_array);
+		}
 	}
 }

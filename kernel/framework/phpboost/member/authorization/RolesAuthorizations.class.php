@@ -109,17 +109,17 @@ class RolesAuthorizations
 
 	private function read_groups_auths(array $auth_array)
 	{
-		foreach ($auth_array as $id => $auth)
+		foreach ($auth_array as $role => $auth)
 		{
 			if ($auth)
 			{
-				if ($id[0] == 'g')
+				if ($role[0] == 'g')
 				{
-					$this->groups[substr($id, 1)] = 1;
+					$this->groups[substr($role, 1)] = 1;
 				}
-				else if (is_numeric($id))
+				else if (is_numeric($role))
 				{
-					$this->groups[$id] = 1;
+					$this->groups[$role] = 1;
 				}
 			}
 		}
@@ -127,13 +127,13 @@ class RolesAuthorizations
 
 	private function read_users_auths(array $auth_array)
 	{
-		foreach ($auth_array as $id => $auth)
+		foreach ($auth_array as $role => $auth)
 		{
 			if ($auth)
 			{
-				if ($id[0] == 'm')
+				if ($role[0] == 'm')
 				{
-					$this->users[substr($id, 1)] = 1;
+					$this->users[substr($role, 1)] = 1;
 				}
 			}
 		}
