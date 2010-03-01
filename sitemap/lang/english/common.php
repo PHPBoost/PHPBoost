@@ -36,5 +36,5 @@ $lang['try_again'] = 'Try again';
 $lang['auto_generate_xml_file'] = 'Generate automatically the sitemap.xml file';
 $lang['xml_file_life_time'] = 'sitemap.xml file life time';
 $lang['xml_file_life_time_explain'] = 'In days';
-
+$lang['generate_xml_file'] = 'Generate the sitemap.xml file';
 ?>
