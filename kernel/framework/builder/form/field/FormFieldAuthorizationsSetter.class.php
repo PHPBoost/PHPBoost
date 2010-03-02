@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                  FormFieldAuthorizationsSetter.class.php
+ *                    FormFieldAuthorizationsSetter.class.php
  *                            -------------------
  *   begin                : March, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -26,9 +26,9 @@
 
 class FormFieldAuthorizationsSetter extends AbstractFormField
 {
-	public function __construct($id, AuthorizationsSettings $value)
+	public function __construct($id, AuthorizationsSettings $value, array $field_options = array())
 	{
-		parent::__construct($id, '', $value);
+		parent::__construct($id, '', $value, $field_options);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
         		'ID' => $this->get_html_id() . 'auth' . $action->get_bit(),
         		'LABEL' => $action->get_label(),
         		'DESCRIPTION' => $action->get_description(),
-        		'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->get_auth_array())
+        		'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->get_auth_array(), array(), $this->get_html_id() . $action->get_bit(), $this->is_disabled())
 			));
 		}
 
@@ -63,13 +63,13 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		$request = AppContext::get_request();
 		foreach ($this->get_value()->get_actions() as $action)
 		{
-			if ($request->has_parameter('groups_auth' . $action->get_bit()))
+			if ($request->has_parameter('groups_auth' . $this->get_html_id() . $action->get_bit()))
 			{
-				$roles_auths = self::get_action_auth($action, $request->get_array('groups_auth' . $action->get_bit(), array()));
+				$roles_auths = self::get_action_auth($action, $request->get_array('groups_auth' . $this->get_html_id() . $action->get_bit(), array()));
 				$roles_auths = self::clean_groups_auths($roles_auths);
-				if ($request->has_parameter('members_auth' . $action->get_bit()))
+				if ($request->has_parameter('members_auth' . $this->get_html_id() . $action->get_bit()))
 				{
-					$member_auths = self::get_action_auth($action, $request->get_array('members_auth' . $action->get_bit(), array()));
+					$member_auths = self::get_action_auth($action, $request->get_array('members_auth' . $this->get_html_id() . $action->get_bit(), array()));
 					foreach (self::clean_members_auths($member_auths) as $member => $auth)
 					{
 						$roles_auths[$member] = $auth;
