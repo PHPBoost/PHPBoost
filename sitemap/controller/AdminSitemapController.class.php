@@ -33,6 +33,10 @@ class AdminSitemapController extends AdminController
 	 */
 	private $form = null;
 	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
+	/**
 	 * @return View
 	 */
 	private $view;
@@ -46,7 +50,7 @@ class AdminSitemapController extends AdminController
 	{
 		$this->build_form();
 
-		if ($request->is_post_method() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
 		}
@@ -66,7 +70,8 @@ class AdminSitemapController extends AdminController
 		array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain']),
 		array(new IntegerIntervalFormFieldConstraint(1, 50))));
 		$this->form->add_button(new FormButtonReset());
-		$this->form->add_button(new FormButtonDefaultSubmit());
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$this->form->add_button($this->submit_button);
 	}
 
 	private function handle_form()
