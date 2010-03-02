@@ -26,9 +26,9 @@
 
 class RolesAuthorizations
 {
-	private $moderators = 0;
-	private $members = 0;
-	private $guests = 0;
+	private $moderators = false;
+	private $members = false;
+	private $guests = false;
 	private $groups = array();
 	private $users = array();
 
@@ -64,28 +64,32 @@ class RolesAuthorizations
 
 	private function fill_groups_auths(array & $auth_array)
 	{
-		foreach ($this->groups as $group_id => $auth)
+		foreach ($this->groups as $group_id)
 		{
-			if ($auth)
-			{
-				$auth_array[$group_id] = 1;
-			}
+			$auth_array[$group_id] = 1;
 		}
 	}
 
 	private function fill_users_auths(array & $auth_array)
 	{
-		foreach ($this->users as $user_id => $auth)
+		foreach ($this->users as $user_id)
 		{
-			if ($auth)
-			{
-				$auth_array['m' . $user_id] = 1;
-			}
+			$auth_array['m' . $user_id] = 1;
 		}
+	}
+	
+	private function init()
+	{
+		$this->moderators = false;
+		$this->members = false;
+		$this->guests = false;
+		$this->groups = array();
+		$this->users = array();
 	}
 
 	public function build_from_auth_array(array $auth_array)
 	{
+		$this->init();
 		$this->read_levels_auths($auth_array);
 		$this->read_groups_auths($auth_array);
 		$this->read_users_auths($auth_array);
@@ -95,13 +99,13 @@ class RolesAuthorizations
 	{
 		if (!empty($auth_array['r1']))
 		{
-			$this->moderators = 1;
+			$this->moderators = true;
 			if (!empty($auth_array['r0']))
 			{
-				$this->members = 1;
+				$this->members = true;
 				if (!empty($auth_array['r-1']))
 				{
-					$this->guests = 1;
+					$this->guests = true;
 				}
 			}
 		}
@@ -115,7 +119,7 @@ class RolesAuthorizations
 			{
 				if (is_numeric($role))
 				{
-					$this->groups[$role] = 1;
+					$this->groups[] = $role;
 				}
 			}
 		}
@@ -129,7 +133,7 @@ class RolesAuthorizations
 			{
 				if ($role[0] == 'm')
 				{
-					$this->users[substr($role, 1)] = 1;
+					$this->users[] = (int)substr($role, 1);
 				}
 			}
 		}
