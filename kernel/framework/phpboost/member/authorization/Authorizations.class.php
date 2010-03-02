@@ -108,7 +108,7 @@ class Authorizations
 	 * @param int $disabled Disabled all option for the select. Set to 1 for disable.
 	 * @param boolean $disabled_advanced_auth Disable advanced authorizations.
 	 * @return String The formated select.
-	* @static
+     * @static
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
@@ -127,9 +127,9 @@ class Authorizations
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 		
-		$Template = new FileTemplate('framework/groups_auth.tpl');
+		$tpl = new FileTemplate('framework/groups_auth.tpl');
        
-		$Template->assign_vars(array(
+		$tpl->assign_vars(array(
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
 			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
             'THEME' => get_utheme(),
@@ -156,7 +156,7 @@ class Authorizations
            	//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
         	if ($idrank == 2)
         	{
-        		$Template->assign_block_vars('ranks_list', array(
+        		$tpl->assign_block_vars('ranks_list', array(
 					'ID' => $j,
 					'IDRANK' => $idrank,
 					'RANK_NAME' => $group_name,
@@ -173,7 +173,7 @@ class Authorizations
 	            }
 	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 	            
-				$Template->assign_block_vars('ranks_list', array(
+				$tpl->assign_block_vars('ranks_list', array(
 					'ID' => $j,
 					'IDRANK' => $idrank,
 					'RANK_NAME' => $group_name,
@@ -193,7 +193,7 @@ class Authorizations
                 $selected = ' selected="selected"';
             }
 
-            $Template->assign_block_vars('groups_list', array(
+            $tpl->assign_block_vars('groups_list', array(
 				'IDGROUP' => $idgroup,
 				'GROUP_NAME' => $group_name,
 				'DISABLED' => $disabled,
@@ -217,8 +217,9 @@ class Authorizations
 		}
 		$advanced_auth = count($array_auth_members) > 0;
 
-		$Template->assign_vars(array(
-			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;')
+		$tpl->assign_vars(array(
+			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;'),
+			'C_ADVANCED_AUTH_OPEN' => $advanced_auth
 		));
 		
 		//Listing des membres autorisés.
@@ -229,7 +230,7 @@ class Authorizations
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-				 $Template->assign_block_vars('members_list', array(
+				 $tpl->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
 					'LOGIN' => $row['login']
 				));
@@ -237,7 +238,7 @@ class Authorizations
 			$Sql->query_close($result);
 		}
 
-        return $Template->to_string();
+        return $tpl->to_string();
     }
 	
     /**

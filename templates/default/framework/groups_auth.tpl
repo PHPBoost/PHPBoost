@@ -43,7 +43,14 @@
 # ENDIF #
 
 <div class="spacer"></div>
-<a class="small_link" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_img('advanced_auth_plus{IDSELECT}', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png');"><img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /> {L_ADVANCED_AUTHORIZATION}</a>
+<a class="small_link" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_img('advanced_auth_plus{IDSELECT}', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png');">
+	# IF C_ADVANCED_AUTH_OPEN #
+	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png" alt="" class="valign_middle" />
+	# ELSE #
+	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" />
+	# ENDIF #
+	{L_ADVANCED_AUTHORIZATION}
+</a>
 <br />
 <a class="small_link" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
 <br />
