@@ -52,7 +52,6 @@ class FormFieldCaptcha extends AbstractFormField
         {
             $this->captcha = new Captcha();
         }
-        $this->captcha->set_html_id($this->get_html_id());
     }
 
     /**
@@ -60,6 +59,7 @@ class FormFieldCaptcha extends AbstractFormField
      */
     public function retrieve_value()
     {
+    	$this->captcha->set_html_id($this->get_html_id());
         if ($this->is_enabled())
         {
             $this->set_value($this->captcha->is_valid());
@@ -76,6 +76,7 @@ class FormFieldCaptcha extends AbstractFormField
     public function display()
     {
         $this->captcha->save_user();
+        $this->captcha->set_html_id($this->get_html_id());
 
         $template = $this->get_template_to_use();
 
