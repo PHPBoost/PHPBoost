@@ -181,7 +181,7 @@ class SandboxFormController extends ModuleController
 		$fieldset3 = new FormFieldsetHTML('Autorisations');
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization('Action 1', 1, 'Autorisations pour l\'action 1'), new ActionAuthorization('Action 2', 2)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
-		$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings, array('disabled' => true));
+		$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 		$fieldset3->add_field($auth_setter);
 		$form->add_fieldset($fieldset3);
 
