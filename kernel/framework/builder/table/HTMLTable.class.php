@@ -135,8 +135,8 @@ class HTMLTable extends HTMLElement
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			// TODO translate submit button label
-			$submit = new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit');
-			$form->add_button($submit);
+            $submit = new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit');
+            $form->add_button($submit);
 			$this->tpl->add_subtemplate('filters', $form->display());
 			$this->tpl->assign_vars(array(
 				'SUBMIT_FUNCTION' => $submit_function,

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         HTMLTableBeginsWithTextSQLFilter.class.php
+ *                        HTMLTableGreaterThanSQLFilter.class.php
  *                            -------------------
- *   begin                : February 27, 2010
+ *   begin                : March 2, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -28,36 +28,19 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package builder
- * @subpackage table/sql
+ * @subpackage table/filter/sql
  */
-class HTMLTableBeginsWithTextSQLFilter extends HTMLTableTextFilter implements SQLFragmentBuilder
-{
-	private $db_field;
-
-	public function __construct($db_field, $name, $label, $match_regex)
-	{
-		$this->db_field = $db_field;
-		parent::__construct($name, $label, $match_regex);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_sql()
-	{
-		$parameter_name = $this->db_field . '_value';
-		$query = $this->db_field . ' LIKE :' . $parameter_name;
-		$parameters = array($parameter_name => $this->get_value() . '%');
-		return new SQLFragment($query, $parameters);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function set_value($value)
-	{
-		parent::set_value(str_replace('%', '', $value));
-	}
+class HTMLTableGreaterThanSQLFilter extends HTMLTableNumberComparatorSQLFilter
+{    
+    protected function get_sql_value_parameter_prefix()
+    {
+        return __CLASS__;
+    }
+    
+    protected function get_sql_comparator_symbol()
+    {
+        return '>';
+    }
 }
 
 ?>

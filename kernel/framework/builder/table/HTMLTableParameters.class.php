@@ -99,7 +99,7 @@ class HTMLTableParameters
 	public function get_default_table_url()
 	{
 		$default_options = array('page' => 1);
-		$params_to_remove = array('sort', 'filters');
+		$params_to_remove = array('sort', 'filters', 'items');
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
