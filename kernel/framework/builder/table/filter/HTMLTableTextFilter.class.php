@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                     FormButtonDefaultSubmit.class.php
+ *                         HTMLTableTextFilter.class.php
  *                            -------------------
- *   begin                : February 16, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 28, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
  *
@@ -25,17 +25,34 @@
  ###################################################*/
 
 /**
- * @package builder
- * @subpackage form/button
+ * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package builder
+ * @subpackage table
  */
-class FormButtonDefaultSubmit extends FormButtonSubmit
+abstract class HTMLTableTextFilter extends AbstractHTMLTableFilter
 {
-    public function __construct()
-    {
-        global $LANG;
-        parent::__construct($LANG['submit'], 'submit');
-    }
+	private $match_regex;
+
+	public function __construct($name, $label, $match_regex = null)
+	{
+		$this->match_regex = $match_regex;
+		$input_text = new FormFieldTextEditor($name, $label, '');
+		parent::__construct($name, $input_text);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_value_allowed($value)
+	{
+		if (empty($this->match_regex) || preg_match($this->match_regex, $value))
+		{
+			$this->set_value($value);
+			return true;
+		}
+		return false;
+	}
 }
+
 ?>

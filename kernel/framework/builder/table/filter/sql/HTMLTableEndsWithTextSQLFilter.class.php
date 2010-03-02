@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         HTMLTableTextFilter.class.php
+ *                         HTMLTableEndsWithTextSQLFilter.class.php
  *                            -------------------
- *   begin                : February 28, 2010
+ *   begin                : March 2, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -28,28 +28,22 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package builder
- * @subpackage table
+ * @subpackage table/filter/sql
  */
-abstract class HTMLTableTextFilter extends AbstractHTMLTableFilter
-{
-	private $match_regex;
-
-	public function __construct($name, $label, $match_regex = null)
+class HTMLTableEndsWithTextSQLFilter extends HTMLTableEscapedLikeTextSQLFilter
+{	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function get_value()
 	{
-		$this->match_regex = $match_regex;
-		$input_text = new FormFieldTextEditor($name, $label, '');
-		parent::__construct($name, $input_text);
+		return '%' . parent::get_value();
 	}
-
-	public function is_value_allowed($value)
-	{
-		if (empty($this->match_regex) || preg_match($this->match_regex, $value))
-		{
-			$this->set_value($value);
-			return true;
-		}
-		return false;
-	}
+    
+    protected function get_sql_value_parameter_prefix()
+    {
+        return __CLASS__;
+    }
 }
 
 ?>

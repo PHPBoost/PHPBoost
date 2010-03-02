@@ -48,8 +48,20 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$this->set_id('t42');
 
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
-		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'loginList', 'Pseudo', $options));
-		$this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'loginText', 'Pseudo', '`^(?!%).+$`'));
+		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'filter1', 'login Equals', $options));
+        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`'));
+        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'filter3', 'login Begins with (no regex)'));
+        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('login', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`'));
+        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('login', 'filter5', 'login Ends with (no regex)'));
+        $this->add_filter(new HTMLTableLikeTextSQLFilter('login', 'filter6', 'login Like (regex)', '`^toto`'));
+        $this->add_filter(new HTMLTableLikeTextSQLFilter('login', 'filter7', 'login Like (no regex)'));
+        $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter8', 'id >'));
+        $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter9', 'id > (lower=3)', 3));
+        $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter10', 'id > (upper=3)', HTMLTableNumberComparatorSQLFilter::NOT_BOUNDED, 3));
+        $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter11', 'id > (lower=1, upper=3)', 1, 3));
+        $this->add_filter(new HTMLTableLessThanSQLFilter('user_id', 'filter12', 'id <'));
+        $this->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
+        $this->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
 		
 	}
 
@@ -91,11 +103,16 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 			foreach ($filters as $filter)
 			{
 				$query_fragment = $filter->get_sql();
+//                Debug::dump($filter->get_id());
+//                Debug::dump($query_fragment->get_query());
+//                Debug::dump($query_fragment->get_parameters());
+//                Debug::dump('<hr />');
 				$query_fragment->add_parameters_to_map($this->parameters);
 				$sql_filters[] = $query_fragment->get_query();
 			}
 			$clause .= ' AND ' . implode(' AND ', $sql_filters);
 		}
+//		Debug::dump('<br /><br /><br />');
 		return $clause;
 	}
 
@@ -105,11 +122,11 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$order_clause .= $this->get_sort_parameter_column($rule) . ' ';
 		if ($rule->get_order_way() == HTMLTableSortingRule::ASC)
 		{
-			$order_clause .= 'ASC';
+			$order_clause .= SQLQuerier::ORDER_BY_ASC;
 		}
 		else
 		{
-			$order_clause .= 'DESC';
+			$order_clause .= SQLQuerier::ORDER_BY_DESC;
 		}
 		return $order_clause;
 	}
@@ -120,13 +137,6 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$default = 'user_id';
 		return Arrays::find($rule->get_sort_parameter(), $values, $default);
 	}
-
-	//	private function get_filter_parameter_column(HTMLTableFilter $filter)
-	//	{
-	//		$values = array();
-	//		$default = 'login';
-	//		return Arrays::find($filter->get_filter_parameter(), $values, $default);
-	//	}
 
 	/**
 	 * @param array $row

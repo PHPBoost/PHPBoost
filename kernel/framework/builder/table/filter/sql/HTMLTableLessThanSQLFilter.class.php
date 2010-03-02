@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                     FormButtonDefaultSubmit.class.php
+ *                        HTMLTableLessThanSQLFilter.class.php
  *                            -------------------
- *   begin                : February 16, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : March 2, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
  *
@@ -25,17 +25,22 @@
  ###################################################*/
 
 /**
- * @package builder
- * @subpackage form/button
+ * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package builder
+ * @subpackage table/filter/sql
  */
-class FormButtonDefaultSubmit extends FormButtonSubmit
-{
-    public function __construct()
+class HTMLTableLessThanSQLFilter extends HTMLTableNumberComparatorSQLFilter
+{    
+    protected function get_sql_value_parameter_prefix()
     {
-        global $LANG;
-        parent::__construct($LANG['submit'], 'submit');
+        return __CLASS__;
+    }
+    
+    protected function get_sql_comparator_symbol()
+    {
+        return '<';
     }
 }
+
 ?>

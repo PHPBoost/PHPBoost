@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         HTMLTableEqualsFromListSQLFilter.class.php
+ *                        HTMLTableGreaterThanOrEqualsToSQLFilter.class.php
  *                            -------------------
- *   begin                : February 27, 2010
+ *   begin                : March 2, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -28,33 +28,19 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package builder
- * @subpackage table/sql
+ * @subpackage table/filter/sql
  */
-class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder
-{
-	private $db_field;
-
-	public function __construct($db_field, $name, $label, array $allowed_values)
-	{
-		$this->db_field = $db_field;
-		parent::__construct($name, $label, $allowed_values);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_sql()
-	{
-		$choice_option = $this->get_value();
-		if ($choice_option instanceof FormFieldSelectChoiceOption)
-		{
-			$parameter_name = $this->db_field . '_value';
-			$query = $this->db_field . '=:' . $parameter_name;
-			$parameters = array($parameter_name => $this->get_value()->get_raw_value());
-			return new SQLFragment($query, $parameters);
-		}
-		return new SQLFragment();
-	}
+class HTMLTableGreaterThanOrEqualsToSQLFilter extends HTMLTableNumberComparatorSQLFilter
+{    
+    protected function get_sql_value_parameter_prefix()
+    {
+        return __CLASS__;
+    }
+    
+    protected function get_sql_comparator_symbol()
+    {
+        return '>=';
+    }
 }
 
 ?>
