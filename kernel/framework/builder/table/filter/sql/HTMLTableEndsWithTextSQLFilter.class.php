@@ -39,11 +39,6 @@ class HTMLTableEndsWithTextSQLFilter extends HTMLTableEscapedLikeTextSQLFilter
 	{
 		return '%' . parent::get_value();
 	}
-    
-    protected function get_sql_value_parameter_prefix()
-    {
-        return __CLASS__;
-    }
 }
 
 ?>
