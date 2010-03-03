@@ -33,6 +33,8 @@
 abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder
 {
 	const NOT_BOUNDED = null;
+	
+	private static $param_id_index = 0;
 
 	private $db_field;
 	private $lower_bound;
@@ -76,7 +78,10 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		return false;
 	}
 
-    abstract protected function get_sql_value_parameter_prefix();
+    protected function get_sql_value_parameter_prefix()
+    {
+        return __CLASS__ . '_' . self::$param_id_index++;
+    }
 
     abstract protected function get_sql_comparator_symbol();
 

@@ -32,6 +32,8 @@
  */
 class HTMLTableLikeTextSQLFilter extends HTMLTableTextFilter implements SQLFragmentBuilder
 {
+	private static $param_id_index = 0;
+	
 	private $db_field;
 
 	public function __construct($db_field, $name, $label, $match_regex = null)
@@ -65,7 +67,7 @@ class HTMLTableLikeTextSQLFilter extends HTMLTableTextFilter implements SQLFragm
     
     protected function get_sql_value_parameter_prefix()
     {
-        return __CLASS__;
+        return __CLASS__ . '_' . self::$param_id_index++;
     }
 }
 

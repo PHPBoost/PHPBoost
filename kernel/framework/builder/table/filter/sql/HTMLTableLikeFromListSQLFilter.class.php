@@ -32,6 +32,8 @@
  */
 class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder
 {
+	private static $param_id_index = 0;
+	
 	private $db_field;
 
 	public function __construct($db_field, $name, $label, array $allowed_values)
@@ -63,7 +65,7 @@ class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter imple
     
     protected function get_sql_value_parameter_prefix()
     {
-        return __CLASS__;
+        return __CLASS__ . '_' . self::$param_id_index++;
     }
 }
 
