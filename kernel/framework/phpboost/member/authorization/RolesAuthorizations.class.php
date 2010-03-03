@@ -24,6 +24,12 @@
  *
  ###################################################*/
 
+/**
+ * @package phpboost
+ * @subpackage member/authorization
+ * @desc This class stores different roles which are authorized for a given action. 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 class RolesAuthorizations
 {
 	private $moderators = false;
@@ -37,6 +43,11 @@ class RolesAuthorizations
 		$this->build_from_auth_array($auth_array);
 	}
 
+	/**
+	 * @desc Returns the array authorization formatted at the legacy format in which all authorizations
+	 * are on the first bit.
+	 * @return mixed[]
+	 */
 	public function build_auth_array()
 	{
 		$auth_array = array();
@@ -87,6 +98,10 @@ class RolesAuthorizations
 		$this->users = array();
 	}
 
+	/**
+	 * @desc Sets the authorizations from the legacy style formatted array.
+	 * @param array $auth_array The array
+	 */
 	public function build_from_auth_array(array $auth_array)
 	{
 		$this->init();
