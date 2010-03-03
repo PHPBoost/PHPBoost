@@ -56,7 +56,7 @@ class Environment
 
 		AppContext::init_bench();
 	}
-	
+
 	/**
 	 * Inits the environment and all its services.
 	 */
@@ -90,20 +90,20 @@ class Environment
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
 	}
-	
+
 	public static function init_http_services()
 	{
 		AppContext::set_request(new HTTPRequest());
 		$response = new HTTPResponse();
 		$response->set_default_attributes();
-		AppContext::set_response($response);		
+		AppContext::set_response($response);
 	}
-	
+
 	public static function init_services()
 	{
 		Environment::init_http_services();
 		AppContext::init_session();
-        AppContext::init_extension_provider_service();
+		AppContext::init_extension_provider_service();
 	}
 
 	public static function enable_errors_and_exceptions_management()
@@ -327,23 +327,21 @@ class Environment
 				$lock_file->write('');
 				$lock_file->flush();
 			}
-			if ($lock_file->lock(false))
-			{
-				$yesterday_timestamp = self::get_yesterday_timestamp();
+			$lock_file->lock(false);
+			$yesterday_timestamp = self::get_yesterday_timestamp();
 
-				$num_entry_today = AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
-				. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
-				TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
-				$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
+			$num_entry_today = AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
+			. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
+			TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
+			$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
 				  'd', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
 
-				if ((int) $num_entry_today == 0)
-				{
-					$last_use_config->set_last_use_date(new Date());
-					LastUseDateConfig::save();
+			if ((int) $num_entry_today == 0)
+			{
+				$last_use_config->set_last_use_date(new Date());
+				LastUseDateConfig::save();
 
-					self::perform_changeday();
-				}
+				self::perform_changeday();
 			}
 			$lock_file->close();
 		}
@@ -487,7 +485,7 @@ class Environment
 			self::$running_module_name = '';
 		}
 	}
-	
+
 	/**
 	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
 	 * @return string The module identifier.
@@ -513,10 +511,10 @@ class Environment
 	public static function get_home_page()
 	{
 		global $CONFIG;
-	
+
 		return (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
 	}
-	
+
 	/**
 	 * @desc Returns the full phpboost version with its build number
 	 * @return string the full phpboost version with its build number
