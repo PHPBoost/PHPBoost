@@ -46,7 +46,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
         		'ID' => $this->get_html_id() . 'auth' . $action->get_bit(),
         		'LABEL' => $action->get_label(),
         		'DESCRIPTION' => $action->get_description(),
-        		'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->get_auth_array(), array(), $this->get_html_id() . $action->get_bit(), $this->is_disabled())
+        		'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->build_auth_array(), array(), $this->get_html_id() . $action->get_bit(), $this->is_disabled())
 			));
 		}
 

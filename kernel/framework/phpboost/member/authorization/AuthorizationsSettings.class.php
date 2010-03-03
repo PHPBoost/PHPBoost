@@ -58,7 +58,7 @@ class AuthorizationsSettings
 
 	private static function merge_auth_array(array & $global, ActionAuthorization $action)
 	{
-		foreach ($action->get_auth_array() as $role => $value)
+		foreach ($action->build_auth_array() as $role => $value)
 		{
 			if (!empty($global[$role]))
 			{
@@ -75,7 +75,7 @@ class AuthorizationsSettings
 	{
 		foreach ($this->actions as $action)
 		{
-			$action->set_auth_array($auth_array);
+			$action->build_from_auth_array($auth_array);
 		}
 	}
 }
