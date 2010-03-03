@@ -62,6 +62,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
         $this->add_filter(new HTMLTableLessThanSQLFilter('user_id', 'filter12', 'id <'));
         $this->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
         $this->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
+        $this->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
 		
 	}
 
