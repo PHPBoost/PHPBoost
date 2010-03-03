@@ -146,23 +146,21 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 		$lock_file->write('');
 		$lock_file->flush();
 	}
-	if ($lock_file->lock(false))
-	{
-		$yesterday_timestamp = time() - 86400;
-		if ((int) $Sql->query("
-		    SELECT COUNT(*)
+	$lock_file->lock(false);
+	$yesterday_timestamp = time() - 86400;
+	if ((int) $Sql->query("
+	    SELECT COUNT(*)
             FROM " . DB_TABLE_STATS . "
             WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND
                 stats_month = '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND
                 stats_day = '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__) == 0
-		)
-		{
-			//Inscription du nouveau jour dans le fichier en cache.
-			$Cache->generate_file('day');
+	)
+	{
+		//Inscription du nouveau jour dans le fichier en cache.
+		$Cache->generate_file('day');
 
-			require_once(PATH_TO_ROOT . '/kernel/changeday.php');
-			change_day();
-		}
+		require_once(PATH_TO_ROOT . '/kernel/changeday.php');
+		change_day();
 	}
 	$lock_file->close();
 }
