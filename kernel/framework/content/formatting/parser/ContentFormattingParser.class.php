@@ -50,8 +50,14 @@ abstract class ContentFormattingParser extends AbstractParser
         global $CONFIG;
         //We build the parent object
         parent::__construct();
-        $this->html_auth = $CONFIG['html_auth'];
-        $this->forbidden_tags = $CONFIG['forbidden_tags'];
+        if (!empty($CONFIG['html_auth']))
+        {
+        	$this->html_auth = $CONFIG['html_auth'];
+        }
+        if (!empty($CONFIG['forbidden_tags']))
+        {
+        	$this->forbidden_tags = $CONFIG['forbidden_tags'];
+        }
     }
 
     /**

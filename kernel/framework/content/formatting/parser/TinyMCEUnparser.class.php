@@ -138,7 +138,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		//Preg_replace.
 		$array_preg = array(
-			'`<img src="([^"]+)" alt="" class="valign_([^"]+)?" />`i',
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
 			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
@@ -150,7 +149,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 			);
 			$array_preg_replace = array(
-			"<img src=\"$1\" alt=\"\" align=\"$2\" />",
 			"<p style=\"text-align: $1;\">$2</p>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
 			"<h1>$1</h1>",
@@ -193,6 +191,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 			//Police
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array($this, 'unparse_font'), $this->content );
+			
+			//Image
+			$this->content = preg_replace_callback('`<img src="([^"]+)" alt=""(?: style="([^"]*)")? />`isU', array($this, 'unparse_img'), $this->content );
 	}
 
 	/**
@@ -327,6 +328,34 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		}
 
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
+	}
+	
+	private function unparse_img($matches)
+	{
+		$style = '';
+		$params = '';
+		foreach (explode(';', $matches[2]) as $style_att)
+		{
+			list($param, $value) = explode(':', $style_att);
+			switch ($param)
+			{
+				case 'width':
+					$params .= 'width="' . str_replace('px', '', $value) . '" ';
+					break;
+				case 'height':
+					$params .= 'height="' . str_replace('px', '', $value) . '" ';
+					break;
+				case 'border':
+					$style .= 'border:' . $value . ';';
+					break;
+			}
+		}
+		
+		if (!empty($style))
+		{
+			$style = ' style="' . $style . '"';
+		}
+		return '<img' . $style . ' src="' . $matches[1] . '" alt="" ' . $params . '/>';
 	}
 
 	/**
