@@ -150,7 +150,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
         $request = AppContext::get_request();
         if ($request->has_parameter($this->get_html_id()))
         {
-            $this->set_raw_value($request->get_value($this->get_html_id()));
+            $this->set_raw_value($request->get_string($this->get_html_id()));
         }
     }
 
