@@ -50,6 +50,7 @@
 [*] Ajout d'un défilement vertical dans l'administration pour la visualisation de la liste des utilisateurs connectées.
 [*] Ajout d'un bloc note à l'accueil de l'administration.
 [*] Possibilité de trier les membres par date de dernière connexion dans l'administration.
+[*] Ajout de l'attribut style à la balise image de façon à pouvoir fixer des propriétés comme largeur, hauteur et bordure.
 
 =================================== Modules =====================================
 [b]BugTracker :[/b]
