@@ -31,7 +31,7 @@
 							</li>
 							# ENDIF #
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" > {L_LINKS}</h5>
+								<h5 style="margin-right:5px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" /> {L_LINKS}</h5>
 								<ul id="smenu1">
 									# START links_list #
 									<li>
