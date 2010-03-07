@@ -1,6 +1,6 @@
 <?php
 
-class applicationTest extends PHPBoostUnitTestCase {
+class ApplicationTest extends PHPBoostUnitTestCase {
 
 	function test_constructor()
 	{
@@ -35,7 +35,7 @@ class applicationTest extends PHPBoostUnitTestCase {
 	
 	function test_load()
 	{
-		TODO(__FILE__, __METHOD__);
+		// TODO(__FILE__, __METHOD__);
 	}
 	
 	function test_get_identifier()
@@ -55,7 +55,7 @@ class applicationTest extends PHPBoostUnitTestCase {
 		$language 	= 'french';
 		
 		$app = new Application($id, $language);
-		TODO(__FILE__, __METHOD__);
+		// TODO(__FILE__, __METHOD__);
 	}
 	
 	function test__get_installed_version()
@@ -67,7 +67,7 @@ class applicationTest extends PHPBoostUnitTestCase {
 		$vers = $app->_get_installed_version();
 		self::assertEquals($vers,'0');
 		
-		TODO(__FILE__, __METHOD__);
+		// TODO(__FILE__, __METHOD__);
 	}
 	
 }

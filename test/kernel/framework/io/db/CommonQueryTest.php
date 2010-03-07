@@ -1,7 +1,5 @@
 <?php
 
-import('io/db/CommonQuery');
-
 class CommonQueryTest extends PHPBoostUnitTestCase
 {
 	private $test_table;

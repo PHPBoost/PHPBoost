@@ -1,7 +1,5 @@
 <?php
 
-import('db/SqlParameterExtractor');
-
 class SqlParameterExtractorTest extends PHPBoostUnitTestCase
 {
 	public function test_parse_with_no_string_params()
