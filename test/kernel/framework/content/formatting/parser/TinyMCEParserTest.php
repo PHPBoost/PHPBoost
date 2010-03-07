@@ -12,6 +12,8 @@ class TinyMCEParserTest extends PHPBoostUnitTestCase
 		self::assertEquals('<img src="/folder/img.png" alt="" style="width:45px;height:22px;" />', $this->parse($input));
 		$input = '&lt;img style="border: 5px solid black;" src="/folder/img.png" alt="toto" width="45" height="22" /&gt;';
 		self::assertEquals('<img src="/folder/img.png" alt="" style="border: 5px solid black;width:45px;height:22px;" />', $this->parse($input));
+		$input = '&lt;img style="border: 4px solid black;" src="/folder/img.png" alt="" width="80" height="20" /&gt;';
+		self::assertEquals('<img src="/folder/img.png" alt="" style="border: 4px solid black;width:80px;height:20px;" />', $this->parse($input));
 	}
 	
 	private function parse($content)

@@ -336,8 +336,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$params = '';
 		foreach (explode(';', $matches[2]) as $style_att)
 		{
-			list($param, $value) = explode(':', $style_att);
-			switch ($param)
+			$exp = explode(':', $style_att);
+			if (count($exp) < 2)
+			{
+				continue;
+			}
+			$value = trim($exp[1]);
+			switch (trim($exp[0]))
 			{
 				case 'width':
 					$params .= 'width="' . str_replace('px', '', $value) . '" ';

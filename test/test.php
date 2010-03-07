@@ -48,7 +48,8 @@ $tpl->assign_vars(array(
 foreach (list_tu('./kernel') as $tu)
 {
     $tpl->assign_block_vars('tests', array(
-        'NAME' => $tu
+        'NAME' => str_replace('Test.php', '', $tu),
+    	'PATH' => $tu
     ));
 }
 

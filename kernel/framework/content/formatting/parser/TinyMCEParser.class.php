@@ -459,7 +459,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"((?: ?[a-z]+="[^"]+")*) /&gt;`is', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"((?: ?[a-z]+="[^"]*")*) /&gt;`is', array($this, 'parse_img'), $this->content);
 		}
 
 		//indent tag

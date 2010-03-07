@@ -22,7 +22,7 @@
     <dt><label for="tus">Choose in the list</label></dt>
     <dd><select id="tus" name="tus">
         # START tests #
-        <option value="./kernel/{tests.NAME}">{tests.NAME}</option>
+        <option value="./kernel/{tests.PATH}">{tests.NAME}</option>
         # END tests #
     </select></dd>
 </dl>
@@ -36,7 +36,7 @@
     <dt><label for="ts">Choose in the list</label></dt>
     <dd><select id="ts" name="ts">
         # START tests_suite #
-        <option value="./kernel/{tests_suite.NAME}">{tests_suite.NAME}</option>
+        <option value="./kernel{tests_suite.NAME}">{tests_suite.NAME}</option>
         # END tests_suite #
     </select></dd>
 </dl>
