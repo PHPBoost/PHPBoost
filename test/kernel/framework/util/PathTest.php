@@ -1,7 +1,5 @@
 <?php
 
-import('util/Path');
-
 class PathTest extends PHPBoostUnitTestCase
 {
 	public function test_phpboost_path()

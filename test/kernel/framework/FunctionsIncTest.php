@@ -5,7 +5,7 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 
 	function test_retrieve()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 
 	function test_numeric()
@@ -20,53 +20,53 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_get_utheme()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_get_ulang()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_display_editor()
 	{
-        TODO(__METHOD__);
+        // TODO(__METHOD__);
 //		$ret = display_editor();
 //		self::assertTrue(is_string($ret));
 	}
 	
 	function test_display_comments()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_load_module_lang()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_load_ini_file()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_parse_ini_array()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_get_ini_config()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	function test_find_require_dir()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_get_module_name()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_redirect_confirm()
@@ -76,12 +76,12 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_get_home_page()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 
 	function test_com_display_link()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_check_mail()
@@ -94,67 +94,67 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_url()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_gmdate_format()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_strtotimestamp()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_strtodate()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_delete_file()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_delete_directory()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_pages_displayed()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_file_get_contents_emulate()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_html_entity_decode()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_htmlspecialchars_decode()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_array_combine()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_get_feed_menu()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_strhash()
 	{
-		TODO(__METHOD__);
+		// TODO(__METHOD__);
 	}
 	
 	function test_get_uid()
@@ -173,12 +173,12 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_req()
 	{
-        TODO(__METHOD__);
+        // TODO(__METHOD__);
 	}
 	
 	function test_inc()
 	{
-        TODO(__METHOD__);
+        // TODO(__METHOD__);
 	}
 }
 ?>

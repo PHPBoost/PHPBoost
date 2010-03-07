@@ -161,7 +161,8 @@ class LangLoader
 	 */
 	public static function clear_lang_cache()
 	{
-		self::$langs = array();
+		self::$ram_cache = null;
+		self::get_ram_cache();
 	}
 
 	/**

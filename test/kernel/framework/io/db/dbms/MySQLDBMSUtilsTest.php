@@ -1,7 +1,5 @@
 <?php
 
-import('io/db/dbms/MySQLDBMSUtils');
-
 class MySQLDBMSUtilsTest extends PHPBoostUnitTestCase
 {
 	private static $test_table1;

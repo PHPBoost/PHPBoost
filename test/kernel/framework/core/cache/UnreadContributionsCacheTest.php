@@ -1,7 +1,5 @@
 <?php
 
-import('core/cache/UnreadContributionsCache');
-
 class UnreadContributionsCacheTest extends PHPBoostUnitTestCase
 {
 	public function __construct()

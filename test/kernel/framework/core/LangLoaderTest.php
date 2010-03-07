@@ -1,7 +1,5 @@
 <?php
 
-import('core/lang/LangLoader');
-
 class LangLoaderTest extends PHPBoostUnitTestCase {
 
 	public function setUp()

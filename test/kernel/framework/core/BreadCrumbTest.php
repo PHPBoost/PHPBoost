@@ -1,10 +1,9 @@
 <?php
 
-class breadcrumbTest extends PHPBoostUnitTestCase
+class BreadcrumbTest extends PHPBoostUnitTestCase
 {
 	function test_constructor()
 	{
-		// DO NOTHING
 	}
 
 	function test_add_1arg()
@@ -14,7 +13,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 		$ret = $bread_crumb->add('texte');
 		self::assertTrue($ret);
 		
-		$tmp = $bread_crumb->array_links;
+		$tmp = $bread_crumb->get_links();
 		self::assertEquals(count($tmp), 1);
 		list($t1, $t2) = $tmp[0];
 		self::assertEquals($t1, 'texte');
@@ -28,7 +27,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 		$ret = $bread_crumb->add('texte','lien');
 		self::assertTrue($ret);
 		
-		$tmp = $bread_crumb->array_links;
+		$tmp = $bread_crumb->get_links();
 		self::assertEquals(count($tmp), 2);
 		list($t1, $t2) = $tmp[1];
 		self::assertEquals($t1, 'texte');
@@ -41,7 +40,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 		
 		$ret = $bread_crumb->reverse();
 		
-		$tmp = $bread_crumb->array_links;
+		$tmp = $bread_crumb->get_links();
 		self::assertEquals(count($tmp), 2);
 		list($t1, $t2) = $tmp[0];
 		self::assertEquals($t1, 'texte');
@@ -54,7 +53,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 		
 		$ret = $bread_crumb->remove_last();
 		
-		$tmp = $bread_crumb->array_links;
+		$tmp = $bread_crumb->get_links();
 		self::assertEquals(count($tmp), 1);
 		list($t1, $t2) = $tmp[0];
 		self::assertEquals($t1, 'texte');
@@ -63,7 +62,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 
 	function test_display()
 	{
-		TODO(__FILE__, __METHOD__);
+		// TODO(__FILE__, __METHOD__);
 	}
 	
 	function test_clean()
@@ -72,7 +71,7 @@ class breadcrumbTest extends PHPBoostUnitTestCase
 		
 		$ret = $bread_crumb->clean();
 		
-		$tmp = $bread_crumb->array_links;
+		$tmp = $bread_crumb->get_links();
 		self::assertEquals(count($tmp), 0);
 	}
 	
