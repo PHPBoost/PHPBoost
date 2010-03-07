@@ -2,7 +2,7 @@
 
 $User = new User();
 
-class TinyMCEParserTest extends PHPBoostUnitTestCase
+class TinyMCEUnparserTest extends PHPBoostUnitTestCase
 {
 	public function test_img()
 	{
@@ -10,8 +10,8 @@ class TinyMCEParserTest extends PHPBoostUnitTestCase
 		self::assertEquals($this->get_expected_value('<img src="../folder/img.png" alt="" />'), $this->unparse($input));
 		$input = '<img src="/folder/img.png" alt="" style="width:45px;height:22px;" />';
 		self::assertEquals($this->get_expected_value('<img src="../folder/img.png" alt="" width="45" height="22" />'), $this->unparse($input));
-		$input = '<img src="/folder/img.png" alt="" style="border: 5px solid black;width:45px;height:22px;" />';
-		self::assertEquals($this->get_expected_value('<img style="border: 5px solid black;" src="../folder/img.png" alt="" width="45" height="22" />'), $this->unparse($input));
+		$input = '<img src="/folder/img.png" alt="" style="border:5px solid black;width:45px;height:22px;" />';
+		self::assertEquals($this->get_expected_value('<img style="border:5px solid black;" src="../folder/img.png" alt="" width="45" height="22" />'), $this->unparse($input));
 	}
 	
 	private function unparse($content)
