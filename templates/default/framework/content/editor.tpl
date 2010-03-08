@@ -59,7 +59,7 @@
 		# IF C_BBCODE_TINYMCE_MODE #
 		
 		# IF NOT C_JS_INCLUDED #
-			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script>
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/tinymce/tiny_mce.js"></script>
 		# ENDIF #
 			
 		<script language="javascript" type="text/javascript">

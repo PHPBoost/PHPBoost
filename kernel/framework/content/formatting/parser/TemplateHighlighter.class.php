@@ -55,7 +55,7 @@ class TemplateHighlighter extends AbstractParser
 	public function parse($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
-		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+		require_once(PATH_TO_ROOT . '/kernel/lib/geshi/geshi.php');
 
 		$geshi = new GeSHi($this->content, 'html');
 

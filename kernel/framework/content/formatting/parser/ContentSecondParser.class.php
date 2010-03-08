@@ -123,7 +123,7 @@ class ContentSecondParser extends AbstractParser
 		//Templates PHPBoost
 		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			require_once(PATH_TO_ROOT . '/kernel/lib/geshi/geshi.php');
 
 			$template_highlighter = new TemplateHighlighter();
 			$template_highlighter->set_content($contents);
@@ -139,7 +139,7 @@ class ContentSecondParser extends AbstractParser
 		}
 		elseif ($language != '')
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			require_once(PATH_TO_ROOT . '/kernel/lib/geshi/geshi.php');
 			$Geshi = new GeSHi($contents, $language);
 
 			if ($line_number) //Affichage des numéros de lignes.
