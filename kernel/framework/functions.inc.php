@@ -92,7 +92,6 @@ function file_get_contents_emulate($filename, $incpath = false, $resource_contex
 }
 
 define('CLASS_IMPORT', '.class.php');
-define('INTERFACE_IMPORT', '.int.php');
 define('INC_IMPORT', '.inc.php');
 define('LIB_IMPORT', '.lib.php');
 define('PHP_IMPORT', '.php');

@@ -37,7 +37,7 @@ if (!defined("PCL_TAR"))
   // ----- Configuration variable
   // Theses values may be changed by the user of PclTar library
   if (!isset($g_pcltar_lib_dir))
-    $g_pcltar_lib_dir = PATH_TO_ROOT . '/kernel/framework/lib/pcl';
+    $g_pcltar_lib_dir = PATH_TO_ROOT . '/kernel/lib/pcl';
 
   // ----- Error codes
   //   -1 : Unable to open file in binary write mode
