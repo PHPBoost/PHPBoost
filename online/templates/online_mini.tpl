@@ -8,7 +8,7 @@
 			<div class="module_mini_bottom">
 			</div>
 			<script type="text/javascript">
-			new Ajax.PeriodicalUpdater('online_mini', '../online/xmlhttprequest.php',
+			new Ajax.PeriodicalUpdater('online_mini', '../online/xmlhttprequest.php?mini=1',
 			{
 				method: 'get',
 				frequency: {FREQUENCY},
