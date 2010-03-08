@@ -56,7 +56,7 @@ class CLIHelpCommand implements CLICommand
 
     public function print_commands_descriptions()
     {
-        CLIOutput::writeln('availables commands are:');
+        CLIOutput::writeln('available commands are:');
         $provider_service = AppContext::get_extension_provider_service();
         foreach ($provider_service->get_providers(CLICommands::EXTENSION_POINT) as $provider)
         {

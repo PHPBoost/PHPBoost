@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              mail.class.php
+ *                              Mail.class.php
  *                            -------------------
- *   begin                : March 11, 2005
- *   copyright            : (C) 2009 Viarre Régis, Benoit Sautel
- *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
+ *   begin                : March 8, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -27,10 +27,10 @@
 
 /**
  * @package io
+ * @subpackage mail
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to send mails without having to deal with the mail headers and parameters.
  */
-
 class Mail
 {
 	const CRLF = "\r\n";
