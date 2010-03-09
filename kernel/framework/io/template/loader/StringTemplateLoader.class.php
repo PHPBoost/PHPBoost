@@ -49,12 +49,11 @@ class StringTemplateLoader implements TemplateLoader
 	{
 		$this->content = $content;
 		$this->hashed_content = md5($content);
-
-		// static initialization
-		if (self::$parsing_cache == null)
-		{
-			self::$parsing_cache = new RAMDataStore();
-		}
+	}
+	
+	public static function static_construct()
+	{
+		self::$parsing_cache = new RAMDataStore();
 	}
 
 	/**
@@ -106,4 +105,7 @@ class StringTemplateLoader implements TemplateLoader
 		return null;
 	}
 }
+
+StringTemplateLoader::static_construct();
+
 ?>

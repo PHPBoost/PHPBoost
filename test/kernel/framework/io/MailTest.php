@@ -6,75 +6,65 @@ class MailTest extends PHPBoostUnitTestCase
 	{
 		// DO NOTHING
 	}
-	
+
 	function test_check_validity()
 	{
 		$msg = new Mail();
 		$ret = $msg->check_validity('from-one_two.test-one_two.test-one_two@test.test.fr');
 		self::assertTrue($ret);
-		
+
 		$ret = $msg->check_validity('titi_bidon');
-		self::assertFalse($ret);		
+		self::assertFalse($ret);
 	}
-	
+
 	function test_accessor_sender()
-	{	
+	{
 		$msg = new Mail();
 
 		$mail = 'test@test.fr';
 		$msg->set_sender($mail);
 		self::assertEquals($mail, $msg->get_sender_mail());
-		self::assertEquals($msg->sender_name, $msg->get_sender_name());	
-		
+		self::assertEquals($msg->sender_name, $msg->get_sender_name());
+
 		$mail = 'test@test.fr';
 		$name = 'sender';
 		$msg->set_sender($mail, $name);
 		self::assertEquals($mail, $msg->get_sender_mail());
-		self::assertEquals($msg->sender_name, $msg->get_sender_name());	
+		self::assertEquals($msg->sender_name, $msg->get_sender_name());
 	}
 
 	function test_accessor_recipients()
 	{
 		$msg = new Mail();
-		
+
 		$recipients = 'titi@test.fr; tutu@test.fr; toto@test.fr';
-		$ret = $msg->set_recipients($recipients);
-		self::assertTrue($ret);
-		
+		$ret = $msg->add_recipient('titi@test.fr');
+		$ret = $msg->add_recipient('tutu@test.fr', 'Tutu');
+		$ret = $msg->add_recipient('toto.test.fr');
+
 		$ret = $msg->get_recipients();
 		self::assertTrue(is_array($ret));
-		foreach($ret as $r) {
-			self::assertTrue(strpos($recipients, $r) !== FALSE);
-		}
+		self::assertEquals(array('titi@test.fr' => '', 'tutu@test.fr' => 'Tutu'), $msg->get_recipients());
 	}
 
-	function test_accessor_object()
+	function test_accessor_subject()
 	{
 		$msg = new Mail();
-		
-		$object = 'object';
-		$msg->set_object($object);
-		self::assertEquals($object, $msg->get_object());
+
+		$subject = 'subject';
+		$msg->set_subject($subject);
+		self::assertEquals($subject, $msg->get_subject());
 	}
 
 	function test_accessor_content()
 	{
 		$msg = new Mail();
-		
+
 		$content = 'content';
 		$msg->set_content($content);
 		self::assertEquals($content, $msg->get_content());
 	}
-	
-	function test_accessor_headers()
-	{
-		$msg = new Mail();
-		
-		$headers = 'headers';
-		$msg->set_headers($headers);
-		self::assertEquals($headers, $msg->get_headers());
-	}
-	
+
 	function test_send_from_properties()
 	{
 		$msg = new Mail();
@@ -88,17 +78,17 @@ class MailTest extends PHPBoostUnitTestCase
 		} else {
 			self::assertTrue($ret);
 		}
-		
+
 		$mail_header = 'My header';
-		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header);		
+		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header);
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
 			self::assertFalse($ret);
 		} else {
 			self::assertTrue($ret);
 		}
-		
+
 		$mail_sender = 'visiteur';
-		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header, $mail_sender);	
+		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header, $mail_sender);
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
 			self::assertFalse($ret);
 		} else {
@@ -106,17 +96,17 @@ class MailTest extends PHPBoostUnitTestCase
 		}
 
 		$mail_from 		= 'from_bidon';
-		$mail_sender 	= 'visiteur';		
+		$mail_sender 	= 'visiteur';
 		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, '', $mail_sender);
-		self::assertFalse($ret);		
+		self::assertFalse($ret);
 	}
-	
+
 	function test_send()
 	{
 		$msg = new Mail();
-		
-		$msg->set_recipients('toto@test.fr; titi@test.fr; tutu@test.fr');
-		$msg->set_object('object');
+
+		$msg->add_recipient('toto@test.fr; titi@test.fr; tutu@test.fr');
+		$msg->set_subject('subject');
 		$msg->set_content('content');
 		$msg->set_sender('sender@mail.fr', 'sender_name');
 		$ret = $msg->send();
@@ -126,23 +116,14 @@ class MailTest extends PHPBoostUnitTestCase
 			self::assertTrue($ret);
 		}
 		/*
-		var_dump($msg->objet);
-		var_dump($msg->content);
-		var_dump($msg->sender_mail);
-		var_dump($msg->sender_name);
-		var_dump($msg->headers);
-		var_dump($msg->recipients);
-		echo '<br />';
-		*/
+		 var_dump($msg->objet);
+		 var_dump($msg->content);
+		 var_dump($msg->sender_mail);
+		 var_dump($msg->sender_name);
+		 var_dump($msg->headers);
+		 var_dump($msg->recipients);
+		 echo '<br />';
+		 */
 	}
-	
-	function test__generate_headers()
-	{
-		$msg = new Mail();
-		$msg->_generate_headers();
-		echo '<br />'.htmlentities($msg->headers).'<br />';
-		self::assertTrue(is_string($msg->headers) AND strlen($msg->headers) > 0);
-	}
-	
 }
 ?>
