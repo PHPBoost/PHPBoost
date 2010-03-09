@@ -736,8 +736,8 @@ switch($step)
 
 				//Paramètres du mail
 				$mail->set_sender('admin');
-				$mail->set_recipients($user_mail);
-				$mail->set_object($LANG['admin_mail_object']);
+				$mail->add_recipient($user_mail);
+				$mail->set_subject($LANG['admin_mail_object']);
 				$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
 
 				//On envoie le mail

@@ -37,6 +37,8 @@ class FileUploadService
 	 * @desc
 	 * @param string $varname
 	 * @return UploadedFile
+	 * @throws UploadedFileTooLargeException if the file is too big
+	 * @throws Exception if an unknown error occurs
 	 */
 	public static function retrieve_file($varname)
 	{

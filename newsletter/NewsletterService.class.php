@@ -55,12 +55,12 @@ class NewsletterService
 			
 			$mail_sender = new Mail();
 			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-			$mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
-			$mail_sender->set_object($mail_object);
+			$mail_sender->set_is_html(true);
+			$mail_sender->set_subject($mail_object);
 			 
 			foreach ($mailing_list as $array_mail)
 			{
-			    $mail_sender->set_recipients($array_mail[1]);
+			    $mail_sender->add_recipient($array_mail[1]);
                 $mail_sender->set_content(str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message));
 
                 if (!$mail_sender->send())
@@ -75,10 +75,10 @@ class NewsletterService
 		{
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-		    $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
-		    $mail_sender->set_recipients($email_test);
+		    $mail_sender->set_is_html(true);
+		    $mail_sender->add_recipient($email_test);
 		    $mail_sender->set_content($message);
-		    $mail_sender->set_object($mail_object);
+		    $mail_sender->set_subject($mail_object);
 		    
 		    $mail_sender->send();
 			return true;
@@ -116,12 +116,12 @@ class NewsletterService
 			
 			$mail_sender = new Mail();
 			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-			$mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
-            $mail_sender->set_object($mail_object);
+			$mail_sender->set_is_html(true);
+            $mail_sender->set_subject($mail_object);
            
             foreach ($mailing_list as $array_mail)
             {
-    	        $mail_sender->set_recipients($array_mail[1]);
+    	        $mail_sender->add_recipient($array_mail[1]);
     	        $mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
                 $mail_sender->set_content($mail_contents . $mail_contents_end);
     
@@ -137,10 +137,10 @@ class NewsletterService
 		{
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-		    $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
-            $mail_sender->set_recipients($email_test);
+		    $mail_sender->set_is_html(true);
+            $mail_sender->add_recipient($email_test);
             $mail_sender->set_content($mail_contents . '</body></html>');
-            $mail_sender->set_object($mail_object);
+            $mail_sender->set_subject($mail_object);
             
             $mail_sender->send();
             return true;
@@ -173,12 +173,12 @@ class NewsletterService
 			
 		    $mail_sender = new Mail();
 		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-            $mail_sender->set_mime(Mail::MIME_FORMAT_TEXT);
-            $mail_sender->set_object($mail_object);
+		    $mail_sender->set_is_html(true);
+            $mail_sender->set_subject($mail_object);
            
             foreach ($mailing_list as $array_mail)
             {
-                $mail_sender->set_recipients($array_mail[1]);
+                $mail_sender->add_recipient($array_mail[1]);
                 $mail_sender->set_content($message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0]);
     
                 if (!$mail_sender->send())
@@ -193,10 +193,10 @@ class NewsletterService
 		{
             $mail_sender = new Mail();
             $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
-            $mail_sender->set_mime(Mail::MIME_FORMAT_HTML);
-            $mail_sender->set_recipients($email_test);
+            $mail_sender->set_is_html(true);
+            $mail_sender->add_recipient($email_test);
             $mail_sender->set_content($message);
-            $mail_sender->set_object($mail_object);
+            $mail_sender->set_subject($mail_object);
             
             $mail_sender->send();
             return true;

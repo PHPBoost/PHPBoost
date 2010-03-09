@@ -33,14 +33,13 @@
  */
 class Mail
 {
+	// TODO remove
 	const CRLF = "\r\n";
-	const MIME_FORMAT_TEXT = 'text/plain';
-	const MIME_FORMAT_HTML = 'text/html';
-	
+
 	/**
 	 * @var sting object of the mail
 	 */
-	var $object = '';
+	var $subject = '';
 
 	/**
 	 * @var string content of the mail
@@ -68,13 +67,13 @@ class Mail
 	var $recipients = array();
 
 	/**
-	 * @var string MIME of the mail content
+	 * @var string Tells whether the content contains HTML code
 	 */
-	var $format = self::MIME_FORMAT_TEXT;
+	var $is_html = false;
 
 
 	/**
-	 * @desc Builds a Mail object.
+	 * @desc Builds a Mail subject.
 	 */
 	public function __construct()
 	{
@@ -103,43 +102,34 @@ class Mail
 	}
 
 	/**
-	 * @desc Sets the recipient(s) of the mail.
-	 * @param string $recipients Recipients of the mail. It they are more than one, use the comma to separate their addresses.
+	 * @desc Adds a recipient to the list
+	 * @param string $address The address to which the mail must be sent
+	 * @param string $name Name of the recipient (facultative)
 	 */
-	public function set_recipients($recipients)
+	public function add_recipient($address, $name = '')
 	{
-		$this->recipients = '';
-
-		$recipients_list = explode(';', $recipients);
-		$recipients_list = array_map('trim', $recipients_list);
-
-		//We check that each recipient address is correct
-		foreach ($recipients_list as $recipient)
+		if (self::check_validity($address))
 		{
-			if (self::check_validity($recipient))
-			{
-				$this->recipients[] = $recipient;
-			}
+			$this->recipients[$address] = $name;
 		}
-		 
-		//We return the setting status.
-		if (!empty($this->recipients))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+	}
+	
+	/**
+	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * @return string[string]
+	 */
+	public function get_recipients()
+	{
+		return $this->recipients;
 	}
 
 	/**
-	 * @desc Sets the mail object
-	 * @param string $object Mail object
+	 * @desc Sets the mail subject
+	 * @param string $subject Mail subject
 	 */
-	public function set_object($object)
+	public function set_subject($subject)
 	{
-		$this->object = $object;
+		$this->subject = $subject;
 	}
 
 	/**
@@ -179,21 +169,12 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail recipients' addresses. They are separated by a comma.
-	 * @return string The mail recipients.
+	 * @desc Returns the mail subject.
+	 * @return string The mail subject.
 	 */
-	public function get_recipients()
+	public function get_subject()
 	{
-		return $this->recipients;
-	}
-
-	/**
-	 * @desc Returns the mail object.
-	 * @return string The mail object.
-	 */
-	public function get_object()
-	{
-		return $this->object;
+		return $this->subject;
 	}
 
 	/**
@@ -214,46 +195,39 @@ class Mail
 		return $this->headers;
 	}
 
-	/**
-	 * Sets the MIME type of the mail content
-	 * @param string $mime Mail::MIME_FORMAT_TEXT or Mail::MIME_FORMAT_HTML
-	 */
-	public function set_mime($mime)
+
+	public function set_is_html($is)
 	{
-		$this->format = $mime;
+		$this->is_html = $is;
 	}
 
-	/**
-	 * Returns the MIME type of the mail content
-	 * @return string the MIME type
-	 */
-	public function get_mime()
+	public function is_html()
 	{
-		return $this->format();
+		return $this->is_html;
 	}
 
 	/**
 	 * @desc Sends the mail.
 	 * @deprecated
 	 * @param string $mail_to The mail recipients' address.
-	 * @param string $mail_object The mail object.
+	 * @param string $mail_subject The mail subject.
 	 * @param string $mail_content content of the mail
 	 * @param string $mail_from The mail sender's address.
 	 * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
 	 * @param string $sender_name The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
 	 * @return bool True if the mail could be sent, false otherwise.
 	 */
-	public function send_from_properties($mail_to, $mail_object, $mail_content, $mail_from, $mail_header = null, $sender_name = 'admin')
+	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from, $mail_header = null, $sender_name = 'admin')
 	{
 		// Initialization of the mail properties
-		$recipient = $this->set_recipients($mail_to);
+		$recipient = $this->add_recipient($mail_to);
 		$sender = $this->set_sender($mail_from, $sender_name);
 		if (!$recipient || !$sender)
 		{
 			return false;
 		}
 		 
-		$this->set_object($mail_object);
+		$this->set_subject($mail_subject);
 		$this->set_content($mail_content);
 
 		$this->set_headers($mail_header);
@@ -274,7 +248,7 @@ class Mail
 		}
 
 		$recipients = trim(implode(', ', $this->recipients), ', ');
-		return @mail($recipients, $this->object, $this->content, $this->headers);
+		return @mail($recipients, $this->subject, $this->content, $this->headers);
 	}
 
 	/**
@@ -283,9 +257,10 @@ class Mail
 	 */
 	public static function check_validity($mail_address)
 	{
-		return preg_match('`^(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', $mail_address);
+		return (bool)preg_match('`^(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', $mail_address);
 	}
 
+	// TODO remove
 	/**
 	 * @access protected
 	 * @desc Generates the mail headers.
