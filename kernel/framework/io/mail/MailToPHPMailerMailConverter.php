@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    AbstractPHPMailerMailSender.class.php
+ *                    MailToPHPMailerMailConverter.class.php
  *                            -------------------
- *   begin                : March 9, 2010
+ *   begin                : March 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -27,22 +27,58 @@
 
 import('/kernel/lib/phpmailer/class.phpmailer', PHP_IMPORT);
 
-class AbstractPHPMailerMailSender implements MailSender
+class MailToPHPMailerMailConverter implements MailSender
 {
 	/**
 	 * @var PHPMailer
 	 */
 	private $mailer;
-
-	public function send(Mail $mail)
+	/**
+	 * @var Mail
+	 */
+	private $mail_to_send;
+	
+	public function convert(Mail $mail)
 	{
-		$converter = new MailToPHPMailerMailConverter();
-		$this->mailer = $converter->convert($mail);
+		$this->mail_to_send = $mail;
+		$this->mailer = new PHPMailer();
+		$this->convert_mail();
 		$this->configure_sending_configuration($this->mailer);
 		$this->mailer->Send();
+		return $this->mailer;
 	}
 
-	abstract protected function configure_sending_configuration(PHPMailer $mailer);
+	private function convert_mail()
+	{
+		foreach ($this->mail_to_send->get_recipients() as $recipient => $name)
+		{
+			$this->mailer->AddAddress($recipient, $name);
+		}
+
+		// TODO cc
+		// TODO bcc
+
+		// from
+		$this->mailer->SetFrom($this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_sender_name());
+		$this->mailer->AddReplyTo($this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_sender_name());
+
+		$this->mailer->Subject = $this->mail_to_send->get_subject();
+
+		// content
+		$this->convert_content();
+	}
+
+	private function convert_content()
+	{
+		if ($this->mail_to_send->is_html())
+		{
+			$this->mailer->MsgHTML($this->mail_to_send->get_content());
+		}
+		else
+		{
+			$this->mailer->Body = $this->mail_to_send->get_content();
+		}
+	}
 }
 
 ?>
