@@ -6,6 +6,7 @@
 
 require_once('../kernel/begin.php');
 require_once('../online/online_begin.php');
+define('NO_SESSION_LOCATION', TRUE);
 require_once('../kernel/header_no_display.php');
 require_once('../online/online_mini.php');
 
