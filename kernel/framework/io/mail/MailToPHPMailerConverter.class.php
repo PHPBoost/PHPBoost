@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    MailToPHPMailerMailConverter.class.php
+ *                    MailToPHPMailerConverter.class.php
  *                            -------------------
  *   begin                : March 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -27,7 +27,7 @@
 
 import('/kernel/lib/phpmailer/class.phpmailer', PHP_IMPORT);
 
-class MailToPHPMailerMailConverter implements MailSender
+class MailToPHPMailerConverter
 {
 	/**
 	 * @var PHPMailer
@@ -38,13 +38,15 @@ class MailToPHPMailerMailConverter implements MailSender
 	 */
 	private $mail_to_send;
 	
+	/**
+	 * @param Mail $mail
+	 * @return PHPMailer
+	 */
 	public function convert(Mail $mail)
 	{
 		$this->mail_to_send = $mail;
 		$this->mailer = new PHPMailer();
 		$this->convert_mail();
-		$this->configure_sending_configuration($this->mailer);
-		$this->mailer->Send();
 		return $this->mailer;
 	}
 
