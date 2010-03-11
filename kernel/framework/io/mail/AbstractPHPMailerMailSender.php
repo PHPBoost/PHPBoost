@@ -36,7 +36,7 @@ class AbstractPHPMailerMailSender implements MailSender
 
 	public function send(Mail $mail)
 	{
-		$converter = new MailToPHPMailerMailConverter();
+		$converter = new MailToPHPMailerConverter();
 		$this->mailer = $converter->convert($mail);
 		$this->configure_sending_configuration($this->mailer);
 		$this->mailer->Send();
