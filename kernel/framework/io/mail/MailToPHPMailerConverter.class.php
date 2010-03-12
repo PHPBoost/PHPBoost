@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    MailToPHPMailerConverter.class.php
+ *                      MailToPHPMailerConverter.class.php
  *                            -------------------
  *   begin                : March 10, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -45,7 +45,7 @@ class MailToPHPMailerConverter
 	public function convert(Mail $mail)
 	{
 		$this->mail_to_send = $mail;
-		$this->mailer = new PHPMailer();
+		$this->mailer = new PHPMailer(true);
 		$this->convert_mail();
 		return $this->mailer;
 	}

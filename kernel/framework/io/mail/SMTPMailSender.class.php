@@ -25,9 +25,18 @@
  *
  ###################################################*/
 
-class SMTPMailSender
+class SMTPMailSender extends AbstractPHPMailerMailSender
 {
-	function send(Mail $mail);
+	protected function set_send_settings(PHPMailer $mailer)
+	{
+		$mailer->IsSMTP();
+		$mailer->SMTPAuth = true;
+		$mailer->SMTPSecure = "tls";
+		$mailer->Host = "smtp.gmail.com";
+		$mailer->Port = 587;
+		$mailer->Username = '';
+		$mailer->Password = '';
+	}
 }
 
 ?>

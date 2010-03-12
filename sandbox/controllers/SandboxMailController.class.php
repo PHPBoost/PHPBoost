@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       SandboxHomeController.class.php
+ *                       SandboxMailController.class.php
  *                            -------------------
- *   begin                : February 10, 2010
+ *   begin                : March 12, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,30 +25,25 @@
  *
  ###################################################*/
 
-class SandboxHomeController extends ModuleController
+class SandboxMailController extends ModuleController
 {
-	private static $tpl_src = '<h1>Sandbox parts</h1>
-	<ul class="bb_ul">
-	# START parts #
-		<li><a href="{parts.URL}">{parts.NAME}</a>
-	# END parts #
-	</ul>';
-
-	private static $links = array('Form builder' => '?url=/form', 'Table builder' => '?url=/table', 'String template bencher' => '?url=/template', 'Mail sendeer' => '?url=/mail');
-
 	public function execute(HTTPRequest $request)
 	{
-		$tpl = new StringTemplate(self::$tpl_src);
+		$view = new StringTemplate('<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
+		$form = $this->build_form();
+		$view->add_subtemplate('SMTP_FORM', $form->display());
+		return new SiteDisplayResponse($view);
+	}
 
-		foreach (self::$links as $name => $url)
-		{
-			$tpl->assign_block_vars('parts', array(
-				'URL' => $url,
-				'NAME' => $name
-			));
-		}
-
-		return new SiteDisplayResponse($tpl);
+	/**
+	 * @return HTMLForm
+	 */
+	private function build_form()
+	{
+		$form = new HTMLForm('smtp_config');
+		$fieldset = new FormFieldsetHTML('SMTP configuration');
+		$form->add_fieldset($fieldset);
+		return $form;
 	}
 }
 ?>

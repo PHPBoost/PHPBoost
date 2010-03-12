@@ -13,7 +13,7 @@ class MailToPHPMailerConverterTest extends PHPBoostUnitTestCase
 		$converter = new MailToPHPMailerConverter();
 		$phpmailer = $converter->convert($mail);
 		self::assertEquals('hello', $phpmailer->Subject);
-		// TODO test the other mail features
+		self::assertEquals('hello world', $phpmailer->Body);
 	}
 }
 ?>

@@ -27,7 +27,7 @@
 
 import('/kernel/lib/phpmailer/class.phpmailer', PHP_IMPORT);
 
-class AbstractPHPMailerMailSender implements MailSender
+abstract class AbstractPHPMailerMailSender implements MailSender
 {
 	/**
 	 * @var PHPMailer
@@ -38,11 +38,11 @@ class AbstractPHPMailerMailSender implements MailSender
 	{
 		$converter = new MailToPHPMailerConverter();
 		$this->mailer = $converter->convert($mail);
-		$this->configure_sending_configuration($this->mailer);
+		$this->set_send_settings($this->mailer);
 		$this->mailer->Send();
 	}
 
-	abstract protected function configure_sending_configuration(PHPMailer $mailer);
+	abstract protected function set_send_settings(PHPMailer $mailer);
 }
 
 ?>

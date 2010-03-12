@@ -27,7 +27,7 @@
 
 class DefaultMailSender extends AbstractPHPMailerMailSender
 {
-	protected function do_send(PHPMailer $mailer)
+	protected function set_send_settings(PHPMailer $mailer)
 	{
 		// Nothing to do
 	}
