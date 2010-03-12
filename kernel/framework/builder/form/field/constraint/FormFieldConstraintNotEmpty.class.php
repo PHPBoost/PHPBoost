@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         LengthIntervalFormFieldConstraint.class.php
+ *                         FormFieldConstraintNotEmpty.class.php
  *                            -------------------
  *   begin                : December 19, 2009
  *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
@@ -30,33 +30,32 @@
  * @package builder
  * @subpackage form/constraint
  */ 
-class LengthIntervalFormFieldConstraint implements FormFieldConstraint 
+class FormFieldConstraintNotEmpty implements FormFieldConstraint 
 {
 	private $js_onblur_message;
-	private $rboundary;
-	private $lboundary;
+	private $js_onsubmit_message;
 	
-	public function __construct($lboundary, $rboundary, $js_onblur_message = '')
+	public function __construct($js_onblur_message = '', $js_onsubmit_message = '')
 	{
 		if (empty($js_onblur_message))
 		{
-			$js_onblur_message = LangLoader::get_message('doesnt_match_length_intervall', 'builder-form-Validator');
+			$js_onblur_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
 		}
 		$this->js_onblur_message = TextHelper::to_js_string($js_onblur_message);
-		$this->lboundary = $lboundary;
-		$this->rboundary = $rboundary;
+		
+		$this->js_onsubmit_message = $js_onsubmit_message;
 	}
 	
 	public function validate(FormField $field)
 	{
-		$value = strlen($field->get_value());
-		return ($value >= $this->lboundary && $value <= $this->rboundary);
+		$value = $field->get_value();
+		return $value !== null && $value != '';
 	}
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'lengthFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', ' . $this->lboundary . ', ' . 
-		$this->rboundary . ', ' . $this->js_onblur_message . ')';
+		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
+			', ' . $this->js_onblur_message . ')';
 	}
 }
 

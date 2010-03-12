@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         NotEmptyFormFieldConstraint.class.php
+ *                         FormFieldConstraintIntegerRange.class.php
  *                            -------------------
- *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
- *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
+ *   begin                : December 20, 2009
+ *   copyright            : (C) 2009 Régis Viarre
+ *   email                : crowkait@phpboost.com
  *
  ###################################################
  *
@@ -30,32 +30,37 @@
  * @package builder
  * @subpackage form/constraint
  */ 
-class NotEmptyFormFieldConstraint implements FormFieldConstraint 
+class FormFieldConstraintIntegerRange implements FormFieldConstraint 
 {
-	private $js_onblur_message;
-	private $js_onsubmit_message;
+	private $js_message;
+	private $rboundary;
+	private $lboundary;
 	
-	public function __construct($js_onblur_message = '', $js_onsubmit_message = '')
+	public function __construct($lboundary, $rboundary, $js_message = '')
 	{
-		if (empty($js_onblur_message))
+		if (empty($js_message))
 		{
-			$js_onblur_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
+			$js_message = LangLoader::get_message('doesnt_match_integer_intervall', 'builder-form-Validator');
 		}
-		$this->js_onblur_message = TextHelper::to_js_string($js_onblur_message);
-		
-		$this->js_onsubmit_message = $js_onsubmit_message;
+		$this->js_message = TextHelper::to_js_string($js_message);
+		$this->lboundary = $lboundary;
+		$this->rboundary = $rboundary;
 	}
 	
 	public function validate(FormField $field)
 	{
-		$value = $field->get_value();
-		return $value !== null && $value != '';
+		if (!is_numeric($field->get_value()))
+		{
+			return false;
+		}
+		$value = (int)$field->get_value();		
+		return ($value >= $this->lboundary && $value <= $this->rboundary);
 	}
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
-			', ' . $this->js_onblur_message . ')';
+		return 'integerIntervalFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', 
+		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . $this->js_message . ')';
 	}
 }
 

@@ -43,7 +43,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
     public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
     {
         $this->css_class = "text";
-        $constraints[] = new MailFormFieldConstraint();
+        $constraints[] = new FormFieldConstraintMailAddress();
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
 }

@@ -68,7 +68,7 @@ class AdminSitemapController extends AdminController
 
 		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
 		array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain']),
-		array(new IntegerIntervalFormFieldConstraint(1, 50))));
+		array(new FormFieldConstraintIntegerRange(1, 50))));
 		$this->form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);

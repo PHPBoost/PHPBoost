@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         RegexFormFieldConstraint.class.php
+ *                         FormFieldConstraintRegex.class.php
  *                            -------------------
  *   begin                : December 19, 2009
  *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form/constraint
  */
-class RegexFormFieldConstraint implements FormFieldConstraint
+class FormFieldConstraintRegex implements FormFieldConstraint
 {
 	private $js_message;
 	private $php_regex;
