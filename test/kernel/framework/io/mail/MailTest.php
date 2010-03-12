@@ -115,15 +115,6 @@ class MailTest extends PHPBoostUnitTestCase
 		} else {
 			self::assertTrue($ret);
 		}
-		/*
-		 var_dump($msg->objet);
-		 var_dump($msg->content);
-		 var_dump($msg->sender_mail);
-		 var_dump($msg->sender_name);
-		 var_dump($msg->headers);
-		 var_dump($msg->recipients);
-		 echo '<br />';
-		 */
 	}
 }
 ?>

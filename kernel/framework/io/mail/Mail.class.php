@@ -186,16 +186,6 @@ class Mail
 		return $this->content;
 	}
 
-	/**
-	 * @desc Returns the mail headers.
-	 * @return string The mail headers.
-	 */
-	public function get_headers()
-	{
-		return $this->headers;
-	}
-
-
 	public function set_is_html($is)
 	{
 		$this->is_html = $is;
