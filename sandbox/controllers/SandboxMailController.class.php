@@ -59,11 +59,11 @@ class SandboxMailController extends ModuleController
 		$this->form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldMailEditor('sender_mail', 'Sender mail', ''));
-		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new NotEmptyFormFieldConstraint())));
+		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMailEditor('recipient_mail', 'Recipient mail', ''));
-		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new NotEmptyFormFieldConstraint())));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array(), array(new RegexFormFieldConstraint('`^[a-z0-9]+(?:\.[a-z0-9]+)*$`i'))));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new NotEmptyFormFieldConstraint())));
+		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array(), array(new FormFieldConstraintRegex('`^[a-z0-9]+(?:\.[a-z0-9]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', ''));
 		
 		$select_option = new FormFieldSelectChoiceOption('TLS', 'tls');

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                         UrlFormFieldConstraint.class.php
+ *                         FormConstraintFieldsEquality.class.php
  *                            -------------------
- *   begin                : Februar 07, 2010
+ *   begin                : Februar 04, 2010
  *   copyright            : (C) 2010 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
@@ -30,19 +30,37 @@
  * @package builder
  * @subpackage form/constraint
  */
-class UrlFormFieldConstraint extends RegexFormFieldConstraint implements FormFieldConstraint
+class FormConstraintFieldsEquality implements FormConstraint
 {
-	public function __construct($js_message = '')
+	private $js_message;
+	private $first_field;
+	private $second_field;
+
+	public function __construct(FormField $first_field, FormField $second_field, $js_message = '')
 	{
-		if (empty($js_message))
+		$this->js_message = $js_message;
+		$this->first_field = $first_field;
+		$this->second_field = $second_field;
+		
+		$this->first_field->add_form_constraint($this);
+		$this->second_field->add_form_constraint($this);
+	}
+	
+	public function validate()
+	{
+		return $this->first_field->get_value() == $this->second_field->get_value();
+	}
+
+	public function get_js_validation()
+	{
+		if (empty($this->js_message))
 		{
-			$js_message = LangLoader::get_message('doesnt_match_url_regex', 'builder-form-Validator');
+			$this->js_message = sprintf(LangLoader::get_message('doesnt_equal', 'builder-form-Validator'), $this->first_field->get_label(), 
+			$this->second_field->get_label());
 		}
-		parent::__construct(
-			'`^(https?|ftp)://[^ ]+$`i', 
-			'`^(https?|ftp)://[^ ]+$`i', 
-			$js_message
-		);
+		
+		return 'equalityFormFieldValidator(this, ' . TextHelper::to_js_string($this->first_field->get_html_id()) .
+			', ' . TextHelper::to_js_string($this->second_field->get_html_id()) . ', ' . TextHelper::to_js_string($this->js_message) . ')';
 	}
 }
 

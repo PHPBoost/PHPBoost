@@ -85,35 +85,35 @@ class SandboxFormController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
-		array(new RegexFormFieldConstraint('`^[a-z0-9_]+$`i'))
+		array(new FormFieldConstraintRegex('`^[a-z0-9_]+$`i'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
-		array(new UrlFormFieldConstraint())
+		array(new FormFieldConstraintUrl())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Mail valide'),
-		array(new MailFormFieldConstraint())
+		array(new FormFieldConstraintMailAddress())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
-		array(new IntegerIntervalFormFieldConstraint(10, 100))
+		array(new FormFieldConstraintIntegerRange(10, 100))
 		));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-		array(new LengthIntervalFormFieldConstraint(6, 12))
+		array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-		array(new LengthIntervalFormFieldConstraint(6, 12))
+		array(new FormFieldConstraintLengthRange(6, 12))
 		));
 
 		// MULTI LINE TEXT
@@ -206,7 +206,7 @@ class SandboxFormController extends ModuleController
 		$form->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
 
 		// FORM CONSTRAINTS
-		$form->add_constraint(new EqualityFormFieldConstraint($password, $password_bis));
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 
 		return $form;
 	}

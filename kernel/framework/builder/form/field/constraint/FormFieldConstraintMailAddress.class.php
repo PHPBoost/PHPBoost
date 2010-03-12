@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         MailFormFieldConstraint.class.php
+ *                         FormFieldConstraintMailAddress.class.php
  *                            -------------------
  *   begin                : Februar 07, 2010
  *   copyright            : (C) 2010 Régis Viarre
@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form/constraint
  */
-class MailFormFieldConstraint extends RegexFormFieldConstraint implements FormFieldConstraint
+class FormFieldConstraintMailAddress extends FormFieldConstraintRegex implements FormFieldConstraint
 {
 	public function __construct($js_message = '')
 	{
