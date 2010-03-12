@@ -27,23 +27,50 @@
 
 class SandboxMailController extends ModuleController
 {
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
+	 
 	public function execute(HTTPRequest $request)
 	{
-		$view = new StringTemplate('<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
-		$form = $this->build_form();
-		$view->add_subtemplate('SMTP_FORM', $form->display());
+		$view = new StringTemplate('# IF C_MAIL_SENT # <div class="success">The mail has been sent</div> # ENDIF #
+		<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
+		
+		$this->build_form();
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$view->assign_vars(array(
+				'C_MAIL_SENT' => true
+			));
+		}
+		$view->add_subtemplate('SMTP_FORM', $this->form->display());
 		return new SiteDisplayResponse($view);
 	}
 
-	/**
-	 * @return HTMLForm
-	 */
 	private function build_form()
 	{
-		$form = new HTMLForm('smtp_config');
+		$this->form = new HTMLForm('smtp_config');
 		$fieldset = new FormFieldsetHTML('SMTP configuration');
-		$form->add_fieldset($fieldset);
-		return $form;
+		$this->form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldMailEditor('sender_mail', 'Sender mail', ''));
+		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new NotEmptyFormFieldConstraint())));
+		$fieldset->add_field(new FormFieldMailEditor('recipient_mail', 'Recipient mail', ''));
+		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new NotEmptyFormFieldConstraint())));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array(), array(new RegexFormFieldConstraint('`^[a-z0-9]+(?:\.[a-z0-9]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new NotEmptyFormFieldConstraint())));
+		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', ''));
+		
+		$select_option = new FormFieldSelectChoiceOption('TLS', 'tls');
+		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option)));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$this->form->add_button($this->submit_button);
 	}
 }
 ?>
