@@ -39,6 +39,13 @@ class BBCodeEditor extends ContentEditor
     {
         parent::ContentEditor();
     }
+	
+	function _clean($code)
+	{
+		$tmp = $code;
+		$tmp = str_replace(array('\''), array('\\\\\\\''), $tmp);
+		return $tmp;
+	}
 
     /**
 	 * @desc Display the editor
@@ -183,11 +190,11 @@ class BBCodeEditor extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $this->_clean($code_smile) . '" title="' . $this->_clean($code_smile) . '" />';
 
             $template->assign_block_vars('smiley', array(
 				'IMG' => $img,
-				'CODE' => addslashes($code_smile),
+				'CODE' => $this->_clean($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 				));
 					
