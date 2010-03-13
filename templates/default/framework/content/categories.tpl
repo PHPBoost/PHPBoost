@@ -12,44 +12,49 @@
 function ajax_move_cat(id, direction)
 {
 	direction = (direction == 'up' ? 'up' : 'down');
-	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&id_' + direction + '=' + id);
+	url = '{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&id_' + direction + '=' + id;
 	
 	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 	
-	xhr_object.onreadystatechange = function() 
-	{
-		//Transfert finished and successful
-		if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-			document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-		else if(  xhr_object.readyState == 4 && xhr_object.responseText == '' ) //Error
+	new Ajax.Request(url,
 		{
-			document.getElementById('l' + id).innerHTML = "";
-			alert("{L_COULD_NOT_BE_MOVED}");
-		}
-	}
-	xmlhttprequest_sender(xhr_object, null);
+			method:'get',
+			onSuccess: function(transport)
+			{
+				var response = transport.responseText || "no response text";
+				document.getElementById("cat_administration").innerHTML = response;
+			},
+			onFailure: function()
+			{
+				document.getElementById('l' + id).innerHTML = "";
+				alert("{L_COULD_NOT_BE_MOVED}");
+			}
+		});
+
 }
 
 // Showing/Hiding a category with AJAX technology
 function ajax_change_cat_visibility(id, status)
 {
 	status = (status == 'show' ? 'show' : 'hide');
-	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&' + status + '=' + id);
+	url = '{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&' + status + '=' + id;
 	
 	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-	
-	xhr_object.onreadystatechange = function() 
-	{
-		//Transfert finished and successful
-		if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-			document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-		else if(  xhr_object.readyState == 4 && xhr_object.responseText == '' ) //Error
+
+	new Ajax.Request(url,
 		{
-			document.getElementById('l' + id).innerHTML = "";
-			alert("{L_VISIBILITY_COULD_NOT_BE_CHANGED}");
-		}
-	}
-	xmlhttprequest_sender(xhr_object, null);
+			method:'get',
+			onSuccess: function(transport)
+			{
+				var response = transport.responseText || "no response text";
+				document.getElementById("cat_administration").innerHTML = response;
+			},
+			onFailure: function()
+			{
+				document.getElementById('l' + id).innerHTML = "";
+				alert("{L_VISIBILITY_COULD_NOT_BE_CHANGED}");
+			}
+		});
 }
 -->
 </script>
