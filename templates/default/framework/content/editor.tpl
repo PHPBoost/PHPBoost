@@ -1,3 +1,5 @@
+<div id='div1'></div>
+
 		<script type="text/javascript">
 		<!--
 		var displayed = new Array();
@@ -169,6 +171,25 @@
 				insertbbcode('[url]', '[/url]', field);
 		}
 
+		var my_table = Builder.node('table', {'style':'margin:4px;margin-left:auto;margin-right:auto;'}, [
+							Builder.node('tr', { }, [
+								Builder.node('td', { }, [
+									Builder.node('table', {'class':'bbcode'}, [
+										Builder.node('tr', { }, [
+											Builder.node('td', {'id': 'td1'}, '')
+										]) ]) ]) ]) ]);
+										
+		path = '{PATH_TO_ROOT}/templates/{THEME}/';
+		
+		var separator = Builder.node('img', {'src': path+'images/form/separate.png', 'alt': ''}, '');
+		
+		$('div1').insert(my_table);
+		
+		$('td1').insert(separator);
+		$('td1').insert(separator);
+		
+		alert(my_table);
+		
 		var editor_menu = '\
 		<table style="margin:4px;margin-left:auto;margin-right:auto;">\
 			<tr>\
