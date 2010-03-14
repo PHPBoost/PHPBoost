@@ -58,6 +58,11 @@ InstallEnvironment::load_lang($lang);
 
 InstallEnvironment::load_distribution_properties($lang);
 
+if ($step > STEP_DB_CONFIG)
+{
+	AppContext::init_extension_provider_service();
+}
+
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
 {
