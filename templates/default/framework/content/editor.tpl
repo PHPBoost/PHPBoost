@@ -1,4 +1,4 @@
-<div id='div1'></div>
+<div id="div1"></div>
 
 		<script type="text/javascript">
 		<!--
@@ -179,14 +179,41 @@
 											Builder.node('td', {'id': 'td1'}, '')
 										]) ]) ]) ]) ]);
 										
+
 		path = '{PATH_TO_ROOT}/templates/{THEME}/';
+		field = '{FIELD}';
+
+		function balise(attrs)
+		{
+			return new Element('img', {'src': path+'images/form/'+attrs.fname, 'alt': attrs.alt, 'class':attrs.classe, 'title':attrs.title, 'onclick':attrs.onclick});
+		}
 		
-		var separator = Builder.node('img', {'src': path+'images/form/separate.png', 'alt': ''}, '');
+		function balise2(attrs)
+		{
+			alert(attrs.bbcode);
+			begin = '[' + attrs.bbcode + ']';
+			end = '[/' + attrs.bbcode + ']';
+			var fn = function() { insertbbcode(begin, end, field); };
+			return new Element('img', {'src': path+'images/form/'+attrs.fname, 'alt': attrs.alt, 'class':attrs.classe, 'title':attrs.title, 'onclick':fn});
+		}
 		
-		$('div1').insert(my_table);
+		var separator = {'fname':'separate.png', 'alt':'', 'title':'', 'bbcode':'', 'field':'', 'classe':'', 'onclick':''};
+		$('div1').insert(balise(separator));
+		var smiley = {'fname':'smileys.png', 'alt':'{L_BB_SMILEYS}', 'title':'{L_BB_SMILEYS}', 'classe':'bbcode_hover', 'onclick': function() {bb_display_block('1', field);}};
+		$('div1').insert(balise(smiley));
+		$('div1').insert(balise(separator));
 		
-		$('td1').insert(separator);
-		$('td1').insert(separator);
+		var block1 = [
+			{'fname':'bold.png', 'alt':'{L_BB_BOLD}', 'title':'{L_BB_BOLD}', 'classe':'bbcode_hover', 'bbcode': 'b'},
+			{'fname':'italic.png', 'alt':'{L_BB_ITALIC}', 'title':'{L_BB_ITALIC}', 'classe':'bbcode_hover', 'bbcode': 'i'},
+			{'fname':'underline.png', 'alt':'{L_BB_UNDERLINE}', 'title':'{L_BB_UNDERLINE}', 'classe':'bbcode_hover', 'bbcode': 'u'},
+			{'fname':'strike.png', 'alt':'{L_BB_STRIKE}', 'title':'{L_BB_STRIKE}', 'classe':'bbcode_hover', 'bbcode': 's'}
+		];
+		
+		block1.each( function(value) {
+			$('div1').insert(balise2(value));
+		});
+		$('div1').insert(balise(separator));
 		
 		alert(my_table);
 		
@@ -201,13 +228,6 @@
 								\
 								<div style="position:relative;z-index:100;margin-left:-50px;bottom:2px;float:left;display:none;" id="bb_block1{FIELD}">\
 									<div class="bbcode_block" style="width:130px;" onmouseout="bb_display_block(\'1\', \'{FIELD}\');">\
-										# START smiley #\
-										<a onclick="insertbbcode(\'{smiley.CODE}\', \'smile\', \'{FIELD}\');" class="bbcode_hover" title="{smiley.CODE}">{smiley.IMG}</a>{smiley.END_LINE}\
-										# END smiley #\
-										# IF C_BBCODE_SMILEY_MORE #\
-										<br />\
-										<a style="font-size: 10px;" href="#" onclick="window.open(\'{PATH_TO_ROOT}/kernel/framework/content/editor/smileys.php?field={FIELD}\', \'{more.L_SMILEY}\', \'height=550,width=650,resizable=yes,scrollbars=yes\');return false;">{L_ALL_SMILEY}</a>\
-										# ENDIF #\
 									</div>\
 								</div>\
 								\
