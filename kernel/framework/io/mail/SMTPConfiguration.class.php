@@ -25,33 +25,62 @@
  *
  ###################################################*/
 
-class SMTPMailSender extends AbstractPHPMailerMailSender
+class SMTPConfiguration
 {
-	/**
-	 * @var SMTPConfiguration
-	 */
-	private $configuration;
-
-	public function __construct(SMTPConfiguration $configuration)
+	private $auth_mode = '';
+	private $host = '';
+	private $port = 0;
+	private $login = '';
+	private $password = '';
+	
+	public function get_auth_mode()
 	{
-		$this->configuration = $configuration;
+		return $this->get_auth_mode();
+	}
+	
+	public function set_auth_mode($auth_mode)
+	{
+		$this->auth_mode = $auth_mode;
 	}
 
-	protected function set_send_settings(PHPMailer $mailer)
+	public function get_host()
 	{
-		$mailer->IsSMTP();
-		$mail->SMTPDebug  = 2;
-		$mailer->SMTPAuth = true;
-		$auth_mode = $this->configuration->get_auth_mode();
-		if (!empty($auth_mode))
-		{
-			$mailer->SMTPSecure = $this->configuration->get_auth_mode();
-		}
-		$mailer->Host = $this->configuration->get_host();
-		$mailer->Port = $this->configuration->get_port();
-		$mailer->Username = $this->configuration->get_login();
-		$mailer->Password = $this->configuration->get_password();
+		return $this->host;
+	}
+	
+	public function set_host($host)
+	{
+		$this->host = $host;
+	}
+	
+	public function get_port()
+	{
+		return $this->port;
+	}
+	
+	public function set_port($port)
+	{
+		$this->port = $port;
+	}
+	
+	public function get_login()
+	{
+		$this->login = $login;
+	}
+	
+	public function set_login($login)
+	{
+		$this->login = $login;
+	}
+	
+	public function get_password()
+	{
+		return $this->password;
+	}
+	
+	public function set_password($password)
+	{
+		$this->password = $password;
 	}
 }
-
 ?>
