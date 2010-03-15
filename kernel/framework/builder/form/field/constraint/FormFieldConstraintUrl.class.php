@@ -30,7 +30,7 @@
  * @package builder
  * @subpackage form/constraint
  */
-class FormFieldConstraintUrl extends FormFieldConstraintRegex implements FormFieldConstraint
+class FormFieldConstraintUrl extends FormFieldConstraintRegex
 {
 	public function __construct($js_message = '')
 	{

@@ -47,6 +47,7 @@ class SandboxMailController extends ModuleController
 			$view->assign_vars(array(
 				'C_MAIL_SENT' => true
 			));
+			$this->send_mail();
 		}
 		$view->add_subtemplate('SMTP_FORM', $this->form->display());
 		return new SiteDisplayResponse($view);
@@ -55,22 +56,47 @@ class SandboxMailController extends ModuleController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('smtp_config');
-		$fieldset = new FormFieldsetHTML('SMTP configuration');
+
+		$fieldset = new FormFieldsetHTML('Mail');
 		$this->form->add_fieldset($fieldset);
-		
 		$fieldset->add_field(new FormFieldMailEditor('sender_mail', 'Sender mail', ''));
 		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMailEditor('recipient_mail', 'Recipient mail', ''));
-		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new FormFieldConstraintNotEmpty())));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array(), array(new FormFieldConstraintRegex('`^[a-z0-9]+(?:\.[a-z0-9]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new FormFieldConstraintNotEmpty()))); 
+		$fieldset->add_field(new FormFieldTextEditor('mail_subject', 'Mail subject', '', array(), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_content', 'Content', ''));
+		
+		$fieldset = new FormFieldsetHTML('SMTP configuration');
+		$this->form->add_fieldset($fieldset);
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array(), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_port', 'SMTP port', 25, array(), array(new FormFieldConstraintIntegerRange(0, 65535))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', ''));
 		
-		$select_option = new FormFieldSelectChoiceOption('TLS', 'tls');
-		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option)));
+		$select_option = new FormFieldSelectChoiceOption('None', 'none');
+		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'))));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
+	}
+	
+	private function send_mail()
+	{
+		$configuration = new SMTPConfiguration();
+		$configuration->set_host($this->form->get_value('smtp_host'));
+		$configuration->set_port($this->form->get_value('smtp_port'));
+		$configuration->set_login($this->form->get_value('smtp_login'));
+		$configuration->set_password($this->form->get_value('smtp_password'));
+				
+		$mailer = new SMTPMailSender($configuration);
+		
+		$mail = new Mail();
+		$mail->add_recipient($this->form->get_value('recipient_mail'), $this->form->get_value('recipient_name'));
+		$mail->set_sender($this->form->get_value('sender_mail'), $this->form->get_value('sender_name'));
+		$mail->set_subject($this->form->get_value('mail_subject'));
+		$mail->set_content($this->form->get_value('mail_content'));
+		
+		$mailer->send($mail);
 	}
 }
 ?>
