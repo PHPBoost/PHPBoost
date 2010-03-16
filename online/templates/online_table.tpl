@@ -21,12 +21,21 @@
 			<tr>
 				<td class="row3">
 					{users.USER}
+					<span id="l{users.ID}"></span>
+					<a href="" onclick="ajax_display_desc({users.ID}); return false;">
+						<img src="{PATH_TO_ROOT}/online/plus.gif" alt="" class="valign_middle" />
+					</a>
 				</td>
 				<td class="row3">
 					{users.LOCATION}
 				</td>
 				<td class="row3">
 					{users.LAST_UPDATE}
+				</td>
+			</tr>
+			<tr id="td_{users.ID}" style="display:{users.DISPLAY_DESC}">
+				<td colspan="3">
+				&gt;&gt;&nbsp;{users.DESC}
 				</td>
 			</tr>
 			# END users #

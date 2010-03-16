@@ -36,7 +36,7 @@ $Cache->load('online');
 
 function get_online($body_only = FALSE)
 {
-	global $Sql, $LANG, $CONFIG, $CONFIG_ONLINE;
+	global $Sql, $Session, $LANG, $CONFIG, $CONFIG_ONLINE;
 	
 		if (!empty($body_only)) {
 			$tpl = new Template('online/online_table.tpl');
@@ -68,9 +68,11 @@ function get_online($body_only = FALSE)
 		'L_LAST_UPDATE' => $LANG['last_update'],
 		'L_ONLINE' => $LANG['online']
 	));
+	
+	$data = $Session->get_module_parameters();
+	$display_desc = !empty($data['display_desc']) ? TRUE : FALSE;
 
-	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
-		s.session_script_title, m.login
+	$result = $Sql->query_while("SELECT s.*, m.*
 		FROM " . DB_TABLE_SESSIONS . " s
 		JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
 		WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
@@ -99,15 +101,39 @@ function get_online($body_only = FALSE)
 
 		$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 		$tpl->assign_block_vars('users', array(
+			'ID' => $row['user_id'],
 			'USER' => !empty($row['login']) ? '<a href="' . HOST . '/member/member.php?id=' . $row['user_id'] . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
 			'LOCATION' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
-			'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
+			'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time']),
+			'DESC' => $row['user_desc'],
+			'DISPLAY_DESC' => !empty($display_desc) ? 'block' : 'none'
 		));	
 	}
 	$Sql->query_close($result);
 
 	return $tpl->parse(TEMPLATE_STRING_MODE);
 
+}
+
+function switch_display()
+{
+	global $Session;
+	
+	$data = $Session->get_module_parameters();
+	
+	if( isset($data['display_desc']) )
+	{
+		$toggle = (intval($data['display_desc']) + 1) % 2;
+		$tmp['display_desc'] = $toggle;
+	}
+	else
+	{
+		$tmp['display_desc'] = 1;
+	}
+	$Session->set_module_parameters($tmp);
+	
+	$i = $tmp['display_desc'];
+	return $i;
 }
 
 ?>
