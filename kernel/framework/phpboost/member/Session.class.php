@@ -339,7 +339,7 @@ class Session
 	{
 		global $CONFIG;
 
-		$session_script = str_replace(DIR, '', SCRIPT);
+		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', SCRIPT);
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
 		if ((!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect)
