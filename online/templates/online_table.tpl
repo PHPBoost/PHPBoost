@@ -34,7 +34,7 @@
 				</td>
 			</tr>
 			<tr id="td_{users.ID}" style="display:{users.DISPLAY_DESC}">
-				<td colspan="3">
+				<td colspan="3" width="100%">
 				&gt;&gt;&nbsp;{users.DESC}
 				</td>
 			</tr>

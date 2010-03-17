@@ -29,8 +29,6 @@ if (defined('PHPBOOST') !== true)	exit;
 
 function online_mini($position, $block, $body_only = FALSE)
 {
-    if (strpos(SCRIPT, '/online/online.php') === false)
-    {
         global $LANG, $Cache, $Sql, $CONFIG, $CONFIG_ONLINE;
         
     	//Chargement de la langue du module.
@@ -127,9 +125,6 @@ function online_mini($position, $block, $body_only = FALSE)
     		'L_TOTAL' => $LANG['total']
     	));
 		return $tpl->parse(TEMPLATE_STRING_MODE);
-    }
-	
-    return '';
 }
 
 ?>

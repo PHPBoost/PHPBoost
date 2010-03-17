@@ -68,9 +68,6 @@ function get_online($body_only = FALSE)
 		'L_LAST_UPDATE' => $LANG['last_update'],
 		'L_ONLINE' => $LANG['online']
 	));
-	
-	$data = $Session->get_module_parameters();
-	$display_desc = !empty($data['display_desc']) ? TRUE : FALSE;
 
 	$result = $Sql->query_while("SELECT s.*, m.*
 		FROM " . DB_TABLE_SESSIONS . " s
@@ -97,7 +94,11 @@ function get_online($body_only = FALSE)
 			
 			default:
 			$status = 'member';
-		} 
+		}
+		
+		$modules_parameters = unserialize($row['modules_parameters']);
+		$display_desc = !empty($modules_parameters[MODULE_NAME]['display_desc']) ? TRUE : FALSE;
+		var_dump($display_desc);
 
 		$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 		$tpl->assign_block_vars('users', array(
@@ -115,25 +116,33 @@ function get_online($body_only = FALSE)
 
 }
 
-function switch_display()
+function switch_display($user_id)
 {
-	global $Session;
+	global $Sql;
 	
-	$data = $Session->get_module_parameters();
-	
-	if( isset($data['display_desc']) )
+	$sessions = $Sql->query_array(PREFIX . 'sessions', 'modules_parameters', "WHERE user_id = " . intval($user_id) , __LINE__, __FILE__);
+
+	if(empty($sessions['modules_parameters']))
 	{
-		$toggle = (intval($data['display_desc']) + 1) % 2;
-		$tmp['display_desc'] = $toggle;
+		$display_desc = 1;
 	}
 	else
 	{
-		$tmp['display_desc'] = 1;
+		$sessions = unserialize($sessions['modules_parameters']);		
+		$display_desc = $sessions[MODULE_NAME]['display_desc'];
+		$display_desc = (intval($display_desc) + 1) % 2;
 	}
-	$Session->set_module_parameters($tmp);
-	
-	$i = $tmp['display_desc'];
-	return $i;
+
+	$record[MODULE_NAME]['display_desc'] = $display_desc;
+	$Sql->query_inject(
+		"UPDATE ".PREFIX."sessions
+			SET
+				modules_parameters = '" . $Sql->escape(serialize($record)) ."'
+			WHERE
+				user_id = " . intval($user_id)
+		, __LINE__, __FILE__);
+			
+	return $display_desc;
 }
 
 ?>

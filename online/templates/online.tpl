@@ -11,7 +11,7 @@ new Ajax.PeriodicalUpdater('online_table', '../online/xmlhttprequest.php?page=1'
 		
 function ajax_display_desc(id)
 {
-	url = '../online/xmlhttprequest.php?display_desc=1';
+	url = '../online/xmlhttprequest.php?display_desc='+id;
 	
 	$('l' + id).update('<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />');
 
