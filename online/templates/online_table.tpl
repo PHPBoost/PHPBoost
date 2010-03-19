@@ -33,8 +33,8 @@
 					{users.LAST_UPDATE}
 				</td>
 			</tr>
-			<tr id="td_{users.ID}" style="display:{users.DISPLAY_DESC}">
-				<td colspan="3" width="100%">
+			<tr class="online-tr" id="online-tr-{users.ID}" style="display:none">
+				<td colspan="3">
 				&gt;&gt;&nbsp;{users.DESC}
 				</td>
 			</tr>

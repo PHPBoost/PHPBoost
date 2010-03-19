@@ -34,10 +34,5 @@ elseif (!empty($_GET['page']))
 {
 	echo( get_online(TRUE) );
 }
-elseif( !empty($_GET['display_desc']) )
-{
-	$toggle = switch_display(intval($_GET['display_desc']));
-	echo $toggle;
-}
 
 ?>

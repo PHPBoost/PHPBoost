@@ -96,53 +96,19 @@ function get_online($body_only = FALSE)
 			$status = 'member';
 		}
 		
-		$modules_parameters = unserialize($row['modules_parameters']);
-		$display_desc = !empty($modules_parameters[MODULE_NAME]['display_desc']) ? TRUE : FALSE;
-		var_dump($display_desc);
-
 		$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 		$tpl->assign_block_vars('users', array(
 			'ID' => $row['user_id'],
 			'USER' => !empty($row['login']) ? '<a href="' . HOST . '/member/member.php?id=' . $row['user_id'] . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
 			'LOCATION' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 			'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time']),
-			'DESC' => $row['user_desc'],
-			'DISPLAY_DESC' => !empty($display_desc) ? 'block' : 'none'
+			'DESC' => $row['user_desc']
 		));	
 	}
 	$Sql->query_close($result);
 
 	return $tpl->parse(TEMPLATE_STRING_MODE);
 
-}
-
-function switch_display($user_id)
-{
-	global $Sql;
-	
-	$sessions = $Sql->query_array(PREFIX . 'sessions', 'modules_parameters', "WHERE user_id = " . intval($user_id) , __LINE__, __FILE__);
-
-	if(empty($sessions['modules_parameters']))
-	{
-		$display_desc = 1;
-	}
-	else
-	{
-		$sessions = unserialize($sessions['modules_parameters']);		
-		$display_desc = $sessions[MODULE_NAME]['display_desc'];
-		$display_desc = (intval($display_desc) + 1) % 2;
-	}
-
-	$record[MODULE_NAME]['display_desc'] = $display_desc;
-	$Sql->query_inject(
-		"UPDATE ".PREFIX."sessions
-			SET
-				modules_parameters = '" . $Sql->escape(serialize($record)) ."'
-			WHERE
-				user_id = " . intval($user_id)
-		, __LINE__, __FILE__);
-			
-	return $display_desc;
 }
 
 ?>
