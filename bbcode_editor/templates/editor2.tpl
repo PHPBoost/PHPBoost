@@ -66,6 +66,7 @@
 				this.element = element;
 				this.options = options;
 				$(element).insert({before: this.get_menu(element)});
+				this.display(this.block1);
 			},
 			
 			get_menu: function(element)
@@ -150,7 +151,23 @@
 				{'type':'balise2', 'fname':'underline.png', 'alt':'{L_BB_UNDERLINE}', 'title':'{L_BB_UNDERLINE}', 'classe':'bbcode_hover', 'bbcode': 'u', 'disabled':'{DISABLED_U}'},
 				{'type':'balise2', 'fname':'strike.png', 'alt':'{L_BB_STRIKE}', 'title':'{L_BB_STRIKE}', 'classe':'bbcode_hover', 'bbcode': 's', 'disabled':'{DISABLED_S}'},
 				{'type':'separator'}
-			]
+			],
+			
+			display: function(bloc)
+			{
+				var elt = $$('table#table-'+this.element+' table.bbcode td');
+				elt = elt.first();
+				
+				bloc.each( function(x)
+				{
+					if (x.type == 'separator')
+						$(elt).insert(this.separator());
+					else if (x.type == 'balise')
+						$(elt).insert(this.balise(x));
+					else if (x.type == 'balise2')
+						$(elt).insert(this.balise2(x));
+				}.bind(this));
+			}
 			
 		});
 		
