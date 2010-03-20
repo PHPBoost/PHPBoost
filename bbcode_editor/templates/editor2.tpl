@@ -200,7 +200,7 @@
 				$('div1').insert(balise2(value));
 		});
 		
-		alert(my_table);
+		//alert(my_table);
 		
 		var editor_menu = '\
 		<table style="margin:4px;margin-left:auto;margin-right:auto;">\

@@ -21,8 +21,9 @@ class BBcode_editor2 extends ContentEditor
  	function display()
     {
         global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS, $_array_smiley_code;
-
-        $template = new Template('editor.tpl');
+		
+		$fname = 'bbcode_editor/editor2.tpl';
+        $template = new Template($fname);
 
         //Chargement de la configuration.
         $Cache->load('uploads');
@@ -116,20 +117,14 @@ class BBcode_editor2 extends ContentEditor
         $Cache->load('smileys');
 
         $smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
-        $smile_by_line = 5; //Smiley par ligne.
 
         $height_max = 50;
         $width_max = 50;
         $nbr_smile = count($_array_smiley_code);
-        $i = 1;
         $z = 0;
         foreach ($_array_smiley_code as $code_smile => $url_smile)
         {
-            if ($z == $smile_max)
-            {
-                $z++;
-                break;
-            }
+            if ($z < $smile_max) $z++; else break;
              
             $width_source = 18; //Valeur par défaut.
             $height_source = 18;
@@ -157,16 +152,12 @@ class BBcode_editor2 extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . addslashes($code_smile) . '" title="' . addslashes($code_smile) . '" />';
 
             $template->assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
-				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 				));
-					
-				$i++;
-				$z++;
         }
 
         if ($z > $smile_max) //Lien vers tous les smiley!
@@ -178,10 +169,7 @@ class BBcode_editor2 extends ContentEditor
             ));
         }
 
-        if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà includé.
-        {
-            define('EDITOR_ALREADY_INCLUDED', true);
-        }
+        defined('EDITOR_ALREADY_INCLUDED') || define('EDITOR_ALREADY_INCLUDED', true); // On installe une seule fois
 
         return $template->parse(TEMPLATE_STRING_MODE);
     }
