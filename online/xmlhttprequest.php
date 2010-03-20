@@ -4,16 +4,9 @@
  *
  */
 
-$fname = $_SERVER['PHP_SELF'];
-if( strpos($fname, '/online/xmlhttprequest.php') !== FALSE)
-{
-	$fname = dirname($fname).'/online.php';
-	$_SERVER['PHP_SELF'] = $fname;
-	$_SERVER['QUERY_STRING'] = '';
-}
-
-require_once('../kernel/begin.php');
+ require_once('../kernel/begin.php');
 require_once('../online/online_begin.php');
+define('NO_SESSION_LOCATION', TRUE);
 require_once('../kernel/header_no_display.php');
 require_once('../online/online_mini.php');
 
