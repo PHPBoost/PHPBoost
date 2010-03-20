@@ -109,7 +109,7 @@ function update_display()
 		var d = $(prefix+'-'+x);
 		if (d)
 		{
-			d.setStyle({display:displays.get(x)});
+			d.setStyle({display:check_browser(displays.get(x))});
 		}
 	});
 	
@@ -117,6 +117,18 @@ function update_display()
 }
 
 new PeriodicalExecuter(online_callback, {FREQUENCY});
+
+function check_browser(t)
+{
+	tmp1 = t;
+	
+	if (tmp1=='block')
+	{
+		if(!Prototype.Browser.IE)
+			tmp1 = 'table-row';
+	}
+	return tmp1;
+}
 		
 function ajax_display_desc(id)
 {
@@ -129,7 +141,8 @@ function ajax_display_desc(id)
 	{
 		var tmp = elt.getStyle('display');
 		if(tmp!='none') tmp = 'none'; else tmp = 'block';
-		elt.setStyle({display:tmp});
+				
+		elt.setStyle({display:check_browser(tmp)});
 		
 		var cookie = new Cookie({});
 		var v = cookie.readData();
