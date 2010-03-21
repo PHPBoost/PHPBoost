@@ -158,7 +158,9 @@
 				{'type':'balise2', 'fname':'italic.png', 'label':'{L_BB_ITALIC}', 'bbcode': 'i', 'disabled':'{DISABLED_I}'},
 				{'type':'balise2', 'fname':'underline.png', 'label':'{L_BB_UNDERLINE}', 'bbcode': 'u', 'disabled':'{DISABLED_U}'},
 				{'type':'balise2', 'fname':'strike.png', 'label':'{L_BB_STRIKE}', 'bbcode': 's', 'disabled':'{DISABLED_S}'},
-				{'type':'separator'}
+				{'type':'separator'},
+				{'type':'balise2', 'fname':'title.png', 'label':'{L_BB_TITLE}', 'bbcode': 'title', 'disabled':'{DISABLED_TITLE}'},
+
 			],
 			
 			display: function(bloc)
