@@ -52,7 +52,7 @@
 		
 		# IF C_BBCODE_NORMAL_MODE #
 		# IF C_EDITOR_NOT_ALREADY_INCLUDED #
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/bbcode.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/bbcode_editor/templates/bbcode.js"></script>
 		# ENDIF #
 		<script type="text/javascript">
 		
@@ -160,7 +160,21 @@
 				{'type':'balise2', 'fname':'strike.png', 'label':'{L_BB_STRIKE}', 'bbcode': 's', 'disabled':'{DISABLED_S}'},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'title.png', 'label':'{L_BB_TITLE}', 'bbcode': 'title', 'disabled':'{DISABLED_TITLE}'},
-
+				{'type':'balise2', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'bbcode': 'subtitle', 'disabled':'{DISABLED_BLOCK}'},
+				{'type':'balise2', 'fname':'style.png', 'label':'{L_BB_STYLE}', 'bbcode': 'style', 'disabled':'{DISABLED_STYLE}'},
+				{'type':'separator'},
+				{'type':'balise2', 'fname':'url.png', 'label':'{L_BB_URL}', 'bbcode': 'url', 'disabled':'{DISABLED_URL}'},
+				{'type':'balise2', 'fname':'image.png', 'label':'{L_BB_IMAGE}', 'bbcode': 'img', 'disabled':'{DISABLED_IMAGE}'},
+				{'type':'balise2', 'fname':'quote.png', 'label':'{L_BB_QUOTE}', 'bbcode': 'quote', 'disabled':'{DISABLED_QUOTE}'},
+				{'type':'balise2', 'fname':'hide.png', 'label':'{L_BB_HIDE}', 'bbcode': 'hide', 'disabled':'{DISABLED_HIDE}'},
+				{'type':'balise2', 'fname':'list.png', 'label':'{L_BB_LIST}', 'bbcode': 'list', 'disabled':'{DISABLED_LIST}'},
+				{'type':'separator'},
+				{'type':'balise2', 'fname':'color.png', 'label':'{L_BB_COLOR}', 'bbcode': 'color', 'disabled':'{DISABLED_COLOR}'},
+				{'type':'balise2', 'fname':'size.png', 'label':'{L_BB_SIZE}', 'bbcode': 'size', 'disabled':'{DISABLED_SIZE}'},
+				{'type':'separator'},
+				{'type':'balise', 'fname':'minus.png', 'label':'{L_BB_SMALL}'},
+				{'type':'balise', 'fname':'plus.png', 'label':'{L_BB_LARGE}'},
+				{'type':'balise', 'fname':'more.png', 'label':'TODO'}
 			],
 			
 			display: function(bloc)
