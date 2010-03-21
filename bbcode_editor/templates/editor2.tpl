@@ -72,7 +72,7 @@
 			get_menu: function(element)
 			{
 				var menu = '\
-					<table id="table-'+element+'" style="margin:4px;margin-left:auto;margin-right:auto;">\
+					<table id="table-'+element+'" style="margin:4px;margin-left:auto;margin-right:auto;" >\
 						<tr>\
 							<td>\
 								<table class="bbcode">\
@@ -108,14 +108,21 @@
 			
 			balise: function(attrs)
 			{
-				var values = Object.extend({'fname': '', 'label':'', 'classe':'bbcode_hover', 'onclick':''}, attrs || {});
-			
-				return new Element('img',
+				var values = Object.extend({
+					'fname': '',
+					'label':'',
+					'classe':'bbcode_hover',
+					'onclick':''
+				}, attrs || {});
+				
+				var img = new Element('img',
 					{'src': path+'images/form/'+values.fname,
 					'alt': values.label,
-					'class':values.classe,
-					'title':values.label,
-					'onclick':values.onclick});
+					'class': values.classe,
+					'title': values.label,
+					'onclick': values.onclick});
+					
+				return img;
 			},
 		
 			separator: function()
@@ -123,25 +130,29 @@
 				var sep = {'fname':'separate.png'};
 				return this.balise(sep);
 			},
-
+			
 			balise2: function(attrs)
 			{
-				if(attrs.disabled != "")
-					var fn = '';
+				var t = this.balise(attrs);
+				
+				if(attrs.disabled != '')
+				{
+					t.setStyle({opacity:0.3, cursor: 'default'});
+					t.setAttribute('onclick', 'return false;');
+				}
 				else
-					var fn = function() {
-						begin = '[' + attrs.bbcode + ']';
-						end = '[/' + attrs.bbcode + ']';			
-						insertbbcode(begin, end, field);
-					}.bind(attrs);
-					
-				attrs.onclick = fn;
-				return this.balise(attrs);
+				{
+					var begin = "["+attrs.bbcode+"]";
+					var end = "[/"+attrs.bbcode+"]";
+					var str = "insertbbcode('"+begin+"', '"+end+"', '"+this.element+"');";
+					t.setAttribute('onclick', str);
+				}
+				return t;
 			},
 			
 			block1: [
 				{'type':'separator'},
-				{'type':'balise', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}', 'onclick': function() {bb_display_block('1', field);}},
+				{'type':'balise', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}'},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'bold.png', 'label':'{L_BB_BOLD}', 'bbcode': 'b', 'disabled':'{DISABLED_B}'},
 				{'type':'balise2', 'fname':'italic.png', 'label':'{L_BB_ITALIC}', 'bbcode': 'i', 'disabled':'{DISABLED_I}'},

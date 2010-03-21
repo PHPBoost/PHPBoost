@@ -101,6 +101,8 @@ class BBcode_editor2 extends ContentEditor
 			'L_INSERT_TABLE' => $LANG['insert_table'],
 			'L_PHPBOOST_LANGUAGES' => $LANG['phpboost_languages']
         ));
+		
+		$this->forbidden_tags = array('b');
 
         foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
         {
@@ -109,7 +111,7 @@ class BBcode_editor2 extends ContentEditor
             	
         	$template->assign_vars(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
-				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
+				'DISABLED_' . strtoupper($forbidden_tag) => 1
 			));
         }
 
@@ -152,10 +154,10 @@ class BBcode_editor2 extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . addslashes($code_smile) . '" title="' . addslashes($code_smile) . '" />';
-
             $template->assign_block_vars('smiley', array(
-				'IMG' => $img,
+				'URL' => $url_smile,
+				'HEIGHT' => $height,
+				'WIDTH' => $width,
 				'CODE' => addslashes($code_smile),
 				));
         }
