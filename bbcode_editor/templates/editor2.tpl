@@ -53,62 +53,23 @@
 		# IF C_BBCODE_NORMAL_MODE #
 		# IF C_EDITOR_NOT_ALREADY_INCLUDED #
 		<script type="text/javascript" src="{PATH_TO_ROOT}/bbcode_editor/templates/bbcode.js"></script>
-		# ENDIF #
+
 		<script type="text/javascript">
-		
-		var path = '{PATH_TO_ROOT}/templates/{THEME}/';
-		var field = '{FIELD}';
-				
-		var BBcodeEditor = Class.create(
+		var BBcodeEditor_Core = Class.create(
 		{
 			initialize: function(element, options)
 			{
 				this.element = element;
 				this.options = options;
 				$(element).insert({before: this.get_menu(element)});
-				this.display(this.block1);
-			},
-			
-			get_menu: function(element)
-			{
-				var menu = '\
-					<table id="table-'+element+'" style="margin:4px;margin-left:auto;margin-right:auto;" >\
-						<tr>\
-							<td>\
-								<table class="bbcode">\
-									<tr>\
-										<td style="padding:1px;"></td>\
-									</tr>\
-								</table>\
-								<table class="bbcode2" id="bbcode_more{FIELD}">\
-									<tr>\
-										<td style="width:100%;padding:1px;">\
-										</td>\
-										<td style="width:3px;">\
-											<img src="'+path+'images/form/separate.png" alt="" />\
-										</td>\
-										<td style="padding:0px 2px;width:22px;">\
-											<img src="'+path+'images/form/help.png" alt="{L_BB_HELP}" />\
-										</td>\
-									</tr>\
-								</table>\
-							</td>\
-							<td style="vertical-align:top;padding-left:8px;padding-top:5px;">\
-								# IF C_UPLOAD_MANAGEMENT #\
-								<a href="#" onclick="window.open(\'{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}&amp;edt={EDITOR_NAME}\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;">\
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" title="{L_BB_UPLOAD}" />\
-								</a>\
-								# ENDIF #\
-							</td>\
-						</tr>\
-					</table>';
-					
-				return menu;
+				this.display(this.block1, 'bbcode');
+				this.display(this.block2, 'bbcode2');
 			},
 			
 			balise: function(attrs)
 			{
-				var values = Object.extend({
+				var values = Object.extend(
+				{
 					'fname': '',
 					'label':'',
 					'classe':'bbcode_hover',
@@ -116,11 +77,13 @@
 				}, attrs || {});
 				
 				var img = new Element('img',
-					{'src': path+'images/form/'+values.fname,
-					'alt': values.label,
+				{
+					'src': this.path+'images/form/'+values.fname,
+					'alt': '',
 					'class': values.classe,
 					'title': values.label,
-					'onclick': values.onclick});
+					'onclick': values.onclick
+				});
 					
 				return img;
 			},
@@ -142,14 +105,87 @@
 				}
 				else
 				{
-					var begin = "["+attrs.bbcode+"]";
-					var end = "[/"+attrs.bbcode+"]";
-					var str = "insertbbcode('"+begin+"', '"+end+"', '"+this.element+"');";
+					if (attrs.bbcode != undefined)
+						var tags = this.getTags(attrs.bbcode, attrs.bbcode);
+					else if ((attrs.begintag != undefined) && (attrs.endtag != undefined))
+						var tags = this.getTags(attrs.begintag, attrs.endtag);
+					else
+						var tags = {begin: '', end: ''};
+					
+					var str = "insertbbcode('"+tags.begin+"', '"+tags.end+"', '"+this.element+"');";
 					t.setAttribute('onclick', str);
 				}
 				return t;
 			},
 			
+			getTags: function(begin, end)
+			{
+				return {'begin': "["+begin+"]", 'end': "[/"+end+"]"};
+			},
+
+			display: function(bloc, classe)
+			{
+				var elt = $$('table#table-'+this.element+' table.'+classe+' td');
+				elt = elt.first();
+				
+				bloc.each( function(x)
+				{
+					if (x.type == 'separator')
+						$(elt).insert(this.separator());
+					else if (x.type == 'balise')
+						$(elt).insert(this.balise(x));
+					else if (x.type == 'balise2')
+						$(elt).insert(this.balise2(x));
+				}.bind(this));
+			}
+			
+		});
+		</script>
+		# ENDIF #
+		
+		<script type="text/javascript">
+		
+		var BBcodeEditor = Class.create(BBcodeEditor_Core,
+		{
+			path: '{PATH_TO_ROOT}/templates/{THEME}/',
+			
+			get_menu: function(element)
+			{
+				var menu = '\
+					<table id="table-'+element+'" style="margin:4px;margin-left:auto;margin-right:auto;" >\
+						<tr>\
+							<td>\
+								<table class="bbcode">\
+									<tr>\
+										<td style="padding:1px;"></td>\
+									</tr>\
+								</table>\
+								<table class="bbcode2">\
+									<tr>\
+										<td style="width:100%;padding:1px;">\
+										</td>\
+										<td style="width:3px;">\
+											<img src="'+this.path+'images/form/separate.png" alt="" />\
+										</td>\
+										<td style="padding:0px 2px;width:22px;">\
+											<img src="'+this.path+'images/form/help.png" alt="" title="{L_BB_HELP}" />\
+										</td>\
+									</tr>\
+								</table>\
+							</td>\
+							<td style="vertical-align:top;padding-left:8px;padding-top:5px;">\
+								# IF C_UPLOAD_MANAGEMENT #\
+								<a href="#" onclick="window.open(\'{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}&amp;edt={EDITOR_NAME}\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;">\
+								<img src="'+this.path+'images/upload/files_add.png" alt="" title="{L_BB_UPLOAD}" />\
+								</a>\
+								# ENDIF #\
+							</td>\
+						</tr>\
+					</table>';
+					
+				return menu;
+			},
+		
 			block1: [
 				{'type':'separator'},
 				{'type':'balise', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}'},
@@ -177,21 +213,28 @@
 				{'type':'balise', 'fname':'more.png', 'label':'TODO'}
 			],
 			
-			display: function(bloc)
-			{
-				var elt = $$('table#table-'+this.element+' table.bbcode td');
-				elt = elt.first();
-				
-				bloc.each( function(x)
-				{
-					if (x.type == 'separator')
-						$(elt).insert(this.separator());
-					else if (x.type == 'balise')
-						$(elt).insert(this.balise(x));
-					else if (x.type == 'balise2')
-						$(elt).insert(this.balise2(x));
-				}.bind(this));
-			}
+			block2: [
+				{'type':'separator'},
+				{'type':'balise2', 'fname':'left.png', 'label':'{L_BB_LEFT}', 'begintag': 'align=left', 'endtag': 'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'center.png', 'label':'{L_BB_CENTER}', 'begintag': 'align=center', 'endtag': 'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'right.png', 'label':'{L_BB_RIGHT}', 'begintag': 'align=right', 'endtag':'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'justify.png', 'label':'{L_BB_JUSTIFY}', 'begintag': 'align=justify', 'endtag':'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'separator'},
+				{'type':'balise2', 'fname':'float_left.png', 'label':'{L_BB_FLOAT_LEFT}', 'begintag': 'float=left', 'endtag':'float', 'disabled':'{DISABLED_FLOAT}'},
+				{'type':'balise2', 'fname':'float_right.png', 'label':'{L_BB_FLOAT_RIGHT}', 'begintag': 'float=right', 'endtag':'float', 'disabled':'{DISABLED_FLOAT}'},
+				{'type':'balise2', 'fname':'sup.png', 'label':'{L_BB_SUP}', 'bbcode': 'sup', 'disabled':'{DISABLED_SUP}'},
+				{'type':'balise2', 'fname':'sub.png', 'label':'{L_BB_SUB}', 'bbcode': 'sub', 'disabled':'{DISABLED_SUB}'},
+				{'type':'balise2', 'fname':'indent.png', 'label':'{L_BB_INDENT}', 'bbcode': 'indent', 'disabled':'{DISABLED_INDENT}'},
+				{'type':'balise', 'fname':'table.png', 'label':'{L_BB_TABLE}'},
+				{'type':'separator'},
+				{'type':'balise', 'fname':'flash.png', 'label':'{L_BB_FLASH}'},
+				{'type':'balise', 'fname':'movie.png', 'label':'{L_BB_MOVIE}'},
+				{'type':'balise', 'fname':'sound.png', 'label':'{L_BB_SOUND}'},
+				{'type':'separator'},
+				{'type':'balise', 'fname':'code.png', 'label':'{L_BB_CODE}'},
+				{'type':'balise', 'fname':'math.png', 'label':'{L_BB_MATH}'},
+				{'type':'balise', 'fname':'html.png', 'label':'{L_BB_HTML}'}
+			]
 			
 		});
 		
