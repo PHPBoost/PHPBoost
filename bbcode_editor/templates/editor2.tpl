@@ -108,13 +108,13 @@
 			
 			balise: function(attrs)
 			{
-				var values = Object.extend({'fname': '', 'alt':'', 'classe':'', 'title':'', 'onclick':''}, attrs || {});
+				var values = Object.extend({'fname': '', 'label':'', 'classe':'bbcode_hover', 'onclick':''}, attrs || {});
 			
 				return new Element('img',
 					{'src': path+'images/form/'+values.fname,
-					'alt': values.alt,
+					'alt': values.label,
 					'class':values.classe,
-					'title':values.title,
+					'title':values.label,
 					'onclick':values.onclick});
 			},
 		
@@ -134,22 +134,19 @@
 						end = '[/' + attrs.bbcode + ']';			
 						insertbbcode(begin, end, field);
 					}.bind(attrs);
-				return new Element('img',
-					{'src': path+'images/form/'+attrs.fname,
-						'alt': attrs.alt,
-						'class':attrs.classe,
-						'title':attrs.title,
-						'onclick':fn});
+					
+				attrs.onclick = fn;
+				return this.balise(attrs);
 			},
 			
 			block1: [
 				{'type':'separator'},
-				{'type':'balise', 'fname':'smileys.png', 'alt':'{L_BB_SMILEYS}', 'title':'{L_BB_SMILEYS}', 'classe':'bbcode_hover', 'onclick': function() {bb_display_block('1', field);}},
+				{'type':'balise', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}', 'onclick': function() {bb_display_block('1', field);}},
 				{'type':'separator'},
-				{'type':'balise2', 'fname':'bold.png', 'alt':'{L_BB_BOLD}', 'title':'{L_BB_BOLD}', 'classe':'bbcode_hover', 'bbcode': 'b', 'disabled':'{DISABLED_B}'},
-				{'type':'balise2', 'fname':'italic.png', 'alt':'{L_BB_ITALIC}', 'title':'{L_BB_ITALIC}', 'classe':'bbcode_hover', 'bbcode': 'i', 'disabled':'{DISABLED_I}'},
-				{'type':'balise2', 'fname':'underline.png', 'alt':'{L_BB_UNDERLINE}', 'title':'{L_BB_UNDERLINE}', 'classe':'bbcode_hover', 'bbcode': 'u', 'disabled':'{DISABLED_U}'},
-				{'type':'balise2', 'fname':'strike.png', 'alt':'{L_BB_STRIKE}', 'title':'{L_BB_STRIKE}', 'classe':'bbcode_hover', 'bbcode': 's', 'disabled':'{DISABLED_S}'},
+				{'type':'balise2', 'fname':'bold.png', 'label':'{L_BB_BOLD}', 'bbcode': 'b', 'disabled':'{DISABLED_B}'},
+				{'type':'balise2', 'fname':'italic.png', 'label':'{L_BB_ITALIC}', 'bbcode': 'i', 'disabled':'{DISABLED_I}'},
+				{'type':'balise2', 'fname':'underline.png', 'label':'{L_BB_UNDERLINE}', 'bbcode': 'u', 'disabled':'{DISABLED_U}'},
+				{'type':'balise2', 'fname':'strike.png', 'label':'{L_BB_STRIKE}', 'bbcode': 's', 'disabled':'{DISABLED_S}'},
 				{'type':'separator'}
 			],
 			
