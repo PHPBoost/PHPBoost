@@ -157,6 +157,14 @@
 									height: x.height,
 									width: x.width
 						});
+						if(x.code)
+						{
+							var fn = function() {
+								insertbbcode(' '+x.code+' ', '', this.element);
+							}.bind(this);
+							Event.observe(d, 'click', fn);
+						}
+
 						elt.insert(d);
 					}
 				}.bind(this));
