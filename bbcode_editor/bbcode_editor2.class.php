@@ -110,7 +110,6 @@ class BBcode_editor2 extends ContentEditor
             	$forbidden_tag = 'block';
             	
         	$template->assign_vars(array(
-				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 1
 			));
         }
@@ -154,7 +153,7 @@ class BBcode_editor2 extends ContentEditor
                 $height = $height_source;
             }
              
-            $template->assign_block_vars('smiley', array(
+            $template->assign_block_vars('smileys', array(
 				'URL' => $url_smile,
 				'HEIGHT' => $height,
 				'WIDTH' => $width,

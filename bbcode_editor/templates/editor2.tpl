@@ -64,6 +64,7 @@
 				$(element).insert({before: this.get_menu(element)});
 				this.display(this.block1, 'bbcode');
 				this.display(this.block2, 'bbcode2');
+				this.getSmileys();
 			},
 			
 			balise: function(attrs)
@@ -143,6 +144,23 @@
 					else if (x.type == 'balise2')
 						$(elt).insert(this.balise2(x));
 				}.bind(this));
+			},
+			
+			getSmileys: function()
+			{
+				var elt = new Element('div');
+				this.smileys.each( function(x) {
+					if(x.url)
+					{
+						var d = new Element('img', {
+									src: this.path_img+x.url,
+									height: x.height,
+									width: x.width
+						});
+						elt.insert(d);
+					}
+				}.bind(this));
+				$('div1').update(elt);
 			}
 			
 		});
@@ -154,6 +172,7 @@
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
 			path: '{PATH_TO_ROOT}/templates/{THEME}/',
+			path_img: '{PATH_TO_ROOT}/images/smileys/',
 			
 			get_menu: function(element)
 			{
@@ -240,6 +259,13 @@
 				{'type':'balise', 'fname':'code.png', 'label':'{L_BB_CODE}'},
 				{'type':'balise', 'fname':'math.png', 'label':'{L_BB_MATH}'},
 				{'type':'balise', 'fname':'html.png', 'label':'{L_BB_HTML}'}
+			],
+			
+			smileys: [
+			# START smileys #
+			{url: '{smileys.URL}', height: {smileys.HEIGHT}, width: {smileys.WIDTH}, code: '{smileys.CODE}'}, 
+			# END smileys #
+			{}
 			]
 			
 		});
