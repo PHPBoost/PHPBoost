@@ -81,9 +81,11 @@
 					'src': this.path+'images/form/'+values.fname,
 					'alt': '',
 					'class': values.classe,
-					'title': values.label,
-					'onclick': values.onclick
+					'title': values.label
 				});
+				
+				if(Object.isFunction(values.onclick))
+					Event.observe(img, 'click', values.onclick);
 					
 				return img;
 			},
@@ -98,22 +100,26 @@
 			{
 				var t = this.balise(attrs);
 				
+				var fn = function()
+					{
+						insertbbcode(tags.begin, tags.end, this.element);
+					}.bind(this);
+				
 				if(attrs.disabled != '')
 				{
 					t.setStyle({opacity:0.3, cursor: 'default'});
-					t.setAttribute('onclick', 'return false;');
+					Event.stopObserving(t, 'click', fn);
 				}
 				else
 				{
-					if (attrs.bbcode != undefined)
+					if (attrs.bbcode)
 						var tags = this.getTags(attrs.bbcode, attrs.bbcode);
-					else if ((attrs.begintag != undefined) && (attrs.endtag != undefined))
+					else if ((attrs.begintag) && (attrs.endtag))
 						var tags = this.getTags(attrs.begintag, attrs.endtag);
 					else
 						var tags = {begin: '', end: ''};
 					
-					var str = "insertbbcode('"+tags.begin+"', '"+tags.end+"', '"+this.element+"');";
-					t.setAttribute('onclick', str);
+					Event.observe(t, 'click', fn);
 				}
 				return t;
 			},
