@@ -311,7 +311,7 @@ class Comments
 							'CONTENTS' => unparse($row['contents']),
 							'DATE' => gmdate_format('date_format', $row['timestamp']),
 							'THEME' => get_utheme(),
-							'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
+							'KERNEL_EDITOR' => display_editor($this->script . 'contents', $CONFIG_COM['forbidden_tags']),
 							'L_LANGUAGE' => substr(get_ulang(), 0, 2),
 							'L_EDIT_COMMENT' => $LANG['edit_comment'],
 							'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
