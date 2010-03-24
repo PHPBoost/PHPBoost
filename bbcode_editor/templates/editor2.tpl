@@ -71,6 +71,7 @@
 			{
 				var values = Object.extend(
 				{
+					'id': '',
 					'fname': '',
 					'label':'',
 					'classe':'bbcode_hover',
@@ -84,11 +85,29 @@
 					'class': values.classe,
 					'title': values.label
 				});
+
+				if(values.id)
+				{
+					var div1 = new Array();
+					var div = new Element('div', {id: 'bb_block1'+this.element});
+					div.setStyle({
+						position:'relative',
+						'zIndex':100,
+						'marginLeft':'-50px',
+						float:'left',
+						display:'none'
+					});
+					div1.push(div);
+					div1.push(img);
+				}
 				
 				if(Object.isFunction(values.onclick))
 					Event.observe(img, 'click', values.onclick);
-					
-				return img;
+
+				if(div1)
+					return div1;
+				else
+					return img;
 			},
 		
 			separator: function()
@@ -139,16 +158,23 @@
 				{
 					if (x.type == 'separator')
 						$(elt).insert(this.separator());
-					else if (x.type == 'balise')
-						$(elt).insert(this.balise(x));
+					else if (x.type == 'balise') {
+						var t = this.balise(x);
+						if (Object.isArray(t))
+							t.each(function(y) { $(elt).insert(y); });
+						else
+							$(elt).insert(t);
+					}
 					else if (x.type == 'balise2')
 						$(elt).insert(this.balise2(x));
 				}.bind(this));
 			},
-			
+							
 			getSmileys: function()
 			{
-				var elt = new Element('div');
+				var elt = new Element('div', {'class':'bbcode_block'});
+				elt.setStyle({width: '130px'});
+				var i = 0;
 				this.smileys.each( function(x) {
 					if(x.url)
 					{
@@ -166,9 +192,13 @@
 						}
 
 						elt.insert(d);
+						i++;
+						if ((i % 5) == 0) elt.insert('<br />');
 					}
 				}.bind(this));
-				$('div1').update(elt);
+				
+				$('bb_block1contents').update(elt);
+				
 			}
 			
 		});
@@ -179,6 +209,7 @@
 		
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
+			field: '{FIELD}',
 			path: '{PATH_TO_ROOT}/templates/{THEME}/',
 			path_img: '{PATH_TO_ROOT}/images/smileys/',
 			
@@ -218,10 +249,15 @@
 					
 				return menu;
 			},
+			
+			test: function()
+			{
+				bb_display_block('1', this.field);
+			},
 		
 			block1: [
 				{'type':'separator'},
-				{'type':'balise', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}'},
+				{'type':'balise', 'id':'smileys', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}', 'onclick': function() {bb_display_block('1', 'contents');}},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'bold.png', 'label':'{L_BB_BOLD}', 'bbcode': 'b', 'disabled':'{DISABLED_B}'},
 				{'type':'balise2', 'fname':'italic.png', 'label':'{L_BB_ITALIC}', 'bbcode': 'i', 'disabled':'{DISABLED_I}'},
