@@ -75,64 +75,67 @@ require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$modules = AppContext::get_extension_provider_service();
+$extension_provider_service = AppContext::get_extension_provider_service();
 $modules_args = array();
 $used_modules = array();
 
 // Chargement des modules avec formulaires
-$search_module = $modules->get_providers('get_search_request');
+$search_providers = $extension_provider_service->get_providers(Searchable::EXTENSION_POINT);
 
 // Génération des formulaires précomplétés et passage aux templates
-foreach ($search_module as $module)
+foreach ($search_providers as $search_provider)
 {
-	if (!in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']))
+	$provider_id = $search_provider->get_id();
+	if (!in_array($provider_id, $SEARCH_CONFIG['unauthorized_modules']))
 	{
+		$searchable = $search_provider->get_extension_point(Searchable::EXTENSION_POINT);
+		$searchable = new ArticlesSearchable();
 	    // Ajout du paramètre search à tous les modules
-	    $modules_args[$module->get_id()]['search'] = $search;
-	    if ($module->has_extension_point('get_search_args'))
+	    $modules_args[$provider_id]['search'] = $search;
+	    if ($searchable->has_search_options())
 	    {
-	        // Récupération de la liste des paramètres
-	        $form_module_args = $module->get_extension_point('get_search_args');
-	        // Ajout des paramètres optionnels sans les sécuriser.
-	        // Ils sont sécurisés à l'intérieur de chaque module.
-	        if ($search_in != 'all')
-	        {
-	            foreach ($form_module_args as $arg)
-	            {
-	                if ($arg == 'search')
-	                {   // 'search' non sécurisé
-	                    $modules_args[$module->get_id()]['search'] = $search;
-	                }
-	                elseif (isset($_POST[$arg]))
-	                {   // Argument non sécurisé (sécurisé par le module en question)
-	                    $modules_args[$module->get_id()][$arg] = $_POST[$arg];
-	                }
-	            }
-	        }
-	        
-	        $Template->assign_block_vars('forms', array(
-	            'MODULE_NAME' => $module->get_id(),
-	            'L_MODULE_NAME' => ucfirst($module->get_name()),
-	            'C_SEARCH_FORM' => true,
-	            'SEARCH_FORM' => $module->get_extension_point('get_search_form', $modules_args[$module->get_id()])
-	        ));
+//	        // Récupération de la liste des paramètres
+//	        $form_module_args = $module->get_extension_point('get_search_args');
+//	        // Ajout des paramètres optionnels sans les sécuriser.
+//	        // Ils sont sécurisés à l'intérieur de chaque module.
+//	        if ($search_in != 'all')
+//	        {
+//	            foreach ($form_module_args as $arg)
+//	            {
+//	                if ($arg == 'search')
+//	                {   // 'search' non sécurisé
+//	                    $modules_args[$module->get_id()]['search'] = $search;
+//	                }
+//	                elseif (isset($_POST[$arg]))
+//	                {   // Argument non sécurisé (sécurisé par le module en question)
+//	                    $modules_args[$module->get_id()][$arg] = $_POST[$arg];
+//	                }
+//	            }
+//	        }
+//	        
+//	        $Template->assign_block_vars('forms', array(
+//	            'MODULE_NAME' => $module->get_id(),
+//	            'L_MODULE_NAME' => ucfirst($module->get_name()),
+//	            'C_SEARCH_FORM' => true,
+//	            'SEARCH_FORM' => $module->get_extension_point('get_search_form', $modules_args[$module->get_id()])
+//	        ));
 	    }
 	    else
 	    {
 	        $Template->assign_block_vars('forms', array(
-	            'MODULE_NAME' => $module->get_id(),
-	            'L_MODULE_NAME' => ucfirst($module->get_name()),
+	            'MODULE_NAME' => $provider_id,
+	            'L_MODULE_NAME' => ucfirst($provider_id),
 	            'C_SEARCH_FORM' => false,
 	            'SEARCH_FORM' => $LANG['search_no_options']
 	        ));
 	    }
 	    
 	    // Récupération de la liste des modules à traiter
-	    if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
-	    	(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )
+	    if ( ($selected_modules === array()) || ($search_in === $provider_id) ||
+	    	(($search_in === 'all') && (in_array($provider_id, $selected_modules))) )
 	    {
 	        $selected = ' selected="selected"';
-	        $used_modules[$module->get_id()] = $module; // Ajout du module à traiter
+	        $used_modules[$provider_id] = $searchable; // Ajout du module à traiter
 	    }
 	    else
 	    {
@@ -140,14 +143,10 @@ foreach ($search_module as $module)
 	    }
 	    
 	    $Template->assign_block_vars('searched_modules', array(
-	        'MODULE' => $module->get_id(),
-	        'L_MODULE_NAME' => ucfirst($module->get_name()),
+	        'MODULE' => $provider_id,
+	        'L_MODULE_NAME' => ucfirst($provider_id),
 	        'SELECTED' => $selected
 	    ));
-	}
-	else
-	{
-		unset($module);
 	}
 }
 

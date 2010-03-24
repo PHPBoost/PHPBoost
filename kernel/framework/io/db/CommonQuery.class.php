@@ -42,6 +42,16 @@ class CommonQuery
 	{
 		$this->querier = $querier;
 	}
+    
+    /**
+     * @desc Removes all table rows
+     * @param string $table_name the table name
+     */
+    public function truncate($table_name)
+    {
+        $query = 'TRUNCATE ' . $table_name . ';';
+        $this->querier->inject($query);
+    }
 
 	/**
 	 * @desc insert the values into the <code>$table_name</code> table
