@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,27 +29,28 @@
 
 class SearchExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function SearchInterface() //Constructeur de la classe ForumInterface
-    {
-        parent::__construct('search');
-    }
-    
-    //Récupération du cache.
-	function get_cache()
+	/**
+	 * @var CommonQuery
+	 */
+	private $querier;
+
+	public function __construct() //Constructeur de la classe ForumInterface
 	{
-		//Configuration
-		$search_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'search'", __LINE__, __FILE__));
-		
-		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
+		$this->sql_querier = AppContext::get_sql_common_query();
+		parent::__construct('search');
 	}
 
-	//Actions journalières
+	function get_cache()
+	{
+		$result = $this->querier->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name=\'search\'');
+		$search_config = unserialize($result['value']);
+		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true) . ';';
+	}
+
 	function on_changeday()
 	{
-		// Délestage du cache des recherches
-		$this->sql_querier->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
-		$this->sql_querier->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
+		$this->querier->truncate(PREFIX . 'search_results');
+		$this->querier->truncate(PREFIX . 'search_index');
 	}
 }
 

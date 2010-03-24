@@ -433,15 +433,11 @@ class Environment
 
 	private static function execute_modules_changedays_tasks()
 	{
-
-		$modules_loader = AppContext::get_extension_provider_service();
-		$modules = $modules_loader->get_providers('on_changeday');
-		foreach ($modules as $module)
+		$providers = AppContext::get_extension_provider_service();
+		$changeday_providers = $providers->get_providers('on_changeday');
+		foreach ($changeday_providers as $module)
 		{
-			if ($module->is_enabled())
-			{
-				$module->get_extension_point('on_changeday');
-			}
+			$module->get_extension_point('on_changeday');
 		}
 	}
 
@@ -453,17 +449,16 @@ class Environment
 		//If the user configured a delay and member accounts must be activated
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
 		{
-			AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
-				" WHERE timestamp < '" . (time() - $delay_unactiv_max) .
-				"' AND user_aprob = 0", __LINE__, __FILE__);
+			AppContext::get_sql_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
+				" WHERE timestamp < :timestamp AND user_aprob = 0",
+			array('timestamp' => (time() - $delay_unactiv_max)));
 		}
 	}
 
 	private static function remove_captcha_entries()
 	{
-		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
-			" WHERE timestamp < '" . (self::get_yesterday_timestamp()) . "'",
-		__LINE__, __FILE__);
+		AppContext::get_sql_querier()->inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
+			" WHERE timestamp < :timestamp", array('timestamp' => self::get_yesterday_timestamp()));
 	}
 
 	private static function check_updates()

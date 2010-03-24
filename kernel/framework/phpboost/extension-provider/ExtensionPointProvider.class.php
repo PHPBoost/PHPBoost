@@ -103,7 +103,7 @@ abstract class ExtensionPointProvider
 	 * @param string[] $extensions_points the names of the methods you want to check the availability
 	 * @return bool true if all extensions points exist, false otherwise
 	 */
-	public function has_extensions_points($extensions_points)
+	public function has_extensions_points(array $extensions_points)
 	{
 		foreach($extensions_points as $extension_point)
 		{

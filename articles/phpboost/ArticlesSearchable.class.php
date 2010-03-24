@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class ArticlesSearchable extends ExtensionPointProvider implements Searchable
+class ArticlesSearchable extends AbstractSearchable
 {
 	function get_search_request($args = null)
 	{

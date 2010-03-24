@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          Searchable.class.php
+ *                          AbstractSearchable.class.php
  *                            -------------------
- *   begin                : February 08, 2010
+ *   begin                : March 24, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,15 +25,17 @@
  *
  ###################################################*/
 
-interface Searchable extends ExtensionPoint
+abstract class AbstractSearchable implements Searchable
 {
-	const EXTENSION_POINT = 'search';
+    public function has_search_options()
+    {
+    	return false;
+    }
     
-    function get_search_request($args = null);
-    
-//    function has_search_options();
-//    
-//    function build_search_form(array $values);
+    public function build_search_form(array $values)
+    {
+    	
+    }
 //    
 //    function has_special_output();
 //    
