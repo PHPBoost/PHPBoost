@@ -60,6 +60,24 @@ class ExtensionPointProviderService
 	}
 
 	/**
+	 * @desc Returns all extension point <code>$extension_point</code> registered implementations
+	 * @param string $extension_point the requested extension point
+	 * @param string[] $authorized_providers_ids the extension point providers that are allowed
+	 * to provide the extension point. If not specified, all providers are allowed
+	 * @return Object[string] the requested extension point implementations
+	 */
+	public function get_extension_point($extension_point, $authorized_providers_ids = null)
+	{
+		$providers = $this->get_providers($extension_point, $authorized_providers_ids);
+		$extensions_points = array();
+		foreach ($providers as $provider)
+		{
+			$extensions_points[$provider->get_id()] = $provider->get_extension_point($extension_point);
+		}
+		return $extensions_points;
+	}
+
+	/**
 	 * @desc Returns the ExtensionPointProvider list.
 	 * @param string $extension_point the extension point name. By default, returns
 	 * all availables modules interfaces.
@@ -68,28 +86,19 @@ class ExtensionPointProviderService
 	 * availables modules interfaces.
 	 * @return ExtensionPointProvider[] the ExtensionPointProvider list.
 	 */
-	public function get_providers($extension_point, $providers_list = array())
+	public function get_providers($extension_point, $authorized_providers_ids = null)
 	{
-		$providers = array();
-		if (empty($providers_list))
+		if ($authorized_providers_ids === null)
 		{
-			foreach ($this->available_providers_ids as $extension_provider_id)
-			{
-				$provider = $this->get_provider($extension_provider_id);
-				if ($provider->has_extension_point($extension_point))
-				{
-					$providers[$provider->get_id()] = $provider;
-				}
-			}
+			$authorized_providers_ids = $this->available_providers_ids;
 		}
-		else
+        $providers = array();
+		foreach ($authorized_providers_ids as $extension_provider_id)
 		{
-			foreach ($providers_list as $provider)
+			$provider = $this->get_provider($extension_provider_id);
+			if ($provider->has_extension_point($extension_point))
 			{
-				if ($provider->has_extension_point($extension_point))
-				{
-					$providers[$provider->get_id()] = $provider;
-				}
+				$providers[$provider->get_id()] = $provider;
 			}
 		}
 		return $providers;

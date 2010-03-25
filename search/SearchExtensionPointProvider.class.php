@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              searchExtensionPointProvider.class.php
+ *                        SearchExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -34,7 +34,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	 */
 	private $querier;
 
-	public function __construct() //Constructeur de la classe ForumInterface
+	public function __construct()
 	{
 		$this->sql_querier = AppContext::get_sql_common_query();
 		parent::__construct('search');
