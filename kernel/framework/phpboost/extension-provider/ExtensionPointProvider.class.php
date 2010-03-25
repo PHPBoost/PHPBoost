@@ -26,12 +26,6 @@
  *###################################################
  */
 
-define('MODULE_NOT_AVAILABLE', 1);
-define('ACCES_DENIED', 2);
-define('MODULE_NOT_YET_IMPLEMENTED', 4);
-define('FUNCTIONNALITY_NOT_IMPLEMENTED', 8);
-define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
-
 /**
  * @author Loïc Rouchon <loic.rouchon@phpboost.com>
  * @desc This Class allow you to call methods on a ExtensionPointProvider extended class
