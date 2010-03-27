@@ -231,7 +231,7 @@ function bb_display_block(divID, field)
 	
 	if( timeout )
 		clearTimeout(timeout);
-
+	
 	var block = document.getElementById('bb_block' + divID + field);
 	if( block.style.display == 'none' )
 	{
