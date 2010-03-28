@@ -156,6 +156,9 @@
 			display: function(bloc, classe)
 			{
 				var elt = $$('table#table-'+this.element+' table.'+classe+' td');
+				if(!elt.length)
+					throw('Error - tables non found');
+					
 				elt = elt.first();
 				
 				bloc.each( function(x)
@@ -275,17 +278,13 @@
 				var elt = new Element('div', {'class':'bbcode_block'});
 				var sel = new Element('select');
 				
-				var first = true;
 				this.titles.each(function(x)
 				{
-					if (first)
+					var opt = new Element('option', {'value':x.value});
+					if (!x.value)
 					{
-						var opt = new Element('option', {'value':x.value, 'selected':'selected', 'disabled':'disabled'});
-						first = false;
-					}
-					else
-					{
-						var opt = new Element('option', {'value':x.value});
+						opt.setAttribute('selected', 'selected');
+						opt.setAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -311,17 +310,13 @@
 				var elt = new Element('div', {'class':'bbcode_block'});
 				var sel = new Element('select');
 				
-				var first = true;
 				this.subtitles.each(function(x)
 				{
-					if (first)
+					var opt = new Element('option', {'value':x.value});
+					if (!x.value)
 					{
-						var opt = new Element('option', {'value':x.value, 'selected':'selected', 'disabled':'disabled'});
-						first = false;
-					}
-					else
-					{
-						var opt = new Element('option', {'value':x.value});
+						opt.setAttribute('selected', 'selected');
+						opt.setAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -347,17 +342,13 @@
 				var elt = new Element('div', {'class':'bbcode_block'});
 				var sel = new Element('select');
 				
-				var first = true;
 				this.styles.each(function(x)
 				{
-					if (first)
+					var opt = new Element('option', {'value':x.value});
+					if (!x.value)
 					{
-						var opt = new Element('option', {'value':x.value, 'selected':'selected', 'disabled':'disabled'});
-						first = false;
-					}
-					else
-					{
-						var opt = new Element('option', {'value':x.value});
+						opt.setAttribute('selected', 'selected');
+						opt.setAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -385,13 +376,11 @@
 				
 				this.sizes.each(function(x)
 				{
+					var opt = new Element('option', {'value':x.value});
 					if (!x.value)
 					{
-						var opt = new Element('option', {'value':x.value, 'selected':'selected', 'disabled':'disabled'});
-					}
-					else
-					{
-						var opt = new Element('option', {'value':x.value});
+						opt.setAttribute('selected', 'selected');
+						opt.setAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
