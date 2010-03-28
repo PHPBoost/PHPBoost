@@ -64,13 +64,6 @@
 				$(element).insert({before: this.get_menu(element)});
 				this.display(this.block1, 'bbcode');
 				this.display(this.block2, 'bbcode2');
-				this.menuSmileys(1);
-				this.menuTitles(2);
-				this.menuSubTitles(3);
-				this.menuStyles(4);
-				this.menuColors(5);
-				this.menuSizes(6);
-				this.menuCodes(7);
 			},
 			
 			balise: function(attrs)
@@ -94,7 +87,7 @@
 
 				if(values.id)
 				{
-					img.setAttribute('id', values.id + this.element);
+					img.setAttribute('id', values.id + '_' + this.element);
 				}
 
 				if(Object.isFunction(values.onclick))
@@ -151,18 +144,130 @@
 				{
 					if (x.type == 'separator')
 						$(elt).insert(this.separator());
-					else if (x.type == 'balise') {
-						var t = this.balise(x);
-						$(elt).insert(t);
-					}
+					else if (x.type == 'balise')
+						$(elt).insert(this.balise(x));
 					else if (x.type == 'balise2')
 						$(elt).insert(this.balise2(x));
+					else if (x.type == 'menu_smileys')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuSmileys(x.id);
+					}
+					else if (x.type == 'menu_title')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuTitles(x.id);
+					}
+					else if (x.type == 'menu_subtitle')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuSubTitles(x.id);
+					}
+					else if (x.type == 'menu_style')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuStyles(x.id);
+					}
+					else if (x.type == 'menu_size')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuSizes(x.id);
+					}
+					else if (x.type == 'menu_color')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuColors(x.id);
+					}
+					else if (x.type == 'menu_code')
+					{
+						var fn = function()
+						{
+							var elt = $('bb_block_'+x.id+'_'+this.element);
+							if (elt)
+							{
+								var tmp = elt.getStyle('display');
+								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+								elt.setStyle({'display': tmp});
+							}
+						}.bind(this);
+						x.onclick = fn;
+						$(elt).insert(this.balise(x));
+						this.menuCodes(x.id);
+					}
+					
 				}.bind(this));
 			},
 							
 			menuSmileys: function(index)
 			{
-				var div = new Element('div', {id: 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -197,12 +302,13 @@
 				}.bind(this));
 				
 				div.update(elt);
-				$('smileys'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuTitles: function(index)
 			{
-				var div = new Element('div', {'id': 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -232,12 +338,13 @@
 				
 				elt.insert(sel);
 				div.update(elt);
-				$('title'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuSubTitles: function(index)
 			{
-				var div = new Element('div', {id: 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -267,12 +374,13 @@
 				
 				elt.insert(sel);
 				div.update(elt);
-				$('subtitle'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuStyles: function(index)
 			{
-				var div = new Element('div', {'id': 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -302,12 +410,13 @@
 				
 				elt.insert(sel);
 				div.update(elt);
-				$('style'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuSizes: function(index)
 			{
-				var div = new Element('div', {id: 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -335,12 +444,13 @@
 				
 				elt.insert(sel);
 				div.update(elt);
-				$('size'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuColors: function(index)
 			{
-				var div = new Element('div', {'id': 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -378,12 +488,13 @@
 				elt.insert(xtable);
 				
 				div.update(elt);
-				$('color'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			},
 			
 			menuCodes: function(index)
 			{
-				var div = new Element('div', {'id': 'bb_block'+index+this.element});
+				var id = 'bb_block_'+index+'_'+this.element;
+				var div = new Element('div', {'id': id});
 				div.setStyle({
 					'position':'relative',
 					'zIndex':100,
@@ -419,7 +530,7 @@
 				
 				elt.insert(sel);
 				div.update(elt);
-				$('size'+this.element).insert({before:div});
+				$(index+'_'+this.element).insert({before:div});
 			}
 			
 		});
@@ -499,20 +610,16 @@
 		
 			block1: [
 				{'type':'separator'},
-				{'type':'balise', 'id':'smileys', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}',
-						'disabled':'{DISABLED_SMILEYS}', 'onclick': function() {bb_display_block('1', 'contents');} },
+				{'type':'menu_smileys', 'id':'smileys', 'fname':'smileys.png', 'label':'{L_BB_SMILEYS}', 'disabled':'{DISABLED_SMILEYS}'},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'bold.png', 'label':'{L_BB_BOLD}', 'tag': 'b', 'disabled':'{DISABLED_B}'},
 				{'type':'balise2', 'fname':'italic.png', 'label':'{L_BB_ITALIC}', 'tag': 'i', 'disabled':'{DISABLED_I}'},
 				{'type':'balise2', 'fname':'underline.png', 'label':'{L_BB_UNDERLINE}', 'tag': 'u', 'disabled':'{DISABLED_U}'},
 				{'type':'balise2', 'fname':'strike.png', 'label':'{L_BB_STRIKE}', 'tag': 's', 'disabled':'{DISABLED_S}'},
 				{'type':'separator'},
-				{'type':'balise', 'id':'title', 'fname':'title.png', 'label':'{L_BB_TITLE}', 'tag': 'title',
-						'disabled':'{DISABLED_TITLE}', 'onclick': function() {bb_display_block('2', 'contents');}},
-				{'type':'balise', 'id':'subtitle', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'tag': 'subtitle',
-						'disabled':'{DISABLED_BLOCK}', 'onclick': function() {bb_display_block('3', 'contents');}},
-				{'type':'balise', 'id':'style', 'fname':'style.png', 'label':'{L_BB_STYLE}', 'tag': 'style',
-						'disabled':'{DISABLED_STYLE}', 'onclick': function() {bb_display_block('4', 'contents');}},
+				{'type':'menu_title', 'id':'title', 'fname':'title.png', 'label':'{L_BB_TITLE}', 'tag': 'title', 'disabled':'{DISABLED_TITLE}'},
+				{'type':'menu_subtitle', 'id':'subtitle', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'tag': 'subtitle', 'disabled':'{DISABLED_BLOCK}'},
+				{'type':'menu_style', 'id':'style', 'fname':'style.png', 'label':'{L_BB_STYLE}', 'tag': 'style', 'disabled':'{DISABLED_STYLE}'},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'url.png', 'label':'{L_BB_URL}', 'tag': 'url', 'disabled':'{DISABLED_URL}'},
 				{'type':'balise2', 'fname':'image.png', 'label':'{L_BB_IMAGE}', 'tag': 'img', 'disabled':'{DISABLED_IMAGE}'},
@@ -520,46 +627,33 @@
 				{'type':'balise2', 'fname':'hide.png', 'label':'{L_BB_HIDE}', 'tag': 'hide', 'disabled':'{DISABLED_HIDE}'},
 				{'type':'balise2', 'fname':'list.png', 'label':'{L_BB_LIST}', 'tag': 'list', 'disabled':'{DISABLED_LIST}'},
 				{'type':'separator'},
-				{'type':'balise', 'id':'color', 'fname':'color.png', 'label':'{L_BB_COLOR}', 'tag': 'color',
-						'disabled':'{DISABLED_COLOR}', 'onclick': function() {bb_display_block('5', 'contents');}},
-				{'type':'balise', 'id':'size', 'fname':'size.png', 'label':'{L_BB_SIZE}', 'tag': 'size',
-						'disabled':'{DISABLED_SIZE}', 'onclick': function() {bb_display_block('6', 'contents');}},
+				{'type':'menu_color', 'id':'color', 'fname':'color.png', 'label':'{L_BB_COLOR}', 'tag': 'color', 'disabled':'{DISABLED_COLOR}'},
+				{'type':'menu_size', 'id':'size', 'fname':'size.png', 'label':'{L_BB_SIZE}', 'tag': 'size', 'disabled':'{DISABLED_SIZE}'},
 				{'type':'separator'},
 				{'type':'balise', 'fname':'minus.png', 'label':'{L_BB_SMALL}'},
 				{'type':'balise', 'fname':'plus.png', 'label':'{L_BB_LARGE}'},
-				{'type':'balise', 'fname':'more.png', 'label':'TODO',
-						'onclick': function() {displayDiv('contents');}}
+				{'type':'action_more', 'fname':'more.png', 'label':'{L_BB_MORE}'}
 			],
 			
 			block2: [
 				{'type':'separator'},
-				{'type':'balise2', 'fname':'left.png', 'label':'{L_BB_LEFT}', 'begintag': 'align=left', 'endtag': 'align',
-						'disabled':'{DISABLED_ALIGN}'},
-				{'type':'balise2', 'fname':'center.png', 'label':'{L_BB_CENTER}', 'begintag': 'align=center', 'endtag': 'align',
-						'disabled':'{DISABLED_ALIGN}'},
-				{'type':'balise2', 'fname':'right.png', 'label':'{L_BB_RIGHT}', 'begintag': 'align=right', 'endtag':'align',
-						'disabled':'{DISABLED_ALIGN}'},
-				{'type':'balise2', 'fname':'justify.png', 'label':'{L_BB_JUSTIFY}', 'begintag': 'align=justify', 'endtag':'align',
-						'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'left.png', 'label':'{L_BB_LEFT}', 'begintag': 'align=left', 'endtag': 'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'center.png', 'label':'{L_BB_CENTER}', 'begintag': 'align=center', 'endtag': 'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'right.png', 'label':'{L_BB_RIGHT}', 'begintag': 'align=right', 'endtag':'align', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'justify.png', 'label':'{L_BB_JUSTIFY}', 'begintag': 'align=justify', 'endtag':'align', 'disabled':'{DISABLED_ALIGN}'},
 				{'type':'separator'},
-				{'type':'balise2', 'fname':'float_left.png', 'label':'{L_BB_FLOAT_LEFT}', 'begintag': 'float=left', 'endtag':'float',
-						'disabled':'{DISABLED_FLOAT}'},
-				{'type':'balise2', 'fname':'float_right.png', 'label':'{L_BB_FLOAT_RIGHT}', 'begintag': 'float=right', 'endtag':'float',
-						'disabled':'{DISABLED_FLOAT}'},
-				{'type':'balise2', 'fname':'sup.png', 'label':'{L_BB_SUP}', 'tag': 'sup',
-						'disabled':'{DISABLED_SUP}'},
-				{'type':'balise2', 'fname':'sub.png', 'label':'{L_BB_SUB}', 'tag': 'sub',
-						'disabled':'{DISABLED_SUB}'},
-				{'type':'balise2', 'fname':'indent.png', 'label':'{L_BB_INDENT}', 'tag': 'indent',
-						'disabled':'{DISABLED_INDENT}'},
+				{'type':'balise2', 'fname':'float_left.png', 'label':'{L_BB_FLOAT_LEFT}', 'begintag': 'float=left', 'endtag':'float', 'disabled':'{DISABLED_FLOAT}'},
+				{'type':'balise2', 'fname':'float_right.png', 'label':'{L_BB_FLOAT_RIGHT}', 'begintag': 'float=right', 'endtag':'float', 'disabled':'{DISABLED_FLOAT}'},
+				{'type':'balise2', 'fname':'sup.png', 'label':'{L_BB_SUP}', 'tag': 'sup', 'disabled':'{DISABLED_SUP}'},
+				{'type':'balise2', 'fname':'sub.png', 'label':'{L_BB_SUB}', 'tag': 'sub', 'disabled':'{DISABLED_SUB}'},
+				{'type':'balise2', 'fname':'indent.png', 'label':'{L_BB_INDENT}', 'tag': 'indent', 'disabled':'{DISABLED_INDENT}'},
 				{'type':'balise', 'fname':'table.png', 'label':'{L_BB_TABLE}'},
 				{'type':'separator'},
 				{'type':'balise', 'fname':'flash.png', 'label':'{L_BB_FLASH}'},
 				{'type':'balise', 'fname':'movie.png', 'label':'{L_BB_MOVIE}'},
 				{'type':'balise', 'fname':'sound.png', 'label':'{L_BB_SOUND}'},
 				{'type':'separator'},
-				{'type':'balise', 'id':'code', 'fname':'code.png', 'label':'{L_BB_CODE}',
-					'disabled':'{DISABLED_CODE}', 'onclick': function() {bb_display_block('7', 'contents');}},
+				{'type':'menu_code', 'id':'code', 'fname':'code.png', 'label':'{L_BB_CODE}', 'disabled':'{DISABLED_CODE}'},
 				{'type':'balise2', 'fname':'math.png', 'label':'{L_BB_MATH}', 'tag': 'math', 'disabled':'{DISABLED_MATH}'},
 				{'type':'balise2', 'fname':'html.png', 'label':'{L_BB_HTML}', 'tag': 'html', 'disabled':'{DISABLED_HTML}'}
 			],
