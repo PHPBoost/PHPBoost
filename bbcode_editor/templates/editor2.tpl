@@ -134,6 +134,24 @@
 			{
 				return {'begin': "["+begin+"]", 'end': "[/"+end+"]"};
 			},
+			
+			getContextFunc: function(index, element)
+			{
+				return function() {
+					this.callback(index, element);
+				}.bind(this);
+			}, 
+			
+			callback: function(index, element)
+			{
+				var elt = $('bb_block_'+index+'_'+element);
+				if (elt)
+				{
+					var tmp = elt.getStyle('display');
+					if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+					elt.setStyle({'display': tmp});
+				}
+			},
 
 			display: function(bloc, classe)
 			{
@@ -150,112 +168,49 @@
 						$(elt).insert(this.balise2(x));
 					else if (x.type == 'menu_smileys')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuSmileys(x.id);
 					}
 					else if (x.type == 'menu_title')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuTitles(x.id);
 					}
 					else if (x.type == 'menu_subtitle')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuSubTitles(x.id);
 					}
 					else if (x.type == 'menu_style')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuStyles(x.id);
 					}
 					else if (x.type == 'menu_size')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuSizes(x.id);
 					}
 					else if (x.type == 'menu_color')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuColors(x.id);
 					}
 					else if (x.type == 'menu_code')
 					{
-						var fn = function()
-						{
-							var elt = $('bb_block_'+x.id+'_'+this.element);
-							if (elt)
-							{
-								var tmp = elt.getStyle('display');
-								if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-								elt.setStyle({'display': tmp});
-							}
-						}.bind(this);
+						var fn = this.getContextFunc(x.id, this.element);
 						x.onclick = fn;
 						$(elt).insert(this.balise(x));
 						this.menuCodes(x.id);
@@ -263,7 +218,7 @@
 					
 				}.bind(this));
 			},
-							
+									
 			menuSmileys: function(index)
 			{
 				var id = 'bb_block_'+index+'_'+this.element;
