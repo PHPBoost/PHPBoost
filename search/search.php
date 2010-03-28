@@ -79,10 +79,8 @@ $extension_provider_service = AppContext::get_extension_provider_service();
 $modules_args = array();
 $used_modules = array();
 
-// Chargement des modules avec formulaires
 $search_providers = $extension_provider_service->get_providers(Searchable::EXTENSION_POINT);
 
-// Génération des formulaires précomplétés et passage aux templates
 foreach ($search_providers as $search_provider)
 {
 	$provider_id = $search_provider->get_id();
