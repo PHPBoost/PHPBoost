@@ -38,16 +38,18 @@ class SandboxMailController extends ModuleController
 	 
 	public function execute(HTTPRequest $request)
 	{
-		$view = new StringTemplate('# IF C_MAIL_SENT # <div class="success">The mail has been sent</div> # ENDIF #
-		<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
+		$view = new StringTemplate('# IF C_MAIL_SENT # <div class="success">The mail has been sent</div>
+			# ELSE # <div class="error">{ERROR}</div> # ENDIF #
+			<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
 		
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			$result = $this->send_mail();
 			$view->assign_vars(array(
-				'C_MAIL_SENT' => true
+				'C_MAIL_SENT' => empty($result),
+				'ERROR' => $result
 			));
-			$this->send_mail();
 		}
 		$view->add_subtemplate('SMTP_FORM', $this->form->display());
 		return new SiteDisplayResponse($view);
@@ -74,7 +76,7 @@ class SandboxMailController extends ModuleController
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', ''));
 		
 		$select_option = new FormFieldSelectChoiceOption('None', 'none');
-		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'))));
+		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'), new FormFieldSelectChoiceOption('SSL', 'ssl'))));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
@@ -96,7 +98,7 @@ class SandboxMailController extends ModuleController
 		$mail->set_subject($this->form->get_value('mail_subject'));
 		$mail->set_content($this->form->get_value('mail_content'));
 		
-		$mailer->send($mail);
+		return $mailer->send($mail);
 	}
 }
 ?>
