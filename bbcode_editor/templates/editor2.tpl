@@ -135,22 +135,17 @@
 				return {'begin': "["+begin+"]", 'end': "[/"+end+"]"};
 			},
 			
-			getContextFunc: function(index, element)
+			toggleMenu: function(index, element)
 			{
 				return function() {
-					this.callback(index, element);
+					var elt = $('bb_block_'+index+'_'+element);
+					if (elt)
+					{
+						var tmp = elt.getStyle('display');
+						if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+						elt.setStyle({'display': tmp});
+					}
 				}.bind(this);
-			}, 
-			
-			callback: function(index, element)
-			{
-				var elt = $('bb_block_'+index+'_'+element);
-				if (elt)
-				{
-					var tmp = elt.getStyle('display');
-					if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-					elt.setStyle({'display': tmp});
-				}
 			},
 
 			display: function(bloc, classe)
@@ -171,50 +166,43 @@
 						$(elt).insert(this.balise2(x));
 					else if (x.type == 'menu_smileys')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSmileys(x.id);
 					}
 					else if (x.type == 'menu_title')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuTitles(x.id);
 					}
 					else if (x.type == 'menu_subtitle')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSubTitles(x.id);
 					}
 					else if (x.type == 'menu_style')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuStyles(x.id);
 					}
 					else if (x.type == 'menu_size')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSizes(x.id);
 					}
 					else if (x.type == 'menu_color')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuColors(x.id);
 					}
 					else if (x.type == 'menu_code')
 					{
-						var fn = this.getContextFunc(x.id, this.element);
-						x.onclick = fn;
+						x.onclick = this.toggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuCodes(x.id);
 					}
@@ -283,8 +271,8 @@
 					var opt = new Element('option', {'value':x.value});
 					if (!x.value)
 					{
-						opt.setAttribute('selected', 'selected');
-						opt.setAttribute('disabled', 'disabled');
+						opt.writeAttribute('selected', 'selected');
+						opt.writeAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -315,8 +303,8 @@
 					var opt = new Element('option', {'value':x.value});
 					if (!x.value)
 					{
-						opt.setAttribute('selected', 'selected');
-						opt.setAttribute('disabled', 'disabled');
+						opt.writeAttribute('selected', 'selected');
+						opt.writeAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -347,8 +335,8 @@
 					var opt = new Element('option', {'value':x.value});
 					if (!x.value)
 					{
-						opt.setAttribute('selected', 'selected');
-						opt.setAttribute('disabled', 'disabled');
+						opt.writeAttribute('selected', 'selected');
+						opt.writeAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -379,8 +367,8 @@
 					var opt = new Element('option', {'value':x.value});
 					if (!x.value)
 					{
-						opt.setAttribute('selected', 'selected');
-						opt.setAttribute('disabled', 'disabled');
+						opt.writeAttribute('selected', 'selected');
+						opt.writeAttribute('disabled', 'disabled');
 					}
 					opt.update(x.label);
 					sel.insert(opt);
@@ -406,16 +394,18 @@
 				var elt = new Element('div', {'class':'bbcode_block'});
 
 				var xtable = new Element('table');
-				xtable.setStyle({margin:'auto'});
+				xtable.style.width = '100px';
+				var xtbody = new Element('tbody');
+				xtable.insert(xtbody);
 				var xtr = new Element('tr');
-				xtable.insert(xtr);
+				xtbody.insert(xtr);
 				for(i = 0; i < 40; i++)
 				{
 					br = (i+1) % 8;
 					if (br == 0)
 					{
 						var xtr = new Element('tr');
-						xtable.insert(xtr);
+						xtbody.insert(xtr);
 					}
 					else
 					{
