@@ -35,7 +35,7 @@ class SMTPConfiguration
 	
 	public function get_auth_mode()
 	{
-		return $this->get_auth_mode();
+		return $this->auth_mode;
 	}
 	
 	public function set_auth_mode($auth_mode)
