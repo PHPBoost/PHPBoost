@@ -65,7 +65,7 @@ class SMTPConfiguration
 	
 	public function get_login()
 	{
-		$this->login = $login;
+		return $this->login;
 	}
 	
 	public function set_login($login)

@@ -38,8 +38,8 @@ class SandboxMailController extends ModuleController
 	 
 	public function execute(HTTPRequest $request)
 	{
-		$view = new StringTemplate('# IF C_MAIL_SENT # <div class="success">The mail has been sent</div>
-			# ELSE # <div class="error">{ERROR}</div> # ENDIF #
+		$view = new StringTemplate('# IF C_MAIL_SENT # # IF C_SUCCESS # <div class="success">The mail has been sent</div>
+			# ELSE # <div class="error">{ERROR}</div> # ENDIF # # ENDIF #
 			<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
 		
 		$this->build_form();
@@ -47,7 +47,8 @@ class SandboxMailController extends ModuleController
 		{
 			$result = $this->send_mail();
 			$view->assign_vars(array(
-				'C_MAIL_SENT' => empty($result),
+				'C_MAIL_SENT' => true,
+				'C_SUCCESS' => empty($result),
 				'ERROR' => $result
 			));
 		}
