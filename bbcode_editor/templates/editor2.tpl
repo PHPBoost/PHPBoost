@@ -55,12 +55,140 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/bbcode_editor/templates/bbcode.js"></script>
 
 		<script type="text/javascript">
+		
+		var Textarea_Core = Class.create(
+		{
+			//Insertion dans le champ.
+			simple_insert: function(target, open_balise, close_balise)
+			{
+				var textarea = target;
+				var scroll = textarea.scrollTop;
+				
+				if( close_balise != "" && close_balise != "smile" )
+					textarea.value += '[' + open_balise + '][/' + close_balise + ']';
+				else if( close_balise == "smile" )
+					textarea.value += ' ' + open_balise + ' ';
+					
+				textarea.focus();
+				textarea.scrollTop = scroll;
+				return false;
+			},
+
+			//Récupération de la sélection sur netscape, ajout des balises autour.
+			netscape_sel: function(target, open_balise, close_balise)
+			{
+				var sel_length = target.textLength;
+				var sel_start = target.selectionStart;
+				var sel_end = target.selectionEnd;
+				//Position verticale.
+				var scroll = target.scrollTop;
+				
+				if( sel_end == 1 || sel_end == 2 )
+				{
+					sel_end = sel_length;
+				}
+
+				var string_start = (target.value).substring(0, sel_start);
+				var selection = (target.value).substring(sel_start, sel_end);
+				var string_end = (target.value).substring(sel_end, sel_length);
+
+				if ( close_balise != "" && selection == "" && close_balise != "smile" )
+				{
+					target.value = string_start + open_balise + close_balise + string_end;
+					target.setSelectionRange(string_start.length + open_balise.length,
+											target.value.length - string_end.length - close_balise.length);
+					target.focus();
+				}
+				else if ( close_balise == "smile" )
+				{
+					target.value = string_start + selection + ' ' + open_balise + ' ' + string_end;	
+					target.setSelectionRange(string_start.length + open_balise.length + 2,
+											target.value.length - string_end.length);	
+					target.focus();		
+				}
+				else
+				{
+					target.value = string_start + open_balise + selection + close_balise + string_end;
+					target.setSelectionRange(string_start.length + open_balise.length,
+											target.value.length - string_end.length - close_balise.length);
+					target.focus();
+				}
+				
+				//Remet à la bonne position le textarea.
+				target.scrollTop = scroll;
+				return false;
+			},
+
+			//Récupération de la sélection sur IE, ajout des balises autour.
+			ie_sel: function(target, open_balise, close_balise)
+			{
+				selText = false;
+				// Position verticale
+				var scroll = target.scrollTop;
+				
+				selection = document.selection.createRange().text;
+
+				if ( close_balise != "" && selection == "" && close_balise != "smile" )
+					document.selection.createRange().text = open_balise + close_balise;
+				else if ( close_balise == "smile" )
+					document.selection.createRange().text = selection + ' ' + open_balise + ' ';
+				else
+					document.selection.createRange().text = open_balise + selection + close_balise;		
+				
+				//Remet à la bonne position le textarea.
+				target.scrollTop = scroll;
+				selText = '';
+				
+				return false;
+			},
+			
+			insert: function(open_balise, close_balise, field)
+			{
+				var area = $(field);
+				area.focus();
+
+				if (Prototype.Browser.IE) // Internet Explorer
+					this.ie_sel(area, open_balise, close_balise);
+				else if (Prototype.Browser.Gecko || Prototype.Browser.Opera) //Netscape ou opera
+					this.netscape_sel(area, open_balise, close_balise);
+				else //insertion normale (autres navigateurs)
+					this.simple_insert(area, open_balise, close_balise);
+
+				return false;
+			},
+			
+			resize: function(id, px, type)
+			{
+				var textarea = $(id);
+				if( type == 'height' )
+				{
+					var current_height = parseInt(textarea.style.height) ? parseInt(textarea.style.height) : 300;
+					var new_height = current_height + px;
+					
+					if( new_height > 40 )
+						textarea.style.height = new_height + "px";
+				}
+				else
+				{
+					var current_width = parseInt(textarea.style.width) ? parseInt(textarea.style.width) : 150;
+					var new_width = current_width + px;
+					
+					if( new_width > 40 )
+						textarea.style.width = new_width + "px";
+				}
+				
+				return false;
+			}
+		});
+		
 		var BBcodeEditor_Core = Class.create(
 		{
 			initialize: function(element, options)
 			{
 				this.element = element;
 				this.options = options;
+				this.textarea = new Textarea_Core();
+				
 				$(element).insert({before: this.get_menu(element)});
 				this.display(this.block1, 'bbcode');
 				this.display(this.block2, 'bbcode2');
@@ -106,11 +234,6 @@
 			{
 				var t = this.balise(attrs);
 				
-				var fn = function()
-					{
-						insertbbcode(tags.begin, tags.end, this.element);
-					}.bind(this);
-				
 				if(attrs.disabled != '')
 				{
 					t.setStyle({opacity:0.3, cursor: 'default'});
@@ -125,6 +248,7 @@
 					else
 						var tags = {begin: '', end: ''};
 					
+					var fn = this.callbackInsertBBcode(tags.begin, tags.end);
 					Event.observe(t, 'click', fn);
 				}
 				return t;
@@ -135,114 +259,38 @@
 				return {'begin': "["+begin+"]", 'end': "[/"+end+"]"};
 			},
 			
-			toggleMenu: function(index, element)
+			toggleElement: function(name)
+			{
+				var elt = $(name);
+				if (elt)
+				{
+					var tmp = elt.getStyle('display');
+					if (tmp != 'none') tmp = 'none'; else tmp = 'block';
+					elt.setStyle({'display': tmp});
+				}
+			},
+			
+			callbackToggleMenu: function(index)
 			{
 				return function()
 				{
-					var elt = $('bb_block_'+index+'_'+element);
-					if (elt)
-					{
-						var tmp = elt.getStyle('display');
-						if (tmp != 'none') tmp = 'none'; else tmp = 'block';
-						elt.setStyle({'display': tmp});
-					}
+					this.toggleElement('bb_block_'+index+'_'+this.element);
 				}.bind(this);
 			},
-
-			//Insertion dans le champ.
-			simple_insert: function(target, open_balise, close_balise)
-			{
-				var textarea = target;
-				var scroll = textarea.scrollTop;
-				
-				if( close_balise != "")
-					textarea.value += '[' + open_balise + '][/' + close_balise + ']';
-				textarea.focus();
-				textarea.scrollTop = scroll;
-				return;
-			}
-
-			//Récupération de la sélection sur netscape, ajout des balises autour.
-			netscape_sel: function(target, open_balise, close_balise)
-			{
-				var sel_length = target.textLength;
-				var sel_start = target.selectionStart;
-				var sel_end = target.selectionEnd;
-				var scroll = target.scrollTop; //Position verticale.
-				
-				if( sel_end == 1 || sel_end == 2 )
-				{
-					sel_end = sel_length;
-				}
-
-				var string_start = (target.value).substring(0, sel_start);
-				var selection = (target.value).substring(sel_start, sel_end);
-				var string_end = (target.value).substring(sel_end, sel_length);
-
-				if( close_balise != "" && selection == "" && close_balise != "smile" )
-				{
-					target.value = string_start + open_balise + close_balise + string_end;
-					target.setSelectionRange(string_start.length + open_balise.length, target.value.length - string_end.length - close_balise.length);
-					target.focus();
-				}
-				else if( close_balise == "smile" )
-				{
-					target.value = string_start + selection + ' ' + open_balise + ' ' + string_end;	
-					target.setSelectionRange(string_start.length + open_balise.length + 2, target.value.length - string_end.length);	
-					target.focus();		
-				}
-				else
-				{
-					target.value = string_start + open_balise + selection + close_balise + string_end;
-					target.setSelectionRange(string_start.length + open_balise.length, target.value.length - string_end.length - close_balise.length);
-					target.focus();
-				}
-				
-				target.scrollTop = scroll; //Remet à la bonne position le textarea.
-				return false;
-			},
-
-			//Récupération de la sélection sur IE, ajout des balises autour.
-			ie_sel: function(target, open_balise, close_balise)
-			{
-				selText = false;
-				var scroll = target.scrollTop; //Position verticale.
-				
-				selection = document.selection.createRange().text; // Sélection
-
-				if( close_balise != "" && selection == "" && close_balise != "smile" )
-					document.selection.createRange().text = open_balise + close_balise;
-				else if( close_balise == "smile" )
-					document.selection.createRange().text = selection + open_balise + ' ';
-				else
-					document.selection.createRange().text = open_balise + selection + close_balise;		
-				
-				target.scrollTop = scroll; //Remet à la bonne position le textarea.
-				selText = '';
-				
-				return false;
-			},
 			
-			insertBBcode: function(open_balise, close_balise, field)
-			{
-				var area = $(field);
-				area.focus();
-
-				if (Prototype.Browser.IE) // Internet Explorer
-					this.ie_sel(area, open_balise, close_balise);
-				else if (Prototype.Browser.Gecko || Prototype.Browser.Opera) //Netscape ou opera
-					this.netscape_sel(area, open_balise, close_balise);
-				else //insertion normale (autres navigateurs)
-					this.simple_insert(area, open_balise, close_balise);
-
-				return false;
-			},
-			
-			callbackInsertBBcode: function(code)
+			callbackToggleDiv: function()
 			{
 				return function()
 				{
-					this.insertBBcode(code, code, this.element);
+					this.toggleElement('bbcode_more'+this.element);
+				}.bind(this);
+			},
+			
+			callbackInsertBBcode: function(begin, end)
+			{
+				return function()
+				{
+					this.textarea.insert(begin, end, this.element);
 				}.bind(this);
 			},
 
@@ -264,45 +312,50 @@
 						$(elt).insert(this.balise2(x));
 					else if (x.type == 'menu_smileys')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSmileys(x.id);
 					}
 					else if (x.type == 'menu_title')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuTitles(x.id);
 					}
 					else if (x.type == 'menu_subtitle')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSubTitles(x.id);
 					}
 					else if (x.type == 'menu_style')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuStyles(x.id);
 					}
 					else if (x.type == 'menu_size')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuSizes(x.id);
 					}
 					else if (x.type == 'menu_color')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuColors(x.id);
 					}
 					else if (x.type == 'menu_code')
 					{
-						x.onclick = this.toggleMenu(x.id, this.element);
+						x.onclick = this.callbackToggleMenu(x.id, this.element);
 						$(elt).insert(this.balise(x));
 						this.menuCodes(x.id);
+					}
+					else if (x.type == 'action_more')
+					{
+						x.onclick = this.callbackToggleDiv();
+						$(elt).insert(this.balise(x));
 					}
 					
 				}.bind(this));
@@ -333,7 +386,7 @@
 						});
 						if(x.code)
 						{
-							var fn = this.callbackInsertBBcode(x.code);
+							var fn = this.callbackInsertBBcode(x.code, 'smile');
 							Event.observe(d, 'click', fn);
 						}
 
@@ -564,17 +617,6 @@
 			}
 			
 		});
-		
-		function displayDiv(divID)
-		{
-			var div = $('bbcode_more'+divID);
-			if (div)
-			{
-				var tmp = div.getStyle('display');
-				if(tmp != 'block') tmp = 'block'; else tmp = 'none';
-				div.setStyle({'display': tmp});
-			}
-		}
 		
 		</script>
 		# ENDIF #
