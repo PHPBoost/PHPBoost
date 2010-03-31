@@ -40,8 +40,9 @@ class SMTPMailSender extends AbstractPHPMailerMailSender
 	protected function set_send_settings(PHPMailer $mailer)
 	{
 		$mailer->IsSMTP();
-		$mail->SMTPDebug  = 1;
+		$mailer->SMTPDebug = 1;
 		$mailer->SMTPAuth = true;
+		$mailer->Timeout = 1;
 		$auth_mode = $this->configuration->get_auth_mode();
 		
 		if (!empty($auth_mode))
