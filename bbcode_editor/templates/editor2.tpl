@@ -75,7 +75,7 @@
 				{'type':'balise2', 'fname':'strike.png', 'label':'{L_BB_STRIKE}', 'tag': 's', 'disabled':'{DISABLED_S}'},
 				{'type':'separator'},
 				{'type':'menu_title', 'id':'title', 'fname':'title.png', 'label':'{L_BB_TITLE}', 'tag': 'title', 'disabled':'{DISABLED_TITLE}'},
-				{'type':'menu_subtitle', 'id':'subtitle', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'tag': 'subtitle', 'disabled':'{DISABLED_BLOCK}'},
+				{'type':'menu_subtitle', 'id':'subtitle', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'disabled':'{DISABLED_BLOCK}'},
 				{'type':'menu_style', 'id':'style', 'fname':'style.png', 'label':'{L_BB_STYLE}', 'tag': 'style', 'disabled':'{DISABLED_STYLE}'},
 				{'type':'separator'},
 				{'type':'balise2', 'fname':'url.png', 'label':'{L_BB_URL}', 'tag': 'url', 'disabled':'{DISABLED_URL}'},
@@ -110,7 +110,7 @@
 				{'type':'balise', 'fname':'movie.png', 'label':'{L_BB_MOVIE}'},
 				{'type':'balise', 'fname':'sound.png', 'label':'{L_BB_SOUND}'},
 				{'type':'separator'},
-				{'type':'menu_code', 'id':'code', 'fname':'code.png', 'label':'{L_BB_CODE}', 'disabled':'{DISABLED_CODE}'},
+				{'type':'menu_code', 'id':'code', 'fname':'code.png', 'label':'{L_BB_CODE}', 'tag':'code', 'disabled':'{DISABLED_CODE}'},
 				{'type':'balise2', 'fname':'math.png', 'label':'{L_BB_MATH}', 'tag': 'math', 'disabled':'{DISABLED_MATH}'},
 				{'type':'balise2', 'fname':'html.png', 'label':'{L_BB_HTML}', 'tag': 'html', 'disabled':'{DISABLED_HTML}'},
 				{'type':'separator'},
@@ -160,13 +160,13 @@
 				{'value':45, 'label':45}
 			],
 			
-			colors: new Array(
+			colors: [
 				'black', 'maroon', '#333300', '#003300', '#003366', '#000080', '#333399', '#333333',
 				'#800000', 'orange', '#808000', 'green', '#008080', 'blue', '#666699', '#808080',
 				'red', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
 				'pink', '#FFCC00', 'yellow', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
 				'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', 'white'
-			),
+			],
 			
 			codes: [
 				{'value':'', 'label':'{L_CODE}'},

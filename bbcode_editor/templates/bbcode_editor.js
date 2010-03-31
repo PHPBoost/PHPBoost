@@ -137,22 +137,21 @@ var BBcodeEditor_Core = Class.create(
 	get_menu: function(element)
 	{
 		var xtd = new Element('td');
-		xtd.setStyle({padding:'0px 2px', width:'100%'});
 		var xtr = new Element('tr');
 		xtr.insert(xtd);
 		var xtbody = new Element('tbody');
 		xtbody.insert(xtr);
 		var xtable1 = new Element('table',{'class':'bbcode'});
+		xtable1.setStyle({'width':'100%'});
 		xtable1.insert(xtbody);
 		
 		var xtd2 = new Element('td');
-		xtd2.setStyle({padding:'0px 2px'});
 		var xtr2 = new Element('tr');
 		xtr2.insert(xtd2);
 		var xtbody2 = new Element('tbody');
 		xtbody2.insert(xtr2);
 		var xtable2 = new Element('table',{'class': 'bbcode2', 'id':'bbcode_more'+element});
-		xtable2.setStyle({display:'none'});
+		xtable2.setStyle({display:'none', 'width':'100%'});
 		xtable2.insert(xtbody2);
 		
 		var xtd10 = new Element('td');
@@ -178,11 +177,9 @@ var BBcodeEditor_Core = Class.create(
 			'fname': '',
 			'label':'',
 			'classe':'bbcode_hover',
-			'onclick':'',
-			'margin':''
+			'onclick':''
 		}, attrs || {});
 		
-		var span = new Element('span', {'margin':'0px 5px'});
 		var img = new Element('img',
 		{
 			'src': this.path+'images/form/'+values.fname,
@@ -190,7 +187,8 @@ var BBcodeEditor_Core = Class.create(
 			'class': values.classe,
 			'title': values.label
 		});
-		span.insert(img);
+		
+		img.setStyle({'margin':'0px 2px'});
 		
 		if(values.id)
 		{
@@ -200,13 +198,14 @@ var BBcodeEditor_Core = Class.create(
 		if(Object.isFunction(values.onclick))
 			Event.observe(img, 'click', values.onclick);
 
-		return span;
+		return img;
 	},
 
 	separator: function()
 	{
 		var sep = {'fname':'separate.png'};
-		return this.balise(sep);
+		var elt = this.balise(sep);
+		return elt;
 	},
 	
 	balise2: function(attrs)
@@ -371,7 +370,7 @@ var BBcodeEditor_Core = Class.create(
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
 				$(elt).insert(this.balise(x));
-				this.menuCodes(x.id);
+				this.menuCodes(x);
 			}
 			else if (x.type == 'action_more')
 			{
@@ -602,9 +601,9 @@ var BBcodeEditor_Core = Class.create(
 		$(index+'_'+this.element).insert({before:div});
 	},
 	
-	menuCodes: function(index)
+	menuCodes: function(item)
 	{
-		var id = 'bb_block_'+index+'_'+this.element;
+		var id = 'bb_block_'+item.id+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
@@ -615,8 +614,8 @@ var BBcodeEditor_Core = Class.create(
 		});
 			
 		var elt = new Element('div', {'class':'bbcode_block'});
-		var sel = new Element('select', {'id': index+this.element});
-		var fn = this.callbackChangeSelect(index, index);
+		var sel = new Element('select', {'id': item.id+this.element});
+		var fn = this.callbackChangeSelect(item.id, item.tag);
 		Event.observe(sel, 'change', fn);
 		
 		this.codes.each(function(x)
@@ -643,7 +642,7 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		$(item.id+'_'+this.element).insert({before:div});
 	}
 	
 });
