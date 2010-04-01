@@ -30,8 +30,11 @@ define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 class PagesExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
     public function __construct() //Constructeur de la classe WikiInterface
     {
+		$this->sql_querier = AppContext::get_sql();
         parent::__construct('pages');
     }
 	

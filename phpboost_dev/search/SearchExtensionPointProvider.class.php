@@ -32,7 +32,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	/**
 	 * @var CommonQuery
 	 */
-	private $querier;
+	private $sql_querier;
 
 	public function __construct()
 	{
@@ -42,7 +42,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	function get_cache()
 	{
-		$result = $this->querier->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name=\'search\'');
+		$result = $this->sql_querier->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name=\'search\'');
 		$search_config = unserialize($result['value']);
 		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true) . ';';
 	}

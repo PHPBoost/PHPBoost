@@ -29,9 +29,12 @@
 
 class ContactExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
     ## Public Methods ##
-    function ContactInterface() //Constructeur de la classe ForumInterface
+    function __construct() //Constructeur de la classe ForumInterface
     {
+		$this->sql_querier = AppContext::get_sql();
         parent::__construct('contact');
     }
     

@@ -140,6 +140,9 @@ AppContext::set_user($User);
 global $Sql;
 $Sql = null;
 
+if (function_exists('date_default_timezone_set'))
+	date_default_timezone_set('Europe/Paris');
+
 switch($step)
 {
 	//Préambule

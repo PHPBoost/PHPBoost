@@ -27,8 +27,11 @@
 
 class CalendarExtensionPointProvider extends ExtensionPointProvider
 {
-    function CalendarInterface() //Constructeur de la classe ForumInterface
+	private $sql_querier;
+	
+    function __construct() //Constructeur de la classe ForumInterface
     {
+		$this->sql_querier = AppContext::get_sql();
         parent::__construct('calendar');
     }
 

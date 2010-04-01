@@ -32,9 +32,12 @@ define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
 class MediaExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
     ## Public Methods ##
-    function MediaInterface() //Constructeur de la classe ForumInterface
+    function __construct() //Constructeur de la classe ForumInterface
     {
+		$this->sql_querier = AppContext::get_sql();
         parent::__construct('media');
     }
 

@@ -32,9 +32,12 @@ define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 //  Provides download module services to the kernel and extern modules
 class DownloadExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+
     ## Public Methods ##
-    function DownloadInterface()
+    function __construct()
     {
+		$this->sql_querier = AppContext::get_sql();
         parent::__construct('download');
     }
   

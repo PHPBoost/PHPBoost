@@ -31,9 +31,12 @@ define('FORUM_MAX_SEARCH_RESULTS', 50);
 
 class ForumExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
 	## Public Methods ##
-	function ForumInterface() //Constructeur de la classe ForumInterface
+	function __construct() //Constructeur de la classe ForumInterface
 	{
+        $this->sql_querier = AppContext::get_sql();
 		parent::__construct('forum');
 	}
 
