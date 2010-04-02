@@ -377,6 +377,13 @@ var BBcodeEditor_Core = Class.create(
 				x.onclick = this.callbackToggleDiv();
 				$(elt).insert(this.balise(x));
 			}
+			else if (x.type == 'action_help')
+			{
+				img = this.balise(x);
+				link = new Element('a', {'href': 'http://www.phpboost.com/wiki/bbcode', 'target':'_blank'});
+				link.insert(img);
+				$(elt).insert(link);
+			}
 			
 		}.bind(this));
 	},

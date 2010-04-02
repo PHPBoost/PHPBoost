@@ -114,7 +114,7 @@
 				{'type':'balise2', 'fname':'math.png', 'label':'{L_BB_MATH}', 'tag': 'math', 'disabled':'{DISABLED_MATH}'},
 				{'type':'balise2', 'fname':'html.png', 'label':'{L_BB_HTML}', 'tag': 'html', 'disabled':'{DISABLED_HTML}'},
 				{'type':'separator'},
-				{'type':'balise2', 'fname':'help.png', 'label':'{L_BB_HELP}', 'disabled':'{DISABLED_HELP}'}				
+				{'type':'action_help', 'fname':'help.png', 'label':'{L_BB_HELP}', 'disabled':'{DISABLED_HELP}'}				
 			],
 			
 			smileys: [
