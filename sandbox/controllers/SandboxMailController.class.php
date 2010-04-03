@@ -90,6 +90,7 @@ class SandboxMailController extends ModuleController
 		$configuration->set_port($this->form->get_value('smtp_port'));
 		$configuration->set_login($this->form->get_value('smtp_login'));
 		$configuration->set_password($this->form->get_value('smtp_password'));
+		$configuration->set_auth_mode($this->form->get_value('secure_protocol')->get_raw_value());
 				
 		$mailer = new SMTPMailSender($configuration);
 		
