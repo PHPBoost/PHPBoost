@@ -279,7 +279,6 @@ var BBcodeEditor_Core = Class.create(
 		{
 			var value = elt.value;
 			var tags = this.getTags(code+'='+value, code);
-			alert(tags.begin);
 			this.textarea.insert(tags.begin, tags.end, this.element);					
 		}
 	},
@@ -299,7 +298,6 @@ var BBcodeEditor_Core = Class.create(
 		{
 			var value = elt.value;
 			var tags = this.getTags(value, value);
-			alert(tags.begin);
 			this.textarea.insert(tags.begin, tags.end, this.element);					
 		}
 	},
@@ -321,6 +319,9 @@ var BBcodeEditor_Core = Class.create(
 			throw('Error - tables non found');
 			
 		elt = elt.first();
+		
+		var item = undefined;
+		var menu = undefined;
 		
 		bloc.each( function(x)
 		{
