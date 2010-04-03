@@ -333,44 +333,58 @@ var BBcodeEditor_Core = Class.create(
 			else if (x.type == 'menu_smileys')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuSmileys(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuSmileys(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_title')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuTitles(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuTitles(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_subtitle')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuSubTitles(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuSubTitles(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_style')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuStyles(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuStyles(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_size')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuSizes(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuSizes(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_color')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuColors(x.id);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuColors(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_code')
 			{
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
-				$(elt).insert(this.balise(x));
-				this.menuCodes(x);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuCodes(x);
+				item.insert({'before':menu});
 			}
 			else if (x.type == 'action_more')
 			{
@@ -388,8 +402,9 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this));
 	},
 	
-	menuSmileys: function(index)
+	menuSmileys: function(x)
 	{
+		index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -424,11 +439,12 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this));
 		
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
-	menuTitles: function(index)
+	menuTitles: function(x)
 	{
+		index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -458,11 +474,12 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
-	menuSubTitles: function(index)
+	menuSubTitles: function(x)
 	{
+		index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -492,11 +509,12 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
-	menuStyles: function(index)
+	menuStyles: function(x)
 	{
+		index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -526,11 +544,12 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
-	menuSizes: function(index)
+	menuSizes: function(x)
 	{
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -560,11 +579,12 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
-	menuColors: function(index)
+	menuColors: function(x)
 	{
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
@@ -605,12 +625,13 @@ var BBcodeEditor_Core = Class.create(
 
 		elt.insert(xtable);			
 		div.update(elt);
-		$(index+'_'+this.element).insert({before:div});
+		return div;
 	},
 	
 	menuCodes: function(item)
 	{
-		var id = 'bb_block_'+item.id+'_'+this.element;
+		var index = item.id;
+		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
@@ -622,7 +643,7 @@ var BBcodeEditor_Core = Class.create(
 			
 		var elt = new Element('div', {'class':'bbcode_block'});
 		var sel = new Element('select', {'id': item.id+this.element});
-		var fn = this.callbackChangeSelect(item.id, item.tag);
+		var fn = this.callbackChangeSelect(index, item.tag);
 		Event.observe(sel, 'change', fn);
 		
 		this.codes.each(function(x)
@@ -649,7 +670,7 @@ var BBcodeEditor_Core = Class.create(
 		
 		elt.insert(sel);
 		div.update(elt);
-		$(item.id+'_'+this.element).insert({before:div});
+		return div;
 	}
 	
 });
