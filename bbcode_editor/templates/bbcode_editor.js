@@ -210,12 +210,12 @@ var BBcodeEditor_Core = Class.create(
 	
 	balise2: function(attrs)
 	{
-		var t = this.balise(attrs);
+		var elt = this.balise(attrs);
 		
 		if(attrs.disabled != '')
 		{
-			t.setStyle({'opacity':0.3, 'cursor': 'default'});
-			Event.stopObserving(t, 'click', fn);
+			elt.setStyle({'opacity':0.3, 'cursor': 'default'});
+			Event.stopObserving(elt, 'click', fn);
 		}
 		else
 		{
@@ -227,9 +227,9 @@ var BBcodeEditor_Core = Class.create(
 				var tags = {begin: '', end: ''};
 			
 			var fn = this.callbackInsertBBcode(tags.begin, tags.end);
-			Event.observe(t, 'click', fn);
+			Event.observe(elt, 'click', fn);
 		}
-		return t;
+		return elt;
 	},
 	
 	getTags: function(begin, end)
@@ -387,15 +387,36 @@ var BBcodeEditor_Core = Class.create(
 				menu = this.menuCodes(x);
 				item.insert({'before':menu});
 			}
+			else if (x.type == 'menu_table')
+			{
+				x.onclick = this.callbackToggleMenu(x.id, this.element);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuTables(x);
+				item.insert({'before':menu});
+			}
+			else if (x.type == 'menu_list')
+			{
+				x.onclick = this.callbackToggleMenu(x.id, this.element);
+				item = this.balise(x);
+				$(elt).insert(item);
+				menu = this.menuLists(x);
+				item.insert({'before':menu});
+			}
 			else if (x.type == 'action_more')
 			{
 				x.onclick = this.callbackToggleDiv();
 				$(elt).insert(this.balise(x));
 			}
+			else if (x.type == 'action_prompt')
+			{
+				x.onclick = this.callbackPrompt(x.prompt);
+				$(elt).insert(this.balise(x));
+			}
 			else if (x.type == 'action_help')
 			{
-				img = this.balise(x);
-				link = new Element('a', {'href': 'http://www.phpboost.com/wiki/bbcode', 'target':'_blank'});
+				var img = this.balise(x);
+				var link = new Element('a', {'href': 'http://www.phpboost.com/wiki/bbcode', 'target':'_blank'});
 				link.insert(img);
 				$(elt).insert(link);
 			}
@@ -403,15 +424,31 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this));
 	},
 	
+	action_prompt: function(question)
+	{
+		var url = prompt(question);
+		if( url != null && url != '' )
+			this.textarea.insert('[url=' + url + ']', '[/url]', this.element);
+		else
+			this.textarea.insert('[url]', '[/url]', this.element);
+	},
+
+	callbackPrompt: function(question)
+	{
+		return function()
+		{
+			this.action_prompt(question);
+		}.bind(this);
+	},
+	
 	menuSmileys: function(x)
 	{
-		index = x.id;
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'-50px',
 			'float':'left',
 			'display':'none'
 		});
@@ -445,13 +482,12 @@ var BBcodeEditor_Core = Class.create(
 	
 	menuTitles: function(x)
 	{
-		index = x.id;
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -480,13 +516,12 @@ var BBcodeEditor_Core = Class.create(
 	
 	menuSubTitles: function(x)
 	{
-		index = x.id;
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -515,13 +550,12 @@ var BBcodeEditor_Core = Class.create(
 	
 	menuStyles: function(x)
 	{
-		index = x.id;
+		var index = x.id;
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -556,7 +590,6 @@ var BBcodeEditor_Core = Class.create(
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -591,7 +624,6 @@ var BBcodeEditor_Core = Class.create(
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -637,7 +669,6 @@ var BBcodeEditor_Core = Class.create(
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'marginLeft':'0px',
 			'float':'left',
 			'display':'none'
 		});
@@ -672,6 +703,203 @@ var BBcodeEditor_Core = Class.create(
 		elt.insert(sel);
 		div.update(elt);
 		return div;
+	},
+
+	menuTables: function(item)
+	{
+		var index = item.id;
+		var id = 'bb_block_'+index+'_'+this.element;
+		var div = new Element('div', {'id': id});
+		div.setStyle({
+			'position':'relative',
+			'zIndex':100,
+			'float':'left',
+			'display':'none'
+		});
+
+		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({
+			'width':'180px'
+		});
+		
+		this.tables.each(function(x)
+		{
+			if(x.type == 'text')
+			{
+				var para = new Element('p');
+				var label = new Element('label', {'for':''});
+				label.setStyle({'fontSize':'10px', 'fontWeight':'normal'});
+				label.update(x.text);
+				para.insert(label);
+				var input = new Element('input',
+					{
+						'type':x.type,
+						'size':x.size,
+						'name':x.id+this.element,
+						'id':x.id+this.element,
+						'maxlength':x.maxlength,
+						'value':x.value
+					});
+				para.insert(input);
+			}
+			else if (x.type == 'checkbox')
+			{
+				var para = new Element('p');
+				var label = new Element('label', {'for':'toto'});
+				label.setStyle({'fontSize':'10px', 'fontWeight':'normal'});
+				label.update(x.text);
+				para.insert(label);
+				var checkbox = new Element('input',
+					{
+						'name':x.id+this.element,
+						'id':x.id+this.element,
+						'type':x.type
+					});
+				para.insert(checkbox);
+			}
+			else if (x.type == 'submit')
+			{
+				var para = new Element('p');
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				var img = this.balise(x);
+				para.insert(img);
+				para.insert(x.text);
+				var fn = this.callbackBBcode_table(x.head);
+				Event.observe(para, 'click', fn);
+			};
+			elt.insert(para);
+		}.bind(this));
+		
+		div.update(elt);
+		return div;
+	},
+
+	menuLists: function(item)
+	{
+		var index = item.id;
+		var id = 'bb_block_'+index+'_'+this.element;
+		var div = new Element('div', {'id': id});
+		div.setStyle({
+			'position':'relative',
+			'zIndex':100,
+			'float':'left',
+			'display':'none'
+		});
+
+		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({
+			'width':'180px'
+		});
+		
+		this.lists.each(function(x)
+		{
+			if(x.type == 'text')
+			{
+				var para = new Element('p');
+				var label = new Element('label', {'for':''});
+				label.setStyle({'fontSize':'10px', 'fontWeight':'normal'});
+				label.update(x.text);
+				para.insert(label);
+				var input = new Element('input',
+					{
+						'type':x.type,
+						'size':x.size,
+						'name':x.id+this.element,
+						'id':x.id+this.element,
+						'maxlength':x.maxlength,
+						'value':x.value
+					});
+				para.insert(input);
+			}
+			else if (x.type == 'checkbox')
+			{
+				var para = new Element('p');
+				var label = new Element('label', {'for':'toto'});
+				label.setStyle({'fontSize':'10px', 'fontWeight':'normal'});
+				label.update(x.text);
+				para.insert(label);
+				var checkbox = new Element('input',
+					{
+						'name':x.id+this.element,
+						'id':x.id+this.element,
+						'type':x.type
+					});
+				para.insert(checkbox);
+			}
+			else if (x.type == 'submit')
+			{
+				var para = new Element('p');
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				var img = this.balise(x);
+				para.insert(img);
+				para.insert(x.text);
+				var fn = this.callbackBBcode_list();
+				Event.observe(para, 'click', fn);
+			};
+			elt.insert(para);
+		}.bind(this));
+		
+		div.update(elt);
+		return div;
+	},
+	
+	BBcode_table: function(element, head_text)
+	{
+		var cols = $('bb_cols'+element).value;
+		var lines = $('bb_lines'+element).value;
+		var head = $('bb_head'+element).checked;
+		var code = '';
+		
+		if( cols >= 0 && lines >= 0 )
+		{
+			var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
+			var pointor = head ? (59 + colspan.length) : 22;
+			code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']' + head_text + '[/head]\n\t[/row]\n' : '[table]\n';
+			
+			for(var i = 0; i < lines; i++)
+			{
+				code += '\t[row]\n';
+				for(var j = 0; j < cols; j++)
+					code += '\t\t[col][/col]\n';
+				code += '\t[/row]\n';
+			}				
+			code += '[/table]';
+			
+			this.textarea.insert(code.substring(0, pointor), code.substring(pointor, code.length), element);
+		}
+	},
+
+	callbackBBcode_table: function(head)
+	{
+		return function()
+		{
+			this.BBcode_table(this.element, head);
+		}.bind(this);
+	},
+	
+	BBcode_list: function(element)
+	{
+		var elements = $('bb_list'+element).value;
+		var ordered_list = $('bb_ordered_list'+element).checked;
+		if( elements <= 0 )
+			elements = 1;
+
+		var pointor = ordered_list ? 19 : 11;
+		
+		var code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
+		for(var j = 0; j < elements; j++)
+			code += '\t[*]\n';
+		code += '[/list]';
+		
+		this.textarea.insert(code.substring(0, pointor), code.substring(pointor, code.length), element);
+	},
+	
+	callbackBBcode_list: function()
+	{
+		return function()
+		{
+			this.BBcode_list(this.element);
+		}.bind(this);;
 	}
 	
 });

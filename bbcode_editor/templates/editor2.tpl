@@ -78,11 +78,11 @@
 				{'type':'menu_subtitle', 'id':'subtitle', 'fname':'subtitle.png', 'label':'{L_BB_CONTAINER}', 'disabled':'{DISABLED_BLOCK}'},
 				{'type':'menu_style', 'id':'style', 'fname':'style.png', 'label':'{L_BB_STYLE}', 'tag': 'style', 'disabled':'{DISABLED_STYLE}'},
 				{'type':'separator'},
-				{'type':'balise2', 'fname':'url.png', 'label':'{L_BB_URL}', 'tag': 'url', 'disabled':'{DISABLED_URL}'},
+				{'type':'action_prompt', 'fname':'url.png', 'label':'{L_BB_URL}', 'tag': 'url', 'disabled':'{DISABLED_URL}', 'prompt':'{L_URL_PROMPT}' },
 				{'type':'balise2', 'fname':'image.png', 'label':'{L_BB_IMAGE}', 'tag': 'img', 'disabled':'{DISABLED_IMAGE}'},
 				{'type':'balise2', 'fname':'quote.png', 'label':'{L_BB_QUOTE}', 'tag': 'quote', 'disabled':'{DISABLED_QUOTE}'},
 				{'type':'balise2', 'fname':'hide.png', 'label':'{L_BB_HIDE}', 'tag': 'hide', 'disabled':'{DISABLED_HIDE}'},
-				{'type':'balise2', 'fname':'list.png', 'label':'{L_BB_LIST}', 'tag': 'list', 'disabled':'{DISABLED_LIST}'},
+				{'type':'menu_list', 'id':'list', 'fname':'list.png', 'label':'{L_BB_LIST}', 'disabled':'{DISABLED_LIST}'},
 				{'type':'separator'},
 				{'type':'menu_color', 'id':'color', 'fname':'color.png', 'label':'{L_BB_COLOR}', 'tag': 'color', 'disabled':'{DISABLED_COLOR}'},
 				{'type':'menu_size', 'id':'size', 'fname':'size.png', 'label':'{L_BB_SIZE}', 'tag': 'size', 'disabled':'{DISABLED_SIZE}'},
@@ -104,10 +104,10 @@
 				{'type':'balise2', 'fname':'sup.png', 'label':'{L_BB_SUP}', 'tag': 'sup', 'disabled':'{DISABLED_SUP}'},
 				{'type':'balise2', 'fname':'sub.png', 'label':'{L_BB_SUB}', 'tag': 'sub', 'disabled':'{DISABLED_SUB}'},
 				{'type':'balise2', 'fname':'indent.png', 'label':'{L_BB_INDENT}', 'tag': 'indent', 'disabled':'{DISABLED_INDENT}'},
-				{'type':'balise', 'fname':'table.png', 'label':'{L_BB_TABLE}'},
+				{'type':'menu_table', 'id':'table', 'fname':'table.png', 'label':'{L_BB_TABLE}', 'disabled':'{DISABLED_TABLE}'},
 				{'type':'separator'},
-				{'type':'balise', 'fname':'flash.png', 'label':'{L_BB_FLASH}', 'begintag': 'swf=425,344', 'endtag':'swf', 'disabled':'{DISABLED_ALIGN}'},
-				{'type':'balise', 'fname':'movie.png', 'label':'{L_BB_MOVIE}', 'begintag': 'movie=100,100', 'endtag':'movie', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'flash.png', 'label':'{L_BB_FLASH}', 'begintag': 'swf=425,344', 'endtag':'swf', 'disabled':'{DISABLED_ALIGN}'},
+				{'type':'balise2', 'fname':'movie.png', 'label':'{L_BB_MOVIE}', 'begintag': 'movie=100,100', 'endtag':'movie', 'disabled':'{DISABLED_ALIGN}'},
 				{'type':'balise2', 'fname':'sound.png', 'label':'{L_BB_SOUND}', 'tag': 'sound', 'disabled':'{DISABLED_SOUND}'},
 				{'type':'separator'},
 				{'type':'menu_code', 'id':'code', 'fname':'code.png', 'label':'{L_BB_CODE}', 'tag':'code', 'disabled':'{DISABLED_CODE}'},
@@ -203,6 +203,19 @@
 					{'value':'vb', 'label':'VB'},
 					{'value':'asm', 'label':'Asm'}
 					]}
+			],
+
+			tables: [
+				{'type':'text', 'text': '* {L_LINES}', 'size':3, 'id':'bb_lines', 'maxlength':3, 'value':2},
+				{'type':'text', 'text': '* {L_COLS}', 'size':3, 'id':'bb_cols', 'maxlength':3, 'value':2},
+				{'type':'checkbox', 'text': "{L_ADD_HEAD}", 'id':'bb_head'},
+				{'type':'submit', 'text':'{L_INSERT_TABLE}', 'fname':'table.png', 'label':'{L_BB_TABLE}', 'classe':'valign_middle', 'head':'{L_TABLE_HEAD}'}
+			],
+			
+			lists: [
+				{'type':'text', 'text': '* {L_LINES}', 'size':3, 'id':'bb_list', 'maxlength':3, 'value':3},
+				{'type':'checkbox', 'text': "{L_ORDERED_LIST} ", 'id':'bb_ordered_list'},
+				{'type':'submit', 'text':'{L_INSERT_LIST}', 'fname':'list.png', 'label':'{L_BB_LIST}', 'classe':'valign_middle' }
 			]
 		});
 		
