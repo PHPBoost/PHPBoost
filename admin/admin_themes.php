@@ -83,7 +83,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		$left_column = retrieve(POST, 'left_column', false, TBOOL);
 		$right_column = retrieve(POST, 'right_column', false, TBOOL);
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
