@@ -9,10 +9,27 @@ import('content/editor/editor');
 
 class BBcode_editor2 extends ContentEditor
 {
+	function __construct()
+	{
+        parent::ContentEditor();
+	}
+	
 	function BBcode_editor2()
     {
-        parent::ContentEditor();
+		self::__construct();
     }
+	
+	function lang_get($value)
+	{
+		global $LANG;
+		
+		if (is_string($value)) {
+			if (!empty($LANG[$value]))
+				return addslashes($LANG[$value]);
+			return addslashes($value);
+		}
+		return 'invalid_value';
+	}
 
     /**
 	 * @desc Display the editor
@@ -38,68 +55,68 @@ class BBcode_editor2 extends ContentEditor
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
-			'L_REQUIRE_TEXT' => $LANG['require_text'],
-			'L_BB_UPLOAD' => $LANG['bb_upload'],
-			'L_BB_SMILEYS' => $LANG['bb_smileys'],
-			'L_BB_BOLD' => $LANG['bb_bold'],
-			'L_BB_ITALIC' => $LANG['bb_italic'],
-			'L_BB_UNDERLINE' => $LANG['bb_underline'],
-			'L_BB_STRIKE' => $LANG['bb_strike'],
-			'L_BB_TITLE' => $LANG['bb_title'],
-			'L_BB_CONTAINER' => $LANG['bb_container'],
-			'L_BB_HTML' => $LANG['bb_html'],
-			'L_BB_STYLE' => $LANG['bb_style'],
-			'L_BB_URL' => $LANG['bb_link'],
-			'L_BB_IMG' => $LANG['bb_picture'],
-			'L_BB_QUOTE' => $LANG['bb_quote'],
-			'L_BB_HIDE' => $LANG['bb_hide'],
-			'L_BB_COLOR' => $LANG['bb_color'],
-			'L_BB_SIZE' => $LANG['bb_size'],
-			'L_BB_SMALL' => $LANG['bb_small'],
-			'L_BB_LARGE' => $LANG['bb_large'],
-			'L_BB_LEFT' => $LANG['bb_left'],
-			'L_BB_CENTER' => $LANG['bb_center'],
-			'L_BB_RIGHT' => $LANG['bb_right'],
-			'L_BB_JUSTIFY' => $LANG['bb_justify'],
-			'L_BB_FLOAT_LEFT' => $LANG['bb_float_left'],
-			'L_BB_FLOAT_RIGHT' => $LANG['bb_float_right'],
-			'L_BB_SUP' => $LANG['bb_sup'],
-			'L_BB_SUB' => $LANG['bb_sub'],
-			'L_BB_INDENT' => $LANG['bb_indent'],
-			'L_BB_LIST' => $LANG['bb_list'],
-			'L_BB_TABLE' => $LANG['bb_table'],
-			'L_BB_SWF' => $LANG['bb_swf'],
-			'L_BB_MOVIE' => $LANG['bb_movie'],
-			'L_BB_SOUND' => $LANG['bb_sound'],
-			'L_BB_CODE' => $LANG['bb_code'],
-			'L_BB_MATH' => $LANG['bb_math'],
-			'L_BB_ANCHOR' => $LANG['bb_anchor'],
-			'L_BB_HELP' => $LANG['bb_help'],
-			'L_URL_PROMPT' => $LANG['bb_url_prompt'],
-			'L_TITLE' => $LANG['title'],
-			'L_CONTAINER' => $LANG['bb_container'],
-			'L_BLOCK' => $LANG['bb_block'],
-			'L_FIELDSET' => $LANG['bb_fieldset'],
-			'L_STYLE' => $LANG['style'],
-			'L_QUESTION' => $LANG['question'],
-			'L_NOTICE' => $LANG['notice'],
-			'L_WARNING' => $LANG['warning'],
-			'L_ERROR' => $LANG['error'],
-			'L_SUCCESS' => $LANG['success'],
-			'L_SIZE' => $LANG['size'],
-			'L_CODE' => $LANG['code'],
-			'L_TEXT' => $LANG['bb_text'],
-			'L_SCRIPT' => $LANG['bb_script'],
-			'L_WEB' => $LANG['bb_web'],
-			'L_PROG' => $LANG['bb_prog'],
-			'L_TABLE_HEAD' => $LANG['head_table'],
-			'L_ADD_HEAD' => $LANG['head_add'],
-			'L_LINES' => $LANG['lines'],
-			'L_COLS' => $LANG['cols'],
-			'L_ORDERED_LIST' => $LANG['ordered_list'],
-			'L_INSERT_LIST' => $LANG['insert_list'],
-			'L_INSERT_TABLE' => $LANG['insert_table'],
-			'L_PHPBOOST_LANGUAGES' => $LANG['phpboost_languages']
+			'L_REQUIRE_TEXT' => $this->lang_get('require_text'),
+			'L_BB_UPLOAD' => $this->lang_get('bb_upload'),
+			'L_BB_SMILEYS' => $this->lang_get('bb_smileys'),
+			'L_BB_BOLD' => $this->lang_get('bb_bold'),
+			'L_BB_ITALIC' => $this->lang_get('bb_italic'),
+			'L_BB_UNDERLINE' => $this->lang_get('bb_underline'),
+			'L_BB_STRIKE' => $this->lang_get('bb_strike'),
+			'L_BB_TITLE' => $this->lang_get('bb_title'),
+			'L_BB_CONTAINER' => $this->lang_get('bb_container'),
+			'L_BB_HTML' => $this->lang_get('bb_html'),
+			'L_BB_STYLE' => $this->lang_get('bb_style'),
+			'L_BB_URL' => $this->lang_get('bb_link'),
+			'L_BB_IMG' => $this->lang_get('bb_picture'),
+			'L_BB_QUOTE' => $this->lang_get('bb_quote'),
+			'L_BB_HIDE' => $this->lang_get('bb_hide'),
+			'L_BB_COLOR' => $this->lang_get('bb_color'),
+			'L_BB_SIZE' => $this->lang_get('bb_size'),
+			'L_BB_SMALL' => $this->lang_get('bb_small'),
+			'L_BB_LARGE' => $this->lang_get('bb_large'),
+			'L_BB_LEFT' => $this->lang_get('bb_left'),
+			'L_BB_CENTER' => $this->lang_get('bb_center'),
+			'L_BB_RIGHT' => $this->lang_get('bb_right'),
+			'L_BB_JUSTIFY' => $this->lang_get('bb_justify'),
+			'L_BB_FLOAT_LEFT' => $this->lang_get('bb_float_left'),
+			'L_BB_FLOAT_RIGHT' => $this->lang_get('bb_float_right'),
+			'L_BB_SUP' => $this->lang_get('bb_sup'),
+			'L_BB_SUB' => $this->lang_get('bb_sub'),
+			'L_BB_INDENT' => $this->lang_get('bb_indent'),
+			'L_BB_LIST' => $this->lang_get('bb_list'),
+			'L_BB_TABLE' => $this->lang_get('bb_table'),
+			'L_BB_SWF' => $this->lang_get('bb_swf'),
+			'L_BB_MOVIE' => $this->lang_get('bb_movie'),
+			'L_BB_SOUND' => $this->lang_get('bb_sound'),
+			'L_BB_CODE' => $this->lang_get('bb_code'),
+			'L_BB_MATH' => $this->lang_get('bb_math'),
+			'L_BB_ANCHOR' => $this->lang_get('bb_anchor'),
+			'L_BB_HELP' => $this->lang_get('bb_help'),
+			'L_URL_PROMPT' => $this->lang_get('bb_url_prompt'),
+			'L_TITLE' => $this->lang_get('title'),
+			'L_CONTAINER' => $this->lang_get('bb_container'),
+			'L_BLOCK' => $this->lang_get('bb_block'),
+			'L_FIELDSET' => $this->lang_get('bb_fieldset'),
+			'L_STYLE' => $this->lang_get('style'),
+			'L_QUESTION' => $this->lang_get('question'),
+			'L_NOTICE' => $this->lang_get('notice'),
+			'L_WARNING' => $this->lang_get('warning'),
+			'L_ERROR' => $this->lang_get('error'),
+			'L_SUCCESS' => $this->lang_get('success'),
+			'L_SIZE' => $this->lang_get('size'),
+			'L_CODE' => $this->lang_get('code'),
+			'L_TEXT' => $this->lang_get('bb_text'),
+			'L_SCRIPT' => $this->lang_get('bb_script'),
+			'L_WEB' => $this->lang_get('bb_web'),
+			'L_PROG' => $this->lang_get('bb_prog'),
+			'L_TABLE_HEAD' => $this->lang_get('head_table'),
+			'L_ADD_HEAD' => $this->lang_get('head_add'),
+			'L_LINES' => $this->lang_get('lines'),
+			'L_COLS' => $this->lang_get('cols'),
+			'L_ORDERED_LIST' => $this->lang_get('ordered_list'),
+			'L_INSERT_LIST' => $this->lang_get('insert_list'),
+			'L_INSERT_TABLE' => $this->lang_get('insert_table'),
+			'L_PHPBOOST_LANGUAGES' => $this->lang_get('phpboost_languages')
         ));
 		
 		$this->forbidden_tags = array('b');
@@ -165,8 +182,8 @@ class BBcode_editor2 extends ContentEditor
         {
             $template->assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
-				'L_ALL_SMILEY' => $LANG['all_smiley'],
-				'L_SMILEY' => $LANG['smiley']
+				'L_ALL_SMILEY' => $this->lang_get('all_smiley'),
+				'L_SMILEY' => $this->lang_get('smiley')
             ));
         }
 

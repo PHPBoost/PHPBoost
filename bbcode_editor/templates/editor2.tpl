@@ -1,5 +1,3 @@
-		<div id="div1"></div>
-
 		<script type="text/javascript">
 		<!--
 		var displayed = new Array();
@@ -52,7 +50,7 @@
 		<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 		
-		# IF C_BBCODE_NORMAL_MODE #
+	# IF C_BBCODE_NORMAL_MODE #
 		
 		# IF C_EDITOR_NOT_ALREADY_INCLUDED #
 		<script type="text/javascript" src="{PATH_TO_ROOT}/bbcode_editor/templates/bbcode_editor.js"></script>
@@ -61,7 +59,6 @@
 		<script type="text/javascript">
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
-			field: '{FIELD}',
 			path: '{PATH_TO_ROOT}/templates/{THEME}/',
 			path_img: '{PATH_TO_ROOT}/images/smileys/',
 		
@@ -206,18 +203,18 @@
 			],
 
 			tables: [
-				{'type':'text', 'text': '* {L_LINES}', 'size':3, 'id':'bb_lines', 'maxlength':3, 'value':2},
-				{'type':'text', 'text': '* {L_COLS}', 'size':3, 'id':'bb_cols', 'maxlength':3, 'value':2},
-				{'type':'checkbox', 'text': "{L_ADD_HEAD}", 'id':'bb_head'},
+				{'type':'text', 'text': '* {L_LINES}', 'id':'bb_lines', 'size':3, 'maxlength':3, 'value':2},
+				{'type':'text', 'text': '* {L_COLS}', 'id':'bb_cols', 'size':3, 'maxlength':3, 'value':2},
+				{'type':'checkbox', 'text': '{L_ADD_HEAD}', 'id':'bb_head'},
 				{'type':'submit', 'text':'{L_INSERT_TABLE}', 'fname':'table.png', 'label':'{L_BB_TABLE}', 'classe':'valign_middle', 'head':'{L_TABLE_HEAD}'}
 			],
 			
 			lists: [
-				{'type':'text', 'text': '* {L_LINES}', 'size':3, 'id':'bb_list', 'maxlength':3, 'value':3},
-				{'type':'checkbox', 'text': "{L_ORDERED_LIST} ", 'id':'bb_ordered_list'},
+				{'type':'text', 'text': '* {L_LINES}', 'id':'bb_list', 'size':3, 'maxlength':3, 'value':3},
+				{'type':'checkbox', 'text': '{L_ORDERED_LIST}', 'id':'bb_ordered_list'},
 				{'type':'submit', 'text':'{L_INSERT_LIST}', 'fname':'list.png', 'label':'{L_BB_LIST}', 'classe':'valign_middle' }
 			]
 		});
 		
 		</script>
-		# ENDIF #
+	# ENDIF #
