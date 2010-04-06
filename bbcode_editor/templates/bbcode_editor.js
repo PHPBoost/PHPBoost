@@ -322,10 +322,17 @@ var BBcodeEditor_Core = Class.create(
 	
 	resize: function(item)
 	{
+		var preview = 'xmlhttprequest_preview'+this.element;
 		if (item.height)
+		{
 			this.textarea.resize(this.element, item.height, 'height');
+			this.textarea.resize(preview, item.height, 'height');
+		}
 		else if (item.width)
-			this.textarea.resize(this.element, item.width, 'width');		
+		{
+			this.textarea.resize(this.element, item.width, 'width');
+			this.textarea.resize(preview, item.width, 'width');
+		}
 	},
 	
 	callbackResize: function(item)
@@ -349,7 +356,7 @@ var BBcodeEditor_Core = Class.create(
 				return false;
 			};
 		Event.observe(a, 'click', fn);
-		var img = new Element('img', {'src':this.path+'/images/upload/files_add.png', 'alt':''});
+		var img = new Element('img', {'src':this.path+'images/upload/files_add.png', 'alt':''});
 		a.insert(img);
 		
 		var elt = $$('td#bbcode-td-'+this.element);
@@ -480,7 +487,7 @@ var BBcodeEditor_Core = Class.create(
 	
 	action_prompt: function(question)
 	{
-		var url = prompt(question);
+		var url = prompt(question, '');
 		if( url != null && url != '' )
 			this.textarea.insert('[url=' + url + ']', '[/url]', this.element);
 		else
