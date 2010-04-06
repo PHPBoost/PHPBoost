@@ -100,12 +100,14 @@ var Textarea_Core = Class.create(
 	resize: function(id, px, type)
 	{
 		var textarea = $(id);
-		if( type == 'height' )
+		if (type != 'height' && type != 'width') return false;
+		
+		if (type == 'height')
 		{
 			var current_height = parseInt(textarea.style.height) ? parseInt(textarea.style.height) : 300;
 			var new_height = current_height + px;
 			
-			if( new_height > 40 )
+			if (new_height > 40)
 				textarea.style.height = new_height + "px";
 		}
 		else
@@ -113,7 +115,7 @@ var Textarea_Core = Class.create(
 			var current_width = parseInt(textarea.style.width) ? parseInt(textarea.style.width) : 150;
 			var new_width = current_width + px;
 			
-			if( new_width > 40 )
+			if (new_width > 40)
 				textarea.style.width = new_width + "px";
 		}
 		
@@ -132,6 +134,8 @@ var BBcodeEditor_Core = Class.create(
 		$(element).insert({before: this.get_menu(element)});
 		this.display(this.block1, 'bbcode');
 		this.display(this.block2, 'bbcode2');
+		if (this.upload.type == 1)
+			this.display_upload(this.upload);
 	},
 	
 	get_menu: function(element)
@@ -157,15 +161,19 @@ var BBcodeEditor_Core = Class.create(
 		var xtd10 = new Element('td');
 		xtd10.insert(xtable1);
 		xtd10.insert(xtable2);
+		var xtd11 = new Element('td', {'id': 'bbcode-td-'+element});
+		xtd11.setStyle({'verticalAlign':'top', 'padding':'5px 5px'});
+		xtd11.update('TOTRO');
 		var xtr10 = new Element('tr');
 		xtr10.insert(xtd10);
+		xtr10.insert(xtd11);
 		var xtbody10 = new Element('tbody');
 		xtbody10.insert(xtr10);
 		var xtable10 = new Element('table', {'id': 'table-'+element});
 		xtable10.setStyle({'margin':'4px', 'marginLeft':'auto', 'marginRight':'auto'});
 		xtable10.insert(xtbody10);
 		
-		menu = xtable10;
+		menu = xtable10;		
 		return menu;
 	},
 	
@@ -304,13 +312,54 @@ var BBcodeEditor_Core = Class.create(
 	
 	callbackChangeSelect2: function(index)
 	{
+		var elt = this.element;
+		var fn = this.changeSelect2;
 		return function()
 		{
-			this.changeSelect2(index+this.element);
+			fn(index+elt);
+		};
+	},
+	
+	resize: function(item)
+	{
+		if (item.height)
+			this.textarea.resize(this.element, item.height, 'height');
+		else if (item.width)
+			this.textarea.resize(this.element, item.width, 'width');		
+	},
+	
+	callbackResize: function(item)
+	{
+		return function()
+		{
+			this.resize(item);
 		}.bind(this);
 	},
 
-
+	display_upload: function(item)
+	{
+		var a = new Element('a', {'title':item.title, 'href':'#'});
+		var root = this.root;
+		var field = this.element;
+		var fn = function()
+			{
+				window.open(root+'/member/upload.php?popup=1&amp;fd='+field+'&amp;edt='+item.editor,
+					'',
+					'height=500,width=720,resizable=yes,scrollbars=yes');
+				return false;
+			};
+		Event.observe(a, 'click', fn);
+		var img = new Element('img', {'src':this.path+'/images/upload/files_add.png', 'alt':''});
+		a.insert(img);
+		
+		var elt = $$('td#bbcode-td-'+this.element);
+		if(elt.length > 0)
+		{
+			elt = elt.first();
+			alert(elt);
+			elt.update(a);
+		}
+	},
 
 	display: function(bloc, classe)
 	{
@@ -402,6 +451,11 @@ var BBcodeEditor_Core = Class.create(
 				$(elt).insert(item);
 				menu = this.menuLists(x);
 				item.insert({'before':menu});
+			}
+			else if (x.type == 'action_resize')
+			{
+				x.onclick = this.callbackResize(x);
+				$(elt).insert(this.balise(x));
 			}
 			else if (x.type == 'action_more')
 			{

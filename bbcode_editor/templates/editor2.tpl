@@ -59,8 +59,11 @@
 		<script type="text/javascript">
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
+			root: '{PATH_TO_ROOT}',
 			path: '{PATH_TO_ROOT}/templates/{THEME}/',
 			path_img: '{PATH_TO_ROOT}/images/smileys/',
+			
+			upload: {'type':{C_UPLOAD_MANAGEMENT} , 'title':'{L_BB_UPLOAD}', 'editor':'{EDITOR_NAME}' },
 		
 			block1: [
 				{'type':'separator'},
@@ -84,8 +87,8 @@
 				{'type':'menu_color', 'id':'color', 'fname':'color.png', 'label':'{L_BB_COLOR}', 'tag': 'color', 'disabled':'{DISABLED_COLOR}'},
 				{'type':'menu_size', 'id':'size', 'fname':'size.png', 'label':'{L_BB_SIZE}', 'tag': 'size', 'disabled':'{DISABLED_SIZE}'},
 				{'type':'separator'},
-				{'type':'balise', 'fname':'minus.png', 'label':'{L_BB_SMALL}'},
-				{'type':'balise', 'fname':'plus.png', 'label':'{L_BB_LARGE}'},
+				{'type':'action_resize', 'fname':'minus.png', 'label':'{L_BB_SMALL}', 'height':-100 },
+				{'type':'action_resize', 'fname':'plus.png', 'label':'{L_BB_LARGE}', 'height':100 },
 				{'type':'action_more', 'fname':'more.png', 'label':'{L_BB_MORE}'}
 			],
 			
