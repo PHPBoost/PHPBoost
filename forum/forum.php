@@ -344,19 +344,19 @@ if (!empty($id_get))
 		
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'");
-
+	
 	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
 		'MODO' => $total_modo,
-		'USER' => $total_member,
+		'MEMBER' => $total_member,
 		'GUEST' => $total_visit,
 		'SELECT_CAT' => forum_list_cat($id_get, $CAT_FORUM[$id_get]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-		'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])
