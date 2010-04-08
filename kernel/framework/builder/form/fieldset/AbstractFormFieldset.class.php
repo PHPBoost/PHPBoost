@@ -32,7 +32,7 @@
  */
 abstract class AbstractFormFieldset implements FormFieldset
 {
-    private $prefix = '';
+    private $form_id = '';
     protected $fields = array();
     /**
      * @var Template
@@ -51,18 +51,18 @@ abstract class AbstractFormFieldset implements FormFieldset
 			please chose a different one!');
         }
         $this->fields[$form_field->get_id()] = $form_field;
-        $form_field->set_prefix($this->prefix);
+        $form_field->set_form_id($this->form_id);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function set_prefix($prefix)
+    public function set_form_id($form_id)
     {
-        $this->prefix = $prefix;
+        $this->form_id = $form_id;
         foreach ($this->fields as $field)
         {
-            $field->set_prefix($prefix);
+            $field->set_form_id($form_id);
         }
     }
 
