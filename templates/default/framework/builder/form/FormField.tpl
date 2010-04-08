@@ -18,3 +18,8 @@
 			# ENDIF #
 			</dd>
 		</dl>
+		<script type="text/javascript">
+		<!--
+		{E_FORM_ID}_form.addField(new FormField("{E_ID}"));
+		-->
+		</script>

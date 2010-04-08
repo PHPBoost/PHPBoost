@@ -42,7 +42,7 @@ interface FormField
      * @desc Sets the id prefix
      * @param string $prefix The new id prefix.
      */
-    function set_prefix($prefix);
+    function set_form_id($prefix);
 
     /**
      * @return mixed

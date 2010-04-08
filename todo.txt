@@ -12,7 +12,6 @@
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
 - Corriger l'export BDD qui fait un out of memory si la BDD est trop grosse (vider les buffers de string de temps en temps)
 - Balises Youtube, Dailymotion
-- Updater scriptaculous et prototype
 
 ------------------------------------ MODULES -----------------------------------
 

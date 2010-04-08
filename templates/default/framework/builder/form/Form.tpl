@@ -6,28 +6,14 @@
 </div>
 # ENDIF #
 
-<form id="{E_HTML_ID}" action="{E_TARGET}" method="{E_METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{E_FORMCLASS}">
-	# IF C_HAS_REQUIRED_FIELDS #
-	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
-	# ENDIF #
-	
-	# START fieldsets #
-		# INCLUDE fieldsets.FIELDSET #
-	# END fieldsets #
-	
-	<fieldset class="fieldset_submit">
-		<legend>{L_SUBMIT}</legend>
-		# START buttons #
-			# INCLUDE buttons.BUTTON #
-		# END buttons #
-	</fieldset>
-</form>
 # IF C_JS_NOT_ALREADY_INCLUDED # 
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script> 
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script>
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/form.js"></script>  
 # ENDIF #
-
 <script type="text/javascript">
 <!--
+	var {E_HTML_ID}_form = new HTMLForm();
+
 	function check_generated_form_{E_HTML_ID}()
 	{
 		var return_value = true;
@@ -44,3 +30,21 @@
 	}
 -->
 </script>
+
+
+<form id="{E_HTML_ID}" action="{E_TARGET}" method="{E_METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{E_FORMCLASS}">
+	# IF C_HAS_REQUIRED_FIELDS #
+	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
+	# ENDIF #
+	
+	# START fieldsets #
+		# INCLUDE fieldsets.FIELDSET #
+	# END fieldsets #
+	
+	<fieldset class="fieldset_submit">
+		<legend>{L_SUBMIT}</legend>
+		# START buttons #
+			# INCLUDE buttons.BUTTON #
+		# END buttons #
+	</fieldset>
+</form>

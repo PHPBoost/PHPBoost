@@ -39,7 +39,7 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
-	private $prefix = '';
+	private $form_id = '';
 	/**
 	 * @var string
 	 */
@@ -131,9 +131,9 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set_prefix($prefix)
+	public function set_form_id($form_id)
 	{
-		$this->prefix = $prefix;
+		$this->form_id = $form_id;
 	}
 
 	/**
@@ -252,7 +252,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_html_id()
 	{
-		return $this->prefix . '_' . $this->get_id();
+		return $this->form_id . '_' . $this->get_id();
 	}
 
 	/**
@@ -350,7 +350,8 @@ abstract class AbstractFormField implements FormField
 			'C_REQUIRED' => $this->is_required(),
 			'VALUE' => $this->get_value(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
-			'CLASS' => $this->get_css_class()
+			'CLASS' => $this->get_css_class(),
+			'FORM_ID' => $this->form_id
 		));
 	}
 

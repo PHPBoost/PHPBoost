@@ -109,7 +109,7 @@ class HTMLForm
      */
     public function add_fieldset(FormFieldset $fieldset)
     {
-        $fieldset->set_prefix($this->html_id);
+        $fieldset->set_form_id($this->html_id);
         $this->fieldsets[] = $fieldset;
     }
 
