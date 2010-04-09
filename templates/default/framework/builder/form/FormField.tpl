@@ -20,6 +20,6 @@
 		</dl>
 		<script type="text/javascript">
 		<!--
-		{E_FORM_ID}_form.addField(new FormField("{E_ID}"));
+		HTMLForms.get("{E_FORM_ID}").addField(new FormField("{E_ID}"));
 		-->
 		</script>
