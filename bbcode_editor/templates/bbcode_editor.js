@@ -313,12 +313,10 @@ var BBcodeEditor_Core = Class.create(
 	
 	callbackChangeSelect2: function(index)
 	{
-		var elt = this.element;
-		var fn = this.changeSelect2;
 		return function()
 		{
-			fn(index+elt);
-		};
+			this.changeSelect2(index+this.element);
+		}.bind(this);
 	},
 	
 	resize: function(item)
@@ -392,7 +390,7 @@ var BBcodeEditor_Core = Class.create(
 				x.onclick = this.callbackToggleMenu(x.id, this.element);
 				item = this.balise(x);
 				$(elt).insert(item);
-				menu = this.menuSmileys(x);
+				menu = this.menuSmileys(x, item);
 				item.insert({'before':menu});
 			}
 			else if (x.type == 'menu_title')
@@ -481,6 +479,11 @@ var BBcodeEditor_Core = Class.create(
 				link.insert(img);
 				$(elt).insert(link);
 			}
+			if(menu)
+			{
+				var fn = function(e) { if(this.id) this.style.display = 'none';};
+				menu.observe('mouseleave', fn);
+			}
 			
 		}.bind(this));
 	},
@@ -502,15 +505,15 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this);
 	},
 	
-	menuSmileys: function(x)
+	menuSmileys: function(x, item)
 	{
 		var index = x.id;
+		alert('top : '+item.top);
 		var id = 'bb_block_'+index+'_'+this.element;
 		var div = new Element('div', {'id': id});
 		div.setStyle({
 			'position':'relative',
 			'zIndex':100,
-			'float':'left',
 			'display':'none'
 		});
 			
