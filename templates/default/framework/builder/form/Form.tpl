@@ -10,29 +10,30 @@
 <script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script>
 <script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/form.js"></script>  
 # ENDIF #
+
 <script type="text/javascript">
 <!--
-	var {E_HTML_ID}_form = new HTMLForm();
+	var form = new HTMLForm("{E_HTML_ID}");
+	HTMLForms.add(form);
 
-	function check_generated_form_{E_HTML_ID}()
-	{
-		var return_value = true;
-		var constraints = Array();
-		# START check_constraints #
-		constraints.push({check_constraints.ONSUBMIT_CONSTRAINTS});
-		# END check_constraints #
-		return_value = formFieldConstraintsOnsubmitValidation(constraints);
-		
-		# IF C_PERSONAL_SUBMIT #
-		return_value = {PERSONAL_SUBMIT}();
-		# ENDIF #
-		return return_value;
-	}
+	form.validate = function() {
+	var return_value = true;
+	var constraints = Array();
+	# START check_constraints #
+	constraints.push({check_constraints.ONSUBMIT_CONSTRAINTS});
+	# END check_constraints #
+	return_value = formFieldConstraintsOnsubmitValidation(constraints);
+	
+	# IF C_PERSONAL_SUBMIT #
+	return_value = {PERSONAL_SUBMIT}();
+	# ENDIF #
+	return return_value;
+}
 -->
 </script>
 
 
-<form id="{E_HTML_ID}" action="{E_TARGET}" method="{E_METHOD}" onsubmit="return check_generated_form_{E_HTML_ID}();" class="{E_FORMCLASS}">
+<form id="{E_HTML_ID}" action="{E_TARGET}" method="{E_METHOD}" onsubmit="return HTMLForms.get('{E_HTML_ID}').validate();" class="{E_FORMCLASS}">
 	# IF C_HAS_REQUIRED_FIELDS #
 	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
 	# ENDIF #

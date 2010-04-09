@@ -1,20 +1,59 @@
+// This contains all the HTML forms contained in the page
+var HTMLForms = Class.create();
+HTMLForms.forms = new Array();
+HTMLForms.add = function(form) {
+	return HTMLForms.forms.push(form);
+};
+HTMLForms.get = function(id) {
+	for ( var i = 0; i < HTMLForms.forms.length; i++) {
+		var form = HTMLForms.forms[i];
+		if (form.getId() == id) {
+			return form;
+		}
+	}
+	return null;
+}
+HTMLForms.has = function(id) {
+	return HTMLForms.get(id) != null;
+}
+
+// This represents a HTML form.
 var HTMLForm = Class.create( {
-	fields : {},
+	fields : new Array(),
+	id : "",
+	initialize: function(id) {
+	this.id = id;
+	},
+	getId : function() {
+		return this.id;
+	},
 	addField : function(field) {
-		this.fields[field.getId()] = field;
+		this.fields.push(field);
 	},
 	getField : function(id) {
-		return this.fields[id];
+		for ( var i = 0; i < this.fields.length; i++) {
+			var field = this.fields[i];
+			if (field.getId() == id) {
+				return field;
+			}
+		}
+		return null;
 	},
 	getFields : function() {
-		var list = new Array();
+		return this.fields;
+	},
+	hasField : function(id) {
 		for ( var i = 0; i < this.fields.length; i++) {
-			list.push(fields.fields[i]);
+			var field = this.fields[i];
+			if (field.getId() == id) {
+				return true;
+			}
 		}
-		return list;
+		return false;
 	}
 });
 
+// This represents a field. It can be overloaded to fit to different fields types
 var FormField = Class.create( {
 	id : 0,
 	initialize : function(id) {
@@ -31,5 +70,7 @@ var FormField = Class.create( {
 	},
 	getValue : function() {
 		return $F(id);
+	},
+	validate : function() {
 	}
 });
