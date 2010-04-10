@@ -75,6 +75,11 @@ class FormConstraintFieldsEquality implements FormConstraint
 			return $this->js_message;
 		}
 	}
+
+	public function get_related_fields()
+	{
+		return array($this->first_field, $this->second_field);
+	}
 }
 
 ?>
