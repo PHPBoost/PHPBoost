@@ -37,31 +37,39 @@
  */
 class FormFieldFree extends AbstractFormField
 {
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-    }
+	public function __construct($id, $label, $value)
+	{
+		parent::__construct($id, $label, $value, array(), array());
+	}
 
-    /**
-     * @return string The html code for the free field.
-     */
-    public function display()
-    {
-        $template = $this->get_template_to_use();
+	/**
+	 * @return string The html code for the free field.
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
 
-        $this->assign_common_template_variables($template);
+		$this->assign_common_template_variables($template);
 
-        $template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->get_value()
-        ));
+		));
 
-        return $template;
-    }
+		return $template;
+	}
 
-    protected function get_default_template()
-    {
-        return new FileTemplate('framework/builder/form/FormField.tpl');
-    }
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/FormField.tpl');
+	}
+ 
+	protected function get_js_specialization_code()
+	{
+		return 'field.validate = function() { return true; };' .
+			'field.disable = function() { }; field.enable = function() { };' .
+			'field.isDisabled = function() { return false; };' . 
+			'field.getValue = function() { return ""; };';
+	}
 }
 
 ?>
