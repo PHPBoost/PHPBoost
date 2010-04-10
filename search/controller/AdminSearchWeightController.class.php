@@ -112,9 +112,8 @@ class AdminSearchWeightController extends AdminSearchController {
 
 	private function save()
 	{
-		$providers_ids = $this->get_providers_ids();
 		$this->weightings = array();
-		foreach ($providers_ids as $provider_id)
+		foreach (SearchProvidersService::get_providers_ids() as $provider_id)
 		{
 			$this->weightings[$provider_id] = $this->form->get_value($provider_id);
 		}
@@ -126,7 +125,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	{
 		$header = new FormFieldFree('header', $this->lang['provider'], '<b>' . $this->lang['search_weights'] . '<b>');
 		$fieldset->add_field($header);
-		foreach ($this->get_providers_ids() as $provider_id)
+		foreach (SearchProvidersService::get_providers_ids() as $provider_id)
 		{
 			$provider_name = ModuleConfigurationManager::get($provider_id)->get_name();
 			$value = $this->get_provider_weight($provider_id);
@@ -135,22 +134,6 @@ class AdminSearchWeightController extends AdminSearchController {
 			$field = new FormFieldTextEditor($provider_id, $provider_name, $value, $options, $constraints);
 			$fieldset->add_field($field);
 		}
-	}
-
-	private function get_providers_ids()
-	{
-		$providers = array();
-		$unauthorized_providers = $this->config->get_unauthorized_providers();
-		$provider_service = AppContext::get_extension_provider_service();
-		foreach ($provider_service->get_providers(Searchable::EXTENSION_POINT) as $provider)
-		{
-			$provider_id = $provider->get_id();
-			if (!in_array($provider_id, $unauthorized_providers))
-			{
-				$providers[] = $provider_id;
-			}
-		}
-		return $providers;
 	}
 
 	private function get_provider_weight($provider_id)
