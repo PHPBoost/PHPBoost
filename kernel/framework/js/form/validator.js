@@ -7,6 +7,7 @@ function displayFormFieldOnsubmitValidatorMessage(message)
 }
 function displayFormFieldOnblurValidatorMessage(field_id, message)
 {
+	// TODO to remove
 	if ($('onblurContainerResponse' + field_id) && $('onblurMesssageResponse' + field_id))
 	{
 		$('onblurContainerResponse' + field_id).innerHTML = 
@@ -19,6 +20,7 @@ function displayFormFieldOnblurValidatorMessage(field_id, message)
 }
 function clearFormFieldOnblurValidatorMessage(field_id)
 {
+	// TODO to remove
 	if ($('onblurContainerResponse' + field_id))
 	{
 		$('onblurContainerResponse' + field_id).innerHTML = 

@@ -353,6 +353,13 @@ abstract class AbstractFormField implements FormField
 			'CLASS' => $this->get_css_class(),
 			'FORM_ID' => $this->form_id
 		));
+		
+		foreach ($this->get_js_validations() as $constraint)
+		{
+			$template->assign_block_vars('constraint', array(
+				'CONSTRAINT' => $constraint
+			));
+		}
 	}
 
 	protected function get_onblur()
