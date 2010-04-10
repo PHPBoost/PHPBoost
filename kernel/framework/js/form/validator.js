@@ -20,9 +20,10 @@ function lengthIntervalValidator(value, lbound, rbound)
 }
 function nonEmptyFormFieldValidator(field_id, message)
 {
-	if ($(field_id))
+	var field = HTMLForms.getField(field_id);
+	if (field)
 	{
-		if ($F(field_id) == '')
+		if (field.getValue() == '')
 		{
 			return message;
 		}
