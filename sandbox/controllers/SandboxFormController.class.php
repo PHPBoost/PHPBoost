@@ -82,6 +82,8 @@ class SandboxFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('Fieldset');
 		$form->add_fieldset($fieldset);
 
+		$fieldset->set_description('Ceci est ma description');
+		
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
@@ -186,16 +188,18 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset3);
 
 		// VERTICAL FIELDSET
-		$hidden_fieldset = new FormFieldsetVertical();
-		$form->add_fieldset($hidden_fieldset);
-		$hidden_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
-		$hidden_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
+		$vertical_fieldset = new FormFieldsetVertical();
+        $vertical_fieldset->set_description('Ceci est ma description');
+		$form->add_fieldset($vertical_fieldset);
+		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
+		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
 
 		// HORIZONTAL FIELDSET
-		$vertical_fieldset = new FormFieldsetHorizontal();
-		$form->add_fieldset($vertical_fieldset);
-		$vertical_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
-		$vertical_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
+		$horizontal_fieldset = new FormFieldsetHorizontal();
+        $horizontal_fieldset->set_description('Ceci est ma description');
+		$form->add_fieldset($horizontal_fieldset);
+		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
 
 		// BUTTONS
 		$form->add_button(new FormButtonReset());
