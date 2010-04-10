@@ -42,36 +42,131 @@ class AdminSearchConfigController extends AdminSearchController {
 	 */
 	private $form;
 
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit;
+
+	/**
+	 * @var SearchConfig
+	 */
+	private $config;
+
 	public function __construct()
 	{
-		$this->view = new FileTemplate('search/AdminSearchConfigController.tpl');
+		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->lang = LangLoader::get('admin', 'search');
-		$this->view->add_lang($this->lang);
+		$this->config = SearchConfig::load();
 	}
 
 	public function execute(HTTPRequest $request)
 	{
-        $this->build_form();
+		$this->build_form();
+		$this->try_save();
 		return $this->send();
 	}
 
 	private function build_form()
 	{
-//		$this->form = new HTMLForm('full_search_form');
-//		$fieldset = new FormFieldsetHTML($this->lang['title']);
-//		$value = 'coucou';
-//		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], $value);
-//		$fieldset->add_field($searched_input_text);
-//		$this->form->add_fieldset($fieldset);
-//		$button = new FormButtonSubmit($this->lang['do_search'], 'search_submit');
-//		$this->form->add_button($button);
-//		return $this->form;
+		$this->form = new HTMLForm('configuration');
+		$this->add_configuration_fieldset();
+		$this->add_cache_configuration_fieldset();
+		$this->add_clear_cache_fieldset();
+		$this->add_buttons();
+		return $this->form;
 	}
-	
+
+	private function try_save()
+	{
+		if ($this->submit->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+		}
+	}
+
 	private function send()
 	{
-//		$this->view->add_subtemplate('ADMIN_SEARCH_FORM', $this->form->display());
+		$this->view->add_subtemplate('FORM', $this->form->display());
 		return $this->prepare_to_send($this->view);
+	}
+
+	private function add_configuration_fieldset()
+	{
+		$fieldset = new FormFieldsetHTML($this->lang['search_config']);
+		$this->form->add_fieldset($fieldset);
+
+		$id = 'nb_results_per_page';
+		$name = $this->lang['nb_results_per_page'];
+		$value = $this->config->get_nb_results_per_page();
+		$options = array();
+		$constraints = array(new FormFieldConstraintIntegerRange(1, 500));
+		$field = new FormFieldTextEditor($id, $name, $value, $options, $constraints);
+		$fieldset->add_field($field);
+
+		$id = 'unauthorized_providers';
+		$name = $this->lang['unauthorized_modules'];
+		$value = var_export($this->config->get_unauthorized_providers(), true);
+		$options = array('description' => $this->lang['unauthorized_modules_explain']);
+		$field = new FormFieldTextEditor($id, $name, $value, $options);
+		$fieldset->add_field($field);
+	}
+
+	private function add_cache_configuration_fieldset()
+	{
+		$fieldset = new FormFieldsetHTML($this->lang['search_cache']);
+		$this->form->add_fieldset($fieldset);
+
+		$id = 'cache_lifetime';
+		$name = $this->lang['cache_time'];
+		$value = $this->config->get_cache_lifetime();
+		$options = array('description' => $this->lang['cache_time_explain']);
+		$constraints = array(new FormFieldConstraintIntegerRange(0, 1000000));
+		$field = new FormFieldTextEditor($id, $name, $value, $options, $constraints);
+		$fieldset->add_field($field);
+
+		$id = 'cache_max_uses';
+		$name = $this->lang['cache_max_use'];
+		$value = $this->config->get_cache_max_uses();
+		$options = array('description' => $this->lang['cache_max_use_explain']);
+		$constraints = array(new FormFieldConstraintIntegerRange(0, 1000000));
+		$field = new FormFieldTextEditor($id, $name, $value, $options, $constraints);
+		$fieldset->add_field($field);
+	}
+
+	private function add_clear_cache_fieldset()
+	{
+		$fieldset = new FormFieldsetHTML($this->lang['clear_out_cache']);
+		$this->form->add_fieldset($fieldset);
+
+		$id = 'clear_cache';
+		$value = new StringTemplate('<p style="text-align:center;">
+          <a href="{U_CLEAR_CACHE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="{EL_CLEAR_OUT_CACHE}" /></a>
+          <br /><a href="{U_CLEAR_CACHE}">{EL_CLEAR_OUT_CACHE}</a></p>');
+		$value->add_lang($this->lang);
+		$value->assign_vars(array('U_CLEAR_CACHE' => AdminSearchUrlBuilder::clear_cache()->absolute()));
+		$field = new FormFieldHTML($id, $value->to_string());
+		$fieldset->add_field($field);
+	}
+
+	private function add_buttons()
+	{
+		$this->submit = new FormButtonDefaultSubmit();
+		$this->form->add_button($this->submit);
+		$reset = new FormButtonReset();
+		$this->form->add_button($reset);
+	}
+
+	private function save()
+	{
+		$this->config->set_nb_results_per_page($this->form->get_value('nb_results_per_page'));
+		$this->config->set_cache_lifetime($this->form->get_value('cache_lifetime'));
+		$this->config->set_cache_max_uses($this->form->get_value('cache_max_uses'));
+		$providers = $this->form->get_value('unauthorized_providers');
+		if (is_array($providers))
+		{
+			$this->config->set_unauthorized_providers($providers);
+		}
+		SearchConfig::save($this->config);
 	}
 }
 
