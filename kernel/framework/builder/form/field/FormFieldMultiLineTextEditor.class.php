@@ -71,8 +71,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
         $template->assign_vars(array(
 			'ROWS' => $this->rows,
 			'COLS' => $this->cols,
-			'DISABLED' => ($this->is_disabled() ? 'disabled="disabled" ' : ''),
-			'ONBLUR' => $this->get_onblur()
+			'DISABLED' => ($this->is_disabled() ? 'disabled="disabled" ' : '')
         ));
     }
 

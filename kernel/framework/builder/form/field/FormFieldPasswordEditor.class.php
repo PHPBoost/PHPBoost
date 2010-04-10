@@ -35,7 +35,7 @@ class FormFieldPasswordEditor extends AbstractFormField
     private $size = 30;
     private $maxlength = 255;
     private static $tpl_src = '<input type="password" size="{SIZE}" maxlength="{MAX_LENGTH}" name="{E_NAME}"
-	id="{E_ID}" value="{E_VALUE}" class="{E_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # onblur="{E_ONBLUR_ACTION}" />';
+	id="{E_ID}" value="{E_VALUE}" class="{E_CLASS}" # IF C_DISABLED # disabled="disabled" # ENDIF # />';
 
     /**
      * @desc Constructs a FormFieldPasswordEditor.
@@ -64,17 +64,6 @@ class FormFieldPasswordEditor extends AbstractFormField
         $template = $this->get_template_to_use();
 
         $field_tpl = new StringTemplate(self::$tpl_src);
-
-        $field_tpl->assign_vars(array(
-			'SIZE' => $this->size,
-			'MAX_LENGTH' => $this->maxlength,
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
-			'VALUE' => $this->get_value(),
-			'CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled(),
-			'ONBLUR_ACTION' => $this->get_onblur_validation() . $this->get_onblur()
-        ));
 
         $this->assign_common_template_variables($template);
 
