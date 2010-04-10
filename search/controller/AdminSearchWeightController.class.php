@@ -41,7 +41,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	 * @var HTMLForm
 	 */
 	private $form;
-	
+
 	/**
 	 * @var FormButtonDefaultSubmit
 	 */
@@ -59,7 +59,7 @@ class AdminSearchWeightController extends AdminSearchController {
 
 	public function __construct()
 	{
-		$this->view = new FileTemplate('search/AdminSearchWeightController.tpl');
+		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->lang = LangLoader::get('admin', 'search');
 		$this->config = SearchConfig::load();
 		$this->weightings = $this->config->get_weightings();
@@ -79,19 +79,18 @@ class AdminSearchWeightController extends AdminSearchController {
 		$this->add_buttons();
 		return $this->form;
 	}
-    
-private function try_save()
-    {
-        $this->submit->has_been_submited();
-        if ($this->form->validate())
-        {
-            $this->save();
-        }
-    }
-    
+
+	private function try_save()
+	{
+		if ($this->submit->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+		}
+	}
+
 	private function send()
 	{
-		$this->view->add_subtemplate('ADMIN_SEARCH_FORM', $this->form->display());
+		$this->view->add_subtemplate('FORM', $this->form->display());
 		return $this->prepare_to_send($this->view);
 	}
 
@@ -103,25 +102,25 @@ private function try_save()
 		$this->form->add_fieldset($fieldset);
 	}
 
-    private function add_buttons()
-    {
-        $this->submit = new FormButtonDefaultSubmit();
-        $this->form->add_button($this->submit);
-        $reset = new FormButtonReset();
-        $this->form->add_button($reset);
-    }
-	
+	private function add_buttons()
+	{
+		$this->submit = new FormButtonDefaultSubmit();
+		$this->form->add_button($this->submit);
+		$reset = new FormButtonReset();
+		$this->form->add_button($reset);
+	}
+
 	private function save()
-    {
-    	$providers_ids = $this->get_providers_ids();
-    	$this->weightings = array();
-    	foreach ($providers_ids as $provider_id)
-    	{
-    		$this->weightings[$provider_id] = $this->form->get_value($provider_id);
-    	}
-        $this->config->set_weightings($this->weightings);
-        SearchConfig::save($this->config);
-    }
+	{
+		$providers_ids = $this->get_providers_ids();
+		$this->weightings = array();
+		foreach ($providers_ids as $provider_id)
+		{
+			$this->weightings[$provider_id] = $this->form->get_value($provider_id);
+		}
+		$this->config->set_weightings($this->weightings);
+		SearchConfig::save($this->config);
+	}
 
 	private function add_weightings_fields(FormFieldset $fieldset)
 	{

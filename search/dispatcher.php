@@ -32,7 +32,8 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 $url_controller_mappers = array(
 new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
 new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`')
+new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
+new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 

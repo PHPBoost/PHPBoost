@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                         AdminSearchUrlBuilder.class.php
+ *                             FormFieldHTML.class.php
  *                            -------------------
  *   begin                : April 10, 2010
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
- *
  *
  ###################################################
  *
@@ -26,36 +25,41 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
- * @desc
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class manage free contents fields.
+ * It provides you additionnal field options :
+ * <ul>
+ * 	<li>template : A template object to personnalize the field</li>
+ * 	<li>content : The field html content if you don't use a personnal template</li>
+ * </ul>
+ * @package builder
+ * @subpackage form
  */
-class AdminSearchUrlBuilder
+class FormFieldHTML extends AbstractFormField
 {
-    private static $dispatcher = '/search/dispatcher.php';
-    
-    /**
-     * @return Url
-     */
-    public static function config()
-    {
-        return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
-    }
-    
-    /**
-     * @return Url
-     */
-    public static function weight()
-    {
-        return DispatchManager::get_url(self::$dispatcher, '/admin/weight/');
-    }
-    
-    /**
-     * @return Url
-     */
-    public static function clear_cache()
-    {
-    	$token = AppContext::get_session()->get_token();
-        return DispatchManager::get_url(self::$dispatcher, '/admin/cache/clear/?token=' . $token);
-    }
+	public function __construct($id, $value)
+	{
+		parent::__construct($id, '', $value, array(), array());
+	}
+
+	/**
+	 * @return string The html code for the free field.
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
+
+		$template->assign_vars(array(
+			'HTML' => $this->get_value()
+		));
+
+		return $template;
+	}
+
+	protected function get_default_template()
+	{
+		return new StringTemplate('{HTML}');
+	}
 }
+
 ?>
