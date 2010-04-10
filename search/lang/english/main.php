@@ -35,4 +35,26 @@ $lang = array();
 $lang['page_title'] = 'Search';
 $lang['title'] = 'Search';
 $lang['do_search'] = 'Search';
+
+$lang['title_search'] = 'Search';
+$lang['search_results'] = 'Search results';
+$lang['warning_length_string_searched'] = 'The size of the string you\'re searching for must be at least 4 characters long!';
+$lang['search_keywords'] = 'Keywords';
+$lang['search_min_length'] = 'at least 4 characters';
+$lang['search_in_modules'] = 'Search in the following modules';
+$lang['search_in_modules_explain'] = 'Hold ctrl then click in the list to select multiple options';
+$lang['search_specialized_form'] = 'Specialized search in the following module';
+$lang['search_specialized_form_explain'] = 'Set the search\'s parameters';
+$lang['title_all_results'] = 'All results';
+$lang['forms'] = 'Forms';
+$lang['results'] = 'Results';
+$lang['results_choice'] = 'Results choice';
+$lang['advanced_search'] = 'Advanced search';
+$lang['simple_search'] = 'Simple search';
+$lang['print'] = 'Print';
+$lang['nb_results_found'] = 'results were found';
+$lang['one_result_found'] = 'result was found';
+$lang['no_results_found'] = 'no results were found';
+$lang['search_all'] = 'All';
+$lang['search_no_options'] = 'No specifics search options';
 ?>
