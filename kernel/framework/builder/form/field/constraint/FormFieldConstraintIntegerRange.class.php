@@ -33,18 +33,19 @@
 class FormFieldConstraintIntegerRange implements FormFieldConstraint 
 {
 	private $js_message;
-	private $rboundary;
-	private $lboundary;
+	private $upper_bound;
+	private $lower_bound;
 	
-	public function __construct($lboundary, $rboundary, $js_message = '')
+	public function __construct($lower_bound, $upper_bound, $js_message = '')
 	{
 		if (empty($js_message))
 		{
 			$js_message = LangLoader::get_message('doesnt_match_integer_intervall', 'builder-form-Validator');
 		}
+		$js_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound, 'upper_bound' => $upper_bound));
 		$this->js_message = TextHelper::to_js_string($js_message);
-		$this->lboundary = $lboundary;
-		$this->rboundary = $rboundary;
+		$this->lower_bound = $lower_bound;
+		$this->upper_bound = $upper_bound;
 	}
 	
 	public function validate(FormField $field)
@@ -54,13 +55,13 @@ class FormFieldConstraintIntegerRange implements FormFieldConstraint
 			return false;
 		}
 		$value = (int)$field->get_value();		
-		return ($value >= $this->lboundary && $value <= $this->rboundary);
+		return ($value >= $this->lower_bound && $value <= $this->upper_bound);
 	}
 
 	public function get_js_validation(FormField $field)
 	{
 		return 'integerIntervalFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) . ', 
-		' . (int)$this->lboundary . ', ' . (int)$this->rboundary . ', ' . $this->js_message . ')';
+		' . (int)$this->lower_bound . ', ' . (int)$this->upper_bound . ', ' . $this->js_message . ')';
 	}
 }
 
