@@ -63,10 +63,6 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
-	protected $onblur = '';
-	/**
-	 * @var string
-	 */
 	protected $required = false;
 	/**
 	 * @var string
@@ -384,16 +380,6 @@ abstract class AbstractFormField implements FormField
 			}
 		}
 		return $related_fields;
-	}
-
-	protected function get_onblur()
-	{
-		return $this->onblur;
-	}
-
-	protected function set_onblur($onblur)
-	{
-		$this->onblur = $onblur;
 	}
 
 	protected function get_css_class()
