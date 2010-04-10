@@ -31,7 +31,7 @@
  */
 class AdminSearchUrlBuilder
 {
-    private static $dispatcher = '/search/dispatcher.php';
+    private static $dispatcher = '/search/index.php';
     
     /**
      * @return Url
