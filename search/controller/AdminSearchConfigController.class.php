@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        SearchFormController.class.php
+ *                        AdminSearchConfigController.class.php
  *                            -------------------
- *   begin                : March 28, 2010
+ *   begin                : April 10, 2010
  *   copyright            : (C) 2010 Rouchon Loïc
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class SearchFormController extends ModuleController {
+class AdminSearchConfigController extends AdminSearchController {
 
 	/**
 	 * @var Template
@@ -44,43 +44,34 @@ class SearchFormController extends ModuleController {
 
 	public function __construct()
 	{
-		$this->view = new FileTemplate('search/SearchFormController.tpl');
-		$this->lang = LangLoader::get('main', 'search');
+		$this->view = new FileTemplate('search/AdminSearchConfigController.tpl');
+		$this->lang = LangLoader::get('admin', 'search');
 		$this->view->add_lang($this->lang);
 	}
 
 	public function execute(HTTPRequest $request)
 	{
         $this->build_form();
-        $this->execute_search();
-		return $this->prepare_to_send();
+		return $this->send();
 	}
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('full_search_form');
-		$fieldset = new FormFieldsetHTML($this->lang['title']);
-		$value = 'coucou';
-		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], $value);
-		$fieldset->add_field($searched_input_text);
-		$this->form->add_fieldset($fieldset);
-		$button = new FormButtonSubmit($this->lang['do_search'], 'search_submit');
-		$this->form->add_button($button);
-		return $this->form;
-	}
-
-	private function execute_search() {
-		$provider_service = AppContext::get_extension_provider_service();
-//		$provider_service->
+//		$this->form = new HTMLForm('full_search_form');
+//		$fieldset = new FormFieldsetHTML($this->lang['title']);
+//		$value = 'coucou';
+//		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], $value);
+//		$fieldset->add_field($searched_input_text);
+//		$this->form->add_fieldset($fieldset);
+//		$button = new FormButtonSubmit($this->lang['do_search'], 'search_submit');
+//		$this->form->add_button($button);
+//		return $this->form;
 	}
 	
-	private function prepare_to_send()
+	private function send()
 	{
-		$this->view->add_subtemplate('SEARCH_FORM', $this->form->display());
-		$response = new SiteDisplayResponse($this->view);
-		$environment = $response->get_graphical_environment();
-		$environment->set_page_title($this->lang['page_title']);
-		return $response;
+//		$this->view->add_subtemplate('ADMIN_SEARCH_FORM', $this->form->display());
+		return $this->prepare_to_send($this->view);
 	}
 }
 
