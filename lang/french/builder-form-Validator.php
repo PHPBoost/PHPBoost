@@ -38,8 +38,8 @@ $lang = array(
     'has_to_be_filled' => 'Ce champ doit être renseigné',
 	'captcha_validation_error' => 'Le champs de vérification visuel n\'a pas été saisi correctement !',
 	'validation_error' => 'Veuillez corriger les erreurs du formulaire',
-	'fields_must_be_equal' => 'Les champs "%s" et "%s" doivent être égaux',
-	'fields_must_not_be_equal' => 'Les champs "%s" et "%s" doivent avoir des valeurs différentes'
+	'fields_must_be_equal' => 'Les champs ":field1" et ":field2" doivent être égaux',
+	'fields_must_not_be_equal' => 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes'
 );
 
 ?>

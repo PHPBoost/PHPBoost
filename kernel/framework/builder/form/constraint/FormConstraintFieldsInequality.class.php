@@ -72,13 +72,8 @@ class FormConstraintFieldsInequality implements FormConstraint
 
 	private function get_message()
 	{
-		if (strpos($this->js_message, '%s') !== false) {
-			return sprintf($this->js_message, $this->first_field->get_label(), $this->second_field->get_label());
-		}
-		else
-		{
-			return $this->js_message;
-		}
+		return StringVars::replace_vars($this->js_message, 
+			array('field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()));
 	}
 
 	public function get_related_fields()
