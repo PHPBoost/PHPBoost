@@ -70,12 +70,23 @@ var HTMLForm = Class.create( {
 				return false;
 			}
 		}
+		this.registerDisabledFields();
 		return true;
 	},
 	displayValidationError : function(message) {
 		message = message.replace(/&quot;/g, '"');
 		message = message.replace(/&amp;/g, '&');
 		alert(message);
+	},
+	registerDisabledFields: function() {
+		var disabled = "";
+		for ( var i = 0; i < this.fields.length; i++) {
+			var field = this.fields[i];
+			if (field.isDisabled()){
+				disabled+= "|" + field.getId();
+			}
+		}
+		$(this.id + '_disabled_fields').value = disabled;
 	}
 });
 
