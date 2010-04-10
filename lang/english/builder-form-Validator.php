@@ -30,7 +30,6 @@
  ####################################################
 
 $lang = array(
-    'doesnt_equal' => 'Both fields "%s" and "%s" has to be set to the same value',
     'doesnt_match_regex' => 'The entered value does not fit the proper format',
 	'doesnt_match_url_regex' => 'The entered value has to be a valid url',
 	'doesnt_match_mail_regex' => 'The entered value has to be a valid mail',
@@ -38,7 +37,9 @@ $lang = array(
     'doesnt_match_integer_intervall' => 'The entered value does not fit the specified interval',
     'has_to_be_filled' => 'This field has to be filled',
 	'captcha_validation_error' => 'The visual confirmation field has not been properly filled !',
-	'validation_error' => 'Please, correct the form errors'
+	'validation_error' => 'Please, correct the form errors',
+	'fields_must_be_equal' => 'Fields "%s" and "%s" must ne equal',
+	'fields_must_not_be_equal' => 'Fields "%s" and "%s" must have different values'
 );
 
 ?>

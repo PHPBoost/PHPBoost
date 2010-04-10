@@ -74,31 +74,26 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 }
 
 /* #### Multiple Field Constraints #### */
-function equalityFormFieldValidator(object_field, field_id, field_id_equality, message)
+function equalityFormFieldValidator(field_id, field_id2, message)
 {
-	// TODO refactor, i think the object_field attribute is useless
-	// TODO refactor use HTMLField.getValue() to obtain fields values.
-	var answer = '';
-	if ($(field_id) && $(field_id_equality))
-	{
-		if (($F(field_id) != '' && $F(field_id_equality) != '') && $F(field_id) != $F(field_id_equality))
-		{
-			answer = message;
+	var field1 = HTMLForms.getField(field_id);
+	var field2 = HTMLForms.getField(field_id2);
+	if (field1 && field2) {
+		if (field1.getValue() != field2.getValue()) {
+			return message;
 		}
 	}
-	if (object_field.id == field_id_equality)
-	{
-		if ($F(field_id) != '')
-		{
-			return Array(field_id, answer);
+	return "";
+}
+
+function inequalityFormFieldValidator(field_id, field_id2, message)
+{
+	var field1 = HTMLForms.getField(field_id);
+	var field2 = HTMLForms.getField(field_id2);
+	if (field1 && field2) {
+		if (field1.getValue() == field2.getValue()) {
+			return message;
 		}
 	}
-	else
-	{
-		if ($F(field_id_equality) != '')
-		{
-			return Array(field_id_equality, answer);
-		}
-	}
-	return Array('', '');
+	return "";
 }

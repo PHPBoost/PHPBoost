@@ -30,7 +30,6 @@
 ####################################################
 
 $lang = array(
-    'doesnt_equal' => 'Les champs "%s" et "%s" doivent avoir la même valeur',
     'doesnt_match_regex' => 'La valeur saisie n\'est pas au bon format',
 	'doesnt_match_url_regex' => 'La valeur saisie doit être une url valide',
 	'doesnt_match_mail_regex' => 'La valeur saisie doit être un mail valide',
@@ -38,7 +37,9 @@ $lang = array(
     'doesnt_match_integer_intervall' => 'La valeur saisie ne respecte pas l\'intervalle défini',
     'has_to_be_filled' => 'Ce champ doit être renseigné',
 	'captcha_validation_error' => 'Le champs de vérification visuel n\'a pas été saisi correctement !',
-	'validation_error' => 'Veuillez corriger les erreurs du formulaire'
+	'validation_error' => 'Veuillez corriger les erreurs du formulaire',
+	'fields_must_be_equal' => 'Les champs "%s" et "%s" doivent être égaux',
+	'fields_must_not_be_equal' => 'Les champs "%s" et "%s" doivent avoir des valeurs différentes'
 );
 
 ?>

@@ -26,95 +26,101 @@
 
 interface FormField
 {
-    /**
-     * @desc Returns the id.
-     * @return string
-     */
-    function get_id();
+	/**
+	 * @desc Returns the id.
+	 * @return string
+	 */
+	function get_id();
 
-    /**
-     * @desc Sets the id
-     * @param string $id The id.
-     */
-    function set_id($id);
+	/**
+	 * @desc Returns the label
+	 * @return string
+	 */
+	function get_label();
 
-    /**
-     * @desc Sets the id prefix
-     * @param string $prefix The new id prefix.
-     */
-    function set_form_id($prefix);
+	/**
+	 * @desc Sets the id
+	 * @param string $id The id.
+	 */
+	function set_id($id);
 
-    /**
-     * @return mixed
-     */
-    function get_value();
+	/**
+	 * @desc Sets the id prefix
+	 * @param string $prefix The new id prefix.
+	 */
+	function set_form_id($prefix);
 
-    /**
-     * @desc Sets the value
-     * @param string $value The value
-     */
-    function set_value($value);
+	/**
+	 * @return mixed
+	 */
+	function get_value();
 
-    /**
-     * @desc Tries to retrieve the value in the HTTP request's parameters.
-     */
-    function retrieve_value();
+	/**
+	 * @desc Sets the value
+	 * @param string $value The value
+	 */
+	function set_value($value);
 
-    /**
-     * @desc Returns the effective HTML id.
-     * @return string
-     */
-    function get_html_id();
+	/**
+	 * @desc Tries to retrieve the value in the HTTP request's parameters.
+	 */
+	function retrieve_value();
 
-    /**
-     * @return Template
-     */
-    function display();
+	/**
+	 * @desc Returns the effective HTML id.
+	 * @return string
+	 */
+	function get_html_id();
 
-    /**
-     * @desc Validates the field by cheching if all the constraints are satisfied.
-     * @return bool true if the form is valid
-     */
-    function validate();
+	/**
+	 * @return Template
+	 */
+	function display();
 
-    /**
-     * @desc Returns validation error message.
-     */
-    function get_validation_error_message();
+	/**
+	 * @desc Validates the field by cheching if all the constraints are satisfied.
+	 * @return bool true if the form is valid
+	 */
+	function validate();
 
-    /**
-     * @desc Set the validation error message.
-     * @param string $error_message The message to set
-     */
-    function set_validation_error_message($error_message);
+	/**
+	 * @desc Returns validation error message.
+	 */
+	function get_validation_error_message();
 
-    /**
-     * @desc Adds a constraint to the field constraints.
-     * @param FormFieldConstraint $constraint The constraint to add
-     */
-    function add_constraint(FormFieldConstraint $constraint);
+	/**
+	 * @desc Set the validation error message.
+	 * @param string $error_message The message to set
+	 */
+	function set_validation_error_message($error_message);
 
-    /**
-     * @desc Add javascript code on the onblur field parameter that makes validation
-     */
-    function add_form_constraint(FormConstraint $constraint);
+	/**
+	 * @desc Adds a constraint to the field constraints.
+	 * @param FormFieldConstraint $constraint The constraint to add
+	 */
+	function add_constraint(FormFieldConstraint $constraint);
 
-    /**
-     * @desc Return true if the field has one or more constraints, false otherwise.
-     * @return boolean
-     */
-    function has_constraints();
+	/**
+	 * @desc Add javascript code on the onblur field parameter that makes validation
+	 */
+	function add_form_constraint(FormConstraint $constraint);
 
-    /**
-     * @desc Returns the javascript onsubmit code.
-     * @return string The javascript code that makes the validation when the form is submitted
-     */
-    function get_js_validations();
+	/**
+	 * @desc Return true if the field has one or more constraints, false otherwise.
+	 * @return boolean
+	 */
+	function has_constraints();
 
-    /**
-     * @desc Sets the template to use to display the field
-     */
-    function set_template(Template $template);
+	/**
+	 * @desc Returns the javascript onsubmit code.
+	 * @return string The javascript code that makes the validation when the form is submitted
+	 */
+	function get_js_validations();
+
+	/**
+	 * @desc Sets the template to use to display the field
+	 */
+	function set_template(Template $template);
 }
 
 ?>
