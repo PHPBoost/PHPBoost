@@ -33,7 +33,7 @@
 class FormFieldsetHorizontal extends AbstractFormFieldset
 {
     // TODO add CSS rules to display dd inline
-    private static $tpl_src = '<div class="horizontal_fieldset"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>
+    private static $tpl_src = '<div class="horizontal_fieldset"># IF C_DESCRIPTION #<span style="float:left">{E_DESCRIPTION}</span># ENDIF ## START fields ## INCLUDE fields.FIELD # # END fields #</div>
 	<div class="spacer"></div>';
 
     /**

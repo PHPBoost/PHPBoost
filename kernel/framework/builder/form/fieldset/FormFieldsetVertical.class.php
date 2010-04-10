@@ -32,7 +32,7 @@
  */
 class FormFieldsetVertical extends AbstractFormFieldset
 {
-    private static $tpl_src = '<div class="vertical_fieldset"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
+    private static $tpl_src = '<div class="vertical_fieldset"># IF C_DESCRIPTION #<p>{E_DESCRIPTION}</p># ENDIF ## START fields # # INCLUDE fields.FIELD # # END fields #</div>';
 
     /**
      * @return Template
