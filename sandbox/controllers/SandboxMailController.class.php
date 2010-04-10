@@ -93,7 +93,6 @@ class SandboxMailController extends ModuleController
 		$configuration->set_auth_mode($this->form->get_value('secure_protocol')->get_raw_value());
 
 		$mailer = new SMTPMailSender($configuration);
-		$mailer = new DefaultMailSender();
 
 		$mail = new Mail();
 		$mail->add_recipient($this->form->get_value('recipient_mail'), $this->form->get_value('recipient_name'));

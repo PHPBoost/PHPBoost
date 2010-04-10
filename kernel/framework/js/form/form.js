@@ -16,6 +16,16 @@ HTMLForms.get = function(id) {
 HTMLForms.has = function(id) {
 	return HTMLForms.get(id) != null;
 };
+HTMLForms.getField = function(id) {
+	for ( var i = 0; i < HTMLForms.forms.length; i++) {
+		var form = HTMLForms.forms[i];
+		var field = form.getField(id);
+		if (field != null) {
+			return field;
+		}
+	}
+	return null;
+};
 
 // This represents a HTML form.
 var HTMLForm = Class.create( {
@@ -87,11 +97,12 @@ var FormField = Class
 				Field.disable(this.id);
 			},
 			isDisabled : function() {
-				var element = $(this.id); 
-				return element.disabled != "disabled" && element.disabled != false;
+				var element = $(this.id);
+				return element.disabled != "disabled"
+						&& element.disabled != false;
 			},
 			getValue : function() {
-				return $F(id);
+				return $F(this.id);
 			},
 			displayErrorMessage : function(message) {
 				if ($('onblurContainerResponse' + this.id)
