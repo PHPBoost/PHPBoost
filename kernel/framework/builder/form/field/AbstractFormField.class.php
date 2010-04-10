@@ -351,7 +351,8 @@ abstract class AbstractFormField implements FormField
 			'VALUE' => $this->get_value(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'CLASS' => $this->get_css_class(),
-			'FORM_ID' => $this->form_id
+			'FORM_ID' => $this->form_id,
+			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code()
 		));
 
 		foreach ($this->get_js_validations() as $constraint)
@@ -360,7 +361,7 @@ abstract class AbstractFormField implements FormField
 				'CONSTRAINT' => $constraint
 			));
 		}
-		
+
 		foreach ($this->get_related_fields() as $field)
 		{
 			$template->assign_block_vars('related_field', array(
@@ -439,6 +440,11 @@ abstract class AbstractFormField implements FormField
 	 * @return Template
 	 */
 	abstract protected function get_default_template();
+
+	protected function get_js_specialization_code()
+	{
+		return '';
+	}
 }
 
 ?>
