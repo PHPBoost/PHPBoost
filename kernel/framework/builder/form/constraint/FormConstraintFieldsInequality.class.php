@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         FormConstraintFieldsEquality.class.php
+ *                         FormConstraintFieldsInequality.class.php
  *                            -------------------
- *   begin                : Februar 04, 2010
- *   copyright            : (C) 2010 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : April 10, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -30,10 +30,16 @@
  * @package builder
  * @subpackage form/constraint
  */
-class FormConstraintFieldsEquality implements FormConstraint
+class FormConstraintFieldsInequality implements FormConstraint
 {
 	private $js_message;
+	/**
+	 * @var FormField
+	 */
 	private $first_field;
+	/**
+	 * @var FormField
+	 */
 	private $second_field;
 
 	public function __construct(FormField $first_field, FormField $second_field, $js_message = '')
@@ -44,9 +50,8 @@ class FormConstraintFieldsEquality implements FormConstraint
 		}
 		else
 		{
-			$this->js_message = LangLoader::get_message('fields_must_be_equal', 'builder-form-Validator');
+			$this->js_message = LangLoader::get_message('fields_must_not_be_equal', 'builder-form-Validator');
 		}
-
 		$this->first_field = $first_field;
 		$this->second_field = $second_field;
 
@@ -56,12 +61,12 @@ class FormConstraintFieldsEquality implements FormConstraint
 
 	public function validate()
 	{
-		return $this->first_field->get_value() == $this->second_field->get_value();
+		return $this->first_field->get_value() != $this->second_field->get_value();
 	}
 
 	public function get_js_validation()
 	{
-		return 'equalityFormFieldValidator(' . TextHelper::to_js_string($this->first_field->get_html_id()) .
+		return 'inequalityFormFieldValidator(' . TextHelper::to_js_string($this->first_field->get_html_id()) .
 			', ' . TextHelper::to_js_string($this->second_field->get_html_id()) . ', ' . TextHelper::to_js_string($this->get_message()) . ')';
 	}
 

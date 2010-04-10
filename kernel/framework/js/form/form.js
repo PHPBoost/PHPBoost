@@ -142,7 +142,7 @@ var FormField = Class
 				if (!this.isDisabled()) {
 					var errorMessage = this.doValidate();
 					if (errorMessage != "") {
-						this.displayErrorMessage(errorMessage)
+						this.displayErrorMessage(errorMessage);
 					} else {
 						this.clearErrorMessage();
 					}

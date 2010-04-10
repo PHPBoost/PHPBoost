@@ -62,9 +62,14 @@ class SandboxMailController extends ModuleController
 
 		$fieldset = new FormFieldsetHTML('Mail');
 		$this->form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldMailEditor('sender_mail', 'Sender mail', ''));
+		$sender_mail = new FormFieldMailEditor('sender_mail', 'Sender mail', '');
+		$fieldset->add_field($sender_mail);
+		
 		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new FormFieldConstraintNotEmpty())));
-		$fieldset->add_field(new FormFieldMailEditor('recipient_mail', 'Recipient mail', ''));
+		
+		$recipient_mail = new FormFieldMailEditor('recipient_mail', 'Recipient mail', '');
+		$fieldset->add_field($recipient_mail);
+		
 		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldTextEditor('mail_subject', 'Mail subject', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_content', 'Content', ''));
@@ -81,6 +86,7 @@ class SandboxMailController extends ModuleController
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
+		$this->form->add_constraint(new FormConstraintFieldsInequality($recipient_mail, $sender_mail));
 	}
 
 	private function send_mail()
