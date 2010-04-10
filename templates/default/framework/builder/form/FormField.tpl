@@ -34,6 +34,10 @@
 			return result;
 		}
 
+		# IF C_DISABLED #
+		field.disable();
+		# ENDIF #
+		
 		{JS_SPECIALIZATION_CODE}
 		
 		Event.observe("{E_ID}", 'blur', function() {
@@ -43,5 +47,11 @@
 			HTMLForms.get("{E_FORM_ID}").getField("{related_field.E_ID}").liveValidate();
 			# END related_field #
 		});
+
+		# START event_handler #
+		Event.observe("{E_ID}", '{event_handler.E_EVENT}', function() {
+			{event_handler.HANDLER}
+		});
+		# END event_hander #
 		-->
 		</script>

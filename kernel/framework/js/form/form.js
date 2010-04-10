@@ -78,12 +78,12 @@ var HTMLForm = Class.create( {
 		message = message.replace(/&amp;/g, '&');
 		alert(message);
 	},
-	registerDisabledFields: function() {
+	registerDisabledFields : function() {
 		var disabled = "";
 		for ( var i = 0; i < this.fields.length; i++) {
 			var field = this.fields[i];
-			if (field.isDisabled()){
-				disabled+= "|" + field.getId();
+			if (field.isDisabled()) {
+				disabled += "|" + field.getId();
 			}
 		}
 		$(this.id + '_disabled_fields').value = disabled;
@@ -104,9 +104,11 @@ var FormField = Class
 			},
 			enable : function() {
 				Field.enable(this.id);
+				this.liveValidate();
 			},
 			disable : function() {
 				Field.disable(this.id);
+				this.clearErrorMessage();
 			},
 			isDisabled : function() {
 				var element = $(this.id);
@@ -140,7 +142,7 @@ var FormField = Class
 					});
 				}
 			},
-			clearErrorMessage : function() {
+			displaySuccessMessage : function() {
 				if (!this.validationMessageEnabled) {
 					return;
 				}
@@ -159,13 +161,25 @@ var FormField = Class
 					});
 				}
 			},
+			clearErrorMessage : function() {
+				if ($('onblurContainerResponse' + this.id)) {
+					$('onblurContainerResponse' + this.id).innerHTML = '';
+					
+					Effect.Appear('onblurContainerResponse' + this.id, {
+						duration : 0.2
+					});
+
+					Effect.Fade('onblurMesssageResponse' + this.id, {
+						duration : 0.2
+					});
+			},
 			liveValidate : function() {
 				if (!this.isDisabled()) {
 					var errorMessage = this.doValidate();
 					if (errorMessage != "") {
 						this.displayErrorMessage(errorMessage);
 					} else {
-						this.clearErrorMessage();
+						this.displaySuccessMessage();
 					}
 				}
 			},

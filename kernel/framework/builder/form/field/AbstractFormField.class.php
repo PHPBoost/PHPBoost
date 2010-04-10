@@ -80,6 +80,8 @@ abstract class AbstractFormField implements FormField
 	 * @var Template
 	 */
 	protected $template = null;
+	
+	protected $events = array();
 	/**
 	 * @desc Constructs and set parameters to the field.
 	 * The specific parameters of this abstract class (common with many fields) are the following:
@@ -250,7 +252,7 @@ abstract class AbstractFormField implements FormField
 	{
 		return $this->form_id . '_' . $this->get_id();
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -311,10 +313,6 @@ abstract class AbstractFormField implements FormField
 					$this->set_description($value);
 					unset($field_options['subtitle']);
 					break;
-				case 'onblur':
-					$this->set_onblur($value);
-					unset($field_options['onblur']);
-					break;
 				case 'disabled':
 					$this->set_disabled($value);
 					unset($field_options['disabled']);
@@ -322,6 +320,10 @@ abstract class AbstractFormField implements FormField
 				case 'class':
 					$this->set_css_class($value);
 					unset($field_options['class']);
+					break;
+				case 'events':
+					$this->events = $value;
+					unset($field_options['events']);
 					break;
 				case 'required':
 					$this->set_required($value);
@@ -348,6 +350,7 @@ abstract class AbstractFormField implements FormField
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'CLASS' => $this->get_css_class(),
 			'FORM_ID' => $this->form_id,
+			'C_DISABLED' => $this->is_disabled(),
 			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code()
 		));
 
@@ -362,6 +365,14 @@ abstract class AbstractFormField implements FormField
 		{
 			$template->assign_block_vars('related_field', array(
 				'ID' => $field
+			));
+		}
+		
+		foreach ($this->events as $event => $handler)
+		{
+			$template->assign_block_vars('event_handler', array(
+				'EVENT' => $event,
+				'HANDLER' => $handler
 			));
 		}
 	}

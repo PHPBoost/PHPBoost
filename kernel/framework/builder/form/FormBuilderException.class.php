@@ -30,6 +30,12 @@
  * @package builder
  * @subpackage form
  */
-class FormBuilderException extends Exception { }
+class FormBuilderException extends Exception
+{
+	public function __construct($message)
+	{
+		parent::__construct($message);
+	}
+}
 
 ?>
