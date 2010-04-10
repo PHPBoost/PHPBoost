@@ -34,7 +34,11 @@
 			# END constraint #
 			return result;
 		}
-
+		
+		# IF C_DISABLED #
+		field.disable();
+		# ENDIF #
+		
 		{JS_SPECIALIZATION_CODE}
 		
 		Event.observe("{E_ID}", 'blur', function() {
