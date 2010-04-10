@@ -20,6 +20,24 @@
 		</dl>
 		<script type="text/javascript">
 		<!--
-		HTMLForms.get("{E_FORM_ID}").addField(new FormField("{E_ID}"));
+		if (!HTMLForms.has("{E_ID}")) {
+			var field = new FormField("{E_ID}");
+			HTMLForms.get("{E_FORM_ID}").addField(field);
+			
+			field.doValidate = function() {
+				var result = "";
+				# START constraint #
+					result = {constraint.CONSTRAINT};
+					if (result != "") {
+						return result;
+					}
+				# END constraint #
+				return result;
+			}
+
+			Event.observe("{E_ID}", 'blur', function() {
+				HTMLForms.get("{E_FORM_ID}").getField("{E_ID}").liveValidate();
+			});
+		}
 		-->
 		</script>
