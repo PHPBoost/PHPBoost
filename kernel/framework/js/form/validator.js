@@ -1,37 +1,4 @@
-/* #### Affichage #### */
-function displayFormFieldOnsubmitValidatorMessage(message)
-{
-	message = message.replace(/&quot;/g, '"');
-	message = message.replace(/&amp;/g,'&');
-	alert(message);
-}
-function displayFormFieldOnblurValidatorMessage(field_id, message)
-{
-	// TODO to remove
-	if ($('onblurContainerResponse' + field_id) && $('onblurMesssageResponse' + field_id))
-	{
-		$('onblurContainerResponse' + field_id).innerHTML = 
-		'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/forbidden_mini.png" alt="" class="valign_middle" />';
-		$('onblurMesssageResponse' + field_id).innerHTML = message;
-	
-		Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.5 });
-		Effect.Appear('onblurMesssageResponse' + field_id, { duration: 0.5 });
-	}
-}
-function clearFormFieldOnblurValidatorMessage(field_id)
-{
-	// TODO to remove
-	if ($('onblurContainerResponse' + field_id))
-	{
-		$('onblurContainerResponse' + field_id).innerHTML = 
-			'<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/processed_mini.png" alt="" class="valign_middle" />';
-		Effect.Appear('onblurContainerResponse' + field_id, { duration: 0.2 });
-		
-		Effect.Fade('onblurMesssageResponse' + field_id, { duration: 0.2 });
-	}
-}
-
-/* #### Outils #### */
+/* #### Constraints #### */
 function integerIntervalValidator(value, lbound, rbound)
 {
 	var prev_value = value;
@@ -51,9 +18,6 @@ function lengthIntervalValidator(value, lbound, rbound)
 	}
 	return true;
 }
-
-
-/* #### Onblur validator #### */
 function nonEmptyFormFieldValidator(field_id, message)
 {
 	if ($(field_id))
@@ -68,9 +32,10 @@ function nonEmptyFormFieldValidator(field_id, message)
 
 function regexFormFieldValidator(field_id, regexPattern, options, message)
 {
-	if ($(field_id))
+	var field = HTMLForms.getField(field_id);
+	if (field)
 	{
-		value = $F(field_id);
+		var value = field.getValue();
 		regex = new RegExp(regexPattern, options);
 		if (!regex.test(value))
 		{
@@ -82,9 +47,11 @@ function regexFormFieldValidator(field_id, regexPattern, options, message)
 
 function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 {
-	if ($(field_id))
+	var field = HTMLForms.getField(field_id);
+	if (field)
 	{
-		if (!integerIntervalValidator($F(field_id), lbound, rbound))
+		var value = field.getValue();
+		if (!integerIntervalValidator(value, lbound, rbound))
 		{
 			return message;
 		}
@@ -94,9 +61,11 @@ function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 
 function lengthFormFieldValidator(field_id, lbound, rbound, message)
 {
-	if ($(field_id))
+	var field = HTMLForms.getField(field_id);
+	if (field)
 	{
-		if (!lengthIntervalValidator($F(field_id), lbound, rbound))
+		var value = field.getValue();
+		if (!lengthIntervalValidator(value, lbound, rbound))
 		{
 			return message;
 		}
@@ -107,6 +76,8 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 /* #### Multiple Field Constraints #### */
 function equalityFormFieldValidator(object_field, field_id, field_id_equality, message)
 {
+	// TODO refactor, i think the object_field attribute is useless
+	// TODO refactor use HTMLField.getValue() to obtain fields values.
 	var answer = '';
 	if ($(field_id) && $(field_id_equality))
 	{
@@ -130,72 +101,4 @@ function equalityFormFieldValidator(object_field, field_id, field_id_equality, m
 		}
 	}
 	return Array('', '');
-}
-
-
-/* #### Validation functions #### */
-function formFieldConstraintsOnblurValidation(othis, constraints)
-{
-	var message = '';
-	var field_id = '';
-
-	has_constraint = constraints.length;
-	for (var i = 0; i < has_constraint; i++)
-	{
-		message = constraints[i];
-		if (message != '')
-		{
-			break;
-		}
-	}
-	if (message instanceof Array) //Multiple constraints
-	{
-		field_id = message[0];
-		message = message[1];
-		if (message == '') //All validations checked.
-		{
-			clearFormFieldOnblurValidatorMessage(othis.id);
-			clearFormFieldOnblurValidatorMessage(field_id);
-		}
-		else
-		{
-			displayFormFieldOnblurValidatorMessage(field_id, message);
-		}
-	}
-	else
-	{
-		if (message == '') //All validations checked.
-		{
-			clearFormFieldOnblurValidatorMessage(othis.id);
-		}
-		else
-		{
-			displayFormFieldOnblurValidatorMessage(othis.id, message);
-		}
-	}
-}
-
-function formFieldConstraintsOnsubmitValidation(constraints)
-{
-	has_constraint = constraints.length;
-	for (var i = 0; i < has_constraint; i++)
-	{
-		if (constraints[i] instanceof Array) //Multiple constraints
-		{
-			if (constraints[i][1] != '')
-			{
-				displayFormFieldOnsubmitValidatorMessage(constraints[i][1]);
-				return false;
-			}
-		}
-		else
-		{
-			if (constraints[i] != '')
-			{
-				displayFormFieldOnsubmitValidatorMessage(constraints[i]);
-				return false;
-			}
-		}
-	}
-	return true;
 }
