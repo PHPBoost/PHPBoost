@@ -70,8 +70,7 @@ class SearchFormController extends ModuleController {
 	}
 
 	private function execute_search() {
-		$provider_service = AppContext::get_extension_provider_service();
-//		$provider_service->
+		$providers = SearchProvidersService::get_providers();
 	}
 	
 	private function prepare_to_send()
