@@ -84,6 +84,7 @@ var HTMLForm = Class.create( {
 var FormField = Class
 		.create( {
 			id : 0,
+			validationMessageEnabled : false,
 			initialize : function(id) {
 				this.id = id;
 			},
@@ -104,7 +105,13 @@ var FormField = Class
 			getValue : function() {
 				return $F(this.id);
 			},
+			enableValidationMessage : function() {
+				this.validationMessageEnabled = true;
+			},
 			displayErrorMessage : function(message) {
+				if (!this.validationMessageEnabled) {
+					return;
+				}
 				if ($('onblurContainerResponse' + this.id)
 						&& $('onblurMesssageResponse' + this.id)) {
 					$('onblurContainerResponse' + this.id).innerHTML = '<img src="'
@@ -123,6 +130,9 @@ var FormField = Class
 				}
 			},
 			clearErrorMessage : function() {
+				if (!this.validationMessageEnabled) {
+					return;
+				}
 				if ($('onblurContainerResponse' + this.id)) {
 					$('onblurContainerResponse' + this.id).innerHTML = '<img src="'
 							+ PATH_TO_ROOT
