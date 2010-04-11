@@ -29,7 +29,7 @@
 
 /**
  * @package core
- * @subpackage environment
+ * @subpackage environment/context
  * @desc This class manages all the environment services.
  * It's able to create each of them and return them.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -81,6 +81,10 @@ class AppContext
      * @var ExtensionPointProviderService
      */
     private static $extension_provider_service;
+    /**
+     * @var CacheService
+     */
+    private static $cache_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -261,6 +265,24 @@ class AppContext
 		// TODO ben, supprime ça, mais casse pas l'installateur
 		self::$user = $user;
 	}
+
+    /**
+     * Returns the cache service
+     * @return CacheService
+     */
+    public static function get_cache_service()
+    {
+    	if (self::$cache_service === null)
+    	{
+    		self::$cache_service = new CacheService();
+    	}
+        return self::$cache_service;
+    }
+
+    public static function set_cache_service(CacheService $cache_service)
+    {
+        self::$cache_service = $cache_service;
+    }
 
     /**
      * Inits the extension provider service

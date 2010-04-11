@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          KernelExtensionPointProvider.class.php
+ *                          CLIClearCacheCommand.class.php
  *                            -------------------
- *   begin                : February 06, 2010
+ *   begin                : April 11, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,43 @@
  *
  ###################################################*/
 
-class KernelExtensionPointProvider extends ExtensionPointProvider
+class CLIClearCacheCommand implements CLICommand
 {
-	public function __construct()
+	public function short_description()
 	{
-		parent::__construct('kernel');
+		return 'clears phpboost cache';
 	}
-	
-	public function commands()
+
+	public function help(array $args)
 	{
-		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand'));
+		CLIOutput::writeln('scenario: phpboost cache clear');
+		$this->print_commands_descriptions();
+	}
+
+	public function execute(array $args)
+	{
+		if (!empty($args))
+		{
+			$this->help($args);
+		}
+		else
+		{
+			$this->clear();
+		}
+	}
+
+	public function print_commands_descriptions() { }
+
+	private function clear()
+	{
+		$cache_service = AppContext::get_cache_service();
+        CLIOutput::writeln('[clear] phpboost cache');
+        $cache_service->clear_phpboost_cache();
+        CLIOutput::writeln('[clear] templates cache');
+        $cache_service->clear_template_cache();
+        CLIOutput::writeln('[clear] syndication cache');
+        $cache_service->clear_syndication_cache();
+        CLIOutput::writeln('cache has been successfully cleared');
 	}
 }
 ?>
