@@ -140,7 +140,7 @@ class HTMLForm
 	public function get_value($field_id)
 	{
 		$field = $this->get_field_by_id($field_id);
-		if ($this->is_disabled())
+		if ($field->is_disabled())
 		{
 			throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 		}
@@ -344,6 +344,10 @@ class HTMLForm
 		$request = AppContext::get_request();
 		$disabled_modules_str = $request->get_string($this->html_id . '_disabled_fields');
 		$disabled_modules_str = trim($disabled_modules_str, '|');
+		if ($disabled_modules_str == '')
+		{
+			return;
+		}
 		$disabled_modules = explode('|', $disabled_modules_str);
 		foreach ($disabled_modules as $module_id)
 		{
