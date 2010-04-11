@@ -80,7 +80,7 @@ abstract class AbstractFormField implements FormField
 	 * @var Template
 	 */
 	protected $template = null;
-	
+
 	protected $events = array();
 	/**
 	 * @desc Constructs and set parameters to the field.
@@ -209,10 +209,11 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function validate()
 	{
-		if (!$this->is_disabled())
+		if ($this->is_disabled())
 		{
-			$this->retrieve_value();
+			return true;
 		}
+		$this->retrieve_value();
 		foreach ($this->constraints as $constraint)
 		{
 			if (!$constraint->validate($this))
@@ -252,7 +253,7 @@ abstract class AbstractFormField implements FormField
 	{
 		return $this->form_id . '_' . $this->get_id();
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -367,7 +368,7 @@ abstract class AbstractFormField implements FormField
 				'ID' => $field
 			));
 		}
-		
+
 		foreach ($this->events as $event => $handler)
 		{
 			$template->assign_block_vars('event_handler', array(
@@ -403,9 +404,19 @@ abstract class AbstractFormField implements FormField
 		$this->css_class = $css_class;
 	}
 
-	protected function is_disabled()
+	public function is_disabled()
 	{
 		return $this->disabled;
+	}
+
+	public function disable()
+	{
+		$this->set_disabled(true);
+	}
+
+	public function enable()
+	{
+		$this->set_disabled(false);
 	}
 
 	protected function set_disabled($disabled)

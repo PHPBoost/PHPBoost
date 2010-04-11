@@ -64,28 +64,28 @@ class SandboxMailController extends ModuleController
 		$this->form->add_fieldset($fieldset);
 		$sender_mail = new FormFieldMailEditor('sender_mail', 'Sender mail', '');
 		$fieldset->add_field($sender_mail);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('sender_name', 'Sender name', '', array(), array(new FormFieldConstraintNotEmpty())));
-		
+
 		$recipient_mail = new FormFieldMailEditor('recipient_mail', 'Recipient mail', '');
 		$fieldset->add_field($recipient_mail);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('recipient_name', 'Recipient name', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldTextEditor('mail_subject', 'Mail subject', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_content', 'Content', ''));
 
 		$fieldset = new FormFieldsetHTML('SMTP configuration');
 		$this->form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', 'Use SMTP', false,
-			array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") HTMLForms.getField("smtp_config_smtp_host").enable(); else HTMLForms.getField("smtp_config_smtp_host").disable();'))));
+		array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") HTMLForms.getField("smtp_config_smtp_host").enable(); else HTMLForms.getField("smtp_config_smtp_host").disable();'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_port', 'SMTP port', 25, array(), array(new FormFieldConstraintIntegerRange(0, 65535))));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new FormFieldConstraintNotEmpty())));
-		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', ''));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_port', 'SMTP port', 25, array('disabled' => true), array(new FormFieldConstraintIntegerRange(0, 65535))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array('disabled' => true), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', '', array('disabled' => true)));
 
 		$select_option = new FormFieldSelectChoiceOption('None', 'none');
-		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'), new FormFieldSelectChoiceOption('SSL', 'ssl'))));
+		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'), new FormFieldSelectChoiceOption('SSL', 'ssl')), array('disabled' => true)));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
@@ -94,14 +94,21 @@ class SandboxMailController extends ModuleController
 
 	private function send_mail()
 	{
-		$configuration = new SMTPConfiguration();
-		$configuration->set_host($this->form->get_value('smtp_host'));
-		$configuration->set_port($this->form->get_value('smtp_port'));
-		$configuration->set_login($this->form->get_value('smtp_login'));
-		$configuration->set_password($this->form->get_value('smtp_password'));
-		$configuration->set_auth_mode($this->form->get_value('secure_protocol')->get_raw_value());
+		if ($this->form->get_value('use_smtp'))
+		{
+			$configuration = new SMTPConfiguration();
+			$configuration->set_host($this->form->get_value('smtp_host'));
+			$configuration->set_port($this->form->get_value('smtp_port'));
+			$configuration->set_login($this->form->get_value('smtp_login'));
+			$configuration->set_password($this->form->get_value('smtp_password'));
+			$configuration->set_auth_mode($this->form->get_value('secure_protocol')->get_raw_value());
 
-		$mailer = new SMTPMailSender($configuration);
+			$mailer = new SMTPMailSender($configuration);
+		}
+		else
+		{
+			$mailer = new DefaultMailSender();
+		}
 
 		$mail = new Mail();
 		$mail->add_recipient($this->form->get_value('recipient_mail'), $this->form->get_value('recipient_name'));

@@ -76,6 +76,22 @@ interface FormField
 	 * @return Template
 	 */
 	function display();
+	
+	/**
+	 * @desc Tells whether the field is disabled
+	 * @return bool
+	 */
+	function is_disabled();
+	
+	/**
+	 * @desc Disabled the field
+	 */
+	function disable();
+
+	/**
+	 * @desc Enables the field
+	 */
+	function enable();
 
 	/**
 	 * @desc Validates the field by cheching if all the constraints are satisfied.

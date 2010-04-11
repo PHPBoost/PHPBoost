@@ -35,5 +35,5 @@
 		# END buttons #
 	</fieldset>
 	
-	<input type="hidden" name="{E_HTML_ID}_disabled_fields" value="" />
+	<input type="hidden" id="{E_HTML_ID}_disabled_fields" name="{E_HTML_ID}_disabled_fields" value="" />
 </form>
