@@ -443,7 +443,7 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if( document.getElementById('url' + divid).style.display == 'table' )
+			if ( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
 				document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/plus.png';
@@ -454,9 +454,9 @@
 				var filename = '../kernel/framework/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
 				var data = null;
 				
-				if(window.XMLHttpRequest) // Firefox
+				if (window.XMLHttpRequest) // Firefox
 				   xhr_object = new XMLHttpRequest();
-				else if(window.ActiveXObject) // Internet Explorer
+				else if (window.ActiveXObject) // Internet Explorer
 				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 				else // XMLHttpRequest non support? par le navigateur
 					return;
@@ -466,14 +466,14 @@
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function() 
 				{
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{	
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
 						document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/minus.png';
 					}
-					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
+					else if ( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
 				}
 				xmlhttprequest_sender(xhr_object, null);
@@ -540,7 +540,7 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if( document.getElementById('url' + divid).style.display == 'table' )
+			if ( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
 				document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/plus.png';
@@ -551,14 +551,14 @@
 				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{	
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
 						document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/minus.png';
 					}
-					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
+					else if ( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
 				}
 				xmlhttprequest_sender(xhr_object, null);
