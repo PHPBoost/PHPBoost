@@ -148,7 +148,7 @@ class Sql
 		try
 		{
 			$query_conditions = new SqlParameterExtractor($conditions);
-			return AppContext::get_sql_common_query()->select_single_row(
+			return PersistenceContext::get_common_query()->select_single_row(
 			$table, $fields, $query_conditions->get_query(), $query_conditions->get_parameters());
 		}
 		catch (RowNotFoundException $exception)
@@ -203,7 +203,7 @@ class Sql
 	 */
 	public function count_table($table, $errline, $errfile)
 	{
-		return AppContext::get_sql_common_query()->count($table);
+		return PersistenceContext::get_common_query()->count($table);
 	}
 
 	/**
@@ -310,7 +310,7 @@ class Sql
 	 */
 	public function list_fields($table)
 	{
-		return AppContext::get_dbms_utils()->desc_table($table);
+		return PersistenceContext::get_dbms_utils()->desc_table($table);
 	}
 
 	/**
@@ -333,7 +333,7 @@ class Sql
 	 */
 	public function list_tables()
 	{
-		return AppContext::get_dbms_utils()->list_and_desc_tables();
+		return PersistenceContext::get_dbms_utils()->list_and_desc_tables();
 	}
 
 	/**
@@ -400,7 +400,7 @@ class Sql
 	 */
 	public function get_data_base_name()
 	{
-		return AppContext::get_dbms_utils()->get_database_name();
+		return PersistenceContext::get_dbms_utils()->get_database_name();
 	}
 
 	/**
@@ -410,7 +410,7 @@ class Sql
 	 */
 	public function list_databases()
 	{
-		return AppContext::get_dbms_utils()->list_databases();
+		return PersistenceContext::get_dbms_utils()->list_databases();
 	}
 
 	/**
@@ -420,7 +420,7 @@ class Sql
 	 */
 	public function create_database($db_name)
 	{
-		return AppContext::get_dbms_utils()->create_database($db_name);
+		return PersistenceContext::get_dbms_utils()->create_database($db_name);
 	}
 
 	/**
@@ -429,7 +429,7 @@ class Sql
 	 */
 	public function optimize_tables($table_array)
 	{
-		AppContext::get_dbms_utils()->optimize($table_array);
+		PersistenceContext::get_dbms_utils()->optimize($table_array);
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Sql
 	 */
 	public function repair_tables($table_array)
 	{
-		AppContext::get_dbms_utils()->repair($table_array);
+		PersistenceContext::get_dbms_utils()->repair($table_array);
 	}
 
 	/**
@@ -447,7 +447,7 @@ class Sql
 	 */
 	public function truncate_tables($table_array)
 	{
-		AppContext::get_dbms_utils()->truncate($table_array);
+		PersistenceContext::get_dbms_utils()->truncate($table_array);
 	}
 
 	/**
@@ -456,7 +456,7 @@ class Sql
 	 */
 	public function drop_tables($table_array)
 	{
-		AppContext::get_dbms_utils()->drop($table_array);
+		PersistenceContext::get_dbms_utils()->drop($table_array);
 	}
 
 	/**
@@ -522,7 +522,7 @@ class Sql
 	 */
 	public function get_dbms_version()
 	{
-		return AppContext::get_dbms_utils()->get_dbms_version();
+		return PersistenceContext::get_dbms_utils()->get_dbms_version();
 	}
 
 	/**
@@ -601,14 +601,14 @@ class Sql
 	private function select($query, $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$decoded_query = new SqlParameterExtractor($query);
-		return AppContext::get_sql_querier()->select(
+		return PersistenceContext::get_querier()->select(
 		$decoded_query->get_query(), $decoded_query->get_parameters(), $fetch_mode);
 	}
 
 	private function inject($query, $parameters = array())
 	{
 		$decoded_query = new SqlParameterExtractor($query);
-		return AppContext::get_sql_querier()->inject(
+		return PersistenceContext::get_querier()->inject(
 		$decoded_query->get_query(), $decoded_query->get_parameters());
 	}
 }

@@ -57,7 +57,7 @@ class AdminError404DAO extends SQLDAO
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 
-		parent::__construct($model, AppContext::get_sql_querier());
+		parent::__construct($model, PersistenceContext::get_querier());
 	}
 }
 ?>

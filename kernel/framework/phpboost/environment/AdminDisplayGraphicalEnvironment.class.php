@@ -63,7 +63,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 
-		$sql = AppContext::get_sql();
+		$sql = PersistenceContext::get_sql();
 
 		//If the member tried to connect
 		if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
@@ -371,8 +371,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$tpl->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => AppContext::get_sql_querier()->get_executed_requests_count() +
-			AppContext::get_sql()->get_executed_requests_number(),
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
+			PersistenceContext::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],

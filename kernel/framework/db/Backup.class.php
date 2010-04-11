@@ -60,7 +60,7 @@ class Backup
 	{
 		if (empty($this->tables))
 		{
-			$this->tables = AppContext::get_sql()->list_tables();
+			$this->tables = PersistenceContext::get_sql()->list_tables();
 		}
 		return $this->tables;
 	}
@@ -125,7 +125,7 @@ class Backup
 		{
 			if ($all_tables || in_array($table_info['name'], $tables)) //Table demandée
 			{
-				$rows_number = AppContext::get_sql_common_query()->count($table_info['name']);
+				$rows_number = PersistenceContext::get_common_query()->count($table_info['name']);
 				if ($rows_number > 0)
 				{
 					$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (`";

@@ -75,13 +75,13 @@ function articles_mini($position, $block)
 	}
 	
 	
-	$result = AppContext::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
+	$result = PersistenceContext::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
 	FROM " . DB_TABLE_ARTICLES . " a	
 	WHERE a.visible = 1 
 	ORDER BY " . $sort . " DESC ".
-	AppContext::get_sql()->limit(0, $mini_conf['nbr_articles']), __LINE__, __FILE__);
+	PersistenceContext::get_sql()->limit(0, $mini_conf['nbr_articles']), __LINE__, __FILE__);
 	
-	while ($row = AppContext::get_sql()->fetch_assoc($result))
+	while ($row = PersistenceContext::get_sql()->fetch_assoc($result))
 	{		
 		$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		

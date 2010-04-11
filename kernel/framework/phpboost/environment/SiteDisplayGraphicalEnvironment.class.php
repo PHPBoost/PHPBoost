@@ -114,7 +114,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//If the counter is to be displayed, we display it
 		if ($CONFIG['compteur'] == 1)
 		{
-			$compteur = AppContext::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
+			$compteur = PersistenceContext::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
 				'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
 
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
@@ -336,8 +336,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$template->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(),
-				'REQ' => AppContext::get_sql_querier()->get_executed_requests_count() + 
-			AppContext::get_sql()->get_executed_requests_number(),
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() + 
+			PersistenceContext::get_sql()->get_executed_requests_number(),
 				'L_REQ' => $LANG['sql_req'],
 				'L_ACHIEVED' => $LANG['achieved'],
 				'L_UNIT_SECOND' => $LANG['unit_seconds_short']

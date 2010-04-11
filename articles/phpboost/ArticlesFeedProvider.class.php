@@ -36,7 +36,7 @@ class ArticlesFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$sql_querier = AppContext::get_sql_querier();
+		$sql_querier = PersistenceContext::get_querier();
 		global $Cache, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
 
 		$Cache->load('articles');

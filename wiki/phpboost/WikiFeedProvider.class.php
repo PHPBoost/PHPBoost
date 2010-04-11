@@ -30,7 +30,7 @@ class WikiFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		$querier = AppContext::get_sql_querier();
+		$querier = PersistenceContext::get_querier();
 		global $LANG;
 		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
 
@@ -53,7 +53,7 @@ class WikiFeedProvider implements FeedProvider
 
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$querier = AppContext::get_sql_querier();
+		$querier = PersistenceContext::get_querier();
 		global $Cache, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
 
 		load_module_lang('wiki');

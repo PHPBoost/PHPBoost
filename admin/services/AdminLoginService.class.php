@@ -83,7 +83,7 @@ class AdminLoginService
 
 	private static function load_admin_data($login)
 	{
-		self::$admin_data = AppContext::get_sql_common_query()->select_single_row(DB_TABLE_MEMBER,
+		self::$admin_data = PersistenceContext::get_common_query()->select_single_row(DB_TABLE_MEMBER,
 		array('user_id', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob'),
 				'WHERE login=:login AND level=2', array('login' => $login));
 		self::$admin_uid = self::$admin_data['user_id'];
@@ -148,7 +148,7 @@ class AdminLoginService
 
 	private static function set_test_connections($tests)
 	{
-		AppContext::get_sql_querier()->inject(
+		PersistenceContext::get_querier()->inject(
 			'UPDATE ' . DB_TABLE_MEMBER . ' SET last_connect=:last_connect, test_connect=:test_connect
 			WHERE user_id=:user_id', array(
 				'last_connect' => time(),

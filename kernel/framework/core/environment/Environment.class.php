@@ -68,7 +68,7 @@ class Environment
 
 		// TODO Suppress uses of $Sql in the framework
 		global $Sql;
-		$Sql = AppContext::get_sql();
+		$Sql = PersistenceContext::get_sql();
 		/* END DEPRECATED */
 
 		self::load_cache();
@@ -330,7 +330,7 @@ class Environment
 			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
-			$num_entry_today = AppContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
+			$num_entry_today = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
 			. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
 			TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
 			$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
@@ -367,21 +367,21 @@ class Environment
 		$yesterday_timestamp = self::get_yesterday_timestamp();
 
 		//We insert today's entry in the stats table
-		AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
+		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
 		"stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y',
 		$yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp,
 		TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) .
 		"', 0, 0, '')", __LINE__, __FILE__);
 
 		//We retrieve the id we just come to create
-		$last_stats = AppContext::get_sql()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
+		$last_stats = PersistenceContext::get_sql()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
 
-		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET yesterday_visit = today_visit", __LINE__, __FILE__);
-		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
 		//We delete the referer entries older than one week
-		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
 		" WHERE last_update < '" . (self::get_yesterday_timestamp()) . "'", __LINE__, __FILE__);
 
 		//We retrieve the number of pages seen until now
@@ -393,22 +393,22 @@ class Environment
 		$pages_file->delete();
 
 		//How much visitors were there today?
-		$total_visit = AppContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
+		$total_visit = PersistenceContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id = 1", __LINE__, __FILE__);
 		//We truncate the table containing the visitors of today
-		AppContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id <> 1", __LINE__, __FILE__);
 		//We update the last changeday date
-		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
 			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) .
 				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
 		//We insert this visitor as a today visitor
-		AppContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
+		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(),
 		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
 
 		//We update the stats table: the number of visits today
-		AppContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
 		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" .
 		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
 		__LINE__, __FILE__);
@@ -449,7 +449,7 @@ class Environment
 		//If the user configured a delay and member accounts must be activated
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
 		{
-			AppContext::get_sql_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
+			PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
 				" WHERE timestamp < :timestamp AND user_aprob = 0",
 			array('timestamp' => (time() - $delay_unactiv_max)));
 		}
@@ -457,7 +457,7 @@ class Environment
 
 	private static function remove_captcha_entries()
 	{
-		AppContext::get_sql_querier()->inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
+		PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
 			" WHERE timestamp < :timestamp", array('timestamp' => self::get_yesterday_timestamp()));
 	}
 
@@ -547,7 +547,7 @@ class Environment
 
 	public static function destroy()
 	{
-		AppContext::close_db_connection();
+		PersistenceContext::close_db_connection();
 
 		ob_end_flush();
 	}

@@ -47,7 +47,7 @@ class CalendarSetup extends DefaultModuleSetup
 
 	private function drop_table()
 	{
-		AppContext::get_dbms_utils()->drop(self::$calendar_table);
+		PersistenceContext::get_dbms_utils()->drop(self::$calendar_table);
 	}
 
 	private function create_table()
@@ -62,7 +62,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array('primary' => array('id'));
-		AppContext::get_dbms_utils()->create_table(self::$calendar_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_table, $fields, $options);
 	}
 }
 

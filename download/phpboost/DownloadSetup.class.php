@@ -55,7 +55,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		AppContext::get_dbms_utils()->drop(array(self::$download_table, self::$download_cats_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$download_table, self::$download_cats_table));
 	}
 
 	private function create_tables()
@@ -98,7 +98,7 @@ class DownloadSetup extends DefaultModuleSetup
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
 				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
 		));
-		AppContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
 	}
 
 	private function create_faq_cats_table()
@@ -118,7 +118,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array('class' => array('type' => 'key', 'fields' => 'c_order'))
 		);
-		AppContext::get_dbms_utils()->create_table(self::$download_cats_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$download_cats_table, $fields, $options);
 	}
 
 	private function insert_data()
@@ -130,7 +130,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_data()
 	{
-		$common_query = AppContext::get_sql_common_query();
+		$common_query = PersistenceContext::get_common_query();
 		$common_query->insert(self::$download_table, array(
 			'id' => 1,
 			'idcat' => 1,
@@ -159,7 +159,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_cats_data()
 	{
-		$common_query = AppContext::get_sql_common_query();
+		$common_query = PersistenceContext::get_common_query();
 		$common_query->insert(self::$download_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,

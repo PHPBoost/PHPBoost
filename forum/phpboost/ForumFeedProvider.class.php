@@ -49,7 +49,7 @@ class ForumFeedProvider implements FeedProvider
 
     function get_feed_data_struct($idcat = 0, $name = '')
     {
-    	$querier = AppContext::get_sql_querier();
+    	$querier = PersistenceContext::get_querier();
         global $Cache, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
 
         $_idcat = $idcat;
