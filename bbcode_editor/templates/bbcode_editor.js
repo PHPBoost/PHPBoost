@@ -140,40 +140,39 @@ var BBcodeEditor_Core = Class.create(
 	
 	get_menu: function(element)
 	{
-		var xtable1 = Builder.node('table',
-						{'class':'bbcode', 'style':'width:100%'}, [
-							Builder.node('tbody', [
-								Builder.node('tr', [
-									Builder.node('td')
-								])
-							])
-						]);
-			
-		var xtable2 = Builder.node('table',
-						{'class': 'bbcode2', 'id':'bbcode_more'+element, 'style':'display:none;width:100%'}, [
-							Builder.node('tbody', [
-								Builder.node('tr', [
-									Builder.node('td')
-								])
-							])
-						]);
-
-		var xtable10 = Builder.node('table',
-							{'id': 'table-'+element, 'style':'margin:4px;margin-left:auto;margin-right:auto'}, [
-								Builder.node('tbody', [
-									Builder.node('tr', [
-										Builder.node('td', [
-											xtable1, xtable2
-										]),
-										Builder.node('td',
-											{'id': 'bbcode-td-'+element, 'style':'vertical-align:top;padding:5px 5px;'}, [
-											'&nbsp;'
-										])
-									])
-								])
-							]);
+		var xtd = new Element('td');
+		var xtr = new Element('tr');
+		xtr.insert(xtd);
+		var xtbody = new Element('tbody');
+		xtbody.insert(xtr);
+		var xtable1 = new Element('table',{'class':'bbcode'});
+		xtable1.setStyle({'width':'100%'});
+		xtable1.insert(xtbody);
 		
+		var xtd2 = new Element('td');
+		var xtr2 = new Element('tr');
+		xtr2.insert(xtd2);
+		var xtbody2 = new Element('tbody');
+		xtbody2.insert(xtr2);
+		var xtable2 = new Element('table',{'class': 'bbcode2', 'id':'bbcode_more'+element});
+		xtable2.setStyle({display:'none', 'width':'100%'});
+		xtable2.insert(xtbody2);
 		
+		var xtd10 = new Element('td');
+		xtd10.insert(xtable1);
+		xtd10.insert(xtable2);
+		var xtd11 = new Element('td', {'id': 'bbcode-td-'+element});
+		xtd11.setStyle({'verticalAlign':'top', 'padding':'5px 5px'});
+		xtd11.update('TOTRO');
+		var xtr10 = new Element('tr');
+		xtr10.insert(xtd10);
+		xtr10.insert(xtd11);
+		var xtbody10 = new Element('tbody');
+		xtbody10.insert(xtr10);
+		var xtable10 = new Element('table', {'id': 'table_'+element});
+		xtable10.setStyle({'margin':'4px', 'marginLeft':'auto', 'marginRight':'auto'});
+		xtable10.insert(xtbody10);			
+							
 		menu = xtable10;
 		return menu;
 	},
@@ -206,6 +205,8 @@ var BBcodeEditor_Core = Class.create(
 
 		if(Object.isFunction(values.onclick))
 			Event.observe(img, 'click', values.onclick);
+		if(Object.isFunction(values.onmouseout))
+			Event.observe(img, 'mouseout', values.onmouseout);
 
 		return img;
 	},
@@ -368,7 +369,8 @@ var BBcodeEditor_Core = Class.create(
 
 	display: function(bloc, classe)
 	{
-		var elt = $$('table#table-'+this.element+' table.'+classe+' td');
+		var str = 'table#table_'+this.element+' table.'+classe+' td';
+		var elt = $$(str);
 		if(!elt.length)
 			throw('Error - tables non found');
 			
@@ -392,6 +394,8 @@ var BBcodeEditor_Core = Class.create(
 				$(elt).insert(item);
 				menu = this.menuSmileys(x, item);
 				item.insert({'before':menu});
+				var fn = this.callbackToggleMenu(x.id, this.element);
+				menu.observe('mouseleave', fn);
 			}
 			else if (x.type == 'menu_title')
 			{
