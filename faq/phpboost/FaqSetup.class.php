@@ -55,7 +55,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		AppContext::get_dbms_utils()->drop(array(self::$faq_table, self::$faq_cats_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$faq_table, self::$faq_cats_table));
 	}
 
 	private function create_tables()
@@ -81,7 +81,7 @@ class FaqSetup extends DefaultModuleSetup
 				'question' => array('type' => 'fulltext', 'fields' => 'question'),
 				'answer' => array('type' => 'fulltext', 'fields' => 'answer')
 		));
-		AppContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
 	}
 
 	private function create_faq_cats_table()
@@ -99,7 +99,7 @@ class FaqSetup extends DefaultModuleSetup
 			'num_questions' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array('primary' => array('id'));
-		AppContext::get_dbms_utils()->create_table(self::$faq_cats_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$faq_cats_table, $fields, $options);
 	}
 
 	private function insert_data()
@@ -111,7 +111,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_data()
 	{
-		$common_query = AppContext::get_sql_common_query();
+		$common_query = PersistenceContext::get_common_query();
 		$common_query->insert(self::$faq_table, array(
 			'id' => 1,
 			'idcat' => 2,
@@ -134,7 +134,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_cats_data()
 	{
-		$common_query = AppContext::get_sql_common_query();
+		$common_query = PersistenceContext::get_common_query();
 		$common_query->insert(self::$faq_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,

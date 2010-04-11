@@ -50,7 +50,7 @@ class Session
 
 	public function __construct()
 	{
-		$this->sql = AppContext::get_sql();
+		$this->sql = PersistenceContext::get_sql();
 	}
 
 	/**

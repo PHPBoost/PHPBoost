@@ -277,7 +277,7 @@ class Cache
 
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG = unserialize((string) AppContext::get_sql()->query(
+		$CONFIG = unserialize((string) PersistenceContext::get_sql()->query(
 			"SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name='config'"));
 		foreach ($CONFIG as $key => $value)
 		{

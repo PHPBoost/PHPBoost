@@ -68,7 +68,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	public function get_number_of_matching_rows(array $filters)
 	{
-		return AppContext::get_sql_common_query()->count(DB_TABLE_MEMBER,
+		return PersistenceContext::get_common_query()->count(DB_TABLE_MEMBER,
 		$this->get_filtered_clause($filters), $this->parameters);
 	}
 
@@ -76,7 +76,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 	{
 		$results = array();
 		$this->build_query($limit, $offset, $sorting_rule, $filters);
-		$result = AppContext::get_sql_querier()->select($this->query, $this->parameters);
+		$result = PersistenceContext::get_querier()->select($this->query, $this->parameters);
 		foreach ($result as $row)
 		{
 			$table_row = $this->build_table_row($row);

@@ -33,7 +33,7 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	
     public function __construct()
     {
-        $this->sql_querier = AppContext::get_sql();
+        $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('poll');
     }
     

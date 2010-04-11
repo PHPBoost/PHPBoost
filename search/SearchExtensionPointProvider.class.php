@@ -36,7 +36,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	public function __construct()
 	{
-		$this->sql_querier = AppContext::get_sql_common_query();
+		$this->sql_querier = PersistenceContext::get_common_query();
 		parent::__construct('search');
 	}
 

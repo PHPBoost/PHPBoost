@@ -36,7 +36,7 @@ class DownloadFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$querier = AppContext::get_sql_querier();
+		$querier = PersistenceContext::get_querier();
 		require_once(PATH_TO_ROOT . '/download/download_auth.php');
 
 		global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;

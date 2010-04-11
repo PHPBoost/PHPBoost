@@ -41,7 +41,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
-        $querier = AppContext::get_sql();
+        $querier = PersistenceContext::get_sql();
 		//Récupération du tableau linéarisé dans la bdd
 		$news_config = unserialize($querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
@@ -73,7 +73,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 	public function get_search_request($args)
 	{
-        $querier = AppContext::get_sql();
+        $querier = PersistenceContext::get_sql();
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
@@ -153,7 +153,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		global $User, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
-        $querier = AppContext::get_sql();
+        $querier = PersistenceContext::get_sql();
 		// Begin.
 		load_module_lang('news');
 		$Cache->load('news');

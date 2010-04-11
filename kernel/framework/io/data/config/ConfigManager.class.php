@@ -82,7 +82,7 @@ class ConfigManager
 
 		try
 		{
-			$result = AppContext::get_sql_common_query()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
+			$result = PersistenceContext::get_common_query()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
 		}
 		catch(RowNotFoundException $ex)
 		{
@@ -132,16 +132,16 @@ class ConfigManager
 	{
 		$serialized_data = serialize($data);
 
-		$update = AppContext::get_sql_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', array('value' => $serialized_data, 'name' => $name));
+		$update = PersistenceContext::get_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', array('value' => $serialized_data, 'name' => $name));
 
 		if ($update->get_affected_rows() == 0)
 		{
 			// If the update requests finds the row but has nothing to update, it affects 0 rows
-			$count = AppContext::get_sql_common_query()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
+			$count = PersistenceContext::get_common_query()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
 				
 			if ($count == 0)
 			{
-				AppContext::get_sql_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', array('name' => $name, 'value' => $serialized_data));
+				PersistenceContext::get_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', array('name' => $name, 'value' => $serialized_data));
 			}
 		}
 	}

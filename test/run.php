@@ -28,6 +28,6 @@ req('/test/phpunit.php');
 if (!empty($_REQUEST['is_html'])) {
 	echo '</pre>';
 }
-AppContext::close_db_connection();
+PersistenceContext::close_db_connection();
 
 ?>

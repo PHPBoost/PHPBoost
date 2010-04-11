@@ -54,37 +54,21 @@ class AppContext
 	 */
 	private static $bench;
 	/**
-	 * @var SQLQuerier
-	 */
-	private static $sql_querier;
-	/**
-	 * @var CommonQuery
-	 */
-	private static $sql_common_query;
-	/**
-	 * @var DBMSUtils
-	 */
-	private static $dbms_utils;
-	/**
-	 * @var Sql
-	 */
-	private static $sql;
-	/**
 	 * @var Session
 	 */
 	private static $session;
-    /**
-     * @var User
-     */
-    private static $user;
-    /**
-     * @var ExtensionPointProviderService
-     */
-    private static $extension_provider_service;
-    /**
-     * @var CacheService
-     */
-    private static $cache_service;
+	/**
+	 * @var User
+	 */
+	private static $user;
+	/**
+	 * @var ExtensionPointProviderService
+	 */
+	private static $extension_provider_service;
+	/**
+	 * @var CacheService
+	 */
+	private static $cache_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -151,88 +135,20 @@ class AppContext
 	}
 
 	/**
-	 * @deprecated de merde pour toi benoit
+	 * Inits the session
 	 */
-	public static function set_sql($sql)
+	public static function init_session()
 	{
-		self::$sql = $sql;
+		self::set_session(new Session());
 	}
 
 	/**
-	 * Returns the data base connection
-	 * @return Sql
+	 * Sets the session
 	 */
-	public static function get_sql()
+	public static function set_session(Session $session)
 	{
-		if (self::$sql === null)
-		{
-			self::$sql = new Sql();
-		}
-		return self::$sql;
+		self::$session = $session;
 	}
-
-	/**
-	 * Returns the sql querier
-	 * @return SqlQuerier
-	 */
-	public static function get_sql_querier()
-	{
-		if (self::$sql_querier === null)
-		{
-			self::$sql_querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
-		}
-		return self::$sql_querier;
-	}
-
-	/**
-	 * Returns the sql querier
-	 * @return CommonQuery
-	 */
-	public static function get_sql_common_query()
-	{
-		if (self::$sql_common_query === null)
-		{
-			self::$sql_common_query = new CommonQuery(self::get_sql_querier());
-		}
-		return self::$sql_common_query;
-	}
-
-	/**
-	 * Returns the sql querier
-	 * @return DBMSUtils
-	 */
-	public static function get_dbms_utils()
-	{
-		if (self::$dbms_utils === null)
-		{
-			self::$dbms_utils = DBFactory::new_dbms_util(self::get_sql_querier());
-		}
-		return self::$dbms_utils;
-	}
-
-	/**
-	 * Closes the database connection
-	 */
-	public static function close_db_connection()
-	{
-		DBFactory::get_db_connection()->disconnect();
-	}
-
-    /**
-     * Inits the session
-     */
-    public static function init_session()
-    {
-        self::set_session(new Session());
-    }
-
-    /**
-     * Sets the session
-     */
-    public static function set_session(Session $session)
-    {
-        self::$session = $session;
-    }
 
 	/**
 	 * Returns the current user's session
@@ -266,39 +182,39 @@ class AppContext
 		self::$user = $user;
 	}
 
-    /**
-     * Returns the cache service
-     * @return CacheService
-     */
-    public static function get_cache_service()
-    {
-    	if (self::$cache_service === null)
-    	{
-    		self::$cache_service = new CacheService();
-    	}
-        return self::$cache_service;
-    }
+	/**
+	 * Returns the cache service
+	 * @return CacheService
+	 */
+	public static function get_cache_service()
+	{
+		if (self::$cache_service === null)
+		{
+			self::$cache_service = new CacheService();
+		}
+		return self::$cache_service;
+	}
 
-    public static function set_cache_service(CacheService $cache_service)
-    {
-        self::$cache_service = $cache_service;
-    }
+	public static function set_cache_service(CacheService $cache_service)
+	{
+		self::$cache_service = $cache_service;
+	}
 
-    /**
-     * Inits the extension provider service
-     */
-    public static function init_extension_provider_service()
-    {
-        self::$extension_provider_service = new ExtensionPointProviderService();
-    }
-	
-    /**
-     * @return ExtensionPointProviderService
-     */
-    public static function get_extension_provider_service()
-    {
-        return self::$extension_provider_service;
-    }
+	/**
+	 * Inits the extension provider service
+	 */
+	public static function init_extension_provider_service()
+	{
+		self::$extension_provider_service = new ExtensionPointProviderService();
+	}
+
+	/**
+	 * @return ExtensionPointProviderService
+	 */
+	public static function get_extension_provider_service()
+	{
+		return self::$extension_provider_service;
+	}
 }
 
 ?>

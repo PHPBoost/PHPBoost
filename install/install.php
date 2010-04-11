@@ -342,7 +342,7 @@ switch($step)
 					);
 					$db_connection = new MySQLDBConnection();
 					$db_connection->connect($db_connection_data);
-					$Sql = AppContext::get_sql();
+					$Sql = PersistenceContext::get_sql();
 					//Création du fichier de configuration
 
 
@@ -530,21 +530,21 @@ switch($step)
 			$CONFIG['html_auth'] = array ('r2' => 1);
 			$CONFIG['forbidden_tags'] = array ();
 
-			$Sql = AppContext::get_sql();
+			$Sql = PersistenceContext::get_sql();
 
 			//On insère dans la base de données
-			AppContext::get_sql_querier()->inject(
+			PersistenceContext::get_querier()->inject(
 				"UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'",
 			array('config' => serialize($CONFIG)));
 
 			//On installe la langue
-			AppContext::get_sql_querier()->inject(
+			PersistenceContext::get_querier()->inject(
 				"INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)",
 			array('config_lang' => $CONFIG['lang']));
 
 			//On installe le thème
 			$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $lang);
-			AppContext::get_sql_querier()->inject(
+			PersistenceContext::get_querier()->inject(
 				"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
 				VALUES (:theme, 1, -1, :left_column, :right_column)",
 			array(
@@ -707,7 +707,7 @@ switch($step)
 			//Si il n'y a pas d'erreur on enregistre dans la table
 			if (empty($error))
 			{
-				$Sql = AppContext::get_sql();
+				$Sql = PersistenceContext::get_sql();
 
 				//On crée le code de déverrouillage
 
@@ -810,7 +810,7 @@ switch($step)
     		break;
     		//Fin
 	case STEP_END:
-		$Sql = AppContext::get_sql();
+		$Sql = PersistenceContext::get_sql();
 
 
 		$Cache = new Cache;

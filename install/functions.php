@@ -68,10 +68,10 @@ function check_database_config($host, $login, $password, &$database, $tables_pre
 		// TODO rework with new API
 
 		//Tentative de création de la base de données
-		$database = AppContext::get_dbms_utils()->create_database($database);
+		$database = PersistenceContext::get_dbms_utils()->create_database($database);
 
 		//On regarde si elle a pu être traitée
-		$databases_list = AppContext::get_dbms_utils()->list_databases();
+		$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
 
 		$db_connection->disconnect();
 
@@ -86,7 +86,7 @@ function check_database_config($host, $login, $password, &$database, $tables_pre
 	}
 
 	defined('PREFIX') or define('PREFIX', $tables_prefix);
-	$tables_list = AppContext::get_dbms_utils()->list_tables();
+	$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
 
 	// Is PHPBoost already installed in this database?
 	if (!empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']))
