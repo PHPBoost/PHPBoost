@@ -69,7 +69,8 @@ class SearchFormController extends ModuleController {
 		return $this->form;
 	}
 
-	private function execute_search() {
+	private function execute_search()
+	{	
 		$providers = SearchProvidersService::get_providers();
 	}
 	
