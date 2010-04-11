@@ -78,7 +78,7 @@ class SandboxMailController extends ModuleController
 		$this->form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', 'Use SMTP', false,
-			array('events' => array('click' => 'if ($F("smtp_config_use_smtp")) HTMLForms.getField("smtp_config_smtp_host").disable(); else HTMLForms.getField("smtp_config_smtp_host").enable();'))));
+			array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") HTMLForms.getField("smtp_config_smtp_host").enable(); else HTMLForms.getField("smtp_config_smtp_host").disable();'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_port', 'SMTP port', 25, array(), array(new FormFieldConstraintIntegerRange(0, 65535))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array(), array(new FormFieldConstraintNotEmpty())));

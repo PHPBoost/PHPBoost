@@ -164,7 +164,7 @@ var FormField = Class
 			clearErrorMessage : function() {
 				if ($('onblurContainerResponse' + this.id)) {
 					$('onblurContainerResponse' + this.id).innerHTML = '';
-					
+
 					Effect.Appear('onblurContainerResponse' + this.id, {
 						duration : 0.2
 					});
@@ -172,6 +172,7 @@ var FormField = Class
 					Effect.Fade('onblurMesssageResponse' + this.id, {
 						duration : 0.2
 					});
+				}
 			},
 			liveValidate : function() {
 				if (!this.isDisabled()) {
