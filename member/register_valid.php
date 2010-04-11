@@ -64,6 +64,11 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_yahoo = retrieve(POST, 'user_yahoo', '');
 	$user_web = retrieve(POST, 'user_web', '');
 	
+	if (strpos($user_web, '://') === false)
+	{
+		$user_web = 'http://' . $user_web;
+	}
+	
 	//Gestion de la date de naissance.
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
