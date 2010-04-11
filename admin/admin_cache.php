@@ -36,7 +36,7 @@ if (empty($cache_mode))    // Génération du cache de la configuration
     //Si c'est confirmé on execute
     if (!empty($_POST['cache']))
     {
-        CacheManager::clear();
+        AppContext::get_cache_service()->clear_cache();
         AppContext::get_response()->redirect('/admin/admin_cache.php?s=1');
     }
     else //Sinon on rempli le formulaire
@@ -67,7 +67,7 @@ else    // Génération du cache des rss
     //Si c'est confirmé on execute
     if (!empty($_POST['cache']))
     {
-        Feed::clear_cache();
+        AppContext::get_cache_service()->clear_syndication_cache();
         
         AppContext::get_response()->redirect('/admin/admin_cache.php?cache=syndication&s=1');
     }

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          KernelExtensionPointProvider.class.php
+ *                          CLICacheCommand.class.php
  *                            -------------------
- *   begin                : February 06, 2010
+ *   begin                : April 11, 2010
  *   copyright            : (C) 2010 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,33 @@
  *
  ###################################################*/
 
-class KernelExtensionPointProvider extends ExtensionPointProvider
+class CLICacheCommand extends CLIMultipleGoalsCommand
 {
+	private static $name = 'cache';
+	private static $goals = array('clear' => 'CLIClearCacheCommand');
+
 	public function __construct()
 	{
-		parent::__construct('kernel');
+		parent::__construct(self::$name, self::$goals);
 	}
 	
-	public function commands()
+	public function short_description()
 	{
-		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand'));
+		return 'manages the phpboost cache';
+	}
+
+	private function call($goal_name, array $args)
+	{
+		if (isset(self::$goals[$goal_name]))
+		{
+			$goal = new self::$goals[$goal_name]();
+			$goal->execute($args);
+		}
+		else
+		{
+			CLIOutput::writeln('goal ' . $goal . ' does not exist');
+			$this->help(array());
+		}
 	}
 }
 ?>
