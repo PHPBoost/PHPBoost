@@ -61,6 +61,10 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $css_class = '';
 	/**
+	 * @var boolean
+	 */
+	protected $hidden = false;
+	/**
 	 * @var string
 	 */
 	protected $required = false;
@@ -81,7 +85,11 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $template = null;
 
+	/**
+	 * @var string[string]
+	 */
 	protected $events = array();
+	
 	/**
 	 * @desc Constructs and set parameters to the field.
 	 * The specific parameters of this abstract class (common with many fields) are the following:
@@ -326,6 +334,10 @@ abstract class AbstractFormField implements FormField
 					$this->events = $value;
 					unset($field_options['events']);
 					break;
+				case 'hidden':
+					$this->hidden = $value;
+					unset($field_options['hidden']);
+					break;
 				case 'required':
 					$this->set_required($value);
 					if ($value)
@@ -352,7 +364,8 @@ abstract class AbstractFormField implements FormField
 			'CLASS' => $this->get_css_class(),
 			'FORM_ID' => $this->form_id,
 			'C_DISABLED' => $this->is_disabled(),
-			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code()
+			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
+			'C_HIDDEN' => $this->hidden
 		));
 
 		foreach ($this->get_js_validations() as $constraint)
@@ -423,7 +436,7 @@ abstract class AbstractFormField implements FormField
 	{
 		$this->disabled = $disabled;
 	}
-
+	
 	public function set_template(Template $template)
 	{
 		$this->template = $template;

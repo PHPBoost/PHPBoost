@@ -32,12 +32,12 @@
  */
 class FormFieldsetHorizontal extends AbstractFormFieldset
 {
-	private static $tpl_src = '<div class="horizontal_fieldset" id="{E_ID}"># IF C_DESCRIPTION #<span style="float:left">{E_DESCRIPTION}</span># ENDIF ## START fields ## INCLUDE fields.FIELD # # END fields #</div>
+	private static $tpl_src = '<div class="horizontal_fieldset" id="{E_ID}" # IF C_HIDDEN # style="display:none;" # ENDIF #># IF C_DESCRIPTION #<span style="float:left">{E_DESCRIPTION}</span># ENDIF ## START fields ## INCLUDE fields.FIELD # # END fields #</div>
 	<div class="spacer"></div>';
 
-	public function __construct($id)
+	public function __construct($id, $options = array())
 	{
-		parent::__construct($id);
+		parent::__construct($id, $options);
 	}
 
 	/**

@@ -38,9 +38,9 @@ class FormFieldsetHTML extends AbstractFormFieldset
      * @desc constructor
      * @param string $name The name of the fieldset
      */
-    public function __construct($id, $name)
+    public function __construct($id, $name, $options = array())
     {
-    	parent::__construct($id);
+    	parent::__construct($id, $options);
         $this->title = $name;
     }
 

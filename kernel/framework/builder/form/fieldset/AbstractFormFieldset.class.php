@@ -36,15 +36,41 @@ abstract class AbstractFormFieldset implements FormFieldset
 	protected $fields = array();
 	protected $description = '';
 	protected $id = '';
+	/**
+	 * @var boolean
+	 */
+	protected $hidden = false;
 
 	/**
 	 * @var Template
 	 */
 	private $template = null;
-	
-	public function __construct($id)
+
+	public function __construct($id, $options = array())
 	{
 		$this->id = $id;
+		$this->compute_options($options);
+	}
+
+	protected function compute_options(array &$options)
+	{
+		foreach($options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'description':
+					$this->set_description($value);
+					unset($options['subtitle']);
+					break;
+				case 'hidden':
+					$this->hidden = $value;
+					unset($options['hidden']);
+					break;
+				default :
+					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
+			}
+		}
 	}
 
 	public function set_description($description)
@@ -134,12 +160,13 @@ abstract class AbstractFormFieldset implements FormFieldset
 		$template->assign_vars(array(
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
-			'ID' => $this->form_id . '_' . $this->id . '_fieldset'
+			'ID' => $this->form_id . '_' . $this->id . '_fieldset',
+			'C_HIDDEN' => $this->hidden
 		));
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(), array(
-				'FIELD' => $field->display(),
+			'FIELD' => $field->display(),
 			));
 		}
 	}
