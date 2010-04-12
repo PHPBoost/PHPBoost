@@ -60,7 +60,7 @@ class SandboxMailController extends ModuleController
 	{
 		$this->form = new HTMLForm('smtp_config');
 
-		$fieldset = new FormFieldsetHTML('Mail');
+		$fieldset = new FormFieldsetHTML('mail_properties', 'Mail');
 		$this->form->add_fieldset($fieldset);
 		$sender_mail = new FormFieldMailEditor('sender_mail', 'Sender mail', '');
 		$fieldset->add_field($sender_mail);
@@ -74,11 +74,15 @@ class SandboxMailController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('mail_subject', 'Mail subject', '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_content', 'Content', ''));
 
-		$fieldset = new FormFieldsetHTML('SMTP configuration');
+		$fieldset = new FormFieldsetHTML('send_configuration', 'SMTP configuration');
+		$this->form->add_fieldset($fieldset);
+		$fieldset->add_field(new FormFieldCheckbox('use_smtp', 'Use SMTP', false,
+			array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") { HTMLForms.getField("smtp_config_smtp_host").enable(); Effect.Appear("smtp_config_smtp_configuration_fieldset"); } else { HTMLForms.getField("smtp_config_smtp_host").disable(); Effect.Fade("smtp_config_smtp_configuration_fieldset"); }'))));
+
+
+		$fieldset = new FormFieldsetHTML('smtp_configuration', 'Send configuration');
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('use_smtp', 'Use SMTP', false,
-		array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") HTMLForms.getField("smtp_config_smtp_host").enable(); else HTMLForms.getField("smtp_config_smtp_host").disable();'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_port', 'SMTP port', 25, array('disabled' => true), array(new FormFieldConstraintIntegerRange(0, 65535))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', 'SMTP login', '', array('disabled' => true), array(new FormFieldConstraintNotEmpty())));

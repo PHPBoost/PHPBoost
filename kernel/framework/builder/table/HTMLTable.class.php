@@ -122,7 +122,7 @@ class HTMLTable extends HTMLElement
 		{
 			$form_id = 'filters_form_' . $this->arg_id;
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
-			$fieldset = new FormFieldsetHorizontal(LangLoader::get_class_message('filters', __CLASS__));
+			$fieldset = new FormFieldsetHorizontal('filters', LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters as $filter)
 			{
 				$fieldset->add_field($filter->get_form_field());

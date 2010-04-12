@@ -1,5 +1,5 @@
 		# START actions #
-		<dl>
+		<dl id="{E_ID}_field">
 			<dt>
 				<label>
 					{actions.LABEL}

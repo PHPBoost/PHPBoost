@@ -92,7 +92,7 @@ class AdminSearchConfigController extends AdminSearchController {
 
 	private function add_configuration_fieldset()
 	{
-		$fieldset = new FormFieldsetHTML($this->lang['search_config']);
+		$fieldset = new FormFieldsetHTML('search_config', $this->lang['search_config']);
 		$this->form->add_fieldset($fieldset);
 
 		$id = 'nb_results_per_page';
@@ -113,7 +113,7 @@ class AdminSearchConfigController extends AdminSearchController {
 
 	private function add_cache_configuration_fieldset()
 	{
-		$fieldset = new FormFieldsetHTML($this->lang['search_cache']);
+		$fieldset = new FormFieldsetHTML('search_cache', $this->lang['search_cache']);
 		$this->form->add_fieldset($fieldset);
 
 		$id = 'cache_lifetime';
@@ -135,7 +135,7 @@ class AdminSearchConfigController extends AdminSearchController {
 
 	private function add_clear_cache_fieldset()
 	{
-		$fieldset = new FormFieldsetHTML($this->lang['clear_out_cache']);
+		$fieldset = new FormFieldsetHTML('clear_cache', $this->lang['clear_out_cache']);
 		$this->form->add_fieldset($fieldset);
 
 		$id = 'clear_cache';

@@ -11,7 +11,7 @@
 		}
 		-->
 		</script>
-		<dl>
+		<dl id="{E_ID}_field">
 			<dt>
 				<label for="{E_ID}">* {LABEL}</label>
 				# IF DESCRIPTION # <br /><span class="text_small">{DESCRIPTION}</span> # ENDIF #

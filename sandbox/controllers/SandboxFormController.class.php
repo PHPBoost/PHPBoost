@@ -79,7 +79,7 @@ class SandboxFormController extends ModuleController
 		$form = new HTMLForm('sandboxForm');
 
 		// FIELDSET
-		$fieldset = new FormFieldsetHTML('Fieldset');
+		$fieldset = new FormFieldsetHTML('fieldset_1', 'Fieldset');
 		$form->add_fieldset($fieldset);
 
 		$fieldset->set_description('Ceci est ma description');
@@ -158,7 +158,7 @@ class SandboxFormController extends ModuleController
 		)
 		));
 
-		$fieldset2 = new FormFieldsetHTML('Fieldset 2');
+		$fieldset2 = new FormFieldsetHTML('fieldset2', 'Fieldset 2');
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA
@@ -180,7 +180,7 @@ class SandboxFormController extends ModuleController
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 
 		// AUTH
-		$fieldset3 = new FormFieldsetHTML('Autorisations');
+		$fieldset3 = new FormFieldsetHTML('fieldset3', 'Autorisations');
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization('Action 1', 1, 'Autorisations pour l\'action 1'), new ActionAuthorization('Action 2', 2)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
 		$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
@@ -188,14 +188,14 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset3);
 
 		// VERTICAL FIELDSET
-		$vertical_fieldset = new FormFieldsetVertical();
+		$vertical_fieldset = new FormFieldsetVertical('fieldset4');
         $vertical_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($vertical_fieldset);
 		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
 
 		// HORIZONTAL FIELDSET
-		$horizontal_fieldset = new FormFieldsetHorizontal();
+		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
         $horizontal_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($horizontal_fieldset);
 		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));

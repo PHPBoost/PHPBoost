@@ -34,12 +34,18 @@ abstract class AbstractFormFieldset implements FormFieldset
 {
 	private $form_id = '';
 	protected $fields = array();
-	private $description = '';
+	protected $description = '';
+	protected $id = '';
 
 	/**
 	 * @var Template
 	 */
 	private $template = null;
+	
+	public function __construct($id)
+	{
+		$this->id = $id;
+	}
 
 	public function set_description($description)
 	{
@@ -127,7 +133,9 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		$template->assign_vars(array(
             'C_DESCRIPTION' => !empty($this->description),
-            'DESCRIPTION' => $this->description));
+            'DESCRIPTION' => $this->description,
+			'ID' => $this->form_id . '_' . $this->id . '_fieldset'
+		));
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(), array(
