@@ -61,7 +61,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 			{
 				case 'description':
 					$this->set_description($value);
-					unset($options['subtitle']);
+					unset($options['description']);
 					break;
 				case 'hidden':
 					$this->hidden = $value;
