@@ -52,6 +52,7 @@ $lang = array(
 	'smtp_secure_protocol_none' => 'None',
 	'smtp_secure_protocol_tls' => 'TLS',
 	'smtp_secure_protocol_ssl' => 'SSL',
+	'mail_config_saved' => 'The configuration has been saved successfully'
 );
 
 ?>

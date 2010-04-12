@@ -693,7 +693,7 @@ switch($step)
 				{
 					return $LANG['admin_passwords_error'];
 				}
-				elseif (!Mail::check_validity($user_mail))
+				elseif (!MailUtil::is_mail_valid($user_mail))
 				{
 					return $LANG['admin_email_error'];
 				}
