@@ -39,8 +39,8 @@ class FormFieldConstraintMailAddress extends FormFieldConstraintRegex implements
 			$js_message = LangLoader::get_message('doesnt_match_mail_regex', 'builder-form-Validator');
 		}
 		parent::__construct(
-			'`^(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', 
-			'`^(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}$`i', 
+			MailUtil::get_mail_checking_regex(), 
+			MailUtil::get_mail_checking_regex(), 
 			$js_message
 		);
 	}

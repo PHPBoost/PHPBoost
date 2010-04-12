@@ -51,7 +51,7 @@ class AdminMailConfigController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$view = new StringTemplate('# IF C_SUBMIT #
-			<div class="success" id="mail_config_saved_success">Configuration saved</div>
+			<div class="success" id="mail_config_saved_success">{L_MAIL_CONFIG_SAVED}</div>
 			<script type="text/javascript"><!--
 			window.setTimeout(function() { Effect.Fade("mail_config_saved_success"); }, 5000);
 			--></script>
@@ -83,6 +83,7 @@ class AdminMailConfigController extends AdminController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			$view->add_lang($this->lang);
 			$view->assign_vars(array(
 				'C_SUBMIT' => true
 			));
@@ -97,8 +98,12 @@ class AdminMailConfigController extends AdminController
 		
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_mail_config']);
 		$this->form->add_fieldset($fieldset);
+		
 		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['default_mail_sender'], '', array('required' => true, 'description' => $this->lang['default_mail_sender_explain'])));
-		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], '', array('required' => true, 'description' => $this->lang['administrators_mails_explain'])));
+		
+		$multi_mail_pattern = '`^' . MailUtil::get_mail_checking_raw_regex() . '(?:,' . MailUtil::get_mail_checking_raw_regex() . ')*$`i';
+		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], '', array('required' => true, 'description' => $this->lang['administrators_mails_explain']), array(new FormFieldConstraintRegex($multi_mail_pattern, $multi_mail_pattern))));
+		
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail_signature'], '', array('description' => $this->lang['mail_signature_explain'])));
 
 		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['send_protocol'], array('description' => $this->lang['send_protocol_explain']));
