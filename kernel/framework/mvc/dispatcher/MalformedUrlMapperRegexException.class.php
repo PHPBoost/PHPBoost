@@ -31,7 +31,7 @@
  * @package mvc
  * @subpackage dispatcher
  */
-class MalformedUrlMapperRegex extends DispatcherException
+class MalformedUrlMapperRegexException extends DispatcherException
 {
 	public function __construct($regex, $message)
 	{
