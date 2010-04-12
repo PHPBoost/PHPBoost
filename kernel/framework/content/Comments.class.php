@@ -295,7 +295,7 @@ class Comments
 						//Post form
 						
 						$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . '&amp;token=' . $Session->get_token() . '&amp;updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : ''));
-						$fieldset = new FormFieldsetHTML($LANG['edit_comment']);
+						$fieldset = new FormFieldsetHTML('edit_comment', $LANG['edit_comment']);
 						if ($is_guest) //Visiteur
 						{
 							$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $row['login'], array(
@@ -456,7 +456,7 @@ class Comments
 				//Post form
 				
 				$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
-				$fieldset = new FormFieldsetHTML($LANG['add_comment']);
+				$fieldset = new FormFieldsetHTML('add_comment', $LANG['add_comment']);
 				if ($is_guest) //Visiteur
 				{
 					$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $LANG['guest'], array(

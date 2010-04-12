@@ -1,4 +1,4 @@
-		<dl>
+		<dl id="{E_ID}_field">
 			<dt>
 				<label for="{E_ID}">
 					# IF C_REQUIRED # * # ENDIF #

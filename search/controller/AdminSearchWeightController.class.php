@@ -96,7 +96,7 @@ class AdminSearchWeightController extends AdminSearchController {
 
 	private function add_fieldset()
 	{
-		$fieldset = new FormFieldsetHTML($this->lang['search_config_weighting']);
+		$fieldset = new FormFieldsetHTML('search_weighting', $this->lang['search_config_weighting']);
 		$fieldset->set_description($this->lang['search_config_weighting_explain']);
 		$this->add_weightings_fields($fieldset);
 		$this->form->add_fieldset($fieldset);

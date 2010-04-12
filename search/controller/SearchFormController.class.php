@@ -59,7 +59,7 @@ class SearchFormController extends ModuleController {
 	private function build_form()
 	{
 		$this->form = new HTMLForm('full_search_form');
-		$fieldset = new FormFieldsetHTML($this->lang['title']);
+		$fieldset = new FormFieldsetHTML('search', $this->lang['title']);
 		$value = 'coucou';
 		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], $value);
 		$fieldset->add_field($searched_input_text);

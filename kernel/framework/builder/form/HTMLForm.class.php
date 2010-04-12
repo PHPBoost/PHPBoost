@@ -98,7 +98,7 @@ class HTMLForm
 	private function add_csrf_protection()
 	{
 		$csrf_protection_field = new FormFieldCSRFToken();
-		$csrf_protection_fieldset = new FormFieldsetHidden();
+		$csrf_protection_fieldset = new FormFieldsetHidden('csrf_protection');
 		$csrf_protection_fieldset->add_field($csrf_protection_field);
 		$this->add_fieldset($csrf_protection_fieldset);
 	}

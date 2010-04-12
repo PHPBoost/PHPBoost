@@ -32,8 +32,13 @@
  */
 class FormFieldsetVertical extends AbstractFormFieldset
 {
-    private static $tpl_src = '<div class="vertical_fieldset"># IF C_DESCRIPTION #<p>{E_DESCRIPTION}</p># ENDIF ## START fields # # INCLUDE fields.FIELD # # END fields #</div>';
+    private static $tpl_src = '<div class="vertical_fieldset" id="{E_ID}"># IF C_DESCRIPTION #<p>{E_DESCRIPTION}</p># ENDIF ## START fields # # INCLUDE fields.FIELD # # END fields #</div>';
 
+    public function __construct($id)
+    {
+    	parent::__construct($id);
+    }
+    
     /**
      * @return Template
      */
