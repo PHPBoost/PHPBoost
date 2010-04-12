@@ -1,5 +1,5 @@
 		# START actions #
-		<dl id="{E_ID}_field">
+		<dl id="{E_ID}_field" # IF C_HIDDEN # style="display:none;" # ENDIF #>
 			<dt>
 				<label>
 					{actions.LABEL}
