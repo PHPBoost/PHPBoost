@@ -85,12 +85,12 @@ class AdminMailConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_mail_config']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['default_mail_sender'], '', array('required' => true, 'description' => $this->lang['default_mail_sender_explain'])));
+		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['default_mail_sender_explain'])));
 
 		$multi_mail_pattern = '`^' . MailUtil::get_mail_checking_raw_regex() . '(?:,' . MailUtil::get_mail_checking_raw_regex() . ')*$`i';
-		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], '', array('required' => true, 'description' => $this->lang['administrators_mails_explain']), array(new FormFieldConstraintRegex($multi_mail_pattern, $multi_mail_pattern))));
+		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'description' => $this->lang['administrators_mails_explain']), array(new FormFieldConstraintRegex($multi_mail_pattern, $multi_mail_pattern))));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail_signature'], '', array('description' => $this->lang['mail_signature_explain'])));
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail_signature'], $this->config->get_mail_signature(), array('description' => $this->lang['mail_signature_explain'])));
 
 		$smtp_enabled = $this->config->is_smtp_enabled();
 
@@ -134,7 +134,11 @@ class AdminMailConfigController extends AdminController
 	{
 		$form = $this->form;
 		$config = $this->config;
-
+		
+		$config->set_default_mail_sender($form->get_value('default_mail_sender'));
+		$config->set_administrators_mails(explode(',', $form->get_value('admin_addresses')));
+		$config->set_mail_signature($form->get_value('mail_signature'));
+		
 		if ($form->get_value('use_smtp'))
 		{
 			$config->enable_smtp();

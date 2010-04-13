@@ -42,6 +42,26 @@ class MailServiceConfig extends AbstractConfigData
 		$this->set_property('default_mail_sender', $sender);
 	}
 	
+	public function get_administrators_mails()
+	{
+		return $this->get_property('administrators_mails');
+	}
+	
+	public function set_administrators_mails(array $mails)
+	{
+		$this->set_property('administrators_mails', $mails);
+	}
+	
+	public function get_mail_signature()
+	{
+		return $this->get_property('mail_signature');
+	}
+	
+	public function set_mail_signature($signature)
+	{
+		$this->set_property('mail_signature', $signature);
+	}
+	
 	public function is_smtp_enabled()
 	{
 		return $this->get_property('use_smtp');
@@ -118,7 +138,10 @@ class MailServiceConfig extends AbstractConfigData
 			'smtp_port' => 25,
 			'smtp_login' => '',
 			'smtp_password' => '',
-			'smtp_protocol' => 'none'
+			'smtp_protocol' => 'none',
+			'default_mail_sender' => '',
+			'administrators_mails' => array(),
+			'mail_signature' => ''
 		);
 	}
 
