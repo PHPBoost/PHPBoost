@@ -341,6 +341,7 @@ class HTMLForm
 
 	private function handle_disabled_modules()
 	{
+		$this->enable_all_fields();
 		$request = AppContext::get_request();
 		$disabled_modules_str = $request->get_string($this->html_id . '_disabled_fields');
 		$disabled_modules_str = trim($disabled_modules_str, '|');
@@ -353,6 +354,17 @@ class HTMLForm
 		{
 			$field = $this->get_field_by_id(str_replace($this->html_id . '_', '', $module_id));
 			$field->disable();
+		}
+	}
+	
+	private function enable_all_fields()
+	{
+		foreach ($this->fieldsets as $fieldset)
+		{
+			foreach ($fieldset->get_fields() as $field)
+			{
+				$field->enable();
+			}
 		}
 	}
 }
