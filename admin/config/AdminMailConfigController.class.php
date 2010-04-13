@@ -124,7 +124,7 @@ class AdminMailConfigController extends AdminController
 			default:
 				$default_protocol_option = $none_protocol_option;
 		}
-		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', $this->lang['smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
+		$fieldset->add_field(new FormFieldSelectChoice('smtp_protocol', $this->lang['smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
