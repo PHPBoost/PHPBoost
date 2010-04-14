@@ -4,8 +4,10 @@
 				<label>
 					{actions.LABEL}
 				</label>
+				# IF C_DESCRIPTION #
 				<br />
 				<span class="text_small">{actions.DESCRIPTION}</span>
+				# ENDIF #
 			</dt>
 			<dd>
 			{actions.AUTH_FORM}
