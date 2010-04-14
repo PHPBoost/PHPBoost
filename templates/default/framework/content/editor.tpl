@@ -62,7 +62,7 @@
 			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/tinymce/tiny_mce.js"></script>
 		# ENDIF #
 			
-		<script language="javascript" type="text/javascript">
+		<script type="text/javascript">
 		<!--
 		tinyMCE.init({
 			mode : "exact",
