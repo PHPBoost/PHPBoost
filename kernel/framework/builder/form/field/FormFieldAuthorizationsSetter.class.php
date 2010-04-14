@@ -44,6 +44,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		{
 			$template->assign_block_vars('actions', array(
         		'ID' => $this->get_html_id() . 'auth' . $action->get_bit(),
+				'BIT' => $action->get_bit(),
         		'LABEL' => $action->get_label(),
         		'DESCRIPTION' => $action->get_description(),
         		'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->build_auth_array(), array(), $this->get_html_id() . $action->get_bit(), $this->is_disabled())
