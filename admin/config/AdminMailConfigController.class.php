@@ -100,7 +100,7 @@ class AdminMailConfigController extends AdminController
 		array('events' => array('click' => 'if ($F("mail_sending_config_use_smtp") == "on") { show_smtp_config(); } else { hide_smtp_config(); }'))));
 
 
-		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['custom_smtp_configuration'], array('hidden' => !$smtp_enabled));
+		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['custom_smtp_configuration'], array('disabled' => !$smtp_enabled));
 
 		$this->form->add_fieldset($fieldset);
 
@@ -148,13 +148,13 @@ class AdminMailConfigController extends AdminController
 			$config->set_smtp_login($form->get_value('smtp_login'));
 			$config->set_smtp_password($form->get_value('smtp_password'));
 			$config->set_smtp_protocol($form->get_value('smtp_protocol')->get_raw_value());
-				
-			MailServiceConfig::save();
 		}
 		else
 		{
 			$config->disable_smtp();
 		}
+		
+		MailServiceConfig::save();
 	}
 }
 ?>

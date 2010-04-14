@@ -198,18 +198,8 @@ class SandboxFormController extends ModuleController
 		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
         $horizontal_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($horizontal_fieldset);
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset séparé'));
         $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert2', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert3', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert1', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert4', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert5', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert6', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert7', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert8', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert9', 'A cocher', FormFieldCheckbox::CHECKED));
-        $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert0', 'A cocher', FormFieldCheckbox::CHECKED));
-		$horizontal_fieldset->add_field(new FormFieldTextEditor('tevert', 'Texte', ''));
 
 		// BUTTONS
 		$form->add_button(new FormButtonReset());

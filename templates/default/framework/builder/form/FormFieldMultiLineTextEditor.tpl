@@ -2,8 +2,10 @@
 			# IF C_REQUIRED # * # ENDIF #
 			{LABEL}
 		</label>
+		# IF C_DESCRIPTION #
 		<br />
 		<span class="text_small">{DESCRIPTION}</span>
+		# ENDIF #
 		# IF C_EDITOR_ENABLED #
 			{EDITOR}
 		# ENDIF #

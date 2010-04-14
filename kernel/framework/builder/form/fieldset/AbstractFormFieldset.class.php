@@ -39,7 +39,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	/**
 	 * @var boolean
 	 */
-	protected $hidden = false;
+	protected $disabled = false;
 
 	/**
 	 * @var Template
@@ -63,9 +63,9 @@ abstract class AbstractFormFieldset implements FormFieldset
 					$this->set_description($value);
 					unset($options['description']);
 					break;
-				case 'hidden':
-					$this->hidden = $value;
-					unset($options['hidden']);
+				case 'disabled':
+					$this->disabled = $value;
+					unset($options['disabled']);
 					break;
 				default :
 					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
@@ -161,7 +161,7 @@ abstract class AbstractFormFieldset implements FormFieldset
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
 			'ID' => $this->form_id . '_' . $this->id . '_fieldset',
-			'C_HIDDEN' => $this->hidden
+			'C_DISABLED' => $this->disabled
 		));
 		foreach($this->fields as $field)
 		{

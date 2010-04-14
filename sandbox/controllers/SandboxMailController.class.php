@@ -80,7 +80,7 @@ class SandboxMailController extends ModuleController
 			array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") { HTMLForms.getField("smtp_config_smtp_host").enable(); Effect.Appear("smtp_config_smtp_configuration_fieldset"); } else { HTMLForms.getField("smtp_config_smtp_host").disable(); Effect.Fade("smtp_config_smtp_configuration_fieldset"); }'))));
 
 
-		$fieldset = new FormFieldsetHTML('smtp_configuration', 'Send configuration', array('hidden' => true));
+		$fieldset = new FormFieldsetHTML('smtp_configuration', 'Send configuration', array('disabled' => true));
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', 'SMTP host', '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));

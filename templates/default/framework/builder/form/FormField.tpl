@@ -4,8 +4,10 @@
 					# IF C_REQUIRED # * # ENDIF #
 					{LABEL}
 				</label>
+				# IF C_DESCRIPTION #
 				<br />
 				<span class="text_small">{DESCRIPTION}</span>
+				# ENDIF #
 			</dt>
 			<dd>
 			# START fieldelements #

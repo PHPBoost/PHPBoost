@@ -33,7 +33,6 @@
 		# START buttons #
 			# INCLUDE buttons.BUTTON #
 		# END buttons #
+		<input type="hidden" id="{E_HTML_ID}_disabled_fields" name="{E_HTML_ID}_disabled_fields" value="" />
 	</fieldset>
-	
-	<input type="hidden" id="{E_HTML_ID}_disabled_fields" name="{E_HTML_ID}_disabled_fields" value="" />
 </form>

@@ -354,10 +354,12 @@ abstract class AbstractFormField implements FormField
 
 	protected function assign_common_template_variables(Template $template)
 	{
+		$description = $this->get_description();
 		$template->assign_vars(array(
 			'ID' => $this->get_html_id(),
 			'LABEL' => $this->get_label(),
-			'DESCRIPTION' => $this->get_description(),
+			'DESCRIPTION' => $description,
+			'C_DESCRIPTION' => !empty($description),
 			'C_REQUIRED' => $this->is_required(),
 			'VALUE' => $this->get_value(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
