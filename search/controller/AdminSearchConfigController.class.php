@@ -139,12 +139,10 @@ class AdminSearchConfigController extends AdminSearchController {
 		$this->form->add_fieldset($fieldset);
 
 		$id = 'clear_cache';
-		$value = new StringTemplate('<p style="text-align:center;">
-          <a href="{U_CLEAR_CACHE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="{EL_CLEAR_OUT_CACHE}" /></a>
-          <br /><a href="{U_CLEAR_CACHE}">{EL_CLEAR_OUT_CACHE}</a></p>');
-		$value->add_lang($this->lang);
-		$value->assign_vars(array('U_CLEAR_CACHE' => AdminSearchUrlBuilder::clear_cache()->absolute()));
-		$field = new FormFieldHTML($id, $value->to_string());
+        $title = $this->lang['clear_out_cache'];
+        $url = AdminSearchUrlBuilder::clear_cache();
+        $img = '/templates/' . get_utheme() . '/images/admin/refresh.png';
+		$field = new FormFieldActionLink($id, $title, $url, $img);
 		$fieldset->add_field($field);
 	}
 

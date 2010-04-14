@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                       FormFieldsetHorizontal.class.php
+ *                        FormFieldActionLinkList.class.php
  *                            -------------------
- *   begin                : February 17, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : April 13, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
  *
@@ -25,39 +25,51 @@
  ###################################################*/
 
 /**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @desc This class manage action links.
  * @package builder
- * @subpackage form/fieldset
- * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @subpackage form/field
  */
-class FormFieldsetHorizontal extends AbstractFormFieldset
+class FormFieldActionLinkList extends AbstractFormField
 {
-	private static $tpl_src = '<div class="horizontal_fieldset" id="{E_ID}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
-	    # IF C_DESCRIPTION #<span style="display:inline-table;">{E_DESCRIPTION}</span># ENDIF #
-	    # START fields #<span style="display:inline-table;"># INCLUDE fields.FIELD #</span># END fields #
-    </div>
-	<div class="spacer"></div>';
+	/**
+	 * @var FormFieldActionLinkElement[]
+	 */
+	private $actions;
 
-	public function __construct($id, $options = array())
+	/**
+	 * @param string $id
+	 * @param FormFieldActionLinkElement[] $actions
+	 */
+	public function __construct($id, array $actions)
 	{
-		parent::__construct($id, $options);
+		$this->actions = $actions;
+		parent::__construct($id, '', '');
 	}
 
 	/**
-	 * @return Template
+	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
 		$template = $this->get_template_to_use();
 
-		$this->assign_template_fields($template);
+		foreach ($this->actions as $action) {
+			$template->assign_block_vars('action', array(
+	            'TITLE' => $action->get_title(),
+	            'U_LINK' => $action->get_url()->absolute(),
+	            'U_IMG' => $action->get_img()->absolute(),
+	            'IS_IMG_RELATIVE' => $action->get_img()->is_relative()
+			));
+		}
 
 		return $template;
 	}
 
 	protected function get_default_template()
 	{
-		return new StringTemplate(self::$tpl_src);
+		return new FileTemplate('framework/builder/form/FormFieldActionLinkList.tpl');
 	}
 }
+
 ?>
