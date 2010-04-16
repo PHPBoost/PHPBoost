@@ -32,7 +32,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	/**
 	 * @var CommonQuery
 	 */
-	private $querier;
+	private $sql_querier;
 
 	public function __construct()
 	{
@@ -42,8 +42,8 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	function on_changeday()
 	{
-		$this->querier->truncate(PREFIX . 'search_results');
-		$this->querier->truncate(PREFIX . 'search_index');
+		$this->sql_querier->truncate(PREFIX . 'search_results');
+		$this->sql_querier->truncate(PREFIX . 'search_index');
 	}
 }
 

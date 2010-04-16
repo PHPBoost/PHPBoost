@@ -20,7 +20,7 @@ abstract class Type
     const CODE_LOB = 3;
 
     /** Map of already instantiated type objects. One instance per type (flyweight). */
-    private static $_typeObjects = array();
+    protected static $_typeObjects = array();
 
     /** The map of supported doctrine mapping types. */
     private static $_typesMap = array(
@@ -41,7 +41,7 @@ abstract class Type
     );
 
     /* Prevent instantiation and force use of the factory method. */
-    private function __construct() {}
+    protected function __construct() {}
 
     /**
      * Converts a value from its PHP representation to its database representation
