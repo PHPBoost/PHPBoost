@@ -26,18 +26,26 @@
  *
  ###################################################*/
 
-require_once('../admin/admin_begin.php');
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+
+require_once(PATH_TO_ROOT.'/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 
 if (!empty($_POST['submit']) )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
-	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
-	$CONFIG['html_auth'] = Authorizations::build_auth_array_from_form(1);
-	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$CONFIG['editor'] 		= ($editor == 'tinymce') ? 'tinymce' : 'bbcode';
+	$CONFIG['html_auth'] 	= Authorizations::build_auth_array_from_form(1);
+	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
+	$CONFIG['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
+	$CONFIG['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
+	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25);
+	
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . "
+						SET value = '" . addslashes(serialize($CONFIG)) . "'
+						WHERE name = 'config'", __LINE__, __FILE__);
 	$Cache->Generate_file('config');
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
@@ -60,12 +68,26 @@ else
 	}
 	
 	$template->assign_vars(array(
-		'BBCODE_SELECTED' => $CONFIG['editor'] == 'bbcode' ? 'selected="selected"' : '',
-		'TINYMCE_SELECTED' => $CONFIG['editor'] == 'tinymce' ? 'selected="selected"' : '',
+		'BBCODE_SELECTED' => ($CONFIG['editor'] == 'bbcode') ? 'selected="selected"' : '',
+		'TINYMCE_SELECTED' => ($CONFIG['editor'] == 'tinymce') ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $CONFIG['html_auth']),
 		'NBR_TAGS' => $j,
-
-
+		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
+		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',
+		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
+		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
+		
+		'L_POST_MANAGEMENT' => $LANG['post_management'],
+		'L_PM_MAX' => $LANG['pm_max'],
+		'L_SECONDS' => $LANG['unit_seconds'],
+		'L_ANTI_FLOOD' => $LANG['anti_flood'],
+		'L_INT_FLOOD' => $LANG['int_flood'],
+		'L_PM_MAX_EXPLAIN' => $LANG['pm_max_explain'],
+		'L_ANTI_FLOOD_EXPLAIN' => $LANG['anti_flood_explain'],
+		'L_INT_FLOOD_EXPLAIN' => $LANG['int_flood_explain'],
+		'L_ACTIV' => $LANG['activ'],
+		'L_UNACTIVE' => $LANG['unactiv'],
+		
 		'L_CONTENT_CONFIG' => $LANG['content_config_extend'],
 		'L_DEFAULT_LANGUAGE' => $LANG['default_formatting_language'],
 		'L_LANGUAGE_CONFIG' => $LANG['content_language_config'],
@@ -82,6 +104,6 @@ else
 	$template->display(); // traitement du modele	
 }
 
-require_once('../admin/admin_footer.php');
+require_once(PATH_TO_ROOT.'/admin/admin_footer.php');
 
 ?>
