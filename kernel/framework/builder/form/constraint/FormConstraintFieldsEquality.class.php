@@ -61,8 +61,8 @@ class FormConstraintFieldsEquality implements FormConstraint
 
 	public function get_js_validation()
 	{
-		return 'equalityFormFieldValidator(' . TextHelper::to_js_string($this->first_field->get_html_id()) .
-			', ' . TextHelper::to_js_string($this->second_field->get_html_id()) . ', ' . TextHelper::to_js_string($this->get_message()) . ')';
+		return 'equalityFormFieldValidator(' . TextHelper::to_js_string($this->first_field->get_id()) .
+			', ' . TextHelper::to_js_string($this->second_field->get_id()) . ', ' . TextHelper::to_js_string($this->get_message()) . ')';
 	}
 
 	private function get_message()
