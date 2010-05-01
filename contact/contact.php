@@ -45,7 +45,13 @@ if (!empty($mail_valid))
     //Code de vérification si activé
     if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
     {
-        if (AppContext::get_mail_service()->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+    	$mail = new Mail();
+    	$mail->set_subject($mail_object);
+    	$mail->set_content($mail_contents);
+    	$mail->set_sender($mail_from, 'user');
+    	$mail->add_recipient(MailServiceConfig::load()->get_default_mail_sender());
+    	
+        if (AppContext::get_mail_service()->try_to_send($mail)) //Succès mail
         {
             $get_error = 'success';
         }

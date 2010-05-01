@@ -256,7 +256,7 @@ You asked a notify in case of an answer on it.
 If you no longer want to be informed on the answers of this thread, click on the link below:
 ' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
 
-' . $CONFIG['sign'];
+' . MailServiceConfig::load()->get_mail_signature();
 
 //Alerts
 $LANG['alert_management'] = 'Alert management';

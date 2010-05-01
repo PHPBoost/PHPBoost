@@ -96,8 +96,7 @@ class Forum
 					AppContext::get_mail_service()->send_from_properties(
 						$row['user_mail'], 
 						$LANG['forum_mail_title_new_post'], 
-						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1), 
-						$CONFIG['mail_exp']
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
 					);
 				}	
 				
