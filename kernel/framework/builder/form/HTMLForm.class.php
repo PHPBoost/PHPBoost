@@ -160,6 +160,19 @@ class HTMLForm
 			'" doesn\'t exists in the "' . $this->html_id . '" form');
 	}
 
+	private function get_fieldset_by_id($fieldset_id)
+	{
+		foreach ($this->fieldsets as $fieldset)
+		{
+			if ($fieldset->get_id() == $fieldset_id)
+			{
+				return $fieldset;
+			}
+		}
+		throw new FormBuilderException('The fieldset "' . $fieldset_id .
+			'" doesn\'t exists in the "' . $this->html_id . '" form');
+	}
+
 	/**
 	 * @desc Displays the form
 	 * @return Template The template containing all the form elements which is ready to be displayed.
@@ -255,7 +268,7 @@ class HTMLForm
 	 */
 	public function validate()
 	{
-		$this->handle_disabled_modules();
+		$this->handle_disabled_fields();
 			
 		$validation_result = true;
 
@@ -339,32 +352,41 @@ class HTMLForm
 		$this->template = $template;
 	}
 
-	private function handle_disabled_modules()
+	private function handle_disabled_fields()
 	{
 		$this->enable_all_fields();
 		$request = AppContext::get_request();
-		$disabled_modules_str = $request->get_string($this->html_id . '_disabled_fields');
-		$disabled_modules_str = trim($disabled_modules_str, '|');
-		if ($disabled_modules_str == '')
+
+		$disabled_fieldsets_str = $request->get_string($this->html_id . '_disabled_fieldsets');
+		$disabled_fieldsets_str = trim($disabled_fieldsets_str, '|');
+		if ($disabled_fieldsets_str != '')
 		{
-			return;
+			$disabled_fieldsets = explode('|', $disabled_fieldsets_str);
+			foreach ($disabled_fieldsets as $fieldset_id)
+			{
+				$fieldset = $this->get_fieldset_by_id(str_replace($this->html_id . '_', '', $fieldset_id));
+				$fieldset->disable();
+			}
 		}
-		$disabled_modules = explode('|', $disabled_modules_str);
-		foreach ($disabled_modules as $module_id)
+
+		$disabled_fields_str = $request->get_string($this->html_id . '_disabled_fields');
+		$disabled_fields_str = trim($disabled_fields_str, '|');
+		if ($disabled_fields_str != '')
 		{
-			$field = $this->get_field_by_id(str_replace($this->html_id . '_', '', $module_id));
-			$field->disable();
+			$disabled_fields = explode('|', $disabled_fields_str);
+			foreach ($disabled_fields as $field_id)
+			{
+				$field = $this->get_field_by_id(str_replace($this->html_id . '_', '', $field_id));
+				$field->disable();
+			}
 		}
 	}
-	
+
 	private function enable_all_fields()
 	{
 		foreach ($this->fieldsets as $fieldset)
 		{
-			foreach ($fieldset->get_fields() as $field)
-			{
-				$field->enable();
-			}
+			$fieldset->enable();
 		}
 	}
 }

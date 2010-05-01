@@ -34,5 +34,6 @@
 			# INCLUDE buttons.BUTTON #
 		# END buttons #
 		<input type="hidden" id="{E_HTML_ID}_disabled_fields" name="{E_HTML_ID}_disabled_fields" value="" />
+		<input type="hidden" id="{E_HTML_ID}_disabled_fieldsets" name="{E_HTML_ID}_disabled_fieldsets" value="" />
 	</fieldset>
 </form>
