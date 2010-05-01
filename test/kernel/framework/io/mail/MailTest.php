@@ -79,8 +79,7 @@ class MailTest extends PHPBoostUnitTestCase
 			self::assertTrue($ret);
 		}
 
-		$mail_header = 'My header';
-		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header);
+		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from);
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
 			self::assertFalse($ret);
 		} else {
@@ -88,7 +87,7 @@ class MailTest extends PHPBoostUnitTestCase
 		}
 
 		$mail_sender = 'visiteur';
-		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header, $mail_sender);
+		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_sender);
 		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
 			self::assertFalse($ret);
 		} else {
@@ -97,24 +96,8 @@ class MailTest extends PHPBoostUnitTestCase
 
 		$mail_from 		= 'from_bidon';
 		$mail_sender 	= 'visiteur';
-		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, '', $mail_sender);
+		$ret = $msg->send_from_properties($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_sender);
 		self::assertFalse($ret);
-	}
-
-	function test_send()
-	{
-		$msg = new Mail();
-
-		$msg->add_recipient('toto@test.fr; titi@test.fr; tutu@test.fr');
-		$msg->set_subject('subject');
-		$msg->set_content('content');
-		$msg->set_sender('sender@mail.fr', 'sender_name');
-		$ret = $msg->send();
-		if (ereg("127.0.0.1",$_SERVER['SERVER_ADDR'])) {
-			self::assertFalse($ret);
-		} else {
-			self::assertTrue($ret);
-		}
 	}
 }
 ?>

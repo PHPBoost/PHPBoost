@@ -41,6 +41,18 @@ interface MailService
 	 * @return boolean True if the mail could be sent, false otherwise.
 	 */
 	function try_to_send(Mail $mail);
+	
+	/**
+	 * @deprecated
+	 * @desc Sends the mail.
+	 * @param string $mail_to The mail recipients' address.
+	 * @param string $mail_subject The mail subject.
+	 * @param string $mail_content content of the mail
+	 * @param string $mail_from The mail sender's address.
+	 * @param string $sender_name The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
+	 * @return bool True if the mail could be sent, false otherwise.
+	 */
+	function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from, $sender_name = 'admin');
 
 	/**
 	 * @desc Check whether the mail address is valid, it respects the mail RFC
