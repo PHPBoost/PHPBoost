@@ -219,20 +219,36 @@ var FormField = Class
 			setFormId : function(formId) {
 				this.formId = formId;
 			},
+			HTMLFieldExists : function() {
+				return $(this.getHTMLId()) != null;
+			},
 			enable : function() {
-				Field.enable(this.getHTMLId());
+				if (this.HTMLFieldExists()) {
+					Field.enable(this.getHTMLId());
+				}
 				Effect.Appear(this.getHTMLId() + "_field");
 				this.liveValidate();
 			},
 			disable : function() {
-				Field.disable(this.getHTMLId());
+				if (this.HTMLFieldExists()) {
+					Field.disable(this.getHTMLId());
+				}
 				Effect.Fade(this.getHTMLId() + "_field");
 				this.clearErrorMessage();
 			},
 			isDisabled : function() {
-				var element = $(this.getHTMLId());
-				return element.disabled != "disabled"
-						&& element.disabled != false;
+				if (this.HTMLFieldExists()) {
+					var element = $(this.getHTMLId());
+					return element.disabled != "disabled"
+							&& element.disabled != false;
+				} else {
+					var display = $(this.getHTMLId()).style;
+					if (display != null) {
+						return display == "none";
+					} else {
+						return false;
+					}
+				}
 			},
 			getValue : function() {
 				return $F(this.getHTMLId());

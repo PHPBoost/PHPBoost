@@ -65,10 +65,6 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $css_class = '';
 	/**
-	 * @var boolean
-	 */
-	protected $hidden = false;
-	/**
 	 * @var string
 	 */
 	protected $required = false;
@@ -403,8 +399,7 @@ abstract class AbstractFormField implements FormField
 			'CLASS' => $this->get_css_class(),
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id,
-			'C_DISABLED' => $this->is_disabled(),
-			'C_HIDDEN' => $this->hidden
+			'C_DISABLED' => $this->is_disabled()
 		));
 		
 		foreach ($this->get_js_validations() as $constraint)
