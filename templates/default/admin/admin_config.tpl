@@ -11,6 +11,11 @@
 					<br />
 					<a href="admin_config.php?adv=1" class="quick_link">{L_CONFIG_ADVANCED}</a>
 				</li>
+				<li>
+					<a href="{PATH_TO_ROOT}/admin/config/index.php?url=/mail"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<br />
+					<a href="{PATH_TO_ROOT}/admin/config/index.php?url=/mail" class="quick_link">{L_MAIL_CONFIG}</a>
+				</li>
 			</ul>
 		</div>
 		

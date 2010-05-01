@@ -298,6 +298,7 @@ $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprime
 //Config
 $LANG['config_main'] = 'Configuration générale';
 $LANG['config_advanced'] = 'Configuration avancée';
+$LANG['config_mail'] = 'Configuration de l\'envoi de mail';
 $LANG['serv_name'] = 'URL du serveur';
 $LANG['serv_path'] = 'Chemin de PHPBoost';
 $LANG['serv_path_explain'] = 'Vide par défaut : site à la racine du serveur';
@@ -342,13 +343,6 @@ $LANG['int_flood'] = 'Intervalle minimal de temps entre les messages';
 $LANG['pm_max_explain'] = 'Illimité pour administrateurs et modérateurs';
 $LANG['anti_flood_explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
 $LANG['int_flood_explain'] = '7 secondes par défaut';
-$LANG['email_management'] = 'Gestion des emails';
-$LANG['email_admin_exp'] = 'Email d\'expédition';
-$LANG['email_admin_explain_exp'] = 'Email qui sera vu par le destinataire';
-$LANG['email_admin'] = 'Emails des administrateurs';
-$LANG['admin_sign'] = 'Signature du mail';
-$LANG['email_admin_explain'] = 'Séparez les mails par ;';
-$LANG['admin_sign_explain'] = 'En bas de tous les mails envoyés par le site';
 $LANG['cache_success'] = 'Le cache a été régénéré avec succès!';
 $LANG['explain_site_cache'] = 'Régénération totale du cache du site à partir de la base de données.
 <br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
