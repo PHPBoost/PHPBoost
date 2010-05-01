@@ -749,7 +749,7 @@ switch($step)
 				$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
 
 				//On envoie le mail
-				$mail->send();
+				AppContext::get_mail_service()->try_to_send($mail);
 
 				//On connecte directement l'administrateur si il l'a demandé
 				if ($create_session)

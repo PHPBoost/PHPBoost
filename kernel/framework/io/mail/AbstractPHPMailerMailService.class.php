@@ -41,7 +41,14 @@ abstract class AbstractPHPMailerMailService implements MailService
 		$converter = new MailToPHPMailerConverter();
 		$this->mailer = $converter->convert($mail);
 		$this->set_send_settings($this->mailer);
+		try
+		{
 		$this->mailer->Send();
+		}
+		catch(Exception $ex)
+		{
+			throw new IOException('Mail couldn\'t be sent:' . $ex->getMessage());
+		}
 	}
 
 	public function try_to_send(Mail $mail)
@@ -55,6 +62,20 @@ abstract class AbstractPHPMailerMailService implements MailService
 		{
 			return false;
 		}
+	}
+
+	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from, $sender_name = 'admin')
+	{
+		// Initialization of the mail properties
+		$mail = new Mail();
+		
+		$mail->add_recipient($mail_to);
+		$mail->set_sender($mail_from, $sender_name);
+		$mail->set_subject($mail_subject);
+		$mail->set_content($mail_content);
+
+		// Let's send the mail
+		return $this->try_to_send($mail);
 	}
 
 	abstract protected function set_send_settings(PHPMailer $mailer);

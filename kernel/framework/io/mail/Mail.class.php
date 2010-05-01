@@ -83,22 +83,13 @@ class Mail
 	 * @desc Sets the mail sender.
 	 * @param string $sender The mail sender address.
 	 * @param string $sender_name 'admin' if the mail is sent by the administrator, 'user' otherwise.
-	 * @return bool True, if the mail sender address is correct, false otherwise.
 	 */
 	public function set_sender($sender, $sender_name = 'admin')
 	{
 		global $LANG, $CONFIG;
 		$this->sender_name = str_replace('"', '', $CONFIG['site_name'] . ' - ' . ($sender_name == 'admin' ? $LANG['admin'] : $LANG['user']));
 
-		if (self::check_mail($sender))
-		{
-			$this->sender_mail = $sender;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		$this->sender_mail = $sender;
 	}
 
 	/**
@@ -113,12 +104,17 @@ class Mail
 			$this->recipients[$address] = $name;
 		}
 	}
-	
+
+	public function clear_recipients()
+	{
+		$this->recipients = array();
+	}
+
 	private static function check_mail($mail)
 	{
 		return AppContext::get_mail_service()->is_mail_valid($mail);
 	}
-	
+
 	/**
 	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[string]
@@ -199,92 +195,6 @@ class Mail
 	public function is_html()
 	{
 		return $this->is_html;
-	}
-
-	/**
-	 * @desc Sends the mail.
-	 * @deprecated
-	 * @param string $mail_to The mail recipients' address.
-	 * @param string $mail_subject The mail subject.
-	 * @param string $mail_content content of the mail
-	 * @param string $mail_from The mail sender's address.
-	 * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
-	 * @param string $sender_name The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
-	 * @return bool True if the mail could be sent, false otherwise.
-	 */
-	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from, $mail_header = null, $sender_name = 'admin')
-	{
-		// Initialization of the mail properties
-		$recipient = $this->add_recipient($mail_to);
-		$sender = $this->set_sender($mail_from, $sender_name);
-		if (!$recipient || !$sender)
-		{
-			return false;
-		}
-		 
-		$this->set_subject($mail_subject);
-		$this->set_content($mail_content);
-
-		$this->set_headers($mail_header);
-
-		// Let's send the mail
-		return $this->send();
-	}
-
-	/**
-	 * @desc Sends the mail.
-	 * @return bool True if the mail could be sent, false otherwise.
-	 */
-	public function send()
-	{
-		if (empty($this->headers))
-		{
-			$this->generate_headers();
-		}
-
-		$recipients = trim(implode(', ', $this->recipients), ', ');
-		return @mail($recipients, $this->subject, $this->content, $this->headers);
-	}
-
-	// TODO remove
-	/**
-	 * @access protected
-	 * @desc Generates the mail headers.
-	 */
-	private function generate_headers()
-	{
-		global $LANG;
-
-		$this->header = '';
-
-		//Sender
-		$this->add_header_field('From', '"' . $this->sender_name . ' ' . HOST . '" <' . $this->sender_mail . '>');
-
-		//Recipients
-		$recipients = '';
-		$nb_recipients = count($this->recipients);
-		for ($i = 0; $i < $nb_recipients; $i++)
-		{
-			$recipients .= '"' . $this->recipients[$i] . '" <' . $this->recipients[$i] . '>';
-			if ($i < $nb_recipients - 1)
-			{
-				$recipients .= ', ';
-			}
-		}
-
-		$this->add_header_field('MIME-Version',  '1.0');
-		$this->add_header_field('Content-type', $this->format . '; charset=ISO-8859-1');
-	}
-
-
-	/**
-	 * @desc add the current coupe <code>$field</code> and <code>$value</code> to the mail headers
-	 * @param string $field the header field
-	 * @param string $value the header value
-	 */
-	private function add_header_field($field, $value)
-	{
-		$this->headers .= wordwrap($field . ': ' . $value, 78, "\n ") . self::CRLF;
 	}
 }
 

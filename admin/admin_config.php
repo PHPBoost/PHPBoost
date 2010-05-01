@@ -424,8 +424,6 @@ else //Sinon on rempli le formulaire
 if (!empty($_GET['unlock']))
 {
 	
-	$Mail = new Mail();
-	
 	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 	$unlock_admin = strhash($unlock_admin_clean);
 	
@@ -435,7 +433,7 @@ if (!empty($_GET['unlock']))
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');
 	
-	$Mail->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
+	AppContext::get_mail_service()->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
 
 	AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&mail=1');
 }

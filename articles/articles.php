@@ -220,13 +220,10 @@ if (!empty($idart) && isset($cat) )
 		$exp=retrieve(POST,'exp','',TSTRING);
 		$object=retrieve(POST,'subject','',TSTRING);		
 		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
-		
-		
-		$mail = new Mail();
 
 		$contents = sprintf($ARTICLES_LANG['text_link_mail'],$CONFIG['site_name'],$exp,$user_mail,$CONFIG['server_name'],$link) ;
 		
-		if($mail->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
+		if(AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
 			$Errorh->handler($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS);
 		else
 			$Errorh->handler($ARTICLES_LANG['error_send_mail'], E_USER_WARNING);

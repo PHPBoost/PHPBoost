@@ -80,9 +80,6 @@ class Forum
 			$next_msg_link = HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			$preview_contents = substr($contents, 0, 300);
 
-			
-			$Mail = new Mail();
-			
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - $CONFIG['site_session_invit'];
@@ -96,7 +93,7 @@ class Forum
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
 				{	
-					$Mail->send_from_properties(
+					AppContext::get_mail_service()->send_from_properties(
 						$row['user_mail'], 
 						$LANG['forum_mail_title_new_post'], 
 						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1), 

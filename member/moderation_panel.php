@@ -247,9 +247,7 @@ switch ($action)
 				
 				if (!empty($user_ban)) //Envoi du mail
 				{
-					
-					$Mail = new Mail();
-					$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
+					AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}			
 			}		
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
@@ -390,9 +388,7 @@ switch ($action)
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 					//Envoi du mail
-					
-					$Mail = new Mail();
-					$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
+					AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}	
 			}
 			

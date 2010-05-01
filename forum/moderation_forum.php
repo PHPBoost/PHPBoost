@@ -475,8 +475,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 				//Envoi du mail
 
-				$Mail = new Mail();
-				$Mail->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
+				AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}
 		}
 
