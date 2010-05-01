@@ -375,6 +375,13 @@ abstract class AbstractFormField implements FormField
 				'HANDLER' => $handler
 			));
 		}
+		
+		foreach ($this->get_js_validations() as $constraint)
+		{
+			$js_tpl->assign_block_vars('constraint', array(
+				'CONSTRAINT' => $constraint
+			));
+		}
 
 		$js_tpl->assign_vars(array(
 			'C_DISABLED' => $this->is_disabled(),
@@ -401,13 +408,6 @@ abstract class AbstractFormField implements FormField
 			'FIELDSET_ID' => $this->fieldset_id,
 			'C_DISABLED' => $this->is_disabled()
 		));
-		
-		foreach ($this->get_js_validations() as $constraint)
-		{
-			$template->assign_block_vars('constraint', array(
-				'CONSTRAINT' => $constraint
-			));
-		}
 	}
 
 	private function get_related_fields()
