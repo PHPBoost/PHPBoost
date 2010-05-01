@@ -382,7 +382,8 @@ abstract class AbstractFormField implements FormField
 
 		$js_tpl->assign_vars(array(
 			'C_DISABLED' => $this->is_disabled(),
-			'ID' => $this->get_html_id(),
+			'ID' => $this->id,
+			'HTML_ID' => $this->get_html_id(),
 			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id
@@ -421,9 +422,9 @@ abstract class AbstractFormField implements FormField
 		{
 			foreach ($constraint->get_related_fields() as $field)
 			{
-				if ($field->get_html_id() != $this->get_html_id() && !in_array($field->get_html_id(), $related_fields))
+				if ($field->get_id() != $this->get_id() && !in_array($field->get_id(), $related_fields))
 				{
-					$related_fields[] = $field->get_html_id();
+					$related_fields[] = $field->get_id();
 				}
 			}
 		}

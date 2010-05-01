@@ -53,6 +53,7 @@ var HTMLForm = Class.create( {
 	},
 	addFieldset : function(fieldset) {
 		this.fieldsets.push(fieldset);
+		fieldset.setFormId(this.id);
 	},
 	getFieldset : function(id) {
 		var fieldset = null;
@@ -138,6 +139,7 @@ var FormFieldset = Class.create( {
 	fields : new Array(),
 	id : "",
 	disabled : false,
+	formId : "",
 	initialize : function(id) {
 		this.id = id;
 		this.fields = new Array();
@@ -146,8 +148,15 @@ var FormFieldset = Class.create( {
 	getId : function() {
 		return this.id;
 	},
+	getHTMLId : function() {
+		return this.formId + '_' + this.id;
+	},
+	setFormId : function(formId) {
+		this.formId = formId;
+	},
 	addField : function(field) {
 		this.fields.push(field);
+		field.setFormId(this.formId);
 	},
 	getField : function(id) {
 		var field = null;
@@ -174,14 +183,14 @@ var FormFieldset = Class.create( {
 	},
 	enable : function() {
 		this.disabled = false;
-		Effect.Appear(this.id);
+		Effect.Appear(this.getHTMLId());
 		this.fields.each(function(field) {
 			field.enable();
 		});
 	},
 	disable : function() {
 		this.disabled = true;
-		Effect.Fade(this.id);
+		Effect.Fade(this.getHTMLId());
 		this.fields.each(function(field) {
 			field.disable();
 		});
@@ -197,29 +206,36 @@ var FormField = Class
 		.create( {
 			id : 0,
 			validationMessageEnabled : false,
+			formId : "",
 			initialize : function(id) {
 				this.id = id;
 			},
 			getId : function() {
 				return this.id;
 			},
+			getHTMLId : function() {
+				return this.formId + "_" + this.id;
+			},
+			setFormId : function(formId) {
+				this.formId = formId;
+			},
 			enable : function() {
-				Field.enable(this.id);
-				Effect.Appear(this.id + "_field");
+				Field.enable(this.getHTMLId());
+				Effect.Appear(this.getHTMLId() + "_field");
 				this.liveValidate();
 			},
 			disable : function() {
-				Field.disable(this.id);
-				Effect.Fade(this.id + "_field");
+				Field.disable(this.getHTMLId());
+				Effect.Fade(this.getHTMLId() + "_field");
 				this.clearErrorMessage();
 			},
 			isDisabled : function() {
-				var element = $(this.id);
+				var element = $(this.getHTMLId());
 				return element.disabled != "disabled"
 						&& element.disabled != false;
 			},
 			getValue : function() {
-				return $F(this.id);
+				return $F(this.getHTMLId());
 			},
 			enableValidationMessage : function() {
 				this.validationMessageEnabled = true;
@@ -228,51 +244,55 @@ var FormField = Class
 				if (!this.validationMessageEnabled) {
 					return;
 				}
-				if ($('onblurContainerResponse' + this.id)
-						&& $('onblurMesssageResponse' + this.id)) {
-					$('onblurContainerResponse' + this.id).innerHTML = '<img src="'
+				if ($('onblurContainerResponse' + this.getHTMLId())
+						&& $('onblurMesssageResponse' + this.getHTMLId())) {
+					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
 							+ PATH_TO_ROOT
 							+ '/templates/'
 							+ THEME
 							+ '/images/forbidden_mini.png" alt="" class="valign_middle" />';
-					$('onblurMesssageResponse' + this.id).innerHTML = message;
+					$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
 
-					Effect.Appear('onblurContainerResponse' + this.id, {
-						duration : 0.5
-					});
-					Effect.Appear('onblurMesssageResponse' + this.id, {
-						duration : 0.5
-					});
+					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+							{
+								duration : 0.5
+							});
+					Effect.Appear('onblurMesssageResponse' + this.getHTMLId(),
+							{
+								duration : 0.5
+							});
 				}
 			},
 			displaySuccessMessage : function() {
 				if (!this.validationMessageEnabled) {
 					return;
 				}
-				if ($('onblurContainerResponse' + this.id)) {
-					$('onblurContainerResponse' + this.id).innerHTML = '<img src="'
+				if ($('onblurContainerResponse' + this.getHTMLId())) {
+					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
 							+ PATH_TO_ROOT
 							+ '/templates/'
 							+ THEME
 							+ '/images/processed_mini.png" alt="" class="valign_middle" />';
-					Effect.Appear('onblurContainerResponse' + this.id, {
-						duration : 0.2
-					});
+					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+							{
+								duration : 0.2
+							});
 
-					Effect.Fade('onblurMesssageResponse' + this.id, {
+					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
 						duration : 0.2
 					});
 				}
 			},
 			clearErrorMessage : function() {
-				if ($('onblurContainerResponse' + this.id)) {
-					$('onblurContainerResponse' + this.id).innerHTML = '';
+				if ($('onblurContainerResponse' + this.getHTMLId())) {
+					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '';
 
-					Effect.Appear('onblurContainerResponse' + this.id, {
-						duration : 0.2
-					});
+					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+							{
+								duration : 0.2
+							});
 
-					Effect.Fade('onblurMesssageResponse' + this.id, {
+					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
 						duration : 0.2
 					});
 				}

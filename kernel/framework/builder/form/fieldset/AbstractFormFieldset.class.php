@@ -84,7 +84,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		return $this->id;
 	}
-	
+
 	public function set_description($description)
 	{
 		$this->description = $description;
@@ -107,14 +107,14 @@ abstract class AbstractFormFieldset implements FormFieldset
 			please chose a different one!');
 		}
 		$this->fields[$form_field->get_id()] = $form_field;
-		
+
 		if ($this->is_disabled())
 		{
 			$form_field->disable();
 		}
-		
+
 		$form_field->set_form_id($this->form_id);
-		$form_field->set_fieldset_id($this->get_html_id());
+		$form_field->set_fieldset_id($this->get_id());
 	}
 
 	/**
@@ -207,11 +207,12 @@ abstract class AbstractFormFieldset implements FormFieldset
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
 
 		$js_tpl->assign_vars(array(
-			'ID' => $this->get_html_id(),
+			'ID' => $this->id,
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
 			'FORM_ID' => $this->form_id
 		));
-		
+
 		$template->add_subtemplate('ADD_FIELDSET_JS', $js_tpl);
 
 		$template->assign_vars(array(
