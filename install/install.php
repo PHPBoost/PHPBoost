@@ -662,10 +662,12 @@ switch($step)
 			$user_mail = retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED);
 			$create_session = retrieve(POST, 'create_session', false);
 			$auto_connection = retrieve(POST, 'auto_connection', false);
-
+			
 			function check_admin_account($login, $password, $password_repeat, $user_mail)
 			{
 				global $LANG;
+				$mail_service = AppContext::get_mail_service();
+				
 				if (empty($login))
 				{
 					return $LANG['admin_require_login'];
@@ -694,7 +696,7 @@ switch($step)
 				{
 					return $LANG['admin_passwords_error'];
 				}
-				elseif (!MailUtil::is_mail_valid($user_mail))
+				elseif (!$mail_service->is_mail_valid($user_mail))
 				{
 					return $LANG['admin_email_error'];
 				}
@@ -773,7 +775,7 @@ switch($step)
     				));
 			}
 		}
-		
+
 		$template->assign_vars(array(
     		'C_ADMIN_ACCOUNT' => true,
     		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_ADMIN_ACCOUNT - 1)),
@@ -807,11 +809,12 @@ switch($step)
     		'MAIL_VALUE' => !empty($error) ? $user_mail : '',
     		'CHECKED_AUTO_CONNECTION' => !empty($error) ? ($auto_connection ? 'checked="checked"' : '') : 'checked="checked"',
     		'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
-    	));
-    	break;
-    	//Fin
+    		));
+    		break;
+    		//Fin
 	case STEP_END:
 		$Sql = PersistenceContext::get_sql();
+
 
 		$Cache = new Cache;
 		$Cache->load('config');
@@ -854,14 +857,14 @@ foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
 			'LANG' => $folder->get_name(),
 			'LANG_NAME' => $info_lang['name'],
 			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
-		));
-
-		if ($folder->get_name() == $lang)
-		{
-			$template->assign_vars(array(
-			'LANG_IDENTIFIER' => $info_lang['identifier']
 			));
-		}
+
+			if ($folder->get_name() == $lang)
+			{
+				$template->assign_vars(array(
+				'LANG_IDENTIFIER' => $info_lang['identifier']
+				));
+			}
 	}
 }
 

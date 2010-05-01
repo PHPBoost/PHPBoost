@@ -87,8 +87,7 @@ class AdminMailConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['default_mail_sender_explain'])));
 
-		$multi_mail_pattern = '`^' . MailUtil::get_mail_checking_raw_regex() . '(?:,' . MailUtil::get_mail_checking_raw_regex() . ')*$`i';
-		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'description' => $this->lang['administrators_mails_explain']), array(new FormFieldConstraintRegex($multi_mail_pattern, $multi_mail_pattern))));
+		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'description' => $this->lang['administrators_mails_explain']), array(new FormFieldConstraintRegex($this->get_multi_mail_regex()))));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail_signature'], $this->config->get_mail_signature(), array('description' => $this->lang['mail_signature_explain'])));
 
@@ -130,19 +129,25 @@ class AdminMailConfigController extends AdminController
 		$this->form->add_button($this->submit_button);
 	}
 
+	private function get_multi_mail_regex()
+	{
+		$simple_regex = AppContext::get_mail_service()->get_mail_checking_raw_regex();
+		return '`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`i';
+	}
+
 	private function save_configuration()
 	{
 		$form = $this->form;
 		$config = $this->config;
-		
+
 		$config->set_default_mail_sender($form->get_value('default_mail_sender'));
 		$config->set_administrators_mails(explode(',', $form->get_value('admin_addresses')));
 		$config->set_mail_signature($form->get_value('mail_signature'));
-		
+
 		if ($form->get_value('use_smtp'))
 		{
 			$config->enable_smtp();
-				
+
 			$config->set_smtp_host($form->get_value('smtp_host'));
 			$config->set_smtp_port($form->get_value('smtp_port'));
 			$config->set_smtp_login($form->get_value('smtp_login'));
@@ -153,7 +158,7 @@ class AdminMailConfigController extends AdminController
 		{
 			$config->disable_smtp();
 		}
-		
+
 		MailServiceConfig::save();
 	}
 }

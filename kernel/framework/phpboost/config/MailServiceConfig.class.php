@@ -144,6 +144,27 @@ class MailServiceConfig extends AbstractConfigData
 			'mail_signature' => ''
 		);
 	}
+	
+	/**
+	 * @return SMTPConfiguration
+	 */
+	public function to_smtp_config()
+	{
+		if ($this->is_smtp_enabled())
+		{
+			$config = new SMTPConfiguration();
+			$config->set_host($this->get_smtp_host());
+			$config->set_port($this->get_smtp_port());
+			$config->set_login($this->get_smtp_login());
+			$config->set_password($this->get_smtp_password());
+			$config->set_auth_mode($this->get_smtp_protocol());
+			return $config;
+		}
+		else
+		{
+			return null;
+		}
+	}
 
 	/**
 	 * Returns the configuration.

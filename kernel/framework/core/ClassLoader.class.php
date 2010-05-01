@@ -92,7 +92,7 @@ class ClassLoader
 			import('io/filesystem/FileSystemElement');
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
-			import('io/filesystem/IOException');
+			import('io/IOException');
 			import('util/Path');
 
 			$phpboost_classfile_pattern = '`^.+\.class\.php$`';

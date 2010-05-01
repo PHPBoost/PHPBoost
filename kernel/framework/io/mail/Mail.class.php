@@ -90,7 +90,7 @@ class Mail
 		global $LANG, $CONFIG;
 		$this->sender_name = str_replace('"', '', $CONFIG['site_name'] . ' - ' . ($sender_name == 'admin' ? $LANG['admin'] : $LANG['user']));
 
-		if (MailUtil::is_mail_valid($sender))
+		if (self::check_mail($sender))
 		{
 			$this->sender_mail = $sender;
 			return true;
@@ -108,10 +108,15 @@ class Mail
 	 */
 	public function add_recipient($address, $name = '')
 	{
-		if (MailUtil::is_mail_valid($address))
+		if (self::check_mail($address))
 		{
 			$this->recipients[$address] = $name;
 		}
+	}
+	
+	private static function check_mail($mail)
+	{
+		return AppContext::get_mail_service()->is_mail_valid($mail);
 	}
 	
 	/**

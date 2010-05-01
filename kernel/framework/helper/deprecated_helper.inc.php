@@ -225,11 +225,11 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  * @desc Checks if a string could match an email address form.
  * @param string $mail String to check
  * @return bool true if the form is correct, false otherwhise.
- * @see MailUtil::is_mail_valid
+ * @see MailService::is_mail_valid
  */
 function check_mail($mail)
 {
-	return MailUtil::is_mail_valid($mail);
+	return AppContext::get_mail_service()->is_mail_valid($mail);
 }
 
 /**

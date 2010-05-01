@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           MailSender.class.php
+ *                           MailService.class.php
  *                            -------------------
  *   begin                : March 8, 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -25,9 +25,41 @@
  *
  ###################################################*/
 
-interface MailSender
+interface MailService
 {
+	/**
+	 * @desc Sends the mail. Throws an exception if the mail cannot be sent.
+	 * @param Mail $mail The mail to send
+	 * @throws IOException if the mail couldn't be sent
+	 */
 	function send(Mail $mail);
+
+	/**
+	 * @desc Tries to send the mail but doesn't throw any error whether the mail cannot be sent,
+	 * it only returns false.
+	 * @param Mail $mail The mail to send
+	 * @return boolean True if the mail could be sent, false otherwise.
+	 */
+	function try_to_send(Mail $mail);
+
+	/**
+	 * @desc Check whether the mail address is valid, it respects the mail RFC
+	 * @param string $mail_address
+	 * @return boolean true if the mail is valid, false otherwise
+	 */
+	function is_mail_valid($mail_address);
+
+	/**
+	 * Return the RFC mail regex.
+	 * @return string the mail regex
+	 */
+	function get_mail_checking_regex();
+
+	/**
+	 * Return the RFC mail regex without delimiters, it's commonly used for compatibility with javascript regex.
+	 * @return string the mail regex without delimiters
+	 */
+	function get_mail_checking_raw_regex();
 }
 
 ?>

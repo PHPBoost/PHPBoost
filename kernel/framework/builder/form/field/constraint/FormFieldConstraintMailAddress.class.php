@@ -38,9 +38,13 @@ class FormFieldConstraintMailAddress extends FormFieldConstraintRegex implements
 		{
 			$js_message = LangLoader::get_message('doesnt_match_mail_regex', 'builder-form-Validator');
 		}
+		
+		$mail_service = AppContext::get_mail_service();
+		$regex = $mail_service->get_mail_checking_regex();
+		
 		parent::__construct(
-			MailUtil::get_mail_checking_regex(), 
-			MailUtil::get_mail_checking_regex(), 
+			$regex, 
+			$regex, 
 			$js_message
 		);
 	}
