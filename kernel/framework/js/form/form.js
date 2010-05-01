@@ -205,10 +205,12 @@ var FormField = Class
 			},
 			enable : function() {
 				Field.enable(this.id);
+				Effect.Appear(this.id + "_field");
 				this.liveValidate();
 			},
 			disable : function() {
 				Field.disable(this.id);
+				Effect.Fade(this.id + "_field");
 				this.clearErrorMessage();
 			},
 			isDisabled : function() {
