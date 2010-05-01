@@ -47,7 +47,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		}
 		catch(Exception $ex)
 		{
-			throw new IOException('Mail couldn\'t be sent:' . $ex->getMessage());
+			throw new IOException('Mail couldn\'t be sent: ' . $ex->getMessage());
 		}
 	}
 

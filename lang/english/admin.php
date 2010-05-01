@@ -299,6 +299,7 @@ $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete t
 //Config
 $LANG['config_main'] = 'Main configuration';
 $LANG['config_advanced'] = 'Advanced configuration';
+$LANG['config_mail'] = 'Mail sending configuration';
 $LANG['serv_name'] = 'Server name';
 $LANG['serv_path'] = 'PHPBoost path, empty by default';
 $LANG['serv_path_explain'] = 'Website, on the server root';
@@ -343,13 +344,6 @@ $LANG['int_flood'] = 'Minimal interval of time between two messages';
 $LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
 $LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
 $LANG['int_flood_explain'] = '7 seconds by default</span>';
-$LANG['email_management'] = 'Email management';
-$LANG['email_admin_exp'] = 'Expedition mail';
-$LANG['email_admin_explain_exp'] = 'Mail viewed by the receiver';
-$LANG['email_admin'] = 'Administrator\'s emails';
-$LANG['admin_sign'] = 'Administrator email signature';
-$LANG['email_admin_explain'] = 'Type ; between each email';
-$LANG['admin_sign_explain'] = 'At the bottom of each email sent by the site';
 $LANG['cache_success'] = 'Cache has been successfully regenerated!';
 $LANG['explain_site_cache'] = 'Total Regeneration of the cache of the site from the database.
 <br /><br />Cache improves the speed of page execution time, and minimizes the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate the site cache after motifications';
