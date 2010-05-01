@@ -7,15 +7,15 @@ class MailTest extends PHPBoostUnitTestCase
 		// DO NOTHING
 	}
 
-	function test_check_validity()
-	{
-		$msg = new Mail();
-		$ret = $msg->check_validity('from-one_two.test-one_two.test-one_two@test.test.fr');
-		self::assertTrue($ret);
-
-		$ret = $msg->check_validity('titi_bidon');
-		self::assertFalse($ret);
-	}
+//	function test_check_validity()
+//	{
+//		$msg = new Mail();
+//		$ret = $msg->check_validity('from-one_two.test-one_two.test-one_two@test.test.fr');
+//		self::assertTrue($ret);
+//
+//		$ret = $msg->check_validity('titi_bidon');
+//		self::assertFalse($ret);
+//	}
 
 	function test_accessor_sender()
 	{
