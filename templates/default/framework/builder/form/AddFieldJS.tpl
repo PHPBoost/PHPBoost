@@ -21,7 +21,7 @@ field.disable();
 
 {JS_SPECIALIZATION_CODE}
 
-Event.observe("{E_ID}", 'blur', function() {
+Event.observe("{E_HTML_ID}", 'blur', function() {
 	HTMLForms.get("{E_FORM_ID}").getField("{E_ID}").enableValidationMessage();
 	HTMLForms.get("{E_FORM_ID}").getField("{E_ID}").liveValidate();
 	# START related_field #
@@ -30,7 +30,7 @@ Event.observe("{E_ID}", 'blur', function() {
 });
 
 # START event_handler #
-Event.observe("{E_ID}", '{event_handler.E_EVENT}', function() {
+Event.observe("{E_HTML_ID}", '{event_handler.E_EVENT}', function() {
 	{event_handler.HANDLER}
 });
 # END event_hander #
