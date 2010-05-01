@@ -69,6 +69,11 @@ class AppContext
 	 * @var CacheService
 	 */
 	private static $cache_service;
+	/**
+	 *
+	 * @var MailService
+	 */
+	private static $mail_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -214,6 +219,26 @@ class AppContext
 	public static function get_extension_provider_service()
 	{
 		return self::$extension_provider_service;
+	}
+
+	/**
+	 * @return MailService
+	 */
+	public static function get_mail_service()
+	{
+		if (self::$mail_service === null)
+		{
+			$config = MailServiceConfig::load();
+			if ($config->is_smtp_enabled())
+			{
+				self::$mail_service = new SMTPMailService($config->to_smtp_config());
+			}
+			else
+			{
+				self::$mail_service = new DefaultMailService();
+			}
+		}
+		return self::$mail_service;
 	}
 }
 

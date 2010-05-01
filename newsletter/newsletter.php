@@ -42,7 +42,7 @@ if (!empty($mail_newsletter))
 {
 	
 	//Vérification de la validité du mail proposé
-	if (MailUtil::is_mail_valid($mail_newsletter))
+	if (AppContext::get_mail_service()->is_mail_valid($mail_newsletter))
 	{
 		//Inscription ou désincription?
 		$subscribe = ($subscribe == 'subscribe') ? 1 : 0;
