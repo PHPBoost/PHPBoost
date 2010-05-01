@@ -32,6 +32,7 @@
  */
 interface FormFieldset
 {
+	function get_id();
     /**
      * @desc Adds a list in the container
      * @param FormField $form_field The field to add
@@ -47,6 +48,12 @@ interface FormFieldset
     function get_html_id();
 
     function validate();
+    
+    function disable();
+    
+    function enable();
+    
+    function is_disabled();
 
     /**
      * @desc Return the form

@@ -64,7 +64,14 @@ abstract class AbstractFormFieldset implements FormFieldset
 					unset($options['description']);
 					break;
 				case 'disabled':
-					$this->disabled = $value;
+					if ($value)
+					{
+						$this->disable();
+					}
+					else
+					{
+						$this->enable();
+					}
 					unset($options['disabled']);
 					break;
 				default :
@@ -73,11 +80,16 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
+	public function get_id()
+	{
+		return $this->id;
+	}
+	
 	public function set_description($description)
 	{
 		$this->description = $description;
 	}
-	
+
 	public function get_html_id()
 	{
 		return $this->form_id . '_' . $this->id;
@@ -95,6 +107,12 @@ abstract class AbstractFormFieldset implements FormFieldset
 			please chose a different one!');
 		}
 		$this->fields[$form_field->get_id()] = $form_field;
+		
+		if ($this->is_disabled())
+		{
+			$form_field->disable();
+		}
+		
 		$form_field->set_form_id($this->form_id);
 		$form_field->set_fieldset_id($this->get_html_id());
 	}
@@ -161,10 +179,33 @@ abstract class AbstractFormFieldset implements FormFieldset
 		return $this->fields;
 	}
 
+	public function disable()
+	{
+		$this->disabled = true;
+		foreach ($this->fields as $field)
+		{
+			$field->disable();
+		}
+	}
+
+	public function enable()
+	{
+		$this->disabled = false;
+		foreach ($this->fields as $field)
+		{
+			$field->enable();
+		}
+	}
+
+	public function is_disabled()
+	{
+		return $this->disabled;
+	}
+
 	protected function assign_template_fields(Template $template)
 	{
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
-		
+
 		$js_tpl->assign_vars(array(
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
@@ -172,7 +213,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		));
 		
 		$template->add_subtemplate('ADD_FIELDSET_JS', $js_tpl);
-		
+
 		$template->assign_vars(array(
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
@@ -180,7 +221,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 			'C_DISABLED' => $this->disabled,
 			'FORM_ID' => $this->form_id
 		));
-		
+
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(), array(

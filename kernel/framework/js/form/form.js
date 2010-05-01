@@ -65,7 +65,7 @@ var HTMLForm = Class.create( {
 		return fieldset;
 	},
 	getFieldsets : function() {
-		return this.fieldset;
+		return this.fieldsets;
 	},
 	hasFieldset : function(id) {
 		var hasFieldset = false;
@@ -79,8 +79,10 @@ var HTMLForm = Class.create( {
 	},
 	getFields : function() {
 		var fields = new Array();
-		fieldsets.each(function(fieldset) {
-			fields.push(fieldset.getFields());
+		this.fieldsets.each(function(fieldset) {
+			fieldset.getFields().each(function(field) {
+				fields.push(field);
+			});
 		});
 		return fields;
 	},
@@ -96,7 +98,7 @@ var HTMLForm = Class.create( {
 	},
 	validate : function() {
 		var validated = true;
-		this.fields.each(function(field) {
+		this.getFields().each(function(field) {
 			var validation = field.validate();
 			if (validation != "") {
 				this.displayValidationError(validation);
@@ -113,13 +115,21 @@ var HTMLForm = Class.create( {
 		alert(message);
 	},
 	registerDisabledFields : function() {
-		var disabled = "";
+		var disabledFields = "";
 		this.getFields().each(function(field) {
 			if (field.isDisabled()) {
-				disabled += "|" + field.getId();
+				disabledFields += "|" + field.getId();
 			}
 		});
-		$(this.id + '_disabled_fields').value = disabled;
+		$(this.id + '_disabled_fields').value = disabledFields;
+
+		var disabledFieldsets = "";
+		this.getFieldsets().each(function(fieldset) {
+			if (fieldset.isDisabled()) {
+				disabledFieldsets += "|" + fieldset.getId();
+			}
+		});
+		$(this.id + '_disabled_fieldsets').value = disabledFieldsets;
 	}
 });
 
@@ -127,9 +137,11 @@ var HTMLForm = Class.create( {
 var FormFieldset = Class.create( {
 	fields : new Array(),
 	id : "",
+	disabled : false,
 	initialize : function(id) {
 		this.id = id;
 		this.fields = new Array();
+		this.disabled = false;
 	},
 	getId : function() {
 		return this.id;
@@ -161,16 +173,21 @@ var FormFieldset = Class.create( {
 		return hasField;
 	},
 	enable : function() {
+		this.disabled = false;
 		Effect.Appear(this.id);
 		this.fields.each(function(field) {
 			field.enable();
 		});
 	},
 	disable : function() {
+		this.disabled = true;
 		Effect.Fade(this.id);
 		this.fields.each(function(field) {
 			field.disable();
 		});
+	},
+	isDisabled : function() {
+		return this.disabled;
 	}
 });
 

@@ -1,7 +1,12 @@
-	<script type="text/javascript">
-	<!--
-		form = HTMLForms.get("{E_FORM_ID}");
-		fieldset = new FormFieldset("{E_ID}");
-		form.addFieldset(fieldset);
-	-->	
-	</script>
+<script type="text/javascript">
+<!--
+	var form = HTMLForms.get("{E_FORM_ID}");
+	var fieldset = new FormFieldset("{E_ID}");
+
+	# IF C_DISABLED #
+	fieldset.disabled = true;
+	# ENDIF #
+	
+	form.addFieldset(fieldset);
+-->	
+</script>
