@@ -365,7 +365,7 @@ $LANG['unlock_mail'] = 'Code à conserver (Il ne vous sera plus délivré) : %s
 Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
 Il vous sera demandé dans le formulaire de connexion directe à l\'administration (votreserveur/admin/admin_index.php)
 
-' . $CONFIG['sign'];
+' . MailServiceConfig::load()->get_mail_signature();
 
 //Maintain
 $LANG['maintain_auth'] = 'Autorisation d\'accès au site durant la maintenance';

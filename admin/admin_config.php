@@ -70,9 +70,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['mail_exp'] 	= stripslashes(retrieve(POST, 'mail_exp', ''));  
-	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));
-	$config['sign'] 		= stripslashes(retrieve(POST, 'sign', ''));  
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
@@ -292,9 +289,6 @@ else //Sinon on rempli le formulaire
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
 		'SELECT_PAGE' => $select_page, 
 		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
-		'MAIL_EXP' => !empty($CONFIG['mail_exp']) ? $CONFIG['mail_exp'] : '',   
-		'MAIL' => !empty($CONFIG['mail']) ? $CONFIG['mail'] : '',   
-		'SIGN' => !empty($CONFIG['sign']) ? $CONFIG['sign'] : '',
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',
@@ -303,7 +297,6 @@ else //Sinon on rempli le formulaire
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
 
-		'L_REQUIRE_VALID_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
 		'L_CONFIG_MAIN' => $LANG['config_main'],
@@ -323,14 +316,9 @@ else //Sinon on rempli le formulaire
 		'L_THEME_AUTHOR' => $LANG['theme_author'],
 		'L_THEME_AUTHOR_EXPLAIN' => $LANG['theme_author_explain'],
 		'L_REWRITE' => $LANG['rewrite'],
-		'L_EMAIL_MANAGEMENT' => $LANG['email_management'],
-		'L_EMAIL_ADMIN_EXP' => $LANG['email_admin_exp'],
-		'L_EMAIL_ADMIN_EXP_EXPLAIN' => $LANG['email_admin_explain_exp'],
-		'L_EMAIL_ADMIN' => $LANG['email_admin'],
-		'L_EMAIL_ADMIN_EXPLAIN' => $LANG['email_admin_explain'],
-		'L_EMAIL_ADMIN_SIGN' => $LANG['admin_sign'],			
-		'L_EMAIL_ADMIN_SIGN_EXPLAIN' => $LANG['admin_sign_explain'],
-		
+		'L_ACTIV' 			=> $LANG['activ'],
+		'L_UNACTIVE' 		=> $LANG['unactiv'],
+
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']		
 	));

@@ -255,7 +255,7 @@ Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
 %s
 
-' . $CONFIG['sign'];
+' . MailServiceConfig::load()->get_mail_signature();
 
 //Gestion des alertes
 $LANG['alert_management'] = 'Gestion des alertes';

@@ -57,7 +57,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 					
 					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
-					AppContext::get_mail_service()->send_from_properties($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail_exp']);
+					AppContext::get_mail_service()->send_from_properties($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, MailServiceConfig::load()->get_mail_signature()));
 
 					//Affichage de la confirmation.
 					AppContext::get_response()->redirect('/member/forget.php?error=forget_mail_send');

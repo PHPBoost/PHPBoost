@@ -120,7 +120,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$user_avatar = $path; //Avatar posté et validé.
 				}
 				
-				$admin_sign = $CONFIG['sign'];
+				$admin_sign = MailServiceConfig::load()->get_mail_signature();
 						
 				$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
@@ -265,7 +265,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					AppContext::get_mail_service()->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);
+					AppContext::get_mail_service()->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, MailServiceConfig::load()->get_mail_signature()));
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if ($user_accounts_config->get_member_accounts_validation_method() == 0)

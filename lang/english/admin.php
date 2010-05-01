@@ -149,8 +149,8 @@ $LANG['download'] = 'Downloaded';
 $LANG['delete'] = 'Delete';
 $LANG['user_ip'] = 'IP address';
 $LANG['localisation'] = 'Localisation';
-$LANG['activ'] = 'Enable';
-$LANG['unactiv'] = 'Disable';
+$LANG['activ'] = 'Enabled';
+$LANG['unactiv'] = 'Disabled';
 $LANG['activate'] = 'Enable';
 $LANG['unactivate'] = 'Disable';
 $LANG['img'] = 'Picture';
@@ -366,7 +366,7 @@ $LANG['unlock_mail'] = 'Conserve this code (it will never be redelivered): %s
 This code can unlock the administration panel in case of intrusion attempt.
 It will be asked of you in the direct administration connection form  (yourserver/admin/admin_index.php)
 
-' . $CONFIG['sign'];
+' . MailServiceConfig::load()->get_mail_signature();
 
 //Maintenance
 $LANG['maintain_auth'] = 'Leave access to the website during maintenance';

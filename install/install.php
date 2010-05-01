@@ -521,9 +521,6 @@ switch($step)
 			$CONFIG['site_cookie'] = 'session';
 			$CONFIG['site_session'] = 3600;
 			$CONFIG['site_session_invit'] = 300;
-			$CONFIG['mail_exp'] = '';
-			$CONFIG['mail'] = '';
-			$CONFIG['sign'] = $LANG['site_config_mail_signature'];
 			$CONFIG['anti_flood'] = 0;
 			$CONFIG['delay_flood'] = 7;
 			$CONFIG['unlock_admin'] = '';
@@ -723,8 +720,11 @@ switch($step)
 				//Génération de la clé d'activation, en cas de verrouillage de l'administration
 				$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
 				$CONFIG['unlock_admin'] = strhash($unlock_admin);
-				$CONFIG['mail_exp'] = $user_mail;
-				$CONFIG['mail'] = $user_mail;
+
+				$mail_config = MailServiceConfig::load();
+				$mail_config->set_administrators_mails(array($user_mail));
+				$mail_config->set_default_mail_sender($user_mail);
+				MailServiceConfig::save();
 
 				$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 
