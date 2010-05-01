@@ -43,6 +43,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	private $fieldset_id = '';
+	/**
+	 * @var string
+	 */
 	protected $label = '';
 	/**
 	 * @var string
@@ -89,7 +93,7 @@ abstract class AbstractFormField implements FormField
 	 * @var string[string]
 	 */
 	protected $events = array();
-	
+
 	/**
 	 * @desc Constructs and set parameters to the field.
 	 * The specific parameters of this abstract class (common with many fields) are the following:
@@ -140,6 +144,11 @@ abstract class AbstractFormField implements FormField
 	public function set_form_id($form_id)
 	{
 		$this->form_id = $form_id;
+	}
+
+	public function set_fieldset_id($fieldset_id)
+	{
+		$this->fieldset_id = $fieldset_id;
 	}
 
 	/**
@@ -354,6 +363,33 @@ abstract class AbstractFormField implements FormField
 
 	protected function assign_common_template_variables(Template $template)
 	{
+		$js_tpl = new FileTemplate('framework/builder/form/AddFieldJS.tpl');
+
+		foreach ($this->get_related_fields() as $field)
+		{
+			$js_tpl->assign_block_vars('related_field', array(
+				'ID' => $field
+			));
+		}
+
+		foreach ($this->events as $event => $handler)
+		{
+			$js_tpl->assign_block_vars('event_handler', array(
+				'EVENT' => $event,
+				'HANDLER' => $handler
+			));
+		}
+
+		$js_tpl->assign_vars(array(
+			'C_DISABLED' => $this->is_disabled(),
+			'ID' => $this->get_html_id(),
+			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
+			'FORM_ID' => $this->form_id,
+			'FIELDSET_ID' => $this->fieldset_id
+		));
+		
+		$template->add_subtemplate('ADD_FIELD_JS', $js_tpl);
+
 		$description = $this->get_description();
 		$template->assign_vars(array(
 			'ID' => $this->get_html_id(),
@@ -365,30 +401,15 @@ abstract class AbstractFormField implements FormField
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'CLASS' => $this->get_css_class(),
 			'FORM_ID' => $this->form_id,
+			'FIELDSET_ID' => $this->fieldset_id,
 			'C_DISABLED' => $this->is_disabled(),
-			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
 			'C_HIDDEN' => $this->hidden
 		));
-
+		
 		foreach ($this->get_js_validations() as $constraint)
 		{
 			$template->assign_block_vars('constraint', array(
 				'CONSTRAINT' => $constraint
-			));
-		}
-
-		foreach ($this->get_related_fields() as $field)
-		{
-			$template->assign_block_vars('related_field', array(
-				'ID' => $field
-			));
-		}
-
-		foreach ($this->events as $event => $handler)
-		{
-			$template->assign_block_vars('event_handler', array(
-				'EVENT' => $event,
-				'HANDLER' => $handler
 			));
 		}
 	}
@@ -438,7 +459,7 @@ abstract class AbstractFormField implements FormField
 	{
 		$this->disabled = $disabled;
 	}
-	
+
 	public function set_template(Template $template)
 	{
 		$this->template = $template;

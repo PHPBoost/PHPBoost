@@ -43,6 +43,8 @@ interface FormFieldset
      * @param string $prefix The new id prefix for fields.
      */
     function set_form_id($prefix);
+    
+    function get_html_id();
 
     function validate();
 
