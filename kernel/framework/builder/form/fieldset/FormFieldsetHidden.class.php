@@ -32,7 +32,7 @@
  */
 class FormFieldsetHidden extends AbstractFormFieldset
 {
-    private static $tpl_src = '<div style="display:none;" id="{E_ID}"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
+    private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div style="display:none;" id="{E_ID}"># START fields #	 # INCLUDE fields.FIELD # # END fields #</div>';
 
     public function __construct($id, $options = array())
     {

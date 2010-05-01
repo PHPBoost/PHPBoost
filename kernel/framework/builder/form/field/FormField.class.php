@@ -49,6 +49,12 @@ interface FormField
 	 * @param string $prefix The new id prefix.
 	 */
 	function set_form_id($prefix);
+	
+	/**
+	 * @desc Sets the if of the fieldset which contains the field
+	 * @param $fieldset_id id of the fieldset
+	 */
+	function set_fieldset_id($fieldset_id);
 
 	/**
 	 * @return mixed

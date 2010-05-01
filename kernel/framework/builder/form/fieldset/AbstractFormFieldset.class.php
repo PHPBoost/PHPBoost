@@ -77,6 +77,11 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		$this->description = $description;
 	}
+	
+	public function get_html_id()
+	{
+		return $this->form_id . '_' . $this->id;
+	}
 
 	/**
 	 * @desc Store fields in the fieldset.
@@ -91,6 +96,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 		$this->fields[$form_field->get_id()] = $form_field;
 		$form_field->set_form_id($this->form_id);
+		$form_field->set_fieldset_id($this->get_html_id());
 	}
 
 	/**
@@ -157,12 +163,24 @@ abstract class AbstractFormFieldset implements FormFieldset
 
 	protected function assign_template_fields(Template $template)
 	{
+		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
+		
+		$js_tpl->assign_vars(array(
+			'ID' => $this->get_html_id(),
+			'C_DISABLED' => $this->disabled,
+			'FORM_ID' => $this->form_id
+		));
+		
+		$template->add_subtemplate('ADD_FIELDSET_JS', $js_tpl);
+		
 		$template->assign_vars(array(
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
-			'ID' => $this->form_id . '_' . $this->id . '_fieldset',
-			'C_DISABLED' => $this->disabled
+			'ID' => $this->get_html_id(),
+			'C_DISABLED' => $this->disabled,
+			'FORM_ID' => $this->form_id
 		));
+		
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(), array(

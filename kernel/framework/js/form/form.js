@@ -5,73 +5,107 @@ HTMLForms.add = function(form) {
 	return HTMLForms.forms.push(form);
 };
 HTMLForms.get = function(id) {
-	for ( var i = 0; i < HTMLForms.forms.length; i++) {
-		var form = HTMLForms.forms[i];
-		if (form.getId() == id) {
-			return form;
+	var form = null;
+	HTMLForms.forms.each(function(aForm) {
+		if (aForm.getId() == id) {
+			form = aForm;
+			throw $break;
 		}
-	}
-	return null;
+	});
+	return form;
 };
 HTMLForms.has = function(id) {
 	return HTMLForms.get(id) != null;
 };
-HTMLForms.getField = function(id) {
-	for ( var i = 0; i < HTMLForms.forms.length; i++) {
-		var form = HTMLForms.forms[i];
-		var field = form.getField(id);
-		if (field != null) {
-			return field;
+HTMLForms.getFieldset = function(id) {
+	var fieldset = null;
+	HTMLForms.forms.each(function(form) {
+		var aFieldset = form.getFieldset(id);
+		if (aFieldset != null) {
+			fieldset = aFieldset;
+			throw $break;
 		}
-	}
-	return null;
+	});
+	return fieldset;
+};
+HTMLForms.getField = function(id) {
+	var field = null;
+	HTMLForms.forms.each(function(form) {
+		var aField = form.getField(id);
+		if (aField != null) {
+			field = aField;
+			throw $break;
+		}
+	});
+	return field;
 };
 
 // This represents a HTML form.
 var HTMLForm = Class.create( {
-	fields : new Array(),
+	fieldsets : new Array(),
 	id : "",
 	initialize : function(id) {
 		this.id = id;
+		this.fieldsets = new Array();
 	},
 	getId : function() {
 		return this.id;
 	},
-	addField : function(field) {
-		this.fields.push(field);
+	addFieldset : function(fieldset) {
+		this.fieldsets.push(fieldset);
 	},
-	getField : function(id) {
-		for ( var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
-			if (field.getId() == id) {
-				return field;
+	getFieldset : function(id) {
+		var fieldset = null;
+		this.fieldsets.each(function(aFieldset) {
+			if (aFieldset.getId() == id) {
+				fieldset = aFieldset;
+				throw $break;
 			}
-		}
-		return null;
+		});
+		return fieldset;
+	},
+	getFieldsets : function() {
+		return this.fieldset;
+	},
+	hasFieldset : function(id) {
+		var hasFieldset = false;
+		this.fieldsets.each(function(aFieldset) {
+			if (aFieldset.getId() == id) {
+				hasFieldset = true;
+				throw $break;
+			}
+		});
+		return hasFieldset;
 	},
 	getFields : function() {
-		return this.fields;
+		var fields = new Array();
+		fieldsets.each(function(fieldset) {
+			fields.push(fieldset.getFields());
+		});
+		return fields;
 	},
-	hasField : function(id) {
-		for ( var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
-			if (field.getId() == id) {
-				return true;
+	getField : function(id) {
+		var field = null;
+		this.getFields().each(function(aField) {
+			if (aField.getId() == id) {
+				field = aField;
+				throw $break;
 			}
-		}
-		return false;
+		});
+		return field;
 	},
 	validate : function() {
-		for ( var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
+		var validated = true;
+		this.fields.each(function(field) {
 			var validation = field.validate();
 			if (validation != "") {
 				this.displayValidationError(validation);
-				return false;
+				validated = false;
+				throw $break;
 			}
-		}
+		});
 		this.registerDisabledFields();
-		return true;
+		return validated;
 	},
 	displayValidationError : function(message) {
 		message = message.replace(/&quot;/g, '"');
@@ -80,13 +114,63 @@ var HTMLForm = Class.create( {
 	},
 	registerDisabledFields : function() {
 		var disabled = "";
-		for ( var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
+		this.getFields().each(function(field) {
 			if (field.isDisabled()) {
 				disabled += "|" + field.getId();
 			}
-		}
+		});
 		$(this.id + '_disabled_fields').value = disabled;
+	}
+});
+
+// This represents a fieldset
+var FormFieldset = Class.create( {
+	fields : new Array(),
+	id : "",
+	initialize : function(id) {
+		this.id = id;
+		this.fields = new Array();
+	},
+	getId : function() {
+		return this.id;
+	},
+	addField : function(field) {
+		this.fields.push(field);
+	},
+	getField : function(id) {
+		var field = null;
+		this.fields.each(function(aField) {
+			if (aField.getId() == id) {
+				field = aField;
+				throw $break;
+			}
+		});
+		return field;
+	},
+	getFields : function() {
+		return this.fields;
+	},
+	hasField : function(id) {
+		var hasField = false;
+		this.fields.each(function(field) {
+			if (field.getId() == id) {
+				hasField = true;
+				throw $break;
+			}
+		});
+		return hasField;
+	},
+	enable : function() {
+		Effect.Appear(this.id);
+		this.fields.each(function(field) {
+			field.enable();
+		});
+	},
+	disable : function() {
+		Effect.Fade(this.id);
+		this.fields.each(function(field) {
+			field.disable();
+		});
 	}
 });
 
