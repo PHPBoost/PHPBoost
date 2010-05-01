@@ -1,4 +1,4 @@
-		<dl id="{E_ID}_field" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+		<dl id="{E_ID}_field" # IF C_DISABLED # style="display:none;" # ENDIF #>
 			<dt>
 				<label for="{E_ID}">
 					# IF C_REQUIRED # * # ENDIF #
