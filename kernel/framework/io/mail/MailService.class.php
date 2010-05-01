@@ -52,7 +52,7 @@ interface MailService
 	 * @param string $sender_name The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
 	 * @return bool True if the mail could be sent, false otherwise.
 	 */
-	function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from, $sender_name = 'admin');
+	function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from = '', $sender_name = 'admin');
 
 	/**
 	 * @desc Check whether the mail address is valid, it respects the mail RFC
