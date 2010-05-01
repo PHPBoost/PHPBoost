@@ -42,7 +42,7 @@ class MailUtil
 	 */
 	public static function is_mail_valid($mail_address)
 	{
-		return (bool)preg_match(get_mail_checking_regex(), $mail_address);
+		return (bool)preg_match(self::get_mail_checking_regex(), $mail_address);
 	}
 
 	/**

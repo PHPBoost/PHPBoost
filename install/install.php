@@ -656,8 +656,6 @@ switch($step)
 		//Validation de l'étape
 		if (retrieve(POST, 'submit', false))
 		{
-
-
 			$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
 			$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
 			$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
@@ -775,7 +773,7 @@ switch($step)
     				));
 			}
 		}
-
+		
 		$template->assign_vars(array(
     		'C_ADMIN_ACCOUNT' => true,
     		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_ADMIN_ACCOUNT - 1)),
@@ -809,12 +807,11 @@ switch($step)
     		'MAIL_VALUE' => !empty($error) ? $user_mail : '',
     		'CHECKED_AUTO_CONNECTION' => !empty($error) ? ($auto_connection ? 'checked="checked"' : '') : 'checked="checked"',
     		'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
-    		));
-    		break;
-    		//Fin
+    	));
+    	break;
+    	//Fin
 	case STEP_END:
 		$Sql = PersistenceContext::get_sql();
-
 
 		$Cache = new Cache;
 		$Cache->load('config');
@@ -857,14 +854,14 @@ foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
 			'LANG' => $folder->get_name(),
 			'LANG_NAME' => $info_lang['name'],
 			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
-			));
+		));
 
-			if ($folder->get_name() == $lang)
-			{
-				$template->assign_vars(array(
-				'LANG_IDENTIFIER' => $info_lang['identifier']
-				));
-			}
+		if ($folder->get_name() == $lang)
+		{
+			$template->assign_vars(array(
+			'LANG_IDENTIFIER' => $info_lang['identifier']
+			));
+		}
 	}
 }
 
