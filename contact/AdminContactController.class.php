@@ -73,7 +73,7 @@ class AdminContactController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['enable_captcha'], $config->is_captcha_enabled(),
 			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
 		$fieldset->add_field(new FormFieldTextEditor('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(), 
-			array('disabled' => !$config->is_captcha_enabled()),
+			array('disabled' => !$config->is_captcha_enabled(), 'required' => true),
 			array(new FormFieldConstraintIntegerRange(0, 4))));
 
 		$form->add_button(new FormButtonReset());
