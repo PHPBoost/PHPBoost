@@ -43,7 +43,7 @@
 [b]Divers :[/b]
 - [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag'n drop).
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail colaboratif.
-- [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
+[*] [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
 [*] Meilleur détection des robots d'indexation, ajout de la prise en compte de Bing.

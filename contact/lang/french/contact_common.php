@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            contact_french.php
+ *                            contact_common.php
  *                            -------------------
  *   begin                : July 29, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -31,17 +31,22 @@
  ####################################################
 
 //Titre
-$LANG['title_contact'] = 'Contact';
+$lang['title_contact'] = 'Contact';
 
 //Contact
-$LANG['contact_mail'] = 'Envoyer un mail à l\'administrateur';
-$LANG['valid_mail'] = 'Valide si vous voulez une réponse !';
-$LANG['success_mail'] = 'Merci, votre Mail a été envoyé avec succès à l\'administrateur';
-$LANG['error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé';
-$LANG['alert_contact_mail'] = 'Le mail que vous avez entré est invalide !';
+$lang['contact_mail'] = 'Contacter les gestionnaires du site';
+$lang['your_mail_address'] = 'Votre adresse mail';
+$lang['your_mail_address_explain'] = 'L\'adresse doit être valide pour que vous puissiez obtenir une réponse';
+$lang['contact_subject'] = 'Object';
+$lang['contact_subject_explain'] = 'Résumez en quelques mot pourquoi vous voulez contacter les gestionnaires du site';
+$lang['message'] = 'Message';
+$lang['success_mail'] = 'Votre message a été envoyé avec succès aux gestionnaires du site.';
+$lang['error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé pour des raisons techniques.';
 
 //Admin
-$LANG['contact_config'] = 'Configuration';
-$LANG['activ_verif_code'] = 'Activer le code vérification';
+$lang['contact_config'] = 'Configuration';
+$lang['enable_captcha'] = 'Activer la protection anti-spam';
+$lang['captcha_difficulty'] = 'Difficulté de l\'anti spam';
+$lang['success_saving_config'] = 'La configuration a été enregistrée avec succès';
 
 ?>
