@@ -162,6 +162,7 @@ $LANG['insert_list'] = 'Insérer la liste';
 $LANG['forbidden_tags'] = 'Types de formatage interdits';
 $LANG['phpboost_languages'] = 'PHPBoost';
 $LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
+$LANG['code_too_long_error'] = 'Le code que vous voulez colorer est trop long et consommerait trop de ressources pour être interprété. Merci de réduire sa taille ou de l\'éclater en plusieurs morceaux.';
 $LANG['format_bold'] = 'Gras';
 $LANG['format_italic'] = 'Italique';
 $LANG['format_underline'] = 'Souligné';
