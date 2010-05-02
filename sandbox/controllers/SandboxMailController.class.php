@@ -77,7 +77,7 @@ class SandboxMailController extends ModuleController
 		$fieldset = new FormFieldsetHTML('send_configuration', 'SMTP configuration', array('description' => 'If you want to use a direct SMTP connection to send the mail, check the box.'));
 		$this->form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', 'Use SMTP', false,
-			array('events' => array('click' => 'if ($F("smtp_config_use_smtp") == "on") { HTMLForms.getFieldset("smtp_configuration").enable(); } else { HTMLForms.getFieldset("smtp_configuration").disable(); }'))));
+			array('events' => array('click' => 'if ($FF("use_smtp").getValue()) { $FFS("smtp_configuration").enable(); } else { $FFS("smtp_configuration").disable(); }'))));
 
 
 		$fieldset = new FormFieldsetHTML('smtp_configuration', 'Send configuration', array('disabled' => true));
