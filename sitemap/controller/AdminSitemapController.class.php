@@ -64,11 +64,13 @@ class AdminSitemapController extends AdminController
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+			array('events' => array('click' => 'if (HTMLForms.getField("enable_sitemap_xml").getValue()) { HTMLForms.getField("file_life_time").enable(); } else { HTMLForms.getField("file_life_time").disable(); }'))));
 
 		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
-		array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain']),
-		array(new FormFieldConstraintIntegerRange(1, 50))));
+			array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain'], 'disabled' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
+			array(new FormFieldConstraintIntegerRange(1, 50))));
+		
 		$this->form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
@@ -80,13 +82,13 @@ class AdminSitemapController extends AdminController
 		if ($this->form->get_value('enable_sitemap_xml'))
 		{
 			$config->enable_sitemap_xml_generation();
+			$config->set_sitemap_xml_life_time((int)$this->form->get_value('file_life_time'));
 		}
 		else
 		{
 			$config->disable_sitemap_xml_generation();
 		}
 
-		$config->set_sitemap_xml_life_time((int)$this->form->get_value('file_life_time'));
 		SitemapConfig::save($config);
 	}
 
