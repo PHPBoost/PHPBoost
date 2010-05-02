@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          install-cli.php
+ *                               phpboost
  *                            -------------------
  *   begin                : February 3, 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 define('PATH_TO_ROOT', '.');
 require_once PATH_TO_ROOT . '/kernel/cli/CLIEnvironment.class.php';

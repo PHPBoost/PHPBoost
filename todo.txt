@@ -3,7 +3,6 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - Ajouter dans l'administration la liste des hôtes autorisés pour le proxy
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 - Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)

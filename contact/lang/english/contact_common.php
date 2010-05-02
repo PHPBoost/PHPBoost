@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              contact_english.php
+ *                            contact_common.php
  *                            -------------------
  *   begin                : July 29, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -31,17 +31,22 @@
  ####################################################
  
 //Title 
-$LANG['title_contact'] = 'Contact';
+$lang['title_contact'] = 'Contact';
  
 //Contact
-$LANG['contact_mail'] = 'Send an e-mail to the administrator';
-$LANG['valid_mail'] = 'Must be valid if you want an answer!';
-$LANG['success_mail'] = 'Thank you, your e-mail has been sent successfully';
-$LANG['error_mail'] = 'Sorry, your e-mail couldn\'t be sent';
-$LANG['alert_contact_mail'] = 'Your e-mail address isn\'t valid!';
+$lang['contact_mail'] = 'Contact the site\'s managers';
+$lang['your_mail_address'] = 'Your mail address';
+$lang['your_mail_address_explain'] = 'Must be valid if you want to be answered';
+$lang['contact_subject'] = 'Subject';
+$lang['contact_subject_explain'] = 'Sum up in a few words why you want to contact the site\'s managers';
+$lang['message'] = 'Message';
+$lang['success_mail'] = 'Thank you, your e-mail has been sent successfully';
+$lang['error_mail'] = 'Sorry, your e-mail couldn\'t be sent';
 
 //Admin
-$LANG['contact_config'] = 'Configuration';
-$LANG['activ_verif_code'] = 'Enter verification code';
+$lang['contact_config'] = 'Configuration';
+$lang['enable_captcha'] = 'Enable the anti spam protection';
+$lang['captcha_difficulty'] = 'Anti spam difficulty';
+$lang['success_saving_config'] = 'The configuration has been saved successfully';
 
 ?>
