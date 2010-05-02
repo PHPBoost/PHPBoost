@@ -12,12 +12,12 @@
 <!--
 	function show_smtp_config()
 	{
-		HTMLForms.getFieldset("smtp_configuration").enable();
+		$FFS("smtp_configuration").enable();
 	}
 	
 	function hide_smtp_config()
 	{
-		HTMLForms.getFieldset("smtp_configuration").disable();
+		$FFS("smtp_configuration").disable();
 	}
 -->
 </script>
