@@ -72,7 +72,7 @@ class HTTPRequest
 
 	private function has_rawparameter($parameter, &$array)
 	{
-		return !empty($array[$parameter]);
+		return isset($array[$parameter]);
 	}
 
 	public function set_value($varname, $value)
