@@ -41,9 +41,9 @@ HTMLForms.getField = function(id) {
 };
 
 // Shortcuts
-$HF = HTMLForms.get;
-$FFS = HTMLForms.getFieldset;
-$FF = HTMLForms.getField;
+var $HF = HTMLForms.get;
+var $FFS = HTMLForms.getFieldset;
+var $FF = HTMLForms.getField;
 
 // This represents a HTML form.
 var HTMLForm = Class.create( {
