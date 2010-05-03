@@ -298,7 +298,7 @@ $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprime
 //Config
 $LANG['config_main'] = 'Configuration générale';
 $LANG['config_advanced'] = 'Configuration avancée';
-$LANG['config_mail'] = 'Configuration de l\'envoi de mail';
+$LANG['config_mail'] = 'Envoi de mail';
 $LANG['serv_name'] = 'URL du serveur';
 $LANG['serv_path'] = 'Chemin de PHPBoost';
 $LANG['serv_path_explain'] = 'Vide par défaut : site à la racine du serveur';

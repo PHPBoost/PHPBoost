@@ -299,7 +299,7 @@ $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete t
 //Config
 $LANG['config_main'] = 'Main configuration';
 $LANG['config_advanced'] = 'Advanced configuration';
-$LANG['config_mail'] = 'Mail sending configuration';
+$LANG['config_mail'] = 'Mail sending';
 $LANG['serv_name'] = 'Server name';
 $LANG['serv_path'] = 'PHPBoost path, empty by default';
 $LANG['serv_path_explain'] = 'Website, on the server root';
