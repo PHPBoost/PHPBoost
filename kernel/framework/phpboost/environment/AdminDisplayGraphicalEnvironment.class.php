@@ -216,6 +216,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_TOOLS' => $LANG['tools'],
 			'L_CONFIGURATION' => $LANG['configuration'],
 			'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
+			'L_MAIL_CONFIG' => $LANG['config_mail'],
 		    'L_ADD' => $LANG['add'],
 		    'L_ADD_CONTENT_MENU' => $LANG['menus_content_add'],
 		    'L_ADD_LINKS_MENU' => $LANG['menus_links_add'],
