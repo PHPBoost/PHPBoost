@@ -258,7 +258,7 @@ class Feed
 		}
 		else
 		{
-			$template = new FileTemplate('framework/content/syndication/feed.tpl');
+			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
 		}
