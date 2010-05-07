@@ -194,6 +194,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			
 			//Image
 			$this->content = preg_replace_callback('`<img src="([^"]+)" alt=""(?: style="([^"]*)")? />`isU', array($this, 'unparse_img'), $this->content );
+			
+			// Feed
+			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
 	}
 
 	/**

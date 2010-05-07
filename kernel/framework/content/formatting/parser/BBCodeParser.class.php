@@ -314,6 +314,12 @@ class BBCodeParser extends ContentFormattingParser
             {
             	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
             }
+            
+            // Feed tag
+            if (!in_array('feed', $this->forbidden_tags))
+            {
+            	$this->parse_feed_tag();
+            }
 	}
 
 	/**
@@ -496,6 +502,13 @@ class BBCodeParser extends ContentFormattingParser
 	protected static function clear_html_br($matches)
 	{
 		return str_replace("<br />", "", $matches[0]);
+	}
+	
+	private function parse_feed_tag()
+	{
+		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
+		$this->content = preg_replace('`\[feed\]([a-z]+)\[/feed\]`U', '[[FEED]]$1[[/FEED]]', $this->content);
+		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
 	}
 }
 

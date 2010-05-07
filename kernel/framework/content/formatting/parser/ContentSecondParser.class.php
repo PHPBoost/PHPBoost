@@ -73,6 +73,8 @@ class ContentSecondParser extends AbstractParser
 			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.class.php';
 			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
 		}
+		
+		$this->parse_feed_tag();
 
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
 	}
@@ -283,6 +285,35 @@ class ContentSecondParser extends AbstractParser
                 <param name="wmode" value="transparent" />
                 <param name="bgcolor" value="#FFFFFF" />
             </object>';
+	}
+	
+	private function parse_feed_tag()
+	{
+		$this->content = preg_replace_callback('`\[\[FEED\]\]([a-z]+)\[\[/FEED\]\]`U', array(__CLASS__, 'inject_feed'), $this->content);
+	}
+	
+	private static function inject_feed(array $matches)
+	{
+		$module = $matches[1];
+		$result = '';
+		try
+		{
+			$result = Feed::get_parsed($module);
+		}
+		catch (Exception $e)
+		{
+		}
+		
+		if (!empty($result))
+		{
+			return $result;			
+		}
+		else
+		{
+			global $LANG;
+			$error = StringVars::replace_vars($LANG['feed_tag_error'], array('module' => $module));
+			return '<div class="error">' . $error . '</div>';
+		}
 	}
 }
 ?>

@@ -193,6 +193,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		//Wikipedia link
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+		
+		// Feed
+		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
 	}
 
 	private function unparse_img($matches)
