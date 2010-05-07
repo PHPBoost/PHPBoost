@@ -226,6 +226,8 @@ class FileTemplateLoader implements TemplateLoader
 			//      /$module/templates/framework/.../$file.tpl
 			//      /templates/default/framework/.../$file.tpl
 
+			// TODO correct it, there are two undefined variables
+			// It was called by Feed::get_parsed() at line 261
 			$this->get_template_real_filepaths_and_data_path(array(
 			$theme_module_templates_folder . $this->file,
 			$module_templates_folder . 'framework/' . $this->file,

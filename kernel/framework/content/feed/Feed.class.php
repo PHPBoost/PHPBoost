@@ -250,7 +250,7 @@ class Feed
 	 * @return string The exported feed
 	 * @static
 	 */
-	private static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
+	public static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
 	{
 		if ($tpl instanceof Template)
 		{
@@ -258,7 +258,7 @@ class Feed
 		}
 		else
 		{
-			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
+			$template = new FileTemplate('framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
 		}

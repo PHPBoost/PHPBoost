@@ -648,6 +648,11 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
 			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
 		}
+		
+		if (!in_array('feed', $this->forbidden_tags))
+		{
+			$this->parse_feed_tag();			
+		}
 	}
 
 	/**
@@ -811,44 +816,51 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		// Trim manuel
 		$this->content = preg_replace(
-		array(
-		        '`^(\s|(?:<br />))*`i',
-                '`(\s|(?:<br />))*$`i',
-                '`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
-                '`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
-                '`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
-		//We delete the spaces which are at the begening of the line (inserted by TinyMCE to indent the HTML code)
-		        "`(\n<br />)[\s]*`"
-		        ),
-		        array(
-                '',
-                '',
-                '$1',
-                "$1\n",
-                "$1$2",
-		        '$1'
-		        ),
-		        $this->content
-		        );
-		         
-		        $this->content = str_replace(
-		        array("\n", "\r", '<br />'),
-		        array(' ', ' ', "\n<br />"),
-		        $this->content
-		        );
-		         
-		        //We delete all remaining HTML tags which are not recognized by the parser
-		        $this->content = preg_replace(
-		        array(
-		        '`&lt;(?:p|span|div)[^&]*&gt;`is',
+			array(
+				'`^(\s|(?:<br />))*`i',
+	            '`(\s|(?:<br />))*$`i',
+	            '`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
+	            '`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
+	            '`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
+				// We delete the spaces which are at the begening of the line (inserted by TinyMCE to indent the HTML code)
+	        	"`(\n<br />)[\s]*`"
+	        ),
+	        array(
+	            '',
+	            '',
+	            '$1',
+	            "$1\n",
+	            "$1$2",
+	        	'$1'
+	        ),
+	        $this->content
+        );
+         
+        $this->content = str_replace(
+        	array("\n", "\r", '<br />'),
+        	array(' ', ' ', "\n<br />"),
+        	$this->content
+        );
+         
+        //We delete all remaining HTML tags which are not recognized by the parser
+        $this->content = preg_replace(
+        	array(
+        		'`&lt;(?:p|span|div)[^&]*&gt;`is',
                 '`&lt;/(?:p|span|div)*&gt;`is'
-                ),
-                array(
+            ),
+            array(
                 '',
                 ''
-                ),
+            ),
                 $this->content
-                );
+        );
+	}
+	
+	private function parse_feed_tag()
+	{
+		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
+		$this->content = preg_replace('`\[feed\]([a-z]+)\[/feed\]`U', '[[FEED]]$1[[/FEED]]', $this->content);
+		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
 	}
 }
 
