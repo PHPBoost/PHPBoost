@@ -464,7 +464,7 @@ function get_ulang()
  */
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
-	$editor = ContentFormattingMetaFactory::get_default_editor();
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 	{
 		$editor->set_forbidden_tags($forbidden_tags);

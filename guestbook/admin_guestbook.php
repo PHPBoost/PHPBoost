@@ -60,7 +60,7 @@ else
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach (FormattingTagsList::get_available_tags() as $name => $value)
+	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $name => $value)
 	{
 		$selected = '';
 		if (in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))

@@ -50,7 +50,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
      */
     public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
     {
-        $this->formatter = ContentFormattingMetaFactory::get_default_factory();
+        $this->formatter = AppContext::get_content_formatting_service()->get_default_factory();
         parent::__construct($id, $label, '', $field_options, $constraints);
 
         $this->set_value($value);

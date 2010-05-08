@@ -74,6 +74,10 @@ class AppContext
 	 * @var MailService
 	 */
 	private static $mail_service;
+	/**
+	 * @var ContentFormattingService
+	 */
+	private static $content_formatting_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -239,6 +243,18 @@ class AppContext
 			}
 		}
 		return self::$mail_service;
+	}
+	
+	/**
+	 * @return ContentFormattingService
+	 */
+	public static function get_content_formatting_service()
+	{
+		if (self::$content_formatting_service === null)
+		{
+			self::$content_formatting_service = new ContentFormattingService();
+		}
+		return self::$content_formatting_service;
 	}
 }
 

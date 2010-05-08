@@ -47,7 +47,6 @@ class SandboxHomeController extends ModuleController
 				'NAME' => $name
 			));
 		}
-
 		return new SiteDisplayResponse($tpl);
 	}
 }

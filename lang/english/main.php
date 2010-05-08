@@ -200,6 +200,7 @@ $LANG['format_mail'] = 'Mail';
 $LANG['format_line'] = 'Horizontal line';
 $LANG['format_wikipedia'] = 'Wikipedia link';
 $LANG['format_html'] = 'HTML code';
+$LANG['format_feed'] = 'Feed';
 
 //Impression
 $LANG['printable_version'] = 'Printable version';

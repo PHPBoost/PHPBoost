@@ -126,7 +126,7 @@ class SandboxFormController extends ModuleController
 		// RICH TEXT
 		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche', 'toto <strong>tata</strong>', array('formatter' => ContentFormattingMetaFactory::create_factory(ContentFormattingMetaFactory::TINYMCE_LANGUAGE))));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory(ContentFormattingService::TINYMCE_LANGUAGE))));
 
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');

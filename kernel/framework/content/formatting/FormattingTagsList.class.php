@@ -74,7 +74,8 @@ class FormattingTagsList
         	'mail' => $LANG['format_mail'],
         	'line' => $LANG['format_line'],
         	'wikipedia' => $LANG['format_wikipedia'],
-        	'html' => $LANG['format_html']
+        	'html' => $LANG['format_html'],
+        	'feed' => $LANG['format_feed']
         );
     }
 }
