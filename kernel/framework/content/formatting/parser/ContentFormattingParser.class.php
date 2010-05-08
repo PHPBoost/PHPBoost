@@ -321,5 +321,12 @@ abstract class ContentFormattingParser extends AbstractParser
 
         return true;
     }
+	
+	protected function parse_feed_tag()
+	{
+		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
+		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`U', '[[FEED$1]]$2[[/FEED]]', $this->content);
+		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
+	}
 }
 ?>

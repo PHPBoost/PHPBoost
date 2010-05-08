@@ -503,13 +503,6 @@ class BBCodeParser extends ContentFormattingParser
 	{
 		return str_replace("<br />", "", $matches[0]);
 	}
-	
-	private function parse_feed_tag()
-	{
-		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
-		$this->content = preg_replace('`\[feed\]([a-z]+)\[/feed\]`U', '[[FEED]]$1[[/FEED]]', $this->content);
-		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
-	}
 }
 
 ?>

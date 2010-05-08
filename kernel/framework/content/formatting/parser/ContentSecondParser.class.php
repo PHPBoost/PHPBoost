@@ -289,16 +289,23 @@ class ContentSecondParser extends AbstractParser
 	
 	private function parse_feed_tag()
 	{
-		$this->content = preg_replace_callback('`\[\[FEED\]\]([a-z]+)\[\[/FEED\]\]`U', array(__CLASS__, 'inject_feed'), $this->content);
+		$this->content = preg_replace_callback('`\[\[FEED((?: [a-z]+="[^"]+")*)\]\]([a-z]+)\[\[/FEED\]\]`U', array(__CLASS__, 'inject_feed'), $this->content);
 	}
 	
 	private static function inject_feed(array $matches)
 	{
-		$module = $matches[1];
+		$module = $matches[2];
+		$args = self::parse_feed_tag_args($matches[1]);
+		$name = !empty($args['name']) ? $args['name'] : Feed::DEFAULT_FEED_NAME;
+		$cat = !empty($args['cat']) ? $args['cat'] : 0;
+		$tpl = false;
+		$number = !empty($args['number']) ? $args['number'] : 10;
+		
 		$result = '';
+		
 		try
 		{
-			$result = Feed::get_parsed($module);
+			$result = Feed::get_parsed($module, $name, $cat, $tpl, $number);
 		}
 		catch (Exception $e)
 		{
@@ -314,6 +321,32 @@ class ContentSecondParser extends AbstractParser
 			$error = StringVars::replace_vars($LANG['feed_tag_error'], array('module' => $module));
 			return '<div class="error">' . $error . '</div>';
 		}
+	}
+	
+	private static function parse_feed_tag_args($matches)
+	{
+		$args = explode(' ', trim($matches));
+		$result = array();
+		
+		foreach ($args as $arg)
+		{
+			$param = array();
+			
+			if (!preg_match('`([a-z]+)="([^"]+)"`U', $arg, $param))
+			{
+				break;
+			}
+			
+			$name = $param[1];
+			$value = $param[2];
+			
+			if (in_array($name, array('name', 'cat', 'number')))
+			{
+				$result[$name] = $value;
+			}
+		}
+		
+		return $result;
 	}
 }
 ?>
