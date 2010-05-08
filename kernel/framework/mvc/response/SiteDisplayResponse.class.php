@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           site_display_response.class.php
+ *                           SiteDisplayResponse.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
@@ -37,7 +35,6 @@ class SiteDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		
 		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
 	}
 }

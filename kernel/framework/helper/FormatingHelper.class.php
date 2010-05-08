@@ -42,7 +42,7 @@ class FormatingHelper
 	 */
 	public static function strparse($content, $forbidden_tags = array(), $addslashes = true)
 	{
-		$parser = ContentFormattingMetaFactory::get_default_parser();
+		$parser = AppContext::get_content_formatting_service()->get_default_parser();
 	
 		//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
 		$parser->set_content($content);
@@ -74,7 +74,7 @@ class FormatingHelper
 	 */
 	public static function unparse($content)
 	{
-		$parser = ContentFormattingMetaFactory::get_default_unparser();
+		$parser = AppContext::get_content_formatting_service()->get_default_unparser();
 		$parser->set_content($content);
 		$parser->parse();
 	
@@ -91,7 +91,7 @@ class FormatingHelper
 	 */
 	public static function second_parse($content)
 	{
-		$parser = ContentFormattingMetaFactory::get_default_second_parser();
+		$parser = AppContext::get_content_formatting_service()->get_default_second_parser();
 		$parser->set_content($content);
 		$parser->parse();
 	

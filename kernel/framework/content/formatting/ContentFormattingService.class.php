@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                     ContentFormattingFactory.class.php
+ *                     ContentFormattingService.class.php
  *                            -------------------
  *   begin                : December 20, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -32,7 +32,7 @@
  * @desc This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
  */
-class ContentFormattingMetaFactory
+class ContentFormattingService
 {
 	const BBCODE_LANGUAGE = 'bbcode';
 	const TINYMCE_LANGUAGE = 'tinymce';
@@ -41,19 +41,19 @@ class ContentFormattingMetaFactory
 	/**
 	 * @var AbstractContentFormattingFactory
 	 */
-	private static $instance;
+	private $default_factory;
 
 	/**
 	 * @desc Returns the content formatting factory corresponding to the default configuration 
 	 * @return ContentFormattingFactory
 	 */
-	public static function get_default_factory()
+	public function get_default_factory()
 	{
-		if (self::$instance === null)
+		if ($this->default_factory === null)
 		{
-			self::$instance = self::create_factory(self::get_user_language());
+			$this->default_factory = $this->create_factory($this->get_user_language());
 		}
-		return self::$instance;
+		return $this->default_factory;
 	}
 
 	/**
@@ -61,16 +61,16 @@ class ContentFormattingMetaFactory
 	 * @param string $language
 	 * @return ContentFormattingFactory
 	 */
-	public static function create_factory($language)
+	public function create_factory($language)
 	{
-		switch (self::get_existing_editor($language))
+		switch ($this->get_existing_editor($language))
 		{
 			case self::BBCODE_LANGUAGE:
 				return new BBCodeFormattingFactory();
 			case self::TINYMCE_LANGUAGE:
 				return new TinyMCEFormattingFactory();
 			default:
-				return self::create_factory(self::get_user_language());
+				return $this->create_factory($this->get_user_language());
 		}
 	}
 
@@ -78,7 +78,7 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
-	public static function get_user_language()
+	public function get_user_language()
 	{
 		return AppContext::get_user()->get_attribute('user_editor');
 	}
@@ -87,27 +87,27 @@ class ContentFormattingMetaFactory
 	 * @desc Returns the parser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	public static function get_default_parser()
+	public function get_default_parser()
 	{
-		return self::get_default_factory()->get_parser();
+		return $this->get_default_factory()->get_parser();
 	}
 
 	/**
 	 * @desc Returns the unparser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	public static function get_default_unparser()
+	public function get_default_unparser()
 	{
-		return self::get_default_factory()->get_unparser();
+		return $this->get_default_factory()->get_unparser();
 	}
 
 	/**
 	 * @desc Returns the second parser to use in the default configuration
 	 * @return FormattingParser
 	 */
-	public static function get_default_second_parser()
+	public function get_default_second_parser()
 	{
-		return self::get_default_factory()->get_second_parser();
+		return $this->get_default_factory()->get_second_parser();
 	}
 
 	/**
@@ -115,16 +115,16 @@ class ContentFormattingMetaFactory
 	 * if you use the default configuration.
 	 * @return ContentEditor
 	 */
-	public static function get_default_editor()
+	public function get_default_editor()
 	{
-		return self::get_default_factory()->get_editor();
+		return $this->get_default_factory()->get_editor();
 	}
 
     /**
      * @param string $editor
      * @return string
      */
-    private static function get_existing_editor($editor)
+    private function get_existing_editor($editor)
     {
         if (in_array($editor, array(self::BBCODE_LANGUAGE, self::TINYMCE_LANGUAGE)))
         {
@@ -132,8 +132,56 @@ class ContentFormattingMetaFactory
         }
         else
         {
-            return self::get_default_editor();
+            return $this->get_default_editor();
         }
+    }
+    
+    /**
+     * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
+     * The keys of the map are the tags identifiers and the values the tags names.
+     * @return string[] The map
+     */
+    public function get_available_tags()
+    {
+        global $LANG;
+        return array(
+        	'b' => $LANG['format_bold'],
+        	'i' => $LANG['format_italic'],
+        	'u' => $LANG['format_underline'],
+        	's' => $LANG['format_strike'],
+        	'title' => $LANG['format_title'],
+        	'style' => $LANG['format_style'],
+        	'url' => $LANG['format_url'],
+        	'img' => $LANG['format_img'],
+        	'quote' => $LANG['format_quote'],
+        	'hide' => $LANG['format_hide'],
+        	'list' => $LANG['format_list'],
+        	'color' => $LANG['format_color'],
+        	'bgcolor' => $LANG['format_bgcolor'],
+        	'font' => $LANG['format_font'],
+        	'size' => $LANG['format_size'],
+        	'align' => $LANG['format_align'],
+        	'float' => $LANG['format_float'],
+        	'sup' => $LANG['format_sup'], 
+			'sub' => $LANG['format_sub'],
+        	'indent' => $LANG['format_indent'],
+        	'pre' => $LANG['format_pre'],
+        	'table' => $LANG['format_table'],
+        	'swf' => $LANG['format_flash'],
+        	'movie' => $LANG['format_movie'],
+        	'sound' => $LANG['format_sound'],
+        	'code' => $LANG['format_code'],
+        	'math' => $LANG['format_math'],
+        	'anchor' => $LANG['format_anchor'],
+        	'acronym' => $LANG['format_acronym'],
+        	'block' => $LANG['format_block'],
+			'fieldset' => $LANG['format_fieldset'],
+        	'mail' => $LANG['format_mail'],
+        	'line' => $LANG['format_line'],
+        	'wikipedia' => $LANG['format_wikipedia'],
+        	'html' => $LANG['format_html'],
+        	'feed' => $LANG['format_feed']
+        );
     }
 }
 ?>

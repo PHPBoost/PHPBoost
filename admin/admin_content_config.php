@@ -57,7 +57,7 @@ else
 	
 	$j = 0;
 	
-	foreach (FormattingTagsList::get_available_tags() as $code => $name)
+	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $code => $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,

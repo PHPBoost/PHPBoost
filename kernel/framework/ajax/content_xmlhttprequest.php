@@ -42,7 +42,7 @@ $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 $ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
 
-$formatting_factory = ContentFormattingMetaFactory::create_factory($editor);
+$formatting_factory = AppContext::get_content_formatting_service()->create_factory($editor);
 
 //On prend le bon parseur avec la bonne configuration
 $parser = $formatting_factory->get_parser();

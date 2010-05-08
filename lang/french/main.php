@@ -199,6 +199,7 @@ $LANG['format_mail'] = 'Mail';
 $LANG['format_line'] = 'Ligne horizontale';
 $LANG['format_wikipedia'] = 'Lien Wikipédia';
 $LANG['format_html'] = 'Code HTML';
+$LANG['format_feed'] = 'Flux';
 
 //Impression
 $LANG['printable_version'] = 'Version imprimable';
