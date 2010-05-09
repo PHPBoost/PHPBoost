@@ -25,6 +25,7 @@
 - Amélioration de la génération du formulaire d'autorisation.
 [*] Amélioration de la récupération des erreurs.
 [*] Récupération du chemin complet du fichier dans les logs d'erreurs.
+[*] Ajout de la balise [feed] permettant d'inclure un flux RSS dans une mise en page
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
