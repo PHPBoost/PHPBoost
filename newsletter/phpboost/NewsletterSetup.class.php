@@ -29,10 +29,6 @@ class NewsletterSetup extends DefaultModuleSetup
 {
 	private static $newsletter_table;
 	private static $newsletter_table_arch;
-	/**
-	 * @var string[string] localized messages
-	 */
-	private $messages;
 
 	public function __construct()
 	{
