@@ -212,8 +212,7 @@ class PackagesManager
 			}
 				
 			//Suppression de la configuration.
-			$config = get_ini_config(PATH_TO_ROOT . '/news/lang/', get_ulang()); //Récupération des infos de config.
-			if (!empty($config))
+			if (!empty($info_module))
 			{
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			}
