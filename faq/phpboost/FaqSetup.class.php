@@ -111,7 +111,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_data()
 	{
-		$common_query = PersistenceContext::get_common_query();
+		$common_query = PersistenceContext::get_querier();
 		$common_query->insert(self::$faq_table, array(
 			'id' => 1,
 			'idcat' => 2,
@@ -134,7 +134,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_cats_data()
 	{
-		$common_query = PersistenceContext::get_common_query();
+		$common_query = PersistenceContext::get_querier();
 		$common_query->insert(self::$faq_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,

@@ -51,7 +51,7 @@ class ModulesConfig extends AbstractConfigData
 	 * @return array id_module => module properties (map)
 	 */
 	public function get_modules()
-	{
+	{echo 'coucou';
 		return $this->get_property(self::$modules_property);
 	}
 
@@ -85,14 +85,14 @@ class ModulesConfig extends AbstractConfigData
         $modules[$module->get_id()] = $module;
         $this->set_property(self::$modules_property, $modules);
     }
-    
+
     public function remove_module(Module $module)
     {
         $modules = $this->get_property(self::$modules_property);
         unset($modules[$module->get_id()]);
         $this->set_property(self::$modules_property, $modules);
     }
-    
+
     public function remove_module_by_id($module_id)
     {
         $modules = $this->get_property(self::$modules_property);

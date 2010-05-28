@@ -38,7 +38,7 @@ class AdminSearchClearCacheController extends AdminController {
 	
 	private function clear_cache()
 	{
-		$querier = PersistenceContext::get_common_query();
+		$querier = PersistenceContext::get_querier();
         $querier->truncate(PREFIX . 'search_results');
         $querier->truncate(PREFIX . 'search_index');
 	}

@@ -125,7 +125,7 @@ class Backup
 		{
 			if ($all_tables || in_array($table_info['name'], $tables)) //Table demandée
 			{
-				$rows_number = PersistenceContext::get_common_query()->count($table_info['name']);
+				$rows_number = PersistenceContext::get_querier()->count($table_info['name']);
 				if ($rows_number > 0)
 				{
 					$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (`";

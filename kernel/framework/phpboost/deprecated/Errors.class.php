@@ -221,7 +221,9 @@ class Errors
 							exit;
 						}
 						else
-						die($errstr);
+						{
+							die($errstr);
+						}
 					}
 					break;
 				case E_TOKEN:

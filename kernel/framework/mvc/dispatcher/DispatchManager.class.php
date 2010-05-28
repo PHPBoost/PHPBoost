@@ -31,7 +31,7 @@
  * @subpackage dispatcher
  */
 class DispatchManager
-{   
+{
     /**
      * @desc Redirect the request to the right controller using the url controller mappes list
      * @param UrlControllerMapper[] $url_controller_mappers the url controllers mapper list
@@ -48,7 +48,7 @@ class DispatchManager
             self::handle_dispatch_exception($ex);
         }
     }
-    
+
 	/**
 	 * @desc Cleans the output buffer and execute the given controller before exiting
 	 * @param Controller $controller the controller to execute
@@ -62,7 +62,7 @@ class DispatchManager
         Environment::destroy();
         exit;
 	}
-	
+
 	/**
 	 * @desc Returns an url object from the dispatcher path with the $url param
 	 * dispatcher must be in the index.php file
@@ -96,7 +96,7 @@ class DispatchManager
 			    '=/' . $url);
 		}
 	}
-	
+
 	private static function get_dispatcher_path($dispatcher_name)
 	{
 		return preg_replace('`(.*/)[a-z0-9]+\.php`','$1', $dispatcher_name);

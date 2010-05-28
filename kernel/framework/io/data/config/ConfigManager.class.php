@@ -82,7 +82,7 @@ class ConfigManager
 
 		try
 		{
-			$result = PersistenceContext::get_common_query()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
+			$result = PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
 		}
 		catch(RowNotFoundException $ex)
 		{
@@ -122,7 +122,7 @@ class ConfigManager
 	public static function save($module_name, ConfigData $data, $entry_name = '')
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
-			
+
 		self::save_in_db($name, $data);
 
 		CacheManager::save($data, $module_name, $entry_name);
@@ -137,8 +137,8 @@ class ConfigManager
 		if ($update->get_affected_rows() == 0)
 		{
 			// If the update requests finds the row but has nothing to update, it affects 0 rows
-			$count = PersistenceContext::get_common_query()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
-				
+			$count = PersistenceContext::get_querier()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
+
 			if ($count == 0)
 			{
 				PersistenceContext::get_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', array('name' => $name, 'value' => $serialized_data));

@@ -31,10 +31,10 @@
  * @package io
  * @subpackage http
  */
-class HTTPResponse 
+class HTTPResponse
 {
 	const PROTOCOL = 'HTTP/1.0';
-	
+
 	private static $status_list = array(
  	    '101' => 'Switching Protocols',
  	    '200' => 'OK',
@@ -77,21 +77,21 @@ class HTTPResponse
  	    '504' => 'Gateway Timeout',
  	    '505' => 'HTTP Version Not Supported'
 	);
-	
+
 	public function __construct($status_code = 200)
 	{
 		$this->set_status_code($status_code);
 	}
-	
+
 	/**
 	 * @desc Send header to client.
 	 * @param string $url
 	 */
-	public function set_header($name, $value) 
+	public function set_header($name, $value)
 	{
 		header($name . ' : ' . $value);
 	}
-	
+
 	/**
 	 * @desc Set defaut headers for the response.
 	 * @param string $url
@@ -117,21 +117,21 @@ class HTTPResponse
 			$url = new Url($url);
 		}
 		$url = $url->absolute();
-		
+
 		header('Location:' . $url);
 		exit;
 	}
-	
+
 	/**
 	 * Set cookie for the application's client.
 	 * @param HTTPCookie $cookie
 	 */
 	public function set_cookie(HTTPCookie $cookie)
 	{
-		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(), 
+		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(),
 		$cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
 	}
-	
+
 	/**
 	 * @desc Clean the output buffer.
 	 */
@@ -139,7 +139,7 @@ class HTTPResponse
 	{
 		@ob_clean();
 	}
-	
+
 	/**
 	 * @desc Send the status code
 	 * @param int $status_code

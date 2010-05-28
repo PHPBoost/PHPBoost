@@ -48,7 +48,9 @@ class ExtensionPointProviderService
 	public function __construct()
 	{
 		$this->loaded_providers = new RAMDataStore();
-		try {
+
+		try
+		{
 			foreach (ModulesManager::get_installed_modules_map() as $provider_id => $module)
 			{
 				if ($module->is_activated())
@@ -56,8 +58,8 @@ class ExtensionPointProviderService
 					$this->register_provider($provider_id);
 				}
 			}
-			} catch (DBConnectionException $exception) {
-			}
+		}
+		catch (DBConnectionException $exception) { }
 		$this->register_provider('kernel');
 		$this->register_provider('install');
 	}

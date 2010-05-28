@@ -130,7 +130,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_data()
 	{
-		$common_query = PersistenceContext::get_common_query();
+		$common_query = PersistenceContext::get_querier();
 		$common_query->insert(self::$download_table, array(
 			'id' => 1,
 			'idcat' => 1,
@@ -159,7 +159,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_cats_data()
 	{
-		$common_query = PersistenceContext::get_common_query();
+		$common_query = PersistenceContext::get_querier();
 		$common_query->insert(self::$download_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,

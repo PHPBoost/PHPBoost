@@ -148,7 +148,7 @@ class Sql
 		try
 		{
 			$query_conditions = new SqlParameterExtractor($conditions);
-			return PersistenceContext::get_common_query()->select_single_row(
+			return PersistenceContext::get_querier()->select_single_row(
 			$table, $fields, $query_conditions->get_query(), $query_conditions->get_parameters());
 		}
 		catch (RowNotFoundException $exception)
@@ -203,7 +203,7 @@ class Sql
 	 */
 	public function count_table($table, $errline, $errfile)
 	{
-		return PersistenceContext::get_common_query()->count($table);
+		return PersistenceContext::get_querier()->count($table);
 	}
 
 	/**
