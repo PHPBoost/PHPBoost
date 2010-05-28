@@ -30,8 +30,9 @@
 class NewsletterExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
-    function NewsletterInterface() //Constructeur de la classe ForumInterface
+    function __construct() //Constructeur de la classe ForumInterface
     {
+		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('newsletter');
     }
     

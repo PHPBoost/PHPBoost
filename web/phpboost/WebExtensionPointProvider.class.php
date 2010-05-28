@@ -30,8 +30,9 @@
 class WebExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
-    function WebInterface() //Constructeur de la classe ForumInterface
+    function __construct() //Constructeur de la classe ForumInterface
     {
+		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('web');
     }
     
