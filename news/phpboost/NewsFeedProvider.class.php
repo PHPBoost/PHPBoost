@@ -40,7 +40,7 @@ class NewsFeedProvider implements FeedProvider
 
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$sql_querier = PersistenceContext::get_querier();
+		$querier = PersistenceContext::get_querier();
 		global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
 
 		// Load the new's config
@@ -73,7 +73,7 @@ class NewsFeedProvider implements FeedProvider
 		if (!empty($array_cat))
 		{
 			// Last news
-			$results = $sql_querier->select('SELECT id, idcat, title, contents, extend_contents, timestamp, img
+			$results = $querier->select('SELECT id, idcat, title, contents, extend_contents, timestamp, img
                  FROM ' . DB_TABLE_NEWS . '
                  WHERE start <= :timestamp AND visible = 1 AND idcat IN :cats_ids
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(

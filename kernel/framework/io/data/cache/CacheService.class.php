@@ -55,13 +55,13 @@ class CacheService
 
 	public function clear_template_cache()
 	{
-		$this->delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_with_extensions);
 	}
 
 	public function clear_syndication_cache()
 	{
         Feed::clear_cache();
-		$this->delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$syndication_cache_folder, self::$all_files_regex_with_extensions);
 	}
 
 	private function delete_files(Folder $folder, $regex = '')

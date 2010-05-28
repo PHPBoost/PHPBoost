@@ -36,7 +36,7 @@ class ArticlesFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$sql_querier = PersistenceContext::get_querier();
+		$querier = PersistenceContext::get_querier();
 		global $Cache, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
 
 		$Cache->load('articles');
@@ -53,7 +53,7 @@ class ArticlesFeedProvider implements FeedProvider
 		$data->set_auth_bit(AUTH_ARTICLES_READ);
 
 		$cat_clause = !empty($idcat) ? ' AND a.idcat = :idcat'  : '';
-		$results = $sql_querier->select('SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
+		$results = $querier->select('SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM ' . DB_TABLE_ARTICLES . ' a
         LEFT JOIN ' . DB_TABLE_ARTICLES_CAT . ' ac ON ac.id = a.idcat
         WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) ' . $cat_clause . '

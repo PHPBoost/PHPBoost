@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           DBMSUtils.class.php
+ *                              install.php
  *                            -------------------
- *   begin                : November 3, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : May 28, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,46 +25,18 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
- * @subpackage db/dbms
- * @desc
- *
- */
-interface DBMSUtils
-{
-	function get_dbms_version();
 
-	function list_databases();
+ ####################################################
+#                     French                        #
+ ####################################################
 
-	function get_database_name();
-
-	function create_database($database_name);
-
-	function list_tables();
-
-	function list_and_desc_tables();
-
-	function desc_table($table);
-
-    function create_table($table_name, array $fields, array $options = array());
-
-	function optimize($tables);
-
-	function repair($tables);
-
-	function truncate($tables);
-
-	function drop($tables);
-
-	function add_column($table_name, $column_name, array $column_description);
-
-	function drop_column($table_name, $column_name);
-
-	function export_phpboost($file = null);
-
-	function export_table($table, $file = null);
-}
-
+$lang = array(
+    'default.category.name' => 'Cat&eacute;gorie de test',
+	'default.category.subname' => 'Cat&eacute;gorie de test',
+    'default.category.name' => 'Forum de test',
+	'default.category.subname' => 'Forum de test',
+	'sample.thread.title' => 'Test',
+	'sample.thread.subtitle' => 'Sujet de test',
+	'sample.thread.message.content' => 'Message de test sur le forum PHPBoost',
+);
 ?>

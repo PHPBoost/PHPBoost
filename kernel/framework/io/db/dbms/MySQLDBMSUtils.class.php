@@ -176,6 +176,19 @@ class MySQLDBMSUtils implements DBMSUtils
 		$this->inject('REPAIR TABLE `' . $tables . '`;');
 	}
 
+	public function add_column($table_name, $column_name, array $column_description)
+	{
+		$changes = array('add' => array($column_name => $column_description));
+		$alter_query = $this->get_platform()->getAlterTableSql($table_name, $changes);
+		$this->inject($alter_query);
+	}
+
+
+	public function drop_column($table_name, $column_name)
+	{
+		$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
+	}
+
 	public function export_phpboost($file = null)
 	{
 		foreach ($this->list_tables() as $table)
