@@ -12,7 +12,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -94,10 +94,10 @@ function get_server_url_page($path)
     $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
     if (!$server_path)
         $server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-        
+
 	$server_path = rtrim($server_path, '/');
     $real_path = substr($server_path, 0, strrpos($server_path, '/')) . '/'. $path;
-	
+
 	return 'http://' . $server_name . $real_path;
 }
 

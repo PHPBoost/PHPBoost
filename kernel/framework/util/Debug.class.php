@@ -113,9 +113,14 @@ class Debug
 
 	/**
 	 * @desc prints the stacktrace and exits
+	 * @param $object
 	 */
-	public static function stop()
+	public static function stop($object = null)
 	{
+		if ($object != null)
+		{
+			Debug::dump($object);
+		}
 		self::print_stacktrace();
 		exit;
 	}

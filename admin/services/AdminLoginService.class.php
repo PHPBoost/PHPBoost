@@ -83,7 +83,7 @@ class AdminLoginService
 
 	private static function load_admin_data($login)
 	{
-		self::$admin_data = PersistenceContext::get_common_query()->select_single_row(DB_TABLE_MEMBER,
+		self::$admin_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER,
 		array('user_id', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob'),
 				'WHERE login=:login AND level=2', array('login' => $login));
 		self::$admin_uid = self::$admin_data['user_id'];
