@@ -32,6 +32,7 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 {
     public function __construct() //Constructeur de la classe WikiInterface
     {
+		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('pages');
     }
 	
@@ -75,67 +76,6 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		
 		return $config . "\n\r" . $code;	
 	}
-    
-	// Recherche
-    public function get_search_request($args)
-    /**
-     *  Renvoie la requête de recherche
-     */
-    {
-        $search = $args['search'];
-        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        
-        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache;
-        require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
-        $Cache->load('pages');
-        
-        $auth_cats = '';
-        if (is_array($_PAGES_CATS))
-        {
-            if (isset($_PAGES_CATS['auth']) && !$User->check_auth($_PAGES_CATS['auth'], READ_PAGE))
-                $auth_cats .= '0,';
-            foreach ($_PAGES_CATS as $id => $key)
-            {
-                if (!$User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-                    $auth_cats .= $id.',';
-            }
-        }
-        $auth_cats = !empty($auth_cats) ? " AND p.id_cat NOT IN (" . trim($auth_cats, ',') . ")" : '';
-        
-        $results = array();
-        $request = "SELECT ".
-            $args['id_search']." AS `id_search`,
-            p.id AS `id_content`,
-            p.title AS `title`,
-            ( 2 * FT_SEARCH_RELEVANCE(p.title, '".$args['search']."') + FT_SEARCH_RELEVANCE(p.contents, '".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
-            CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
-            p.auth AS `auth`
-            FROM " . PREFIX . "pages p
-            WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$auth_cats
-            .$this->sql_querier->limit(0, PAGES_MAX_SEARCH_RESULTS);
-
-        $result = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
-        while ($row = $this->sql_querier->fetch_assoc($result))
-        {
-            if ( !empty($row['auth']) )
-            {
-                $auth = unserialize($row['auth']);
-                if ( !$User->check_auth($auth, READ_PAGE) )
-                {
-                    unset($row['auth']);
-                    array_push($results, $row);
-                }
-            }
-            else
-            {
-                unset($row['auth']);
-                array_push($results, $row);
-            }
-        }
-        $this->sql_querier->query_close($result);
-        
-        return $results;
-    }
     
 	public function get_module_map($auth_mode)
 	{
