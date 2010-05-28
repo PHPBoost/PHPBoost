@@ -29,10 +29,6 @@ class GallerySetup extends DefaultModuleSetup
 {
 	private static $gallery_table;
 	private static $gallery_cats_table;
-	/**
-	 * @var string[string] localized messages
-	 */
-	private $messages;
 
 	public function __construct()
 	{

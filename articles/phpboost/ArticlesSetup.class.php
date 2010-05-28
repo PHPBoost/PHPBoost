@@ -31,11 +31,6 @@ class ArticlesSetup extends DefaultModuleSetup
 	private static $articles_cat_table;
 	private static $articles_model_table;
 
-	/**
-	 * @var string[string] localized messages
-	 */
-	private $messages;
-
 	public function __construct()
 	{
 		self::$articles_table = PREFIX . 'articles';
