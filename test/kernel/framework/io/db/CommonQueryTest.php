@@ -1,6 +1,6 @@
 <?php
 
-class CommonQueryTest extends PHPBoostUnitTestCase
+class DBQuerierTest extends PHPBoostUnitTestCase
 {
 	private $test_table;
 
@@ -15,7 +15,7 @@ class CommonQueryTest extends PHPBoostUnitTestCase
 	private $querier;
 
 	/**
-	 * @var CommonQuery
+	 * @var DBQuerier
 	 */
 	private $common_query;
 
@@ -26,7 +26,7 @@ class CommonQueryTest extends PHPBoostUnitTestCase
 		$connection = DBFactory::get_db_connection();
 		$this->querier = DBFactory::new_sql_querier($connection);
 		$this->dbms_utils = new MySQLDBMSUtils($this->querier);
-		$this->common_query = new CommonQuery($this->querier);
+		$this->common_query = new DBQuerier($this->querier);
 
 		$this->drop_test_table();
 		$this->create_test_table();

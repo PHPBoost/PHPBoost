@@ -42,7 +42,7 @@ class AdminUser extends User
 	 */
 	public function __construct()
 	{
-		parent::__construct();
+//		parent::__construct();
 		$this->is_admin = true;
 	}
 
@@ -69,7 +69,7 @@ class AdminUser extends User
 	{
 		return 1;
 	}
-	
+
 	/**
 	 * @desc Check the authorization level
 	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).

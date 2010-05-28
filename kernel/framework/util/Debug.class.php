@@ -153,6 +153,8 @@ class Debug
 		}
 		else
 		{
+			$class = new ReflectionClass($exception);
+			$string_stacktrace = $class->getName() . ': ' . $exception->getMessage() . '<hr />';
 			$start_trace_index--;
 			$stacktrace = $exception->getTrace();
 		}
@@ -270,7 +272,7 @@ class Debug
 		}
 		return $string_stacktrace;
 	}
-	
+
 	private static function to_plain_text($text)
 	{
 		$text = str_replace(

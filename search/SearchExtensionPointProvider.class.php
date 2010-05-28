@@ -30,7 +30,7 @@
 class SearchExtensionPointProvider extends ExtensionPointProvider
 {
 	/**
-	 * @var CommonQuery
+	 * @var DBQuerier
 	 */
 	private $sql_querier;
 

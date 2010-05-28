@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           CommonQuery.class.php
+ *                           DBQuerier.class.php
  *                            -------------------
  *   begin                : October 5, 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -31,7 +31,7 @@
  * @subpackage db
  * @desc implements some simple queries
  */
-class CommonQuery
+class DBQuerier implements SQLQuerier
 {
 	/**
 	 * @var SQLQuerier
@@ -42,7 +42,39 @@ class CommonQuery
 	{
 		$this->querier = $querier;
 	}
-    
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	{
+		$this->querier->select($query, $parameters, $fetch_mode);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function inject($query, $parameters = array())
+	{
+		$this->querier->inject($query, $parameters);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function enable_query_translator()
+	{
+		$this->querier->enable_query_translator();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function disable_query_translator()
+	{
+		$this->querier->disable_query_translator();
+	}
+
     /**
      * @desc Removes all table rows
      * @param string $table_name the table name

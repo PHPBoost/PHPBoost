@@ -122,6 +122,10 @@ class AppContext
 	 */
 	public static function get_response()
 	{
+		if (self::$response == null)
+		{
+			self::$response = new HTTPResponse();
+		}
 		return self::$response;
 	}
 
@@ -244,7 +248,7 @@ class AppContext
 		}
 		return self::$mail_service;
 	}
-	
+
 	/**
 	 * @return ContentFormattingService
 	 */

@@ -39,16 +39,16 @@ class PersistenceContext
 	/**
 	 * @var SQLQuerier
 	 */
-	private static $querier;
+	private static $sql_querier;
 	/**
-	 * @var CommonQuery
+	 * @var DBQuerier
 	 */
-	private static $common_query;
+	private static $db_querier;
 	/**
 	 * @var DBMSUtils
 	 */
 	private static $dbms_utils;
-	
+
 	/**
 	 * @var Sql
 	 */
@@ -67,7 +67,7 @@ class PersistenceContext
         }
         return self::$sql;
     }
-	
+
 	/**
 	 * @deprecated de merde pour toi benoit
 	 */
@@ -78,28 +78,15 @@ class PersistenceContext
 
 	/**
 	 * Returns the sql querier
-	 * @return SqlQuerier
+	 * @return DBQuerier
 	 */
 	public static function get_querier()
 	{
-		if (self::$querier === null)
+		if (self::$db_querier === null)
 		{
-			self::$querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
+			self::$db_querier = new DBQuerier(self::get_sql_querier());
 		}
-		return self::$querier;
-	}
-
-	/**
-	 * Returns the sql querier
-	 * @return CommonQuery
-	 */
-	public static function get_common_query()
-	{
-		if (self::$common_query === null)
-		{
-			self::$common_query = new CommonQuery(self::get_querier());
-		}
-		return self::$common_query;
+		return self::$db_querier;
 	}
 
 	/**
@@ -121,6 +108,19 @@ class PersistenceContext
 	public static function close_db_connection()
 	{
 		DBFactory::get_db_connection()->disconnect();
+	}
+
+	/**
+	 * Returns the sql querier
+	 * @return SQLQuerier
+	 */
+	private static function get_sql_querier()
+	{
+		if (self::$sql_querier === null)
+		{
+			self::$sql_querier = DBFactory::new_sql_querier(DBFactory::get_db_connection());
+		}
+		return self::$sql_querier;
 	}
 }
 
