@@ -44,7 +44,6 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
-		$this->insert_data();
 	}
 
 	public function uninstall()
@@ -89,11 +88,6 @@ class NewsletterSetup extends DefaultModuleSetup
 			'primary' => array('id')
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_arch, $fields, $options);
-	}
-
-
-	private function insert_data()
-	{
 	}
 }
 

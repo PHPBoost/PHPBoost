@@ -44,7 +44,6 @@ class GallerySetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
-		$this->insert_data();
 	}
 
 	public function uninstall()
@@ -114,11 +113,6 @@ class GallerySetup extends DefaultModuleSetup
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_cats_table, $fields, $options);
-	}
-
-
-	private function insert_data()
-	{
 	}
 }
 
