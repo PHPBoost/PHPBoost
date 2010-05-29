@@ -89,6 +89,7 @@ class InstallSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
+		$this->insert_data();
 	}
 
 	public function uninstall()
@@ -652,6 +653,21 @@ class InstallSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$verif_code_table, $fields, $options);
 	}
 	
+	private function insert_data()
+	{
+		$this->insert_menu_configuration_data();
+	}
+
+	private function insert_menu_configuration_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$menu_configuration_table, array(
+			'id' => 1,
+			'name' => 'default',
+			'match_regex' => '`.*`',
+			'priority' => 1
+		));
+
+	}
 }
 
 ?>
