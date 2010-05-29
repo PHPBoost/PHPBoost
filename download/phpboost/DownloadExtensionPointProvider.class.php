@@ -32,9 +32,12 @@ define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 //  Provides download module services to the kernel and extern modules
 class DownloadExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
     ## Public Methods ##
-    function DownloadInterface()
-    {
+    function __construct()
+    {	
+		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('download');
     }
   
@@ -46,7 +49,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_DOWNLOAD = unserialize(PersistenceContext::get_querier()->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
+		$CONFIG_DOWNLOAD = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
 		
 		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 		

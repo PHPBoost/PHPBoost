@@ -71,7 +71,7 @@ class PagesSetup extends DefaultModuleSetup
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'is_cat' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'hits' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'count_hits' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

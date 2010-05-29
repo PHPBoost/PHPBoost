@@ -94,7 +94,7 @@ class WikiSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'articles_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'article_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id')
@@ -106,7 +106,7 @@ class WikiSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id_contents' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_articles' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_article' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'menu' => array('type' => 'text', 'length' => 65000),
 			'content' => array('type' => 'text', 'length' => 65000),
 			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -128,7 +128,7 @@ class WikiSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'articles_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'article_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id')
