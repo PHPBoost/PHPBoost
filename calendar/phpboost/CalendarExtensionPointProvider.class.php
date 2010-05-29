@@ -37,7 +37,7 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 		$code = 'global $CONFIG_CALENDAR;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CALENDAR = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'calendar'", __LINE__, __FILE__));
+		$CONFIG_CALENDAR = unserialize(PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), " WHERE name = 'calendar'"));
 		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
 
 		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
