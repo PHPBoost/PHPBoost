@@ -60,12 +60,19 @@ class CLIDumpCommand implements CLICommand
 		$this->dump($file_name, $tables);
 	}
 	
-	private function dump($file_path, array $tables)
+	private function dump($file_path, $tables)
 	{
 		CLIOutput::writeln('Dumping to file ' . $file_path);
 		$file = new File($file_path);
 		$file_writer = new BufferedFileWriter($file);
-		PersistenceContext::get_dbms_utils()->dump_tables($file_writer, $tables, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
+		if ($tables == null)
+		{
+			PersistenceContext::get_dbms_utils()->dump_phpboost($file_writer, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
+		}
+		else
+		{
+			PersistenceContext::get_dbms_utils()->dump_tables($file_writer, $tables, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
+		}
 	}
 }
 ?>
