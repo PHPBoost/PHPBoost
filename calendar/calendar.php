@@ -397,7 +397,7 @@ elseif (!empty($id))
 }
 elseif ($add) //Ajout d'un évenement
 {
-	if (!$User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
+	if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_READ)) //Autorisation de poster?
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	if (!empty($_POST['valid'])) //Enregistrement
