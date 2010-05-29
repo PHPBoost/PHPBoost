@@ -115,6 +115,7 @@ class Environment
 	public static function fit_to_php_configuration()
 	{
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
+		@ini_set('display_errors', 'on');
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
