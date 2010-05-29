@@ -73,7 +73,7 @@ class PollSetup extends DefaultModuleSetup
 			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0)
-			
+
 		);
 		$options = array(
 			'primary' => array('id')
@@ -95,7 +95,7 @@ class PollSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$poll_ip_table, $fields, $options);
 	}
-	
+
 	private function insert_data()
 	{
         $this->messages = LangLoader::get('install', 'poll');
@@ -104,8 +104,7 @@ class PollSetup extends DefaultModuleSetup
 
 	private function insert_poll_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$poll_table, array(
+		PersistenceContext::get_querier()->insert(self::$poll_table, array(
 			'id' => 1,
 			'question' => $this->messages['poll_question'],
 			'answers' => $this->messages['poll_answers'],

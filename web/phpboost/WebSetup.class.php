@@ -123,8 +123,7 @@ class WebSetup extends DefaultModuleSetup
 
 	private function insert_web_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$web_table, array(
+		PersistenceContext::get_querier()->insert(self::$web_table, array(
 			'id' => 1,
 			'idcat' => 1,
 			'title' => $this->messages['web_title'],
@@ -143,8 +142,7 @@ class WebSetup extends DefaultModuleSetup
 
 	private function insert_web_cats_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$web_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$web_cats_table, array(
 			'id' => 1,
 			'class' => 1,
 			'name' => $this->messages['web_name_cat'],

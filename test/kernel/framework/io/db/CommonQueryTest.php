@@ -10,23 +10,18 @@ class DBQuerierTest extends PHPBoostUnitTestCase
 	private $dbms_utils;
 
 	/**
-	 * @var SQLQuerier
-	 */
-	private $querier;
-
-	/**
 	 * @var DBQuerier
 	 */
-	private $common_query;
+	private $querier;
 
 	public function setUp()
 	{
 		$this->test_table = PREFIX . 'test_table';
 
 		$connection = DBFactory::get_db_connection();
-		$this->querier = DBFactory::new_sql_querier($connection);
-		$this->dbms_utils = new MySQLDBMSUtils($this->querier);
-		$this->common_query = new DBQuerier($this->querier);
+		$sql_querier = DBFactory::new_sql_querier($connection);
+		$this->dbms_utils = new MySQLDBMSUtils($sql_querier);
+		$this->querier = new DBQuerier($sql_querier);
 
 		$this->drop_test_table();
 		$this->create_test_table();
@@ -40,7 +35,7 @@ class DBQuerierTest extends PHPBoostUnitTestCase
 
 	public function test_select_single_row()
 	{
-		$this->common_query->select_single_row($this->test_table, array('*'),
+		$this->querier->select_single_row($this->test_table, array('*'),
           'WHERE value=:value', array('value' => 'coucou'));
 	}
 
@@ -48,7 +43,7 @@ class DBQuerierTest extends PHPBoostUnitTestCase
 	{
 		try
 		{
-			$this->common_query->select_single_row($this->test_table, array('*'),
+			$this->querier->select_single_row($this->test_table, array('*'),
                 'WHERE value=:value', array('value' => 'cou2cou'));
 			self::assertTrue(false, 'Row has been found but shoudn\'t');
 		}
@@ -61,7 +56,7 @@ class DBQuerierTest extends PHPBoostUnitTestCase
 	{
 		try
 		{
-			$this->common_query->select_single_row($this->test_table, array('*'));
+			$this->querier->select_single_row($this->test_table, array('*'));
 			self::assertTrue(false, 'Only on row has been found but multiples shoud');
 		}
 		catch (NotASingleRowFoundException $ex)

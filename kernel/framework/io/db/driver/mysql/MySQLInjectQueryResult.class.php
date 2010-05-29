@@ -58,9 +58,10 @@ class MySQLInjectQueryResult implements InjectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct($query, $link)
+	public function __construct($query, $resource, $link)
 	{
 		$this->query = $query;
+		$this->resource = $resource;
 		$this->affected_rows = mysql_affected_rows($link);
 		$this->last_inserted_id = mysql_insert_id($link);
 	}

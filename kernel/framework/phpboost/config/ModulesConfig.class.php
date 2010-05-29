@@ -51,7 +51,7 @@ class ModulesConfig extends AbstractConfigData
 	 * @return array id_module => module properties (map)
 	 */
 	public function get_modules()
-	{echo 'coucou';
+	{
 		return $this->get_property(self::$modules_property);
 	}
 

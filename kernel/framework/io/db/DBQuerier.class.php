@@ -48,7 +48,7 @@ class DBQuerier implements SQLQuerier
 	 */
 	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
-		$this->querier->select($query, $parameters, $fetch_mode);
+		return $this->querier->select($query, $parameters, $fetch_mode);
 	}
 
 	/**
@@ -56,7 +56,7 @@ class DBQuerier implements SQLQuerier
 	 */
 	public function inject($query, $parameters = array())
 	{
-		$this->querier->inject($query, $parameters);
+		return $this->querier->inject($query, $parameters);
 	}
 
 	/**
