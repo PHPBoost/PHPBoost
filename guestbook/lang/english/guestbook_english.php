@@ -32,7 +32,9 @@
 
 //Admin
 $LANG['guestbook_config'] = 'Guestbook configuration';
-$LANG['rank_post'] = 'Rank required to post';
+$LANG['rank_post'] = 'Write permission';
+$LANG['rank_modo'] = 'Permission deletion or modification message';
+$LANG['rank_read'] = 'Permission to read the Guestbook';
 
 //Title
 $LANG['title_guestbook'] = 'Guest Book';

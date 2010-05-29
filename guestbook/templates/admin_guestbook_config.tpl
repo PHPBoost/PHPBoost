@@ -37,16 +37,6 @@
 				<fieldset>
 					<legend>{L_GUESTBOOK_CONFIG}</legend>
 					<dl>
-						<dt><label for="guestbook_auth">* {L_RANK}</label></dt>
-						<dd><label>
-							<select name="guestbook_auth" id="guestbook_auth">
-								# START select_auth #
-									{select_auth.RANK}
-								# END select_auth #
-							</select>
-						</label></dd>
-					</dl>	
-					<dl>
 						<dt><label for="contact_verifcode">{L_GUESTBOOK_VERIFCODE}</label><br /><span>{L_GUESTBOOK_VERIFCODE_EXPLAIN}</span></dt>
 						<dd>
 							<label><input type="radio" {GUESTBOOK_VERIFCODE_ENABLED} name="guestbook_verifcode" id="guestbook_verifcode" value="1" />	{L_YES}</label>
@@ -82,6 +72,33 @@
 						<dt><label for="guestbook_max_link">* {L_MAX_LINK}</label><br /><span>{L_MAX_LINK_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="2" name="guestbook_max_link" id="guestbook_max_link" value="{MAX_LINK}" class="text" /></label></dd>
 					</dl>
+					<br>
+					<hr>
+					<br>
+					<dl>
+						<dt>
+							<label for="guestbook_auth">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="calendar_auth">{L_AUTH_WRITE}</label>
+						</dt>
+						<dd>
+							{AUTH_WRITE}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="calendar_auth">{L_AUTH_MODO}</label>
+						</dt>
+						<dd>
+							{AUTH_MODO}
+						</dd>
+					</dl>	
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

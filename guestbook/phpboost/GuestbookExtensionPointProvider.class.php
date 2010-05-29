@@ -27,8 +27,6 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-
-
 class GuestbookExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
