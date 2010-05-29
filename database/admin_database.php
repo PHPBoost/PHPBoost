@@ -177,7 +177,7 @@ elseif ($action == 'restore')
 		{
 			$Sql->parse($file_path);
 			//On optimise et répare les tables
-			$tables_list = $backup->get_tables_list();
+			$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
 			$Sql->optimize_tables($tables_list);
 			$Sql->repair_tables($tables_list);
 			$Cache->generate_all_files();
@@ -195,7 +195,7 @@ elseif ($action == 'restore')
 			{
 				$Sql->parse($file_path);
 				
-				$tables_list = $backup->get_tables_list();
+				$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
 				$Sql->optimize_tables($tables_list);
 				$Sql->repair_tables($tables_list);
 				$Cache->generate_all_files();
@@ -302,10 +302,11 @@ else
 	}
 
 	if ($tables_backup) //Liste des tables pour les sauvegarder
-	{	
+	{
+		$tables = PersistenceContext::get_dbms_utils()->list_tables();
 		$Template->assign_vars(array(
 			'C_DATABASE_BACKUP' => true,
-			'NBR_TABLES' => $backup->get_tables_number(),
+			'NBR_TABLES' => count($tables),
 			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
@@ -320,14 +321,14 @@ else
 		
 		$selected_tables = array();
 		$i = 0;
-		foreach ($backup->get_tables_properties_list() as $table => $properties)
+		foreach ($tables as $table)
 		{
-			if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
-				$selected_tables[] = $properties['name'];
+			if (!empty($_POST['table_' . $table]) && $_POST['table_' . $table] == 'on')
+				$selected_tables[] = $table;
 			
 			$Template->assign_block_vars('table_list', array(
-				'NAME' => $properties['name'],
-				'SELECTED' => in_array($properties['name'], $selected_tables) ? 'selected="selected"' : '',
+				'NAME' => $table,
+				'SELECTED' => in_array($table, $selected_tables) ? 'selected="selected"' : '',
 				'I' => $i
 			));
 			$i++;
@@ -339,7 +340,7 @@ else
 		if ($repair || $optimize)
 		{
 			$selected_tables = array();
-			foreach ($backup->get_tables_list()as $table_name)
+			foreach (PersistenceContext::get_dbms_utils()->list_tables() as $table_name)
 			{
 				if (!empty($_POST['table_' . $table_name]) && $_POST['table_' . $table_name] == 'on')
 					$selected_tables[] = $table_name;
@@ -397,7 +398,7 @@ else
 		$Template->assign_vars(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
-			'NBR_TABLES' => $backup->get_tables_number(),
+			'NBR_TABLES' => count(PersistenceContext::get_dbms_utils()->list_tables()),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,
 			'NBR_FREE' => $nbr_free,
