@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
-$news_cat = new NewsCats();
+//$news_cat = new NewsCats();
 
 $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
@@ -51,7 +51,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Bread crumb.
-		$news_cat->bread_crumb($news['idcat']);
+//		$news_cat->bread_crumb($news['idcat']);
 		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 
 		// Titre de la page.
@@ -65,7 +65,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 		// Construction de l'arbre des catégories pour les news précédentes, suivantes et suggestion de news.
 		$array_cat = array();
-		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+//		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
 		// News suivante.
 		$next_news = $Sql->query_array(DB_TABLE_NEWS, "title", "id", "WHERE visible = 1 AND timestamp > '" . $news['timestamp'] . "' AND start <= '" . $now->get_timestamp() . "' AND idcat IN (" . implode(', ', $array_cat) . ") ORDER BY timestamp ASC" . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -155,7 +155,7 @@ elseif ($user)
 
 	// Build array with the children categories.
 	$array_cat = array();
-	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
+//	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
 
 	if (!empty($array_cat))
 	{
@@ -218,7 +218,7 @@ elseif ($user)
 else
 {
 	define('TITLE', $NEWS_LANG['news']);
-	$news_cat->bread_crumb($idcat);
+//	$news_cat->bread_crumb($idcat);
 	require_once('../kernel/header.php');
 	
 	$modulesLoader = AppContext::get_extension_provider_service();

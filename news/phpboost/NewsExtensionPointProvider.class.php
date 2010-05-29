@@ -33,27 +33,29 @@ require_once PATH_TO_ROOT . '/news/news_constant.php';
 
 class NewsExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
 	public function __construct() //Constructeur de la classe ForumInterface
 	{
+		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct('news');
 	}
 
 	//Récupération du cache.
 	public function get_cache()
 	{
-        $querier = PersistenceContext::get_sql();
 		//Récupération du tableau linéarisé dans la bdd
-		$news_config = unserialize($querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
+		$news_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
 		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";
 		$string .= '$NEWS_CONFIG = ' . var_export($news_config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_NEWS_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		while ($row = $querier->fetch_assoc($result))
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
 			var_export(array(
@@ -72,9 +74,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	}
 
 	public function get_search_request($args)
-	{
-        $querier = PersistenceContext::get_sql();
-		
+	{		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		$news_cat = new NewsCats();
@@ -91,12 +91,12 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
             n.title AS title,
             ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
             FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
-            . $querier->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
+            . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
             FROM " . DB_TABLE_NEWS . " n
             WHERE ( FT_SEARCH(n.title, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
             FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "') )
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
-            ORDER BY relevance DESC " . $querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
 
             return $request;
 	}
@@ -153,7 +153,6 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		global $User, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
-        $querier = PersistenceContext::get_sql();
 		// Begin.
 		load_module_lang('news');
 		$Cache->load('news');
@@ -169,7 +168,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$Pagination = new DeprecatedPagination();
 
 		// Classe des catégories.
-		$news_cat = new NewsCats();
+//		$news_cat = new NewsCats();
 
 		// Variables.
 		$arch = retrieve(GET, 'arch', false);
@@ -232,7 +231,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		}
 		else
 		{
-			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+//			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		}
 
 		// Gestion du where.
@@ -240,7 +239,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$where = "WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1 AND n.idcat IN(" . implode(", ", $array_cat) . ")";
 
 		// Comptage des news.
-		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
+		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
 
 		// Affichage d'un message d'erreur en cas d'absence de news.
 		if ($NEWS_CONFIG['nbr_news'] == 0)
@@ -288,14 +287,14 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					));
 				}
 
-				$result = $querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+				$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 					FROM " . DB_TABLE_NEWS . " n
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 					" . $where . "
 					ORDER BY n.timestamp DESC
-					" . $querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
-				while ($row = $querier->fetch_assoc($result))
+				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					// Séparation des news en colonnes si activé.
 					if ($column)
@@ -336,7 +335,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					));
 				}
 
-				$querier->query_close($result);
+				$this->sql_querier->query_close($result);
 			}
 			else // News en liste
 			{
@@ -353,11 +352,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					));
 				}
 
-				$result = $querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
+				$result = $this->sql_querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
 					FROM " . DB_TABLE_NEWS . " n " . $where . "
-					ORDER BY n.timestamp DESC" . $querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					ORDER BY n.timestamp DESC" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
-				while ($row = $querier->fetch_assoc($result))
+				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					// Séparation des news en colonnes si activé.
 					if ($column)
@@ -385,7 +384,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					));
 				}
 
-				$querier->query_close($result);
+				$this->sql_querier->query_close($result);
 			}
 		}
 

@@ -97,10 +97,7 @@ if ($checkdate === true && empty($id) && !$add)
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
-	$Template->set_filenames(array(
-		'calendar'=> 'calendar/calendar.tpl'
-	));
-	
+	$Template = new FileTemplate('calendar/calendar.tpl');
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)
@@ -288,7 +285,7 @@ if ($checkdate === true && empty($id) && !$add)
 		));
 	}
 
-	$Template->pparse('calendar');
+	$Template->display();
 }
 elseif (!empty($id))
 {
@@ -490,7 +487,7 @@ elseif ($add) //Ajout d'un évenement
 		if (!empty($errstr))
 			$Errorh->handler($errstr, E_USER_NOTICE);
 
-		$Template->pparse('calendar');
+		$Template->display();
 	}
 }
 else

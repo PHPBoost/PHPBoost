@@ -30,6 +30,7 @@ require_once('news_begin.php');
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
+//$news_categories = new NewsCats();
 
 $new = retrieve(GET, 'new', 0);
 $cat = retrieve(GET, 'cat', 0);
@@ -291,7 +292,7 @@ else
 				'USER_ID' => $news['user_id']
 			));
 
-			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+//			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
 		{
@@ -347,7 +348,7 @@ else
 			));
 			
 			$cat = $cat > 0 && ($User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE)) ? $cat : 0;
-			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+	//		$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');
