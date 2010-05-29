@@ -122,7 +122,10 @@ class Environment
 		@ini_set('open_basedir', NULL);
 
 		//Disabling magic quotes if possible
-		@set_magic_quotes_runtime(0);
+		if (floatval(phpversion()) < '5.3')
+		{
+			@set_magic_quotes_runtime(0);
+		}
 
 		//If the register globals option is enabled, we clear the automatically assigned variables
 		if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')

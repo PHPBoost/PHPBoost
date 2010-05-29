@@ -562,7 +562,6 @@ switch($step)
 			{
 				ModulesManager::install_module($module_name, true);
 			}
-
 			MenuService::enable_all(true);
 
 			$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
