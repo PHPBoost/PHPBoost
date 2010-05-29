@@ -36,7 +36,7 @@ interface SQLQuerier
 {
 	const ORDER_BY_ASC = 'ASC';
 	const ORDER_BY_DESC = 'DESC';
-	
+
 	/**
 	 * @desc executes the <code>$query</code> sql request and returns the query result.
 	 * <p>Query will first be converted into the specific sgbd dialect.</p>
@@ -68,6 +68,8 @@ interface SQLQuerier
 	function enable_query_translator();
 
 	function disable_query_translator();
+
+	function get_executed_requests_count();
 }
 
 ?>
