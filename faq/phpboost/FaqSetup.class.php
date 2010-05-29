@@ -35,7 +35,7 @@ class FaqSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$faq_table = PREFIX . 'faq';
 		self::$faq_cats_table = PREFIX . 'faq_cats';

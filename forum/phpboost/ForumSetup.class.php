@@ -47,7 +47,7 @@ class ForumSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$forum_alerts_table = PREFIX . 'forum_alerts';
 		self::$forum_cats_table = PREFIX . 'forum_cats';
@@ -59,8 +59,10 @@ class ForumSetup extends DefaultModuleSetup
 		self::$forum_view_table = PREFIX . 'forum_view';
 		self::$member_extend = PREFIX . 'member_extend';
 		self::$member_extend_cat = PREFIX . 'member_extend_cat';
+	}
 
-
+	public function __construct()
+	{
 		$this->querier = PersistenceContext::get_querier();
 	}
 
@@ -318,7 +320,7 @@ class ForumSetup extends DefaultModuleSetup
 			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}',
 			'url' => ''
 		));
-		
+
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 2,
 			'id_left' => 2,
@@ -335,7 +337,7 @@ class ForumSetup extends DefaultModuleSetup
 			'url' => ''
 		));
 	}
-	
+
 	private function insert_forum_topics_data()
 	{
 		$this->querier->insert(self::$forum_topics_table, array(

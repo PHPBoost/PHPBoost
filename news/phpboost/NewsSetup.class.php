@@ -35,7 +35,7 @@ class NewsSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$news_table = PREFIX . 'news';
 		self::$news_cats_table = PREFIX . 'news_cat';
@@ -110,7 +110,7 @@ class NewsSetup extends DefaultModuleSetup
 			'description' => array('type' => 'text', 'length' => 65000),
 			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
 		);
-		
+
 		$options = array(
 			'primary' => array('id')
 		);

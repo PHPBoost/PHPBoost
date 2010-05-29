@@ -34,7 +34,7 @@ class PagesSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$pages_table = PREFIX . 'pages';
 		self::$pages_cats_table = PREFIX . 'pages_cats';
@@ -94,14 +94,14 @@ class PagesSetup extends DefaultModuleSetup
 	private function create_pages_cats_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),	
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_page' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
 		);
-	
+
 		PersistenceContext::get_dbms_utils()->create_table(self::$pages_cats_table, $fields, $options);
 	}
 }

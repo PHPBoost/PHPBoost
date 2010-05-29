@@ -35,7 +35,7 @@ class DownloadSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$download_table = PREFIX . 'download';
 		self::$download_cats_table = PREFIX . 'download_cat';

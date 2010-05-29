@@ -30,7 +30,7 @@ class GallerySetup extends DefaultModuleSetup
 	private static $gallery_table;
 	private static $gallery_cats_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$gallery_table = PREFIX . 'gallery';
 		self::$gallery_cats_table = PREFIX . 'gallery_cats';
@@ -90,7 +90,7 @@ class GallerySetup extends DefaultModuleSetup
 	private function create_gallery_cats_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),	
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_left' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'id_right' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'level' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

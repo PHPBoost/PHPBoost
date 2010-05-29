@@ -32,7 +32,7 @@ class WikiSetup extends DefaultModuleSetup
 	private static $wiki_contents_table;
 	private static $wiki_favorites_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$wiki_articles_table = PREFIX . 'wiki_articles';
 		self::$wiki_cats_table = PREFIX . 'wiki_cats';
@@ -101,7 +101,7 @@ class WikiSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$wiki_cats_table, $fields, $options);
 	}
-	
+
 	private function create_wiki_contents_table()
 	{
 		$fields = array(
@@ -122,7 +122,7 @@ class WikiSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$wiki_contents_table, $fields, $options);
 	}
-	
+
 	private function create_wiki_favorites_table()
 	{
 		$fields = array(
@@ -135,7 +135,7 @@ class WikiSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$wiki_favorites_table, $fields, $options);
 	}
-	
+
 }
 
 ?>

@@ -29,7 +29,7 @@ class CalendarSetup extends DefaultModuleSetup
 {
 	private static $calendar_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$calendar_table = PREFIX . 'calendar';
 	}

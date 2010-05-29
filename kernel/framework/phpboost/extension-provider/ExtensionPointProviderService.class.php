@@ -133,18 +133,6 @@ class ExtensionPointProviderService
 		return $this->loaded_providers->get($provider_id);
 	}
 
-	private function try_to_reload_modules_providers($provider_id)
-	{
-		if (!in_array($provider_id, $this->available_providers_ids))
-		{
-			$this->load_modules_providers();
-			if (!in_array($provider_id, $this->available_providers_ids))
-			{
-				throw new UnexistingExtensionPointProviderException($provider_id);
-			}
-		}
-	}
-
 	public function get_provider_extensions_points($provider)
 	{
 		$module_methods = get_class_methods($provider);
@@ -184,6 +172,18 @@ class ExtensionPointProviderService
 	private function compute_provider_classname($provider_id)
 	{
 		return ucfirst($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+	}
+
+	private function try_to_reload_modules_providers($provider_id)
+	{
+		if (!in_array($provider_id, $this->available_providers_ids))
+		{
+			$this->load_modules_providers();
+			if (!in_array($provider_id, $this->available_providers_ids))
+			{
+				throw new UnexistingExtensionPointProviderException($provider_id);
+			}
+		}
 	}
 }
 ?>
