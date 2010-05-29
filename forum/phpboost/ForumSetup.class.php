@@ -121,7 +121,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'idtopic' => array('type' => 'key', 'fields' => array('idtopic', 'user_id', 'idmodo'))
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_alerts_table, $fields, $options);
 	}
 
 	private function create_forum_cats_table()
@@ -146,7 +146,7 @@ class ForumSetup extends DefaultModuleSetup
 			'last_topic_id' => array('type' => 'key', 'fields' => 'last_topic_id'),
 			'id_left' => array('type' => 'key', 'fields' => 'id_left')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_cats_table, $fields, $options);
 	}
 
 	private function create_forum_history_table()
@@ -163,7 +163,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'user_id' => array('type' => 'key', 'fields' => 'user_id')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_history_table, $fields, $options);
 	}
 
 	private function create_forum_message_table()
@@ -183,7 +183,7 @@ class ForumSetup extends DefaultModuleSetup
 			'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
 			'contenu' => array('type' => 'fulltext', 'fields' => 'contents')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
 
 	private function create_forum_poll_table()
@@ -201,7 +201,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'idtopic' => array('type' => 'unique', 'fields' => 'idtopic')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_poll_table, $fields, $options);
 	}
 
 	private function create_forum_topics_table()
@@ -228,7 +228,7 @@ class ForumSetup extends DefaultModuleSetup
 			'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
 			'title' => array('type' => 'key', 'fields' => 'title')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_topics_table, $fields, $options);
 	}
 
 	private function create_forum_track_table()
@@ -245,7 +245,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'idtopic' => array('type' => 'unique', 'fields' => array('idtopic', 'user_id'))
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_track_table, $fields, $options);
 	}
 
 	private function create_forum_view_table()
@@ -261,7 +261,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'idv' => array('type' => 'key', 'fields' => array('idtopic', 'user_id'))
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_view_table, $fields, $options);
 	}
 
 	private function add_member_extend_last_view_forum_column()
@@ -318,6 +318,7 @@ class ForumSetup extends DefaultModuleSetup
 			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}',
 			'url' => ''
 		));
+		
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 2,
 			'id_left' => 2,
@@ -334,7 +335,7 @@ class ForumSetup extends DefaultModuleSetup
 			'url' => ''
 		));
 	}
-
+	
 	private function insert_forum_topics_data()
 	{
 		$this->querier->insert(self::$forum_topics_table, array(
