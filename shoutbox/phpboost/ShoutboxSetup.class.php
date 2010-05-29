@@ -87,8 +87,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 
 	private function insert_shoutbox_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$shoutbox_table, array(
+		PersistenceContext::get_querier()->insert(self::$shoutbox_table, array(
 			'id' => 1,
 			'login' => $this->messages['shoutbox_login'],
 			'user_id' => -1,

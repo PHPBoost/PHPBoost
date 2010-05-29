@@ -130,8 +130,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$download_table, array(
+		PersistenceContext::get_querier()->insert(self::$download_table, array(
 			'id' => 1,
 			'idcat' => 1,
 			'title' => $this->messages['download_title'],
@@ -159,8 +158,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_download_cats_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$download_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$download_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,

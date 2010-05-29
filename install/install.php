@@ -62,7 +62,7 @@ if ($step > STEP_DB_CONFIG)
 {
 	AppContext::init_extension_provider_service();
 }
-Debug::stop('youpi');
+
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
 {
@@ -464,7 +464,7 @@ switch($step)
 		));
 		break;
 		// Configuration du site
-	case STEP_SITE_CONFIG:echo 'coucou';
+	case STEP_SITE_CONFIG:
 		//Variables serveur.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$server_path)

@@ -111,8 +111,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$faq_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_table, array(
 			'id' => 1,
 			'idcat' => 2,
 			'q_order' => 1,
@@ -121,7 +120,7 @@ class FaqSetup extends DefaultModuleSetup
 			'user_id' => 1,
 			'timestamp' => 1242496334
 		));
-		$common_query->insert(self::$faq_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_table, array(
 			'id' => 2,
 			'idcat' => 1,
 			'q_order' => 1,
@@ -134,8 +133,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_cats_data()
 	{
-		$common_query = PersistenceContext::get_querier();
-		$common_query->insert(self::$faq_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -147,7 +145,7 @@ class FaqSetup extends DefaultModuleSetup
 			'image' => 'faq.png',
 			'num_questions' => 1
 		));
-		$common_query->insert(self::$faq_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
 			'id' => 2,
 			'id_parent' => 0,
 			'c_order' => 2,

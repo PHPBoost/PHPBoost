@@ -158,8 +158,6 @@ class Debug
 		}
 		else
 		{
-			$class = new ReflectionClass($exception);
-			$string_stacktrace = $class->getName() . ': ' . $exception->getMessage() . '<hr />';
 			$start_trace_index--;
 			$stacktrace = $exception->getTrace();
 		}

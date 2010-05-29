@@ -59,7 +59,6 @@ class ErrorHandler
 	 */
 	public function handle($errno, $errstr, $errfile, $errline)
 	{
-		echo 'enter  error handler';
 		$this->prepare($errno, $errstr, $errfile, $errline);
 		if ($this->needs_to_be_processed())
 		{
@@ -68,11 +67,9 @@ class ErrorHandler
 			$this->log();
 			if ($this->fatal)
 			{
-		echo 'EXIIIIIIIIIIIIIT';
 				exit;
 			}
 		}
-		echo 'exit  error handler';
 		return true;
 	}
 
@@ -94,7 +91,7 @@ class ErrorHandler
 	 */
 	private function needs_to_be_processed()
 	{
-		return $this->errno & ERROR_REPORTING;
+		return error_reporting() != 0 && ($this->errno & ERROR_REPORTING);
 	}
 
 	private function process()

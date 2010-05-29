@@ -53,7 +53,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 	public function inject($query, $parameters = array())
 	{
 		$resource = $this->execute($query, $parameters);
-		return new MySQLInjectQueryResult($query, $this->link);
+		return new MySQLInjectQueryResult($query, $resource, $this->link);
 	}
 
 	public function escape($value)
@@ -68,7 +68,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 		$resource = mysql_query($query, $this->link);
 		if ($resource === false)
 		{
-			throw new MySQLQuerierException('invalid query');
+			throw new MySQLQuerierException('invalid query', $query);
 		}
 		return $resource;
 	}

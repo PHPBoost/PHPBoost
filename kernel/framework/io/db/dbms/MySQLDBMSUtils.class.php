@@ -186,7 +186,18 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function drop_column($table_name, $column_name)
 	{
-		$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
+		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
+			AND TABLE_NAME=:member_extend AND COLUMN_NAME=:column_name',
+			array(
+				'schema' => $this->get_database_name(),
+				'member_extend' => DB_TABLE_MEMBER_EXTEND,
+				'column_name' => $column_name
+			)
+		);
+		if ($result->get_rows_count() > 0)
+		{
+			$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
+		}
 	}
 
 	public function export_phpboost($file = null)

@@ -347,7 +347,7 @@ class ForumSetup extends DefaultModuleSetup
 			'nbr_views' => 0,
 			'last_user_id' => 1,
 			'last_msg_id' => 1,
-			'last_timestamp' => unix_timestamp(current_timestamp),
+			'last_timestamp' => time(),
 			'first_msg_id' => 1,
 			'type' => 0,
 			'status' => 1,
@@ -363,7 +363,7 @@ class ForumSetup extends DefaultModuleSetup
 		 	'idtopic' => 1,
 			'user_id' => 1,
 			'contents' => $this->messages['sample.thread.message.content'],
-			'timestamp' => unix_timestamp(current_timestamp),
+			'timestamp' => time(),
 			'timestamp_edit' => 0,
 			'user_id_edit' => 0
 		));

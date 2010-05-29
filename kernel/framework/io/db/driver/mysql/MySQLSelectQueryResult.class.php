@@ -92,8 +92,11 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 
 	public function rewind()
 	{
-		@mysql_data_seek($this->resource, 0);
-		$this->index = 0;
+		if ($this->index > 0)
+		{
+			@mysql_data_seek($this->resource, 0);
+			$this->index = 0;
+		}
 		$this->next();
 	}
 
