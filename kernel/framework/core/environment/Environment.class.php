@@ -116,6 +116,7 @@ class Environment
 	{
 		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
 		@ini_set('display_errors', 'on');
+		@ini_set('display_startup_errors', 'on');
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));

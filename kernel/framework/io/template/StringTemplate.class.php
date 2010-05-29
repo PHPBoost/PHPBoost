@@ -57,16 +57,18 @@ class StringTemplate extends AbstractTemplate
 		$data = new DefaultTemplateData();
 		$data->auto_load_frequent_vars();
 
-		if ($this->has_to_cache($content, $use_cache))
-		{
-			$loader = new CachedStringTemplateLoader($content);
-			$renderer = new DefaultTemplateRenderer();
-		}
-		else
-		{
-			$loader = new StringTemplateLoader($content);
-			$renderer = new DefaultTemplateRenderer();
-		}
+		// FIXME l'eval ne fonctionne pas actuellement: segfault php
+		// donc la fonctionnalité est désactivée et tout est mis en cache
+		//		if ($this->has_to_cache($content, $use_cache))
+		//		{
+		$loader = new CachedStringTemplateLoader($content);
+		$renderer = new DefaultTemplateRenderer();
+		//		}
+		//		else
+		//		{
+		//			$loader = new StringTemplateLoader($content);
+		//			$renderer = new DefaultTemplateRenderer();
+		//		}
 		parent::__construct($loader, $renderer, $data);
 	}
 
