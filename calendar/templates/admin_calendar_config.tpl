@@ -28,14 +28,12 @@
 			<fieldset>
 				<legend>{L_CALENDAR_CONFIG}</legend>
 				<dl>
-					<dt><label for="shoutbox_auth">* {L_RANK}</label></dt>
-					<dd><label>
-						<select name="calendar_auth" id="calendar_auth">
-						# START select_auth #
-							{select_auth.RANK}
-						# END select_auth #
-						</select>
-					</label></dd>
+					<dt>
+						<label for="calendar_auth">{L_RANK}</label>
+					</dt>
+					<dd>
+						{AUTH_READ}
+					</dd>
 				</dl>
 			</fieldset>	
 			
