@@ -35,7 +35,7 @@ require_once('calendar_constante.php');
 if (!empty($_POST['valid']) )
 {
 	$CONFIG_CALENDAR = array(
-		'calendar_auth' => Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ)
+		'calendar_auth' => Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO)
 	);
 
 	PersistenceContext::get_sql()->query("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_CALENDAR)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
@@ -56,11 +56,15 @@ else
 		'L_REQUIRE' => $LANG['require'],	
 		'L_CALENDAR' => $LANG['title_calendar'],
 		'L_CALENDAR_CONFIG' => $LANG['calendar_config'],
-		'L_RANK' => $LANG['rank_post'],
+		'L_AUTH_WRITE' => $LANG['rank_post'],
+		'L_AUTH_READ' => $LANG['rank_read'],
+		'L_AUTH_MODO' => $LANG['rank_modo'],
 		'L_UPDATE' => $LANG['update'],
 		'L_ERASE' => $LANG['erase'],
 		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$CONFIG_CALENDAR['calendar_auth']),
-	));
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$CONFIG_CALENDAR['calendar_auth']),
+		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$CONFIG_CALENDAR['calendar_auth']),
+		));
 
 	$Template->display();
 }

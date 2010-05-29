@@ -29,10 +29,26 @@
 				<legend>{L_CALENDAR_CONFIG}</legend>
 				<dl>
 					<dt>
-						<label for="calendar_auth">{L_RANK}</label>
+						<label for="calendar_auth">{L_AUTH_READ}</label>
 					</dt>
 					<dd>
 						{AUTH_READ}
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="calendar_auth">{L_AUTH_WRITE}</label>
+					</dt>
+					<dd>
+						{AUTH_WRITE}
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="calendar_auth">{L_AUTH_MODO}</label>
+					</dt>
+					<dd>
+						{AUTH_MODO}
 					</dd>
 				</dl>
 			</fieldset>	
