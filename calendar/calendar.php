@@ -28,6 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('../calendar/calendar_begin.php');
 require_once('../kernel/header.php');
+require_once('calendar_constante.php');
 
 $time = gmdate_format('Ymd');
 $year = substr($time, 0, 4);
@@ -59,7 +60,7 @@ if ($checkdate === true && empty($id) && !$add)
 	{
 		$event_up = $Sql->query("SELECT timestamp
 		FROM " . PREFIX . "calendar
-		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
+		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year) . "'
 		ORDER BY timestamp
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
@@ -79,7 +80,7 @@ if ($checkdate === true && empty($id) && !$add)
 	{
 		$event_down = $Sql->query("SELECT timestamp
 		FROM " . PREFIX . "calendar
-		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year, 0) . "'
+		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year) . "'
 		ORDER BY timestamp DESC
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			
@@ -160,7 +161,7 @@ if ($checkdate === true && empty($id) && !$add)
 	//Récupération des actions du mois en cours.
 	$result = $Sql->query_while("SELECT timestamp
 	FROM " . PREFIX . "calendar
-	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year, 0) . "'
+	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year) . "'
 	ORDER BY timestamp
 	" . $Sql->limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -223,7 +224,7 @@ if ($checkdate === true && empty($id) && !$add)
 		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
 		FROM " . PREFIX . "calendar cl
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id=cl.user_id
-		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
+		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year) . "' AND '" . mktime(23, 59, 59, $month, $day, $year) . "'
 		GROUP BY cl.id", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -268,7 +269,7 @@ if ($checkdate === true && empty($id) && !$add)
 			$Template->assign_block_vars('action', array(
 				'TITLE' => '&nbsp;',
 				'LOGIN' => '',
-				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year, 0)),
+				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year)),
 				'CONTENTS' => '<p style="text-align:center;">' . $LANG['no_current_action'] . '</p>'
 			));
 		}
