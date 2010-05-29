@@ -68,6 +68,12 @@
 [b]Articles :[/b]
 [*] Refonte complète du module, collaboration des utilisateurs possible.
 
+[b]Livre d'or :[/b]
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération ( édition et suppression )
+
+[b]Calendrier :[/b]
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération ( édition et suppression )
+
 [b]Compatibilité des thèmes 3.0 :[/b]
 - Ajout d'une variable js THEME dans header.tpl
 - Modification de la classe xmlhttprequest_preview (border-radius en plus).
