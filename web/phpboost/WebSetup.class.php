@@ -38,7 +38,7 @@ class WebSetup extends DefaultModuleSetup
 	public function __construct()
 	{
 		self::$web_table = PREFIX . 'web';
-		self::$web_cats_table = PREFIX . 'web';
+		self::$web_cats_table = PREFIX . 'web_cat';
 	}
 
 	public function install()
@@ -93,18 +93,12 @@ class WebSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'class' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'url' => array('type' => 'text', 'length' => 2048),
-			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'approb' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 2048),
-			'nbrnote' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'length' => 3, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
+			'icon' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'secure' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -131,7 +125,7 @@ class WebSetup extends DefaultModuleSetup
 			'url' => $this->messages['web_url'],
 			'compt' => 0,
 			'approb' => 1,
-			'timestamp' => 1234956484,
+			'timestamp' => time(),
 			'users_note' => '0',
 			'nbrnote' => 0,
 			'note' => 0,
