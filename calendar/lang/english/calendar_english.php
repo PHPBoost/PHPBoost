@@ -33,7 +33,9 @@
 //Title
 $LANG['title_calendar'] = 'Calendar';
 $LANG['calendar_config'] = 'Calendar configuration';
-$LANG['rank_post'] = 'The required rank to post events';
+$LANG['rank_post'] = 'Permission to post events';
+$LANG['rank_modo'] = 'Permission to remove or edit events';
+$LANG['rank_read'] = 'Read permission Calendar';
 
 //Calendrier
 $LANG['calendar'] = 'Calendar';

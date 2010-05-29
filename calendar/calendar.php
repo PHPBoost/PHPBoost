@@ -51,7 +51,10 @@ $edit = retrieve(GET, 'edit', false);
 
 if ($delete)
     $Session->csrf_get_protect();
-
+	
+if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_READ)) //Autorisation de poster?
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
 {
@@ -118,16 +121,11 @@ if ($checkdate === true && empty($id) && !$add)
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
-	
-	if ($User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
-		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />';
-	else
-		$add_event = '';
-	
+		
 	$Template->assign_vars(array(
 		'C_CALENDAR_DISPLAY' => true,
 		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
-		'ADD' => $add_event,
+		'ADD' => $User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_WRITE) ? '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 		'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
@@ -225,7 +223,7 @@ if ($checkdate === true && empty($id) && !$add)
 		GROUP BY cl.id", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			if ($User->check_level(ADMIN_LEVEL))
+			if ($User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_MODO))
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="" /></a>';
@@ -289,11 +287,12 @@ if ($checkdate === true && empty($id) && !$add)
 }
 elseif (!empty($id))
 {
-	if (!$User->check_level(ADMIN_LEVEL)) //Admins seulement autorisés à editer/supprimer!
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if ($delete) //Suppression simple.
 	{
+		if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Suppression des commentaires associés.
@@ -303,6 +302,9 @@ elseif (!empty($id))
 	}
 	elseif ($edit)
 	{
+		if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 		if (!empty($_POST['valid']))
 		{
 			$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -339,9 +341,7 @@ elseif (!empty($id))
 		}
 		else //Formulaire d'édition
 		{
-			$Template->set_filenames(array(
-				'calendar'=> 'calendar/calendar.tpl'
-			));
+			$Template = new FileTemplate('calendar/calendar.tpl');
 			
 			//Récupération des infos
 			$row = $Sql->query_array(PREFIX . 'calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -386,7 +386,7 @@ elseif (!empty($id))
 			if (!empty($errstr))
 				$Errorh->handler($errstr, E_USER_NOTICE);
 			
-			$Template->pparse('calendar');
+			$Template->display();
 		}
 	}
 	else
@@ -394,7 +394,7 @@ elseif (!empty($id))
 }
 elseif ($add) //Ajout d'un évenement
 {
-	if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_READ)) //Autorisation de poster?
+	if (!$User->check_auth($CONFIG_CALENDAR['calendar_auth'], AUTH_CALENDAR_WRITE)) //Autorisation de poster?
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	if (!empty($_POST['valid'])) //Enregistrement
@@ -433,9 +433,7 @@ elseif ($add) //Ajout d'un évenement
 	}
 	else
 	{
-		$Template->set_filenames(array(
-			'calendar'=> 'calendar/calendar.tpl'
-		));
+		$Template = new FileTemplate('calendar/calendar.tpl');
 
 		$time = gmdate_format('YmdHi');
 		$year = substr($time, 0, 4);
