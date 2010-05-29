@@ -67,9 +67,9 @@ class PollSetup extends DefaultModuleSetup
 			'answers' => array('type' => 'text', 'length' => 65000),
 			'votes' => array('type' => 'text', 'length' => 65000),
 			'type' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
-			'archive' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'archive' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'visible' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0)
