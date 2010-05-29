@@ -96,12 +96,12 @@ class Debug
 	 */
 	public static function fatal(Exception $exception)
 	{
-		$message = $exception->getMessage();
+		$message = get_class($exception) . ': ' . $exception->getMessage();
 		if (empty($message))
 		{
-			$message = 'An exception has been thrown';
+			$message .= 'An exception has been thrown';
 		}
-		$message = $message . '<hr />';
+		$message .= '<hr />';
 		if (!self::$html_output)
 		{
 			$message = self::to_plain_text('<hr />' . $message);

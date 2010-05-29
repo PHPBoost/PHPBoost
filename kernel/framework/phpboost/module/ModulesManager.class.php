@@ -177,41 +177,6 @@ class ModulesManager
 			}
 		}
 
-		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
-		$dir_db_module = get_ulang();
-		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
-		$db_scripts_folder = new Folder($dir);
-		if ($db_scripts_folder->exists())
-		{
-			if (!file_exists($dir . '/' . $dir_db_module))
-			{
-				$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');
-				$dir_db_module = count($existing_db_files) > 0 ? $existing_db_files[0]->get_name() : '';
-			}
-
-			//Parsage du fichier sql.
-			$sql_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql';
-			if (file_exists($sql_file))
-			{
-				$Sql->parse($sql_file, PREFIX);
-			}
-
-			//Parsage du fichier php.
-			$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
-			if (file_exists($php_file))
-			{
-				if (!Debug::is_debug_mode_enabled())
-				{
-					@include_once($php_file);
-				}
-				else
-				{
-					include_once($php_file);
-				}
-			}
-		}
-		// @endDeprecated
-
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 		MenuService::add_mini_module($module_identifier);
@@ -227,8 +192,6 @@ class ModulesManager
 				HtaccessFileCache::regenerate();
 			}
 		}
-
-//		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 
 		return MODULE_INSTALLED;
 	}
@@ -281,18 +244,6 @@ class ModulesManager
 					break;
 				}
 			}
-
-			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.' . DBTYPE . '.sql'))
-			{   //Parsage du fichier sql de désinstallation.
-				$Sql->parse(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.' . DBTYPE . '.sql', PREFIX);
-			}
-
-			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.php'))
-			{   //Parsage fichier php de désinstallation.
-				@include_once(PATH_TO_ROOT . '/' . $module_id . '/db/' . $dir_db_module . '/uninstall_' . $module_id . '.php');
-			}
-			// @endDeprecated
-
 
 			ModulesCssFilesCache::invalidate();
 

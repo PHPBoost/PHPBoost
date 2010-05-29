@@ -48,18 +48,7 @@ class ExtensionPointProviderService
 	public function __construct()
 	{
 		$this->loaded_providers = new RAMDataStore();
-
-		try
-		{
-			foreach (ModulesManager::get_installed_modules_map() as $provider_id => $module)
-			{
-				if ($module->is_activated())
-				{
-					$this->register_provider($provider_id);
-				}
-			}
-		}
-		catch (DBConnectionException $exception) { }
+		$this->load_modules_providers();
 		$this->register_provider('kernel');
 		$this->register_provider('install');
 	}
@@ -137,14 +126,23 @@ class ExtensionPointProviderService
 	{
 		if (!$this->loaded_providers->contains($provider_id))
 		{
-			if (!in_array($provider_id, $this->available_providers_ids))
-			{
-				throw new UnexistingExtensionPointProviderException($provider_id);
-			}
+			$this->try_to_reload_modules_providers($provider_id);
 			$classname = $this->compute_provider_classname($provider_id);
 			$this->loaded_providers->store($provider_id, new $classname());
 		}
 		return $this->loaded_providers->get($provider_id);
+	}
+
+	private function try_to_reload_modules_providers($provider_id)
+	{
+		if (!in_array($provider_id, $this->available_providers_ids))
+		{
+			$this->load_modules_providers();
+			if (!in_array($provider_id, $this->available_providers_ids))
+			{
+				throw new UnexistingExtensionPointProviderException($provider_id);
+			}
+		}
 	}
 
 	public function get_provider_extensions_points($provider)
@@ -154,9 +152,24 @@ class ExtensionPointProviderService
 		return array_values(array_diff($module_methods, $generics_methods));
 	}
 
+	private function load_modules_providers()
+	{
+		try
+		{
+			foreach (ModulesManager::get_installed_modules_map() as $provider_id => $module)
+			{
+				if ($module->is_activated())
+				{
+					$this->register_provider($provider_id);
+				}
+			}
+		}
+		catch (DBConnectionException $exception) { }
+	}
+
 	private function register_provider($provider_id)
 	{
-		if ($this->check_provider($provider_id))
+		if ($this->check_provider($provider_id) && !in_array($provider_id, $this->available_providers_ids))
 		{
 			$this->available_providers_ids[] = $provider_id;
 		}

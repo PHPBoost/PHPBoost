@@ -75,6 +75,14 @@ class DBQuerier implements SQLQuerier
 		$this->querier->disable_query_translator();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_executed_requests_count()
+	{
+		return $this->querier->get_executed_requests_count();
+	}
+
     /**
      * @desc Removes all table rows
      * @param string $table_name the table name
