@@ -38,6 +38,9 @@ $Cache->load('guestbook');
 $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
+if (!$User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_READ)) //Autorisation de lire ?
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 if ($guestbook && empty($id_get)) //Enregistrement
 {
 	$guestbook_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -52,7 +55,7 @@ if ($guestbook && empty($id_get)) //Enregistrement
 	if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 	{
 		//Accès pour poster.
-		if ($User->check_level($CONFIG_GUESTBOOK['guestbook_auth']))
+		if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE))
 		{
 			if ($CONFIG_GUESTBOOK['guestbook_verifcode'] && !$captcha->is_valid())
 			{
@@ -105,7 +108,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 	$row = $Sql->query_array(PREFIX . 'guestbook', '*', 'WHERE id=\'' . $id_get . '\'', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 
-	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	{
 		if ($del) //Suppression.
 		{
@@ -120,9 +123,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 		}
 		elseif ($edit)
 		{
-			$Template->set_filenames(array(
-				'guestbook'=> 'guestbook/guestbook.tpl'
-			));
+			$Template = new FileTemplate('guestbook/guestbook.tpl');
 
 			//Update form
 			$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
@@ -145,7 +146,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 
 			$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 
-			$Template->pparse('guestbook');
+			$Template->display();
 		}
 		elseif ($update)
 		{
@@ -186,9 +187,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 }
 else //Affichage.
 {
-	$Template->set_filenames(array(
-		'guestbook'=> 'guestbook/guestbook.tpl'
-	));
+	$Template = new FileTemplate('guestbook/guestbook.tpl');
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -219,30 +218,33 @@ else //Affichage.
 	{
 		echo $errstr;
 	}
-
-	$is_guest = !$User->check_level(MEMBER_LEVEL);
-
-	//Post form
-	$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
-	$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
-	if ($is_guest) //Visiteur
+	
+	if($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE))
 	{
-		$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['guest'], array(
-			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
-			'maxlength' => 25)
+		$is_guest = !$User->check_level(MEMBER_LEVEL);
+
+		//Post form
+		$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
+		$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
+		if ($is_guest) //Visiteur
+		{
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['guest'], array(
+				'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
+				'maxlength' => 25)
+			));
+		}
+		$fieldset->add_field(new FormTextarea('contents', '', array(
+			'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
+			'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 		));
+		if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
+		{
+			$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
+		}
+		$form->add_fieldset($fieldset);
+		$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
 	}
-	$fieldset->add_field(new FormTextarea('contents', '', array(
-		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-		'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
-	));
-	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
-	{
-		$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
-	}
-	$form->add_fieldset($fieldset);
-	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
-
+	
 	$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 	
 	//On crée une pagination si le nombre de msg est trop important.
@@ -283,7 +285,7 @@ else //Affichage.
 		}
 
 		//Edition/suppression.
-		if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+		if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 		{
 			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
@@ -420,7 +422,7 @@ else //Affichage.
 	}
 	$Sql->query_close($result);
 
-	$Template->pparse('guestbook');
+	$Template->display();
 }
 
 require_once('../kernel/footer.php');

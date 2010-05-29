@@ -30,17 +30,18 @@ require_once('../admin/admin_begin.php');
 load_module_lang('guestbook'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-
+require_once('guestbook_constants.php');
 if (!empty($_POST['valid']) )
 {
-	$config_guestbook = array();
-	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
-	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
-	$config_guestbook['guestbook_max_link'] = retrieve(POST, 'guestbook_max_link', -1);
-	$config_guestbook['guestbook_verifcode'] = retrieve(POST, 'guestbook_verifcode', 1);
-	$config_guestbook['guestbook_difficulty_verifcode'] = retrieve(POST, 'guestbook_difficulty_verifcode', 2);
-	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
+	$CONFIG_GUESTBOOK = array(
+		'guestbook_auth' => Authorizations::build_auth_array_from_form(AUTH_GUESTBOOK_READ, AUTH_GUESTBOOK_WRITE, AUTH_GUESTBOOK_MODO),
+		'guestbook_forbidden_tags' => isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array()),
+		'guestbook_max_link' => retrieve(POST, 'guestbook_max_link', -1),
+		'guestbook_verifcode' => retrieve(POST, 'guestbook_verifcode', 1),
+		'guestbook_difficulty_verifcode' => retrieve(POST, 'guestbook_difficulty_verifcode', 2),
+	);
+
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_GUESTBOOK)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('guestbook');
@@ -50,9 +51,7 @@ if (!empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_guestbook_config'=> 'guestbook/admin_guestbook_config.tpl'
-	));
+	$Template = new FileTemplate('guestbook/admin_guestbook_config.tpl');
 	
 	$Cache->load('guestbook');
 	
@@ -77,13 +76,18 @@ else
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
 		'GUESTBOOK_VERIFCODE_ENABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '1') ? 'checked="checked"' : '',
 		'GUESTBOOK_VERIFCODE_DISABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '0') ? 'checked="checked"' : '',
+		'AUTH_READ' => Authorizations::generate_select(AUTH_GUESTBOOK_READ,$CONFIG_GUESTBOOK['guestbook_auth']),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_GUESTBOOK_WRITE,$CONFIG_GUESTBOOK['guestbook_auth']),
+		'AUTH_MODO' => Authorizations::generate_select(AUTH_GUESTBOOK_MODO,$CONFIG_GUESTBOOK['guestbook_auth']),
+		'L_AUTH_WRITE' => $LANG['rank_post'],
+		'L_AUTH_READ' => $LANG['rank_read'],
+		'L_AUTH_MODO' => $LANG['rank_modo'],
 		'L_REQUIRE' => $LANG['require'],	
 		'L_GUESTBOOK' => $LANG['title_guestbook'],
 		'L_GUESTBOOK_CONFIG' => $LANG['guestbook_config'],
 		'L_GUESTBOOK_VERIFCODE' => $LANG['verif_code'],
 		'L_GUESTBOOK_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
 		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
-		'L_RANK' => $LANG['rank_post'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_YES' => $LANG['yes'],
@@ -103,35 +107,8 @@ else
 			'SELECTED' => ($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
 		));
 	}
-	
-	$CONFIG_GUESTBOOK['guestbook_auth'] = isset($CONFIG_GUESTBOOK['guestbook_auth']) ? $CONFIG_GUESTBOOK['guestbook_auth'] : '-1';	
-	//Rang d'autorisation.
-	for ($i = -1; $i <= 2; $i++)
-	{
-		switch ($i) 
-		{	
-			case -1:
-				$rank = $LANG['guest'];
-			break;				
-			case 0:
-				$rank = $LANG['member'];
-			break;				
-			case 1: 
-				$rank = $LANG['modo'];
-			break;		
-			case 2:
-				$rank = $LANG['admin'];
-			break;					
-			default: -1;
-		} 
 
-		$selected = ($CONFIG_GUESTBOOK['guestbook_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->assign_block_vars('select_auth', array(
-			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-		));
-	}
-	
-	$Template->pparse('admin_guestbook_config'); // traitement du modele	
+	$Template->display(); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

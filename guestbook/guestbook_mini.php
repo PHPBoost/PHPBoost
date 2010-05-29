@@ -65,7 +65,7 @@ function guestbook_mini($position, $block)
 				'C_ANY_MESSAGE_GESTBOOK' => true,
 				'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 	    		'RAND_MSG_ID' => $guestbook_rand['id'],
-	    		'RAND_MSG_CONTENTS' => (strlen($guestbook_rand['contents']) > 149) ? ucfirst($guestbook_rand['contents']) . ' <a href="' . TPL_PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : ucfirst($guestbook_rand['contents']),
+	    		'RAND_MSG_CONTENTS' => (strlen($guestbook_rand['contents']) > 149) ? ucfirst($guestbook_rand['contents']) . ' <a href="' . TPL_PATH_TO_ROOT . '/guestbook/guestbook.php#m'.$guestbook_rand['id'].'" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : ucfirst($guestbook_rand['contents']),
 	    		'RAND_MSG_LOGIN' => $guestbook_login,
 	    		'L_BY' => $LANG['by']
 	    	));
