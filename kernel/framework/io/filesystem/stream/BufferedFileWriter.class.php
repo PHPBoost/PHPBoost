@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          CalendarExtensionPointProvider.class.php
+ *                       BufferedFileWriter.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : May 29, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,25 +25,47 @@
  *
  ###################################################*/
 
-class CalendarExtensionPointProvider extends ExtensionPointProvider
+class BufferedFileWriter implements FileWriter
 {
-    function __construct()
-    {
-        parent::__construct('calendar');
-    }
-
-	function get_cache()
+	const DEFAULT_BUFFER_SIZE = 10000;
+	
+	/**
+	 * @var File
+	 */
+	private $file;
+	private $buffer = '';
+	
+	public function __construct(File $file, $buffer_size = self::DEFAULT_BUFFER_SIZE)
 	{
-		$code = 'global $CONFIG_CALENDAR;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CALENDAR = unserialize(PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), " WHERE name = 'calendar'"));
-		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
-
-		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
-
-		return $code;
+		$this->file = $file;
+	}
+	
+	public function append($content)
+	{
+		if ($this->will_exceed_buffer_size($content))
+		{
+			$this->flush();
+			$this->buffer = $content;
+		}
+		else
+		{
+			$this->append_to_buffer($content);
+		}
+	}
+	
+	private function will_exceed_buffer_size($content)
+	{
+		return strlen($this->buffer) + strlen($content) > self::DEFAULT_BUFFER_SIZE;
+	}
+	
+	public function flush()
+	{
+		$this->file->append($this->buffer);
+		
+	}
+	
+	private function append_to_buffer($content)
+	{
+		$this->buffer .= $content;
 	}
 }
-
-?>

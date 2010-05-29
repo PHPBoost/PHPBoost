@@ -34,6 +34,10 @@
  */
 interface DBMSUtils
 {
+	const DUMP_STRUCTURE = 1;
+	const DUMP_DATA = 2;
+	const DUMP_STRUCTURE_AND_DATA = 3;
+	
 	function get_dbms_version();
 
 	function list_databases();
@@ -62,9 +66,11 @@ interface DBMSUtils
 
 	function drop_column($table_name, $column_name);
 
-	function export_phpboost($file = null);
+	function dump_phpboost(FileWriter $file, $what = self::DUMP_STRUCTURE_AND_DATA);
 
-	function export_table($table, $file = null);
+	function dump_tables(FileWriter $file, array $tables, $what = self::DUMP_STRUCTURE_AND_DATA);
+	
+	function dump_table(FileWriter $file, $table, $what = self::DUMP_STRUCTURE_AND_DATA);
 }
 
 ?>
