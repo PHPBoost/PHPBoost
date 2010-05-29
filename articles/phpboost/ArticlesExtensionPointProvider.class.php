@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
     public function __construct()
     {
         $this->sql_querier = PersistenceContext::get_sql();
@@ -42,7 +42,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	function get_cache()
 	{
 		$config_articles = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
-		
+
 		$string = 'global $CONFIG_ARTICLES, $ARTICLES_CAT;' . "\n\n" . '$CONFIG_ARTICLES = $ARTICLES_CAT = array();' . "\n\n";
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
@@ -86,12 +86,12 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			$this->sql_querier->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
-	
+
 	public function search()
 	{
 		return new ArticlesSearchable();
 	}
-	
+
 	public function feeds()
 	{
 		return new ArticlesFeedProvider();
@@ -121,10 +121,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 			$cat_links = '';
 			$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
-			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "'  AND ac.visible = 1";		
+			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "'  AND ac.visible = 1";
 		}
 		else //Racine.
-		{	
+		{
 			$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
@@ -136,11 +136,11 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		//Niveau d'autorisation de la catégorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-			
+
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
 		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1", __LINE__, __FILE__);
 		$total_cat = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
-			
+
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
 		$get_sort = retrieve(GET, 'sort', '');
@@ -155,7 +155,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			'asc' => '',
 			'desc' => '',
 			);
-				
+
 		switch ($get_sort)
 		{
 			case 'alpha' :
@@ -200,7 +200,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
 		$array_class = array('member', 'modo', 'admin');
-			
+
 		$tpl->assign_vars(array(
 		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL) ? true : false,
@@ -252,7 +252,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		//On crée une pagination si le nombre de fichiers est trop important.
-		
+
 		$Pagination = new DeprecatedPagination();
 
 		//Catégories non autorisées.
@@ -279,7 +279,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
 			" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-			
+
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$tpl->assign_block_vars('cat_list', array(
@@ -304,14 +304,14 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
 
-			
+
 			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"'
 			ORDER BY " . $sort . " " . $mode .
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-			
+
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				//On reccourci le lien si il est trop long.
@@ -333,7 +333,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 				'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				));
 			}
-				
+
 			if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
 			{
 				$tpl->assign_vars(array(
@@ -343,14 +343,14 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : ''
 				));
 
-				
+
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-				
+
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//On reccourci le lien si il est trop long.
@@ -369,12 +369,12 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					));		
+					));
 				}
 			}
 			$this->sql_querier->query_close($result);
-		}			
-		return $tpl->parse(TRUE);
+		}
+		return $tpl->display();
 	}
 }
 
