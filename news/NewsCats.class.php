@@ -34,7 +34,7 @@ class NewsCats extends CategoriesManager
 	## Public methods ##
 
 	//Constructor
-	function NewsCats()
+	function __contruct()
 	{
 		global $Cache, $NEWS_CAT;
 		if (!isset($NEWS_CAT))
@@ -180,6 +180,7 @@ class NewsCats extends CategoriesManager
 		else
 			return false;
 	}
+
 }
 
 ?>

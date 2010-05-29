@@ -45,7 +45,7 @@ $new_cat = retrieve(GET, 'new', false);
 $error = retrieve(GET, 'error', '');
 
 $tpl = new FileTemplate('news/admin_news_cat.tpl');
-$Errorh->set_template($tpl);
+
 
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
@@ -87,7 +87,6 @@ elseif ($cat_to_del > 0)
 		$news_categories->delete($cat_to_del);
 		
 		// Feeds Regeneration
-		
 		Feed::clear_cache('news');
 
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');

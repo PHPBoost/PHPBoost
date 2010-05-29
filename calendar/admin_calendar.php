@@ -38,7 +38,7 @@ if (!empty($_POST['valid']) )
 		'calendar_auth' => Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ)
 	);
 
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_CALENDAR)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
+	PersistenceContext::get_sql()->query("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_CALENDAR)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('calendar');
