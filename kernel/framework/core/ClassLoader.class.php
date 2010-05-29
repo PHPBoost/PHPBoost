@@ -37,7 +37,7 @@ class ClassLoader
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
 		'/kernel/data', '/kernel/framework/js', '/kernel/framework/content/tinymce',
-		'/kernel/framework/content/geshi', '/kernel/framework/io/db/dbms/Doctrine', 
+		'/kernel/framework/content/geshi', '/kernel/framework/io/db/dbms/Doctrine',
 	);
 
 	private static $exclude_folders_names = array('.svn', 'templates', 'lang');
@@ -68,6 +68,7 @@ class ClassLoader
 				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
 		}
+		self::call_static_initializer($classname);
 	}
 
     public static function is_class_registered($classname)
@@ -147,6 +148,14 @@ class ClassLoader
 	private static function inc($file)
 	{
 		return file_exists($file) && include_once $file;
+	}
+
+	private static function call_static_initializer($classname)
+	{
+		if (method_exists($classname, '__static'))
+		{
+			call_user_func(array($classname, '__static'));
+		}
 	}
 }
 ?>
