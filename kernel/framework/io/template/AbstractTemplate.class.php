@@ -3,7 +3,7 @@
  *                        AbstractTemplate.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 /**
  * @package io
  * @subpackage template
- * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
  */

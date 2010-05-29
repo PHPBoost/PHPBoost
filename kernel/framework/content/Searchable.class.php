@@ -3,7 +3,7 @@
  *                          Searchable.class.php
  *                            -------------------
  *   begin                : February 08, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

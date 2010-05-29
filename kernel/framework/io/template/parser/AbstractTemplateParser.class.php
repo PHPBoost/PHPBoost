@@ -3,7 +3,7 @@
  *                       AbstractTemplateParser.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -29,7 +29,7 @@
  * @package io
  * @package template/parser
  * @desc This is an abstract implementation of the {@link TemplateParser} interface.
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
 abstract class AbstractTemplateParser implements TemplateParser
 {

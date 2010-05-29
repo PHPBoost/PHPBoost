@@ -3,7 +3,7 @@
  *                              main.php
  *                            -------------------
  *   begin                : March 28, 2010
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *  

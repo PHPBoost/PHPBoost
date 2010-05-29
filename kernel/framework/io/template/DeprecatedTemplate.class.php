@@ -3,7 +3,7 @@
  *                         DeprecatedTemplate.class.php
  *                            -------------------
  *   begin                : September 17, 2009
- *   copyright            : Loïc Rouchon
+ *   copyright            : Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -32,7 +32,7 @@
  * @desc This class exists only to be compliant with legacy code. It manages several templates in the same objet.
  * In fact, a single instance of this class loads several templates which share the same data.
  * As of PHPBoost 3.1, it's forbidden to use it, but it won't be removed while the legacy code will use it.
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
 class DeprecatedTemplate extends FileTemplate
 {

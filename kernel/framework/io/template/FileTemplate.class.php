@@ -3,7 +3,7 @@
  *                           FileTemplate.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 /**
  * @package io
  * @subpackage template
- * @author Loïc Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to handle a template file.
  * Your template files should have the .tpl extension. 
  * To be more efficient, this class uses a cache and parses each file only once.

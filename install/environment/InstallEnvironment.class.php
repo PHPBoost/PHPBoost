@@ -3,7 +3,7 @@
  *                          environment.class.php
  *                            -------------------
  *   begin                : September 28, 2009
- *   copyright            : (C) 2009 Benoit Sautel, Loïc Rouchon
+ *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
  *   email                : ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  *

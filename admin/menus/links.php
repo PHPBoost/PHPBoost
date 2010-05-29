@@ -3,7 +3,7 @@
  *                           admin_link_menus.php
  *                            -------------------
  *   begin                : November, 13 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

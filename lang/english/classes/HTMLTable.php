@@ -3,7 +3,7 @@
  *                        kernel-framework-builder-table-HTMLTable.php
  *                            -------------------
  *   begin                : December 22, 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

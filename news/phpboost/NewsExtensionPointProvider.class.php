@@ -3,7 +3,7 @@
  *                              newsExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : April 9, 2008
- *   copyright            : (C) 2008 Loïc Rouchon, Roguelon Geoffrey
+ *   copyright            : (C) 2008 Loic Rouchon, Roguelon Geoffrey
  *   email                : loic.rouchon@phpboost.com, liaght@gmail.com
  *
  *

@@ -3,7 +3,7 @@
  *                                Path.class.php
  *                            -------------------
  *   begin                : November 8, 2006
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @package util
  */
 class Path

@@ -3,7 +3,7 @@
  *                              search.class.php
  *                            -------------------
  *   begin                : February 1, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -31,7 +31,7 @@ define('CACHE_TIME', $CONFIG['search_cache_time']);
 define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package content
  */

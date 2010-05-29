@@ -3,7 +3,7 @@
 *                             menu.class.php
 *                            -------------------
 *   begin               : July 08, 2008
-*   copyright           : (C) 2008 Régis Viarre; Loïc Rouchon
+*   copyright           : (C) 2008 Régis Viarre; Loic Rouchon
 *   email               : crowkait@phpboost.com; loic.rouchon@phpboost.com
 *
 *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
-* @author Loïc Rouchon <loic.rouchon@phpboost.com>
+* @author Loic Rouchon <loic.rouchon@phpboost.com>
 * @desc Create a Menu with children.
 * Children could be Menu or LinksMenuLink objects
 * @package menu

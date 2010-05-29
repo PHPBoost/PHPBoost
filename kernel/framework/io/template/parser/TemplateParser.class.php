@@ -3,7 +3,7 @@
  *                          TemplateParser.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -30,7 +30,7 @@
  * @subpackage template/parser
  * @desc This interfaces represents a class that is able to parse a template source and transform it
  * to a syntax that the PHP engine is able to run.
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
 interface TemplateParser
 {

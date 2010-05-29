@@ -3,7 +3,7 @@
  *                             menu_service.class.php
  *                            -------------------
  *   begin                : November 13, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This service manage kernel menus by adding the persistance to menus objects.
  * It also provides all moving and disabling methods to change the website appearance.
  * @static

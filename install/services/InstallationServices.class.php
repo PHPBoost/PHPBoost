@@ -41,7 +41,7 @@ class InstallationServices
 
 	public function validate_server_configuration()
 	{
-
+		return PHPBoostFoldersPermissions::validate_server_configuration();
 	}
 
 	public function validate_database_connection()

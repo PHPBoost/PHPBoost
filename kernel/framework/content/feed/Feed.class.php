@@ -3,7 +3,7 @@
  *                            feed.class.php
  *                         -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2005 Loïc Rouchon
+ *   copyright            : (C) 2005 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -29,7 +29,7 @@ define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could be used to export feeds
  * @abstract  Do not use this class, but one of its children like RSS or ATOM
  * @package content

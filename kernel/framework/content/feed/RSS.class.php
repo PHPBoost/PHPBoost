@@ -3,7 +3,7 @@
  *                              rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
- *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2005 Régis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
  * export it to the RSS format
  * @package content

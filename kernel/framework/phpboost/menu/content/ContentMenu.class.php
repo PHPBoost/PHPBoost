@@ -3,7 +3,7 @@
  *                          content_menu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package menu
  * @subpackage contentmenu

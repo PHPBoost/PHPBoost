@@ -3,7 +3,7 @@
  *                             MenuInstance.class.php
  *                            -------------------
  *   begin                : October 25, 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -30,7 +30,7 @@
 
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  */
 class MenuInstance extends BusinessObject

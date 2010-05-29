@@ -3,7 +3,7 @@
  *                              SqlParameterExtractor.class.php
  *                            -------------------
  *   begin                : April 08, 2008
- *   copyright            : (C) 2008 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2008 Régis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package db
- * @author Benoît Sautel bepopeye@phpboost.com, Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Benoît Sautel bepopeye@phpboost.com, Loic Rouchon <loic.rouchon@phpboost.com>
  */
 
 class SqlParameterExtractor

@@ -3,7 +3,7 @@
  *                          downloadExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : June 22, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

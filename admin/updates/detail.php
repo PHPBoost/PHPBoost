@@ -3,7 +3,7 @@
  *                           admin_update_detail.php
  *                            -------------------
  *   begin                  : July 27, 2008
- *   copyright              : (C) 2008 Loïc Rouchon
+ *   copyright              : (C) 2008 Loic Rouchon
  *   email                  : loic.rouchon@phpboost.com
  *
  *
