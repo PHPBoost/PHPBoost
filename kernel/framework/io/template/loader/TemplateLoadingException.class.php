@@ -3,7 +3,7 @@
  *                          TemplateLoadingException.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -29,7 +29,7 @@
  * @package io
  * @subpackage template/loader
  * @desc This exception is thrown when the template cannot been loaded.
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
 class TemplateLoadingException extends Exception
 {

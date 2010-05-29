@@ -237,7 +237,7 @@ $LANG['end_installation'] = '<fieldset>
 							<ul>
 								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer</li>
 								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer</li>
-								<li><strong>Loïc ROUCHON</strong> <em>(alias horn)</em>, developer</li>
+								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer</li>
 							</ul>
 						</fieldset>';
 $LANG['site_index'] = 'Go to the website';

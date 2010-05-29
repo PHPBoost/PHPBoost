@@ -3,7 +3,7 @@
  *                        FileTemplateLoader.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -36,7 +36,7 @@
  * This loader supports caching and stores cache files in the /cache/tpl directory, their name are related to
  * their source's real path.
  * @see FileTemplate
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
 class FileTemplateLoader implements TemplateLoader
 {

@@ -65,7 +65,7 @@ abstract class FileSystemElement
 	{
 		return $this->path;
 	}
-	
+
 	/**
 	 * @desc Returns the element path from the phpboost root.
 	 * @return string The element from the phpboost root.
@@ -74,7 +74,7 @@ abstract class FileSystemElement
 	{
 		return Path::get_path_from_root($this->path);
 	}
-	
+
 	/**
 	 * @desc Returns the element name.
 	 * @return string The element name.
@@ -90,15 +90,26 @@ abstract class FileSystemElement
 	}
 
 	/**
+	 * @desc Returns true if the file or the folder is writable.
+	 * @return true if the file or the folder is writable.
+	 */
+	public function is_writable()
+	{
+		return @is_writable($this->path);
+	}
+
+	/**
 	 * @desc Changes the chmod of the element.
 	 * @param int $chmod The new chmod of the file. Put a 0 at the begening of the number to indicate to the PHP parser that it's an octal value.
+	 * @return true if the chmod has been successfully changed.
 	 */
 	public function change_chmod($chmod)
 	{
 		if (!empty($this->path))
 		{
-			@chmod($this->path, $chmod);
+			return @chmod($this->path, $chmod);
 		}
+		return false;
 	}
 
 	/**

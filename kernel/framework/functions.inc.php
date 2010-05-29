@@ -3,7 +3,7 @@
  *                             functions.inc.php
  *                            -------------------
  *   begin                : June 13, 2005
- *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2005 Régis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *

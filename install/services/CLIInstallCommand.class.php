@@ -3,7 +3,7 @@
  *                          CLIInstallCommand.class.php
  *                            -------------------
  *   begin                : February 06, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -53,7 +53,7 @@ class CLIInstallCommand implements CLICommand
     {
         return 'install phpboost development environment';
     }
-    
+
     public function help(array $args)
     {
     	CLIOutput::writeln('this is the phpboost install command line manual...');
@@ -128,6 +128,12 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--u-login', $this->user_login);
 		$this->show_parameter('--u-pwd', $this->user_password);
 		$this->show_parameter('--u-email', $this->user_email);
+
+		$installation = new InstallationServices();
+		$installation->validate_server_configuration();
+		$installation->validate_database_connection();
+		$installation->configure_website();
+		$installation->create_admin_account();
 	}
 
 	private function show_parameter($name, $value)

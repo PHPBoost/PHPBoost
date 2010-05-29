@@ -3,7 +3,7 @@
  *                           application.class.php
  *                            -------------------
  *   begin                : August 17 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -33,7 +33,7 @@ define('APPLICATION_TYPE__TEMPLATE', 'template');
 
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package core
  */

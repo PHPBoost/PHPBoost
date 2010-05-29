@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          SitemapUrlBuilder.class.php
+ *             		 PHPBoostFoldersPermissions.class.php
  *                            -------------------
- *   begin                : December 23, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : May 29, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,24 +25,35 @@
  *
  ###################################################*/
 
-class SitemapUrlBuilder
+abstract class PHPBoostFoldersPermissions
 {
-	private static $dispatcher = '/sitemap/index.php';
+	private static $folders_path;
 
-	/**
-	 * @return Url
-	 */
-	public static function get_general_config()
+	public static function __static()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/');
+		self::$folders_path = array('/cache', '/cache/backup', '/cache/syndication', '/cache/tpl',
+			'/images/avatars', '/images/group', '/images/maths', '/images/smileys', '/kernel/db',
+			'/lang', '/menus', '/templates', '/upload');
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function get_xml_file_generation()
+
+	public static function validate_server_configuration()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/generate/');
+		@clearstatcache();
+		foreach (self::$folders_path as $folder_path)
+		{
+			Debug::dump($folder_path);
+			$folder = new Folder(PATH_TO_ROOT . $folder_path);
+			if (!$folder->exists())
+			{
+				return false;
+			}
+			if (!$folder->is_writable() && !$folder->change_chmod(0777))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

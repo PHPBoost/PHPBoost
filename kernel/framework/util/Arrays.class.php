@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @package util
  */
 class Arrays

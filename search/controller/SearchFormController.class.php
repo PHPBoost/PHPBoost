@@ -3,7 +3,7 @@
  *                        SearchFormController.class.php
  *                            -------------------
  *   begin                : March 28, 2010
- *   copyright            : (C) 2010 Rouchon Loïc
+ *   copyright            : (C) 2010 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *

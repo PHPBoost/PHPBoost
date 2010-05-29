@@ -3,7 +3,7 @@
  *                             updates.class.php
  *                            -------------------
  *   begin                : August 17 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -34,7 +34,7 @@ define('CHECK_THEMES', 0X04);
 define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package core
  */

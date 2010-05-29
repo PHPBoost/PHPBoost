@@ -3,7 +3,7 @@
 *                               search.inc.php
 *                            -------------------
 *   begin                : february 5, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon Loic
 *   email                : loic.rouchon@phpboost.com
 *
 *

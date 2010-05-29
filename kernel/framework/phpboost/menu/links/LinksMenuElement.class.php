@@ -3,7 +3,7 @@
  *                             menu_element.class.php
  *                            -------------------
  *   begin                : July 08, 2008
- *   copyright            : (C) 2008 Régis Viarre; Loïc Rouchon
+ *   copyright            : (C) 2008 Régis Viarre; Loic Rouchon
  *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
  *
  *
@@ -30,7 +30,7 @@
 //      use, on of these
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
  * @package menu

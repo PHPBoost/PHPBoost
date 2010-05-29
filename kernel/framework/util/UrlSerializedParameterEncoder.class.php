@@ -3,7 +3,7 @@
  *                     UrlSerializedParameterEncoder.class.php
  *                            -------------------
  *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @package util
  */
 class UrlSerializedParameterEncoder

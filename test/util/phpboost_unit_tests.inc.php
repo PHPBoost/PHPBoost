@@ -3,7 +3,7 @@
  *                        phpboost_unit_tests.inc.php
  *                            -------------------
  *   begin                : November 29, 2009
- *   copyright            : (C) 2009 Rouchon Loïc
+ *   copyright            : (C) 2009 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *

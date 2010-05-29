@@ -3,7 +3,7 @@
  *                        AdminSearchClearCacheController.class.php
  *                            -------------------
  *   begin                : April 10, 2010
- *   copyright            : (C) 2010 Rouchon Loïc
+ *   copyright            : (C) 2010 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *

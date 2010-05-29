@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 27, 2008
  *   last modified	      : August 1st, 2009 - Forensic
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *  

@@ -3,7 +3,7 @@
  *                           CacheService.class.php
  *                            -------------------
  *   begin                : April 11, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                          TemplateLoader.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon, Benoit Sautel
+ *   copyright            : (C) 2009 Loic Rouchon, Benoit Sautel
  *   email                : loic.rouchon@phpboost.com, ben.popeye@phpboost.com
  *
  *
@@ -35,7 +35,7 @@
  * the parsed files caching which enables us to parse each file only once and then reuse the cache.
  * Even if the {@link TemplateLoader} interface knows the cache notion, that doesn't mean that the 
  * implementation has to support caching. It's the reason why there is the {@link supports_caching()} method.  
- * @author Benoit Sautel <ben.popeye@phpboost.com>, Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  */
 interface TemplateLoader
 {

@@ -3,7 +3,7 @@
  *                          ValidationResult.class.php
  *                            -------------------
  *   begin                : January 16, 2010
- *   copyright            : (C) 2010 Loïc Rouchon
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class is done to time a process easily. You choose when to start and when to stop.
  * @package util
  */

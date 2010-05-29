@@ -3,7 +3,7 @@
  *                           admin_modules_add.php
  *                            -------------------
  *   begin                : January 31, 2007
- *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2007 Régis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *

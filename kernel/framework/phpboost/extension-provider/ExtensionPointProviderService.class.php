@@ -3,7 +3,7 @@
  *                         ExtensionPointProviderService.class.php
  *                            -------------------
  *   begin                : January 15, 2008
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon Loic
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class is a ExtensionPointProvider factory providing some services like
  * mass operations (on several modules at the same time) or identifications
  * methods to get all ExtensionPointProvider that provide a given extension point

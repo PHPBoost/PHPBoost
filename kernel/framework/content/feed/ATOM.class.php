@@ -3,7 +3,7 @@
  *                              atom.class.php
  *                            -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Loïc Rouchon <loic.rouchon@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
  * export it to the ATOM format
  * @package content

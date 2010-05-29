@@ -3,7 +3,7 @@
  *                         pagesExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *

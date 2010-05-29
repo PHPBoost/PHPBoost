@@ -3,7 +3,7 @@
  *                                 menus.php
  *                            -------------------
  *   begin                : March, 05 2007
- *   copyright            : (C) 2009 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
