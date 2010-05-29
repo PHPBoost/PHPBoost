@@ -184,14 +184,15 @@ class MySQLDBMSUtilsTest extends PHPBoostUnitTestCase
 		self::assertNotContains(self::$test_table2, $tables_list);
 	}
 
-	public function test_export_table()
+	public function test_dump_table()
 	{
 		$file = new File(PATH_TO_ROOT . '/cache/test.php');
-		$file->write('');
-		self::$dbms_utils->export_table(self::$test_table1, $file);
+		self::$dbms_utils->dump_table(new BufferedFileWriter($file), self::$test_table1, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
 		$file->close();
 
 		$content = $file->read();
+		
+		$file->delete();
 
 		self::assertEquals(
 "DROP TABLE IF EXISTS `phpboost_test_table_1`;

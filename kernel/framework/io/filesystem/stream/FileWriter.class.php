@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          CalendarExtensionPointProvider.class.php
+ *                          FileWriter.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : May 29, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -25,25 +25,8 @@
  *
  ###################################################*/
 
-class CalendarExtensionPointProvider extends ExtensionPointProvider
+interface FileWriter
 {
-    function __construct()
-    {
-        parent::__construct('calendar');
-    }
-
-	function get_cache()
-	{
-		$code = 'global $CONFIG_CALENDAR;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CALENDAR = unserialize(PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), " WHERE name = 'calendar'"));
-		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
-
-		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
-
-		return $code;
-	}
+	function append($content);
 }
-
 ?>

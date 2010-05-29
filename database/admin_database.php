@@ -286,65 +286,17 @@ else
 	//Sauvegarde
 	if ($action == 'backup')
 	{
-		//Type de sauvegarde (1 => tout, 2 => données, 3 => structure)
-		$backup_type = (!empty($_POST['backup_type']) && $_POST['backup_type'] != 'all') ? ($_POST['backup_type'] == 'data' ? 2 : 3 ) : 1;
+		$backup_type = (!empty($_POST['backup_type']) && $_POST['backup_type'] != 'all') ? ($_POST['backup_type'] == 'data' ? DBMSUtils::DUMP_DATA : DBMSUtils::DUMP_STRUCTURE) : DBMSUtils::DUMP_STRUCTURE_AND_DATA;
 		
-		//Listage des tables sélectionnées
-		$selected_tables = array();
-		
-		//Erreur, la liste des fichiers est vide
 		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
-		foreach ($backup->get_tables_properties_list() as $table => $properties)
-		{
-			if (in_array($properties['name'], $_POST['table_list']))
-				$selected_tables[] = $properties['name'];
-		}
-
-		if (count($selected_tables) == $backup->get_tables_number()) //On doit tout sauvegarder
-		{
-			//Structure, données ?
-			if ($backup_type != 2)
-			{
-				//Suppression éventuelle des tables
-				$backup->generate_drop_table_query();
-				$backup->concatenate_to_query("\n\n");
-				//Création de la structure des tables
-				$backup->generate_create_table_query();
-				$backup->concatenate_to_query("\n\n");
-			}
-
-			if ($backup_type != 3)
-			{
-				//Insertion des données dans les tables
-				$backup->generate_insert_values_query();
-			}
-		}
-		else //Sauvegarde des tables sélectionnées
-		{
-			//structure, données ?
-			if ($backup_type != 2)
-			{
-				//Suppression éventuelle des tables
-				$backup->generate_drop_table_query($selected_tables);
-				$backup->concatenate_to_query("\n\n");
-				//Création de la structure des tables
-				$backup->generate_create_table_query($selected_tables);
-				$backup->concatenate_to_query("\n\n");
-			}
-
-			if ($backup_type != 3)
-			{
-				//Insertion des données dans les tables
-				$backup->generate_insert_values_query($selected_tables);
-			}
-		}
+		$selected_tables = $_POST['table_list'];
 		
 		$file_name = 'backup_' . $Sql->get_data_base_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
-		$backup->export_file($file_path); //Exportation de la bdd.
+		PersistenceContext::get_dbms_utils()->dump_phpboost(new BufferedFileWriter(new File($file_path), $backup_type, $selected_tables));
 		
 		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
 	}

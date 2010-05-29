@@ -25,24 +25,16 @@
  *
  ###################################################*/
 
-class CalendarExtensionPointProvider extends ExtensionPointProvider
+class DatabaseExtensionPointProvider extends ExtensionPointProvider
 {
-    function __construct()
-    {
-        parent::__construct('calendar');
-    }
-
-	function get_cache()
+	function __construct()
 	{
-		$code = 'global $CONFIG_CALENDAR;' . "\n";
+		parent::__construct('database');
+	}
 
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CALENDAR = unserialize(PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), " WHERE name = 'calendar'"));
-		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
-
-		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
-
-		return $code;
+	public function commands()
+	{
+		return new CLICommandsList(array('dump' => 'CLIDumpCommand'));
 	}
 }
 

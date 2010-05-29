@@ -200,22 +200,36 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	public function export_phpboost($file = null)
+	public function dump_phpboost(FileWriter $file, $what = self::DUMP_STRUCTURE_AND_DATA)
 	{
-		foreach ($this->list_tables() as $table)
+		$this->dump_tables($file, $this->list_tables(), $what);
+	}
+	
+	public function dump_tables(FileWriter $file, array $tables, $what = self::DUMP_STRUCTURE_AND_DATA)
+	{
+		$tables = array_intersect($tables, $this->list_tables());
+		foreach ($tables as $table)
 		{
-			$this->export_table($table, $file);
+			$this->dump_table($file, $table, $what);
+		}
+		$file->flush();
+	}
+
+	public function dump_table(FileWriter $file, $table, $what = self::DUMP_STRUCTURE_AND_DATA)
+	{
+		if ($what == self::DUMP_STRUCTURE || $what == self::DUMP_STRUCTURE_AND_DATA)
+		{
+			$this->write($this->get_drop_table_query($table), $file);
+			$this->write($this->get_create_table_query($table), $file);
+		}
+		
+		if ($what == self::DUMP_DATA || $what == self::DUMP_STRUCTURE_AND_DATA)
+		{
+			$this->dump_table_rows($table, $file);
 		}
 	}
 
-	public function export_table($table, $file = null)
-	{
-		$this->write($this->get_drop_table_query($table), $file);
-		$this->write($this->get_create_table_query($table), $file);
-		$this->export_table_rows($table, $file);
-	}
-
-	public function export_table_rows($table, $file = null)
+	public function dump_table_rows($table, $file = null)
 	{
 		$results = $this->select('SELECT * FROM `' . $table . '`');
 		$field_names = array_keys($this->desc_table($table));
@@ -248,17 +262,9 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	private function write($string, $file = null)
+	private function write($string, FileWriter $file)
 	{
-		$string .= "\n";
-		if ($file instanceof File)
-		{
-			$file->append($string);
-		}
-		else
-		{
-			echo $string;
-		}
+		$file->append($string .  "\n");
 	}
 
 	private function get_drop_table_query($tables)
