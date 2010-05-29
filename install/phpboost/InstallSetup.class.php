@@ -355,7 +355,7 @@ class InstallSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'class' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0, 'default' => 0),
+			'class' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
@@ -400,7 +400,7 @@ class InstallSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
 			'match_regex' => array('type' => 'text', 'length' => 65000),
-			'priority' => array('type' => 'integer', 'length' => 11 'notnull' => 1)
+			'priority' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
 		
 		$options = array(
@@ -415,8 +415,8 @@ class InstallSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idconvers' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
+			'idconvers' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'view_status' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
@@ -435,14 +435,14 @@ class InstallSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'user_id_dest' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'user_id_dest' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_convers_status' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_view_pm' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'nbr_msg' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'last_user_id' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'last_msg_id' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'last_timestamp' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0)
+			'user_view_pm' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'nbr_msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'last_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'last_msg_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'last_timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 
 		$options = array(
@@ -458,7 +458,7 @@ class InstallSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'msg' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
+			'msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'special' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
@@ -472,12 +472,12 @@ class InstallSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_user' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
+			'id_user' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'module' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => 0),
 			'search' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
 			'options' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'last_search_use' => array('type' => 'integer', 'length' => 11 'notnull' => 1, 'default' => 0),
-			'times_used' => array('type' => 'integer', 'length' => 3 'notnull' => 1, 'default' => 0)
+			'last_search_use' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'times_used' => array('type' => 'integer', 'length' => 3, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id_search'),
