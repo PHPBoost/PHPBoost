@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('../calendar/calendar_begin.php');
 require_once('../kernel/header.php');
-require_once('calendar_constante.php');
+require_once('calendar_constants.php');
 
 $time = gmdate_format('Ymd');
 $year = substr($time, 0, 4);
