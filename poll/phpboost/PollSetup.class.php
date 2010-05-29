@@ -111,7 +111,7 @@ class PollSetup extends DefaultModuleSetup
 			'votes' => $this->messages['poll_votes'],
 			'type' => 1,
 			'archive' => 0,
-			'timestamp' => unix_timestamp(current_timestamp),
+			'timestamp' => time(),
 			'visible' => 1,
 			'start' => 0,
 			'end' => 0,

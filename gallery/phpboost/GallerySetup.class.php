@@ -95,12 +95,12 @@ class GallerySetup extends DefaultModuleSetup
 			'id_right' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'level' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 65000),
 			'nbr_pics_aprob' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'nbr_pics_unaprob' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
+			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('id'),
