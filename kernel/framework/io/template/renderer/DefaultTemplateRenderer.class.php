@@ -38,14 +38,16 @@ class DefaultTemplateRenderer implements TemplateRenderer
 	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
 	{
-		if ($loader->supports_caching())
-		{
+		// FIXME l'eval ne fonctionne pas actuellement: segfault php
+		// donc la fonctionnalité est désactivée et tout est mis en cache
+//		if ($loader->supports_caching())
+//		{
 			return $this->parse($loader, $data);
-		}
-		else
-		{
-			return $this->execute($loader, $data);
-		}
+//		}
+//		else
+//		{
+//			return $this->execute($loader, $data);
+//		}
 	}
 
 	private function parse(TemplateLoader $loader, TemplateData $data)
@@ -58,7 +60,8 @@ class DefaultTemplateRenderer implements TemplateRenderer
 	private function execute(TemplateLoader $loader, TemplateData $data)
 	{
 		$_data = $data;
-
+		// FIXME l'eval ne fonctionne pas actuellement: segfault php
+		// donc la fonctionnalité est désactivée et tout est mis en cache
 		eval($this->get_code_to_eval($loader));
 		return $_result;
 	}
