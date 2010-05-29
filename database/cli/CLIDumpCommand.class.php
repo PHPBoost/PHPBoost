@@ -29,7 +29,7 @@ class CLIDumpCommand implements CLICommand
 {
 	public function short_description()
 	{
-		return 'dumps database';
+		return 'Dump database';
 	}
 
 	public function help(array $args)
