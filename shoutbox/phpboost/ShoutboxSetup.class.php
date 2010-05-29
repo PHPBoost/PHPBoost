@@ -33,7 +33,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$shoutbox_table = PREFIX . 'shoutbox';
 	}

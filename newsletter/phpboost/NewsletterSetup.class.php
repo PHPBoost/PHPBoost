@@ -30,7 +30,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	private static $newsletter_table;
 	private static $newsletter_table_arch;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$newsletter_table = PREFIX . 'newsletter';
 		self::$newsletter_table_arch = PREFIX . 'newsletter_arch';
@@ -73,7 +73,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	private function create_newsletter_arch_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),	
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
 			'message' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

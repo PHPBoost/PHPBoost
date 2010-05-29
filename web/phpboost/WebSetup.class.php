@@ -35,7 +35,7 @@ class WebSetup extends DefaultModuleSetup
 	 */
 	private $messages;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$web_table = PREFIX . 'web';
 		self::$web_cats_table = PREFIX . 'web_cat';

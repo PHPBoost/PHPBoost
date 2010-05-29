@@ -31,7 +31,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	private static $articles_cat_table;
 	private static $articles_model_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cat_table = PREFIX . 'articles_cats';

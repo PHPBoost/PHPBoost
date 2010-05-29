@@ -29,7 +29,7 @@ class GuestbookSetup extends DefaultModuleSetup
 {
 	private static $guestbook_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$guestbook_table = PREFIX . 'guestbook';
 	}

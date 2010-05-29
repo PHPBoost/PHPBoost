@@ -30,7 +30,7 @@ class PollSetup extends DefaultModuleSetup
 	private static $poll_table;
 	private static $poll_ip_table;
 
-	public function __construct()
+	public static function __static()
 	{
 		self::$poll_table = PREFIX . 'poll';
 		self::$poll_ip_table = PREFIX . 'poll_ip';
