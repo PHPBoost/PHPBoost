@@ -25,14 +25,13 @@
  *
  ###################################################*/
 
-class GallerySetup extends DefaultModuleSetup
+class GuestbookSetup extends DefaultModuleSetup
 {
 	private static $guestbook_table;
 
 	public function __construct()
 	{
-		self::$gallery_table = PREFIX . 'gallery';
-		self::$gallery_cats_table = PREFIX . 'gallery_cats';
+		self::$guestbook_table = PREFIX . 'guestbook';
 	}
 
 	public function install()
@@ -71,7 +70,7 @@ class GallerySetup extends DefaultModuleSetup
 				'timestamp' => array('type' => 'key', 'fields' => 'timestamp')
 			)
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$guestbook_table, $fields, $options);
 	}
 }
 
