@@ -68,8 +68,8 @@ class SqlParameterExtractor
 			{	// string beginning detected
 				$in_string = true;
 			}
-			elseif ($in_string && $char == '\'' && $next_char == '\'')
-			{	// end of string
+			elseif ($in_string && !$is_escaped && $char == '\'' && $next_char == '\'')
+			{	// '' escaping
 				$this->current_parameter .= '\'';
 				$i++;
 			}

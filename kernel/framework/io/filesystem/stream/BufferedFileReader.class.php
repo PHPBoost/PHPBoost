@@ -59,7 +59,7 @@ class BufferedFileReader implements FileReader
 		$buffer = $this->file->read($this->offset_in_file, $this->buffer_max_size);
 		$buffer_size = strlen($buffer);
 		$this->offset_in_file += strlen($buffer);
-		if ($buffer_size < $this->buffer_max_size)
+		if ($buffer_size == 0)
 		{
 			$this->reached_end_of_file = true;
 		}
@@ -74,7 +74,7 @@ class BufferedFileReader implements FileReader
 		}
 		if ($this->has_buffered_line() || $this->is_last_line())
 		{
-			return array_shift($this->lines);
+			return $this->get_oldest_line();
 		}
 		else
 		{
@@ -82,7 +82,7 @@ class BufferedFileReader implements FileReader
 			{
 				$this->read_lines_in_new_packet();
 			}
-			return array_shift($this->lines);
+			return $this->get_oldest_line();
 		}
 	}
 
@@ -114,6 +114,11 @@ class BufferedFileReader implements FileReader
 	private function has_no_more_line()
 	{
 		return $this->reached_end_of_file && count($this->lines) == 0;
+	}
+	
+	private function get_oldest_line()
+	{
+		return array_shift($this->lines);
 	}
 }
 ?>

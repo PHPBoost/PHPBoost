@@ -92,6 +92,18 @@ class SqlParameterExtractorTest extends PHPBoostUnitTestCase
 		array($value1, $value2, $value3)
 		);
 	}
+	
+	public function test_parse_with_ending_escaped_quote_character()
+	{
+		$value1 = 'Comment s\\\'inscrire ?';
+		$value2 = 'Allez dans le bloc \\\'se connecter\\\', en bas de ce bloc se trouve un lien \\\'s\\\'inscrire\\\'';
+		$query = "INSERT INTO phpboost_faq VALUES (10,8,1,%s,%s,177,1204358106);";
+		$this->check_query_and_parameters(
+			sprintf($query, '\'' . $value1 . '\'', '\'' . $value2 . '\''),
+			sprintf($query, ':param1', ':param2'),
+			array($value1, $value2)
+		);
+	}
 
 	private function check_query_and_parameters($raw_query, $query, $parameters)
 	{
