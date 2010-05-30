@@ -93,13 +93,12 @@
 						<a href="{news.U_SYNDICATION}" title="{L_SYNDICATION}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 						</a>
-	        			<a href="{news.U_LINK} class="big_link" onclick="document.location = 'count.php?id={news.ID}';">{news.TITLE}</a>
+	        			<a href="{news.U_LINK}" class="big_link" >{news.TITLE}</a>
 	        		</div>
 	        		<div style="float:right">
 						# IF news.U_COM #
 						<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}
 						# ENDIF #
-
 						# IF news.C_EDIT #
 						<a href="management.php?edit={news.ID}" title="{L_EDIT}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />

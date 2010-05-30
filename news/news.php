@@ -37,8 +37,12 @@ $user = retrieve(GET, 'user', false, TBOOL);
 $level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
+	if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
+
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
@@ -46,10 +50,21 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	if (!empty($news['id']) && !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ)
+	$cat = !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ)
 		&& ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())
-		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
-	{
+		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'));
+		
+	$not_cat = $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ)
+		&& ($User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())
+		|| $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'));
+		
+	$read_id = $news['idcat'] > 0 ? $cat : $not_cat;
+	
+	if (!empty($news['id']) && $read_id)
+	{	
+		
+		$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET compt = compt + 1 WHERE id = '" . $idnews . "'", __LINE__, __LINE__); //MAJ du compteur.
+
 		// Bread crumb.
 		$news_cat->bread_crumb($news['idcat']);
 		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
@@ -108,11 +123,16 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			));
 			$i++;
 		}	
-	
+		
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')
+		: $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		
+		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
+		
 		$tpl->assign_vars(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
-			'C_EDIT' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'),
-			'C_DELETE' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE),
+			'C_EDIT' => $auth_edit,
+			'C_DELETE' => $auth_delete,
 			'C_NEWS_NAVIGATION_LINKS' => !empty($previous_news['id']) || !empty($next_news['id']),
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
@@ -125,7 +145,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'EXTEND_CONTENTS' => FormatingHelper::second_parse($news['extend_contents']),
 			'IMG' => FormatingHelper::second_parse_url($news['img']),
 			'IMG_DESC' => $news['alt'],
-			'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']),
+			'ICON' => $news['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
@@ -133,15 +153,13 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
-			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
+			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
 			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
 			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . Url::encode_rewrite($next_news['title']) . '.php'),
-			'U_COMPTEUR_PREVIOUS' => 'onclick="document.location = \'count.php?id='. $previous_news['id'] .'\';"',
-			'U_COMPTEUR_NEXT' => 'onclick="document.location = \'count.php?id='. $next_news['id'] .'\';"',
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'L_EDIT' => $LANG['edit'],
 			'L_DELETE' => $LANG['delete'],
@@ -197,8 +215,8 @@ elseif ($user)
 				'IMG' => FormatingHelper::second_parse_url($row['img']),
 				'IMG_DESC' => $row['alt'],
 				'C_ICON' => $NEWS_CONFIG['activ_icon'],
-				'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
-				'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']),
+				'U_CAT' => $row['idcat'] > 0 ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
+				'ICON' => $row['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 				'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',

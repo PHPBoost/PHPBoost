@@ -14,12 +14,6 @@
 				new Effect.ScrollTo('title',{duration:1.2});
 				return false;
 			}
-			if (document.getElementById('idcat').value == 0)
-			{
-				alert("{L_REQUIRE_CAT}");
-				new Effect.ScrollTo('idcat',{duration:1.2});
-				return false;
-			}
 			if (document.getElementById('contents').value == "")
 			{
 				alert("{L_REQUIRE_TEXT}");
@@ -147,7 +141,7 @@
 					<dt><label for="idcat">* {L_CATEGORY}</label></dt>
 					<dd><label>
 						<select id="{FORM_ID}" name="{FORM_NAME}">
-							<option value="0" disabled="disabled">{L_ROOT}</option>
+							<option value="0" >{L_ROOT}</option>
 						# START options #
 							<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
 						# END options #
