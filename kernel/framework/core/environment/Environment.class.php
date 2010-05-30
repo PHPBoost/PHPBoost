@@ -124,7 +124,7 @@ class Environment
 		@ini_set('open_basedir', NULL);
 
 		//Disabling magic quotes if possible
-		if (floatval(ServerConfiguration::get_phpversion()) < '5.3')
+		if (ServerConfiguration::get_phpversion() < '5.3')
 		{
 			@set_magic_quotes_runtime(0);
 		}
@@ -622,6 +622,16 @@ class Environment
 			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
 		}
 		return self::$graphical_environment;
+	}
+	
+	/**
+	 * This method is not called automatically but can be called if you know that an action can
+	 * take a long time. By default, max execution time is 30 seconds.
+	 * Note that according to PHP configuration, this function can fail.
+	 */
+	public static function try_to_increase_max_execution_time()
+	{
+		@set_time_limit(600);
 	}
 }
 
