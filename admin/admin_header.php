@@ -86,6 +86,6 @@ if (defined('ALTERNATIVE_CSS'))
 
 $env->set_page_title(TITLE);
 
-$env->display_header();
+Environment::display_header();
 
 ?>
