@@ -38,16 +38,14 @@ class DefaultTemplateRenderer implements TemplateRenderer
 	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
 	{
-		// FIXME l'eval ne fonctionne pas actuellement: segfault php
-		// donc la fonctionnalité est désactivée et tout est mis en cache
-//		if ($loader->supports_caching())
-//		{
+		if ($loader->supports_caching())
+		{
 			return $this->parse($loader, $data);
-//		}
-//		else
-//		{
-//			return $this->execute($loader, $data);
-//		}
+		}
+		else
+		{
+			return $this->execute($loader, $data);
+		}
 	}
 
 	private function parse(TemplateLoader $loader, TemplateData $data)
