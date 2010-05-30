@@ -57,7 +57,7 @@ class InstallSetup extends DefaultModuleSetup
 	
 	
 
-	public function __static()
+	public static function __static()
 	{
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
