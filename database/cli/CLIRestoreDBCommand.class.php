@@ -65,6 +65,7 @@ class CLIRestoreDBCommand implements CLICommand
 	
 	private function restore_db($file_name)
 	{
+		Environment::try_to_increase_max_execution_time();
 		PersistenceContext::get_dbms_utils()->parse_file(new File($file_name));
 		CLIOutput::writeln('Dump restored from file ' . $file_name);
 	}

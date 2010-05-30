@@ -171,6 +171,7 @@ elseif ($action == 'restore')
 		$file_path = '../cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
+			Environment::try_to_increase_max_execution_time();
 			$db_utils = PersistenceContext::get_dbms_utils();
 			$db_utils->parse_file(new File($file_path));
 			$tables_list = $db_utils->list_tables();
@@ -190,6 +191,7 @@ elseif ($action == 'restore')
 			$file_path = '../cache/backup/' . $post_file['name'];
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
+				Environment::try_to_increase_max_execution_time();
 				$db_utils = PersistenceContext::get_dbms_utils();
 				$db_utils->parse_file(new File($file_path));
 				$tables_list = $db_utils->list_tables();
@@ -294,6 +296,7 @@ else
 		$file_name = 'backup_' . $Sql->get_data_base_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
+		Environment::try_to_increase_max_execution_time();
 		PersistenceContext::get_dbms_utils()->dump_phpboost(new BufferedFileWriter(new File($file_path), $backup_type, $selected_tables));
 		
 		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));

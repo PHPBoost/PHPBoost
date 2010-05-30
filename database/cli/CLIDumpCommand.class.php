@@ -62,6 +62,7 @@ class CLIDumpCommand implements CLICommand
 	
 	private function dump($file_path, $tables)
 	{
+		Environment::try_to_increase_max_execution_time();
 		$file = new File($file_path);
 		$file_writer = new BufferedFileWriter($file);
 		if ($tables == null)
