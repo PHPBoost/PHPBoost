@@ -38,6 +38,20 @@
 				<br /><br />
                	{EXTEND_CONTENTS}
 				<br /><br />
+				<table style="width:300px;" class="module_cara text_small">
+					<tr><br>
+						<th colspan="1">
+							{L_SOURCES}
+						</th>
+					</tr>
+					# START sources #
+						<tr> 
+							<td class="row1" style="padding:3px"> 
+								<a href="{sources.URL}">{sources.NAME}</a>
+							</td>
+						</tr>
+					# END sources #
+				</table>
 				<div class="spacer"></div>
            	</div>
 			<div class="news_bottom_l"></div>

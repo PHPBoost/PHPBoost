@@ -30,7 +30,7 @@ require_once('news_begin.php');
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-//$news_categories = new NewsCats();
+$news_categories = new NewsCats();
 
 $new = retrieve(GET, 'new', 0);
 $cat = retrieve(GET, 'cat', 0);
@@ -75,6 +75,16 @@ elseif (!empty($_POST['submit']))
 	$end = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
 
+	$sources = array();
+	for ($i = 0; $i < 50; $i++)
+	{	
+		if (retrieve(POST,'name'.$i,false,TSTRING))
+		{	
+			$sources[$i]['name'] = retrieve(POST, 'name'.$i, '');
+			$sources[$i]['url'] = retrieve(POST, 'url'.$i, '');
+		}
+	}
+	
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -94,7 +104,8 @@ elseif (!empty($_POST['submit']))
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'img' => retrieve(POST, 'img', '', TSTRING),
-		'alt' => retrieve(POST, 'alt', '', TSTRING)
+		'alt' => retrieve(POST, 'alt', '', TSTRING),
+		'sources' => addslashes(serialize($sources))
 	);
 
 	if ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
@@ -150,7 +161,7 @@ elseif (!empty($_POST['submit']))
 
 			if ($news['id'] > 0)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "'
+				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "', sources = '" . $news['sources'] . "'
 				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
 				
 				if ($news['visible'])
@@ -170,8 +181,8 @@ elseif (!empty($_POST['submit']))
 			{
 				$auth_contrib = !$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE);
 
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com)
-				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '0')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com, sources)
+				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '0', '" . $news['sources'] . "')", __LINE__, __FILE__);
 
 				$news['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_NEWS);
 
@@ -264,13 +275,35 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['timestamp'] > 0 ? $news['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
+			
+			$sources = unserialize($news['sources']);
 
+			$i = 0;
+			foreach (sources as $value)
+			{	
+				$tpl->assign_block_vars('sources', array(
+					'I' => $i,
+					'NAME' => stripslashes($value['name']),
+					'URL' => stripslashes($value['url'])
+				));
+				$i++;
+			}	
+			if($i==0)
+			{
+				$tpl->assign_block_vars('sources', array(
+					'I' => 0,
+					'NAME' => '',
+					'URL' => ''
+				));
+			}
+			
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
 				'JS_CONTRIBUTION' => 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => $news['title'],
+				'NB_FIELDS_SOURCES' => $i == 0 ? 1 : $i,
 				'CONTENTS' => FormatingHelper::unparse($news['contents']),
 				'EXTEND_CONTENTS' => FormatingHelper::unparse($news['extend_contents']),
 				'VISIBLE_WAITING' => $news['visible'] && (!empty($news['start']) || !empty($news['end'])),
@@ -292,7 +325,7 @@ else
 				'USER_ID' => $news['user_id']
 			));
 
-//			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
 		{
@@ -328,6 +361,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => '',
 				'CONTENTS' => '',
+				'NB_FIELDS_SOURCES' => 1,
 				'EXTEND_CONTENTS' => '',
 				'VISIBLE_WAITING' => 0,
 				'VISIBLE_ENABLED' => 1,
@@ -346,9 +380,16 @@ else
 				'IDNEWS' => '0',
 				'USER_ID' => $User->get_attribute('user_id')
 			));
+
+			$tpl->assign_block_vars('sources', array(
+				'I' => 0,
+				'NAME' => '',
+				'URL' => ''
+			));
+
 			
 			$cat = $cat > 0 && ($User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE)) ? $cat : 0;
-	//		$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');
@@ -357,6 +398,9 @@ else
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),
+		'L_NAME_SOURCES' => $NEWS_LANG['name_sources'],
+		'L_URL_SOURCES' => $NEWS_LANG['url_sources'],
+		'L_ADD_SOURCES' => $NEWS_LANG['add_sources'],
 		'L_ADD_NEWS' => $NEWS_LANG['add_news'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_TITLE_NEWS' => $NEWS_LANG['title_news'],

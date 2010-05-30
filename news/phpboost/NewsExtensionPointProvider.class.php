@@ -168,7 +168,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$Pagination = new DeprecatedPagination();
 
 		// Classe des catégories.
-//		$news_cat = new NewsCats();
+		$news_cat = new NewsCats();
 
 		// Variables.
 		$arch = retrieve(GET, 'arch', false);
@@ -231,7 +231,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		}
 		else
 		{
-//			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		}
 
 		// Gestion du where.
@@ -373,6 +373,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					$last_release = max($last_release, $row['start']);
 
 					$tpl->assign_block_vars('list', array(
+						'ID' => $row['id'],
 						'C_NEWS_ROW' => $new_row,
 						'ICON' => $NEWS_CONFIG['activ_icon'] ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
