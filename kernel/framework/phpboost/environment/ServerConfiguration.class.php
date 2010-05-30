@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *             		 PHPBoostFoldersPermissions.class.php
+ *                          ServerConfiguration.class.php
  *                            -------------------
- *   begin                : May 29, 2010
+ *   begin                : May 30, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,40 +25,48 @@
  *
  ###################################################*/
 
-abstract class PHPBoostFoldersPermissions
+class ServerConfiguration
 {
-	private static $folders_path;
+	const MIN_PHP_VERSION = '5.1.2';
+	private static $mod_rewrite = 'mod_rewrite';
 
-	public static function __static()
+	public static function get_phpversion()
 	{
-		self::$folders_path = array('/', '/cache', '/cache/backup', '/cache/syndication',
-			'/cache/tpl', '/images/avatars', '/images/group', '/images/maths', '/images/smileys',
-			'/kernel/db', '/lang', '/menus', '/templates', '/upload');
+		$system_phpversion = phpversion();
+		$matches = array();
+		if (preg_match('`^([0-9]+(?:\.[0-9]+){0,2})`', $system_phpversion, $matches))
+		{
+			return $matches[1];
+		}
+		return $system_phpversion;
 	}
 
-	public static function validate()
+	/**
+	 * @return true if php version fits to phpboost's requirements.
+	 */
+	public function is_php_compatible()
 	{
-		$permissions = self::get_permissions();
-		foreach ($permissions as $folder => $permission)
-		{
-			if ($permission == false)
-			{
-				return false;
-			}
-		}
-		return true;
+		return ServerConfiguration::get_phpversion() >= self::MIN_PHP_VERSION;
 	}
 
-	public static function get_permissions()
+	/**
+	 * @return true if GD libray is available, else false.
+	 */
+	public function has_gd_libray()
 	{
-		@clearstatcache();
-		$permissions = array();
-		foreach (self::$folders_path as $folder_path)
+		return @extension_loaded('gd');
+	}
+
+	/**
+	 * @return true if url rewriting is available, else false.
+	 */
+	public function has_url_rewriting()
+	{
+		if (function_exists('apache_get_modules'))
 		{
-			$folder = new Folder(PATH_TO_ROOT . $folder_path);
-			$permissions[$folder->get_path_from_root()] = $folder->is_writable();
+			return in_array(self::$mod_rewrite, apache_get_modules());
 		}
-		return $permissions;
+		return false;
 	}
 }
 

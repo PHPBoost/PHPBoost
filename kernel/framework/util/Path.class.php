@@ -33,7 +33,7 @@ class Path
 	private static $fs_root_directory;
 
 	/**
-	 * @return string the phpboost home directory path 
+	 * @return string the phpboost home directory path
 	 */
 	public static function phpboost_path()
 	{
@@ -63,7 +63,12 @@ class Path
 	 */
 	public static function get_path_from_root($path)
 	{
-		return '/' . trim(str_replace(self::phpboost_path(), '', self::real_path($path)), '/');
+		$path_from_root = trim(str_replace(self::phpboost_path(), '', self::real_path($path)), '/');
+		if (!empty($path_from_root))
+		{
+			return '/' . $path_from_root;
+		}
+		return '';
 	}
 
 	/**

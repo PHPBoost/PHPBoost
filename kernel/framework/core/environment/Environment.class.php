@@ -124,7 +124,7 @@ class Environment
 		@ini_set('open_basedir', NULL);
 
 		//Disabling magic quotes if possible
-		if (floatval(phpversion()) < '5.3')
+		if (floatval(ServerConfiguration::get_phpversion()) < '5.3')
 		{
 			@set_magic_quotes_runtime(0);
 		}
