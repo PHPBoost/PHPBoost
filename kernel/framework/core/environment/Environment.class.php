@@ -120,6 +120,7 @@ class Environment
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
+		date_default_timezone_set('Europe/Paris');
 
 		@ini_set('open_basedir', NULL);
 
