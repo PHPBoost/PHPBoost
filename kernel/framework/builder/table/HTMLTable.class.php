@@ -65,7 +65,7 @@ class HTMLTable extends HTMLElement
 	{
 		if ($tpl_path === '')
 		{
-			$tpl_path = 'framework/builder/table/table.tpl';
+			$tpl_path = 'framework/builder/table/HTMLTable.tpl';
 		}
 		$this->tpl = new FileTemplate($tpl_path);
 		$this->model = $model;
@@ -122,7 +122,8 @@ class HTMLTable extends HTMLElement
 		{
 			$form_id = 'filters_form_' . $this->arg_id;
 			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
-			$fieldset = new FormFieldsetHorizontal('filters', LangLoader::get_class_message('filters', __CLASS__));
+			$fieldset = new FormFieldsetHorizontal('filters');
+			$fieldset->set_description(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters as $filter)
 			{
 				$fieldset->add_field($filter->get_form_field());
