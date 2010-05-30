@@ -30,7 +30,6 @@ if (defined('PHPBOOST') !== true)
 	exit;
 
 
-
 $env = new AdminDisplayGraphicalEnvironment();
 
 Environment::set_graphical_environment($env);
@@ -61,8 +60,7 @@ if (defined('ALTERNATIVE_CSS'))
 			}
 			else
 			{
-				$env->add_css_file('/' . $module . '/templates/' . $style .
-							'.css');
+				$env->add_css_file('/' . $module . '/templates/' . $style .	'.css');
 			}
 		}
 	}
@@ -88,6 +86,6 @@ if (defined('ALTERNATIVE_CSS'))
 
 $env->set_page_title(TITLE);
 
-Environment::display_header();
+$env->display_header();
 
 ?>
