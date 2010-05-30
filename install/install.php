@@ -143,7 +143,7 @@ $Sql = null;
 if (function_exists('date_default_timezone_set'))
 	date_default_timezone_set('Europe/Paris');
 
-	import('io/filesystem/file');
+	import('io/filesystem/File');
 	$cache_install = new File(PATH_TO_ROOT . '/cache/.install', 2);
 	
 	

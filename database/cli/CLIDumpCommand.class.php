@@ -49,7 +49,7 @@ class CLIDumpCommand implements CLICommand
 		else
 		{
 			$file_name = $args[0];
-			unset($args[0]);
+			array_shift($args);
 		}
 		$tables = null;
 		foreach ($args as $arg)
@@ -62,7 +62,6 @@ class CLIDumpCommand implements CLICommand
 	
 	private function dump($file_path, $tables)
 	{
-		CLIOutput::writeln('Dumping to file ' . $file_path);
 		$file = new File($file_path);
 		$file_writer = new BufferedFileWriter($file);
 		if ($tables == null)
@@ -73,6 +72,7 @@ class CLIDumpCommand implements CLICommand
 		{
 			PersistenceContext::get_dbms_utils()->dump_tables($file_writer, $tables, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
 		}
+		CLIOutput::writeln('Tables dumped to file ' . $file_path);
 	}
 }
 ?>

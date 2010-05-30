@@ -71,6 +71,8 @@ interface DBMSUtils
 	function dump_tables(FileWriter $file, array $tables, $what = self::DUMP_STRUCTURE_AND_DATA);
 	
 	function dump_table(FileWriter $file, $table, $what = self::DUMP_STRUCTURE_AND_DATA);
+	
+	function parse_file(File $file, $prefix = '');
 }
 
 ?>
