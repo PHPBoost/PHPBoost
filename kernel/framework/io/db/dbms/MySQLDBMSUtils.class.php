@@ -306,7 +306,7 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		$reader = new BufferedFileReader($file);
 		$query = '';
-		while (($line = $reader->read_line()) != null)
+		while (($line = $reader->read_line()) !== null)
 		{
 			if (!empty($line) && substr($line, 0, 2) !== '--')
 			{
