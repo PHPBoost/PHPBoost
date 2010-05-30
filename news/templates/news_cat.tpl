@@ -93,7 +93,7 @@
 						<a href="{news.U_SYNDICATION}" title="{L_SYNDICATION}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 						</a>
-	        			<a href="{news.U_LINK} onclick="document.location = 'count.php?id={news.ID}';" class="big_link">{news.TITLE}</a>
+	        			<a href="{news.U_LINK} class="big_link" onclick="document.location = 'count.php?id={news.ID}';">{news.TITLE}</a>
 	        		</div>
 	        		<div style="float:right">
 						# IF news.C_EDIT #

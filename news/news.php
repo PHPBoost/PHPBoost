@@ -103,6 +103,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			$tpl->assign_block_vars('sources', array(
 				'I' => $i,
 				'NAME' => stripslashes($sources['name']),
+				'COMMA' => $i > 0 ? ', ' : ' ',
 				'URL' => stripslashes($sources['url']),
 			));
 			$i++;
@@ -117,6 +118,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
 			'C_IMG' => !empty($news['img']),
 			'C_ICON' => $NEWS_CONFIG['activ_icon'],
+			'C_SOURCES' => $i > 0 ? true : false,
 			'ID' => $news['id'],
 			'TITLE' => $news['title'],
 			'CONTENTS' => FormatingHelper::second_parse($news['contents']),
@@ -138,6 +140,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
 			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . Url::encode_rewrite($next_news['title']) . '.php'),
+			'U_COMPTEUR_PREVIOUS' => 'onclick="document.location = \'count.php?id='. $previous_news['id'] .'\';"',
+			'U_COMPTEUR_NEXT' => 'onclick="document.location = \'count.php?id='. $next_news['id'] .'\';"',
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'L_EDIT' => $LANG['edit'],
 			'L_DELETE' => $LANG['delete'],

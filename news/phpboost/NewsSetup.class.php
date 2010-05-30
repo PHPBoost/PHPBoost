@@ -86,7 +86,8 @@ class NewsSetup extends DefaultModuleSetup
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'archive' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'lock_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('id'),
