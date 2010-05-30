@@ -161,7 +161,8 @@ class CLIInstallCommand implements CLICommand
 		{
 			return false;
 		}
-		if (!$this->installation->configure_website())
+		if (!$this->installation->configure_website($this->website_locale, $this->website_server, $this->website_path, $this->website_name,
+			'PHPBoost command line installation', '', $this->website_timezone))
 		{
 			return false;
 		}

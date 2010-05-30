@@ -133,7 +133,7 @@ class ModulesManager
 	{
 		self::update_class_list();
 
-		global $Cache, $Sql, $CONFIG;
+		global $CONFIG;
 
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
@@ -156,16 +156,18 @@ class ModulesManager
 		}
 
 		self::execute_module_installation($module_identifier);
+
 		// @deprecated
 		//Insertion de la configuration du module.
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 
 		if (!empty($config))
 		{
-			$check_config = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . $module_identifier . "'", __LINE__, __FILE__);
+			$querier = PersistenceContext::get_querier();
+			$check_config = $querier->count(DB_TABLE_CONFIGS, 'WHERE name=:module_id', array('module_id' => $module_identifier));
 			if (empty($check_config))
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) VALUES ('" . $module_identifier . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
+				$querier->insert(DB_TABLE_CONFIGS, array('name' => $module_identifier, 'value' => $config));
 			}
 			else
 			{
