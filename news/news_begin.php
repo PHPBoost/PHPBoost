@@ -32,6 +32,6 @@ load_module_lang('news');
 //Chargement du cache
 $Cache->load('news');
 
-require_once('news_constant.php');
+require_once('news_constants.php');
 
 ?>

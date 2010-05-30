@@ -177,25 +177,13 @@ elseif ($user)
 	if (!empty($array_cat))
 	{
 		
-		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level, n.sources
+		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_NEWS . " n
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 		WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "' AND idcat IN (" . implode(', ', $array_cat) . ")
 		ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			
-			$array_sources = unserialize($row['sources']);
-			$i = 0;
-			foreach ($array_sources as $sources)
-			{	
-				$tpl->assign_block_vars('sources', array(
-					'I' => $i,
-					'NAME' => stripslashes($sources['name']),
-					'URL' => stripslashes($sources['url']),
-				));
-				$i++;
-			}
 			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 
 			$tpl->assign_block_vars('news', array(
