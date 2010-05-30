@@ -71,14 +71,14 @@
        	<div class="navigation_link">
 			# IF C_PREVIOUS_NEWS #
 			<span style="float:left">
-				<a href="{U_PREVIOUS_NEWS}" {U_COMPTEUR_PREVIOUS}><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign_middle" /></a>
-				<a href="{U_PREVIOUS_NEWS}" {U_COMPTEUR_PREVIOUS}>{PREVIOUS_NEWS}</a>
+				<a href="{U_PREVIOUS_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign_middle" /></a>
+				<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
 			</span>
 			# ENDIF #
           	# IF C_NEXT_NEWS #
 			<span style="float:right">
-				<a href="{U_NEXT_NEWS}" {U_COMPTEUR_NEXT}>{NEXT_NEWS}</a>
-				<a href="{U_NEXT_NEWS}" {U_COMPTEUR_NEXT}><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
+				<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
+				<a href="{U_NEXT_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
 			</span>
 			# ENDIF #
 		<div class="spacer"></div>

@@ -107,21 +107,25 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING),
 		'sources' => addslashes(serialize($sources))
 	);
-
-	if ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
+	
+	$auth_edit_cat = $news['idcat'] > 0 ? ($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) : '';
+	$auth_write_cat = $news['idcat'] > 0 ? ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) : '';
+	$auth_edit_not_cat = $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
+	$auth_write_not_cat = $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
+	
+	$auth = $news['idcat'] > 0 ? ($auth_edit_cat||$auth_write_cat) : ($auth_edit_not_cat||$auth_write_not_cat);
+	if ($auth)
 	{
 		// Errors.
 		if (empty($news['title']))
 		{
-			$Errorh->handler('e_require_title', E_USER_REDIRECT);
-		}
-		elseif (empty($news['idcat']) && $news['idcat'] == 0)
-		{
-			$Errorh->handler('e_require_cat', E_USER_REDIRECT);
+			echo 'pas de titre';
+// TODO				$Errorh->handler('e_require_title', E_USER_REDIRECT);
 		}
 		elseif (empty($news['desc']))
 		{
-			$Errorh->handler('e_require_desc', E_USER_REDIRECT);
+			echo 'pas de desc';
+// TODO				$Errorh->handler('e_require_desc', E_USER_REDIRECT);
 		}
 		else
 		{
@@ -246,7 +250,8 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		echo 'tu n\'a spas l\'autorisation';
+/* TODO */		//$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }
 else
@@ -256,8 +261,10 @@ else
 	if ($edit > 0)
 	{
 		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
-
-		if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
+		
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id') : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		
+		if (!empty($news['id']) && $auth_edit)
 		{
 			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . addslashes($news['title']));
 			$news_categories->bread_crumb($news['idcat']);
@@ -329,7 +336,8 @@ else
 		}
 		else
 		{
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+/* TODO */		echo 'tu n\'as pas l\'autorisation';
+			//$Errorh->handler('e_auth', E_USER_REDIRECT);
 		}
 	}
 	else
@@ -429,7 +437,6 @@ else
 		'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $NEWS_LANG['contribution_counterpart_explain'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE_CAT' => $NEWS_LANG['require_cat'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],

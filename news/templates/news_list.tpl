@@ -117,7 +117,7 @@
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" alt="" />
 							# IF list.ICON #<a href="{list.U_CAT}"><img class="valign_middle" src="{list.ICON}" alt="" /></a># ENDIF #
 							# IF list.DATE #<span class="text_small">{list.DATE} : </span># ENDIF #
-							<a href="{list.U_NEWS}" onclick="document.location ='count.php?id={list.ID}';">{list.TITLE}</a>
+							<a href="{list.U_NEWS}">{list.TITLE}</a>
 							# IF list.C_COM #({list.COM})# ENDIF #
 						</li>
 					</ul>
