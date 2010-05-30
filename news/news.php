@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
 
-//$news_cat = new NewsCats();
+$news_cat = new NewsCats();
 
 $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
@@ -40,7 +40,7 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 	// Récupération de la news
-	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 	WHERE n.id = '" . $idnews . "'", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
@@ -51,7 +51,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Bread crumb.
-//		$news_cat->bread_crumb($news['idcat']);
+		$news_cat->bread_crumb($news['idcat']);
 		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 
 		// Titre de la page.
@@ -65,7 +65,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 		// Construction de l'arbre des catégories pour les news précédentes, suivantes et suggestion de news.
 		$array_cat = array();
-//		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
 		// News suivante.
 		$next_news = $Sql->query_array(DB_TABLE_NEWS, "title", "id", "WHERE visible = 1 AND timestamp > '" . $news['timestamp'] . "' AND start <= '" . $now->get_timestamp() . "' AND idcat IN (" . implode(', ', $array_cat) . ") ORDER BY timestamp ASC" . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -95,7 +95,19 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			));
 			$nbr_suggested++;
 		}
-
+		
+		$array_sources = unserialize($news['sources']);
+		$i = 0;
+		foreach ($array_sources as $sources)
+		{	
+			$tpl->assign_block_vars('sources', array(
+				'I' => $i,
+				'NAME' => stripslashes($sources['name']),
+				'URL' => stripslashes($sources['url']),
+			));
+			$i++;
+		}	
+	
 		$tpl->assign_vars(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'),
@@ -130,6 +142,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'L_EDIT' => $LANG['edit'],
 			'L_DELETE' => $LANG['delete'],
 			'L_SYNDICATION' => $LANG['syndication'],
+			'L_SOURCES' => $NEWS_LANG['sources'],
 			'L_NEWS_SUGGESTED' => $NEWS_LANG['news_suggested']
 		));
 
@@ -155,17 +168,30 @@ elseif ($user)
 
 	// Build array with the children categories.
 	$array_cat = array();
-//	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
+	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
 
 	if (!empty($array_cat))
 	{
-		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+		
+		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level, n.sources
 		FROM " . DB_TABLE_NEWS . " n
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 		WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "' AND idcat IN (" . implode(', ', $array_cat) . ")
 		ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			
+			$array_sources = unserialize($row['sources']);
+			$i = 0;
+			foreach ($array_sources as $sources)
+			{	
+				$tpl->assign_block_vars('sources', array(
+					'I' => $i,
+					'NAME' => stripslashes($sources['name']),
+					'URL' => stripslashes($sources['url']),
+				));
+				$i++;
+			}
 			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 
 			$tpl->assign_block_vars('news', array(
@@ -218,7 +244,7 @@ elseif ($user)
 else
 {
 	define('TITLE', $NEWS_LANG['news']);
-//	$news_cat->bread_crumb($idcat);
+	$news_cat->bread_crumb($idcat);
 	require_once('../kernel/header.php');
 	
 	$modulesLoader = AppContext::get_extension_provider_service();

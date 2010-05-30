@@ -124,6 +124,11 @@ $NEWS_LANG = array(
 	'waiting_news' => 'Waiting news',
 
 	'xml_news_desc' => 'News - ',
+	
+	'sources' => 'Sources',
+	'add_sources' => 'Adding sources to the news ?',
+	'name_sources' => 'Name sources',
+	'url_sources' => 'Url sources',
 );
 
 ?>

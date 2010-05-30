@@ -104,7 +104,20 @@
 			}
 			return false;
 		}
+		
+		function add_fields_sources(i, i_max) 
+		{
+			var i2 = i + 1;
 
+			if( document.getElementById('name'+i) )
+				document.getElementById('name'+i).innerHTML = '<label><input type="text" size="40" name="name'+i+'" value="" class="text" /></label><br /><span id="name'+i2+'"></span>';	
+			if( document.getElementById('url'+i) )
+				document.getElementById('url'+i).innerHTML = '<label><input type="text" size="40" name="url'+i+'" value="" class="text" /></label><br /><span id="url'+i2+'"></span>';	
+			if( document.getElementById('s'+i) )
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_fields_sources('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_CHAMPS}</a></span>' : '';
+				
+		}
+		
 		# IF C_ADD #
 		function value_now(id_date, id_hour, id_min)
 		{
@@ -205,6 +218,38 @@
 					<dd><label><input type="text" size="60" name="alt" id="alt" value="{ALT}" class="text" /></label></dd>
 				</dl>
 			</fieldset>
+			<fieldset>
+				<legend>{L_ADD_SOURCES}</legend>
+				<table style="border:none;border-spacing:0;margin:auto;">
+					<tr>
+						<th style="text-align:center;">
+							{L_NAME_SOURCES}
+						</th>
+						<th style="text-align:center;">
+							{L_URL_SOURCES}
+						</th>
+					</tr>
+					<tr>
+						<td class="row2" style="text-align:center;">	
+							# START sources #					
+							<label><input type="text" size="40" name="name{sources.I}" id="name{sources.I}" value="{sources.NAME}" class="text" /> </label><br />
+							# END sources #
+							<span id="name{NB_FIELDS_SOURCES}"></span>
+						</td>
+						<td class="row2" style="text-align:center;">	
+							# START sources #					
+							<label><input type="text" size="40" name="url{sources.I}" id="url{sources.I}" value="{sources.URL}" class="text" /> </label><br />
+							# END sources #
+							<span id="url{NB_FIELDS_SOURCES}"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;" colspan="2">
+							<div id="s{NB_FIELDS_SOURCES}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_fields_sources({NB_FIELDS_SOURCES}, 50)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_IMG}</a></div>								
+						</td>
+					</tr>
+				</table>
+			</fieldset>				
 
 			# IF C_CONTRIBUTION #
 			<fieldset>
