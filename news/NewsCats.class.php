@@ -34,7 +34,7 @@ class NewsCats extends CategoriesManager
 	## Public methods ##
 
 	//Constructor
-	function __contruct()
+	function __construct()
 	{
 		global $Cache, $NEWS_CAT;
 		if (!isset($NEWS_CAT))
