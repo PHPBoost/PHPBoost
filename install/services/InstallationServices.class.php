@@ -29,6 +29,7 @@ class InstallationServices
 {
 	private static $token_file_content = '1';
 	private static $min_php_version = '5.1.2';
+	private static $phpboost_major_version = '3.1';
 
 	/**
 	 * @var File
@@ -49,10 +50,132 @@ class InstallationServices
 		$this->generate_installation_token();
 	}
 
-	public function configure_website()
+	public function configure_website($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
 		$this->get_installation_token();
+
+		$modules_to_install = $this->load_distribution_configuration($locale);
+		$this->generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
+		$this->install_modules($modules_to_install);
+		$this->add_menus();
+		$this->generate_cache();
+
+		// TODO remove it when the $CONFIG variable will be managed by the new config manager
+		if (DISTRIBUTION_ENABLE_DEBUG_MODE)
+		{
+			Debug::enabled_debug_mode();
+		}
+		else
+		{
+			Debug::disable_debug_mode();
+		}
 		return true;
+	}
+
+	private function load_distribution_configuration($locale)
+	{
+		include PATH_TO_ROOT . '/install/distribution/' . $locale . '.php';
+		return $DISTRIBUTION_MODULES;
+	}
+
+	private function generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
+	{
+		$user = new User();
+		$user->set_user_lang($locale);
+		AppContext::set_user($user);
+		$config = $this->build_configuration($locale, $server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
+		$this->save_configuration($config, $locale);
+		$this->configure_theme($config['theme'], $locale);
+	}
+
+	private function build_configuration($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
+	{
+		$CONFIG = array();
+		$CONFIG['server_name'] = $server_url;
+		$CONFIG['server_path'] = '/' . ltrim($server_path, '/');
+		$CONFIG['site_name'] = $site_name;
+		$CONFIG['site_desc'] = $site_desc;
+		$CONFIG['site_keyword'] = $site_keyword;
+		$CONFIG['start'] = time();
+		$CONFIG['version'] = self::$phpboost_major_version;
+		$CONFIG['lang'] = $locale;
+		$CONFIG['theme'] = DISTRIBUTION_THEME;
+		$CONFIG['editor'] = 'bbcode';
+		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
+		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
+		$CONFIG['maintain'] = 0;
+		$CONFIG['maintain_delay'] = 1;
+		$CONFIG['maintain_display_admin'] = 1;
+		$CONFIG['maintain_text'] = 'Maintain'; // TODO add localization $LANG['site_config_maintain_text'];
+		$CONFIG['htaccess_manual_content'] = '';
+		$CONFIG['rewrite'] = 0;
+		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
+		$CONFIG['com_popup'] = 0;
+		$CONFIG['compteur'] = 0;
+		$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;
+		$CONFIG['theme_author'] = 0;
+		$CONFIG['ob_gzhandler'] = 0;
+		$CONFIG['site_cookie'] = 'session';
+		$CONFIG['site_session'] = 3600;
+		$CONFIG['site_session_invit'] = 300;
+		$CONFIG['anti_flood'] = 0;
+		$CONFIG['delay_flood'] = 7;
+		$CONFIG['unlock_admin'] = '';
+		$CONFIG['pm_max'] = 50;
+		$CONFIG['search_cache_time'] = 30;
+		$CONFIG['search_max_use'] = 100;
+		$CONFIG['html_auth'] = array ('r2' => 1);
+		$CONFIG['forbidden_tags'] = array ();
+
+		return $CONFIG;
+	}
+
+	private function save_configuration($config, $locale)
+	{
+		$querier = PersistenceContext::get_querier();
+		$querier->inject("UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'", array(
+			'config' => serialize($config)));
+		$querier->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
+			'config_lang' => $config['lang']));
+	}
+
+	private function configure_theme($theme, $locale)
+	{
+		$info_theme = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $locale);
+		PersistenceContext::get_querier()->inject(
+			"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
+			VALUES (:theme, 1, -1, :left_column, :right_column)", array(
+				'theme' => $theme,
+				'left_column' => $info_theme['left_column'],
+				'right_column' => $info_theme['right_column']
+		));
+	}
+	private function install_modules(array $modules_to_install)
+	{
+		ModulesConfig::load()->set_modules(array());
+		foreach ($modules_to_install as $module_name)
+		{
+			ModulesManager::install_module($module_name, true);
+		}
+	}
+
+	private function add_menus()
+	{
+		MenuService::enable_all(true);
+		$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
+		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
+		MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
+		MenuService::save($modules_menu);
+	}
+
+	private function generate_cache()
+	{
+		// TODO see if those lines are necessary
+//		$Cache = new Cache();
+//		$Cache->generate_all_files();
+//		$Cache->load('themes', RELOAD_CACHE);
+//		ModulesCssFilesCache::invalidate();
+		AppContext::get_cache_service()->clear_phpboost_cache();
 	}
 
 	public function create_admin_account()
@@ -151,5 +274,4 @@ class InstallationServices
 		$this->token->delete();
 	}
 }
-
 ?>

@@ -26,7 +26,7 @@
  ###################################################*/
 
 //A personnaliser
-define('UPDATE_VERSION', '3.0');
+define('UPDATE_VERSION', '3.1');
 define('INSTALL_DEFAULT_LANGUAGE', 'french');
 define('STEPS_NUMBER', 7);
 define('STEP_INTRO', 1);
@@ -141,8 +141,8 @@ global $Sql;
 $Sql = null;
 
 	$cache_install = new File(PATH_TO_ROOT . '/cache/.install', 2);
-	
-	
+
+
 switch($step)
 {
 	//Préambule
@@ -157,7 +157,7 @@ switch($step)
     		'L_NEXT_STEP' => add_lang('install.php?step=' . (STEP_INTRO + 1)),
     		'L_START_INSTALL' => $LANG['start_install']
 		));
-		
+
 		//Le fichier existe, il est déjà passé par l'étape 4, mais elle n'as pas abouti, donc on ne lui fait pas relire le tout
 		if($cache_install->exists())
 		{
@@ -297,7 +297,7 @@ switch($step)
 		//Mise en place de la base de données
 	case STEP_DB_CONFIG:
 		require_once 'functions.php';
-		
+
 		// On créer le fichier de cache pour l'installation pour dire que l'on est a l'étape 4
 		$cache_install->write("");
 		$cache_install->close();
@@ -666,7 +666,7 @@ switch($step)
 		}
 		//Compte administrateur
 	case STEP_ADMIN_ACCOUNT:
-		
+
 		if($cache_install->exists())
 		{
 			$template->assign_block_vars('admin', array());
@@ -839,10 +839,10 @@ switch($step)
 		}
 	case STEP_END:
 		$Sql = PersistenceContext::get_sql();
-		
+
 		// On supprime le fichier .install, l'installation est fini
 		$cache_install->delete();
-		
+
 		$Cache = new Cache;
 		$Cache->load('config');
 		$Cache->load('themes');

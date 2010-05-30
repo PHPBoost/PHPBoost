@@ -78,10 +78,10 @@ class InstallEnvironment extends Environment
 		global $DISTRIBUTION_MODULES;
 
 		//If the distribution properties exist in the prefered language
-		if (is_file('distribution/distribution_' . $prefered_lang . '.php'))
+		if (is_file('distribution/' . $prefered_lang . '.php'))
 		{
 			//We load them
-			include('distribution/distribution_' . $prefered_lang . '.php');
+			include('distribution/' . $prefered_lang . '.php');
 		}
 		else
 		{
