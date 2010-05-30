@@ -96,6 +96,10 @@
 	        			<a href="{news.U_LINK} class="big_link" onclick="document.location = 'count.php?id={news.ID}';">{news.TITLE}</a>
 	        		</div>
 	        		<div style="float:right">
+						# IF news.U_COM #
+						<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}
+						# ENDIF #
+
 						# IF news.C_EDIT #
 						<a href="management.php?edit={news.ID}" title="{L_EDIT}">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
@@ -122,7 +126,6 @@
 	    		<div class="news_bottom_r"></div>
 	    		<div class="news_bottom">
 					<div style="float:left"># IF news.PSEUDO #<a class="small_link{news.LEVEL}" href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
-					<div style="float:right"># IF news.U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}# ENDIF #</div>
 					<div class="spacer"></div>
 	    		</div>
 			</div>

@@ -27,7 +27,7 @@
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
-require_once('news_constant.php');
+require_once('news_constants.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('news'); //Chargement de la langue du module.
