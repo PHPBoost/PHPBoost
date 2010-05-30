@@ -188,11 +188,11 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
 			AND TABLE_NAME=:member_extend AND COLUMN_NAME=:column_name',
-			array(
+		array(
 				'schema' => $this->get_database_name(),
 				'member_extend' => DB_TABLE_MEMBER_EXTEND,
 				'column_name' => $column_name
-			)
+		)
 		);
 		if ($result->get_rows_count() > 0)
 		{
@@ -204,7 +204,7 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		$this->dump_tables($file, $this->list_tables(), $what);
 	}
-	
+
 	public function dump_tables(FileWriter $file, array $tables, $what = self::DUMP_STRUCTURE_AND_DATA)
 	{
 		$tables = array_intersect($tables, $this->list_tables());
@@ -222,7 +222,7 @@ class MySQLDBMSUtils implements DBMSUtils
 			$this->write($this->get_drop_table_query($table), $file);
 			$this->write($this->get_create_table_query($table), $file);
 		}
-		
+
 		if ($what == self::DUMP_DATA || $what == self::DUMP_STRUCTURE_AND_DATA)
 		{
 			$this->dump_table_rows($table, $file);
@@ -252,13 +252,17 @@ class MySQLDBMSUtils implements DBMSUtils
 		{
 			return $field;
 		}
-		elseif (is_string($field))
+		else if (is_string($field))
 		{
 			return '\'' .
 			str_replace(chr(13), '\r',
 			str_replace(chr(10), '\n',
 			str_replace('\\', '\\\\',
 			str_replace("'", "''", $field)))) . '\'';
+		}
+		else
+		{
+			return 'NULL';
 		}
 	}
 
@@ -296,6 +300,45 @@ class MySQLDBMSUtils implements DBMSUtils
 		$result = $this->querier->inject($query, $parameters);
 		$this->querier->enable_query_translator();
 		return $result;
+	}
+
+	public function parse_file(File $file, $prefix = '')
+	{
+		$reader = new BufferedFileReader($file);
+		$query = '';
+		while (($line = $reader->read_line()) != null)
+		{
+			if (!empty($line) && substr($line, 0, 2) !== '--')
+			{
+				if (substr($line, -1) == ';')
+				{
+					if (empty($query))
+					{
+						$query = $line;
+					}
+					else
+					{
+						$query .= ' ' . $line;
+					}
+
+					if (!empty($tableprefix))
+					{
+						$query = str_replace('phpboost_', $tableprefix, $query);
+					}
+					$parameter_extractor = new SqlParameterExtractor($query);
+//					CLIOutput::writeln($parameter_extractor->get_query());
+//					Debug::dump($parameter_extractor->get_parameters());
+//					CLIOutput::writeln();
+//					CLIOutput::writeln();
+					$this->querier->inject($parameter_extractor->get_query(), $parameter_extractor->get_parameters());
+					$query = '';
+				}
+				else
+				{
+					$query .= ' ' . $line;
+				}
+			}
+		}
 	}
 
 	/**

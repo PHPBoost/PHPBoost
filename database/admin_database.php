@@ -60,10 +60,6 @@ $Template->set_filenames(array(
 	'admin_database_management'=> 'database/admin_database_management.tpl'
 ));
 
-//outils de sauvegarde de la base de données
-
-$backup = new Backup();
-
 $Template->assign_vars(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
@@ -175,12 +171,13 @@ elseif ($action == 'restore')
 		$file_path = '../cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
-			$Sql->parse($file_path);
-			//On optimise et répare les tables
-			$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
-			$Sql->optimize_tables($tables_list);
-			$Sql->repair_tables($tables_list);
+			$db_utils = PersistenceContext::get_dbms_utils();
+			$db_utils->parse_file(new File($file_path));
+			$tables_list = $db_utils->list_tables();
+			$db_utils->optimize($tables_list);
+			$db_utils->repair($tables_list);
 			$Cache->generate_all_files();
+			AppContext::get_cache_service()->clear_cache();
 			
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
@@ -193,12 +190,13 @@ elseif ($action == 'restore')
 			$file_path = '../cache/backup/' . $post_file['name'];
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
-				$Sql->parse($file_path);
-				
-				$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
-				$Sql->optimize_tables($tables_list);
-				$Sql->repair_tables($tables_list);
+				$db_utils = PersistenceContext::get_dbms_utils();
+				$db_utils->parse_file(new File($file_path));
+				$tables_list = $db_utils->list_tables();
+				$db_utils->optimize($tables_list);
+				$db_utils->repair($tables_list);
 				$Cache->generate_all_files();
+				AppContext::get_cache_service()->clear_cache();
 				
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
@@ -367,7 +365,7 @@ else
 		$i = 0;
 		
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
-		foreach ($backup->get_tables_properties_list() as $key => $table_info)
+		foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables() as $key => $table_info)
 		{	
 			$free = NumberHelper::round($table_info['data_free']/1024, 1);
 			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
