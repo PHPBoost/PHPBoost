@@ -18,6 +18,9 @@
                		<a href="{U_LINK}" class="big_link">{TITLE}</a>
                	</div>
                	<div style="float:right">
+					# IF U_COM #
+					<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {U_COM}
+					# ENDIF #
 					# IF C_EDIT #
 					<a href="management.php?edit={ID}" title="{L_EDIT}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
@@ -38,28 +41,18 @@
 				<br /><br />
                	{EXTEND_CONTENTS}
 				<br /><br />
-				<table style="width:300px;" class="module_cara text_small">
-					<tr><br>
-						<th colspan="1">
-							{L_SOURCES}
-						</th>
-					</tr>
-					# START sources #
-						<tr> 
-							<td class="row1" style="padding:3px"> 
-								<a href="{sources.URL}">{sources.NAME}</a>
-							</td>
-						</tr>
-					# END sources #
-				</table>
+				# IF C_SOURCES #
+				<div style="float:right">
+					<div class="text_small"><b> {L_SOURCES} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+				</div>
+				# ENDIF #
 				<div class="spacer"></div>
            	</div>
 			<div class="news_bottom_l"></div>
            	<div class="news_bottom_r"></div>
            	<div class="news_bottom">
                	<div style="float:left"># IF PSEUDO #<a class="small_link{LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
-               	<div style="float:right"># IF U_COM #<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {U_COM}# ENDIF #</div>
-				<div class="spacer"></div>
+				<div class="spacer">
            	</div>
 		</div>
 		
@@ -78,14 +71,14 @@
        	<div class="navigation_link">
 			# IF C_PREVIOUS_NEWS #
 			<span style="float:left">
-				<a href="{U_PREVIOUS_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign_middle" /></a>
-				<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
+				<a href="{U_PREVIOUS_NEWS}" {U_COMPTEUR_PREVIOUS}><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign_middle" /></a>
+				<a href="{U_PREVIOUS_NEWS}" {U_COMPTEUR_PREVIOUS}>{PREVIOUS_NEWS}</a>
 			</span>
 			# ENDIF #
           	# IF C_NEXT_NEWS #
 			<span style="float:right">
-				<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
-				<a href="{U_NEXT_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
+				<a href="{U_NEXT_NEWS}" {U_COMPTEUR_NEXT}>{NEXT_NEWS}</a>
+				<a href="{U_NEXT_NEWS}" {U_COMPTEUR_NEXT}><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
 			</span>
 			# ENDIF #
 		<div class="spacer"></div>

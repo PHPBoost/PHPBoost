@@ -114,7 +114,7 @@
 			if( document.getElementById('url'+i) )
 				document.getElementById('url'+i).innerHTML = '<label><input type="text" size="40" name="url'+i+'" value="" class="text" /></label><br /><span id="url'+i2+'"></span>';	
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_fields_sources('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_CHAMPS}</a></span>' : '';
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_fields_sources('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCES}</a></span>' : '';
 				
 		}
 		
@@ -245,7 +245,7 @@
 					</tr>
 					<tr>
 						<td style="text-align:center;" colspan="2">
-							<div id="s{NB_FIELDS_SOURCES}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_fields_sources({NB_FIELDS_SOURCES}, 50)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_IMG}</a></div>								
+							<div id="s{NB_FIELDS_SOURCES}" style="height:22px;text-align:center;line-height:22px;"><a href="javascript:add_fields_sources({NB_FIELDS_SOURCES}, 50)"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCES}</a></div>								
 						</td>
 					</tr>
 				</table>

@@ -263,7 +263,7 @@ else
 			$news_categories->bread_crumb($news['idcat']);
 			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 			$Bread_crumb->add($NEWS_LANG['edit_news'], url('management.php?edit=' . $news['id']));
-
+			
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
 			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['start'] > 0 ? $news['start'] : $now->get_timestamp()));
@@ -279,7 +279,7 @@ else
 			$sources = unserialize($news['sources']);
 
 			$i = 0;
-			foreach (sources as $value)
+			foreach ($sources as $value)
 			{	
 				$tpl->assign_block_vars('sources', array(
 					'I' => $i,
@@ -341,7 +341,8 @@ else
 		else
 		{
 			$auth_contrib = !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
-
+			$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
+			$Bread_crumb->add($NEWS_LANG['add_news'], url('management.php?new=1'));
 			define('TITLE', $NEWS_LANG['add_news']);
 
 			// Calendrier.

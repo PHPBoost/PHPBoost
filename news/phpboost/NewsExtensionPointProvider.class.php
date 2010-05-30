@@ -72,35 +72,12 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 		return $string;
 	}
-
-	public function get_search_request($args)
-	{		
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
-		$news_cat = new NewsCats();
-
-		// Build array with the children categories.
-		$array_cat = array();
-		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
-		$where = !empty($array_cat) ? " AND idcat IN(" . implode(", ", $array_cat) . ")" : " AND idcat = '0'";
-
-		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-
-		$request = "SELECT " . $args['id_search'] . " AS id_search,
-            n.id AS id_content,
-            n.title AS title,
-            ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
-            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
-            . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
-            FROM " . DB_TABLE_NEWS . " n
-            WHERE ( FT_SEARCH(n.title, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
-            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "') )
-                AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
-            ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
-
-            return $request;
+	
+	public function search()
+	{
+		return new NewsSearchable();
 	}
-
+	
 	public function feeds()
 	{
 		return new NewsFeedProvider();
@@ -326,7 +303,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 						'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
+						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '" onclick="document.location = \'count.php?id='. $row['id'] .'\';">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 						'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 						'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 						'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',

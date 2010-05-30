@@ -126,9 +126,9 @@ $NEWS_LANG = array(
 	'xml_news_desc' => 'News - ',
 	
 	'sources' => 'Sources',
-	'add_sources' => 'Adding sources to the news ?',
-	'name_sources' => 'Name sources',
-	'url_sources' => 'Url sources',
+	'add_sources' => 'Adding sources',
+	'name_sources' => 'Name source',
+	'url_sources' => 'Url source',
 );
 
 ?>
