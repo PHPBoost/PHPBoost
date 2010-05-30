@@ -292,7 +292,7 @@ else
 			
 			$template->assign_block_vars('row.module', array(
 				'WIDTH' => (int)(100. / (NUMBER_OF_MODULES_PER_LINE)),
-				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $name . '/' . url($contribution_interface),
+				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module->get_id() . '/' . url($contribution_interface),
 				'MODULE_ID' => $module->get_id(),
 				'MODULE_NAME' => $module->get_configuration()->get_name(),
 				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())

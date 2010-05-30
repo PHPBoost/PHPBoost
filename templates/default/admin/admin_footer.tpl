@@ -1,5 +1,5 @@
     			<br /><br /><br />
-    		</div>
+    		</div></div>
     		<div id="footer">
     			<span>
 					<!-- This mention must figured on the website ! -->
