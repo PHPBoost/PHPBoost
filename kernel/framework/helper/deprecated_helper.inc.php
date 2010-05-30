@@ -270,8 +270,6 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		$timestamp = time();
 	}
 
-	//TODO S'occuper de ce problème de timezone
-	date_default_timezone_set('Europe/Paris');
 	// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I');
 

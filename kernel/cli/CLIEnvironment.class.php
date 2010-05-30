@@ -75,10 +75,5 @@ class CLIEnvironment extends Environment
 		define('SID', '');
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
-
-	public function __destroy()
-	{
-		echo "\ntototot\n";
-	}
 }
 ?>

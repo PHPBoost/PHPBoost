@@ -454,8 +454,6 @@ class Date
 	{
 		global $CONFIG;
 
-		//TODO S'occuper de ce problème de timezone
-		date_default_timezone_set('Europe/Paris');
 		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
 		$server_hour = intval(date('Z') / 3600) - intval(date('I'));
 			
