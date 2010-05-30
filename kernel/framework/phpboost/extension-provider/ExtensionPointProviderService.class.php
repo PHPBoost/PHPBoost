@@ -145,7 +145,7 @@ class ExtensionPointProviderService
 		try
 		{
 			// In case that phpboost is not installed and that a command line is invoked,
-			// DBConnectionException and IOException could be thrown.
+			// DBConnectionException, SQLQuerierException and IOException could be thrown.
 			// In that case, it only means that modules extension points providers won't be loaded
 			foreach (ModulesManager::get_installed_modules_map() as $provider_id => $module)
 			{
@@ -156,6 +156,7 @@ class ExtensionPointProviderService
 			}
 		}
 		catch (DBConnectionException $exception) { }
+		catch (SQLQuerierException $exception) { }
 		catch (IOException $exception) { }
 	}
 

@@ -59,7 +59,6 @@ class DBFactory
 				break;
 			case self::MYSQL:
 			default:
-				require_once PATH_TO_ROOT . '/kernel/framework/io/db/factory/MySQLDBFactory.class.php';
 				self::$factory = new MySQLDBFactory();
 				break;
 		}
@@ -76,7 +75,7 @@ class DBFactory
 		{
 			$data = self::load_config();
 			self::init_factory($data['dbms']);
-			self::$db_connection = self::get_factory()->new_db_connection();
+			self::$db_connection = self::new_db_connection();
 			self::$db_connection->connect($data);
 		}
 		return self::$db_connection;
@@ -85,6 +84,15 @@ class DBFactory
 	public static function set_db_connection(DBConnection $connection)
 	{
 		self::$db_connection = $connection;
+	}
+
+	/**
+	 * @desc returns a new <code>DBConnection</code> instance
+	 * @return SQLQuerier a new <code>DBConnection</code> instance
+	 */
+	public static function new_db_connection()
+	{
+		return self::get_factory()->new_db_connection();
 	}
 
 	/**
@@ -104,10 +112,8 @@ class DBFactory
 
 	private static function load_config()
 	{
-		//Configuration file
 		include PATH_TO_ROOT . '/kernel/db/config.php';
 
-		//If PHPBoost is not installed, we redirect the user to the installation page
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
 			import('util/unusual_functions', INC_IMPORT);

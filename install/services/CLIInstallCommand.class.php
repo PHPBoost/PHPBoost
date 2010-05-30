@@ -80,11 +80,7 @@ class CLIInstallCommand implements CLICommand
 		$this->arg_reader = new CLIArgumentsReader($args);
 		$this->check_parameters();
 		$this->show_parameters();
-		if ($this->check_env())
-		{
-			$this->install();
-		}
-		else
+		if (!($this->check_env() && $this->install()))
 		{
 			CLIOutput::writeln('installation failed');
 		}
@@ -155,15 +151,26 @@ class CLIInstallCommand implements CLICommand
 	private function check_env()
 	{
 		CLIOutput::writeln('check environment');
-		return $this->chech_php_version() && $this->check_folders_permissions() && $this->check_database_connection();
+		return $this->chech_php_version() && $this->check_folders_permissions();
 	}
 
 	private function install()
 	{
 		CLIOutput::writeln('starting phpboost installation');
-		$this->installation->configure_website();
-		$this->installation->create_admin_account();
+		if (!$this->create_phpboost_tables())
+		{
+			return false;
+		}
+		if (!$this->installation->configure_website())
+		{
+			return false;
+		}
+		if (!$this->installation->create_admin_account())
+		{
+			return false;
+		}
 		CLIOutput::writeln('installation successfull');
+		return true;
 	}
 
 	private function chech_php_version()
@@ -194,10 +201,30 @@ class CLIInstallCommand implements CLICommand
 		return true;
 	}
 
-	private function check_database_connection()
+	private function create_phpboost_tables()
 	{
-		$this->installation->validate_database_connection();
-		return true;
+		AppContext::get_cache_service()->clear_cache();
+		try
+		{
+			$this->installation->create_phpboost_tables(DBFactory::MYSQL, $this->db_host, $this->db_port,
+			$this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix);
+			return true;
+		}
+		catch (DBConnectionException $exception)
+		{
+			CLIOutput::writeln('Connection to database failed, check your connection parameters');
+		}
+		catch (UnexistingDatabaseException $exception)
+		{
+			CLIOutput::writeln('Database ' . $this->db_schema .
+				' does not exist and attempt to create it failed. Create it and relaunch the installation');
+		}
+		catch (IOException $exception)
+		{
+			CLIOutput::writeln('Can\'t write database configuration file informations to /kernel/db/config.php. ' .
+				'Check file or parent directory permissions.');
+		}
+		return false;
 	}
 }
 ?>
