@@ -185,7 +185,7 @@ class InstallSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
 			'time' => array('type' => 'date', 'notnull' => 1, 'default' => '0000-00-00'),
-			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'total' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -655,7 +655,12 @@ class InstallSetup extends DefaultModuleSetup
 	
 	private function insert_data()
 	{
+		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_menu_configuration_data();
+		$this->insert_configs_data();
+		$this->insert_ranks_data();
+		$this->insert_member_data();
+		$this->insert_smileys_data();
 	}
 
 	private function insert_menu_configuration_data()
@@ -665,6 +670,281 @@ class InstallSetup extends DefaultModuleSetup
 			'name' => 'default',
 			'match_regex' => '`.*`',
 			'priority' => 1
+		));
+
+	}
+	
+	private function insert_smileys_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 1,
+			'code_smiley' => ':|',
+			'url_smiley' => 'waw.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 2,
+			'code_smiley' => ':siffle',
+			'url_smiley' => 'siffle.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 3,
+			'code_smiley' => ':)',
+			'url_smiley' => 'sourire.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 4,
+			'code_smiley' => ':lol',
+			'url_smiley' => 'rire.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 5,
+			'code_smiley' => ':p',
+			'url_smiley' => 'tirelangue.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 6,
+			'code_smiley' => ':(',
+			'url_smiley' => 'malheureux.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 7,
+			'code_smiley' => ';)',
+			'url_smiley' => 'clindoeil.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 8,
+			'code_smiley' => ':heink',
+			'url_smiley' => 'heink.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 9,
+			'code_smiley' => ':D',
+			'url_smiley' => 'heureux.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 10,
+			'code_smiley' => ':d',
+			'url_smiley' => 'content.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 11,
+			'code_smiley' => ':s',
+			'url_smiley' => 'incertain.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 12,
+			'code_smiley' => ':gne',
+			'url_smiley' => 'pinch.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 13,
+			'code_smiley' => 'top',
+			'url_smiley' => 'top.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 14,
+			'code_smiley' => ':clap',
+			'url_smiley' => 'clap.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 15,
+			'code_smiley' => ':hehe',
+			'url_smiley' => 'hehe.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 16,
+			'code_smiley' => ':@',
+			'url_smiley' => 'angry.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 17,
+			'code_smiley' => ':\'(',
+			'url_smiley' => 'snif.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 18,
+			'code_smiley' => ':nex',
+			'url_smiley' => 'nex.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 19,
+			'code_smiley' => '8-)',
+			'url_smiley' => 'star.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 20,
+			'code_smiley' => '|-)',
+			'url_smiley' => 'nuit.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 21,
+			'code_smiley' => ':berk',
+			'url_smiley' => 'berk.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 22,
+			'code_smiley' => ':gre',
+			'url_smiley' => 'colere.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 23,
+			'code_smiley' => ':love',
+			'url_smiley' => 'love.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 24,
+			'code_smiley' => ':hum',
+			'url_smiley' => 'doute.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 25,
+			'code_smiley' => ':mat',
+			'url_smiley' => 'mat.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 26,
+			'code_smiley' => ':miam',
+			'url_smiley' => 'miam.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 27,
+			'code_smiley' => ':+1',
+			'url_smiley' => 'plus1.gif'
+		));
+		PersistenceContext::get_querier()->insert(self::$smileys_table, array(
+			'idsmiley' => 28,
+			'code_smiley' => ':lu',
+			'url_smiley' => 'lu.gif'
+		));
+
+	}
+	
+	private function insert_ranks_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 1,
+			'name' => $this->messages['install.rank.admin'],
+			'msg' => -2,
+			'icon' => 'rank_admin.png',
+			'special' => 1
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 2,
+			'name' => $this->messages['install.rank.modo'],
+			'msg' => -1,
+			'icon' => 'rank_modo.png',
+			'special' => 1
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 3,
+			'name' => $this->messages['install.rank.inactiv'],
+			'msg' => 0,
+			'icon' => 'rank_0.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 4,
+			'name' => $this->messages['install.rank.fronde'],
+			'msg' => 1,
+			'icon' => 'rank_0.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 5,
+			'name' => $this->messages['install.rank.minigun'],
+			'msg' => 25,
+			'icon' => 'rank_1.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 6,
+			'name' => $this->messages['install.rank.fuzil'],
+			'msg' => 50,
+			'icon' => 'rank_2.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 7,
+			'name' => $this->messages['install.rank.bazooka'],
+			'msg' => 100,
+			'icon' => 'rank_3.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 8,
+			'name' => $this->messages['install.rank.roquette'],
+			'msg' => 250,
+			'icon' => 'rank_4.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 9,
+			'name' => $this->messages['install.rank.mortier'],
+			'msg' => 500,
+			'icon' => 'rank_5.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 10,
+			'name' => $this->messages['install.rank.missile'],
+			'msg' => 1000,
+			'icon' => 'rank_6.png',
+			'special' => 0
+		));
+		PersistenceContext::get_querier()->insert(self::$ranks_table, array(
+			'id' => 11,
+			'name' => $this->messages['install.rank.fusee'],
+			'msg' => 1500,
+			'icon' => 'rank_special.png',
+			'special' => 0
+		));
+
+	}
+	
+	private function insert_member_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$member_table, array(
+
+			'login' => 'login',
+			'level' => 2,
+			'user_aprob' => 1,
+			'user_groups' => '',
+			'user_desc' => '',
+			'user_sign' => ''
+		));
+
+	}
+	
+	private function insert_configs_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$configs_table, array(
+			'id' => 1,
+			'name' => 'config',
+			'value' => ''
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$configs_table, array(
+			'id' => 2,
+			'name' => 'member',
+			'value' => 'a:14:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:169:"Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.";s:12:"msg_register";s:156:"Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d''être poli et courtois dans vos interventions.<br /><br />Merci, l''équipe du site.";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:21:"verif_code_difficulty";i:2;s:17:"delay_unactiv_max";i:20;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:1;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:1;s:10:"avatar_url";s:13:"no_avatar.png";}'
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$configs_table, array(
+			'id' => 3,
+			'name' => 'uploads',
+			'value' => 'a:4:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";i:1;s:15:"auth_extensions";a:48:{i:0;s:3:"jpg";i:1;s:4:"jpeg";i:2;s:3:"bmp";i:3;s:3:"gif";i:4;s:3:"png";i:5;s:3:"tif";i:6;s:3:"svg";i:7;s:3:"ico";i:8;s:3:"rar";i:9;s:3:"zip";i:10;s:2:"gz";i:11;s:3:"txt";i:12;s:3:"doc";i:13;s:4:"docx";i:14;s:3:"pdf";i:15;s:3:"ppt";i:16;s:3:"xls";i:17;s:3:"odt";i:18;s:3:"odp";i:19;s:3:"ods";i:20;s:3:"odg";i:21;s:3:"odc";i:22;s:3:"odf";i:23;s:3:"odb";i:24;s:3:"xcf";i:25;s:3:"flv";i:26;s:3:"mp3";i:27;s:3:"ogg";i:28;s:3:"mpg";i:29;s:3:"mov";i:30;s:3:"swf";i:31;s:3:"wav";i:32;s:3:"wmv";i:33;s:4:"midi";i:34;s:3:"mng";i:35;s:2:"qt";i:36;s:1:"c";i:37;s:1:"h";i:38;s:3:"cpp";i:39;s:4:"java";i:40;s:2:"py";i:41;s:3:"css";i:42;s:4:"html";i:43;s:3:"xml";i:44;s:3:"ttf";i:45;s:3:"tex";i:46;s:3:"rtf";i:47;s:3:"psd";}s:10:"auth_files";s:32:"a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}";}'
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$configs_table, array(
+			'id' => 4,
+			'name' => 'com',
+			'value' => 'a:6:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"com_verif_code";i:1;s:25:"com_verif_code_difficulty";i:2;s:14:"forbidden_tags";a:0:{}s:8:"max_link";i:2;}'
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$configs_table, array(
+			'id' => 5,
+			'name' => 'writingpad',
+			'value' => ''
 		));
 
 	}
