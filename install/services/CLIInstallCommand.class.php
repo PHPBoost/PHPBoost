@@ -45,27 +45,49 @@ class CLIInstallCommand implements CLICommand
 	private $user_email = 'admin@mail.com';
 
 	/**
+	 * @var InstallationServices
+	 */
+	private $installation;
+
+	/**
+	 * @var ServerConfiguration
+	 */
+	private $server_configuration;
+
+	/**
 	 * @var CLIArgumentsReader
 	 */
 	private $arg_reader;
 
-    public function short_description()
-    {
-        return 'install phpboost development environment';
-    }
+	public function __construct()
+	{
+		$this->installation = new InstallationServices();
+		$this->server_configuration = new ServerConfiguration();
+	}
 
-    public function help(array $args)
-    {
-    	CLIOutput::writeln('this is the phpboost install command line manual...');
-    }
+	public function short_description()
+	{
+		return 'install phpboost development environment';
+	}
+
+	public function help(array $args)
+	{
+		CLIOutput::writeln('this is the phpboost install command line manual...');
+	}
 
 	public function execute(array $args)
 	{
 		$this->arg_reader = new CLIArgumentsReader($args);
 		$this->check_parameters();
 		$this->show_parameters();
-		$this->check_env();
-		$this->install();
+		if ($this->check_env())
+		{
+			$this->install();
+		}
+		else
+		{
+			CLIOutput::writeln('installation failed');
+		}
 	}
 
 	private function check_parameters()
@@ -97,16 +119,6 @@ class CLIInstallCommand implements CLICommand
 		$this->user_email = $this->arg_reader->get('--u-email', $this->user_email);
 	}
 
-	private function check_env()
-	{
-		CLIOutput::writeln('check environment');
-	}
-
-	private function install()
-	{
-		CLIOutput::writeln('starting phpboost installation');
-	}
-
 	private function show_parameters()
 	{
 		$this->show_parameter_section('database');
@@ -128,12 +140,6 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--u-login', $this->user_login);
 		$this->show_parameter('--u-pwd', $this->user_password);
 		$this->show_parameter('--u-email', $this->user_email);
-
-		$installation = new InstallationServices();
-		$installation->validate_server_configuration();
-		$installation->validate_database_connection();
-		$installation->configure_website();
-		$installation->create_admin_account();
 	}
 
 	private function show_parameter($name, $value)
@@ -144,6 +150,54 @@ class CLIInstallCommand implements CLICommand
 	private function show_parameter_section($name)
 	{
 		CLIOutput::writeln(strtoupper($name));
+	}
+
+	private function check_env()
+	{
+		CLIOutput::writeln('check environment');
+		return $this->chech_php_version() && $this->check_folders_permissions() && $this->check_database_connection();
+	}
+
+	private function install()
+	{
+		CLIOutput::writeln('starting phpboost installation');
+		$this->installation->configure_website();
+		$this->installation->create_admin_account();
+		CLIOutput::writeln('installation successfull');
+	}
+
+	private function chech_php_version()
+	{
+		if (!$this->server_configuration->is_php_compatible())
+		{
+			CLIOutput::writeln('PHP version (' . ServerConfiguration::get_phpversion() . ') is not compatible with PHPBoost.');
+			CLIOutput::writeln('PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed!');
+			return false;
+
+		}
+		return true;
+	}
+
+	private function check_folders_permissions()
+	{
+		if (!PHPBoostFoldersPermissions::validate())
+		{
+			foreach (PHPBoostFoldersPermissions::get_permissions() as $folder => $is_writable)
+			{
+				if (!$is_writable)
+				{
+					CLIOutput::writeln('Folder ' . $folder . ' is not writable. Please change its rights');
+				}
+			}
+			return false;
+		}
+		return true;
+	}
+
+	private function check_database_connection()
+	{
+		$this->installation->validate_database_connection();
+		return true;
 	}
 }
 ?>

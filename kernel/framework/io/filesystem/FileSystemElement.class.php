@@ -72,7 +72,12 @@ abstract class FileSystemElement
 	 */
 	public function get_path_from_root()
 	{
-		return Path::get_path_from_root($this->path);
+		$path_from_root = Path::get_path_from_root($this->path);
+		if (empty($path_from_root))
+		{
+			return $this->path;
+		}
+		return $path_from_root;
 	}
 
 	/**
@@ -91,11 +96,24 @@ abstract class FileSystemElement
 
 	/**
 	 * @desc Returns true if the file or the folder is writable.
+	 * @param bool $force_chmod If true, then, chmod will be forced to 777 if not writable.
 	 * @return true if the file or the folder is writable.
 	 */
-	public function is_writable()
+	public function is_writable($force_chmod = false)
 	{
-		return @is_writable($this->path);
+		if (!$this->exists())
+		{
+			return false;
+		}
+		else if (@is_writable($this->path))
+		{
+			return true;
+		}
+		else if ($force_chmod)
+		{
+			return $folder->change_chmod(0777) && @is_writable($this->path);
+		}
+		return false;
 	}
 
 	/**

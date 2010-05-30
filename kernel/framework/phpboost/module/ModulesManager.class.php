@@ -149,11 +149,7 @@ class ModulesManager
 		$module = new Module($module_identifier, $enable_module, $authorizations);
 		$configuration = $module->get_configuration();
 
-		$phpversion = phpversion();
-		if (strpos(phpversion(), '-') !== FALSE)
-		{
-			$phpversion = substr($phpversion, 0, strpos(phpversion(), '-'));
-		}
+		$phpversion = ServerConfiguration::get_phpversion();
 		if (version_compare($phpversion, $configuration->get_php_version(), 'lt'))
 		{
 			return PHP_VERSION_CONFLICT;

@@ -28,6 +28,7 @@
 class InstallationServices
 {
 	private static $token_file_content = '1';
+	private static $min_php_version = '5.1.2';
 
 	/**
 	 * @var File
@@ -37,11 +38,6 @@ class InstallationServices
 	public function __construct()
 	{
 		$this->token = new File(PATH_TO_ROOT . '/.install_token');
-	}
-
-	public function validate_server_configuration()
-	{
-		return PHPBoostFoldersPermissions::validate_server_configuration();
 	}
 
 	public function validate_database_connection()

@@ -91,7 +91,7 @@ $summerization =
 
 SERVER CONFIGURATION-----------------------------------------------------------
 
-php version              : " . phpversion() . "
+php version              : " . ServerConfiguration::get_phpversion() . "
 dbms version             : " . $Sql->get_dbms_version() . "
 gd library               : " . (int)@extension_loaded('gd') . "
 url rewriting            : " . (function_exists('apache_get_modules') ? (int)!empty($temp_var[5]) : "?") . "
@@ -119,7 +119,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 " . $directories_summerization;
 
 $template->assign_vars(array(
-	'PHP_VERSION' => phpversion(),
+	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
 	'DBMS_VERSION' => $Sql->get_dbms_version(),
 	'C_SERVER_GD_LIBRARY' => @extension_loaded('gd'),
 	'C_URL_REWRITING_KNOWN' => function_exists('apache_get_modules'),

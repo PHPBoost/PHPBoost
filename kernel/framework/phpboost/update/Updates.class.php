@@ -58,7 +58,7 @@ class Updates
 	*/
     function _load_apps($checks = CHECK_ALL_UPDATES)
     {
-        if (phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             global $CONFIG;
 
@@ -102,7 +102,7 @@ class Updates
 	*/
     function _load_repositories()
     {
-        if (phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {
@@ -118,7 +118,7 @@ class Updates
 	*/
     function _check_repositories()
     {
-        if (phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {

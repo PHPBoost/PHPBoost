@@ -184,7 +184,7 @@ else
 	
 	$updates_availables = 0;
 
-	if (phpversion() > PHP_MIN_VERSION_UPDATES)
+	if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
 	{
 		// Retrieves all the update alerts from the database
 		
