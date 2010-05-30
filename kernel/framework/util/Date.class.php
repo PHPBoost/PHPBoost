@@ -489,5 +489,10 @@ class Date
 	{
 		return $this->timestamp + self::compute_server_user_difference($timezone) * 3600;
 	}
+	
+	public static function set_default_timezone()
+	{
+		date_default_timezone_set(date_default_timezone_get());
+	}
 }
 ?>
