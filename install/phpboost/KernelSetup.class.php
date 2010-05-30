@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             InstallSetup.class.php
+ *                             KernelSetup.class.php
  *                            -------------------
  *   begin                : May 29, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,10 +25,16 @@
  *
  ###################################################*/
 
-class InstallSetup extends DefaultModuleSetup
+class KernelSetup
 {
-	private static $sql_dbms;
-	private static $sql_querier;
+	/**
+	 * @var DBMSUtils
+	 */
+	private static $db_utils;
+	/**
+	 * @var DBQuerier
+	 */
+	private static $db_querier;
 	private static $com_table;
 	private static $visit_counter_table;
 	private static $configs_table;
@@ -54,14 +60,12 @@ class InstallSetup extends DefaultModuleSetup
 	private static $upload_table;
 	private static $upload_cat_table;
 	private static $verif_code_table;
-	
-	
 
 	public static function __static()
 	{
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
-		
+
 		self::$com_table = PREFIX . 'com';
 		self::$visit_counter_table = PREFIX . 'visit_counter';
 		self::$configs_table = PREFIX . 'configs';
@@ -87,7 +91,7 @@ class InstallSetup extends DefaultModuleSetup
 		self::$upload_table = PREFIX . 'upload';
 		self::$upload_cat_table = PREFIX . 'upload_cat';
 		self::$verif_code_table = PREFIX . 'verif_code';
-		
+
 	}
 
 	public function install()
@@ -97,20 +101,15 @@ class InstallSetup extends DefaultModuleSetup
 		$this->insert_data();
 	}
 
-	public function uninstall()
-	{
-		$this->drop_tables();
-	}
-
 	private function drop_tables()
 	{
 		self::$db_utils->drop(array(
-			self::$com_table, 
-			self::$visit_counter_table, 
-			self::$configs_table, 
-			self::$events_table, 
-			self::$errors_404_table, 
-			self::$group_table, 
+			self::$com_table,
+			self::$visit_counter_table,
+			self::$configs_table,
+			self::$events_table,
+			self::$errors_404_table,
+			self::$group_table,
 			self::$lang_table,
 			self::$member_table,
 			self::$member_extend_table,
@@ -139,7 +138,7 @@ class InstallSetup extends DefaultModuleSetup
 		$this->create_visit_counter_table();
 		$this->create_configs_table();
 		$this->create_events_table();
-		$this->errors_404_table();
+		$this->create_errors_404_table();
 		$this->create_group_table();
 		$this->create_lang_table();
 		$this->create_member_table();
@@ -183,13 +182,13 @@ class InstallSetup extends DefaultModuleSetup
 		self::$db_utils->create_table(self::$com_table, $fields, $options);
 	}
 
-	
+
 	private function create_visit_counter_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'time' => array('type' => 'date', 'notnull' => 1, 'default' => '0000-00-00'),
+			'time' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
 			'total' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -199,7 +198,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$visit_counter_table, $fields, $options);
 	}
-	
+
 	private function create_configs_table()
 	{
 		$fields = array(
@@ -214,7 +213,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$configs_table, $fields, $options);
 	}
-	
+
 	private function create_events_table()
 	{
 		$fields = array(
@@ -224,8 +223,8 @@ class InstallSetup extends DefaultModuleSetup
 			'fixing_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'module' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
 			'current_status' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => "''"),
-			'fixing_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => "''"),
+			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'fixing_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'poster_id' => array('type' => 'integer', 'length' => 11),
 			'fixer_id' => array('type' => 'integer', 'length' => 11),
@@ -236,7 +235,7 @@ class InstallSetup extends DefaultModuleSetup
 			'priority' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 3),
 			'nbr_com' => array('type' => 'integer', 'length' => 10, 'default' => 0),
 			'lock_com' => array('type' => 'boolean', 'length' => 1, 'default' => 0)
-		  
+
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -248,7 +247,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$events_table, $fields, $options);
 	}
-	
+
 	private function create_errors_404_table()
 	{
 		$fields = array(
@@ -265,7 +264,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$errors_404_table, $fields, $options);
 	}
-	
+
 	private function create_group_table()
 	{
 		$fields = array(
@@ -281,7 +280,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
 	}
-	
+
 	private function create_lang_table()
 	{
 		$fields = array(
@@ -291,11 +290,11 @@ class InstallSetup extends DefaultModuleSetup
 			'secure' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
-			'primary' => array('user_id'),
+			'primary' => array('id'),
 		);
 		self::$db_utils->create_table(self::$lang_table, $fields, $options);
 	}
-	
+
 	private function create_member_table()
 	{
 		$fields = array(
@@ -321,7 +320,7 @@ class InstallSetup extends DefaultModuleSetup
 			'user_hobbies' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'user_desc' => array('type' => 'text', 'length' => 65000),
 			'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => '0000-00-00'),
+			'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
 			'user_sign' => array('type' => 'text', 'length' => 65000),
 			'user_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'user_warning' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
@@ -329,12 +328,12 @@ class InstallSetup extends DefaultModuleSetup
 			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
 			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
-			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),	
+			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
 			'user_ban' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 
 		);
-		
+
 		$options = array(
 			'primary' => array('user_id'),
 			'indexes' => array(
@@ -343,19 +342,19 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$member_table, $fields, $options);
 	}
-	
+
 	private function create_member_extend_table()
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 		);
-		
+
 		$options = array(
 			'primary' => array('user_id'),
 		);
 		self::$db_utils->create_table(self::$member_extend_table, $fields, $options);
 	}
-	
+
 	private function create_member_extend_cat_table()
 	{
 		$fields = array(
@@ -377,7 +376,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$member_extend_cat_table, $fields, $options);
 	}
-	
+
 	private function create_menus_table()
 	{
 		$fields = array(
@@ -398,7 +397,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$menus_table, $fields, $options);
 	}
-	
+
 	private function create_menu_configuration_table()
 	{
 		$fields = array(
@@ -407,7 +406,7 @@ class InstallSetup extends DefaultModuleSetup
 			'match_regex' => array('type' => 'text', 'length' => 65000),
 			'priority' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
-		
+
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
@@ -415,7 +414,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$menu_configuration_table, $fields, $options);
 	}
-	
+
 	private function create_pm_msg_table()
 	{
 		$fields = array(
@@ -426,7 +425,7 @@ class InstallSetup extends DefaultModuleSetup
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'view_status' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
-		
+
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
@@ -434,7 +433,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$pm_msg_table, $fields, $options);
 	}
-	
+
 	private function create_pm_topic_table()
 	{
 		$fields = array(
@@ -457,7 +456,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 		self::$db_utils->create_table(self::$pm_topic_table, $fields, $options);
 	}
-	
+
 	private function create_ranks_table()
 	{
 		$fields = array(
@@ -472,7 +471,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$ranks_table, $fields, $options);
 	}
-	
+
 	private function create_search_index_table()
 	{
 		$fields = array(
@@ -493,7 +492,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$search_index_table, $fields, $options);
 	}
-	
+
 	private function create_search_results_table()
 	{
 		$fields = array(
@@ -513,7 +512,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$search_results_table, $fields, $options);
 	}
-	
+
 	private function create_sessions_table()
 	{
 		$fields = array(
@@ -539,7 +538,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);
 	}
-	
+
 	private function create_smileys_table()
 	{
 		$fields = array(
@@ -552,7 +551,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$smileys_table, $fields, $options);
 	}
-	
+
 	private function create_stats_table()
 	{
 		$fields = array(
@@ -572,7 +571,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$stats_table, $fields, $options);
 	}
-	
+
 	private function create_stats_referer_table()
 	{
 		$fields = array(
@@ -594,7 +593,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$stats_referer_table, $fields, $options);
 	}
-	
+
 	private function create_themes_table()
 	{
 		$fields = array(
@@ -610,7 +609,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$themes_table, $fields, $options);
 	}
-	
+
 	private function create_upload_table()
 	{
 		$fields = array(
@@ -628,7 +627,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$upload_table, $fields, $options);
 	}
-	
+
 	private function create_upload_cat_table()
 	{
 		$fields = array(
@@ -642,13 +641,13 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$upload_cat_table, $fields, $options);
 	}
-	
+
 	private function create_verif_code_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_contents' => array('type' => 'integer', 'length' => 15, 'notnull' => 1, 'default' => "''"),
-			'code' => array('type' => 'integer', 'length' => 20, 'notnull' => 1, 'default' => "''"),
+			'id_contents' => array('type' => 'integer', 'length' => 15, 'notnull' => 1, 'default' => 0),
+			'code' => array('type' => 'integer', 'length' => 20, 'notnull' => 1, 'default' => 0),
 			'difficulty' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -657,7 +656,7 @@ class InstallSetup extends DefaultModuleSetup
 		);
 		self::$db_utils->create_table(self::$verif_code_table, $fields, $options);
 	}
-	
+
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'install');
@@ -678,7 +677,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 
 	}
-	
+
 	private function insert_smileys_data()
 	{
 		self::$db_querier->insert(self::$smileys_table, array(
@@ -823,7 +822,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 
 	}
-	
+
 	private function insert_ranks_data()
 	{
 		self::$db_querier->insert(self::$ranks_table, array(
@@ -905,7 +904,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 
 	}
-	
+
 	private function insert_member_data()
 	{
 		self::$db_querier->insert(self::$member_table, array(
@@ -919,7 +918,7 @@ class InstallSetup extends DefaultModuleSetup
 		));
 
 	}
-	
+
 	private function insert_configs_data()
 	{
 		self::$db_querier->insert(self::$configs_table, array(
@@ -927,31 +926,30 @@ class InstallSetup extends DefaultModuleSetup
 			'name' => 'config',
 			'value' => ''
 		));
-		
+
 		self::$db_querier->insert(self::$configs_table, array(
 			'id' => 2,
 			'name' => 'member',
 			'value' => 'a:14:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:169:"Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.";s:12:"msg_register";s:156:"Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br /><br />Merci, l\'équipe du site.";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:21:"verif_code_difficulty";i:2;s:17:"delay_unactiv_max";i:20;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:1;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:1;s:10:"avatar_url";s:13:"no_avatar.png";}'
 		));
-		
+
 		self::$db_querier->insert(self::$configs_table, array(
 			'id' => 3,
 			'name' => 'uploads',
 			'value' => 'a:4:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";i:1;s:15:"auth_extensions";a:48:{i:0;s:3:"jpg";i:1;s:4:"jpeg";i:2;s:3:"bmp";i:3;s:3:"gif";i:4;s:3:"png";i:5;s:3:"tif";i:6;s:3:"svg";i:7;s:3:"ico";i:8;s:3:"rar";i:9;s:3:"zip";i:10;s:2:"gz";i:11;s:3:"txt";i:12;s:3:"doc";i:13;s:4:"docx";i:14;s:3:"pdf";i:15;s:3:"ppt";i:16;s:3:"xls";i:17;s:3:"odt";i:18;s:3:"odp";i:19;s:3:"ods";i:20;s:3:"odg";i:21;s:3:"odc";i:22;s:3:"odf";i:23;s:3:"odb";i:24;s:3:"xcf";i:25;s:3:"flv";i:26;s:3:"mp3";i:27;s:3:"ogg";i:28;s:3:"mpg";i:29;s:3:"mov";i:30;s:3:"swf";i:31;s:3:"wav";i:32;s:3:"wmv";i:33;s:4:"midi";i:34;s:3:"mng";i:35;s:2:"qt";i:36;s:1:"c";i:37;s:1:"h";i:38;s:3:"cpp";i:39;s:4:"java";i:40;s:2:"py";i:41;s:3:"css";i:42;s:4:"html";i:43;s:3:"xml";i:44;s:3:"ttf";i:45;s:3:"tex";i:46;s:3:"rtf";i:47;s:3:"psd";}s:10:"auth_files";s:32:"a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}";}'
 		));
-		
+
 		self::$db_querier->insert(self::$configs_table, array(
 			'id' => 4,
 			'name' => 'com',
 			'value' => 'a:6:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"com_verif_code";i:1;s:25:"com_verif_code_difficulty";i:2;s:14:"forbidden_tags";a:0:{}s:8:"max_link";i:2;}'
 		));
-		
+
 		self::$db_querier->insert(self::$configs_table, array(
 			'id' => 5,
 			'name' => 'writingpad',
 			'value' => ''
 		));
-
 	}
 }
 
