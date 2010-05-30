@@ -8,7 +8,6 @@
 - Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)
 - Refonte de l'installateur : mettre un fichier /cache/.install indiquant que l'installation est en cours à l'étape 4 et le supprimer à la fin. Les étapes 5 à 7 ne pourront être exécutées que si il y a ce fichier.
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
-- Corriger l'export BDD qui fait un out of memory si la BDD est trop grosse (vider les buffers de string de temps en temps)
 - Balises Youtube, Dailymotion
 
 ------------------------------------ MODULES -----------------------------------
