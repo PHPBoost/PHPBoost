@@ -110,14 +110,6 @@ class MenuService
 		}
 	}
 
-	private static function get_next_position($block)
-	{
-		$column = 'MAX(position) + 1 AS newPosition';
-		$condition = 'WHERE block=:block AND enabled=1';
-		$parameters = array('block' => $block);
-		return (int) self::$querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
-	}
-
 	/**
 	 * @desc save a Menu in the database
 	 * @param Menu $menu The Menu to save
@@ -698,8 +690,13 @@ class MenuService
 		return new SQLFragment($condition, $parameters);
 	}
 
-
-	## Private ##
+	private static function get_next_position($block)
+	{
+		$column = 'MAX(position) + 1 AS newPosition';
+		$condition = 'WHERE block=:block AND enabled=1';
+		$parameters = array('block' => $block);
+		return (int) self::$querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
+	}
 
 	/**
 	 * @access private
