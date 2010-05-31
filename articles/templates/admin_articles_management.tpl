@@ -84,7 +84,7 @@
 				var theme = '{THEME}';
 			-->
 			</script>
-			<script type="text/javascript" src="../kernel/lib/js/calendar.js"></script>
+			<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
 			<script type="text/javascript">
 			<!--
 			function check_form()

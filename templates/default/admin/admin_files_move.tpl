@@ -94,7 +94,7 @@
 									<img src="../templates/{THEME}/images/right.png" alt="" />
 								</td>
 								<td class="row1">
-									<script type="text/javascript" src="../kernel/lib/js/upload.js">
+									<script type="text/javascript" src="../kernel/lib/js/phpboost/upload.js">
 									</script>
 									<script type="text/javascript">
 									<!--

@@ -1,5 +1,5 @@
 	{HEADER}
-	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 	<script type="text/javascript">
 	<!--
 	function insert_popup(code) 
