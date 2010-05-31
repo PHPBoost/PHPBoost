@@ -36,7 +36,6 @@
  */
 function strhash($str, $salt = true)
 {
-
 	if ($salt === true)
 	{   // Default salt
 		$str = md5($str) . $str;
