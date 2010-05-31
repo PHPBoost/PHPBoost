@@ -113,7 +113,7 @@ class MenuService
 	private static function get_next_position($block)
 	{
 		$column = 'MAX(position) + 1 AS newPosition';
-		$condition = 'WHERE block=:block';
+		$condition = 'WHERE block=:block AND enabled=1';
 		$parameters = array('block' => $block);
 		return (int) self::$querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
 	}
@@ -169,9 +169,6 @@ class MenuService
 		MenuService::disable($menu);
 		self::$querier->delete(DB_TABLE_MENUS, 'WHERE id=:id', array('id' => $menu->get_id()));
 	}
-
-
-	## Menu state ##
 
 	/**
 	 * @desc Enable a menu
@@ -235,51 +232,31 @@ class MenuService
 	 */
 	public static function change_position($menu, $direction = self::MOVE_UP)
 	{
-		global $Sql;
-
 		$block_position = $menu->get_block_position();
 		$new_block_position = $block_position;
 		$update_query = '';
 
+		$parameters = array('block' => $menu->get_block());
 		if ($direction > 0)
 		{   // Moving the menu down
-			$max_position_query = "SELECT MAX(position) FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1'";
-			$max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
-			// Getting the max diff
-			if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
-			{
-				$new_block_position = $max_position;
-			}
-
-			$update_query = "
-                UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
-                WHERE
-                    block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
-            ";
+			$max_position = self::get_next_position($menu->get_block()) - 1;
+			$new_block_position = ($menu->get_block_position() + $direction);
+			$new_block_position = min(array($new_block_position, $max_position));
+			$parameters['min_position'] = $block_position + 1;
+			$parameters['max_position'] = $new_block_position;
 		}
 		else if ($direction < 0)
 		{   // Moving the menu up
-
-			// Getting the max diff
-			if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
-			{
-				$new_block_position = 0;
-			}
-
-			// Updating other menus
-			$update_query = "
-                UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
-                WHERE
-                    block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
-            ";
+			$new_block_position = $menu->get_block_position() + $direction;
+			$new_block_position = max(array($new_block_position, 0));
+			$parameters['min_position'] = $new_block_position;
+			$parameters['max_position'] = $block_position - 1;
 		}
 
 		if ($block_position != $new_block_position)
 		{   // Updating other menus
-			$Sql->query_inject($update_query, __LINE__, __FILE__);
-
+			self::$querier->inject('UPDATE ' . DB_TABLE_MENUS . ' SET position=position - 1
+				WHERE block=:block AND position BETWEEN :min_position AND :max_position', $parameters);
 			// Updating the current menu
 			$menu->set_block_position($new_block_position);
 			MenuService::save($menu);
@@ -293,7 +270,6 @@ class MenuService
 	 */
 	public static function enable_all($enable = true)
 	{
-		global $Sql;
 		$menus = MenuService::get_menu_list();
 		foreach($menus as $menu)
 		{
@@ -352,9 +328,12 @@ class MenuService
 		);
 
 		if ($return_string)
-		return $cache_str;
+		{
+			return $cache_str;
+		}
 
-		global $Cache;
+		// TODO replace this old cache system.
+		$Cache = new Cache();
 		$Cache->write('menus', $cache_str);
 		return '';
 
@@ -399,12 +378,13 @@ class MenuService
 	 */
 	public static function delete_mini_menu($menu)
 	{
-		global $Sql;
-		$query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(MiniMenu::MINI_MENU__CLASS) . "' AND
-            title LIKE '" . strtolower(TextHelper::strprotect($menu))  . "/%';";
-		$result = $Sql->query_while($query, __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		$conditions = 'WHERE class=:class AND title LIKE :like_title';
+		$parameters = array(
+			'class' => strtolower(MiniMenu::MINI_MENU__CLASS),
+			'like_title' => strtolower($menu) . '/%'
+		);
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
+		foreach ($results as $row)
 		{
 			MenuService::delete(MenuService::initialize($row));
 		}
@@ -416,9 +396,6 @@ class MenuService
 	 */
 	public static function update_mini_menus_list($update_cache = true)
 	{
-		global $Sql;
-
-
 		$m_menus_directory = new Folder(PATH_TO_ROOT . '/menus');
 		$m_menus_list = $m_menus_directory->get_folders();
 
@@ -429,13 +406,12 @@ class MenuService
 		{
 			$menus_names[] = $menu->get_name();
 		}
-
-		$query = "SELECT title FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(MiniMenu::MINI_MENU__CLASS) . "';";
-		$result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
-		while ($menu = $Sql->fetch_assoc($result))
+		$conditions = 'WHERE class=:class';
+		$parameters = array('class' => strtolower(MiniMenu::MINI_MENU__CLASS));
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('title'), $conditions, $parameters);
+		foreach ($results as $row)
 		{
-			$menu_folder = substr($menu['title'], 0, strpos($menu['title'], '/'));
+			$menu_folder = substr($row['title'], 0, strpos($row['title'], '/'));
 			if (!in_array($menu_folder, $processed_folders))
 			{
 				if (!in_array($menu_folder, $menus_names))
@@ -444,12 +420,11 @@ class MenuService
 				}
 				else
 				{
-					$installed_menus_names[] = $menu['title'];
+					$installed_menus_names[] = $row['title'];
 				}
 				$processed_folders[] = $menu_folder;
 			}
 		}
-		$Sql->query_close($result);
 
 		foreach ($m_menus_list as $menu)
 		{
@@ -519,12 +494,13 @@ class MenuService
 	 */
 	public static function delete_mini_module($module)
 	{
-		global $Sql;
-		$query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
-            class='" . strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS) . "' AND
-            title LIKE '" . strtolower(TextHelper::strprotect($module))  . "/%';";
-		$result = $Sql->query_while($query, __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		$conditions = 'WHERE class=:class AND title LIKE :like_title';
+		$parameters = array(
+			'class' => strtolower(MiniMenu::MODULE_MINI_MENU__CLASS),
+			'like_title' => strtolower($module) . '/%'
+		);
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
+		foreach ($results as $row)
 		{
 			MenuService::delete(MenuService::initialize($row));
 		}
@@ -540,8 +516,6 @@ class MenuService
 
 		// Retrieves the mini modules already installed
 		$installed_minimodules = array();
-		$query = "SELECT id, title FROM " . DB_TABLE_MENUS . " WHERE class='" . strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS) . "'";
-
 		$modules = array();
 		// Build the availables modules list
 		foreach (ModulesManager::get_installed_modules_map() as $module)
@@ -552,8 +526,10 @@ class MenuService
 			}
 		}
 
-		$result = $Sql->query_while ($query, __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		$conditions = 'WHERE class=:class';
+		$parameters = array('class' => strtolower(MiniMenu::MODULE_MINI_MENU__CLASS));
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title'), $conditions, $parameters);
+		foreach ($results as $row)
 		{
 			// Build the module name from the mini module file_path
 			$title = explode('/', strtolower($row['title']) , 2);
@@ -572,7 +548,6 @@ class MenuService
 				MenuService::delete($row['id']);
 			}
 		}
-		$Sql->query_close($result);
 
 		$new_modules = array_diff($modules, $installed_minimodules);
 		foreach ($new_modules as $module)
