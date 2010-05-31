@@ -36,6 +36,11 @@ class InstallationServices
 	 */
 	private $token;
 
+	/**
+	 * @var DBQuerier (Do not instanciate this until DBConnection is OK).
+	 */
+	private $querier;
+
 	public function __construct()
 	{
 		$this->token = new File(PATH_TO_ROOT . '/.install_token');
@@ -132,17 +137,17 @@ class InstallationServices
 
 	private function save_configuration($config, $locale)
 	{
-		$querier = PersistenceContext::get_querier();
-		$querier->inject("UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'", array(
+		$this->querier = PersistenceContext::get_querier();
+		$this->querier->inject("UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'", array(
 			'config' => serialize($config)));
-		$querier->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
+		$this->querier->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
 			'config_lang' => $config['lang']));
 	}
 
 	private function configure_theme($theme, $locale)
 	{
 		$info_theme = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $locale);
-		PersistenceContext::get_querier()->inject(
+		$this->querier->inject(
 			"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
 			VALUES (:theme, 1, -1, :left_column, :right_column)", array(
 				'theme' => $theme,
@@ -178,9 +183,76 @@ class InstallationServices
 		AppContext::get_cache_service()->clear_phpboost_cache();
 	}
 
-	public function create_admin_account()
+	public function create_admin_account($login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
+
+		global $CONFIG;
+		$Cache = new Cache();
+		$Cache->load('config');
+
+		$columns = array(
+			'login' => $login,
+			'password' => strhash($password),
+			'level' => 2,
+			'user_mail' => $email,
+			'user_lang' => $CONFIG['lang'],
+			'user_theme' => $CONFIG['theme'],
+			'user_show_mail' => 1,
+			'timestamp' => time(),
+			'user_aprob' => 1,
+			'user_timezone' => $CONFIG['timezone']
+		);
+
+		//On enregistre le membre (l'entrée était au préalable créée)
+		$this->querier->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
+
+		//Génération de la clé d'activation, en cas de verrouillage de l'administration
+		$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
+		$CONFIG['unlock_admin'] = strhash($unlock_admin);
+
+		$mail_config = MailServiceConfig::load();
+		$mail_config->set_administrators_mails(array($email));
+		$mail_config->set_default_mail_sender($email);
+		MailServiceConfig::save();
+
+		$this->querier->update(DB_TABLE_CONFIGS, array('value' => serialize($CONFIG)), "WHERE name='config'");
+
+		$Cache->Generate_file('config');
+
+		//Configuration des membres
+		$user_account_config = UserAccountsConfig::load();
+		$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
+
+		UserAccountsConfig::save();
+
+		//On envoie un mail à l'administrateur
+		$LANG['admin'] = '';
+
+		$mail = new Mail();
+
+		//Paramètres du mail
+		$mail->set_sender($email, 'admin');
+		$mail->add_recipient($email);
+		$mail->set_subject($LANG['admin_mail_object']);
+		$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
+
+		//On envoie le mail
+		AppContext::get_mail_service()->try_to_send($mail);
+
+		//On connecte directement l'administrateur si il l'a demandé
+		if ($create_session)
+		{
+
+			$Session = new Session();
+
+			//Remise à zéro du compteur d'essais.
+			$this->querier->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
+			//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
+			$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
+		}
+
+		$Cache->generate_file('stats');
 
 		$this->delete_installation_token();
 		return true;
