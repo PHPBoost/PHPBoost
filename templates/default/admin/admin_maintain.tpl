@@ -3,7 +3,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/calendar.js"></script>
 		
 		<div id="admin_quick_menu">
 			<ul>

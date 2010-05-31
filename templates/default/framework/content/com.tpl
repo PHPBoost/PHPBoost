@@ -21,9 +21,9 @@
 	</script>
 	# IF C_BBCODE_TINYMCE_MODE # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #
 	
-	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
-	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
-	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
 </head>
 
 <body>
