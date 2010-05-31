@@ -16,7 +16,7 @@
 		-->
 		</script> 
 		# IF C_JS_NOTE #
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/note.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/note.js"></script>
 		# ENDIF #
 		
 		<form action="" method="post" class="text_small">

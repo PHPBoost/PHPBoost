@@ -152,7 +152,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/lib/js/calendar.js"></script>
+		<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
 		<form action="member{U_USER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL_EDIT}</legend>

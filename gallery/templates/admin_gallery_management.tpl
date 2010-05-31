@@ -1,5 +1,5 @@
 		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--
 		function Confirm_file() {
