@@ -82,13 +82,13 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
 				{
-					import('/kernel/lib/pcl/pcltar', LIB_IMPORT);
+					import('/kernel/lib/php/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../lang/'))
 						$error = $Upload->get_error();
 				}
 				elseif ($Upload->get_extension() == 'zip')
 				{
-					import('/kernel/lib/pcl/pclzip', LIB_IMPORT);
+					import('/kernel/lib/php/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->get_error();
