@@ -136,7 +136,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/calendar.js"></script>
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
 		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">

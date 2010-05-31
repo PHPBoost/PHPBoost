@@ -7,8 +7,8 @@
 # ENDIF #
 
 # IF C_JS_NOT_ALREADY_INCLUDED # 
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/validator.js"></script>
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/form/form.js"></script>  
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/form/validator.js"></script>
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/form/form.js"></script>  
 # ENDIF #
 
 <script type="text/javascript">

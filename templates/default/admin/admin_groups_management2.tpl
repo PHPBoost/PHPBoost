@@ -1,4 +1,4 @@
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/bbcode.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form_add_mbr(){
