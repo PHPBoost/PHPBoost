@@ -32,7 +32,7 @@
  * @desc This class is a highlighter for the PHPBoost BBCode language.
  * It supplies the highlighted code written in XHTML.
  */
-class BBCodeHighlighter implements FormattingParser
+class BBCodeHighlighter extends AbstractParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;

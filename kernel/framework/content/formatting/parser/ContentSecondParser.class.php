@@ -69,9 +69,13 @@ class ContentSecondParser extends AbstractParser
 		//Balise latex.
 		if (strpos($this->content, '[[MATH]]') !== false)
 		{
-			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php';
-			require_once PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.class.php';
-			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
+			$server_config = new ServerConfiguration();
+			if ($server_config->has_gd_libray())
+			{
+				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.php';
+				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.class.php';
+				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
+			}
 		}
 		
 		$this->parse_feed_tag();
@@ -88,7 +92,7 @@ class ContentSecondParser extends AbstractParser
 	{
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
-            '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
+            '<object type="application/x-shockwave-flash" data="/kernel/lib/flash/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
@@ -275,10 +279,10 @@ class ContentSecondParser extends AbstractParser
 	private static function process_sound_tag($matches)
 	{
 		//Balise son
-		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
+		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
          		<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
-                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" />
+                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
                 <param name="menu" value="false" />
                 <param name="quality" value="high" />
                 <param name="scalemode" value="noborder" />
