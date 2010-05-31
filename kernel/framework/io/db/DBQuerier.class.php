@@ -120,11 +120,12 @@ class DBQuerier implements SQLQuerier
 	public function update($table_name, array $columns, $condition, array $parameters = array())
 	{
 		$columns_names = array_keys($columns);
-		foreach (array_keys($columns) as $column)
+		$columns_definition = array();
+		foreach ($columns_names as $column)
 		{
-			$columns[] = $column . '=:' . $column;
+			$columns_definition[] = $column . '=:' . $column;
 		}
-		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
+		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns_definition) .
             ' ' . $condition . ';';
 		return $this->querier->inject($query, array_merge($parameters, $columns));
 	}

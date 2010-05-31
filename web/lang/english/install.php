@@ -1,10 +1,11 @@
 <?php
+
 /*##################################################
  *                              install.php
  *                            -------------------
- *   begin                : May 28, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : January 17, 2010
+ *   copyright            : (C) 2010 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,18 +26,17 @@
  *
  ###################################################*/
 
-
  ####################################################
-#                     French                        #
+ #                    French                        #
  ####################################################
 
 $lang = array(
-    'default.category.name' => 'Cat&eacute;gorie de test',
-	'default.category.subname' => 'Cat&eacute;gorie de test',
-    'default.board.name' => 'Forum de test',
-	'default.board.subname' => 'Forum de test',
-	'sample.thread.title' => 'Test',
-	'sample.thread.subtitle' => 'Sujet de test',
-	'sample.thread.message.content' => 'Message de test sur le forum PHPBoost',
+	'web_title' => 'PHPBoost',
+	'web_contents' => '<p class="float_right"><img src="../templates/base/theme/images/phpboost_box_3_0.png" alt="" class="valign_" /></p><br />\r\nPHPBoost is a CMS (Content Managing System).',
+	'web_url' => 'http://www.phpboost.com',
+    'web_name_cat' => 'Test category',
+    'web_contents_cat' => 'Test links',
+	'web_icon_cat' => 'web.png'
 );
+
 ?>

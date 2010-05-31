@@ -33,8 +33,8 @@
 $lang = array(
     'default.category.name' => 'Test category',
 	'default.category.subname' => 'Test category',
-    'default.category.name' => 'Test board',
-	'default.category.subname' => 'Test board',
+    'default.board.name' => 'Test board',
+	'default.board.subname' => 'Test board',
 	'sample.thread.title' => 'Test',
 	'sample.thread.subtitle' => 'Test thread',
 	'sample.thread.message.content' => 'Test message on the PHPBoost board',
