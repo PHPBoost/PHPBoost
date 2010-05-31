@@ -72,7 +72,28 @@ class CLIInstallCommand implements CLICommand
 
 	public function help(array $args)
 	{
-		CLIOutput::writeln('this is the phpboost install command line manual...');
+		CLIOutput::writeln('this is the phpboost install command line manual.');
+		CLIOutput::writeln('this commands have optionals parameters. Here is theirs default values:');
+
+		$this->show_parameter_section('database');
+		$this->show_parameter('--db-host', $this->db_host);
+		$this->show_parameter('--db-port', $this->db_port);
+		$this->show_parameter('--db-user', $this->db_user);
+		$this->show_parameter('--db-pwd', $this->db_password);
+		$this->show_parameter('--db-schema', $this->db_schema);
+		$this->show_parameter('--db-table-prefix', $this->db_tables_prefix);
+
+		$this->show_parameter_section('website');
+		$this->show_parameter('--ws-server', $this->website_server);
+		$this->show_parameter('--ws-path', $this->website_path);
+		$this->show_parameter('--ws-name', $this->website_name);
+		$this->show_parameter('--ws-locale', $this->website_locale);
+		$this->show_parameter('--ws-timezone', 'GMT' . ($this->website_timezone >= 0 ? '+' : '') . $this->website_timezone);
+
+		$this->show_parameter_section('admin');
+		$this->show_parameter('--u-login', $this->user_login);
+		$this->show_parameter('--u-pwd', $this->user_password);
+		$this->show_parameter('--u-email', $this->user_email);
 	}
 
 	public function execute(array $args)
@@ -100,7 +121,7 @@ class CLIInstallCommand implements CLICommand
 		$this->website_path = $this->arg_reader->get('--ws-path', $this->website_path);
 		$this->website_name = $this->arg_reader->get('--ws-name', $this->website_name);
 		$this->website_locale = $this->arg_reader->get('--ws-locale', $this->website_locale);
-		$timezone = $this->arg_reader->get('--ws-timezone', $this->website_timezone);
+		$timezone = str_replace('GMT', '', $this->arg_reader->get('--ws-timezone', $this->website_timezone));
 		if (is_numeric($timezone))
 		{
 			$timezone = (int) $timezone;
@@ -140,7 +161,7 @@ class CLIInstallCommand implements CLICommand
 
 	private function show_parameter($name, $value)
 	{
-		CLIOutput::writeln("\t" . $name . '=' . $value);
+		CLIOutput::writeln("\t" . $name . ' ' . $value);
 	}
 
 	private function show_parameter_section($name)
@@ -150,22 +171,25 @@ class CLIInstallCommand implements CLICommand
 
 	private function check_env()
 	{
-		CLIOutput::writeln('check environment');
+		CLIOutput::writeln('environment check...');
 		return $this->chech_php_version() && $this->check_folders_permissions();
 	}
 
 	private function install()
 	{
-		CLIOutput::writeln('starting phpboost installation');
+		CLIOutput::writeln('installation');
+		CLIOutput::writeln("\t" . 'kernel...');
 		if (!$this->create_phpboost_tables())
 		{
 			return false;
 		}
+		CLIOutput::writeln("\t" . 'modules...');
 		if (!$this->installation->configure_website($this->website_locale, $this->website_server, $this->website_path, $this->website_name,
 			'PHPBoost command line installation', '', $this->website_timezone))
 		{
 			return false;
 		}
+		CLIOutput::writeln("\t" . 'admin creation...');
 		if (!$this->installation->create_admin_account())
 		{
 			return false;
@@ -176,6 +200,7 @@ class CLIInstallCommand implements CLICommand
 
 	private function chech_php_version()
 	{
+		CLIOutput::writeln("\t" . 'php version');
 		if (!$this->server_configuration->is_php_compatible())
 		{
 			CLIOutput::writeln('PHP version (' . ServerConfiguration::get_phpversion() . ') is not compatible with PHPBoost.');
@@ -188,6 +213,7 @@ class CLIInstallCommand implements CLICommand
 
 	private function check_folders_permissions()
 	{
+		CLIOutput::writeln("\t" . 'folder permissions...');
 		if (!PHPBoostFoldersPermissions::validate())
 		{
 			foreach (PHPBoostFoldersPermissions::get_permissions() as $folder => $is_writable)
