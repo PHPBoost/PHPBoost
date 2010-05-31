@@ -454,8 +454,8 @@ class Date
 	{
 		global $CONFIG;
 
-		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
-		$server_hour = intval(date('Z') / 3600) - intval(date('I'));
+		// Number of hours separating GMT and server's timezone
+		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
 			
 		switch ($referencial_timezone)
 		{
@@ -478,6 +478,16 @@ class Date
 				$timezone = 0;
 		}
 		return $timezone;
+	}
+	
+	private static function get_server_timezone()
+	{
+		return intval(date('Z') / 3600);
+	}
+	
+	private static function get_offset_due_to_daylight_saving_time()
+	{
+		return intval(date('I'));
 	}
 
 	private function set_date_from_values($year, $month, $day, $hours, $minutes, $seconds)
