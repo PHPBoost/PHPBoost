@@ -37,48 +37,37 @@ class MenuService
 	const MOVE_UP = -1;
 	const MOVE_DOWN = 1;
 
+	/**
+	 * @var DBQuerier
+	 */
+	private static $querier;
+
+	/**
+	 * @var string[] the columns needed to instanciate a menu
+	 */
+	private static $columns = array('id', 'object', 'block', 'position', 'enabled');
+
+	public static function __static()
+	{
+		self::$querier = PersistenceContext::get_querier();
+	}
+
 	## Menus ##
 	/**
 	* @desc
 	* @param $block
 	* @param $enabled
-	* @return unknown_type
+	* @return Menu[]
 	*/
 	public static function get_menu_list($class = Menu::MENU__CLASS, $block = Menu::BLOCK_POSITION__ALL, $enabled = Menu::MENU_ENABLE_OR_NOT)
 	{
-		global $Sql;
-
-		$query = "SELECT id, object, block, position, enabled FROM " . DB_TABLE_MENUS;
-
-		$conditions = array();
-		if ($class != Menu::MENU__CLASS)
-		{
-			$conditions[] = "class='" . strtolower($class) . "'";
-		}
-		if ($block != Menu::BLOCK_POSITION__ALL)
-		{
-			$conditions[] = "block='" . $block . "'";
-		}
-		if ($enabled !== Menu::MENU_ENABLE_OR_NOT)
-		{
-			$conditions[] .= "enabled='" . $enabled . "'";
-		}
-
-		if (count($conditions) > 0)
-		{
-			$query .= " WHERE " . implode(' AND ', $conditions);
-		}
-
+		$fragment = self::build_menu_list_query_conditions($class, $block, $enabled);
 		$menus = array();
-		$result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
-
-		while ($row = $Sql->fetch_assoc($result))
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query(), $fragment->get_parameters());
+		foreach ($results as $row)
 		{
-			$menus[] = MenuService::_load($row);
+			$menus[] = MenuService::initialize($row);
 		}
-
-		$Sql->query_close($result);
-
 		return $menus;
 	}
 
@@ -88,34 +77,21 @@ class MenuService
 	 */
 	public static function get_menus_map()
 	{
-		global $Sql;
-
-		// Initialize the map by using the value of the 9 constants used for blocks positions
-		$menus = MenuService::_initialize_menus_map();
-
-		$query = "
-            SELECT id, object, block, position, enabled
-            FROM " . DB_TABLE_MENUS . "
-            ORDER BY position ASC
-        ;";
-		$result = $Sql->query_while ($query, __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		$menus = MenuService::initialize_menus_map();
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'ORDER BY position ASC');
+		foreach ($results as $row)
 		{
 			if ($row['enabled'] != Menu::MENU_ENABLED)
 			{
-				$menus[Menu::BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
+				$menus[Menu::BLOCK_POSITION__NOT_ENABLED][] = MenuService::initialize($row);
 			}
 			else
 			{
-				$menus[$row['block']][] = MenuService::_load($row);
+				$menus[$row['block']][] = MenuService::initialize($row);
 			}
 		}
-		$Sql->query_close($result);
-
 		return $menus;
 	}
-
-	## Menu ##
 
 	/**
 	 * @desc Retrieve a Menu Object from the database by its id
@@ -124,15 +100,22 @@ class MenuService
 	 */
 	public static function load($id)
 	{
-		global $Sql;
-		$result = $Sql->query_array(DB_TABLE_MENUS, 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
-
-		if ($result === false)
+		try
+		{
+			$result = self::$querier->select_single_row(DB_TABLE_MENUS, self::$columns, 'WHERE id=:id', array('id' => $id));
+			return MenuService::initialize($result);
+		} catch (RowNotFoundException $ex)
 		{
 			return null;
 		}
+	}
 
-		return MenuService::_load($result);
+	private static function get_next_position($block)
+	{
+		$column = 'MAX(position) + 1 AS newPosition';
+		$condition = 'WHERE block=:block';
+		$parameters = array('block' => $block);
+		return (int) self::$querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
 	}
 
 	/**
@@ -142,45 +125,32 @@ class MenuService
 	 */
 	public static function save($menu)
 	{
-		global $Sql;
 		$block_position = $menu->get_block_position();
 
 		if (($block = $menu->get_block()) != Menu::MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
 		{
-			$block_position_query = "SELECT MAX(position) + 1 FROM " . DB_TABLE_MENUS . " WHERE block='" . $block. "'";
-			$block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
+			$block_position = self::get_next_position($block);
 		}
 
 		$query = '';
 		$id_menu = $menu->get_id();
+
+		$columns = array(
+			'title' => $menu->get_title(),
+			'object' => serialize($menu),
+			'class' => get_class($menu),
+			'enabled' => (int) $menu->is_enabled(),
+			'block' => $block,
+			'position' => $menu->get_block_position()
+		);
 		if ($id_menu > 0)
-		{   // We only have to update the element
-			$query = "
-            UPDATE " . DB_TABLE_MENUS . " SET
-                    title='" . addslashes($menu->get_title()) . "',
-                    object='" . addslashes(serialize($menu)) . "',
-                    class='" . strtolower(get_class($menu)) . "',
-                    enabled='" . (int)$menu->is_enabled() . "',
-                    block='" . $block . "',
-                    position='" . $menu->get_block_position() . "'
-            WHERE id='" . $id_menu . "';";
-			$Sql->query_inject($query, __LINE__, __FILE__);
+		{
+			self::$querier->update(DB_TABLE_MENUS, $columns, 'WHERE id=:id', array('id' => $id_menu));
 		}
 		else
-		{   // We have to insert the element in the database
-			$query = "
-                INSERT INTO " . DB_TABLE_MENUS . " (title,object,class,enabled,block,position)
-                VALUES (
-                    '" . addslashes($menu->get_title()) . "',
-                    '" . addslashes(serialize($menu)) . "',
-                    '" . strtolower(get_class($menu)) . "',
-                    '" . (int)$menu->is_enabled() . "',
-                    '" . $block . "',
-                    '" . $block_position . "'
-                );";
-			$Sql->query_inject($query, __LINE__, __FILE__);
-			//The object has now an id, we set it
-			$menu->id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MENUS));
+		{
+			$result = self::$querier->insert(DB_TABLE_MENUS, $columns);
+			$menu->id($result->get_last_inserted_id());
 		}
 
 		return true;
@@ -192,13 +162,12 @@ class MenuService
 	 */
 	public static function delete($menu)
 	{
-		global $Sql;
 		if (!is_object($menu))
 		{
 			$menu = MenuService::load($menu);
 		}
 		MenuService::disable($menu);
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_MENUS . " WHERE id='" . $menu->get_id() . "';" , __LINE__, __FILE__);
+		self::$querier->delete(DB_TABLE_MENUS, 'WHERE id=:id', array('id' => $menu->get_id()));
 	}
 
 
@@ -232,16 +201,12 @@ class MenuService
 	 */
 	public static function move($menu, $block, $save = true)
 	{
-		global $Sql;
-
 		if ($menu->get_id() > 0 && $menu->is_enabled())
 		{   // Updates the previous block position counter
 			// Only for already existing menu that are enabled, not for new ones
-			$update_query = "
-                UPDATE " . DB_TABLE_MENUS . "
-                SET position=position - 1
-                WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
-			$Sql->query_inject($update_query, __LINE__, __FILE__);
+			$parameters = array('block' => $menu->get_block(), 'position' => $menu->get_block_position());
+			self::$querier->inject('UPDATE ' . DB_TABLE_MENUS . ' SET position=position - 1
+				WHERE block=:block AND position > :position', $parameters);
 		}
 
 		// Disables the menu if the destination block is the NOT_ENABLED block position
@@ -253,8 +218,8 @@ class MenuService
 			$menu->set_block($block);
 
 			// Computes the new block position for the menu
-			$position_query = "SELECT MAX(position) + 1 FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1';";
-			$menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
+			$position_query = self::get_next_position($menu->get_block());
+			$menu->set_block_position($position_query);
 		}
 
 		if ($save)
@@ -441,7 +406,7 @@ class MenuService
 		$result = $Sql->query_while($query, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			MenuService::delete(MenuService::_load($row));
+			MenuService::delete(MenuService::initialize($row));
 		}
 	}
 
@@ -561,7 +526,7 @@ class MenuService
 		$result = $Sql->query_while($query, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			MenuService::delete(MenuService::_load($row));
+			MenuService::delete(MenuService::initialize($row));
 		}
 	}
 
@@ -724,6 +689,40 @@ class MenuService
 		}
 	}
 
+	/**
+	 * @desc
+	 * @param int $class
+	 * @param int_type $block
+	 * @param boolean $enabled
+	 * @return SQLFragment
+	 */
+	private static function build_menu_list_query_conditions($class, $block, $enabled)
+	{
+		$conditions = array();
+		$parameters = array();
+		if ($class != Menu::MENU__CLASS)
+		{
+			$conditions[] = 'class=:class';
+			$parameters['class'] = strtolower($class);
+		}
+		if ($block != Menu::BLOCK_POSITION__ALL)
+		{
+			$conditions[] = 'block=:block';
+			$parameters['block'] = $block;
+		}
+		if ($enabled !== Menu::MENU_ENABLE_OR_NOT)
+		{
+			$conditions[] = 'enabled=:enabled';
+			$parameters['enabled'] = $enabled;
+		}
+		$condition = '';
+		if (!empty($conditions))
+		{
+			$condition .= 'WHERE ' . implode(' AND ', $conditions);
+		}
+		return new SQLFragment($condition, $parameters);
+	}
+
 
 	## Private ##
 
@@ -731,7 +730,7 @@ class MenuService
 	 * @access private
 	 * @return array[] initialize the menus map structure
 	 */
-	private static function _initialize_menus_map()
+	private static function initialize_menus_map()
 	{
 		return array(
 		Menu::BLOCK_POSITION__HEADER => array(),
@@ -752,7 +751,7 @@ class MenuService
 	 * @param string[key] $db_result the map from the database with the Menu id and serialized object
 	 * @return Menu the menu object from the serialized one
 	 */
-	private static function _load($db_result)
+	private static function initialize($db_result)
 	{
 		$menu = unserialize($db_result['object']);
 

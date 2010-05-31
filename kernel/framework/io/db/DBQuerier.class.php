@@ -97,13 +97,14 @@ class DBQuerier implements SQLQuerier
 	 * @desc insert the values into the <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
+	 * @return InjectQueryResult the query result set
 	 */
 	public function insert($table_name, array $columns)
 	{
 		$columns_names = array_keys($columns);
 		$query = 'INSERT INTO ' . $table_name . ' (' . implode(', ', $columns_names) .
 		  ') VALUES (:' . implode(', :', $columns_names) . ');';
-		$this->querier->inject($query, $columns);
+		return $this->querier->inject($query, $columns);
 	}
 
 	/**
@@ -114,8 +115,9 @@ class DBQuerier implements SQLQuerier
 	 * @param string $condition the update condition beginning just after the where clause.
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
+	 * @return InjectQueryResult the query result set
 	 */
-	public function update($table_name, array $columns, $condition, $parameters = array())
+	public function update($table_name, array $columns, $condition, array $parameters = array())
 	{
 		$columns_names = array_keys($columns);
 		foreach (array_keys($columns) as $column)
@@ -124,7 +126,7 @@ class DBQuerier implements SQLQuerier
 		}
 		$query = 'UPDATE ' . $table_name . ' SET ' . implode(', ', $columns) .
             ' ' . $condition . ';';
-		$this->querier->inject($query, array_merge($parameters, $columns));
+		return $this->querier->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
@@ -135,7 +137,7 @@ class DBQuerier implements SQLQuerier
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */
-	public function delete($table_name, $condition, $parameters = array())
+	public function delete($table_name, $condition, array $parameters = array())
 	{
 		$query = 'DELETE FROM ' . $table_name . ' ' . $condition . ';';
 		$this->querier->inject($query, $parameters);
@@ -151,8 +153,7 @@ class DBQuerier implements SQLQuerier
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public function select_single_row($table_name, $columns, $condition,
-	$parameters = array())
+	public function select_single_row($table_name, array $columns, $condition, array $parameters = array())
 	{
 		$query_result = self::select_rows($table_name, $columns, $condition, $parameters);
 		$query_result->rewind();
@@ -170,6 +171,22 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
+	 * @desc retrieve a single value of the <code>$column</code> column of a single row from the
+	 * <code>$table_name</code> table matching the <code>$condition</code> condition.
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string $column the column to retrieve.
+	 * @param string $condition the update condition beginning just after the where clause.
+	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
+	 * @return mixed the value of the returned row
+	 */
+	public function get_column_value($table_name, $column, $condition, array $parameters = array())
+	{
+		$result = $this->select_single_row($table_name, array($column), $condition, $parameters);
+		return array_shift($result);
+	}
+
+	/**
 	 * @desc retrieve rows from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
@@ -179,7 +196,7 @@ class DBQuerier implements SQLQuerier
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
-	public function select_rows($table_name, $columns, $condition = 'WHERE 1',
+	public function select_rows($table_name, array $columns, $condition = 'WHERE 1',
 	$parameters = array())
 	{
 		$query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' ' . $condition;
