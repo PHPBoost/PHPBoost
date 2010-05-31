@@ -62,10 +62,10 @@ if (!empty($id))
 			//Sons
 			case 'mp3':
 			echo '<br />
-				<object type="application/x-shockwave-flash" data="../kernel/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" width="200" height="20">
+				<object type="application/x-shockwave-flash" data="../kernel/lib/flash/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" width="200" height="20">
 				<param name="allowScriptAccess" value="never" />
 				<param name="play" value="true" />
-				<param name="movie" value="../kernel/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" />
+				<param name="movie" value="../kernel/lib/flash/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" />
 				<param name="menu" value="false" />
 				<param name="quality" value="high" />
 				<param name="scalemode" value="noborder" />
