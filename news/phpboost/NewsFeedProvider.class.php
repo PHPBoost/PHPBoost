@@ -75,7 +75,7 @@ class NewsFeedProvider implements FeedProvider
 			// Last news
 			$results = $querier->select('SELECT id, idcat, title, contents, extend_contents, timestamp, img
                  FROM ' . DB_TABLE_NEWS . '
-                 WHERE start <= :timestamp AND visible = 1 AND idcat IN :cats_ids
+                 WHERE visible = 1 AND idcat IN :cats_ids
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(
                      'timestamp' => $now->get_timestamp(),
 			         'cats_ids' => $array_cat,

@@ -107,14 +107,8 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING),
 		'sources' => addslashes(serialize($sources))
 	);
-	
-	$auth_edit_cat = $news['idcat'] > 0 ? ($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) : '';
-	$auth_write_cat = $news['idcat'] > 0 ? ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) : '';
-	$auth_edit_not_cat = $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
-	$auth_write_not_cat = $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
-	
-	$auth = $news['idcat'] > 0 ? ($auth_edit_cat||$auth_write_cat) : ($auth_edit_not_cat||$auth_write_not_cat);
-	if ($auth)
+
+	if (($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) || ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))))
 	{
 		// Errors.
 		if (empty($news['title']))

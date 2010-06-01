@@ -54,7 +54,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_NEWS_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
-
+		$string .= '$NEWS_CAT[0] = ' .
+		var_export(array(
+					'auth' =>$news_config['global_auth']
+			), true) . ';' . "\n\n";
+		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
@@ -155,11 +159,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$tpl = new FileTemplate($filetpl);
 
 
-		$c_add = $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE);
-		$c_writer = $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE);
+		$c_add = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
+		$c_writer = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
 		
 		$last_release = 0;
-		$where = $cat > 0 ? " WHERE n.visible = 1 AND n.idcat = ".$cat." " : " WHERE n.visible = 1";
+		$where = " WHERE n.visible = 1 AND n.idcat = ".$cat." AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
 		$nbr_news = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n".$where, __LINE__, __FILE__);
 		
 		// Construction du tableau des catégories.
@@ -228,8 +232,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
-					$auth_read = $row['idcat'] == 0 ? true : $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ);
-					if($auth_read)
+
+					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.
 						if ($NEWS_CONFIG['nbr_column'] > 1)
@@ -252,8 +256,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
 							'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
-							'C_EDIT' => $row['idcat'] == 0 ? $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id') : $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),							
-							'C_DELETE' =>  $row['idcat'] == 0 ? $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
+							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),	
+							'C_DELETE' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE),
 							'C_IMG' => !empty($row['img']),
 							'IMG' => FormatingHelper::second_parse_url($row['img']),
 							'IMG_DESC' => $row['alt'],
@@ -283,9 +287,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{	
-
-					$auth_read = $row['idcat'] == 0 ? true : $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ);
-					if($auth_read)
+					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.
 						if ($NEWS_CONFIG['nbr_column'] > 1)
