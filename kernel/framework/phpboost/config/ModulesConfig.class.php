@@ -32,8 +32,6 @@
  */
 class ModulesConfig extends AbstractConfigData
 {
-	private static $default_modules_value = array();
-
 	private static $modules_property = 'modules';
 
 	/**

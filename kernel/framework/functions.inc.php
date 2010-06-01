@@ -44,17 +44,7 @@ function strhash($str, $salt = true)
 	{   // Specific salt
 		$str = $salt . $str;
 	}
-
-	if (function_exists('hash'))
-	{   // PHP5 Primitive
-		return hash('sha256', $str);
-	}
-	else
-	{   // With PHP4
-		echo 'PHP4';
-
-		return SHA256::hash($str);
-	}
+    return hash('sha256', $str);
 }
 
 /**

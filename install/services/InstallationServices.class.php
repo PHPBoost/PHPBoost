@@ -40,19 +40,30 @@ class InstallationServices
 	 * @var DBQuerier (Do not instanciate this until DBConnection is OK).
 	 */
 	private $querier;
+	
+	/**
+	 * @var string[string]
+	 */
+	private $messages;
 
-	public function __construct()
+	public function __construct($locale)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/.install_token');
+		LangLoader::set_locale($locale);
+		$this->messages = LangLoader::get('install', 'install');
 	}
 
-	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true)
+	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
 	{
 		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
 		$password, $tables_prefix, $create_db_if_needed);
-		$this->create_tables();
+		if (!$this->create_tables($override_previous_phpboost_install))
+		{
+			return false;
+		}
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
 		$this->generate_installation_token();
+		return true;
 	}
 
 	public function configure_website($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
@@ -76,7 +87,15 @@ class InstallationServices
 		}
 		return true;
 	}
-
+	
+	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
+	{
+		$this->get_installation_token();
+		$this->create_first_admin($login, $password, $email,$create_session, $auto_connect);
+		$this->delete_installation_token();
+		return true;
+	}
+	
 	private function load_distribution_configuration($locale)
 	{
 		include PATH_TO_ROOT . '/install/distribution/' . $locale . '.php';
@@ -111,7 +130,7 @@ class InstallationServices
 		$CONFIG['maintain'] = 0;
 		$CONFIG['maintain_delay'] = 1;
 		$CONFIG['maintain_display_admin'] = 1;
-		$CONFIG['maintain_text'] = 'Maintain'; // TODO add localization $LANG['site_config_maintain_text'];
+		$CONFIG['maintain_text'] = $this->messages['site_config_maintain_text'];
 		$CONFIG['htaccess_manual_content'] = '';
 		$CONFIG['rewrite'] = 0;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
@@ -155,9 +174,9 @@ class InstallationServices
 				'right_column' => $info_theme['right_column']
 		));
 	}
+	
 	private function install_modules(array $modules_to_install)
 	{
-		ModulesConfig::load()->set_modules(array());
 		foreach ($modules_to_install as $module_name)
 		{
 			ModulesManager::install_module($module_name, true);
@@ -176,86 +195,11 @@ class InstallationServices
 	private function generate_cache()
 	{
 		// TODO see if those lines are necessary
-//		$Cache = new Cache();
-//		$Cache->generate_all_files();
-//		$Cache->load('themes', RELOAD_CACHE);
-//		ModulesCssFilesCache::invalidate();
+		//		$Cache = new Cache();
+		//		$Cache->generate_all_files();
+		//		$Cache->load('themes', RELOAD_CACHE);
+		//		ModulesCssFilesCache::invalidate();
 		AppContext::get_cache_service()->clear_phpboost_cache();
-	}
-
-	public function create_admin_account($login, $password, $email, $create_session = true, $auto_connect = true)
-	{
-		$this->get_installation_token();
-
-		global $CONFIG;
-		$Cache = new Cache();
-		$Cache->load('config');
-
-		$columns = array(
-			'login' => $login,
-			'password' => strhash($password),
-			'level' => 2,
-			'user_mail' => $email,
-			'user_lang' => $CONFIG['lang'],
-			'user_theme' => $CONFIG['theme'],
-			'user_show_mail' => 1,
-			'timestamp' => time(),
-			'user_aprob' => 1,
-			'user_timezone' => $CONFIG['timezone']
-		);
-
-		//On enregistre le membre (l'entrée était au préalable créée)
-		$this->querier->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
-
-		//Génération de la clé d'activation, en cas de verrouillage de l'administration
-		$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
-		$CONFIG['unlock_admin'] = strhash($unlock_admin);
-
-		$mail_config = MailServiceConfig::load();
-		$mail_config->set_administrators_mails(array($email));
-		$mail_config->set_default_mail_sender($email);
-		MailServiceConfig::save();
-
-		$this->querier->update(DB_TABLE_CONFIGS, array('value' => serialize($CONFIG)), "WHERE name='config'");
-
-		$Cache->Generate_file('config');
-
-		//Configuration des membres
-		$user_account_config = UserAccountsConfig::load();
-		$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
-
-		UserAccountsConfig::save();
-
-		//On envoie un mail à l'administrateur
-		$LANG['admin'] = '';
-
-		$mail = new Mail();
-
-		//Paramètres du mail
-		$mail->set_sender($email, 'admin');
-		$mail->add_recipient($email);
-		$mail->set_subject($LANG['admin_mail_object']);
-		$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
-
-		//On envoie le mail
-		AppContext::get_mail_service()->try_to_send($mail);
-
-		//On connecte directement l'administrateur si il l'a demandé
-		if ($create_session)
-		{
-
-			$Session = new Session();
-
-			//Remise à zéro du compteur d'essais.
-			$this->querier->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
-			//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
-			$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
-		}
-
-		$Cache->generate_file('stats');
-
-		$this->delete_installation_token();
-		return true;
 	}
 
 	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed)
@@ -298,10 +242,12 @@ class InstallationServices
 		DBFactory::set_db_connection($connection);
 	}
 
-	private function create_tables()
+	private function create_tables($override_previous_phpboost_install)
 	{
+		// TODO implements $override_previous_phpboost_install test
 		$kernel = new KernelSetup();
 		$kernel->install();
+		return true;
 	}
 
 	private function write_connection_config_file(array $db_connection_data, $tables_prefix)
@@ -316,6 +262,83 @@ class InstallationServices
 		$db_config_file = new File(PATH_TO_ROOT . '/kernel/db/config.php');
 		$db_config_file->write($db_config_content);
 		$db_config_file->close();
+	}
+
+	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
+	{
+		global $CONFIG, $Cache;
+		$Cache = new Cache();
+		$Cache->load('config');
+		$admin_unlock_code = $this->generate_admin_unlock_code();
+		$this->update_first_admin_account($login, $password, $email, $CONFIG['lang'], $CONFIG['theme'], $CONFIG['timezone']);
+		$this->configure_mail_sender_system($email);
+		$this->configure_accounts_policy();
+		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
+		if ($create_session)
+		{
+			$this->connect_admin($password, $auto_connect);
+		}
+		$Cache->generate_file('stats');
+	}
+
+	private function update_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
+	{
+		$columns = array(
+            'login' => $login,
+            'password' => strhash($password),
+            'level' => 2,
+            'user_mail' => $email,
+            'user_lang' => $locale,
+            'user_theme' => $theme,
+            'user_show_mail' => 1,
+            'timestamp' => time(),
+            'user_aprob' => 1,
+            'user_timezone' => $timezone
+		);
+		$this->querier->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
+	}
+
+	private function generate_admin_unlock_code()
+	{
+		$admin_unlock_code = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
+		global $CONFIG, $Cache;
+		$CONFIG['unlock_admin'] = strhash($admin_unlock_code);
+		$this->querier->update(DB_TABLE_CONFIGS, array('value' => serialize($CONFIG)), "WHERE name='config'");
+		$Cache->Generate_file('config');
+		return $admin_unlock_code;
+	}
+
+	private function configure_mail_sender_system($administrator_email)
+	{
+		$mail_config = MailServiceConfig::load();
+		$mail_config->set_administrators_mails(array($administrator_email));
+		$mail_config->set_default_mail_sender($administrator_email);
+		MailServiceConfig::save();
+	}
+
+	private function configure_accounts_policy()
+	{
+		$user_account_config = UserAccountsConfig::load();
+		$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
+		UserAccountsConfig::save();
+	}
+
+	private function send_installation_mail($login, $password, $email, $unlock_admin)
+	{
+		$mail = new Mail();
+		$mail->set_sender($email, 'admin');
+		$mail->add_recipient($email);
+		$mail->set_subject($this->messages['admin_mail_object']);
+		$mail->set_content(sprintf($this->messages['admin_mail_unlock_code'], stripslashes($login),
+		stripslashes($login), $password, $unlock_admin, HOST . DIR));
+		AppContext::get_mail_service()->try_to_send($mail);
+	}
+
+	private function connect_admin($password, $auto_connect)
+	{
+		$Session = new Session();
+		$this->querier->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
+		$Session->start(1, $password, 2, '/install/install.php', '', $this->messages['page_title'], $auto_connect);
 	}
 
 	private function generate_installation_token()

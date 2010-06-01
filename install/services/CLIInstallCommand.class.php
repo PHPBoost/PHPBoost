@@ -61,7 +61,6 @@ class CLIInstallCommand implements CLICommand
 
 	public function __construct()
 	{
-		$this->installation = new InstallationServices();
 		$this->server_configuration = new ServerConfiguration();
 	}
 
@@ -178,6 +177,7 @@ class CLIInstallCommand implements CLICommand
 	private function install()
 	{
 		CLIOutput::writeln('installation');
+        $this->installation = new InstallationServices($this->locale);
 		CLIOutput::writeln("\t" . 'kernel...');
 		if (!$this->create_phpboost_tables())
 		{
@@ -190,7 +190,7 @@ class CLIInstallCommand implements CLICommand
 			return false;
 		}
 		CLIOutput::writeln("\t" . 'admin creation...');
-		if (!$this->installation->create_admin_account($this->user_login, $this->user_password, $this->user_email))
+		if (!$this->installation->create_admin($this->user_login, $this->user_password, $this->user_email, false, false))
 		{
 			return false;
 		}
@@ -234,7 +234,7 @@ class CLIInstallCommand implements CLICommand
 		try
 		{
 			$this->installation->create_phpboost_tables(DBFactory::MYSQL, $this->db_host, $this->db_port,
-			$this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix);
+			$this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix, true, true);
 			return true;
 		}
 		catch (DBConnectionException $exception)

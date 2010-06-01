@@ -102,9 +102,10 @@ function add_lang($url, $header_location = false)
 
 //Changement de langue
 $new_language = retrieve(POST, 'new_language', '');
-if (!empty($new_language) && is_file('lang/' . $new_language . '/install_' . $new_language . '.php') && $new_language != $lang)
+if (!empty($new_language) && is_file('lang/' . $new_language . '/install.php') && $new_language != $lang)
 {
 	$lang = $new_language;
+	$LANG = LangLoader::get('install', 'install');
 	AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
