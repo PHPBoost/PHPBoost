@@ -177,7 +177,7 @@ class CLIInstallCommand implements CLICommand
 	private function install()
 	{
 		CLIOutput::writeln('installation');
-        $this->installation = new InstallationServices($this->locale);
+        $this->installation = new InstallationServices($this->website_locale);
 		CLIOutput::writeln("\t" . 'kernel...');
 		if (!$this->create_phpboost_tables())
 		{
