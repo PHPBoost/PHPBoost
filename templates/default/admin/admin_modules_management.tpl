@@ -21,7 +21,7 @@
 		
 		<div id="admin_contents">
 			# IF C_MODULES_LIST #	
-				<form action="admin_modules.php?uninstall=1" method="post">
+				<form action="admin_modules.php?uninstall=1&token={TOKEN}" method="post">
 					<table class="module_table" style="width:99%;margin-bottom:30px;">
 						<tr> 
 							<th colspan="5">
@@ -107,7 +107,7 @@
 			
 			
 			# IF C_MODULES_DEL #				
-				<form action="admin_modules.php?uninstall=1" method="post" class="fieldset_content">
+				<form action="admin_modules.php?uninstall=1&token={TOKEN}" method="post" class="fieldset_content">
 					<fieldset>
 						<legend>{L_DEL_MODULE}</legend>
 						<div class="error_warning" style="width:500px;margin:auto;">

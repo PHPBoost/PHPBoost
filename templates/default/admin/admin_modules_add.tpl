@@ -46,7 +46,7 @@
 				</fieldset>	
 			</form>
 			
-			<form action="admin_modules_add.php?install=1" method="post">
+			<form action="admin_modules_add.php?install=1&token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="4">
