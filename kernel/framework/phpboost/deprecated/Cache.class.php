@@ -38,6 +38,13 @@ define('NO_FATAL_ERROR_CACHE', true);
  */
 class Cache
 {
+	private static $sql;
+	
+	public static function __static()
+	{
+		self::$sql = PersistenceContext::get_sql();
+	}
+	
 	/**
 	 * @desc Builds a Cache object. Check if the directory in which the cache is written is writable.
 	 */
@@ -60,7 +67,7 @@ class Cache
 	 */
 	function load($file, $reload_cache = false)
 	{
-		global $Errorh, $Sql;
+		global $Errorh;
 
 		//On charge le fichier
 		$cache_file = PATH_TO_ROOT . '/cache/' . $file . '.php';
@@ -273,8 +280,6 @@ class Cache
 	 */
 	function _get_config()
 	{
-		global $Sql;
-
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 		//Récupération du tableau linéarisé dans la bdd
 		$CONFIG = unserialize((string) PersistenceContext::get_sql()->query(
@@ -293,19 +298,17 @@ class Cache
 	 */
 	function _get_themes()
 	{
-		global $Sql;
-
 		$code = 'global $THEME_CONFIG;' . "\n";
-		$result = $Sql->query_while("SELECT theme, left_column, right_column, secure
+		$result = self::$sql->query_while("SELECT theme, left_column, right_column, secure
 		FROM " . DB_TABLE_THEMES . "
 		WHERE activ = 1", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql->fetch_assoc($result))
 		{
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n";
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n\n";
 		}
-		$Sql->query_close($result);
+		self::$sql->query_close($result);
 
 		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'secure\'] = \'-1\'';
 	}
@@ -316,17 +319,15 @@ class Cache
 	 */
 	function _get_langs()
 	{
-		global $Sql;
-
 		$code = 'global $LANGS_CONFIG;' . "\n";
-		$result = $Sql->query_while("SELECT lang, secure
+		$result = self::$sql->query_while("SELECT lang, secure
 		FROM " . PREFIX . "lang
 		WHERE activ = 1", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql->fetch_assoc($result))
 		{
 			$code .= '$LANGS_CONFIG[\'' . addslashes($row['lang']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n\n";
 		}
-		$Sql->query_close($result);
+		self::$sql->query_close($result);
 
 		return $code;
 	}
@@ -337,8 +338,6 @@ class Cache
 	 */
 	function _get_member()
 	{
-		global $Sql;
-
 		$config_member = 'global $ADMINISTRATOR_ALERTS;' . "\n";
 
 		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
@@ -352,17 +351,15 @@ class Cache
 	 */
 	function _get_ranks()
 	{
-		global $Sql;
-
 		$stock_array_ranks = '$_array_rank = array(';
-		$result = $Sql->query_while("SELECT name, msg, icon
+		$result = self::$sql->query_while("SELECT name, msg, icon
 		FROM " . PREFIX . "ranks
 		ORDER BY msg DESC", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql->fetch_assoc($result))
 		{
 			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
 		}
-		$Sql->query_close($result);
+		self::$sql->query_close($result);
 
 		$stock_array_ranks = trim($stock_array_ranks, ',');
 		$stock_array_ranks .= ');';
@@ -375,12 +372,10 @@ class Cache
 	 */
 	function _get_uploads()
 	{
-		global $Sql;
-
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
+		$CONFIG_UPLOADS = unserialize((string)self::$sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
 		foreach ($CONFIG_UPLOADS as $key => $value)
 		{
@@ -402,12 +397,10 @@ class Cache
 	 */
 	function _get_com()
 	{
-		global $Sql;
-
 		$com_config = 'global $CONFIG_COM;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
+		$CONFIG_COM = unserialize((string)self::$sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach ($CONFIG_COM as $key => $value)
 		{
@@ -420,19 +413,17 @@ class Cache
 	//Smileys
 	function _get_smileys()
 	{
-		global $Sql;
-
 		$i = 0;
 		$stock_smiley_code = '$_array_smiley_code = array(';
-		$result = $Sql->query_while("SELECT code_smiley, url_smiley
+		$result = self::$sql->query_while("SELECT code_smiley, url_smiley
 		FROM " . PREFIX . "smileys", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql->fetch_assoc($result))
 		{
 			$comma = ($i != 0) ? ',' : '';
 			$stock_smiley_code .=  $comma . "\n" . '' . var_export($row['code_smiley'], true) . ' => ' . var_export($row['url_smiley'], true);
 			$i++;
 		}
-		$Sql->query_close($result);
+		self::$sql->query_close($result);
 		$stock_smiley_code .= "\n" . ');';
 
 		return 'global $_array_smiley_code;' . "\n" . $stock_smiley_code;
@@ -444,11 +435,9 @@ class Cache
 	 */
 	function _get_stats()
 	{
-		global $Sql;
-
 		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+		$nbr_members = self::$sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
+		$last_member = self::$sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . self::$sql->limit(0, 1), __LINE__, __FILE__);
 
 		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
 		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";
