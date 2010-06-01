@@ -488,7 +488,7 @@ class MenuService
 	{
 		$conditions = 'WHERE class=:class AND title LIKE :like_title';
 		$parameters = array(
-			'class' => strtolower(MiniMenu::MODULE_MINI_MENU__CLASS),
+			'class' => strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS),
 			'like_title' => strtolower($module) . '/%'
 		);
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
@@ -519,7 +519,7 @@ class MenuService
 		}
 
 		$conditions = 'WHERE class=:class';
-		$parameters = array('class' => strtolower(MiniMenu::MODULE_MINI_MENU__CLASS));
+		$parameters = array('class' => strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS));
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title'), $conditions, $parameters);
 		foreach ($results as $row)
 		{
