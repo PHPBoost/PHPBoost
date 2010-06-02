@@ -21,7 +21,7 @@
 		
 		<div id="admin_contents">
 			# IF C_MODULES_LIST #	
-				<form action="admin_modules.php?uninstall=1&token={TOKEN}" method="post">
+				<form action="admin_modules.php?uninstall=1" method="post">
 					<table class="module_table" style="width:99%;margin-bottom:30px;">
 						<tr> 
 							<th colspan="5">
@@ -99,6 +99,7 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+						<input type="hidden" name="token" value="{TOKEN}" />
 						&nbsp;&nbsp; 
 						<input type="reset" value="{L_RESET}" class="reset" />
 					</fieldset>
@@ -107,7 +108,7 @@
 			
 			
 			# IF C_MODULES_DEL #				
-				<form action="admin_modules.php?uninstall=1&token={TOKEN}" method="post" class="fieldset_content">
+				<form action="admin_modules.php?uninstall=1" method="post" class="fieldset_content">
 					<fieldset>
 						<legend>{L_DEL_MODULE}</legend>
 						<div class="error_warning" style="width:500px;margin:auto;">
@@ -123,6 +124,7 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="hidden" name="idmodule" value="{IDMODULE}" />
+						<input type="hidden" name="token" value="{TOKEN}" />
 						<input type="submit" name="valid_del" value="{L_SUBMIT}" class="submit" />
 					</fieldset>
 				</form>
