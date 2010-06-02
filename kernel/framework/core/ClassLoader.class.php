@@ -72,11 +72,6 @@ class ClassLoader
 		self::call_static_initializer($classname);
 	}
 
-	public static function is_class_registered($classname)
-	{
-		return array_key_exists($classname, self::$autoload);
-	}
-
 	public static function is_class_registered_and_valid($classname)
 	{
 		if (!self::is_class_registered($classname))
@@ -128,6 +123,11 @@ class ClassLoader
 		self::$already_reloaded = false;
 	}
 
+	private static function is_class_registered($classname)
+	{
+		return array_key_exists($classname, self::$autoload);
+	}
+
 	private static function add_classes($directory, $pattern, $recursive = true)
 	{
 		$files = array();
@@ -144,7 +144,8 @@ class ClassLoader
 		{
 			foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $a_folder)
 			{
-				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths) && !in_array($a_folder->get_name(), self::$exclude_folders_names))
+				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)
+				&& !in_array($a_folder->get_name(), self::$exclude_folders_names))
 				{
 					self::add_classes($a_folder->get_path(), $pattern);
 				}
