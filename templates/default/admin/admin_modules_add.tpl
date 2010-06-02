@@ -31,7 +31,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_modules_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
+			<form action="admin_modules_add.php" method="post" enctype="multipart/form-data" class="fieldset_content">
 				<fieldset>
 					<legend>{L_UPLOAD_MODULE}</legend>
 					<dl>
@@ -42,11 +42,12 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
+					<input type="hidden" name="token" value="{TOKEN}" />
 					<input type="submit" value="{L_UPLOAD}" class="submit" />				
 				</fieldset>	
 			</form>
 			
-			<form action="admin_modules_add.php?install=1&token={TOKEN}" method="post">
+			<form action="admin_modules_add.php?install=1" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="4">
@@ -96,6 +97,7 @@
 							<input type="radio" name="{available.ID}activ" value="0" /> {L_NO}
 						</td>
 						<td class="row2">	
+							<input type="hidden" name="token" value="{TOKEN}" />
 							<input type="submit" name="module_{available.ID}" value="{L_INSTALL}" class="submit" />
 						</td>
 					</tr>						
