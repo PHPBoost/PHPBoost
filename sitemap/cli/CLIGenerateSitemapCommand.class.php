@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                        SitemapExtensionPointProvider.class.php
+ *                      CLIGenerateSitemapCommand.class.php
  *                            -------------------
- *   begin                : December 10, 2009
- *   copyright            : (C) 2009 Benoit Sautel
+ *   begin                : June 02, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -25,16 +25,29 @@
  *
  ###################################################*/
 
-class SitemapExtensionPointProvider extends ExtensionPointProvider
+class CLIGenerateSitemapCommand implements CLICommand
 {
-	public function __construct()
+	public function short_description()
 	{
-		parent::__construct('sitemap');
+		return 'Generates the sitemap.xml file.';
 	}
-	
-	public function on_changeday()
+
+	public function help(array $args)
 	{
-		SitemapXMLFileService::generate_if_needed();
+		CLIOutput::writeln('Generates the sitemap.xml file. If is already exists, it is overridden.');
+	}
+
+	public function execute(array $args)
+	{
+		try
+		{
+			SitemapXMLFileService::try_to_generate();
+			CLIOutput::writeln('The sitemap.xml file has been successfully generated');
+		}
+		catch(IOException $e)
+		{
+			CLIOutput::writeln('The sitemap.xml couldn\'t be generated probably because it\'s unwritable.');
+		}
 	}
 }
 ?>
