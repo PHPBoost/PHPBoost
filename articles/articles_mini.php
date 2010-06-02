@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Maurel Nicolas
  *   email                : crunchfamily@free.fr
  *
-  *
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
@@ -31,13 +31,13 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
 function articles_mini($position, $block)
 {
-    global $Cache, $LANG, $CONFIG_ARTICLES,$ARTICLES_LANG;
-   
-	$Cache->load('articles'); 
+	global $Cache, $LANG, $CONFIG_ARTICLES,$ARTICLES_LANG;
+	 
+	$Cache->load('articles');
 	load_module_lang('articles');
-	
+
 	$tpl = new FileTemplate('articles/articles_mini.tpl');
-	
+
 	MenuService::assign_positions_conditions($tpl, $block);
 
 	$com = false;
@@ -45,10 +45,11 @@ function articles_mini($position, $block)
 	$date = false;
 	$view = false;
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);
+	$sort = 'date';
 	switch ($mini_conf['type'])
 	{
-		case 'note' :	
-			$sort = 'note';	
+		case 'note' :
+			$sort = 'note';
 			$l_type = $ARTICLES_LANG['articles_best_note'];
 			$note= true;
 			break;
@@ -57,35 +58,41 @@ function articles_mini($position, $block)
 			$l_type = $ARTICLES_LANG['articles_more_com'];
 			$com= true;
 			break;
-		case 'date' :
-			$sort = 'timestamp';
-			$l_type = $ARTICLES_LANG['articles_by_date'];
-			$date= true;
-			break;
 		case 'view' :
 			$sort = 'views';
 			$l_type = $ARTICLES_LANG['articles_most_popular'];
 			$view= true;
 			break;
+        case 'date' :
 		default :
-			$sort = 'date';
+			$sort = 'timestamp';
 			$l_type = $ARTICLES_LANG['articles_by_date'];
 			$date= true;
 			break;
 	}
-	
-	
-	$result = PersistenceContext::get_sql()->query_while("SELECT a.id, a.title, a.idcat,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com, a.user_id
-	FROM " . DB_TABLE_ARTICLES . " a	
-	WHERE a.visible = 1 
-	ORDER BY " . $sort . " DESC ".
-	PersistenceContext::get_sql()->limit(0, $mini_conf['nbr_articles']), __LINE__, __FILE__);
-	
-	while ($row = PersistenceContext::get_sql()->fetch_assoc($result))
-	{		
-		$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-		
-		$tpl->assign_block_vars('articles', array(
+
+	$limit = $mini_conf['nbr_articles'] > 0 ? $mini_conf['nbr_articles'] : 10;
+	$columns =  array(
+        'a.id',
+        'a.title',
+        'a.idcat',
+		'a.description',
+		'a.icon',
+		'a.timestamp', 
+		'a.views', 
+		'a.note',
+		'a.nbrnote', 
+		'a.nbr_com', 
+        'a.user_id'
+    );
+    $condition = 'WHERE a.visible=1 ORDER BY ' . $sort . ' DESC LIMIT :limit OFFSET 0';
+    $parameters = array('limit' => $limit);
+    $results = PersistenceContext::get_querier()->select_rows(DB_TABLE_ARTICLES . ' AS a', $columns, $condition, $parameters);
+    foreach ($results as $row)
+    {
+    	$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+
+    	$tpl->assign_block_vars('articles', array(
 			'ID' => $row['id'],
 			'TITLE' => $row['title'],
 			'NOTE' => $note ? (($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>') : '',
@@ -94,16 +101,16 @@ function articles_mini($position, $block)
 			'COM'=> $com ? ($LANG['com']. " : ".$row['nbr_com']) : '',
 			'DESCRIPTION'=>$row['description'],
 			'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
-		));
-	}
-	
-	$tpl->assign_vars(array(
+    	));
+    }
+
+    $tpl->assign_vars(array(
 		'L_TYPE_MINI' => $l_type,
 		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article'],
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
-	));
+    ));
 
-	return $tpl->to_string();
+    return $tpl->to_string();
 }
 
 ?>

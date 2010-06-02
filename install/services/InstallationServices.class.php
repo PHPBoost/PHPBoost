@@ -48,7 +48,7 @@ class InstallationServices
 
 	public function __construct($locale)
 	{
-		$this->token = new File(PATH_TO_ROOT . '/.install_token');
+		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
 	}
