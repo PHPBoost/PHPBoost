@@ -38,6 +38,7 @@ class ClassLoader
 		'/cache', '/images', '/lang', '/upload', '/templates',
 		'/kernel/data', '/kernel/lib/js', '/kernel/framework/content/tinymce',
 		'/kernel/framework/content/geshi', '/kernel/framework/io/db/dbms/Doctrine',
+	    '/test/PHPUnit',
 	);
 
 	private static $exclude_folders_names = array('.svn', 'templates', 'lang');
@@ -71,15 +72,27 @@ class ClassLoader
 		self::call_static_initializer($classname);
 	}
 
-    public static function is_class_registered($classname)
-    {
-        return array_key_exists($classname, self::$autoload);
-    }
+	public static function is_class_registered($classname)
+	{
+		return array_key_exists($classname, self::$autoload);
+	}
 
-    public static function is_class_registered_and_valid($classname)
-    {
-        return self::is_class_registered($classname) && file_exists(PATH_TO_ROOT . self::$autoload[$classname]);
-    }
+	public static function is_class_registered_and_valid($classname)
+	{
+		if (!self::is_class_registered($classname))
+		{
+			return false;
+		}
+		elseif (!file_exists(PATH_TO_ROOT . self::$autoload[$classname]))
+		{
+			self::generate_classlist();
+			return self::is_class_registered($classname);
+		}
+		else
+		{
+			return true;
+		}
+	}
 
 	/**
 	 * @desc Generates the autoload cache file by exploring phpboost folders
@@ -96,14 +109,14 @@ class ClassLoader
 			import('io/IOException');
 			import('util/Path');
 
-			$phpboost_classfile_pattern = '`^.+\.class\.php$`';
+			$phpboost_classfile_pattern = '`\.class\.php$`';
 			$paths = array('/', '/kernel/framework/core/lang');
 
 			foreach ($paths as $path)
 			{
 				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
 			}
-			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`^.+\.php$`');
+			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`\.php$`');
 			self::generate_autoload_cache();
 		}
 	}
