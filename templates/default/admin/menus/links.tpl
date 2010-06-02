@@ -148,7 +148,7 @@ function deleteElement(element_id)
 -->
 </script>
 <div id="admin_contents">
-	<form action="links.php?action=save&token={TOKEN}" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
+	<form action="links.php?action=save" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
@@ -221,6 +221,7 @@ function deleteElement(element_id)
 		<fieldset class="fieldset_submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}" />
+			<input type="hidden" name="token" value="{TOKEN}" />
 			<input type="hidden" name="menu_tree" id="menu_tree" value="" />
 			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />					
 		</fieldset>
