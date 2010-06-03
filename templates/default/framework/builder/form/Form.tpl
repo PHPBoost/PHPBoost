@@ -6,10 +6,13 @@
 </div>
 # ENDIF #
 
+# IF C_JS_NOT_ALREADY_INCLUDED # 
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/validator.js"></script>
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/form.js"></script>  
+# ENDIF #
+
 <script type="text/javascript">
 <!--
-	loadLib('phpboost/form/form.js');
-	loadLib('phpboost/form/validator.js');
 	var form = new HTMLForm("{E_HTML_ID}");
 	HTMLForms.add(form);
 -->
