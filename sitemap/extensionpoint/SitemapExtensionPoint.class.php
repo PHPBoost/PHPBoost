@@ -1,13 +1,13 @@
 <?php
 /*##################################################
- *                           CategoryTree.class.php
+ *                          ExtensionPoint.class.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
+ *   begin                : February 07, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
- ###################################################
+ *###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+ *###################################################
+ */
 
-class CategoryTree
+interface SitemapExtensionPoint extends ExtensionPoint
 {
 	/**
-	 * @var Category
+	 * @return Sitemap
 	 */
-	private $root_category;
+	function get_public_sitemap();
+	
+	/**
+	 * @return Sitemap
+	 */
+	function get_user_sitemap();
 }
-
 ?>
