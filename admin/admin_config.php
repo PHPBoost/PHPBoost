@@ -93,7 +93,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	if (function_exists('apache_get_modules'))
 	{	
 		$get_rewrite = apache_get_modules();
-		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
+		$check_rewrite = in_array('mod_rewrite', $get_rewrite) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
 	}
 	else
 	{
@@ -373,39 +373,18 @@ else //Sinon on rempli le formulaire
 		'IMG_LANG_IDENTIFIER' => $lang_identifier
 	));
 	
-	//On recupère les dossier des thèmes contents dans le dossier templates.
-	$tpl_array = array();
-	$lang_folder_path = new Folder('../templates/');
-	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
+	foreach ($THEME_CONFIG as $theme => $array_info) 
 	{
-		$tpl_array[] = $lang->get_name();
-	}
-		
-	$theme_array_bdd = array();
-	$result = $Sql->query_while("SELECT theme 
-	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		//On recherche les clées correspondante à celles trouvée dans la bdd.
-		if (array_search($row['theme'], $tpl_array) !== false)
-		{
-			$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
-		}
-	}
-	$Sql->query_close($result);
-	
-	foreach ($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
-	{
-		$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
-		if ($theme_info)
-		{
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
-			$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
-			$Template->assign_block_vars('select', array(
-				'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
-			));
-		}
-	}
+
+		if ($theme != 'default' && $array_info['activ'] == 1)
+    	{
+			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
+			$selected = ($theme == $CONFIG['theme']) ? ' selected="selected"' : '';
+    		$Template->assign_block_vars('select', array(
+				'THEME' => '<option value="' . $theme . '" ' . $selected . '>' . $info_theme['name'] . '</option>'
+    		));
+    	}
+	}	
 	
 	$Template->pparse('admin_config');
 }

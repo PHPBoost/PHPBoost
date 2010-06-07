@@ -461,6 +461,8 @@ $LANG['display_title'] = 'Afficher le titre';
 $LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
 $LANG['feed'] = 'flux';
 $LANG['availables_feeds'] = 'Flux disponibles';
+$LANG['valid_position_menus'] = 'Valider la position des menus';
+$LANG['themes_management'] = 'Gérer le thème';
 
 $LANG['menu_configurations'] = 'Configurations';
 $LANG['menu_configurations_list'] = 'Liste des configurations de menus';

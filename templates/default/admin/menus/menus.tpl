@@ -101,9 +101,11 @@ function createSortableMenu()
 			<tr>
 				<td colspan="3" style="padding:10px;" class="row2">
 					<div style="float:right;">
-						<strong>Gérer le thème :</strong> 
-						<select>
-							<option>Tornade</option>
+						<strong>{L_THEME_MANAGEMENT} :</strong> 
+						<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
+							# START themes #
+								<option value="{themes.IDNAME}" {themes.SELECTED} >{themes.NAME}</option>
+							# END themes #
 						</select>
 					</div>
 				</td>
@@ -169,7 +171,7 @@ function createSortableMenu()
 									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" checked="checked" /> {L_LEFT_MENU}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMM} /> {L_LEFT_MENU}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -272,7 +274,7 @@ function createSortableMenu()
 									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" checked="checked" /> {L_RIGHT_MENU}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMM} /> {L_RIGHT_MENU}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu6');" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -352,7 +354,8 @@ function createSortableMenu()
 		</script>
 		
 		<div id="valid_position_menus">
-			Valider la position des menus : <input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+			<input type="submit" name="valid" value="{L_VALID_POSTIONS}" class="submit" />
+			<input type="hidden" name="theme" value="{NAME_THEME}" />
 		</div>
 		<input type="hidden" name="menu_tree" id="menu_tree" value="" />
 	</form>

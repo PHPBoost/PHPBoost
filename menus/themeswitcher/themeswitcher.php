@@ -60,7 +60,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     $utheme = get_utheme();
     foreach($THEME_CONFIG as $theme => $array_info)
     {
-    	if ($User->check_level($array_info['secure']) && $theme != 'default')
+    	if ($User->check_level($array_info['secure']) && $theme != 'default' && $array_info['activ'] == 1)
     	{
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
     		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');

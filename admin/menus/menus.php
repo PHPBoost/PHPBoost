@@ -32,6 +32,9 @@ define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = retrieve(GET, 'id', 0);
+$switchtheme = retrieve(GET, 'theme', '');
+$name_theme = !empty($switchtheme) ? $switchtheme : get_utheme();
+$theme_post = retrieve(POST, 'theme', '');
 
 $action = retrieve(GET, 'action', '');
 $move = retrieve(GET, 'move', '');
@@ -199,13 +202,12 @@ if ($action == 'save') //Save menus positions.
 	    
     	ModulesCssFilesCache::invalidate();
 	}
-
-	/*
+	
 	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0; 
 	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0; 
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE theme = '" . $theme_post . "'", __LINE__, __FILE__);
 	$Cache->Generate_file('themes'); //Régénération du cache.
-	*/
+	
 	
 	AppContext::get_response()->redirect('menus.php');
 }
@@ -253,15 +255,11 @@ foreach ($menus_blocks as $block_id => $menus)
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
             'CONTENTS' => $menu->admin_display(),
-            'ACTIV' => ($enabled ? 'disable' : 'enable'),
-            'UNACTIV' => ($enabled ? 'enable' : 'disable'),
 			'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
 			'C_UP' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
             'C_DOWN' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-			'L_ACTIVATE' => $LANG['activate'],
-			'L_UNACTIVATE' => $LANG['unactivate'],
 			'L_DEL' => $LANG['delete'],
 			'L_EDIT' => $LANG['edit'],
 			'U_EDIT' => menu_admin_link($menu, 'edit'),
@@ -270,13 +268,41 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_DOWN' => menu_admin_link($menu, 'down'),
             'U_MOVE' => menu_admin_link($menu, 'move'),
         ));
-        
+		
+		if($enabled)
+		{
+			$menu_tpl->assign_vars(array(
+				'ACTIV' => ($enabled ? 'disable' : 'enable'),
+				'UNACTIV' => ($enabled ? 'enable' : 'disable'),
+				'L_ACTIVATE' => $LANG['activate'],
+				'L_UNACTIVATE' => $LANG['unactivate'],
+
+			));
+        }
         $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->to_string()));
         $i++;
     }
 }
 
+	foreach($THEME_CONFIG as $theme => $array_info)
+    {
+    	if ($theme != 'default' && $array_info['activ'] == 1)
+    	{
+			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
+			$selected = (empty($switchtheme) ? get_utheme() == $theme : $switchtheme == $theme) ? ' selected="selected"' : '';
+    		$tpl->assign_block_vars('themes', array(
+    			'NAME' => $info_theme['name'],
+    			'IDNAME' => $theme,
+    			'SELECTED' => $selected
+    		));
+    	}
+    }
+	
+	
 $tpl->assign_vars(array(
+	'NAME_THEME' => $name_theme,
+	'CHECKED_RIGHT_COLUMM' => $THEME_CONFIG[$name_theme]['right_column'] ? 'checked="checked"' : '',
+	'CHECKED_LEFT_COLUMM' => $THEME_CONFIG[$name_theme]['left_column'] ? 'checked="checked"' : '',
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'C_LEFT_COLUMN' => $left_column,
     'C_RIGHT_COLUMN' => $right_column,
@@ -301,6 +327,8 @@ $tpl->assign_vars(array(
 	'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
 	'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
 	'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
+	'L_VALID_POSTIONS' => $LANG['valid_position_menus'],
+	'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 	'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
     'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
     'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,

@@ -464,6 +464,8 @@ $LANG['display_title'] = 'Display title';
 $LANG['choose_feed_in_list'] = 'Choose a feed in the list';
 $LANG['feed'] = 'feed';
 $LANG['availables_feeds'] = 'Available feeds';
+$LANG['valid_position_menus'] = 'Menus position valid';
+$LANG['theme_management'] = 'Theme management';
 
 $LANG['menu_configurations'] = 'Configurations';
 $LANG['menu_configurations_list'] = 'Menus configurations list';
