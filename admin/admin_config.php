@@ -253,27 +253,19 @@ else //Sinon on rempli le formulaire
 	$i = 0;
 	$modules_config = array();
 	$modules_names = ModulesManager::get_installed_modules_ids_list();
+
 	foreach ($modules_names as $name)
 	{
-		$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
-		if (is_array($array_info))
+		$config_ini = PATH_TO_ROOT . '/' .$name. '/config.ini';
+		$desc_ini = PATH_TO_ROOT . '/' .$name. '/lang/'. get_ulang() . '/desc.ini';
+		if(file_exists($desc_ini))
 		{
-			$array_info['module_name'] = $name;
-			$modules_config[$array_info['name']] = $array_info;
-		}
-	}
-	
-	foreach ($modules_config as $name => $array_info)
-	{
-		if (!empty($array_info['starteable_page']))
-		{
-			$selected = '';
-			if ('/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] == $CONFIG['start_page'])
-			{	
-				$selected = 'selected="selected"';
-				$start_page = $CONFIG['start_page'];
-			}	
-			$select_page .= '<option value="' . '/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] . '" ' . $selected . '>' . $name . '</option>';
+		
+			$GetModuleConfiguration = new ModuleConfiguration($config_ini, $desc_ini);
+			
+			$selected = '/' . $name . '/' . $GetModuleConfiguration->get_home_page() == $CONFIG['start_page'] ? 'selected="selected"' : '';
+			$select_page .= '<option value="' . '/' . $name . '/' . $GetModuleConfiguration->get_home_page() . '" ' . $selected . '>' . $GetModuleConfiguration->get_name() . '</option>';
+		
 			$i++;
 		}
 	}
