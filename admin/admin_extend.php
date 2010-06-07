@@ -39,6 +39,8 @@ $Template->assign_vars(array(
 	'THEME' => get_utheme(),
 	'L_CONFIGURATION' => $LANG['configuration'],
 	'L_INDEX_SITE' => $LANG['site'],
+	'L_SITE' => $LANG['site'],
+	'L_DISCONNECT' => $LANG['disconnect'],
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_SITE_LINK' => $LANG['link_management'],
 	'L_SITE_MENU' => $LANG['menu_management'],

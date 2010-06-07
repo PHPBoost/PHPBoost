@@ -195,7 +195,7 @@ switch($step)
 		if (function_exists('apache_get_modules'))
 		{
 			$get_rewrite = apache_get_modules();
-			$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
+			$check_rewrite = in_array('mod_rewrite', $get_rewrite) ? 1 : 0;
 		}
 		else
 		{
