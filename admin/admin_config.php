@@ -34,6 +34,8 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 
 $check_advanced = !empty($_GET['adv']);
 
+$ServerConfiguration = new ServerConfiguration();
+
 //Variables serveur.
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 if (!$server_path)
@@ -115,7 +117,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
-		'CHECK_REWRITE' 	=> new ServerConfiguration()->has_url_rewriting()has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
+		'CHECK_REWRITE' 	=> $ServerConfiguration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
 		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
 		'GZ_DISABLED' 		=> (!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : '',
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
@@ -237,23 +239,20 @@ else //Sinon on rempli le formulaire
 	}
 	
 	$select_page = '';
-	$start_page = '';
+	
 	//Pages de démarrage
-	$i = 0;
 	$modules_names = ModulesManager::get_installed_modules_ids_list();
-
+	$i = 0;
 	foreach ($modules_names as $name)
 	{
-		$config_ini = PATH_TO_ROOT . '/' .$name. '/config.ini';
-		$desc_ini = PATH_TO_ROOT . '/' .$name. '/lang/'. get_ulang() . '/desc.ini';
-		if(file_exists($desc_ini))
+		$GetModuleConfiguration = ModuleConfigurationManager::get($name);
+		
+		if($GetModuleConfiguration->get_home_page())
 		{
-		
-			$GetModuleConfiguration = new ModuleConfiguration($config_ini, $desc_ini);
-			
-			$selected = '/' . $name . '/' . $GetModuleConfiguration->get_home_page() == $CONFIG['start_page'] ? 'selected="selected"' : '';
-			$select_page .= '<option value="' . '/' . $name . '/' . $GetModuleConfiguration->get_home_page() . '" ' . $selected . '>' . $GetModuleConfiguration->get_name() . '</option>';
-		
+			$get_home_page = '/' . $name . '/' . $GetModuleConfiguration->get_home_page();
+			$selected = $get_home_page == $CONFIG['start_page'] ? 'selected="selected"' : '';
+			$select_page .= '<option value="' . $get_home_page . '" ' . $selected . '>' . $GetModuleConfiguration->get_name() . '</option>';
+
 			$i++;
 		}
 	}
@@ -261,7 +260,7 @@ else //Sinon on rempli le formulaire
 	{
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
-
+	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $CONFIG['theme'],
@@ -269,7 +268,7 @@ else //Sinon on rempli le formulaire
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
 		'SELECT_PAGE' => $select_page, 
-		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
+		'START_PAGE' => $CONFIG['start_page'], 
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',
@@ -277,7 +276,6 @@ else //Sinon on rempli le formulaire
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
-
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
 		'L_CONFIG_MAIN' => $LANG['config_main'],
@@ -300,7 +298,6 @@ else //Sinon on rempli le formulaire
 		'L_REWRITE' => $LANG['rewrite'],
 		'L_ACTIV' 			=> $LANG['activ'],
 		'L_UNACTIVE' 		=> $LANG['unactiv'],
-
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']		
 	));
