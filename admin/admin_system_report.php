@@ -121,9 +121,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 $template->assign_vars(array(
 	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
 	'DBMS_VERSION' => $Sql->get_dbms_version(),
-	'C_SERVER_GD_LIBRARY' => @extension_loaded('gd'),
+	'C_SERVER_GD_LIBRARY' => ServerConfiguration::has_gd_libray(),
 	'C_URL_REWRITING_KNOWN' => function_exists('apache_get_modules'),
-	'C_SERVER_URL_REWRITING' => function_exists('apache_get_modules') ? in_array('mod_rewrite', apache_get_modules()) : false,
+	'C_SERVER_URL_REWRITING' => ServerConfiguration::has_url_rewriting(),
 	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
 	'SERV_SERV_URL' => $server_name,
 	'SERV_SITE_PATH' => $server_path,
