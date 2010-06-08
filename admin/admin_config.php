@@ -89,17 +89,6 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'admin_config2'=> 'admin/admin_config2.tpl'
 	));	
 	
-	//Vérification serveur de l'activation du mod_rewrite.
-	if (function_exists('apache_get_modules'))
-	{	
-		$get_rewrite = apache_get_modules();
-		$check_rewrite = in_array('mod_rewrite', $get_rewrite) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
-	}
-	else
-	{
-		$check_rewrite = '<span class="unspecified_test">' . $LANG['undefined'] . '</span>';
-	}
-	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
@@ -126,9 +115,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
-		'CHECK_REWRITE' 	=> $check_rewrite,
+		'CHECK_REWRITE' 	=> function_exists('apache_get_modules') ? ServerConfiguration::has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>' : '<span class="unspecified_test">' . $LANG['undefined'] . '</span>',
 		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
-		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
+		'GZ_DISABLED' 		=> ServerConfiguration::has_gd_libray() ? '' : 'disabled="disabled"',
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
 		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
@@ -251,7 +240,6 @@ else //Sinon on rempli le formulaire
 	$start_page = '';
 	//Pages de démarrage
 	$i = 0;
-	$modules_config = array();
 	$modules_names = ModulesManager::get_installed_modules_ids_list();
 
 	foreach ($modules_names as $name)
