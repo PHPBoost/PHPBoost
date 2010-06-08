@@ -44,7 +44,7 @@ class ServerConfiguration
 	/**
 	 * @return true if php version fits to phpboost's requirements.
 	 */
-	public static function is_php_compatible()
+	public function is_php_compatible()
 	{
 		return ServerConfiguration::get_phpversion() >= self::MIN_PHP_VERSION;
 	}
@@ -52,7 +52,7 @@ class ServerConfiguration
 	/**
 	 * @return true if GD libray is available, else false.
 	 */
-	public static function has_gd_libray()
+	public function has_gd_libray()
 	{
 		return @extension_loaded('gd');
 	}
@@ -60,7 +60,7 @@ class ServerConfiguration
 	/**
 	 * @return true if url rewriting is available, else false.
 	 */
-	public static function has_url_rewriting()
+	public function has_url_rewriting()
 	{
 		if (function_exists('apache_get_modules'))
 		{
