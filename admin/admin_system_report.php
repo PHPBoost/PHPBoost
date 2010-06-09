@@ -73,13 +73,15 @@ $lang_ini_file = load_ini_file('../lang/', get_ulang());
 $template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', get_ulang());
 
 $directories_summerization = '';
-foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $value)
+$directories_list = array('/', '/cache', '/cache/backup', '/cache/syndication/', '/cache/tpl', '/images/avatars', '/images/group', '/images/maths', '/images/smileys', '/lang', '/menus', '/templates', '/upload');
+foreach ($directories_list as $dir)
 {
+	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
 	$template->assign_block_vars('directories', array(
-		'NAME' => $key,
-		'C_AUTH_DIR' => $value
+		'NAME' => $dir,
+		'C_AUTH_DIR' => $dir_status
 	));
-	$directories_summerization .= $key . str_repeat(' ', 25 - strlen($key)) . ": " . (int)$value . "
+	$directories_summerization .= $dir . str_repeat(' ', 25 - strlen($dir)) . ": " . (int)$dir_status . "
 ";
 }
 
@@ -119,9 +121,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 $template->assign_vars(array(
 	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
 	'DBMS_VERSION' => $Sql->get_dbms_version(),
-	'C_SERVER_GD_LIBRARY' => ServerConfiguration::has_gd_libray(),
+	'C_SERVER_GD_LIBRARY' => @extension_loaded('gd'),
 	'C_URL_REWRITING_KNOWN' => function_exists('apache_get_modules'),
-	'C_SERVER_URL_REWRITING' => new ServerConfiguration()->has_url_rewriting(),
+	'C_SERVER_URL_REWRITING' => function_exists('apache_get_modules') ? !empty($temp_var[5]) : false,
 	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
 	'SERV_SERV_URL' => $server_name,
 	'SERV_SITE_PATH' => $server_path,
