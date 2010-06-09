@@ -172,8 +172,10 @@ class Environment
 		define('MODO_LEVEL', 		1);
 		define('MODERATOR_LEVEL', 	1);
 		define('ADMIN_LEVEL', 		2);
+		
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
+		
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
@@ -191,6 +193,7 @@ class Environment
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
+		define('AUTH_READ_MEMBERS', 1);
 
 		### Variable types ###
 		define('GET', 		1);

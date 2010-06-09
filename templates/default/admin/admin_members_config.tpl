@@ -137,8 +137,20 @@
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{AVATAR_URL}" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
+					
 				</fieldset>
-				
+				<fieldset>
+					<legend>{L_AUTH_MEMBERS}</legend>
+					<p>{L_AUTH_READ_MEMBERS_EXPLAIN}</p>
+					<dl>
+						<dt>
+							<label for="auth_read_members">{L_AUTH_READ_MEMBERS}</label>
+						</dt>
+						<dd>
+							{AUTH_READ_MEMBERS}
+						</dd>
+					</dl>
+				</fieldset>
 				<fieldset>
 					<legend>{L_USERS_MSG}</legend>
 					<label for="contents">* {L_CONTENTS}</label>

@@ -48,6 +48,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	$user_account_config->set_max_avatar_width(retrieve(POST, 'width_max', 120));
 	$user_account_config->set_max_avatar_height(retrieve(POST, 'height_max', 120));
 	$user_account_config->set_max_avatar_weight(retrieve(POST, 'weight_max', 20));
+	$user_account_config->set_auth_read_members(Authorizations::build_auth_array_from_form(AUTH_READ_MEMBERS));
 	
 	UserAccountsConfig::save();
 	
@@ -77,7 +78,7 @@ else
 			'SELECTED' => ($user_account_config->get_registration_captcha_difficulty() == $i) ? 'selected="selected"' : ''
 		));
 	}
-	
+
 	$Template->assign_vars(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
 		'ACTIV_REGISTER_ENABLED' => $user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
@@ -95,9 +96,13 @@ else
 		'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
 		'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
 		'AVATAR_URL' => $user_account_config->get_default_avatar_name(),
+		'AUTH_READ_MEMBERS' => Authorizations::generate_select(AUTH_READ_MEMBERS, $user_account_config->get_auth_read_members()),
 		'CONTENTS' => FormatingHelper::unparse($user_account_config->get_welcome_message()),
 		'KERNEL_EDITOR' => display_editor(),
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
+		'L_AUTH_MEMBERS' => $LANG['auth_members'],
+		'L_AUTH_READ_MEMBERS' => $LANG['auth_read_members'],
+		'L_AUTH_READ_MEMBERS_EXPLAIN' => $LANG['auth_read_members_explain'],
 		'L_KB' => $LANG['unit_kilobytes'],
 		'L_PX' => $LANG['unit_pixels'],
 		'L_ACTIV_REGISTER' => $LANG['activ_register'],

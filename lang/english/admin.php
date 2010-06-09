@@ -298,6 +298,9 @@ $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete t
 	
 //Config
 $LANG['config_main'] = 'Main configuration';
+$LANG['auth_members'] = 'Permissions';
+$LANG['auth_read_members'] = 'Configuration read permissions';
+$LANG['auth_read_members_explain'] = 'Here you define the permissions for reading the list of members and so hide some personal information to a member as email.';
 $LANG['config_advanced'] = 'Advanced configuration';
 $LANG['config_mail'] = 'Mail sending';
 $LANG['serv_name'] = 'Server name';
