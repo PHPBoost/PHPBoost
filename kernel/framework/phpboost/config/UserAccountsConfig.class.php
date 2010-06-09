@@ -455,7 +455,7 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	/**
 	 * Returns the authorization to read members all
-	 * @return int The weight in kilobytes
+	 * @return array The array of authorizations.
 	 */
 	public function get_auth_read_members()
 	{
@@ -464,7 +464,7 @@ class UserAccountsConfig extends AbstractConfigData
 
 	/**
 	 * Sets the authorization to read members all
-	 * @param int $height The weight in kilobytes
+	 * @param array The array of authorizations.
 	 */
 	public function set_auth_read_members($auth)
 	{
