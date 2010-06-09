@@ -194,7 +194,8 @@ switch($step)
 		//Url rewriting
 		if (function_exists('apache_get_modules'))
 		{
-			$check_rewrite = new ServerConfiguration()->has_url_rewriting() ? 1 : 0;
+			$get_rewrite = apache_get_modules();
+			$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
 		}
 		else
 		{
@@ -204,7 +205,7 @@ switch($step)
 		$template->assign_vars(array(
     		'C_SERVER_CONFIG' => true,
     		'C_PHP_VERSION_OK' => ServerConfiguration::get_phpversion() >= '4.1.0',
-    		'C_GD_LIBRAIRY_ENABLED' => new ServerConfiguration()->has_gd_libray(),
+    		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
     		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
     		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
 		));
