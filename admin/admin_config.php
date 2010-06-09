@@ -247,7 +247,7 @@ else //Sinon on rempli le formulaire
 	{
 		$GetModuleConfiguration = ModuleConfigurationManager::get($name);
 		
-		if($GetModuleConfiguration->get_home_page())
+		if ($GetModuleConfiguration->get_home_page())
 		{
 			$get_home_page = '/' . $name . '/' . $GetModuleConfiguration->get_home_page();
 			$selected = $get_home_page == $CONFIG['start_page'] ? 'selected="selected"' : '';

@@ -297,6 +297,9 @@ $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprime
 
 //Config
 $LANG['config_main'] = 'Configuration générale';
+$LANG['auth_members'] = 'Permissions';
+$LANG['auth_read_members'] = 'Configuration des autorisations de lecture';
+$LANG['auth_read_members_explain'] = 'Vous définissez ici les permissions de lecture de la liste des membres et ainsi cacher certains informations personnels d\'un membre comme l\'email.';
 $LANG['config_advanced'] = 'Configuration avancée';
 $LANG['config_mail'] = 'Envoi de mail';
 $LANG['serv_name'] = 'URL du serveur';

@@ -102,6 +102,11 @@ class UserAccountsConfig extends AbstractConfigData
 	const MAX_AVATAR_WEIGHT_PROPERTY = 'max_avatar_weight';
 
 	/**
+	 * Name of the property containing the authorization read member all
+	 */
+	const AUTH_READ_MEMBERS = 'auth_read_members';
+	
+	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
 	 * mail it receives, 2 if the administrator has to approbate it.
@@ -447,6 +452,24 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::MAX_AVATAR_WEIGHT_PROPERTY, $weight);
 	}
+	
+	/**
+	 * Returns the authorization to read members all
+	 * @return int The weight in kilobytes
+	 */
+	public function get_auth_read_members()
+	{
+		return $this->get_property(self::AUTH_READ_MEMBERS);
+	}
+
+	/**
+	 * Sets the authorization to read members all
+	 * @param int $height The weight in kilobytes
+	 */
+	public function set_auth_read_members($auth)
+	{
+		$this->set_property(self::AUTH_READ_MEMBERS, $auth);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -469,7 +492,8 @@ class UserAccountsConfig extends AbstractConfigData
 			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
-			self::MAX_AVATAR_WEIGHT_PROPERTY => 20
+			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,
+			self::AUTH_READ_MEMBERS => 'a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}'
 		);
 	}
 
