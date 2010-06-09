@@ -589,16 +589,19 @@
 					<dd><div>{USER_DESC}</div></dd>
 				</dl>
 			</fieldset>
-			
+			# IF C_AUTH_READ_CONTACT #
 			<fieldset>
 				<legend>{L_CONTACT}</legend>
-				<dl>
-					<dt>{L_MAIL}</dt>
-					<dd>{MAIL}</dd>
-				</dl>
+				# IF C_USER_CONNECTED #
 				<dl>
 					<dt>{L_PRIVATE_MESSAGE}</dt>
 					<dd><a href="pm{U_USER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a></dd>
+				</dl>
+				# ENDIF #
+				# IF C_AUTH_READ_MEMBERS #
+				<dl>
+					<dt>{L_MAIL}</dt>
+					<dd>{MAIL}</dd>
 				</dl>
 				<dl>
 					<dt>MSN</dt>
@@ -608,8 +611,9 @@
 					<dt>Yahoo</dt>
 					<dd>{USER_YAHOO}</dd>
 				</dl>
+				# ENDIF #
 			</fieldset>
-			
+			# ENDIF #
 			# IF C_PROFIL_MISCELLANEOUS #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>						
