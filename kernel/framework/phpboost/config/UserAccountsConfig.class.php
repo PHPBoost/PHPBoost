@@ -493,7 +493,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
 			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,
-			self::AUTH_READ_MEMBERS => 'a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}'
+			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1)
 		);
 	}
 
