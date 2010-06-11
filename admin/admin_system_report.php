@@ -30,6 +30,8 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+$server_configuration = new ServerConfiguration();
+
 $template = new FileTemplate('admin/admin_system_report.tpl');
 
 $template->assign_vars(array(
@@ -61,8 +63,7 @@ $template->assign_vars(array(
 	'L_SUMMERIZATION_EXPLAIN' => $LANG['system_report_summerization_explain']
 ));
 
-//Temp variables
-$temp_var = function_exists('apache_get_modules') ? apache_get_modules() : array();
+
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 if (!$server_path)
 	$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
@@ -73,15 +74,13 @@ $lang_ini_file = load_ini_file('../lang/', get_ulang());
 $template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', get_ulang());
 
 $directories_summerization = '';
-$directories_list = array('/', '/cache', '/cache/backup', '/cache/syndication/', '/cache/tpl', '/images/avatars', '/images/group', '/images/maths', '/images/smileys', '/lang', '/menus', '/templates', '/upload');
-foreach ($directories_list as $dir)
+foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $value)
 {
-	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
 	$template->assign_block_vars('directories', array(
-		'NAME' => $dir,
-		'C_AUTH_DIR' => $dir_status
+		'NAME' => $key,
+		'C_AUTH_DIR' => $value
 	));
-	$directories_summerization .= $dir . str_repeat(' ', 25 - strlen($dir)) . ": " . (int)$dir_status . "
+	$directories_summerization .= $key . str_repeat(' ', 25 - strlen($key)) . ": " . (int)$value . "
 ";
 }
 
@@ -92,9 +91,9 @@ $summerization =
 SERVER CONFIGURATION-----------------------------------------------------------
 
 php version              : " . ServerConfiguration::get_phpversion() . "
-dbms version             : " . $Sql->get_dbms_version() . "
-gd library               : " . (int)@extension_loaded('gd') . "
-url rewriting            : " . (function_exists('apache_get_modules') ? (int)!empty($temp_var[5]) : "?") . "
+dbms version             : " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
+gd library               : " . (int)$server_configuration->has_gd_libray() . "
+url rewriting            : " . (int)$server_configuration->has_url_rewriting() . "
 register globals         : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
 server url               : " . $server_name . "
 site path                : " . $server_path  . "
@@ -105,7 +104,7 @@ phpboost version         : " . Environment::get_phpboost_version() . "
 server url               : " . $CONFIG['server_name'] . "
 site path                : " . $CONFIG['server_path']  . "
 default theme            : " . $template_ini_file['name'] . "
-default language         : " . get_ulang() . "
+default language         : " . $lang_ini_file['name'] . "
 default editor           : " . $CONFIG['editor'] . "
 start page               : " . $CONFIG['start_page'] . "
 url rewriting            : " . $CONFIG['rewrite'] . "
@@ -120,10 +119,10 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 $template->assign_vars(array(
 	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
-	'DBMS_VERSION' => $Sql->get_dbms_version(),
-	'C_SERVER_GD_LIBRARY' => @extension_loaded('gd'),
+	'DBMS_VERSION' => PersistenceContext::get_dbms_utils()->get_dbms_version(),
+	'C_SERVER_GD_LIBRARY' => $server_configuration->has_gd_libray(),
 	'C_URL_REWRITING_KNOWN' => function_exists('apache_get_modules'),
-	'C_SERVER_URL_REWRITING' => function_exists('apache_get_modules') ? !empty($temp_var[5]) : false,
+	'C_SERVER_URL_REWRITING' => $server_configuration->has_url_rewriting(),
 	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
 	'SERV_SERV_URL' => $server_name,
 	'SERV_SITE_PATH' => $server_path,
