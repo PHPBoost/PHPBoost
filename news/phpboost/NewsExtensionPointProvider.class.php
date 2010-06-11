@@ -44,6 +44,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
+		global $LANG;
 		//Récupération du tableau linéarisé dans la bdd
 		$news_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
@@ -56,7 +57,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		$string .= '$NEWS_CAT[0] = ' .
 		var_export(array(
-					'auth' =>$news_config['global_auth']
+					'name' => $LANG['root'],
+					'auth' => $news_config['global_auth']
 			), true) . ';' . "\n\n";
 		
 		while ($row = $this->sql_querier->fetch_assoc($result))

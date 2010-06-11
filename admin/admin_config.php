@@ -34,6 +34,8 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 
 $check_advanced = !empty($_GET['adv']);
 
+$server_configuration = new ServerConfiguration();
+
 //Variables serveur.
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 if (!$server_path)
@@ -46,27 +48,16 @@ $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'
 //Si c'est confirmé on exécute
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
-	//Gestion de la page de démarrage.
-	if (!empty($_POST['start_page2']) )
-	{
-		$start_page = TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT);
-	}
-	elseif (!empty($_POST['start_page']))
-	{
-		$start_page = TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT);
-	}
-	else
-	{
-		$start_page = '';
-	}
-		
+	// Page de démarrage
+	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
+
 	$config = $CONFIG;	 
 	$config['site_name'] 	= stripslashes(retrieve(POST, 'site_name', ''));	
 	$config['site_desc'] 	= stripslashes(retrieve(POST, 'site_desc', ''));
 	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['start_page'] 	= !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
+	$config['start_page'] 	= stripslashes($start_page);
 	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
@@ -88,17 +79,6 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	$Template->set_filenames(array(
 		'admin_config2'=> 'admin/admin_config2.tpl'
 	));	
-	
-	//Vérification serveur de l'activation du mod_rewrite.
-	if (function_exists('apache_get_modules'))
-	{	
-		$get_rewrite = apache_get_modules();
-		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
-	}
-	else
-	{
-		$check_rewrite = '<span class="unspecified_test">' . $LANG['undefined'] . '</span>';
-	}
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -126,7 +106,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
-		'CHECK_REWRITE' 	=> $check_rewrite,
+		'CHECK_REWRITE' 	=> $server_configuration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
 		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
@@ -224,7 +204,6 @@ elseif (!empty($_POST['advanced']))
 		}
 		
 		//Régénération du htaccess.
-		
 		HtaccessFileCache::regenerate();
 			
 		AppContext::get_response()->redirect($host . $dir . '/admin/admin_config.php?adv=1');
@@ -235,7 +214,7 @@ elseif (!empty($_POST['advanced']))
 	}
 }
 else //Sinon on rempli le formulaire	 
-{		
+{	
 	$Template->set_filenames(array(
 		'admin_config'=> 'admin/admin_config.tpl'
 	));
@@ -247,35 +226,24 @@ else //Sinon on rempli le formulaire
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	}
 	
-	$select_page = '';
-	$start_page = '';
 	//Pages de démarrage
+	$select_page = '';
+	$start_page = array();
 	$i = 0;
-	$modules_config = array();
-	$modules_names = ModulesManager::get_installed_modules_ids_list();
-	foreach ($modules_names as $name)
+	foreach (ModulesManager::get_installed_modules_ids_list() as $name)
 	{
-		$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
-		if (is_array($array_info))
+		$module_configuration = ModuleConfigurationManager::get($name);
+		
+		if ($module_configuration->get_home_page())
 		{
-			$array_info['module_name'] = $name;
-			$modules_config[$array_info['name']] = $array_info;
-		}
-	}
-	
-	foreach ($modules_config as $name => $array_info)
-	{
-		if (!empty($array_info['starteable_page']))
-		{
-			$selected = '';
-			if ('/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] == $CONFIG['start_page'])
-			{	
-				$selected = 'selected="selected"';
-				$start_page = $CONFIG['start_page'];
-			}	
-			$select_page .= '<option value="' . '/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] . '" ' . $selected . '>' . $name . '</option>';
+			$get_home_page = '/' . $name . '/' . $module_configuration->get_home_page();
+			$selected = $get_home_page == $CONFIG['start_page'] ? 'selected="selected"' : '';
+			$start_page[] = $get_home_page;
+			$select_page .= '<option value="' . $get_home_page . '" ' . $selected . '>' . $module_configuration->get_name() . '</option>';
+			
 			$i++;
 		}
+		
 	}
 	if ($i == 0)
 	{
@@ -289,7 +257,7 @@ else //Sinon on rempli le formulaire
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
 		'SELECT_PAGE' => $select_page, 
-		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
+		'START_PAGE' => !in_array($CONFIG['start_page'], $start_page) ? $CONFIG['start_page'] : '', 
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',
@@ -297,7 +265,6 @@ else //Sinon on rempli le formulaire
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
-
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
 		'L_CONFIG_MAIN' => $LANG['config_main'],
@@ -320,92 +287,47 @@ else //Sinon on rempli le formulaire
 		'L_REWRITE' => $LANG['rewrite'],
 		'L_ACTIV' 			=> $LANG['activ'],
 		'L_UNACTIVE' 		=> $LANG['unactiv'],
-
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']		
 	));
 
 	//Gestion langue par défaut.
-	
-	$lang_array = array();
-	$lang_folder_path = new Folder('../lang/');
-	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
-	{
-		$lang_array[] = $lang->get_name();
-	}
-	
-	$lang_array_bdd = array();
-	$result = $Sql->query_while("SELECT lang 
-	FROM " . PREFIX . "lang", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		//On recherche les clées correspondante à celles trouvée dans la bdd.
-		if (array_search($row['lang'], $lang_array) !== false)
-		{
-			$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
-		}
-	}
-	$Sql->query_close($result);
-	
 	$array_identifier = '';
-	$lang_identifier = '../images/stats/other.png';
-	foreach ($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
+	foreach ($LANGS_CONFIG as $lang => $array_info) 
 	{
-		$lang_info = load_ini_file('../lang/', $lang_value);
-		if ($lang_info)
-		{
-			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang_value;
+		if ($array_info['activ'] == 1)
+    	{
+			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
+			$selected = ($lang == $CONFIG['lang']) ? ' selected="selected"' : '';
 			
-			$array_identifier .= 'array_identifier[\'' . $lang_value . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-			$selected = '';
-			if ($lang_value == $CONFIG['lang'])
-			{
-				$selected = 'selected="selected"';
-				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-			}
-			$Template->assign_block_vars('select_lang', array(
-				'LANG' => '<option value="' . $lang_value . '" ' . $selected . '>' . $lang_name . '</option>'
-			));
-		}
-	}
+    		$Template->assign_block_vars('select_lang', array(
+				'LANG' => '<option value="' . $lang . '" ' . $selected . '>' . $info_lang['name'] . '</option>'
+    		));
+			
+			$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
+			
+			if ($lang == $CONFIG['lang'])
+				$lang_identifier = $info_lang['identifier'];
+    	}
+	}	
+	
 	$Template->assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
-		'IMG_LANG_IDENTIFIER' => $lang_identifier
+		'IMG_LANG_IDENTIFIER' => '../images/stats/countries/' . $lang_identifier. '.png'
 	));
 	
-	//On recupère les dossier des thèmes contents dans le dossier templates.
-	$tpl_array = array();
-	$lang_folder_path = new Folder('../templates/');
-	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
+	// Thème par defaut.
+	foreach ($THEME_CONFIG as $theme => $array_info) 
 	{
-		$tpl_array[] = $lang->get_name();
-	}
-		
-	$theme_array_bdd = array();
-	$result = $Sql->query_while("SELECT theme 
-	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		//On recherche les clées correspondante à celles trouvée dans la bdd.
-		if (array_search($row['theme'], $tpl_array) !== false)
-		{
-			$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
-		}
-	}
-	$Sql->query_close($result);
-	
-	foreach ($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
-	{
-		$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
-		if ($theme_info)
-		{
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
-			$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
-			$Template->assign_block_vars('select', array(
-				'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
-			));
-		}
-	}
+		if ($theme !== 'default' && $array_info['activ'] == 1)
+    	{
+			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
+			$selected = ($theme == $CONFIG['theme']) ? ' selected="selected"' : '';
+    		$Template->assign_block_vars('select', array(
+				'THEME' => '<option value="' . $theme . '" ' . $selected . '>' . $info_theme['name'] . '</option>'
+    		));
+    	}
+	}	
 	
 	$Template->pparse('admin_config');
 }
