@@ -31,12 +31,12 @@
  ####################################################
 
 $lang = array(
-	'media_name' => 'First video file'',
+	'media_name' => 'First video file',
 	'media_contents' => 'Demonstration of a video file.',
 	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
 	
     'media_name_cat' => 'First video category',
-    'media_contents_cat' => ''This category contains video files.',
+    'media_contents_cat' => 'This category contains video files.',
 	'media_icon_cat' => '../media/templates/images/video.png'
 );
 
