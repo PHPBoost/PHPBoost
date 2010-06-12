@@ -311,8 +311,8 @@ class DefaultTemplateData implements TemplateData
 	 */
 	public function auto_load_frequent_vars()
 	{
-		global $User, $Session;
-		$member_connected = $User->check_level(MEMBER_LEVEL);
+		$session = AppContext::get_session();
+		$member_connected = AppContext::get_user()->check_level(MEMBER_LEVEL);
 		$this->assign_vars(array(
 			'SID' => SID,
 			'THEME' => get_utheme(),
@@ -321,7 +321,7 @@ class DefaultTemplateData implements TemplateData
 			'C_USER_NOTCONNECTED' => !$member_connected,
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
-			'TOKEN' => !empty($Session) ? $Session->get_token() : ''
+			'TOKEN' => !empty($session) ? $session->get_token() : ''
 			));
 	}
 
