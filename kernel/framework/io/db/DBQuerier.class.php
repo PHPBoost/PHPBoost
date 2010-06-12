@@ -134,7 +134,7 @@ class DBQuerier implements SQLQuerier
 	 * @desc delete all the row from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
-	 * @param string $condition the update condition beginning just after the where clause.
+	 * @param string $condition the update condition beginning just after the from clause.
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */

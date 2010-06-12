@@ -322,7 +322,7 @@ class DefaultTemplateData implements TemplateData
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($session) ? $session->get_token() : ''
-			));
+		));
 	}
 
 	private function find_lang_var($varname)
