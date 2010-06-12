@@ -190,6 +190,7 @@ class InstallationServices
 		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
 		MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
 		MenuService::save($modules_menu);
+		MenuService::generate_cache();
 	}
 
 	private function generate_cache()
