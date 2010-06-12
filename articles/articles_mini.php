@@ -44,6 +44,8 @@ function articles_mini($position, $block)
 	$note = false;
 	$date = false;
 	$view = false;
+	// FIXME update the article module and then correct this mini module
+	/*
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);
 	$sort = 'date';
 	switch ($mini_conf['type'])
@@ -109,7 +111,7 @@ function articles_mini($position, $block)
 		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article'],
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
     ));
-
+    */
     return $tpl->to_string();
 }
 

@@ -89,13 +89,18 @@ function poll_mini($position, $block)
     		$z = 0;
     		if ($poll_mini['type'] == '1')
     		{
-    			foreach ($poll_mini['votes'] as $answer => $width)
+    			
+    			if (is_array($poll_mini['votes']))
     			{
-    				$tpl->assign_block_vars('question.radio', array(
-    					'NAME' => $z,
-    					'ANSWERS' => $answer
-    				));
-    				$z++;
+    			    // FIXME should always be an array, needs to patch cache generation
+	    			foreach ($poll_mini['votes'] as $answer => $width)
+	    			{
+	    				$tpl->assign_block_vars('question.radio', array(
+	    					'NAME' => $z,
+	    					'ANSWERS' => $answer
+	    				));
+	    				$z++;
+	    			}
     			}
     		}
     		elseif ($poll_mini['type'] == '0')
