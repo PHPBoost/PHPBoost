@@ -53,6 +53,10 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
         {
             $this->add_option($option);
         }
+    	if (is_string($value))
+    	{
+    		$this->set_value($this->get_option($value));
+    	}
     }
 
     /**
