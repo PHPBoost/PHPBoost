@@ -75,9 +75,9 @@ class MediaSetup extends DefaultModuleSetup
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'url' => array('type' => 'text', 'length' => 2048),
 			'mime_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
-			'infos' => array('type' => 'decimal', 'scale' => 6, 'notnull' => 1, 'default' => 0),
-			'width' => array('type' => 'decimal', 'scale' => 9, 'notnull' => 1, 'default' => 100),
-			'height' => array('type' => 'decimal', 'scale' => 9, 'notnull' => 1, 'default' => 100),
+			'infos' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
+			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
+			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'users_note' => array('type' => 'text', 'length' => 2048),
 			'nbr_note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -88,8 +88,9 @@ class MediaSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'name' => array('type' => 'key', 'fields' => 'name'),
-				'contents' => array('type' => 'key', 'fields' => 'contents')
+				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
+				'name' => array('type' => 'fulltext', 'fields' => 'name'),
+				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$media_table, $fields, $options);
 	}
@@ -148,16 +149,16 @@ class MediaSetup extends DefaultModuleSetup
 	private function insert_media_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$media_cats_table, array(
-			'id' => 1
-			'id_parent' => 0
-			'c_order' => 1
-			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;}'
-			'name' => $this->messages['media_name_cat']
-			'visible' => 1
-			'mime_type' => 2
-			'activ' => 7914
-			'descriptios' => $this->messages['media_contents_cat']
-			'image' => $this->messages['media_icon_cat']
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;}',
+			'name' => $this->messages['media_name_cat'],
+			'visible' => 1,
+			'mime_type' => 2,
+			'activ' => 7914,
+			'descriptios' => $this->messages['media_contents_cat'],
+			'image' => $this->messages['media_icon_cat'],
 			'num_media' => 3
 		));
 	}
