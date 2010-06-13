@@ -36,7 +36,15 @@ define('NOTE_DISPLAY_BLOCK', 0x04);
  */
 class Note
 {
-	## Public Methods ##
+	private $script = '';
+	private $idprov = 0;
+	private $path = '';
+	private $script_path = '';
+	private $module_folder = '';
+	private $options = '';
+	private $sql_table = '';
+	private $notation_scale = '';
+
 	/**
 	 * @desc Create an new object Note.
 	 * @param string $script The module name in which the pagination is used.
@@ -47,12 +55,12 @@ class Note
 	 * @param string $module_folder (optional) The folder where the module is located. It allow you to specify a different module location
 	 * @param int $options
 	 */
-	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0)
+	public function __construct($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0)
 	{
 		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
 		$this->options = (int)$options;
 		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(TextHelper::strprotect($script), NumberHelper::numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
-		$this->sql_table = $this->_get_table_module();
+		$this->sql_table = $this->get_module_table();
 	}
 	
 	/**
@@ -60,7 +68,7 @@ class Note
 	 * @param int $note The note given by the user.
 	 * @return Return a string used in the ajax file, to update the notation. If an error occur, return an error code.
 	 */
-	function add($note)
+	public function add($note)
 	{
 		global $Sql, $User;
 		
@@ -91,7 +99,7 @@ class Note
 	 * @param object $template Template object to use another template file.
 	 * @return string the parsed template.
 	 */
-	function display_form($template = false)
+	public function display_form($template = false)
 	{
 		global $CONFIG, $Sql, $LANG, $Session;
 		
@@ -99,7 +107,7 @@ class Note
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->script_path), 0);
 
 		//Notes chargées?
-		if ($this->_note_loaded()) //Utilisateur connecté.
+		if ($this->is_correctly_loaded()) //Utilisateur connecté.
 		{
 			if (!is_object($template) || !($template instanceof Template))
 			$template = new template('framework/note.tpl');
@@ -189,7 +197,7 @@ class Note
 	 * @return string The notation with images.
 	 * @static
 	 */
-	/* static */ function display_img($note, $notation_scale, $num_stars_display = 0)
+	public static function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;
 		
@@ -228,17 +236,16 @@ class Note
 	 * @param string $varname
 	 * @return unknown_type
 	 */
-	function get_attribute($varname)
+	public function get_attribute($varname)
 	{
 		return $this->$varname;
 	}
 	
-	## Private Methods ##
 	/**
 	 * @desc Check if the notation system is correctly loaded.
 	 * @return bool
 	 */
-	function _note_loaded()
+	private function is_correctly_loaded()
 	{
 		global $Errorh;
 		
@@ -252,7 +259,7 @@ class Note
 	 * @desc Get the sql table of the associated module
 	 * @return string The sql table of the associated module
 	 */
-	function _get_table_module()
+	private function get_module_table()
 	{
 		global $Sql, $CONFIG;
 
@@ -271,16 +278,6 @@ class Note
 		
 		return $check_script ? $info_module['note'] : '0';
 	}
-	
-	## Private attributes ##
-	var $script = '';
-	var $idprov = 0;
-	var $path = '';
-	var $script_path = '';
-	var $module_folder = '';
-	var $options = '';
-	var $sql_table = '';
-	var $notation_scale = '';
 }
 
 ?>
