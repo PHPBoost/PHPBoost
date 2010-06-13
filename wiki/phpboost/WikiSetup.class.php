@@ -70,6 +70,7 @@ class WikiSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_contents' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			'encoded_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'hits' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_cat' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -128,7 +129,7 @@ class WikiSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'article_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'id_article' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id')
