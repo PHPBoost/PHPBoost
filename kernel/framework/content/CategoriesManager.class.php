@@ -645,7 +645,7 @@ class CategoriesManager
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
 		
-		$template = $reference_template->copy();
+		$template = clone $reference_template;
 		
 		$template->assign_vars(array(
 			'C_AJAX_MODE' => $ajax_mode,

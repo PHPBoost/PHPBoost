@@ -294,9 +294,22 @@ class MenuService
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__LEFT] = \'\';';
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__RIGHT] = \'\';';
 		$cache_str .= 'global $User;' . "\n";
-
+		
 		$menus_map = MenuService::get_menus_map();
-
+//        unset($menus_map[1][0]);
+//        unset($menus_map[2][0]);
+//        unset($menus_map[5][0]);
+//        unset($menus_map[7][0]);
+//        unset($menus_map[7][1]);
+//        unset($menus_map[7][2]);
+//        unset($menus_map[7][3]);
+//        unset($menus_map[8][0]);
+//        unset($menus_map[8][1]);
+//        unset($menus_map[8][2]);
+//        unset($menus_map[8][3]);
+//        unset($menus_map[8][4]);
+//        Debug::dump($menus_map);
+		
 		foreach ($menus_map as $block => $block_menus)
 		{
 			if ($block != Menu::BLOCK_POSITION__NOT_ENABLED)

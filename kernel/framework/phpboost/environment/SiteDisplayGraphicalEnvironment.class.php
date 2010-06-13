@@ -135,13 +135,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//Inclusion des blocs
 		if (Debug::is_debug_mode_enabled())
 		{
-			$result = include_once(PATH_TO_ROOT . '/cache/menus.php');
-		}
-		else
-		{
 			$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');
 		}
-		
 		if (!$result)
 		{
 			global $Cache, $Errorh;
