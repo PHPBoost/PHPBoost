@@ -97,7 +97,7 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == Sitemap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
@@ -134,7 +134,7 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		{
 			$id = $keys[$j];
 			$properties = $_PAGES_CATS[$id];
-			if ($auth_mode == Sitemap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
 			}
