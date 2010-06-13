@@ -165,7 +165,7 @@ class Sitemap
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	public function build($mode = self::SEARCH_ENGINE_MODE, $auth_mode = self::AUTH_GUEST)
+	public function build($mode = self::SEARCH_ENGINE_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
 		$this->build_kernel_map($mode, $auth_mode);
 		$this->build_modules_maps($auth_mode);
@@ -175,13 +175,13 @@ class Sitemap
 	 * @desc Adds to the site map all maps of the installed modules
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	private function build_modules_maps($auth_mode = self::AUTH_GUEST)
+	private function build_modules_maps($auth_mode = self::AUTH_PUBLIC)
 	{
 		$modules = AppContext::get_extension_provider_service();
 		foreach ($modules->get_providers('sitemap') as $provider)
 		{
 			$sitemap_provider = $provider->sitemap();
-			if ($auth_mode == self::AUTH_GUEST)
+			if ($auth_mode == self::AUTH_PUBLIC)
 			{
 				$module_map = $sitemap_provider->get_public_sitemap();
 			}
@@ -198,7 +198,7 @@ class Sitemap
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
+	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
 		global $CONFIG, $LANG, $User;
 			
