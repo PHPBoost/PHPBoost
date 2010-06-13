@@ -52,7 +52,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
+	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
 		if (strpos($block_name, '.') !== false) //Bloc imbriqué.
 		{
@@ -82,7 +82,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function add_lang(array $lang)
+	public function add_lang(array $lang)
 	{
 		$this->langs[] = $lang;
 	}
@@ -90,7 +90,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function add_subtemplate($identifier, Template $template)
+	public function add_subtemplate($identifier, Template $template)
 	{
 		$this->subtemplates[$identifier] =& $template;
 	}
@@ -98,7 +98,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_subtemplate($identifier)
+	public function get_subtemplate($identifier)
 	{
 		if (isset($this->subtemplates[$identifier]))
 		{
@@ -110,7 +110,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_subtemplate_from_list($identifier, $list)
+	public function get_subtemplate_from_list($identifier, $list)
 	{
 		if (isset($list[$identifier]))
 		{
@@ -122,7 +122,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_block($blockname)
+	public function get_block($blockname)
 	{
 		return $this->get_block_from_list($blockname, $this->blocks);
 	}
@@ -130,7 +130,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_block_from_list($blockname, $parent_block)
+	public function get_block_from_list($blockname, $parent_block)
 	{
 		if (isset($parent_block[$blockname]) && is_array($parent_block[$blockname]))
 		{
@@ -142,7 +142,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function is_true($varname)
+	public function is_true($varname)
 	{
 		return $this->is_true_from_list($varname, $this->vars);
 	}
@@ -150,7 +150,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function is_true_from_list($varname, $list)
+	public function is_true_from_list($varname, $list)
 	{
 		return isset($list[$varname]) && $list[$varname];
 	}
@@ -158,7 +158,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_var($varname)
+	public function get_var($varname)
 	{
 		return $this->get_var_from_list($varname, $this->vars);
 	}
@@ -166,7 +166,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_var_from_list($varname, &$list)
+	public function get_var_from_list($varname, &$list)
 	{
 		if (isset($list[$varname]))
 		{
@@ -179,7 +179,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_js_var($varname)
+	public function get_js_var($varname)
 	{
 		return $this->get_js_var_from_list($varname, $this->vars);
 	}
@@ -187,7 +187,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_js_var_from_list($varname, &$list)
+	public function get_js_var_from_list($varname, &$list)
 	{
 		$full_varname = 'J_' . $varname;
 		if (!empty($list[$full_varname]))
@@ -205,7 +205,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_js_lang_var($varname)
+	public function get_js_lang_var($varname)
 	{
 		return $this->get_js_lang_var_from_list($varname, $this->vars);
 	}
@@ -213,7 +213,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_js_lang_var_from_list($varname, &$list)
+	public function get_js_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'JL_' . $varname;
 		if (!empty($list[$full_varname]))
@@ -228,7 +228,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_htmlescaped_lang_var($varname)
+	public function get_htmlescaped_lang_var($varname)
 	{
 		return $this->get_htmlescaped_lang_var_from_list($varname, $this->vars);
 	}
@@ -236,7 +236,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_htmlescaped_lang_var_from_list($varname, &$list)
+	public function get_htmlescaped_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'EL_' . $varname;
 		if (!empty($list[$full_varname]))
@@ -251,7 +251,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_htmlescaped_var($varname)
+	public function get_htmlescaped_var($varname)
 	{
 		return $this->get_htmlescaped_var_from_list($varname, $this->vars);
 	}
@@ -259,7 +259,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_htmlescaped_var_from_list($varname, &$list)
+	public function get_htmlescaped_var_from_list($varname, &$list)
 	{
 		$full_varname = 'E_' . $varname;
 		if (!empty($list[$full_varname]))
@@ -279,7 +279,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_lang_var($varname)
+	public function get_lang_var($varname)
 	{
 		return $this->get_lang_var_from_list($varname, $this->vars);
 	}
@@ -287,7 +287,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_lang_var_from_list($varname, &$list)
+	public function get_lang_var_from_list($varname, &$list)
 	{
 		$full_varname = 'L_' . $varname;
 		if (!empty($list[$full_varname]))
@@ -322,7 +322,7 @@ class DefaultTemplateData implements TemplateData
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($session) ? $session->get_token() : ''
-		));
+			));
 	}
 
 	private function find_lang_var($varname)

@@ -78,7 +78,7 @@ class SitemapExportConfig
 	 */
 	public function get_site_map_stream()
 	{
-		return $this->site_map_file->copy();
+		return clone $this->site_map_file;
 	}
 
 	/**
@@ -87,7 +87,7 @@ class SitemapExportConfig
 	 */
 	public function get_module_map_stream()
 	{
-		return $this->module_map_file->copy();
+		return clone $this->module_map_file;
 	}
 
 	/**
@@ -96,7 +96,7 @@ class SitemapExportConfig
 	 */
 	public function get_section_stream()
 	{
-		return $this->section_file->copy();
+		return clone $this->section_file;
 	}
 
 	/**
@@ -105,7 +105,7 @@ class SitemapExportConfig
 	 */
 	public function get_link_stream()
 	{
-		return $this->link_file->copy();
+		return clone $this->link_file;
 	}
 
 	/**

@@ -106,11 +106,11 @@ class Feed
 	{
 		if ($template === false)
 		{    // A specific template is used
-			$tpl = $this->tpl->copy();
+			$tpl = clone $this->tpl;
 		}
 		else
 		{
-			$tpl = $template->copy();
+			$tpl = clone $template;
 		}
 
 		global $User, $MODULES;
@@ -254,7 +254,7 @@ class Feed
 	{
 		if ($tpl instanceof Template)
 		{
-			$template = $tpl->copy();
+			$template = clone $tpl;
 		}
 		else
 		{

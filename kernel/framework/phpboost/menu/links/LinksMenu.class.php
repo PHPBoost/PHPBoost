@@ -133,14 +133,14 @@ class LinksMenu extends LinksMenuElement
         }
         else
         {
-            $tpl = $template->copy();
+            $tpl = clone $template;
         }
-        $original_tpl = $tpl->copy();
+        $original_tpl = clone $tpl;
         
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
-            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl->copy(), $mode)));
+            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
         }
         
         // Menu assignment
@@ -168,14 +168,14 @@ class LinksMenu extends LinksMenuElement
         }
         else
         {
-            $tpl = $template->copy();
+            $tpl = clone $template;
         }
-        $original_tpl = $tpl->copy();
+        $original_tpl = clone $tpl;
         
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
-            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export($original_tpl->copy())));
+            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
         }
         
         // Menu assignment

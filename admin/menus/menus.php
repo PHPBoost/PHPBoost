@@ -238,7 +238,7 @@ foreach ($menus_blocks as $block_id => $menus)
     $max = count($menus);
     foreach ($menus as $menu)
     {   // For each Menu in this block
-        $menu_tpl = $menu_template->copy();
+        $menu_tpl = clone $menu_template;
         
         $id = $menu->get_id();
         $enabled = $menu->is_enabled();

@@ -95,12 +95,6 @@ interface Template
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
 
 	/**
-	 * @desc Clones this object.
-	 * @return Template A clone of this object.
-	 */
-	function copy();
-
-	/**
 	 * @desc Displays the template.
 	 */
 	function display();

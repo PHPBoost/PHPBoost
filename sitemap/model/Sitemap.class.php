@@ -156,7 +156,6 @@ class Sitemap
 				'ELEMENT' => $element->export($export_config)
 			));
 		}
-		
 		return $template;
 	}
 

@@ -94,9 +94,9 @@ abstract class AbstractTemplate implements Template
 	/**
 	 * {@inheritdoc}
 	 */
-	public function copy()
+	public function __clone()
 	{
-		return clone $this;
+        $this->data = clone $this->data;
 	}
 
 	/**
