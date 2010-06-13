@@ -88,48 +88,10 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsFeedProvider();
 	}
-
-	/**
-	 * @desc Returns the module map objet to build the global sitemap
-	 * @param $auth_mode
-	 * @return unknown_type
-	 */
-	public function get_module_map($auth_mode)
+	
+	public function sitemap()
 	{
-		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
-
-		require_once PATH_TO_ROOT . '/news/news_begin.php';
-
-		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
-
-		$module_map = new ModuleMap($news_link, 'news');
-		$module_map->set_description('<em>Test</em>');
-
-		$id_cat = 0;
-		$keys = array_keys($NEWS_CAT);
-		$num_cats = count($NEWS_CAT);
-		$properties = array();
-		for ($j = 0; $j < $num_cats; $j++)
-		{
-			$id = $keys[$j];
-			$properties = $NEWS_CAT[$id];
-
-			if ($auth_mode == Sitemap::AUTH_PUBLIC)
-			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-			else
-			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-
-			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
-			{
-				$module_map->add($this->create_module_map_sections($id, $auth_mode));
-			}
-		}
-
-		return $module_map;
+		return new NewsSitemapExtensionPoint();	
 	}
 
 	public function get_home_page()
