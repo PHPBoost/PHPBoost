@@ -46,7 +46,6 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($news_link, 'news');
-		$module_map->set_description('<em>Test</em>');
 
 		$id_cat = 0;
 		$keys = array_keys($NEWS_CAT);
@@ -73,6 +72,36 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 		}
 
 		return $module_map;
+	}
+	
+	private function create_module_map_sections($id_cat, $auth_mode)
+	{
+		global $NEWS_CAT, $LANG, $User, $NEWS_CONFIG;
+		
+		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/news' . url('.php?cat='.$id_cat, '-' . $id_cat . '+' . Url::encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')));
+
+		$category = new SitemapSection($this_category);
+		
+		$i = 0;
+		
+		$keys = array_keys($NEWS_CAT);
+		$num_cats = count($NEWS_CAT);
+		$properties = array();
+		for ($j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $NEWS_CAT[$id];
+			if ($id != 0 && $properties['id_parent'] == $id_cat)
+			{
+				$category->add($this->create_module_map_sections($id, $auth_mode));
+				$i++;
+			}
+		}
+		
+		if ($i == 0	)
+			$category = $this_category;
+		
+		return $category;
 	}
 }
 
