@@ -114,7 +114,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			$id = $keys[$j];
 			$properties = $NEWS_CAT[$id];
 
-			if ($auth_mode == Sitemap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
@@ -400,7 +400,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		{
 			$id = $keys[$j];
 			$properties = $NEWS_CAT[$id];
-			if ($auth_mode == Sitemap::AUTH_GUEST)
+			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}

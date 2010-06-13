@@ -37,7 +37,7 @@ class Sitemap
 	/**
 	* The site map will be seen by every body, only the public elements must appear
 	*/
-	const AUTH_GUEST = false;
+	const AUTH_PUBLIC = false;
 	/**
 	 * The site map is for the current user. It must contain only what the user can see, but it can be private.
 	 */
@@ -156,6 +156,7 @@ class Sitemap
 				'ELEMENT' => $element->export($export_config)
 			));
 		}
+		
 		return $template;
 	}
 
@@ -174,12 +175,20 @@ class Sitemap
 	 * @desc Adds to the site map all maps of the installed modules
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	public function build_modules_maps($auth_mode = self::AUTH_GUEST)
+	private function build_modules_maps($auth_mode = self::AUTH_GUEST)
 	{
-		$Modules = AppContext::get_extension_provider_service();
-		foreach ($Modules->get_providers('get_module_map') as $module)
+		$modules = AppContext::get_extension_provider_service();
+		foreach ($modules->get_providers('sitemap') as $provider)
 		{
-			$module_map = $module->get_module_map(self::AUTH_USER);
+			$sitemap_provider = $provider->sitemap();
+			if ($auth_mode == self::AUTH_GUEST)
+			{
+				$module_map = $sitemap_provider->get_public_sitemap();
+			}
+			else
+			{
+				$module_map = $sitemap_provider->get_user_sitemap();
+			}
 			$this->add($module_map);
 		}
 	}
@@ -189,7 +198,7 @@ class Sitemap
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
-	public function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
+	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_GUEST)
 	{
 		global $CONFIG, $LANG, $User;
 			
