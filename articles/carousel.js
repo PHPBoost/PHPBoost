@@ -27,7 +27,7 @@ var CarouselJs = function(elementId, options) {
         disableAnimation:   so.disableAnimation || false,
         disableSkipping:    so.disableSkipping  || false,
         defaultItemClass:   so.defaultItemClass || null,
-		startsegment: 		so.startsegment || 0,
+		startsegment: 		so.startsegment || 0
       };
       return options;
     }
