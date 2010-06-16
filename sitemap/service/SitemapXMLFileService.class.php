@@ -72,7 +72,7 @@ class SitemapXMLFileService
 	private static function get_reference_date()
 	{
 		$reference_date = new Date();
-		$life_time = SitemapConfig::load()->get_sitemap_xml_life_time();
+		$life_time = self::get_life_time();
 		$reference_date->set_day($reference_date->get_day() - $life_time);
 		return $reference_date;
 	}
