@@ -90,9 +90,7 @@ class Template
 		if (!empty($tpl))
 		{
 			global $User, $Session;
-			$fname = $this->_check_file($tpl);
-			if (empty($fname) || !file_exists($fname)) trigger_error('Template filename invalid : '.$fname, E_USER_ERROR);
-			$this->tpl = $fname;
+			$this->tpl = $this->_check_file($tpl);
 			$this->files[$this->tpl] = $this->tpl;
 			if ($auto_load_vars)
 			{
@@ -121,9 +119,7 @@ class Template
 	{
 		foreach ($array_tpl as $parse_name => $filename)
 		{
-			$fname = $this->_check_file($filename);
-			if (empty($fname) || !file_exists($fname)) trigger_error('Template filename invalid : '.$fname, E_USER_ERROR);
-			$this->files[$parse_name] = $fname;
+			$this->files[$parse_name] = $this->_check_file($filename);
 		}
 
 		global $Session;
