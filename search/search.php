@@ -31,7 +31,6 @@ load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
 $Template->set_filenames(array(
-    'search_mini_form' => 'search/search_mini_form.tpl',
     'search_forms' => 'search/search_forms.tpl',
     'search_results' => 'search/search_results.tpl'
 ));
