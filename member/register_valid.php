@@ -64,7 +64,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_yahoo = retrieve(POST, 'user_yahoo', '');
 	$user_web = retrieve(POST, 'user_web', '');
 	
-	if (strpos($user_web, '://') === false)
+	if (!empty($user_web) && strpos($user_web, '://') === false)
 	{
 		$user_web = 'http://' . $user_web;
 	}
