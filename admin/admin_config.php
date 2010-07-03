@@ -293,9 +293,10 @@ else //Sinon on rempli le formulaire
 
 	//Gestion langue par défaut.
 	$array_identifier = '';
-	foreach ($LANGS_CONFIG as $lang => $array_info) 
+	$langs_cache = LangsCache::load();
+	foreach ($langs_cache->get_installed_langs() as $lang => $properties) 
 	{
-		if ($array_info['activ'] == 1)
+		if ($properties['enabled'] == 1)
     	{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
 			$selected = ($lang == $CONFIG['lang']) ? ' selected="selected"' : '';

@@ -52,7 +52,7 @@ if ($install)
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		//Régénération du cache.
-		$Cache->Generate_file('langs');
+		LangsCache::invalidate();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}

@@ -316,26 +316,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the langs file cache.
-	 * @return The content of the langs file cache.
-	 */
-	function _get_langs()
-	{
-		$code = 'global $LANGS_CONFIG;' . "\n";
-		$result = self::$sql->query_while("SELECT lang, secure, activ
-		FROM " . PREFIX . "lang
-		WHERE activ = 1", __LINE__, __FILE__);
-		while ($row = self::$sql->fetch_assoc($result))
-		{
-			$code .= '$LANGS_CONFIG[\'' . addslashes($row['lang']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";
-			$code .= '$LANGS_CONFIG[\'' . addslashes($row['lang']) . '\'][\'activ\'] = ' . var_export($row['activ'], true) . ';' . "\n\n";
-		}
-		self::$sql->query_close($result);
-
-		return $code;
-	}
-
-	/**
 	 * @desc Method which is called to generate the members file cache.
 	 * @return The content of the members file cache.
 	 */

@@ -27,7 +27,7 @@
 
 function menu_langswitcher_langswitcher($position, $block)
 {
-	global $CONFIG, $LANGS_CONFIG, $User, $LANG, $Session;
+	global $CONFIG, $User, $LANG, $Session;
 
 	load_menu_lang('langswitcher');
 	
@@ -59,9 +59,10 @@ function menu_langswitcher_langswitcher($position, $block)
 
     $array_js_identifier = '';
     $ulang = get_ulang();
-    foreach($LANGS_CONFIG as $lang => $array_info)
+    $langs_cache = LangsCache::load();
+    foreach($langs_cache as $lang => $properties)
     {
-    	if ($User->check_level($array_info['secure']) && $array_info['activ'] == 1)
+    	if ($User->check_level($properties['auth']) && $properties['enabled'] == 1)
     	{
     		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
     		
