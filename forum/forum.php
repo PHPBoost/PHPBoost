@@ -351,14 +351,12 @@ if (!empty($id_get))
 		'ADMIN' => $total_admin,
 		'MODO' => $total_modo,
 		'MEMBER' => $total_member,
-		'USER' => $total_member,
 		'GUEST' => $total_visit,
 		'SELECT_CAT' => forum_list_cat($id_get, $CAT_FORUM[$id_get]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
 		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])
