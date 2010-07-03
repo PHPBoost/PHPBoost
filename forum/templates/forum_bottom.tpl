@@ -34,7 +34,7 @@
 					
 				# IF USERS_ONLINE #
 				<span style="float:left;">
-					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {USER} {L_USER} {L_AND} {GUEST} {L_GUEST}
+					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
 					<br />
 					{L_USER} {L_ONLINE}: {USERS_ONLINE}
 				</span>
