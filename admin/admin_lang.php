@@ -38,7 +38,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
-	$Cache->Generate_file('langs');
+	LangsCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
@@ -47,7 +47,7 @@ if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation
 	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
-	$Cache->Generate_file('langs');
+	LangsCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
@@ -65,7 +65,7 @@ elseif (isset($_POST['valid'])) //Mise à jour
 	}
 	
 	//Régénération du cache.
-	$Cache->Generate_file('langs');
+	LangsCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
@@ -98,7 +98,7 @@ elseif ($uninstall) //Désinstallation.
 		}
 	
 		//Régénération du cache.
-		$Cache->Generate_file('langs');
+		LangsCache::invalidate();
 		
 		$error = !empty($error) ? '?error=' . $error : '';
 		AppContext::get_response()->redirect(HOST . SCRIPT . $error);

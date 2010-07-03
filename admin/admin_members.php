@@ -553,7 +553,8 @@ elseif (!empty($id))
 	//Gestion LANG par défaut.
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
-	foreach($LANGS_CONFIG as $lang => $array_info)
+	$langs_cache = LangsCache::load();
+	foreach (array_keys($langs_cache->get_installed_langs()) as $lang)
 	{
 		$info_lang = load_ini_file('../lang/', $lang);
 		$selected = '';

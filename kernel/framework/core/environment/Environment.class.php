@@ -238,7 +238,6 @@ class Environment
 		$CONFIG = array();
 		$Cache->load('config');
 		$Cache->load('themes');
-		$Cache->load('langs');
 	}
 
 	public static function load_dynamic_constants()
@@ -252,7 +251,7 @@ class Environment
 
 	public static function init_session()
 	{
-		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG;
+		global $CONFIG, $THEME_CONFIG;
 		AppContext::get_session()->load();
 		AppContext::get_session()->act();
 
@@ -285,8 +284,9 @@ class Environment
 
 		$user_lang = AppContext::get_user()->get_attribute('user_lang');
 		//Is that member authorized to use this lang? If not, we assign it the default lang
-		if (!isset($LANGS_CONFIG[$user_lang]['secure']) ||
-		!AppContext::get_user()->check_level($LANGS_CONFIG[$user_lang]['secure']))
+		$langs_cache = LangsCache::load();
+		$lang_properties = $langs_cache->get_lang_properties($user_lang);
+		if ($lang_properties == null || !AppContext::get_user()->check_level($lang_properties['auth']))
 		{
 			$user_lang = $CONFIG['lang'];
 		}
