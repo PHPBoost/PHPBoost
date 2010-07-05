@@ -206,7 +206,7 @@ class Sitemap
 		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url($CONFIG['start_page'])));
 			
 		//The site description
-		$kernel_map->set_description(nl2br($CONFIG['site_desc']));
+		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));
 			
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)

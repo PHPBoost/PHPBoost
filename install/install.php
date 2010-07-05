@@ -509,10 +509,10 @@ switch($step)
 				$general_config->set_site_url($server_url);
 				$general_config->set_site_path($server_path);
 				$general_config->set_site_name($site_name);
+				$general_config->set_site_description($site_desc);
 				GeneralConfig::save();
 				
 				$CONFIG = array();
-				$CONFIG['site_desc'] = $site_desc;
 				$CONFIG['site_keyword'] = $site_keyword;
 				$CONFIG['start'] = time();
 				$CONFIG['version'] = UPDATE_VERSION;
