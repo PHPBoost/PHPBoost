@@ -243,9 +243,11 @@ class Environment
 	{
 		global $CONFIG;
 
-		define('DIR', $CONFIG['server_path']);
-		define('HOST', $CONFIG['server_name']);
-		define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '');
+		$general_config = GeneralConfig::load();
+		$site_path = $general_config->get_site_path();
+		define('DIR', $site_path);
+		define('HOST', $general_config->get_site_url());
+		define('TPL_PATH_TO_ROOT', DIR);
 	}
 
 	public static function init_session()

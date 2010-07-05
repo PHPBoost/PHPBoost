@@ -98,18 +98,15 @@ class BreadCrumb
             $this->add($this->get_page_title(), HOST . SCRIPT . SID);
         }
 
-		$start_page = '';
-		if (!empty($CONFIG['server_name']))
+		$start_page_url = GeneralConfig::load()->get_site_url();
+		$site_path = GeneralConfig::load()->get_site_path();
+		if (!empty($site_path)) 
 		{
-			$start_page .= $CONFIG['server_name'];
-		}
-		if (!empty($CONFIG['server_path'])) 
-		{
-			$start_page .= $CONFIG['server_path'] . '/';
+			$start_page_url .= $site_path . '/';
 		}
 		
         $tpl->assign_vars(array(
-			'START_PAGE' => $start_page,
+			'START_PAGE' => $start_page_url,
 			'L_INDEX' 	 => $LANG['home']
         ));
         

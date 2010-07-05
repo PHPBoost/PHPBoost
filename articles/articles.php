@@ -221,7 +221,7 @@ if (!empty($idart) && isset($cat) )
 		$object=retrieve(POST,'subject','',TSTRING);		
 		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
 
-		$contents = sprintf($ARTICLES_LANG['text_link_mail'],$CONFIG['site_name'],$exp,$user_mail,$CONFIG['server_name'],$link) ;
+		$contents = sprintf($ARTICLES_LANG['text_link_mail'], $CONFIG['site_name'], $exp, $user_mail, GeneralConfig::load()->get_site_url(), $link) ;
 		
 		if(AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
 			$Errorh->handler($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS);

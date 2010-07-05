@@ -31,11 +31,9 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-
 $CONFIG = array();
 $Cache = new Cache();
 $Cache->load('config');
-
 
 $user_data = array(
     'm_user_id' => 1,
@@ -71,7 +69,7 @@ require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php';
 require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php';
 
-define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '/');
+define('TPL_PATH_TO_ROOT', GeneralConfig::load()->get_site_path());
 
 header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1

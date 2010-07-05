@@ -13,16 +13,14 @@ class urlTest extends PHPBoostUnitTestCase {
 		self::assertEquals('', $rel, $rel . ' != /forum/');
 		self::assertEquals('', $abs, $abs . ' != ' . Url::get_absolute_root() . '/forum/');
 
-		global $CONFIG;
-		$CONFIG2 = $CONFIG;
-		$CONFIG['server_name'] = 'http://freerepairpc.net';
+		
+		$site_url = GeneralConfig::load()->get_site_url();
 		$CONFIG['server_path'] = '';
 		$url = new Url('menus.php#m42', '../..', '/admin/menus/links.php');
 		
         self::assertEquals('/admin/menus/menus.php#m42', $url->relative(), $url->relative() . ' != /admin/menus/menus.php#m42');
-        self::assertEquals('http://freerepairpc.net/admin/menus/menus.php#m42', $url->absolute(),
-            $url->absolute() . ' != http://freerepairpc.net/admin/menus/menus.php#m42');
-		$CONFIG = $CONFIG2;
+        self::assertEquals($site_url . '/admin/menus/menus.php#m42', $url->absolute(),
+            $url->absolute() . ' != ' . $site_url . '/admin/menus/menus.php#m42');
 		
 	}
 

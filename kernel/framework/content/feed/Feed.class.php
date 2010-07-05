@@ -319,7 +319,8 @@ class Feed
 
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
-		$feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
+		$general_config = GeneralConfig::load();
+		$feed_absolut_url = $general_config->get_site_url() . $general_config->get_site_path() . '/' . trim($feed_url, '/');
 
 		$feed_menu->assign_vars(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,

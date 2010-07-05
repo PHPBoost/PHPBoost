@@ -710,7 +710,8 @@ class Session
 		{
 			return false;
 		}
-		return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
+		$general_config = GeneralConfig::load();
+		return strpos($_SERVER['HTTP_REFERER'], trim($general_config->get_site_url() . $general_config->get_site_path(), '/')) === 0;
 	}
 
 	/**

@@ -36,21 +36,11 @@ $check_advanced = !empty($_GET['adv']);
 
 $server_configuration = new ServerConfiguration();
 
-//Variables serveur.
-$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-if (!$server_path)
-{
-	$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-}
-$server_path = trim(str_replace('/admin', '', dirname($server_path)));
-$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
-
 //Si c'est confirmé on exécute
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
 	// Page de démarrage
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
-
 	$config = $CONFIG;	 
 	$config['site_name'] 	= stripslashes(retrieve(POST, 'site_name', ''));	
 	$config['site_desc'] 	= stripslashes(retrieve(POST, 'site_desc', ''));
@@ -100,9 +90,11 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
 	
+	$general_config = GeneralConfig::load();
+	
 	$Template->assign_vars(array(
-		'SERVER_NAME' 		=> !empty($CONFIG['server_name']) ? $CONFIG['server_name'] : $server_name,
-		'SERVER_PATH' 		=> isset($CONFIG['server_path']) ? $CONFIG['server_path'] : $server_path,
+		'SERVER_NAME' 		=> $general_config->get_site_url(),
+		'SERVER_PATH' 		=> $general_config->get_site_path(),
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
@@ -163,15 +155,15 @@ elseif ($check_advanced && empty($_POST['advanced']))
 }
 elseif (!empty($_POST['advanced']))
 {
-	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = trim(TextHelper::strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
-	 
-	$CONFIG['server_path'] = trim(TextHelper::strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
-	//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
-	if ($CONFIG['server_path'] != '')
+	$site_url = trim(TextHelper::strprotect(retrieve(POST, 'server_name', GeneralConfig::get_default_site_url(), TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
+	$site_path = trim(TextHelper::strprotect(retrieve(POST, 'server_path', GeneralConfig::get_default_site_path('/admin'), TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
+	
+	if ($site_path != '')
 	{
-		$CONFIG['server_path'] = '/' . $CONFIG['server_path'];
+		$site_path = '/' . $site_path;
 	}
+	
+	$CONFIG['rewrite'] = 1;
 		  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
@@ -181,14 +173,8 @@ elseif (!empty($_POST['advanced']))
 	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 	$CONFIG['debug_mode'] = retrieve(POST, 'debug', 0);
 	
-	if (!empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
+	if (!empty($site_url) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
-		list($host, $dir) = array($CONFIG['server_name'], $CONFIG['server_path']); //Réassignation pour la redirection.
-		if (empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr')) //Désactivation de l'url rewriting.
-		{
-			$CONFIG['rewrite'] = 0;
-		}
-			
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
@@ -205,8 +191,13 @@ elseif (!empty($_POST['advanced']))
 		
 		//Régénération du htaccess.
 		HtaccessFileCache::regenerate();
-			
-		AppContext::get_response()->redirect($host . $dir . '/admin/admin_config.php?adv=1');
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_url($site_url);
+		$general_config->set_site_path($site_path);
+		GeneralConfig::save();
+		
+		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
 	else
 	{
