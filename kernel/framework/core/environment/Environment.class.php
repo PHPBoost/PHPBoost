@@ -516,9 +516,8 @@ class Environment
 	 */
 	public static function get_home_page()
 	{
-		global $CONFIG;
-
-		return (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
+		$home_page = GeneralConfig::load()->get_home_page();
+		return (substr($home_page, 0, 1) == '/') ? url(HOST . DIR . $home_page) : $home_page;
 	}
 
 	/**
