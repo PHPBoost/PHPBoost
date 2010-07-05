@@ -185,7 +185,7 @@ class Url
 		global $CONFIG;
 
 		$local_path = $this->server_url;
-		$local_path = substr(trim($local_path, '/'), strlen(trim($CONFIG['server_path'], '/')));
+		$local_path = substr(trim($local_path, '/'), strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
 		$file_begun = strrpos($local_path, '/');
 		if ($file_begun >= 0)
 		{
@@ -243,7 +243,8 @@ class Url
 	public static function get_absolute_root()
 	{
 		global $CONFIG;
-		return trim(trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/'), '/');
+		$general_config = GeneralConfig::load();
+		return trim($general_config->get_site_url() . $general_config->get_site_path(), '/');
 	}
 
 	/**

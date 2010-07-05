@@ -498,18 +498,19 @@ switch($step)
 				$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 				$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
 				$site_timezone = retrieve(POST, 'site_timezone', (int)date('I'));
-
-				$CONFIG = array();
-				$CONFIG['server_name'] = $server_url;
+				
 				//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 				if ($server_path != '')
 				{
-					$CONFIG['server_path'] = '/' . $server_path;
+					$server_path = '/' . $server_path;
 				}
-				else
-				{
-					$CONFIG['server_path'] = $server_path;
-				}
+				
+				$general_config = GeneralConfig::load();
+				$general_config->set_site_url($server_url);
+				$general_config->set_site_path($server_path);
+				GeneralConfig::save();
+				
+				$CONFIG = array();
 				$CONFIG['site_name'] = $site_name;
 				$CONFIG['site_desc'] = $site_desc;
 				$CONFIG['site_keyword'] = $site_keyword;

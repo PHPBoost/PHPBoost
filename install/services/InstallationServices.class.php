@@ -107,16 +107,23 @@ class InstallationServices
 		$user = new User();
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
-		$config = $this->build_configuration($locale, $server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
+		$this->save_general_config($server_url, $server_path);
+		$config = $this->build_configuration($locale, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->save_configuration($config, $locale);
 		$this->configure_theme($config['theme'], $locale);
 	}
+	
+	private function save_general_config($server_url, $server_path)
+	{
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_url($server_url);
+		$general_config->set_site_path('/' . ltrim($server_path, '/'));
+		GeneralConfig::save();
+	}
 
-	private function build_configuration($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
+	private function build_configuration($locale, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
 		$CONFIG = array();
-		$CONFIG['server_name'] = $server_url;
-		$CONFIG['server_path'] = '/' . ltrim($server_path, '/');
 		$CONFIG['site_name'] = $site_name;
 		$CONFIG['site_desc'] = $site_desc;
 		$CONFIG['site_keyword'] = $site_keyword;
