@@ -42,7 +42,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	// Page de démarrage
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
 	$config = $CONFIG;	 
-	$config['site_name'] 	= stripslashes(retrieve(POST, 'site_name', ''));	
 	$config['site_desc'] 	= stripslashes(retrieve(POST, 'site_desc', ''));
 	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
@@ -56,6 +55,10 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
+		GeneralConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -240,11 +243,13 @@ else //Sinon on rempli le formulaire
 	{
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
-
+	
+	$general_config = GeneralConfig::load();
+	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $CONFIG['theme'],
-		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
+		'SITE_NAME' => $general_config->get_site_name(),
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
 		'SELECT_PAGE' => $select_page, 

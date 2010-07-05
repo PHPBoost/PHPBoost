@@ -67,9 +67,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$this->add_menus_css_files();
 
+		$general_config = GeneralConfig::load();
+		
 		$template->assign_vars(array(
-			'SERVER_NAME' => $CONFIG['site_name'],
-			'SITE_NAME' => $CONFIG['site_name'],
+			'SITE_NAME' => $general_config->get_site_name(),
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $CONFIG['site_desc'],

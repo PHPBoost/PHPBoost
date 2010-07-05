@@ -77,7 +77,7 @@ else //Délai indéterminé.
 }
 
 $Template->assign_vars(array(	
-	'SITE_NAME' => $CONFIG['site_name'],
+	'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 	'VERSION' => $CONFIG['version'],
 	'THEME' => get_utheme(),
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',

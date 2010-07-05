@@ -52,7 +52,8 @@ class NewsFeedProvider implements FeedProvider
 
 		load_module_lang('news');
 
-		$site_name = $idcat > 0 ? $CONFIG['site_name'] . ' : ' . $NEWS_CAT[$idcat]['name'] : $CONFIG['site_name'];
+		$site_name = GeneralConfig::load()->get_site_name();
+		$site_name = $idcat > 0 ? $site_name . ' : ' . $NEWS_CAT[$idcat]['name'] : $site_name;
 
 		$data = new FeedData();
 

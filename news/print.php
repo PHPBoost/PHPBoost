@@ -47,7 +47,7 @@ if ($id > 0) //Si on connait son titre
 	$template = new FileTemplate('framework/content/print.tpl');
 
 	$template->assign_vars(array(
-		'PAGE_TITLE' => $news['title'] . ' - ' . $CONFIG['site_name'],
+		'PAGE_TITLE' => $news['title'] . ' - ' . GeneralConfig::load()->get_site_name(),
 		'TITLE' => $news['title'],
 		'L_XML_LANGUAGE' => $LANG['xml_lang'],
 		'CONTENT' => FormatingHelper::second_parse($news['contents']) . '<br />' . FormatingHelper::second_parse($news['extend_contents'])

@@ -66,7 +66,7 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $template = new FileTemplate('framework/content/print.tpl');
 
 $template->assign_vars(array(
-	'PAGE_TITLE' => $page_infos['title'] . ' - ' . $CONFIG['site_name'],
+	'PAGE_TITLE' => $page_infos['title'] . ' - ' . GeneralConfig::load()->get_site_name(),
 	'TITLE' => $page_infos['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'CONTENT' => FormatingHelper::second_parse($page_infos['contents'])

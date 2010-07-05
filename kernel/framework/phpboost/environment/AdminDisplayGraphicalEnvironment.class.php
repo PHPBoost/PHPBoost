@@ -143,7 +143,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 			$template->assign_vars(array(
 				'L_XML_LANGUAGE' => $LANG['xml_lang'],
-				'SITE_NAME' => $CONFIG['site_name'],
+				'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 				'TITLE' => TITLE,
 				'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
@@ -157,8 +157,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			if ($flood)
 			{
 				$template->assign_vars(array(
-					'L_XML_LANGUAGE' => $LANG['xml_lang'],
-					'SITE_NAME' => $CONFIG['site_name'],
 					'TITLE' => TITLE,
 					'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
 					'L_UNLOCK' => $LANG['unlock_admin_panel'],
@@ -177,7 +175,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	 */
 	function display_header()
 	{
-		global $LANG, $CONFIG;
+		global $LANG;
 
 		self::set_page_localization($this->get_page_title());
 
@@ -187,7 +185,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$header_tpl->assign_vars(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
-			'SITE_NAME' => $CONFIG['site_name'],
+			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),

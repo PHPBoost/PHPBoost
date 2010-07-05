@@ -48,7 +48,6 @@ $smile_by_line = 4;
 $field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->assign_vars(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => stripslashes(TITLE),
 	'THEME' => $CONFIG['theme'],
 	'FIELD' => $field ,
