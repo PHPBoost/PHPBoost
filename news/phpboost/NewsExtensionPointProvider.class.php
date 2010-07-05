@@ -55,11 +55,9 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_NEWS_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
-		$string .= '$NEWS_CAT[0] = ' .
-		var_export(array(
-					'name' => $LANG['root'],
-					'auth' => $news_config['global_auth']
-			), true) . ';' . "\n\n";
+		
+		//Racine
+		$string .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'],'auth' => $news_config['global_auth']), true) . ';' . "\n\n";
 		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
@@ -77,6 +75,23 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		}
 
 		return $string;
+	}
+	
+	function on_changeday()
+	{
+		//Publication des news en attente
+		$result = $this->sql_querier->query_while("SELECT id, start, end
+		FROM " . PREFIX . "news
+		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
+		$time = time();
+		while ($row = $this->sql_querier->fetch_assoc($result))
+		{
+			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
+				$this->sql_querier->query_inject("UPDATE " . PREFIX . "news SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			
+			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
+				$this->sql_querier->query_inject("UPDATE " . PREFIX . "news SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
 	}
 	
 	public function search()
@@ -122,12 +137,16 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 		$tpl = new FileTemplate($filetpl);
 
-
 		$c_add = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
 		$c_writer = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
 		
 		$last_release = 0;
-		$where = " WHERE n.visible = 1 AND n.idcat = ".$cat." AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
+		
+		if ($cat > 0)
+			$where = " WHERE n.visible = 1 AND n.idcat = ".$cat." AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
+		else
+			$where = " WHERE n.visible = 1 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
+
 		$nbr_news = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n".$where, __LINE__, __FILE__);
 		
 		// Construction du tableau des catégories.
