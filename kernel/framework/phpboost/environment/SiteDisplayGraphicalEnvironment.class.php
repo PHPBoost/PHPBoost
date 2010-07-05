@@ -130,7 +130,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $THEME_CONFIG, $MENUS;
+		global $MENUS;
 
 		//Inclusion des blocs
 		if (Debug::is_debug_mode_enabled())
@@ -157,8 +157,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MENUS_SUB_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__SUB_HEADER]
 		));
 
-		$left_column  = ($THEME_CONFIG[get_utheme()]['left_column'] && $this->are_left_menus_enabled());
-		$right_column = ($THEME_CONFIG[get_utheme()]['right_column'] && $this->are_right_menus_enabled());
+		$user_theme_properties = ThemesCache::load()->get_theme_properties(get_utheme());
+		$left_column  = ($user_theme_properties['left_column'] && $this->are_left_menus_enabled());
+		$right_column = ($user_theme_properties['right_column'] && $this->are_right_menus_enabled());
 
 		//Début de la colonne de gauche.
 		if ($left_column) //Gestion des blocs de gauche.

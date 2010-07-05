@@ -256,9 +256,9 @@ if (empty($key))
 		//Gestion thème par défaut.
 		if (!$user_accounts_config->is_users_theme_forced()) //Thèmes aux membres autorisés.
 		{
-			foreach($THEME_CONFIG as $theme => $array_info)
+			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if ($CONFIG['theme'] == $theme || ($array_info['secure'] == -1 && $theme != 'default'))
+				if ($CONFIG['theme'] == $theme || ($theme_properties['auth'] == -1 && $theme != 'default'))
 				{
 					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);

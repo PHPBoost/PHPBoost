@@ -194,9 +194,7 @@ class Application
 				}
 				break;
 			case APPLICATION_TYPE__TEMPLATE:
-				global $THEME_CONFIG;
-				$kThemes = array_keys($THEME_CONFIG);
-				foreach ($kThemes as $theme)
+				foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
 				{
 					if ($theme == $this->name)
 					{

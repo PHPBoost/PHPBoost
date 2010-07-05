@@ -200,9 +200,9 @@ if (!empty($id_get)) //Espace membre
 		if (!$user_account_config->is_users_theme_forced()) //Thèmes aux membres autorisés.
 		{
 			$utheme = get_utheme();
-			foreach($THEME_CONFIG as $theme => $array_info)
+			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if ($CONFIG['theme'] == $theme || ($User->check_level($array_info['secure']) && $theme != 'default'))
+				if ($CONFIG['theme'] == $theme || ($User->check_level($theme_properties['auth']) && $theme != 'default'))
 				{
 					$selected = ($utheme == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());

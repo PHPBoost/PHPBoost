@@ -79,10 +79,8 @@ class Updates
 
             if ($checks & CHECK_THEMES)
             {
-                global $THEME_CONFIG;
                 // Add Themes
-                $kThemes = array_keys($THEME_CONFIG);
-                foreach ($kThemes as $theme)
+                foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
                 {
                     if ($theme != 'default')
 					{

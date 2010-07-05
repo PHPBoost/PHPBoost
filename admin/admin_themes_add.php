@@ -54,11 +54,7 @@ if ($install)
 
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . TextHelper::strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . (int)$info_theme['left_column'] . "', '" . (int)$info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
-		//Régénération du cache.
-		$Cache->Generate_file('themes');
-		
-		$Cache->load('themes', RELOAD_CACHE);
-		
+		ThemesCache::invalidate();
 		
     	ModulesCssFilesCache::invalidate();
 

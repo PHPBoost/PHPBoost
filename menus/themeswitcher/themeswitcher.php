@@ -27,7 +27,7 @@
 
 function menu_themeswitcher_themeswitcher($position, $block)
 {
-	global $CONFIG, $THEME_CONFIG, $User, $LANG, $Session;
+	global $CONFIG, $User, $LANG, $Session;
 
 	load_menu_lang('themeswitcher');
 	
@@ -58,9 +58,9 @@ function menu_themeswitcher_themeswitcher($position, $block)
     MenuService::assign_positions_conditions($tpl, $block);
     
     $utheme = get_utheme();
-    foreach($THEME_CONFIG as $theme => $array_info)
+    foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
     {
-    	if ($User->check_level($array_info['secure']) && $theme != 'default' && $array_info['activ'] == 1)
+    	if ($User->check_level($theme_properties['auth']) && $theme != 'default' && $theme_properties['enabled'] == 1)
     	{
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
     		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');

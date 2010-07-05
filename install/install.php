@@ -585,8 +585,6 @@ switch($step)
 
 				$Cache->generate_all_files();
 
-				$Cache->load('themes', RELOAD_CACHE);
-
 				// TODO remove it when the $CONFIG variable will be managed by the new config manager
 				if (DISTRIBUTION_ENABLE_DEBUG_MODE)
 				{
@@ -846,7 +844,6 @@ switch($step)
 
 		$Cache = new Cache;
 		$Cache->load('config');
-		$Cache->load('themes');
 
 		$template->assign_vars(array(
     		'C_END' => true,

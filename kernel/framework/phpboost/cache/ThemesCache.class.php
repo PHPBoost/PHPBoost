@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           LangsCache.class.php
+ *                           ThemesCache.class.php
  *                            -------------------
- *   begin                : 4 July, 2010
+ *   begin                : 5 July, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -26,57 +26,62 @@
  ###################################################*/
 
 /**
- * This class contains the cache data of the langs which are installed
+ * This class contains the cache data of the themes which are installed
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class LangsCache implements CacheData
+class ThemesCache implements CacheData
 {
-	private $langs = array();
+	private $themes = array();
 
 	public function synchronize()
 	{
-		$this->langs = array();
+		$this->themes = array();
 		$db_connection = PersistenceContext::get_querier();
-
-		$result = $db_connection->select("SELECT lang, secure, activ
-		FROM " . PREFIX . "lang
+		
+		$result = $db_connection->select("SELECT theme, left_column, right_column, secure, activ
+		FROM " . DB_TABLE_THEMES . "
 		WHERE activ = 1");
 
-		foreach ($result as $lang)
+		foreach ($result as $theme)
 		{
-			$this->langs[$lang['lang']] = array('enabled' => $lang['activ'], 'auth' => $lang['secure']);
+			$this->themes[$theme['theme']] = array(
+				'left_column' => (bool)$theme['left_column'],
+				'right_column' => (bool)$theme['right_column'],
+				'auth' => $theme['secure'],
+				'enabled' => $theme['activ']
+			);
 		}
 	}
 
-	public function get_installed_langs()
+	public function get_installed_themes()
 	{
-		return $this->langs;
+		return $this->themes;
 	}
 
-	public function get_lang_properties($identifier)
+	public function get_theme_properties($identifier)
 	{
-		if (isset($this->langs[$identifier]))
+		if (isset($this->themes[$identifier]))
 		{
-			return $this->langs[$identifier];
+			return $this->themes[$identifier];
 		}
 		return null;
 	}
 
 	/**
-	 * Loads and returns the Langs cached data.
-	 * @return LangsCache The cached data
+	 * Loads and returns the Themes cached data.
+	 * @return ThemesCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'installed-langs');
+		return CacheManager::load(__CLASS__, 'kernel', 'installed-themes');
 	}
 
 	/**
-	 * Invalidates the current Langs cached data.
+	 * Invalidates the current Themes cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'installed-langs');
+		CacheManager::invalidate('kernel', 'installed-themes');
 	}
 }

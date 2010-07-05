@@ -39,8 +39,7 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
-	//Régénération du cache.
-	$Cache->Generate_file('themes');
+	ThemesCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
@@ -49,9 +48,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
-	//Régénération du cache.
-	$Cache->Generate_file('themes');
-		
+	ThemesCache::invalidate();		
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
@@ -68,8 +65,7 @@ elseif (isset($_POST['valid'])) //Modification de tous les thèmes.
 			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
-	//Régénération du cache.
-	$Cache->Generate_file('themes');
+	ThemesCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
@@ -86,8 +82,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
-		//Régénération du cache.
-		$Cache->Generate_file('themes');
+		ThemesCache::invalidate();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 	}
@@ -151,10 +146,7 @@ elseif ($uninstall) //Désinstallation.
 			}
 		}
 		
-		$Cache->generate_file('themes');
-		
-		$Cache->load('themes', RELOAD_CACHE);
-		
+		ThemesCache::invalidate();
 		
     	ModulesCssFilesCache::invalidate();
 	
