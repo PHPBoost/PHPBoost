@@ -510,17 +510,17 @@ switch($step)
 				$general_config->set_site_path($server_path);
 				$general_config->set_site_name($site_name);
 				$general_config->set_site_description($site_desc);
+				$general_config->set_site_keywords($site_keyword);
+				$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 				GeneralConfig::save();
 				
 				$CONFIG = array();
-				$CONFIG['site_keyword'] = $site_keyword;
 				$CONFIG['start'] = time();
 				$CONFIG['version'] = UPDATE_VERSION;
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['editor'] = 'bbcode';
 				$CONFIG['timezone'] = $site_timezone;
-				$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
 				$CONFIG['maintain'] = 0;
 				$CONFIG['maintain_delay'] = 1;
 				$CONFIG['maintain_display_admin'] = 1;
@@ -852,7 +852,7 @@ switch($step)
     		'L_ADMIN_INDEX' => $LANG['admin_index'],
     		'L_SITE_INDEX' => $LANG['site_index'],
     		'U_ADMIN_INDEX' => '../admin/admin_index.php',
-    		'U_INDEX' => '..' . $CONFIG['start_page']
+    		'U_INDEX' => '..' . GeneralConfig::load()->get_home_page()
 		));
 
 

@@ -34,6 +34,8 @@ $Template->set_filenames(array(
 	'admin_extend'=> 'admin/admin_extend.tpl'
 ));
 
+$home_page = GeneralConfig::load()->get_home_page();
+
 $Template->assign_vars(array(
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
@@ -58,7 +60,7 @@ $Template->assign_vars(array(
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
-	'U_INDEX_SITE' => ((substr($CONFIG['start_page'], 0, 1) == '/') ? '..' . $CONFIG['start_page'] : $CONFIG['start_page']) ,
+	'U_INDEX_SITE' => ((substr($home_page, 0, 1) == '/') ? '..' . $home_page : $home_page) ,
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 

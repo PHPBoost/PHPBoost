@@ -107,33 +107,33 @@ class InstallationServices
 		$user = new User();
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
-		$this->save_general_config($server_url, $server_path, $site_name, $site_desc);
-		$config = $this->build_configuration($locale, $site_keyword, $site_timezone);
+		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword);
+		$config = $this->build_configuration($locale, $site_timezone);
 		$this->save_configuration($config, $locale);
 		$this->configure_theme($config['theme'], $locale);
 	}
 	
-	private function save_general_config($server_url, $server_path, $site_name, $site_description = '')
+	private function save_general_config($server_url, $server_path, $site_name, $site_description = '', $site_keywords = '')
 	{
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_url($server_url);
 		$general_config->set_site_path('/' . ltrim($server_path, '/'));
 		$general_config->set_site_name($site_name);
 		$general_config->set_site_description($site_description);
+		$general_config->set_site_keywords($site_keywords);
+		$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 		GeneralConfig::save();
 	}
 
-	private function build_configuration($locale, $site_keyword = '', $site_timezone = '')
+	private function build_configuration($locale, $site_timezone = '')
 	{
 		$CONFIG = array();
-		$CONFIG['site_keyword'] = $site_keyword;
 		$CONFIG['start'] = time();
 		$CONFIG['version'] = self::$phpboost_major_version;
 		$CONFIG['lang'] = $locale;
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['editor'] = 'bbcode';
 		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
-		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
 		$CONFIG['maintain'] = 0;
 		$CONFIG['maintain_delay'] = 1;
 		$CONFIG['maintain_display_admin'] = 1;

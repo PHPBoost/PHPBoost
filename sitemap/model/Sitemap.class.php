@@ -200,10 +200,10 @@ class Sitemap
 	 */
 	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
-		global $CONFIG, $LANG, $User;
+		global $LANG, $User;
 			
 		//We consider the kernel as a module
-		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url($CONFIG['start_page'])));
+		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(GeneralConfig::load()->get_home_page())));
 			
 		//The site description
 		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));

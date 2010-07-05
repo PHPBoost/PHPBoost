@@ -108,7 +108,7 @@ site path                : " . $general_config->get_site_path()  . "
 default theme            : " . $template_ini_file['name'] . "
 default language         : " . $lang_ini_file['name'] . "
 default editor           : " . $CONFIG['editor'] . "
-start page               : " . $CONFIG['start_page'] . "
+home page               : " . $general_config->get_home_page() . "
 url rewriting            : " . $CONFIG['rewrite'] . "
 output gz                : " . $CONFIG['ob_gzhandler'] . "
 session cookie name      : " . $CONFIG['site_cookie'] . "
@@ -134,7 +134,7 @@ $template->assign_vars(array(
 	'KERNEL_DEFAULT_THEME' => $template_ini_file['name'],
 	'KERNEL_DEFAULT_LANGUAGE' => $lang_ini_file['name'],
 	'KERNEL_DEFAULT_EDITOR' => $CONFIG['editor'] == 'tinymce' ? 'TinyMCE' : 'BBCode',
-	'KERNEL_START_PAGE' => $CONFIG['start_page'],
+	'KERNEL_START_PAGE' => $general_config->get_home_page(),
 	'C_KERNEL_URL_REWRITING' => (bool)$CONFIG['rewrite'],
 	'C_KERNEL_OUTPUT_GZ' => (bool)$CONFIG['ob_gzhandler'],
 	'COOKIE_NAME' => $CONFIG['site_cookie'],

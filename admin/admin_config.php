@@ -42,10 +42,8 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	// Page de démarrage
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
 	$config = $CONFIG;	 
-	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['start_page'] 	= stripslashes($start_page);
 	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
@@ -58,6 +56,8 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
 		$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
+		$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
+		$general_config->set_home_page(stripslashes($start_page));
 		GeneralConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
@@ -220,6 +220,8 @@ else //Sinon on rempli le formulaire
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	}
 	
+	$general_config = GeneralConfig::load();
+	
 	//Pages de démarrage
 	$select_page = '';
 	$start_page = array();
@@ -231,7 +233,7 @@ else //Sinon on rempli le formulaire
 		if ($module_configuration->get_home_page())
 		{
 			$get_home_page = '/' . $name . '/' . $module_configuration->get_home_page();
-			$selected = $get_home_page == $CONFIG['start_page'] ? 'selected="selected"' : '';
+			$selected = $get_home_page == $general_config->get_home_page() ? 'selected="selected"' : '';
 			$start_page[] = $get_home_page;
 			$select_page .= '<option value="' . $get_home_page . '" ' . $selected . '>' . $module_configuration->get_name() . '</option>';
 			
@@ -244,16 +246,14 @@ else //Sinon on rempli le formulaire
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
 	
-	$general_config = GeneralConfig::load();
-	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $CONFIG['theme'],
 		'SITE_NAME' => $general_config->get_site_name(),
 		'SITE_DESCRIPTION' => $general_config->get_site_description(),
-		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
+		'SITE_KEYWORD' => $general_config->get_site_keywords(),		
 		'SELECT_PAGE' => $select_page, 
-		'START_PAGE' => !in_array($CONFIG['start_page'], $start_page) ? $CONFIG['start_page'] : '', 
+		'START_PAGE' => $general_config->get_home_page(), 
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',

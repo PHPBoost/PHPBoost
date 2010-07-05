@@ -34,6 +34,8 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_PATH = 'site_path';
 	const SITE_NAME = 'site_name';
 	const SITE_DESCRIPTION = 'site_description';
+	const SITE_KEYWORDS = 'site_keywords';
+	const HOME_PAGE = 'home_page';
 
 	public function get_site_url()
 	{
@@ -70,7 +72,9 @@ class GeneralConfig extends AbstractConfigData
 		self::SITE_URL => self::get_default_site_url(),
 		self::SITE_PATH => '/',
 		self::SITE_NAME => '',
-		self::SITE_DESCRIPTION => ''
+		self::SITE_DESCRIPTION => '',
+		self::SITE_KEYWORDS => '',
+		self::HOME_PAGE => '/member/member.php'
 		);
 	}
 
@@ -108,6 +112,26 @@ class GeneralConfig extends AbstractConfigData
 	public function set_site_description($site_description)
 	{
 		$this->set_property(self::SITE_DESCRIPTION, $site_description);
+	}
+	
+	public function get_site_keywords()
+	{
+		return $this->get_property(self::SITE_KEYWORDS);
+	}
+	
+	public function set_site_keywords($keywords)
+	{
+		$this->set_property(self::SITE_KEYWORDS, $keywords);
+	}
+	
+	public function get_home_page()
+	{
+		return $this->get_property(self::HOME_PAGE);
+	}
+	
+	public function set_home_page($start_page)
+	{
+		$this->set_property(self::HOME_PAGE, $start_page);
 	}
 
 	/**
