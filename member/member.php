@@ -50,7 +50,7 @@ $post_group = retrieve(GET, 'show_group', 0);
 $get_error = retrieve(GET, 'error', '');
 $get_l_error = retrieve(GET, 'erroru', '');
 
-$UserAccountsConfig = UserAccountsConfig::load();
+$user_account_config = UserAccountsConfig::load();
 
 if (!empty($id_get)) //Espace membre
 {
@@ -194,7 +194,6 @@ if (!empty($id_get)) //Espace membre
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
-		$user_account_config = UserAccountsConfig::load();
 		
 		//Gestion thème par défaut.
 		if (!$user_account_config->is_users_theme_forced()) //Thèmes aux membres autorisés.
@@ -471,9 +470,7 @@ if (!empty($id_get)) //Espace membre
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			}
-
-			$user_account_config = UserAccountsConfig::load();
-			
+		
 			//Gestion upload d'avatar.
 			$user_avatar = '';
 			if ($user_account_config->is_avatar_upload_enabled())
@@ -751,8 +748,8 @@ if (!empty($id_get)) //Espace membre
 		$Template->assign_vars(array(
 			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_USER_VIEW' => true,
-			'C_AUTH_READ_MEMBERS' => $User->check_auth($UserAccountsConfig->get_auth_read_members(), AUTH_READ_MEMBERS),
-			'C_AUTH_READ_CONTACT' => $User->check_auth($UserAccountsConfig->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->check_level(MEMBER_LEVEL),
+			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS),
+			'C_AUTH_READ_CONTACT' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->check_level(MEMBER_LEVEL),
 			'SID' => SID,
 			'LANG' => get_ulang(),
 			'USER_NAME' => $row['login'],
@@ -909,9 +906,7 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 				$user_rank = $LANG['admin'];
 				break;
 			}
-			
-			$user_account_config = UserAccountsConfig::load();
-			
+
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
 			if (empty($row['user_avatar']) && $user_account_config->is_default_avatar_enabled())
@@ -930,7 +925,7 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 else //Show all member!
 {
 
-	if (!$User->check_auth($UserAccountsConfig->get_auth_read_members(), AUTH_READ_MEMBERS))
+	if (!$User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
