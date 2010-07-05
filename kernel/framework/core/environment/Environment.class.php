@@ -237,7 +237,6 @@ class Environment
 		global $Cache;
 		$CONFIG = array();
 		$Cache->load('config');
-		$Cache->load('themes');
 	}
 
 	public static function load_dynamic_constants()
@@ -251,7 +250,7 @@ class Environment
 
 	public static function init_session()
 	{
-		global $CONFIG, $THEME_CONFIG;
+		global $CONFIG;
 		AppContext::get_session()->load();
 		AppContext::get_session()->act();
 
@@ -273,8 +272,9 @@ class Environment
 
 		$user_theme = AppContext::get_user()->get_attribute('user_theme');
 		//Is that theme authorized for this member? If not, we assign it the default theme
-		if (UserAccountsConfig::load()->is_users_theme_forced() || !isset($THEME_CONFIG[$user_theme]['secure'])
-		|| !AppContext::get_user()->check_level($THEME_CONFIG[$user_theme]['secure']))
+		$user_theme_properties = ThemesCache::load()->get_theme_properties($user_theme);
+		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
+		|| !AppContext::get_user()->check_level($user_theme_properties['auth']))
 		{
 			$user_theme = $CONFIG['theme'];
 		}

@@ -198,7 +198,6 @@ class InstallationServices
 		// TODO see if those lines are necessary
 		//		$Cache = new Cache();
 		//		$Cache->generate_all_files();
-		//		$Cache->load('themes', RELOAD_CACHE);
 		//		ModulesCssFilesCache::invalidate();
 		AppContext::get_cache_service()->clear_phpboost_cache();
 	}

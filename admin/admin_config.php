@@ -318,9 +318,9 @@ else //Sinon on rempli le formulaire
 	));
 	
 	// Thème par defaut.
-	foreach ($THEME_CONFIG as $theme => $array_info) 
+	foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties) 
 	{
-		if ($theme !== 'default' && $array_info['activ'] == 1)
+		if ($theme !== 'default' && $properties['enabled'] == 1)
     	{
 			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
 			$selected = ($theme == $CONFIG['theme']) ? ' selected="selected"' : '';

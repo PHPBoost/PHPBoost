@@ -57,7 +57,6 @@ include('lateral_menu.php');
 lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/auth.tpl');
-$Cache->load('themes');
 
 $tpl->assign_vars(array(
     'KERNEL_EDITOR' => display_editor(),

@@ -293,29 +293,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the themes file cache.
-	 * @return The content of the themes file cache.
-	 */
-	function _get_themes()
-	{
-		$code = 'global $THEME_CONFIG;' . "\n";
-		$result = self::$sql->query_while("SELECT theme, left_column, right_column, secure, activ
-		FROM " . DB_TABLE_THEMES . "
-		WHERE activ = 1", __LINE__, __FILE__);
-		while ($row = self::$sql->fetch_assoc($result))
-		{
-			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
-			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n";
-			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";
-			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'activ\'] = ' . var_export($row['activ'], true) . ';' . "\n\n";
-
-		}
-		self::$sql->query_close($result);
-
-		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'secure\'] = \'-1\'';
-	}
-
-	/**
 	 * @desc Method which is called to generate the members file cache.
 	 * @return The content of the members file cache.
 	 */

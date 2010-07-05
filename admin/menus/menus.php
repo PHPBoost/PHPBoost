@@ -108,11 +108,11 @@ MenuService::update_mini_modules_list(false);
 // The same with the mini menus
 MenuService::update_mini_menus_list();
 
-$Cache->load('themes');
-
 // Compute the column number
-$right_column = $THEME_CONFIG[get_utheme()]['right_column'];
-$left_column = $THEME_CONFIG[get_utheme()]['left_column'];
+$themes_cache = ThemesCache::load();
+$theme_properties = $themes_cache->get_theme_properties(get_utheme());
+$right_column = $theme_properties['right_column'];
+$left_column = $theme_properties['left_column'];
 
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
@@ -206,7 +206,7 @@ if ($action == 'save') //Save menus positions.
 	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0; 
 	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0; 
 	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE theme = '" . $theme_post . "'", __LINE__, __FILE__);
-	$Cache->Generate_file('themes'); //Régénération du cache.
+	ThemesCache::invalidate();
 	
 	
 	AppContext::get_response()->redirect('menus.php');
@@ -284,9 +284,9 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 }
 
-	foreach($THEME_CONFIG as $theme => $array_info)
+	foreach($themes_cache->get_installed_themes() as $theme => $properties)
     {
-    	if ($theme != 'default' && $array_info['activ'] == 1)
+    	if ($theme != 'default' && $properties['enabled'] == 1)
     	{
 			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
 			$selected = (empty($switchtheme) ? get_utheme() == $theme : $switchtheme == $theme) ? ' selected="selected"' : '';
@@ -301,8 +301,8 @@ foreach ($menus_blocks as $block_id => $menus)
 	
 $tpl->assign_vars(array(
 	'NAME_THEME' => $name_theme,
-	'CHECKED_RIGHT_COLUMM' => $THEME_CONFIG[$name_theme]['right_column'] ? 'checked="checked"' : '',
-	'CHECKED_LEFT_COLUMM' => $THEME_CONFIG[$name_theme]['left_column'] ? 'checked="checked"' : '',
+	'CHECKED_RIGHT_COLUMM' => $theme_properties['right_column'] ? 'checked="checked"' : '',
+	'CHECKED_LEFT_COLUMM' => $theme_properties['left_column'] ? 'checked="checked"' : '',
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'C_LEFT_COLUMN' => $left_column,
     'C_RIGHT_COLUMN' => $right_column,

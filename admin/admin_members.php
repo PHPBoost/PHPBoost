@@ -572,7 +572,7 @@ elseif (!empty($id))
 	}
 	
 	//Gestion thème par défaut.
-	foreach($THEME_CONFIG as $theme => $array_info)
+	foreach(ThemesCache::load()->get_installed_themes() as $theme => $properties)
 	{
 		if ($theme != 'default')
 		{
