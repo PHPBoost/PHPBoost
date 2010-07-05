@@ -508,10 +508,10 @@ switch($step)
 				$general_config = GeneralConfig::load();
 				$general_config->set_site_url($server_url);
 				$general_config->set_site_path($server_path);
+				$general_config->set_site_name($site_name);
 				GeneralConfig::save();
 				
 				$CONFIG = array();
-				$CONFIG['site_name'] = $site_name;
 				$CONFIG['site_desc'] = $site_desc;
 				$CONFIG['site_keyword'] = $site_keyword;
 				$CONFIG['start'] = time();

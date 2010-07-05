@@ -40,7 +40,7 @@ $Cache->load('forum');
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum'));  
+	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', GeneralConfig::load()->get_site_name() . ' forum'));  
 	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
 	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
 	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;

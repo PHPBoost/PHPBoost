@@ -32,6 +32,7 @@ class GeneralConfig extends AbstractConfigData
 {
 	const SITE_URL = 'site_url';
 	const SITE_PATH = 'site_path';
+	const SITE_NAME = 'site_name';
 
 	public function get_site_url()
 	{
@@ -66,7 +67,8 @@ class GeneralConfig extends AbstractConfigData
 	{
 		return array(
 		self::SITE_URL => self::get_default_site_url(),
-		self::SITE_PATH => '/'
+		self::SITE_PATH => '/',
+		self::SITE_NAME => ''
 		);
 	}
 
@@ -84,6 +86,16 @@ class GeneralConfig extends AbstractConfigData
 		}
 		$server_path = trim(str_replace($page_path, '', dirname($server_path)));
 		return $server_path;
+	}
+	
+	public function get_site_name()
+	{
+		return $this->get_property(self::SITE_NAME);
+	}
+	
+	public function set_site_name($site_name)
+	{
+		$this->set_property(self::SITE_NAME, $site_name);
 	}
 
 	/**

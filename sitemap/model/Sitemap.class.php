@@ -108,14 +108,14 @@ class Sitemap
 	 */
 	public function set_site_name($site_name)
 	{
-		global $CONFIG;
 		if (!empty($site_name))
 		{
-			$this->site_name = $CONFIG['site_name'];
+			$this->site_name = $site_name;
 		}
 		elseif (empty($this->site_name))
 		{
-			$this->site_name = $CONFIG['site_name'];
+			$general_config = GeneralConfig::load();
+			$this->site_name = $general_config->get_site_name();
 		}
 	}
 

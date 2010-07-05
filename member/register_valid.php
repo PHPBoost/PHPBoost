@@ -265,7 +265,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					AppContext::get_mail_service()->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, MailServiceConfig::load()->get_mail_signature()));
+					$site_name = GeneralConfig::load()->get_site_name();
+					AppContext::get_mail_service()->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], GeneralConfig::load()->get_site_name()), sprintf($LANG['register_mail'], $login, $site_name, $site_name, stripslashes($login), $password, $valid, MailServiceConfig::load()->get_mail_signature()));
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if ($user_accounts_config->get_member_accounts_validation_method() == 0)
