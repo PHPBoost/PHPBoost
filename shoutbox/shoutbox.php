@@ -28,9 +28,15 @@
 require_once('../kernel/begin.php'); 
 require_once('../shoutbox/shoutbox_begin.php'); 
 require_once('../kernel/header.php');
+
+require_once('shoutbox_constants.php');
 	
 $shout_id = retrieve(GET, 'id', 0);
 $shoutbox = retrieve(POST, 'shoutboxForm', false);
+
+if (!$User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_READ)) //Autorisation de lecture
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 if ($shoutbox && empty($shout_id)) //Insertion
 {		
 	//Membre en lecture seule?
@@ -43,7 +49,7 @@ if ($shoutbox && empty($shout_id)) //Insertion
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{		
 		//Accès pour poster.		
-		if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
+		if ($User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_WRITE))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';

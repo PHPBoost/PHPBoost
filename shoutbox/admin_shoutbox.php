@@ -31,18 +31,21 @@ load_module_lang('shoutbox'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+require_once('shoutbox_constants.php');
+
 if (!empty($_POST['valid']) )
 {
-	$config_shoutbox = array();
-	$config_shoutbox['shoutbox_max_msg'] = retrieve(POST, 'shoutbox_max_msg', 10);
-	$config_shoutbox['shoutbox_auth'] = retrieve(POST, 'shoutbox_auth', -1);
-	$config_shoutbox['shoutbox_forbidden_tags'] = isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array());
-	$config_shoutbox['shoutbox_max_link'] = retrieve(POST, 'shoutbox_max_link', -1);
-	$config_shoutbox['shoutbox_refresh_delay'] = NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float');
-	
+	$config_shoutbox = array(
+		'shoutbox_max_msg' => retrieve(POST, 'shoutbox_max_msg', 10),
+		'shoutbox_auth' => Authorizations::build_auth_array_from_form(AUTH_SHOUTBOX_READ, AUTH_SHOUTBOX_WRITE),
+		'shoutbox_forbidden_tags' => isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array()),
+		'shoutbox_max_link' => retrieve(POST, 'shoutbox_max_link', -1),
+		'shoutbox_refresh_delay' => NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float'),
+	);
+		
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	
-	###### Régénération du cache des news #######
+	###### Régénération du cache de la shoutbox #######
 	$Cache->Generate_module_file('shoutbox');
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
@@ -61,20 +64,11 @@ else
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
 	'sub' => 0, 'indent' => 1, 'pre' => 0, 'table' => 1, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 1, 'math' => 1, 'anchor' => 0, 'acronym' => 0);
 	
-	//Rang d'autorisation.
-	$CONFIG_SHOUTBOX['shoutbox_auth'] = isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1';	
-	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$ranks = '';
-	foreach ($array_auth_ranks as $rank => $name)
-	{
-		$selected = ($CONFIG_SHOUTBOX['shoutbox_auth'] == $rank) ? ' selected="selected"' : '' ;
-		$ranks .= '<option value="' . $rank . '"' . $selected . '>' . $name . '</option>';
-	}
-	
 	$Template->assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' => !empty($CONFIG_SHOUTBOX['shoutbox_max_msg']) ? $CONFIG_SHOUTBOX['shoutbox_max_msg'] : '100',
-		'SHOUTBOX_AUTH' => $ranks,
+		'AUTH_READ' => Authorizations::generate_select(AUTH_SHOUTBOX_READ,$CONFIG_SHOUTBOX['shoutbox_auth']),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_SHOUTBOX_WRITE,$CONFIG_SHOUTBOX['shoutbox_auth']),
 		'MAX_LINK' => isset($CONFIG_SHOUTBOX['shoutbox_max_link']) ? $CONFIG_SHOUTBOX['shoutbox_max_link'] : '-1',
 		'SHOUTBOX_REFRESH_DELAY' => isset($CONFIG_SHOUTBOX['shoutbox_refresh_delay']) ? ($CONFIG_SHOUTBOX['shoutbox_refresh_delay']/60000) : 1,
 		'L_REQUIRE' => $LANG['require'],	
@@ -82,7 +76,8 @@ else
 		'L_SHOUTBOX_CONFIG' => $LANG['shoutbox_config'],
 		'L_SHOUTBOX_MAX_MSG' => $LANG['shoutbox_max_msg'],
 		'L_SHOUTBOX_MAX_MSG_EXPLAIN' => $LANG['shoutbox_max_msg_explain'],
-		'L_RANK' => $LANG['rank_post'],
+		'L_AUTH_WRITE' => $LANG['auth_write'],
+		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_SHOUTBOX_REFRESH_DELAY' => $LANG['shoutbox_refresh_delay'],
 		'L_SHOUTBOX_REFRESH_DELAY_EXPLAIN' => $LANG['shoutbox_refresh_delay_explain'],
 		'L_MINUTES' => $LANG['minutes'],

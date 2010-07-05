@@ -60,7 +60,7 @@ function menu_langswitcher_langswitcher($position, $block)
     $array_js_identifier = '';
     $ulang = get_ulang();
     $langs_cache = LangsCache::load();
-    foreach($langs_cache as $lang => $properties)
+    foreach($langs_cache->get_installed_langs() as $lang => $properties)
     {
     	if ($User->check_level($properties['auth']) && $properties['enabled'] == 1)
     	{

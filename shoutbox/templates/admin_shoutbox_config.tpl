@@ -43,13 +43,22 @@
 				<fieldset>
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<dl>
-						<dt><label for="shoutbox_auth">* {L_RANK}</label></dt>
-						<dd><label>
-							<select name="shoutbox_auth" id="shoutbox_auth">
-								{SHOUTBOX_AUTH}
-							</select>
-						</label></dd>
+						<dt>
+							<label for="shoutbox_auth">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
 					</dl>
+					<dl>
+						<dt>
+							<label for="shoutbox_auth">{L_AUTH_WRITE}</label>
+						</dt>
+						<dd>
+							{AUTH_WRITE}
+						</dd>
+					</dl>
+					<hr><br>
 					<dl>
 						<dt><label for="shoutbox_refresh_delay">* {L_SHOUTBOX_REFRESH_DELAY}</label><br /><span>{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" id="shoutbox_refresh_delay" name="shoutbox_refresh_delay" value="{SHOUTBOX_REFRESH_DELAY}" class="text" /> {L_MINUTES}</label></dd>

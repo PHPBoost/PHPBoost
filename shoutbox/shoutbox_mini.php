@@ -32,7 +32,7 @@ function shoutbox_mini($position, $block)
     global $Cache, $LANG, $User, $CONFIG_SHOUTBOX, $nbr_members, $last_member_id, $last_member_login, $Sql;
     
     //Mini Shoutbox non activée si sur la page archive shoutbox.
-    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false)
+    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_READ))
     {
     	load_module_lang('shoutbox');
     	$Cache->load('shoutbox'); //Chargement du cache
@@ -50,7 +50,7 @@ function shoutbox_mini($position, $block)
     		if (!empty($shout_pseudo) && !empty($shout_contents))
     		{
     			//Accès pour poster.
-    			if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
+    			if ($User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_WRITE))
     			{
     				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
     				$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';

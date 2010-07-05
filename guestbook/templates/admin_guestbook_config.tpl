@@ -85,7 +85,7 @@
 					</dl>
 					<dl>
 						<dt>
-							<label for="calendar_auth">{L_AUTH_WRITE}</label>
+							<label for="guestbook_auth">{L_AUTH_WRITE}</label>
 						</dt>
 						<dd>
 							{AUTH_WRITE}
@@ -93,7 +93,7 @@
 					</dl>
 					<dl>
 						<dt>
-							<label for="calendar_auth">{L_AUTH_MODO}</label>
+							<label for="guestbook_auth">{L_AUTH_MODO}</label>
 						</dt>
 						<dd>
 							{AUTH_MODO}
