@@ -188,7 +188,6 @@ class Environment
 		### Authorizations ###
 		define('AUTH_MENUS', 		0x01);
 		define('AUTH_FILES', 		0x01);
-		define('AUTH_MAINTAIN', 	0x01);
 		define('ACCESS_MODULE', 	0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');

@@ -190,12 +190,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_site_maintenance(Template $template)
 	{
-		global $CONFIG, $Template, $LANG;
+		global $Template, $LANG;
 
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
 
-		if ($this->is_under_maintenance() && $CONFIG['maintain_display_admin'])
+		$maintenance_config = MaintenanceConfig::load();
+		if ($this->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
@@ -209,15 +210,16 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'1 ' . $LANG['week']);
 
 			//Retourne le délai de maintenance le plus proche.
-			if ($CONFIG['maintain'] != -1)
+			if (!$maintenance_config->is_unlimited_maintenance())
 			{
 				$key_delay = 0;
 				$current_time = time();
 				$array_size = count($array_time) - 1;
+				$end_timestamp = $maintenance_config->get_end_date()->get_timestamp();
 				for ($i = $array_size; $i >= 1; $i--)
 				{
-					if (($CONFIG['maintain'] - $current_time) - $array_time[$i] < 0
-					&&  ($CONFIG['maintain'] - $current_time) - $array_time[$i-1] > 0)
+					if (($end_timestamp - $current_time) - $array_time[$i] < 0
+					&&  ($end_timestamp - $current_time) - $array_time[$i-1] > 0)
 					{
 						$key_delay = $i-1;
 						break;
@@ -225,13 +227,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				}
 
 				//Calcul du format de la date
-				$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
+				$seconds = gmdate_format('s', $end_timestamp, TIMEZONE_SITE);
 				$array_release = array(
-				gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE),
-				(gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1),
-				gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE),
-				gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE),
-				gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE),
+				gmdate_format('Y', $end_timestamp, TIMEZONE_SITE),
+				(gmdate_format('n', $end_timestamp, TIMEZONE_SITE) - 1),
+				gmdate_format('j', $end_timestamp, TIMEZONE_SITE),
+				gmdate_format('G', $end_timestamp, TIMEZONE_SITE),
+				gmdate_format('i', $end_timestamp, TIMEZONE_SITE),
 				($seconds < 10) ? trim($seconds, 0) : $seconds);
 
 				$seconds = gmdate_format('s', time(), TIMEZONE_SITE);
@@ -251,7 +253,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$template->assign_vars(array(
 				'C_ALERT_MAINTAIN' => true,
 				'C_MAINTAIN_DELAY' => true,
-				'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
+				'UNSPECIFIED' => $maintenance_config->is_unlimited_maintenance() ? 0 : 1,
 				'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
 				'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),

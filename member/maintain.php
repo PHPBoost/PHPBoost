@@ -29,7 +29,9 @@ include_once('../kernel/begin.php');
 define('TITLE', $LANG['title_maintain']);
 include_once('../kernel/header_no_display.php');
 
-if ($CONFIG['maintain'] != -1 && $CONFIG['maintain'] <= time())
+$maintenance_config = MaintenanceConfig::load();
+
+if (!$maintenance_config->is_under_maintenance())
 {	
 	header('location: ' . Environment::get_home_page());
 	exit;
@@ -44,13 +46,14 @@ $array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 =>
 $array_delay = array(0 => $LANG['unspecified'], 1 => '', 2 => '1 ' . $LANG['minute'], 3 => '5 ' . $LANG['minutes'], 4 => '15 ' . $LANG['minutes'], 5 => '30 ' . $LANG['minutes'], 6 => '1 ' . $LANG['hour'], 7 => '2 ' . $LANG['hours'], 8 => '1 ' . $LANG['day'], 9 => '2 ' . $LANG['days'], 10 => '1 ' . $LANG['week']);
 
 //Retourne le délai de maintenance le plus proche. 
-if ($CONFIG['maintain'] != -1)
+if (!$maintenance_config->is_unlimited_maintenance())
 {
 	$key = 0;
 	$current_time = time();
+	$end_timestamp = $maintenance_config->get_end_date()->get_timestamp();
 	for ($i = 10; $i >= 0; $i--)
 	{					
-		$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
+		$delay = ($end_timestamp - $current_time) - $array_time[$i];		
 		if ($delay >= $array_time[$i]) 
 		{	
 			$key = $i;
@@ -59,10 +62,10 @@ if ($CONFIG['maintain'] != -1)
 	}
 	
 	//Calcul du format de la date
-	$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
+	$seconds = gmdate_format('s', $end_timestamp, TIMEZONE_SITE);
 	$array_release = array(
-	gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE), 
-	gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+	gmdate_format('Y', $end_timestamp, TIMEZONE_SITE), (gmdate_format('n', $end_timestamp, TIMEZONE_SITE) - 1), gmdate_format('j', $end_timestamp, TIMEZONE_SITE), 
+	gmdate_format('G', $end_timestamp, TIMEZONE_SITE), gmdate_format('i', $end_timestamp, TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
 
 	$seconds = gmdate_format('s', time(), TIMEZONE_SITE);
     $array_now = array(
@@ -76,6 +79,8 @@ else //Délai indéterminé.
 	$array_now = array('0', '0', '0', '0', '0', '0');
 }
 
+$maintenance_message = $maintenance_config->get_message();
+
 $Template->assign_vars(array(	
 	'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 	'VERSION' => $CONFIG['version'],
@@ -83,9 +88,9 @@ $Template->assign_vars(array(
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 	'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 	'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . Environment::get_home_page() . '">' . $LANG['home'] . '</a>',	
+	'U_INDEX' => !$User->check_auth(1, $maintenance_config->get_auth()) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . Environment::get_home_page() . '">' . $LANG['home'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? FormatingHelper::second_parse($CONFIG['maintain_text']) : $LANG['maintain']),
+	'L_MAINTAIN' => (!empty($maintenance_message) ? FormatingHelper::second_parse($maintenance_message) : $LANG['maintain']),
 	'L_MAINTAIN_TITLE' => $LANG['title_maintain'],
 	'L_LOADING' => $LANG['loading'],
 	'L_DAYS' => $LANG['days'],
@@ -97,7 +102,7 @@ $Template->assign_vars(array(
 	'PHPBOOST_VERSION' => $CONFIG['version']
 ));
 
-if ($CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1)
+if ($maintenance_config->get_display_duration() && !$maintenance_config->is_unlimited_maintenance())
 {
 	$Template->assign_vars(array(
 		'C_DISPLAY_DELAY' => true,
