@@ -512,6 +512,7 @@ switch($step)
 				$general_config->set_site_description($site_desc);
 				$general_config->set_site_keywords($site_keyword);
 				$general_config->set_home_page(DISTRIBUTION_START_PAGE);
+				$general_config->set_phpboost_major_version(UPDATE_VERSION);
 				GeneralConfig::save();
 				
 				$CONFIG = array();

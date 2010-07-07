@@ -213,9 +213,11 @@ class Application
         	return false;
         }
         
+        $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+        
 		return version_compare($current_version, $this->get_version(), '<') > 0 &&
-		(($CONFIG['version'] >= $this->compatibility_min) && ($this->compatibility_max == null ||
-		($CONFIG['version'] <= $this->compatibility_max && $this->compatibility_max >= $this->compatibility_min)));
+		(($phpboost_version >= $this->compatibility_min) && ($this->compatibility_max == null ||
+		($phpboost_version <= $this->compatibility_max && $this->compatibility_max >= $this->compatibility_min)));
 	}
 
 	## PUBLIC ACCESSORS ##
@@ -336,7 +338,7 @@ class Application
 		switch ($this->type)
 		{
 			case APPLICATION_TYPE__KERNEL:
-				return $CONFIG['version'];
+				return GeneralConfig::load()->get_phpboost_major_version();
 			case APPLICATION_TYPE__MODULE:
 				$infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
 				return !empty($infos['version']) ? $infos['version'] : '0';

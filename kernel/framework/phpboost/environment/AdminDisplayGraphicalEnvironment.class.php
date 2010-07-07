@@ -352,7 +352,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
 		$tpl->assign_vars(array(
-			'VERSION' => $CONFIG['version'],
 			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
 			'L_POWERED_BY' => $LANG['powered_by'],
@@ -362,7 +361,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_BY' => strtolower($LANG['by']),
 			'L_THEME_AUTHOR' => $theme['author'],
 			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
-		    'PHPBOOST_VERSION' => $CONFIG['version']
+		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
 		if ($CONFIG['bench'])

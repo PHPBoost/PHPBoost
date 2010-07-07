@@ -36,6 +36,7 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_DESCRIPTION = 'site_description';
 	const SITE_KEYWORDS = 'site_keywords';
 	const HOME_PAGE = 'home_page';
+	const PHPBOOST_VERSION = 'phpboost_version';
 
 	public function get_site_url()
 	{
@@ -62,6 +63,16 @@ class GeneralConfig extends AbstractConfigData
 	{
 		$this->set_property(self::SITE_PATH, $path);
 	}
+	
+	public function get_phpboost_major_version()
+	{
+		return $this->get_property(self::PHPBOOST_VERSION);
+	}
+	
+	public function set_phpboost_major_version($version)
+	{
+		$this->set_property(self::PHPBOOST_VERSION, $version);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -74,7 +85,8 @@ class GeneralConfig extends AbstractConfigData
 		self::SITE_NAME => '',
 		self::SITE_DESCRIPTION => '',
 		self::SITE_KEYWORDS => '',
-		self::HOME_PAGE => '/member/member.php'
+		self::HOME_PAGE => '/member/member.php',
+		self::PHPBOOST_VERSION => '3.1'
 		);
 	}
 

@@ -1172,7 +1172,7 @@ else
 		'C_STATS_SITE' => true,
 		'START' => gmdate_format('date_format_short', $CONFIG['start']),
 		'VERSION' => Environment::get_phpboost_version(),
-		'BUILD' => $CONFIG['version'],
+		'BUILD' => GeneralConfig::load()->get_phpboost_major_version(),
 		'L_START' => $LANG['start'],
 		'L_KERNEL_VERSION' => $LANG['kernel_version']
 	));

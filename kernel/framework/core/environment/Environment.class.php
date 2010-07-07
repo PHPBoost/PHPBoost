@@ -525,12 +525,17 @@ class Environment
 	 */
 	public static function get_phpboost_version()
 	{
-		global $CONFIG;
-
+		$major_version = GeneralConfig::load()->get_phpboost_major_version();
+		$minor_version = self::get_phpboost_minor_version();
+		return $major_version . '.' . $minor_version;
+	}
+	
+	private static function get_phpboost_minor_version()
+	{
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
 		$build =  $file->read();
 		$file->close();
-		return '3.0.' . trim($build);
+		return trim($build);
 	}
 
 	/**
