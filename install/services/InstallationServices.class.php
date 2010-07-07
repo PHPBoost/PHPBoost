@@ -110,6 +110,7 @@ class InstallationServices
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword);
 		$config = $this->build_configuration($locale, $site_timezone);
 		$this->save_configuration($config, $locale);
+		$this->init_maintenance_config();
 		$this->configure_theme($config['theme'], $locale);
 	}
 	
@@ -124,6 +125,13 @@ class InstallationServices
 		$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 		GeneralConfig::save();
 	}
+	
+	private function init_maintenance_config()
+	{
+		$maintenance_config = MaintenanceConfig::load();
+		$maintenance_config->set_message($this->messages['site_config_maintain_text']);
+		MaintenanceConfig::save();
+	}
 
 	private function build_configuration($locale, $site_timezone = '')
 	{
@@ -134,10 +142,6 @@ class InstallationServices
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['editor'] = 'bbcode';
 		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
-		$CONFIG['maintain'] = 0;
-		$CONFIG['maintain_delay'] = 1;
-		$CONFIG['maintain_display_admin'] = 1;
-		$CONFIG['maintain_text'] = $this->messages['site_config_maintain_text'];
 		$CONFIG['htaccess_manual_content'] = '';
 		$CONFIG['rewrite'] = 0;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;

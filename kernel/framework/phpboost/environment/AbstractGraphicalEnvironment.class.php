@@ -38,12 +38,10 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 	protected function process_site_maintenance()
 	{
-		global $CONFIG, $Template;
-
 		if ($this->is_under_maintenance())
 		{
-			if (!$this->user->check_level(ADMIN_LEVEL) &&
-			!$this->user->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN))
+			$maintenance_config = MaintenanceConfig::load();
+			if (!$this->user->check_auth($maintenance_config->get_auth(), 1))
 			{
 				if (SCRIPT !== (DIR . '/member/maintain.php'))
 				{
@@ -55,8 +53,8 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 	protected function is_under_maintenance()
 	{
-		global $CONFIG;
-		return $CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time();
+		$maintenance_config = MaintenanceConfig::load();
+		return $maintenance_config->is_under_maintenance();
 	}
 	
 	protected static function set_page_localization($page_title)

@@ -521,10 +521,6 @@ switch($step)
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['editor'] = 'bbcode';
 				$CONFIG['timezone'] = $site_timezone;
-				$CONFIG['maintain'] = 0;
-				$CONFIG['maintain_delay'] = 1;
-				$CONFIG['maintain_display_admin'] = 1;
-				$CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
 				$CONFIG['htaccess_manual_content'] = '';
 				$CONFIG['rewrite'] = 0;
 				$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
