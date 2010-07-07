@@ -64,7 +64,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = ($CONFIG['anti_flood'] == 1 && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
+	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -155,7 +155,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//Mod anti Flood
 			if ($check_time !== false && $check_status != 0)
 			{
-				$delay_flood = $CONFIG['delay_flood']; //On recupère le delai de flood.
+				$delay_flood = ContentManagementConfig::load()->get_anti_flood_duration(); //On recupère le delai de flood.
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 
 				//Droit de flooder?.
@@ -399,7 +399,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		//Mod anti Flood
 		if ($check_time !== false)
 		{
-			$delay_expire = time() - $CONFIG['delay_flood']; //On calcul la fin du delai.
+			$delay_expire = time() - ContentManagementConfig::load()->get_anti_flood_duration(); //On calcul la fin du delai.
 			//Droit de flooder?
 			if ($check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Ok
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
