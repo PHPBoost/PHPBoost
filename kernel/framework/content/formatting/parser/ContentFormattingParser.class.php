@@ -47,17 +47,11 @@ abstract class ContentFormattingParser extends AbstractParser
      */
     public function __construct()
     {
-        global $CONFIG;
-        //We build the parent object
         parent::__construct();
-        if (!empty($CONFIG['html_auth']))
-        {
-        	$this->html_auth = $CONFIG['html_auth'];
-        }
-        if (!empty($CONFIG['forbidden_tags']))
-        {
-        	$this->forbidden_tags = $CONFIG['forbidden_tags'];
-        }
+        
+        $content_formatting_config = ContentFormattingConfig::load();
+		$this->forbidden_tags = $content_formatting_config->get_forbidden_tags();
+		$this->html_auth = $content_formatting_config->get_html_tag_auth();
     }
 
     /**
@@ -97,15 +91,7 @@ abstract class ContentFormattingParser extends AbstractParser
      */
     public function set_html_auth(array $array_auth)
     {
-        global $CONFIG;
-        if (is_array($array_auth))
-        {
-            $this->html_auth = $array_auth;
-        }
-        else
-        {
-            $this->html_auth = $CONFIG['html_auth'];
-        }
+    	$this->html_auth = $array_auth;
     }
     
     /**

@@ -519,7 +519,6 @@ switch($step)
 				$CONFIG['version'] = UPDATE_VERSION;
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
-				$CONFIG['editor'] = 'bbcode';
 				$CONFIG['timezone'] = $site_timezone;
 				$CONFIG['htaccess_manual_content'] = '';
 				$CONFIG['rewrite'] = 0;
@@ -538,8 +537,6 @@ switch($step)
 				$CONFIG['pm_max'] = 50;
 				$CONFIG['search_cache_time'] = 30;
 				$CONFIG['search_max_use'] = 100;
-				$CONFIG['html_auth'] = array ('r2' => 1);
-				$CONFIG['forbidden_tags'] = array ();
 
 				$Sql = PersistenceContext::get_sql();
 

@@ -35,7 +35,7 @@ $page_path_to_root = retrieve(REQUEST, 'path_to_root', '');
 $page_path = retrieve(REQUEST, 'page_path', '');
 
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
-$editor = retrieve(REQUEST, 'editor', $CONFIG['editor']);
+$editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_default_editor());
 
 $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 

@@ -39,9 +39,9 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	
 	public function __construct()
 	{
-		global $CONFIG;
-		$this->forbidden_tags = $CONFIG['forbidden_tags'];
-		$this->html_auth = $CONFIG['html_auth'];
+		$content_formatting_config = ContentFormattingConfig::load();
+		$this->forbidden_tags = $content_formatting_config->get_forbidden_tags();
+		$this->html_auth = $content_formatting_config->get_html_tag_auth();
 	}
 	
 	/**
