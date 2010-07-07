@@ -125,7 +125,7 @@ else //Sinon on rempli le formulaire
 		'DISPLAY_DELAY_DISABLED' => !$maintenance_config->get_display_duration() ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_ENABLED' => $maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_DISABLED' => !$maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
-		'MAINTAIN_CHECK_NO' => !$maintenance_config->is_maintenance_enabled() ? ' checked="checked"' : '',
+		'MAINTAIN_CHECK_NO' => !$maintenance_config->is_maintenance_enabled() || !$maintenance_config->is_end_date_not_reached() ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && $maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow) ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_UNTIL' => $maintenance_config->is_maintenance_enabled() && $check_until ? ' checked="checked"' : '',
 		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_USER)) : '',
