@@ -83,7 +83,6 @@ $maintenance_message = $maintenance_config->get_message();
 
 $Template->assign_vars(array(	
 	'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-	'VERSION' => $CONFIG['version'],
 	'THEME' => get_utheme(),
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 	'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
@@ -99,7 +98,7 @@ $Template->assign_vars(array(
 	'L_SEC' => $LANG['seconds'],
 	'L_POWERED_BY' => $LANG['powered_by'],
 	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
-	'PHPBOOST_VERSION' => $CONFIG['version']
+	'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 ));
 
 if ($maintenance_config->get_display_duration() && !$maintenance_config->is_unlimited_maintenance())

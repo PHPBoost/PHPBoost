@@ -1124,7 +1124,7 @@ else
 	$Template->assign_vars(array(
 		'C_STATS_SITE' => true,
 		'START' => gmdate_format('date_format_short', $CONFIG['start']),
-		'VERSION' => $CONFIG['version'],
+		'VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 		'L_START' => $LANG['start'],
 		'L_VERSION' => $LANG['version']
 	));

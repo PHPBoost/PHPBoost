@@ -324,7 +324,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_BY' => strtolower($LANG['by']),
 			'L_THEME_AUTHOR' => $theme['author'],
 			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
-		    'PHPBOOST_VERSION' => $CONFIG['version']
+		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
 		//We add a page to the page displayed counter
