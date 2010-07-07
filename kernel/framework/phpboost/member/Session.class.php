@@ -325,7 +325,7 @@ class Session
 		$this->data['user_mail'] = isset($userdata['user_mail']) ? $userdata['user_mail'] : '';
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';
-		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : $CONFIG['editor'];
+		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : ContentFormattingConfig::load()->get_default_editor();
 		$this->data['user_timezone'] = isset($userdata['user_timezone']) ? $userdata['user_timezone'] : $CONFIG['timezone'];
 		$this->data['avatar'] = isset($userdata['avatar']) ? $userdata['avatar'] : '';
 		$this->data['modules_parameters'] = isset($userdata['modules_parameters']) ? $userdata['modules_parameters'] : '';

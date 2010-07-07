@@ -173,9 +173,10 @@ if (empty($key))
 		//Gestion éditeur par défaut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
 		$select_editors = '';
+		$default_editor = ContentFormattingConfig::load()->get_default_editor();
 		foreach ($editors as $code => $name)
 		{
-			$selected = ($code == $CONFIG['editor']) ? 'selected="selected"' : '';
+			$selected = ($code == $default_editor) ? 'selected="selected"' : '';
 			$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 		}
 		

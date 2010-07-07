@@ -140,7 +140,6 @@ class InstallationServices
 		$CONFIG['version'] = self::$phpboost_major_version;
 		$CONFIG['lang'] = $locale;
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
-		$CONFIG['editor'] = 'bbcode';
 		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
 		$CONFIG['htaccess_manual_content'] = '';
 		$CONFIG['rewrite'] = 0;
@@ -159,8 +158,6 @@ class InstallationServices
 		$CONFIG['pm_max'] = 50;
 		$CONFIG['search_cache_time'] = 30;
 		$CONFIG['search_max_use'] = 100;
-		$CONFIG['html_auth'] = array ('r2' => 1);
-		$CONFIG['forbidden_tags'] = array ();
 
 		return $CONFIG;
 	}

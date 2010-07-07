@@ -36,9 +36,11 @@ if (!empty($_POST['submit']) )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
 	
-	$CONFIG['editor'] 		= ($editor == 'tinymce') ? 'tinymce' : 'bbcode';
-	$CONFIG['html_auth'] 	= Authorizations::build_auth_array_from_form(1);
-	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
+	$content_formatting_config = ContentFormattingConfig::load();
+	$content_formatting_config->set_default_editor(($editor == 'tinymce') ? 'tinymce' : 'bbcode');
+	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
+	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
+	ContentFormattingConfig::save();
 	$CONFIG['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
 	$CONFIG['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
 	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25);
@@ -55,6 +57,8 @@ else
 {		
 	$template = new FileTemplate('admin/admin_content_config.tpl');
 	
+	$content_formatting_config = ContentFormattingConfig::load();
+	
 	$j = 0;
 	
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $code => $name)
@@ -63,14 +67,14 @@ else
 			'IDENTIFIER' => $j++,
 			'CODE' => $code,
 			'TAG_NAME' => $name,
-			'C_ENABLED' => in_array($code, $CONFIG['forbidden_tags'])
+			'C_ENABLED' => in_array($code, $content_formatting_config->get_forbidden_tags())
 		));
 	}
 	
 	$template->assign_vars(array(
-		'BBCODE_SELECTED' => ($CONFIG['editor'] == 'bbcode') ? 'selected="selected"' : '',
-		'TINYMCE_SELECTED' => ($CONFIG['editor'] == 'tinymce') ? 'selected="selected"' : '',
-		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $CONFIG['html_auth']),
+		'BBCODE_SELECTED' => ($content_formatting_config->get_default_editor() == 'bbcode') ? 'selected="selected"' : '',
+		'TINYMCE_SELECTED' => ($content_formatting_config->get_default_editor() == 'tinymce') ? 'selected="selected"' : '',
+		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $content_formatting_config->get_html_tag_auth()),
 		'NBR_TAGS' => $j,
 		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
 		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',

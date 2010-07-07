@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             editor.class.php
+ *                         	ContentEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -35,8 +35,8 @@ abstract class ContentEditor
 {
     function ContentEditor()
     {
-        global $CONFIG;
-        $this->forbidden_tags = $CONFIG['forbidden_tags'];
+        $content_formatting_config = ContentFormattingConfig::load();
+        $this->forbidden_tags = $content_formatting_config->get_forbidden_tags();
     }
 
     /**
