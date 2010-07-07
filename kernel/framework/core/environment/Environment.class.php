@@ -530,7 +530,7 @@ class Environment
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
 		$build =  $file->read();
 		$file->close();
-		return $CONFIG['version'] . '.' . trim($build);
+		return '3.0.' . trim($build);
 	}
 
 	/**

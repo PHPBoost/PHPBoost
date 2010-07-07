@@ -516,7 +516,6 @@ switch($step)
 				
 				$CONFIG = array();
 				$CONFIG['start'] = time();
-				$CONFIG['version'] = UPDATE_VERSION;
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['timezone'] = $site_timezone;
@@ -531,8 +530,6 @@ switch($step)
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
 				$CONFIG['site_session_invit'] = 300;
-				$CONFIG['anti_flood'] = 0;
-				$CONFIG['delay_flood'] = 7;
 				$CONFIG['unlock_admin'] = '';
 				$CONFIG['pm_max'] = 50;
 				$CONFIG['search_cache_time'] = 30;

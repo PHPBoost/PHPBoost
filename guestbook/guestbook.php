@@ -63,10 +63,10 @@ if ($guestbook && empty($id_get)) //Enregistrement
 			}
 
 			//Mod anti-flood
-			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if (!empty($check_time))
 			{
-				if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcul la fin du delai.
+				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcul la fin du delai.
 				{
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=flood', '', '&') . '#errorh');
 				}

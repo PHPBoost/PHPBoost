@@ -231,10 +231,10 @@ class Comments
 					if ($User->check_level($CONFIG_COM['com_auth']))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+						$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{
-							if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcule la fin du delai.
+							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcule la fin du delai.
 								AppContext::get_response()->redirect($path_redirect . '&errorh=flood#errorh');
 						}
 						

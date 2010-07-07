@@ -41,10 +41,13 @@ if (!empty($_POST['submit']) )
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
 	ContentFormattingConfig::save();
-	$CONFIG['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
-	$CONFIG['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
-	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25);
 	
+	$content_management_config = ContentManagementConfig::load();
+	$content_management_config->set_anti_flood_enabled((boolean)retrieve(POST, 'anti_flood', 0));
+	$content_management_config->set_anti_flood_duration(retrieve(POST, 'delay_flood', 0));
+	ContentManagementConfig::save();
+	
+	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25);
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . "
 						SET value = '" . addslashes(serialize($CONFIG)) . "'
 						WHERE name = 'config'", __LINE__, __FILE__);
@@ -58,6 +61,7 @@ else
 	$template = new FileTemplate('admin/admin_content_config.tpl');
 	
 	$content_formatting_config = ContentFormattingConfig::load();
+	$content_management_config = ContentManagementConfig::load();
 	
 	$j = 0;
 	
@@ -77,9 +81,9 @@ else
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $content_formatting_config->get_html_tag_auth()),
 		'NBR_TAGS' => $j,
 		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
-		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',
-		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
-		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
+		'DELAY_FLOOD' => $content_management_config->get_anti_flood_duration(),
+		'FLOOD_ENABLED' => $content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
+		'FLOOD_DISABLED' => !$content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
 		
 		'L_POST_MANAGEMENT' => $LANG['post_management'],
 		'L_PM_MAX' => $LANG['pm_max'],
