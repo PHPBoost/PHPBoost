@@ -517,12 +517,15 @@ switch($step)
 				$general_config->set_site_timezone($site_timezone);
 				GeneralConfig::save();
 				
+				$graphical_environment_config = GraphicalEnvironmentConfig::load();
+				$graphical_environment_config->set_page_bench_enabled(DISTRIBUTION_ENABLE_BENCH);
+				GraphicalEnvironmentConfig::save();
+				
 				$CONFIG = array();
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 				$CONFIG['com_popup'] = 0;
-				$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;
 				$CONFIG['ob_gzhandler'] = 0;
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;

@@ -330,7 +330,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//We add a page to the page displayed counter
 		StatsSaver::update_pages_displayed('pages');
 
-		if ($CONFIG['bench'])
+		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
 			$template->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,

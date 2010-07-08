@@ -110,6 +110,7 @@ class InstallationServices
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$config = $this->build_configuration($locale);
 		$this->save_configuration($config, $locale);
+		$this->save_graphical_config();
 		$this->init_maintenance_config();
 		$this->configure_theme($config['theme'], $locale);
 	}
@@ -135,6 +136,13 @@ class InstallationServices
 		$maintenance_config->set_message($this->messages['site_config_maintain_text']);
 		MaintenanceConfig::save();
 	}
+	
+	private function get_graphical_config()
+	{
+		$graphical_environment_config = GraphicalEnvironmentConfig::load();
+		$graphical_environment_config->set_page_bench_enabled(DISTRIBUTION_ENABLE_BENCH);
+		GraphicalEnvironmentConfig::save();
+	}
 
 	private function build_configuration($locale)
 	{
@@ -143,7 +151,6 @@ class InstallationServices
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 		$CONFIG['com_popup'] = 0;
-		$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;
 		$CONFIG['ob_gzhandler'] = 0;
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
