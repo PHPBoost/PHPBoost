@@ -209,6 +209,7 @@ elseif (!empty($_POST['advanced']))
 		
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
+		HtaccessFileCache::regenerate();
 		ServerEnvironmentConfig::save();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
