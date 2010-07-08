@@ -151,7 +151,6 @@ class InstallationServices
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 		$CONFIG['com_popup'] = 0;
-		$CONFIG['ob_gzhandler'] = 0;
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
 		$CONFIG['site_session_invit'] = 300;

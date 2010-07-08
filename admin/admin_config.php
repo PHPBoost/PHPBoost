@@ -109,8 +109,8 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'CHECK_REWRITE' 	=> $server_configuration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
 		'HTACCESS_MANUAL_CONTENT' => $server_environment_config->get_htaccess_manual_content(),
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
-		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
-		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
+		'GZHANDLER_ENABLED' => ($server_environment_config->is_output_gziping_enabled() && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
+		'GZHANDLER_DISABLED' => !$server_environment_config->is_output_gziping_enabled() ? 'checked="checked"' : '',
 		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
 		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
 		'SITE_SESSION_VISIT'=> !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',
@@ -175,7 +175,6 @@ elseif (!empty($_POST['advanced']))
 	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
 	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 		  
-	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
@@ -209,6 +208,7 @@ elseif (!empty($_POST['advanced']))
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
 		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
+		$server_environment_config->set_output_gziping_enabled((retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib')));
 		ServerEnvironmentConfig::save();
 		HtaccessFileCache::regenerate();
 		
