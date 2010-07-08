@@ -45,11 +45,9 @@ if (!empty($_POST['valid']) )
 	###### Régénération du cache des news #######
 	$Cache->Generate_file('com');
 		
-	$CONFIG['com_popup'] = retrieve(POST, 'com_popup', 0);
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-	
-	###### Régénération du cache dela configuration #######
-	$Cache->Generate_file('config');
+	$comments_config = CommentsConfig::load();
+	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
+	CommentsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
@@ -61,8 +59,6 @@ else
 	));
 	
 	$Cache->load('com');
-	
-	$CONFIG['com_popup'] = isset($CONFIG['com_popup']) ? $CONFIG['com_popup'] : 0; //Affichage des commentaires
 	
 	//Rang d'autorisation.
 	$CONFIG_COM['com_auth'] = isset($CONFIG_COM['com_auth']) ? $CONFIG_COM['com_auth'] : '-1';	
@@ -93,13 +89,15 @@ else
 		));
 	}
 	
+	$comments_config = CommentsConfig::load();
+	
 	$Template->assign_vars(array(
 		'NBR_TAGS' => $j,
 		'OPTIONS_RANK' =>  $options,
 		'COM_MAX' => !empty($CONFIG_COM['com_max']) ? $CONFIG_COM['com_max'] : '10',
 		'MAX_LINK' => isset($CONFIG_COM['max_link']) ? $CONFIG_COM['max_link'] : '-1',
-		'COM_ENABLED' => ($CONFIG['com_popup'] == 0) ? 'checked="checked"' : '',
-		'COM_DISABLED' => ($CONFIG['com_popup'] == 1) ? 'checked="checked"' : '',
+		'COM_ENABLED' => !$comments_config->get_display_comments_in_popup() ? 'checked="checked"' : '',
+		'COM_DISABLED' => $comments_config->get_display_comments_in_popup() ? 'checked="checked"' : '',
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
 		'VERIF_CODE_ENABLED' => ($CONFIG_COM['com_verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
 		'VERIF_CODE_DISABLED' => ($CONFIG_COM['com_verif_code'] == 0) ? 'checked="checked"' : '',

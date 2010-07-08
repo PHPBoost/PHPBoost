@@ -528,7 +528,6 @@ switch($step)
 				$CONFIG = array();
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
-				$CONFIG['com_popup'] = 0;
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
 				$CONFIG['site_session_invit'] = 300;
