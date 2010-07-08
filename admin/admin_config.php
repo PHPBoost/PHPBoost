@@ -44,7 +44,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config = $CONFIG;	 
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
@@ -60,7 +59,8 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		GeneralConfig::save();
 		
 		$graphical_environment_config = GraphicalEnvironmentConfig::load();
-		$graphical_environment_config->set_visit_counter_enabled((boolean)retrieve(POST, 'compteur', 0));
+		$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
+		$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
 		GraphicalEnvironmentConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
@@ -260,6 +260,7 @@ else //Sinon on rempli le formulaire
 	
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$visit_counter_enabled = $graphical_environment_config->is_visit_counter_enabled();
+	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
@@ -272,8 +273,8 @@ else //Sinon on rempli le formulaire
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => $visit_counter_enabled ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => !$visit_counter_enabled ? 'checked="checked"' : '',
-		'BENCH_ENABLED' => ($CONFIG['bench'] == 1) ? 'checked="checked"' : '',
-		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
+		'BENCH_ENABLED' => $graphical_environment_config->is_page_bench_enabled() ? 'checked="checked"' : '',
+		'BENCH_DISABLED' => !$graphical_environment_config->is_page_bench_enabled() ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => $graphical_environment_config->get_display_theme_author() ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => !$graphical_environment_config->get_display_theme_author() ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],

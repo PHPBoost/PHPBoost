@@ -364,7 +364,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
-		if ($CONFIG['bench'])
+		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
 			$tpl->assign_vars(array(
 				'C_DISPLAY_BENCH' => true,
