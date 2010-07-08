@@ -31,6 +31,7 @@
 class GraphicalEnvironmentConfig extends AbstractConfigData
 {
 	const VISIT_COUNTER_ENABLED = 'visit_counter_enabled';
+	const DISPLAY_THEME_AUTHOR = 'display_theme_author';
 
 	public function is_visit_counter_enabled()
 	{
@@ -41,11 +42,22 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	{
 		$this->set_property(self::VISIT_COUNTER_ENABLED, $enabled);
 	}
+	
+	public function get_display_theme_author()
+	{
+		return $this->get_property(self::DISPLAY_THEME_AUTHOR);
+	}
+	
+	public function set_display_theme_author($display)
+	{
+		$this->set_property(self::DISPLAY_THEME_AUTHOR, $display);
+	}
 
 	public function get_default_values()
 	{
 		return array(
-		self::VISIT_COUNTER_ENABLED => false
+		self::VISIT_COUNTER_ENABLED => false,
+		self::DISPLAY_THEME_AUTHOR => false
 		);
 	}
 

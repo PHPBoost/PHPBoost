@@ -525,7 +525,6 @@ switch($step)
 				$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 				$CONFIG['com_popup'] = 0;
 				$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;
-				$CONFIG['theme_author'] = 0;
 				$CONFIG['ob_gzhandler'] = 0;
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
