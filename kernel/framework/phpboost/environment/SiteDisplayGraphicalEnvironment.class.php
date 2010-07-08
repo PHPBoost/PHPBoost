@@ -316,7 +316,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MENUS_TOP_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER],
 			'C_MENUS_FOOTER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]),
 			'MENUS_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__FOOTER],
-			'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
+			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => $LANG['powered_by'],
 			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
 			'L_THEME' => $LANG['theme'],

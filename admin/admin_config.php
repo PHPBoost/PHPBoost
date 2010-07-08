@@ -252,7 +252,8 @@ else //Sinon on rempli le formulaire
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
 	
-	$visit_counter_enabled = GraphicalEnvironmentConfig::load()->is_visit_counter_enabled();
+	$graphical_environment_config = GraphicalEnvironmentConfig::load();
+	$visit_counter_enabled = $graphical_environment_config->is_visit_counter_enabled();
 	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
@@ -267,8 +268,8 @@ else //Sinon on rempli le formulaire
 		'COMPTEUR_DISABLED' => !$visit_counter_enabled ? 'checked="checked"' : '',
 		'BENCH_ENABLED' => ($CONFIG['bench'] == 1) ? 'checked="checked"' : '',
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
-		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
-		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
+		'THEME_AUTHOR_ENABLED' => $graphical_environment_config->get_display_theme_author() ? 'checked="checked"' : '',
+		'THEME_AUTHOR_DISABLED' => !$graphical_environment_config->get_display_theme_author() ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
 		'L_CONFIG_MAIN' => $LANG['config_main'],
