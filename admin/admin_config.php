@@ -44,7 +44,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config = $CONFIG;	 
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 
@@ -59,6 +58,10 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
 		$general_config->set_home_page(stripslashes($start_page));
 		GeneralConfig::save();
+		
+		$graphical_environment_config = GraphicalEnvironmentConfig::load();
+		$graphical_environment_config->set_visit_counter_enabled((boolean)retrieve(POST, 'compteur', 0));
+		GraphicalEnvironmentConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -249,6 +252,8 @@ else //Sinon on rempli le formulaire
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
 	
+	$visit_counter_enabled = GraphicalEnvironmentConfig::load()->is_visit_counter_enabled();
+	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $CONFIG['theme'],
@@ -258,8 +263,8 @@ else //Sinon on rempli le formulaire
 		'SELECT_PAGE' => $select_page, 
 		'START_PAGE' => $general_config->get_home_page(), 
 		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
-		'COMPTEUR_ENABLED' => ($CONFIG['compteur'] == 1) ? 'checked="checked"' : '',
-		'COMPTEUR_DISABLED' => ($CONFIG['compteur'] == 0) ? 'checked="checked"' : '',
+		'COMPTEUR_ENABLED' => $visit_counter_enabled ? 'checked="checked"' : '',
+		'COMPTEUR_DISABLED' => !$visit_counter_enabled ? 'checked="checked"' : '',
 		'BENCH_ENABLED' => ($CONFIG['bench'] == 1) ? 'checked="checked"' : '',
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',

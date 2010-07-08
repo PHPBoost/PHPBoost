@@ -145,7 +145,6 @@ class InstallationServices
 		$CONFIG['rewrite'] = 0;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 		$CONFIG['com_popup'] = 0;
-		$CONFIG['compteur'] = 0;
 		$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;
 		$CONFIG['theme_author'] = 0;
 		$CONFIG['ob_gzhandler'] = 0;

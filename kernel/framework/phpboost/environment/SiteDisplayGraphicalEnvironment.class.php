@@ -113,7 +113,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		global $CONFIG;
 
 		//If the counter is to be displayed, we display it
-		if ($CONFIG['compteur'] == 1)
+		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
 			$compteur = PersistenceContext::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
 				'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
