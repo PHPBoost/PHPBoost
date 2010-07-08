@@ -112,7 +112,7 @@ default language         : " . $lang_ini_file['name'] . "
 default editor           : " . $content_formatting_config->get_default_editor() . "
 home page                : " . $general_config->get_home_page() . "
 url rewriting            : " . $server_environment_config->is_url_rewriting_enabled() . "
-output gz                : " . $CONFIG['ob_gzhandler'] . "
+output gzip              : " . $server_environment_config->is_output_gziping_enabled() . "
 session cookie name      : " . $CONFIG['site_cookie'] . "
 session length           : " . $CONFIG['site_session'] . "
 guest session length     : " . $CONFIG['site_session_invit'] . "
@@ -138,7 +138,7 @@ $template->assign_vars(array(
 	'KERNEL_DEFAULT_EDITOR' => $content_formatting_config->get_default_editor() == 'tinymce' ? 'TinyMCE' : 'BBCode',
 	'KERNEL_START_PAGE' => $general_config->get_home_page(),
 	'C_KERNEL_URL_REWRITING' => $server_environment_config->is_url_rewriting_enabled(),
-	'C_KERNEL_OUTPUT_GZ' => (bool)$CONFIG['ob_gzhandler'],
+	'C_KERNEL_OUTPUT_GZ' => $server_environment_config->is_output_gziping_enabled(),
 	'COOKIE_NAME' => $CONFIG['site_cookie'],
 	'SESSION_LENGTH' => $CONFIG['site_session'],
 	'SESSION_LENGTH_GUEST' => $CONFIG['site_session_invit'],

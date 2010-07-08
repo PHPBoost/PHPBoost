@@ -55,7 +55,7 @@ $user_groups = array();
 $User = new User($user_data, $user_groups);
 
 
-if ($CONFIG['ob_gzhandler'] == 1)
+if (ServerEnvironmentConfig::load()->is_output_gziping_enabled())
 {
     ob_start('ob_gzhandler'); //Activation de la compression de données
 }
