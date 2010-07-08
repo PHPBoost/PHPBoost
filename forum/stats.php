@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$total_day = NumberHelper::round((time() - $CONFIG['start'])/(3600*24), 0);
+$total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
 
 $sum = $Sql->query_array(PREFIX . "forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1", __LINE__, __FILE__);

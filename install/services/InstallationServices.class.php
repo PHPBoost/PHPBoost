@@ -124,6 +124,7 @@ class InstallationServices
 		$general_config->set_site_keywords($site_keywords);
 		$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
+		$general_config->set_site_install_date(new Date());
 		GeneralConfig::save();
 	}
 	
@@ -137,7 +138,6 @@ class InstallationServices
 	private function build_configuration($locale, $site_timezone = '')
 	{
 		$CONFIG = array();
-		$CONFIG['start'] = time();
 		$CONFIG['lang'] = $locale;
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
