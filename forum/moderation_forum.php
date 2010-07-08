@@ -90,9 +90,9 @@ if (!empty($id_topic_get))
 	$Cache->load('forum');
 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
+	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($topic['title']) : '';
+	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
 
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
 }

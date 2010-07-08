@@ -103,9 +103,9 @@ elseif (!empty($idt_get))
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
+	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($topic['title']) : '';
+	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
 
 	//Changement du statut (display_msg) du sujet.
 	if ($msg_d)

@@ -521,7 +521,6 @@ switch($step)
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['htaccess_manual_content'] = '';
-				$CONFIG['rewrite'] = 0;
 				$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
 				$CONFIG['com_popup'] = 0;
 				$CONFIG['bench'] = DISTRIBUTION_ENABLE_BENCH;

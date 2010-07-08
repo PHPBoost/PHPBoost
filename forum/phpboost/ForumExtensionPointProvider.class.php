@@ -318,7 +318,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
 		));
-		$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($result_data['title']) : '';
+		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
 		$tpl->assign_vars(array(
             'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result_data['user_id'],'-'.$result_data['user_id'].'.php') : '',

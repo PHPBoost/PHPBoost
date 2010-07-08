@@ -44,7 +44,7 @@ class HtaccessFileCache implements CacheData
 
 		$this->htaccess_file_content = '';
 
-		if ($CONFIG['rewrite'])
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
 

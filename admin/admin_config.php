@@ -88,6 +88,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	}
 	
 	$general_config = GeneralConfig::load();
+	$server_environment_config = ServerEnvironmentConfig::load();
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
@@ -103,8 +104,8 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
 		'SERVER_PATH' 		=> $general_config->get_site_path(),
 		'SELECT_TIMEZONE' 	=> $select_timezone,
-		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
-		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
+		'CHECKED' 			=> $server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
+		'UNCHECKED' 		=> !$server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
 		'CHECK_REWRITE' 	=> $server_configuration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
 		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
@@ -172,7 +173,7 @@ elseif (!empty($_POST['advanced']))
 	
 	$timezone = retrieve(POST, 'timezone', 0);
 	  
-	$CONFIG['rewrite'] = 1;
+	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
 		  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
@@ -205,6 +206,10 @@ elseif (!empty($_POST['advanced']))
 		$general_config->set_site_path($site_path);
 		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
+		
+		$server_environment_config = ServerEnvironmentConfig::load();
+		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
+		ServerEnvironmentConfig::save();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}

@@ -171,7 +171,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 
 	if ($session_mod == 0)
 	{
-		if ($CONFIG['rewrite'] == 1 && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
 		{
 			return $mod_rewrite;
 		}

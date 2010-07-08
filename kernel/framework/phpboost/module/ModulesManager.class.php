@@ -185,7 +185,7 @@ class ModulesManager
 			MenuService::generate_cache();
 
 			$rewrite_rules = $configuration->get_url_rewrite_rules();
-			if ($CONFIG['rewrite'] == 1 && !empty($rewrite_rules))
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
 			{
 				HtaccessFileCache::regenerate();
 			}
@@ -251,7 +251,7 @@ class ModulesManager
 			Feed::clear_cache($module_id);
 
 			$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
-			if ($CONFIG['rewrite'] == 1 && !empty($rewrite_rules))
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
 			{
 				HtaccessFileCache::regenerate();
 			}

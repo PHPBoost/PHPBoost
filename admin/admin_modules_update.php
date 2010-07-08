@@ -102,13 +102,11 @@ if ($update) //Mise à jour du module
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
 		
-		
     	ModulesCssFilesCache::invalidate();
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
+		if (!empty($info_module['url_rewrite']) && ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
-			
 			HtaccessFileCache::regenerate();
 		}	
 		

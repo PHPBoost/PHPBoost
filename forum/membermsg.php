@@ -86,9 +86,9 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
 	
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-		$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($row['name']) : '';
+		$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['name']) : '';
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-		$rewrited_title = ( $CONFIG['rewrite'] == 1 ) ? '+' . Url::encode_rewrite($row['title']) : '';
+		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Ajout du marqueur d'édition si activé.
 	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="../member/member' . url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';

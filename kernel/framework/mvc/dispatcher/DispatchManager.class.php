@@ -76,7 +76,7 @@ class DispatchManager
 		$url = ltrim($url, '/');
 
 		global $CONFIG;
-		if ($CONFIG['rewrite'] == 1)
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			if (empty($url))
 			{
