@@ -107,14 +107,14 @@ class InstallationServices
 		$user = new User();
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
-		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword);
-		$config = $this->build_configuration($locale, $site_timezone);
+		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
+		$config = $this->build_configuration($locale);
 		$this->save_configuration($config, $locale);
 		$this->init_maintenance_config();
 		$this->configure_theme($config['theme'], $locale);
 	}
 	
-	private function save_general_config($server_url, $server_path, $site_name, $site_description = '', $site_keywords = '')
+	private function save_general_config($server_url, $server_path, $site_name, $site_description, $site_keywords, $site_timezone)
 	{
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_url($server_url);
@@ -125,6 +125,7 @@ class InstallationServices
 		$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
+		$general_config->set_site_timezone((int)$site_timezone);
 		GeneralConfig::save();
 	}
 	
@@ -135,12 +136,11 @@ class InstallationServices
 		MaintenanceConfig::save();
 	}
 
-	private function build_configuration($locale, $site_timezone = '')
+	private function build_configuration($locale)
 	{
 		$CONFIG = array();
 		$CONFIG['lang'] = $locale;
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
-		$CONFIG['timezone'] = !empty($site_timezone) ? $timezone : (int) date('I');
 		$CONFIG['htaccess_manual_content'] = '';
 		$CONFIG['rewrite'] = 0;
 		$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
@@ -276,7 +276,7 @@ class InstallationServices
 		$Cache = new Cache();
 		$Cache->load('config');
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, $CONFIG['lang'], $CONFIG['theme'], $CONFIG['timezone']);
+		$this->update_first_admin_account($login, $password, $email, $CONFIG['lang'], $CONFIG['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);

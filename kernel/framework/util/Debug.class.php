@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             debug.class.php
+ *                             Debug.class.php
  *                            -------------------
  *   begin                : October 3, 2009
  *   copyright            : (C) 2009 Loic Rouchon

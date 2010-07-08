@@ -275,7 +275,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 
 	if ($timezone_system == 1) //Timestamp du site, non dépendant de l'utilisateur.
 	{
-		$timezone = $CONFIG['timezone'] - $serveur_hour;
+		$timezone = GeneralConfig::load()->get_site_timezone() - $serveur_hour;
 	}
 	elseif ($timezone_system == 2) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
 	{
