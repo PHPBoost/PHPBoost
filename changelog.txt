@@ -68,6 +68,9 @@
 [b]Articles :[/b]
 [*] Refonte complète du module, collaboration des utilisateurs possible.
 
+[b]ShoutBox :[/b]
+[*] Possibilité des gérer les autorisations d'écriture et de lecture
+
 [b]Livre d'or :[/b]
 [*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération ( édition et suppression )
 
