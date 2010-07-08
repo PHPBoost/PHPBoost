@@ -182,9 +182,10 @@ if (empty($key))
 		
 		//Gestion fuseau horaire par défaut.
 		$select_timezone = '';
+		$timezone = GeneralConfig::load()->get_site_timezone();
 		for ($i = -12; $i <= 14; $i++)
 		{
-			$selected = ($i == $CONFIG['timezone']) ? 'selected="selected"' : '';
+			$selected = ($i == $timezone) ? 'selected="selected"' : '';
 			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}

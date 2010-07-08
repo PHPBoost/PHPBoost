@@ -38,6 +38,7 @@ class GeneralConfig extends AbstractConfigData
 	const HOME_PAGE = 'home_page';
 	const PHPBOOST_VERSION = 'phpboost_version';
 	const SITE_INSTALL_DATE = 'site_install_date';
+	const SITE_TIMEZONE = 'timezone';
 
 	public function get_site_url()
 	{
@@ -87,6 +88,16 @@ class GeneralConfig extends AbstractConfigData
 	{
 		$this->set_property(self::SITE_INSTALL_DATE, $date);
 	}
+	
+	public function get_site_timezone()
+	{
+		return $this->get_property(self::SITE_TIMEZONE);
+	}
+	
+	public function set_site_timezone($timezone)
+	{
+		$this->set_property(self::SITE_TIMEZONE, (int)$timezone);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -101,7 +112,8 @@ class GeneralConfig extends AbstractConfigData
 		self::SITE_KEYWORDS => '',
 		self::HOME_PAGE => '/member/member.php',
 		self::PHPBOOST_VERSION => '3.1',
-		self::SITE_INSTALL_DATE => new Date()
+		self::SITE_INSTALL_DATE => new Date(),
+		self::SITE_TIMEZONE => (int)date('I')
 		);
 	}
 

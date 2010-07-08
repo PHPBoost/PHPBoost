@@ -84,16 +84,17 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$Errorh->handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
 	}
 	
+	$general_config = GeneralConfig::load();
+	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
+	$timezone = $general_config->get_site_timezone();
 	for ($i = -12; $i <= 14; $i++)
 	{
-		$selected = ($i == $CONFIG['timezone']) ? 'selected="selected"' : '';
+		$selected = ($i == $timezone) ? 'selected="selected"' : '';
 		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
-	
-	$general_config = GeneralConfig::load();
 	
 	$Template->assign_vars(array(
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
@@ -166,9 +167,10 @@ elseif (!empty($_POST['advanced']))
 		$site_path = '/' . $site_path;
 	}
 	
+	$timezone = retrieve(POST, 'timezone', 0);
+	  
 	$CONFIG['rewrite'] = 1;
 		  
-	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
@@ -198,6 +200,7 @@ elseif (!empty($_POST['advanced']))
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_url($site_url);
 		$general_config->set_site_path($site_path);
+		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');

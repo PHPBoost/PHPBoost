@@ -248,7 +248,7 @@ class Date
 	 */
 	public function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
 	{
-		global $LANG, $CONFIG;
+		global $LANG;
 
 		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
 
@@ -283,7 +283,7 @@ class Date
 				break;
 
 			case DATE_RFC3339_F:
-				return date(DATE_RFC3339_FORMAT, $timestamp) . ($CONFIG['timezone'] < 0 ? '-' : '+') . sprintf('%02d:00',$CONFIG['timezone']);
+				return date(DATE_RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
 				break;
 
 			default:
@@ -461,7 +461,7 @@ class Date
 		{
 			// Référentiel : heure du site
 			case TIMEZONE_SITE:
-				$timezone = $CONFIG['timezone'] - $server_hour;
+				$timezone = GeneralConfig::load()->get_site_timezone() - $server_hour;
 				break;
 
 				//Référentiel : heure du serveur

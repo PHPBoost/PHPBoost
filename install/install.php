@@ -514,12 +514,12 @@ switch($step)
 				$general_config->set_home_page(DISTRIBUTION_START_PAGE);
 				$general_config->set_phpboost_major_version(UPDATE_VERSION);
 				$general_config->set_site_install_date(new Date());
+				$general_config->set_site_timezone($site_timezone);
 				GeneralConfig::save();
 				
 				$CONFIG = array();
 				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
-				$CONFIG['timezone'] = $site_timezone;
 				$CONFIG['htaccess_manual_content'] = '';
 				$CONFIG['rewrite'] = 0;
 				$CONFIG['debug_mode'] = DISTRIBUTION_ENABLE_DEBUG_MODE;
@@ -726,7 +726,7 @@ switch($step)
 					$Cache->load('config');
 
 					//On enregistre le membre (l'entrée était au préalable créée)
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . GeneralConfig::load()->get_site_timezone() . "' WHERE user_id = '1'",__LINE__, __FILE__);
 
 					//Génération de la clé d'activation, en cas de verrouillage de l'administration
 					$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
