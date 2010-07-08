@@ -12,9 +12,6 @@ $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
 $open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
 
-//Chargement d'un fichier template pour connaître l'emplacement du template
-$Template->set_filenames(array('pages'=> 'pages/pages.tpl'));
-
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {	
