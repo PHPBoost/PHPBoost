@@ -44,7 +44,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config = $CONFIG;	 
 	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
@@ -61,6 +60,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$graphical_environment_config = GraphicalEnvironmentConfig::load();
 		$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
 		$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
+		$graphical_environment_config->set_display_theme_author(retrieve(POST, 'theme_author', false));
 		GraphicalEnvironmentConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
