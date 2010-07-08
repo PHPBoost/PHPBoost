@@ -178,23 +178,12 @@ elseif (!empty($_POST['advanced']))
 	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
-	$CONFIG['debug_mode'] = retrieve(POST, 'debug', 0);
 	
 	if (!empty($site_url) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
-		
-		// TODO remove it when the $CONFIG variable will be managed by the new config manager
-		if ($CONFIG['debug_mode'])
-		{
-			Debug::enabled_debug_mode();
-		}
-		else
-		{
-			Debug::disable_debug_mode();
-		}
 		
 		//Régénération du htaccess.
 		HtaccessFileCache::regenerate();
@@ -208,7 +197,8 @@ elseif (!empty($_POST['advanced']))
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
 		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
-		$server_environment_config->set_output_gziping_enabled((retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib')));
+		$server_environment_config->set_output_gziping_enabled(retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
+		$server_environment_config->set_debug_mode_enabled(retrieve(POST, 'debug', false));
 		ServerEnvironmentConfig::save();
 		HtaccessFileCache::regenerate();
 		
