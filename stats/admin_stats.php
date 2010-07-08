@@ -1170,7 +1170,7 @@ else
 {
 	$Template->assign_vars(array(
 		'C_STATS_SITE' => true,
-		'START' => gmdate_format('date_format_short', $CONFIG['start']),
+		'START' => GeneralConfig::load()->get_site_install_date()->format(DATE_FORMAT_SHORT),
 		'VERSION' => Environment::get_phpboost_version(),
 		'BUILD' => GeneralConfig::load()->get_phpboost_major_version(),
 		'L_START' => $LANG['start'],
