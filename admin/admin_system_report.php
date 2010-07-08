@@ -86,6 +86,7 @@ foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $value)
 
 $general_config = GeneralConfig::load();
 $content_formatting_config = ContentFormattingConfig::load();
+$server_environment_config = ServerEnvironmentConfig::load();
 
 $summerization =
 "---------------------------------System report---------------------------------
@@ -109,8 +110,8 @@ site path                : " . $general_config->get_site_path()  . "
 default theme            : " . $template_ini_file['name'] . "
 default language         : " . $lang_ini_file['name'] . "
 default editor           : " . $content_formatting_config->get_default_editor() . "
-home page               : " . $general_config->get_home_page() . "
-url rewriting            : " . $CONFIG['rewrite'] . "
+home page                : " . $general_config->get_home_page() . "
+url rewriting            : " . $server_environment_config->is_url_rewriting_enabled() . "
 output gz                : " . $CONFIG['ob_gzhandler'] . "
 session cookie name      : " . $CONFIG['site_cookie'] . "
 session length           : " . $CONFIG['site_session'] . "
@@ -136,7 +137,7 @@ $template->assign_vars(array(
 	'KERNEL_DEFAULT_LANGUAGE' => $lang_ini_file['name'],
 	'KERNEL_DEFAULT_EDITOR' => $content_formatting_config->get_default_editor() == 'tinymce' ? 'TinyMCE' : 'BBCode',
 	'KERNEL_START_PAGE' => $general_config->get_home_page(),
-	'C_KERNEL_URL_REWRITING' => (bool)$CONFIG['rewrite'],
+	'C_KERNEL_URL_REWRITING' => $server_environment_config->is_url_rewriting_enabled(),
 	'C_KERNEL_OUTPUT_GZ' => (bool)$CONFIG['ob_gzhandler'],
 	'COOKIE_NAME' => $CONFIG['site_cookie'],
 	'SESSION_LENGTH' => $CONFIG['site_session'],

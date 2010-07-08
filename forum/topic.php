@@ -56,8 +56,8 @@ $Bread_crumb->add($topic['title'], '');
 define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
 require_once('../kernel/header.php'); 
 
-$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : ''; //On encode l'url pour un éventuel rewriting.
-$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
+$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : ''; //On encode l'url pour un éventuel rewriting.
+$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))

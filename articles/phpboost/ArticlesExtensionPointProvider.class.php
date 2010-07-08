@@ -216,7 +216,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		'SELECTED_AUTHOR' => $selected_fields['author'],
 		'SELECTED_ASC' => $selected_fields['asc'],
 		'SELECTED_DESC' => $selected_fields['desc'],
-		'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&',
+		'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&',
 		'L_DATE' => $LANG['date'],
 		'L_VIEW' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],

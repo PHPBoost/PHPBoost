@@ -135,7 +135,7 @@ function pages_second_parse($contents)
 {
 	global $CONFIG;
 	
-	if ($CONFIG['rewrite'] == 0) //Pas de rewriting	
+	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting	
 	{
 			$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
 	}

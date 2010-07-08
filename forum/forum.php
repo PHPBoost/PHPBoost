@@ -55,7 +55,7 @@ else
 require_once('../kernel/header.php'); 
 
 //On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-$rewrited_title = ($CONFIG['rewrite'] == 1 && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
+$rewrited_title = (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
 
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
@@ -302,7 +302,7 @@ if (!empty($id_get))
 		}
 		
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-		$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . Url::encode_rewrite($row['title']) : '';
+		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Affichage du dernier message posté.
 		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');

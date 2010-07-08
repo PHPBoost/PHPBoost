@@ -171,7 +171,7 @@ if (empty($id_media) && $id_cat >= 0)
 		$Template->assign_vars(array(
 			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 			'C_FILES' => true,
-			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
+			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 		));
 
 		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.note, v.nbrnote, v.nbr_com, v.infos, v.contents, mb.login, mb.level
