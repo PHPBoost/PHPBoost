@@ -107,7 +107,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'CHECKED' 			=> $server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> !$server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
 		'CHECK_REWRITE' 	=> $server_configuration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
-		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
+		'HTACCESS_MANUAL_CONTENT' => $server_environment_config->get_htaccess_manual_content(),
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
@@ -172,14 +172,13 @@ elseif (!empty($_POST['advanced']))
 	}
 	
 	$timezone = retrieve(POST, 'timezone', 0);
-	  
 	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
+	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 		  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
-	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 	$CONFIG['debug_mode'] = retrieve(POST, 'debug', 0);
 	
 	if (!empty($site_url) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
@@ -209,8 +208,9 @@ elseif (!empty($_POST['advanced']))
 		
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
-		HtaccessFileCache::regenerate();
+		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
 		ServerEnvironmentConfig::save();
+		HtaccessFileCache::regenerate();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
