@@ -319,7 +319,7 @@ class Comments
 							'COM_FORM' =>  $form->display(),
 							'SCRIPT' => $this->script,
 							'L_XML_LANGUAGE' => $LANG['xml_lang'],
-							'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
+							'L_TITLE' => (!CommentsConfig::load()->get_display_comments_in_popup() || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 							'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 						));
 					}
@@ -495,7 +495,7 @@ class Comments
 					'VAR' => $vars_simple,
 					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
-					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
+					'L_TITLE' => (!CommentsConfig::load()->get_display_comments_in_popup() || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 					'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
 					'L_WARNING_MANAGEMENT' => $LANG['warning_management'],
@@ -676,7 +676,7 @@ class Comments
 	    $link_pop = "javascript:popup('" . HOST . DIR . url('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "', '" . $script . "')";
 	    $link_current = $path . '#anchor_' . $script;
 	
-	    $link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
+	    $link .= '<a class="com" href="' . (!CommentsConfig::load()->get_display_comments_in_popup() ? $link_current : $link_pop) . '">' . $l_com . '</a>';
 	
 	    return $link;
 	}
