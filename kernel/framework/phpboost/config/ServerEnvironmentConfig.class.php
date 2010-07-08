@@ -33,6 +33,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const URL_REWRITING_ENABLED = 'url_rewriting_enabled';
 	const HTACCESS_MANUAL_CONTENT = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED = 'output_gziping_enabled';
+	const DEBUG_MODE_ENABLED = 'debug_mode_enabled';
 
 	public function is_url_rewriting_enabled()
 	{
@@ -62,6 +63,24 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	public function set_output_gziping_enabled($enabled)
 	{
 		$this->set_property(self::OUTPUT_GZIPING_ENABLED, $enabled);
+	}
+	
+	public function is_debug_mode_enabled()
+	{
+		return $this->get_property(self::DEBUG_MODE_ENABLED);
+	}
+	
+	public function set_debug_mode_enabled($enabled)
+	{
+		$this->set_property(self::DEBUG_MODE_ENABLED, $enabled);
+		if ($enabled)
+		{
+			Debug::enabled_debug_mode();
+		}
+		else
+		{
+			Debug::disable_debug_mode();
+		}
 	}
 	
 	public function get_default_values()
