@@ -157,10 +157,11 @@ class HtaccessFileCache implements CacheData
 
 	private function add_manual_content()
 	{
-		if (!empty($CONFIG['htaccess_manual_content']))
+		$manual_content = ServerEnvironmentConfig::load()->get_htaccess_manual_content();
+		if (!empty($manual_content))
 		{
 			$this->add_section('Manual content');
-			$this->add_line($CONFIG['htaccess_manual_content']);
+			$this->add_line($manual_content);
 		}
 	}
 

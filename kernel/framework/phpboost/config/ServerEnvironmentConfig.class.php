@@ -31,6 +31,7 @@
 class ServerEnvironmentConfig extends AbstractConfigData
 {
 	const URL_REWRITING_ENABLED = 'url_rewriting_enabled';
+	const HTACCESS_MANUAL_CONTENT = 'htaccess_manual_content';
 
 	public function is_url_rewriting_enabled()
 	{
@@ -41,11 +42,22 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
 	}
+	
+	public function get_htaccess_manual_content()
+	{
+		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
+	}
+	
+	public function set_htaccess_manual_content($content)
+	{
+		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
+	}
 
 	public function get_default_values()
 	{
 		return array(
-		self::URL_REWRITING_ENABLED => false
+		self::URL_REWRITING_ENABLED => false,
+		self::HTACCESS_MANUAL_CONTENT => ''
 		);
 	}
 
