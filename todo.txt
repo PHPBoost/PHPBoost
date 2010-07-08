@@ -22,10 +22,8 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Déplacer la gestion des posts dans la config vers l'admin des contenus
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 
-- Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre, logo et couleurs du site.
