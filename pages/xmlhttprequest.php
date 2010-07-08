@@ -13,7 +13,6 @@ $open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
 
 //Chargement d'un fichier template pour connaître l'emplacement du template
-$Template->set_filenames(array('pages'=> 'pages/pages.tpl'));
 $pages_data_path = $Template->get_module_data_path('pages');
 
 //Listage des répertoires dont le répertoire parent est connu
