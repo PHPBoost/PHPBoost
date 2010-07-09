@@ -73,7 +73,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     }
     
     $tpl->assign_vars(array(
-    	'DEFAULT_THEME' => $CONFIG['theme'],
+    	'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
     	'L_SWITCH_THEME' => $LANG['switch_theme'],
     	'L_DEFAULT_THEME' => $LANG['defaut_theme'],
     	'L_SUBMIT' => $LANG['submit']

@@ -201,7 +201,7 @@ if (!empty($id_get)) //Espace membre
 			$utheme = get_utheme();
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if ($CONFIG['theme'] == $theme || ($User->check_level($theme_properties['auth']) && $theme != 'default'))
+				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($User->check_level($theme_properties['auth']) && $theme != 'default'))
 				{
 					$selected = ($utheme == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
@@ -217,8 +217,8 @@ if (!empty($id_get)) //Espace membre
 		{
 			$theme_info = load_ini_file('/config/', get_ulang());
 			$Template->assign_block_vars('select_theme', array(
-				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'],
-				'IDNAME' => $CONFIG['theme']
+				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : UserAccountsConfig::load()->get_default_theme(),
+				'IDNAME' => UserAccountsConfig::load()->get_default_theme()
 			));
 		}
 		

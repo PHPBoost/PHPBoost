@@ -576,7 +576,7 @@ elseif (!empty($id))
 	{
 		if ($theme != 'default')
 		{
-			$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
+			$selected = (UserAccountsConfig::load()->get_default_lang() == $theme) ? ' selected="selected"' : '';
 			$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
 			$Template->assign_block_vars('select_theme', array(
 				'NAME' => $info_theme['name'],

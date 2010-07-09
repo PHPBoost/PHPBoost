@@ -321,7 +321,7 @@ class Session
 		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : -1;
 		$this->data['user_groups'] = isset($userdata['user_groups']) ? $userdata['user_groups'] : '';
 		$this->data['user_lang'] = !empty($userdata['user_lang']) ? $userdata['user_lang'] : UserAccountsConfig::load()->get_default_lang(); //Langue membre
-		$this->data['user_theme'] = !empty($userdata['user_theme']) ? $userdata['user_theme'] : $CONFIG['theme']; //Thème membre
+		$this->data['user_theme'] = !empty($userdata['user_theme']) ? $userdata['user_theme'] : UserAccountsConfig::load()->get_default_theme(); //Thème membre
 		$this->data['user_mail'] = isset($userdata['user_mail']) ? $userdata['user_mail'] : '';
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';

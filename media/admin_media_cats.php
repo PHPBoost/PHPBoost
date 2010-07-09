@@ -271,7 +271,6 @@ else
 	$Template->assign_block_vars('categories_management', array('CATEGORIES' => $media_categories->build_administration_interface()));
 	$Template->assign_vars(array(
 		'L_MANAGEMENT_CATS' => $MEDIA_LANG['management_cat'],
-		'THEME' => $CONFIG['theme']
 	));
 }
 

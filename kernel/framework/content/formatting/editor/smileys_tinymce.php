@@ -49,7 +49,7 @@ $field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->assign_vars(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'TITLE' => stripslashes(TITLE),
-	'THEME' => $CONFIG['theme'],
+	'THEME' => UserAccountsConfig::load()->get_default_theme(),
 	'FIELD' => $field ,
 	'COLSPAN' => $smile_by_line + 1,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
