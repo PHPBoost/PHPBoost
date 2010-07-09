@@ -51,6 +51,7 @@ class InstallationServices
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
+		$this->querier = PersistenceContext::get_querier();
 	}
 
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
@@ -91,7 +92,7 @@ class InstallationServices
 	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
-		$this->create_first_admin($login, $password, $email,$create_session, $auto_connect);
+		$this->create_first_admin($login, $password, $email, $locale, $create_session, $auto_connect);
 		$this->delete_installation_token();
 		return true;
 	}
@@ -108,11 +109,13 @@ class InstallationServices
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
-		$config = $this->build_configuration($locale);
-		$this->save_configuration($config, $locale);
+		$config = $this->build_configuration();
+		$this->save_configuration($config);
 		$this->init_maintenance_config();
 		$this->init_graphical_config();
 		$this->init_server_environment_config();
+		$this->init_user_accounts_config($locale);
+		$this->install_locale($locale);
 		$this->configure_theme($config['theme'], $locale);
 	}
 	
@@ -151,11 +154,17 @@ class InstallationServices
 		$server_environment_config->set_debug_mode_enabled(DISTRIBUTION_ENABLE_DEBUG_MODE);
 		ServerEnvironmentConfig::save();
 	}
+	
+	private function init_user_accounts_config($locale)
+	{
+		$user_accounts_config = UserAccountsConfig::load();
+		$user_accounts_config->set_default_lang($locale);
+		UserAccountsConfig::save();
+	}
 
-	private function build_configuration($locale)
+	private function build_configuration()
 	{
 		$CONFIG = array();
-		$CONFIG['lang'] = $locale;
 		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
@@ -168,13 +177,16 @@ class InstallationServices
 		return $CONFIG;
 	}
 
-	private function save_configuration($config, $locale)
+	private function save_configuration($config)
 	{
-		$this->querier = PersistenceContext::get_querier();
 		$this->querier->inject("UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'", array(
 			'config' => serialize($config)));
+	}
+	
+	private function install_locale($locale)
+	{
 		$this->querier->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
-			'config_lang' => $config['lang']));
+			'config_lang' => $locale));
 	}
 
 	private function configure_theme($theme, $locale)
@@ -278,13 +290,13 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
+	private function create_first_admin($login, $password, $email, $create_session, $auto_connect, $locale)
 	{
-		global $CONFIG, $Cache;
+		global $Cache;
 		$Cache = new Cache();
 		$Cache->load('config');
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, $CONFIG['lang'], $CONFIG['theme'], GeneralConfig::load()->get_site_timezone());
+		$this->update_first_admin_account($login, $password, $email, $locale, $CONFIG['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);

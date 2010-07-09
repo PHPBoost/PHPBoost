@@ -42,33 +42,30 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	// Page de démarrage
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
 	$config = $CONFIG;	 
-	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
 
-	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
-	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-		$Cache->Generate_file('config');
-		
-		$general_config = GeneralConfig::load();
-		$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
-		$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
-		$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
-		$general_config->set_home_page(stripslashes($start_page));
-		GeneralConfig::save();
-		
-		$graphical_environment_config = GraphicalEnvironmentConfig::load();
-		$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
-		$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
-		$graphical_environment_config->set_display_theme_author(retrieve(POST, 'theme_author', false));
-		GraphicalEnvironmentConfig::save();
-		
-		AppContext::get_response()->redirect(HOST . SCRIPT);
-	}
-	else
-	{
-		AppContext::get_response()->redirect('/admin/admin_config.php?error=incomplete#errorh');
-	}
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	
+	$Cache->Generate_file('config');
+	
+	$general_config = GeneralConfig::load();
+	$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
+	$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
+	$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
+	$general_config->set_home_page(stripslashes($start_page));
+	GeneralConfig::save();
+	
+	$graphical_environment_config = GraphicalEnvironmentConfig::load();
+	$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
+	$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
+	$graphical_environment_config->set_display_theme_author(retrieve(POST, 'theme_author', false));
+	GraphicalEnvironmentConfig::save();
+	
+	$user_accounts_config = UserAccountsConfig::load();
+	$user_accounts_config->set_default_lang(stripslashes(retrieve(POST, 'lang', '')));
+	UserAccountsConfig::save();
+	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($check_advanced && empty($_POST['advanced']))
 {
@@ -251,6 +248,7 @@ else //Sinon on rempli le formulaire
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$visit_counter_enabled = $graphical_environment_config->is_visit_counter_enabled();
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
+	$user_accounts_config = UserAccountsConfig::load();
 	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
@@ -296,12 +294,13 @@ else //Sinon on rempli le formulaire
 	//Gestion langue par défaut.
 	$array_identifier = '';
 	$langs_cache = LangsCache::load();
+	$selected_lang = $user_accounts_config->get_default_lang();
 	foreach ($langs_cache->get_installed_langs() as $lang => $properties) 
 	{
 		if ($properties['enabled'] == 1)
     	{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
-			$selected = ($lang == $CONFIG['lang']) ? ' selected="selected"' : '';
+			$selected = ($lang == $selected_lang) ? ' selected="selected"' : '';
 			
     		$Template->assign_block_vars('select_lang', array(
 				'LANG' => '<option value="' . $lang . '" ' . $selected . '>' . $info_lang['name'] . '</option>'
@@ -309,7 +308,7 @@ else //Sinon on rempli le formulaire
 			
 			$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
 			
-			if ($lang == $CONFIG['lang'])
+			if ($lang == $selected_lang)
 				$lang_identifier = $info_lang['identifier'];
     	}
 	}	

@@ -35,7 +35,7 @@ $error = retrieve(GET, 'error', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
-	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	LangsCache::invalidate();
@@ -44,7 +44,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
-	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	LangsCache::invalidate();
@@ -55,7 +55,7 @@ elseif (isset($_POST['valid'])) //Mise à jour
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM " . PREFIX . "lang
-	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	WHERE activ = 1 AND lang != '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
@@ -77,10 +77,10 @@ elseif ($uninstall) //Désinstallation.
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
-		if ($previous_lang != $CONFIG['lang'] && !empty($idlang) && !empty($previous_lang))
+		if ($previous_lang != UserAccountsConfig::load()->get_default_lang() && !empty($idlang) && !empty($previous_lang))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . UserAccountsConfig::load()->get_default_lang() . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
 				
 			//On supprime le lang de la bdd.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
@@ -182,7 +182,7 @@ else
 			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
 		
-		$default_lang = ($row['lang'] == $CONFIG['lang']);
+		$default_lang = ($row['lang'] == UserAccountsConfig::load()->get_default_lang());
 		$Template->assign_block_vars('list', array(
 			'C_LANG_DEFAULT' => $default_lang ? true : false,
 			'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,

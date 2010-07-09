@@ -289,7 +289,7 @@ class Environment
 		$lang_properties = $langs_cache->get_lang_properties($user_lang);
 		if ($lang_properties == null || !AppContext::get_user()->check_level($lang_properties['auth']))
 		{
-			$user_lang = $CONFIG['lang'];
+			$user_lang = UserAccountsConfig::load()->get_default_lang();
 		}
 		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
 		AppContext::get_user()->set_user_lang($user_lang);
