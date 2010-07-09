@@ -260,9 +260,9 @@ if (empty($key))
 		{
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if ($CONFIG['theme'] == $theme || ($theme_properties['auth'] == -1 && $theme != 'default'))
+				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($theme_properties['auth'] == -1 && $theme != 'default'))
 				{
-					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
+					$selected = (UserAccountsConfig::load()->get_default_theme() == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
 					$Template->assign_block_vars('select_theme', array(
 						'NAME' => $info_theme['name'],
@@ -276,8 +276,8 @@ if (empty($key))
 		{
 			$theme_info = load_ini_file('/config/', get_ulang());
 			$Template->assign_block_vars('select_theme', array(
-				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'],
-				'IDNAME' => $CONFIG['theme']
+				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : UserAccountsConfig::load()->get_default_theme(),
+				'IDNAME' => UserAccountsConfig::load()->get_default_theme()
 			));
 		}
 

@@ -39,19 +39,11 @@ $server_configuration = new ServerConfiguration();
 //Si c'est confirmé on exécute
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
-	// Page de démarrage
-	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
-	$config = $CONFIG;	 
-	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-	
-	$Cache->Generate_file('config');
-	
 	$general_config = GeneralConfig::load();
 	$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
 	$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
 	$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
+	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], HTML_UNPROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], HTML_UNPROTECT) : '/member/member.php');
 	$general_config->set_home_page(stripslashes($start_page));
 	GeneralConfig::save();
 	
@@ -252,7 +244,7 @@ else //Sinon on rempli le formulaire
 	
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
-		'THEME_DEFAULT' => $CONFIG['theme'],
+		'THEME_DEFAULT' => $user_accounts_config->get_default_theme(),
 		'SITE_NAME' => $general_config->get_site_name(),
 		'SITE_DESCRIPTION' => $general_config->get_site_description(),
 		'SITE_KEYWORD' => $general_config->get_site_keywords(),		
@@ -324,7 +316,7 @@ else //Sinon on rempli le formulaire
 		if ($theme !== 'default' && $properties['enabled'] == 1)
     	{
 			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
-			$selected = ($theme == $CONFIG['theme']) ? ' selected="selected"' : '';
+			$selected = ($theme == $user_accounts_config->get_default_theme()) ? ' selected="selected"' : '';
     		$Template->assign_block_vars('select', array(
 				'THEME' => '<option value="' . $theme . '" ' . $selected . '>' . $info_theme['name'] . '</option>'
     		));

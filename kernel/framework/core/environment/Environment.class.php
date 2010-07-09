@@ -277,7 +277,7 @@ class Environment
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
 		|| !AppContext::get_user()->check_level($user_theme_properties['auth']))
 		{
-			$user_theme = $CONFIG['theme'];
+			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}
 		//If the user's theme doesn't exist, we assign it a default one which exists
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);

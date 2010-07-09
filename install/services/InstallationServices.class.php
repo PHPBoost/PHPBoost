@@ -159,13 +159,13 @@ class InstallationServices
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$user_accounts_config->set_default_lang($locale);
+		$user_accounts_config->set_default_theme(DISTRIBUTION_THEME);
 		UserAccountsConfig::save();
 	}
 
 	private function build_configuration()
 	{
 		$CONFIG = array();
-		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
 		$CONFIG['site_session_invit'] = 300;
@@ -296,7 +296,7 @@ class InstallationServices
 		$Cache = new Cache();
 		$Cache->load('config');
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, $locale, $CONFIG['theme'], GeneralConfig::load()->get_site_timezone());
+		$this->update_first_admin_account($login, $password, $email, $locale, DISTRIBUTION_THEME, GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
