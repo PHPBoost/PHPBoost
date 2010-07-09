@@ -38,7 +38,7 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . UserAccountsConfig::load()->get_default_theme() . "'", __LINE__, __FILE__);
 	ThemesCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
@@ -47,7 +47,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . UserAccountsConfig::load()->get_default_theme() . "'", __LINE__, __FILE__);
 	ThemesCache::invalidate();		
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
@@ -55,7 +55,7 @@ elseif (isset($_POST['valid'])) //Modification de tous les thèmes.
 {	
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM " . DB_TABLE_THEMES . "
-	WHERE activ = 1 AND theme != '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
+	WHERE activ = 1 AND theme != '" . UserAccountsConfig::load()->get_default_theme() . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
@@ -124,10 +124,10 @@ elseif ($uninstall) //Désinstallation.
 		$drop_files = retrieve(POST, 'drop_files', false, TBOOL);
 		
 		$previous_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
-		if ($previous_theme != UserAccountsConfig::load()->get_default_lang() && !empty($idtheme))
+		if ($previous_theme != UserAccountsConfig::load()->get_default_theme() && !empty($idtheme))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . UserAccountsConfig::load()->get_default_lang() . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . UserAccountsConfig::load()->get_default_theme() . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
 				
 			//On supprime le theme de la bdd.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
@@ -249,7 +249,7 @@ else
 			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}	
 		
-		$default_theme = ($row['theme'] == UserAccountsConfig::load()->get_default_lang());
+		$default_theme = ($row['theme'] == UserAccountsConfig::load()->get_default_theme());
 		$Template->assign_block_vars('list', array(
 			'C_THEME_DEFAULT' => $default_theme ? true : false,
 			'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
