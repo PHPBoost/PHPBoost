@@ -13,19 +13,35 @@ AppContext::get_session()->act();
 AppContext::init_user();
 req('/test/PHPUnit/Framework.php');
 
-if (!empty($_REQUEST['params'])) {
+if (isset($argv))
+{
+	array_shift($argv);
+	$_REQUEST['params'] = implode(' ', $argv);
+	$_REQUEST['is_html'] = false;
+}
+
+if (!empty($_REQUEST['params']))
+{
 	// Fake command line environment
 	$argv = $_REQUEST['params'];
 	$_SERVER['argv'] = explode(' ', '--configuration ./phpunit.cfg.xml ' . $argv);
-} else {
+}
+else
+{
 	$_SERVER['argv'] = array();
 }
 
-if (empty($_REQUEST['is_html'])) {
+$is_html = isset($_REQUEST['is_html']) && $_REQUEST['is_html'] == true;
+if (!$is_html)
+{
 	echo '<pre>';
 }
+
+//Debug::dump($_SERVER['argv']);
+
 req('/test/phpunit.php');
-if (!empty($_REQUEST['is_html'])) {
+if (!$is_html)
+{
 	echo '</pre>';
 }
 PersistenceContext::close_db_connection();
