@@ -254,7 +254,7 @@ elseif ($id_media > 0)
 		'KERNEL_NOTATION' => $Note->display_form(),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$media['nbrnote'] > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$media['nbrnote']) : sprintf($MEDIA_LANG['num_note'], (int)$media['nbrnote']),
-		'LANG' => $CONFIG['lang'],
+		'LANG' => UserAccountsConfig::load()->get_default_lang(),
 		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],

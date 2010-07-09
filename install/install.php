@@ -525,8 +525,11 @@ switch($step)
 				$server_environment_config->set_debug_mode_enabled(DISTRIBUTION_ENABLE_DEBUG_MODE);
 				ServerEnvironmentConfig::save();
 				
+				$user_account_config = UserAccountsConfig::load();
+				$user_account_config->set_default_lang($lang);
+				UserAccountsConfig::save();
+				
 				$CONFIG = array();
-				$CONFIG['lang'] = $lang;
 				$CONFIG['theme'] = DISTRIBUTION_THEME;
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
@@ -546,7 +549,7 @@ switch($step)
 				//On installe la langue
 				PersistenceContext::get_querier()->inject(
 					"INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)",
-				array('config_lang' => $CONFIG['lang']));
+				array('config_lang' => $lang));
 
 				//On installe le thème
 				$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $lang);
@@ -726,7 +729,7 @@ switch($step)
 					$Cache->load('config');
 
 					//On enregistre le membre (l'entrée était au préalable créée)
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . GeneralConfig::load()->get_site_timezone() . "' WHERE user_id = '1'",__LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . GeneralConfig::load()->get_site_timezone() . "' WHERE user_id = '1'",__LINE__, __FILE__);
 
 					//Génération de la clé d'activation, en cas de verrouillage de l'administration
 					$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);

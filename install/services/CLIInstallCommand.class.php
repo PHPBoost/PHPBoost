@@ -190,7 +190,7 @@ class CLIInstallCommand implements CLICommand
 			return false;
 		}
 		CLIOutput::writeln("\t" . 'admin creation...');
-		if (!$this->installation->create_admin($this->user_login, $this->user_password, $this->user_email, false, false))
+		if (!$this->installation->create_admin($this->user_login, $this->user_password, $this->website_locale, $this->user_email, false, false))
 		{
 			return false;
 		}

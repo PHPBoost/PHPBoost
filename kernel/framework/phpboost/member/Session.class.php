@@ -320,7 +320,7 @@ class Session
 		$this->data['login'] = isset($userdata['login']) ? $userdata['login'] : '';
 		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : -1;
 		$this->data['user_groups'] = isset($userdata['user_groups']) ? $userdata['user_groups'] : '';
-		$this->data['user_lang'] = !empty($userdata['user_lang']) ? $userdata['user_lang'] : $CONFIG['lang']; //Langue membre
+		$this->data['user_lang'] = !empty($userdata['user_lang']) ? $userdata['user_lang'] : UserAccountsConfig::load()->get_default_lang(); //Langue membre
 		$this->data['user_theme'] = !empty($userdata['user_theme']) ? $userdata['user_theme'] : $CONFIG['theme']; //Thème membre
 		$this->data['user_mail'] = isset($userdata['user_mail']) ? $userdata['user_mail'] : '';
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';

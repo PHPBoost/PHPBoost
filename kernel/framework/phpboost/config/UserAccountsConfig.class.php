@@ -106,6 +106,10 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	const AUTH_READ_MEMBERS = 'auth_read_members';
 	
+	const DEFAULT_LANG = 'default_lang';
+	
+	const DEFAULT_THEME = 'default_theme';
+	
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -470,6 +474,26 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTH_READ_MEMBERS, $auth);
 	}
+	
+	public function get_default_lang()
+	{
+		return $this->get_property(self::DEFAULT_LANG);
+	}
+	
+	public function set_default_lang($lang)
+	{
+		$this->set_property(self::DEFAULT_LANG, $lang);
+	}
+	
+	public function get_default_theme()
+	{
+		return $this->get_property(self::DEFAULT_THEME);
+	}
+	
+	public function set_default_theme($theme)
+	{
+		$this->set_property(self::DEFAULT_THEME, $theme);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -493,7 +517,9 @@ class UserAccountsConfig extends AbstractConfigData
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
 			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,
-			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1)
+			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1),
+			self::DEFAULT_LANG => 'english',
+			self::DEFAULT_THEME => 'base'
 		);
 	}
 

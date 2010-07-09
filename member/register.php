@@ -155,7 +155,7 @@ if (empty($key))
 			{
 				$info_lang = load_ini_file('../lang/', $lang);
 				$selected = '';
-				if ($CONFIG['lang'] == $lang)
+				if (UserAccountsConfig::load()->get_default_lang() == $lang)
 				{
 					$selected = ' selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
@@ -263,7 +263,7 @@ if (empty($key))
 				if ($CONFIG['theme'] == $theme || ($theme_properties['auth'] == -1 && $theme != 'default'))
 				{
 					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
-					$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
+					$info_theme = load_ini_file('../templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
 					$Template->assign_block_vars('select_theme', array(
 						'NAME' => $info_theme['name'],
 						'IDNAME' => $theme,
