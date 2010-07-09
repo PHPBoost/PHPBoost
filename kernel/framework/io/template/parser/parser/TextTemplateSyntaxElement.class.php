@@ -1,0 +1,91 @@
+<?php
+/*##################################################
+ *                    TextTemplateSyntaxElement.class.php
+ *                            -------------------
+ *   begin                : July 08 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : horn@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+{
+	private $input;
+	private $output;
+	private $ended = false;
+	private $escaped = false;
+
+	public function parse(StringInputStream $input, StringOutputStream $output)
+	{
+		$this->input = $input;
+		$this->output = $output;
+		$this->doParse();
+	}
+	
+	private function doParse()
+	{
+		while ($this->input->has_next() && !$this->ended)
+		{
+			$current = $this->input->next();
+			if (!$this->escaped)
+			{
+				$this->processChar($current);
+			}
+			else
+			{
+				$this->processEscapedChar($current);
+			}
+		}
+	}
+
+	private function processChar($char)
+	{
+		if ($char == '\\')
+		{
+			$this->escape = true;
+		}
+		elseif ($char == '{' || $char == '#')
+		{
+			$this->input->move(-1);
+			$this->ended = true;
+		}
+		else
+		{
+			$this->write($char);
+		}
+	}
+
+	private function processEscapedChar($char)
+	{
+		if (!in_array($char, array('\\', '{', '}', '#')))
+		{
+			throw new Exception('Escaping character "' . $current .
+				'" has no meaning');
+		}
+		$this->escape = false;
+		$this->write($char);
+	}
+
+	private function write($char)
+	{
+		$this->output->write($char);
+	}
+}
+?>
