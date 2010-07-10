@@ -35,24 +35,29 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		$this->input = $input;
 		$this->output = $output;
-		$this->doParse();
+		$this->do_parse();
 	}
 
-	private function doParse()
+	private function do_parse()
 	{
-		$this->output->write('{expression');
+		$this->process_expression_start();
 		$this->process_expression_content();
-		$this->process_expression_ends();
+		$this->process_expression_end();
 		if (!$this->ended)
 		{
 			$this->prematured_expression_end();
 		}
 	}
 
-	private function process_expression_ends()
+	private function process_expression_start()
+	{
+		$this->output->write('\' . ');
+	}
+
+	private function process_expression_end()
 	{
 		$this->ended = $this->input->next() == '}';
-		$this->output->write('}');
+		$this->output->write(' . \'');
 	}
 
 	private function process_expression_content()
@@ -60,16 +65,15 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$element = null;
 		if ($this->is_function())
 		{
-			$element = new EmptyTemplateSyntaxElement();
+			throw new NotYetImplementedException();
 		}
-		elseif ($this->is_variable())
+		elseif (VariableTemplateSyntaxElement::is_element($this->input))
 		{
-			$this->input->capture_next('(?:\w+\.)*\w+'); // consume all variable char (test only)
-			$element = new EmptyTemplateSyntaxElement();
+			$element = new VariableTemplateSyntaxElement();
 		}
 		elseif ($this->is_constant())
 		{	
-			$element = new EmptyTemplateSyntaxElement();
+			throw new NotYetImplementedException();
 		}
 		else
 		{
@@ -86,11 +90,6 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function is_function()
 	{
 		return $this->input->assert_next('(?:\w+::)?\w+\(');
-	}
-
-	private function is_variable()
-	{
-		return $this->input->assert_next('(?:\w+\.)*\w+');
 	}
 
 	private function is_constant()
