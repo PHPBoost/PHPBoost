@@ -112,7 +112,7 @@ class StringInputStream
 		$this->index = $new_index;
 	}
 	
-	public function to_string($delta = 0, $max_length = 0)
+	public function to_string($delta = 0, $max_length = 50)
 	{
 		$old_index = $this->index;
 		$this->move($delta);

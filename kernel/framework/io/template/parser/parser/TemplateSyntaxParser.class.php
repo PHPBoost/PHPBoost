@@ -47,7 +47,7 @@
  * @desc 
  * @author Benoit sautel <ben.popeye@gmail.com>, Loic Rouchon horn@phpboost.com
  */
-class TemplateSyntaxParser
+class TemplateSyntaxParser implements TemplateParser
 {
 	/**
 	 * @var StringInputStream
@@ -58,13 +58,14 @@ class TemplateSyntaxParser
 	 */
 	private $output;
 	
-	public function parse(StringInputStream $input)
+	public function parse($content)
 	{
-		$this->input = $input;
+		$this->input = new StringInputStream($content);
 		$this->output = new StringOutputStream();
 		$this->output->write('<?php $_result=\'');
 		$this->do_parse();
 		$this->output->write('\'; ?>');
+//		Debug::stop($this->output->to_string());
 		return $this->output->to_string();
 	}
 	

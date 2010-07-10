@@ -55,7 +55,7 @@ class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxEleme
 		}
 		else
 		{
-			throw new DomainException('bad expression statement', 0);
+			throw new DomainException('bad expression statement: ' . $this->input->to_string(), 0);
 		}
 		$element->parse($this->input, $this->output);
 	}

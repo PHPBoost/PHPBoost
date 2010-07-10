@@ -45,7 +45,7 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->process_expression_end();
 		if (!$this->ended)
 		{
-			$this->prematured_expression_end();
+			$this->missing_expression_end();
 		}
 	}
 
@@ -66,9 +66,9 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$element->parse($this->input, $this->output);
 	}
 
-	private function prematured_expression_end()
+	private function missing_expression_end()
 	{
-		throw new OutOfBoundsException('Missing expression end \'}\'', 0);
+		throw new DomainException('Missing expression end \'}\': ' . $this->input->to_string(), 0);
 	}
 }
 ?>

@@ -27,7 +27,13 @@
 
 class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
+	/**
+	 * @var StringInputStream
+	 */
 	private $input;
+	/**
+	 * @var StringOutputStream
+	 */
 	private $output;
 	private $ended = false;
 	private $escaped = false;
@@ -61,7 +67,8 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$this->escape = true;
 		}
-		elseif ($char == '{' || $char == '#')
+		elseif (($char == '{' && $this->input->assert_next('[^\s]')) ||
+		($char == '#'&& $this->input->assert_next('[\s]')))
 		{
 			$this->input->move(-1);
 			$this->ended = true;

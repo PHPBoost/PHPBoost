@@ -166,7 +166,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	private function assert_parse($input, $expected_output)
 	{
 		$parser = new TemplateSyntaxParser();
-		$output = $parser->parse(new StringInputStream($input));
+		$output = $parser->parse($input);
 		$this->assertEquals($expected_output, $output);
 	}
 }
