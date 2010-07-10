@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    SimpleVarTemplateSyntaxElement.class.php
+ *                    ExpressionContentTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 10 2010
+ *   begin                : July 08 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,25 +25,49 @@
  *
  ###################################################*/
 
-class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	public static function is_element(StringInputStream $input)
-	{
-		return $input->assert_next('\w+');
-	}
-	
+	private $input;
+	private $output;
+	private $ended = false;
+
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		$matches = array();
-		if ($input->capture_next('(?P<var>\w+)', '', $matches))
+		$this->input = $input;
+		$this->output = $output;
+		$this->do_parse();
+	}
+
+	private function do_parse()
+	{
+		$element = null;
+		if ($this->is_function())
 		{
-			$varname = $matches['var'];
-			$output->write('$_data->get_var(\'' . $varname . '\')');
+			throw new NotYetImplementedException();
+		}
+		elseif (VariableTemplateSyntaxElement::is_element($this->input))
+		{
+			$element = new VariableTemplateSyntaxElement();
+		}
+		elseif ($this->is_constant())
+		{	
+			throw new NotYetImplementedException();
 		}
 		else
 		{
-			throw new DomainException('invalid simple variable name', 0);
+			throw new DomainException('bad expression statement', 0);
 		}
+		$element->parse($this->input, $this->output);
+	}
+	
+	private function is_function()
+	{
+		return $this->input->assert_next('(?:\w+::)?\w+\(');
+	}
+
+	private function is_constant()
+	{
+		return $this->input->assert_next('// TODO');
 	}
 }
 ?>

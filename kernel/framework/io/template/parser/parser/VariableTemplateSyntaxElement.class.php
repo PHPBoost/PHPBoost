@@ -27,8 +27,6 @@
 
 class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-
 	public static function is_element(StringInputStream $input)
 	{
 		return $input->assert_next('(?:\w+\.)*\w+');
@@ -36,7 +34,6 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
 		$element = null;
 		if (LoopVarTemplateSyntaxElement::is_element($input))
 		{
