@@ -48,14 +48,40 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_parse_text()
 	{
 		$input = 'this is a simple text';
-		$output = 'this is a simple text';
+		$output = '<?php $_result=\'this is a simple text\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+	
+	public function test_parse_text_with_char_to_escape()
+	{
+		$input = 'this is a simpl\' text';
+		$output = '<?php $_result=\'this is a simpl\\\' text\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+	
+	public function test_parse_text_with_line_breaks()
+	{
+		$input = 'this is a simple
+	text';
+		$output = '<?php $_result=\'this is a simple
+	text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_expressions()
+	public function test_parse_text_with_simple_vars()
 	{
 		$input = 'this is {a} sim{pl}e text';
-		$output = 'this is  sime text';
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
+			'\' sim\' . $_data->get_var(\'pl\') . \'e text\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_loop_vars()
+	{
+		$input = 'this is {a} sim{p.l}e {tex.ext.text}';
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
+			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e \' . ' .
+			'$_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
 

@@ -36,26 +36,26 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		$this->input = $input;
 		$this->output = $output;
-		$this->doParse();
+		$this->do_parse();
 	}
-	
-	private function doParse()
+
+	private function do_parse()
 	{
 		while ($this->input->has_next() && !$this->ended)
 		{
 			$current = $this->input->next();
 			if (!$this->escaped)
 			{
-				$this->processChar($current);
+				$this->process_char($current);
 			}
 			else
 			{
-				$this->processEscapedChar($current);
+				$this->process_escaped_char($current);
 			}
 		}
 	}
 
-	private function processChar($char)
+	private function process_char($char)
 	{
 		if ($char == '\\')
 		{
@@ -68,11 +68,15 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
+			if ($char == '\'')
+			{
+				$this->write('\\');
+			}
 			$this->write($char);
 		}
 	}
 
-	private function processEscapedChar($char)
+	private function process_escaped_char($char)
 	{
 		if (!in_array($char, array('\\', '{', '}', '#')))
 		{

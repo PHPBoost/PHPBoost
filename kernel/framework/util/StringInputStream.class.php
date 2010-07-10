@@ -111,6 +111,19 @@ class StringInputStream
 		}
 		$this->index = $new_index;
 	}
+	
+	public function to_string($delta, $max_length = 0)
+	{
+		$old_index = $this->index;
+		$this->move($delta);
+		$str = substr($this->stream, $this->index);
+		$this->seek($old_index);
+		if ($max_length > 0)
+		{
+			return substr($str, 0, $max_length);
+		}
+		return $str;
+	}
 }
 
 ?>

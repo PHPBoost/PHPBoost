@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    EmptyTemplateSyntaxElement.class.php
+ *                    SimpleVarTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 08 2010
+ *   begin                : July 10 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,10 +25,28 @@
  *
  ###################################################*/
 
-class EmptyTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
+	private $input;
+	private $output;
+
+	public static function is_element(StringInputStream $input)
+	{
+		return $input->assert_next('\w+');
+	}
+	
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
+		$matches = array();
+		if ($input->capture_next('(?P<var>\w+)', '', $matches))
+		{
+			$varname = $matches['var'];
+			$output->write('$_data->get_var(\'' . $varname . '\')');
+		}
+		else
+		{
+			throw new DomainException('invalid simple variable name', 0);
+		}
 	}
 }
 ?>

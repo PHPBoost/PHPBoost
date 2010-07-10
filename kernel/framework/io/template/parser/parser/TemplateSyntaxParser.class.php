@@ -25,22 +25,22 @@
  *
  ###################################################*/
 
-
 /*
  * template = (expression | condition | loop | text)*
- * expression = "{", (function | variable), "}"
+ * expression = "{", expressionContent, "}"
  * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSE #, template)?, "# ENDIF #"
  * loop = "# START ", expression, "#", template, "# END (?:name)? #"
  * text = .+
+ * expressionContent = function | variable | constant
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
  * parameters = parameter | (parameter, (",", parameter)+)
- * parameter = function | variable
- * variable = simplevar | blockvar
- * simplevar = "\w+"
- * blockvar = "(\w+\.)+\w+"
+ * parameter = expressionContent
+ * variable = simpleVar | loopVar
+ * constant = "'.+'" | [0-9]+
+ * simpleVar = "\w+"
+ * loopVar = "(\w+\.)+\w+"
  * 
  */
-
 
 /**
  * @package {@package}
@@ -62,11 +62,13 @@ class TemplateSyntaxParser
 	{
 		$this->input = $input;
 		$this->output = new StringOutputStream();
-		$this->doParse();
+		$this->output->write('<?php $_result=\'');
+		$this->do_parse();
+		$this->output->write('\'; ?>');
 		return $this->output->to_string();
 	}
 	
-	private function doParse()
+	private function do_parse()
 	{
 		while ($this->input->has_next())
 		{
@@ -117,12 +119,12 @@ class TemplateSyntaxParser
 	
 	private function build_condition_elt()
 	{
-		return new EmptyTemplateSyntaxElement();
+		throw new NotYetImplementedException();
 	}
 	
 	private function build_loop_elt()
 	{	
-		return new EmptyTemplateSyntaxElement();
+		throw new NotYetImplementedException();
 	}
 }
 ?>
