@@ -50,7 +50,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->process_end();
 		if (!$this->ended)
 		{
-			$this->prematured_expression_end();
+			$this->missing_end();
 		}
 	}
 
@@ -64,9 +64,9 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		$condition = new ExpressionContentTemplateSyntaxElement();
 		$condition->parse($this->input, $this->output);
-		if (!$this->input->consume_next('\s+#'))
+		if (!$this->input->consume_next('\s*#'))
 		{
-			throw new DomainException('invalid condition statement', 0);
+			throw new DomainException('invalid condition statement: ' . $this->input->to_string(), 0);
 		}
 		$this->output->write(') { $_result.=\'');
 	}
@@ -93,9 +93,9 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$element->parse($this->input, $this->output);
 	}
 
-	private function prematured_expression_end()
+	private function missing_end()
 	{
-		throw new DomainException('Missing condition end: # END #', 0);
+		throw new DomainException('Missing condition end: ' . $this->input->to_string(), 0);
 	}
 }
 ?>

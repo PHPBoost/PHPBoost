@@ -49,11 +49,11 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$element = null;
 			$current = $this->input->next();
-			if ($current == '{')
+			if ($current == '{' && $this->input->assert_next('[^\s]'))
 			{
 				$element = $this->build_expression_elt();
 			}
-			elseif ($current == '#')
+			elseif ($current == '#' && $this->input->assert_next('[\s]'))
 			{
 				$element = $this->build_statement_elt();
 				if ($element === null)

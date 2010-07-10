@@ -29,11 +29,12 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('(?:\w+\.)*\w+');
+		return $input->assert_next('\s*(?:\w+\.)*\w+\s*');
 	}
 	
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
+		$input->consume_next('\s*');
 		$element = null;
 		if (LoopVarTemplateSyntaxElement::is_element($input))
 		{
@@ -48,6 +49,7 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			throw new DomainException('invalid variable near: "' . $input->to_string(0, 50) . '"', 0);
 		}
 		$element->parse($input, $output);
+		$input->consume_next('\s*');
 	}
 }
 ?>

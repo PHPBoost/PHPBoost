@@ -50,7 +50,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->process_end();
 		if (!$this->ended)
 		{
-			$this->prematured_expression_end();
+			$this->loop_end();
 		}
 	}
 
@@ -66,7 +66,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_end()
 	{
-		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)\w+)?\s#');
+		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)*\w+)?\s#');
 		$this->output->write('\';} $_result.=\'');
 	}
 
@@ -76,9 +76,9 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$element->parse($this->input, $this->output);
 	}
 
-	private function prematured_expression_end()
+	private function loop_end()
 	{
-		throw new DomainException('Missing loop end: # END #', 0);
+		throw new DomainException('Missing loop end: ' . $this->input->to_string(), 0);
 	}
 }
 ?>
