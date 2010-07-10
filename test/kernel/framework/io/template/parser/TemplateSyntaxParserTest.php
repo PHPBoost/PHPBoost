@@ -78,10 +78,19 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 
 	public function test_parse_text_with_loop_vars()
 	{
-		$input = 'this is {a} sim{p.l}e {tex.ext.text}';
+		$input = 'this is {a} sim{p.l}e
+# START tex #
+	# START tex.ext #
+		{tex.ext.text}
+	# END #
+# END #';
 		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
-			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e \' . ' .
-			'$_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'\'; ?>';
+			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
+\'; foreach ($_data->get_block(\'tex\') as $_tmp_tex) { $_result.=\'
+	\'; foreach ($_data->get_block(\'tex.ext\') as $_tmp_tex_ext) { $_result.=\'
+		\' . $_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'
+	\';} $_result.=\'
+\';} $_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
 

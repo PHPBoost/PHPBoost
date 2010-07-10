@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    ExpressionTemplateSyntaxElement.class.php
+ *                    LoopTemplateSyntaxElement.class.php
  *                            -------------------
  *   begin                : July 08 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,12 +25,17 @@
  *
  ###################################################*/
 
-class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	private $input;
 	private $output;
 	private $ended = false;
 
+	public static function is_element(StringInputStream $input)
+	{
+		return $input->assert_next('\s?START\s+(?:\w+\.)*\w+\s?#');
+	}
+	
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$this->input = $input;
@@ -40,35 +45,40 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function do_parse()
 	{
-		$this->process_expression_start();
-		$this->process_expression_content();
-		$this->process_expression_end();
+		$this->process_start();
+		$this->process_content();
+		$this->process_end();
 		if (!$this->ended)
 		{
 			$this->prematured_expression_end();
 		}
 	}
 
-	private function process_expression_start()
+	private function process_start()
 	{
-		$this->output->write('\' . ');
+		$matches = array();
+		$this->input->capture_next('\s?START\s+(?P<loop>(?:\w+\.)*\w+)\s?#', '', $matches);
+		$loop_expression = $matches['loop'];
+		$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']);
+		$this->output->write('\'; foreach ($_data->get_block(\'' . $loop_expression .
+			'\') as ' . $loop_var . ') { $_result.=\'');
 	}
 
-	private function process_expression_end()
+	private function process_end()
 	{
-		$this->ended = $this->input->next() == '}';
-		$this->output->write(' . \'');
+		$this->ended = $this->input->capture_next('\s?END(?P<loop>\s+(?:\w+\.)\w+)?\s?#');
+		$this->output->write('\';} $_result.=\'');
 	}
 
-	private function process_expression_content()
+	private function process_content()
 	{
-		$element = new ExpressionContentTemplateSyntaxElement();
+		$element = new TemplateTemplateSyntaxElement();
 		$element->parse($this->input, $this->output);
 	}
 
 	private function prematured_expression_end()
 	{
-		throw new OutOfBoundsException('Missing expression end \'}\'', 0);
+		throw new OutOfBoundsException('Missing loop end: # END #', 0);
 	}
 }
 ?>

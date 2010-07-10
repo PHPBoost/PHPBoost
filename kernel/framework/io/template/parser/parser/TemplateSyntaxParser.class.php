@@ -70,61 +70,8 @@ class TemplateSyntaxParser
 	
 	private function do_parse()
 	{
-		while ($this->input->has_next())
-		{
-			$element = null;
-			$current = $this->input->next();
-			if ($current == '{')
-			{
-				$element = $this->build_expression_elt();
-			}
-			elseif ($current == '#')
-			{
-				$element = $this->build_statement_elt();
-			}
-			else
-			{
-				$element = $this->build_text_elt();
-			}
-			$element->parse($this->input, $this->output);
-		}
-	}
-	
-	private function build_expression_elt()
-	{
-		return new ExpressionTemplateSyntaxElement();
-	}
-	
-	private function build_text_elt()
-	{
-		$this->input->move(-1);
-		return new TextTemplateSyntaxElement();
-	}
-	
-	private function build_statement_elt()
-	{
-		if ($this->input->assert_next('\s*IF\s'))
-		{
-			return $this->build_condition_elt();
-		}
-		elseif ($this->input->assert_next('\s*START\s'))
-		{
-			return $this->build_loop_elt();
-		}
-		else
-		{
-			throw new Exception('Bad Statement');
-		}
-	}
-	
-	private function build_condition_elt()
-	{
-		throw new NotYetImplementedException();
-	}
-	
-	private function build_loop_elt()
-	{	
-		throw new NotYetImplementedException();
+		$template_element = new TemplateTemplateSyntaxElement();
+		$template_element->parse($this->input, $this->output);
 	}
 }
 ?>

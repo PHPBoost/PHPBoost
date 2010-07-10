@@ -27,9 +27,6 @@
 
 class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
-
 	public static function is_element(StringInputStream $input)
 	{
 		return $input->assert_next('(?:\w+\.)+\w+');
