@@ -35,7 +35,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
-		if ($input->capture_next('(?P<loop>\w+(?:\.\w+)*)\.(?P<var>\w+)', '', $matches))
+		if ($input->consume_next('(?P<loop>\w+(?:\.\w+)*)\.(?P<var>\w+)', '', $matches))
 		{
 			$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']) . '[\'vars\']';
 			$varname =  $matches['var'];

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    LoopTemplateSyntaxElement.class.php
+ *                    ConditionTemplateSyntaxElement.class.php
  *                            -------------------
  *   begin                : July 10 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	private $input;
 	private $output;
@@ -33,9 +33,9 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('#\sSTART\s+(?:\w+\.)*\w+\s#');
+		return $input->assert_next('#\sIF\s');
 	}
-	
+
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$this->input = $input;
@@ -56,21 +56,38 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_start()
 	{
-		$matches = array();
-		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
-		$loop_expression = $matches['loop'];
-		$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']);
-		$this->output->write('\'; foreach ($_data->get_block(\'' . $loop_expression .
-			'\') as ' . $loop_var . ') { $_result.=\'');
+		$this->input->consume_next('#\sIF\s+');
+		$this->output->write('\'; if (');
+		if ($this->input->consume_next('NOT\s+'))
+		{
+			$this->output->write('!');
+		}
+		$condition = new ExpressionContentTemplateSyntaxElement();
+		$condition->parse($this->input, $this->output);
+		if (!$this->input->consume_next('\s+#'))
+		{
+			throw new DomainException('invalid condition statement', 0);
+		}
+		$this->output->write(') { $_result.=\'');
 	}
 
 	private function process_end()
 	{
-		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)\w+)?\s#');
+		$this->ended = $this->input->consume_next('#\sEND(?:IF)?\s#');
 		$this->output->write('\';} $_result.=\'');
 	}
 
 	private function process_content()
+	{
+		$this->process_condition();
+		if ($this->input->consume_next('#\sELSE\s#'))
+		{
+			$this->output->write('\';} else { $_result.=\'');
+			$this->process_condition();
+		}
+	}
+
+	private function process_condition()
 	{
 		$element = new TemplateTemplateSyntaxElement();
 		$element->parse($this->input, $this->output);
@@ -78,7 +95,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function prematured_expression_end()
 	{
-		throw new DomainException('Missing loop end: # END #', 0);
+		throw new DomainException('Missing condition end: # END #', 0);
 	}
 }
 ?>

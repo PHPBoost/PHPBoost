@@ -27,7 +27,7 @@
 
 class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-/**
+	/**
 	 * @var StringInputStream
 	 */
 	private $input;
@@ -35,14 +35,14 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	 * @var StringOutputStream
 	 */
 	private $output;
-	
+
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$this->input = $input;
 		$this->output = $output;
 		$this->do_parse();
 	}
-	
+
 	private function do_parse()
 	{
 		while ($this->input->has_next())
@@ -55,11 +55,11 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			}
 			elseif ($current == '#')
 			{
-				if ($this->input->assert_next('\s?END'))
-				{
+				$element = $this->build_statement_elt();
+				if ($element === null)
+				{	// every other statement if processed at a higher level
 					return;
 				}
-				$element = $this->build_statement_elt();
 			}
 			else
 			{
@@ -68,21 +68,22 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			$element->parse($this->input, $this->output);
 		}
 	}
-	
+
 	private function build_expression_elt()
 	{
 		return new ExpressionTemplateSyntaxElement();
 	}
-	
+
 	private function build_text_elt()
 	{
 		$this->input->move(-1);
 		return new TextTemplateSyntaxElement();
 	}
-	
+
 	private function build_statement_elt()
 	{
-		if ($this->input->assert_next('\s*IF\s'))
+		$this->input->move(-1);
+		if (ConditionTemplateSyntaxElement::is_element($this->input))
 		{
 			return $this->build_condition_elt();
 		}
@@ -90,19 +91,16 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			return $this->build_loop_elt();
 		}
-		else
-		{
-			throw new Exception('Bad Statement');
-		}
+		return null;
 	}
-	
+
 	private function build_condition_elt()
 	{
-		throw new NotYetImplementedException();
+		return new ConditionTemplateSyntaxElement();
 	}
-	
+
 	private function build_loop_elt()
-	{	
+	{
 		return new LoopTemplateSyntaxElement();
 	}
 }
