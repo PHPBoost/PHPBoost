@@ -51,14 +51,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is a simple text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
-	
+
 	public function test_parse_text_with_char_to_escape()
 	{
 		$input = 'this is a simpl\' text';
 		$output = '<?php $_result=\'this is a simpl\\\' text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
-	
+
 	public function test_parse_text_with_line_breaks()
 	{
 		$input = 'this is a simple
@@ -89,6 +89,75 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 \'; foreach ($_data->get_block(\'tex\') as $_tmp_tex) { $_result.=\'
 	\'; foreach ($_data->get_block(\'tex.ext\') as $_tmp_tex_ext) { $_result.=\'
 		\' . $_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'
+	\';} $_result.=\'
+\';} $_result.=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_condition()
+	{
+		$input = '
+# IF condition #
+	coucou
+# END #';
+		$output = '<?php $_result=\'
+\'; if ($_data->get_var(\'condition\')) { $_result.=\'
+	coucou
+\';} $_result.=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_negative_condition()
+	{
+		$input = '
+# IF NOT condition #
+	coucou
+# END #';
+		$output = '<?php $_result=\'
+\'; if (!$_data->get_var(\'condition\')) { $_result.=\'
+	coucou
+\';} $_result.=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_condition_and_else()
+	{
+		$input = '
+# IF condition #
+	coucou
+# ELSE #
+	hello
+# END #';
+		$output = '<?php $_result=\'
+\'; if ($_data->get_var(\'condition\')) { $_result.=\'
+	coucou
+\';} else { $_result.=\'
+	hello
+\';} $_result.=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_loop_and_conditions()
+	{
+		$input = 'this is {a} sim{p.l}e
+# START tex #
+	# IF tex.coucou #
+		# START tex.ext #
+			{tex.ext.text}
+		# END #
+	# ELSE #
+		pas de {coucou}
+	# END #
+# END #';
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
+			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
+\'; foreach ($_data->get_block(\'tex\') as $_tmp_tex) { $_result.=\'
+	\'; if ($_data->get_var_from_list(\'coucou\', $_tmp_tex[\'vars\'])) { $_result.=\'
+		\'; foreach ($_data->get_block(\'tex.ext\') as $_tmp_tex_ext) { $_result.=\'
+			\' . $_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'
+		\';} $_result.=\'
+	\';} else { $_result.=\'
+		pas de \' . $_data->get_var(\'coucou\') . \'
 	\';} $_result.=\'
 \';} $_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);

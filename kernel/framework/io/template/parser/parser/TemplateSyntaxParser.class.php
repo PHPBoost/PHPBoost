@@ -72,6 +72,10 @@ class TemplateSyntaxParser
 	{
 		$template_element = new TemplateTemplateSyntaxElement();
 		$template_element->parse($this->input, $this->output);
+		if ($this->input->has_next())
+		{
+			throw new DomainException('Unknown statement: ' . $this->input->to_string(0, 20), 0);
+		}
 	}
 }
 ?>

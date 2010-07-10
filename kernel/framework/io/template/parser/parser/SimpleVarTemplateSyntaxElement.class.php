@@ -35,7 +35,7 @@ class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
-		if ($input->capture_next('(?P<var>\w+)', '', $matches))
+		if ($input->consume_next('(?P<var>\w+)', '', $matches))
 		{
 			$varname = $matches['var'];
 			$output->write('$_data->get_var(\'' . $varname . '\')');

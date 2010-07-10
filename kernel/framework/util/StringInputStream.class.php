@@ -86,7 +86,7 @@ class StringInputStream
 		return preg_match('`^' . $pattern . '`' . $options, $subject, $matches);
 	}
 	
-	public function capture_next($pattern, $options = '', array &$matches = null)
+	public function consume_next($pattern, $options = '', array &$matches = null)
 	{
 		if ($this->assert_next($pattern, $options, $matches))
 		{
@@ -112,7 +112,7 @@ class StringInputStream
 		$this->index = $new_index;
 	}
 	
-	public function to_string($delta, $max_length = 0)
+	public function to_string($delta = 0, $max_length = 0)
 	{
 		$old_index = $this->index;
 		$this->move($delta);
