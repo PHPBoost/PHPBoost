@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage hidden input fields.
  * @package {@package}
- * @subpackage form
  */
 class FormFieldHidden extends AbstractFormField
 {

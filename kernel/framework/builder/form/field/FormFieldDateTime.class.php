@@ -28,7 +28,6 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class is able to retrieve a date and a hour (hours & minutes).
  * @package {@package}
- * @subpackage form/field
  */
 class FormFieldDateTime extends FormFieldDate
 {

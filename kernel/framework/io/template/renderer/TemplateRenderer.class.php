@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage template/renderer
  * @desc Represents a template renderer as its names shows. Its able to get the result of the template
  * interpration from a TemplateLoader which gives it the template source and a TemplateData which 
  * contains the data to assign in the template.

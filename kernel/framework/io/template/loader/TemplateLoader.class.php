@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage template/loader
  * @desc This class is responsible to load a template and transform it in the PHPBoost parsed template
  * syntax.
  * Normally a loader is able to load a template and provide its parsed form. The parsing is done by 

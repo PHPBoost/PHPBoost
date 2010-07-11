@@ -28,7 +28,6 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a rich text editor.
  * @package {@package}
- * @subpackage form
  */
 class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 {

@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage template/data
  * @desc This interface describes data which are assigned to a template. There are two types of data:
  * <ul>
  * 	<li>Variables: there are string that are directly displayed</li>

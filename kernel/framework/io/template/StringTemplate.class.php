@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage template
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class enables you to handle a template whose input is not a file but directly a string.
  * To be always as efficient as possible, it uses cache if it evaluates that it could be faster.

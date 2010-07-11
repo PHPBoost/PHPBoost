@@ -29,7 +29,6 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc Manages the HTTP file upload
  * @package {@package}
- * @subpackage http/upload
  */
 class FileUploadService
 {

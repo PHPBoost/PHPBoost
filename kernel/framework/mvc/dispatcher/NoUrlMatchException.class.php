@@ -29,7 +29,6 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc No UrlDispatcherItem were found matching the given url
  * @package {@package}
- * @subpackage dispatcher
  */
 class NoUrlMatchException extends DispatcherException
 {

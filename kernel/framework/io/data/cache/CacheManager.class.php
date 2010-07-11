@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage data/cache
  * @desc This class manages cache. It makes a two-level lazy loading:
  * <ul>
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the

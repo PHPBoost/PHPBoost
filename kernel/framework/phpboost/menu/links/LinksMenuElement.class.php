@@ -34,7 +34,6 @@
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
  * @package {@package}
- * @subpackage linksmenu
  */
 abstract class LinksMenuElement extends Menu
 {

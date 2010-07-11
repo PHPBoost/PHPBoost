@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage formatting/parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This is a syntax highlighter for the PHPBoost template syntax.
  */

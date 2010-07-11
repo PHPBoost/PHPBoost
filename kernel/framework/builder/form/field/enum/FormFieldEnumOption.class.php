@@ -24,6 +24,11 @@
  *
  ###################################################*/
 
+/**
+ * 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package {@package}
+ */
 interface FormFieldEnumOption
 {
 	/**

@@ -24,6 +24,11 @@
  *
  ###################################################*/
 
+/**
+ * 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package {@package}
+ */
 class FormFieldAuthorizationsSetter extends AbstractFormField
 {
 	public function __construct($id, AuthorizationsSettings $value, array $field_options = array())

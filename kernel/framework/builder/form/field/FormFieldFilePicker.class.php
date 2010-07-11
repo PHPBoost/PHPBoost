@@ -32,7 +32,6 @@
  * 	<li>size : The size for the field</li>
  * </ul>
  * @package {@package}
- * @subpackage form
  */
 class FormFieldFilePicker extends AbstractFormField
 {

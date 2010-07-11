@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage template/parser
  * @desc 
  * @author Benoit sautel <ben.popeye@gmail.com>
  */

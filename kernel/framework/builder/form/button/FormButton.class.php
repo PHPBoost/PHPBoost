@@ -26,7 +26,6 @@
 
 /**
  * @package {@package}
- * @subpackage form/button
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */

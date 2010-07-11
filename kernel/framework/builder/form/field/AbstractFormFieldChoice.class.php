@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage radio input fields.
  * @package {@package}
- * @subpackage form
  */
 abstract class AbstractFormFieldChoice extends AbstractFormField
 {

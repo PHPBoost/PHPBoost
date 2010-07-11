@@ -28,7 +28,6 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package {@package}
- * @subpackage table/filter/sql
  */
 class HTMLTableGreaterThanOrEqualsToSQLFilter extends HTMLTableNumberComparatorSQLFilter
 {

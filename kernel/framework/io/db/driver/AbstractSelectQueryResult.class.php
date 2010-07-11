@@ -30,7 +30,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
- * @subpackage db/driver
  * @desc this class encapsulate a query result set
  */
 abstract class AbstractSelectQueryResult implements SelectQueryResult

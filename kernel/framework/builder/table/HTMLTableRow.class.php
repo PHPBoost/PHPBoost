@@ -28,7 +28,6 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc This class allows you to manage easily html tables.
  * @package {@package}
- * @subpackage table
  */
 class HTMLTableRow extends HTMLElement
 {

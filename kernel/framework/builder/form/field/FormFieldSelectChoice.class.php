@@ -32,7 +32,6 @@
  * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
  * </ul>
  * @package {@package}
- * @subpackage form
  */
 class FormFieldSelectChoice extends AbstractFormFieldChoice
 {

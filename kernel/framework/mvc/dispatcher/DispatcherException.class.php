@@ -29,7 +29,6 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @abstract
  * @package {@package}
- * @subpackage dispatcher
  *
  */
 abstract class DispatcherException extends Exception

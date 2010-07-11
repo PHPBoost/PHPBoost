@@ -30,7 +30,6 @@
  * @desc The specified method of the controller from the UrlDispatcherItem
  * matching the url does not exists
  * @package {@package}
- * @subpackage dispatcher
  */
 class NoSuchControllerException extends DispatcherException
 {
