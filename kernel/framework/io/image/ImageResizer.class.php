@@ -26,73 +26,89 @@
  ###################################################*/
 
 /**
- * @author Kévib MASSY <soldier.weasel@gmail.com>
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
 class ImageResizer
 {
-	private $properties_image;
 	private $width;
 	private $height;
-	
-	public function __construct()
+
+	private function return_login_picture($properties_image)
 	{
-	
+		switch ($properties_image->get_mime_type) {
+			case 'image/jpeg':
+					return imagecreatefromjpeg($properties_image->get_path());
+				break;
+			case 'image/png':
+					return imagecreatefrompng($properties_image->get_path());
+				break;
+			case 'image/gif':
+					return imagecreatefromgif($properties_image->get_path());
+				break;
+			// TODO Erreur mime non prise en compte
+		}
 	}
 	
-	public function resize($properties_image, $width = 0, $height = 0, $directory = false)
+	function return_ressource($properties_image, $width = 0, $height = 0)
 	{
-		if (empty($width) && !empty($height))
+		if($properties_image->get_mime_type == 'image/gif')
+			return imagecreate($width, $height); 
+		else
+			return imagecreatetruecolor($width, $height); 
+			
+	}
+	
+	public function set_directory($directory)
+	{
+		$this->directory = $directory;
+
+	}
+
+	private function get_directory($properties_image)
+	{
+		if(!isset($this->directory))
+			return $properties_image->get_path();
+		else 
+			return $this->directory;
+	}
+	
+	public function resize($properties_image, $width = 0, $height = 0)
+	{
+		if ($width == 0 && $height > 0)
 		{
 			$width = $properties_image->get_height() / $height;
 			$width = $properties_image->get_width() / $width;
 		}	
-		elseif (!empty($width) && empty($height))
+		elseif ($height == 0 && $width > 0)
 		{
 			$height = $properties_image->get_width() / $width;
 			$height = $properties_image->get_height() / $height;
 		}
-		
-		if (!$directory)
-			$directory = $properties_image->get_path();
-		else
-			$directory;
 			
-		switch ($properties_image->get_mime()) {
-			case 'image/jpeg':
-					$original_picture = imagecreatefromjpeg($properties_image->get_path());
-				break;
-			case 'image/png':
-					$original_picture = imagecreatefrompng($properties_image->get_path());
-				break;
-			case 'image/gif':
-					$original_picture = imagecreatefromgif($properties_image->get_path());
-				break;
-			// TODO Erreur mime non prise en compte
-		}
+		$original_picture = $this->return_login_picture($properties_image);
+		$create_picture = $this->return_ressource($properties_image, $width, $height);
 		
-		if($properties_image->get_mime() == 'image/gif')
-			$create_picture = imagecreate($width, $height); 
-		else
-			$create_picture = imagecreatetruecolor($width, $height); 
-			
 		imagecopyresized($create_picture, $original_picture, 0, 0, 0, 0, $width, $height, $properties_image->get_width(), $properties_image->get_height()); 
+
+		$this->create_image($properties_image);
+	}
 	
-		switch ($properties_image->get_mime()) {
+	function create_image($properties_image)
+	{
+		switch ($properties_image->get_mime_type) {
 			case 'image/jpeg':
-					imagejpeg($create_picture, $directory);
+					imagejpeg($create_picture, $this->get_directory($properties_image));
 				break;
 			case 'image/png':
-					imagepng($create_picture, $directory);
+					imagepng($create_picture, $this->get_directory($properties_image));
 				break;
 			case 'image/gif':
-					imagegif($create_picture, $directory);
+					imagegif($create_picture, $this->get_directory($properties_image));
 				break;
 			// TODO mime non prise en compte
 		}
-
 	}
 	
 	
 }
-
 ?>
