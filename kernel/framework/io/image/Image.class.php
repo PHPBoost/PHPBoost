@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévib MASSY <soldier.weasel@gmail.com>
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
 class Image
 {
@@ -50,22 +50,19 @@ class Image
 	public function get_width()
 	{
 		$property = $this->get_properties();
-		$width = $property[0];
-		return $width;
+		return $property[0];
 	}
 	
 	public function get_height()
 	{
 		$property = $this->get_properties();
-		$height = $property[1];
-		return $height;
+		return $property[1];
 	}
 	
-	public function get_mime()
+	public function get_mime_type()
 	{
 		$property = $this->get_properties();
-		$mime = $property['mime'];
-		return $mime;
+		return $property['mime'];
 	}
 	
 	public function get_size()
@@ -77,6 +74,6 @@ class Image
 	{
 		unlink($this->path);
 	}
-
+	
 }
 ?>
