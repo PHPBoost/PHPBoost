@@ -30,10 +30,8 @@
  */
 class ImageResizer
 {
-	private $width;
-	private $height;
 
-	private function return_login_picture($properties_image)
+	private function create_image_identifier($properties_image)
 	{
 		switch ($properties_image->get_mime_type) {
 			case 'image/jpeg':
@@ -51,64 +49,57 @@ class ImageResizer
 	
 	private function return_ressource($properties_image, $width = 0, $height = 0)
 	{
-		if($properties_image->get_mime_type == 'image/gif')
+		if($properties_image->get_mime_type == 'image/gif'){
 			return imagecreate($width, $height); 
-		else
+		}
+		else{
 			return imagecreatetruecolor($width, $height); 
-			
-	}
-	
-	public function set_directory($directory)
-	{
-		$this->directory = $directory;
-
+		}
 	}
 
-	private function get_directory($properties_image)
-	{
-		if(!isset($this->directory))
-			return $properties_image->get_path();
-		else 
-			return $this->directory;
-	}
-	
-	public function resize($properties_image, $width = 0, $height = 0)
+	public function resize($properties_image, $width = 0, $height = 0, $directory = false)
 	{
 		if ($width == 0 && $height > 0)
 		{
-			$width = $properties_image->get_height() / $height;
-			$width = $properties_image->get_width() / $width;
+			$height = $properties_image->get_width() / $width;
+			$height = $properties_image->get_height() / $height;
 		}	
 		elseif ($height == 0 && $width > 0)
 		{
-			$height = $properties_image->get_width() / $width;
-			$height = $properties_image->get_height() / $height;
+			$width = $properties_image->get_height() / $height;
+			$width = $properties_image->get_width() / $width;
 		}
-			
-		$original_picture = $this->return_login_picture($properties_image);
+		
+		if (!$directory){
+			$directory = $properties_image->get_path();
+		}
+		else{
+			$directory;
+		}
+
+		$original_picture = $this->create_image_identifier($properties_image);
 		$create_picture = $this->return_ressource($properties_image, $width, $height);
 		
 		imagecopyresized($create_picture, $original_picture, 0, 0, 0, 0, $width, $height, $properties_image->get_width(), $properties_image->get_height()); 
 
-		$this->create_image($properties_image);
+		$this->create_image($properties_image, $directory);
 	}
 	
-	private function create_image($properties_image)
+	private function create_image($properties_image, $directory)
 	{
 		switch ($properties_image->get_mime_type) {
 			case 'image/jpeg':
-					imagejpeg($create_picture, $this->get_directory($properties_image));
+					imagejpeg($create_picture, $directory);
 				break;
 			case 'image/png':
-					imagepng($create_picture, $this->get_directory($properties_image));
+					imagepng($create_picture, $directory);
 				break;
 			case 'image/gif':
-					imagegif($create_picture, $this->get_directory($properties_image));
+					imagegif($create_picture, $directory);
 				break;
 			// TODO mime non prise en compte
 		}
 	}
-	
-	
+
 }
 ?>
