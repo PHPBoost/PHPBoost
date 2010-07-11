@@ -24,6 +24,12 @@
  *
  ###################################################*/
 
+/**
+ * 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package {@package}
+ *
+ */
 class FormBuilderDisabledFieldException extends FormBuilderException
 {
 	private $value;

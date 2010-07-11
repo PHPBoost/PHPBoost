@@ -27,7 +27,6 @@
 
 /**
  * @package {@package}
- * @subpackage data/config
  * @desc This exception is raised when a configuration entry is load whereas it doesn't exists in the
  * database.
  * @author Benoit Sautel <ben.popeye@phpboost.com>

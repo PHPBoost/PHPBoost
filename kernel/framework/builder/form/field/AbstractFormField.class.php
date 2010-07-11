@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class that proposes a default implementation for the FormField interface.
  * @package {@package}
- * @subpackage form
  */
 abstract class AbstractFormField implements FormField
 {

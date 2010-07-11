@@ -32,7 +32,6 @@ define('REQUEST_URI', $_SERVER['REQUEST_URI']);
  * @desc dispatch the current url arg to the first method matching
  * in the UrlDispatcherItem list of the controller object
  * @package {@package}
- * @subpackage dispatcher
  */
 class Dispatcher
 {

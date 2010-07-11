@@ -30,7 +30,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
- * @subpackage db
  * @desc this class encapsulate an inject query result
  */
 interface InjectQueryResult extends QueryResult

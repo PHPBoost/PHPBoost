@@ -24,6 +24,11 @@
  *
  ###################################################*/
 
+/**
+ * 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package {@package}
+ */
 class FormButtonButton extends AbstractFormButton
 {
     public function __construct($label, $onclick_action = '', $name = '')

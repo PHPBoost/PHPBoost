@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line password fields.
  * @package {@package}
- * @subpackage form
  */
 class FormFieldPasswordEditor extends AbstractFormField
 {

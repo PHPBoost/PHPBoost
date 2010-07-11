@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class embeds a calendar
  * @package {@package}
- * @subpackage form
  */
 class FormFieldDate extends AbstractFormField
 {

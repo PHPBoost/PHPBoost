@@ -30,7 +30,6 @@
  * @desc Call the controller method matching an url
  * @abstract
  * @package {@package}
- * @subpackage dispatcher
  */
 abstract class AbstractUrlMapper implements UrlMapper
 {

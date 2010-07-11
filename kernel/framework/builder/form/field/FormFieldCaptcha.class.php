@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage captcha validation fields to avoid bot spam.
  * @package {@package}
- * @subpackage form
  */
 class FormFieldCaptcha extends AbstractFormField
 {

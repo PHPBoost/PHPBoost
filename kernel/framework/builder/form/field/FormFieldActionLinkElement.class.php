@@ -28,7 +28,6 @@
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class manage action links.
  * @package {@package}
- * @subpackage form/field
  */
 class FormFieldActionLinkElement
 {

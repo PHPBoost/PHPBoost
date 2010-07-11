@@ -30,7 +30,6 @@
  * @author  loic rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package {@package}
- * @subpackage model
  */
 class ObjectNotFoundException extends Exception
 {

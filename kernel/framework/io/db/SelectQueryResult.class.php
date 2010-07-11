@@ -30,7 +30,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
- * @subpackage db
  * @desc this class encapsulate a query result set
  * usage is:
  * <code>

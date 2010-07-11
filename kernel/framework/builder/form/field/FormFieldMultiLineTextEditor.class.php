@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage multi-line text fields, but the text can't be formatted.
  * @package {@package}
- * @subpackage form
  */
 class FormFieldMultiLineTextEditor extends AbstractFormField
 {

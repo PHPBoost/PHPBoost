@@ -28,7 +28,6 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc
  * @package {@package}
- * @subpackage form/constraint
  */
 class FormFieldConstraintUrl extends FormFieldConstraintRegex
 {

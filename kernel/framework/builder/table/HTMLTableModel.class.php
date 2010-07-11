@@ -27,7 +27,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
- * @subpackage table
  */
 interface HTMLTableModel
 {

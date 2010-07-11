@@ -28,7 +28,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
- * @subpackage db
  * @desc implements some simple queries
  */
 class DBQuerier implements SQLQuerier
