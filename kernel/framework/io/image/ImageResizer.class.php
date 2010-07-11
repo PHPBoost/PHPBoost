@@ -49,7 +49,7 @@ class ImageResizer
 		}
 	}
 	
-	function return_ressource($properties_image, $width = 0, $height = 0)
+	private function return_ressource($properties_image, $width = 0, $height = 0)
 	{
 		if($properties_image->get_mime_type == 'image/gif')
 			return imagecreate($width, $height); 
@@ -93,7 +93,7 @@ class ImageResizer
 		$this->create_image($properties_image);
 	}
 	
-	function create_image($properties_image)
+	private function create_image($properties_image)
 	{
 		switch ($properties_image->get_mime_type) {
 			case 'image/jpeg':
