@@ -27,7 +27,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class is done to time a process easily. You choose when to start and when to stop.
- * @package util
+ * @package {@package}
  */
 class ValidationResult
 {

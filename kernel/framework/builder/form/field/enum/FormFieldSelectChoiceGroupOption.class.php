@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage select field options.
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption

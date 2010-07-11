@@ -32,7 +32,7 @@
  * @desc This class enables you to retrieve easily a date entered by a user.
  * If the user isn't in the same timezone as the server, the hour will be automatically recomputed.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @package util
+ * @package {@package}
  */
 class MiniCalendar
 {

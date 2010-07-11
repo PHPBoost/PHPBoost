@@ -30,7 +30,6 @@
 * @desc Create a Menu with children.
 * Children could be Menu or LinksMenuLink objects
 * @package menu
-* @subpackage linksmenu
 */
 class LinksMenu extends LinksMenuElement
 {

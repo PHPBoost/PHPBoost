@@ -33,7 +33,7 @@ define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations 
 /**
  * @author Régis VIARRE <crowkait@phpboost.com>
  * @desc This class provides methods to manage user in groups.
- * @package members
+ * @package {@package}
  */
 class GroupsService
 {

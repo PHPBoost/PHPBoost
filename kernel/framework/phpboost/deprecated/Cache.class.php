@@ -29,7 +29,7 @@ define('RELOAD_CACHE', true);
 define('NO_FATAL_ERROR_CACHE', true);
 
 /**
- * @package core
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is the cache manager of PHPBoost.
  * Its functioning is very particular. Loading a file is equivalent to include the file. The cache file must define some PHP global variables.

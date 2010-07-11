@@ -32,8 +32,7 @@ define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndic
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could be used to export feeds
  * @abstract  Do not use this class, but one of its children like RSS or ATOM
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class Feed
 {

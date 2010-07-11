@@ -33,7 +33,7 @@ define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package content
+ * @package {@package}
  */
 class Search
 {

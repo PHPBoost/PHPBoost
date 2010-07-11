@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package core
- * @subpackage environment
+ * @package {@package}
  * This class manages all the deprecated services that old PHPBoost modules need to run.
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  *

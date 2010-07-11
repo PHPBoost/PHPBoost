@@ -28,7 +28,7 @@
 /**
  * @author Régis VIARRE <crowkait@phpboost.com
  * @desc This class provides you methods to upload easily files to the ftp.
- * @package io
+ * @package {@package}
  */
 class Upload
 {

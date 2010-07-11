@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @package builder
+ * @package {@package}
  * @subpackage form/fieldset
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>

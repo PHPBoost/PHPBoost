@@ -55,7 +55,7 @@ define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
 define('NEW_STATUS_UNKNOWN', 0x100);
 
 /**
- * @package content
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class enables you to manage easily the administration of categories for your modules.
  * It's as generic as possible, if you want to complete some actions to specialize them for you module, 

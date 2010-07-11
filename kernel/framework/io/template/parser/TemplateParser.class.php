@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template/parser
  * @desc This interfaces represents a class that is able to parse a template source and transform it
  * to a syntax that the PHP engine is able to run.

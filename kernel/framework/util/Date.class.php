@@ -44,7 +44,7 @@ define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 define('TIMEZONE_AUTO', 		TIMEZONE_USER);
 
 /**
- * @package util
+ * @package {@package}
  * @desc This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
  * It supports the most common formats and manages timezones. Here are the definitions of the 3 existing timezones:
  * <ul>

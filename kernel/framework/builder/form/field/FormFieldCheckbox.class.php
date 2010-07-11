@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class FormFieldCheckbox extends AbstractFormField

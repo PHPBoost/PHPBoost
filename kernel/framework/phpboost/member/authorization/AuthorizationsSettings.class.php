@@ -25,8 +25,7 @@
  ###################################################*/
 
 /**
- * @package phpboost
- * @subpackage member/authorization
+ * @package {@package}
  * @desc This class manages authorizations settings which deals with all the actions for which you want
  * to restrict access. You can choose who can access to between the different roles existing in PHPBoost:
  * <ul>

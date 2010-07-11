@@ -28,8 +28,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc Contains meta-informations about a feed with its entries
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class FeedData
 {

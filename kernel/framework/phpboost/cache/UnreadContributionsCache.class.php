@@ -30,8 +30,7 @@
  * If there are, it's able to tell us how much there are for the administrator, and for the other
  * types of users, it's only able to tell if there are unread contributions.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @package core
- * @subpackage cache
+ * @package {@package}
  */
 class UnreadContributionsCache implements CacheData
 {

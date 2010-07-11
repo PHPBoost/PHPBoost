@@ -26,7 +26,6 @@
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package util
  */
 class UrlSerializedParameterEncoderTest extends PHPBoostUnitTestCase
 {

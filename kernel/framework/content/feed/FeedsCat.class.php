@@ -30,8 +30,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc Describes a feed by building a category tree
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class FeedsCat
 {

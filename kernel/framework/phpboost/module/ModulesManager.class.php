@@ -36,7 +36,7 @@ define('MODULE_FILES_COULD_NOT_BE_DROPPED',	5);
 define('PHP_VERSION_CONFLICT', 				6);
 
 /**
- * @package modules
+ * @package {@package}
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class enables you to manages the PHPBoost packages which are nothing else than the modules.
  *

@@ -27,7 +27,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package core
+ * @package {@package}
  * @subpackage lang
  */
 class LangLoader

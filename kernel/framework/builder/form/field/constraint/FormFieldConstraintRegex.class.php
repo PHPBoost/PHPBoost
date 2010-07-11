@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package builder
+ * @package {@package}
  * @subpackage form/constraint
  */
 class FormFieldConstraintRegex implements FormFieldConstraint

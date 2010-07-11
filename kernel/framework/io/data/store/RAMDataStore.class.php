@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage data/store
+ * @package {@package}
  * @desc This is a very efficient data store, but its principal weakness is that it's life span
  * is very short, in fact it's the page's execution.
  * It's to use when you know that the data you want to store will be accessed several times during

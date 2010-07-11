@@ -30,7 +30,7 @@
  * @desc This service manage kernel menus by adding the persistance to menus objects.
  * It also provides all moving and disabling methods to change the website appearance.
  * @static
- * @package core
+ * @package {@package}
  */
 class MenuService
 {

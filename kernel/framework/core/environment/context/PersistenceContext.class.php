@@ -28,8 +28,7 @@
 
 
 /**
- * @package core
- * @subpackage environment/context
+ * @package {@package}
  * @desc This class manages all the persistence services.
  * It's able to create each of them and return them.
  * @author loic rouchon <loic.rouchon@phpboost.com>

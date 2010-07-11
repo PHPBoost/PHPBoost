@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line text fields.
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class FormFieldTextEditor extends AbstractFormField

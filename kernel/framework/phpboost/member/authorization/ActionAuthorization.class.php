@@ -25,8 +25,7 @@
  ###################################################*/
 
 /**
- * @package phpboost
- * @subpackage member/authorization
+ * @package {@package}
  * @desc This class represents the authorizations for an action. It's associated to a label, 
  * a description, the bit in which flags are saved, and obviously the authorization array which is
  * encapsulated in the RolesAuthorizations class.

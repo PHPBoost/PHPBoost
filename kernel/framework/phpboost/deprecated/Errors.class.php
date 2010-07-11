@@ -29,7 +29,7 @@
  * @deprecated use ErrorsManager
  * @author Viarre Régis crowkait@phpboost.com
  * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
- * @package core
+ * @package {@package}
  */
 class Errors
 {

@@ -28,7 +28,7 @@
 /**
  * @author Régis VIARRE <crowkait@phpboost.com>
  * @desc This class provides methods to manage private message.
- * @package members
+ * @package {@package}
  */
 class PrivateMsg
 {

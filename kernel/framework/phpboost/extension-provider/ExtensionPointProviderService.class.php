@@ -30,7 +30,7 @@
  * @desc This class is a ExtensionPointProvider factory providing some services like
  * mass operations (on several modules at the same time) or identifications
  * methods to get all ExtensionPointProvider that provide a given extension point
- * @package extension-provider
+ * @package {@package}
  */
 class ExtensionPointProviderService
 {

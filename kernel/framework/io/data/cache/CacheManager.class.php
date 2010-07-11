@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage data/cache
  * @desc This class manages cache. It makes a two-level lazy loading:
  * <ul>

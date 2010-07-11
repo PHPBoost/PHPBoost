@@ -28,8 +28,6 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
- * @package mvc
- * @subpackage response
  */
 class AdminMenusDisplayResponse extends AdminMenuDisplayResponse
 {

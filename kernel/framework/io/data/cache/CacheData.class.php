@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage data/cache
  * @desc This interface represents data which are stored automatically by the cache manager.
  * The storage mode is very powerful, it uses a two-level cache and the database.

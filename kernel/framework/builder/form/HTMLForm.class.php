@@ -31,7 +31,7 @@
  * the posted values and also validate the entered data from constraints you define. The validation
  * is done in PHP when the form is received, but also in live thanks to Javascript (each field is
  * validated when it looses the focus and the whole form is validated when the user submits it).
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class HTMLForm

@@ -26,7 +26,7 @@
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package util
+ * @package {@package}
  */
 class Pagination
 {

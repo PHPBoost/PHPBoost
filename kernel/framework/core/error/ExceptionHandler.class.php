@@ -27,7 +27,7 @@
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package core
+ * @package {@package}
  * @desc
  */
 class ExceptionHandler

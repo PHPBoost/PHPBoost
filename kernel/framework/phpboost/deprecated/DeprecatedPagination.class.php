@@ -33,7 +33,7 @@ define('LINK_START_PAGE', false); //Lien sur la première page.
  * @desc This class enables you to manage easily a pagination system.
  * It's very useful when you have a lot of items and you cannot display all of them.
  * It also can generate the where clause to insert in your SQL query which selects the items.
- * @package util
+ * @package {@package}
  */
 class DeprecatedPagination
 {

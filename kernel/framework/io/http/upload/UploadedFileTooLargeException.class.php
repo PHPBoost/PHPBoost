@@ -28,7 +28,7 @@
 /**
  * @author Benoit Sautel
  * @desc Represents a HTTP uploaded file
- * @package io
+ * @package {@package}
  * @subpackage http/upload
  */
 class UploadedFileTooLargeException extends Exception

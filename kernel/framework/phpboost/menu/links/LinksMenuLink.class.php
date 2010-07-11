@@ -28,8 +28,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc A Simple menu link
- * @package menu
- * @subpackage linksmenu
+ * @package {@package}
  */
 class LinksMenuLink extends LinksMenuElement
 {

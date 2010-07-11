@@ -30,7 +30,7 @@ include_once(PATH_TO_ROOT . '/lang/' . UserAccountsConfig::load()->get_default_l
 /**
  * @author Viarre Régis crowkait@phpboost.com
   * @desc 
-  * @package core
+  * @package {@package}
   */
 class StatsSaver
 {	

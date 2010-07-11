@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package core
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is used to represent the bread crumb displayed on each page of the website.
  * It enables the user to locate himself in the whole site.

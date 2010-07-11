@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage template
+ * @package {@package}
  * @deprecated
  * @desc This class exists only to be compliant with legacy code. It manages several templates in the same objet.
  * In fact, a single instance of this class loads several templates which share the same data.

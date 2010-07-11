@@ -27,7 +27,7 @@
 
 /**
  * @deprecated
- * @package db
+ * @package {@package}
  * @author Benoît Sautel ben.popeye@gmail.com / Régis Viarre crowkait@phpboost.com
  * @desc This class helps you to generate the backup file of your data base.
  */

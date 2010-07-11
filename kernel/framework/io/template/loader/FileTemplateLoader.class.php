@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage template/loader
+ * @package {@package}
  * @desc This loader is the most used. It takes a file identifier as input. This identifier corresponds
  * to a file that can be different from the user's theme. In fact, when it loads a template, its looks for
  * it at several places. For a module template, it can be the default one which is in the /module/templates directory,

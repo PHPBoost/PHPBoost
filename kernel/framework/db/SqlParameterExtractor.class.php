@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package db
+ * @package {@package}
  * @author Benoît Sautel bepopeye@phpboost.com, Loic Rouchon <loic.rouchon@phpboost.com>
  */
 

@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package core
- * @subpackage environment
+ * @package {@package}
  * This class manages all the environment that PHPBoost need to run.
  * <p>It's able to initialize the environment that contains services (database,
  * users management...) as well as the graphical environment.</p>

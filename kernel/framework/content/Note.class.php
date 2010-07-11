@@ -30,7 +30,7 @@ define('NOTE_NODISPLAY_NBRNOTES', 0x02);
 define('NOTE_DISPLAY_BLOCK', 0x04);
 
 /**
- * @package content
+ * @package {@package}
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class provides you an easy way to manage notation.
  */

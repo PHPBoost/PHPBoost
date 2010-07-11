@@ -27,7 +27,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
+ * @package {@package}
  * @subpackage db/translator
  * @desc translates the generic query <code>$query</code> into the mysql specific dialect
  */

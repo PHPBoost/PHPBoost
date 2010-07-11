@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage data/store
+ * @package {@package}
  * @desc This data store is not very efficient but is the only one which has an infinite life span
  * when APC is not available.
  * It stores data in the /cache folder.

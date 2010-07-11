@@ -26,8 +26,7 @@
  ###################################################*/
 
 /** 
- * @package io
- * @subpackage mail
+ * @package {@package}
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Régis Viarre <crowkait@phpboost.com>
  * @desc This class provides you utilities for emails.
  */

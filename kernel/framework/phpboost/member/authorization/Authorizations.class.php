@@ -28,7 +28,7 @@
 /**
  * @author Régis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
  * @desc This class contains only static methods, it souldn't be instantiated.
- * @package members
+ * @package {@package}
  */
 class Authorizations
 {

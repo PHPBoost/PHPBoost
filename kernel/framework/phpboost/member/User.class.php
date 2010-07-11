@@ -32,7 +32,7 @@ define('USER_TYPE', 3);
 /**
  * @author Régis VIARRE <crowkait@phpboost.com>
  * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
- * @package members
+ * @package {@package}
  */
 class User
 {

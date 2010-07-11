@@ -28,7 +28,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
- * @package mvc
+ * @package {@package}
  * @subpackage response
  */
 class SiteDisplayResponse extends AbstractResponse

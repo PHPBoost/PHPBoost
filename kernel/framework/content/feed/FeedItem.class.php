@@ -30,8 +30,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc Contains meta-informations and informations about a feed entry / item
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class FeedItem
 {

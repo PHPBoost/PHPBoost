@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template/data
  * @desc This interface describes data which are assigned to a template. There are two types of data:
  * <ul>

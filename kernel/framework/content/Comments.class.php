@@ -30,7 +30,7 @@ define('POP_UP_WINDOW', false);
 define('KERNEL_SCRIPT', true);
 
 /**
- * @package content
+ * @package {@package}
  * @author Révis Viarre <crowkait@phpboost.com>
  * @desc This class manages comments everywhere in phpboost
  * Simplyfied use with the display_comments function: 

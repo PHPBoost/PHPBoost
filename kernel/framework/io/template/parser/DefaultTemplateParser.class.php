@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template/parser
  * @desc This class is a default implementation of the {@link TemplateParser} interface that is based
  * on the {@link AbstractTemplateParser} implementation. 

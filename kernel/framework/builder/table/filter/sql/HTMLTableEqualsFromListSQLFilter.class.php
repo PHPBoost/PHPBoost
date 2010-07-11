@@ -27,7 +27,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package builder
+ * @package {@package}
  * @subpackage table/filter/sql
  */
 class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder

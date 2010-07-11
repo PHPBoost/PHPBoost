@@ -31,8 +31,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class contains an agregation of differents feeds
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class FeedsList
 {

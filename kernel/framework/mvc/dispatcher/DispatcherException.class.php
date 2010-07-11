@@ -28,7 +28,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @abstract
- * @package mvc
+ * @package {@package}
  * @subpackage dispatcher
  *
  */

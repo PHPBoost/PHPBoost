@@ -25,8 +25,7 @@
  ###################################################*/
 
 /**
- * @package builder
- * @subpackage form/button
+ * @package {@package}
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */

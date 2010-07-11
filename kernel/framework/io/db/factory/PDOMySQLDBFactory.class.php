@@ -27,7 +27,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
+ * @package {@package}
  * @subpackage db/factory
  * @desc this factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
  * for the right sgbd.

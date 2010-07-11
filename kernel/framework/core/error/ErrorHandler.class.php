@@ -27,7 +27,7 @@
 
 /**
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
- * @package core
+ * @package {@package}
  * @desc
  */
 class ErrorHandler
