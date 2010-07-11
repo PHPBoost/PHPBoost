@@ -33,7 +33,7 @@
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
- * @package menu
+ * @package {@package}
  * @subpackage linksmenu
  */
 abstract class LinksMenuElement extends Menu

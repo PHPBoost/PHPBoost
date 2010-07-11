@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template
  * @desc This class represents a PHPBoost template. Templates are used to generate text which
  * have a common structure. You just have to write your text with tags at the place you want to insert

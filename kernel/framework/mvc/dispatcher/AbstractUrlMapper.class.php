@@ -29,7 +29,7 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Call the controller method matching an url
  * @abstract
- * @package mvc
+ * @package {@package}
  * @subpackage dispatcher
  */
 abstract class AbstractUrlMapper implements UrlMapper

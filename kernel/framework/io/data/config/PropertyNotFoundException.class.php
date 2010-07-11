@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage data/config
  * @desc This exception is raised when a not existing property is asked in a ConfigData object.
  * @author Benoit Sautel <ben.popeye@phpboost.com>

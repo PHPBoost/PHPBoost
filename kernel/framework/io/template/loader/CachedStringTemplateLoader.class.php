@@ -26,8 +26,8 @@
  ###################################################*/
 
 /**
- * @package io
- * @package template/loader
+ * @package {@package}
+ * @package {@package}
  * @desc This loader is to use when you load a template whose source is directly a PHP string
  * and not a file. It supports caching and saves cache files in the /cache/tpl directory, using
  * a md5 hash to distinguish eache string input.

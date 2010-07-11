@@ -35,7 +35,7 @@ define('APPLICATION_TYPE__TEMPLATE', 'template');
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package core
+ * @package {@package}
  */
 class Application
 {

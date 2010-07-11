@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package events
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents an alert which must be sent to the administrator.
  * It allows to the module developers to handle the administrator alerts.

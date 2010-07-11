@@ -30,8 +30,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package menu
- * @subpackage modulesminimenu
+ * @package {@package}
  */
 class ModuleMiniMenu extends Menu
 {

@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package core
- * @subpackage environment
+ * @package {@package}
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */

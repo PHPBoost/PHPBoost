@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template/data
  * @desc This class is a default implementation of the {@link TemplateData} interface.
  * @author Benoit Sautel <ben.popeye@phpboost.com>

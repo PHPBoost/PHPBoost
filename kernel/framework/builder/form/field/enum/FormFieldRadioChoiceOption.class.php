@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage radio input field options.
- * @package builder
+ * @package {@package}
  * @subpackage form/field/enum
  */
 class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption

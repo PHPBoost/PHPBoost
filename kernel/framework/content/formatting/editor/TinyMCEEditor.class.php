@@ -28,8 +28,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class provides an interface editor for contents.
- * @package content
- * @subpackage formatting/editor
+ * @package {@package}
  */
 class TinyMCEEditor extends ContentEditor
 {

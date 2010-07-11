@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manages a mail address.
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class FormFieldMailEditor extends FormFieldTextEditor

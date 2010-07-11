@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage mail
+ * @package {@package}
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to send mails without having to deal with the mail headers and parameters.
  */

@@ -28,7 +28,7 @@
 /**
  * @author  loic rouchon <loic.rouchon@phpboost.com>
  * @desc The regular expression that the controller have to match is malformed
- * @package mvc
+ * @package {@package}
  * @subpackage dispatcher
  */
 class MalformedUrlMapperRegexException extends DispatcherException

@@ -27,7 +27,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
+ * @package {@package}
  * @subpackage db/driver
  * @desc implements the query var replacement method
  *

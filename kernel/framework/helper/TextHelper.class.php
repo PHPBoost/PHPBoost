@@ -28,7 +28,7 @@
 /**
  * @desc Text helper
  * @author Régis Viarre <crowkait@phpboost.com>
- * @package helper
+ * @package {@package}
  */
 class TextHelper 
 {

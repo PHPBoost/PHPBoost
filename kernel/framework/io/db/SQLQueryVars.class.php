@@ -29,8 +29,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
- * @subpackage db
+ * @package {@package}
  * @desc implements the query var replacement method
  *
  */

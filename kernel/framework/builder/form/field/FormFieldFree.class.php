@@ -32,7 +32,7 @@
  * 	<li>template : A template object to personnalize the field</li>
  * 	<li>content : The field html content if you don't use a personnal template</li>
  * </ul>
- * @package builder
+ * @package {@package}
  * @subpackage form
  */
 class FormFieldFree extends AbstractFormField

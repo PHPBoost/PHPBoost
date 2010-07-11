@@ -28,7 +28,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Manages cookies via the HTTP protocol
- * @package io
+ * @package {@package}
  * @subpackage http
  */
 

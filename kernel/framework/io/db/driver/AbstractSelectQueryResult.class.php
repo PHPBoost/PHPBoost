@@ -29,7 +29,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package io
+ * @package {@package}
  * @subpackage db/driver
  * @desc this class encapsulate a query result set
  */

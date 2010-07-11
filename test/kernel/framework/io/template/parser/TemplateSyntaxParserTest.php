@@ -39,7 +39,6 @@
  */
 
 /**
- * @package {@package}
  * @desc
  * @author Benoit sautel <ben.popeye@gmail.com>, Loic Rouchon horn@phpboost.com
  */

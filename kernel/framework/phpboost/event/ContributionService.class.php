@@ -29,7 +29,7 @@
 //Flag which distinguishes a contribution from an alert
 
 /**
- * @package events
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This service allows developers to manage their contributions.
  */

@@ -28,7 +28,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Manages response via the HTTP protocol
- * @package io
+ * @package {@package}
  * @subpackage http
  */
 class HTTPResponse

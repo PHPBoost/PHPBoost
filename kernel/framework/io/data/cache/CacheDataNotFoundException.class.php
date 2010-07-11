@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage data/cache
  * @desc This exception is raised when you are asking a cache entry that doesn't exist.
  * @author Benoit Sautel <ben.popeye@phpboost.com>

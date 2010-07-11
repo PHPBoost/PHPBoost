@@ -35,7 +35,7 @@ define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 /**
  * @author Régis VIARRE <crowkait@phpboost.com
  * @desc This class manages all sessions for the users.
- * @package members
+ * @package {@package}
  */
 class Session
 {

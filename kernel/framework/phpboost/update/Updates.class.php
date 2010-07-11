@@ -36,7 +36,7 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package core
+ * @package {@package}
  */
 class Updates
 {

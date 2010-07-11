@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template
  * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to handle a template file.

@@ -38,7 +38,7 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
  *   <li>In content, get the url with the absolute() method. It will allow content include at multiple level</li>
  *   <li>In forms, get the url with the relative() method. It's a faster way to display url</li>
  * </ul>
- * @package util
+ * @package {@package}
  */
 class Url
 {

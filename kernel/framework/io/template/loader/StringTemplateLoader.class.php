@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage template/loader
+ * @package {@package}
  * @desc This loader is a very simple one. Its input is a string containing the template source.
  * It doesn't supports caching so it always parses the input source.
  * @author Benoit Sautel <ben.popeye@phpboost.com>

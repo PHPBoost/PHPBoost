@@ -28,7 +28,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package util
+ * @package {@package}
  * @desc implements the string var replacement method
  *
  */

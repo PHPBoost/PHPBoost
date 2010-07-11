@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage data/store
+ * @package {@package}
  * @desc This interface represents a data store. Its different implementations store data in
  * different physical areas, you have to use it according to the data's life span and the efficiency
  * you need.

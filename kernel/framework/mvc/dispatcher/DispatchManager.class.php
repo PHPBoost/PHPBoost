@@ -27,7 +27,7 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package mvc
+ * @package {@package}
  * @subpackage dispatcher
  */
 class DispatchManager

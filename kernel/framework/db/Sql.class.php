@@ -38,7 +38,7 @@ define('CONNECTED_TO_DATABASE', 3);
 define('DBTYPE', 'mysql');
 
 /**
- * @package db
+ * @package {@package}
  * @author Régis Viarre crowkait@phpboost.com, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class manages all the database access done by PHPBoost.
  * It currently manages only one DBMS, MySQL, but we made it as generic as we could.

@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage data/config
  * @desc This class manages config loading and saving. It makes a two-level lazy loading:
  * <ul>

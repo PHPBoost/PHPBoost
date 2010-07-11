@@ -37,7 +37,7 @@ define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
 /**
  * @desc This class provides easy ways to create several type of charts.
  * @author regis viarre <crowkait@phpboost.com>
- * @package util
+ * @package {@package}
  *
  */
 class Stats

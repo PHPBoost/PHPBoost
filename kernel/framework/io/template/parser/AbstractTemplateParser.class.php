@@ -26,8 +26,8 @@
  ###################################################*/
 
 /**
- * @package io
- * @package template/parser
+ * @package {@package}
+ * @package {@package}
  * @desc This is an abstract implementation of the {@link TemplateParser} interface.
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */

@@ -31,7 +31,7 @@
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 /**
- * @package events
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This static class allows you to handler easily the administrator alerts which can be made in PHPBoost.
  */

@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
+ * @package {@package}
  * @subpackage template/loader
  * @desc This exception is thrown when the template cannot been loaded.
  * @author Loic Rouchon <loic.rouchon@phpboost.com>

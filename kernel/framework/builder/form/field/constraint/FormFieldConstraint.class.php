@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>, Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc 
- * @package builder
+ * @package {@package}
  * @subpackage form/constraint
  */ 
 interface FormFieldConstraint 

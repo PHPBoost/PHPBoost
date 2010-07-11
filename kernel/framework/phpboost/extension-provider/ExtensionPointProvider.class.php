@@ -32,7 +32,7 @@
  * that you're not sure of the method's availality. It also provides a set of
  * generic methods that you could use to integrate your module with others, or
  * allow your module to share services.
- * @package modules
+ * @package {@package}
  */
 abstract class ExtensionPointProvider
 {

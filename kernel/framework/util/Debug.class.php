@@ -27,7 +27,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package util
+ * @package {@package}
  */
 class Debug
 {

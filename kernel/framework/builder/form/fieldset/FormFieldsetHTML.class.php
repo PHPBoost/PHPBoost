@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @package builder
+ * @package {@package}
  * @subpackage form/fieldset
  * @desc
  * @author Régis Viarre <crowkait@phpboost.com>

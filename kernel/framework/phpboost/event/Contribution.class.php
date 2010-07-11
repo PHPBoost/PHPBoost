@@ -31,7 +31,7 @@
 //Bit on which are checked the authorizations
 
 /**
- * @package events
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a contribution made by a user to complete the content of the website.
  * All the contributions are managed in the contribution panel.

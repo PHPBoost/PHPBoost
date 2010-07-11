@@ -29,7 +29,7 @@
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc The specified method of the controller from the UrlDispatcherItem
  * matching the url does not exists
- * @package mvc
+ * @package {@package}
  * @subpackage dispatcher
  */
 class NoSuchControllerException extends DispatcherException

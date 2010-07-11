@@ -27,7 +27,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc This class allows you to manage easily html elements.
- * @package builder
+ * @package {@package}
  */
 abstract class HTMLElement
 {

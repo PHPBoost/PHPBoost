@@ -25,8 +25,7 @@
  ###################################################*/
 
 /**
- * @package phpboost
- * @subpackage member/authorization
+ * @package {@package}
  * @desc This class stores different roles which are authorized for a given action. 
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */

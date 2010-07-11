@@ -27,7 +27,7 @@
 /**
  * @desc Formating helper
  * @author Régis Viarre <crowkait@phpboost.com>
- * @package helper
+ * @package {@package}
  */
 class FormatingHelper 
 {

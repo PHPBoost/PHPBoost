@@ -29,8 +29,7 @@
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
  * export it to the RSS format
- * @package content
- * @subpackage syndication
+ * @package {@package}
  */
 class RSS extends Feed
 {

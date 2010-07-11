@@ -27,7 +27,7 @@
 
 /**
  * @abstract
- * @package events
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc It's the common part between two types of event existing now in PHPBoost:
  * <ul>

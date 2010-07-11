@@ -30,7 +30,7 @@
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc the response
- * @package mvc
+ * @package {@package}
  * @subpackage response
  */
 abstract class AbstractResponse implements Response

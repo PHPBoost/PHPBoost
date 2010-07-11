@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package content
+ * @package {@package}
  * @subpackage formatting/parser
  * @desc This class enables to use TinyMCE without breaking the compatibility with the
  * BBCode formatting. PHPBoost has a reference syntax, it in HTML with specific CSS classes.

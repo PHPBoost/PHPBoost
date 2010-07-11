@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage data/store
+ * @package {@package}
  * @desc This data store is not already available, the APC PHP extension must be enabled for you yo use it.
  * When it's available, it provides a memory area that is persistent (its life span is no the page execution) and
  * shared by all simultaneous page executions.

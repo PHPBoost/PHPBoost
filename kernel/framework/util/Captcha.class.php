@@ -31,7 +31,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class provide you an easy way to prevent spam by bot in public formular.
- * @package util
+ * @package {@package}
  */
 class Captcha
 {

@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package content
- * @subpackage formatting/factory
+ * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This is a default abstract implementation of the ContentFormattingFactory class.
  */

@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package io
- * @subpackage data/store
+ * @package {@package}
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <horn@phpboost.com>
  *

@@ -26,8 +26,7 @@
  ###################################################*/
 
 /**
- * @package content
- * @subpackage formatting/editor
+ * @package {@package}
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class for editors content.
  */

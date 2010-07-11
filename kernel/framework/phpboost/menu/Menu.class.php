@@ -29,7 +29,7 @@
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class represents a menu element and is used to build any kind of menu
  * @abstract
- * @package menu
+ * @package {@package}
  */
 abstract class Menu
 {

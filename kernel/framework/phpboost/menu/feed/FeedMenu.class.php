@@ -28,8 +28,7 @@
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
- * @package menu
- * @subpackage feedmenu
+ * @package {@package}
  */
 class FeedMenu extends Menu
 {

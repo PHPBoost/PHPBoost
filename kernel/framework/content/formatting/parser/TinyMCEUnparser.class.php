@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @package content
+ * @package {@package}
  * @subpackage formatting/parser
  * @desc This class enables to translate the content formatting from the PHPBoost standard one to
  * the TinyMCE one. The PHPBoost one is historically the one corresponding to the BBCode
