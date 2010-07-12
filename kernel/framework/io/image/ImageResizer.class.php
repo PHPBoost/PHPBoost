@@ -27,67 +27,108 @@
 
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @desc This class allows you to resize images easily.
+ * @package {@package}
  */
 class ImageResizer
 {
-
-	private function create_image_identifier($properties_image)
+	/**
+	 * @desc Create image identifier
+	 * @param Image $image the element to load
+	 * @return Image identifier
+	 */
+	private function create_image_identifier(Image $image)
 	{
-		switch ($properties_image->get_mime_type) {
+		switch ($image->get_mime_type()) 
+		{
 			case 'image/jpeg':
-					return imagecreatefromjpeg($properties_image->get_path());
+					return imagecreatefromjpeg($image->get_path());
 				break;
 			case 'image/png':
-					return imagecreatefrompng($properties_image->get_path());
+					return imagecreatefrompng($image->get_path());
 				break;
 			case 'image/gif':
-					return imagecreatefromgif($properties_image->get_path());
+					return imagecreatefromgif($image->get_path());
 				break;
 			// TODO Erreur mime non prise en compte
 		}
 	}
 	
-	private function return_ressource($properties_image, $width = 0, $height = 0)
+	/**
+	 * @desc Create ressource of new picture 
+	 * @param Image $image the element to load
+	 * @param int $width Width of the new picture create in pixel.
+	 * @param int $height Height of the new picture create in pixel.
+	 * @return Ressource image
+	 */
+	private function create_ressource(Image $image, $width = 0, $height = 0)
 	{
-		if($properties_image->get_mime_type == 'image/gif'){
+		if($image->get_mime_type() == 'image/gif')
+		{
 			return imagecreate($width, $height); 
 		}
-		else{
+		else
+		{
 			return imagecreatetruecolor($width, $height); 
 		}
 	}
-
-	public function resize($properties_image, $width = 0, $height = 0, $directory = false)
+	
+	/**
+	 * @desc Directory of the create a new image
+	 * @param Image $image the element to load
+	 * @param string $directory Path of the new image directory
+	 * @return Directory image of the create a new image
+	 */
+	private function directory_new_image (Image $image, $directory)
+	{
+		if (!$directory)
+		{
+			return $image->get_path();
+		}
+		else
+		{
+			return $directory;
+		}
+	}
+	/**
+	 * @desc Resize image
+	 * @param Image $image the element to load
+	 * @param int $width Width of the new picture create in pixel.
+	 * @param int $height Height of the new picture create in pixel.
+	 * @param string $directory Path of the new image directory
+	 */
+	public function resize(Image $image, $width = 0, $height = 0, $directory = false)
 	{
 		if ($width == 0 && $height > 0)
 		{
-			$height = $properties_image->get_width() / $width;
-			$height = $properties_image->get_height() / $height;
-		}	
+			$height = $image->get_width() / $width;
+			$height = $image->get_height() / $height;
+		}
 		elseif ($height == 0 && $width > 0)
 		{
-			$width = $properties_image->get_height() / $height;
-			$width = $properties_image->get_width() / $width;
+			$width = $image->get_height() / $height;
+			$width = $image->get_width() / $width;
 		}
 		
-		if (!$directory){
-			$directory = $properties_image->get_path();
-		}
-		else{
-			$directory;
-		}
+		$directory = $this->directory_new_image($image, $directory);
 
-		$original_picture = $this->create_image_identifier($properties_image);
-		$create_picture = $this->return_ressource($properties_image, $width, $height);
+		$original_picture = $this->create_image_identifier($image);
+		$create_picture = $this->create_ressource($image, $width, $height);
 		
-		imagecopyresized($create_picture, $original_picture, 0, 0, 0, 0, $width, $height, $properties_image->get_width(), $properties_image->get_height()); 
+		imagecopyresized($create_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
 
-		$this->create_image($properties_image, $directory);
+		$this->create_image($image, $directory);
 	}
 	
-	private function create_image($properties_image, $directory)
+	/**
+	 * @desc Create a new image of the directory
+	 * @param Image $image the element to load
+	 * @param string $directory Path of the new image directory
+	 */
+	private function create_image(Image $image, $directory)
 	{
-		switch ($properties_image->get_mime_type) {
+		switch ($image->get_mime_type()) 
+		{
 			case 'image/jpeg':
 					imagejpeg($create_picture, $directory);
 				break;
