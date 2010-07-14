@@ -169,7 +169,6 @@ class InstallationServices
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
 		$CONFIG['site_session_invit'] = 300;
-		$CONFIG['unlock_admin'] = '';
 		$CONFIG['pm_max'] = 50;
 		$CONFIG['search_cache_time'] = 30;
 		$CONFIG['search_max_use'] = 100;
@@ -327,10 +326,9 @@ class InstallationServices
 	private function generate_admin_unlock_code()
 	{
 		$admin_unlock_code = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
-		global $CONFIG, $Cache;
-		$CONFIG['unlock_admin'] = strhash($admin_unlock_code);
-		$this->querier->update(DB_TABLE_CONFIGS, array('value' => serialize($CONFIG)), "WHERE name='config'");
-		$Cache->Generate_file('config');
+		$general_config = GeneralConfig::load();
+		$general_config->set_admin_unlocking_key($admin_unlock_code);
+		GeneralConfig::save();
 		return $admin_unlock_code;
 	}
 

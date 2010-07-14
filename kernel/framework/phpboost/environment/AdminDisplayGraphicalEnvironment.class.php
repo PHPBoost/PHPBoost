@@ -78,7 +78,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
 				{
 					//Protection de l'administration par connexion brute force.
-					if ($info_connect['test_connect'] < '5' || $unlock === $CONFIG['unlock_admin']) //Si clée de déverouillage bonne aucune vérification.
+					if ($info_connect['test_connect'] < '5' || $unlock === GeneralConfig::load()->get_admin_unlocking_key()) //Si clée de déverouillage bonne aucune vérification.
 					{
 						$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 					}
@@ -118,7 +118,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 					AppContext::get_response()->redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 				}
-				elseif (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
+				elseif (!empty($unlock) && $unlock !== GeneralConfig::load()->get_admin_unlocking_key())
 				{
 					AppContext::get_session()->end();
 					AppContext::get_response()->redirect('/admin/admin_index.php?flood=0');

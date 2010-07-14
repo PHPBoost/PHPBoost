@@ -534,7 +534,6 @@ switch($step)
 				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
 				$CONFIG['site_session_invit'] = 300;
-				$CONFIG['unlock_admin'] = '';
 				$CONFIG['pm_max'] = 50;
 				$CONFIG['search_cache_time'] = 30;
 				$CONFIG['search_max_use'] = 100;
@@ -723,32 +722,25 @@ switch($step)
 				{
 					$Sql = PersistenceContext::get_sql();
 
-					//On crée le code de déverrouillage
-
 					$Cache = new Cache;
-					$Cache->load('config');
 
 					//On enregistre le membre (l'entrée était au préalable créée)
 					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . TextHelper::strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $lang . "', user_theme = '" . DISTRIBUTION_THEME . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . GeneralConfig::load()->get_site_timezone() . "' WHERE user_id = '1'",__LINE__, __FILE__);
 
 					//Génération de la clé d'activation, en cas de verrouillage de l'administration
 					$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
-					$CONFIG['unlock_admin'] = strhash($unlock_admin);
+					$general_config = GeneralConfig::load();
+					$general_config->set_admin_unlocking_key($unlock_admin);
+					GeneralConfig::save();
 
 					$mail_config = MailServiceConfig::load();
 					$mail_config->set_administrators_mails(array($user_mail));
 					$mail_config->set_default_mail_sender($user_mail);
 					MailServiceConfig::save();
 
-					$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-
-					$Cache->Generate_file('config');
-
 					//Configuration des membres
 					$user_account_config = UserAccountsConfig::load();
-
 					$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
-
 					UserAccountsConfig::save();
 
 					//On envoie un mail à l'administrateur
