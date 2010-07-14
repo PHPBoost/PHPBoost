@@ -87,6 +87,7 @@ foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $value)
 $general_config = GeneralConfig::load();
 $content_formatting_config = ContentFormattingConfig::load();
 $server_environment_config = ServerEnvironmentConfig::load();
+$sessions_config = SessionsConfig::load();
 
 $summerization =
 "---------------------------------System report---------------------------------
@@ -113,7 +114,7 @@ default editor           : " . $content_formatting_config->get_default_editor() 
 home page                : " . $general_config->get_home_page() . "
 url rewriting            : " . $server_environment_config->is_url_rewriting_enabled() . "
 output gzip              : " . $server_environment_config->is_output_gziping_enabled() . "
-session cookie name      : " . $CONFIG['site_cookie'] . "
+session cookie name      : " . $sessions_config->get_cookie_name() . "
 session length           : " . $CONFIG['site_session'] . "
 guest session length     : " . $CONFIG['site_session_invit'] . "
 
@@ -139,7 +140,7 @@ $template->assign_vars(array(
 	'KERNEL_START_PAGE' => $general_config->get_home_page(),
 	'C_KERNEL_URL_REWRITING' => $server_environment_config->is_url_rewriting_enabled(),
 	'C_KERNEL_OUTPUT_GZ' => $server_environment_config->is_output_gziping_enabled(),
-	'COOKIE_NAME' => $CONFIG['site_cookie'],
+	'COOKIE_NAME' => $sessions_config->get_cookie_name(),
 	'SESSION_LENGTH' => $CONFIG['site_session'],
 	'SESSION_LENGTH_GUEST' => $CONFIG['site_session_invit'],
 	'SUMMERIZATION' => $summerization

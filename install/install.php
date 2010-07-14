@@ -531,7 +531,6 @@ switch($step)
 				UserAccountsConfig::save();
 				
 				$CONFIG = array();
-				$CONFIG['site_cookie'] = 'session';
 				$CONFIG['site_session'] = 3600;
 				$CONFIG['site_session_invit'] = 300;
 				$CONFIG['search_cache_time'] = 30;
