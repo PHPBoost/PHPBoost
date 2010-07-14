@@ -169,7 +169,6 @@ class InstallationServices
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
 		$CONFIG['site_session_invit'] = 300;
-		$CONFIG['pm_max'] = 50;
 		$CONFIG['search_cache_time'] = 30;
 		$CONFIG['search_max_use'] = 100;
 

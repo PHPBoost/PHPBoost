@@ -34,9 +34,8 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 
 if (!empty($_POST['submit']) )
 {
-	$editor = retrieve(POST, 'formatting_language', '');
-	
 	$content_formatting_config = ContentFormattingConfig::load();
+	$editor = retrieve(POST, 'formatting_language', '');
 	$content_formatting_config->set_default_editor(($editor == 'tinymce') ? 'tinymce' : 'bbcode');
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
@@ -47,12 +46,10 @@ if (!empty($_POST['submit']) )
 	$content_management_config->set_anti_flood_duration(retrieve(POST, 'delay_flood', 0));
 	ContentManagementConfig::save();
 	
-	$CONFIG['pm_max'] 		= retrieve(POST, 'pm_max', 25);
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . "
-						SET value = '" . addslashes(serialize($CONFIG)) . "'
-						WHERE name = 'config'", __LINE__, __FILE__);
-	$Cache->Generate_file('config');
-		
+	$user_accounts_config = UserAccountsConfig::load();
+	$user_accounts_config->set_max_private_messages_number(retrieve(POST, 'pm_max', 25));
+	UserAccountsConfig::save();
+	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
@@ -80,7 +77,7 @@ else
 		'TINYMCE_SELECTED' => ($content_formatting_config->get_default_editor() == 'tinymce') ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $content_formatting_config->get_html_tag_auth()),
 		'NBR_TAGS' => $j,
-		'PM_MAX' => isset($CONFIG['pm_max']) ? $CONFIG['pm_max'] : '50',
+		'PM_MAX' => UserAccountsConfig::load()->get_max_private_messages_number(),
 		'DELAY_FLOOD' => $content_management_config->get_anti_flood_duration(),
 		'FLOOD_ENABLED' => $content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
 		'FLOOD_DISABLED' => !$content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
