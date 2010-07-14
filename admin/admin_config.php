@@ -78,6 +78,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	
 	$general_config = GeneralConfig::load();
 	$server_environment_config = ServerEnvironmentConfig::load();
+	$sessions_config = SessionsConfig::load();
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
@@ -100,7 +101,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($server_environment_config->is_output_gziping_enabled() && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => !$server_environment_config->is_output_gziping_enabled() ? 'checked="checked"' : '',
-		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
+		'SITE_COOKIE' 		=> $sessions_config->get_cookie_name(),
 		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
 		'SITE_SESSION_VISIT'=> !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',
 	    'DEBUG_ENABLED'     => Debug::is_debug_mode_enabled() ? 'checked="checked"' : '',
@@ -163,12 +164,12 @@ elseif (!empty($_POST['advanced']))
 	$timezone = retrieve(POST, 'timezone', 0);
 	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
 	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
-		  
-	$CONFIG['site_cookie'] = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE); //Session par defaut.
+	
+	$cookie_name = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
 	
-	if (!empty($site_url) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
+	if (!empty($site_url) && !empty($cookie_name) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
@@ -190,6 +191,10 @@ elseif (!empty($_POST['advanced']))
 		$server_environment_config->set_debug_mode_enabled(retrieve(POST, 'debug', false));
 		ServerEnvironmentConfig::save();
 		HtaccessFileCache::regenerate();
+		
+		$sessions_config = SessionsConfig::load();
+		$sessions_config->set_cookie_name($cookie_name);
+		SessionsConfig::save();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
