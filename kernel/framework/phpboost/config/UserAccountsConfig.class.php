@@ -110,6 +110,8 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	const DEFAULT_THEME = 'default_theme';
 	
+	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
+	
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -494,6 +496,16 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::DEFAULT_THEME, $theme);
 	}
+	
+	public function get_max_private_messages_number()
+	{
+		return $this->get_property(self::MAX_PRIVATE_MESSAGES_NUMBER);
+	}
+	
+	public function set_max_private_messages_number($number)
+	{
+		$this->set_property(self::MAX_PRIVATE_MESSAGES_NUMBER, $number);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -519,7 +531,8 @@ class UserAccountsConfig extends AbstractConfigData
 			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,
 			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1),
 			self::DEFAULT_LANG => 'english',
-			self::DEFAULT_THEME => 'base'
+			self::DEFAULT_THEME => 'base',
+			self::MAX_PRIVATE_MESSAGES_NUMBER => 50
 		);
 	}
 

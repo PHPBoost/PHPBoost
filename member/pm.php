@@ -51,7 +51,8 @@ $read = retrieve(GET, 'read', false);
 if ($read)
 {
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$max_pm_number = UserAccountsConfig::load()->get_max_private_messages_number();
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $max_pm_number);
 	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
 
 	$nbr_waiting_pm = 0;
@@ -86,7 +87,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
 	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
@@ -142,7 +143,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 		'LOGIN' => $login
 	));
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	if (!$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
 		$Errorh->handler($LANG['e_pm_full_post'], E_USER_WARNING);
@@ -757,7 +758,7 @@ else //Liste des conversation, dans la boite du membre.
 	$pagination_pm = 25;
 	$pagination_msg = 25;
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
