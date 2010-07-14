@@ -329,15 +329,12 @@ else //Sinon on rempli le formulaire
 //Renvoi du code de déblocage.
 if (!empty($_GET['unlock']))
 {
-	
 	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 	$unlock_admin = strhash($unlock_admin_clean);
 	
-	$CONFIG['unlock_admin'] = $unlock_admin;
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-	
-	###### Régénération du cache $CONFIG #######
-	$Cache->Generate_file('config');
+	$general_config = GeneralConfig::load();
+	$general_config->set_admin_unlocking_key($unlock_admin);
+	GeneralConfig::save();
 	
 	AppContext::get_mail_service()->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
 

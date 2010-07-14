@@ -140,7 +140,7 @@ class AdminLoginService
 	{
 		$unlock = strhash(AppContext::get_request()->get_poststring('unlock', ''));
 		global $CONFIG;
-		if (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
+		if (!empty($unlock) && $unlock !== GeneralConfig::load()->get_admin_unlocking_key())
 		{
 			AppContext::get_session()->end();
 		}
