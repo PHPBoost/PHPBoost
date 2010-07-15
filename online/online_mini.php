@@ -49,7 +49,7 @@ function online_mini($position, $block)
     	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.user_groups, m.login
     	FROM " . DB_TABLE_SESSIONS . " s
     	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-    	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+    	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
     	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
     	while ($row = $Sql->fetch_assoc($result))
     	{

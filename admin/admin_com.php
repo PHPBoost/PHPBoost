@@ -100,7 +100,7 @@ $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
 $result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 FROM " . DB_TABLE_COM . " c
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
-LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC

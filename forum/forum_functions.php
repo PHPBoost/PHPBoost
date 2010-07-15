@@ -34,7 +34,7 @@ function forum_list_user_online($sql_condition)
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups
 	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' " . $sql_condition . "
+	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' " . $sql_condition . "
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

@@ -81,7 +81,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		$result = $Sql->query_while("SELECT c.timestamp, c.script, c.path, m.login, s.user_id AS connect, c.contents
 		FROM " . DB_TABLE_COM . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
-		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 		WHERE m.user_id = '" . $memberId . "'
 		ORDER BY c.timestamp DESC 
 		" . $Sql->limit($Pagination->get_first_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
