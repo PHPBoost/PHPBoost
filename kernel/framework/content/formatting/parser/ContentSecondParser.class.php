@@ -72,7 +72,6 @@ class ContentSecondParser extends AbstractParser
 			if ($server_config->has_gd_libray())
 			{
 				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.php';
-				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.class.php';
 				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
 			}
 		}
@@ -219,9 +218,8 @@ class ContentSecondParser extends AbstractParser
 	private function math_code($matches)
 	{
 		$matches[1] = str_replace('<br />', '', $matches[1]);
-		$matches = mathfilter(html_entity_decode($matches[1]), 12);
-
-		return $matches;
+		$code = mathimage($matches[1], 12, '/images/maths/');
+		return $code;
 	}
 
 	/**
