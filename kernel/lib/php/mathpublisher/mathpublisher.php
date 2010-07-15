@@ -52,6 +52,7 @@ define('PHP_MATH_PUBLISHER_CACHE_DIR', PATH_TO_ROOT . '/images/maths');
 
 
 //******************************************************************
+global $symboles;
 $symboles = array(
 '~'=>' ',
 'alpha'=>'&#174;',
@@ -186,6 +187,7 @@ $symboles = array(
 'inf'=>'inf',
 'tanh'=>'tanh'
 );
+global $fontesmath;
 $fontesmath = array(
 '~'=>'FreeSerif',
 'alpha'=>'cmmi10',
