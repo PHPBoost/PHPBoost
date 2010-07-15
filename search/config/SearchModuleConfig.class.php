@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                    SearchConfig.class.php
+ *		                    SearchModuleConfig.class.php
  *                            -------------------
  *   begin                : April 10, 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -29,7 +29,7 @@
  * @desc This class represents the search module's configuration.
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  */
-class SearchConfig extends AbstractConfigData
+class SearchModuleConfig extends AbstractConfigData
 {
 	const weightings = 'weightings';
 	const nb_results_per_page = '_nb_results_per_page';
@@ -143,7 +143,7 @@ class SearchConfig extends AbstractConfigData
 
 	/**
 	 * Returns the configuration.
-	 * @return SearchConfig
+	 * @return SearchModuleConfig
 	 */
 	public static function load()
 	{
@@ -152,9 +152,9 @@ class SearchConfig extends AbstractConfigData
 
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
-	 * @param SearchConfig $config The configuration to push in the database.
+	 * @param SearchModuleConfig $config The configuration to push in the database.
 	 */
-	public static function save(SearchConfig $config)
+	public static function save(SearchModuleConfig $config)
 	{
 		ConfigManager::save('search', $config, 'config');
 	}

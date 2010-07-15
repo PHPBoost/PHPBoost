@@ -48,7 +48,7 @@ class AdminSearchConfigController extends AdminSearchController {
 	private $submit;
 
 	/**
-	 * @var SearchConfig
+	 * @var SearchModuleConfig
 	 */
 	private $config;
 
@@ -56,7 +56,7 @@ class AdminSearchConfigController extends AdminSearchController {
 	{
 		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->lang = LangLoader::get('admin', 'search');
-		$this->config = SearchConfig::load();
+		$this->config = SearchModuleConfig::load();
 	}
 
 	public function execute(HTTPRequest $request)
@@ -164,7 +164,7 @@ class AdminSearchConfigController extends AdminSearchController {
 		{
 			$this->config->set_unauthorized_providers($providers);
 		}
-		SearchConfig::save($this->config);
+		SearchModuleConfig::save($this->config);
 	}
 }
 
