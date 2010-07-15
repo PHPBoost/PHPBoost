@@ -285,7 +285,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
             s.user_id AS connect,
             msg.contents AS contents
         FROM " . PREFIX . "forum_msg msg
-        LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+        LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
         LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
         JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
         WHERE msg.id IN (".implode(',', $ids).")

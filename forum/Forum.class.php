@@ -82,7 +82,7 @@ class Forum
 
 
 			//Récupération des membres suivant le sujet.
-			$max_time = time() - $CONFIG['site_session_invit'];
+			$max_time = time() - SessionsConfig::load()->get_active_session_duration();
 			$result = $Sql->query_while("SELECT m.user_id, m.login, m.user_mail, tr.pm, tr.mail, v.last_view_id
 			FROM " . PREFIX . "forum_track tr
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id

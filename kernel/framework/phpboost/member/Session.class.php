@@ -622,10 +622,11 @@ class Session
 	{
 		global $CONFIG;
 
+		$sessions_config = SessionsConfig::load();
 		$this->sql->query_inject("DELETE
 		FROM " . DB_TABLE_SESSIONS . "
-		WHERE session_time < '" . (time() - $CONFIG['site_session']) . "'
-		OR (session_time < '" . (time() - $CONFIG['site_session_invit']) . "' AND user_id = -1)", __LINE__, __FILE__);
+		WHERE session_time < '" . (time() - $sessions_config->get_session_duration()) . "'
+		OR (session_time < '" . (time() - $sessions_config->get_active_session_duration()) . "' AND user_id = -1)", __LINE__, __FILE__);
 	}
 
 	/**

@@ -34,7 +34,7 @@ $Template->set_filenames(array(
 ));
 	
 //Membre connectés..
-$nbr_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
+$nbr_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE level <> -1 AND session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'", __LINE__, __FILE__);
  
 $Pagination = new DeprecatedPagination();
 	
@@ -50,7 +50,7 @@ $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, s.sessio
 s.session_script_title, m.login
 FROM " . DB_TABLE_SESSIONS . " s
 JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
-WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
 while ($row = $Sql->fetch_assoc($result))

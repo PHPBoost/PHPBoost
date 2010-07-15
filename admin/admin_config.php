@@ -102,8 +102,8 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'GZHANDLER_ENABLED' => ($server_environment_config->is_output_gziping_enabled() && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => !$server_environment_config->is_output_gziping_enabled() ? 'checked="checked"' : '',
 		'SITE_COOKIE' 		=> $sessions_config->get_cookie_name(),
-		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
-		'SITE_SESSION_VISIT'=> !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',
+		'SITE_SESSION' 		=> $sessions_config->get_session_duration(),
+		'SITE_SESSION_VISIT'=> $sessions_config->get_active_session_duration(),
 	    'DEBUG_ENABLED'     => Debug::is_debug_mode_enabled() ? 'checked="checked"' : '',
         'DEBUG_DISABLED'    => !Debug::is_debug_mode_enabled() ? 'checked="checked"' : '',
 		'L_SECONDS' 		=> $LANG['unit_seconds'],
@@ -166,18 +166,11 @@ elseif (!empty($_POST['advanced']))
 	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 	
 	$cookie_name = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
-	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
-	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
+	$session_duration = retrieve(POST, 'site_session', 3600);			
+	$active_session_duration = retrieve(POST, 'site_session_invit', 300);
 	
-	if (!empty($site_url) && !empty($cookie_name) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
+	if (!empty($site_url) && !empty($cookie_name) && !empty($session_duration) && !empty($active_session_duration))
 	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-		###### Régénération du cache $CONFIG #######
-		$Cache->generate_file('config');
-		
-		//Régénération du htaccess.
-		HtaccessFileCache::regenerate();
-		
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_url($site_url);
 		$general_config->set_site_path($site_path);
@@ -194,6 +187,8 @@ elseif (!empty($_POST['advanced']))
 		
 		$sessions_config = SessionsConfig::load();
 		$sessions_config->set_cookie_name($cookie_name);
+		$sessions_config->set_session_duration($session_duration);
+		$sessions_config->set_active_session_duration($active_session_duration);
 		SessionsConfig::save();
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');

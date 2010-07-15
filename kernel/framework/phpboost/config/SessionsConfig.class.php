@@ -31,6 +31,14 @@
 class SessionsConfig extends AbstractConfigData
 {
 	const COOKIE_NAME = 'cookie_name';
+	/**
+	 * Duration of a session (in seconds).
+	 */
+	const SESSION_DURATION = 'session_duration';
+	/**
+	 * Time during which the sessions is considered as active (the user is online)
+	 */
+	const ACTIVE_SESSION_DURATION = 'active_session_duration';
 	
 	public function get_cookie_name()
 	{
@@ -42,10 +50,32 @@ class SessionsConfig extends AbstractConfigData
 		$this->set_property(self::COOKIE_NAME, $cookie_name);
 	}
 	
+	public function get_session_duration()
+	{
+		return $this->get_property(self::SESSION_DURATION);
+	}
+	
+	public function set_session_duration($duration)
+	{
+		$this->set_property(self::SESSION_DURATION, $duration);
+	}
+	
+	public function get_active_session_duration()
+	{
+		return $this->get_property(self::ACTIVE_SESSION_DURATION);
+	}
+	
+	public function set_active_session_duration($duration)
+	{
+		$this->set_property(self::ACTIVE_SESSION_DURATION, $duration);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
-		self::COOKIE_NAME => 'session'
+		self::COOKIE_NAME => 'session',
+		self::SESSION_DURATION => 3600,
+		self::ACTIVE_SESSION_DURATION => 360
 		);
 	}
 
