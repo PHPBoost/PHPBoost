@@ -35,7 +35,7 @@ class SearchProvidersService {
 	public static function get_providers()
 	{
 		$providers = array();
-        $unauthorized_providers = SearchConfig::load()->get_unauthorized_providers();
+        $unauthorized_providers = SearchModuleConfig::load()->get_unauthorized_providers();
         $provider_service = AppContext::get_extension_provider_service();
         foreach ($provider_service->get_providers(Searchable::EXTENSION_POINT) as $provider)
         {

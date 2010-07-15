@@ -48,7 +48,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	private $submit;
 
 	/**
-	 * @var SearchConfig
+	 * @var SearchModuleConfig
 	 */
 	private $config;
 
@@ -61,7 +61,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	{
 		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->lang = LangLoader::get('admin', 'search');
-		$this->config = SearchConfig::load();
+		$this->config = SearchModuleConfig::load();
 		$this->weightings = $this->config->get_weightings();
 	}
 
@@ -118,7 +118,7 @@ class AdminSearchWeightController extends AdminSearchController {
 			$this->weightings[$provider_id] = $this->form->get_value($provider_id);
 		}
 		$this->config->set_weightings($this->weightings);
-		SearchConfig::save($this->config);
+		SearchModuleConfig::save($this->config);
 	}
 
 	private function add_weightings_fields(FormFieldset $fieldset)
