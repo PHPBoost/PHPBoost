@@ -43,7 +43,7 @@ NOTE : if the free latex fonts furnished with this script don't work well (very 
 // NEW in 0.3 version : no more / at the end of PHP_MATH_PUBLISHER_FONT_DIR and PHP_MATH_PUBLISHER_CACHE_DIR
 
 // absolute path to the fonts directory
-define('PHP_MATH_PUBLISHER_FONT_DIR', PATH_TO_ROOT . '/kernel/data/fonts');
+define('PHP_MATH_PUBLISHER_FONT_DIR', PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/fonts');
 // or PHP_MATH_PUBLISHER_FONT_DIR=dirname(__FILE__)."/phpmathpublisher/fonts";
 
 // absolute path to the images directory
