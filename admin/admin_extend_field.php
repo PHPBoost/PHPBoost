@@ -64,7 +64,7 @@ elseif (!empty($_POST['valid']))
 		$regex = retrieve(POST, 'regex2', '');
 
 	$array_field = array(
-		1 => 'VARCHAR(255) NOT NULL DEFAULT = \'\'', 
+		1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
 		2 => 'TEXT NOT NULL', 
 		3 => 'TEXT NOT NULL', 
 		4 => 'TEXT NOT NULL', 
