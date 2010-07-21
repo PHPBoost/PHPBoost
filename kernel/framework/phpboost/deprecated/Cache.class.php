@@ -417,7 +417,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'menus', 'themes', 'langs', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('config', 'menus', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>
