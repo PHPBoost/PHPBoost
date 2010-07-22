@@ -343,6 +343,7 @@ class Session
 		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', SCRIPT);
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
+		$sessions_config = SessionsConfig::load();
 		if ((!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect)
 		{
 			if (!$check_autoconnect) //Mode de connexion directe par le formulaire.
@@ -360,8 +361,7 @@ class Session
 			{
 				$location = '';
 			}
-
-			$sessions_config = SessionsConfig::load();
+			
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
 			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);
 			if ($this->sql->affected_rows($resource, "SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0) //Aucune session lancée.
