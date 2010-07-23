@@ -31,7 +31,7 @@ class AdminErrorsController404Delete extends AdminController
 	{
 		AppContext::get_session()->csrf_get_protect();
 		AdminError404Service::delete_404_error($request->get_getint('id'));
-		AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors());
+		AppContext::get_response()->redirect(AdminError404Service::list_404_errors());
 	}
 }
 ?>

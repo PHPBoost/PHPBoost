@@ -50,8 +50,6 @@ else
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
-	$msg_register = $Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
-	
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	$Template->assign_vars(array(
