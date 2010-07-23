@@ -190,7 +190,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		));
 		
 		//On éxécute la requête
-		$row = $Sql->query_array(PREFIX . preg_replace('`^' . PREFIX . '`', '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array(preg_replace('`^' . PREFIX . '`', '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		//On parse les valeurs de sortie
 		$i = 0;
 		foreach ($row as $field_name => $field_value)
