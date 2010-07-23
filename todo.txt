@@ -122,7 +122,6 @@
 [b]Calendrier:[/b]
 - [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
 - Possibilité d'afficher les évenements sur une période donnée. 
-- Posibilité de modifier les évenements (avant réservé aux administrateur).
 
 [b]Contact:[/b]
 - Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
