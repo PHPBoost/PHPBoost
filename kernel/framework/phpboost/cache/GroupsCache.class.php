@@ -67,7 +67,7 @@ class GroupsCache implements CacheData
 	 */
 	public function get_groups()
 	{
-			return $this->groups;
+		return $this->groups;
 	}
 	
 	/**

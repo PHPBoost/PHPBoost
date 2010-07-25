@@ -106,7 +106,7 @@ $LANG['edit'] = 'Edit';
 $LANG['register'] = 'Sign up';
 
 //Alerts
-$LANG['alert_delete_msg'] = 'Delete this message ?';
+$LANG['alert_delete_msg'] = 'Delete the message ?';
 $LANG['alert_delete_file'] = 'Delete this file ?';
 
 //BBcode

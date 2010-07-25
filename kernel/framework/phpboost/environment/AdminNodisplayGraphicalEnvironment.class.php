@@ -38,7 +38,6 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	{
 		parent::__construct();
 
-		global $LANG, $CONFIG;
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 	}
 
