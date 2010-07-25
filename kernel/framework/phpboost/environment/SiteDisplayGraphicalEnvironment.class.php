@@ -56,7 +56,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	function display_header()
 	{
-		global $CONFIG, $LANG, $Errorh, $Cache;
+		global $LANG;
 
 		self::set_page_localization($this->get_page_title());
 
@@ -301,7 +301,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	function display_footer()
 	{
-		global $CONFIG, $MENUS, $LANG;
+		global $MENUS, $LANG;
 		$template = new FileTemplate('footer.tpl');
 
 		$theme = load_ini_file(

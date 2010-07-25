@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function connect_mini($position, $block)
 {
-    global $LANG, $ADMINISTRATOR_ALERTS, $Session;
+    global $LANG;
     
     $tpl = new FileTemplate('connect/connect_mini.tpl');
     $user = AppContext::get_user();
@@ -89,7 +89,7 @@ function connect_mini($position, $block)
     		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
     		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $user->get_attribute('user_id'), '-' . $user->get_attribute('user_id') . '.php'),
     		'U_USER_ID' => url('.php?id=' . $user->get_attribute('user_id') . '&amp;view=1', '-' . $user->get_attribute('user_id') . '.php?view=1'),
-    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . $Session->get_token(),
+    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token(),
     		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
     		'L_PROFIL' => $LANG['profile'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],
