@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                          InstallDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : June 13 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,20 +25,18 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
-InstallEnvironment::load_imports();
-InstallEnvironment::init();
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ */
+class InstallDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
+{
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-$url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+	public function display_header() {}
+	
+	public function display_footer() {}
+}
 ?>

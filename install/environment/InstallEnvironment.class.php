@@ -47,6 +47,8 @@ class InstallEnvironment extends Environment
 		Environment::load_static_constants();
 		self::load_dynamic_constants();
 		Environment::init_output_bufferization();
+        self::set_locale();
+        self::init_admin_role();
 	}
 
 	public static function load_dynamic_constants()
@@ -59,19 +61,16 @@ class InstallEnvironment extends Environment
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
 
-	public static function load_lang($prefered_lang)
-	{
-		global $LANG;
+    private static function set_locale()
+    {
+        $locale = AppContext::get_request()->get_getstring('locale', 'french');
+        LangLoader::set_locale($locale);
+    }
 
-		if (!@include_once('lang/' . $prefered_lang . '/install_' . $prefered_lang . '.php'))
-		{
-			include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
-			$prefered_lang = DEFAULT_LANGUAGE;
-		}
-		@include_once(PATH_TO_ROOT . '/lang/' . $prefered_lang . '/errors.php');
-
-		LangLoader::set_locale($prefered_lang);
-	}
+    private static function init_admin_role()
+    {
+        AppContext::set_user(new AdminUser());
+    }
 
 	public static function load_distribution_properties($prefered_lang)
 	{
