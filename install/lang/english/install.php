@@ -49,7 +49,7 @@ $lang = array(
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>',
 
 // General variables
-	'page_title' => 'PHPBoost installation',
+	'installation.title' => 'PHPBoost installation',
 	'steps_list' => 'Steps list',
 	'introduction' => 'Preamble',
 	'config_server' => 'Server settings',
@@ -68,16 +68,16 @@ $lang = array(
 	'query_failure' => 'An error occured during query processing',
 
 // Introduction
-	'intro_title' => 'Welcome to PHPBoost installation wizard',
-	'intro_explain' => '<p>Thank you for choosing PHPBoost to build your website.</p>
+	'step.welcome.title' => 'Welcome to PHPBoost installation wizard',
+	'step.welcome.explanation' => '<p>Thank you for choosing PHPBoost to build your website.</p>
 <p>Before starting installation, be sure to have to hand Database information provided by your hosting company. The installation is automatic and should take only a few minutes of your time.  To start the installation process, please click on the green arrow down below.</p>
 <p>Best regards, the PHPBoost team</p>',
-	'intro_distribution' => '%s distribution',
-	'intro_distribution_intro' => '<p>There are several distributions which allow you to setup easily their website according to your needs. PHPBoost will install the kernel and modules according to the chosen distribution. After the installation is complete, you will be able to change settings and add/remove modules. </p>',
+	'step.welcome.distribution' => '%s distribution',
+	'step.welcome.distribution.explanation' => '<p>There are several distributions which allow you to setup easily their website according to your needs. PHPBoost will install the kernel and modules according to the chosen distribution. After the installation is complete, you will be able to change settings and add/remove modules. </p>',
 	'start_install' => 'Start installation',
 
 // License
-	'license' => 'License',
+	'step.license.title' => 'License',
 	'require_license_agreement' => 'You must accept the GNU/GPL license terms to install PHPBoost.',
 	'license_agreement' => 'End-user license agreement',
 	'license_terms' => 'License terms',

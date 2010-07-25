@@ -31,25 +31,25 @@
  ####################################################
 
 
-$lang = array(
-   'install.rank.admin' => 'Administrateur',
-   'install.rank.modo' => 'Modérateur',
-   'install.rank.inactiv' => 'Boosteur Inactif',
-   'install.rank.fronde' => 'Booster Fronde',
-   'install.rank.minigun' => 'Booster Minigun',
-   'install.rank.fuzil' => 'Booster Fuzil',
-   'install.rank.bazooka' => 'Booster Bazooka',
-   'install.rank.roquette' => 'Booster Roquette',
-   'install.rank.mortier' => 'Booster Mortier',
-   'install.rank.missile' => 'Booster Missile',
-   'install.rank.fusee' => 'Booster Fusée',
+$lang = array(    
+    'install.rank.admin' => 'Administrateur',
+    'install.rank.modo' => 'Modérateur',
+    'install.rank.inactiv' => 'Boosteur Inactif',
+    'install.rank.fronde' => 'Booster Fronde',
+    'install.rank.minigun' => 'Booster Minigun',
+    'install.rank.fuzil' => 'Booster Fuzil',
+    'install.rank.bazooka' => 'Booster Bazooka',
+    'install.rank.roquette' => 'Booster Roquette',
+    'install.rank.mortier' => 'Booster Mortier',
+    'install.rank.missile' => 'Booster Missile',
+    'install.rank.fusee' => 'Booster Fusée',
 
 	'cache_tpl_must_exist_and_be_writable' => '<h1>Installation de PHPBoost</h1>
 <p><strong>Attention</strong> : les dossiers cache et cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
 <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>',
 
 //Variables générales
-	'page_title' => 'Installation de PHPBoost',
+	'installation.title' => 'Installation de PHPBoost',
 	'steps_list' => 'Liste des étapes',
 	'introduction' => 'Préambule',
 	'config_server' => 'Configuration du serveur',
@@ -68,17 +68,17 @@ $lang = array(
 	'query_failure' => 'Traitement échoué',
 
 //Introduction
-	'intro_title' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
-	'intro_explain' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
+	'step.welcome.title' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
+    'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement, l\'équipe PHPBoost</p>',
-	'intro_distribution' => 'Distribution %s',
-	'intro_distribution_intro' => '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p>
+	'step.welcome.distribution' => 'Distribution %s',
+	'step.welcome.distribution.explanation' => '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p>
 <p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>',
 	'start_install' => 'Commencer l\'installation',
 
 //licence
-	'license' => 'Licence',
+	'step.license.title' => 'Licence',
 	'require_license_agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>',
 	'license_agreement' => 'Acceptation des termes de la licence',
 	'license_terms' => 'Termes de la licence',

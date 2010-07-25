@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                         InstallWelcomeController.class.php
  *                            -------------------
  *   begin                : June 13 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,20 +25,38 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
-InstallEnvironment::load_imports();
-InstallEnvironment::init();
+class InstallWelcomeController extends AbstractController
+{
+	private $lang;
+	
+	public function execute(HTTPRequest $request)
+	{
+        $this->lang = LangLoader::get('install', 'install');
+		$view = new FileTemplate('install/welcome.tpl');
+		return $this->create_response($view);
+	}
 
-$url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+	/**
+	 * @param Template $view
+	 * @return InstallDisplayResponse
+	 */
+	private function create_response(Template $view)
+	{
+        $page_title = $this->lang['installation.title'];
+        $step_title = $this->lang['step.welcome.title'];
+        $step_explanation = $this->lang['step.welcome.explanation'];
+		$response = new InstallDisplayResponse($page_title, $view, $step_title, $step_explanation);
+		$this->add_navigation($response);
+		return $response;
+	}
+	
+	/**
+	 * @param InstallDisplayResponse $response
+	 */
+	private function add_navigation(InstallDisplayResponse $response)
+    {
+    	$name = $this->lang['step.license.title'];
+    	$response->set_next_step($name, InstallUrlBuilder::license()->relative());
+    }
+}
 ?>
