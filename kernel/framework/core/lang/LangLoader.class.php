@@ -129,7 +129,7 @@ class LangLoader
 	 * @param string $filename the language filename
 	 * @return string the real language file path
 	 */
-	public static function get_real_lang_path($folder, $filename)
+	private static function get_real_lang_path($folder, $filename)
 	{
 		$real_folder = PATH_TO_ROOT;
 		if (!empty($folder))
