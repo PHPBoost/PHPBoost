@@ -109,6 +109,7 @@ class FileTemplateLoader implements TemplateLoader
 		}
 
 		$parser = new DefaultTemplateParser();
+//		$parser = new TemplateSyntaxParser();
 		$result = $parser->parse($real_file_content);
 
 		try

@@ -105,6 +105,10 @@ class HtaccessFileCache implements CacheData
 	private function add_core_rules()
 	{
 		$this->add_section('Core');
+		$this->add_line('RewriteRule ^(.*)admin/errors/404/(?:list/?)?$ ' . DIR . '/admin/errors/?url=/404/list [L,QSA]');
+		$this->add_line('RewriteRule ^(.*)admin/errors/404/clear/?$ ' . DIR . '/admin/errors/?url=/404/clear [L,QSA]');
+		$this->add_line('RewriteRule ^(.*)admin/errors/404/([0-9]+)/delete/?$ ' . DIR . '/admin/errors/?url=/404/$2/delete [L,QSA]');
+		
 		$this->add_line('RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]');
 		$this->add_line('RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]');
 	}
