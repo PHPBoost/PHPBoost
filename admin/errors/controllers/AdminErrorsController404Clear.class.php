@@ -31,7 +31,7 @@ class AdminErrorsController404Clear extends AdminController
 	{
 		AppContext::get_session()->csrf_get_protect();
 		AdminError404Service::clear_404_errors_list();
-		AppContext::get_response()->redirect(AdminError404Service::list_404_errors());
+		AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors());
 	}
 }
 ?>

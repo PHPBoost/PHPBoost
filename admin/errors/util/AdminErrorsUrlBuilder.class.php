@@ -31,7 +31,7 @@
  */
 class AdminErrorsUrlBuilder
 {
-    private static $dispatcher = '/admin/errors/index.php';
+    private static $dispatcher = '/admin/errors';
     
 	/**
 	 * @return Url
