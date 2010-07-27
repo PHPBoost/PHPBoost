@@ -78,7 +78,7 @@ class PrivateMsg
 	 */
 	public static function start_conversation($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
 	{
-		global $CONFIG, $Sql;
+		global $Sql;
 		
 		//Message privé envoyé par le système => user_id = -1
 		if ($system_pm)
@@ -145,7 +145,7 @@ class PrivateMsg
 	 */
 	public static function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
-		global $CONFIG, $Sql;
+		global $Sql;
 				
 		$info_convers = $Sql->query_array(DB_TABLE_PM_TOPIC . " ", "user_view_pm", "last_user_id", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)

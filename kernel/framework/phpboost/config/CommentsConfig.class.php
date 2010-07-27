@@ -45,7 +45,7 @@ class CommentsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-		self::DISPLAY_COMMENTS_IN_POPUP => false
+			self::DISPLAY_COMMENTS_IN_POPUP => false
 		);
 	}
 

@@ -322,16 +322,14 @@ class Contribution extends Event
 	 */
 	public function get_status_name()
 	{
-		global $LANG;
-
 		switch ($this->current_status)
 		{
 			case Event::EVENT_STATUS_UNREAD:
-				return $LANG['contribution_status_unread'];
+				return LangLoader::get_message('contribution_status_unread', 'main');
 			case Event::EVENT_STATUS_BEING_PROCESSED:
-				return $LANG['contribution_status_being_processed'];
+				return LangLoader::get_message('contribution_status_being_processed', 'main');
 			case Event::EVENT_STATUS_PROCESSED:
-				return $LANG['contribution_status_processed'];
+				return LangLoader::get_message('contribution_status_processed', 'main');
 		}
 	}
 
@@ -341,8 +339,6 @@ class Contribution extends Event
 	 */
 	public function get_module_name()
 	{
-		global $CONFIG;
-
 		if (!empty($this->module))
 		{
 			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());

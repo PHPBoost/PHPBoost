@@ -62,10 +62,8 @@ class WritingPadConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		global $LANG;
-		
 		return array(
-			'content' => $LANG['writing_pad_explain']
+			'content' => LangLoader::get_message('writing_pad_explain', 'admin')
 		);
 	}
 

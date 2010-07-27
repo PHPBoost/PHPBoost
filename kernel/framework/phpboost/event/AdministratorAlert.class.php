@@ -164,21 +164,22 @@ class AdministratorAlert extends Event
         switch ($this->priority)
         {
             case self::ADMIN_ALERT_VERY_LOW_PRIORITY:
-                return $LANG['priority_very_low'];
+                return LangLoader::get_message('priority_very_low', 'admin');
                 break;
             case self::ADMIN_ALERT_LOW_PRIORITY:
-                return $LANG['priority_low'];
+                return LangLoader::get_message('priority_low', 'admin');
                 break;
             case self::ADMIN_ALERT_MEDIUM_PRIORITY:
-                return $LANG['priority_medium'];
+                return LangLoader::get_message('priority_medium', 'admin');
                 break;
             case self::ADMIN_ALERT_HIGH_PRIORITY:
-                return $LANG['priority_high'];
+                return LangLoader::get_message('priority_high', 'admin');
                 break;
             case self::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-                return $LANG['priority_very_high'];
+                return LangLoader::get_message('priority_very_high', 'admin');
                 break;
             default:
+				// TODO, langue existante ?
                 return $LANG['normal'];
         }
     }

@@ -264,7 +264,7 @@ class Uploads
 	//Récupération du répertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{		
-		global $LANG, $Sql;
+		global $Sql;
 		
 		$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
@@ -279,7 +279,7 @@ class Uploads
 	//Récupération du répertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
 	{		
-		global $LANG, $Sql;
+		global $Sql;
 		
 		$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
@@ -301,10 +301,8 @@ class Uploads
 
 	//Conversion mimetype -> image.
 	public static function get_img_mimetype($type)
-	{
-		global $LANG;
-		
-		$filetype = sprintf($LANG['file_type'], strtoupper($type));
+	{	
+		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), strtoupper($type));
 		switch ($type)
 		{
 			//Images
@@ -314,25 +312,25 @@ class Uploads
 			case 'bmp':
 			case 'svg':
 			$img = $type . '.png';
-			$filetype = sprintf($LANG['image_type'], strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), strtoupper($type));
 			break;
 			//Archives
 			case 'rar':
 			case 'gz':
 			case 'zip':
 			$img = 'zip.png';
-			$filetype = sprintf($LANG['zip_type'], strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
 			$img = 'pdf.png';
-			$filetype = $LANG['adobe_pdf'];
+			$filetype = LangLoader::get_message('adobe_pdf', 'main');
 			break;
 			//Son
 			case 'wav':
 			case 'mp3':
 			$img = 'audio.png';
-			$filetype = sprintf($LANG['audio_type'], strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
@@ -353,7 +351,7 @@ class Uploads
 			break;
 			default:
 			$img = 'text.png';
-			$filetype = sprintf($LANG['document_type'], strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), strtoupper($type));
 		}	
 		
 		return array('img' => $img, 'filetype' => $filetype);

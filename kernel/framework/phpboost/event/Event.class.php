@@ -295,16 +295,14 @@ class Event
 	 */
 	public function get_status_name()
 	{
-		global $LANG;
-
 		switch ($this->current_status)
 		{
 			case self::EVENT_STATUS_UNREAD:
-				return $LANG['contribution_status_unread'];
+				return LangLoader::get_message('contribution_status_unread', 'main');
 			case self::EVENT_STATUS_BEING_PROCESSED:
-				return $LANG['contribution_status_being_processed'];
+				return LangLoader::get_message('contribution_status_being_processed', 'main');
 			case self::EVENT_STATUS_PROCESSED:
-				return $LANG['contribution_status_processed'];
+				return LangLoader::get_message('contribution_status_processed', 'main');
 		}
 	}
 

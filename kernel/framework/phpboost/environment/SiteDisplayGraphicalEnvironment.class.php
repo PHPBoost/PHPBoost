@@ -56,8 +56,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	function display_header()
 	{
-		global $LANG;
-
 		self::set_page_localization($this->get_page_title());
 
 		$template =  new FileTemplate('header.tpl');
@@ -75,9 +73,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
 			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
-			'L_XML_LANGUAGE' => $LANG['xml_lang'],
-			'L_VISIT' => $LANG['guest_s'],
-			'L_TODAY' => $LANG['today'],
+			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
+			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
+			'L_TODAY' => LangLoader::get_message('today', 'main'),
 		));
 
 		$this->display_counter($template);
@@ -109,8 +107,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_counter(Template $template)
 	{
-		global $CONFIG;
-
 		//If the counter is to be displayed, we display it
 		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
@@ -189,8 +185,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_site_maintenance(Template $template)
 	{
-		global $Template, $LANG;
-
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
 
@@ -200,13 +194,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
 			21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'],
-				'5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], 
-				'30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], 
-				'3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], 
-				'6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], 
-				'16 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], 
-				'1 ' . $LANG['week']);
+			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . LangLoader::get_message('minute', 'main'),
+				'5 ' . LangLoader::get_message('minutes', 'main'), '10 ' . LangLoader::get_message('minutes', 'main'), '15 ' . LangLoader::get_message('minutes', 'main'), 
+				'30 ' . LangLoader::get_message('minutes', 'main'), '1 ' . LangLoader::get_message('hour', 'main'), '2 ' . LangLoader::get_message('hours', 'main'), 
+				'3 ' . LangLoader::get_message('hours', 'main'), '4 ' . LangLoader::get_message('hours', 'main'), '5 ' . LangLoader::get_message('hours', 'main'), 
+				'6 ' . LangLoader::get_message('hours', 'main'), '7 ' . LangLoader::get_message('hours', 'main'), '8 ' . LangLoader::get_message('hours', 'main'), 
+				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'days'), 
+				'1 ' . LangLoader::get_message('week', 'main'));
 
 			//Retourne le délai de maintenance le plus proche.
 			if (!$maintenance_config->is_unlimited_maintenance())
@@ -256,12 +250,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
 				'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
-				'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
-				'L_LOADING' => $LANG['loading'],
-				'L_DAYS' => $LANG['days'],
-				'L_HOURS' => $LANG['hours'],
-				'L_MIN' => $LANG['minutes'],
-				'L_SEC' => $LANG['seconds'],
+				'L_MAINTAIN_DELAY' => LangLoader::get_message('maintain_delay', 'main'),
+				'L_LOADING' => LangLoader::get_message('loading', 'main'),
+				'L_DAYS' => LangLoader::get_message('days', 'main'),
+				'L_HOURS' => LangLoader::get_message('hours', 'main'),
+				'L_MIN' => LangLoader::get_message('minutes', 'main'),
+				'L_SEC' => LangLoader::get_message('seconds', 'main'),
 			));
 		}
 	}
@@ -301,7 +295,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	function display_footer()
 	{
-		global $MENUS, $LANG;
+		global $MENUS;
 		$template = new FileTemplate('footer.tpl');
 
 		$theme = load_ini_file(
@@ -316,11 +310,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_MENUS_FOOTER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]),
 			'MENUS_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__FOOTER],
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
-			'L_POWERED_BY' => $LANG['powered_by'],
-			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
-			'L_THEME' => $LANG['theme'],
+			'L_POWERED_BY' => LangLoader::get_message('powered_by', 'main'),
+			'L_PHPBOOST_RIGHT' => LangLoader::get_message('phpboost_right', 'main'),
+			'L_THEME' => LangLoader::get_message('theme', 'main'),
 			'L_THEME_NAME' => $theme['name'],
-			'L_BY' => strtolower($LANG['by']),
+			'L_BY' => strtolower(LangLoader::get_message('by', 'main')),
 			'L_THEME_AUTHOR' => $theme['author'],
 			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
@@ -336,9 +330,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'BENCH' => AppContext::get_bench()->to_string(),
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() + 
 			PersistenceContext::get_sql()->get_executed_requests_number(),
-				'L_REQ' => $LANG['sql_req'],
-				'L_ACHIEVED' => $LANG['achieved'],
-				'L_UNIT_SECOND' => $LANG['unit_seconds_short']
+				'L_REQ' => LangLoader::get_message('sql_req', 'main'),
+				'L_ACHIEVED' => LangLoader::get_message('achieved', 'main'),
+				'L_UNIT_SECOND' => LangLoader::get_message('unit_seconds_short', 'main')
 			));
 		}
 
