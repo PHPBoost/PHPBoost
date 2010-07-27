@@ -89,7 +89,7 @@ class InstallationServices
 		return true;
 	}
 	
-	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
+	public function create_admin($login, $password, $email, $locale, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
 		$this->create_first_admin($login, $password, $email, $locale, $create_session, $auto_connect);
@@ -116,7 +116,7 @@ class InstallationServices
 		$this->init_server_environment_config();
 		$this->init_user_accounts_config($locale);
 		$this->install_locale($locale);
-		$this->configure_theme($config['theme'], $locale);
+		$this->configure_theme(DISTRIBUTION_THEME, $locale);
 	}
 	
 	private function save_general_config($server_url, $server_path, $site_name, $site_description, $site_keywords, $site_timezone)
@@ -285,7 +285,7 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($login, $password, $email, $create_session, $auto_connect, $locale)
+	private function create_first_admin($login, $password, $email, $locale, $create_session, $auto_connect)
 	{
 		global $Cache;
 		$Cache = new Cache();

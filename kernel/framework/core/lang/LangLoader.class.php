@@ -118,7 +118,12 @@ class LangLoader
 
 	private static function load($lang_id, $folder, $filename)
 	{
+		$lang = array();
 		include self::get_real_lang_path($folder, $filename);
+		if (empty($lang) && !empty($LANG))
+		{
+			$lang = $LANG;
+		}
 		self::get_ram_cache()->store($lang_id, $lang);
 	}
 

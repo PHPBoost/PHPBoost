@@ -512,13 +512,11 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		global $LANG;
-
 		return array(
 			self::REGISTRATION_ENABLED_PROPERTY => true,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => 1,
-			self::WELCOME_MESSAGE_PROPERTY => $LANG['site_config_msg_mbr'],
-			self::REGISTRATION_AGREEMENT_PROPERTY => $LANG['register_agreement'],
+			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
+			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
 			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => true,
 			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 1,
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
