@@ -40,8 +40,6 @@ class HtaccessFileCache implements CacheData
 	 */
 	public function synchronize()
 	{
-		global $CONFIG;
-
 		$this->htaccess_file_content = '';
 
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())

@@ -40,6 +40,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		parent::__construct();
 		
+		global $LANG;
+		
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 
 		$this->check_admin_auth();

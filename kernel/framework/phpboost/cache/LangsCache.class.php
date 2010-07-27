@@ -45,7 +45,10 @@ class LangsCache implements CacheData
 
 		foreach ($result as $lang)
 		{
-			$this->langs[$lang['lang']] = array('enabled' => $lang['activ'], 'auth' => $lang['secure']);
+			$this->langs[$lang['lang']] = array(
+				'enabled' => $lang['activ'],
+				'auth' => $lang['secure']
+			);
 		}
 	}
 

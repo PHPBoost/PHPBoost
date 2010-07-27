@@ -56,8 +56,8 @@ class ContentManagementConfig extends AbstractConfigData
 	protected function get_default_values()
 	{
 		return array(
-		self::ANTI_FLOOD_ENABLED => false,
-		self::ANTI_FLOOD_DURATION => 7
+			self::ANTI_FLOOD_ENABLED => false,
+			self::ANTI_FLOOD_DURATION => 7
 		);
 	}
 

@@ -137,13 +137,13 @@ class MaintenanceConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-		self::ENABLED => false,
-		self::UNLIMITED_DURATION => false,
-		self::END_DATE => new Date(),
-		self::MESSAGE => '',
-		self::AUTH => array(),
-		self::DISPLAY_DURATION => true,
-		self::DISPLAY_DURATION_FOR_ADMIN => true
+			self::ENABLED => false,
+			self::UNLIMITED_DURATION => false,
+			self::END_DATE => new Date(),
+			self::MESSAGE => '',
+			self::AUTH => array(),
+			self::DISPLAY_DURATION => true,
+			self::DISPLAY_DURATION_FOR_ADMIN => true
 		);
 	}
 

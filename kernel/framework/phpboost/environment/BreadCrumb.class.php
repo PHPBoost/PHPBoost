@@ -91,8 +91,6 @@ class BreadCrumb
      */
     public function display(Template $tpl)
     {
-        global $CONFIG, $LANG;
-
         if (empty($this->array_links))
         {
             $this->add($this->get_page_title(), HOST . SCRIPT . SID);
@@ -107,7 +105,7 @@ class BreadCrumb
 		
         $tpl->assign_vars(array(
 			'START_PAGE' => $start_page_url,
-			'L_INDEX' 	 => $LANG['home']
+			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
         ));
         
         foreach ($this->array_links as $key => $array)
