@@ -126,7 +126,7 @@
 				</tr>	
 				<tr> 
 					<td colspan="4" class="row2" style="padding:0;">
-						<div style="height:200px;overflow:auto;">
+						<div style="overflow:auto;">
 							<table style="width:100%">
 								# START user #
 								<tr> 

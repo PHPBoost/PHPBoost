@@ -15,6 +15,19 @@
 #################################################################################
 
 
+#################################################################################
+##                                   REIDLOS                                   ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées (création d'une classe).
+
+------------------------------------ MODULES -----------------------------------
+
+[b]Téléchargement[/b]
+- Possibilité de signaler les liens cassés.
+
+#################################################################################
 
 
 #################################################################################
@@ -85,9 +98,7 @@
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
-- Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
 - Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
-- Ajout de l'upload d'images pour les groupes.
 
 
 [b]Forum[/b]
@@ -108,7 +119,6 @@
 
 [b]Téléchargement[/b]
 - Possibilité d'afficher la dernière mise à jour du fichier.
-- Possibilité de signaler les liens cassés.
 
 [b]Liens web[/b]
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
