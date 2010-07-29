@@ -32,15 +32,9 @@
  */
 class Image
 {	
-	/**
-	 * @var string Path the image.
-	 */
+
 	private $path;
-	
-	/**
-	 * @desc Builds a new properties object
-	 * @param string Path or is the image.
-	 */
+
 	function __construct($path)
 	{
 		$this->path = $path;		
@@ -54,40 +48,24 @@ class Image
 	{
 		return getimagesize($this->path);
 	}
-	
-	/**
-	 * @desc Path image
-	 * @return Path image
-	 */
+
 	public function get_path()
 	{
 		return $this->path;
 	}
-	
-	/**
-	 * @desc Width image
-	 * @return Width image
-	 */
+
 	public function get_width()
 	{
 		$property = $this->get_properties();
 		return $property[0];
 	}
-	
-	/**
-	 * @desc Height image
-	 * @return Height image
-	 */
+
 	public function get_height()
 	{
 		$property = $this->get_properties();
 		return $property[1];
 	}
 	
-	/**
-	 * @desc Mime type image
-	 * @return Mime type image
-	 */
 	public function get_mime_type()
 	{
 		$property = $this->get_properties();
@@ -96,17 +74,37 @@ class Image
 	
 	/**
 	 * @desc Return Size image
-	 * @return Size image
+	 * @return Size image in octets
 	 */
 	public function get_size()
 	{
 		return filesize($this->path);
 	}
 	
-	/**
-	 * @desc Destroy image
-	 */
-	function destroy()
+	public function get_name_and_extension()
+	{
+		$explode = explode('/', $this->path);
+		return array_pop($explode);
+	}
+	
+	public function get_extension()
+	{
+		$explode = explode('.', $this->get_name_and_extension());
+		return array_pop($explode);
+	}
+	
+	public function get_name()
+	{
+		$explode = explode('.', $this->get_name_and_extension());
+		return $explode[0];
+	}
+	
+	public function get_folder_image()
+	{
+		return preg_replace('#[a-zA-Z0-9._-]*.[a-z]{2,4}$#', '', $this->path);
+	}
+	
+	function delete()
 	{
 		unlink($this->path);
 	}

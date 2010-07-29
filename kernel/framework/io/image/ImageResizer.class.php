@@ -32,38 +32,91 @@
  */
 class ImageResizer
 {
-	/**
-	 * @desc Create image identifier
-	 * @param Image $image the element to load
-	 * @return Image identifier
-	 */
-	private function create_image_identifier(Image $image)
+	function __construct()
 	{
-		switch ($image->get_mime_type()) 
+		$server_configuration = new ServerConfiguration();
+		if (!$server_configuration->has_gd_libray())
+		{
+			// TODO
+			echo 'Requires GD !';
+			exit;
+		}
+	}
+	
+	public function resizer(Image $image, $width = 0, $height = 0, $directory = '')
+	{
+		$height = $this->default_height_for_width($image, $width, $height);
+		$width = $this->default_width_for_height($image, $width, $height);
+		
+		$path = $this->default_path($image, $directory);
+		
+		$original_picture = $this->create_image_identifier($image);
+		$news_picture = $this->create_ressource($image, $width, $height);
+		
+		imagecopyresized($news_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
+		
+		//TODO
+		//$black = imagecolorallocate($news_picture, 0, 0, 0);
+		//imagecolortransparent($news_picture, $black);
+		
+		$this->create_image($image, $news_picture, $path);
+	}
+	
+	private function default_height_for_width(Image $image, $width, $height)
+	{
+		if ($height == 0 && $width > 0)
+		{
+			return $image->get_height() / ($image->get_width() / $width);
+		}
+		elseif ($height > 0)
+		{
+			return $height;
+		}
+	}
+	
+	private function default_width_for_height(Image $image, $width, $height)
+	{
+		if ($width == 0 && $height > 0)
+		{
+			return $image->get_width() / ($image->get_height() / $height);
+		}
+		elseif ($width > 0)
+		{
+			return $width;
+		}
+	}
+	
+	private function default_path(Image $image, $directory)
+	{
+		if (empty($directory))
+			return $image->get_path();
+		else
+			return $directory;
+	}
+
+	private function create_image_identifier(Image $Image)
+	{
+		switch ($Image->get_mime_type()) 
 		{
 			case 'image/jpeg':
-					return imagecreatefromjpeg($image->get_path());
+					return imagecreatefromjpeg($Image->get_path());
 				break;
 			case 'image/png':
-					return imagecreatefrompng($image->get_path());
+					return imagecreatefrompng($Image->get_path());
 				break;
 			case 'image/gif':
-					return imagecreatefromgif($image->get_path());
+					return imagecreatefromgif($Image->get_path());
+				break;
+			case 'image/bmp':
+					return imagecreatefrombmp($Image->get_path());
 				break;
 			// TODO Erreur mime non prise en compte
 		}
 	}
 	
-	/**
-	 * @desc Create ressource of new picture 
-	 * @param Image $image the element to load
-	 * @param int $width Width of the new picture create in pixel.
-	 * @param int $height Height of the new picture create in pixel.
-	 * @return Ressource image
-	 */
-	private function create_ressource(Image $image, $width = 0, $height = 0)
+	private function create_ressource(Image $Image, $width, $height)
 	{
-		if($image->get_mime_type() == 'image/gif')
+		if ($Image->get_mime_type() == 'image/gif')
 		{
 			return imagecreate($width, $height); 
 		}
@@ -73,74 +126,37 @@ class ImageResizer
 		}
 	}
 	
-	/**
-	 * @desc Directory of the create a new image
-	 * @param Image $image the element to load
-	 * @param string $directory Path of the new image directory
-	 * @return Directory image of the create a new image
-	 */
-	private function directory_new_image (Image $image, $directory)
+	private function extension_news_path($directory)
 	{
-		if (!$directory)
-		{
-			return $image->get_path();
-		}
-		else
-		{
-			return $directory;
-		}
-	}
-	/**
-	 * @desc Resize image
-	 * @param Image $image the element to load
-	 * @param int $width Width of the new picture create in pixel.
-	 * @param int $height Height of the new picture create in pixel.
-	 * @param string $directory Path of the new image directory
-	 */
-	public function resize(Image $image, $width = 0, $height = 0, $directory = false)
-	{
-		if ($width == 0 && $height > 0)
-		{
-			$height = $image->get_width() / $width;
-			$height = $image->get_height() / $height;
-		}
-		elseif ($height == 0 && $width > 0)
-		{
-			$width = $image->get_height() / $height;
-			$width = $image->get_width() / $width;
-		}
-		
-		$directory = $this->directory_new_image($image, $directory);
-
-		$original_picture = $this->create_image_identifier($image);
-		$create_picture = $this->create_ressource($image, $width, $height);
-		
-		imagecopyresized($create_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
-
-		$this->create_image($image, $directory);
+		$explode = explode('/', $directory);
+		$name_and_extension = array_pop($explode);
+		$explode = explode('.', $name_and_extension);
+		return array_pop($explode);
 	}
 	
-	/**
-	 * @desc Create a new image of the directory
-	 * @param Image $image the element to load
-	 * @param string $directory Path of the new image directory
-	 */
-	private function create_image(Image $image, $directory)
+	private function create_image(Image $image, $create_picture, $directory)
 	{
-		switch ($image->get_mime_type()) 
+	
+		$extension = $this->extension_news_path($directory);
+		switch ($extension) 
 		{
-			case 'image/jpeg':
-					imagejpeg($create_picture, $directory);
-				break;
-			case 'image/png':
-					imagepng($create_picture, $directory);
-				break;
-			case 'image/gif':
-					imagegif($create_picture, $directory);
-				break;
-			// TODO mime non prise en compte
+			case 'jpeg':
+				return imagejpeg($create_picture, $directory);
+					break;
+			case 'jpg':
+				return imagejpeg($create_picture, $directory);
+					break;
+			case 'png':
+				return imagepng($create_picture, $directory);
+					break;
+			case 'gif':
+				return imagegif($create_picture, $directory);
+					break;
+			case 'bmp':
+				return imagebmp($create_picture, $directory);
+					break;
+			// TODO extension non prise en compte
 		}
 	}
-
 }
 ?>
