@@ -101,7 +101,7 @@ class Note
 	 */
 	public function display_form($template = false)
 	{
-		global $CONFIG, $Sql, $LANG, $Session;
+		global $Sql, $LANG, $Session;
 		
 		$note = !empty($_POST['note']) ? NumberHelper::numeric($_POST['note']) : 0;
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->script_path), 0);
@@ -199,8 +199,6 @@ class Note
 	 */
 	public static function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
-		global $CONFIG;
-		
 		if ($notation_scale == 0)
 			return '';
 			
@@ -261,7 +259,7 @@ class Note
 	 */
 	private function get_module_table()
 	{
-		global $Sql, $CONFIG;
+		global $Sql;
 
 		//Récupération des informations sur le module.
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());

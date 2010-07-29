@@ -31,10 +31,6 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-$CONFIG = array();
-$Cache = new Cache();
-$Cache->load('config');
-
 $user_data = array(
     'm_user_id' => 1,
     'login' => 'login',

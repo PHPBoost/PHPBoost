@@ -114,7 +114,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $User, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
+		global $User, $Errorh, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
 		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
 
@@ -186,7 +186,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	 *  Renvoie la requête de recherche dans le forum
 	 */
 	{
-		global $CONFIG, $CAT_FORUM, $User, $Cache;
+		global $CAT_FORUM, $User, $Cache;
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		$Cache->load('forum');
 
@@ -262,8 +262,6 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	 */
 	function compute_search_results($args)
 	{
-		global $CONFIG;
-
 		$results_data = array();
 
 		$results =& $args['results'];
@@ -308,7 +306,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	 */
 	function parse_search_result($result_data)
 	{
-		global $CONFIG, $LANG;
+		global $LANG;
 
 		load_module_lang('forum'); //Chargement de la langue du module.
 

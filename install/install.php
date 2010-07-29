@@ -530,17 +530,6 @@ switch($step)
 				$user_account_config->set_default_theme(DISTRIBUTION_THEME);
 				UserAccountsConfig::save();
 				
-				$CONFIG = array();
-				$CONFIG['search_cache_time'] = 30;
-				$CONFIG['search_max_use'] = 100;
-
-				$Sql = PersistenceContext::get_sql();
-
-				//On insère dans la base de données
-				PersistenceContext::get_querier()->inject(
-					"UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'",
-				array('config' => serialize($CONFIG)));
-
 				//On installe la langue
 				PersistenceContext::get_querier()->inject(
 					"INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)",
@@ -826,7 +815,6 @@ switch($step)
 		$cache_install->delete();
 
 		$Cache = new Cache;
-		$Cache->load('config');
 
 		$template->assign_vars(array(
     		'C_END' => true,
@@ -836,7 +824,6 @@ switch($step)
     		'U_ADMIN_INDEX' => '../admin/admin_index.php',
     		'U_INDEX' => '..' . GeneralConfig::load()->get_home_page()
 		));
-
 
 		new Updates();
 		break;

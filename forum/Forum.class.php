@@ -40,7 +40,7 @@ class Forum
 	//Ajout d'un message.
 	function Add_msg($idtopic, $idcat, $contents, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
-		global $CONFIG, $Sql, $User, $CAT_FORUM, $LANG;
+		global $Sql, $User, $CAT_FORUM, $LANG;
 
 		##### Insertion message #####
 		$last_timestamp = time();

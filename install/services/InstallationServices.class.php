@@ -109,8 +109,6 @@ class InstallationServices
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
-		$config = $this->build_configuration();
-		$this->save_configuration($config);
 		$this->init_maintenance_config();
 		$this->init_graphical_config();
 		$this->init_server_environment_config();
@@ -161,21 +159,6 @@ class InstallationServices
 		$user_accounts_config->set_default_lang($locale);
 		$user_accounts_config->set_default_theme(DISTRIBUTION_THEME);
 		UserAccountsConfig::save();
-	}
-
-	private function build_configuration()
-	{
-		$CONFIG = array();
-		$CONFIG['search_cache_time'] = 30;
-		$CONFIG['search_max_use'] = 100;
-
-		return $CONFIG;
-	}
-
-	private function save_configuration($config)
-	{
-		$this->querier->inject("UPDATE " . DB_TABLE_CONFIGS . " SET value=:config WHERE name='config'", array(
-			'config' => serialize($config)));
 	}
 	
 	private function install_locale($locale)
@@ -289,7 +272,6 @@ class InstallationServices
 	{
 		global $Cache;
 		$Cache = new Cache();
-		$Cache->load('config');
 		$admin_unlock_code = $this->generate_admin_unlock_code();
 		$this->update_first_admin_account($login, $password, $email, $locale, DISTRIBUTION_THEME, GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);

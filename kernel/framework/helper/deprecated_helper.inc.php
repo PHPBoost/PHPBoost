@@ -158,7 +158,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-	global $CONFIG, $Session;
+	global $Session;
 
 	if (!is_object($Session))
 	{
@@ -243,7 +243,7 @@ function check_mail($mail)
  */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-	global $User, $CONFIG, $LANG;
+	global $User, $LANG;
 
 	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
@@ -309,7 +309,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
  */
 function strtotimestamp($str, $date_format)
 {
-	global $CONFIG, $User;
+	global $User;
 
 	list($month, $day, $year) = array(0, 0, 0);
 	$array_timestamp = explode('/', $str);

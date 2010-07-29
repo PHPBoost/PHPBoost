@@ -70,7 +70,6 @@ class Environment
 		$Sql = PersistenceContext::get_sql();
 		/* END DEPRECATED */
 
-		self::load_cache();
 		self::load_dynamic_constants();
 		self::init_session();
 
@@ -230,17 +229,8 @@ class Environment
 		@include PATH_TO_ROOT . '/kernel/db/config.php';
 	}
 
-	public static function load_cache()
-	{
-		global $Cache;
-		$CONFIG = array();
-		$Cache->load('config');
-	}
-
 	public static function load_dynamic_constants()
 	{
-		global $CONFIG;
-
 		$general_config = GeneralConfig::load();
 		$site_path = $general_config->get_site_path();
 		define('DIR', $site_path);
@@ -250,7 +240,6 @@ class Environment
 
 	public static function init_session()
 	{
-		global $CONFIG;
 		AppContext::get_session()->load();
 		AppContext::get_session()->act();
 

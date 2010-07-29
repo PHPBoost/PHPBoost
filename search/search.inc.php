@@ -90,7 +90,6 @@ function get_search_results($search_string, $search_modules, &$modules_args, &$r
  */
 function get_html_results($results, $html_results, $results_name)
 {
-    global $CONFIG;
     $modules = AppContext::get_extension_provider_service();
     $display_all_results = ($results_name == 'all' ? true : false);
     

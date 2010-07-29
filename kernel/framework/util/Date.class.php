@@ -103,8 +103,6 @@ class Date
 	 */
 	public function __construct()
 	{
-		global $CONFIG;
-
 		//Nombre d'arguments
 		$num_args = func_num_args();
 
@@ -452,8 +450,6 @@ class Date
 	 */
 	private static function compute_server_user_difference($referencial_timezone = TIMEZONE_SYSTEM)
 	{
-		global $CONFIG;
-
 		// Number of hours separating GMT and server's timezone
 		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
 			

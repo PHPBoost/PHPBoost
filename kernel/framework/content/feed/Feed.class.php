@@ -314,7 +314,7 @@ class Feed
 	 */
 	public static function get_feed_menu($feed_url)
 	{
-		global $LANG, $CONFIG;
+		global $LANG;
 
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 

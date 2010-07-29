@@ -66,7 +66,6 @@ function wiki_unparse($var)
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)
 function wiki_no_rewrite($var)
 {
-	global $CONFIG;
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting	
 		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
 	else

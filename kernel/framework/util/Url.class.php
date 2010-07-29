@@ -182,8 +182,6 @@ class Url
 	 */
 	public function root_to_local()
 	{
-		global $CONFIG;
-
 		$local_path = $this->server_url;
 		$local_path = substr(trim($local_path, '/'), strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
 		$file_begun = strrpos($local_path, '/');
@@ -242,7 +240,6 @@ class Url
 	 */
 	public static function get_absolute_root()
 	{
-		global $CONFIG;
 		$general_config = GeneralConfig::load();
 		return trim($general_config->get_site_url() . $general_config->get_site_path(), '/');
 	}

@@ -60,8 +60,6 @@ class Updates
     {
         if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
-            global $CONFIG;
-
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
                 $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
@@ -140,7 +138,7 @@ class Updates
         if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
         {
             $alert = new AdministratorAlert();
-            global $LANG, $CONFIG;
+            global $LANG;
             require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
             if ($app->get_type() == APPLICATION_TYPE__KERNEL)
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));

@@ -142,8 +142,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
      */
     function compute_search_results($args)
     {
-        global $CONFIG;
-        
         $results_data = array();
         
         $results =& $args['results'];
@@ -174,7 +172,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
      */
     function parse_search_result($result_data)
     {
-        global $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
         $Cache->load('download');
         
         load_module_lang('download'); //Chargement de la langue du module.

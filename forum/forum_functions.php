@@ -28,7 +28,7 @@
 //Listes les utilisateurs en lignes.
 function forum_list_user_online($sql_condition)
 {
-	global $Sql, $CONFIG;
+	global $Sql;
 	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups

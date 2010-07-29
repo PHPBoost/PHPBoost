@@ -111,7 +111,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 	function get_home_page()
 	{
-		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
+		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
 		if ($idartcat > 0)

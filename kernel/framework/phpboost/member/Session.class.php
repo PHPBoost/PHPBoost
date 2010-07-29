@@ -160,8 +160,6 @@ class Session
 	 */
 	public function start($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
-		global $CONFIG;
-
 		$pwd = $password;
 		if (!$already_hashed)
 		{
@@ -276,8 +274,6 @@ class Session
 	 */
 	public function load()
 	{
-		global $CONFIG;
-
 		$this->get_id(); //Récupération des identifiants de session.
 
 		########Valeurs à retourner########
@@ -338,8 +334,6 @@ class Session
 	 */
 	public function check($session_script_title)
 	{
-		global $CONFIG;
-
 		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', SCRIPT);
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
@@ -415,8 +409,6 @@ class Session
 	 */
 	public function end()
 	{
-		global $CONFIG;
-
 		$this->get_id();
 		$sessions_config = SessionsConfig::load();
 
@@ -505,8 +497,6 @@ class Session
 	 */
 	private function get_id()
 	{
-		global $CONFIG;
-
 		//Suppression d'éventuelles données dans ce tableau.
 		$this->data = array();
 
@@ -556,8 +546,6 @@ class Session
 	 */
 	private function autoconnect($session_script, $session_script_get, $session_script_title)
 	{
-		global $CONFIG;
-		
 		$sessions_config = SessionsConfig::load();
 		########Cookie Existe?########
 		if (AppContext::get_request()->has_cookieparameter($sessions_config->get_cookie_name() . '_autoconnect'))
@@ -620,8 +608,6 @@ class Session
 	 */
 	public function garbage_collector()
 	{
-		global $CONFIG;
-
 		$sessions_config = SessionsConfig::load();
 		$this->sql->query_inject("DELETE
 		FROM " . DB_TABLE_SESSIONS . "
@@ -712,7 +698,6 @@ class Session
 	 */
 	private static function check_referer()
 	{
-		global $CONFIG;
 		if (empty($_SERVER['HTTP_REFERER']))
 		{
 			return false;

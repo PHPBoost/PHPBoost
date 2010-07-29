@@ -124,8 +124,6 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
      */
     public function compute_search_results($args)
     {
-        global $CONFIG;
-        
         $results_data = array();
         
         $results =& $args['results'];
