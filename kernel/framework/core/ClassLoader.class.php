@@ -102,6 +102,8 @@ class ClassLoader
 			import('io/filesystem/Folder');
 			import('io/filesystem/File');
 			import('io/IOException');
+			import('io/image/Image');
+			import('io/image/ImageResizer');
 			import('util/Path');
 
 			$phpboost_classfile_pattern = '`\.class\.php$`';

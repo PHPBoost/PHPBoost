@@ -111,6 +111,14 @@
 						</dd>
 					</dl>
 					<dl>
+						<dt><label for="activ_avatar_resize">* {L_ACTIV_RESIZE_AVATAR}</label></dt>
+						<dd>
+							<label><input type="radio" {AVATAR_RESIZE_ENABLED} name="activ_avatar_resize" id="activ_up_avatar" value="1" /> {L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {AVATAR_RESIZE_DISABLED} name="activ_avatar_resize" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
 						<dt><label for="width_max">* {L_WIDTH_MAX_AVATAR}</label><br /><span>{L_WIDTH_MAX_AVATAR_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" maxlength="3" id="width_max" name="width_max" value="{WIDTH_MAX}" class="text" /> {L_PX}</label></dd>
 					</dl>
