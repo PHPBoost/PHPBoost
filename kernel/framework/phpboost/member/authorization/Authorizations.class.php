@@ -112,7 +112,7 @@ class Authorizations
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
-        global $Sql, $LANG, $CONFIG, $array_ranks;
+        global $Sql, $LANG, $array_ranks;
 		
         //Récupération du tableau des rangs.
 		$array_ranks = is_array($array_ranks) ?

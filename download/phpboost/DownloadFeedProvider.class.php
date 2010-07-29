@@ -39,7 +39,7 @@ class DownloadFeedProvider implements FeedProvider
 		$querier = PersistenceContext::get_querier();
 		require_once(PATH_TO_ROOT . '/download/download_auth.php');
 
-		global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');
 		$Cache->load('download');
 		$data = new FeedData();

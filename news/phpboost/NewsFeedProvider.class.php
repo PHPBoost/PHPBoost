@@ -41,7 +41,7 @@ class NewsFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
+		global $Cache, $LANG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
 
 		// Load the new's config
 		$Cache->load('news');

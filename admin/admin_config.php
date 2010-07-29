@@ -250,7 +250,6 @@ else //Sinon on rempli le formulaire
 		'SITE_KEYWORD' => $general_config->get_site_keywords(),		
 		'SELECT_PAGE' => $select_page, 
 		'START_PAGE' => $general_config->get_home_page(), 
-		'NOTE_MAX' => isset($CONFIG['note_max']) ? $CONFIG['note_max'] : '10',
 		'COMPTEUR_ENABLED' => $visit_counter_enabled ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => !$visit_counter_enabled ? 'checked="checked"' : '',
 		'BENCH_ENABLED' => $graphical_environment_config->is_page_bench_enabled() ? 'checked="checked"' : '',
@@ -336,7 +335,7 @@ if (!empty($_GET['unlock']))
 	$general_config->set_admin_unlocking_key($unlock_admin);
 	GeneralConfig::save();
 	
-	AppContext::get_mail_service()->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
+	AppContext::get_mail_service()->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), MailServiceConfig::load()->get_default_mail_sender());	
 
 	AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&mail=1');
 }

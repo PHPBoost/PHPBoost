@@ -15,7 +15,6 @@ class urlTest extends PHPBoostUnitTestCase {
 
 		
 		$site_url = GeneralConfig::load()->get_site_url();
-		$CONFIG['server_path'] = '';
 		$url = new Url('menus.php#m42', '../..', '/admin/menus/links.php');
 		
         self::assertEquals('/admin/menus/menus.php#m42', $url->relative(), $url->relative() . ' != /admin/menus/menus.php#m42');

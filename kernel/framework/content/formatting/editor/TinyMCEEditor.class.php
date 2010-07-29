@@ -45,7 +45,7 @@ class TinyMCEEditor extends ContentEditor
 	 */
     function display()
     {
-        global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS;
+        global $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS;
 
         $template = $this->get_template();
 

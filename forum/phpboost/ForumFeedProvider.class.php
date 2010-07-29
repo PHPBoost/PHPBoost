@@ -50,7 +50,7 @@ class ForumFeedProvider implements FeedProvider
     function get_feed_data_struct($idcat = 0, $name = '')
     {
     	$querier = PersistenceContext::get_querier();
-        global $Cache, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
+        global $Cache, $LANG, $CONFIG_FORUM, $CAT_FORUM, $User;
 
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');

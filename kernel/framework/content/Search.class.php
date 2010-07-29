@@ -25,10 +25,8 @@
  *
  ###################################################*/
 
-global $CONFIG;
-
-define('CACHE_TIME', $CONFIG['search_cache_time']);
-define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
+define('CACHE_TIME', SearchConfig::load()->get_cache_life_time());
+define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_use_times());
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>

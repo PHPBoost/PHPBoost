@@ -438,7 +438,7 @@ class CategoriesManager
 	 */
 	function build_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
 	{
-		global $CONFIG, $LANG;
+		global $LANG;
 		
 		if (is_null($category_template) || !is_object($category_template) || !($category_template instanceof Template))
 			$category_template = new FileTemplate('framework/content/category.tpl');
@@ -640,7 +640,7 @@ class CategoriesManager
 	 */
 	function _create_row_interface($id_cat, $level, $ajax_mode, $reference_template)
 	{
-		global $CONFIG, $LANG, $Session;
+		global $LANG, $Session;
 		
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);

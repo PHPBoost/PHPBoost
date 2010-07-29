@@ -121,8 +121,6 @@ class MiniCalendar
 	 */
 	public function display()
 	{
-		global $CONFIG;
-		
 		//On crée le code selon le template
 		$template = new FileTemplate('framework/mini_calendar.tpl');
 		

@@ -67,7 +67,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		require_once(PATH_TO_ROOT . '/kernel/begin.php');
 		load_module_lang('wiki');
-		global $CONFIG, $LANG;
+		global $LANG;
 
 		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
 

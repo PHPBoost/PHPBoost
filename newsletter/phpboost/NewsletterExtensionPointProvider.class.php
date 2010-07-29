@@ -39,8 +39,6 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
     //Récupération du cache.
 	function get_cache()
 	{
-		global $CONFIG;
-		
 		//Configuration de la newsletter
 		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
 		$NEWSLETTER_CONFIG = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'newsletter'", __LINE__, __FILE__));

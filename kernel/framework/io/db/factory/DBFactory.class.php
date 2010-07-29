@@ -115,9 +115,6 @@ class DBFactory
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
 			throw new PHPBoostNotInstalledException();
-			// TODO à reporter ailleur
-//			import('util/unusual_functions', INC_IMPORT);
-//			AppContext::get_response()->redirect(get_server_url_page('install/install.php'));
 		}
 		return $db_connection_data;
 	}

@@ -133,8 +133,6 @@ class ModulesManager
 	{
 		self::update_class_list();
 
-		global $CONFIG;
-
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return UNEXISTING_MODULE;
@@ -208,7 +206,7 @@ class ModulesManager
 	 */
 	public static function uninstall_module($module_id, $drop_files)
 	{
-		global $Cache, $Sql, $CONFIG, $MODULES;
+		global $Cache, $Sql, $MODULES;
 
 		if (!empty($module_id))
 		{

@@ -65,7 +65,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 {
-	global $Sql, $CONFIG;
+	global $Sql;
 	$line = '';
 	$result = $Sql->query_while("SELECT id, name
 	FROM " . PREFIX . "upload_cat

@@ -31,7 +31,7 @@ function online_mini($position, $block)
 {
     if (strpos(SCRIPT, '/online/online.php') === false)
     {
-        global $LANG, $Cache, $Sql, $CONFIG, $CONFIG_ONLINE;
+        global $LANG, $Cache, $Sql, $CONFIG_ONLINE;
         
     	//Chargement de la langue du module.
     	load_module_lang('online');

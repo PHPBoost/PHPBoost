@@ -57,7 +57,6 @@ class Repository
 	 */
 	function check($app)
 	{
-		global $CONFIG;
 		$xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
 		// can't compare strings with XPath, so we check the version number with PHP.
 		if ($this->xml != null)

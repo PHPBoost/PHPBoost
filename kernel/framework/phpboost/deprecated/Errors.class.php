@@ -83,7 +83,7 @@ class Errors
 		echo '<pre>' . $errstr . ' ' . $errfile . ' ' . $errline . '</pre><hr />';
 //		$this->display('error_notice', $errno, $errline, $errfile);
 
-		global $LANG, $CONFIG;
+		global $LANG;
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 		{
 			return true;

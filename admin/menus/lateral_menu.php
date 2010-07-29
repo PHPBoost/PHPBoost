@@ -28,7 +28,7 @@
 
 function lateral_menu()
 {
-    global $LANG, $CONFIG;
+    global $LANG;
     $tpl = new FileTemplate('admin/menus/panel.tpl');
     $tpl->assign_vars(array(
         'L_MENUS_MANAGEMENT' => $LANG['menus_management'],

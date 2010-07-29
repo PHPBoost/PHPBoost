@@ -128,8 +128,6 @@ class Captcha
 	 */
 	public function display_form($Template = false)
 	{
-		global $CONFIG;
-
 		$this->save_user();
 
 		if (!is_object($Template) || !($Template instanceof Template))

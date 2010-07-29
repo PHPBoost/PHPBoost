@@ -174,7 +174,6 @@ class Application
 	 */
 	function check_compatibility()
 	{
-		global $CONFIG;
 		$current_version = '0';
 		switch ($this->type)
 		{
@@ -334,7 +333,6 @@ class Application
 	 */
 	function _get_installed_version()
 	{
-		global $CONFIG;
 		switch ($this->type)
 		{
 			case APPLICATION_TYPE__KERNEL:

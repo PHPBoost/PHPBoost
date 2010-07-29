@@ -37,7 +37,7 @@ class MediaFeedProvider implements FeedProvider
     function get_feed_data_struct($idcat = 0)
     {
     	$querier = PersistenceContext::get_querier();
-        global $Cache, $LANG, $MEDIA_LANG, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS;
+        global $Cache, $LANG, $MEDIA_LANG, $MEDIA_CONFIG, $MEDIA_CATS;
         
         $Cache->load('media');
         load_module_lang('media');

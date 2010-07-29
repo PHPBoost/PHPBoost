@@ -275,24 +275,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the site configuration file cache.
-	 * @return The content of the site configuration file cache.
-	 */
-	function _get_config()
-	{
-		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
-		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG = unserialize((string) PersistenceContext::get_sql()->query(
-			"SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name='config'"));
-		foreach ($CONFIG as $key => $value)
-		{
-			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
-		}
-
-		return $config;
-	}
-
-	/**
 	 * @desc Method which is called to generate the members file cache.
 	 * @return The content of the members file cache.
 	 */
@@ -417,7 +399,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'menus', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('menus', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

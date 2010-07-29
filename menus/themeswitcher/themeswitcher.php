@@ -27,7 +27,7 @@
 
 function menu_themeswitcher_themeswitcher($position, $block)
 {
-	global $CONFIG, $User, $LANG, $Session;
+	global $User, $LANG, $Session;
 
 	load_menu_lang('themeswitcher');
 	

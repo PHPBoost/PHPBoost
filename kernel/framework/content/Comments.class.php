@@ -181,7 +181,7 @@ class Comments
 	 */
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_COM, $_array_rank, $Session;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG_COM, $_array_rank, $Session;
 		
 		if ($integrated_in_environment)
 		{
@@ -667,7 +667,7 @@ class Comments
 	 */
 	public static function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	{
-	    global $CONFIG, $LANG;
+	    global $LANG;
 	
 	    $link = '';
 	    $l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
@@ -685,7 +685,7 @@ class Comments
 	//Récupération de la table du module associée aux commentaires.
 	function _get_info_module()
 	{
-		global $Sql, $CONFIG;
+		global $Sql;
 
 		//Récupération des informations sur le module.
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
@@ -706,7 +706,7 @@ class Comments
 	//Initialisation des paramètres quand il s'agit du noyau qui appelle
 	function _get_info_kernel_script()
 	{
-		global $Sql, $CONFIG;
+		global $Sql;
 		
 		$row_infos = $Sql->query_array(PREFIX . $this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 		
