@@ -111,11 +111,11 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_avatar_resize">* {L_ACTIV_RESIZE_AVATAR}</label></dt>
+						<dt><label for="enable_avatar_auto_resizing">* {L_ACTIV_AUTO_RESIZING_AVATAR}</label><br /><span>{L_ACTIV_AUTO_RESIZING_AVATAR_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="radio" {AVATAR_RESIZE_ENABLED} name="activ_avatar_resize" id="activ_up_avatar" value="1" /> {L_YES}</label>
+							<label><input type="radio" {AVATAR_AUTO_RESIZING_ENABLED} name="enable_avatar_auto_resizing" id="enable_avatar_auto_resizing" value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {AVATAR_RESIZE_DISABLED} name="activ_avatar_resize" value="0" /> {L_NO}</label>
+							<label><input type="radio" {AVATAR_AUTO_RESIZING_DISABLED} name="enable_avatar_auto_resizing" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
