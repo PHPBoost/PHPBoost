@@ -78,18 +78,24 @@ elseif ($User->check_level(MODO_LEVEL)) //Modo
 	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
-		//Initialisation  de la class de gestion des fichiers.
-		include_once('../gallery/gallery.class.php');
-		$Gallery = new Gallery;
-		
 		$id_file = retrieve(POST, 'id_file', 0);
-		$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
-		$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
+		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
 		
-		if (!empty($id_file))
-			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
-		else 
-			echo -1;
+		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
+		{	
+			//Initialisation  de la class de gestion des fichiers.
+			include_once('../gallery/gallery.class.php');
+			$Gallery = new Gallery;
+
+			$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
+			$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
+			
+			if (!empty($id_file))
+				echo $Gallery->Rename_pics($id_file, $name, $previous_name);
+			else 
+				echo -1;
+				
+		}
 	}
 	elseif (!empty($_GET['aprob_pics']))
 	{
