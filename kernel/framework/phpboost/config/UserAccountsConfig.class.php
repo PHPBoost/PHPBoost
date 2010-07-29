@@ -76,9 +76,9 @@ class UserAccountsConfig extends AbstractConfigData
 	const ENABLE_AVATAR_UPLOAD_PROPERTY = 'enable_avatar_upload';
 
 	/**
-	 * Name of the property indicating if the resizing of avatars is enabled or not
+	 * Name of the property indicating whether avatars' automatic resizing is enabled or not
 	 */
-	const ENABLE_AVATAR_RESIZE = 'enable_avatar_resize';
+	const ENABLE_AVATAR_AUTO_RESIZING = 'enable_avatar_auto_resizing';
 	
 	/**
 	 * Name of the property indicating if the default avatar is enable (users who don't have a
@@ -324,18 +324,18 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether the scaling is enabled avatars
 	 * @return bool true if they can, false otherwise
 	 */
-	public function is_avatar_resize_enabled()
+	public function is_avatar_auto_resizing_enabled()
 	{
-		return $this->get_property(self::ENABLE_AVATAR_RESIZE);
+		return $this->get_property(self::ENABLE_AVATAR_AUTO_RESIZING);
 	}
 	
 	/**
-	 * Sets the boolean value indicating whether the avatars should be resize
+	 * Sets the boolean value indicating whether the avatars should be resized automatically
 	 * @param bool $enabled true if enabled, false otherwise
 	 */
-	public function set_avatar_resize_enabled($enabled)
+	public function set_avatar_auto_resizing_enabled($enabled)
 	{
-		$this->set_property(self::ENABLE_AVATAR_RESIZE, $enabled);
+		$this->set_property(self::ENABLE_AVATAR_AUTO_RESIZING, $enabled);
 	}
 
 	/**
@@ -547,7 +547,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::FORCE_USERS_THEME_PROPERTY => false,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => true,
-			self::ENABLE_AVATAR_RESIZE => $server_configuration->has_gd_libray() ? true : false,
+			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_libray() ? true : false,
 			self::DEFAULT_AVATAR_ENABLED_PROPERTY => true,
 			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,

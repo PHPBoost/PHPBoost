@@ -43,7 +43,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	$user_account_config->set_unactivated_accounts_timeout(retrieve(POST, 'delay_unactiv_max', 20));
 
 	$user_account_config->set_default_avatar_name_enabled(retrieve(POST, 'activ_avatar', false));
-	$user_account_config->set_avatar_resize_enabled(retrieve(POST, 'activ_avatar_resize', false));
+	$user_account_config->set_avatar_auto_resizing_enabled(retrieve(POST, 'enable_avatar_auto_resizing', false));
 	$user_account_config->set_default_avatar_name(retrieve(POST, 'avatar_url', ''));
 	
 	$user_account_config->set_max_avatar_width(retrieve(POST, 'width_max', 120));
@@ -93,8 +93,8 @@ else
 		'AVATAR_UP_DISABLED' => !$user_account_config->is_avatar_upload_enabled() ? 'checked="checked"' : '',
 		'AVATAR_ENABLED' => $user_account_config->is_default_avatar_enabled() ? 'checked="checked"' : '',
 		'AVATAR_DISABLED' => !$user_account_config->is_default_avatar_enabled() ? 'checked="checked"' : '',
-		'AVATAR_RESIZE_ENABLED' => $user_account_config->is_avatar_resize_enabled() ? 'checked="checked"' : '',
-		'AVATAR_RESIZE_DISABLED' => !$user_account_config->is_avatar_resize_enabled() ? 'checked="checked"' : '',
+		'AVATAR_AUTO_RESIZING_ENABLED' => $user_account_config->is_avatar_auto_resizing_enabled() ? 'checked="checked"' : '',
+		'AVATAR_AUTO_RESIZING_DISABLED' => !$user_account_config->is_avatar_auto_resizing_enabled() ? 'checked="checked"' : '',
 		'WIDTH_MAX' => $user_account_config->get_max_avatar_width(),
 		'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
 		'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
@@ -127,7 +127,8 @@ else
 		'L_ALLOW_THEME_MBR' => $LANG['allow_theme_mbr'],
 		'L_AVATAR_MANAGEMENT' => $LANG['avatar_management'],
 		'L_ACTIV_UP_AVATAR' => $LANG['activ_up_avatar'],
-		'L_ACTIV_RESIZE_AVATAR' => $LANG['activ_resize_avatar'],
+		'L_ACTIV_AUTO_RESIZING_AVATAR' => $LANG['enable_auto_resizing_avatar'],
+		'L_ACTIV_AUTO_RESIZING_AVATAR_EXPLAIN' => $LANG['enable_auto_resizing_avatar_explain'],
 		'L_WIDTH_MAX_AVATAR' => $LANG['width_max_avatar'],
 		'L_WIDTH_MAX_AVATAR_EXPLAIN' => $LANG['width_max_avatar_explain'],
 		'L_HEIGHT_MAX_AVATAR' => $LANG['height_max_avatar'],

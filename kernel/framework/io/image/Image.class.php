@@ -74,7 +74,7 @@ class Image
 	
 	/**
 	 * @desc Return Size image
-	 * @return Size image in octets
+	 * @return Size image in bytes
 	 */
 	public function get_size()
 	{
@@ -101,12 +101,13 @@ class Image
 	
 	public function get_folder_image()
 	{
-		return preg_replace('#[a-zA-Z0-9._-]*.[a-z]{2,4}$#', '', $this->path);
+		return dirname($this->path);
 	}
 	
 	function delete()
 	{
-		unlink($this->path);
+		$file = new File($this->path);
+		$file->delete();
 	}
 	
 }

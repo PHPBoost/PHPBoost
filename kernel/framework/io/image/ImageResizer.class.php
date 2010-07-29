@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+define('KEEP_RATIO', 	1);
+define('FORCE_SIZE', 	2);
+
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @desc This class allows you to resize images easily.
@@ -32,55 +35,42 @@
  */
 class ImageResizer
 {
-	function __construct()
+	public function resize(Image $image, $width = 0, $height = 0, $directory = '', $option = KEEP_RATIO)
 	{
-		$server_configuration = new ServerConfiguration();
-		if (!$server_configuration->has_gd_libray())
-		{
-			// TODO
-			echo 'Requires GD !';
-			exit;
-		}
-	}
-	
-	public function resizer(Image $image, $width = 0, $height = 0, $directory = '')
-	{
-		$height = $this->default_height_for_width($image, $width, $height);
-		$width = $this->default_width_for_height($image, $width, $height);
+		$this->check_GD_is_enabled();
+		
+		$height = $this->default_height_for_width($image, $width, $height, $option);
+		$width = $this->default_width_for_height($image, $width, $height, $option);
 		
 		$path = $this->default_path($image, $directory);
 		
 		$original_picture = $this->create_image_identifier($image);
-		$news_picture = $this->create_ressource($image, $width, $height);
+		$new_picture = $this->create_ressource($image, $width, $height);
 		
-		imagecopyresized($news_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
-		
-		//TODO
-		//$black = imagecolorallocate($news_picture, 0, 0, 0);
-		//imagecolortransparent($news_picture, $black);
-		
-		$this->create_image($image, $news_picture, $path);
+		imagecopyresampled($new_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
+	
+		$this->create_image($image, $new_picture, $path);
 	}
 	
-	private function default_height_for_width(Image $image, $width, $height)
+	private function default_height_for_width(Image $image, $width, $height, $option)
 	{
-		if ($height == 0 && $width > 0)
+		if ($height == 0 && $width > 0 || $option == KEEP_RATIO)
 		{
 			return $image->get_height() / ($image->get_width() / $width);
 		}
-		elseif ($height > 0)
+		elseif ($height > 0 || $option == FORCE_SIZE)
 		{
 			return $height;
 		}
 	}
 	
-	private function default_width_for_height(Image $image, $width, $height)
+	private function default_width_for_height(Image $image, $width, $height, $option)
 	{
-		if ($width == 0 && $height > 0)
+		if ($width == 0 && $height > 0 || $option == KEEP_RATIO)
 		{
 			return $image->get_width() / ($image->get_height() / $height);
 		}
-		elseif ($width > 0)
+		elseif ($width > 0 || $option == FORCE_SIZE)
 		{
 			return $width;
 		}
@@ -158,5 +148,15 @@ class ImageResizer
 			// TODO extension non prise en compte
 		}
 	}
+	
+	private function check_GD_is_enabled()
+	{
+		$server_configuration = new ServerConfiguration();
+		if (!$server_configuration->has_gd_libray())
+		{
+			throw new GDNotAvailableException();
+		}
+	}
+	
 }
 ?>
