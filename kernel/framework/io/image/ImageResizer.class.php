@@ -47,6 +47,9 @@ class ImageResizer
 		$original_picture = $this->create_image_identifier($image);
 		$new_picture = $this->create_ressource($image, $width, $height);
 		
+		imagealphablending($new_picture, false);
+		imagesavealpha($new_picture, true);
+
 		imagecopyresampled($new_picture, $original_picture, 0, 0, 0, 0, $width, $height, $image->get_width(), $image->get_height()); 
 	
 		$this->create_image($image, $new_picture, $path);
