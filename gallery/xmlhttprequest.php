@@ -72,7 +72,7 @@ elseif (!empty($_GET['note']) ) //Utilisateur connecté.
 	else
 		echo -2;
 }
-elseif ($User->check_level(MODO_LEVEL)) //Modo
+else
 {	
 	$Session->csrf_get_protect(); //Protection csrf
 	
@@ -99,19 +99,24 @@ elseif ($User->check_level(MODO_LEVEL)) //Modo
 	}
 	elseif (!empty($_GET['aprob_pics']))
 	{
-		//Initialisation  de la class de gestion des fichiers.
-		include_once('../gallery/gallery.class.php');
-		$Gallery = new Gallery;
-		
 		$id_file = retrieve(POST, 'id_file', 0);
-		if (!empty($id_file))
+		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
+		
+		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
 		{
-			echo $Gallery->Aprob_pics($id_file);
-			//Régénération du cache des photos aléatoires.
-			$Cache->Generate_module_file('gallery');
+			//Initialisation  de la class de gestion des fichiers.
+			include_once('../gallery/gallery.class.php');
+			$Gallery = new Gallery;
+			
+			if (!empty($id_file))
+			{
+				echo $Gallery->Aprob_pics($id_file);
+				//Régénération du cache des photos aléatoires.
+				$Cache->Generate_module_file('gallery');
+			}
+			else 
+				echo 0;
 		}
-		else 
-			echo 0;
 	}
 }
 
