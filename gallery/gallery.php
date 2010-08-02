@@ -672,7 +672,7 @@ else
 			WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 			" . $g_sql_sort . "
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
-						while ($row = $Sql->fetch_assoc($result))
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
