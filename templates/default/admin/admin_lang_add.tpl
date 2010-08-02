@@ -99,6 +99,7 @@
 					</tr>
 					# END list #
 				</table>
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 		</div>
 		
