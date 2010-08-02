@@ -24,24 +24,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-define('KEEP_RATIO', 	1);
-define('FORCE_SIZE', 	2);
-
-/**
+ /*
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @desc This class allows you to resize images easily.
  * @package {@package}
  */
 class ImageResizer
 {
-	public function resize(Image $image, $width = 0, $height = 0, $directory = '', $option = KEEP_RATIO)
+	/*
+	 * @throws GDNotAvailableException if the GD extension is not loaded
+	 */
+	public function resize(Image $image, $width, $height, $directory = '')
 	{
-		$this->check_GD_is_enabled();
-		
-		$height = $this->default_height_for_width($image, $width, $height, $option);
-		$width = $this->default_width_for_height($image, $width, $height, $option);
-		
+		$this->assert_gd_extension_is_loaded();
+
 		$path = $this->default_path($image, $directory);
 		
 		$original_picture = $this->create_image_identifier($image);
@@ -55,28 +51,31 @@ class ImageResizer
 		$this->create_image($image, $new_picture, $path);
 	}
 	
-	private function default_height_for_width(Image $image, $width, $height, $option)
+	public function resize_with_max_values(Image $image, $width, $height, $directory = '')
 	{
-		if ($height == 0 && $width > 0 || $option == KEEP_RATIO)
-		{
-			return $image->get_height() / ($image->get_width() / $width);
-		}
-		elseif ($height > 0 || $option == FORCE_SIZE)
-		{
-			return $height;
-		}
+		$coef_width = $image->get_width() / $width;
+		$coef_height = $image->get_height() / $height;
+
+		$ratio = max($coef_width,$coef_height);
+
+		$width = $image->get_width() / $ratio;
+		$height = $image->get_height() / $ratio;
+		
+		$this->resize($image, $width, $height, $directory);
 	}
 	
-	private function default_width_for_height(Image $image, $width, $height, $option)
+	public function resize_width(Image $image, $width, $directory)
 	{
-		if ($width == 0 && $height > 0 || $option == KEEP_RATIO)
-		{
-			return $image->get_width() / ($image->get_height() / $height);
-		}
-		elseif ($width > 0 || $option == FORCE_SIZE)
-		{
-			return $width;
-		}
+		$height = $image->get_height() / ($image->get_width() / $width);
+		
+		$this->resize($image, $width, $height, $directory);
+	}
+	
+	public function resize_height(Image $image, $height, $directory)
+	{
+		$width = $image->get_width() / ($image->get_height() / $height);
+		
+		$this->resize($image, $width, $height, $directory);
 	}
 	
 	private function default_path(Image $image, $directory)
@@ -129,7 +128,6 @@ class ImageResizer
 	
 	private function create_image(Image $image, $create_picture, $directory)
 	{
-	
 		$extension = $this->extension_news_path($directory);
 		switch ($extension) 
 		{
@@ -152,7 +150,10 @@ class ImageResizer
 		}
 	}
 	
-	private function check_GD_is_enabled()
+	/*
+	 * @throws GDNotAvailableException if the GD extension is not loaded
+	 */
+	private function assert_gd_extension_is_loaded()
 	{
 		$server_configuration = new ServerConfiguration();
 		if (!$server_configuration->has_gd_libray())
