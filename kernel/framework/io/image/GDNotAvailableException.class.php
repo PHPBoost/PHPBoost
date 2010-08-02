@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                   GDNotAvailableException.php
+ *		     GDNotAvailableException.class.php
  *                            -------------------
  *   begin                : July 29, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -30,7 +30,7 @@ class GDNotAvailableException extends Exception
 {
 	public function __construct()
 	{
-		parent::__construct('GD is not available !');
+		parent::__construct('The GD extension is required but not loaded.');
 	}
 }
 ?>
