@@ -25,7 +25,7 @@
 		</script>
 		
 		<div id="admin_contents">
-			<form action="admin_content_config.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_content_config.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 
@@ -89,7 +89,8 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
-					<input type="reset" value="{L_RESET}" class="reset" />					
+					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />					
 				</fieldset>	
 			</form>
 		</div>

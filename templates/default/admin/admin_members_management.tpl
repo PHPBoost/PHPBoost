@@ -101,6 +101,7 @@
 						</dd>
 					</dl>
 				</fieldset>	
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 
 			<table  class="module_table">

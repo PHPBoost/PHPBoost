@@ -17,7 +17,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_maintain.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_maintain.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SET_MAINTAIN}</legend>
 					<dl class="overflow_visible">
@@ -79,7 +79,8 @@
 					-->
 					</script>
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />		
+					<input type="reset" value="{L_RESET}" class="reset" />	
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>	
 			</form>	
 		</div>

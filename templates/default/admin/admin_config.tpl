@@ -43,7 +43,7 @@
 			-->
 			</script>
 				
-			<form action="admin_config.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_config.php" method="post" class="fieldset_content">
 				<fieldset> 
 					<legend>{L_CONFIG_MAIN}</legend>
 					<dl>
@@ -123,6 +123,7 @@
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>
 			</form>
 		</div>

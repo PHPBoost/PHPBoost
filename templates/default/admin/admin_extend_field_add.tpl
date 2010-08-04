@@ -58,7 +58,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="admin_extend_field_add.php?token={TOKEN}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
+		<form action="admin_extend_field_add.php" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_EXTEND_FIELD_ADD}</legend>
 				<dl> 
@@ -123,7 +123,8 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-				<input type="reset" value="{L_RESET}" class="reset" />					
+				<input type="reset" value="{L_RESET}" class="reset" />
+				<input type="hidden" name="token" value="{TOKEN}" />				
 			</fieldset>
 		</form>
 	</div>

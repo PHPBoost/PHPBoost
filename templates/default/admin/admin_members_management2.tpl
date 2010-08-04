@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			# ENDIF #
-			<form action="admin_members.php?add=1&amp;token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_ADD}</legend>
 					<dl>
@@ -99,7 +99,8 @@
 					<legend>{L_ADD}</legend>
 					<input type="submit" name="add" value="{L_ADD}" class="submit" />
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset" />		
+					<input type="hidden" name="token" value="{TOKEN}" />					
 				</fieldset>	
 			</form>
 			
@@ -161,7 +162,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_members.php?token={TOKEN}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_MANAGEMENT}</legend>
 					<dl>
@@ -406,6 +407,7 @@
 					<input type="hidden" name="id" value="{IDMBR}" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>
 			</form>
 			# ENDIF #

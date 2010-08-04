@@ -117,6 +117,7 @@
 						</th>
 					</tr>	
 				</table>
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 			# ENDIF #
 			
@@ -133,7 +134,8 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>
 					<input type="submit" name="valid_del" value="{L_DELETE}" class="submit" />	
-					<input type="hidden" name="idlang" value="{IDLANG}" />					
+					<input type="hidden" name="idlang" value="{IDLANG}" />
+					<input type="hidden" name="token" value="{TOKEN}" />					
 				</fieldset>	
 			</form>
 			# ENDIF #

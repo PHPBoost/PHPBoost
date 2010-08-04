@@ -356,6 +356,7 @@ function createSortableMenu()
 		<div id="valid_position_menus">
 			<input type="submit" name="valid" value="{L_VALID_POSTIONS}" class="submit" />
 			<input type="hidden" name="theme" value="{NAME_THEME}" />
+			<input type="hidden" name="token" value="{TOKEN}" />
 		</div>
 		<input type="hidden" name="menu_tree" id="menu_tree" value="" />
 	</form>

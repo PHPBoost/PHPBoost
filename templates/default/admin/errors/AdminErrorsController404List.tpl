@@ -6,6 +6,7 @@
             <dd><label><input type="submit" name="clear" value="{EL_CLEAR_404_LIST}" class="reset" /> </label></dd>
         </dl>
     </fieldset>
+	<input type="hidden" name="token" value="{TOKEN}" />
 </form>            
 <br />
 <table class="module_table">
