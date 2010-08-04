@@ -243,7 +243,7 @@
 			
 			
 			# IF C_ADD_GROUP #
-			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
+			<form action="admin_groups.php?add=1&token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
 					<dl>
