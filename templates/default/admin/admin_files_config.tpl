@@ -36,7 +36,7 @@
 		</div>
 		
 		<div id="admin_contents">	
-			<form action="admin_files_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_files_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_FILES}</legend>
 					<dl> 
@@ -74,7 +74,8 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
-					<input type="reset" value="{L_RESET}" class="reset" />					
+					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />					
 				</fieldset>		
 			</form>
 		</div>

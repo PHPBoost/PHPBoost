@@ -33,7 +33,7 @@
 			</script>
             # ENDIF #
             
-            <form action="admin_cache.php?cache=syndication&amp;token={TOKEN}" method="post" class="fieldset_content">
+            <form action="admin_cache.php?cache=syndication" method="post" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SYNDICATION}</legend>
                     <p>
@@ -45,6 +45,7 @@
                 <fieldset class="fieldset_submit">
                     <legend>{L_GENERATE}</legend>
                     <input type="submit" name="cache" value="{L_GENERATE}" class="submit" />
+					<input type="hidden" name="token" value="{TOKEN}" />
                 </fieldset> 
             </form>
         </div>

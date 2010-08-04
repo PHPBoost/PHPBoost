@@ -22,7 +22,7 @@
 		-->	
 		</script>
 		<div id="admin_contents">
-			<form action="admin_errors.php?token={TOKEN}" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
+			<form action="admin_errors.php" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<dl>
@@ -30,6 +30,7 @@
 						<dd><label><input type="submit" name="erase" value="{L_ERASE}" class="reset" /> </label></dd>
 					</dl>
 				</fieldset>
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 			
 			<br />

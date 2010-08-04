@@ -25,7 +25,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_lang_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
+			<form action="admin_lang_add.php" method="post" enctype="multipart/form-data" class="fieldset_content">
 				<fieldset>
 					<legend>{L_UPLOAD_LANG}</legend>
 					<dl>
@@ -36,7 +36,8 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
-					<input type="submit" value="{L_UPLOAD}" class="submit" />				
+					<input type="submit" value="{L_UPLOAD}" class="submit" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>	
 			</form>
 			

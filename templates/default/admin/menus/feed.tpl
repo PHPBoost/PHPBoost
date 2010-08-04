@@ -16,7 +16,7 @@ function CheckForm() {
 -->
 </script>
 <div id="admin_contents">
-	<form action="feed.php?token={TOKEN}" method="post" class="fieldset_content" onsubmit="return CheckForm();">
+	<form action="feed.php" method="post" class="fieldset_content" onsubmit="return CheckForm();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
@@ -77,7 +77,8 @@ function CheckForm() {
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}" />
 			# IF C_EDIT #<input type="hidden" name="id" value="{IDMENU}" /># ENDIF #
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />			
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />
+			<input type="hidden" name="token" value="{TOKEN}" />
 		</fieldset>	
 	</form>
 </div>

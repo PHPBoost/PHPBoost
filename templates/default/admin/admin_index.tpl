@@ -79,7 +79,7 @@
 				</table>
 			</div>
 			<div style="float:right;width:50%;">
-				<form action="admin_index.php?token={TOKEN}" method="post">
+				<form action="admin_index.php" method="post">
 					<table class="module_table">
 						<tr> 
 							<th colspan="4">
@@ -99,6 +99,7 @@
 							</td>
 						</tr>
 					</table>	
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</form>
 			</div>
 			

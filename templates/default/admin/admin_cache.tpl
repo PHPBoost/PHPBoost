@@ -33,7 +33,7 @@
 			</script>
 			# ENDIF #
 			
-			<form action="admin_cache.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_cache.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<p>
@@ -44,7 +44,8 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_GENERATE}</legend>
-					<input type="submit" name="cache" value="{L_GENERATE}" class="submit" />		
+					<input type="submit" name="cache" value="{L_GENERATE}" class="submit" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>	
 			</form>
 		</div>

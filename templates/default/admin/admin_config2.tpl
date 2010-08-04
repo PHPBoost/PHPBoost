@@ -64,7 +64,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="admin_config.php?adv=1&amp;token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+		<form action="admin_config.php?adv=1" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<fieldset> 
 				<legend>{L_CONFIG_ADVANCED}</legend>
 				<dl>
@@ -166,6 +166,7 @@
 				<input type="submit" name="advanced" value="{L_UPDATE}" class="submit" />
 				&nbsp;&nbsp; 
 				<input type="reset" value="{L_RESET}" class="reset" />
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</fieldset>		
 		</form>	
 	</div>

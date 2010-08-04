@@ -98,6 +98,7 @@
 						</label></dd>
 					</dl>
 				</fieldset>
+				<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 				
 			<table class="module_table">
@@ -191,6 +192,7 @@
 					</td>
 				</tr>
 			</table>
+			<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 			# ENDIF #
 			
@@ -230,6 +232,7 @@
 					</td>
 				</tr>
 			</table>
+			<input type="hidden" name="token" value="{TOKEN}" />
 			</form>
 			# ENDIF #
 		</div>

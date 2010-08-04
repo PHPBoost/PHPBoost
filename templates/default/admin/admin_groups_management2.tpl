@@ -125,7 +125,7 @@
 		
 		<div id="admin_contents">		
 			# IF C_EDIT_GROUP #					
-			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<dl>
@@ -174,6 +174,7 @@
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>
 			</form>
 			
@@ -243,7 +244,7 @@
 			
 			
 			# IF C_ADD_GROUP #
-			<form action="admin_groups.php?add=1&token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">				
+			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
 					<dl>
@@ -262,7 +263,7 @@
 			</form>
 			
 			
-			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<dl>
