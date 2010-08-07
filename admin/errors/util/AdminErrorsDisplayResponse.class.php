@@ -39,8 +39,8 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 
         $img = '/templates/' . get_utheme() . '/images/admin/errors.png';
         $this->set_title($lang['logged_errors']);
-        $this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors()->absolute(), $img);
-        $this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors()->absolute(), $img);
+        $this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors()->relative(), $img);
+        $this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors()->relative(), $img);
 	}
 }
 ?>

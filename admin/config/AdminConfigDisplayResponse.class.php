@@ -40,9 +40,9 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
         $view->add_lang($LANG);
         $this->set_title($LANG['configuration']);
         $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
-        $this->add_link($LANG['config_main'], TPL_PATH_TO_ROOT . '/admin/admin_config.php', $img);
-        $this->add_link($LANG['config_advanced'], TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1', $img);
-        $this->add_link($this->lang['mail_config'], TPL_PATH_TO_ROOT . '/admin/config/index.php?url=/mail', $img);
+        $this->add_link($LANG['config_main'], '/admin/admin_config.php', $img);
+        $this->add_link($LANG['config_advanced'], '/admin/admin_config.php?adv=1', $img);
+        $this->add_link($this->lang['mail_config'], '/admin/config/index.php?url=/mail', $img);
 	}
 	
 	private function load_lang()
