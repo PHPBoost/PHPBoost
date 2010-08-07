@@ -37,8 +37,8 @@ class AdminSearchDisplayResponse extends AdminMenuDisplayResponse
         $view->add_lang($lang);
         $this->set_title($lang['search_management']);
         $img = '/search/search.png';
-        $this->add_link($lang['search_config'], AdminSearchUrlBuilder::config()->absolute(), $img);
-        $this->add_link($lang['search_config_weighting'], AdminSearchUrlBuilder::weight()->absolute(), $img);
+        $this->add_link($lang['search_config'], AdminSearchUrlBuilder::config()->relative(), $img);
+        $this->add_link($lang['search_config_weighting'], AdminSearchUrlBuilder::weight()->relative(), $img);
 	}
 }
 ?>

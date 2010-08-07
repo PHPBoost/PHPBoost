@@ -53,7 +53,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	{
 		$this->full_view->assign_block_vars('links', array(
 		    'LINK' => $name,
-		    'U_LINK' => $url,
+		    'U_LINK' => ltrim($url, '/'),
 		    'U_IMG' => $img
 		));
 	}

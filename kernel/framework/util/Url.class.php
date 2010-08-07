@@ -337,6 +337,7 @@ class Url
 	 */
 	public static function path_to_root($path = null)
 	{
+		// TODO remove this remanent variable
 		static $path_to_root = PATH_TO_ROOT;
 		if ($path != null)
 		{
