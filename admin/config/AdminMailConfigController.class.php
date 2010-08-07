@@ -25,17 +25,8 @@
  *
  ###################################################*/
 
-class AdminMailConfigController extends AdminController
+class AdminMailConfigController extends AbstractAdminFormPageController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $lang;
 
 	/**
@@ -46,6 +37,7 @@ class AdminMailConfigController extends AdminController
 	public function __construct()
 	{
 		$this->load_lang();
+		parent::__construct($this->lang['mail_config_saved']);
 		$this->load_config();
 	}
 
@@ -59,31 +51,12 @@ class AdminMailConfigController extends AdminController
 		$this->config = MailServiceConfig::load();
 	}
 
-	public function execute(HTTPRequest $request)
+	protected function create_form()
 	{
-		$view = new FileTemplate('admin/config/AdminMailConfigController.tpl');
-
-		$this->build_form();
-
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
-		{
-			$this->save_configuration();
-
-			$view->add_lang($this->lang);
-			$view->assign_vars(array(
-				'C_SUBMIT' => true
-			));
-		}
-		$view->add_subtemplate('SMTP_FORM', $this->form->display());
-		return new AdminConfigDisplayResponse($view);
-	}
-
-	private function build_form()
-	{
-		$this->form = new HTMLForm('mail_sending_config');
+		$form = new HTMLForm('mail_sending_config');
 
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_mail_config']);
-		$this->form->add_fieldset($fieldset);
+		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['default_mail_sender_explain'])));
 
@@ -94,14 +67,14 @@ class AdminMailConfigController extends AdminController
 		$smtp_enabled = $this->config->is_smtp_enabled();
 
 		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['send_protocol'], array('description' => $this->lang['send_protocol_explain']));
-		$this->form->add_fieldset($fieldset);
+		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['use_custom_smtp_configuration'], $smtp_enabled,
 		array('events' => array('click' => 'if ($F("mail_sending_config_use_smtp") == "on") { show_smtp_config(); } else { hide_smtp_config(); }'))));
 
 
 		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['custom_smtp_configuration'], array('disabled' => !$smtp_enabled));
 
-		$this->form->add_fieldset($fieldset);
+		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['smtp_host'], $this->config->get_smtp_host(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_port', $this->lang['smtp_port'], $this->config->get_smtp_port(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
@@ -125,8 +98,10 @@ class AdminMailConfigController extends AdminController
 		}
 		$fieldset->add_field(new FormFieldSelectChoice('smtp_protocol', $this->lang['smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
 
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$this->form->add_button($this->submit_button);
+		$submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($submit_button);
+		$this->set_form($form);
+		$this->set_submit_button($submit_button);
 	}
 
 	private function get_multi_mail_regex()
@@ -135,9 +110,9 @@ class AdminMailConfigController extends AdminController
 		return '`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`i';
 	}
 
-	private function save_configuration()
+	protected function handle_submit()
 	{
-		$form = $this->form;
+		$form = $this->get_form();
 		$config = $this->config;
 
 		$config->set_default_mail_sender($form->get_value('default_mail_sender'));
@@ -160,6 +135,26 @@ class AdminMailConfigController extends AdminController
 		}
 
 		MailServiceConfig::save();
+	}
+	
+	protected function generate_response(Template $template)
+	{
+		$tpl = new StringTemplate('<script type="text/javascript">
+<!--
+	function show_smtp_config()
+	{
+		$FFS("smtp_configuration").enable();
+	}
+	
+	function hide_smtp_config()
+	{
+		$FFS("smtp_configuration").disable();
+	}
+-->
+</script>
+# INCLUDE form #');
+		$tpl->add_subtemplate('form', $template);
+		return new AdminConfigDisplayResponse($tpl);
 	}
 }
 ?>

@@ -66,12 +66,17 @@ abstract class AbstractAdminFormPageController extends AdminController
 	
 	private function has_been_submited()
 	{
-		return $this->submit_button->has_been_submited();
+		return $this->submit_button->has_been_submited() && $this->form->validate();
 	}
 	
 	protected abstract function handle_submit();
 	
 	protected abstract function generate_response(Template $template);
+	
+	protected function get_form()
+	{
+		return $this->form;
+	}
 	
 	protected function set_form(HTMLForm $form)
 	{
