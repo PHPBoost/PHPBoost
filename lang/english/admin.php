@@ -7,7 +7,6 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
  ###################################################
  *
  *   This program is a free software. You can redistribute it and/or modify
@@ -347,11 +346,6 @@ $LANG['int_flood'] = 'Minimal interval of time between two messages';
 $LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
 $LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
 $LANG['int_flood_explain'] = '7 seconds by default</span>';
-$LANG['cache_success'] = 'Cache has been successfully regenerated!';
-$LANG['explain_site_cache'] = 'Total Regeneration of the cache of the site from the database.
-<br /><br />Cache improves the speed of page execution time, and minimizes the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate the site cache after motifications';
-$LANG['explain_site_cache_syndication'] = 'Total Regeneration of the site\'s feed cache from the database.
-<br /><br />Cache improves the speed of page execution time, and minimizes the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate the site cache after motifications';
 $LANG['confirm_unlock_admin'] = 'An email will be sent to you with the new unlock code';
 $LANG['unlock_admin_confirm'] = 'Unlock code has been sent succesfully';
 $LANG['unlock_admin'] = 'Unlock code';

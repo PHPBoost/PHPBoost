@@ -120,7 +120,7 @@ class LangLoader
 	{
 		$lang = array();
 		include self::get_real_lang_path($folder, $filename);
-		if (empty($lang) && !empty($LANG))
+		if (empty($lang) && !empty($LANG) && is_array($LANG))
 		{
 			$lang = $LANG;
 		}
