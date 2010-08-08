@@ -31,7 +31,8 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCacheController', '`^/data/?$`'),
-	new UrlControllerMapper('AdminSyndicationCacheController', '`^/syndication/?$`')
+	new UrlControllerMapper('AdminSyndicationCacheController', '`^/syndication/?$`'),
+	new UrlControllerMapper('AdminCacheConfigController', '`^/config/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 

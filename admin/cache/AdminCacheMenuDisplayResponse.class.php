@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        AdminCacheController.class.php
+ *                   AdminCacheMenuDisplayResponse.class.php
  *                            -------------------
  *   begin                : August 5 2010
  *   copyright            : (C) 2010 Benoit Sautel
@@ -25,36 +25,22 @@
  *
  ###################################################*/
 
-class AdminCacheController extends AbstractAdminFormPageController
+class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
 {
 	private $lang;
 	
-	public function __construct()
+	public function __construct($view)
 	{
-		$this->lang = LangLoader::get('admin-cache-common');
-		parent::__construct($this->lang['cache_cleared_successfully']);
-	}
-	
-	protected function create_form()
-	{
-		$form = new HTMLForm('cache_config');
-		$fieldset = new FormFieldsetHTML('explain', $this->lang['cache']);
-		$form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldHTML('exp', $this->lang['explain_data_cache']));
-		$button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
-		$this->set_submit_button($button);
-		$form->add_button($button);
-		$this->set_form($form);
-	}
-	
-	protected function handle_submit()
-	{
-		AppContext::get_cache_service()->clear_cache();
-	}
-	
-	protected function generate_response(Template $template)
-	{
-		return new AdminCacheMenuDisplayResponse($template);
+        global $LANG;
+        
+        parent::__construct($view);
+        $cache = LangLoader::get_message('cache', 'admin-cache-common');
+        $this->set_title($cache);
+        $this->add_link($cache, '/admin/cache/?url=/data', '/templates/' . get_utheme() . '/images/admin/cache.png');
+        $syndication_cache = LangLoader::get_message('syndication_cache', 'admin-cache-common');
+        $this->add_link($syndication_cache, '/admin/cache/?url=/syndication', '/templates/' . get_utheme() . '/images/admin/rss.png');
+        $cache_configuration = LangLoader::get_message('cache_configuration', 'admin-cache-common');
+        $this->add_link($cache_configuration, '/admin/cache/?url=/config', '/templates/' . get_utheme() . '/images/admin/configuration.png');
 	}
 }
 ?>

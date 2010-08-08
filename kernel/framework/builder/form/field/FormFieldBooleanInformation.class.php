@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                   AdminCacheControllerResponse.class.php
+ *                    FormFieldBooleanInformation.class.php
  *                            -------------------
- *   begin                : August 5 2010
+ *   begin                : August 8, 2010
  *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
- *
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -25,20 +24,38 @@
  *
  ###################################################*/
 
-class AdminCacheControllerResponse extends AdminMenuDisplayResponse
+class FormFieldBooleanInformation extends FormFieldFree
 {
-	private $lang;
-	
-	public function __construct($view)
+	/**
+	 * @param bool $value
+	 */
+	public function __construct($id, $label, $value, array $properties)
 	{
-        global $LANG;
-        
-        parent::__construct($view);
-        $cache = LangLoader::get_message('cache', 'admin-cache-common');
-        $this->set_title($cache);
-        $this->add_link($cache, '/admin/cache/?url=/data', '/templates/' . get_utheme() . '/images/admin/cache.png');
-        $syndication_cache = LangLoader::get_message('syndication_cache', 'admin-cache-common');
-        $this->add_link($syndication_cache, '/admin/cache/?url=/syndication', '/templates/' . get_utheme() . '/images/admin/rss.png');
+		parent::__construct($id, $label, $value, $properties);
+	}
+
+	public function display()
+	{
+		$template = $this->get_template_to_use();
+
+		$this->assign_common_template_variables($template);
+
+		$template->assign_block_vars('fieldelements', array(
+			'ELEMENT' => $this->get_html_value()
+		));
+
+		return $template;
+	}
+	
+	protected function get_html_value()
+	{
+		$image_name = 'stop.png'; 
+		if ($this->get_value())
+		{
+			$image_name = 'success.png';
+		}
+		return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $image_name . '" alt="" />';
 	}
 }
+
 ?>

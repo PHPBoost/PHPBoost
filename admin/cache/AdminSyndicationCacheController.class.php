@@ -62,7 +62,7 @@ class AdminSyndicationCacheController extends AbstractAdminFormPageController
 	
 	protected function generate_response(Template $template)
 	{
-		return new AdminCacheControllerResponse($template);
+		return new AdminCacheMenuDisplayResponse($template);
 	}
 }
 ?>
