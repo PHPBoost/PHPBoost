@@ -77,15 +77,9 @@ class InstallationServices
 		$this->add_menus();
 		$this->generate_cache();
 
-		// TODO remove it when the $CONFIG variable will be managed by the new config manager
-		if (DISTRIBUTION_ENABLE_DEBUG_MODE)
-		{
-			Debug::enabled_debug_mode();
-		}
-		else
-		{
-			Debug::disable_debug_mode();
-		}
+		$server_environment_config = ServerEnvironmentConfig::load();
+		$server_environment_config->set_debug_mode_enabled(DISTRIBUTION_ENABLE_DEBUG_MODE);
+		ServerEnvironmentConfig::save();
 		return true;
 	}
 	
