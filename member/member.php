@@ -473,37 +473,63 @@ if (!empty($id_get)) //Espace membre
 		
 			//Gestion upload d'avatar.
 			$user_avatar = '';
-			if ($user_account_config->is_avatar_upload_enabled())
-			{
-				$dir = '../images/avatars/';
-				$Upload = new Upload($dir);
+			$dir = '../images/avatars/';
 			
-				$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_account_config->get_max_avatar_weight() * 1024);
-				if ($Upload->get_size() > 0)
+			$user_accounts_config = UserAccountsConfig::load();
+			
+			if ($user_accounts_config->is_avatar_upload_enabled())
+			{
+				if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($_FILES['avatars']))
 				{
-					if ($Upload->get_error() != '') //Erreur, on arrête ici
+					import('io/image/Image');
+					import('io/image/ImageResizer');
+					
+					$name_image = $_FILES['avatars']['name'];
+					$image = new Image($_FILES['avatars']['tmp_name']);
+					$resizer = new ImageResizer();
+					$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $dir . $name_image);
+					
+					$user_avatar = $dir . $name_image;
+					
+					// TODO gestion des erreurs 
+				}
+				else
+				{
+					$Upload = new Upload($dir);
+					
+					if ($Upload->get_size() > 0)
 					{
-						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
-					}
-					else
-					{
-						$path = $dir . $Upload->get_filename();
-						$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
-						if (!empty($error)) //Erreur, on arrête ici
-							AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
-						else
+						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_account_config->get_max_avatar_weight() * 1024);
+						if ($Upload->get_size() > 0)
 						{
-							//Suppression de l'ancien avatar (sur le serveur) si il existe!
-							$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-							if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
+							if ($Upload->get_error() != '') //Erreur, on arrête ici
 							{
-								if (is_file($user_avatar_path) && isset($match[1]))
-									@unlink('../images/avatars/' . $match[1]);
+								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
 							}
-							$user_avatar = $path; //Avatar uploadé et validé
+							else
+							{
+								$path = $dir . $Upload->get_filename();
+								$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
+								if (!empty($error)) //Erreur, on arrête ici
+									AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+								else
+								{
+									$user_avatar = $path; //Avatar uploadé et validé
+								}
+							}
 						}
 					}
 				}
+				if (empty($error))
+				{
+					$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+					if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
+					{
+						if (is_file($user_avatar_path) && isset($match[1]))
+							@unlink('../images/avatars/' . $match[1]);
+					}
+				}
+				
 			}
 			
 			if (!empty($_POST['avatar']))
