@@ -113,10 +113,8 @@ class Captcha
 	 */
 	public function js_require()
 	{
-		global $LANG;
-
 		return $this->is_available() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
-			alert("' . $LANG['require_verif_code'] . '");
+			alert("' . LangLoader::get_message('require_verif_code', 'main') . '");
 			return false;
 		}' : '';
 	}
@@ -292,12 +290,10 @@ class Captcha
 	*/
 	private function generate_code()
 	{
-		global $LANG;
-
 		$rand = rand(0,1);
 
 		##Génération du code##
-		$words = $LANG['_code_dictionnary'];
+		$words = LangLoader::get_message('_code_dictionnary', 'main');
 
 		switch ($this->difficulty)
 		{
