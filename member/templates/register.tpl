@@ -258,7 +258,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
+		<script type="text/javascript" src="../kernel/lib/js/phpboost/calendar.js"></script>
 		<form action="../member/register_valid.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_REGISTER}</legend>

@@ -1,5 +1,5 @@
 		# IF C_INCLUDE_JS #
-			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/form/calendar.js"></script>
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		# ENDIF #
 		
 		<input type="text" size="8" maxlength="8" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text" />
