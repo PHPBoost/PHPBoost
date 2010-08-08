@@ -150,7 +150,7 @@
 				var theme = '{THEME}';
 			-->
 			</script>
-			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/form/calendar.js"></script>
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 				
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
