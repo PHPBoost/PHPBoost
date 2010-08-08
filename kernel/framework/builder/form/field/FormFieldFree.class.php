@@ -36,14 +36,11 @@
  */
 class FormFieldFree extends AbstractFormField
 {
-	public function __construct($id, $label, $value)
+	public function __construct($id, $label, $value, array $properties)
 	{
-		parent::__construct($id, $label, $value, array(), array());
+		parent::__construct($id, $label, $value, $properties);
 	}
 
-	/**
-	 * @return string The html code for the free field.
-	 */
 	public function display()
 	{
 		$template = $this->get_template_to_use();

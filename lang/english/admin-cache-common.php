@@ -40,7 +40,16 @@ in order to avoid accessing the data base management system.</p>
 In this situation, you have to clear the cache in order to have PHPBoost fetch again data in the data base.
 The reference place for data is the data base. If you update data in the cache file, they will be lost at the same cache generation.</p>';
 $lang['syndication_cache'] = 'Syndication';
-$lang['explain_syndication_cache'] = '<p>PHPBoost caches all syndication data. In fact, at the first time a feed is asked, it\'s fecthed in the data base and cache, and the next times the cache is read without accessing the data base.
+$lang['explain_syndication_cache'] = '<p>PHPBoost caches all syndication data.
+In fact, at the first time a feed is asked, it\'s fecthed in the data base and cache, and the next times the cache is read without accessing the data base.
 <p>On this configuration page, you can clear the syndication cache. It\'s useful if you have manually updated data in the data base, without clearing it manually, changes aren\'t visible in the feeds.</p>';
+$lang['cache_configuration'] = 'Cache configuration';
+$lang['php_cache'] = 'PHP accelerator';
+$lang['explain_php_cache'] = '<p>Some additional PHP modules enable to improve dramatically the execution time of PHP applications.
+PHP supports <acronym title="Advanced PHP Cache">APC</acronym> which is the cache system which is becoming the reference one.</p>
+<p>By default, cache data are stored on the filesystem (in the files tree) but that kind of module allows to store directly in the server\'s central memory (RAM) which is far faster.</p>';
+$lang['enable_apc'] = 'Enable APC cache';
+$lang['apc_available'] = 'Availability of the APC extension';
+$lang['explain_apc_available'] = 'The extension is available on a few servers. If it\'s not available, you cannot benefit from the performance improvement.';
 
 ?>

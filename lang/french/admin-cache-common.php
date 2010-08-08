@@ -43,5 +43,13 @@ $lang['syndication_cache'] = 'Syndication';
 $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des flux de données (RSS ou ATOM) qui lui sont demandés. En pratique, la première fois qu\'on lui demande un flux, il va le chercher en base de données et il l\'enregistre sur le serveur web et n\'accède plus à la base de données les fois suivantes pour
 éviter des requêtes dans la base de données qui ralentissent considérablement l\'affichage des pages.</p>
 <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache de façon à forcer PHPBoost à rechercher les données dans la base de données. C\'est particulièrement utile si vous avez modifié certaines choses manuellement dans la base de données. En effet, elles ne seront pas prises en compte car le cache aura toujours les valeurs précédentes.</p>';
+$lang['cache_configuration'] = 'Configuration du cache';
+$lang['php_cache'] = 'Accélérateur PHP';
+$lang['explain_php_cache'] = '<p>Il existe des modules complémentaires à PHP permettant d\'améliorer nettement la vitesse d\'exécution des applications PHP.
+A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</acronym> qui est le système de cache aditionnel qui s\'impose comme le standard en la matière.</p>
+<p>Par défaut le cache est enregistré dans le système de fichier (arborescence de fichiers du serveur) dans le dossier /cache. Un système tel que APC permet de stocker ces données directement en mémoire centrale (RAM) qui propose des temps d\'accès incomparablement plus faibles.</p>';
+$lang['enable_apc'] = 'Activer le cache d\'APC';
+$lang['apc_available'] = 'Disponibilité de l\'extension APC';
+$lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement profiter des gains de performances qu\'elle permet d\'obtenir.';
 
 ?>
