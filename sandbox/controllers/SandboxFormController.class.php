@@ -87,7 +87,7 @@ class SandboxFormController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
-		array(new FormFieldConstraintRegex('`^[a-z0-9_]+$`i'))
+		array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
@@ -168,7 +168,7 @@ class SandboxFormController extends ModuleController
 		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
 
 		// FREE FIELD
-		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre'));
+		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre', array()));
 
 		// DATE
 		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
