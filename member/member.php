@@ -774,7 +774,7 @@ if (!empty($id_get)) //Espace membre
 		$Template->assign_vars(array(
 			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_USER_VIEW' => true,
-			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS),
+			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->get_attribute('user_id') == $id_get,
 			'C_AUTH_READ_CONTACT' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->check_level(MEMBER_LEVEL),
 			'SID' => SID,
 			'LANG' => get_ulang(),

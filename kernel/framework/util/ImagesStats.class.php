@@ -62,15 +62,13 @@ class Stats
 	 */
  	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
-		global $LANG;
-
 		$this->decimal = $decimal;
 		if ($draw_type == 'ellipse')
 		{
 			//Nombre total d'entrées
 			$this->nbr_entry = array_sum($array_stats);
 			if ($this->nbr_entry == 0)
-				$this->data_stats = array($LANG['other'] => 360);
+				$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
 			else
 			{
 				//On classe le tableau par ordre décroissant de hits
@@ -86,7 +84,7 @@ class Stats
 			$this->data_stats = $array_stats;
 		}
 		else
-			$this->data_stats = array($LANG['other'] => 360);
+			$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
 	}
 
 	/**

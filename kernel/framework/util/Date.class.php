@@ -246,8 +246,6 @@ class Date
 	 */
 	public function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
 	{
-		global $LANG;
-
 		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
 
 		if ($timestamp <= 0)
@@ -258,18 +256,18 @@ class Date
 		switch ($format)
 		{
 			case DATE_FORMAT_TINY:
-				return date($LANG['date_format_tiny'], $timestamp);
+				return date(LangLoader::get_message('date_format_tiny', 'main'), $timestamp);
 				break;
 
 			case DATE_FORMAT_SHORT:
-				return date($LANG['date_format_short'], $timestamp);
+				return date(LangLoader::get_message('date_format_short', 'main'), $timestamp);
 				break;
 			case DATE_FORMAT:
-				return date($LANG['date_format'], $timestamp);
+				return date(LangLoader::get_message('date_format', 'main'), $timestamp);
 				break;
 
 			case DATE_FORMAT_LONG:
-				return date($LANG['date_format_long'], $timestamp);
+				return date(LangLoader::get_message('date_format_long', 'main'), $timestamp);
 				break;
 
 			case DATE_TIMESTAMP:
