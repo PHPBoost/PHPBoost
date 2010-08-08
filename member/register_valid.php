@@ -86,30 +86,44 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 			{
 				####Vérification de la validité de l'avatar####
 				$user_avatar = '';
-				//Gestion upload d'avatar.
 				$dir = '../images/avatars/';
-				
 				$Upload = new Upload($dir);
-				
+
 				if ($user_accounts_config->is_avatar_upload_enabled())
 				{
-					if ($Upload->get_size() > 0)
+					if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($_FILES['avatars']))
 					{
-						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
-						if ($Upload->get_error() != '') //Erreur, on arrête ici
-							AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
-						else
+						import('io/image/Image');
+						import('io/image/ImageResizer');
+						
+						$name_image = $_FILES['avatars']['name'];
+						$image = new Image($_FILES['avatars']['tmp_name']);
+						$resizer = new ImageResizer();
+						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $dir . $name_image);
+						
+						$user_avatar = $dir . $name_image;
+						
+						// TODO gestion des erreurs 
+					}
+					else
+					{
+						if ($Upload->get_size() > 0)
 						{
-							$path = $dir . $Upload->get_filename();
-							$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
-							if (!empty($error)) //Erreur, on arrête ici
-								AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+							$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
+							if ($Upload->get_error() != '') //Erreur, on arrête ici
+								AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
 							else
-								$user_avatar = $path; //Avatar uploadé et validé.
+							{
+								$path = $dir . $Upload->get_filename();
+								$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
+								if (!empty($error)) //Erreur, on arrête ici
+									AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+								else
+									$user_avatar = $path; //Avatar uploadé et validé.
+							}
 						}
 					}
 				}
-				
 				$path = retrieve(POST, 'avatar', '');
 				if (!empty($path))
 				{

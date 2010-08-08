@@ -21,6 +21,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées (création d'une classe).
+- Gérer finement les autorisations des thèmes/langues
 
 ------------------------------------ MODULES -----------------------------------
 
