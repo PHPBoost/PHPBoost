@@ -48,13 +48,12 @@ class BBCodeEditor extends ContentEditor
 	 */
  	function display()
     {
-        global $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS, $_array_smiley_code;
+        global $Sql, $LANG, $Cache, $User;
 
         $template = $this->get_template();
 
         //Chargement de la configuration.
-        $Cache->load('uploads');
-        $Cache->load('smileys');
+        $smileys_cache = SmileysCache::load();
 
         $template->assign_vars(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
@@ -64,7 +63,7 @@ class BBCodeEditor extends ContentEditor
 			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
-			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => $User->check_auth(FilesConfig::load()->get_auth_activation_interface_files(), AUTH_FILES),
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_UPLOAD' => $LANG['bb_upload'],
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
@@ -140,18 +139,15 @@ class BBCodeEditor extends ContentEditor
 			));
         }
 
-        //Inclusion du cache des smileys pour éviter une requête inutile.
-        $Cache->load('smileys');
-
         $smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
         $smile_by_line = 5; //Smiley par ligne.
 
         $height_max = 50;
         $width_max = 50;
-        $nbr_smile = count($_array_smiley_code);
+        $nbr_smile = count($smileys_cache->get_smileys());
         $i = 1;
         $z = 0;
-        foreach ($_array_smiley_code as $code_smile => $url_smile)
+        foreach ($smileys_cache->get_smileys() as $code_smile => $url_smile)
         {
             if ($z == $smile_max)
             {

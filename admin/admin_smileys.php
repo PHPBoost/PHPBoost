@@ -45,7 +45,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
 					
 		###### Régénération du cache des smileys #######
-		$Cache->Generate_file('smileys');
+		SmileysCache::invalidate();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -60,7 +60,7 @@ elseif (!empty($id) && $del) //Suppression.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des smileys #######
-	$Cache->Generate_file('smileys');
+	SmileysCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }

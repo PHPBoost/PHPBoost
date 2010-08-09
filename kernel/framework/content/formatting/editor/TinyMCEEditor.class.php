@@ -45,18 +45,15 @@ class TinyMCEEditor extends ContentEditor
 	 */
     function display()
     {
-        global $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS;
+        global $Sql, $LANG, $User;
 
         $template = $this->get_template();
-
-        //Chargement de la configuration.
-        $Cache->load('uploads');
 
         $template->assign_vars(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
-			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => $User->check_auth(FilesConfig::load()->get_auth_activation_interface_files(), AUTH_FILES),
         	'C_NOT_JS_INCLUDED' => self::$js_included,
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,

@@ -288,69 +288,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the uploads file cache.
-	 * @return The content of the uploads file cache.
-	 */
-	function _get_uploads()
-	{
-		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG_UPLOADS = unserialize((string)self::$sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
-		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
-		foreach ($CONFIG_UPLOADS as $key => $value)
-		{
-			if ($key == 'auth_files')
-			{
-				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
-			}
-			else
-			{
-				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-			}
-		}
-		return $config_uploads;
-	}
-
-	/**
-	 * @desc Method which is called to generate the comments file cache.
-	 * @return The content of the comments file cache.
-	 */
-	function _get_com()
-	{
-		$com_config = 'global $CONFIG_COM;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd
-		$CONFIG_COM = unserialize((string)self::$sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
-		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
-		foreach ($CONFIG_COM as $key => $value)
-		{
-			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-		}
-
-		return $com_config;
-	}
-
-	//Smileys
-	function _get_smileys()
-	{
-		$i = 0;
-		$stock_smiley_code = '$_array_smiley_code = array(';
-		$result = self::$sql->query_while("SELECT code_smiley, url_smiley
-		FROM " . PREFIX . "smileys", __LINE__, __FILE__);
-		while ($row = self::$sql->fetch_assoc($result))
-		{
-			$comma = ($i != 0) ? ',' : '';
-			$stock_smiley_code .=  $comma . "\n" . '' . var_export($row['code_smiley'], true) . ' => ' . var_export($row['url_smiley'], true);
-			$i++;
-		}
-		self::$sql->query_close($result);
-		$stock_smiley_code .= "\n" . ');';
-
-		return 'global $_array_smiley_code;' . "\n" . $stock_smiley_code;
-	}
-
-	/**
 	 * @desc Method which is called to generate the statistics file cache.
 	 * @return The content of the statistics file cache.
 	 */
@@ -378,7 +315,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('menus', 'member', 'uploads', 'com', 'smileys', 'stats');
+	var $files = array('menus', 'member', 'stats');
 }
 
 ?>

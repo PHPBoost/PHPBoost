@@ -88,7 +88,7 @@ if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
 $files_config = FilesConfig::load();
 
 //Droit d'accès?.
-if (!$files_config->get_auth_activation_interface_files(), AUTH_FILES))
+if (!$User->check_auth($files_config->get_auth_activation_interface_files(), AUTH_FILES))
 {
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
