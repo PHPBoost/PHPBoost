@@ -130,9 +130,7 @@ class HtaccessFileCache implements CacheData
 	{
 		//Bandwidth protection. The /upload directory can be forbidden if the request comes from
 		//out of PHPBoost
-		global $CONFIG_UPLOADS, $Cache;
-		$Cache->load('uploads');
-		if ($CONFIG_UPLOADS['bandwidth_protect'])
+		if (FilesConfig::load()->get_bandwidth_protect())
 		{
 			$this->add_section('Bandwith protection');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');

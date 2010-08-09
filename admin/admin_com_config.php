@@ -54,17 +54,7 @@ else
 	));
 	
 	$comments_config = CommentsConfig::load();
-	
-	//Rang d'autorisation.
-	$CONFIG_COM['com_auth'] = isset($CONFIG_COM['com_auth']) ? $CONFIG_COM['com_auth'] : '-1';	
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$options = '';
-	for ($i = -1 ; $i <= 2 ; $i++)
-	{
-		$selected = ($CONFIG_COM['com_auth'] == $i) ? 'selected="selected"' : '' ;
-		$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-	}
-	
+
 	for ($i = 0; $i < 5; $i++)
 	{
 		$Template->assign_block_vars('difficulty', array(

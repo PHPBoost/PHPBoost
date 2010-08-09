@@ -32,15 +32,18 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']) )
 {
-	$CONFIG_UPLOADS = array();
-	$CONFIG_UPLOADS['size_limit'] = isset($_POST['size_limit']) ? max(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
-	$CONFIG_UPLOADS['bandwidth_protect'] = retrieve(POST, 'bandwidth_protect', 1);
-	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
-	$auth_extensions_sup = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
+	$files_config = FilesConfig::load();
 
-	if (is_array($auth_extensions_sup))
+	$files_config->set_auth_activation_interface_files(Authorizations::build_auth_array_from_form(AUTH_FILES));
+	$files_config->set_max_size_upload_members(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024);
+	$files_config->set_bandwidth_protect(retrieve(POST, 'bandwidth_protect',false));
+
+	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
+	$additional_extension = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
+	
+	if (is_array($additional_extension))
 	{	
-		foreach ($auth_extensions_sup as $extension)
+		foreach ($additional_extension as $extension)
 		{
 		    //Suppression de tous les caractères interdits dans les extensions
 		    $extension = str_replace('-', '', Url::encode_rewrite($extension));
@@ -51,19 +54,11 @@ if (!empty($_POST['valid']) )
 			}
 		}
 	}
-	$CONFIG_UPLOADS['auth_extensions'] = $auth_extensions;
-
-	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(AUTH_FILES);
-	$CONFIG_UPLOADS['auth_files'] = serialize($array_auth_all);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
-	
-	###### Régénération du cache dela configuration #######
-	$Cache->Generate_file('uploads');
+	$files_config->set_auth_extension($auth_extensions);
+	FilesConfig::save();
 	
 	//Régénération du htaccess.
-	
 	HtaccessFileCache::regenerate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
@@ -71,14 +66,14 @@ if (!empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
+
 	$Template->set_filenames(array(
 		'admin_files_config'=> 'admin/admin_files_config.tpl'
 	));
 	
-	$Cache->load('uploads');
+	$files_config = FilesConfig::load();
 	
-	$CONFIG_UPLOADS['auth_extensions'] = !empty($CONFIG_UPLOADS['auth_extensions']) && is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
-	$array_ext_sup = $CONFIG_UPLOADS['auth_extensions'];
+	$array_ext_sup = $files_config->get_auth_extension();
 	$array_extensions_type = array(
 		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
 		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
@@ -95,7 +90,7 @@ else
 		$auth_extensions .= '<optgroup label="' . $file_type . '">';
 		foreach ($array_extensions as $key => $extension)
 		{
-			$extension_key = array_search($extension, $CONFIG_UPLOADS['auth_extensions']);
+			$extension_key = array_search($extension, $files_config->get_auth_extension());
 			$selected = ($extension_key !== false) ? ' selected="selected"' : '';
 			$auth_extensions .= '<option value="' . $extension . '" id="ext' . $i . '"' . $selected . '>' . $extension . '</option>';
 			if (isset($array_ext_sup[$extension_key]))
@@ -104,16 +99,13 @@ else
 		}
 		$auth_extensions .= '</optgroup>';
 	}
-	
-	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']); //Création du tableau des rangs.	 
-	$array_auth = isset($CONFIG_UPLOADS['auth_files']) ? $CONFIG_UPLOADS['auth_files'] : array(); //Récupération des tableaux des autorisations et des groupes.
-	
+
 	$Template->assign_vars(array(
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $array_auth, array(2 => true)),
-		'SIZE_LIMIT' => isset($CONFIG_UPLOADS['size_limit']) ? NumberHelper::round($CONFIG_UPLOADS['size_limit']/1024, 2) : '0.5',
-		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
-		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 0 ? 'checked="checked"' : '',
+		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $files_config->get_auth_activation_interface_files(), array(2 => true)),
+		'SIZE_LIMIT' => NumberHelper::round($files_config->get_max_size_upload_members()/1024, 2),
+		'BANDWIDTH_PROTECT_ENABLED' => $files_config->get_bandwidth_protect() ? 'checked="checked"' : '',
+		'BANDWIDTH_PROTECT_DISABLED' => !$files_config->get_bandwidth_protect() ? 'checked="checked"' : '',
 		'AUTH_EXTENSIONS' => $auth_extensions,
 		'AUTH_EXTENSIONS_SUP' => implode(', ', $array_ext_sup),
 		'L_MB' => $LANG['unit_megabytes'],

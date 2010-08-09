@@ -71,12 +71,8 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		//Chargement de la configuration.
-		$Cache->load('uploads');
-		
-		
 		$Upload = new Upload($dir);
-		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', Upload::UNIQ_NAME);
+		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FilesConfig::load()->get_auth_extension())) . ')+$`i', Upload::UNIQ_NAME);
 		
 		if ($Upload->get_error() != '') //Erreur, on arrête ici
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#errorh');
