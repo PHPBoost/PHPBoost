@@ -40,7 +40,7 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $tpl_smileys = new template('framework/content/smileys_tinymce.tpl');
 
 //Chargement de la configuration.
-$Cache->load('smileys');
+$smileys_cache = SmileysCache::load();
 $height_max = 50;
 $width_max = 50;
 $smile_by_line = 4;
@@ -58,9 +58,9 @@ $tpl_smileys->assign_vars(array(
 	'L_REQUIRE_TEXT' => $LANG['require_text']
 ));
 
-$nbr_smile = count($_array_smiley_code);
+$nbr_smile = count($smileys_cache->get_smileys());
 $j = 0;
-foreach($_array_smiley_code as $code_smile => $url_smile)
+foreach($smileys_cache->get_smileys() as $code_smile => $url_smile)
 {
     $width_source = 18; //Valeur par défaut.
     $height_source = 18;

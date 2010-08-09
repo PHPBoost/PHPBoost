@@ -45,7 +45,7 @@ if (!empty($_POST['add']))
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')", __LINE__, __FILE__);
 		
 			###### Régénération du cache des smileys #######	
-			$Cache->Generate_file('smileys');	
+			SmileysCache::invalidate();
 		
 			AppContext::get_response()->redirect('/admin/admin_smileys.php');
 		}
