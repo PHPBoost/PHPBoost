@@ -32,21 +32,16 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']) )
 {
-	$config_com = array();
-	$config_com['com_auth'] = retrieve(POST, 'com_auth', -1);
-	$config_com['com_max'] = retrieve(POST, 'com_max', 10);
-	$config_com['com_verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? NumberHelper::numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
-	$config_com['com_verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
-	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
-	$config_com['max_link'] = retrieve(POST, 'max_link', -1);
-	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_com)) . "' WHERE name = 'com'", __LINE__, __FILE__);
-	
-	###### Régénération du cache des news #######
-	$Cache->Generate_file('com');
-		
 	$comments_config = CommentsConfig::load();
+	$server_configuration = new ServerConfiguration();
+	
+	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(AUTH_POST_COMMENTS));
 	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
+	$comments_config->set_display_captcha($server_configuration->has_gd_libray() ? $_POST['verif_code'] : false);
+	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
+	$comments_config->set_number_comments_per_page(retrieve(POST, 'com_max', 10));
+	$comments_config->set_forbidden_tags($_POST['forbidden_tags']);
+	$comments_config->set_max_links_comment(retrieve(POST, 'max_link', -1));
 	CommentsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
@@ -58,7 +53,7 @@ else
 		'admin_com_config'=> 'admin/admin_com_config.tpl'
 	));
 	
-	$Cache->load('com');
+	$comments_config = CommentsConfig::load();
 	
 	//Rang d'autorisation.
 	$CONFIG_COM['com_auth'] = isset($CONFIG_COM['com_auth']) ? $CONFIG_COM['com_auth'] : '-1';	
@@ -74,7 +69,7 @@ else
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
-			'SELECTED' => ($CONFIG_COM['com_verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+			'SELECTED' => ($comments_config->get_captcha_difficulty() == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
@@ -85,22 +80,20 @@ else
 			'IDENTIFIER' => $j++,
 			'CODE' => $identifier,
 			'TAG_NAME' => $name,
-			'C_ENABLED' => in_array($identifier, $CONFIG_COM['forbidden_tags'])
+			'C_ENABLED' => in_array($identifier, $comments_config->get_forbidden_tags())
 		));
 	}
-	
-	$comments_config = CommentsConfig::load();
-	
+
 	$Template->assign_vars(array(
 		'NBR_TAGS' => $j,
-		'OPTIONS_RANK' =>  $options,
-		'COM_MAX' => !empty($CONFIG_COM['com_max']) ? $CONFIG_COM['com_max'] : '10',
-		'MAX_LINK' => isset($CONFIG_COM['max_link']) ? $CONFIG_COM['max_link'] : '-1',
+		'AUTH_POST_COMMENTS' => Authorizations::generate_select(AUTH_POST_COMMENTS, $comments_config->get_auth_post_comments()),
+		'COM_MAX' => $comments_config->get_number_comments_per_page(),
+		'MAX_LINK' => $comments_config->get_max_links_comment(),
 		'COM_ENABLED' => !$comments_config->get_display_comments_in_popup() ? 'checked="checked"' : '',
 		'COM_DISABLED' => $comments_config->get_display_comments_in_popup() ? 'checked="checked"' : '',
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
-		'VERIF_CODE_ENABLED' => ($CONFIG_COM['com_verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
-		'VERIF_CODE_DISABLED' => ($CONFIG_COM['com_verif_code'] == 0) ? 'checked="checked"' : '',
+		'VERIF_CODE_ENABLED' => $comments_config->get_display_captcha() ? 'checked="checked"' : '',
+		'VERIF_CODE_DISABLED' => !$comments_config->get_display_captcha() ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_COM' => $LANG['com'],
 		'L_COM_MANAGEMENT' => $LANG['com_management'],
@@ -108,7 +101,7 @@ else
 		'L_COM_MAX' => $LANG['com_max'],	
 		'L_CURRENT_PAGE' => $LANG['current_page'],
 		'L_NEW_PAGE' => $LANG['new_page'],
-		'L_RANK' => $LANG['rank_com_post'],
+		'L_AUTH_POST_COMMENTS' => $LANG['rank_com_post'],
 		'L_VIEW_COM' => $LANG['view_com'],
 		'L_VERIF_CODE' => $LANG['verif_code'],
 		'L_VERIF_CODE_EXPLAIN' => $LANG['verif_code_explain'],
