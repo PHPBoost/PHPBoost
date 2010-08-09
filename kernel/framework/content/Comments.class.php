@@ -181,7 +181,7 @@ class Comments
 	 */
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG_COM, $_array_rank, $Session;
+		global $User, $Errorh, $Sql, $LANG, $_array_rank, $Session;
 		
 		if ($integrated_in_environment)
 		{
@@ -204,12 +204,10 @@ class Comments
 		
 		if ($this->is_loaded()) //Commentaires chargés?
 		{
-			//Chargement du cache
-			$Cache->load('com');
-			
+			$comments_config = CommentsConfig::load();
 			
 			$captcha = new Captcha();
-			$captcha->set_difficulty($CONFIG_COM['com_verif_code_difficulty']);
+			$captcha->set_difficulty($comments_config->get_captcha_difficulty());
 
 			###########################Insertion##############################
 			if (retrieve(POST, 'comForm', false) && !$updatecom)
@@ -228,7 +226,7 @@ class Comments
 						AppContext::get_response()->redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires?
-					if ($User->check_level($CONFIG_COM['com_auth']))
+					if ($User->check_auth($comments_config->get_auth_post_comments(), AUTH_POST_COMMENTS))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 						$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
@@ -239,15 +237,15 @@ class Comments
 						}
 						
 						//Code de vérification anti-bots.
-						if ($CONFIG_COM['com_verif_code'] && !$captcha->is_valid())
+						if ($comments_config->get_display_captcha() && !$captcha->is_valid())
 						{
 							AppContext::get_response()->redirect($path_redirect . '&errorh=verif#errorh');
 						}
-						$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
+						$contents = FormatingHelper::strparse($contents, $comments_config->get_forbidden_tags());
 						
 						if (!TextHelper::check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
-						if (!TextHelper::check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
+						if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 						
 						//Récupération de l'adresse de la page.
@@ -304,7 +302,7 @@ class Comments
 							));
 						}
 						$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($row['contents']), array(
-							'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+							'forbiddentags' => $comments_config->get_forbidden_tags(), 'title' => $LANG['message'], 
 							'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 						));
 						$fieldset->add_field(new FormFieldHidden('idprov', $row['idprov']));
@@ -331,9 +329,9 @@ class Comments
 			
 						if (!empty($contents) && !empty($login))
 						{
-							$contents = FormatingHelper::strparse($contents, $CONFIG_COM['forbidden_tags']);
+							$contents = FormatingHelper::strparse($contents, $comments_config->get_forbidden_tags());
 							
-							if (!TextHelper::check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
+							if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
 								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
 
 							$this->update($contents, $login);
@@ -398,7 +396,7 @@ class Comments
 						$errno = E_USER_WARNING;
 						break;
 					case 'l_flood':
-						$errstr = sprintf($LANG['e_l_flood'], $CONFIG_COM['max_link']);
+						$errstr = sprintf($LANG['e_l_flood'], $comments_config->get_max_links_comment());
 						break;
 					case 'l_pseudo':
 						$errstr = $LANG['e_link_pseudo'];
@@ -424,7 +422,7 @@ class Comments
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
-					if ($User->check_level($CONFIG_COM['com_auth']))
+					if ($User->check_auth($comments_config->get_auth_post_comments(), AUTH_POST_COMMENTS))
 					{	
 						$Template->assign_vars(array(
 							'AUTH_POST_COM' => true
@@ -465,10 +463,10 @@ class Comments
 					));
 				}
 				$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($contents), array(
-					'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+					'forbiddentags' => $comments_config->get_forbidden_tags(), 'title' => $LANG['message'], 
 					'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 				));
-				if ($is_guest && $CONFIG_COM['com_verif_code']) //Code de vérification, anti-bots.
+				if ($is_guest && $comments_config->get_display_captcha()) //Code de vérification, anti-bots.
 				{
 					$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 				}
@@ -489,7 +487,7 @@ class Comments
 					'COM_FORM' => $form->display(),
 					'CURRENT_PAGE_COM' => $integrated_in_environment,
 					'POPUP_PAGE_COM' => !$integrated_in_environment,
-					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $comments_config->get_number_comments_per_page(), 3),
 					'SCRIPT' => $this->script,
 					'PATH' => SCRIPT,
 					'VAR' => $vars_simple,
@@ -515,7 +513,7 @@ class Comments
 				WHERE c.script = '" . $this->script . "' AND c.idprov = '" . $this->idprov . "'
 				GROUP BY c.idcom
 				ORDER BY c.timestamp DESC
-				" . $Sql->limit($pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+				" . $Sql->limit($pagination->get_first_msg($comments_config->get_number_comments_per_page(), 'pc'), $comments_config->get_number_comments_per_page()), __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
 					list($edit, $del) = array(false, false);

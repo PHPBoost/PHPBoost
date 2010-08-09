@@ -46,14 +46,12 @@
 			<form action="admin_com_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_COM_CONFIG}</legend>
-					<dl> 
-						<dt><label for="com_auth">* {L_RANK}</label></dt>
+					<dl>
+						<dt>
+							<label for="auth_post_comments">{L_AUTH_POST_COMMENTS}</label>
+						</dt>
 						<dd>
-							<label>
-								<select name="com_auth" id="com_auth">
-									{OPTIONS_RANK}
-								</select>
-							</label>
+							{AUTH_POST_COMMENTS}
 						</dd>
 					</dl>
 					<dl> 
