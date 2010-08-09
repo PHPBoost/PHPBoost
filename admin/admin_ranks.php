@@ -50,8 +50,7 @@ if (!empty($_POST['valid']))
 	}
 	$Sql->query_close($result);
 
-	###### Régénération du cache des rangs #######
-	$Cache->Generate_file('ranks');
+	RanksCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
@@ -61,7 +60,7 @@ elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_RANKS . " WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
-	$Cache->Generate_file('ranks');
+	RanksCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT); 	
 }
