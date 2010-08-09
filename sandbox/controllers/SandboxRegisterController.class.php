@@ -38,7 +38,10 @@ class SandboxRegisterController extends ModuleController
 
 	private function build_form()
 	{	
-		$form = new HTMLForm('slide_admin');
+		
+		$sandboxregisterconfig = new SandboxRegisterConfig();
+		
+		$form = new HTMLForm('register');
 		
 		// S'inscrire
 		$fieldset = new FormFieldsetHTML('s\'inscrire', 'S\'inscrire');
@@ -61,36 +64,26 @@ class SandboxRegisterController extends ModuleController
 			'class' => 'text', 'maxlength' => 25),
 		array(new FormFieldConstraintLengthRange(6, 12))
 		));
-		$fieldset->add_field(new FormFieldSelectChoice('user_lang', 'Langue par défaut', '',
-			array(
-				new FormFieldSelectChoiceOption('Français', '1'),
-				new FormFieldSelectChoiceOption('Anglais', '2'),
-			)
+		$fieldset->add_field(new FormFieldSelectChoice('user_lang', 'Langue par défaut', UserAccountsConfig::load()->get_default_lang(),
+			$sandboxregisterconfig->return_array_lang_for_formbuilder()
 		));
+		$fieldset->add_field(new FormFieldCaptcha());
 		
 		//Options
 		$fieldset2 = new FormFieldsetHTML('option', 'Option');
 		$form->add_fieldset($fieldset2);
 		
-		$fieldset2->add_field(new FormFieldSelectChoice('user_theme', 'Thème par défaut', '',
-			array(
-				new FormFieldSelectChoiceOption('Base', '1'),
-				new FormFieldSelectChoiceOption('Base2', '2'),
-			),
-			array('events' => array('onchange' => 'change_img_theme(\'img_theme\', this.options[selectedIndex].value)'))
+		$fieldset2->add_field(new FormFieldSelectChoice('user_theme', 'Thème par défaut', UserAccountsConfig::load()->get_default_theme(),
+			$sandboxregisterconfig->return_array_theme_for_formubuilder(),
+			array('events' => array('change' => 'change_img_theme(\'img_theme\', HTMLForms.getField("user_theme").getValue())'))
 		));
 		$fieldset2->add_field(new FormFieldFree('preview_theme', 'Preview du thème', '<img id="img_theme" src="../templates/base/theme/images/theme.jpg" alt="" style="vertical-align:top" />', array()));
 		
-		$fieldset2->add_field(new FormFieldSelectChoice('user_editor', 'Editeur de texte par défaut', '',
-			array(
-				new FormFieldSelectChoiceOption('BBCode', '1'),
-				new FormFieldSelectChoiceOption('TinyMCE', '2'),
-			)
+		$fieldset2->add_field(new FormFieldSelectChoice('user_editor', 'Editeur de texte par défaut', ContentFormattingConfig::load()->get_default_editor(),
+			$sandboxregisterconfig->return_array_editor_for_formubuilder()
 		));
 		$fieldset2->add_field(new FormFieldSelectChoice('user_timezone', 'Choix du fuseau horaire', '',
-			array(
-				new FormFieldSelectChoiceOption('GMT', '1'),
-			)
+			$sandboxregisterconfig->return_array_timezone_for_formubuilder()
 		));
 		$fieldset2->add_field(new FormFieldCheckbox('user_hide_mail', 'Cacher votre email', true));
 		
@@ -118,13 +111,15 @@ class SandboxRegisterController extends ModuleController
 		$fieldset3->add_field(new FormFieldSelectChoice('user_sex', 'Sexe', '',
 			array(
 				new FormFieldSelectChoiceOption('--', '1'),
-				new FormFieldSelectChoiceOption('Masculin', '2'),
-				new FormFieldSelectChoiceOption('Feminim', '3'),
+				new FormFieldSelectChoiceOption('Homme', '2'),
+				new FormFieldSelectChoiceOption('Femme', '3'),
 			)
 		));
 		
-		$fieldset3->add_field(new FormFieldDate('user_born', 'Date de naissance', new Date(), array(
-			'description' => 'Date de naissance valide')
+		$fieldset3->add_field(new FormFieldDate('user_born', 'Date de naissance', new Date(), 
+			array(
+				'description' => 'Date de naissance valide', 
+			)
 		));
 		
 		$fieldset3->add_field(new FormFieldMultiLineTextEditor('user_sign', 'Signature', '',
