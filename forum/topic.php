@@ -181,7 +181,7 @@ $Template->assign_vars(array(
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
-$Cache->load('ranks'); //Récupère les rangs en cache.
+$ranks_cache = RanksCache::load()->get_ranks(); //Récupère les rangs en cache.
 $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
@@ -290,19 +290,19 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$user_rank_icon = '';
 	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
-		$user_rank = $_array_rank[-2][0];
+		$user_rank = $ranks_cache[-2][0];
 		$user_group = $user_rank;
-		$user_rank_icon = $_array_rank[-2][1];
+		$user_rank_icon = $ranks_cache[-2][1];
 	}
 	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
-		$user_rank = $_array_rank[-1][0];
+		$user_rank = $ranks_cache[-1][0];
 		$user_group = $user_rank;
-		$user_rank_icon = $_array_rank[-1][1];
+		$user_rank_icon = $ranks_cache[-1][1];
 	}
 	else
 	{
-		foreach ($_array_rank as $msg => $ranks_info)
+		foreach ($ranks_cache as $msg => $ranks_info)
 		{
 			if ($msg >= 0 && $msg <= $row['user_msg'])
 			{ 

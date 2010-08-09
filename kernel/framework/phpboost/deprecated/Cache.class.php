@@ -288,27 +288,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the ranks file cache.
-	 * @return The content of the ranks file cache.
-	 */
-	function _get_ranks()
-	{
-		$stock_array_ranks = '$_array_rank = array(';
-		$result = self::$sql->query_while("SELECT name, msg, icon
-		FROM " . PREFIX . "ranks
-		ORDER BY msg DESC", __LINE__, __FILE__);
-		while ($row = self::$sql->fetch_assoc($result))
-		{
-			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
-		}
-		self::$sql->query_close($result);
-
-		$stock_array_ranks = trim($stock_array_ranks, ',');
-		$stock_array_ranks .= ');';
-		return	'global $_array_rank;' . "\n" . $stock_array_ranks;
-	}
-
-	/**
 	 * @desc Method which is called to generate the uploads file cache.
 	 * @return The content of the uploads file cache.
 	 */
@@ -399,7 +378,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('menus', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+	var $files = array('menus', 'member', 'uploads', 'com', 'smileys', 'stats');
 }
 
 ?>

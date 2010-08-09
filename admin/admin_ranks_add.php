@@ -45,7 +45,7 @@ if (!empty($_POST['add']))
 		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
 				
 		###### Régénération du cache des rangs #######
-		$Cache->Generate_file('ranks');
+		RanksCache::invalidate();
 		
 		AppContext::get_response()->redirect('/admin/admin_ranks.php');	
 	}
