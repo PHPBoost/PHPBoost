@@ -77,7 +77,7 @@ class SandboxRegisterController extends ModuleController
 			$sandboxregisterconfig->return_array_theme_for_formubuilder(),
 			array('events' => array('change' => 'change_img_theme(\'img_theme\', HTMLForms.getField("user_theme").getValue())'))
 		));
-		$fieldset2->add_field(new FormFieldFree('preview_theme', 'Preview du thème', '<img id="img_theme" src="../templates/base/theme/images/theme.jpg" alt="" style="vertical-align:top" />', array()));
+		$fieldset2->add_field(new FormFieldFree('preview_theme', 'Preview du thème', '<img id="img_theme" src="../templates/'. UserAccountsConfig::load()->get_default_theme() .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />', array()));
 		
 		$fieldset2->add_field(new FormFieldSelectChoice('user_editor', 'Editeur de texte par défaut', ContentFormattingConfig::load()->get_default_editor(),
 			$sandboxregisterconfig->return_array_editor_for_formubuilder()
@@ -149,7 +149,7 @@ class SandboxRegisterController extends ModuleController
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button(new FormButtonDefaultSubmit());
-
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		return $form;
 	}
 }
