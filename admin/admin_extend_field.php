@@ -46,6 +46,9 @@ if ($del && !empty($id))
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);
 	}
+	
+	ExtendFieldCache::invalidate();
+	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($_POST['valid']))
@@ -92,6 +95,8 @@ elseif (!empty($_POST['valid']))
 				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
+			ExtendFieldCache::invalidate();
+			
 			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 		}
 		else
@@ -122,11 +127,15 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 			
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
+	
+	ExtendFieldCache::invalidate();
+	
 }
 elseif (!empty($id))
 {	
-	$extend_field = $Sql->query_array(DB_TABLE_MEMBER_EXTEND_CAT, "id", "name", "contents", "field", "possible_values", "default_values", "required", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	
+
+	$extend_field = ExtendFieldCache::load()->get_extend_field($id);
+
 	$regex_checked = 2;
 	$predef_regex = false;
 	if (is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5)
@@ -250,7 +259,7 @@ else
 	
 	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-	
+
 	$result = $Sql->query_while("SELECT id, class, name, required
 	FROM " . PREFIX . "member_extend_cat
 	WHERE display = 1
