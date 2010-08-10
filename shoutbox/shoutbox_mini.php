@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function shoutbox_mini($position, $block)
 {
-    global $Cache, $LANG, $User, $CONFIG_SHOUTBOX, $nbr_members, $last_member_id, $last_member_login, $Sql;
+    global $Cache, $LANG, $User, $CONFIG_SHOUTBOX, $Sql;
     
     //Mini Shoutbox non activée si sur la page archive shoutbox.
     if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_READ))

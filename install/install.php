@@ -754,7 +754,7 @@ switch($step)
 						$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
 					}
 
-					$Cache->generate_file('stats');
+					StatsCache::invalidate();
 
 					//On redirige vers l'étape suivante
 					AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_ADMIN_ACCOUNT + 1), true));

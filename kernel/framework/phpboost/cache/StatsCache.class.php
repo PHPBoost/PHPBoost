@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      	 SmileysCache.class.php
+ *                      	 StatsCache.class.php
  *                            -------------------
- *   begin                : August 09, 2010
+ *   begin                : August 0, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -28,53 +28,56 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class SmileysCache implements CacheData
+class StatsCache implements CacheData
 {
-	private $smileys = array();
+	private $stats = array();
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->smileys = array();
+		$this->stats = array();
 		$db_connection = PersistenceContext::get_sql();
-		
-		$result = $db_connection->query_while("SELECT code_smiley, url_smiley
-			FROM " . PREFIX . "smileys", __LINE__, __FILE__);
-		
-		while ($row = $db_connection->fetch_assoc($result))
-		{
-			$this->smileys[$row['code_smiley']] = $row['url_smiley'];
-		}
-		
-		$db_connection->query_close($result);
+			
+		$nbr_members = $db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
+		$last_member = $db_connection->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $db_connection->limit(0, 1), __LINE__, __FILE__);
+
+		$this->stats = 	array(
+			'nbr_members' => $nbr_members,
+			'last_member_login' => $last_member['login'],
+			'last_member_id' => $last_member['user_id']
+		);
 	}
 
-	public function get_smileys()
+	public function get_stats()
 	{
-		return $this->smileys;
+		return $this->stats;
 	}
 	
-	public function get_url_smiley($code_smiley)
+	public function get_stats_properties($identifier)
 	{
-		return $this->smileys[$code_smiley];
+		if (isset($this->stats[$identifier]))
+		{
+			return $this->stats[$identifier];
+		}
+		return null;
 	}
 	
 	/**
-	 * Loads and returns the smileys cached data.
-	 * @return SmileysCache The cached data
+	 * Loads and returns the stats cached data.
+	 * @return StatsCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'smileys');
+		return CacheManager::load(__CLASS__, 'kernel', 'stats');
 	}
 	
 	/**
-	 * Invalidates the current smileys cached data.
+	 * Invalidates the current stats cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'smileys');
+		CacheManager::invalidate('kernel', 'stats');
 	}
 }

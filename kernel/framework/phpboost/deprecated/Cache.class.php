@@ -286,36 +286,13 @@ class Cache
 
 		return $config_member;
 	}
-
-	/**
-	 * @desc Method which is called to generate the statistics file cache.
-	 * @return The content of the statistics file cache.
-	 */
-	function _get_stats()
-	{
-		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = self::$sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = self::$sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . self::$sql->limit(0, 1), __LINE__, __FILE__);
-
-		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
-		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";
-		$code .= '$last_member_id = ' . var_export($last_member['user_id'], true). ';' . "\n";
-
-		$array_stats_img = array('browser.png', 'os.png', 'lang.png', 'theme.png', 'sex.png');
-		foreach ($array_stats_img as $key => $value)
-		{
-			@unlink(PATH_TO_ROOT . '/cache/' . $value);
-		}
-
-		return $code;
-	}
-
+	
 	## Private Attributes ##
 	/**
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('menus', 'member', 'stats');
+	var $files = array('menus', 'member');
 }
 
 ?>

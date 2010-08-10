@@ -275,7 +275,7 @@ class InstallationServices
 		{
 			$this->connect_admin($password, $auto_connect);
 		}
-		$Cache->generate_file('stats');
+		StatsCache::invalidate();
 	}
 
 	private function update_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
