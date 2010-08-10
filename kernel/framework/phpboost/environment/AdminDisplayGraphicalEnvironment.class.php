@@ -250,6 +250,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_THEMES' => $LANG['themes'],
 			'L_CACHE' => $LANG['cache'],
 			'L_SYNDICATION' => $LANG['syndication'],
+			'L_CACHE_CONFIG' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
 			'L_CONTENT_CONFIG' => $LANG['content_config'],
 			'U_INDEX_SITE' => Environment::get_home_page(),
 		    'L_WEBSITE_UPDATES' => $LANG['website_updates']
