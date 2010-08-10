@@ -273,26 +273,13 @@ class Cache
 	{
 		return MenuService::generate_cache(true);
 	}
-
-	/**
-	 * @desc Method which is called to generate the members file cache.
-	 * @return The content of the members file cache.
-	 */
-	function _get_member()
-	{
-		$config_member = 'global $ADMINISTRATOR_ALERTS;' . "\n";
-
-		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
-
-		return $config_member;
-	}
 	
 	## Private Attributes ##
 	/**
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('menus', 'member');
+	var $files = array('menus');
 }
 
 ?>

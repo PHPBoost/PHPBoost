@@ -25,9 +25,8 @@
  *
  ###################################################*/
 
-
-
-//Flag which distinguishes an alert and a contribution in the database
+ 
+ //Flag which distinguishes an alert and a contribution in the database
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 /**
@@ -187,7 +186,7 @@ class AdministratorAlertService
 	 */
     public static function save_alert($alert)
 	{
-		global $Sql, $Cache;
+		global $Sql;
 		
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
@@ -200,7 +199,7 @@ class AdministratorAlertService
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
 			{
-				$Cache->generate_file('member');
+				MemberCache::invalidate();
 				$alert->set_must_regenerate_cache(false);
 			}
 		}
@@ -211,7 +210,7 @@ class AdministratorAlertService
 			$alert->set_id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS ));
 
 			//Cache regeneration
-			$Cache->generate_file('member');
+			MemberCache::invalidate();
 		}
 	}
 	
@@ -221,33 +220,16 @@ class AdministratorAlertService
 	 */
 	public static function delete_alert($alert)
 	{
-		global $Sql, $Cache;
+		global $Sql;
 		
 		// If it exists in the data base
 		if ($alert->get_id() > 0)
 		{			
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			$alert->set_id(0);
-			$Cache->generate_file('member');
+			MemberCache::invalidate();
 		}
 		//Else it's not present in the database, we have nothing to delete
-	}
-	
-	/**
-	 * @desc Counts the number of unread alerts.
-	 * @return int[] An associative map:
-	 * <ul>	
-	 * 	<li>unread => the number of the unread alerts</li>
-	 * 	<li>all => the number of all the alerts of the site</li>
-	 * </ul>
-	 */
-	public static function compute_number_unread_alerts()
-	{
-		global $Sql;
-		
-		return array('unread' => $Sql->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
-			'all' => $Sql->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
-			);
 	}
 	
 	/**
@@ -256,8 +238,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_unread_alerts()
 	{
-		global $ADMINISTRATOR_ALERTS;
-		return $ADMINISTRATOR_ALERTS['unread'];
+		return MemberCache::load()->get_member_properties('unread');
 	}
 	
 	/**
@@ -266,8 +247,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_alerts()
 	{
-		global $ADMINISTRATOR_ALERTS;
-		return $ADMINISTRATOR_ALERTS['all'];
+		return MemberCache::load()->get_member_properties('all');
 	}
 }
 

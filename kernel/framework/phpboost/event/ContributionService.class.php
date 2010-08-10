@@ -175,7 +175,7 @@ class ContributionService
 	 */
 	public static function save_contribution($contribution)
 	{
-		global $Sql, $Cache;
+		global $Sql;
 		
 		// If it exists already in the data base
 		if ($contribution->get_id() > 0)
@@ -197,7 +197,7 @@ class ContributionService
 		//Regeneration of the member cache file
 		if ($contribution->get_must_regenerate_cache())
 		{
-			$Cache->generate_file('member');
+			MemberCache::invalidate();
 			$contribution->set_must_regenerate_cache(false);
 		}
 	}
@@ -208,7 +208,7 @@ class ContributionService
 	 */
 	public static function delete_contribution($contribution)
 	{
-		global $Sql, $Cache;
+		global $Sql;
 		
 		//If it exists in database
 		if ($contribution->get_id() > 0)
@@ -218,7 +218,7 @@ class ContributionService
 			$contribution->set_id(0);
 			
 			//Regeneration of the member cache file
-			$Cache->generate_file('member');
+			MemberCache::invalidate();
 		}
 	}
 	
@@ -227,8 +227,7 @@ class ContributionService
 	 */
 	public static function generate_cache()
 	{
-		global $Cache;
-		$Cache->generate_file('member');
+		MemberCache::invalidate();
 	}
 	
 	/**
