@@ -30,16 +30,14 @@ require_once('../calendar/calendar_begin.php');
 require_once('../kernel/header.php');
 require_once('calendar_constants.php');
 
-$time = gmdate_format('Ymd');
-$year = substr($time, 0, 4);
-$month = substr($time, 4, 2);
-$day = substr($time, 6, 2);
+$date = new Date();
+$array_time = explode('-',$date->to_date());
 
-$year = retrieve(GET, 'y', $year);
+$year = retrieve(GET, 'y', $array_time[0]);
 $year = empty($year) ? 0 : $year;
-$month = retrieve(GET, 'm', $month);
+$month = retrieve(GET, 'm', $array_time[1]);
 $month = empty($month) ? 0 : $month;
-$day = retrieve(GET, 'd', $day);
+$day = retrieve(GET, 'd', $array_time[2]);
 $day = empty($day) ? 0 : $day;
 $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
@@ -69,10 +67,11 @@ if ($checkdate === true && empty($id) && !$add)
 		
 		if (!empty($event_up))
 		{
-			$time = gmdate_format('Ymd', $event_up);
-			$year = substr($time, 0, 4);
-			$month = substr($time, 4, 2);
-			$day = substr($time, 6, 2);
+			$time = gmdate_format('Y-m-d', $event_up);
+			$array_time = explode('-', $time);
+			$year = $array_time[0];
+			$month = $array_time[1];
+			$day = $array_time[2];
 			
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
@@ -89,10 +88,11 @@ if ($checkdate === true && empty($id) && !$add)
 			
 		if (!empty($event_down))
 		{
-			$time = gmdate_format('Ymd', $event_down);
-			$year = substr($time, 0, 4);
-			$month = substr($time, 4, 2);
-			$day = substr($time, 6, 2);
+			$time = gmdate_format('Y-m-d', $event_down);
+			$array_time = explode('-', $time);
+			$year = $array_time[0];
+			$month = $array_time[1];
+			$day = $array_time[2];
 			
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}

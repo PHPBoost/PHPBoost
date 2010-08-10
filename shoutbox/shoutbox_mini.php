@@ -29,13 +29,14 @@ if (defined('PHPBOOST') !== true) exit;
 
 function shoutbox_mini($position, $block)
 {
-    global $Cache, $LANG, $User, $CONFIG_SHOUTBOX, $Sql;
-    
+    global $Cache, $LANG, $User, $Sql;
+	
+    $config_shoutbox = ShoutboxConfig::load();
+	
     //Mini Shoutbox non activée si sur la page archive shoutbox.
-    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_READ))
+    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ))
     {
     	load_module_lang('shoutbox');
-    	$Cache->load('shoutbox'); //Chargement du cache
     	
     	###########################Insertion##############################
     	$shoutbox = retrieve(POST, 'shoutbox', false);
@@ -50,7 +51,7 @@ function shoutbox_mini($position, $block)
     		if (!empty($shout_pseudo) && !empty($shout_contents))
     		{
     			//Accès pour poster.
-    			if ($User->check_auth($CONFIG_SHOUTBOX['shoutbox_auth'], AUTH_SHOUTBOX_WRITE))
+    			if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
     			{
     				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
     				$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
@@ -61,10 +62,10 @@ function shoutbox_mini($position, $block)
     				}
     				
     				//Vérifie que le message ne contient pas du flood de lien.
-    				$shout_contents = FormatingHelper::strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
+    				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_tags());
     				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
-    				if (!TextHelper::check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
+    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links())) //Nombre de liens max dans le message.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
     					
     				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
@@ -93,14 +94,13 @@ function shoutbox_mini($position, $block)
     			'C_VISIBLE_SHOUT' => true
     		));
     	
-		$refresh_delay = empty($CONFIG_SHOUTBOX['shoutbox_refresh_delay']) ? 60 : $CONFIG_SHOUTBOX['shoutbox_refresh_delay'];
-    	$tpl->assign_vars(array(
+		$tpl->assign_vars(array(
     		'SID' => SID,
-    		'SHOUT_REFRESH_DELAY' => (int)max($refresh_delay, 0),
+    		'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
     		'L_ALERT_TEXT' => $LANG['require_text'],
     		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
     		'L_ALERT_FLOOD' => $LANG['e_flood'],
-    		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $CONFIG_SHOUTBOX['shoutbox_max_link']),
+    		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links()),
     		'L_ALERT_LINK_PSEUDO' => $LANG['e_link_pseudo'],
     		'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
     		'L_ALERT_READONLY' => $LANG['e_readonly'],

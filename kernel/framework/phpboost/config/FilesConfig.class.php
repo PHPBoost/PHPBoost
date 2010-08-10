@@ -30,68 +30,63 @@
  */
 class FilesConfig extends AbstractConfigData
 {
-	const AUTH_ACTIVATION_INTERFACE_FILES = 'auth_activation_interface_files';
-	const MAX_SIZE_UPLOAD_MEMBERS = 'max_size_upload_members';
-	const BANDWITCH_PROTECT = 'bandwidth_protect';
-	const AUTH_EXTENSION = 'auth_extension';
+	const AUTHORIZATION_ENABLE_INTERFACE_FILES = 'authorization_enable_interface_files';
+	const MAXIMUM_SIZE_UPLOAD = 'maximum_size_upload';
+	const ENABLE_BANDWIDTH_PROTECTION = 'enable_bandwidth_protect';
+	const AUTHORIZED_EXTENSIONS = 'authorized_extensions';
 	
-	public function get_auth_activation_interface_files()
+	public function get_authorization_enable_interface_files()
 	{
-		return $this->get_property(self::AUTH_ACTIVATION_INTERFACE_FILES);
+		return $this->get_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES);
 	}
 	
-	public function set_auth_activation_interface_files(Array $array)
+	public function set_authorization_enable_interface_files(array $array)
 	{
-		$this->set_property(self::AUTH_ACTIVATION_INTERFACE_FILES, $array);
+		$this->set_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES, $array);
 	}
 	
-	public function get_max_size_upload_members()
+	public function get_maximum_size_upload()
 	{
-		return $this->get_property(self::MAX_SIZE_UPLOAD_MEMBERS);
+		return $this->get_property(self::MAXIMUM_SIZE_UPLOAD);
 	}
 	
-	public function set_max_size_upload_members($size)
+	public function set_maximum_size_upload($size)
 	{
-		$this->set_property(self::MAX_SIZE_UPLOAD_MEMBERS, $size);
+		$this->set_property(self::MAXIMUM_SIZE_UPLOAD, $size);
 	}
 	
-	public function get_bandwidth_protect()
+	public function get_enable_bandwidth_protect()
 	{
-		return $this->get_property(self::BANDWITCH_PROTECT);
+		return $this->get_property(self::ENABLE_BANDWIDTH_PROTECTION);
 	}
 	
-	public function set_bandwidth_protect($value)
+	public function set_enable_bandwidth_protect($value)
 	{
-		$this->set_property(self::BANDWITCH_PROTECT, $value);
+		$this->set_property(self::ENABLE_BANDWIDTH_PROTECTION, $value);
 	}
 	
-	public function get_auth_extension()
+	public function get_authorized_extensions()
 	{
-		return $this->get_property(self::AUTH_EXTENSION);
+		return $this->get_property(self::AUTHORIZED_EXTENSIONS);
 	}
 	
-	public function set_auth_extension(Array $array)
+	public function set_authorized_extensions(array $array)
 	{
-		$this->set_property(self::AUTH_EXTENSION, $array);
+		$this->set_property(self::AUTHORIZED_EXTENSIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTH_ACTIVATION_INTERFACE_FILES => array('r0' => '1', 'r1' => '1'),
-			self::MAX_SIZE_UPLOAD_MEMBERS => '512',
-			self::BANDWITCH_PROTECT => true,
-			self::AUTH_EXTENSION => array(
-				'0' => 'jpg', '1' => 'jpeg', '2' => 'bmp', '3' => 'gif', '4' => 'png', 
-				'5' => 'tif', '6' => 'svg', '7' => 'ico', '8' => 'rar', '9' => 'zip', 
-				'10' => 'gz', '11' => 'txt', '12' => 'doc', '13' => 'docx', '14' => 'pdf',
-				'15' => 'ppt', '16' => 'xls', '17' => 'odt', '18' => 'odp', '19' => 'ods',
-				'20' => 'odg', '21' => 'odc', '22' => 'odf', '23' => 'odb', '24' => 'xcf',
-				'25' => 'flv', '26' => 'mp3', '27' => 'ogg', '28' => 'mpg', '29' => 'mov',
-				'30' => 'swf', '31' => 'wav', '32' => 'wmv', '33' => 'midi', '34' => 'mng',
-				'35' => 'qt', '36' => 'c', '37' => 'h','38' => 'cpp', '39' => 'java', 
-				'40' => 'py', '41' => 'css', '42' => 'html', '43' => 'xml', '44' => 'ttf', 
-				'45' => 'tex', '46' => 'rtf', '47' => 'psd'
+			self::AUTHORIZATION_ENABLE_INTERFACE_FILES => array('r0' => 1, 'r1' => 1),
+			self::MAXIMUM_SIZE_UPLOAD => 512,
+			self::ENABLE_BANDWIDTH_PROTECTION => true,
+			self::AUTHORIZED_EXTENSIONS => array(
+				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'rar', 'zip', 
+				'gz', 'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods',
+				'odg', 'odc', 'odf', 'odb', 'xcf','flv', 'mp3','ogg', 'mpg', 'mov',
+				'swf', 'wav', 'wmv', 'midi', 'mng',	'qt', 'c', 'h',  'cpp', 'java', 
+				'py', 'css', 'html', 'xml', 'ttf', 	'tex', 'rtf', 'psd'		
 			)			
 		);
 	}

@@ -35,18 +35,15 @@ require_once('shoutbox_constants.php');
 
 if (!empty($_POST['valid']) )
 {
-	$config_shoutbox = array(
-		'shoutbox_max_msg' => retrieve(POST, 'shoutbox_max_msg', 10),
-		'shoutbox_auth' => Authorizations::build_auth_array_from_form(AUTH_SHOUTBOX_READ, AUTH_SHOUTBOX_WRITE),
-		'shoutbox_forbidden_tags' => isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array()),
-		'shoutbox_max_link' => retrieve(POST, 'shoutbox_max_link', -1),
-		'shoutbox_refresh_delay' => NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float'),
-	);
-		
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
+	$config_shoutbox = ShoutboxConfig::load();
 	
-	###### Régénération du cache de la shoutbox #######
-	$Cache->Generate_module_file('shoutbox');
+	$config_shoutbox->set_max_messages(retrieve(POST, 'shoutbox_max_msg', 10));
+	$config_shoutbox->set_authorization(Authorizations::build_auth_array_from_form(AUTH_SHOUTBOX_READ, AUTH_SHOUTBOX_WRITE));
+	$config_shoutbox->set_forbidden_tags($_POST['shoutbox_forbidden_tags']);
+	$config_shoutbox->set_max_links(retrieve(POST, 'shoutbox_max_link', -1));
+	$config_shoutbox->set_refresh_delay(NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float'));
+
+	ShoutboxConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
@@ -57,8 +54,8 @@ else
 		'admin_shoutbox_config'=> 'shoutbox/admin_shoutbox_config.tpl'
 	));
 	
-	$Cache->load('shoutbox');
-	
+	$config_shoutbox = ShoutboxConfig::load();
+
 	//Balises interdites => valeur 1.
 	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 1, 'stitle' => 1, 'style' => 1, 'url' => 0, 
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
@@ -66,11 +63,11 @@ else
 	
 	$Template->assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
-		'SHOUTBOX_MAX_MSG' => !empty($CONFIG_SHOUTBOX['shoutbox_max_msg']) ? $CONFIG_SHOUTBOX['shoutbox_max_msg'] : '100',
-		'AUTH_READ' => Authorizations::generate_select(AUTH_SHOUTBOX_READ,$CONFIG_SHOUTBOX['shoutbox_auth']),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_SHOUTBOX_WRITE,$CONFIG_SHOUTBOX['shoutbox_auth']),
-		'MAX_LINK' => isset($CONFIG_SHOUTBOX['shoutbox_max_link']) ? $CONFIG_SHOUTBOX['shoutbox_max_link'] : '-1',
-		'SHOUTBOX_REFRESH_DELAY' => isset($CONFIG_SHOUTBOX['shoutbox_refresh_delay']) ? ($CONFIG_SHOUTBOX['shoutbox_refresh_delay']/60000) : 1,
+		'SHOUTBOX_MAX_MSG' =>  $config_shoutbox->get_max_messages(),
+		'AUTH_READ' => Authorizations::generate_select(AUTH_SHOUTBOX_READ, $config_shoutbox->get_authorization()),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_SHOUTBOX_WRITE, $config_shoutbox->get_authorization()),
+		'MAX_LINK' => $config_shoutbox->get_max_links(),
+		'SHOUTBOX_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay()/60000,
 		'L_REQUIRE' => $LANG['require'],	
 		'L_SHOUTBOX' => $LANG['title_shoutbox'],
 		'L_SHOUTBOX_CONFIG' => $LANG['shoutbox_config'],
@@ -96,7 +93,7 @@ else
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $name => $value)
 	{
 		$selected = '';
-		if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
+		if (in_array($name, $config_shoutbox->get_forbidden_tags()))
 			$selected = 'selected="selected"';
 		
 		$Template->assign_block_vars('forbidden_tags', array(
