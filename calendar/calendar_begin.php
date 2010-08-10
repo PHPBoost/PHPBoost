@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)
 	
 load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_calendar']);
-$Cache->load('calendar');
+$calendar_config = CalendarConfig::load();
 
 //Chargement du css alternatif.
 define('ALTERNATIVE_CSS', 'calendar');
