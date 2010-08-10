@@ -28,7 +28,7 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class ExtendFieldCache implements CacheData
+class ExtendFieldsCache implements CacheData
 {
 	private $extend_fields = array();
 
@@ -69,6 +69,11 @@ class ExtendFieldCache implements CacheData
 	{
 		return $this->extend_fields;
 	}
+	
+	public function get_exist_field()
+	{
+		return (count($this->extend_fields) > 0) ? true : false;
+	}
 
 	public function get_extend_field($id)
 	{
@@ -81,7 +86,7 @@ class ExtendFieldCache implements CacheData
 	
 	/**
 	 * Loads and returns the extend_fields cached data.
-	 * @return ExtendFieldCache The cached data
+	 * @return ExtendFieldsCache The cached data
 	 */
 	public static function load()
 	{
