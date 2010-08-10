@@ -40,9 +40,6 @@ function stats_mini($position, $block)
     MenuService::assign_positions_conditions($tpl, $block);
     
     $stats_cache = StatsCache::load();
-	print_r($stats_cache);
-	$stats_cache_d = $stats_cache->get_stats_properties('last_member_login');
-	print_r($stats_cache_d);
     $l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
     
     $tpl->assign_vars(array(

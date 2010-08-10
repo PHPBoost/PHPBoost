@@ -665,9 +665,6 @@ if (!empty($id_get)) //Espace membre
 	{
 		//Info membre
 		$msg_mbr = FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message());
-	
-		//Chargement de la configuration.
-		$Cache->load('uploads');
 
 		//Droit d'accès?.
 		$is_auth_files = $User->check_auth(FilesConfig::load()->get_auth_activation_interface_files(), AUTH_FILES);
