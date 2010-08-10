@@ -234,7 +234,7 @@ else //Affichage.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 	//Gestion des rangs.	
-	$Cache->load('ranks');
+	$ranks_cache = RanksCache::load()->get_ranks();
 	$j = 0;
 	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 	FROM " . PREFIX . "shoutbox s
@@ -278,19 +278,19 @@ else //Affichage.
 		$user_rank_icon = '';
 		if ($row['level'] === '2') //Rang spécial (admins).  
 		{
-			$user_rank = $_array_rank[-2][0];
+			$user_rank = $ranks_cache[-2][0];
 			$user_group = $user_rank;
-			$user_rank_icon = $_array_rank[-2][1];
+			$user_rank_icon = $ranks_cache[-2][1];
 		}
 		elseif ($row['level'] === '1') //Rang spécial (modos).  
 		{
-			$user_rank = $_array_rank[-1][0];
+			$user_rank = $ranks_cache[-1][0];
 			$user_group = $user_rank;
-			$user_rank_icon = $_array_rank[-1][1];
+			$user_rank_icon = $ranks_cache[-1][1];
 		}
 		else
 		{
-			foreach ($_array_rank as $msg => $ranks_info)
+			foreach ($ranks_cache as $msg => $ranks_info)
 			{
 				if ($msg >= 0 && $msg <= $row['user_msg'])
 				{ 

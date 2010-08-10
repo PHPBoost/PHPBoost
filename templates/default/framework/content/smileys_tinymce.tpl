@@ -12,8 +12,8 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
         <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
 		
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce_popup.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/plugins/emotions/js/emotions.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/tinymce/tiny_mce_popup.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/tinymce/plugins/emotions/js/emotions.js"></script>
 	</head>
 	<body>
 		<table class="module_table" style="margin:15px auto">

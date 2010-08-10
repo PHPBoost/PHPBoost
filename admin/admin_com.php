@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 ));
 
 //Chargement du cache
-$Cache->load('com');
+$comments_config = CommentsConfig::load();
 
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
@@ -61,7 +61,7 @@ $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] 
 $Template->assign_vars(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
-	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $comments_config->get_max_links_comment(), 3),
 	'L_DISPLAY_RECENT' => $LANG['display_recent_com'],
 	'L_DISPLAY_TOPIC_COM' => $LANG['display_topic_com'],
 	'L_CONFIRM_DELETE' => $LANG['alert_delete_msg'],
@@ -94,7 +94,7 @@ foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 }
 
 //Gestion des rangs.
-$Cache->load('ranks');
+$ranks_cache = RanksCache::load()->get_ranks();
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
 $result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
@@ -104,7 +104,7 @@ LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_tim
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
-" . $Sql->limit($Pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+" . $Sql->limit($Pagination->get_first_msg($comments_config->get_max_links_comment(), 'pc'), $comments_config->get_max_links_comment()), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	$row['user_id'] = (int)$row['user_id'];
@@ -121,19 +121,19 @@ while ($row = $Sql->fetch_assoc($result))
 	$user_group = $user_rank;
 	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
-		$user_rank = $_array_rank[-2][0];
+		$user_rank = $ranks_cache[-2][0];
 		$user_group = $user_rank;
-		$user_rank_icon = $_array_rank[-2][1];
+		$user_rank_icon = $ranks_cache[-2][1];
 	}
 	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
-		$user_rank = $_array_rank[-1][0];
+		$user_rank = $ranks_cache[-1][0];
 		$user_group = $user_rank;
-		$user_rank_icon = $_array_rank[-1][1];
+		$user_rank_icon = $ranks_cache[-1][1];
 	}
 	else
 	{
-		foreach ($_array_rank as $msg => $ranks_info)
+		foreach ($ranks_cache as $msg => $ranks_info)
 		{
 			if ($msg >= 0 && $msg <= $row['user_msg'])
 			{ 
