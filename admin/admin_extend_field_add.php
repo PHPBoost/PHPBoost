@@ -73,7 +73,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
 			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
 			
-			ExtendFieldCache::invalidate();
+			ExtendFieldsCache::invalidate();
 			
 			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 		}

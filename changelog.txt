@@ -47,7 +47,7 @@
 [*] [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 [*] Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
-- Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
+[*] Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
 [*] Meilleur détection des robots d'indexation, ajout de la prise en compte de Bing.
 [*] Ajout d'un défilement vertical dans l'administration pour la visualisation de la liste des utilisateurs connectées.
 [*] Ajout d'un bloc note à l'accueil de l'administration.

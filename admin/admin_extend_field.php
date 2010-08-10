@@ -47,7 +47,7 @@ if ($del && !empty($id))
 		$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);
 	}
 	
-	ExtendFieldCache::invalidate();
+	ExtendFieldsCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
@@ -95,7 +95,7 @@ elseif (!empty($_POST['valid']))
 				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			ExtendFieldCache::invalidate();
+			ExtendFieldsCache::invalidate();
 			
 			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 		}
@@ -128,14 +128,15 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
 	
-	ExtendFieldCache::invalidate();
+	ExtendFieldsCache::invalidate();
 	
 }
 elseif (!empty($id))
 {	
 
-	$extend_field = ExtendFieldCache::load()->get_extend_field($id);
-
+	$extend_field = ExtendFieldsCache::load()->get_extend_field($id);
+	ExtendFieldsMembersCache::invalidate();
+	print_r(ExtendFieldsMembersCache::load());
 	$regex_checked = 2;
 	$predef_regex = false;
 	if (is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5)
