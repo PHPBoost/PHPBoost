@@ -34,15 +34,12 @@ require_once('calendar_constants.php');
 ##########################admin_calendar.tpl###########################
 if (!empty($_POST['valid']) )
 {
-	$CONFIG_CALENDAR = array(
-		'calendar_auth' => Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO)
-	);
+	$calendar_config = CalendarConfig::load();
+	
+	$calendar_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO));
+	
+	CalendarConfig::save();
 
-	PersistenceContext::get_sql()->query("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_CALENDAR)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
-	
-	###### Régénération du cache des news #######
-	$Cache->Generate_module_file('calendar');
-	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
@@ -50,8 +47,8 @@ else
 {		
 	$Template = new FileTemplate('calendar/admin_calendar_config.tpl');
 
-	$Cache->load('calendar');
-	
+	$calendar_config = CalendarConfig::load();
+
 	$Template->assign_vars(array(
 		'L_REQUIRE' => $LANG['require'],	
 		'L_CALENDAR' => $LANG['title_calendar'],
@@ -61,9 +58,9 @@ else
 		'L_AUTH_MODO' => $LANG['rank_modo'],
 		'L_UPDATE' => $LANG['update'],
 		'L_ERASE' => $LANG['erase'],
-		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$CONFIG_CALENDAR['calendar_auth']),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$CONFIG_CALENDAR['calendar_auth']),
-		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$CONFIG_CALENDAR['calendar_auth']),
+		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$calendar_config->get_authorization()),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$calendar_config->get_authorization()),
+		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$calendar_config->get_authorization()),
 		));
 
 	$Template->display();
