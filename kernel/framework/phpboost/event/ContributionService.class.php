@@ -197,7 +197,7 @@ class ContributionService
 		//Regeneration of the member cache file
 		if ($contribution->get_must_regenerate_cache())
 		{
-			MemberCache::invalidate();
+			UnreadContributionsCache::invalidate();
 			$contribution->set_must_regenerate_cache(false);
 		}
 	}
@@ -218,7 +218,7 @@ class ContributionService
 			$contribution->set_id(0);
 			
 			//Regeneration of the member cache file
-			MemberCache::invalidate();
+			UnreadContributionsCache::invalidate();
 		}
 	}
 	
@@ -227,7 +227,7 @@ class ContributionService
 	 */
 	public static function generate_cache()
 	{
-		MemberCache::invalidate();
+		UnreadContributionsCache::invalidate();
 	}
 	
 	/**
