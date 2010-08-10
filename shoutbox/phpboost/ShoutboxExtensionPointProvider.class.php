@@ -36,23 +36,6 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('shoutbox');
     }
-    
-    //Récupération du cache.
-	function get_cache()
-	{
-		$shoutbox_config = 'global $CONFIG_SHOUTBOX;' . "\n";
-			
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_SHOUTBOX = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'shoutbox'", __LINE__, __FILE__));
-		$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
-		
-		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
-			$CONFIG_SHOUTBOX['shoutbox_forbidden_tags'] = unserialize($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
-		
-		$shoutbox_config .= '$CONFIG_SHOUTBOX = ' . var_export($CONFIG_SHOUTBOX, true) . ';' . "\n";
-		
-		return $shoutbox_config;
-	}
 
 	//Actions journalière.
 	function on_changeday()

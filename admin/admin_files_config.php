@@ -34,9 +34,9 @@ if (!empty($_POST['valid']) )
 {
 	$files_config = FilesConfig::load();
 
-	$files_config->set_auth_activation_interface_files(Authorizations::build_auth_array_from_form(AUTH_FILES));
-	$files_config->set_max_size_upload_members(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024);
-	$files_config->set_bandwidth_protect(retrieve(POST, 'bandwidth_protect',false));
+	$files_config->set_authorization_enable_interface_files(Authorizations::build_auth_array_from_form(AUTH_FILES));
+	$files_config->set_maximum_size_upload(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024);
+	$files_config->set_enable_bandwidth_protect(retrieve(POST, 'bandwidth_protect',false));
 
 	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
 	$additional_extension = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
@@ -55,7 +55,7 @@ if (!empty($_POST['valid']) )
 		}
 	}
 	
-	$files_config->set_auth_extension($auth_extensions);
+	$files_config->set_authorized_extensions($auth_extensions);
 	FilesConfig::save();
 	
 	//Régénération du htaccess.
@@ -73,7 +73,7 @@ else
 	
 	$files_config = FilesConfig::load();
 	
-	$array_ext_sup = $files_config->get_auth_extension();
+	$array_ext_sup = $files_config->get_authorized_extensions();
 	$array_extensions_type = array(
 		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
 		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
@@ -90,7 +90,7 @@ else
 		$auth_extensions .= '<optgroup label="' . $file_type . '">';
 		foreach ($array_extensions as $key => $extension)
 		{
-			$extension_key = array_search($extension, $files_config->get_auth_extension());
+			$extension_key = array_search($extension, $files_config->get_authorized_extensions());
 			$selected = ($extension_key !== false) ? ' selected="selected"' : '';
 			$auth_extensions .= '<option value="' . $extension . '" id="ext' . $i . '"' . $selected . '>' . $extension . '</option>';
 			if (isset($array_ext_sup[$extension_key]))
@@ -102,10 +102,10 @@ else
 
 	$Template->assign_vars(array(
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $files_config->get_auth_activation_interface_files(), array(2 => true)),
-		'SIZE_LIMIT' => NumberHelper::round($files_config->get_max_size_upload_members()/1024, 2),
-		'BANDWIDTH_PROTECT_ENABLED' => $files_config->get_bandwidth_protect() ? 'checked="checked"' : '',
-		'BANDWIDTH_PROTECT_DISABLED' => !$files_config->get_bandwidth_protect() ? 'checked="checked"' : '',
+		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $files_config->get_authorization_enable_interface_files(), array(2 => true)),
+		'SIZE_LIMIT' => NumberHelper::round($files_config->get_maximum_size_upload()/1024, 2),
+		'BANDWIDTH_PROTECT_ENABLED' => $files_config->get_enable_bandwidth_protect() ? 'checked="checked"' : '',
+		'BANDWIDTH_PROTECT_DISABLED' => !$files_config->get_enable_bandwidth_protect() ? 'checked="checked"' : '',
 		'AUTH_EXTENSIONS' => $auth_extensions,
 		'AUTH_EXTENSIONS_SUP' => implode(', ', $array_ext_sup),
 		'L_MB' => $LANG['unit_megabytes'],

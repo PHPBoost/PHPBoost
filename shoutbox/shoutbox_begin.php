@@ -32,6 +32,6 @@ load_module_lang('shoutbox'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_shoutbox']);
 
 //Chargement du cache
-$Cache->load('shoutbox');
+$config_shoutbox = ShoutboxConfig::load();
 
 ?>
