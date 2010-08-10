@@ -670,7 +670,7 @@ if (!empty($id_get)) //Espace membre
 		$Cache->load('uploads');
 
 		//Droit d'accès?.
-		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
+		$is_auth_files = $User->check_auth(FilesConfig::load()->get_auth_activation_interface_files(), AUTH_FILES);
 	
 		$Template->assign_vars(array(
 			'C_USER_INDEX' => true,

@@ -67,7 +67,7 @@ class RanksCache implements CacheData
 	
 	/**
 	 * Loads and returns the ranks cached data.
-	 * @return GroupsCache The cached data
+	 * @return RanksCache The cached data
 	 */
 	public static function load()
 	{

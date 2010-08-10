@@ -81,11 +81,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_smilies()
 	{
 		//Smilies
-		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if (!empty($_array_smiley_code))
+		$smileys_cache = SmileysCache::load();
+		if (!empty($smileys_cache->get_smileys()))
 		{
 			//Création du tableau de remplacement
-			foreach ($_array_smiley_code as $code => $img)
+			foreach ($smileys_cache->get_smileys() as $code => $img)
 			{
 				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;

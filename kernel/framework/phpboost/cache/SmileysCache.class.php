@@ -63,7 +63,7 @@ class SmileysCache implements CacheData
 	
 	/**
 	 * Loads and returns the smileys cached data.
-	 * @return GroupsCache The cached data
+	 * @return SmileysCache The cached data
 	 */
 	public static function load()
 	{

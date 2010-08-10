@@ -98,7 +98,7 @@ class FilesConfig extends AbstractConfigData
 
 	/**
 	 * Returns the configuration.
-	 * @return CommentsConfig
+	 * @return FilesConfig
 	 */
 	public static function load()
 	{
