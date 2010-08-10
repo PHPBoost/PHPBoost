@@ -532,11 +532,11 @@ class TinyMCEParser extends ContentFormattingParser
 			'<img src="/images/smileys/$1" alt="$2" class="smiley" />', $this->content);
 
 		//Smilies
-		$smileys_cache = SmileysCache::load();
-		if (!empty($smileys_cache->get_smileys()))
+		$smileys_cache = SmileysCache::load()->get_smileys();
+		if (!empty($smileys_cache))
 		{
 			//Création du tableau de remplacement.
-			foreach ($smileys_cache->get_smileys() as $code => $img)
+			foreach ($smileys_cache as $code => $img)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')(?:(?![a-z0-9]))`';
 				$smiley_img_url[] = '<img src="/images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';

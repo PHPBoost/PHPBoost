@@ -175,7 +175,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						AdministratorAlertService::save_alert($alert);
 					}
 					else //Régénération du cache des stats.
-						$Cache->Generate_file('stats');
+						StatsCache::invalidate();
 					
 					//Champs supplémentaires.
 					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);

@@ -47,7 +47,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		Uploads::Empty_folder_member($id_post); //Suppression de tout les fichiers et dossiers du membre.
 			
 		//On régénère le cache
-		$Cache->Generate_file('stats');
+		StatsCache::invalidate();
 			
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -319,7 +319,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '', '" . UserAccountsConfig::load()->get_default_lang() . "', '', '" . $mail . "', '" . GeneralConfig::load()->get_site_timezone() . "', '1', '" . time() . "', '', 0, '', '', '', '', '', '', '', 0, '0000-00-00', '', 0, 0, 0, 0, 0, '', '', 0, 1)", __LINE__, __FILE__);
 					
 					//On régénère le cache
-					$Cache->Generate_file('stats');
+					StatsCache::invalidate();
 						
 					AppContext::get_response()->redirect(HOST . SCRIPT); 	
 				}
@@ -344,7 +344,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	Uploads::Empty_folder_member($id); //Suppression de tout les fichiers et dossiers du membre.
 	
 	//On régénère le cache
-	$Cache->Generate_file('stats');
+	StatsCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }

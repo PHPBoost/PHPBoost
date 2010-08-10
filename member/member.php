@@ -427,7 +427,7 @@ if (!empty($id_get)) //Espace membre
 			Uploads::Empty_folder_member($User->get_attribute('user_id')); //Suppression de tout les fichiers et dossiers du membre.
 
 			//On régénère le cache
-			$Cache->Generate_file('stats');
+			StatsCache::invalidate();
 		}
 		
 		//Mise à jour du reste de la config.
