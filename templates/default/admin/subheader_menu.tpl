@@ -90,6 +90,7 @@
 				<ul id="ssmenu32">
 					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/data/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/syndication/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/rss_mini.png);">{L_SYNDICATION}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/config" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CACHE_CONFIG}</a></li>
 				</ul>
 			</li>		
 			<li><a href="{PATH_TO_ROOT}/admin/admin_errors.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
