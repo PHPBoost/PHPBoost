@@ -29,59 +29,18 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
+$extend_field = new ExtendFieldService();
 if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
-	$name = retrieve(POST, 'name', '');
-	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
-	$field = retrieve(POST, 'field', 0);
-	$required = retrieve(POST, 'required', 0);
-	$possible_values = retrieve(POST, 'possible_values', '');
-	$default_values = retrieve(POST, 'default_values', '');
-	
-	$regex_type = retrieve(POST, 'regex_type', 0);
-	if (empty($regex_type))
-		$regex = retrieve(POST, 'regex1', 0);
-	else
-		$regex = retrieve(POST, 'regex2', '');
-
-	$array_field = array(
-		1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
-		2 => 'TEXT NOT NULL', 
-		3 => 'TEXT NOT NULL', 
-		4 => 'TEXT NOT NULL', 
-		5 => 'TEXT NOT NULL', 
-		6 => 'TEXT NOT NULL'
-	);
-	
-	if (!empty($name) && !empty($field))
+	$error = $extend_field->errors();
+	if(empty($error))
 	{
-		function rewrite_field($field)
-		{
-			$field = strtolower($field);
-			$field = Url::encode_rewrite($field);
-			$field = str_replace('-', '_', $field);
-			return 'f_' . $field;
-		}
-		$field_name = rewrite_field($name);
-		$check_name = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
-		if (empty($check_name)) 
-		{
-			$class = $Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', '" . $required . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
-			//Alteration de la table pour prendre en compte le nouveau champs.
-			$field_name = $field_name . ' ' . $array_field[$field];
-			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
-			
-			ExtendFieldsCache::invalidate();
-			
-			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
-		}
-		else
-			AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
+		$extend_field->add();
+		
+		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error='.$error.'#errorh');
 }
 else
 {
@@ -90,7 +49,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = $extend_field->errors();
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif ($get_error == 'exist_field')

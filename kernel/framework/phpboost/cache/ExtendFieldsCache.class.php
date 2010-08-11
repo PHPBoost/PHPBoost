@@ -42,7 +42,7 @@ class ExtendFieldsCache implements CacheData
 		
 		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display 
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
-			ORDER BY id", __LINE__, __FILE__);
+			ORDER BY class", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{

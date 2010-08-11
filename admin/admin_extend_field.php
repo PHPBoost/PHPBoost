@@ -37,15 +37,12 @@ $bottom = retrieve(GET, 'bot', 0);
 $Template->set_filenames(array(
 	'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 ));
-	
+
+$extend_field = new ExtendFieldService();
+
 if ($del && !empty($id))
 {
-	$field_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	if (!empty($field_name)) 
-	{
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);
-	}
+	$extend_field->delete($id);
 	
 	ExtendFieldsCache::invalidate();
 	
@@ -53,57 +50,15 @@ if ($del && !empty($id))
 }
 elseif (!empty($_POST['valid']))
 {
-	$name = retrieve(POST, 'name', '');
-	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
-	$field = retrieve(POST, 'field', 0);
-	$required = retrieve(POST, 'required', 0);
-	$possible_values = retrieve(POST, 'possible_values', '');
-	$default_values = retrieve(POST, 'default_values', '');
-	
-	$regex_type = retrieve(POST, 'regex_type', 0);
-	if (empty($regex_type))
-		$regex = retrieve(POST, 'regex1', 0);
-	else
-		$regex = retrieve(POST, 'regex2', '');
-
-	$array_field = array(
-		1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
-		2 => 'TEXT NOT NULL', 
-		3 => 'TEXT NOT NULL', 
-		4 => 'TEXT NOT NULL', 
-		5 => 'TEXT NOT NULL', 
-		6 => 'TEXT NOT NULL'
-	);
-	
-	if (!empty($name) && !empty($field))
+	$error = $extend_field->errors();
+	if(empty($error))
 	{
-		function rewrite_field($field)
-		{
-			$field = strtolower($field);
-			$field = Url::encode_rewrite($field);
-			$field = str_replace('-', '_', $field);
-			return 'f_' . $field;
-		}
-		$field_name = rewrite_field($name);
+		$extend_field->update($id);
 		
-		$check_name = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
-		if (empty($check_name)) 
-		{
-			$new_field_name = $field_name . ' ' . $array_field[$field];
-			$previous_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			if ($previous_name != $field_name)
-				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			
-			ExtendFieldsCache::invalidate();
-			
-			AppContext::get_response()->redirect('/admin/admin_extend_field.php');
-		}
-		else
-			AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
+		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_extend_field.php?id=' . $id . '&error='.$error.'#errorh');
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
@@ -115,6 +70,8 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
+		ExtendFieldsCache::invalidate();
+		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
 	elseif (!empty($bottom))
@@ -125,18 +82,22 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
+		ExtendFieldsCache::invalidate();
+		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
+		
 	}
-	
-	ExtendFieldsCache::invalidate();
-	
 }
 elseif (!empty($id))
 {	
-
+	$get_error = $extend_field->errors();
+	if ($get_error == 'incomplete')
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	elseif ($get_error == 'exist_field')
+		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
+		
 	$extend_field = ExtendFieldsCache::load()->get_extend_field($id);
-	ExtendFieldsMembersCache::invalidate();
-	print_r(ExtendFieldsMembersCache::load());
+
 	$regex_checked = 2;
 	$predef_regex = false;
 	if (is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5)
@@ -258,30 +219,30 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 
-	$result = $Sql->query_while("SELECT id, class, name, required
-	FROM " . PREFIX . "member_extend_cat
-	WHERE display = 1
-	ORDER BY class", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	$result = ExtendFieldsCache::load()->get_extend_fields();
+	foreach($result as $id => $row)
 	{
-		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
+		if($row['display'] == 1)
+		{
+			//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
+			$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+			<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
+			$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+			<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
-		$Template->assign_block_vars('field', array(
-			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'L_REQUIRED' => $row['required'] ? $LANG['yes'] : $LANG['no'],
-			'TOP' => $top_link,
-			'BOTTOM' => $bottom_link
-		));		
+			$Template->assign_block_vars('field', array(
+				'ID' => $row['id'],
+				'NAME' => $row['name'],
+				'L_REQUIRED' => $row['required'] ? $LANG['yes'] : $LANG['no'],
+				'TOP' => $top_link,
+				'BOTTOM' => $bottom_link
+			));	
+		}		
 	}
-	$Sql->query_close($result);
+
 }
 
 $Template->pparse('admin_extend_field');		
