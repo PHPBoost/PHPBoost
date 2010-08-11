@@ -53,7 +53,7 @@ class ExtendFieldUtil
 		return 'f_' . $field;
 	}
 	
-	public function get_regex($regex_type)
+	public static function get_regex($regex_type)
 	{
 		if (is_numeric($regex_type))
 		{

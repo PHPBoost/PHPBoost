@@ -479,7 +479,7 @@ if (!empty($id_get)) //Espace membre
 			
 			if ($user_accounts_config->is_avatar_upload_enabled())
 			{
-				if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($_FILES['avatars']))
+				if ($user_accounts_config->is_avatar_auto_resizing_enabled() && isset($_FILES['avatars']))
 				{
 					import('io/image/Image');
 					import('io/image/ImageResizer');
@@ -564,94 +564,8 @@ if (!empty($id_get)) //Espace membre
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
 				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				
-				//Champs supplémentaires.
-				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-				if ($extend_field_exist > 0)
-				{
-					$req_update = '';
-					$req_field = '';
-					$req_insert = '';
-					$result = $Sql->query_while("SELECT field_name, field, possible_values, regex, required
-					FROM " . PREFIX . "member_extend_cat
-					WHERE display = 1", __LINE__, __FILE__);
-					while ($row = $Sql->fetch_assoc($result))
-					{
-						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
-						//Champs requis, si vide redirection.
-						if ($row['required'] && $row['field'] != 6 && empty($field))
-							AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
-				
-						//Validation par expressions régulières.
-						if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
-						{
-							$array_regex = array(
-								1 => '`^[0-9]+$`',
-								2 => '`^[a-z]+$`',
-								3 => '`^[a-z0-9]+$`',
-								4 => '`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`',
-								5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`'
-							);
-							$row['regex'] = $array_regex[$row['regex']];
-						}
-						
-						$valid_field = true;
-						if (!empty($row['regex']) && $row['field'] <= 2)
-						{
-							if (@preg_match($row['regex'], trim($field)))
-								$valid_field = true;
-							else
-								$valid_field = false;
-						}
-						
-						if ($row['field'] == 2)
-							$field = FormatingHelper::strparse($field);
-						elseif ($row['field'] == 4)
-						{
-							$array_field = is_array($field) ? $field : array();
-							$field = '';
-							foreach ($array_field as $value)
-								$field .= TextHelper::strprotect($value) . '|';
-						}
-						elseif ($row['field'] == 6)
-						{
-							$field = '';
-							$i = 0;
-							$array_possible_values = explode('|', $row['possible_values']);
-							foreach ($array_possible_values as $value)
-							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? TextHelper::strprotect($value) . '|' : '';
-								$i++;
-							}
-							if ($row['required'] && empty($field))
-								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
-						}
-						else
-							$field = TextHelper::strprotect($field);
-							
-						if (!empty($field))
-						{
-							if ($valid_field) //Validation par expression régulière si présente.
-							{
-								$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
-								$req_field .= $row['field_name'] . ', ';
-								$req_insert .= '\'' . trim($field, '|') . '\', ';
-							}
-						}
-					}
-					$Sql->query_close($result);
-					
-					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
-					if ($check_member)
-					{
-						if (!empty($req_update))
-							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
-					}
-					else
-					{
-						if (!empty($req_insert))
-							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . NumberHelper::numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
-					}
-				}
+				$ExtendFieldMemberService = new ExtendFieldMemberService();
+				$ExtendFieldMemberService->update($User->get_attribute('user_id'));
 				
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}

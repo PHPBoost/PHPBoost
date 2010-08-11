@@ -288,12 +288,11 @@ if (empty($key))
 			$Template->assign_vars(array(			
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$Template->assign_block_vars('miscellaneous', array(			
-			));
-			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values
-			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " AS exc
-			WHERE exc.display = 1
-			ORDER BY exc.class", __LINE__, __FILE__);
+			
+			$result = $Sql->query_while("SELECT name, contents, field, required, field_name, possible_values, default_values
+			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
+			WHERE display = 1
+			ORDER BY class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{	
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
@@ -360,7 +359,7 @@ if (empty($key))
 					));
 				}
 				
-				$Template->assign_block_vars('miscellaneous.list', array(
+				$Template->assign_block_vars('list', array(
 					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
