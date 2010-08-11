@@ -69,7 +69,7 @@ class ExtendFieldService
 			{		
 				$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " 	(name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $this->name . "', '" . $this->class . "', '" . $this->field_name . "', '" . $this->contents . "', '" . $this->field . "', '" . $this->possible_values . "', '" . $this->default_values . "', '" . $this->required . "', 1, '" . $this->regex . "')", __LINE__, __FILE__);		
 				
-				ExtendFieldUtil::add_field_name($this->field_name);
+				ExtendFieldUtil::add_field_name($this->field_name, $this->field);
 				
 				ExtendFieldsCache::invalidate();
 			}

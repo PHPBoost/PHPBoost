@@ -30,16 +30,19 @@ class ExtendFieldUtil
 {
 	public static function get_field_type($field_type)
 	{
-		$array_field_type = array(
-			1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
-			2 => 'TEXT NOT NULL', 
-			3 => 'TEXT NOT NULL', 
-			4 => 'TEXT NOT NULL', 
-			5 => 'TEXT NOT NULL', 
-			6 => 'TEXT NOT NULL'
-		);
-		
-		return $array_field_type[$field_type];
+		if (is_numeric($field_type))
+		{
+			$array_field_type = array(
+				1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
+				2 => 'TEXT NOT NULL', 
+				3 => 'TEXT NOT NULL', 
+				4 => 'TEXT NOT NULL', 
+				5 => 'TEXT NOT NULL', 
+				6 => 'TEXT NOT NULL'
+			);
+			
+			return $array_field_type[$field_type];
+		}
 	}
 	
 	public static function rewrite_field($field)
@@ -52,30 +55,32 @@ class ExtendFieldUtil
 	
 	public function get_regex($regex_type)
 	{
-		$array_regex = array(
-			1 => '`^[0-9]+$`',
-			2 => '`^[a-z]+$`',
-			3 => '`^[a-z0-9]+$`',
-			4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
-			5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
-		);
-		
-		return $array_regex[$regex_type];
+		if (is_numeric($regex_type))
+		{
+			$array_regex = array(
+				1 => '`^[0-9]+$`',
+				2 => '`^[a-z]+$`',
+				3 => '`^[a-z0-9]+$`',
+				4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
+				5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
+			);
+			
+			return $array_regex[$regex_type];
+		}
 	}
 	
-	public static function add_field_name($field_name)
+	public static function add_field_name($field_name, $field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
+		$change_type = ExtendFieldUtil::get_field_type($field);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name. " " .$change_type, __LINE__, __FILE__);
 	}
 	
 	public static function change_field_name($precedent_field_id, $new_field, $field)
 	{
 		$previous_name = PersistenceContext::get_sql()->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $precedent_field_id . "'", __LINE__, __FILE__);
-		$change_type = self::get_field_type($field);
+		$change_type = ExtendFieldUtil::get_field_type($field);
 		
-		if ($previous_name != $new_field)
-			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field . "" . $change_type, __LINE__, __FILE__);
-
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field . " " . $change_type, __LINE__, __FILE__);
 	}
 }
 ?>
