@@ -113,7 +113,7 @@ class ExtendFieldService
 					name = '" . $this->name . "', 
 					field_name = '" . $this->field_name . "', 
 					contents = '" . $this->contents . "', 
-					field = '" . ExtendFieldUtil::get_field_type($this->field) . "', 
+					field = '" . $this->field . "', 
 					possible_values = '" . $this->possible_values . "', 
 					default_values = '" . $this->default_values . "', 
 					required = '" . $this->required . "', 
