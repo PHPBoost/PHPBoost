@@ -42,7 +42,7 @@ class ExtendFieldUtil
 		return $array_field_type[$field_type];
 	}
 	
-	public static rewrite_field($field)
+	public static function rewrite_field($field)
 	{
 		$field = strtolower($field);
 		$field = Url::encode_rewrite($field);
@@ -65,16 +65,16 @@ class ExtendFieldUtil
 	
 	public static function add_field_name($field_name)
 	{
-		$this->db_connection->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
 	}
 	
 	public static function change_field_name($precedent_field_id, $new_field, $field)
 	{
-		$previous_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $precedent_field_id . "'", __LINE__, __FILE__);
+		$previous_name = PersistenceContext::get_sql()->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $precedent_field_id . "'", __LINE__, __FILE__);
 		$change_type = self::get_field_type($field);
 		
 		if ($previous_name != $new_field)
-			$this->db_connection->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field . "" . $change_type, __LINE__, __FILE__);
+			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field . "" . $change_type, __LINE__, __FILE__);
 
 	}
 }

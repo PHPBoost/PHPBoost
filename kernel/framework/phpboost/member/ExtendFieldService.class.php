@@ -53,10 +53,11 @@ class ExtendFieldService
 		$this->field = retrieve(POST, 'field', 0);
 		$this->possible_values = retrieve(POST, 'possible_values', '');
 		$this->default_values = retrieve(POST, 'default_values', '');
-		$this->regex = empty(retrieve(POST, 'regex_type', 0)) ? retrieve(POST, 'regex1', 0) : retrieve(POST, 'regex2', '');
+		$regex_type = retrieve(POST, 'regex_type', 0);
+		$this->regex = empty($regex_type) ? retrieve(POST, 'regex1', 0) : retrieve(POST, 'regex2', '');
 		
 		$this->class = $this->db_connection->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
-		$this->field_name = ExtendFieldUtil::rewrite_field($name);
+		$this->field_name = ExtendFieldUtil::rewrite_field($this->name);
 	}
 	
 	public function add()
@@ -108,7 +109,7 @@ class ExtendFieldService
 			$check_name = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $this->field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
 			if (empty($check_name)) 
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
+				$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
 					name = '" . $this->name . "', 
 					field_name = '" . $this->field_name . "', 
 					contents = '" . $this->contents . "', 
