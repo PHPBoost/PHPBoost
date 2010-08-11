@@ -281,93 +281,9 @@ if (empty($key))
 			));
 		}
 
-		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-		if ($extend_field_exist > 0)
-		{
-			$Template->assign_vars(array(			
-				'L_MISCELLANEOUS' => $LANG['miscellaneous']
-			));
-			
-			$result = $Sql->query_while("SELECT name, contents, field, required, field_name, possible_values, default_values
-			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
-			WHERE display = 1
-			ORDER BY class", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{	
-				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
-				$field = '';
-				switch ($row['field'])
-				{
-					case 1:
-					$field = '<input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' .  $row['default_values'] . '" />';
-					break;
-					case 2:
-					$field = '<textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . FormatingHelper::unparse($row['default_values']) . '</textarea>';
-					break;
-					case 3:
-					$field = '<select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';
-					$array_values = explode('|', $row['possible_values']);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$selected = ($values ==  $row['default_values']) ? 'selected="selected"' : '';
-						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-						$i++;
-					}
-					$field .= '</select>';
-					break;
-					case 4:
-					$field = '<select name="' . $row['field_name'] . '[]" multiple="multiple" id="' . $row['field_name'] . '">';
-					$array_values = explode('|', $row['possible_values']);
-					$array_default_values = explode('|', $row['default_values']);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$selected = in_array($values, $array_default_values) ? 'selected="selected"' : '';
-						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-						$i++;
-					}
-					$field .= '</select>';
-					break;
-					case 5:
-					$array_values = explode('|', $row['possible_values']);
-					foreach ($array_values as $values)
-					{
-						$checked = ($values ==  $row['default_values']) ? 'checked="checked"' : '';
-						$field .= '<input type="radio" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" value="' . $values . '" ' . $checked . ' /> ' . ucfirst($values) . '<br />';
-					}
-					break;
-					case 6:
-					$array_values = explode('|', $row['possible_values']);
-					$array_default_values = explode('|', $row['default_values']);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$checked = in_array($values, $array_default_values) ? 'checked="checked"' : '';
-						$field .= '<input type="checkbox" name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $checked . '/> ' . ucfirst($values) . '<br />';
-						$i++;
-					}
-					break;
-				}				
-				
-				if ($row['required'])
-				{	
-					$Template->assign_block_vars('miscellaneous_js_list', array(
-						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($row['name'])),
-						'ID' => $row['field_name']
-					));
-				}
-				
-				$Template->assign_block_vars('list', array(
-					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
-					'ID' => $row['field_name'],
-					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
-					'FIELD' => $field
-				));
-			}
-			$Sql->query_close($result);	
-		}
+		$DisplayExtendField = new DisplayExtendField();
+		
+		$DisplayExtendField->display_for_register();
 		
 		$Template->pparse('register');
 	}

@@ -271,96 +271,9 @@ if (!empty($id_get)) //Espace membre
 			));
 		}
 		
-		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-		if ($extend_field_exist > 0)
-		{
-			$Template->assign_vars(array(
-				'C_PROFIL_MISCELLANEOUS' => true,
-				'L_MISCELLANEOUS' => $LANG['miscellaneous']
-			));
-
-			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, ex.*
-			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
-			LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id_get . "'
-			WHERE exc.display = 1
-			ORDER BY exc.class", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
-				$field = '';
-				$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
-				switch ($row['field'])
-				{
-					case 1:
-					$field = '<label><input type="text" size="30" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
-					break;
-					case 2:
-					$field = '<label><textarea class="post" rows="4" cols="27" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '"> ' . FormatingHelper::unparse($row[$row['field_name']]) . '</textarea></label>';
-					break;
-					case 3:
-					$field = '<label><select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';
-					$array_values = explode('|', $row['possible_values']);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$selected = ($values == $row[$row['field_name']]) ? 'selected="selected"' : '';
-						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-						$i++;
-					}
-					$field .= '</select></label>';
-					break;
-					case 4:
-					$field = '<label><select name="' . $row['field_name'] . '[]" multiple="multiple" id="' . $row['field_name'] . '">';
-					$array_values = explode('|', $row['possible_values']);
-					$array_default_values = explode('|', $row[$row['field_name']]);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$selected = in_array($values, $array_default_values) ? 'selected="selected"' : '';
-						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-						$i++;
-					}
-					$field .= '</select></label>';
-					break;
-					case 5:
-					$array_values = explode('|', $row['possible_values']);
-					foreach ($array_values as $values)
-					{
-						$checked = ($values == $row[$row['field_name']]) ? 'checked="checked"' : '';
-						$field .= '<label><input type="radio" name="' . $row['field_name'] . '" value="' . $values . '" id="' . $row['field_name'] . '" ' . $checked . '/> ' . ucfirst($values) . '</label><br />';
-					}
-					break;
-					case 6:
-					$array_values = explode('|', $row['possible_values']);
-					$array_default_values = explode('|', $row[$row['field_name']]);
-					$i = 0;
-					foreach ($array_values as $values)
-					{
-						$checked = in_array($values, $array_default_values) ? 'checked="checked"' : '';
-						$field .= '<label><input type="checkbox" name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $checked . '/> ' . ucfirst($values) . '</label><br />';
-						$i++;
-					}
-					break;
-				}
-				
-				if ($row['required'])
-				{	
-					$Template->assign_block_vars('miscellaneous_js_list', array(
-						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($row['name'])),
-						'ID' => $row['field_name']
-					));
-				}
-				
-				$Template->assign_block_vars('miscellaneous_list', array(
-					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
-					'ID' => $row['field_name'],
-					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
-					'FIELD' => $field
-				));
-			}
-			$Sql->query_close($result);
-		}
+		$DisplayExtendField = new DisplayExtendField();
+		
+		$DisplayExtendField->display_for_member($id_get);
 		
 		//Gestion des erreurs.
 		switch ($get_error)
