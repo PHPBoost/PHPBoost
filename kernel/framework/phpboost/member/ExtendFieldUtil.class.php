@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               ExtendFieldsService.class.php
+ *                               ExtendFieldUtil.class.php
  *                            -------------------
  *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -26,9 +26,9 @@
  ###################################################*/
 
 
-class ExtendFieldsService
+class ExtendFieldUtil
 {
-	public static function get_array_type_fields()
+	public static function get_field_type($field_type)
 	{
 		$array_field_type = array(
 			1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
@@ -39,7 +39,7 @@ class ExtendFieldsService
 			6 => 'TEXT NOT NULL'
 		);
 		
-		return $array_field_type;
+		return $array_field_type[$field_type];
 	}
 	
 	public static rewrite_field($field)
@@ -50,8 +50,7 @@ class ExtendFieldsService
 		return 'f_' . $field;
 	}
 	
-	
-	public function get_array_regex()
+	public function get_regex($regex_type)
 	{
 		$array_regex = array(
 			1 => '`^[0-9]+$`',
@@ -60,6 +59,23 @@ class ExtendFieldsService
 			4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
 			5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
 		);
+		
+		return $array_regex[$regex_type];
+	}
+	
+	public static function add_field_name($field_name)
+	{
+		$this->db_connection->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
+	}
+	
+	public static function change_field_name($precedent_field_id, $new_field, $field)
+	{
+		$previous_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $precedent_field_id . "'", __LINE__, __FILE__);
+		$change_type = self::get_field_type($field);
+		
+		if ($previous_name != $new_field)
+			$this->db_connection->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field . "" . $change_type, __LINE__, __FILE__);
+
 	}
 }
 ?>
