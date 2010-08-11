@@ -43,53 +43,107 @@ class ExtendFieldMemberService
 		$req_field = '';
 		$req_insert = '';
 		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
-		foreach ($extend_fields_cache as $extend_field)
+		foreach ($extend_fields_cache as $id => $extend_field)
 		{
 			$field = retrieve(POST, $extend_field['field_name'], '', TSTRING_UNCHANGE);
 			
-			// Champs requis ! On redirige si il est vide.
 			if ($extend_field['required'] && $extend_field['field'] != 6 && empty($field))
 			{
 				$this->errors = 'incomplete';
 			}
 			else
 			{
-				if (empty($this->errors))
-				{
-					$field = $this->rewrite_field($extend_field['field'], $field);
-				}
+				$field = $this->rewrite_field($extend_field['field'], $field);
+				
 				if (!empty($field))
 				{
-					if (is_numeric($extend_field['regex']) && $extend_field['regex'] > 0 && $extend_field['field'] <= 2)
+					$regex = ExtendFieldUtil::get_regex($extend_field['regex']);
+					
+					if ($extend_field['regex'] > 0 && @preg_match($regex, $field))
 					{
-						$regex = ExtendFieldUtil::get_regex($extend_field['regex'];
-						if (@preg_match($regex, $field))
-						{
-							$req_update .= $extend_field['field_name'] . ' = \'' . trim($field, '|') . '\', ';
-							$req_field .= $extend_field['field_name'] . ', ';
-							$req_insert .= '\'' . trim($field, '|') . '\', ';
-						}
+						$req_update .= $extend_field['field_name'] . ' = \'' . trim($field, '|') . '\', ';
+						$req_field .= $extend_field['field_name'] . ', ';
+						$req_insert .= '\'' . trim($field, '|') . '\', ';
+					}
+					elseif($extend_field['regex'] == 0)
+					{
+						$req_update .= $extend_field['field_name'] . ' = \'' . trim($field, '|') . '\', ';
+						$req_field .= $extend_field['field_name'] . ', ';
+						$req_insert .= '\'' . trim($field, '|') . '\', ';	
 					}
 				}
 			}
 		}
 		if(empty($this->errors))
 		{
-			$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			if ($check_member && !empty($req_update))
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			}
 			elseif (!empty($req_insert))
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $user_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+				$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $user_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 			}
 		}
 	}
 
 	public function update($user_id)
 	{
-		$this->add($user_id);
+		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+		
+		$extend_field_exist = count($extend_fields_cache);
+		// Des champs membres sont existant
+		if ($extend_field_exist > 0)
+		{
+			$req_update = '';
+			$req_field = '';
+			$req_insert = '';
+			foreach ($extend_fields_cache as $id => $extend_field)
+			{
+				$field = retrieve(POST, $extend_field['field_name'], '', TSTRING_UNCHANGE);
+				
+				if ($extend_field['required'] && $extend_field['field'] != 6 && empty($field))
+				{
+					$this->errors = 'incomplete';
+				}
+				else
+				{
+					$field = $this->rewrite_field($extend_field['field'], $field);
+					
+					if (!empty($field))
+					{
+						$regex = ExtendFieldUtil::get_regex($extend_field['regex']);
+						
+						if ($extend_field['regex'] > 0 && @preg_match($regex, $field))
+						{
+							$req_update .= $extend_field['field_name'] . ' = \'' . trim($field, '|') . '\', ';
+							$req_field .= $extend_field['field_name'] . ', ';
+							$req_insert .= '\'' . trim($field, '|') . '\', ';
+						}
+						elseif($extend_field['regex'] == 0)
+						{
+							$req_update .= $extend_field['field_name'] . ' = \'' . trim($field, '|') . '\', ';
+							$req_field .= $extend_field['field_name'] . ', ';
+							$req_insert .= '\'' . trim($field, '|') . '\', ';	
+						}
+					}
+				}
+			}
+			if(empty($this->errors))
+			{
+				//Le membre à déjà enregistré une fois la config des champs
+				$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				if ($check_member && !empty($req_update))
+				{
+					$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				}
+				elseif (!empty($req_insert))
+				{
+					$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $user_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+				}
+			}
+		}
 	}
 	
 	public function errors()
@@ -97,7 +151,7 @@ class ExtendFieldMemberService
 		return !empty($this->errors) ? $this->errors : '';
 	}
 	
-	private function rewrite_field(bool $field_type, string $field)
+	private function rewrite_field($field_type, $field)
 	{
 		if (is_numeric($field_type))
 		{
@@ -136,7 +190,7 @@ class ExtendFieldMemberService
 	{
 		$field = '';
 		$i = 0;
-		$array_possible_values = $this->get_explode_possible_values($possible_values));
+		$array_possible_values = $this->get_explode_possible_values($possible_values);
 		foreach ($array_possible_values as $value)
 		{
 			$field .= !empty($_POST[$field_name . '_' . $i]) ? addslashes($value) . '|' : '';

@@ -434,18 +434,18 @@
 				</dl>
 			</fieldset>
 
-			# START miscellaneous #
+			
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>	
 					
-				# START miscellaneous.list #
+				# START list #
 				<dl>
 					<dt><label for="{miscellaneous.list.ID}">{miscellaneous.list.NAME}</label><br /><span>{miscellaneous.list.DESC}</span></dt>
 					<dd>{miscellaneous.list.FIELD}</dd>
 				</dl>
-				# END miscellaneous.list #	
+				# END list #	
 			</fieldset>
-			# END miscellaneous #	
+			
 
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
