@@ -219,7 +219,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 								$array_possible_values = explode('|', $row['possible_values']);
 								foreach ($array_possible_values as $value)
 								{
-									$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($value) . '|' : '';
+									$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($_POST[$row['field_name'] . '_' . $i]) . '|' : '';
 									$i++;
 								}
 								if ($row['required'] && empty($field))

@@ -592,7 +592,7 @@ if (!empty($id_get)) //Espace membre
 							$array_possible_values = explode('|', $row['possible_values']);
 							foreach ($array_possible_values as $value)
 							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($value) . '|' : '';
+								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($_POST[$row['field_name'] . '_' . $i]) . '|' : '';
 								$i++;
 							}
 							if ($row['required'] && empty($field))
