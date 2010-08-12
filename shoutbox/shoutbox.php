@@ -199,6 +199,7 @@ else //Affichage.
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	$Template->assign_vars(array(
+		'UPDATE' => '?token=' . $Session->get_token(),
 		'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
 		'L_ON' => $LANG['on'],
 		'L_ALERT_TEXT' => $LANG['require_text'],
