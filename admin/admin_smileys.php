@@ -128,18 +128,16 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete'],
 	));
-
-	$result = $Sql->query_while("SELECT *
-	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	
+	$smileys_cache = SmileysCache::load()->get_smileys();
+	foreach($smileys_cache as $code => $row)
 	{
 		$Template->assign_block_vars('list', array(
 			'IDSMILEY' => $row['idsmiley'],
 			'URL_SMILEY' => $row['url_smiley'],
-			'CODE_SMILEY' => $row['code_smiley']
+			'CODE_SMILEY' => $code
 		));
 	}
-	$Sql->query_close($result);
 	
 	$Template->pparse('admin_smileys_management');
 }

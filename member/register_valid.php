@@ -179,6 +179,12 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					$ExtendFieldMemberService = new ExtendFieldMemberService();
 					$ExtendFieldMemberService->add($last_mbr_id);
 					
+					$error = $extend_field_member_service->errors();
+					if (!empty($error))
+					{
+						AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+					}
+					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
 					if ($user_accounts_config->get_member_accounts_validation_method() == 1)
 					{

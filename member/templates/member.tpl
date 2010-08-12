@@ -7,13 +7,13 @@
 				alert("{L_REQUIRE_MAIL}");
 				return false;
 		    }
-			# IF C_PROFIL_MISCELLANEOUS #
-				# START miscellaneous_js_list #
-				if(document.getElementById('{miscellaneous_js_list.ID}') && document.getElementById('{miscellaneous_js_list.ID}').value == "") {
-					alert("{miscellaneous_js_list.L_REQUIRED}");
+			# IF C_MISCELLANEOUS #
+				# START extend_fields_js_list #
+				if(document.getElementById('{extend_fields_js_list.ID}') && document.getElementById('{extend_fields_js_list.ID}').value == "") {
+					alert("{extend_fields_js_list.L_REQUIRED}");
 					return false;
 				}
-				# END miscellaneous_js_list #	
+				# END extend_fields_js_list #	
 			# ENDIF #
 			
 			return true;
@@ -327,16 +327,16 @@
 				</dl>
 			</fieldset>
 			
-			# IF C_PROFIL_MISCELLANEOUS #
+			# IF C_MISCELLANEOUS #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>	
 					
-				# START miscellaneous_list #
+				# START extend_fields_list #
 				<dl>
-					<dt><label for="{miscellaneous_list.ID}">{miscellaneous_list.NAME}</label><br /><span>{miscellaneous_list.DESC}</span></dt>
-					<dd><label>{miscellaneous_list.FIELD}</label></dd>
+					<dt><label for="{extend_fields_list.ID}">{extend_fields_list.NAME}</label><br /><span>{extend_fields_list.DESC}</span></dt>
+					<dd><label>{extend_fields_list.FIELD}</label></dd>
 				</dl>
-				# END miscellaneous_list #	
+				# END extend_fields_list #	
 			</fieldset>
 			# ENDIF #
 

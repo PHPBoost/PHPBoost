@@ -272,7 +272,6 @@ if (!empty($id_get)) //Espace membre
 		}
 		
 		$DisplayExtendField = new DisplayExtendField();
-		
 		$DisplayExtendField->display_for_member($id_get);
 		
 		//Gestion des erreurs.
@@ -479,6 +478,11 @@ if (!empty($id_get)) //Espace membre
 				
 				$ExtendFieldMemberService = new ExtendFieldMemberService();
 				$ExtendFieldMemberService->update($User->get_attribute('user_id'));
+				$error = $extend_field_member_service->errors();
+				if (!empty($error))
+				{
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error='.$error.'') . '#errorh');
+				}
 				
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}

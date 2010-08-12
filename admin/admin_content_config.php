@@ -61,7 +61,6 @@ else
 	$content_management_config = ContentManagementConfig::load();
 	
 	$j = 0;
-	
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $code => $name)
 	{	
 		$template->assign_block_vars('tag', array(

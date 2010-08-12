@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      	 MemberCache.class.php
+ *                      	 EventsAdministratorCache.class.php
  *                            -------------------
  *   begin                : August 0, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -28,55 +28,55 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class MemberCache implements CacheData
+class EventsAdministratorCache implements CacheData
 {
-	private $member = array();
+	private $events_administrator = array();
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->member = array();
+		$this->events_administrator = array();
 		$db_connection = PersistenceContext::get_sql();
 			
 		$unread = $db_connection->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 		$all = $db_connection->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 
-		$this->member = array(
+		$this->events_administrator = array(
 			'unread' => $unread,
 			'all' => $all
 		);
 	}
 
-	public function get_member()
+	public function get_events_administrator()
 	{
-		return $this->member;
+		return $this->events_administrator;
 	}
 	
-	public function get_member_properties($identifier)
+	public function get_events_administrator_properties($identifier)
 	{
-		if (isset($this->member[$identifier]))
+		if (isset($this->events_administrator[$identifier]))
 		{
-			return $this->member[$identifier];
+			return $this->events_administrator[$identifier];
 		}
 		return null;
 	}
 	
 	/**
-	 * Loads and returns the member cached data.
-	 * @return MemberCache The cached data
+	 * Loads and returns the events administrator cached data.
+	 * @return EventsAdministratorCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'member');
+		return CacheManager::load(__CLASS__, 'kernel', 'events-administrator');
 	}
 	
 	/**
-	 * Invalidates the current member cached data.
+	 * Invalidates the current events administrator cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'member');
+		CacheManager::invalidate('kernel', 'events-administrator');
 	}
 }
