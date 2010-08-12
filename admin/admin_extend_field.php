@@ -38,11 +38,9 @@ $Template->set_filenames(array(
 	'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 ));
 
-$extend_field = new ExtendFieldService();
-
 if ($del && !empty($id))
 {
-	$extend_field->delete($id);
+	ExtendFieldAdmin::delete($id);
 	
 	ExtendFieldsCache::invalidate();
 	
@@ -50,11 +48,9 @@ if ($del && !empty($id))
 }
 elseif (!empty($_POST['valid']))
 {
-	$error = $extend_field->errors();
+	$error = ExtendFieldAdmin::insert_or_update_field($id);
 	if(empty($error))
 	{
-		$extend_field->update($id);
-		
 		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 	}
 	else
@@ -90,7 +86,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 }
 elseif (!empty($id))
 {	
-	$get_error = $extend_field->errors();
+	$get_error = retrieve(GET, 'error', TSTRING);
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif ($get_error == 'exist_field')

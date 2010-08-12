@@ -271,8 +271,7 @@ if (!empty($id_get)) //Espace membre
 			));
 		}
 		
-		$DisplayExtendField = new DisplayExtendField();
-		$DisplayExtendField->display_for_member($id_get);
+		ExtendFieldMember::display($Template, $id_get);
 		
 		//Gestion des erreurs.
 		switch ($get_error)
@@ -476,12 +475,10 @@ if (!empty($id_get)) //Espace membre
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
 				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				
-				$ExtendFieldMemberService = new ExtendFieldMemberService();
-				$ExtendFieldMemberService->update($User->get_attribute('user_id'));
-				$error = $extend_field_member_service->errors();
+				$error = ExtendFieldMember::add_field($User->get_attribute('user_id'));
 				if (!empty($error))
 				{
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error='.$error.'') . '#errorh');
+					AppContext::get_response()->redirect('/admin/member' . url('.php?id=' .  $id_get . '&error='.$error.'') . '#errorh');
 				}
 				
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));

@@ -224,14 +224,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					AppContext::get_mail_service()->send_from_properties($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
 				}
 				
-				//Champs supplémentaires.
-				$extend_field_member_service = new ExtendFieldMemberService();
-				$extend_field_member_service->update($id_post);
-				$error = $extend_field_member_service->errors();
-				if (!empty($error))
-				{
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error='.$error.'') . '#errorh');
-				}
+				ExtendFieldMember::add_field($id_post);
 				
 				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
@@ -427,19 +420,17 @@ elseif (!empty($id))
 	//Groupes.	
 	$i = 0;
 	$groups_options = '';
-	$result = $Sql->query_while("SELECT id, name
-	FROM " . PREFIX . "group", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	$groupe_cache = GroupsCache::load()->get_groups();
+	foreach ($groupe_cache as $id => $values)
 	{		
 		$selected = '';		
-		$search_group = array_search($row['id'], explode('|', $mbr['user_groups']));		
+		$search_group = array_search($id, explode('|', $mbr['user_groups']));		
 		if (is_numeric($search_group))
 			$selected = 'selected="selected"';	
 			
-		$groups_options .= '<option value="' . $row['id'] . '" id="g' . $i . '" ' . $selected . '>' . $row['name'] . '</option>';
+		$groups_options .= '<option value="' . $id . '" id="g' . $i . '" ' . $selected . '>' . $values['name'] . '</option>';
 		$i++;
 	}
-	$Sql->query_close($result);
 
 	//Temps de bannissement.
 	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
@@ -567,6 +558,9 @@ elseif (!empty($id))
 		$i++;
 	}
 	
+	//Champs supplémentaires.
+	ExtendFieldMember::display($Template, retrieve(GET, 'id', 0));
+	
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
@@ -679,10 +673,6 @@ elseif (!empty($id))
 		'L_RESET' => $LANG['reset']
 	));
 
-	//Champs supplémentaires.
-	$DisplayExtendField = new DisplayExtendField();
-	$DisplayExtendField->display_for_member($id);
-	
 	$Template->pparse('admin_members_management2');
 }
 else

@@ -29,14 +29,11 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$extend_field = new ExtendFieldService();
 if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
-	$error = $extend_field->errors();
+	$error = ExtendFieldAdmin::insert_or_update_field();
 	if(empty($error))
 	{
-		$extend_field->add();
-		
 		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 	}
 	else
@@ -49,7 +46,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = $extend_field->errors();
+	$get_error = $extend_field->get_error();
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif ($get_error == 'exist_field')
