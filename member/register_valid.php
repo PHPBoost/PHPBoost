@@ -176,13 +176,10 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						StatsCache::invalidate();
 					
 					//Champs supplémentaires.
-					$ExtendFieldMemberService = new ExtendFieldMemberService();
-					$ExtendFieldMemberService->add($last_mbr_id);
-					
-					$error = $extend_field_member_service->errors();
+					$error = ExtendFieldMember::add_field($last_mbr_id);
 					if (!empty($error))
 					{
-						AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+						AppContext::get_response()->redirect('/member/register' . url('.php?error='.$error.'') . '#errorh');
 					}
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.

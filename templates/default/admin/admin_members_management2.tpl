@@ -24,15 +24,6 @@
 		return confirm("{L_CONFIRM_DEL_USER}");
 		}
 		-->
-		
-		# IF C_MISCELLANEOUS #
-			# START extend_fields_js_list #
-			if(document.getElementById('{extend_fields_js_list.ID}') && document.getElementById('{extend_fields_js_list.ID}').value == "") {
-				alert("{extend_fields_js_list.L_REQUIRED}");
-				return false;
-			}
-			# END extend_fields_js_list #	
-		# ENDIF #
 		</script>
 	
 		<div id="admin_quick_menu">

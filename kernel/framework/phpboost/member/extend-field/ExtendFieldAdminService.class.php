@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               ExtendFieldService.class.php
+ *                               ExtendFieldAdminService.class.php
  *                            -------------------
  *   begin                : August 11, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -26,7 +26,7 @@
  ###################################################*/
 
 
-class ExtendFieldService
+class ExtendFieldAdminService
 {
 	private $db_connection;
 	
@@ -41,7 +41,7 @@ class ExtendFieldService
 	private $class;
 	private $field_name;
 
-	private $errors;
+	private $error;
 	
 	public function __construct()
 	{
@@ -76,13 +76,13 @@ class ExtendFieldService
 			else
 			{
 				//Le champs existe déjà
-				$this->errors = 'exist_field';
+				$this->error = 'exist_field';
 			}
 		}
 		else
 		{	
 			// Tous les champs n'ont pas été remplie
-			$this->errors = 'incomplete';
+			$this->error = 'incomplete';
 		}
 	}
 	
@@ -98,7 +98,7 @@ class ExtendFieldService
 		}
 		else
 		{
-			$this->errors = 'not_existent_field';
+			$this->error = 'not_exist_field';
 		}	
 	}
 	
@@ -109,17 +109,7 @@ class ExtendFieldService
 			$check_name = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $this->field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
 			if (empty($check_name)) 
 			{
-				$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
-					name = '" . $this->name . "', 
-					field_name = '" . $this->field_name . "', 
-					contents = '" . $this->contents . "', 
-					field = '" . $this->field . "', 
-					possible_values = '" . $this->possible_values . "', 
-					default_values = '" . $this->default_values . "', 
-					required = '" . $this->required . "', 
-					regex = '" . $this->regex . "' 
-					WHERE id = '" . $id . "'"
-				, __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $this->name . "', field_name = '" . $this->field_name . "', contents = '" . $this->contents . "', field = '" . $this->field . "', possible_values = '" . $this->possible_values . "', default_values = '" . $this->default_values . "', required = '" . $this->required . "', regex = '" . $this->regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 				
 				ExtendFieldUtil::change_field_name($id, $this->field_name, $this->field);
 				
@@ -128,19 +118,19 @@ class ExtendFieldService
 			else
 			{
 				//Le champs existe déjà
-				$this->errors = 'exist_field';
+				$this->error = 'exist_field';
 			}
 		}
 		else
-		{	
+		{
 			// Tous les champs n'ont pas été remplie
-			$this->errors = 'incomplete';
+			$this->error = 'incomplete';
 		}
 	}
 	
-	public function errors()
+	public function get_error()
 	{
-		return !empty($this->errors) ? $this->errors : '';
+		return isset($this->error) ? $this->error : '';
 	}
 }
 ?>

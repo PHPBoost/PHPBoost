@@ -280,11 +280,9 @@ if (empty($key))
 				'IDNAME' => UserAccountsConfig::load()->get_default_theme()
 			));
 		}
+		
+		ExtendFieldMember::display($Template);
 
-		$DisplayExtendField = new DisplayExtendField();
-		
-		$DisplayExtendField->display_for_register();
-		
 		$Template->pparse('register');
 	}
 	else
