@@ -208,7 +208,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					}
 
 					//Régénération du cache des stats.
-					$Cache->Generate_file('stats');
+					StatsCache::invalidate();
 				}
 				
                 $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = " . $user_show_mail . ", user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -225,63 +225,15 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				}
 				
 				//Champs supplémentaires.
-				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-				if ($extend_field_exist > 0)
+				$extend_field_member_service = new ExtendFieldMemberService();
+				$extend_field_member_service->update($id_post);
+				$error = $extend_field_member_service->errors();
+				if (!empty($error))
 				{
-					$req_update = '';
-					$req_field = '';
-					$req_insert = '';
-					$result = $Sql->query_while("SELECT field_name, field, possible_values
-					FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
-					WHERE display = 1", __LINE__, __FILE__);
-					while ($row = $Sql->fetch_assoc($result))
-					{
-						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
-						if ($row['field'] == 2)
-							$field = FormatingHelper::strparse($field);
-						elseif ($row['field'] == 4)
-						{
-							$array_field = is_array($field) ? $field : array();
-							$field = '';
-							foreach ($array_field as $value)
-								$field .= TextHelper::strprotect($value) . '|';
-						}
-						elseif ($row['field'] == 6)
-						{
-							$field = '';
-							$i = 0;
-							$array_possible_values = explode('|', $row['possible_values']);
-							foreach ($array_possible_values as $value)
-							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? TextHelper::strprotect($value) . '|' : '';
-								$i++;
-							}
-						}
-						else
-							$field = TextHelper::strprotect($field);
-							
-						if (!empty($field))
-						{
-							$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
-							$req_field .= $row['field_name'] . ', ';
-							$req_insert .= '\'' . trim($field, '|') . '\', ';
-						}
-					}
-					$Sql->query_close($result);	
-					
-					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					if ($check_member)
-					{	
-						if (!empty($req_update))
-							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
-					}
-					else
-					{	
-						if (!empty($req_insert))
-							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
-					}
-				}	
-				AppContext::get_response()->redirect(HOST . SCRIPT);	
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error='.$error.'') . '#errorh');
+				}
+				
+				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
 			else
 				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
@@ -728,87 +680,8 @@ elseif (!empty($id))
 	));
 
 	//Champs supplémentaires.
-	$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-	if ($extend_field_exist > 0)
-	{
-		$Template->assign_vars(array(			
-			'C_MISCELLANEOUS' => true,
-			'L_MISCELLANEOUS' => $LANG['miscellaneous']
-		));
-
-		$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, ex.*
-		FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id . "'
-		WHERE exc.display = 1
-		ORDER BY exc.class", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{	
-			// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
-			$field = '';
-			$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
-			switch ($row['field'])
-			{
-				case 1:
-				$field = '<label><input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
-				break;
-				case 2:
-				$field = '<label><textarea class="post" rows="4" cols="27" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">' . FormatingHelper::unparse($row[$row['field_name']]) . '</textarea></label>';
-				break;
-				case 3:
-				$field = '<label><select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';
-				$array_values = explode('|', $row['possible_values']);
-				$i = 0;
-				foreach ($array_values as $values)
-				{
-					$selected = ($values == $row[$row['field_name']]) ? 'selected="selected"' : '';
-					$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-					$i++;
-				}
-				$field .= '</select></label>';
-				break;
-				case 4:
-				$field = '<label><select name="' . $row['field_name'] . '[]" multiple="multiple" id="' . $row['field_name'] . '">';
-				$array_values = explode('|', $row['possible_values']);
-				$array_default_values = explode('|', $row[$row['field_name']]);
-				$i = 0;
-				foreach ($array_values as $values)
-				{
-					$selected = in_array($values, $array_default_values) ? 'selected="selected"' : '';
-					$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
-					$i++;
-				}
-				$field .= '</select></label>';
-				break;
-				case 5:
-				$array_values = explode('|', $row['possible_values']);
-				foreach ($array_values as $values)
-				{
-					$checked = ($values == $row[$row['field_name']]) ? 'checked="checked"' : '';
-					$field .= '<label><input type="radio" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" value="' . $values . '" ' . $checked . '/> ' . ucfirst($values) . '</label><br />';
-				}
-				break;
-				case 6:
-				$array_values = explode('|', $row['possible_values']);
-				$array_default_values = explode('|', $row[$row['field_name']]);
-				$i = 0;
-				foreach ($array_values as $values)
-				{
-					$checked = in_array($values, $array_default_values) ? 'checked="checked"' : '';
-					$field .= '<label><input type="checkbox" name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $checked . '/> ' . ucfirst($values) . '</label><br />';
-					$i++;
-				}
-				break;
-			}				
-			
-			$Template->assign_block_vars('list', array(
-				'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
-				'ID' => $row['field_name'],
-				'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
-				'FIELD' => $field
-			));
-		}
-		$Sql->query_close($result);	
-	}
+	$DisplayExtendField = new DisplayExtendField();
+	$DisplayExtendField->display_for_member($id);
 	
 	$Template->pparse('admin_members_management2');
 }

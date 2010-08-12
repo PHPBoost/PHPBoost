@@ -85,9 +85,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		if (!empty($smileys_cache))
 		{
 			//Création du tableau de remplacement
-			foreach ($smileys_cache as $code => $img)
+			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($img) . '(.*) />`sU';
+				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);

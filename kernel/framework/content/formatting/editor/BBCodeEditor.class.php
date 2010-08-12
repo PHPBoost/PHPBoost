@@ -147,7 +147,7 @@ class BBCodeEditor extends ContentEditor
         $nbr_smile = count($smileys_cache->get_smileys());
         $i = 1;
         $z = 0;
-        foreach ($smileys_cache->get_smileys() as $code_smile => $url_smile)
+        foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
         {
             if ($z == $smile_max)
             {
@@ -159,7 +159,7 @@ class BBCodeEditor extends ContentEditor
             $height_source = 18;
              
             // On recupère la hauteur et la largeur de l'image.
-            list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
+            list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
             if ($width_source > $width_max || $height_source > $height_max)
             {
                 if ($width_source > $height_source)
@@ -181,7 +181,7 @@ class BBCodeEditor extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'] . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 
             $template->assign_block_vars('smiley', array(
 				'IMG' => $img,

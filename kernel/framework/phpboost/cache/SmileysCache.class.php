@@ -40,12 +40,15 @@ class SmileysCache implements CacheData
 		$this->smileys = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT code_smiley, url_smiley
+		$result = $db_connection->query_while("SELECT idsmiley, code_smiley, url_smiley
 			FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{
-			$this->smileys[$row['code_smiley']] = $row['url_smiley'];
+			$this->smileys[$row['code_smiley']] = array(
+				'idsmiley' => $row['idsmiley'],
+				'url_smiley' => $row['url_smiley']
+			);
 		}
 		
 		$db_connection->query_close($result);

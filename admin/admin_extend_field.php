@@ -219,11 +219,12 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
+	$extend_field = ExtendFieldsCache::load()->get_extend_fields();
+	
 	$min_cat = $Sql->query("SELECT MIN(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 	$max_cat = $Sql->query("SELECT MAX(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 
-	$result = ExtendFieldsCache::load()->get_extend_fields();
-	foreach($result as $id => $row)
+	foreach($extend_field as $id => $row)
 	{
 		if($row['display'] == 1)
 		{

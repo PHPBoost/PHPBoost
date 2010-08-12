@@ -24,6 +24,15 @@
 		return confirm("{L_CONFIRM_DEL_USER}");
 		}
 		-->
+		
+		# IF C_MISCELLANEOUS #
+			# START extend_fields_js_list #
+			if(document.getElementById('{extend_fields_js_list.ID}') && document.getElementById('{extend_fields_js_list.ID}').value == "") {
+				alert("{extend_fields_js_list.L_REQUIRED}");
+				return false;
+			}
+			# END extend_fields_js_list #	
+		# ENDIF #
 		</script>
 	
 		<div id="admin_quick_menu">
@@ -392,12 +401,12 @@
 				<fieldset>
 					<legend>{L_MISCELLANEOUS}</legend>	
 						
-					# START list #
+					# START extend_fields_list #
 					<dl>
-						<dt><label for="{list.ID}">{list.NAME}</label><br /><span>{list.DESC}</span></dt>
-						<dd>{list.FIELD}</dd>
+						<dt><label for="{extend_fields_list.ID}">{extend_fields_list.NAME}</label><br /><span>{extend_fields_list.DESC}</span></dt>
+						<dd>{extend_fields_list.FIELD}</dd>
 					</dl>
-					# END list #	
+					# END extend_fields_list #	
 				</fieldset>
 				# ENDIF #					
 				

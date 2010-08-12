@@ -40,15 +40,17 @@ class RanksCache implements CacheData
 		$this->ranks = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT name, msg, icon
+		$result = $db_connection->query_while("SELECT id, name, msg, icon, special
 			FROM " . PREFIX . "ranks
 			ORDER BY msg DESC", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{
 			$this->ranks[$row['msg']] = array(
+				'id' => $row['id'],
 				'name' => $row['name'],
-				'icon' => $row['icon']
+				'icon' => $row['icon'], 
+				'special' => $row['special']
 			);
 		}
 		

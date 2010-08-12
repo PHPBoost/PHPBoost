@@ -82,12 +82,14 @@
 		    }
 			{L_REQUIRE_VERIF_CODE}
 			
-			# START miscellaneous_js_list #
-			if(document.getElementById('{miscellaneous_js_list.ID}') && document.getElementById('{miscellaneous_js_list.ID}').value == "") {
-				alert("{miscellaneous_js_list.L_REQUIRED}");
-				return false;
-			}
-			# END miscellaneous_js_list #	
+			# IF C_MISCELLANEOUS #
+				# START extend_fields_js_list #
+				if(document.getElementById('{extend_fields_js_list.ID}') && document.getElementById('{extend_fields_js_list.ID}').value == "") {
+					alert("{extend_fields_js_list.L_REQUIRED}");
+					return false;
+				}
+				# END extend_fields_js_list #	
+			# ENDIF #
 			
 			return true;
 		}
@@ -434,18 +436,18 @@
 				</dl>
 			</fieldset>
 
-			
+			# IF C_MISCELLANEOUS #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>	
 					
-				# START list #
+				# START extend_fields_list #
 				<dl>
-					<dt><label for="{miscellaneous.list.ID}">{miscellaneous.list.NAME}</label><br /><span>{miscellaneous.list.DESC}</span></dt>
-					<dd>{miscellaneous.list.FIELD}</dd>
+					<dt><label for="{extend_fields_list.ID}">{extend_fields_list.NAME}</label><br /><span>{extend_fields_list.DESC}</span></dt>
+					<dd>{extend_fields_list.FIELD}</dd>
 				</dl>
-				# END list #	
+				# END extend_fields_list #	
 			</fieldset>
-			
+			# ENDIF #
 
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>

@@ -11,7 +11,8 @@ class DisplayExtendField
 		$extend_field_exist = count($extend_fields_cache);
 		if ($extend_field_exist > 0)
 		{
-			$Template->assign_vars(array(		
+			$Template->assign_vars(array(	
+				'C_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
 			
@@ -23,13 +24,13 @@ class DisplayExtendField
 					
 					if ($extend_field['required'])
 					{	
-						$Template->assign_block_vars('miscellaneous_js_list', array(
+						$Template->assign_block_vars('extend_fields_js_list', array(
 							'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($extend_field['name'])),
 							'ID' => $extend_field['field_name']
 						));
 					}
 					
-					$Template->assign_block_vars('list', array(
+					$Template->assign_block_vars('extend_fields_list', array(
 						'NAME' => $extend_field['required'] ? '* ' . ucfirst($extend_field['name']) : ucfirst($extend_field['name']),
 						'ID' => $extend_field['field_name'],
 						'DESC' => !empty($extend_field['contents']) ? ucfirst($extend_field['contents']) : '',
@@ -50,7 +51,7 @@ class DisplayExtendField
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(
-				'C_PROFIL_MISCELLANEOUS' => true,
+				'C_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
 
@@ -67,13 +68,13 @@ class DisplayExtendField
 				
 				if ($extend_field['required'])
 				{	
-					$Template->assign_block_vars('miscellaneous_js_list', array(
+					$Template->assign_block_vars('extend_fields_js_list', array(
 						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($extend_field['name'])),
 						'ID' => $extend_field['field_name']
 					));
 				}
 				
-				$Template->assign_block_vars('miscellaneous_list', array(
+				$Template->assign_block_vars('extend_fields_list', array(
 					'NAME' => $extend_field['required'] ? '* ' . ucfirst($extend_field['name']) : ucfirst($extend_field['name']),
 					'ID' => $extend_field['field_name'],
 					'DESC' => !empty($extend_field['contents']) ? ucfirst($extend_field['contents']) : '',

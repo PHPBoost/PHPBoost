@@ -302,7 +302,9 @@ else //Liste des groupes.
 		'admin_groups_management'=> 'admin/admin_groups_management.tpl'
 	 ));
 	 
-	$nbr_group = $Sql->count_table(DB_TABLE_GROUP, __LINE__, __FILE__);
+	$group_cache = GroupsCache::load()->get_groups();
+	
+	$nbr_group = count($group_cache);
 	
 	$Pagination = new DeprecatedPagination();
 	$Template->assign_vars(array(
