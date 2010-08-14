@@ -27,6 +27,18 @@
  
 class ExtendedFields
 {
+
+	private $id;
+	private $name;
+	private $position;
+	private $field_name;
+	private $content;
+	private $possible_values;
+	private $default_values;
+	private $required;
+	private $display;
+	private $regex;
+	
 	public function set_id($id)
 	{
 		$this->id = $id;
