@@ -29,14 +29,14 @@ class ExtendedFieldsTableService
 {
 	public static function add_extended_field(ExtendedFields $extended_field)
 	{
-		ExtendedFieldsTableService::add_extend_field_to_member($extended_field);
+		self::add_extend_field_to_member($extended_field);
 		
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $extended_field->get_name() . "', '" . $extended_field->get_position() . "', '" . $extended_field->get_field_name() . "', '" . $extended_field->get_content() . "', '" . $extended_field->get_field_type() . "', '" . $extended_field->get_possible_values() . "', '" . $extended_field->get_default_values() . "', '" . $extended_field->get_required() . "',	'" . $extended_field->get_display() . "','" . $extended_field->get_regex() . "')", __LINE__, __FILE__);
 	}
 	
 	public static function update_extended_field(ExtendedFields $extended_field)
 	{
-		ExtendedFieldsTableService::change_extend_field_to_member($extended_field);
+		self::change_extend_field_to_member($extended_field);
 
 		PersistenceContext::get_sql()->query_inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
@@ -50,45 +50,37 @@ class ExtendedFieldsTableService
 			regex = '" . $extended_field->get_regex() . "' 
 			WHERE id = '" . $extended_field->get_id() . "'"
 		, __LINE__, __FILE__);
-		
-		
 	}
 	
 	public static function delete_extended_field(ExtendedFields $extended_field)
 	{
-		ExtendedFieldsTableService::drop_extend_field_to_member($extended_field);		
+		self::drop_extend_field_to_member($extended_field);		
 		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $extended_field->get_id() . "'", __LINE__, __FILE__);
 	}
 	
 	public static function check_field_exist_by_field_name(ExtendedFields $extended_field)
 	{
-		$number = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $extended_field->get_field_name() . "'", __LINE__, __FILE__);
-		return $number > 0 ? true : false;
+		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $extended_field->get_field_name() . "'", __LINE__, __FILE__) > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_id(ExtendedFields $extended_field)
 	{
-		$number = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $extended_field->get_field_name() . "'", __LINE__, __FILE__);
-		return $number > 0 ? true : false;
+		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $extended_field->get_id() . "'", __LINE__, __FILE__) > 0 ? true : false;
 	}
 	
 	public static function add_extend_field_to_member(ExtendedFields $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $extended_field->get_field_name() . " " . ExtendedFieldsTableService::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
 	}
 	
 	public static function change_extend_field_to_member(ExtendedFields $extended_field)
 	{
-		$previous_name = ExtendedFieldsTableService::select_field_name($extended_field);
-		$change_type = ExtendedFieldsTableService::type_columm_field($extended_field);
-		
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $extended_field->get_field_name() . " " . $change_type, __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . self::select_field_name($extended_field) . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
 	}
 
 	public static function drop_extend_field_to_member(ExtendedFields $extended_field)
 	{
-		$field_name = ExtendedFieldsTableService::select_field_name($extended_field);
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);	
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . self::select_field_name($extended_field), __LINE__, __FILE__);	
 	}
 	
 	public static function select_field_name(ExtendedFields $extended_field)
@@ -98,8 +90,7 @@ class ExtendedFieldsTableService
 	
 	public static function type_columm_field(ExtendedFields $extended_field)
 	{
-		$field_type = $extended_field->get_field_type();
-		if (is_numeric($field_type))
+		if (is_numeric($extended_field->get_field_type()))
 		{
 			$array_field_type = array(
 				1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
@@ -110,7 +101,7 @@ class ExtendedFieldsTableService
 				6 => 'TEXT NOT NULL'
 			);
 			
-			return $array_field_type[$field_type];
+			return $array_field_type[$extended_field->get_field_type()];
 		}
 	}
 	
