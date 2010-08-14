@@ -62,7 +62,7 @@ elseif (!empty($_POST['valid']) && !empty($id))
 	$extended_fields->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_fields->set_default_values(retrieve(POST, 'default_values', ''));
 	$extended_fields->set_is_required(retrieve(POST, 'required', 0));
-	$extended_fields->set_regex(ExtendedFields::rewrite_regex($regex));
+	$extended_fields->set_regex($regex);
 	
 	ExtendedFieldsService::update($extended_fields);
 	

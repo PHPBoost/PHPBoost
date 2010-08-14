@@ -43,7 +43,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 	$extended_fields->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_fields->set_default_values(retrieve(POST, 'default_values', ''));
 	$extended_fields->set_is_required(retrieve(POST, 'required', 0));
-	$extended_fields->set_regex(ExtendedFields::rewrite_regex($regex));
+	$extended_fields->set_regex($regex);
 	
 	ExtendedFieldsService::add($extended_fields);
 

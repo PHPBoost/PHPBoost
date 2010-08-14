@@ -45,13 +45,13 @@ class ExtendedFieldsService
 			else
 			{
 				// The field are already exist
-				new Exception('The field are already exist.');
+				throw new Exception('The field are already exist.');
 			}
 		}
 		else
 		{	
 			// All fields not completed !
-			new Exception('Please complete all fields!');
+			throw new Exception('Please complete all fields!');
 		}
 	}
 	
@@ -73,13 +73,13 @@ class ExtendedFieldsService
 			else
 			{
 				// The field are already exist
-				new Exception('The field are already exist.');
+				throw new Exception('The field are already exist.');
 			}
 		}
 		else
 		{
 			// All fields not completed !
-			new Exception('Please complete all required fields!');
+			throw new Exception('Please complete all required fields!');
 		}
 	}
 	
@@ -97,7 +97,7 @@ class ExtendedFieldsService
 		else
 		{
 			// The field is not exited
-			new Exception('The field is not exited !');
+			throw new Exception('The field is not existed !');
 		}	
 	}
 }
