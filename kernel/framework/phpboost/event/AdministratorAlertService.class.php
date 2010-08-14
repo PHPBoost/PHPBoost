@@ -115,7 +115,7 @@ class AdministratorAlertService
 		//There is no criteria, we return all alerts
 		else
 		{
-			return AdministratorAlertCache::load()->get_all();
+			return AdministratorAlertCache::load()->get_all_alerts_number();
 		}
 	}
 	
@@ -238,7 +238,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_unread_alerts()
 	{
-		return AdministratorAlertCache::load()->get_unread();
+		return AdministratorAlertCache::load()->get_unread_alerts_number();
 	}
 	
 	/**
@@ -247,7 +247,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_alerts()
 	{
-		return AdministratorAlertCache::load()->get_all();
+		return AdministratorAlertCache::load()->get_all_alerts_number();
 	}
 }
 

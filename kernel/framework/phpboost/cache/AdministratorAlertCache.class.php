@@ -39,21 +39,18 @@ class AdministratorAlertCache implements CacheData
 	public function synchronize()
 	{
 		$db_connection = PersistenceContext::get_sql();
-			
-		$unread = $db_connection->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
-		$all = $db_connection->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 
-		$this->unread_administrator_alert = $unread;
-		$this->all_administrator_alert =  $all;
+		$this->unread_administrator_alert = $db_connection->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
+		$this->all_administrator_alert =  $db_connection->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 		
 	}
 
-	public function get_all()
+	public function get_all_alerts_number()
 	{
 		return $this->all_administrator_alert;
 	}
 	
-	public function get_unread()
+	public function get_unread_alerts_number()
 	{
 		return $this->unread_administrator_alert;
 	}
