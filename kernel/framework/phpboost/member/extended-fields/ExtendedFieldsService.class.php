@@ -36,8 +36,7 @@ class ExtendedFieldsService
 		$type_field = $extended_field->get_field_type();
 		if (!empty($name) && !empty($type_field))
 		{
-			$check_already_exist = ExtendedFieldsTableService::check_field_exist_by_field_name($extended_field);
-			if (!$check_already_exist) 
+			if (!ExtendedFieldsTableService::check_field_exist_by_field_name($extended_field)) 
 			{		
 				ExtendedFieldsTableService::add_extended_field($extended_field);
 				
@@ -57,16 +56,15 @@ class ExtendedFieldsService
 	}
 	
 	/*
-	 * This function required object ExtendedFields containing the id, name, field name, position, content, field type, possible values, default values, required and regex.
+	 * This function required object ExtendedFields containing the id, name, field name, content, field type, possible values, default values, required and regex.
 	 */
 	public static function update(ExtendedFields $extended_field)
 	{
 		$name = $extended_field->get_name();
 		$type_field = $extended_field->get_field_type();
 		if (!empty($name) && !empty($type_field))
-		{			
-			$field_exist = ExtendedFieldsTableService::check_field_exist_by_id($extended_field);
-			if ($field_exist)
+		{
+			if (ExtendedFieldsTableService::check_field_exist_by_id($extended_field))
 			{
 				ExtendedFieldsTableService::update_extended_field($extended_field);
 				
@@ -90,8 +88,7 @@ class ExtendedFieldsService
 	 */
 	public static function delete(ExtendedFields $extended_field)
 	{
-		$field_exist = ExtendedFieldsTableService::check_field_exist_by_id($extended_field);
-		if (!$field_exist)
+		if (ExtendedFieldsTableService::check_field_exist_by_id($extended_field))
 		{
 			ExtendedFieldsTableService::delete_extended_field($extended_field);
 			
