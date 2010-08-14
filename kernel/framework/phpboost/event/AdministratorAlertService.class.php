@@ -115,7 +115,7 @@ class AdministratorAlertService
 		//There is no criteria, we return all alerts
 		else
 		{
-			return AdministratorAlertService::get_all_alerts();
+			return AdministratorAlertCache::load()->get_all();
 		}
 	}
 	
@@ -199,7 +199,7 @@ class AdministratorAlertService
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
 			{
-				EventsAdministratorCache::invalidate();
+				AdministratorAlertCache::invalidate();
 				$alert->set_must_regenerate_cache(false);
 			}
 		}
@@ -210,7 +210,7 @@ class AdministratorAlertService
 			$alert->set_id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS ));
 
 			//Cache regeneration
-			EventsAdministratorCache::invalidate();
+			AdministratorAlertCache::invalidate();
 		}
 	}
 	
@@ -227,7 +227,7 @@ class AdministratorAlertService
 		{			
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			$alert->set_id(0);
-			EventsAdministratorCache::invalidate();
+			AdministratorAlertCache::invalidate();
 		}
 		//Else it's not present in the database, we have nothing to delete
 	}
@@ -238,7 +238,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_unread_alerts()
 	{
-		return EventsAdministratorCache::load()->get_events_administrator_properties('unread');
+		return AdministratorAlertCache::load()->get_unread();
 	}
 	
 	/**
@@ -247,7 +247,7 @@ class AdministratorAlertService
 	 */
 	public static function get_number_alerts()
 	{
-		return EventsAdministratorCache::load()->get_events_administrator_properties('all');
+		return AdministratorAlertCache::load()->get_all();
 	}
 }
 

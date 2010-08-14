@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      	 EventsAdministratorCache.class.php
+ *                      	 AdministratorAlertCache.class.php
  *                            -------------------
  *   begin                : August 0, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -28,55 +28,50 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class EventsAdministratorCache implements CacheData
+class AdministratorAlertCache implements CacheData
 {
-	private $events_administrator = array();
+	private $all_administrator_alert;
 
+	private $unread_administrator_alert;
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->events_administrator = array();
 		$db_connection = PersistenceContext::get_sql();
 			
 		$unread = $db_connection->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 		$all = $db_connection->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
 
-		$this->events_administrator = array(
-			'unread' => $unread,
-			'all' => $all
-		);
+		$this->unread_administrator_alert = $unread;
+		$this->all_administrator_alert =  $all;
+		
 	}
 
-	public function get_events_administrator()
+	public function get_all()
 	{
-		return $this->events_administrator;
+		return $this->all_administrator_alert;
 	}
 	
-	public function get_events_administrator_properties($identifier)
+	public function get_unread()
 	{
-		if (isset($this->events_administrator[$identifier]))
-		{
-			return $this->events_administrator[$identifier];
-		}
-		return null;
+		return $this->unread_administrator_alert;
 	}
 	
 	/**
-	 * Loads and returns the events administrator cached data.
-	 * @return EventsAdministratorCache The cached data
+	 * Loads and returns the administrator alert cached data.
+	 * @return AdministratorAlertCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'events-administrator');
+		return CacheManager::load(__CLASS__, 'kernel', 'administrator-alert');
 	}
 	
 	/**
-	 * Invalidates the current events administrator cached data.
+	 * Invalidates the current administrator alert cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'events-administrator');
+		CacheManager::invalidate('kernel', 'administrator-alert');
 	}
 }
