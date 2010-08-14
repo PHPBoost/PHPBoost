@@ -191,7 +191,6 @@ class Environment
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
 		define('AUTH_READ_MEMBERS', 1);
-		define('AUTH_POST_COMMENTS',1);
 
 		### Variable types ###
 		define('GET', 		1);

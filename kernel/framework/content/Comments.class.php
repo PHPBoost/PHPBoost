@@ -39,6 +39,9 @@ define('KERNEL_SCRIPT', true);
  */
 class Comments
 {
+
+	const POST_COMMENT_AUTH = 1;
+	
 	## Public Methods ##
 	/**
 	 * @desc Display comments form.
@@ -226,7 +229,7 @@ class Comments
 						AppContext::get_response()->redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires?
-					if ($User->check_auth($comments_config->get_auth_post_comments(), AUTH_POST_COMMENTS))
+					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 						$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
@@ -422,7 +425,7 @@ class Comments
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
-					if ($User->check_auth($comments_config->get_auth_post_comments(), AUTH_POST_COMMENTS))
+					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
 					{	
 						$Template->assign_vars(array(
 							'AUTH_POST_COM' => true
