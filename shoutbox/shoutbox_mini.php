@@ -62,10 +62,10 @@ function shoutbox_mini($position, $block)
     				}
     				
     				//Vérifie que le message ne contient pas du flood de lien.
-    				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_tags());
+    				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
     				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
-    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links())) //Nombre de liens max dans le message.
+    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
     					
     				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
@@ -100,7 +100,7 @@ function shoutbox_mini($position, $block)
     		'L_ALERT_TEXT' => $LANG['require_text'],
     		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
     		'L_ALERT_FLOOD' => $LANG['e_flood'],
-    		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links()),
+    		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links_number_per_message()),
     		'L_ALERT_LINK_PSEUDO' => $LANG['e_link_pseudo'],
     		'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
     		'L_ALERT_READONLY' => $LANG['e_readonly'],

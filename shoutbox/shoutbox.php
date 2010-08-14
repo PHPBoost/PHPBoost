@@ -60,10 +60,10 @@ if ($shoutbox && empty($shout_id)) //Insertion
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
-			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_tags());		
+			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());		
 			if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
-			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links())) //Nombre de liens max dans le message.
+			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
@@ -118,7 +118,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				));
 			}
 			$fieldset->add_field(new FormTextarea('shoutbox_contents', FormatingHelper::unparse($row['contents']), array(
-				'forbiddentags' => $config_shoutbox->get_forbidden_tags(), 'title' => $LANG['message'], 
+				'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
 				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
@@ -140,10 +140,10 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
-				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_tags());
+				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
 				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
-				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links())) //Nombre de liens max dans le message.
+				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->query_inject("UPDATE " . PREFIX . "shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
@@ -188,7 +188,7 @@ else //Affichage.
 			$errstr = $LANG['e_flood'];
 			break;
 		case 'l_flood':
-			$errstr = sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links());
+			$errstr = sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links_number_per_message());
 			break;
 		case 'l_pseudo':
 			$errstr = $LANG['e_link_pseudo'];
@@ -213,7 +213,7 @@ else //Affichage.
 		));
 	}
 	$fieldset->add_field(new FormTextarea('shoutbox_contents', '', array(
-		'forbiddentags' => $config_shoutbox->get_forbidden_tags(), 'title' => $LANG['message'], 
+		'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
 		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 	));
 	$form->add_fieldset($fieldset);

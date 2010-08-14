@@ -30,20 +30,20 @@
  */
 class ShoutboxConfig extends AbstractConfigData
 {
-	const MAX_MESSAGES = 'max_messages';
+	const MAX_MESSAGES_NUMBER = 'max_messages_number';
 	const AUTHORIZATION = 'authorization';
-	const FORBIDDEN_TAGS = 'forbidden_tags';
-	const MAX_LINKS = 'max_links';
+	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
+	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
 	const REFRESH_DELAY = 'refresh_delay';
 	
-	public function get_max_messages()
+	public function get_max_messages_number()
 	{
-		return $this->get_property(self::MAX_MESSAGES);
+		return $this->get_property(self::MAX_MESSAGES_NUMBER);
 	}
 	
-	public function set_max_messages($nbr_messages)
+	public function set_max_messages_number($nbr_messages)
 	{
-		$this->set_property(self::MAX_MESSAGES, $nbr_messages);
+		$this->set_property(self::MAX_MESSAGES_NUMBER, $nbr_messages);
 	}
 	
 	public function get_authorization()
@@ -56,24 +56,24 @@ class ShoutboxConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATION, $array);
 	}
 	
-	public function get_forbidden_tags()
+	public function get_forbidden_formatting_tags()
 	{
-		return $this->get_property(self::FORBIDDEN_TAGS);
+		return $this->get_property(self::FORBIDDEN_FORMATTING_TAGS);
 	}
 	
-	public function set_forbidden_tags(Array $array)
+	public function set_forbidden_formatting_tags(Array $array)
 	{
-		$this->set_property(self::FORBIDDEN_TAGS, $array);
+		$this->set_property(self::FORBIDDEN_FORMATTING_TAGS, $array);
 	}
 	
-	public function get_max_links()
+	public function get_max_links_number_per_message()
 	{
-		return $this->get_property(self::MAX_LINKS);
+		return $this->get_property(self::MAX_LINKS_NUMBER_PER_MESSAGE);
 	}
 	
-	public function set_max_links($nbr_links)
+	public function set_max_links_number_per_message($nbr_links)
 	{
-		$this->set_property(self::MAX_LINKS, $nbr_links);
+		$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE, $nbr_links);
 	}
 	
 	public function get_refresh_delay()
@@ -81,24 +81,27 @@ class ShoutboxConfig extends AbstractConfigData
 		return $this->get_property(self::REFRESH_DELAY);
 	}
 	
+	/*
+	 * Param Refresh shoutbox delay in minute
+	*/
 	public function set_refresh_delay($delay)
 	{
-		$this->set_property(self::REFRESH_DELAY, $$delay);
+		$this->set_property(self::REFRESH_DELAY, $delay);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::MAX_MESSAGES => 100,
+			self::MAX_MESSAGES_NUMBER => 100,
 			self::AUTHORIZATION => array ( 'r-1' => 3, 'r0' => 3, '[r1]' => 3 ) ,
-			self::FORBIDDEN_TAGS => array(
+			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',
 				'size', 'align', 'float', 'sup', 'sub',
 				'indent', 'pre',' table', 'swf', 'movie',
 				'sound', 'code', 'math', 'anchor', 'acronym'
 			),
-			self::MAX_LINKS => 2,
+			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
 			self::REFRESH_DELAY => 60000
 		);
 	}

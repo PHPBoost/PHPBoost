@@ -41,9 +41,9 @@ class SandboxRegisterController extends ModuleController
 						document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 				}
 				-->		
-				</script>');
-		$view = new StringTemplate('# INCLUDE form #');
-		
+				</script>
+				# INCLUDE form #');
+
 		$form = $this->build_form();
 		$view->add_lang($this->lang);
 		
