@@ -35,7 +35,7 @@ if (!empty($_POST['valid']) )
 	$comments_config = CommentsConfig::load();
 	$server_configuration = new ServerConfiguration();
 	
-	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(AUTH_POST_COMMENTS));
+	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(Comments::POST_COMMENT_AUTH));
 	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
 	$comments_config->set_display_captcha($server_configuration->has_gd_libray() ? $_POST['verif_code'] : false);
 	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
@@ -76,7 +76,7 @@ else
 
 	$Template->assign_vars(array(
 		'NBR_TAGS' => $j,
-		'AUTH_POST_COMMENTS' => Authorizations::generate_select(AUTH_POST_COMMENTS, $comments_config->get_auth_post_comments()),
+		'AUTH_POST_COMMENTS' => Authorizations::generate_select(Comments::POST_COMMENT_AUTH, $comments_config->get_auth_post_comments()),
 		'COM_MAX' => $comments_config->get_number_comments_per_page(),
 		'MAX_LINK' => $comments_config->get_max_links_comment(),
 		'COM_ENABLED' => !$comments_config->get_display_comments_in_popup() ? 'checked="checked"' : '',
