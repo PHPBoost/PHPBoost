@@ -27,107 +27,117 @@
 
 class SandboxRegisterController extends ModuleController
 {
+	private $lang;
+	
 	public function execute(HTTPRequest $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxRegisterController.tpl');
+		$this->lang = LangLoader::get('main');
+		
+		$view = new StringTemplate('<script type="text/javascript">
+				<!--
+				function change_img_theme(id, value)
+				{
+					if(document.images )
+						document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
+				}
+				-->		
+				</script>');
+		$view = new StringTemplate('# INCLUDE form #');
+		
 		$form = $this->build_form();
+		$view->add_lang($this->lang);
 		
 		$view->add_subtemplate('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 
 	private function build_form()
-	{	
-		
-		$sandboxregisterconfig = new SandboxRegisterConfig();
-		
+	{
 		$form = new HTMLForm('register');
 		
 		// S'inscrire
-		$fieldset = new FormFieldsetHTML('s\'inscrire', 'S\'inscrire');
+		$fieldset = new FormFieldsetHTML('s\'inscrire', $this->lang['register']);
 		$fieldset->set_description('Les champs marqués * sont obligatoire !');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', 'Pseudo', '', array(
-			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => 'Longeur minimum du pseudo : 3 caractères'),
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
+			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo_how']),
 			array(new FormFieldConstraintLengthRange(3, 25))
 		));		
-		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => 'Mail valide'),
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['mail'], '', array(
+			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid']),
 		array(new FormFieldConstraintMailAddress())
 		));
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12 caractères'),
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password_how']),
 		array(new FormFieldConstraintLengthRange(6, 12))
 		));
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', '', array(
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['confirm_password'], '', array(
 			'class' => 'text', 'maxlength' => 25),
 		array(new FormFieldConstraintLengthRange(6, 12))
 		));
-		$fieldset->add_field(new FormFieldSelectChoice('user_lang', 'Langue par défaut', UserAccountsConfig::load()->get_default_lang(),
-			$sandboxregisterconfig->return_array_lang_for_formbuilder()
+		$fieldset->add_field(new FormFieldSelectChoice('user_lang', $this->lang['choose_lang'], UserAccountsConfig::load()->get_default_lang(),
+			RegisterFormHelper::return_array_lang_for_formbuilder()
 		));
 		$fieldset->add_field(new FormFieldCaptcha());
 		
 		//Options
-		$fieldset2 = new FormFieldsetHTML('option', 'Option');
+		$fieldset2 = new FormFieldsetHTML('option', $this->lang['options']);
 		$form->add_fieldset($fieldset2);
 		
-		$fieldset2->add_field(new FormFieldSelectChoice('user_theme', 'Thème par défaut', UserAccountsConfig::load()->get_default_theme(),
-			$sandboxregisterconfig->return_array_theme_for_formubuilder(),
+		$fieldset2->add_field(new FormFieldSelectChoice('user_theme', $this->lang['choose_theme'], UserAccountsConfig::load()->get_default_theme(),
+			RegisterFormHelper::return_array_theme_for_formubuilder(),
 			array('events' => array('change' => 'change_img_theme(\'img_theme\', HTMLForms.getField("user_theme").getValue())'))
 		));
-		$fieldset2->add_field(new FormFieldFree('preview_theme', 'Preview du thème', '<img id="img_theme" src="../templates/'. UserAccountsConfig::load()->get_default_theme() .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />', array()));
+		$fieldset2->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="../templates/'. UserAccountsConfig::load()->get_default_theme() .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />', array()));
 		
-		$fieldset2->add_field(new FormFieldSelectChoice('user_editor', 'Editeur de texte par défaut', ContentFormattingConfig::load()->get_default_editor(),
-			$sandboxregisterconfig->return_array_editor_for_formubuilder()
+		$fieldset2->add_field(new FormFieldSelectChoice('user_editor', $this->lang['choose_editor'], ContentFormattingConfig::load()->get_default_editor(),
+			RegisterFormHelper::return_array_editor_for_formubuilder()
 		));
-		$fieldset2->add_field(new FormFieldSelectChoice('user_timezone', 'Choix du fuseau horaire', '',
-			$sandboxregisterconfig->return_array_timezone_for_formubuilder()
+		$fieldset2->add_field(new FormFieldSelectChoice('user_timezone', $this->lang['timezone_choose'], GeneralConfig::load()->get_site_timezone(),
+			RegisterFormHelper::return_array_timezone_for_formubuilder()
 		));
-		$fieldset2->add_field(new FormFieldCheckbox('user_hide_mail', 'Cacher votre email', true));
+		$fieldset2->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], true));
 		
 		//Infos
-		$fieldset3 = new FormFieldsetHTML('informations', 'Informations');
+		$fieldset3 = new FormFieldsetHTML('informations', $this->lang['info']);
 		$form->add_fieldset($fieldset3);
 		
-		$fieldset3->add_field(new FormFieldTextEditor('user_web', 'Site web', '', array(
+		$fieldset3->add_field(new FormFieldTextEditor('user_web', $this->lang['web_site'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
 		array(new FormFieldConstraintUrl())
 		));
 		
-		$fieldset3->add_field(new FormFieldTextEditor('user_local', 'localisation', '', array(
+		$fieldset3->add_field(new FormFieldTextEditor('user_local', $this->lang['localisation'], '', array(
 			'class' => 'text', 'maxlength' => 255))
 		);
 		
-		$fieldset3->add_field(new FormFieldTextEditor('user_occupation', 'Emploi', '', array(
+		$fieldset3->add_field(new FormFieldTextEditor('user_occupation', $this->lang['job'], '', array(
 			'class' => 'text', 'maxlength' => 255))
 		);
 		
-		$fieldset3->add_field(new FormFieldTextEditor('user_hobbies', 'Loisirs', '', array(
+		$fieldset3->add_field(new FormFieldTextEditor('user_hobbies', $this->lang['hobbies'], '', array(
 			'class' => 'text', 'maxlength' => 255))
 		);
 		
-		$fieldset3->add_field(new FormFieldSelectChoice('user_sex', 'Sexe', '',
+		$fieldset3->add_field(new FormFieldSelectChoice('user_sex', $this->lang['sex'], '',
 			array(
 				new FormFieldSelectChoiceOption('--', '1'),
-				new FormFieldSelectChoiceOption('Homme', '2'),
-				new FormFieldSelectChoiceOption('Femme', '3'),
+				new FormFieldSelectChoiceOption($this->lang['male'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['female'], '3'),
 			)
 		));
 		
-		$fieldset3->add_field(new FormFieldDate('user_born', 'Date de naissance', new Date(), 
-			array(
-				'description' => 'Date de naissance valide', 
-			)
+		$fieldset3->add_field(new FormFieldDate('user_born', $this->lang['date_of_birth'], new Date(), 
+			array('description' => $this->lang['valid'])
 		));
 		
-		$fieldset3->add_field(new FormFieldMultiLineTextEditor('user_sign', 'Signature', '',
-		array('rows' => 4, 'cols' => 27, 'description' => 'Apparaît sous chacun de vos messages')
+		$fieldset3->add_field(new FormFieldMultiLineTextEditor('user_sign', $this->lang['sign'], '',
+		array('rows' => 4, 'cols' => 27, 'description' => $this->lang['sign_where'])
 		));
 		
 		//Contact
-		$fieldset4 = new FormFieldsetHTML('contact', 'Contact');
+		$fieldset4 = new FormFieldsetHTML('contact', $this->lang['contact']);
 		$form->add_fieldset($fieldset4);
 		
 		$fieldset4->add_field(new FormFieldTextEditor('user_msn', 'MSN', '', array(
@@ -137,14 +147,14 @@ class SandboxRegisterController extends ModuleController
 			'class' => 'text', 'maxlength' => 255), array(new FormFieldConstraintMailAddress()))
 		);
 		// Avatar
-		$fieldset5 = new FormFieldsetHTML('gestion_avatar', 'Gestion avatar');
+		$fieldset5 = new FormFieldsetHTML('gestion_avatar', $this->lang['avatar_gestion']);
 		$form->add_fieldset($fieldset5);
 		
-		$fieldset5->add_field(new FormFieldFilePicker('avatars', 'Uploader avatar',
-			array('description' => 'Avatar directement hébergé sur le serveur'
+		$fieldset5->add_field(new FormFieldFilePicker('avatars', $this->lang['upload_avatar'],
+			array('description' => $this->lang['upload_avatar_where']
 		)));
-		$fieldset5->add_field(new FormFieldTextEditor('user_avatar', 'lien avatar', '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => 'Adresse directe de l\'avatar')
+		$fieldset5->add_field(new FormFieldTextEditor('user_avatar', $this->lang['avatar_link'], '', array(
+			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['avatar_link_where'])
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

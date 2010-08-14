@@ -1,9 +1,9 @@
 <?php
 
-class SandboxRegisterConfig
+class RegisterFormHelper
 {
 
-	public function return_array_lang_for_formbuilder()
+	public static function return_array_lang_for_formbuilder()
 	{
 		$array = array();
 		$langs_cache = LangsCache::load();
@@ -21,52 +21,52 @@ class SandboxRegisterConfig
 		return $array;
 	}
 	
-	public function return_array_editor_for_formubuilder()
+	public static function return_array_editor_for_formubuilder()
 	{
-		$array = array();
+		$choices_list = array();
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
 		foreach ($editors as $code => $name)
 		{
-			$array[] = new FormFieldSelectChoiceOption($name, $code);
+			$choices_list[] = new FormFieldSelectChoiceOption($name, $code);
 		}
-		return $array;
+		return $choices_list;
 	}
 	
-	public function return_array_timezone_for_formubuilder()
+	public static function return_array_timezone_for_formubuilder()
 	{
-		$array = array();
+		$choices_list = array();
 		$timezone = GeneralConfig::load()->get_site_timezone();
 		for ($i = -12; $i <= 14; $i++)
 		{
-			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
-			$array[] = new FormFieldSelectChoiceOption('[GMT' . $name . ']', $i);
+			$name = ($i !== 0 ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
+			$choices_list[] = new FormFieldSelectChoiceOption('[GMT' . $name . ']', $i);
 		}
-		return $array;
+		return $choices_list;
 	
 	}
 	
-	public function return_array_theme_for_formubuilder()
+	public static function return_array_theme_for_formubuilder()
 	{
-		$array = array();
+		$choices_list = array();
 		
 		$user_accounts_config = UserAccountsConfig::load();
 		
-		if (!$user_accounts_config->is_users_theme_forced()) //Thèmes aux membres autorisés.
+		if (!$user_accounts_config->is_users_theme_forced()) // If users can choose the theme they use
 		{
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
 				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($theme_properties['auth'] == -1 && $theme != 'default'))
 				{				
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
-					$array[] = new FormFieldSelectChoiceOption( $info_theme['name'], $theme);
+					$choices_list[] = new FormFieldSelectChoiceOption( $info_theme['name'], $theme);
 				}
 			}
 		}
 		else
 		{
-			$array[] = new FormFieldSelectChoiceOption('Base', 'base');
+			$choices_list[] = new FormFieldSelectChoiceOption('Base', 'base');
 		}
-		return $array;
+		return $choices_list;
 	
 	}
 }
