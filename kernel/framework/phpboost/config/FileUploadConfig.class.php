@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		             FilesConfig.class.php
+ *		             FileUploadConfig.class.php
  *                            -------------------
  *   begin                : August 09, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -28,7 +28,7 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class FilesConfig extends AbstractConfigData
+class FileUploadConfig extends AbstractConfigData
 {
 	const AUTHORIZATION_ENABLE_INTERFACE_FILES = 'authorization_enable_interface_files';
 	const MAXIMUM_SIZE_UPLOAD = 'maximum_size_upload';
@@ -93,11 +93,11 @@ class FilesConfig extends AbstractConfigData
 
 	/**
 	 * Returns the configuration.
-	 * @return FilesConfig
+	 * @return FileUploadConfig
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'files-config');
+		return ConfigManager::load(__CLASS__, 'kernel', 'file-upload-config');
 	}
 
 	/**
@@ -105,7 +105,7 @@ class FilesConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('kernel', self::load(), 'files-config');
+		ConfigManager::save('kernel', self::load(), 'file-upload-config');
 	}
 }
 ?>
