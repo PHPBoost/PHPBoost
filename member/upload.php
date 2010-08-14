@@ -85,10 +85,10 @@ if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 
-$files_config = FilesConfig::load();
+$files_upload_config = FileUploadConfig::load();
 
 //Droit d'accès?.
-if (!$User->check_auth($files_config->get_authorization_enable_interface_files(), AUTH_FILES))
+if (!$User->check_auth($files_upload_config->get_authorization_enable_interface_files(), AUTH_FILES))
 {
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
@@ -126,7 +126,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 {
 	$error = '';
 	//Autorisation d'upload aux groupes.
-	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_config->get_maximum_size_upload());
+	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
 	$member_memory_used = Uploads::Member_memory_used($User->get_attribute('user_id'));
@@ -146,7 +146,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			
 			$Upload = new Upload($dir);
-			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $files_config->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME, $weight_max);
+			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $files_upload_config->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME, $weight_max);
 			
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
 			{
@@ -491,7 +491,7 @@ else
 	$Sql->query_close($result);
 	
 	//Autorisation d'uploader sans limite aux groupes.
-	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_config->get_maximum_size_upload());
+	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
