@@ -40,21 +40,33 @@ $Template->set_filenames(array(
 
 if ($del && !empty($id))
 {
-	ExtendFieldAdmin::delete($id);
+	$extended_fields = new ExtendedFields();
+	$extended_fields->set_id($id);
 	
-	ExtendFieldsCache::invalidate();
+	ExtendedFieldsService::delete($extended_fields);
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
-elseif (!empty($_POST['valid']))
+elseif (!empty($_POST['valid']) && !empty($id))
 {
-	$error = ExtendFieldAdmin::insert_or_update_field($id);
-	if(empty($error))
-	{
-		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
-	}
-	else
-		AppContext::get_response()->redirect('/admin/admin_extend_field.php?id=' . $id . '&error='.$error.'#errorh');
+	$regex_type = retrieve(POST, 'regex_type', 0);
+	$regex = empty($regex_type) ? retrieve(POST, 'regex1', 0) : retrieve(POST, 'regex2', '');
+	
+	$extended_fields = new ExtendedFields();
+	$extended_fields->set_id($id);
+	$extended_fields->set_name(retrieve(POST, 'name', ''));
+	$extended_fields->set_field_name(ExtendedFields::rewrite_field_name(retrieve(POST, 'name', '')));
+	$extended_fields->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+	$extended_fields->set_content(retrieve(POST, 'contents', '', TSTRING));
+	$extended_fields->set_field_type(retrieve(POST, 'field', 0));
+	$extended_fields->set_possible_values(retrieve(POST, 'possible_values', ''));
+	$extended_fields->set_default_values(retrieve(POST, 'default_values', ''));
+	$extended_fields->set_is_required(retrieve(POST, 'required', 0));
+	$extended_fields->set_regex(ExtendedFields::rewrite_regex($regex));
+	
+	ExtendedFieldsService::update($extended_fields);
+	
+	AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {

@@ -31,13 +31,23 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
-	$error = ExtendFieldAdmin::insert_or_update_field();
-	if(empty($error))
-	{
-		AppContext::get_response()->redirect('/admin/admin_extend_field.php');
-	}
-	else
-		AppContext::get_response()->redirect('/admin/admin_extend_field_add.php?error='.$error.'#errorh');
+	$regex_type = retrieve(POST, 'regex_type', 0);
+	$regex = empty($regex_type) ? retrieve(POST, 'regex1', 0) : retrieve(POST, 'regex2', '');
+	
+	$extended_fields = new ExtendedFields();
+	$extended_fields->set_name(retrieve(POST, 'name', ''));
+	$extended_fields->set_field_name(ExtendedFields::rewrite_field_name(retrieve(POST, 'name', '')));
+	$extended_fields->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+	$extended_fields->set_content(retrieve(POST, 'contents', '', TSTRING));
+	$extended_fields->set_field_type(retrieve(POST, 'field', 0));
+	$extended_fields->set_possible_values(retrieve(POST, 'possible_values', ''));
+	$extended_fields->set_default_values(retrieve(POST, 'default_values', ''));
+	$extended_fields->set_is_required(retrieve(POST, 'required', 0));
+	$extended_fields->set_regex(ExtendedFields::rewrite_regex($regex));
+	
+	ExtendedFieldsService::add($extended_fields);
+
+	AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 }
 else
 {
@@ -45,13 +55,6 @@ else
 		'admin_extend_field_add'=> 'admin/admin_extend_field_add.tpl'
 	));
 	
-	//Gestion erreur.
-	$get_error = $extend_field->get_error();
-	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif ($get_error == 'exist_field')
-		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
-		
 	$Template->assign_vars(array(
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
