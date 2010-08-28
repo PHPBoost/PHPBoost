@@ -36,7 +36,7 @@
  */
 class FormFieldFree extends AbstractFormField
 {
-	public function __construct($id, $label, $value, array $properties)
+	public function __construct($id, $label, $value, array $properties = array())
 	{
 		parent::__construct($id, $label, $value, $properties);
 	}
