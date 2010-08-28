@@ -55,7 +55,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'main', 'calendar');
+		return ConfigManager::load(__CLASS__, 'calendar', 'main');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('main', self::load(), 'calendar');
+		ConfigManager::save('calendar', self::load(), 'main');
 	}
 }
 ?>
