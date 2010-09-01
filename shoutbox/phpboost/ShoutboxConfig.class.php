@@ -112,7 +112,7 @@ class ShoutboxConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'main', 'shoutbox');
+		return ConfigManager::load(__CLASS__, 'shoutbox', 'main');
 	}
 
 	/**
@@ -120,7 +120,7 @@ class ShoutboxConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('main', self::load(), 'shoutbox');
+		ConfigManager::save('shoutbox', self::load(), 'main');
 	}
 }
 ?>
