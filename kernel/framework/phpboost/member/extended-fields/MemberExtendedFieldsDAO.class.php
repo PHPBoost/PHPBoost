@@ -43,46 +43,70 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request(MemberExtendedField $member_extended_field)
 	{
-		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $$member_extended_field->get_user_id() . "'", __LINE__, __FILE__);
+		$this->set_request_update($member_extended_field);
+
+		$this->set_request_insert($member_extended_field);
+	}
+	
+	public function get_request($user_id)
+	{
+		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if ($check_member)
 		{
-			$this->set_request_update($member_extended_field);
+			$this->get_request_update($user_id);
 		}
 		else
 		{
-			$this->set_request_insert($member_extended_field);
-			$this->set_request_field($member_extended_field);
+			$this->get_request_insert($user_id);
 		}
 	}
 	
 	public function set_request_insert(MemberExtendedField $member_extended_field)
 	{
-	
+		$this->request_insert .= '\'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
 	}
 	
-	public function get_request_insert()
+	public function get_request_insert($user_id)
 	{
-	
+		if (!empty($this->request_field) && !empty($this->request_insert))
+		{
+			$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($this->request_field, ', ') . ") VALUES ('" . $user_id . "', " . trim($this->request_insert, ', ') . ")", __LINE__, __FILE__);
+		}
 	}
 	
 	public function set_request_field(MemberExtendedField $member_extended_field)
 	{
-	
-	}
-	
-	public function get_request_field()
-	{
-	
+		$this->request_field .= $member_extended_field->get_field_name() . ', ';
 	}
 	
 	public function set_request_update(MemberExtendedField $member_extended_field)
 	{
-	
+		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
 	}
 	
-	public function get_request_update()
+	public function get_request_update($user_id)
 	{
+		if (!empty($this->request_update))
+		{
+			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		}
+	}
 	
+	public function get_field_type($field_type)
+	{
+		if (is_numeric($field_type))
+		{
+			$array_field_type = array(
+				1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
+				2 => 'TEXT NOT NULL', 
+				3 => 'TEXT NOT NULL', 
+				4 => 'TEXT NOT NULL', 
+				5 => 'TEXT NOT NULL', 
+				6 => 'TEXT NOT NULL'
+			);
+			
+			return $array_field_type[$field_type];
+		}
 	}
 
 }
