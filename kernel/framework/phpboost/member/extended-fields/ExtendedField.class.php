@@ -25,6 +25,10 @@
  *
  ###################################################*/
  
+ /**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @package {@package}
+ */
 class ExtendedField
 {
 

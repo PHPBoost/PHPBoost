@@ -24,7 +24,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
- 
+
+ /**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @desc This class is responsible of all database accesses implied by the extended fields management. 
+ * Indeed, for instance when a field is created, the data base structure must be updated throw an ALTER request.
+ * @package {@package}
+ */
 class ExtendedFieldsDatabaseService
 {
 	public static function add_extended_field(ExtendedFields $extended_field)
