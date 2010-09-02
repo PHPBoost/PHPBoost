@@ -35,23 +35,24 @@ class MemberExtendedFieldsService
 	{
 		if(!empty($user_id))
 		{
-			$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+			$extended_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
 			
 			if (count($extend_fields_cache) > 0)
 			{
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
-				foreach ($extend_fields_cache as $id => $extend_field)
+				foreach ($extended_fields_cache as $id => $extended_field)
 				{
 					$member_extended_field = new MemberExtendedField();
 					$member_extended_field->set_user_id($user_id);
 					
-					$member_extended_field->set_field_type();
-					$member_extended_field->set_field_name();
-					$member_extended_field->set_required();
-					$member_extended_field->set_regex_type();
-					$member_extended_field->set_regex();
-					$member_extended_field->set_default_values();
-					$member_extended_field->set_possible_values();
+					$member_extended_field->set_field_type($extended_field['field']);
+					$member_extended_field->set_field_name($extended_field['field_name']);
+					$member_extended_field->set_field_value(retrieve(POST, $extend_field['field_name'], '', TSTRING_UNCHANGE));
+					$member_extended_field->set_required($extended_field['required']);
+					$member_extended_field->set_regex_type($extended_field['regex']);
+					$member_extended_field->set_regex($member_extended_field->rewrite_regex($extended_field['regex']));
+					$member_extended_field->set_default_values($extended_field['default_values']);
+					$member_extended_field->set_possible_values($extended_field['possible_values']);
 					
 					$member_extended_fields_dao->set_request($member_extended_field);
 				}

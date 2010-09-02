@@ -33,6 +33,7 @@ class MemberExtendedField
 {
 	private $field_type;
 	private $field_name;
+	private $field_value;
 	private $required;
 	private $regex_type;
 	private $regex;
@@ -58,6 +59,16 @@ class MemberExtendedField
 	public function get_field_name()
 	{
 		return $this->field_name;
+	}
+	
+	public function set_field_value($field_value)
+	{
+		$this->field_value = $field_value;
+	}
+	
+	public function get_field_value()
+	{
+		return $this->field_value;
 	}
 	
 	public function set_required($required)
@@ -118,6 +129,26 @@ class MemberExtendedField
 	public function get_user_id()
 	{
 		return $this->user_id;
+	}
+	
+	public static function rewrite_regex($regex_type)
+	{
+		if (is_numeric($regex_type))
+		{
+			$array_regex = array(
+				1 => '`^[0-9]+$`',
+				2 => '`^[a-z]+$`',
+				3 => '`^[a-z0-9]+$`',
+				4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
+				5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
+			);
+			
+			return $array_regex[$regex_type];
+		}
+		else
+		{
+			return $regex_type;
+		}
 	}
 }
 ?>
