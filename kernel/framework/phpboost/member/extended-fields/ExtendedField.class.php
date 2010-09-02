@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *             ExtendedFields.class.php
+ *             ExtendedField.class.php
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
  
-class ExtendedFields
+class ExtendedField
 {
 
 	private $id;

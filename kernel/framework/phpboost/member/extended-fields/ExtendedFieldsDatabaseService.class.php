@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *      ExtendedFieldsTableService.class.php
+ *      ExtendedFieldsDatabaseService.class.php
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
  
-class ExtendedFieldsTableService
+class ExtendedFieldsDatabaseService
 {
 	public static function add_extended_field(ExtendedFields $extended_field)
 	{
