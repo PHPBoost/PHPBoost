@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *         ExtendedFieldsService.class.php
+ *         ExtendedFieldService.class.php
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,20 +25,20 @@
  *
  ###################################################*/
  
-class ExtendedFieldsService
+class ExtendedFieldService
 {
 	/*
-	 * This function required object ExtendedFields containing the name, field name, position, content, field type, possible values, default values, required and regex.
+	 * This function required object ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
 	 */
-	public static function add(ExtendedFields $extended_field)
+	public static function add(ExtendedField $extended_field)
 	{
 		$name = $extended_field->get_name();
 		$type_field = $extended_field->get_field_type();
 		if (!empty($name) && !empty($type_field))
 		{
-			if (!ExtendedFieldsTableService::check_field_exist_by_field_name($extended_field)) 
+			if (!ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field)) 
 			{		
-				ExtendedFieldsTableService::add_extended_field($extended_field);
+				ExtendedFieldsDatabaseService::add_extended_field($extended_field);
 				
 				ExtendFieldsCache::invalidate();
 			}
@@ -56,17 +56,17 @@ class ExtendedFieldsService
 	}
 	
 	/*
-	 * This function required object ExtendedFields containing the id, name, field name, content, field type, possible values, default values, required and regex.
+	 * This function required object ExtendedField containing the id, name, field name, content, field type, possible values, default values, required and regex.
 	 */
-	public static function update(ExtendedFields $extended_field)
+	public static function update(ExtendedField $extended_field)
 	{
 		$name = $extended_field->get_name();
 		$type_field = $extended_field->get_field_type();
 		if (!empty($name) && !empty($type_field))
 		{
-			if (ExtendedFieldsTableService::check_field_exist_by_id($extended_field))
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
 			{
-				ExtendedFieldsTableService::update_extended_field($extended_field);
+				ExtendedFieldsDatabaseService::update_extended_field($extended_field);
 				
 				ExtendFieldsCache::invalidate();
 			}
@@ -84,13 +84,13 @@ class ExtendedFieldsService
 	}
 	
 	/*
-	 * This function required object ExtendedFields containing the id
+	 * This function required object ExtendedField containing the id
 	 */
-	public static function delete(ExtendedFields $extended_field)
+	public static function delete(ExtendedField $extended_field)
 	{
-		if (ExtendedFieldsTableService::check_field_exist_by_id($extended_field))
+		if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
 		{
-			ExtendedFieldsTableService::delete_extended_field($extended_field);
+			ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
 			
 			ExtendFieldsCache::invalidate();
 		}
