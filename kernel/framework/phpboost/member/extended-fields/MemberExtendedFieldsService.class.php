@@ -54,10 +54,73 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_default_values($extended_field['default_values']);
 					$member_extended_field->set_possible_values($extended_field['possible_values']);
 					
-					$member_extended_fields_dao->set_request($member_extended_field);
+					$rewrite_field = self::rewrite_field($member_extended_field);
+					if ($rewrite_field !== '')
+					{
+						if (($member_extended_field->get_regex_type() > 0 && @preg_match($member_extended_field->get_regex, $rewrite_field)) || $member_extended_field->get_regex_type() == 0)
+						{
+							$member_extended_fields_dao->set_request($member_extended_field);
+						}
+					}
 				}
+				
+				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
 	}
+	
+	private static function rewrite_field(MemberExtendedField $member_extended_field)
+	{
+		if (is_numeric($member_extended_field->get_field_type()))
+		{
+			switch ($member_extended_field->get_field_type()) {
+				case 2:
+					return self::format_field_long_text($member_extended_field);
+					break;
+				case 4:
+					return self::format_field_multiple_select($member_extended_field);
+					break;
+				case 6:
+					return self::format_field_multiple_choice($member_extended_field);
+					break;
+				default:
+					return TextHelper::strprotect($member_extended_field);
+			}
+		}
+	}
+	
+	private static function format_field_long_text(MemberExtendedField $member_extended_field)
+	{
+		return FormatingHelper::strparse($member_extended_field->get_field_value());
+	}
+	
+	private static function format_field_multiple_select(MemberExtendedField $member_extended_field)
+	{
+		$array_field = is_array($member_extended_field->get_field_value()) ? $member_extended_field->get_field_value() : array();
+		$field = '';
+		foreach ($array_field as $value)
+			$field .= TextHelper::strprotect($value) . '|';
+			
+		return $field;
+	}
+	
+	private static function format_field_multiple_choice(MemberExtendedField $member_extended_field)
+	{
+		$field = '';
+		$i = 0;
+		$array_possible_values = $this->get_explode_possible_values($member_extended_field->get_possible_values());
+		foreach ($array_possible_values as $value)
+		{
+			$field .= !empty($_POST[$member_extended_field->get_field_name() . '_' . $i]) ? addslashes($_POST[$member_extended_field->get_field_name() . '_' . $i]) . '|' : '';
+			$i++;
+		}
+		return $field;
+	}
+	
+	private static function get_explode_possible_values(MemberExtendedField $member_extended_field)
+	{
+		return explode('|', $member_extended_field->get_possible_values());
+	}
+	
 }
 ?>
