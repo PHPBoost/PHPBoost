@@ -35,7 +35,7 @@ class MemberExtendedFieldsService
 	{
 		if(!empty($user_id))
 		{
-			$extended_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+			$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
 			
 			if (count($extend_fields_cache) > 0)
 			{
