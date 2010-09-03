@@ -66,7 +66,7 @@ class MemberExtendedFieldsDAO
 		$this->request_insert .= '\'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
 	}
 	
-	public function get_request_insert($user_id)
+	private function get_request_insert($user_id)
 	{
 		if (!empty($this->request_field) && !empty($this->request_insert))
 		{
@@ -84,7 +84,7 @@ class MemberExtendedFieldsDAO
 		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
 	}
 	
-	public function get_request_update($user_id)
+	private function get_request_update($user_id)
 	{
 		if (!empty($this->request_update))
 		{
