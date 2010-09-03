@@ -4,6 +4,8 @@
 --------------------------------------*/ /* Balises */
 img {
     border:none;
+	max-width:500px;
+	overflow:scroll;
 }
 
 hr {
