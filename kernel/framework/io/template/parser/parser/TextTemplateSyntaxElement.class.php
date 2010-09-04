@@ -87,8 +87,8 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!in_array($char, array('\\', '{', '}', '#')))
 		{
-			throw new Exception('Escaping character "' . $current .
-				'" has no meaning');
+			throw new TemplateParserException('Escaping character "' . $current .
+				'" has no meaning', $this->input);
 		}
 		$this->escape = false;
 		$this->write($char);

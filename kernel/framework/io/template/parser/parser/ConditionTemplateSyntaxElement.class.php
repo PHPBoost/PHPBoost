@@ -66,7 +66,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$condition->parse($this->input, $this->output);
 		if (!$this->input->consume_next('\s*#'))
 		{
-			throw new DomainException('invalid condition statement: ' . $this->input->to_string(), 0);
+			throw new TemplateParserException('invalid condition statement', $this->input);
 		}
 		$this->output->write(') { $_result.=\'');
 	}
@@ -95,7 +95,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function missing_end()
 	{
-		throw new DomainException('Missing condition end: ' . $this->input->to_string(), 0);
+		throw new TemplateParserException('Missing condition end', $this->input);
 	}
 }
 ?>

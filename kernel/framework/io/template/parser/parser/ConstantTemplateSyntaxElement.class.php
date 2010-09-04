@@ -42,7 +42,7 @@ class ConstantTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new DomainException('invalid constant variable name' . $input->to_string(), 0);
+			throw new TemplateParserException('invalid constant variable name', $input);
 		}
 	}
 }

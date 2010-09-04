@@ -43,7 +43,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new DomainException('invalid loop variable name', 0);
+			throw new TemplateParserException('invalid loop variable name', $input);
 		}
 	}
 }

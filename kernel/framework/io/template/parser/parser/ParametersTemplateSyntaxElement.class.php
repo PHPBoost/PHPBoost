@@ -39,7 +39,7 @@ class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
             }
             else if (!$input->assert_next('\s*\)\s*'))
             {
-            	throw new DomainException('invalid function call: ' . $input->to_string(), 0);
+            	throw new TemplateParserException('invalid function call', $input);
             }
 		}
 	}
