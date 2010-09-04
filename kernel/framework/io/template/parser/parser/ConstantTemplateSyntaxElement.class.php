@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    ExpressionContentTemplateSyntaxElement.class.php
+ *                    ConstantTemplateSyntaxElementTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 08 2010
+ *   begin                : September 04 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,39 +25,25 @@
  *
  ###################################################*/
 
-class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class ConstantTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
-	private $ended = false;
-
+	public static function is_element(StringInputStream $input)
+	{
+		return $input->assert_next('(?:[0-9]+(?:\.[0-9]+)?)|(?:\'[^\']*\')');
+	}
+	
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
-		$this->do_parse();
-	}
-
-	private function do_parse()
-	{
-		$element = null;
-		if (FunctionTemplateSyntaxElement::is_element($this->input))
+		$matches = array();
+		if ($input->consume_next('(?P<constant>(?:[0-9]+(?:\.[0-9]+)?)|(?:\'[^\']*\'))', '', $matches))
 		{
-			$element = new FunctionTemplateSyntaxElement();
-		}
-		elseif (VariableTemplateSyntaxElement::is_element($this->input))
-		{
-			$element = new VariableTemplateSyntaxElement();
-		}
-		elseif (ConstantTemplateSyntaxElement::is_element($this->input))
-		{	
-			$element = new ConstantTemplateSyntaxElement();
+			$constant = $matches['constant'];
+			$output->write($constant);
 		}
 		else
 		{
-			throw new DomainException('bad expression statement: ' . $this->input->to_string(), 0);
+			throw new DomainException('invalid constant variable name' . $input->to_string(), 0);
 		}
-		$element->parse($this->input, $this->output);
 	}
 }
 ?>

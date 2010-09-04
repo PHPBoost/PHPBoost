@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    ExpressionContentTemplateSyntaxElement.class.php
+ *                    ParametersTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 08 2010
+ *   begin                : September 04 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,39 +25,23 @@
  *
  ###################################################*/
 
-class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
-	private $ended = false;
-
-	public function parse(StringInputStream $input, StringOutputStream $output)
+    public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
-		$this->do_parse();
-	}
-
-	private function do_parse()
-	{
-		$element = null;
-		if (FunctionTemplateSyntaxElement::is_element($this->input))
+		while (!$input->assert_next('\s*\)\s*'))
 		{
-			$element = new FunctionTemplateSyntaxElement();
+			$parameter = new ExpressionContentTemplateSyntaxElement();
+			$parameter->parse($input, $output);
+            if ($input->consume_next('\s*,\s*'))
+            {
+            	$output->write(', ');
+            }
+            else if (!$input->assert_next('\s*\)\s*'))
+            {
+            	throw new DomainException('invalid function call: ' . $input->to_string(), 0);
+            }
 		}
-		elseif (VariableTemplateSyntaxElement::is_element($this->input))
-		{
-			$element = new VariableTemplateSyntaxElement();
-		}
-		elseif (ConstantTemplateSyntaxElement::is_element($this->input))
-		{	
-			$element = new ConstantTemplateSyntaxElement();
-		}
-		else
-		{
-			throw new DomainException('bad expression statement: ' . $this->input->to_string(), 0);
-		}
-		$element->parse($this->input, $this->output);
 	}
 }
 ?>
