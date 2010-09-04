@@ -118,6 +118,13 @@
 						<label><input type="text" size="40" id="regex2" name="regex2" class="text" onclick="document.getElementById('regex_type2').checked = true;" /></label>							
 					</dd>
 				</dl>
+				<dl> 
+					<dt><label>* {L_DISPLAY}</label><br /></dt>
+					<dd><label>
+						<label><input type="radio" name="display" id="display" value="1" checked="checked" /> {L_YES}</label>
+						<label><input type="radio" name="display" id="not_display" value="0" /> {L_NO}</label>
+					</label></dd>
+				</dl>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">

@@ -24,25 +24,28 @@
 					</th>
 				</tr>
 				<tr style="text-align:center;">
+					<td class="row1" style="width:8%">
+					</td>
 					<td class="row1">
 						{L_NAME}
 					</td>
-					<td class="row1" style="width:180px">
+					<td class="row1" style="width:20%">
 						{L_POSITION}
 					</td>
-					<td class="row1" style="width:180px">
+					<td class="row1" style="width:20%">
 						{L_REQUIRED}
 					</td>
-					<td class="row1" style="width:180px">
-						{L_UPDATE}
-					</td>				
-					<td class="row1" style="width:180px">
-						{L_DELETE}
+					<td class="row1" style="width:20%">
+						{L_DISPLAY}
 					</td>
 				</tr>
 				
 				# START field #
 				<tr style="text-align:center;"> 
+					<td class="row1"> 
+						<a href="admin_extend_field.php?id={field.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_extend_field.php?del=1&amp;id={field.ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+					</td>
 					<td class="row2">
 						<span id="e{field.ID}"></span>
 						{field.NAME}
@@ -54,11 +57,8 @@
 					<td class="row2">
 						{field.L_REQUIRED}
 					</td>
-					<td class="row2"> 
-						<a href="admin_extend_field.php?id={field.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-					</td>
 					<td class="row2">
-						<a href="admin_extend_field.php?del=1&amp;id={field.ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						{field.L_DISPLAY}
 					</td>
 				</tr>
 				# END field #
@@ -159,6 +159,13 @@
 						<label><input type="radio" name="regex_type" id="regex_type2" {REGEX2_CHECKED}{DISABLED} value="1" /> {L_PERSO_REGEXP}</label>
 						<label><input type="text" size="40" id="regex2" name="regex2" value="{REGEX}" class="text" onclick="document.getElementById('regex_type2').checked = true;"{DISABLED} /></label>							
 					</dd>
+				</dl>
+				<dl> 
+					<dt><label>* {L_DISPLAY}</label><br /></dt>
+					<dd><label>
+						<label><input type="radio" name="display" id="display" value="1" {DISPLAY} /> {L_YES}</label>
+						<label><input type="radio" name="display" id="not_display" value="0" {NOT_DISPLAY} /> {L_NO}</label>
+					</label></dd>
 				</dl>
 			</fieldset>
 			

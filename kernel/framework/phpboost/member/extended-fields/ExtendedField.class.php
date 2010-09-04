@@ -140,7 +140,7 @@ class ExtendedField
 	
 	public function get_display()
 	{
-		return !empty($this->display) ? $this->display : 1;
+		return $this->display;
 	}
 	
 	public function set_regex($regex)

@@ -62,6 +62,7 @@ elseif (!empty($_POST['valid']) && !empty($id))
 	$extended_field->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_field->set_default_values(retrieve(POST, 'default_values', ''));
 	$extended_field->set_is_required(retrieve(POST, 'required', 0));
+	$extended_field->set_display(retrieve(POST, 'display', 0));
 	$extended_field->set_regex($regex);
 	
 	ExtendedFieldsService::update($extended_field);
@@ -125,6 +126,8 @@ elseif (!empty($id))
 		'REGEX1_CHECKED' => ($regex_checked == 1) ? 'checked="checked"' : '',
 		'REGEX2_CHECKED' => ($regex_checked == 2) ? 'checked="checked"' : '',
 		'DISABLED' => ($extend_field['field'] > 2) ? ' disabled="disabled"' : '',
+		'DISPLAY' => $extend_field['display'] ? 'checked="checked"' : '',
+		'NOT_DISPLAY' => $extend_field['display'] ? '' : 'checked="checked"',
 	));
 
 	//Gestion erreur.
@@ -185,6 +188,9 @@ elseif (!empty($id))
 		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
 		'L_REQUIRED' => $LANG['required'],
 		'L_NOT_REQUIRED' => $LANG['not_required'],
+		'L_DISPLAY' => $LANG['display'],
+		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
 		'L_LONG_TEXT' => $LANG['long_text'],
 		'L_SEL_UNIQ' => $LANG['sel_uniq'],
@@ -223,33 +229,32 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_REQUIRED' => $LANG['required'],
 		'L_POSITION' => $LANG['position'],
+		'L_DISPLAY' => $LANG['display'],
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 	));
 	
 	$extend_field = ExtendFieldsCache::load()->get_extend_fields();
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
 
 	foreach($extend_field as $id => $row)
 	{
-		if($row['display'] == 1)
-		{
-			//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-			$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-			<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-			$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-			<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
+		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
+		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
+		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
-			$Template->assign_block_vars('field', array(
-				'ID' => $row['id'],
-				'NAME' => $row['name'],
-				'L_REQUIRED' => $row['required'] ? $LANG['yes'] : $LANG['no'],
-				'TOP' => $top_link,
-				'BOTTOM' => $bottom_link
-			));	
-		}		
+		$Template->assign_block_vars('field', array(
+			'ID' => $row['id'],
+			'NAME' => $row['name'],
+			'L_REQUIRED' => $row['required'] ? $LANG['yes'] : $LANG['no'],
+			'L_DISPLAY' => $row['display'] ? $LANG['yes'] : $LANG['no'],
+			'TOP' => $top_link,
+			'BOTTOM' => $bottom_link
+		));	
 	}
 
 }

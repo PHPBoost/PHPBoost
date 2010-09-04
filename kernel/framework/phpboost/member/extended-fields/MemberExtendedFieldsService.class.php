@@ -27,16 +27,21 @@
 
  /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @desc This class is responsible for updating of fields extended.
  * @package {@package}
  */
 class MemberExtendedFieldsService
-{
+{	
+	/*
+	 * This function required user id.
+	 */
 	public static function update_fields($user_id)
 	{
 		if(!empty($user_id))
 		{
 			$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
 			
+			// Null fields
 			if (count($extend_fields_cache) > 0)
 			{
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
@@ -61,6 +66,10 @@ class MemberExtendedFieldsService
 						{
 							$member_extended_fields_dao->set_request($member_extended_field);
 						}
+						else
+						{
+							throw new Exception('A fields is not correctly filled.');
+						}
 					}
 				}
 				$member_extended_fields_dao->get_request($user_id);
@@ -77,7 +86,7 @@ class MemberExtendedFieldsService
 					return self::format_field_long_text($member_extended_field);
 					break;
 				case 4:
-					return self::format_field_multiple_select($member_extended_field);
+					return self::format_field_multiple_choice($member_extended_field);
 					break;
 				case 6:
 					return self::format_field_multiple_choice($member_extended_field);
@@ -92,22 +101,12 @@ class MemberExtendedFieldsService
 	{
 		return FormatingHelper::strparse($member_extended_field->get_field_value());
 	}
-	
-	private static function format_field_multiple_select(MemberExtendedField $member_extended_field)
-	{
-		$array_field = is_array($member_extended_field->get_field_value()) ? $member_extended_field->get_field_value() : array();
-		$field = '';
-		foreach ($array_field as $value)
-			$field .= TextHelper::strprotect($value) . '|';
-			
-		return $field;
-	}
-	
+
 	private static function format_field_multiple_choice(MemberExtendedField $member_extended_field)
 	{
 		$field = '';
 		$i = 0;
-		$array_possible_values = $this->get_explode_possible_values($member_extended_field->get_possible_values());
+		$array_possible_values = self::get_explode_possible_values($member_extended_field);
 		foreach ($array_possible_values as $value)
 		{
 			$field .= !empty($_POST[$member_extended_field->get_field_name() . '_' . $i]) ? addslashes($_POST[$member_extended_field->get_field_name() . '_' . $i]) . '|' : '';

@@ -51,16 +51,5 @@ class ExtendFieldMember
 			}
 		}
 	}
-	
-	public static function add_field($user_id)
-	{
-		if (!empty($user_id))
-		{
-			$extend_fields_member_service = new ExtendFieldMemberService();
-			$extend_fields_member_service->add_field($user_id);
-			
-			return $extend_fields_member_service->get_error();
-		}
-	}
 }
 ?>

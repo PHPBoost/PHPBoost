@@ -27,6 +27,7 @@
 
  /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @desc The class is responsible for access to the database fields extended.
  * @package {@package}
  */
 class MemberExtendedFieldsDAO
