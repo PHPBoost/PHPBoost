@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *         ExtendedFieldService.class.php
+ *         ExtendedFieldsService.class.php
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -29,7 +29,7 @@
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
-class ExtendedFieldService
+class ExtendedFieldsService
 {
 	/*
 	 * This function required object ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
