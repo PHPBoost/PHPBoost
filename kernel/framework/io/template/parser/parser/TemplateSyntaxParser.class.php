@@ -33,8 +33,7 @@
  * text = .+
  * expressionContent = function | variable | constant
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
- * parameters = parameter | (parameter, (",", parameter)+)
- * parameter = expressionContent
+ * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
  * variable = simpleVar | loopVar
  * constant = "'.+'" | [0-9]+
  * simpleVar = "\w+"

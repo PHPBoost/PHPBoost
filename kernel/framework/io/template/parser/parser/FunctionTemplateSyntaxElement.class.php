@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    VariableTemplateSyntaxElement.class.php
+ *                    FunctionTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 0810 2010
+ *   begin                : September 04 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,31 +25,42 @@
  *
  ###################################################*/
 
-class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('\s*(?![0-9])(?:\w+\.)*\w+\s*');
+		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
 	}
-	
+
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		$input->consume_next('\s*');
-		$element = null;
-		if (LoopVarTemplateSyntaxElement::is_element($input))
+		$matches = array();
+		if ($input->consume_next('(?P<function>(?:\w+::)?\w+)\(', '', $matches))
 		{
-			$element = new LoopVarTemplateSyntaxElement();
-		}
-		elseif (SimpleVarTemplateSyntaxElement::is_element($input))
-		{
-			$element = new SimpleVarTemplateSyntaxElement();
+			$function = $matches['function'];
+			$output->write($function . '(');
+			$this->parameters($input, $output);
+			$this->end($input, $output);
 		}
 		else
 		{
-			throw new DomainException('invalid variable near: "' . $input->to_string(0, 50) . '"', 0);
+			throw new DomainException('invalid function call: ' . $input->to_string(), 0);
 		}
-		$element->parse($input, $output);
-		$input->consume_next('\s*');
+	}
+
+	private function parameters(StringInputStream $input, StringOutputStream $output)
+	{
+		$parameters = new ParametersTemplateSyntaxElement();
+		$parameters->parse($input, $output);
+	}
+
+	private function end(StringInputStream $input, StringOutputStream $output)
+	{
+		if (!$input->consume_next('\)'))
+		{
+			throw new DomainException('invalid function call: missing enclosing parenthesis: ' . $input->to_string(), 0);
+		}
+		$output->write(')');
 	}
 }
 ?>

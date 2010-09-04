@@ -162,6 +162,56 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
+    public function test_function_call_without_parameters()
+    {
+        $input = 'this is a simple {Function::call()}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call() . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function_call_with_a_parameter()
+    {
+        $input = 'this is a simple {Function::call(coucou)}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call($_data->get_var(\'coucou\')) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function_call_with_a_constant_parameter()
+    {
+        $input = 'this is a simple {Function::call(\'coucou\')}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(\'coucou\') . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function_call_with_a_numeric_constant_parameter()
+    {
+        $input = 'this is a simple {Function::call(42)}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function_call_with_a_floating_constant_parameter()
+    {
+        $input = 'this is a simple {Function::call(42.37)}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42.37) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function_call_with_mixed_parameters()
+    {
+        $input = 'this is a simple {Function::call(42, \'coucou\',
+        42.37)}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42, \'coucou\', 42.37) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_imbricated_functions_call()
+    {
+        $input = 'this is a simple {Function::call(SubFunction::callAgain())}';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(SubFunction::callAgain()) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+	
 	private function assert_parse($input, $expected_output)
 	{
 		$parser = new TemplateSyntaxParser();
