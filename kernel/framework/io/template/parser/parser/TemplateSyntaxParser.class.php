@@ -74,7 +74,7 @@ class TemplateSyntaxParser implements TemplateParser
 		$template_element->parse($this->input, $this->output);
 		if ($this->input->has_next())
 		{
-			throw new DomainException('Unknown statement: ' . $this->input->to_string(0, 20), 0);
+			throw new TemplateParserException('Unknown statement', $this->input);
 		}
 	}
 }

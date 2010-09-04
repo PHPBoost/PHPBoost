@@ -46,7 +46,7 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new DomainException('invalid variable near: "' . $input->to_string(0, 50) . '"', 0);
+			throw new TemplateParserException('invalid variable', $input);
 		}
 		$element->parse($input, $output);
 		$input->consume_next('\s*');

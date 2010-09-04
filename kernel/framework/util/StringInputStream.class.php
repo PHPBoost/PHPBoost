@@ -102,6 +102,11 @@ class StringInputStream
 		$this->seek($new_index);
 	}
 	
+	public function tell()
+	{
+		return $this->index;
+	}
+	
 	public function seek($new_index)
 	{
 		if (!($new_index >= -1 && $new_index < $this->length))
@@ -123,6 +128,11 @@ class StringInputStream
 			return substr($str, 0, $max_length);
 		}
 		return $str;
+	}
+	
+	public function entire_string()
+	{
+		return $this->stream;
 	}
 }
 
