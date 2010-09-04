@@ -32,13 +32,16 @@
 class MemberExtendedFieldsDAO
 {
 	private $db_connection;
-	private $request_insert = '';
-	private $request_update = '';
-	private $request_field = '';
+	private $request_insert;
+	private $request_update;
+	private $request_field;
 	
 	public function __construct()
 	{
 		$this->db_connection = PersistenceContext::get_sql();
+		$this->request_field = '';
+		$this->request_insert = '';
+		$this->request_update = '';
 	}
 	
 	public function set_request(MemberExtendedField $member_extended_field)
@@ -63,6 +66,7 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request_insert(MemberExtendedField $member_extended_field)
 	{
+		$this->set_request_field($member_extended_field);
 		$this->request_insert .= '\'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
 	}
 	

@@ -176,11 +176,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						StatsCache::invalidate();
 					
 					//Champs supplémentaires.
-					$error = ExtendFieldMember::add_field($last_mbr_id);
-					if (!empty($error))
-					{
-						AppContext::get_response()->redirect('/member/register' . url('.php?error='.$error.'') . '#errorh');
-					}
+					MemberExtendedFieldsService::update_fields($last_mbr_id);
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
 					if ($user_accounts_config->get_member_accounts_validation_method() == 1)
