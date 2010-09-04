@@ -40,14 +40,14 @@ class MemberExtendedFieldsService
 			if (count($extend_fields_cache) > 0)
 			{
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
-				foreach ($extended_fields_cache as $id => $extended_field)
+				foreach ($extend_fields_cache as $id => $extended_field)
 				{
 					$member_extended_field = new MemberExtendedField();
 					$member_extended_field->set_user_id($user_id);
 					
 					$member_extended_field->set_field_type($extended_field['field']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
-					$member_extended_field->set_field_value(retrieve(POST, $extend_field['field_name'], '', TSTRING_UNCHANGE));
+					$member_extended_field->set_field_value(retrieve(POST, $extended_field['field_name'], '', TSTRING_UNCHANGE));
 					$member_extended_field->set_required($extended_field['required']);
 					$member_extended_field->set_regex_type($extended_field['regex']);
 					$member_extended_field->set_regex($member_extended_field->rewrite_regex($extended_field['regex']));
@@ -69,7 +69,7 @@ class MemberExtendedFieldsService
 		}
 	}
 	
-	private static function rewrite_field(MemberExtendedField $member_extended_field)
+	public static function rewrite_field(MemberExtendedField $member_extended_field)
 	{
 		if (is_numeric($member_extended_field->get_field_type()))
 		{
@@ -84,7 +84,7 @@ class MemberExtendedFieldsService
 					return self::format_field_multiple_choice($member_extended_field);
 					break;
 				default:
-					return TextHelper::strprotect($member_extended_field);
+					return TextHelper::strprotect($member_extended_field->get_field_value());
 			}
 		}
 	}
