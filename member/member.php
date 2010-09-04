@@ -475,11 +475,7 @@ if (!empty($id_get)) //Espace membre
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
 				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				
-				$error = ExtendFieldMember::add_field($User->get_attribute('user_id'));
-				if (!empty($error))
-				{
-					AppContext::get_response()->redirect('/admin/member' . url('.php?id=' .  $id_get . '&error='.$error.'') . '#errorh');
-				}
+				MemberExtendedFieldsService::update_fields($User->get_attribute('user_id'));
 				
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}

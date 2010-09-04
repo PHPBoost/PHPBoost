@@ -34,18 +34,18 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 	$regex_type = retrieve(POST, 'regex_type', 0);
 	$regex = empty($regex_type) ? retrieve(POST, 'regex1', 0) : retrieve(POST, 'regex2', '');
 	
-	$extended_fields = new ExtendedFields();
-	$extended_fields->set_name(retrieve(POST, 'name', ''));
-	$extended_fields->set_field_name(ExtendedFields::rewrite_field_name(retrieve(POST, 'name', '')));
-	$extended_fields->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
-	$extended_fields->set_content(retrieve(POST, 'contents', '', TSTRING));
-	$extended_fields->set_field_type(retrieve(POST, 'field', 0));
-	$extended_fields->set_possible_values(retrieve(POST, 'possible_values', ''));
-	$extended_fields->set_default_values(retrieve(POST, 'default_values', ''));
-	$extended_fields->set_is_required(retrieve(POST, 'required', 0));
-	$extended_fields->set_regex($regex);
+	$extended_field = new ExtendedField();
+	$extended_field->set_name(retrieve(POST, 'name', ''));
+	$extended_field->set_field_name(ExtendedField::rewrite_field_name(retrieve(POST, 'name', '')));
+	$extended_field->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+	$extended_field->set_content(retrieve(POST, 'contents', '', TSTRING));
+	$extended_field->set_field_type(retrieve(POST, 'field', 0));
+	$extended_field->set_possible_values(retrieve(POST, 'possible_values', ''));
+	$extended_field->set_default_values(retrieve(POST, 'default_values', ''));
+	$extended_field->set_is_required(retrieve(POST, 'required', 0));
+	$extended_field->set_regex($regex);
 	
-	ExtendedFieldsService::add($extended_fields);
+	ExtendedFieldsService::add($extended_field);
 
 	AppContext::get_response()->redirect('/admin/admin_extend_field.php');
 }

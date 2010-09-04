@@ -224,7 +224,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					AppContext::get_mail_service()->send_from_properties($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
 				}
 				
-				ExtendFieldMember::add_field($id_post);
+				MemberExtendedFieldsService::update_fields($id_post);
 				
 				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}

@@ -57,13 +57,12 @@ class MemberExtendedFieldsService
 					$rewrite_field = self::rewrite_field($member_extended_field);
 					if ($rewrite_field !== '')
 					{
-						if (($member_extended_field->get_regex_type() > 0 && @preg_match($member_extended_field->get_regex, $rewrite_field)) || $member_extended_field->get_regex_type() == 0)
+						if (($member_extended_field->get_regex_type() > 0 && @preg_match($member_extended_field->get_regex(), $rewrite_field)) || $member_extended_field->get_regex_type() == 0)
 						{
 							$member_extended_fields_dao->set_request($member_extended_field);
 						}
 					}
 				}
-				
 				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
