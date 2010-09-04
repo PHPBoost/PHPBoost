@@ -108,8 +108,8 @@ class FileTemplateLoader implements TemplateLoader
 			throw new FileTemplateLoadingException($this->filepath, $this->real_filepath);
 		}
 
-		$parser = new DefaultTemplateParser();
-//		$parser = new TemplateSyntaxParser();
+//		$parser = new DefaultTemplateParser();
+		$parser = new TemplateSyntaxParser();
 		$result = $parser->parse($real_file_content);
 
 		try

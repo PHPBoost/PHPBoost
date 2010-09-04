@@ -73,7 +73,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_end()
 	{
-		$this->ended = $this->input->consume_next('#\sEND(?:IF)?\s#');
+		$this->ended = $this->input->consume_next('#\s*END(?:\s*IF)?\s*#');
 		$this->output->write('\';} $_result.=\'');
 	}
 
