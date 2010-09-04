@@ -43,6 +43,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 	$extended_field->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_field->set_default_values(retrieve(POST, 'default_values', ''));
 	$extended_field->set_is_required(retrieve(POST, 'required', 0));
+	$extended_field->set_display(retrieve(POST, 'display', 0));
 	$extended_field->set_regex($regex);
 	
 	ExtendedFieldsService::add($extended_field);
@@ -69,6 +70,9 @@ else
 		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
 		'L_REQUIRED' => $LANG['required'],
 		'L_NOT_REQUIRED' => $LANG['not_required'],
+		'L_DISPLAY' => $LANG['display'],
+		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
 		'L_LONG_TEXT' => $LANG['long_text'],
 		'L_SEL_UNIQ' => $LANG['sel_uniq'],
