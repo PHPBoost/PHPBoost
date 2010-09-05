@@ -225,7 +225,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     {
         $input = 'this is a simple # INCLUDE block.tpl #';
         $output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_block_value[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
+'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_block[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
     }
@@ -234,7 +234,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     {
         $input = 'this is a simple # INCLUDE block.imbricated.tpl #';
         $output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_imbricated_value[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
+'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_imbricated[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
     }

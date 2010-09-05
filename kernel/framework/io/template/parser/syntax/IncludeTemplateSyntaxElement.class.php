@@ -74,7 +74,8 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
     
     private function write_block_subtemplate_initialization($name, $block)
     {
-        $block_var = '$_tmp_' . array_pop(explode('.', $block)) . '_value[\'subtemplates\']';
+    	$blocks = explode('.', $block);
+        $block_var = '$_tmp_' . array_pop($blocks) . '[\'subtemplates\']';
         $this->output->write('$_subtemplate = $_data->get_subtemplate_from_list(\'' . $name . '\', ' . $block_var . ');');
     }
     
