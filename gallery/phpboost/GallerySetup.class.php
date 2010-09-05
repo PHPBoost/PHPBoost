@@ -40,6 +40,7 @@ class GallerySetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
+		$this->insert_data();
 	}
 
 	public function uninstall()
@@ -109,6 +110,52 @@ class GallerySetup extends DefaultModuleSetup
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_cats_table, $fields, $options);
+	}
+	
+	private function insert_data()
+	{
+		$this->messages = LangLoader::get('install', 'gallery');
+		$this->insert_gallery_data();
+		$this->insert_gallery_cat_data();
+	}
+	
+	private function insert_gallery_data()
+	{
+		$this->querier->insert(self::$gallery_table, array(
+			'id' => 1,
+			'idcat' => 1,
+			'name' => 'PHPBoost 3!',
+			'path' => 'phpboost3.jpg',
+			'width' => 320,
+			'height' => 264,
+			'weight' => 15614,
+			'user_id' => 1,
+			'aprob' => 1,
+			'view' => 0,
+			'timestamp' => time(),
+			'user_note' => '',
+			'nbrnote' => 0,
+			'note' => 0,
+			'nbr_com' => 0,
+			'lock_com' => 0
+		));
+	}
+	
+	private function insert_gallery_cat_data()
+	{
+		$this->querier->insert(self::$gallery_cats_table, array(
+			'id' => 1,
+			'id_left' => 1,
+			'id_right' => 2,
+			'level' => 0,
+			'name' => $this->messages['gallery_cat_name'],
+			'contents' => $this->messages['gallery_cat_content'],
+			'nbr_pics_aprob' => 1,
+			'nbr_pics_unaprob' => 0,
+			'status' => 1,
+			'aprob' => 1,
+			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;}',
+		));
 	}
 }
 
