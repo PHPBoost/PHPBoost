@@ -169,6 +169,26 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
+    public function test_renderer_function_call()
+    {
+        $input = 'this is a simple ${call()}';
+        try
+        {
+        	$this->assert_parse($input, null);
+        	$this->fail('unauthorized method call not detected');
+        }
+        catch (TemplateParserException $ex)
+        {	
+        }
+    }
+
+    public function test_renderer_functions_call()
+    {
+        $input = 'this is a simple ${resources(\'main\')}';
+        $output = '<?php $_result=\'this is a simple \' . $this->resources(\'main\') . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
     public function test_function_call_without_parameters()
     {
         $input = 'this is a simple ${Function::call()}';
