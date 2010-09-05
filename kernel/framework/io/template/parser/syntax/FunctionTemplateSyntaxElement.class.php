@@ -27,6 +27,13 @@
 
 class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
+	private static $renderer_methods;
+
+	public static function __static()
+	{
+		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw');
+	}
+
 	public static function is_element(StringInputStream $input)
 	{
 		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
@@ -35,16 +42,33 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
-		if ($input->consume_next('(?P<function>(?:\w+::)?\w+)\(', '', $matches))
+		if ($input->consume_next('(?P<callable>(?P<class>\w+::)?\w+)\(', '', $matches))
 		{
-			$function = $matches['function'];
-			$output->write($function . '(');
+			$callable = $matches['callable'];
+			$this->check_method_call($matches, $callable, $input, $output);
+			$output->write($callable . '(');
 			$this->parameters($input, $output);
 			$this->end($input, $output);
 		}
 		else
 		{
 			throw new TemplateParserException('invalid function call', $input);
+		}
+	}
+
+	private function check_method_call(array $matches, $method, StringInputStream $input, StringOutputStream $output)
+	{
+		if (empty($matches['class']))
+		{
+			if (!in_array($method, self::$renderer_methods))
+			{
+				throw new TemplateParserException('Unauthorized method call. Only resources, i18n, i18njs and i18nraw ' .
+            	   'functions calls and static methods calls are allowed', $input);
+			}
+			else
+			{
+				$output->write('$this->');
+			}
 		}
 	}
 
