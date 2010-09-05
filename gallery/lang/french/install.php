@@ -1,9 +1,8 @@
 <?php
-
 /*##################################################
  *                              install.php
  *                            -------------------
- *   begin                : January 17, 2010
+ *   begin                : September 5, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -27,13 +26,11 @@
  ###################################################*/
 
  ####################################################
- #                    English                       #
+ #                    French                        #
  ####################################################
 
 $lang = array(
-	'poll_question' => 'Do you like our website?',
-	'poll_answers' => 'Very Good|Good|Average|Bad|Very Bad',
-	'poll_votes' => '||||'
+    'gallery_cat_name' => 'Test',
+    'gallery_cat_content' => 'Gallerie de test',
 );
-
 ?>
