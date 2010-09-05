@@ -49,7 +49,11 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$element = null;
 			$current = $this->input->next();
-			if ($current == '{' && $this->input->assert_next('[^\s]'))
+		    if ($current == '{' && $this->input->assert_next('(?:\w+\.)*\w+\}'))
+            {
+                $element = new VariableExpressionTemplateSyntaxElement();
+            }
+			elseif ($current == '$' && $this->input->assert_next('\{'))
 			{
 				$element = $this->build_expression_elt();
 			}

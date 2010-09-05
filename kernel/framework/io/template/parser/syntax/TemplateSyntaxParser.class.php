@@ -26,8 +26,9 @@
  ###################################################*/
 
 /*
- * template = (expression | condition | loop | include | text)*
- * expression = "{", expressionContent, "}"
+ * template = (variableExpression | expression | condition | loop | include | text)*
+ * variableExpression = "{", variable, "}"
+ * expression = "${", expressionContent, "}"
  * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSE #, template)?, "# ENDIF #"
  * loop = "# START ", expression, " #", template, "# END (?:name)? #"
  * include = "# INCLUDE ", name, " #"

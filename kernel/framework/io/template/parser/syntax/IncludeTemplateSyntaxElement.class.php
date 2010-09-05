@@ -2,7 +2,7 @@
 /*##################################################
  *                    IncludeTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 10 2010
+ *   begin                : September 05 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
