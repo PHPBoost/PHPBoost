@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    ExpressionTemplateSyntaxElement.class.php
+ *                    VariableExpressionTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 08 2010
+ *   begin                : September 05 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class VariableExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	private $input;
 	private $output;
@@ -51,8 +51,7 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_expression_start()
 	{
-        $this->input->consume_next('\{');
-        $this->output->write('\' . ');
+		$this->output->write('\' . ');
 	}
 
 	private function process_expression_end()
@@ -63,7 +62,7 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_expression_content()
 	{
-		$element = new ExpressionContentTemplateSyntaxElement();
+		$element = new VariableTemplateSyntaxElement();
 		$element->parse($this->input, $this->output);
 	}
 

@@ -103,16 +103,25 @@ abstract class AbstractTemplate implements Template
 	 */
 	public function display()
 	{
-		echo $this->renderer->render($this->data, $this->loader);
+		echo $this->render();
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function to_string()
-	{
-		return $this->renderer->render($this->data, $this->loader);
-	}
+    public function to_string()
+    {
+        return $this->render();
+    }
+    
+    /**
+     * @return string the template parsed in a result string
+     * @throws TemplateParserException
+     */
+    protected function render()
+    {
+    	return $this->renderer->render($this->data, $this->loader);
+    }
 
 	/**
 	 * {@inheritdoc}

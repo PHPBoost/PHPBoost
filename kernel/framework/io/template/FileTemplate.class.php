@@ -48,6 +48,8 @@
  */
 class FileTemplate extends AbstractTemplate
 {
+	private $file_identifier;
+	
 	/**
 	 * @desc Builds a FileTemplate object
 	 * @param string $file_identifier The identifier of the file you want to load (see this class' description)
@@ -55,11 +57,27 @@ class FileTemplate extends AbstractTemplate
 	 */
 	public function __construct($file_identifier)
 	{
+		$this->file_identifier = $file_identifier;
 		$data = new DefaultTemplateData();
 		$data->auto_load_frequent_vars();
-		$loader = new FileTemplateLoader($file_identifier, $data);
+		$loader = new FileTemplateLoader($this->file_identifier, $data);
 		$renderer = new DefaultTemplateRenderer();
 		parent::__construct($loader, $renderer, $data);
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+    protected function render()
+    {
+        try
+        {
+            return $this->renderer->render($this->data, $this->loader);
+        }
+        catch (TemplateParserException $exception)
+        {
+            throw new FileTemplateParserException($this->file_identifier, $exception);
+        }
+    }
 }
 ?>

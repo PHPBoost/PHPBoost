@@ -106,6 +106,10 @@ class Debug
 		{
 			$message = self::to_plain_text('<hr />' . $message);
 		}
+		else
+		{
+			$message = str_replace("\n", '<br />', $message);
+		}
 		echo $message;
 		Debug::print_stacktrace(0, $exception);
 		exit;
