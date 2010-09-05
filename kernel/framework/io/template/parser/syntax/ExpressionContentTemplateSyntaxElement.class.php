@@ -41,7 +41,11 @@ class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxEleme
 	private function do_parse()
 	{
 		$element = null;
-		if (FunctionTemplateSyntaxElement::is_element($this->input))
+		if (ArrayTemplateSyntaxElement::is_element($this->input))
+		{
+            $element = new ArrayTemplateSyntaxElement();
+		}
+		elseif (FunctionTemplateSyntaxElement::is_element($this->input))
 		{
 			$element = new FunctionTemplateSyntaxElement();
 		}

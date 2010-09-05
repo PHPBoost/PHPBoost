@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    ParametersTemplateSyntaxElement.class.php
+ *                    ArrayTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : September 04 2010
+ *   begin                : September 05 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,23 +25,40 @@
  *
  ###################################################*/
 
-class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-    public function parse(StringInputStream $input, StringOutputStream $output)
+	public static function is_element(StringInputStream $input)
 	{
-		while (!$input->assert_next('\s*\)\s*'))
+		return $input->assert_next('\s*array\(');
+	}
+
+	public function parse(StringInputStream $input, StringOutputStream $output)
+	{
+		if ($input->consume_next('\s*array\('))
 		{
-			$parameter = new ExpressionContentTemplateSyntaxElement();
-			$parameter->parse($input, $output);
-            if ($input->consume_next('\s*,\s*'))
-            {
-            	$output->write(', ');
-            }
-            else if (!$input->assert_next('\s*\)\s*'))
-            {
-            	throw new TemplateParserException('invalid function call, missing "," or ")"', $input);
-            }
+			$output->write('array(');
+			$this->content($input, $output);
+			$this->end($input, $output);
 		}
+		else
+		{
+			throw new TemplateParserException('invalid array', $input);
+		}
+	}
+
+	private function content(StringInputStream $input, StringOutputStream $output)
+	{
+		$parameters = new ArrayContentTemplateSyntaxElement();
+		$parameters->parse($input, $output);
+	}
+
+	private function end(StringInputStream $input, StringOutputStream $output)
+	{
+		if (!$input->consume_next('\)\s*'))
+		{
+			throw new TemplateParserException('invalid array: missing enclosing parenthesis', $input);
+		}
+		$output->write(')');
 	}
 }
 ?>

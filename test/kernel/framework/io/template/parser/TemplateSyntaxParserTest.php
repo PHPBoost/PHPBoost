@@ -26,16 +26,23 @@
  ###################################################*/
 
 /*
- * template = (expression | condition | loop | text)*
- * expression = "{", (function | variable), "}"
+ * template = (variableExpression | expression | condition | loop | include | text)*
+ * variableExpression = "{", variable, "}"
+ * expression = "${", expressionContent, "}"
  * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSE #, template)?, "# ENDIF #"
- * loop = "# START ", expression, "#", template, "# END (?:name)? #"
+ * loop = "# START ", expression, " #", template, "# END (?:name)? #"
+ * include = "# INCLUDE ", name, " #"
  * text = .+
+ * expressionContent = function | variable | constant
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
- * parameters = parameter | (parameter, (",", parameter)+)
- * parameter = function | variable
- * variable = "\w+"
- *
+ * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
+ * variable = simpleVar | loopVar
+ * constant = "'.+'" | [0-9]+ | array
+ * array = "array(", arrayContent, ")"
+ * arrayContent = arrayElement | (arrayElement, (",", arrayElement)+)
+ * arrayElement = expressionContent | ("'\w+'\s*=>\s*", expressionContent)
+ * simpleVar = "\w+"
+ * loopVar = "(\w+\.)+\w+"
  */
 
 /**
@@ -238,7 +245,35 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
     }
-	
+
+    public function test_parse_empty_array()
+    {
+        $input = 'this is a simple ${My::call(array())}';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array()) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_parse_one_parameter_array()
+    {
+        $input = 'this is a simple ${My::call(array(\'coucou\'))}';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\')) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_parse_multi_parameters_array()
+    {
+        $input = 'this is a simple ${My::call(array(\'coucou\', COUCOU, 42.3))}';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_parse_one_parameter_map()
+    {
+        $input = 'this is a simple ${My::call(array(\'key\' => \'coucou\'))}';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'key\' => \'coucou\')) . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+    
 	private function assert_parse($input, $expected_output)
 	{
 		$parser = new TemplateSyntaxParser();
