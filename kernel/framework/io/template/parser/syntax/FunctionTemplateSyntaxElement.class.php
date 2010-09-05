@@ -44,7 +44,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new DomainException('invalid function call', $input);
+			throw new TemplateParserException('invalid function call', $input);
 		}
 	}
 
@@ -58,7 +58,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!$input->consume_next('\)'))
 		{
-			throw new DomainException('invalid function call: missing enclosing parenthesis', $input);
+			throw new TemplateParserException('invalid function call: missing enclosing parenthesis', $input);
 		}
 		$output->write(')');
 	}

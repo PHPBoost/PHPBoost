@@ -33,7 +33,7 @@
  * loop = "# START ", expression, " #", template, "# END (?:name)? #"
  * include = "# INCLUDE ", name, " #"
  * text = .+
- * expressionContent = function | variable | constant
+ * expressionContent = array | function | variable | constant
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
  * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
  * variable = simpleVar | loopVar
@@ -43,7 +43,6 @@
  * arrayElement = expressionContent | ("'\w+'\s*=>\s*", expressionContent)
  * simpleVar = "\w+"
  * loopVar = "(\w+\.)+\w+"
- * 
  */
 
 /**
