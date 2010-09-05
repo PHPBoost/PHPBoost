@@ -45,7 +45,7 @@ class TemplateParserException extends Exception
 	
 	private function get_message()
 	{
-		$msg = $this->error_message . '<br />';
+		$msg = $this->error_message . "\n";
 		$msg .= 'line ' . $this->line . ' offset ' . $this->offset . ' near';
 		$msg .= ' "...' . $this->input->to_string(-100, 200) . '..."';
 		return $msg;

@@ -26,10 +26,11 @@
  ###################################################*/
 
 /*
- * template = (expression | condition | loop | text)*
+ * template = (expression | condition | loop | include | text)*
  * expression = "{", expressionContent, "}"
  * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSE #, template)?, "# ENDIF #"
- * loop = "# START ", expression, "#", template, "# END (?:name)? #"
+ * loop = "# START ", expression, " #", template, "# END (?:name)? #"
+ * include = "# INCLUDE ", name, " #"
  * text = .+
  * expressionContent = function | variable | constant
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
@@ -64,7 +65,6 @@ class TemplateSyntaxParser implements TemplateParser
 		$this->output->write('<?php $_result=\'');
 		$this->do_parse();
 		$this->output->write('\'; ?>');
-//		Debug::stop($this->output->to_string());
 		return $this->output->to_string();
 	}
 	

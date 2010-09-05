@@ -85,23 +85,17 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->input->move(-1);
 		if (ConditionTemplateSyntaxElement::is_element($this->input))
 		{
-			return $this->build_condition_elt();
+			return new ConditionTemplateSyntaxElement();
 		}
-		elseif (LoopTemplateSyntaxElement::is_element($this->input))
-		{
-			return $this->build_loop_elt();
-		}
+        elseif (LoopTemplateSyntaxElement::is_element($this->input))
+        {
+            return new LoopTemplateSyntaxElement();
+        }
+        elseif (IncludeTemplateSyntaxElement::is_element($this->input))
+        {
+            return new IncludeTemplateSyntaxElement();
+        }
 		return null;
-	}
-
-	private function build_condition_elt()
-	{
-		return new ConditionTemplateSyntaxElement();
-	}
-
-	private function build_loop_elt()
-	{
-		return new LoopTemplateSyntaxElement();
 	}
 }
 ?>
