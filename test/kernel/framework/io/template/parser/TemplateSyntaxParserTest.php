@@ -211,6 +211,33 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
         $output = '<?php $_result=\'this is a simple \' . Function::call(SubFunction::callAgain()) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
+
+    public function test_include_tpl()
+    {
+        $input = 'this is a simple # INCLUDE tpl #';
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+'$_subtemplate = $_data->get_subtemplate(\'tpl\');if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
+'$_result.=\'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_simple_block_include_tpl()
+    {
+        $input = 'this is a simple # INCLUDE block.tpl #';
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_block_value[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
+'$_result.=\'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_imbricated_block_include_tpl()
+    {
+        $input = 'this is a simple # INCLUDE block.imbricated.tpl #';
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+'$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_imbricated_value[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
+'$_result.=\'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
 	
 	private function assert_parse($input, $expected_output)
 	{

@@ -101,6 +101,13 @@ class StringInputStream
 		$new_index = $this->index + $delta;
 		$this->seek($new_index);
 	}
+    
+    public function safe_move($delta)
+    {
+        $new_index = $this->index + $delta;
+        $safe_index = max(0, min($new_index, $this->length - 1));
+        $this->seek($safe_index);
+    }
 	
 	public function tell()
 	{
@@ -120,7 +127,7 @@ class StringInputStream
 	public function to_string($delta = 0, $max_length = 50)
 	{
 		$old_index = $this->index;
-		$this->move($delta);
+		$this->safe_move($delta);
 		$str = substr($this->stream, $this->index);
 		$this->seek($old_index);
 		if ($max_length > 0)
