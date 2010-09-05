@@ -37,7 +37,10 @@
  * function = "\(\w+::\)?\w+\(", parameters, "\)"
  * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
  * variable = simpleVar | loopVar
- * constant = "'.+'" | [0-9]+
+ * constant = "'.+'" | [0-9]+ | array
+ * array = "array(", arrayContent, ")"
+ * arrayContent = arrayElement | (arrayElement, (",", arrayElement)+)
+ * arrayElement = expressionContent | ("'\w+'\s*=>\s*", expressionContent)
  * simpleVar = "\w+"
  * loopVar = "(\w+\.)+\w+"
  * 
