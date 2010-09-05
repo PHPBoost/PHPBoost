@@ -71,7 +71,7 @@ class GallerySetup extends DefaultModuleSetup
 			'weight' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'view' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'views' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'user_note' => array('type' => 'text', 'length' => 65000),
 			'nbrnote' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
@@ -121,7 +121,7 @@ class GallerySetup extends DefaultModuleSetup
 	
 	private function insert_gallery_data()
 	{
-		$this->querier->insert(self::$gallery_table, array(
+		PersistenceContext::get_querier()->insert(self::$gallery_table, array(
 			'id' => 1,
 			'idcat' => 1,
 			'name' => 'PHPBoost 3!',
@@ -131,7 +131,7 @@ class GallerySetup extends DefaultModuleSetup
 			'weight' => 15614,
 			'user_id' => 1,
 			'aprob' => 1,
-			'view' => 0,
+			'views' => 0,
 			'timestamp' => time(),
 			'user_note' => '',
 			'nbrnote' => 0,
@@ -143,7 +143,7 @@ class GallerySetup extends DefaultModuleSetup
 	
 	private function insert_gallery_cat_data()
 	{
-		$this->querier->insert(self::$gallery_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$gallery_cats_table, array(
 			'id' => 1,
 			'id_left' => 1,
 			'id_right' => 2,
