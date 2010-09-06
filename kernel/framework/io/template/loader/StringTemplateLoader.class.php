@@ -66,7 +66,7 @@ class StringTemplateLoader implements TemplateLoader
 		}
 		else
 		{
-			$parser = new DefaultTemplateParser();
+			$parser = new TemplateSyntaxParser();
 			$parsed_content = $parser->parse($this->content);
 			self::register_cached_template($this->hashed_content, $parsed_content);
 			return $parsed_content;

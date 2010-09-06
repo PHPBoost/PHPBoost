@@ -92,7 +92,7 @@ class CachedStringTemplateLoader implements TemplateLoader
 
 	private function get_parsed_content()
 	{
-		$parser = new DefaultTemplateParser();
+		$parser = new TemplateSyntaxParser();
 		return $parser->parse($this->content);
 	}
 
