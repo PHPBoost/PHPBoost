@@ -67,7 +67,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			}
 			else
 			{
-				$output->write('$this->');
+				$output->write('$_i18n->');
 			}
 		}
 	}
