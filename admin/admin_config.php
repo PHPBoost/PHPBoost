@@ -55,6 +55,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	$user_accounts_config->set_default_lang(stripslashes(retrieve(POST, 'lang', '')));
+	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	UserAccountsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
