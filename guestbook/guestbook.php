@@ -243,9 +243,10 @@ else //Affichage.
 		}
 		$form->add_fieldset($fieldset);
 		$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
+	   
+		$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 	}
 	
-	$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 	
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
