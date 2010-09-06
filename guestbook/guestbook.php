@@ -219,7 +219,7 @@ else //Affichage.
 		echo $errstr;
 	}
 	
-	if($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE))
+	if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE))
 	{
 		$is_guest = !$User->check_level(MEMBER_LEVEL);
 
@@ -242,11 +242,9 @@ else //Affichage.
 			$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 		}
 		$form->add_fieldset($fieldset);
-		$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
 	   
 		$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 	}
-	
 	
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);

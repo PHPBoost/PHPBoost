@@ -107,7 +107,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			//Update form
 			
-			$form = new FormBuilder('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
+			$form = new HTMLForm('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
 			$fieldset = new FormFieldsetHTML('update_msg', $LANG['update_msg']);
 			
 			if ($row['user_id'] == -1) //Visiteur
@@ -117,7 +117,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
 			}
-			$fieldset->add_field(new FormTextarea('shoutbox_contents', FormatingHelper::unparse($row['contents']), array(
+			$fieldset->add_field(new FormFieldTextEditor('shoutbox_contents', FormatingHelper::unparse($row['contents']), array(
 				'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
 				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 			));
@@ -204,7 +204,7 @@ else //Affichage.
 	
 	//Post form
 	
-	$form = new FormBuilder('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
+	$form = new HTMLForm('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
 	$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
@@ -212,12 +212,11 @@ else //Affichage.
 			'title' => $LANG['pseudo'], 'class' => 'text', 'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
 		));
 	}
-	$fieldset->add_field(new FormTextarea('shoutbox_contents', '', array(
+	$fieldset->add_field(new FormFieldTextEditor('shoutbox_contents', '', array(
 		'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
 		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 	));
 	$form->add_fieldset($fieldset);
-	$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
 	
 	//On crée une pagination si le nombre de messages est trop important.
 	$nbr_shout = $Sql->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
