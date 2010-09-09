@@ -122,7 +122,6 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
-			$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
 			$form->set_form_submit($LANG['update']);	
 			
 			$Template->assign_vars(array(
