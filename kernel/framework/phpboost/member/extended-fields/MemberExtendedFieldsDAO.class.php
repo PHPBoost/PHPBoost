@@ -97,6 +97,11 @@ class MemberExtendedFieldsDAO
 		}
 	}
 	
+	public static function level_user($user_id)
+	{
+		return PersistenceContext::get_sql()->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__) > 0 ? true : false;
+	}
+	
 	public function get_field_type($field_type)
 	{
 		if (is_numeric($field_type))
