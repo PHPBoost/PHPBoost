@@ -39,8 +39,19 @@ define('KERNEL_SCRIPT', true);
  */
 class Comments
 {
-
 	const POST_COMMENT_AUTH = 1;
+	
+    ## Private attributes ##
+    private $script = '';
+    private $idprov = 0;
+    private $idcom = 0;
+    private $path = '';
+    private $vars = '';
+    private $module_folder = '';
+    private $sql_table = '';
+    private $nbr_com = 0;
+    private $lock_com = 0;
+    private $is_kernel_script = false;
 	
 	## Public Methods ##
 	/**
@@ -51,7 +62,7 @@ class Comments
 	 * @param string $module_folder Module's folder
 	 * @param string $is_kernel_script
 	 */
-	 function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
+	public function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
 	{
 		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
 		list($this->script, $this->idprov, $this->vars, $this->path) = array(TextHelper::strprotect($script), NumberHelper::numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
@@ -65,7 +76,7 @@ class Comments
 	 * @param string $login Poster's login
 	 * @return int the inserted identifier.
 	 */
-	 function add($contents, $login)
+	public function add($contents, $login)
 	{
 		global $Sql, $User;
 		
@@ -83,7 +94,7 @@ class Comments
 	 * @param string $contents Comment content
 	 * @param string $login Poster's login
 	 */
-	function update($contents, $login)
+	public function update($contents, $login)
 	{
 		global $Sql;
 		$Sql->query_inject("UPDATE " . DB_TABLE_COM . " SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
@@ -93,7 +104,7 @@ class Comments
 	 * @desc Delete a comment
 	 * @return int the previous comment identifier.
 	 */
-	function del()
+	public function del()
 	{
 		global $Sql;
 		
@@ -118,7 +129,7 @@ class Comments
 	 * @desc Delete all comments for the specified item.
 	 * @param int $idprov The id field of the item in the database.
 	 */
-	 function delete_all($idprov)
+	public  function delete_all($idprov)
 	{
 		global $Sql;
 		
@@ -129,7 +140,7 @@ class Comments
 	 * @desc Lock or unlock comments for an item.
 	 * @param boolean $lock true for locking, false otherwise
 	 */
-	function lock($lock)
+	public function lock($lock)
 	{
 		global $Sql;
 
@@ -140,12 +151,14 @@ class Comments
 	 * @desc Check if the comments system is correctly loaded.
 	 * @return boolean true if loaded correctly, false otherwise.
 	 */
-	function is_loaded()
+	public function is_loaded()
 	{
 		global $Errorh;
 		
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
+		{
 			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+		}
 			
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}
@@ -155,7 +168,7 @@ class Comments
 	 * @param int $idcom
 	 * @param string $path
 	 */
-	function set_arg($idcom, $path = '')
+	public function set_arg($idcom, $path = '')
 	{
 		if (!empty($path))
 			$this->path = $path;
@@ -163,14 +176,52 @@ class Comments
 		
 		//Si c'est un module qui appelle
 		if (!$this->is_kernel_script)
+		{
+			
 			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
+		}
 		//Sinon c'est le noyau
 		else
+		{
 			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_kernel_script();
+		}
 	}
 	
+   //Récupération de la table du module associée aux commentaires.
+    private function _get_info_module()
+    {
+        global $Sql;
+
+        //Récupération des informations sur le module.
+        $info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
+        
+        $check_script = false;
+        if (isset($info_module['com']))
+        {
+            if ($info_module['com'] == $this->script)
+            {
+                $info_sql_module = $Sql->query_array(PREFIX . TextHelper::strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+                if ($info_sql_module['id'] == $this->idprov)
+                {
+                    $check_script = true;
+                }
+            }
+        }
+        return $check_script ? array(TextHelper::strprotect($info_module['com']), $info_sql_module['nbr_com'], (bool)$info_sql_module['lock_com']) : array('', 0, 0);
+    }
+
+    //Initialisation des paramètres quand il s'agit du noyau qui appelle
+    private function _get_info_kernel_script()
+    {
+        global $Sql;
+        
+        $row_infos = $Sql->query_array(PREFIX . $this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+        
+        return array($this->script, $row_infos['nbr_com'], (bool)$row_infos['lock_com']);
+    }
+    
 	//Accesseur
-	function get_attribute($varname)
+	public function get_attribute($varname)
 	{
 		return $this->$varname;
 	}
@@ -182,7 +233,7 @@ class Comments
 	 * @param string $page_path_to_root
 	 * @return string The parsed template
 	 */
-	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
+	public function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
 		global $User, $Errorh, $Sql, $LANG, $Session;
 		
@@ -203,7 +254,9 @@ class Comments
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '');
 		
 		if (!is_object($Template) || !($Template instanceof Template))
+		{
 			$Template = new FileTemplate('framework/content/com.tpl');
+		}
 		
 		if ($this->is_loaded()) //Commentaires chargés?
 		{
@@ -217,7 +270,9 @@ class Comments
 			{
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
+				{
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
+				}
 				
 				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
 				$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
@@ -226,7 +281,9 @@ class Comments
 				{
 					//Status des commentaires, verrouillé/déverrouillé?
 					if ($this->lock_com >= 1 && !$User->check_level(MODO_LEVEL))
+					{
 						AppContext::get_response()->redirect($path_redirect);
+					}
 					
 					//Autorisation de poster des commentaires?
 					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
@@ -236,7 +293,9 @@ class Comments
 						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{
 							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcule la fin du delai.
+							{
 								AppContext::get_response()->redirect($path_redirect . '&errorh=flood#errorh');
+							}
 						}
 						
 						//Code de vérification anti-bots.
@@ -247,9 +306,13 @@ class Comments
 						$contents = FormatingHelper::strparse($contents, $comments_config->get_forbidden_tags());
 						
 						if (!TextHelper::check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
+						{
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
+						}
 						if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
+						{
 							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
+						}
 						
 						//Récupération de l'adresse de la page.
 						$last_idcom = $this->add($contents, $login);
@@ -258,16 +321,22 @@ class Comments
 						AppContext::get_response()->redirect($path_redirect . '#m' . $last_idcom);
 					}
 					else //utilisateur non autorisé!
+					{
 						AppContext::get_response()->redirect($path_redirect . '&errorh=auth#errorh');
+					}
 				}
 				else
+				{
 					AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+				}
 			}
 			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
+				{
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
+				}
 				
 				$row = $Sql->query_array(DB_TABLE_COM, '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
@@ -304,7 +373,7 @@ class Comments
 								'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 							));
 						}
-						$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($row['contents']), array(
+						$fieldset->add_field(new FormFieldTextEditor($this->script . 'contents', FormatingHelper::unparse($row['contents']), array(
 							'forbiddentags' => $comments_config->get_forbidden_tags(), 'title' => $LANG['message'], 
 							'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 						));
@@ -313,7 +382,6 @@ class Comments
 						$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				
 						$form->add_fieldset($fieldset);
-						$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
 						$form->set_form_submit($LANG['update']);	
 						
 						$Template->assign_vars(array(
@@ -335,7 +403,9 @@ class Comments
 							$contents = FormatingHelper::strparse($contents, $comments_config->get_forbidden_tags());
 							
 							if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
+							{
 								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
+							}
 
 							$this->update($contents, $login);
 							
@@ -343,13 +413,19 @@ class Comments
 							AppContext::get_response()->redirect($path_redirect . '#m' . $this->idcom);
 						}
 						else //Champs incomplet!
+						{
 							AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+						}
 					}
 					else
+					{
 						AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+					}
 				}
 				else
+				{
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
+				}
 			}
 			elseif (isset($_GET['lock']) && $User->check_level(MODO_LEVEL)) //Verrouillage des commentaires.
 			{
@@ -447,9 +523,13 @@ class Comments
 					
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 				if ($get_pos)
+				{
 					$get_page = substr($_SERVER['QUERY_STRING'], 0, $get_pos) . '&amp;pc';
+				}
 				else
+				{
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
+				}
 				
 				$is_modo = $User->check_level(MODO_LEVEL);
 				$is_guest = !$User->check_level(MEMBER_LEVEL);
@@ -465,7 +545,7 @@ class Comments
 						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 					));
 				}
-				$fieldset->add_field(new FormTextarea($this->script . 'contents', FormatingHelper::unparse($contents), array(
+				$fieldset->add_field(new FormFieldTextEditor($this->script . 'contents', FormatingHelper::unparse($contents), array(
 					'forbiddentags' => $comments_config->get_forbidden_tags(), 'title' => $LANG['message'], 
 					'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 				));
@@ -478,10 +558,8 @@ class Comments
 				$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				
 				$form->add_fieldset($fieldset);
-				$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
 				
 				//On crée une pagination si le nombre de commentaires est trop important.
-				
 				$pagination = new DeprecatedPagination();
 				
 				$Template->assign_vars(array(
@@ -530,9 +608,13 @@ class Comments
 					
 					//Pseudo.
 					if (!$is_guest)
+					{
 						$com_pseudo = '<a class="msg_link_pseudo" href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+					}
 					else
+					{
 						$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+					}
 					
 					//Rang de l'utilisateur.
 					$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
@@ -578,7 +660,9 @@ class Comments
 						}
 					}
 					else
+					{
 						$user_groups = $LANG['group'] . ': ' . $user_group;
+					}
 					
 					//Membre en ligne?
 					$user_online = !empty($row['connect']) ? 'online' : 'offline';
@@ -587,16 +671,24 @@ class Comments
 					
 					//Avatar
 					if (empty($row['user_avatar']))
+					{
 						$user_avatar = $user_accounts_config->is_default_avatar_enabled() ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
+					}
 					else
+					{
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+					}
 						
 					//Affichage du sexe et du statut (connecté/déconnecté).
 					$user_sex = '';
 					if ($row['user_sex'] == 1)
+					{
 						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
+					}
 					elseif ($row['user_sex'] == 2)
+					{
 						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
+					}
 							
 					//Nombre de message.
 					$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -613,7 +705,9 @@ class Comments
 						
 					//Correction des chemins du BBCode
 					if (!$integrated_in_environment && !empty($page_path_to_root))
+					{
 						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
+					}
 				
 					$Template->assign_block_vars('com_list', array(
 						'ID' => $row['idcom'],
@@ -653,7 +747,9 @@ class Comments
 			return $Template->to_string();
 		}
 		else
+		{
 			return 'error : class Comments loaded uncorrectly';
+		}
 	}
 	
 	
@@ -681,50 +777,6 @@ class Comments
 	
 	    return $link;
 	}
-
-	## Private Methods ##
-	//Récupération de la table du module associée aux commentaires.
-	function _get_info_module()
-	{
-		global $Sql;
-
-		//Récupération des informations sur le module.
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
-		
-		$check_script = false;
-		if (isset($info_module['com']))
-		{
-			if ($info_module['com'] == $this->script)
-			{
-				$info_sql_module = $Sql->query_array(PREFIX . TextHelper::strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-				if ($info_sql_module['id'] == $this->idprov)
-					$check_script = true;
-			}
-		}
-		return $check_script ? array(TextHelper::strprotect($info_module['com']), $info_sql_module['nbr_com'], (bool)$info_sql_module['lock_com']) : array('', 0, 0);
-	}
-	
-	//Initialisation des paramètres quand il s'agit du noyau qui appelle
-	function _get_info_kernel_script()
-	{
-		global $Sql;
-		
-		$row_infos = $Sql->query_array(PREFIX . $this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-		
-		return array($this->script, $row_infos['nbr_com'], (bool)$row_infos['lock_com']);
-	}
-	
-	## Private attributes ##
-	var $script = '';
-	var $idprov = 0;
-	var $idcom = 0;
-	var $path = '';
-	var $vars = '';
-	var $module_folder = '';
-	var $sql_table = '';
-	var $nbr_com = 0;
-	var $lock_com = 0;
-	var $is_kernel_script = false;
 }
 
 ?>
