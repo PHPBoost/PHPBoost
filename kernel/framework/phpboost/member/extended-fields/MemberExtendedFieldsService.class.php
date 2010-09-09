@@ -41,14 +41,13 @@ class MemberExtendedFieldsService
 		{
 			$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
 			
-			// Null fields
+			// Not null fields
 			if (count($extend_fields_cache) > 0)
 			{
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
 				foreach ($extend_fields_cache as $id => $extended_field)
 				{
 					$member_extended_field = new MemberExtendedField();
-					$member_extended_field->set_user_id($user_id);
 					
 					$member_extended_field->set_field_type($extended_field['field']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
@@ -60,9 +59,11 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_possible_values($extended_field['possible_values']);
 					
 					$rewrite_field = self::rewrite_field($member_extended_field);
-					if ($rewrite_field !== '')
+					$level_user = MemberExtendedFieldsDAO::level_user($user_id);
+					
+					if (!$member_extended_field->get_required() && $rewrite_field !== '' && $level_user == 2)
 					{
-						if (($member_extended_field->get_regex_type() > 0 && @preg_match($member_extended_field->get_regex(), $rewrite_field)) || $member_extended_field->get_regex_type() == 0)
+						if ((@preg_match($member_extended_field->get_regex(), $rewrite_field)))
 						{
 							$member_extended_fields_dao->set_request($member_extended_field);
 						}
@@ -71,12 +72,20 @@ class MemberExtendedFieldsService
 							throw new Exception('A fields is not correctly filled.');
 						}
 					}
+					else
+					{
+						throw new Exception('The field'. $member_extended_field->get_field_name( .'is required.');
+						
+					}
 				}
 				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
 	}
 	
+	/*
+	 * Parse field value to insert DataBase
+	 */
 	public static function rewrite_field(MemberExtendedField $member_extended_field)
 	{
 		if (is_numeric($member_extended_field->get_field_type()))
@@ -106,7 +115,7 @@ class MemberExtendedFieldsService
 	{
 		$field = '';
 		$i = 0;
-		$array_possible_values = self::get_explode_possible_values($member_extended_field);
+		$array_possible_values = self::explode_possible_values($member_extended_field);
 		foreach ($array_possible_values as $value)
 		{
 			$field .= !empty($_POST[$member_extended_field->get_field_name() . '_' . $i]) ? addslashes($_POST[$member_extended_field->get_field_name() . '_' . $i]) . '|' : '';
@@ -115,7 +124,7 @@ class MemberExtendedFieldsService
 		return $field;
 	}
 	
-	private static function get_explode_possible_values(MemberExtendedField $member_extended_field)
+	private static function explode_possible_values(MemberExtendedField $member_extended_field)
 	{
 		return explode('|', $member_extended_field->get_possible_values());
 	}
