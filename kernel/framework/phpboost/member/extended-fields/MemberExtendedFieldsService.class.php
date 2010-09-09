@@ -74,7 +74,7 @@ class MemberExtendedFieldsService
 					}
 					else
 					{
-						throw new Exception('The field'. $member_extended_field->get_field_name( .'is required.');
+						throw new Exception('The field'. $member_extended_field->get_field_name() .'is required.');
 						
 					}
 				}
