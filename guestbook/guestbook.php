@@ -136,12 +136,11 @@ elseif (!empty($id_get)) //Edition + suppression!
 					'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 				));
 			}
-			$fieldset->add_field(new FormTextarea('contents', FormatingHelper::unparse($row['contents']), array(
+			$fieldset->add_field(new FormFieldTextEditor('contents', FormatingHelper::unparse($row['contents']), array(
 				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 				'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
-			$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
 			$form->set_form_submit($LANG['update']);
 
 			$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
@@ -233,7 +232,7 @@ else //Affichage.
 				'maxlength' => 25)
 			));
 		}
-		$fieldset->add_field(new FormTextarea('contents', '', array(
+		$fieldset->add_field(new FormFieldTextEditor('contents', '', array(
 			'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
 			'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 		));
