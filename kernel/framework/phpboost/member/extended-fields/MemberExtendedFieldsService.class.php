@@ -61,7 +61,7 @@ class MemberExtendedFieldsService
 					$rewrite_field = self::rewrite_field($member_extended_field);
 					$level_user = MemberExtendedFieldsDAO::level_user($user_id);
 					
-					if (!$member_extended_field->get_required() && $rewrite_field !== '' && $level_user == 2)
+					if (!$member_extended_field->get_required() && $rewrite_field !== '' && $level_user == 2 || $level_user < 2)
 					{
 						if ((@preg_match($member_extended_field->get_regex(), $rewrite_field)))
 						{
