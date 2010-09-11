@@ -25,7 +25,7 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{L_LANG}
+						${i18n('change_lang')}
 					</td>
 				</tr>
 				<tr>
@@ -40,7 +40,7 @@ ${resources('install/install')}
 								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							</p>
 							<p id="button_change_lang">
-								<input type="submit" class="submit" value="{L_CHANGE}" />
+								<input type="submit" class="submit" value="${i18n('change')}" />
 							</p>
 							<script type="text/javascript">
 							<!--
@@ -54,27 +54,27 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{L_STEPS_LIST}
+						${i18n('steps_list')}
 					</td>
 				</tr>
-				# START link_menu #
+				# START step #
 					<tr>
-						<td class="{link_menu.CLASS}">
-							<img src="templates/images/{link_menu.STEP_IMG}" alt="" class="valign_middle" />&nbsp;&nbsp;{link_menu.STEP_NAME}
+						<td class="{step.CSS_CLASS}">
+							<img src="templates/images/{step.IMG}" alt="${escape(step.NAME)}" class="valign_middle" />&nbsp;&nbsp;{step.NAME}
 						</td>				
 					</tr>
-				# END link_menu #
+				# END step #
 			</table>
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{L_INSTALL_PROGRESS}
+						${i18n('install_progress')}
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final">
 						<div style="margin:auto;width:200px">
-							<div style="text-align:center;margin-bottom:5px;">{L_STEP} :&nbsp;{PROGRESS_LEVEL}%</div>
+							<div style="text-align:center;margin-bottom:5px;">{STEP_TITLE} :&nbsp;{PROGRESSION}%</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
 								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
 							</div>
@@ -90,16 +90,16 @@ ${resources('install/install')}
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" class="valign_middle" />
+						<img src="templates/images/help.png" alt="${i18n('documentation')}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_DOCUMENTATION}">{L_DOCUMENTATION}</a>
+						<a href="{U_DOCUMENTATION}">${i18n('documentation')}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" class="valign_middle" />
+						<img src="templates/images/intro.png" alt="${i18n('restart_installation')}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_RESTART}" onclick="return confirm('{L_CONFIRM_RESTART}');">{L_RESTART_INSTALL}</a>
+						<a href="{U_RESTART}" onclick="return confirm('${i18n('confirm_restart_installation')}');">${i18n('restart_installation')}</a>
 					</td>
 				</tr>					
 			</table>
@@ -109,7 +109,7 @@ ${resources('install/install')}
 			<table class="table_contents">
 				<tr> 
 					<th colspan="2">
-						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {L_STEP}</div>
+						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {STEP_TITLE}</div>
 					</th>
 				</tr>
 				
@@ -127,13 +127,13 @@ ${resources('install/install')}
 												
 						<fieldset class="submit_case">
                         # IF C_HAS_PREVIOUS_STEP #
-                            <a href="{PREVIOUS_STEP_URL}" title="{EL_PREVIOUS_STEP_TITLE}" >
-                                <img src="templates/images/left.png" alt="{EL_PREVIOUS_STEP_TITLE}" class="valign_middle" />
+                            <a href="{PREVIOUS_STEP_URL}" title="${escape(PREVIOUS_STEP_TITLE)}" >
+                                <img src="templates/images/left.png" alt="${escape(PREVIOUS_STEP_TITLE)}" class="valign_middle" />
                             </a>
                         # ENDIF #
                         # IF C_HAS_NEXT_STEP #
-                            <a href="{NEXT_STEP_URL}" title="{EL_NEXT_STEP_TITLE}" >
-                                <img src="templates/images/right.png" alt="{EL_NEXT_STEP_TITLE}" class="valign_middle" />
+                            <a href="{NEXT_STEP_URL}" title="${escape(NEXT_STEP_TITLE)}" >
+                                <img src="templates/images/right.png" alt="${escape(NEXT_STEP_TITLE)}" class="valign_middle" />
                             </a>
                         # ENDIF #
 						</fieldset>						
@@ -144,7 +144,7 @@ ${resources('install/install')}
 	</div>
 	<div id="footer">
 		<span>
-			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+			${i18n('powered_by')} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> ${i18n('phpboost_right')}
 		</span>	
 	</div>
 	</body>
