@@ -47,6 +47,7 @@ class I18NMessages
         		$this->add_resource($resource);
         	}
         }
+//        Debug::dump($this->messages);
     }
     
     private function add_resource($resource)
@@ -67,40 +68,26 @@ class I18NMessages
         $this->messages = array_merge(LangLoader::get($filename, $module), $this->messages);
     }
     
-    public function i18n($key, $resource = null)
+    public function i18n($key, $filename = null, $module = null)
     {
-        return htmlentities($this->i18nraw($key, $resource));
+        return htmlspecialchars($this->i18nraw($key, $filename, $module));
     }
     
-    public function i18njs($key, $resource = null)
+    public function i18njs($key, $filename = null, $module = null)
     {
-        return TextHelper::to_js_string($this->i18n($key, $resource));        
+        return TextHelper::to_js_string($this->i18n($key, $filename, $module));        
     }
     
-    public function i18njsraw($key, $resource = null)
+    public function i18njsraw($key, $filename = null, $module = null)
     {
-        return TextHelper::to_js_string($this->i18nraw($key, $resource));        
+        return TextHelper::to_js_string($this->i18nraw($key, $filename, $module));        
     }
     
-    public function i18nraw($key, $resource = null)
+    public function i18nraw($key, $filename = null, $module = null)
     {
-        if ($resource !== null)
+        if ($filename !== null && $module !== null)
         {
-        	// FIXME How to mutualize this code???
-	        $module = '';
-	        $filename = '';
-	        $resource = trim($resource, '/');
-	        $slash_idx = strrpos($resource, '/');
-	        if ($slash_idx > -1)
-	        {
-	            $module = substr($resource, 0, $slash_idx);
-	            $filename = substr($resource, $slash_idx + 1);
-	        }
-	        else
-	        {
-	            $filename = $resource;
-	        }
-            return LangLoader::get_message($key, $filename, $module);
+        	return LangLoader::get_message($key, $filename, $module);
         }
         else
         {
@@ -108,21 +95,8 @@ class I18NMessages
         }
     }
     
-    private function get_message($key, $resource)
+    private function get_message($key, $filename, $module)
     {
-        $module = '';
-    	$filename = '';
-    	$resource = trim($resource, '/');
-    	$slash_idx = strrpos($resource, '/');
-    	if ($slash_idx > -1)
-    	{
-            $module = substr($resource, 0, $slash_idx);
-            $filename = substr($resource, $slash_idx + 1);
-    	}
-    	else
-    	{
-    		$filename = $resource;
-    	}
         return LangLoader::get_message($key, $filename, $module);
     }
 }

@@ -30,11 +30,11 @@
  * @author Régis Viarre <crowkait@phpboost.com>
  * @package {@package}
  */
-class TextHelper 
+class TextHelper
 {
 	const HTML_NO_PROTECT = false;
 	const HTML_PROTECT = true;
-	
+
 	const ADDSLASHES_AUTO = 0; //Automatique : échappe seulement si le serveur n'échappe pas automatiquement
 	const ADDSLASHES_FORCE = 1; //Force l'échappement des caractères critique
 	const ADDSLASHES_NONE = 2; //Aucun échappement
@@ -51,7 +51,7 @@ class TextHelper
 	public static function strprotect($var, $html_protect = self::HTML_PROTECT, $addslashes = self::ADDSLASHES_AUTO)
 	{
 		$var = trim((string)$var);
-	
+
 		//Protection contre les balises html.
 		if ($html_protect)
 		{
@@ -59,7 +59,7 @@ class TextHelper
 			//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
 			$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
 		}
-	
+
 		switch ($addslashes)
 		{
 			case self::ADDSLASHES_FORCE:
@@ -79,10 +79,10 @@ class TextHelper
 					$var = addslashes($var);
 				}
 		}
-	
+
 		return $var;
 	}
-	
+
 	/**
 	 * @desc Inserts a carriage return every $lenght characters. It's equivalent to wordwrap PHP function but it can deal with the HTML entities.
 	 * An entity is coded on several characters and the wordwrap function counts several characters for an entity whereas it represents only one character.
@@ -97,7 +97,7 @@ class TextHelper
 		$str = wordwrap(html_entity_decode($str), $lenght, $cut_char, $cut);
 		return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES));
 	}
-	
+
 	/**
 	 * @desc Cuts a string containing some HTML code which contains some HTML entities. The substr PHP function considers a HTML entity as several characters.
 	 * This function allows you to consider them as only one character.
@@ -119,18 +119,30 @@ class TextHelper
 			return htmlspecialchars(substr(html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 		}
 	}
-	
+
 	/**
-	 * @Exports a variable to be used in a javascript script.
-	 * @param string $string A PHP string to convert to a JS one
+	 * @desc Exports a variable to be used in a javascript script.
+     * @param string $string A PHP string to convert to a JS one
+     * @param string $add_quotes If true, returned string will be bounded by quotes
 	 * @return string The js equivalent string
 	 */
-	public static function to_js_string($string)
+	public static function to_js_string($string, $add_quotes = true)
 	{
-		return '\'' . str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'),
-		addcslashes($string, '\'')) . '\'';
+		$bounds = $add_quotes ? '\'' : '';
+		return $bounds . str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'),
+		addcslashes($string, '\'')) . $bounds;
 	}
-	
+
+	/**
+	 * @desc applies htmlspecialchars php function to the given string
+	 * @param $string A String 
+	 * @return string the string without html special chars
+	 */
+	public static function htmlspecialchars($string)
+	{
+		return htmlspecialchars($string);
+	}
+
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
 	 * @param string $contents String in which you want to count the number of links
@@ -143,13 +155,13 @@ class TextHelper
 		{
 			return true;
 		}
-	
+
 		$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
 		if ($nbr_link !== false && $nbr_link > $max_nbr)
 		{
 			return false;
 		}
-	
+
 		return true;
 	}
 }

@@ -65,6 +65,10 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 					return;
 				}
 			}
+		    elseif ($current == '<' && $this->input->assert_next('\?php'))
+            {
+                $element = new PHPTemplateSyntaxElement();
+            }
 			else
 			{
 				$element = $this->build_text_elt();
