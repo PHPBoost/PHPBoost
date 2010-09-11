@@ -35,7 +35,7 @@ class StringVars
 {
 	private $parameters;
 	
-    public static function replace_vars($string, $parameters)
+    public static function replace_vars($string, array $parameters)
     {
     	if (empty($parameters))
     	{
@@ -45,7 +45,7 @@ class StringVars
     	return $string_var->replace($string, $parameters);
     }
     
-    public function replace($string, $parameters)
+    public function replace($string, array $parameters)
     {
     	$this->parameters = $parameters;
         return preg_replace_callback('`:([a-z][\w_]+)`i', array($this, 'replace_var'), $string);

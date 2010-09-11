@@ -51,12 +51,20 @@
  */
 class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 {
-	public function test_parse_text()
-	{
-		$input = 'this is a simple text';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple text\'; ?>';
-		$this->assert_parse($input, $output);
-	}
+    public function test_parse_text()
+    {
+        $input = 'this is a simple text';
+        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple text\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+    
+    public function test_parse_text_with_php()
+    {
+        $input = 'this is a <?php simple(); ?> text';
+        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a \';$_ob_length=ob_get_length();' .
+        'simple();if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
+        $this->assert_parse($input, $output);
+    }
 
 	public function test_parse_text_with_char_to_escape()
 	{

@@ -33,6 +33,8 @@ class InstallWelcomeController extends AbstractController
 	{
         $this->lang = LangLoader::get('install', 'install');
 		$view = new FileTemplate('install/welcome.tpl');
+        $view->assign_vars(array('DISTRIBUTION' => 'coucou'));
+        $view->assign_vars(array('DISTRIBUTION_DESCRIPTION' => 'coucou'));
 		return $this->create_response($view);
 	}
 

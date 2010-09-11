@@ -162,7 +162,7 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA
-		//$fieldset2->add_field(new FormFieldCaptcha());
+		$fieldset2->add_field(new FormFieldCaptcha());
 
 		// HIDDEN
 		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));

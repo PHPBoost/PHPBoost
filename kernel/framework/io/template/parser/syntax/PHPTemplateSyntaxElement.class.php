@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    TextTemplateSyntaxElement.class.php
+ *                      PHPTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 08 2010
+ *   begin                : September 10 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class PHPTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	/**
 	 * @var StringInputStream
@@ -47,60 +47,23 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function do_parse()
 	{
-		while ($this->input->has_next() && !$this->ended)
+		$matches = array();
+		if ($this->input->consume_next('\?php\s*(?P<php>[^\s].*[^\*])\s*\?>', 'Us', $matches))
 		{
-			$current = $this->input->next();
-			if (!$this->escaped)
-			{
-				$this->process_char($current);
-			}
-			else
-			{
-				$this->process_escaped_char($current);
-			}
-		}
-	}
-
-	private function process_char($char)
-	{
-		if ($char == '\\')
-		{
-			$this->escaped = true;
-		}
-		elseif (!$this->escaped && 
-		(($char == '$' && $this->input->assert_next('\{')) ||
-		($char == '{' && $this->input->assert_next('(?:\w+\.)*\w+\}')) ||
-		($char == '#'&& $this->input->assert_next('[\s]')) ||
-        ($char == '<' && $this->input->assert_next('\?php'))))
-		{
-			$this->input->move(-1);
-			$this->ended = true;
+			$this->process_php($matches['php']);
 		}
 		else
 		{
-			if ($char == '\'')
-			{
-				$this->write('\\');
-			}
-			$this->write($char);
+			throw new TemplateParserException('Missing php code ends: "?>"', $this->input);
 		}
 	}
 
-	private function process_escaped_char($char)
+	private function process_php($php)
 	{
-		if (!in_array($char, array('\\', '{', '}', '#')))
-		{
-            $this->write('\\');
-//			throw new TemplateParserException('Escaping character "' . $current .
-//				'" has no meaning', $this->input);
-		}
-		$this->escaped = false;
-		$this->write($char);
-	}
-
-	private function write($char)
-	{
-		$this->output->write($char);
+        $this->output->write('\';$_ob_length=ob_get_length();');
+        $this->output->write($php);
+        $this->output->write('if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}');
+        $this->output->write('$_result.=\'');
 	}
 }
 ?>
