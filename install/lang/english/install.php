@@ -6,14 +6,14 @@
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -43,7 +43,7 @@ $lang = array(
    'install.rank.mortier' => 'Mortar booster',
    'install.rank.missile' => 'Missile booster',
    'install.rank.fusee' => 'Spaceship boost',
-   
+
    'cache_tpl_must_exist_and_be_writable' => '<h1>PHPBoost installation</h1>
 <p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>',
@@ -68,7 +68,7 @@ $lang = array(
 	'query_failure' => 'An error occured during query processing',
 
 // Introduction
-	'step.welcome.title' => 'Welcome to PHPBoost installation wizard',
+	'step.welcome.title' => 'Preamble',
 	'step.welcome.explanation' => '<p>Thank you for choosing PHPBoost to build your website.</p>
 <p>Before starting installation, be sure to have to hand Database information provided by your hosting company. The installation is automatic and should take only a few minutes of your time.  To start the installation process, please click on the green arrow down below.</p>
 <p>Best regards, the PHPBoost team</p>',
@@ -89,7 +89,7 @@ $lang = array(
 	'config_server_explain' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php_version' => 'PHP version',
-	'check_php_version' => 'PHP higher than 5.0',
+	'check_php_version' => 'PHP higher than 5.1.2',
 	'check_php_version_explain' => '<span style="font-weight:bold;color:red;">Required :</span> To run PHPBoost, your server must run PHP 4.1.x or higher. Below that, you might have issues with some modules. Since PHP 4 is no longer supported, we encourage you to ask your hosting company to migrate PHP to version 5.',
 	'extensions' => 'Extensions',
 	'check_extensions' => '<span style="font-weight:bold;">Optional :</span> The activation of these extensions will provide additional features but it is not essential to its operation.',
@@ -201,14 +201,14 @@ Thanks, the site team.',
 
 First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : http://www.phpboost.org/forum/index.php
 
-Here is your login and password (don\'t lose them, you will need them to setup your website) : 
+Here is your login and password (don\'t lose them, you will need them to setup your website) :
 
-Login: %s 
+Login: %s
 Password: %s
 
 Please note the following code (It won\'t be delivered anymore unless you ask to in the administration panel) : %s
 
-If your website undergoes a hacking attempt, you will have to use this security code to unlock the administration panel. You will be asked to enter the security code when you log in to the administration panel.  (%s/admin/admin_index.php) 
+If your website undergoes a hacking attempt, you will have to use this security code to unlock the administration panel. You will be asked to enter the security code when you log in to the administration panel.  (%s/admin/admin_index.php)
 
 Best regards,
 The PHPBoost Team.',
@@ -252,7 +252,7 @@ The PHPBoost Team.',
                         </fieldset>',
 	'site_index' => 'Go to the website',
 	'admin_index' => 'Go to the administration panel',
-                
+
 // Miscalleneous
 	'yes' => 'Yes',
 	'no' => 'No',

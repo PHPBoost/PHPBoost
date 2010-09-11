@@ -28,7 +28,7 @@
 class InstallWelcomeController extends AbstractController
 {
 	private $lang;
-	
+
 	public function execute(HTTPRequest $request)
 	{
         $this->lang = LangLoader::get('install', 'install');
@@ -47,11 +47,11 @@ class InstallWelcomeController extends AbstractController
         $page_title = $this->lang['installation.title'];
         $step_title = $this->lang['step.welcome.title'];
         $step_explanation = $this->lang['step.welcome.explanation'];
-		$response = new InstallDisplayResponse($page_title, $view, $step_title, $step_explanation);
+		$response = new InstallDisplayResponse($page_title, $view, 0, $step_title, $step_explanation);
 		$this->add_navigation($response);
 		return $response;
 	}
-	
+
 	/**
 	 * @param InstallDisplayResponse $response
 	 */

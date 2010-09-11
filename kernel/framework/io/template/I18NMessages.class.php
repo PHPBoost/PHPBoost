@@ -28,12 +28,12 @@
 class I18NMessages
 {
 	private $messages = array();
-	
+
 	public function __construct($resources = null)
 	{
         $this->resources($resources);
 	}
-    
+
     public function resources($resources)
     {
         if (is_string($resources))
@@ -48,7 +48,7 @@ class I18NMessages
         	}
         }
     }
-    
+
     private function add_resource($resource)
     {
         $module = '';
@@ -66,7 +66,7 @@ class I18NMessages
         }
         $this->add_language_maps(LangLoader::get($filename, $module));
     }
-    
+
     public function add_language_maps(array $lang)
     {
     	if (empty($this->messages))
@@ -78,22 +78,22 @@ class I18NMessages
     		$this->messages = array_merge($lang, $this->messages);
     	}
     }
-    
+
     public function i18n($key, $filename = null, $module = '')
     {
         return htmlspecialchars($this->i18nraw($key, $filename, $module));
     }
-    
+
     public function i18njs($key, $filename = null, $module = '')
     {
-        return TextHelper::to_js_string($this->i18n($key, $filename, $module));        
+        return TextHelper::to_js_string($this->i18n($key, $filename, $module));
     }
-    
+
     public function i18njsraw($key, $filename = null, $module = '')
     {
-        return TextHelper::to_js_string($this->i18nraw($key, $filename, $module));        
+        return TextHelper::to_js_string($this->i18nraw($key, $filename, $module));
     }
-    
+
     public function i18nraw($key, $filename = null, $module = '')
     {
         if ($filename !== null)
@@ -105,7 +105,7 @@ class I18NMessages
         	return $this->messages[$key];
         }
     }
-    
+
     private function get_message($key, $filename, $module)
     {
         return LangLoader::get_message($key, $filename, $module);

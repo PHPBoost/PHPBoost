@@ -6,14 +6,14 @@
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,7 +31,7 @@
  ####################################################
 
 
-$lang = array(    
+$lang = array(
     'install.rank.admin' => 'Administrateur',
     'install.rank.modo' => 'Modérateur',
     'install.rank.inactiv' => 'Boosteur Inactif',
@@ -68,7 +68,7 @@ $lang = array(
 	'query_failure' => 'Traitement échoué',
 
 //Introduction
-	'step.welcome.title' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
+	'step.welcome.title' => 'Préambule',
     'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement, l\'équipe PHPBoost</p>',
@@ -91,7 +91,7 @@ $lang = array(
 <div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>',
 	'php_version' => 'Version de PHP',
-	'check_php_version' => 'PHP supérieur à 5.0',
+	'check_php_version' => 'PHP supérieur à 5.1.2',
 	'check_php_version_explain' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP 4.1.0. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.',
 	'extensions' => 'Extensions',
 	'check_extensions' => 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.',
@@ -204,12 +204,12 @@ Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous esp
 
 Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
 
-Identifiant: %s 
+Identifiant: %s
 Password: %s
 
 A conserver ce code (Il ne vous sera plus délivré) : %s
 
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php) 
+Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php)
 
 Cordialement l\'équipe PHPBoost.',
 
