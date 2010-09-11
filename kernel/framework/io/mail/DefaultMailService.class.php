@@ -29,7 +29,7 @@ class DefaultMailService extends AbstractPHPMailerMailService
 {
 	protected function set_send_settings(PHPMailer $mailer)
 	{
-		// Nothing to do
+		$mailer->IsMail();
 	}
 }
 
