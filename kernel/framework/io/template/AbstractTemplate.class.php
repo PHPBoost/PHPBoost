@@ -59,17 +59,17 @@ abstract class AbstractTemplate implements Template
 		$this->set_data($data);
 	}
 
-	protected function set_loader(TemplateLoader $loader)
+	private function set_loader(TemplateLoader $loader)
 	{
 		$this->loader = $loader;
 	}
 
-	protected function set_renderer(TemplateRenderer $renderer)
+	private function set_renderer(TemplateRenderer $renderer)
 	{
 		$this->renderer = $renderer;
 	}
 
-	protected function set_data(TemplateData $data)
+	private function set_data(TemplateData $data)
 	{
 		$this->data = $data;
 	}
@@ -123,13 +123,13 @@ abstract class AbstractTemplate implements Template
     	return $this->renderer->render($this->data, $this->loader);
     }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_lang(array $lang)
-	{
-		$this->data->add_lang($lang);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function add_lang(array $lang)
+    {
+        $this->renderer->add_lang($lang);
+    }    
 
 	/**
 	 * {@inheritdoc}

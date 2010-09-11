@@ -39,8 +39,8 @@ class InstallDisplayResponse extends AbstractResponse
         $this->full_view->add_subtemplate('step', $view);
         
         $lang = LangLoader::get('install', 'install');
-        $view->add_lang($lang);
-        $this->full_view->add_lang($lang);
+//        $view->add_lang($lang);
+//        $this->full_view->add_lang($lang);
 
         $env = new InstallDisplayGraphicalEnvironment();
         $env->set_page_title($page_title);

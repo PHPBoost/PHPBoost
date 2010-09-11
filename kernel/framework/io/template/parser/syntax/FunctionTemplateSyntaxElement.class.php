@@ -31,7 +31,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public static function __static()
 	{
-		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw');
+		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw', 'escape', 'escapejs', 'setvars');
 	}
 
 	public static function is_element(StringInputStream $input)
@@ -62,12 +62,12 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			if (!in_array($method, self::$renderer_methods))
 			{
-				throw new TemplateParserException('Unauthorized method call. Only resources, i18n, i18njs and i18nraw ' .
-            	   'functions calls and static methods calls are allowed', $input);
+				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', self::$renderer_methods) .
+            	   ' functions calls and static methods calls are allowed', $input);
 			}
 			else
 			{
-				$output->write('$_i18n->');
+				$output->write('$_functions->');
 			}
 		}
 	}

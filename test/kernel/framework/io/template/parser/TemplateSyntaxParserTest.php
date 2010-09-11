@@ -54,14 +54,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     public function test_parse_text()
     {
         $input = 'this is a simple text';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple text\'; ?>';
+        $output = '<?php $_result=\'this is a simple text\'; ?>';
         $this->assert_parse($input, $output);
     }
     
     public function test_parse_text_with_php()
     {
         $input = 'this is a <?php simple(); ?> text';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a \';$_ob_length=ob_get_length();' .
+        $output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
         'simple();if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
         $this->assert_parse($input, $output);
     }
@@ -69,7 +69,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_parse_text_with_char_to_escape()
 	{
 		$input = 'this is a simpl\' text';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simpl\\\' text\'; ?>';
+		$output = '<?php $_result=\'this is a simpl\\\' text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
 
@@ -77,7 +77,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple
 	text';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple
+		$output = '<?php $_result=\'this is a simple
 	text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -85,7 +85,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_parse_text_with_simple_vars()
 	{
 		$input = 'this is {a} sim{pl}e text';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is \' . $_data->get_var(\'a\') . ' .
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
 			'\' sim\' . $_data->get_var(\'pl\') . \'e text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -98,7 +98,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		{tex.ext.text}
 	# END #
 # END #';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is \' . $_data->get_var(\'a\') . ' .
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
 			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
 \'; foreach ($_data->get_block(\'tex\') as $_tmp_tex) { $_result.=\'
 	\'; foreach ($_data->get_block(\'tex.ext\') as $_tmp_tex_ext) { $_result.=\'
@@ -114,7 +114,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 # IF condition #
 	coucou
 # END #';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'
+		$output = '<?php $_result=\'
 \'; if ($_data->get_var(\'condition\')) { $_result.=\'
 	coucou
 \';} $_result.=\'\'; ?>';
@@ -127,7 +127,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 # IF NOT condition #
 	coucou
 # END #';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'
+		$output = '<?php $_result=\'
 \'; if (!$_data->get_var(\'condition\')) { $_result.=\'
 	coucou
 \';} $_result.=\'\'; ?>';
@@ -142,7 +142,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 # ELSE #
 	hello
 # END #';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'
+		$output = '<?php $_result=\'
 \'; if ($_data->get_var(\'condition\')) { $_result.=\'
 	coucou
 \';} else { $_result.=\'
@@ -163,7 +163,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		pas de {coucou}
 	# END #
 # END #';
-		$output = '<?php $_i18n=new I18NMessages();$_result=\'this is \' . $_data->get_var(\'a\') . ' .
+		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
 			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
 \'; foreach ($_data->get_block(\'tex\') as $_tmp_tex) { $_result.=\'
 	\'; if ($_data->get_var_from_list(\'coucou\', $_tmp_tex[\'vars\'])) { $_result.=\'
@@ -177,80 +177,87 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-    public function test_renderer_function_call()
+    public function test_tpl_function()
     {
         $input = 'this is a simple ${call()}';
         try
         {
-        	$this->assert_parse($input, null);
-        	$this->fail('unauthorized method call not detected');
+            $this->assert_parse($input, null);
+            $this->fail('unauthorized method call not detected');
         }
         catch (TemplateParserException $ex)
-        {	
+        {   
         }
     }
 
-    public function test_renderer_functions_call()
+    public function test_function_call()
+    {
+        $input = 'this is a simple #{resources(\'main\')}';
+        $output = '<?php $_result=\'this is a simple \';$_functions->resources(\'main\');$_result=\'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
+    public function test_function()
     {
         $input = 'this is a simple ${resources(\'main\')}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . $_i18n->resources(\'main\') . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . $_functions->resources(\'main\') . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_without_parameters()
+    public function test_function_without_parameters()
     {
         $input = 'this is a simple ${Function::call()}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call() . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call() . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_with_a_parameter()
+    public function test_function_with_a_parameter()
     {
         $input = 'this is a simple ${Function::call(coucou)}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call($_data->get_var(\'coucou\')) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call($_data->get_var(\'coucou\')) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_with_a_constant_parameter()
+    public function test_function_with_a_constant_parameter()
     {
         $input = 'this is a simple ${Function::call(\'coucou\')}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call(\'coucou\') . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(\'coucou\') . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_with_a_numeric_constant_parameter()
+    public function test_function_with_a_numeric_constant_parameter()
     {
         $input = 'this is a simple ${Function::call(42)}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call(42) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_with_a_floating_constant_parameter()
+    public function test_function_with_a_floating_constant_parameter()
     {
         $input = 'this is a simple ${Function::call(42.37)}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call(42.37) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42.37) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
-    public function test_function_call_with_mixed_parameters()
+    public function test_function_with_mixed_parameters()
     {
         $input = 'this is a simple ${Function::call(42, \'coucou\',
         42.37)}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call(42, \'coucou\', 42.37) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(42, \'coucou\', 42.37) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_imbricated_functions_call()
     {
         $input = 'this is a simple ${Function::call(SubFunction::callAgain())}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . Function::call(SubFunction::callAgain()) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . Function::call(SubFunction::callAgain()) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_include_tpl()
     {
         $input = 'this is a simple # INCLUDE tpl #';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \';' . "\n" .
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate(\'tpl\');if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
@@ -259,7 +266,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     public function test_simple_block_include_tpl()
     {
         $input = 'this is a simple # INCLUDE block.tpl #';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \';' . "\n" .
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_block[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
@@ -268,7 +275,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     public function test_imbricated_block_include_tpl()
     {
         $input = 'this is a simple # INCLUDE block.imbricated.tpl #';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \';' . "\n" .
+        $output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_imbricated[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
         $this->assert_parse($input, $output);
@@ -277,28 +284,28 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
     public function test_parse_empty_array()
     {
         $input = 'this is a simple ${My::call(array())}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . My::call(array()) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array()) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_one_parameter_array()
     {
         $input = 'this is a simple ${My::call(array(\'coucou\'))}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . My::call(array(\'coucou\')) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\')) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_multi_parameters_array()
     {
         $input = 'this is a simple ${My::call(array(\'coucou\', COUCOU, 42.3))}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . My::call(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_one_parameter_map()
     {
         $input = 'this is a simple ${My::call(array(\'key\' => \'coucou\'))}';
-        $output = '<?php $_i18n=new I18NMessages();$_result=\'this is a simple \' . My::call(array(\'key\' => \'coucou\')) . \'\'; ?>';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'key\' => \'coucou\')) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
     

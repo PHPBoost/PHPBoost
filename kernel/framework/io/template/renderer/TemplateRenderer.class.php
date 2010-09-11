@@ -42,5 +42,11 @@ interface TemplateRenderer
 	 * @return string The parsed template
 	 */
 	function render(TemplateData $data, TemplateLoader $loader);
+
+    /**
+     * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
+     * @param string[string] $lang the language map
+     */
+    function add_lang(array $lang);
 }
 ?>
