@@ -104,10 +104,10 @@ interface Template
 	function to_string();
 
 	/**
-	 * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-	 * @param string[] $lang the language map
-	 */
-	function add_lang(array $lang);
+     * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
+     * @param string[string] $lang the language map
+     */
+    function add_lang(array $lang);
 
 	/**
 	 * @desc Adds a subtemplate to embed with the INCLUDE instruction

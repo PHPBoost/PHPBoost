@@ -56,12 +56,6 @@ interface TemplateData
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
 
 	/**
-	 * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-	 * @param string[string] $lang the language map
-	 */
-	function add_lang(array $lang);
-
-	/**
 	 * @desc Adds a subtemplate that could be used using the following template code <code># include identifier #</code>
 	 * @param string $identifier the identifier
 	 * @param Template $template the template
@@ -130,81 +124,6 @@ interface TemplateData
 	 * @return string The variable content
 	 */
 	function get_var_from_list($varname, &$list);
-
-	/**
-	 * @desc Returns the var $varname ready to be placed in Javascript string definition.
-	 * @param string $varname The name of the variable to retrieve.
-	 * @return string The variable's value
-	 */
-	function get_js_var($varname);
-
-	/**
-	 * @desc Does the same thing as {@link get_js_var()} but for a loop.
-	 * @param string $varname Name of the var
-	 * @param mixed[] $list The list into which look for
-	 * @return string The variable's value
-	 */
-	function get_js_var_from_list($varname, &$list);
-
-	/**
-	 * @desc Returns an javascript-ready lang variable (similar to get_lang_var).
-	 * @param string $varname Name of the variable
-	 * @return string The variable's value
-	 */
-	function get_js_lang_var($varname);
-
-	/**
-	 * @desc Similar to {@link get_js_lang_var()} but for a loop.
-	 * @param string $varname Name of the variable
-	 * @param mixed[] $list The list into which the variable should be
-	 * @return string The variable's value
-	 */
-	function get_js_lang_var_from_list($varname, &$list);
-
-	/**
-	 * @desc Returns a HTML escaped lang variable (" becomes &quote; for instance).
-	 * @param string $varname Name of the variable
-	 * @return string The variable's value
-	 */
-	function get_htmlescaped_lang_var($varname);
-
-	/**
-	 * @desc Similar to {@link get_htmlescaped_lang_var()} but for a loop.
-	 * @param string $varname Name of the variable
-	 * @param mixed[] $list The list into which the variable should be.
-	 * @return string The variable's value
-	 */
-	function get_htmlescaped_lang_var_from_list($varname, &$list);
-
-	/**
-	 * @desc Returns the HTML escaped variable.
-	 * @param string $varname Name of the variable
-	 * @return string The variable's value
-	 */
-	function get_htmlescaped_var($varname);
-
-	/**
-	 * @desc Similar to {@link get_htmlescaped_var()} but for a loop.
-	 * @param string $varname Name of the variable
-	 * @param mixed $list The list into which the variable should be
-	 * @return string The variable's value
-	 */
-	function get_htmlescaped_var_from_list($varname, &$list);
-
-	/**
-	 * @desc Returns a language variable assigned by the {@link add_lang()} method.
-	 * @param string $varname Name of the variable
-	 * @return string The variable's value
-	 */
-	function get_lang_var($varname);
-
-	/**
-	 * @desc Similar to {@link get_lang_var()} but for a loop.
-	 * @param string $varname Name of the variable
-	 * @param mixed[] $list The list into which the variable should be
-	 * @return string The variable's value
-	 */
-	function get_lang_var_from_list($varname, &$list);
 
 	/**
 	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:

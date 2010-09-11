@@ -47,7 +47,6 @@ class I18NMessages
         		$this->add_resource($resource);
         	}
         }
-//        Debug::dump($this->messages);
     }
     
     private function add_resource($resource)
@@ -65,27 +64,39 @@ class I18NMessages
         {
             $filename = $resource;
         }
-        $this->messages = array_merge(LangLoader::get($filename, $module), $this->messages);
+        $this->add_language_maps(LangLoader::get($filename, $module));
     }
     
-    public function i18n($key, $filename = null, $module = null)
+    public function add_language_maps(array $lang)
+    {
+    	if (empty($this->messages))
+    	{
+    		$this->messages = $lang;
+    	}
+    	else
+    	{
+    		$this->messages = array_merge($lang, $this->messages);
+    	}
+    }
+    
+    public function i18n($key, $filename = null, $module = '')
     {
         return htmlspecialchars($this->i18nraw($key, $filename, $module));
     }
     
-    public function i18njs($key, $filename = null, $module = null)
+    public function i18njs($key, $filename = null, $module = '')
     {
         return TextHelper::to_js_string($this->i18n($key, $filename, $module));        
     }
     
-    public function i18njsraw($key, $filename = null, $module = null)
+    public function i18njsraw($key, $filename = null, $module = '')
     {
         return TextHelper::to_js_string($this->i18nraw($key, $filename, $module));        
     }
     
-    public function i18nraw($key, $filename = null, $module = null)
+    public function i18nraw($key, $filename = null, $module = '')
     {
-        if ($filename !== null && $module !== null)
+        if ($filename !== null)
         {
         	return LangLoader::get_message($key, $filename, $module);
         }

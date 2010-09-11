@@ -78,6 +78,10 @@ class FileTemplate extends AbstractTemplate
         {
             throw new FileTemplateParserException($this->file_identifier, $exception);
         }
+        catch (LangNotFoundException $exception)
+        {
+            throw new FileTemplateParserException($this->file_identifier, $exception);
+        }
     }
 }
 ?>

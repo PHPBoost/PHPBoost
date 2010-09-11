@@ -34,6 +34,16 @@
 class DefaultTemplateRenderer implements TemplateRenderer
 {
 	/**
+	 * @var TemplateFunctions
+	 */
+	private $functions;
+
+	public function __construct()
+	{
+		$this->functions = new TemplateFunctions();
+	}
+	
+	/**
 	 * {@inheritdoc}
 	 */
 	public function render(TemplateData $data, TemplateLoader $loader)
@@ -48,8 +58,17 @@ class DefaultTemplateRenderer implements TemplateRenderer
 		}
 	}
 
+    /**
+     * {@inheritDoc}
+     */
+    public function add_lang(array $lang)
+    {
+    	$this->functions->add_language_maps($lang);
+    }
+
 	private function parse(TemplateLoader $loader, TemplateData $data)
 	{
+		$_functions = $this->functions;
 		$_data = $data;
 		include $loader->get_cache_file_path();
 		return $_result;
@@ -57,6 +76,7 @@ class DefaultTemplateRenderer implements TemplateRenderer
 
 	private function execute(TemplateLoader $loader, TemplateData $data)
 	{
+        $_functions = $this->functions;
 		$_data = $data;
 		// FIXME l'eval ne fonctionne pas actuellement: segfault php
 		// donc la fonctionnalité est désactivée et tout est mis en cache

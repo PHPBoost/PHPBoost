@@ -68,7 +68,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			$this->escaped = true;
 		}
 		elseif (!$this->escaped && 
-		(($char == '$' && $this->input->assert_next('\{')) ||
+		((($char == '$' || $char == '#') && $this->input->assert_next('\{')) ||
 		($char == '{' && $this->input->assert_next('(?:\w+\.)*\w+\}')) ||
 		($char == '#'&& $this->input->assert_next('[\s]')) ||
         ($char == '<' && $this->input->assert_next('\?php'))))
@@ -91,8 +91,6 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		if (!in_array($char, array('\\', '{', '}', '#')))
 		{
             $this->write('\\');
-//			throw new TemplateParserException('Escaping character "' . $current .
-//				'" has no meaning', $this->input);
 		}
 		$this->escaped = false;
 		$this->write($char);

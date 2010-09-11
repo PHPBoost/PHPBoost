@@ -57,14 +57,18 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			{
 				$element = $this->build_expression_elt();
 			}
-			elseif ($current == '#' && $this->input->assert_next('[\s]'))
-			{
-				$element = $this->build_statement_elt();
-				if ($element === null)
-				{	// every other statement if processed at a higher level
-					return;
-				}
-			}
+            elseif ($current == '#' && $this->input->assert_next('\{'))
+            {
+                $element = new FunctionCallTemplateSyntaxElement();
+            }
+            elseif ($current == '#' && $this->input->assert_next('[\s]'))
+            {
+                $element = $this->build_statement_elt();
+                if ($element === null)
+                {   // every other statement if processed at a higher level
+                    return;
+                }
+            }
 		    elseif ($current == '<' && $this->input->assert_next('\?php'))
             {
                 $element = new PHPTemplateSyntaxElement();

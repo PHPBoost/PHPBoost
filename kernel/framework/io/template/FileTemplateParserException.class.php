@@ -27,7 +27,7 @@
 
 class FileTemplateParserException extends Exception
 {   
-	public function __construct($file_identifier, TemplateParserException $exception)
+	public function __construct($file_identifier, Exception $exception)
 	{
         $message = 'template ' . $file_identifier . "\n" . $exception->getMessage();
 		parent::__construct($message);

@@ -35,7 +35,6 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 	{
         parent::__construct($view);
         $lang = LangLoader::get('admin-errors-Common');
-        $view->add_lang($lang);
 
         $img = '/templates/' . get_utheme() . '/images/admin/errors.png';
         $this->set_title($lang['logged_errors']);
