@@ -197,7 +197,7 @@ class Debug
 	}
 
 	/**
-	 * @desc executes a print_r() in an html <pre> block
+	 * @desc executes a <code>print_r()</code> in an html &lt;pre&gt; block
 	 * @param mixed $object the object to see using print_r
 	 */
 	public static function dump($object)
