@@ -69,23 +69,24 @@ $lang = array(
 
 // Introduction
 	'step.welcome.title' => 'Preamble',
+	'step.welcome.message' => 'Welcome to PHPBoost installation wizard',
 	'step.welcome.explanation' => '<p>Thank you for choosing PHPBoost to build your website.</p>
 <p>Before starting installation, be sure to have to hand Database information provided by your hosting company. The installation is automatic and should take only a few minutes of your time.  To start the installation process, please click on the green arrow down below.</p>
 <p>Best regards, the PHPBoost team</p>',
-	'step.welcome.distribution' => '%s distribution',
+	'step.welcome.distribution' => ':distribution Distribution',
 	'step.welcome.distribution.explanation' => '<p>There are several distributions which allow you to setup easily their website according to your needs. PHPBoost will install the kernel and modules according to the chosen distribution. After the installation is complete, you will be able to change settings and add/remove modules. </p>',
 	'start_install' => 'Start installation',
 
 // License
 	'step.license.title' => 'License',
-	'require_license_agreement' => 'You must accept the GNU/GPL license terms to install PHPBoost.',
-	'license_agreement' => 'End-user license agreement',
-	'license_terms' => 'License terms',
-	'please_agree_license' => 'I have read and understand the End-user License Terms which applies to this software',
-	'alert_agree_license' => 'You have to agree to the end-user license by checking the form !',
+	'step.license.agreement' => 'End-user license agreement',
+	'step.license.require.agreement' => 'You must accept the GNU/GPL license terms to install PHPBoost.',
+	'step.license.terms.title' => 'License terms',
+	'step.license.please_agree' => 'I have read and understand the End-user License Terms which applies to this software',
+	'step.license.submit.alert' => 'You have to agree to the end-user license by checking the form !',
 
 // Server setup
-	'config_server_title' => 'Looking up server configuration...',
+	'step.server.title' => 'Looking up server configuration...',
 	'config_server_explain' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php_version' => 'PHP version',

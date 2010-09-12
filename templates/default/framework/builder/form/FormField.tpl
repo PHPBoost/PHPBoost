@@ -1,6 +1,6 @@
-		<dl id="{E_ID}_field" # IF C_DISABLED # style="display:none;" # ENDIF #>
+		<dl id="${escape(ID)}_field" # IF C_DISABLED # style="display:none;" # ENDIF #>
 			<dt>
-				<label for="{E_ID}">
+				<label for="${escape(ID)}">
 					# IF C_REQUIRED # * # ENDIF #
 					{LABEL}
 				</label>
@@ -15,8 +15,8 @@
 			# END fieldelements #
 			# IF C_HAS_CONSTRAINTS #
 				&nbsp;
-				<span style="display:none" id="onblurContainerResponse{E_ID}"></span>
-				<div style="font-weight:bold;display:none" id="onblurMesssageResponse{E_ID}"></div>
+				<span style="display:none" id="onblurContainerResponse${escape(ID)}"></span>
+				<div style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></div>
 			# ENDIF #
 			</dd>
 		</dl>

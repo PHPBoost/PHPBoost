@@ -9,7 +9,7 @@
 	# IF C_CSS_STYLE # style="{CSS_STYLE}"# ENDIF #>
 	# IF C_CAPTION #
 	<caption>
-		<a href="{U_TABLE_DEFAULT_OPIONS}" title="{E_CAPTION}">{E_CAPTION}</a>
+		<a href="{U_TABLE_DEFAULT_OPIONS}" title="${escape(CAPTION)}">${escape(CAPTION)}</a>
 	</caption>
 	# ENDIF #
 	<thead>

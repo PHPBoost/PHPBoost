@@ -1,4 +1,4 @@
-<div id="{E_ID_field}" style="text-align:center; # IF C_DISABLED # display:none; # ENDIF #">
+<div id="${escape(ID_field)}" style="text-align:center; # IF C_DISABLED # display:none; # ENDIF #">
     <ul style="margin:5px;list-style-type:none;">
 # START action #
         <li style="margin:2px 10px;display:inline-table;">

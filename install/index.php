@@ -31,7 +31,7 @@ InstallEnvironment::load_imports();
 InstallEnvironment::init();
 
 $url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^/?$`'),
+new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)/?$`'),
 new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
 new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
 new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),

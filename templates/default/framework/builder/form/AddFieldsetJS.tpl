@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!--
-	var form = HTMLForms.get("{E_FORM_ID}");
-	var fieldset = new FormFieldset("{E_ID}");
+	var form = HTMLForms.get("${escape(FORM_ID)}");
+	var fieldset = new FormFieldset("${escape(ID)}");
 
 	# IF C_DISABLED #
 	fieldset.disabled = true;
