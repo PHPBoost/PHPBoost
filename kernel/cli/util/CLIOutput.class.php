@@ -27,6 +27,13 @@
 
 class CLIOutput
 {
+	private static $err_output;
+	
+	public static function __static()
+	{
+		self::$err_output = new File('php://stderr');		
+	}
+	
 	public static function write($message)
 	{
 		echo $message;
@@ -40,6 +47,15 @@ class CLIOutput
 			$break .= "\n";
 		}
 		self::write($message . $break);
+	}
+	
+	/**
+	 * Prints a message in the error output.
+	 * @param $message The message to print
+	 */
+	public static function err($message)
+	{
+		self::$err_output->append($message . "\n");
 	}
 }
 ?>
