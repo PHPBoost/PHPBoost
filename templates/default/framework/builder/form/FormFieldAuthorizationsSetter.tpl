@@ -1,5 +1,5 @@
 		# START actions #
-		<dl id="{E_ID}_field_{actions.BIT}" # IF C_DISABLED # style="display:none;" # ENDIF #>
+		<dl id="${escape(ID)}_field_{actions.BIT}" # IF C_DISABLED # style="display:none;" # ENDIF #>
 			<dt>
 				<label>
 					{actions.LABEL}

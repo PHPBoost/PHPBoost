@@ -2,7 +2,7 @@ ${resources('install/install')}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
 	<head>
-		<title>${i18n('installation.title')}</title>
+		<title>${i18n('installation.title')} - {STEP_TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
@@ -13,15 +13,11 @@ ${resources('install/install')}
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
-		<script type="text/javascript">
-		<!--
-			var step = {NUM_STEP};
-		-->
-		</script>
 	<div id="global">
 		<div id="header_container">
 		</div>
 		<div id="left_menu">
+            # IF NOT C_HAS_PREVIOUS_STEP #
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -32,7 +28,7 @@ ${resources('install/install')}
 					<td class="row_next row_final" style="text-align:center;">
 						<form action="{U_CHANGE_LANG}" method="post">
 							<p>
-								<select name="new_language" id="change_lang" onchange="document.location = 'install.php?step=' + step + '&amp;lang=' + document.getElementById('change_lang').value;">
+								<select name="new_language" id="change_lang" onchange="document.location='index.php?url=/welcome&amp;lang=' + document.getElementById('change_lang').value;">
 									# START lang #
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
@@ -51,6 +47,7 @@ ${resources('install/install')}
 					</td>
 				</tr>
 			</table>
+			# END IF #
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -115,28 +112,7 @@ ${resources('install/install')}
 				
 				<tr> 				
 					<td class="row_contents">						
-						<span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
-							<img src="templates/images/PHPBoost_box3.0.png" alt="Logo PHPBoost" />
-						</span>
-						<h1>{STEP_TITLE}</h1>
-						{STEP_EXPLANATION}
-						
-						<div style="margin-bottom:60px;">&nbsp;</div>
-						
-                        # INCLUDE step #
-												
-						<fieldset class="submit_case">
-                        # IF C_HAS_PREVIOUS_STEP #
-                            <a href="{PREVIOUS_STEP_URL}" title="${escape(PREVIOUS_STEP_TITLE)}" >
-                                <img src="templates/images/left.png" alt="${escape(PREVIOUS_STEP_TITLE)}" class="valign_middle" />
-                            </a>
-                        # ENDIF #
-                        # IF C_HAS_NEXT_STEP #
-                            <a href="{NEXT_STEP_URL}" title="${escape(NEXT_STEP_TITLE)}" >
-                                <img src="templates/images/right.png" alt="${escape(NEXT_STEP_TITLE)}" class="valign_middle" />
-                            </a>
-                        # ENDIF #
-						</fieldset>						
+                        # INCLUDE step #					
 					</td>
 				</tr>
 			</table>		

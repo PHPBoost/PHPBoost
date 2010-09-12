@@ -4,13 +4,13 @@
 		<dl>
 			<dt><label for="menu_config_name">* {EL_MENU_CONFIGURATION_EDITION_NAME}</label></dt>
 			<dd><label>
-				<input type="text" id="menu_config_name"	name="menu_config_name" value="{E_NAME}" class="text" />
+				<input type="text" id="menu_config_name"	name="menu_config_name" value="${escape(NAME)}" class="text" />
 			</label></dd>
 		</dl>
 		<dl>
 			<dt><label for="menu_config_match_regex">* {EL_MENU_CONFIGURATION_EDITION_MATCH_REGEX}</label></dt>
 			<dd><label>
-				<input type="text" id="menu_config_match_regex" name="menu_config_match_regex" value="{E_MATCH_REGEX}" class="text" />
+				<input type="text" id="menu_config_match_regex" name="menu_config_match_regex" value="${escape(MATCH_REGEX)}" class="text" />
 			</label></dd>
 		</dl>
 	</fieldset>

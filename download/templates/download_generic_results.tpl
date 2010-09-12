@@ -2,7 +2,7 @@
     <div class="block_contents">
         <div class="float_right">
             <a href="{U_LINK}">
-                <img src="{U_IMG}" alt="{E_TITLE}">
+                <img src="{U_IMG}" alt="${escape(TITLE)}">
             </a>
         </div>
         <p style="margin-bottom: 10px;"><a href="{U_LINK}" class="big_link">{TITLE}</a></p>

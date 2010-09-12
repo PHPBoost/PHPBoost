@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!--
-var field = new FormField("{E_ID}");
-var fieldset = HTMLForms.getFieldset("{E_FIELDSET_ID}");
+var field = new FormField("${escape(ID)}");
+var fieldset = HTMLForms.getFieldset("${escape(FIELDSET_ID)}");
 fieldset.addField(field);
 
 field.doValidate = function() {
@@ -15,18 +15,18 @@ field.doValidate = function() {
 	return result;
 }
 
-if ($("{E_HTML_ID}") != null)
+if ($("${escape(HTML_ID)}") != null)
 {
-	Event.observe("{E_HTML_ID}", 'blur', function() {
-		HTMLForms.get("{E_FORM_ID}").getField("{E_ID}").enableValidationMessage();
-		HTMLForms.get("{E_FORM_ID}").getField("{E_ID}").liveValidate();
+	Event.observe("${escape(HTML_ID)}", 'blur', function() {
+		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
+		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
 		# START related_field #
-		HTMLForms.get("{E_FORM_ID}").getField("{related_field.E_ID}").liveValidate();
+		HTMLForms.get("${escape(FORM_ID)}").getField("{related_field.E_ID}").liveValidate();
 		# END related_field #
 	});
 	
 	# START event_handler #
-	Event.observe("{E_HTML_ID}", '{event_handler.E_EVENT}', function() {
+	Event.observe("${escape(HTML_ID)}", '{event_handler.E_EVENT}', function() {
 		{event_handler.HANDLER}
 	});
 	# END event_hander #

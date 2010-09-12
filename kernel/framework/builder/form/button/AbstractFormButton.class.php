@@ -51,10 +51,10 @@ abstract class AbstractFormButton implements FormButton
     {
         global $LANG;
 
-        $template = new StringTemplate('<input type="{E_TYPE}" name="{E_BUTTON_NAME}" value="{EL_VALUE}" class="submit" onclick="{E_ONCLICK_ACTION}" />');
+        $template = new StringTemplate('<input type="${escape(TYPE)}" name="${escape(BUTTON_NAME)}" value="${escape(VALUE)}" class="submit" onclick="${escape(ONCLICK_ACTION)}" />');
 
         $template->assign_vars(array(
-			'L_VALUE' => $this->label,
+			'VALUE' => $this->label,
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action

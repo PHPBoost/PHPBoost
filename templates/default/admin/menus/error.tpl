@@ -3,9 +3,9 @@
 	<div class="module_top_r"></div>
 	<div class="module_top">
 		<strong>
-			{E_TITLE}
+			${escape(TITLE)}
 			# IF CODE #
-			(#{E_CODE})
+			(#${escape(CODE)})
 			# END IF #
 		</strong>
 	</div>
@@ -14,10 +14,10 @@
 		<div class="error_warning"
 			style="width: 500px; margin: auto; padding: 15px;"><img
 			src="../templates/base/images/important.png" alt=""
-			style="float: left; padding-right: 6px;" /> <strong>{E_TITLE}
-		# IF CODE #(#{E_CODE})# END IF #</strong><br />
+			style="float: left; padding-right: 6px;" /> <strong>${escape(TITLE)}
+		# IF CODE #(#${escape(CODE)})# END IF #</strong><br />
 		<br />
-		{E_MESSAGE}
+		${escape(MESSAGE)}
 		</div>
 	</div>
 	<div class="module_bottom_l"></div>
@@ -25,7 +25,7 @@
 
 	<div class="module_bottom">
 		<strong>
-			<a href="{U_LINK}" title="{E_LINK_NAME}">{E_LINK_NAME}</a>
+			<a href="{U_LINK}" title="${escape(LINK_NAME)}">${escape(LINK_NAME)}</a>
 		</strong>
 	</div>
 </div>

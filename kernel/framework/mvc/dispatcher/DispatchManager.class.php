@@ -81,16 +81,24 @@ class DispatchManager
 			}
 			return new Url(self::get_dispatcher_path($dispatcher_url->relative()) . '/' . $url);
 		}
-		else if (strpos($url, '?') !== false)
-		{
-			$exploded = explode('?', $url, 2);
-			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME .
-			    '=/' . $exploded[0] . '&amp;' . $exploded[1]);
-		}
 		else
 		{
-			return new Url($dispatcher_url->relative() . '?' . Dispatcher::URL_PARAM_NAME .
-			    '=/' . $url);
+			$dispatcher = $dispatcher_url->relative();
+			if (!preg_match('`(?:\.php)|/$`', $dispatcher))
+			{
+				$dispatcher .= '/';
+			}
+			if (strpos($url, '?') !== false)
+			{
+				$exploded = explode('?', $url, 2);
+				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
+				    '=/' . $exploded[0] . '&amp;' . $exploded[1]);
+			}
+			else
+			{
+				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
+				    '=/' . $url);
+			}
 		}
 	}
 

@@ -48,7 +48,7 @@ $lang = array(
 <p><strong>Attention</strong> : les dossiers cache et cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
 <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>',
 
-//Variables générales
+	//Variables générales
 	'installation.title' => 'Installation de PHPBoost',
 	'steps_list' => 'Liste des étapes',
 	'introduction' => 'Préambule',
@@ -69,6 +69,7 @@ $lang = array(
 
 //Introduction
 	'step.welcome.title' => 'Préambule',
+	'step.welcome.message' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
     'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement, l\'équipe PHPBoost</p>',
@@ -79,14 +80,14 @@ $lang = array(
 
 //licence
 	'step.license.title' => 'Licence',
-	'require_license_agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>',
-	'license_agreement' => 'Acceptation des termes de la licence',
-	'license_terms' => 'Termes de la licence',
-	'please_agree_license' => 'J\'ai pris connaissance des termes de la licence et je les accepte',
-	'alert_agree_license' => 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !',
+	'step.license.agreement' => 'Acceptation des termes de la licence',
+	'step.license.require.agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>',
+	'step.license.terms.title' => 'Termes de la licence',
+	'step.license.please_agree' => 'J\'ai pris connaissance des termes de la licence et je les accepte',
+	'step.license.submit.alert' => 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !',
 
 //Configuration du serveur
-	'config_server_title' => 'Vérification de la configuration du serveur',
+	'step.server.title' => 'Vérification de la configuration du serveur',
 	'config_server_explain' => '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
 <div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>',

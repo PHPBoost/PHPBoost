@@ -32,61 +32,81 @@
 class InstallUrlBuilder
 {
     private static $dispatcher = '/install/index.php';
-    
+
+    private static $locale = InstallController::DEFAULT_LOCALE;
+
+    public static function set_locale($locale)
+    {
+    	self::$locale = $locale;
+    }
+
     /**
      * @return Url
      */
     public static function welcome()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/welcome');
+        return self::url('/welcome');
     }
-    
+
     /**
      * @return Url
      */
     public static function license()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/license');
+        return self::url('/license');
     }
-    
+
     /**
      * @return Url
      */
     public static function server_configuration()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/server');
+        return self::url('/server');
     }
-    
+
     /**
      * @return Url
      */
     public static function database()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/database');
+        return self::url('/database');
     }
-    
+
     /**
      * @return Url
      */
     public static function website()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/website');
+        return self::url('/website');
     }
-    
+
     /**
      * @return Url
      */
     public static function admin()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/admin');
+        return self::url('/admin');
     }
-    
+
     /**
      * @return Url
      */
     public static function finish()
     {
-        return DispatchManager::get_url(self::$dispatcher, '/finish');
+        return self::url('/finish');
+    }
+
+    /**
+     * @param string the url path from the dispatcher root
+     * @return Url
+     */
+    private static function url($path)
+    {
+    	if (self::$locale  != InstallController::DEFAULT_LOCALE)
+    	{
+    		$path .= '?lang=' . self::$locale;
+    	}
+        return DispatchManager::get_url(self::$dispatcher, $path);
     }
 }
 ?>

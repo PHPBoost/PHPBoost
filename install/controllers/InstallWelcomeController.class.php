@@ -25,16 +25,13 @@
  *
  ###################################################*/
 
-class InstallWelcomeController extends AbstractController
+class InstallWelcomeController extends InstallController
 {
-	private $lang;
-
 	public function execute(HTTPRequest $request)
 	{
-        $this->lang = LangLoader::get('install', 'install');
+        parent::load_lang($request);
 		$view = new FileTemplate('install/welcome.tpl');
-        $view->assign_vars(array('DISTRIBUTION' => 'coucou'));
-        $view->assign_vars(array('DISTRIBUTION_DESCRIPTION' => 'coucou'));
+		$this->add_navigation($view);
 		return $this->create_response($view);
 	}
 
@@ -44,21 +41,14 @@ class InstallWelcomeController extends AbstractController
 	 */
 	private function create_response(Template $view)
 	{
-        $page_title = $this->lang['installation.title'];
         $step_title = $this->lang['step.welcome.title'];
-        $step_explanation = $this->lang['step.welcome.explanation'];
-		$response = new InstallDisplayResponse($page_title, $view, 0, $step_title, $step_explanation);
-		$this->add_navigation($response);
+		$response = new InstallDisplayResponse(0, $step_title, $view);
 		return $response;
 	}
 
-	/**
-	 * @param InstallDisplayResponse $response
-	 */
-	private function add_navigation(InstallDisplayResponse $response)
+	private function add_navigation(Template $view)
     {
-    	$name = $this->lang['step.license.title'];
-    	$response->set_next_step($name, InstallUrlBuilder::license()->relative());
+        $view->assign_vars(array('NEXT_STEP_URL' => InstallUrlBuilder::license()->absolute()));
     }
 }
 ?>

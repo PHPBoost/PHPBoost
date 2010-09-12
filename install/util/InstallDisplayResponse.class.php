@@ -35,6 +35,8 @@ class InstallDisplayResponse extends AbstractResponse
 
 	private $lang;
 
+	private $distribution_lang;
+
 	private $current_step = 0;
 
 	private $nb_steps;
@@ -44,18 +46,17 @@ class InstallDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 
-	public function __construct($page_title, Template $view, $step_number, $step_title, $step_explanation)
+	public function __construct($step_number, $step_title, Template $view)
 	{
+		$this->load_language_resources();
 		$this->init_response($step_number, $view);
 		$env = new InstallDisplayGraphicalEnvironment();
-		$env->set_page_title($page_title);
 		$this->add_language_bar();
 		$this->init_steps();
 		$this->update_progress_bar();
 
 		$this->full_view->assign_vars(array(
             'STEP_TITLE' => $step_title,
-            'STEP_EXPLANATION' => $step_explanation,
             'C_HAS_PREVIOUS_STEP' => false,
             'C_HAS_NEXT_STEP' => false,
             'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
@@ -69,27 +70,16 @@ class InstallDisplayResponse extends AbstractResponse
 		$this->current_step = $step_number;
 		$this->full_view = new FileTemplate('install/main.tpl');
 		$this->full_view->add_subtemplate('step', $view);
-		$this->lang = LangLoader::get('install', 'install');
 		$this->full_view->add_lang($this->lang);
+		$this->full_view->add_lang($this->distribution_lang);
 		$view->add_lang($this->lang);
+		$view->add_lang($this->distribution_lang);
 	}
 
-	public function set_previous_step($name, $url)
+	public function load_language_resources()
 	{
-		$this->full_view->assign_vars(array(
-            'C_HAS_PREVIOUS_STEP' => true,
-            'PREVIOUS_STEP_URL' => $url,
-            'PREVIOUS_STEP_TITLE' => $name,
-		));
-	}
-
-	public function set_next_step($name, $url)
-	{
-		$this->full_view->assign_vars(array(
-            'C_HAS_NEXT_STEP' => true,
-            'NEXT_STEP_URL' => $url,
-            'NEXT_STEP_TITLE' => $name,
-		));
+		$this->lang = LangLoader::get('install', 'install');
+		$this->distribution_lang = LangLoader::get('distribution', 'install');
 	}
 
 	private function add_language_bar()
