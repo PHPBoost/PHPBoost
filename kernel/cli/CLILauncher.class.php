@@ -49,6 +49,19 @@ class CLILauncher
 
 	public function launch()
 	{
+		try
+		{
+			$this->do_launch();
+		}
+		catch (Exception $exception)
+		{
+			CLIOutput::err('Uncaught exception: ' . $exception->getMessage() . ' at:');
+			CLIOutput::err($exception->getTraceAsString());
+		}
+	}
+	
+	private function do_launch()
+	{
 		if ($this->find_command())
 		{
 			$this->execute_command();
