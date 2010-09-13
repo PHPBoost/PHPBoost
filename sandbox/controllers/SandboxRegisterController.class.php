@@ -199,13 +199,13 @@ class SandboxRegisterController extends ModuleController
 		
 		$fieldset3->add_field(new FormFieldSelectChoice('user_sex', $this->lang['sex'], '',
 			array(
-				new FormFieldSelectChoiceOption('--', '1'),
-				new FormFieldSelectChoiceOption($this->lang['male'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['female'], '3'),
+				new FormFieldSelectChoiceOption('--', '0'),
+				new FormFieldSelectChoiceOption($this->lang['male'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['female'], '2'),
 			)
 		));
 		
-		$fieldset3->add_field(new FormFieldDate('user_born', $this->lang['date_of_birth'], new Date(), 
+		$fieldset3->add_field(new FormFieldDate('user_born', $this->lang['date_of_birth'], null, 
 			array('description' => $this->lang['valid'])
 		));
 		

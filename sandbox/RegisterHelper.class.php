@@ -42,7 +42,7 @@
 			'" . $form->get_value('user_lang')->get_raw_value() . "', 
 			'" . $form->get_value('user_theme')->get_raw_value() . "', 
 			'" . $form->get_value('mail') . "', 
-			'" . var_export($form->get_value('user_hide_mail'), true) . "', 
+			'" . $form->get_value('user_hide_mail') . "', 
 			'" . $form->get_value('user_editor')->get_raw_value() . "', 
 			'" . $form->get_value('user_timezone')->get_raw_value() . "', 
 			'" . time() . "', 
@@ -136,7 +136,7 @@
 			$dir = '../images/avatars/';
 			
 			$avatar = $form->get_value('avatar');
-			if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !isset($avatar))
+			if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($avatar))
 			{
 				import('io/image/Image');
 				import('io/image/ImageResizer');
