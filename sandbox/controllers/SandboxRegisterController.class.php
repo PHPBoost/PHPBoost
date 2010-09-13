@@ -220,7 +220,7 @@ class SandboxRegisterController extends ModuleController
 		$fieldset4->add_field(new FormFieldTextEditor('user_msn', 'MSN', '', array(
 			'class' => 'text', 'maxlength' => 255), array(new FormFieldConstraintMailAddress()))
 		);
-		$fieldset4->add_field(new FormFieldTextEditor('user_yohoo', 'Yahoo', '', array(
+		$fieldset4->add_field(new FormFieldTextEditor('user_yahoo', 'Yahoo', '', array(
 			'class' => 'text', 'maxlength' => 255), array(new FormFieldConstraintMailAddress()))
 		);
 		// Avatar
