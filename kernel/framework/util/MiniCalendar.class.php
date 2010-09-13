@@ -67,11 +67,11 @@ class MiniCalendar
 		$this->form_name = $form_name;
 		$this->num_instance = ++self::$num_instances;
 		
-		if ($date !== null)
+		if (is_numeric($date))
 		{
 			$this->set_date($date);
 		}
-		else
+		elseif($date !== null)
 		{
 			$this->set_date(new Date(DATE_NOW));
 		}
@@ -125,12 +125,12 @@ class MiniCalendar
 		$template = new FileTemplate('framework/mini_calendar.tpl');
 		
 		$template->assign_vars(array(
-			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
+			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_SHORT) : '',
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
-			'DAY' => $this->date->get_day(),
-			'MONTH' => $this->date->get_month(),
-			'YEAR' => $this->date->get_year(),
+			'DAY' => !empty($this->date) ? $this->date->get_day() : '',
+			'MONTH' => !empty($this->date) ? $this->date->get_month() : '',
+			'YEAR' => !empty($this->date) ? $this->date->get_year() : '',
 			'FORM_NAME' => $this->form_name,
 			'CALENDAR_STYLE' => $this->style,
 			'C_INCLUDE_JS' => !self::$js_inclusion_already_done
