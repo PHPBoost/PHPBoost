@@ -29,6 +29,8 @@ class SandboxRegisterController extends ModuleController
 {
 	private $lang;
 	
+	private $submit_button;
+	
 	public function execute(HTTPRequest $request)
 	{
 		$this->lang = LangLoader::get('main');
@@ -44,20 +46,95 @@ class SandboxRegisterController extends ModuleController
 				</script>
 				# INCLUDE form #');
 
-		$form = $this->build_form();
+		$form = $this->build_form_register();
+		
+		if ($this->submit_button->has_been_submited())
+		{
+			if ($form->validate())
+			{
+				$this->user_registration_database($form, $view);
+			}
+		}
+		
 		$view->add_lang($this->lang);
 		
 		$view->add_subtemplate('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
+	
+	private function user_registration_database(&$form, &$view)
+	{
+		
+		//$form->get_value('text');
+		if (UserAccountsConfig::load()->is_registration_enabled())
+		{
+			RegisterHelper::registeration_valid($form);
+		}
+		else
+		{
+			// Error, registeration disable
+		}
+		
 
-	private function build_form()
+	}
+	
+	private function registeration_valid(&$view)
+	{
+		/*
+		if (UserAccountsConfig::load()->get_member_accounts_validation_method() == 1)
+		{
+			// Activation par mail
+		}
+		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 2)
+		{
+			// Activation admin
+		}
+		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 2)
+		{
+			// Mail envoyé
+		}
+		*/
+	}
+	
+	private function build_form_register()
+	{
+		if (!UserAccountsConfig::load()->is_registration_enabled())
+		{
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
+		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
+		{
+			// TODO return $this->already_registered();
+			return $this->build_form_not_registered();
+		}
+		else
+		{
+			return $this->build_form_not_registered();
+		}
+	
+	}
+	
+	private function already_registered()
+	{
+		// You are already registered !
+		// Redirect ...
+		// TODO
+		
+		$form = new HTMLForm('already_register');
+		
+		$fieldset = new FormFieldsetHTML('already_register', 'Vous êtes déjà enregistré !');
+		$fieldset->set_description('Vous êtes déjà enregistré !');
+		$form->add_fieldset($fieldset);
+		
+		return $form;
+	}
+	
+	private function build_form_not_registered()
 	{
 		$form = new HTMLForm('register');
 		
-		// S'inscrire
-		$fieldset = new FormFieldsetHTML('s\'inscrire', $this->lang['register']);
-		$fieldset->set_description('Les champs marqués * sont obligatoire !');
+		// Register
+		$fieldset = new FormFieldsetHTML('registration', $this->lang['register']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
@@ -147,10 +224,10 @@ class SandboxRegisterController extends ModuleController
 			'class' => 'text', 'maxlength' => 255), array(new FormFieldConstraintMailAddress()))
 		);
 		// Avatar
-		$fieldset5 = new FormFieldsetHTML('gestion_avatar', $this->lang['avatar_gestion']);
+		$fieldset5 = new FormFieldsetHTML('avatar_managament', $this->lang['avatar_gestion']);
 		$form->add_fieldset($fieldset5);
 		
-		$fieldset5->add_field(new FormFieldFilePicker('avatars', $this->lang['upload_avatar'],
+		$fieldset5->add_field(new FormFieldFilePicker('avatar', $this->lang['upload_avatar'],
 			array('description' => $this->lang['upload_avatar_where']
 		)));
 		$fieldset5->add_field(new FormFieldTextEditor('user_avatar', $this->lang['avatar_link'], '', array(
