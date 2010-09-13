@@ -52,7 +52,7 @@ class ForumSetup extends DefaultModuleSetup
 		self::$forum_alerts_table = PREFIX . 'forum_alerts';
 		self::$forum_cats_table = PREFIX . 'forum_cats';
 		self::$forum_history_table = PREFIX . 'forum_history';
-		self::$forum_message_table = PREFIX . 'forum_message';
+		self::$forum_message_table = PREFIX . 'forum_msg';
 		self::$forum_poll_table = PREFIX . 'forum_poll';
 		self::$forum_topics_table = PREFIX . 'forum_topics';
 		self::$forum_track_table = PREFIX . 'forum_track';

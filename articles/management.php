@@ -310,6 +310,23 @@ else
 {
 	$tpl = new FileTemplate('articles/management.tpl');
 
+	// models
+	$result = $Sql->query_while("SELECT id, name,description
+	FROM " . DB_TABLE_ARTICLES_MODEL 
+	, __LINE__, __FILE__);
+	
+	$select_models = '--';		
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		if($row['id'] == $articles['id_models'])
+		{
+			$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
+			$model_desc=$row['description'];
+		}
+		else
+			$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+	}
+
 	if ($edit > 0)
 	{
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
@@ -369,24 +386,7 @@ else
 						'URL' => '',
 					));
 			}
-			
-			// models
-			$result = $Sql->query_while("SELECT id, name,description
-			FROM " . DB_TABLE_ARTICLES_MODEL 
-			, __LINE__, __FILE__);
-			
-			$select_models='';		
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				if($row['id'] == $articles['id_models'])
-				{
-					$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-					$model_desc=$row['description'];
-				}
-				else
-					$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-			}
-			
+
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
@@ -460,18 +460,6 @@ else
 			FROM " . DB_TABLE_ARTICLES_MODEL 
 			, __LINE__, __FILE__);
 
-			$select_models='';			
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				if($row['id'] == $ARTICLES_CAT[$cat]['models'])
-				{
-					$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-					$model_desc=$row['description'];
-				}
-				else
-					$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-			}
-			
 			$tpl->assign_vars(array(
 				'C_ADD' => false,
 				'C_CONTRIBUTION' => $auth_contrib ,
@@ -480,7 +468,7 @@ else
 				'TITLE' => '',
 				'CONTENTS' => '',
 				'DESCRIPTION'=>'',
-				'MODELE_DESCRIPTION'=>FormatingHelper::second_parse($model_desc),
+				'MODELE_DESCRIPTION'=> isset($model_desc) ? FormatingHelper::second_parse($model_desc) : '',
 				'EXTEND_CONTENTS' => '',
 				'VISIBLE_WAITING' => 0,
 				'VISIBLE_ENABLED' => 1,
