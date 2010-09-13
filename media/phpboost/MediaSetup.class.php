@@ -105,8 +105,8 @@ class MediaSetup extends DefaultModuleSetup
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'mime_type' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'activ' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'descriptios' => array('type' => 'text', 'length' => 65000),
+			'active' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'description' => array('type' => 'text', 'length' => 65000),
 			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'num_media' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -156,8 +156,8 @@ class MediaSetup extends DefaultModuleSetup
 			'name' => $this->messages['media_name_cat'],
 			'visible' => 1,
 			'mime_type' => 2,
-			'activ' => 7914,
-			'descriptios' => $this->messages['media_contents_cat'],
+			'active' => 7914,
+			'description' => $this->messages['media_contents_cat'],
 			'image' => $this->messages['media_icon_cat'],
 			'num_media' => 3
 		));
