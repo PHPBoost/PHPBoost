@@ -46,10 +46,25 @@ class PHPBoostErrors
 	
 	public static function user_not_authorized()
 	{
-		// TODO
-        $controller = new UserErrorController('TODO', 'User not authorized');
+		global $LANG;
+		
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_auth', 'errors'));
+        $controller->set_correction_link($LANG['back'], UserErrorController::PREVIOUS_PAGE);
+		
         return $controller;
 	}
+	
+    public static function unexisting_page()
+    {
+        global $LANG;
+        
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_unexist_page', 'errors'));
+        $controller->set_correction_link($LANG['back'], UserErrorController::PREVIOUS_PAGE);
+        
+        return $controller;
+    }
 
 	public static function member_banned()
 	{
