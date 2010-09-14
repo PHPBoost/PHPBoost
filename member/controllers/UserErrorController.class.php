@@ -91,7 +91,8 @@ class UserErrorController extends AbstractController
 	private function fill_view()
 	{
 		$this->view->assign_vars(array(
-            'ERROR_TYPE' => $this->get_error_type_img_name(),
+            'ERROR_TYPE' => $this->get_error_type(),
+            'ERROR_IMG' => $this->get_error_associated_image(),
             'TITLE' => $this->title,
             'MESSAGE' => $this->message,
             'U_LINK' => $this->link,
@@ -100,28 +101,45 @@ class UserErrorController extends AbstractController
 		));
 	}
 
-	private function get_error_type_img_name()
+	private function get_error_associated_image() {
+		$img_error = 'question';
+		switch ($this->error_type)
+        {
+            case self::NOTICE:
+                $img_error = 'notice';
+                break;
+            case self::WARNING:
+                $img_error = 'important';
+                break;
+            case self::FATAL:
+                $img_error = 'stop';
+                break;
+            case self::SUCCESS:
+                $img_error = 'success';
+                break;
+        }
+        return $img_error;
+	}
+	
+	private function get_error_type()
 	{
-		$img = 'question';
+		$css_class_name = 'unknow';
 		switch ($this->error_type)
 		{
 			case self::NOTICE:
-				$img = 'notice';
+				$css_class_name = 'notice';
 				break;
 			case self::WARNING:
-				$img = 'important';
+				$css_class_name = 'warning';
 				break;
 			case self::FATAL:
-				$img = 'stop';
+				$css_class_name = 'fatal';
 				break;
 			case self::SUCCESS:
-				$img = 'success';
+				$css_class_name = 'success';
 				break;
-			case self::QUESTION:
-			default:
-				$img = 'question';
 		}
-		return $img;
+		return $css_class_name;
 	}
 }
 ?>
