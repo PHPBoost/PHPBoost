@@ -1,11 +1,10 @@
 <!-- Move the styles in CSS -->
-<div>
+<div style="margin-bottom:25px;">
 	<div style="margin:10px;margin-bottom:20px;padding-bottom:5px;border-bottom:1px solid #aaaaaa;">
 		<strong>${escape(TITLE)}</strong>
 	</div>
-	<div>
-		<img src="{PATH_TO_ROOT}/templates/base/images/{ERROR_TYPE}.png" alt="${escape(TITLE)}"
-		style="float: left; padding-right: 6px;" />
+	<div class="error_{ERROR_TYPE}" style="width:500px;margin:auto;padding:15px;">
+        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERROR_IMG}.png" alt="" style="float:left;padding-right:6px;">
 		{MESSAGE}
 	</div>
     # IF HAS_LINK #
