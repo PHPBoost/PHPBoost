@@ -35,13 +35,17 @@ $view_get = retrieve(GET, 'view', 0);
 if (!empty($view_get) || !empty($edit_get))
 {
 	if ($User->check_level(MEMBER_LEVEL))
+	{
 		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	}
 	
 	$title_mbr = !empty($edit_get) ? $LANG['profile_edition'] : '';
 	$Bread_crumb->add($title_mbr, '');
 }
 else
-	$Bread_crumb->add($LANG['member'], url('member.php', ''));
+{
+    $Bread_crumb->add($LANG['member'], url('member.php', ''));
+}
 
 require_once('../kernel/header.php');
 
@@ -88,7 +92,9 @@ if (!empty($id_get)) //Espace membre
 		
 		$user_sex = '';
 		if (!empty($row['user_sex']))
+		{
 			$user_sex = ($row['user_sex'] == 1) ? 'man.png' : 'woman.png';
+		}
 	
 		$Template->assign_vars(array(
 			'C_USER_UPDATE_PROFIL' => true,
@@ -295,10 +301,14 @@ if (!empty($id_get)) //Espace membre
 			$errstr = '';
 		}
 		if (!empty($errstr))
+		{
 			$Errorh->handler($errstr, E_USER_NOTICE);
+		}
 
 		if (isset($LANG[$get_l_error]))
+		{
 			$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
+		}
 	}
 	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil
 	{
@@ -324,10 +334,14 @@ if (!empty($id_get)) //Espace membre
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					}
 					else //Longueur minimale du password
+					{
 						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
+					}
 				}
 				else //Password non identiques.
+				{
 					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
+				}
 			}
 		}
 		
@@ -376,7 +390,9 @@ if (!empty($id_get)) //Espace membre
 				if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 				{
 					if (is_file($user_avatar_path) && isset($match[1]))
+					{
 						@unlink('../images/avatars/' . $match[1]);
+					}
 				}
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -422,7 +438,9 @@ if (!empty($id_get)) //Espace membre
 								$path = $dir . $Upload->get_filename();
 								$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 								if (!empty($error)) //Erreur, on arrête ici
+								{
 									AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+								}
 								else
 								{
 									$user_avatar = $path; //Avatar uploadé et validé
@@ -437,7 +455,9 @@ if (!empty($id_get)) //Espace membre
 					if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 					{
 						if (is_file($user_avatar_path) && isset($match[1]))
+						{
 							@unlink('../images/avatars/' . $match[1]);
+						}
 					}
 				}
 				
@@ -448,9 +468,13 @@ if (!empty($id_get)) //Espace membre
 				$path = TextHelper::strprotect($_POST['avatar']);
 				$error = Util::check_img_dimension($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
+				{
 					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+				}
 				else
+				{
 					$user_avatar = $path; //Avatar posté et validé.
+				}
 			}
 			$user_avatar = !empty($user_avatar) ? " user_avatar = '" . $user_avatar . "', " : '';
 			
@@ -459,14 +483,20 @@ if (!empty($id_get)) //Espace membre
 				$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);
 				$user_mail = "user_mail = '" . $user_mail . "', ";
 				if ($check_mail >= 1) //Autre utilisateur avec le même mail!
+				{
 					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
+				}
 				
 				//Suppression des images des stats concernant les membres, si l'info a été modifiée.
 				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
+				{
 					@unlink('../cache/sex.png');
+				}
 				if ($info_mbr['user_theme'] != $user_theme)
+				{
 					@unlink('../cache/theme.png');
+				}
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "',
 				" . $user_mail . "user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "',
@@ -480,10 +510,14 @@ if (!empty($id_get)) //Espace membre
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}
 			else
+			{
 				AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+			}
 		}
 		else
+		{
 			AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
+		}
 	}
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
@@ -535,7 +569,9 @@ if (!empty($id_get)) //Espace membre
 			{	
 				$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				if ($check_member)
+				{
 					AppContext::get_response()->redirect('/admin/admin_members.php?id=' . $id_get);
+				}
 				else
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
@@ -593,7 +629,9 @@ if (!empty($id_get)) //Espace membre
 		{
 			$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', "WHERE id = '" . NumberHelper::numeric($group_id) . "'", __LINE__, __FILE__);
 			if (!empty($group['id']))
+			{
 				$user_group_list .= '<li><a href="member' . url('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : $group['name']) . '</a></li>';
+			}
 		}
 		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
@@ -710,7 +748,9 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 	
 	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
 	if (empty($group['id'])) //Groupe inexistant.
+	{
 		AppContext::get_response()->redirect('/member/member.php');
+	}
 		
 	$Template->assign_vars(array(
 		'SID' => SID,
@@ -763,7 +803,9 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
 			if (empty($row['user_avatar']) && $user_account_config->is_default_avatar_enabled())
+			{
 				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $user_account_config->get_default_avatar_name() . '" alt="" />';
+			}
 			
 			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
@@ -831,9 +873,11 @@ else //Show all member!
 	$result = $Sql->query_while("SELECT id, name
 	FROM " . PREFIX . "group", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
+	{
 		$Template->assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
+	}
 	
 	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	
