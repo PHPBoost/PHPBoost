@@ -34,9 +34,15 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
+	
 	if (empty($web['id']))
+	{
 		$Errorh->handler('e_unexist_link_web', E_USER_REDIRECT);
+	}
 		
 	if ($User->check_level(ADMIN_LEVEL))
 	{
@@ -106,7 +112,10 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
 	FROM " . PREFIX . "web 

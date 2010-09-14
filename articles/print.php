@@ -40,7 +40,10 @@ if ($idart > 0)
 
 	//category level authorization
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	if (empty($articles['id']))
 	$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);

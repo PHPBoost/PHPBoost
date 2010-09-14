@@ -37,8 +37,11 @@ $user = retrieve(GET, 'user', false, TBOOL);
 $level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-	if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
+{
+    $error_controller = PHPBoostErrors::unexisting_page();
+    DispatchManager::redirect($error_controller);
+}
 		
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {

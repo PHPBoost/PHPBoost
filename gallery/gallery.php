@@ -86,7 +86,10 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
@@ -158,7 +161,10 @@ elseif ($g_add)
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
 	foreach ($CAT_GALLERY as $idcat => $key)
@@ -284,7 +290,10 @@ else
 
 	//Niveau d'autorisation de la catégorie
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);

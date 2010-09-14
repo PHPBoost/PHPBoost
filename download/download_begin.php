@@ -86,6 +86,9 @@ $Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
 $Bread_crumb->reverse();
 
 if (!$auth_read)
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 ?>

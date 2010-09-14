@@ -39,7 +39,10 @@ $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
 if (!$User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_READ)) //Autorisation de lire ?
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 		
 if ($guestbook && empty($id_get)) //Enregistrement
 {

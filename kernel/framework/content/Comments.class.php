@@ -157,7 +157,8 @@ class Comments
 		
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 		{
-			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 			
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
@@ -271,7 +272,8 @@ class Comments
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
 				{
-					$Errorh->handler('e_auth', E_USER_REDIRECT);
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
 				}
 				
 				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
@@ -335,7 +337,8 @@ class Comments
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
 				{
-					$Errorh->handler('e_auth', E_USER_REDIRECT);
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
 				}
 				
 				$row = $Sql->query_array(DB_TABLE_COM, '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
@@ -424,7 +427,8 @@ class Comments
 				}
 				else
 				{
-					$Errorh->handler('e_auth', E_USER_REDIRECT);
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			elseif (isset($_GET['lock']) && $User->check_level(MODO_LEVEL)) //Verrouillage des commentaires.

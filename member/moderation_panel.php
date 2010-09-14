@@ -49,7 +49,10 @@ define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
 if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $moderation_panel_template = new FileTemplate('member/moderation_panel.tpl');	
 

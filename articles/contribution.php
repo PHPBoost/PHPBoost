@@ -31,7 +31,10 @@ require_once('../kernel/begin.php');
 require_once 'articles_begin.php';
 
 if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE))
-$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $Bread_crumb->add($ARTICLES_LANG['contribution_confirmation'], url('contribution.php'));
 

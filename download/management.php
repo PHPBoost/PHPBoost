@@ -96,7 +96,10 @@ if ($delete_file > 0)
         Feed::clear_cache('download');
 	}
 	else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 //Editing a page
 elseif ($edit_file_id > 0)
@@ -128,7 +131,10 @@ elseif ($edit_file_id > 0)
 	}
 	
 	if (!$auth_write)
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 else
 {
@@ -136,7 +142,10 @@ else
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 	
 	if (!($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 
 $Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));

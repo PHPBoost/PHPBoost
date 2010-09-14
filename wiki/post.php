@@ -90,7 +90,10 @@ if (!empty($contents)) //On enregistre un article
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 			if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
-				$Errorh->handler('e_auth', E_USER_REDIRECT); 
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			} 
 			
 			$previous_id_contents = $Sql->query("SELECT id_contents FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
@@ -115,9 +118,15 @@ if (!empty($contents)) //On enregistre un article
 		{
 			//autorisations
 			if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
-				$Errorh->handler('e_auth', E_USER_REDIRECT); 
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			} 
 			elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
-				$Errorh->handler('e_auth', E_USER_REDIRECT); 
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			} 
 			
 			//On vérifie que le titre n'existe pas
 			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . Url::encode_rewrite($title) . "'", __LINE__, __FILE__);
@@ -169,7 +178,10 @@ if ($id_edit > 0)//On édite
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 	
 	$article_contents = $Sql->query_array(PREFIX . 'wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
@@ -194,9 +206,15 @@ else
 {
 	//autorisations
 	if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 	elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	if (!empty($encoded_title))
 		$Errorh->handler($LANG['wiki_article_does_not_exist'], E_USER_WARNING);	

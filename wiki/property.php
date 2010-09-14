@@ -48,7 +48,10 @@ if ($id_auth > 0) //Autorisations de l'article
 	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
 	if (!$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 {
@@ -59,7 +62,10 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif ($move > 0) //Déplacement d'article
 {
@@ -70,7 +76,10 @@ elseif ($move > 0) //Déplacement d'article
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif ($rename > 0) //Renommer l'article
 {
@@ -81,7 +90,10 @@ elseif ($rename > 0) //Renommer l'article
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 {
@@ -95,7 +107,10 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif (isset($_GET['com']) && $idcom > 0)
 {
@@ -105,7 +120,10 @@ elseif (isset($_GET['com']) && $idcom > 0)
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {
@@ -115,7 +133,10 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	} 
 }
 else
 	define('TITLE', '');

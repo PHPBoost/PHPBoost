@@ -73,7 +73,10 @@ if ($faq_del_id > 0)
 		}
 	}
 	else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 elseif ($down > 0)
 {
@@ -92,7 +95,10 @@ elseif ($down > 0)
 		}
 	}
 	else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 elseif ($up > 0)
 {
@@ -109,7 +115,10 @@ elseif ($up > 0)
 		}
 	}
 	else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 //Updating or creating a question
 elseif (!empty($entitled) && !empty($answer))
@@ -126,7 +135,10 @@ elseif (!empty($entitled) && !empty($answer))
 			
 		}
 		else
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	else
 	{
@@ -155,7 +167,10 @@ elseif (!empty($entitled) && !empty($answer))
 			AppContext::get_response()->redirect('/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
@@ -193,7 +208,10 @@ elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
 		AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $id_cat, '', '&'));
 	}
 	else
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 //Moving a question
 elseif ($id_question > 0 && $move_question && $target >= 0)
@@ -238,7 +256,8 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $target, '', '&'));
 		}
 	}
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 else
 	AppContext::get_response()->redirect(HOST . DIR . url('/faq/faq.php', '', '&'));

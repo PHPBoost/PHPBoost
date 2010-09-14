@@ -537,10 +537,16 @@ if (!empty($id_get)) //Espace membre
 				if ($check_member)
 					AppContext::get_response()->redirect('/admin/admin_members.php?id=' . $id_get);
 				else
-					$Errorh->handler('e_auth', E_USER_REDIRECT);
+				{
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
+				}
 			}
 			else
-				$Errorh->handler('e_auth', E_USER_REDIRECT);
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 
 		//Dernière connexion, si vide => date d'enregistrement du membre.
@@ -774,7 +780,8 @@ else //Show all member!
 
 	if (!$User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS))
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
 	}
 	
   	$Template->set_filenames(array(

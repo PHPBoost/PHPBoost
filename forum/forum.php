@@ -37,7 +37,10 @@ if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'
 	
 //Vérification des autorisations d'accès.
 if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$id_get]['url']))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);

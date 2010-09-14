@@ -52,8 +52,8 @@ include_once('faq_bread_crumb.php');
 //checking authorization
 if (!$auth_read)
 {
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
-	exit;
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 include_once('../kernel/header.php');

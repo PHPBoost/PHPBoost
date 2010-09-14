@@ -33,7 +33,10 @@ require_once('../kernel/header.php');
 
 //Interdit aux non membres.
 if (!$User->check_level(MEMBER_LEVEL))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 
 
@@ -395,10 +398,16 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				$Errorh->handler('e_pm_nodel', E_USER_REDIRECT);
 		}
 		else //Echec.
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	else //Echec.
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la pas encore lu.
 {
@@ -427,7 +436,10 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					if ($pm_edit > $id_first) //Maj du message.
 						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);
 					else //Echec.
-						$Errorh->handler('e_auth', E_USER_REDIRECT);
+					{
+						$error_controller = PHPBoostErrors::unexisting_page();
+						DispatchManager::redirect($error_controller);
+					}
 				}
 				elseif (!empty($_POST['convers']) && !empty($title)) //Maj de la conversation, si il s'agit du premier message.
 				{
@@ -437,7 +449,10 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);
 					}
 					else //Echec.
-						$Errorh->handler('e_auth', E_USER_REDIRECT);
+					{
+						$error_controller = PHPBoostErrors::unexisting_page();
+						DispatchManager::redirect($error_controller);
+					}
 				}
 				else //Champs manquants.
 					$Errorh->handler('e_incomplete', E_USER_REDIRECT);
@@ -506,7 +521,10 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 			$Errorh->handler('e_pm_noedit', E_USER_REDIRECT);
 	}
 	else //Echec.
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 {
@@ -523,7 +541,10 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 
 	//Vérification des autorisations.
 	if (empty($convers['id']) || ($convers['user_id'] != $User->get_attribute('user_id') && $convers['user_id_dest'] != $User->get_attribute('user_id')))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != $User->get_attribute('user_id')) //Membre n'ayant pas encore lu la conversation.
 	{

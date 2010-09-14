@@ -35,7 +35,10 @@ $Cache->load('download');
 load_module_lang('download');
 
 if (!$User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 define('TITLE', $DOWNLOAD_LANG['contribution_confirmation']);
 

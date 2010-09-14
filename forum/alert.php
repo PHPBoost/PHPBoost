@@ -48,7 +48,10 @@ if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
 if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
-    $Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $Template->set_filenames(array(
 	'forum_alert'=> 'forum/forum_alert.tpl',
