@@ -91,7 +91,7 @@ $Template->assign_vars(array(
 	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR' => $LANG['e_auth'],
+	'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 ));
