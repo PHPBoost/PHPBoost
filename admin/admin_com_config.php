@@ -40,7 +40,9 @@ if (!empty($_POST['valid']) )
 	$comments_config->set_display_captcha($server_configuration->has_gd_libray() ? $_POST['verif_code'] : false);
 	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
 	$comments_config->set_number_comments_per_page(retrieve(POST, 'com_max', 10));
-	$comments_config->set_forbidden_tags($_POST['forbidden_tags']);
+	if (!empty($_POST['forbidden_tags'])) {
+	   $comments_config->set_forbidden_tags($_POST['forbidden_tags']);
+	}
 	$comments_config->set_max_links_comment(retrieve(POST, 'max_link', -1));
 	CommentsConfig::save();
 	
