@@ -454,7 +454,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$check_auth = true;
 
 			if (!$check_auth)
-				$Errorh->handler('e_auth', E_USER_REDIRECT);
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 
 			if ($update && $post_topic)
 			{
@@ -753,7 +756,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$check_auth = true;
 
 			if (!$check_auth) //Non autorisé!
-				$Errorh->handler('e_auth', E_USER_REDIRECT);
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 
 			if ($update && retrieve(POST, 'edit_msg', false))
 			{
@@ -965,7 +971,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$Errorh->handler('unknow_error', E_USER_REDIRECT);
 }
 else
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 include('../kernel/footer.php');
 

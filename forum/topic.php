@@ -65,7 +65,10 @@ if (!empty($_POST['change_cat']))
 	
 //Autorisation en lecture.
 if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $Template->set_filenames(array(
 	'forum_topic'=> 'forum/forum_topic.tpl',

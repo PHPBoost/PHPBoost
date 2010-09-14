@@ -59,7 +59,10 @@ if (is_array($CAT_FORUM))
 }
 
 if (!$User->check_level(MODO_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $Template->set_filenames(array(
 	'forum_moderation_panel'=> 'forum/forum_moderation_panel.tpl',

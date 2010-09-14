@@ -36,7 +36,10 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php'); 
 
 if (!$User->check_level(MEMBER_LEVEL))
-	$Errorh->handler('e_auth', E_USER_REDIRECT); 
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+} 
 
 $add_favorite = retrieve(GET, 'add', 0);
 $remove_favorite = retrieve(GET, 'del', 0);

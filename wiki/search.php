@@ -36,7 +36,10 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
 if (!$User->check_level(MEMBER_LEVEL))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $search_string = retrieve(GET, 'search', '');
 $where_search = retrieve(GET, 'where', '');

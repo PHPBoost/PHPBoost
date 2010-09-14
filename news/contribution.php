@@ -32,7 +32,10 @@ require_once 'news_begin.php';
 
 
 if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE))
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 define('TITLE', $NEWS_LANG['contribution_confirmation']);
 

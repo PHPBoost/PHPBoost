@@ -56,7 +56,10 @@ if (!empty($idurl))
     
     //Pas l'autorisation de le lire
     if (!$auth_read)
-        $Errorh->handler('e_auth', E_USER_REDIRECT);
+    {
+    	$error_controller = PHPBoostErrors::unexisting_page();
+    	DispatchManager::redirect($error_controller);
+    }
     
 	if (empty($info_file['url']))
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);

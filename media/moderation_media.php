@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 
 if (!$User->check_level(MODO_LEVEL))
 {
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
-	exit;
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 require_once('media_begin.php');

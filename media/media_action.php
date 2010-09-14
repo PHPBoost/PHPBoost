@@ -52,8 +52,8 @@ if ($unvisible > 0)
 	}
 	elseif (!$User->check_level(MODO_LEVEL))
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		exit;
+		$error_controller = PHPBoostErrors::unexisting_page();
+        DispatchManager::redirect($error_controller);
 	}
 
 	bread_crumb($media['idcat']);
@@ -84,8 +84,8 @@ elseif ($delete > 0)
 	}
 	elseif (!$User->check_level(MODO_LEVEL))
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		exit;
+		$error_controller = PHPBoostErrors::unexisting_page();
+        DispatchManager::redirect($error_controller);
 	}
 
 	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
@@ -201,8 +201,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 	else
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		exit;
+		$error_controller = PHPBoostErrors::unexisting_page();
+        DispatchManager::redirect($error_controller);
 	}
 
 	if (!empty($media))
@@ -397,14 +397,14 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		exit;
+		$error_controller = PHPBoostErrors::unexisting_page();
+        DispatchManager::redirect($error_controller);
 	}
 }
 else
 {
-	$Errorh->handler('e_auth', E_USER_REDIRECT);
-	exit;
+	$error_controller = PHPBoostErrors::unexisting_page();
+    DispatchManager::redirect($error_controller);
 }
 
 $Template->pparse('media_action');

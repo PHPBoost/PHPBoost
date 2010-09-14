@@ -66,7 +66,8 @@ if ($delete > 0)
 	}
 	else
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
 	}
 }
 elseif (!empty($_POST['submit']))
@@ -244,8 +245,8 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		echo 'tu n\'a spas l\'autorisation';
-/* TODO */		//$Errorh->handler('e_auth', E_USER_REDIRECT);
+	   $error_controller = PHPBoostErrors::unexisting_page();
+	   DispatchManager::redirect($error_controller);
 	}
 }
 else
@@ -330,15 +331,16 @@ else
 		}
 		else
 		{
-/* TODO */		echo 'tu n\'as pas l\'autorisation';
-			//$Errorh->handler('e_auth', E_USER_REDIRECT);
+	       $error_controller = PHPBoostErrors::unexisting_page();
+	       DispatchManager::redirect($error_controller);
 		}
 	}
 	else
 	{
 		if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
 		{
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+	       $error_controller = PHPBoostErrors::unexisting_page();
+	       DispatchManager::redirect($error_controller);
 		}
 		else
 		{

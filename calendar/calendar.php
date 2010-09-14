@@ -51,7 +51,10 @@ if ($delete)
     $Session->csrf_get_protect();
 	
 if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ)) //Autorisation de poster?
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 		
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
@@ -291,7 +294,10 @@ elseif (!empty($id))
 	if ($delete) //Suppression simple.
 	{
 		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
@@ -303,7 +309,10 @@ elseif (!empty($id))
 	elseif ($edit)
 	{
 		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 		
 		if (!empty($_POST['valid']))
 		{
@@ -395,7 +404,10 @@ elseif (!empty($id))
 elseif ($add) //Ajout d'un évenement
 {
 	if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_WRITE)) //Autorisation de poster?
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 	if (!empty($_POST['valid'])) //Enregistrement
 	{

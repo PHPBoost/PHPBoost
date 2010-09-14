@@ -224,8 +224,8 @@ elseif ($id_media > 0)
 	}
 	elseif (!$User->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
 	{
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
-		exit;
+		$error_controller = PHPBoostErrors::unexisting_page();
+        DispatchManager::redirect($error_controller);
 	}
 
 	bread_crumb($media['idcat']);
