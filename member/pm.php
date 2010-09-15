@@ -395,7 +395,11 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				}
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
-				$Errorh->handler('e_pm_nodel', E_USER_REDIRECT);
+			{
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_pm_nodel']);
+                DispatchManager::redirect($controller);
+			}
 		}
 		else //Echec.
 		{
@@ -455,7 +459,11 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					}
 				}
 				else //Champs manquants.
-					$Errorh->handler('e_incomplete', E_USER_REDIRECT);
+				{
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                        $LANG['e_incomplete']);
+                    DispatchManager::redirect($controller);
+				}
 				
 				//Succès redirection vers la conversation.
 				AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
@@ -518,7 +526,11 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 			}
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
-			$Errorh->handler('e_pm_noedit', E_USER_REDIRECT);
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_pm_noedit']);
+            DispatchManager::redirect($controller);
+		}
 	}
 	else //Echec.
 	{

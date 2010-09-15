@@ -37,10 +37,18 @@ $quote_get = retrieve(GET, 'quote', 0);
 $topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
 //Existance du topic.
 if (empty($topic['id']))
-	$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['e_unexist_cat']);
+    DispatchManager::redirect($controller);
+}
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0)
-	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['e_unexist_cat']);
+    DispatchManager::redirect($controller);
+}
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);

@@ -33,10 +33,18 @@ $id_get = retrieve(GET, 'id', 0);
 
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
-	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['e_unexist_cat']);
+    DispatchManager::redirect($controller);
+}
 
 if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
-	$Errorh->handler('e_readonly', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['e_readonly']);
+    DispatchManager::redirect($controller);
+}
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
@@ -87,7 +95,11 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 		if (empty($topic['idcat'])) //Topic inexistant.
-			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_unexist_topic_forum']);
+            DispatchManager::redirect($controller);
+		}
 
 		$Template->set_filenames(array(
 			'edit_msg'=> 'forum/forum_edit_msg.tpl',
@@ -384,7 +396,11 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		//Verrouillé?
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if (empty($topic['idcat']))
-			$Errorh->handler('e_topic_lock_forum', E_USER_REDIRECT);
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_topic_lock_forum']);
+            DispatchManager::redirect($controller);
+		}
 
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		//Catégorie verrouillée?
@@ -438,7 +454,11 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
-			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
+		{
+            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_unexist_topic_forum']);
+            DispatchManager::redirect($controller);
+		}
 
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
@@ -823,7 +843,11 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		{
 			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if (empty($topic['idcat'])) //Topic inexistant.
-				$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
+			{
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_unexist_topic_forum']);
+                DispatchManager::redirect($controller);
+			}
 
 			$Template->set_filenames(array(
 				'error_post'=> 'forum/forum_edit_msg.tpl',
@@ -963,12 +987,20 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			));
 		}
 		else
-			$Errorh->handler('unknow_error', E_USER_REDIRECT);
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                 $LANG['unknow_error']);
+            DispatchManager::redirect($controller);
+		}
 
 		$Template->pparse('error_post');
 	}
 	else
-		$Errorh->handler('unknow_error', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+             $LANG['unknow_error']);
+        DispatchManager::redirect($controller);
+	}
 }
 else
 {

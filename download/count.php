@@ -62,7 +62,11 @@ if (!empty($idurl))
     }
     
 	if (empty($info_file['url']))
-		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_file_download']);
+        DispatchManager::redirect($controller);
+	}
     
 	//Si le téléchargement est forcé et que le fichier est local au serveur
 	if ($info_file['force_download'] == DOWNLOAD_FORCE_DL && strpos($info_file['url'], '://') === false)	
@@ -89,5 +93,9 @@ if (!empty($idurl))
 	}
 }
 else
-	$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
+{
+    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_file_download']);
+    DispatchManager::redirect($controller);
+}
 ?>

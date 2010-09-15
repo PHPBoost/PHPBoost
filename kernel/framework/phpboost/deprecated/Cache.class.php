@@ -52,10 +52,10 @@ class Cache
 	{
 		if (!is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache'))
 		{
-			global $Errorh;
-
 			//Enregistrement dans le log d'erreur.
-			$Errorh->handler('Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                'Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', UserErrorController::FATAL);
+            DispatchManager::redirect($controller);
 		}
 	}
 
@@ -67,8 +67,6 @@ class Cache
 	 */
 	function load($file, $reload_cache = false)
 	{
-		global $Errorh;
-
 		//On charge le fichier
 		$cache_file = PATH_TO_ROOT . '/cache/' . $file . '.php';
 		$include = false;
@@ -117,7 +115,9 @@ class Cache
 				}
 				if (!$include2)
 				{
-					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                        'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
+                    DispatchManager::redirect($controller);
 				}
 			}
 			else
@@ -135,7 +135,9 @@ class Cache
 				}
 				if (!$include3)
 				{
-					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                         'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
+                    DispatchManager::redirect($controller);
 				}
 			}
 		}
@@ -158,9 +160,6 @@ class Cache
 	 */
 	function generate_module_file($module_name, $no_alert_on_error = false)
 	{
-		global $Errorh;
-
-
 		$modules_loader = AppContext::get_extension_provider_service();
 		$module = $modules_loader->get_provider($module_name);
 
@@ -171,7 +170,9 @@ class Cache
 		}
 		elseif (!$no_alert_on_error)
 		{
-			$Errorh->handler('Cache -&gt; Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                'Cache -&gt; Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', UserErrorController::FATAL);
+            DispatchManager::redirect($controller);
 		}
 	}
 
@@ -258,7 +259,9 @@ class Cache
 		//Il est l'heure de vérifier si la génération a fonctionné.
 		if (!file_exists($file_path) && filesize($file_path) == 0)
 		{
-			$Errorh->handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
+            DispatchManager::redirect($controller);
 		}
 	}
 

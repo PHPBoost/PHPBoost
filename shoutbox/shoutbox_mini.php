@@ -44,7 +44,10 @@ function shoutbox_mini($position, $block)
     	{
     		//Membre en lecture seule?
     		if ($User->get_attribute('user_readonly') > time())
-    			$Errorh->handler('e_readonly', E_USER_REDIRECT);
+    		{
+    			$error_controller = PHPBoostErrors::user_in_read_only();
+                DispatchManager::redirect($error_controller);
+    		}
     			
     		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
     		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);

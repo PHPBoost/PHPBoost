@@ -62,7 +62,9 @@ if ($delete > 0)
 	}
 	elseif (empty($news['id']))
 	{
-		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_news']);
+        DispatchManager::redirect($controller);
 	}
 	else
 	{

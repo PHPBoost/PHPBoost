@@ -35,8 +35,9 @@ $id_question = retrieve(GET, 'question', 0);
 //if the category doesn't exist or is not visible
 if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']))
 {
-	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
-	exit;
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_cat']);
+    DispatchManager::redirect($controller);
 }
 
 if ($id_faq > 0)

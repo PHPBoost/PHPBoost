@@ -52,6 +52,14 @@ class PHPBoostErrors
         return $controller;
 	}
 	
+	public static function user_in_read_only()
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_readonly', 'errors'));
+		
+        return $controller;
+	}
+	
     public static function unexisting_page()
     {
        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
@@ -62,33 +70,46 @@ class PHPBoostErrors
 
 	public static function member_banned()
 	{
-		// TODO
         $lang = LangLoader::get('errors');
-        $controller = new UserErrorController('TODO', 'TODO');
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_member_ban_w', 'errors'));
+        
         return $controller;
 	}
 
 	public static function unexisting_member()
 	{
-		// TODO
         $lang = LangLoader::get('errors');
-        $controller = new UserErrorController('TODO', 'TODO');
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_unexist_member', 'errors'));
+        
         return $controller;
 	}
-
+	
+    public static function unexisting_category()
+    {
+        $lang = LangLoader::get('errors');
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_unexist_cat', 'errors'));
+        
+        return $controller;
+    }
+    
 	public static function member_not_enabled()
 	{
-		// TODO
         $lang = LangLoader::get('errors');
-        $controller = new UserErrorController('TODO', 'TODO');
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('e_unactiv_member', 'errors'));
+        
         return $controller;
 	}
 
 	public static function flood()
 	{
-		// TODO
         $lang = LangLoader::get('errors');
-		$controller = new UserErrorController('TODO', 'TODO');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		  LangLoader::get_message('e_flood', 'errors'));
+		
         return $controller;
 	}
 }

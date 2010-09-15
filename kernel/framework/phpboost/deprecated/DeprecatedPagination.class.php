@@ -179,11 +179,13 @@ class DeprecatedPagination
 
 		if ($this->page < 0) //Erreur => redirection!
 		{
-			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+			$error_controller = PHPBoostErrors::unexisting_page();
+            DispatchManager::redirect($error_controller);
 		}
 		elseif ($this->page > $nbr_page) //Erreur => redirection!
 		{
-			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+			$error_controller = PHPBoostErrors::unexisting_page();
+            DispatchManager::redirect($error_controller);
 		}
 
 		return $this->page;

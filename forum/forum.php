@@ -33,7 +33,11 @@ $id_get = retrieve(GET, 'id', 0);
 
 //Vérification de l'existance de la catégorie.
 if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
-	$Errorh->handler('e_unexist_cat_forum', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['e_unexist_cat_forum']);
+    DispatchManager::redirect($controller);
+}
 	
 //Vérification des autorisations d'accès.
 if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$id_get]['url']))

@@ -184,8 +184,8 @@ class Note
 		}
 		else
         {
-            global $Errorh;
-            $Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+            $controller = PHPBoostErrors::unexisting_page();
+            DispatchManager::redirect($controller);        
         }
 	}
 	
@@ -248,7 +248,10 @@ class Note
 		global $Errorh;
 		
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
-			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
+		{
+			$controller = PHPBoostErrors::unexisting_page();
+            DispatchManager::redirect($controller);        
+		}
 		
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->script_path));
 	}

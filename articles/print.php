@@ -46,7 +46,11 @@ if ($idart > 0)
 	}
 
 	if (empty($articles['id']))
-	$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_articles']);
+        DispatchManager::redirect($controller);
+	}
 }
 
 if (empty($articles['title']))

@@ -55,7 +55,11 @@ if (!empty($idart) && isset($cat) )
 	}
 	
 	if (empty($articles['id']))
-		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_articles']);
+        DispatchManager::redirect($controller);
+	}
 
 	$tpl = new FileTemplate('articles/'.$articles['tpl_articles']);
 	
@@ -68,9 +72,13 @@ if (!empty($idart) && isset($cat) )
 
 	//Si l'article ne commence pas par une page on l'ajoute.
 	if (substr(trim($articles['contents']), 0, 6) != '[page]')
+	{
 		$articles['contents'] = ' [page]&nbsp;[/page]' . $articles['contents'];
+	}
 	else
+	{
 		$articles['contents'] = ' ' . $articles['contents'];
+	}
 		
 	//Pagination des articles.
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
@@ -227,10 +235,14 @@ if (!empty($idart) && isset($cat) )
 		$general_config = GeneralConfig::load();
 		$contents = sprintf($ARTICLES_LANG['text_link_mail'], $general_config->get_site_name(), $exp, $user_mail, $general_config->get_site_url(), $link) ;
 		
-		if(AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
+		if (AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
+		{
 			$Errorh->handler($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS);
+		}
 		else
+		{
 			$Errorh->handler($ARTICLES_LANG['error_send_mail'], E_USER_WARNING);
+		}
 	}
 	$tpl->display();
 }
@@ -241,12 +253,15 @@ else
 	$module_name = 'articles';
 	$module = $modulesLoader->get_provider($module_name);
 	if ($module->has_extension_point('get_home_page'))
+	{
 		echo $module->get_extension_point('get_home_page');
+	}
 	elseif (!$no_alert_on_error) 
 	{
-		global $Errorh;
-		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
-		exit;
+		//TODO Gestion de la langue
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
 	}
 }
 			

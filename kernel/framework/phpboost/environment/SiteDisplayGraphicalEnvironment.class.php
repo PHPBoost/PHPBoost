@@ -135,14 +135,16 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 		if (!$result)
 		{
-			global $Cache, $Errorh;
+			global $Cache;
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
 				
 			//On inclut une nouvelle fois
 			if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 			{
-				$Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_cache_modules'], UserErrorController::FATAL);
+                DispatchManager::redirect($controller);
 			}
 		}
 

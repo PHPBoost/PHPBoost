@@ -43,7 +43,11 @@ if (!empty($file_id))
 	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	
 	if (empty($download_info['id']))
-		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_file_download']);
+        DispatchManager::redirect($controller);
+	}
 	$Bread_crumb->add($download_info['title'], url('download.php?id=' . $file_id, 'download-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $download_info['title']);
@@ -51,7 +55,11 @@ if (!empty($file_id))
 elseif (!empty($category_id))
 {
 	if (!array_key_exists($category_id, $DOWNLOAD_CATS))
-		$Errorh->handler('e_unexist_category_download', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_category_download']);
+        DispatchManager::redirect($controller);
+	}
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 	$id_cat_for_download = $category_id;

@@ -230,10 +230,14 @@ elseif ($action == 'restore')
 				$Errorh->handler($LANG['db_restore_success'], E_USER_NOTICE);
 				break;
 			case 'failure' :
-				$Errorh->handler($LANG['db_restore_failure'], E_USER_ERROR);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['db_restore_failure'], UserErrorController::FATAL);
+                DispatchManager::redirect($controller);
 				break;
 			case 'upload_failure' :
-				$Errorh->handler($LANG['db_upload_failure'], E_USER_ERROR);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['db_upload_failure'], UserErrorController::FATAL);
+                DispatchManager::redirect($controller);
 				break;
 			case 'file_already_exists' :
 				$Errorh->handler($LANG['db_file_already_exists'], E_USER_WARNING);
@@ -242,7 +246,9 @@ elseif ($action == 'restore')
 				$Errorh->handler($LANG['db_unlink_success'], E_USER_NOTICE);
 				break;
 			case 'unlink_failure' :
-				$Errorh->handler($LANG['db_unlink_failure'], E_USER_ERROR);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['db_unlink_failure'], UserErrorController::FATAL);
+                DispatchManager::redirect($controller);
 				break;
 			case 'file_does_not_exist':
 				$Errorh->handler($LANG['db_file_does_not_exist'], E_USER_WARNING);

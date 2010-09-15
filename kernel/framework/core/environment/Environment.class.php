@@ -179,7 +179,7 @@ class Environment
 		define('PHPBOOST', 			true);
 		define('E_UNKNOWN', 		0);
 		define('E_TOKEN', 			-3);
-		define('E_USER_REDIRECT', 	-1);
+		define('E_USER_REDIRECT', 	-1); //Deprecated
 		define('E_USER_SUCCESS', 	-2);
 		define('HTML_UNPROTECT', 	false);
 

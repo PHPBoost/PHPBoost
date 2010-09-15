@@ -40,7 +40,7 @@ $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
 if (!$User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_READ)) //Autorisation de lire ?
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 		
@@ -52,7 +52,8 @@ if ($guestbook && empty($id_get)) //Enregistrement
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time())
 	{
-		$Errorh->handler('e_readonly', E_USER_REDIRECT);
+		$controller = PHPBoostErrors::user_in_read_only();
+        DispatchManager::redirect($controller);
 	}
 
 	if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
@@ -174,7 +175,9 @@ elseif (!empty($id_get)) //Edition + suppression!
 			}
 			else
 			{
-				$Errorh->handler('e_incomplete', E_USER_REDIRECT);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_incomplete']);
+                DispatchManager::redirect($controller);
 			}
 		}
 		else
