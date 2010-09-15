@@ -172,7 +172,9 @@ class Comments
 	public function set_arg($idcom, $path = '')
 	{
 		if (!empty($path))
+		{
 			$this->path = $path;
+		}
 		$this->idcom = (int)max($idcom, 0);
 		
 		//Si c'est un module qui appelle
