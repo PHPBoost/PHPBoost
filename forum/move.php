@@ -421,8 +421,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 }
 else
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-        $LANG['unknow_error']);
+	$controller = PHPBoostErrors::unknow();
     DispatchManager::redirect($controller);
 }
 
