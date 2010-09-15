@@ -167,7 +167,9 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	}
 	else
 	{
-		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_news']);
+        DispatchManager::redirect($controller);
 	}
 }
 elseif ($user)
@@ -253,8 +255,10 @@ else
 	}
 	elseif (!$no_alert_on_error)
 	{
-		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
-		exit;
+		//TODO Gestion de la langue
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
 	}
 }
 

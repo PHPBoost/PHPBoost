@@ -44,7 +44,10 @@ if ($shoutbox && empty($shout_id)) //Insertion
 {		
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
-		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::user_in_read_only();
+        DispatchManager::redirect($error_controller);
+	}
 	
 	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
 	$shout_contents = retrieve(POST, 'shoutbox_contents', '', TSTRING_UNCHANGE);
@@ -83,7 +86,10 @@ elseif (!empty($shout_id)) //Edition + suppression!
 {
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
-		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
+	{
+		$error_controller = PHPBoostErrors::user_in_read_only();
+        DispatchManager::redirect($error_controller);
+	}
 
 	$del_message = retrieve(GET, 'del', false);
 	$edit_message = retrieve(GET, 'edit', false);

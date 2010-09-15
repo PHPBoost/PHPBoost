@@ -523,11 +523,11 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 
 		if (!$result2)
 		{
-			global $Errorh;
-
-			//Déclenchement d'une erreur fatale.
-			$Errorh->handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
-			exit;
+			$error_message = sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php');
+			
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $error_message, UserErrorController::FATAL);
+            DispatchManager::redirect($controller);
 		}
 	}
 }
@@ -604,11 +604,11 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 
 	if ($fatal_error)
 	{
-		global $Errorh;
-
-		//Déclenchement d'une erreur fatale.
-		$Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__);
-		exit;
+		$error_message = sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir);
+            
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $error_message, UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
 	}
 }
 

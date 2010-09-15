@@ -47,7 +47,11 @@ if ($delete > 0)
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
 	if (empty($articles['id']))
-		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_articles']);
+        DispatchManager::redirect($controller);
+	}
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -145,9 +149,19 @@ elseif(retrieve(POST,'submit',false))
 	{
 		// Errors.
 		if (empty($articles['title']))
-		$Errorh->handler('e_require_title', E_USER_REDIRECT);
+		{
+			//TODO à dégager, géré par le formBuilder
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_require_title']);
+            DispatchManager::redirect($controller);
+		}
 		elseif (empty($articles['desc']))
-		$Errorh->handler('e_require_desc', E_USER_REDIRECT);
+		{
+			//TODO à dégager, géré par le formBuilder
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_require_desc']);
+            DispatchManager::redirect($controller);
+		}
 		else
 		{
 			// $start & $end.
@@ -569,7 +583,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
 	$tpl->display();
 }
 

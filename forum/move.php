@@ -135,10 +135,14 @@ elseif (!empty($id_post)) //Déplacement du topic
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
-			$Errorh->handler('e_incomplete', E_USER_REDIRECT);
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_incomplete']);
+            DispatchManager::redirect($controller);
+		}
 	}
 	else
-	{
+	{ 
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
@@ -164,7 +168,11 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
-		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['e_unable_cut_forum']);
+        DispatchManager::redirect($controller);
+	}
 
 	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
@@ -357,7 +365,9 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
-		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unable_cut_forum']);
+        DispatchManager::redirect($controller);
 	}
 
 	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
@@ -403,10 +413,18 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
 	}
 	else
-		$Errorh->handler('e_incomplete', E_USER_REDIRECT);
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_incomplete']);
+        DispatchManager::redirect($controller);
+	}
 }
 else
-	$Errorh->handler('unknow_error', E_USER_REDIRECT);
+{
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+        $LANG['unknow_error']);
+    DispatchManager::redirect($controller);
+}
 
 include('../kernel/footer.php');
 

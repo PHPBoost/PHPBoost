@@ -47,8 +47,9 @@ if ($unvisible > 0)
 	// Gestion des erreurs.
 	if (empty($media))
 	{
-		$Errorh->handler('e_unexist_media', E_USER_REDIRECT);
-		exit;
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_media']);
+        DispatchManager::redirect($controller);
 	}
 	elseif (!$User->check_level(MODO_LEVEL))
 	{
@@ -79,8 +80,9 @@ elseif ($delete > 0)
 
 	if (empty($media))
 	{
-		$Errorh->handler('e_unexist_media', E_USER_REDIRECT);
-		exit;
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_media']);
+        DispatchManager::redirect($controller);
 	}
 	elseif (!$User->check_level(MODO_LEVEL))
 	{
@@ -284,8 +286,9 @@ elseif (!empty($_POST['submit']))
 			}
 			else
 			{
-				$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-				exit;
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_mime_disable_media']);
+                DispatchManager::redirect($controller);
 			}
 		}
 		elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
@@ -306,14 +309,16 @@ elseif (!empty($_POST['submit']))
 				
 				if (empty($media['mime_type']))
 				{
-					$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-					exit;
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_mime_disable_media']);
+                DispatchManager::redirect($controller);
 				}
 			}
 			else
 			{
-				$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-				exit;
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                    $LANG['e_mime_disable_media']);
+                DispatchManager::redirect($controller);
 			}
 		}
 		elseif (($url_parsed = parse_url($media['url'])) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
@@ -322,14 +327,16 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			$Errorh->handler('media_unknow_mime', E_USER_REDIRECT);
-			exit;
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+                $LANG['media_unknow_mime']);
+            DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
-		$Errorh->handler('media_empty_link', E_USER_REDIRECT);
-		exit;
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['media_empty_link']);
+        DispatchManager::redirect($controller);
 	}
 
 	// Édition

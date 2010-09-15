@@ -41,7 +41,9 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	
 	if (empty($web['id']))
 	{
-		$Errorh->handler('e_unexist_link_web', E_USER_REDIRECT);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_link_web']);
+        DispatchManager::redirect($controller);
 	}
 		
 	if ($User->check_level(ADMIN_LEVEL))

@@ -37,7 +37,11 @@ if (!empty($poll_id))
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
-		$Errorh->handler('e_unexist_poll', E_USER_REDIRECT); 
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_poll']);
+        DispatchManager::redirect($controller);
+	}
 }	
 	
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
@@ -379,7 +383,10 @@ elseif ($archives) //Archives.
 	$Template->pparse('poll');
 }
 else
-	$Errorh->handler('e_unexist_page', E_USER_REDIRECT); 
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+    DispatchManager::redirect($error_controller);
+}
 	
 require_once('../kernel/footer.php');
 

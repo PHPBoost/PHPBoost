@@ -41,8 +41,8 @@ if (empty($id_media) && $id_cat >= 0)
 	//if the category doesn't exist or is not visible
 	if (empty($MEDIA_CATS[$id_cat]) || $MEDIA_CATS[$id_cat]['visible'] === false || !$User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_READ))
 	{
-		$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
-		exit;
+		$controller = PHPBoostErrors::unexisting_category();
+        DispatchManager::redirect($controller);
 	}
 
 	bread_crumb($id_cat);
@@ -219,8 +219,9 @@ elseif ($id_media > 0)
 	
 	if (empty($media) || ($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
 	{
-		$Errorh->handler('e_unexist_media', E_USER_REDIRECT);
-		exit;
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_media']);
+        DispatchManager::redirect($controller);
 	}
 	elseif (!$User->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
 	{

@@ -43,6 +43,7 @@ if (!defined('TITLE'))
 }
 
 //DEPRECATED PROCESS
+//TODO A déplacer et à refaire
 if (defined('ALTERNATIVE_CSS'))
 {
 	$alternative = null;
