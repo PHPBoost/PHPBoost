@@ -71,6 +71,11 @@ class UserErrorController extends AbstractController
 		$this->response_classname = $response_classname;
 	}
 	
+	public function disable_correction_link() {
+		$this->link_name = "";
+        $this->link = "";
+	}
+	
 	public function execute(HTTPRequest $request)
 	{
 		$this->create_view();
@@ -95,7 +100,7 @@ class UserErrorController extends AbstractController
 	{
 		$this->view->assign_vars(array(
             'ERROR_TYPE' => $this->get_error_type(),
-            'ERROR_IMG' => $this->get_error_associated_image(),
+            'ERROR_IMG' => $this->get_error_type_associated_image(),
             'TITLE' => $this->title,
             'MESSAGE' => $this->message,
             'U_LINK' => $this->link,
@@ -104,7 +109,7 @@ class UserErrorController extends AbstractController
 		));
 	}
 
-	private function get_error_associated_image() {
+	private function get_error_type_associated_image() {
 		$img_error = 'question';
 		switch ($this->error_type)
         {
