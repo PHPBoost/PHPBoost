@@ -51,6 +51,7 @@ class DBFactory
 
 	public static function init_factory($dbms)
 	{
+        require_once PATH_TO_ROOT . '/kernel/db/tables.php';
 		switch ($dbms)
 		{
 			case self::PDO_MYSQL:

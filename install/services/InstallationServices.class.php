@@ -35,30 +35,24 @@ class InstallationServices
 	 * @var File
 	 */
 	private $token;
-
-	/**
-	 * @var DBQuerier (Do not instanciate this until DBConnection is OK).
-	 */
-	private $querier;
 	
 	/**
 	 * @var string[string]
 	 */
 	private $messages;
-
+	
 	public function __construct($locale)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
-		$this->querier = PersistenceContext::get_querier();
 	}
 
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
 	{
 		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
 		$password, $tables_prefix, $create_db_if_needed);
-		if (!$this->create_tables($override_previous_phpboost_install))
+        if (!$this->create_tables($override_previous_phpboost_install))
 		{
 			return false;
 		}
@@ -157,14 +151,14 @@ class InstallationServices
 	
 	private function install_locale($locale)
 	{
-		$this->querier->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
+		PersistenceContext::get_querier()->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
 			'config_lang' => $locale));
 	}
 
 	private function configure_theme($theme, $locale)
 	{
 		$info_theme = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $locale);
-		$this->querier->inject(
+		PersistenceContext::get_querier()->inject(
 			"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
 			VALUES (:theme, 1, -1, :left_column, :right_column)", array(
 				'theme' => $theme,
@@ -292,7 +286,7 @@ class InstallationServices
             'user_aprob' => 1,
             'user_timezone' => $timezone
 		);
-		$this->querier->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
 	}
 
 	private function generate_admin_unlock_code()
