@@ -41,7 +41,7 @@ class UserErrorController extends AbstractController
 	private $error_type = E_UNKNOWN;
 	private $title = '';
 	private $message = '';
-	private $link = '';
+	private $link = self::PREVIOUS_PAGE;
     private $link_name = '';
     private $response_classname = self::SITE_RESPONSE;
 
@@ -52,9 +52,12 @@ class UserErrorController extends AbstractController
 
 	public function __construct($title, $message, $error_type = self::QUESTION)
 	{
+		global $LANG;
+		
 		$this->title = $title;
 		$this->message = $message;
 		$this->error_type = $error_type;
+	    $this->link_name = $LANG['back'];
 	}
 
 	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)
