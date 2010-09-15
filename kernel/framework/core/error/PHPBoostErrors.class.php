@@ -95,6 +95,15 @@ class PHPBoostErrors
         return $controller;
     }
     
+    public static function unknow()
+    {
+        $lang = LangLoader::get('errors');
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            LangLoader::get_message('unknow_error', 'errors'), UserErrorController::QUESTION);
+        
+        return $controller;
+    }
+    
 	public static function member_not_enabled()
 	{
         $lang = LangLoader::get('errors');

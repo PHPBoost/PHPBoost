@@ -38,15 +38,13 @@ $topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'use
 //Existance du topic.
 if (empty($topic['id']))
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-        $LANG['e_unexist_cat']);
+	$controller = PHPBoostErrors::unexisting_category();
     DispatchManager::redirect($controller);
 }
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0)
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-        $LANG['e_unexist_cat']);
+	$controller = PHPBoostErrors::unexisting_category();
     DispatchManager::redirect($controller);
 }
 

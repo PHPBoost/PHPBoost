@@ -34,15 +34,13 @@ $id_get = retrieve(GET, 'id', 0);
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-        $LANG['e_unexist_cat']);
+	$controller = PHPBoostErrors::unexisting_category();
     DispatchManager::redirect($controller);
 }
 
 if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-        $LANG['e_readonly']);
+	$controller = PHPBoostErrors::user_in_read_only();
     DispatchManager::redirect($controller);
 }
 
@@ -988,8 +986,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                 $LANG['unknow_error']);
+			$controller = PHPBoostErrors::unknow();
             DispatchManager::redirect($controller);
 		}
 
@@ -997,8 +994,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-             $LANG['unknow_error']);
+		$controller = PHPBoostErrors::unknow();
         DispatchManager::redirect($controller);
 	}
 }
