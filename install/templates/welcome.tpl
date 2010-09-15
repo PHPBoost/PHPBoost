@@ -9,8 +9,4 @@ ${i18nraw('step.welcome.distribution.explanation')}
 <br />
 ${i18nraw('distribution.description')}
 												
-<fieldset class="submit_case">
-	<a href="{NEXT_STEP_URL}" title="${i18n('step.license.title')}" >
-    	<img src="templates/images/right.png" alt="${i18n('step.license.title')}" class="valign_middle" />
-    </a>
-</fieldset>	
+# INCLUDE LICENSE_FORM #

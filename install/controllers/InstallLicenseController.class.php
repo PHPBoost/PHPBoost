@@ -62,16 +62,16 @@ class InstallLicenseController extends InstallController
     	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree']);
     	$agree_checkbox->add_constraint(new FormFieldConstraintNotEmpty());
     	$fieldset->add_field($agree_checkbox);
-    	$form->add_button(new FormButtonSubmit('submit', 'submit'));
+    	$navigation_bar = $this->add_navigation();
+    	$form->add_button($navigation_bar);
 		$view->add_subtemplate('LICENSE_FORM', $form->display());
     }
 
-	private function add_navigation(Template $view)
+	private function add_navigation()
     {
-    	$view->assign_vars(array(
-    		'PREVIOUS_STEP_URL' => InstallUrlBuilder::welcome()->absolute(),
-    		'NEXT_STEP_URL' => InstallUrlBuilder::server_configuration()->absolute()
-    	));
+    	$nav = new InstallNavigationBar();
+    	$nav->set_previous_step_url(InstallUrlBuilder::welcome()->absolute());
+        return $nav;
     }
 }
 ?>

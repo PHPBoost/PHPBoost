@@ -67,6 +67,9 @@ $lang = array(
 	'query_success' => 'The process has been done successfully',
 	'query_failure' => 'An error occured during query processing',
 
+    'step.previous' => 'Etape précédente',
+    'step.next' => 'Etape suivante',
+
 // Introduction
 	'step.welcome.title' => 'Preamble',
 	'step.welcome.message' => 'Welcome to PHPBoost installation wizard',
