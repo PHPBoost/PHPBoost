@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                          InstallNavigationBar.class.php
  *                            -------------------
- *   begin                : June 13 2010
+ *   begin                : September 15, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,20 +25,27 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
-InstallEnvironment::load_imports();
-InstallEnvironment::init();
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @desc
+ */
+class InstallNavigationBar implements FormButton
+{
+    private $previous_step_url;
 
-$url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+    public function set_previous_step_url($url)
+    {
+        $this->previous_step_url = $url;
+    }
+    
+    public function display()
+    {
+    	$tpl = new FileTemplate('install/InstallNavigationBar.tpl');
+    	$tpl->assign_vars(array(
+            'HAS_PREVIOUS_STEP' => !empty($this->previous_step_url),
+            'PREVIOUS_STEP_URL' => $this->previous_step_url
+        ));
+    	return $tpl;
+    }
+}
 ?>

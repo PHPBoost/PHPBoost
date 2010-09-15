@@ -85,13 +85,17 @@ class HTMLForm
 	/**
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
-	 * @param string $target The url where the form sends data
+     * @param string $target The url where the form sends data
+     * @param bool $enable_csrf_protection True if the form is CSRF protected
 	 */
-	public function __construct($html_id, $target = '')
+	public function __construct($html_id, $target = '', $enable_csrf_protection = true)
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
-		$this->add_csrf_protection();
+		if ($enable_csrf_protection)
+		{
+		    $this->add_csrf_protection();
+		}
 	}
 
 	private function add_csrf_protection()

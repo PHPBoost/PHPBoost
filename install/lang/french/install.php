@@ -67,6 +67,9 @@ $lang = array(
 	'query_success' => 'Traitement terminé',
 	'query_failure' => 'Traitement échoué',
 
+    'step.previous' => 'Etape précédente',
+    'step.next' => 'Etape suivante',
+
 //Introduction
 	'step.welcome.title' => 'Préambule',
 	'step.welcome.message' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
