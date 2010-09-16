@@ -48,7 +48,7 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
 
 
-$Stats = new Stats();
+$Stats = new ImagesStats();
 
 $array_stats = array('other' => 0);
 if ($get_visit_month)
