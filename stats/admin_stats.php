@@ -112,12 +112,12 @@ if (!empty($members))
 	}
 	$Sql->query_close($result);
 
-	$Stats = new Stats();
+	$Stats = new ImagesStats();
 
 	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->assign_block_vars('templates', array(
 			'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -153,7 +153,7 @@ if (!empty($members))
 	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->assign_block_vars('sex', array(
 			'NBR_MBR' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -1088,7 +1088,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	}
 
 
-	$Stats = new Stats();
+	$Stats = new ImagesStats();
 
 	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
 
@@ -1117,7 +1117,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 
 		if (!isset($array_order[$value_name]))
 		{
-			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$array_stats_tmp[$value_name] = array($name_stats, $array_color, $stats_img);
 			$array_order[$value_name] = $angle_value;
 		}
@@ -1146,7 +1146,7 @@ elseif ($bot)
 	));
 
 
-	$Stats = new Stats();
+	$Stats = new ImagesStats();
 
 	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');
 
@@ -1155,7 +1155,7 @@ elseif ($bot)
 	{
 		if (in_array($key, $stats_info))
 		{
-			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$name = ucfirst($key);
 			$Template->assign_block_vars('list', array(
 				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',

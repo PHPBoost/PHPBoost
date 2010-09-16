@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             images_stats.class.php
+ *                             ImagesStats.class.php
  *                            -------------------
  *   begin                : August 27, 2007
  *   copyright            : (C) 2007 Viarre Régis
@@ -40,19 +40,15 @@ define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
  * @package {@package}
  *
  */
-class Stats
+class ImagesStats
 {
-	private $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
+	public  $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
 	private $nbr_color = 14;
-	private $data_stats; //Tableau des données.
+	public  $data_stats; //Tableau des données.
 	private $nbr_entry; //Nombre d'entrée à traiter.
-	private $array_allocated_color = array(); //Tableau des couleurs allouées.
+	public $array_allocated_color = array(); //Tableau des couleurs allouées.
 	private $color_index = 0; //Couleur courante.
 	private $decimal = 1; //Arrondi
-
-	public function __construct()
-	{
-	}
 
 	/**
 	 * @desc Load data for the charts.
@@ -476,7 +472,7 @@ class Stats
 	 * @param resource $similar_color Set 0.40 for a different color and 0.99 for a very similar.
 	 * @return int angle
 	 */
-	private function image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
+	public function image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
 		if ($this->color_index == $this->nbr_color)
 			$this->color_index = 0;
