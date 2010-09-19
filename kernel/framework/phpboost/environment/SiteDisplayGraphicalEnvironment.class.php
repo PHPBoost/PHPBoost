@@ -201,7 +201,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'30 ' . LangLoader::get_message('minutes', 'main'), '1 ' . LangLoader::get_message('hour', 'main'), '2 ' . LangLoader::get_message('hours', 'main'), 
 				'3 ' . LangLoader::get_message('hours', 'main'), '4 ' . LangLoader::get_message('hours', 'main'), '5 ' . LangLoader::get_message('hours', 'main'), 
 				'6 ' . LangLoader::get_message('hours', 'main'), '7 ' . LangLoader::get_message('hours', 'main'), '8 ' . LangLoader::get_message('hours', 'main'), 
-				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'days'), 
+				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'main'), 
 				'1 ' . LangLoader::get_message('week', 'main'));
 
 			//Retourne le délai de maintenance le plus proche.
