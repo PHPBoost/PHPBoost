@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                       ConfirmHelper.class.php
  *                            -------------------
  *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
@@ -24,21 +24,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('ConfirmController', '`^/confirm(?:/[0-9]+)?/?$`', array('key')),
-	new UrlControllerMapper('RegisterController', '`^/register/?$`'),
-	new UrlControllerMapper('MemberController', '`^/member/?$`'),
-	new UrlControllerMapper('ProfilController', '`^/profil/?$`'),
-	new UrlControllerMapper('404Controller', '`^/404/?$`'),
-	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),
-	new UrlControllerMapper('ErrorController', '`^/error/([a-z][0-9]+)/?$`', array('type')),
-	new UrlControllerMapper('MemberHomeController', '`^.*$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
-?>
+ 
+ class ConfirmHelper
+ {
+	public static function check_activation_pass_exist($key)
+	{
+		return PersistenceContext::get_sql()->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	}
+	
+	public static update_aprobation($key)
+	{
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	}
+ 
+ }
+ ?>
