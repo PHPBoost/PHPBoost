@@ -44,7 +44,7 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -64,8 +64,8 @@ abstract class PHPUnit_Util_Metrics
 {
 }
 
-require_once 'PHPUnit/Util/Metrics/Project.php';
-require_once 'PHPUnit/Util/Metrics/File.php';
-require_once 'PHPUnit/Util/Metrics/Class.php';
-require_once 'PHPUnit/Util/Metrics/Function.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/Project.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/File.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/Function.php';
 ?>

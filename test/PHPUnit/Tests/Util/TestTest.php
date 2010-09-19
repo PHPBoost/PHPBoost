@@ -44,9 +44,9 @@
  * @since      File available since Release 3.3.6
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
 
-require_once 'PHPUnit/Util/Timer.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Timer.php';
 
 /**
  *

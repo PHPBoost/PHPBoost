@@ -45,7 +45,7 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/SeleniumTestCase.php';
 
 /**
  * Tests for PHPUnit_Extensions_SeleniumTestCase.

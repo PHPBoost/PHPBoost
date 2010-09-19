@@ -48,8 +48,8 @@ if (!defined('T_NAMESPACE')) {
     define('T_NAMESPACE', 377);
 }
 
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/InvalidArgumentHelper.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/InvalidArgumentHelper.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

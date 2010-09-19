@@ -44,14 +44,14 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Framework/MockObject/Builder/InvocationMocker.php';
-require_once 'PHPUnit/Framework/MockObject/Builder/Match.php';
-require_once 'PHPUnit/Framework/MockObject/Builder/Namespace.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher.php';
-require_once 'PHPUnit/Framework/MockObject/Stub.php';
-require_once 'PHPUnit/Framework/MockObject/Invocation.php';
-require_once 'PHPUnit/Framework/MockObject/Invokable.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Builder/InvocationMocker.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Builder/Match.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Builder/Namespace.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Invocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Invokable.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

@@ -44,7 +44,7 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Util/FilterIterator.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/FilterIterator.php';
 
 /**
  * Utility class for code filtering.

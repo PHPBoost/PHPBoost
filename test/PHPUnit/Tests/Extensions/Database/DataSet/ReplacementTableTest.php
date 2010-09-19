@@ -44,11 +44,11 @@
  * @since      File available since Release 3.3.0
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/ReplacementTable.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTable.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php';
-require_once 'PHPUnit/Extensions/Database/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/ReplacementTable.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/DefaultTable.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/TestCase.php';
 
 /**
  * @category   Testing

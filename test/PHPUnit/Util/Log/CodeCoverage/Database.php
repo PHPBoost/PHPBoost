@@ -44,12 +44,12 @@
  * @since      File available since Release 3.1.4
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Metrics/Project.php';
-require_once 'PHPUnit/Util/Class.php';
-require_once 'PHPUnit/Util/CodeCoverage.php';
-require_once 'PHPUnit/Util/Filesystem.php';
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/Project.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/CodeCoverage.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filesystem.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

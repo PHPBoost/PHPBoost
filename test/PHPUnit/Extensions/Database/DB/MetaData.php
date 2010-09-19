@@ -44,9 +44,9 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Extensions/Database/DB/IMetaData.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/IMetaData.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -238,8 +238,8 @@ abstract class PHPUnit_Extensions_Database_DB_MetaData implements PHPUnit_Extens
  * the classes can't find the PHPUnit_Extensions_Database_DB_MetaData
  * class.
  */
-require_once 'PHPUnit/Extensions/Database/DB/MetaData/Sqlite.php';
-require_once 'PHPUnit/Extensions/Database/DB/MetaData/InformationSchema.php';
-require_once 'PHPUnit/Extensions/Database/DB/MetaData/MySQL.php';
-require_once 'PHPUnit/Extensions/Database/DB/MetaData/PgSQL.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/MetaData/Sqlite.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/MetaData/InformationSchema.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/MetaData/MySQL.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/MetaData/PgSQL.php';
 ?>

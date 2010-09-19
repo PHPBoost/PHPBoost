@@ -44,12 +44,12 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Log/Database.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/Test.php';
-require_once 'PHPUnit/Util/XML.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase/Driver.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/Database.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Test.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/XML.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/SeleniumTestCase/Driver.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

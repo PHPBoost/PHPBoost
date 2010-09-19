@@ -44,8 +44,8 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Extensions/Database/TestCase.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
 
 require_once 'BankAccount.php';
 

@@ -44,8 +44,8 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Type.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Type.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -213,9 +213,9 @@ abstract class PHPUnit_Framework_ComparisonFailure extends PHPUnit_Framework_Ass
     }
 }
 
-require_once 'PHPUnit/Framework/ComparisonFailure/Array.php';
-require_once 'PHPUnit/Framework/ComparisonFailure/Object.php';
-require_once 'PHPUnit/Framework/ComparisonFailure/Scalar.php';
-require_once 'PHPUnit/Framework/ComparisonFailure/String.php';
-require_once 'PHPUnit/Framework/ComparisonFailure/Type.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure/Array.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure/Object.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure/Scalar.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure/String.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure/Type.php';
 ?>

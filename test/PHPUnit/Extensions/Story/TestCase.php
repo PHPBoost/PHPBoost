@@ -45,9 +45,9 @@
  * @since      File available since Release 3.3.0
  */
 
-require_once 'PHPUnit/Extensions/Story/Scenario.php';
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/Scenario.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

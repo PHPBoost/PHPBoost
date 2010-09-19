@@ -44,11 +44,11 @@
  * @since      File available since Release 3.3.0
  */
 
-require_once 'PHPUnit/Runner/Version.php';
-require_once 'PHPUnit/Util/Class.php';
-require_once 'PHPUnit/Util/CodeCoverage.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/XML.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/Version.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/CodeCoverage.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/XML.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

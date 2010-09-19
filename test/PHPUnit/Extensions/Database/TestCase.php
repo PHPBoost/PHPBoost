@@ -44,14 +44,14 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
-require_once 'PHPUnit/Extensions/Database/DefaultTester.php';
-require_once 'PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php';
-require_once 'PHPUnit/Extensions/Database/Operation/Factory.php';
-require_once 'PHPUnit/Extensions/Database/Constraint/TableIsEqual.php';
-require_once 'PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DefaultTester.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/Operation/Factory.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/Constraint/TableIsEqual.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -167,7 +167,7 @@ abstract class PHPUnit_Extensions_Database_TestCase extends PHPUnit_Framework_Te
      */
     protected function createFlatXMLDataSet($xmlFile)
     {
-        require_once 'PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
+        require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
         return new PHPUnit_Extensions_Database_DataSet_FlatXmlDataSet($xmlFile);
     }
 
@@ -179,7 +179,7 @@ abstract class PHPUnit_Extensions_Database_TestCase extends PHPUnit_Framework_Te
      */
     protected function createXMLDataSet($xmlFile)
     {
-        require_once 'PHPUnit/Extensions/Database/DataSet/XmlDataSet.php';
+        require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/XmlDataSet.php';
         return new PHPUnit_Extensions_Database_DataSet_XmlDataSet($xmlFile);
     }
 
@@ -191,7 +191,7 @@ abstract class PHPUnit_Extensions_Database_TestCase extends PHPUnit_Framework_Te
      */
     protected function getOperations()
     {
-        require_once 'PHPUnit/Extensions/Database/Operation/Factory.php';
+        require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/Operation/Factory.php';
         return new PHPUnit_Extensions_Database_Operation_Factory();
     }
 

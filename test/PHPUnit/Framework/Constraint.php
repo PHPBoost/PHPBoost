@@ -44,7 +44,7 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -172,30 +172,30 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     abstract public function evaluate($other);
 }
 
-require_once 'PHPUnit/Framework/Constraint/And.php';
-require_once 'PHPUnit/Framework/Constraint/ArrayHasKey.php';
-require_once 'PHPUnit/Framework/Constraint/Attribute.php';
-require_once 'PHPUnit/Framework/Constraint/ClassHasAttribute.php';
-require_once 'PHPUnit/Framework/Constraint/ClassHasStaticAttribute.php';
-require_once 'PHPUnit/Framework/Constraint/IsFalse.php';
-require_once 'PHPUnit/Framework/Constraint/FileExists.php';
-require_once 'PHPUnit/Framework/Constraint/GreaterThan.php';
-require_once 'PHPUnit/Framework/Constraint/IsAnything.php';
-require_once 'PHPUnit/Framework/Constraint/IsEqual.php';
-require_once 'PHPUnit/Framework/Constraint/IsIdentical.php';
-require_once 'PHPUnit/Framework/Constraint/IsInstanceOf.php';
-require_once 'PHPUnit/Framework/Constraint/IsType.php';
-require_once 'PHPUnit/Framework/Constraint/LessThan.php';
-require_once 'PHPUnit/Framework/Constraint/Not.php';
-require_once 'PHPUnit/Framework/Constraint/IsNull.php';
-require_once 'PHPUnit/Framework/Constraint/ObjectHasAttribute.php';
-require_once 'PHPUnit/Framework/Constraint/Or.php';
-require_once 'PHPUnit/Framework/Constraint/PCREMatch.php';
-require_once 'PHPUnit/Framework/Constraint/StringContains.php';
-require_once 'PHPUnit/Framework/Constraint/StringStartsWith.php';
-require_once 'PHPUnit/Framework/Constraint/StringEndsWith.php';
-require_once 'PHPUnit/Framework/Constraint/TraversableContains.php';
-require_once 'PHPUnit/Framework/Constraint/TraversableContainsOnly.php';
-require_once 'PHPUnit/Framework/Constraint/IsTrue.php';
-require_once 'PHPUnit/Framework/Constraint/Xor.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/And.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/ArrayHasKey.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/Attribute.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/ClassHasAttribute.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/ClassHasStaticAttribute.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsFalse.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/FileExists.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/GreaterThan.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsAnything.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsEqual.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsIdentical.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsInstanceOf.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsType.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/LessThan.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/Not.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsNull.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/ObjectHasAttribute.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/Or.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/PCREMatch.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/StringContains.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/StringStartsWith.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/StringEndsWith.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/TraversableContains.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/TraversableContainsOnly.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/IsTrue.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/Constraint/Xor.php';
 ?>

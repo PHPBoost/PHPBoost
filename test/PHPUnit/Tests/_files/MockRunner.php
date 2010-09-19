@@ -1,5 +1,5 @@
 <?php
-require_once 'PHPUnit/Runner/BaseTestRunner.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/BaseTestRunner.php';
 
 class MockRunner extends PHPUnit_Runner_BaseTestRunner
 {

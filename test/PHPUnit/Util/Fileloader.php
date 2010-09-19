@@ -44,10 +44,10 @@
  * @since      File available since Release 2.3.0
  */
 
-require_once 'PHPUnit/Util/InvalidArgumentHelper.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/Filesystem.php';
-require_once 'PHPUnit/Util/PHP.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/InvalidArgumentHelper.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filesystem.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/PHP.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'PHPUnit/Extensions/PerformanceTestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/PerformanceTestCase.php';
 
 class SleepTest extends PHPUnit_Extensions_PerformanceTestCase
 {

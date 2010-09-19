@@ -31,5 +31,10 @@ class TestExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('test');
 	}
+	
+	public function commands()
+	{
+		return new CLICommandsList(array('test' => 'UnitTestCommand'));
+	}
 }
 ?>

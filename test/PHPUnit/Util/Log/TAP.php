@@ -44,11 +44,11 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/Printer.php';
-require_once 'PHPUnit/Util/Test.php';
-require_once 'PHPUnit/Util/YAML/sfYamlDumper.class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Printer.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Test.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/YAML/sfYamlDumper.class.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

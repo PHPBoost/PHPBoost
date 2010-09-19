@@ -44,10 +44,10 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/Invocation.php';
-require_once 'PHPUnit/Framework/MockObject/Invocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/Invocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Invocation.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -312,13 +312,13 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
     }
 }
 
-require_once 'PHPUnit/Framework/MockObject/Matcher/AnyInvokedCount.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/AnyParameters.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/InvokedAtIndex.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/InvokedAtLeastOnce.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/InvokedCount.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/InvokedRecorder.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/MethodName.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/Parameters.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/StatelessInvocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/AnyInvokedCount.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/AnyParameters.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/InvokedAtIndex.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/InvokedAtLeastOnce.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/InvokedCount.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/InvokedRecorder.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/MethodName.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/Parameters.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/StatelessInvocation.php';
 ?>
