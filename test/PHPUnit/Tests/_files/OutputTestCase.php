@@ -1,5 +1,5 @@
 <?php
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/OutputTestCase.php';
 
 class OutputTestCase extends PHPUnit_Extensions_OutputTestCase
 {

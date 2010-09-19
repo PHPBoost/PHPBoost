@@ -44,8 +44,8 @@
  * @since      File available since Release 3.2.10
  */
 
-require_once 'PHPUnit/Util/CodeCoverage.php';
-require_once 'PHPUnit/Util/FilterIterator.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/CodeCoverage.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/FilterIterator.php';
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     $files = new PHPUnit_Util_FilterIterator(

@@ -44,9 +44,9 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Framework/MockObject/Matcher/StatelessInvocation.php';
-require_once 'PHPUnit/Framework/MockObject/Invocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Matcher/StatelessInvocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Invocation.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

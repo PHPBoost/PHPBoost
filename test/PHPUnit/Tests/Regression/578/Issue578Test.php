@@ -1,5 +1,5 @@
 <?php
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
 
 class Issue578Test extends PHPUnit_Framework_TestCase
 {

@@ -44,10 +44,10 @@
  * @since      File available since Release 2.3.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/TestDox/NamePrettifier.php';
-require_once 'PHPUnit/Util/Printer.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/TestDox/NamePrettifier.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Printer.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

@@ -44,7 +44,7 @@
  * @since      File available since Release 3.4.0
  */
 
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

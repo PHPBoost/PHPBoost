@@ -44,11 +44,11 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Class.php';
-require_once 'PHPUnit/Util/InvalidArgumentHelper.php';
-require_once 'PHPUnit/Util/Type.php';
-require_once 'PHPUnit/Util/XML.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/InvalidArgumentHelper.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Type.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/XML.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

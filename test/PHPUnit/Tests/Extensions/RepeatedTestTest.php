@@ -44,10 +44,10 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/TestResult.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/Extensions/RepeatedTest.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestResult.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestSuite.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/RepeatedTest.php';
 
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Success.php';
 

@@ -45,9 +45,9 @@
  * @since      File available since Release 3.3.0
  */
 
-require_once 'PHPUnit/Extensions/Story/Scenario.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once 'PHPUnit/Extensions/Story/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/Scenario.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/SeleniumTestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/TestCase.php';
 
 /**
  *

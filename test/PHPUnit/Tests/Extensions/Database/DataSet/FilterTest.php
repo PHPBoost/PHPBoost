@@ -44,10 +44,10 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/DataSetFilter.php';
-require_once 'PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/DataSetFilter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php';
 
 /**
  * @category   Testing

@@ -36,17 +36,19 @@
  * $Id: phpunit.php 5078 2009-08-10 07:58:18Z sb $
  */
 
+defined('PATH_TO_ROOT') || define('PATH_TO_ROOT', '..');
+
 if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 }
 
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
-require 'PHPUnit/TextUI/Command.php';
+require PATH_TO_ROOT . '/test/PHPUnit/TextUI/Command.php';
 
-define('PHPUnit_MAIN_METHOD', 'PHPUnit_TextUI_Command::main');
+define(PATH_TO_ROOT . '/test/PHPUnit_MAIN_METHOD', PATH_TO_ROOT . '/test/PHPUnit_TextUI_Command::main');
 
 PHPUnit_TextUI_Command::main();
 ?>

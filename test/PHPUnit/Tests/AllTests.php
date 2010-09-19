@@ -46,12 +46,12 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/Extensions/PhptTestSuite.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestSuite.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/PhptTestSuite.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'AllTests.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Extensions' . DIRECTORY_SEPARATOR . 'AllTests.php';

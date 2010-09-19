@@ -44,17 +44,17 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Runner/Version.php';
-require_once 'PHPUnit/Util/Metrics/Project.php';
-require_once 'PHPUnit/Util/Log/PMD/Rule/Class.php';
-require_once 'PHPUnit/Util/Log/PMD/Rule/File.php';
-require_once 'PHPUnit/Util/Log/PMD/Rule/Function.php';
-require_once 'PHPUnit/Util/Log/PMD/Rule/Project.php';
-require_once 'PHPUnit/Util/Class.php';
-require_once 'PHPUnit/Util/CodeCoverage.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/FilterIterator.php';
-require_once 'PHPUnit/Util/Printer.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/Version.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Metrics/Project.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/PMD/Rule/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/PMD/Rule/File.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/PMD/Rule/Function.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/PMD/Rule/Project.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Class.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/CodeCoverage.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/FilterIterator.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Printer.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

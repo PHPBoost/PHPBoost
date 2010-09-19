@@ -45,14 +45,14 @@ if (isset($_ENV['PWD'])) {
     chdir($_ENV['PWD']);
 }
 
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
-require_once 'PHPUnit/Extensions/Database/UI/Command.php';
-require_once 'PHPUnit/Extensions/Database/UI/ModeFactory.php';
-require_once 'PHPUnit/Extensions/Database/UI/Mediums/Text.php';
-require_once 'PHPUnit/Extensions/Database/UI/Context.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/UI/Command.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/UI/ModeFactory.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/UI/Mediums/Text.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/UI/Context.php';
 
 $command = new PHPUnit_Extensions_Database_UI_Command(
 	new PHPUnit_Extensions_Database_UI_ModeFactory()

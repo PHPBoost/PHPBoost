@@ -44,13 +44,13 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
-require_once 'PHPUnit/Extensions/Database/DataSet/AbstractDataSet.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php';
-require_once 'PHPUnit/Extensions/Database/DB/TableIterator.php';
-require_once 'PHPUnit/Extensions/Database/DB/Table.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/AbstractDataSet.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/TableIterator.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/Table.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

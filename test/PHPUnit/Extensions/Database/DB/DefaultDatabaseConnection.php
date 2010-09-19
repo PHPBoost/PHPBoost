@@ -44,15 +44,15 @@
  * @since      File available since Release 3.2.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
 
-require_once 'PHPUnit/Extensions/Database/DataSet/QueryTable.php';
-require_once 'PHPUnit/Extensions/Database/DB/IDatabaseConnection.php';
-require_once 'PHPUnit/Extensions/Database/DB/MetaData.php';
-require_once 'PHPUnit/Extensions/Database/DB/ResultSetTable.php';
-require_once 'PHPUnit/Extensions/Database/DB/DataSet.php';
-require_once 'PHPUnit/Extensions/Database/DB/FilteredDataSet.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DataSet/QueryTable.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/IDatabaseConnection.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/MetaData.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/ResultSetTable.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/DataSet.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Database/DB/FilteredDataSet.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

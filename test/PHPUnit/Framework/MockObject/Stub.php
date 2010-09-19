@@ -44,9 +44,9 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Framework/MockObject/Invocation.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Invocation.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -79,10 +79,10 @@ interface PHPUnit_Framework_MockObject_Stub extends PHPUnit_Framework_SelfDescri
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation);
 }
 
-require_once 'PHPUnit/Framework/MockObject/Stub/ConsecutiveCalls.php';
-require_once 'PHPUnit/Framework/MockObject/Stub/Exception.php';
-require_once 'PHPUnit/Framework/MockObject/Stub/MatcherCollection.php';
-require_once 'PHPUnit/Framework/MockObject/Stub/Return.php';
-require_once 'PHPUnit/Framework/MockObject/Stub/ReturnArgument.php';
-require_once 'PHPUnit/Framework/MockObject/Stub/ReturnCallback.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/ConsecutiveCalls.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/Exception.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/MatcherCollection.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/Return.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/ReturnArgument.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/MockObject/Stub/ReturnCallback.php';
 ?>

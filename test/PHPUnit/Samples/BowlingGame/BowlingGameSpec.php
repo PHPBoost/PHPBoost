@@ -44,7 +44,7 @@
  * @since      File available since Release 3.3.0
  */
 
-require_once 'PHPUnit/Extensions/Story/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/TestCase.php';
 require_once 'BowlingGame.php';
 
 class BowlingGameSpec extends PHPUnit_Extensions_Story_TestCase

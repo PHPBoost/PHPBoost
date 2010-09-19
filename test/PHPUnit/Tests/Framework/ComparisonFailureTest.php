@@ -44,8 +44,8 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Framework/ComparisonFailure.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/ComparisonFailure.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework/TestCase.php';
 
 /**
  *

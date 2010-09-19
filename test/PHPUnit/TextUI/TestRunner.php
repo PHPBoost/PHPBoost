@@ -44,17 +44,17 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Runner/BaseTestRunner.php';
-require_once 'PHPUnit/Extensions/RepeatedTest.php';
-require_once 'PHPUnit/Runner/StandardTestSuiteLoader.php';
-require_once 'PHPUnit/Runner/Version.php';
-require_once 'PHPUnit/TextUI/ResultPrinter.php';
-require_once 'PHPUnit/Util/Configuration.php';
-require_once 'PHPUnit/Util/PDO.php';
-require_once 'PHPUnit/Util/Filesystem.php';
-require_once 'PHPUnit/Util/Filter.php';
-require_once 'PHPUnit/Util/Report.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Framework.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/BaseTestRunner.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/RepeatedTest.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/StandardTestSuiteLoader.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Runner/Version.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/TextUI/ResultPrinter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Configuration.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/PDO.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filesystem.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Filter.php';
+require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Report.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
@@ -234,7 +234,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         $result->addListener($this->printer);
 
         if (isset($arguments['storyHTMLFile'])) {
-            require_once 'PHPUnit/Extensions/Story/ResultPrinter/HTML.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/ResultPrinter/HTML.php';
 
             $result->addListener(
               new PHPUnit_Extensions_Story_ResultPrinter_HTML(
@@ -244,7 +244,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['storyTextFile'])) {
-            require_once 'PHPUnit/Extensions/Story/ResultPrinter/Text.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Extensions/Story/ResultPrinter/Text.php';
 
             $result->addListener(
               new PHPUnit_Extensions_Story_ResultPrinter_Text(
@@ -254,7 +254,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['testdoxHTMLFile'])) {
-            require_once 'PHPUnit/Util/TestDox/ResultPrinter/HTML.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/TestDox/ResultPrinter/HTML.php';
 
             $result->addListener(
               new PHPUnit_Util_TestDox_ResultPrinter_HTML(
@@ -264,7 +264,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['testdoxTextFile'])) {
-            require_once 'PHPUnit/Util/TestDox/ResultPrinter/Text.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/TestDox/ResultPrinter/Text.php';
 
             $result->addListener(
               new PHPUnit_Util_TestDox_ResultPrinter_Text(
@@ -275,7 +275,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
 
         if (isset($arguments['graphvizLogfile'])) {
             if (PHPUnit_Util_Filesystem::fileExistsInIncludePath('Image/GraphViz.php')) {
-                require_once 'PHPUnit/Util/Log/GraphViz.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/GraphViz.php';
 
                 $result->addListener(
                   new PHPUnit_Util_Log_GraphViz($arguments['graphvizLogfile'])
@@ -293,7 +293,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['jsonLogfile'])) {
-            require_once 'PHPUnit/Util/Log/JSON.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/JSON.php';
 
             $result->addListener(
               new PHPUnit_Util_Log_JSON($arguments['jsonLogfile'])
@@ -301,7 +301,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['tapLogfile'])) {
-            require_once 'PHPUnit/Util/Log/TAP.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/TAP.php';
 
             $result->addListener(
               new PHPUnit_Util_Log_TAP($arguments['tapLogfile'])
@@ -309,7 +309,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         }
 
         if (isset($arguments['junitLogfile'])) {
-            require_once 'PHPUnit/Util/Log/JUnit.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/JUnit.php';
 
             $result->addListener(
               new PHPUnit_Util_Log_JUnit(
@@ -329,7 +329,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         if ($writeToTestDatabase) {
             $dbh = PHPUnit_Util_PDO::factory($arguments['testDatabaseDSN']);
 
-            require_once 'PHPUnit/Util/Log/Database.php';
+            require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/Database.php';
 
             $dbListener = PHPUnit_Util_Log_Database::getInstance(
               $dbh,
@@ -363,7 +363,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
                   'this may take a moment.'
                 );
 
-                require_once 'PHPUnit/Util/Log/CodeCoverage/XML/Clover.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/CodeCoverage/XML/Clover.php';
 
                 $writer = new PHPUnit_Util_Log_CodeCoverage_XML_Clover(
                   $arguments['coverageClover']
@@ -379,7 +379,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
                   'this may take a moment.'
                 );
 
-                require_once 'PHPUnit/Util/Log/CodeCoverage/XML/Source.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/CodeCoverage/XML/Source.php';
 
                 $writer = new PHPUnit_Util_Log_CodeCoverage_XML_Source(
                   $arguments['coverageSource']
@@ -395,7 +395,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
                   "database.\nThis may take a moment."
                 );
 
-                require_once 'PHPUnit/Util/Log/CodeCoverage/Database.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/CodeCoverage/Database.php';
 
                 $testDb = new PHPUnit_Util_Log_CodeCoverage_Database($dbh);
                 $testDb->storeCodeCoverage(
@@ -413,7 +413,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
                   "\nWriting metrics report XML file, this may take a moment."
                 );
 
-                require_once 'PHPUnit/Util/Log/Metrics.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/Metrics.php';
 
                 $writer = new PHPUnit_Util_Log_Metrics(
                   $arguments['metricsXML']
@@ -424,7 +424,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
             }
 
             if (isset($arguments['pmdXML'])) {
-                require_once 'PHPUnit/Util/Log/PMD.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/PMD.php';
 
                 $writer = new PHPUnit_Util_Log_PMD(
                   $arguments['pmdXML'], $arguments['pmd']
@@ -437,7 +437,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
 
                 $writer->process($result);
 
-                require_once 'PHPUnit/Util/Log/CPD.php';
+                require_once PATH_TO_ROOT . '/test/PHPUnit/Util/Log/CPD.php';
 
                 $writer = new PHPUnit_Util_Log_CPD(
                   str_replace('.xml', '-cpd.xml', $arguments['pmdXML'])
