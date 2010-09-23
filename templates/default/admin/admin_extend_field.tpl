@@ -169,7 +169,7 @@
 				</dl>
 				<dl>
 					<dt>
-						<label for="{ID}">{L_AUTH}</label>
+						<label for="{ID}">* {L_AUTH}</label>
 					</dt>
 					<dd>
 						{AUTH}

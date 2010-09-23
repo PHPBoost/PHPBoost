@@ -59,6 +59,7 @@ else
 	
 	$Template->assign_vars(array(
 		'AUTH' => Authorizations::generate_select(ExtendedField::AUTHORIZATION, array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1), array(2 => true), 'auth'),
+		'L_AUTH' => $LANG['authorizations'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],

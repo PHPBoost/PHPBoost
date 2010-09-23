@@ -115,7 +115,7 @@ elseif (!empty($id))
 		$regex_checked = 1;
 		$predef_regex = true;
 	}
-		print_r($extend_field['auth']);
+
 	$Template->assign_vars(array(
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
@@ -176,6 +176,7 @@ elseif (!empty($id))
 		'OPTION_FIELD' => $option_field,
 		'REQUIRED_FIELD_ENABLE' => $extend_field['required'] ? 'checked="checked"' : '',
 		'REQUIRED_FIELD_DISABLE' => !$extend_field['required'] ? 'checked="checked"' : '',
+		'L_AUTH' => $LANG['authorizations'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],

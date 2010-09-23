@@ -127,7 +127,7 @@
 				</dl>
 				<dl>
 					<dt>
-						<label for="auth">{L_AUTH}</label>
+						<label for="auth">* {L_AUTH}</label>
 					</dt>
 					<dd>
 						{AUTH}
