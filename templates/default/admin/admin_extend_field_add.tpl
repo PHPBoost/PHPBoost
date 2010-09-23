@@ -125,6 +125,14 @@
 						<label><input type="radio" name="display" id="not_display" value="0" /> {L_NO}</label>
 					</label></dd>
 				</dl>
+				<dl>
+					<dt>
+						<label for="auth">{L_AUTH}</label>
+					</dt>
+					<dd>
+						{AUTH}
+					</dd>
+				</dl>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">

@@ -47,38 +47,41 @@ class MemberExtendedFieldsService
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
 				foreach ($extend_fields_cache as $id => $extended_field)
 				{
-					$member_extended_field = new MemberExtendedField();
-					
-					$member_extended_field->set_field_type($extended_field['field']);
-					$member_extended_field->set_field_name($extended_field['field_name']);
-					$member_extended_field->set_field_value(retrieve(POST, $extended_field['field_name'], '', TSTRING_UNCHANGE));
-					$member_extended_field->set_required($extended_field['required']);
-					$member_extended_field->set_regex_type($extended_field['regex']);
-					$member_extended_field->set_regex($member_extended_field->rewrite_regex($extended_field['regex']));
-					$member_extended_field->set_default_values($extended_field['default_values']);
-					$member_extended_field->set_possible_values($extended_field['possible_values']);
-					
-					$rewrite_field = self::rewrite_field($member_extended_field);
-					$level_user = MemberExtendedFieldsDAO::level_user($user_id);
-					
-					if (!$member_extended_field->get_required() && $rewrite_field !== '' && $level_user == 2 || $level_user < 2)
+					if ($extended_field['display'] == 1 && AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::AUTHORIZATION))
 					{
-						if ((@preg_match($member_extended_field->get_regex(), $rewrite_field)))
+						$member_extended_field = new MemberExtendedField();
+						
+						$member_extended_field->set_field_type($extended_field['field']);
+						$member_extended_field->set_field_name($extended_field['field_name']);
+						$member_extended_field->set_field_value(retrieve(POST, $extended_field['field_name'], '', TSTRING_UNCHANGE));
+						$member_extended_field->set_required($extended_field['required']);
+						$member_extended_field->set_regex_type($extended_field['regex']);
+						$member_extended_field->set_regex($member_extended_field->rewrite_regex($extended_field['regex']));
+						$member_extended_field->set_default_values($extended_field['default_values']);
+						$member_extended_field->set_possible_values($extended_field['possible_values']);
+						
+						$rewrite_field = self::rewrite_field($member_extended_field);
+						$level_user = MemberExtendedFieldsDAO::level_user($user_id);
+						
+						if (!$member_extended_field->get_required() && $rewrite_field !== '' && $level_user == 2 || $level_user < 2)
 						{
-							$member_extended_fields_dao->set_request($member_extended_field);
+							if ((@preg_match($member_extended_field->get_regex(), $rewrite_field)))
+							{
+								$member_extended_fields_dao->set_request($member_extended_field);
+							}
+							else
+							{
+								throw new Exception('A fields is not correctly filled.');
+							}
 						}
 						else
 						{
-							throw new Exception('A fields is not correctly filled.');
+							throw new Exception('The field'. $member_extended_field->get_field_name() .'is required.');
+							
 						}
 					}
-					else
-					{
-						throw new Exception('The field'. $member_extended_field->get_field_name() .'is required.');
-						
-					}
+					$member_extended_fields_dao->get_request($user_id);
 				}
-				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
 	}

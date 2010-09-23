@@ -31,7 +31,8 @@
  */
 class ExtendedField
 {
-
+	const AUTHORIZATION = 1;
+	
 	private $id;
 	private $name;
 	private $position;
@@ -42,6 +43,7 @@ class ExtendedField
 	private $required;
 	private $display;
 	private $regex;
+	private $authorization;
 	
 	public function set_id($id)
 	{
@@ -151,6 +153,16 @@ class ExtendedField
 	public function get_regex()
 	{
 		return !empty($this->regex) ? $this->regex : '';
+	}
+	
+	public function set_authorization($authorization)
+	{
+		$this->authorization = $authorization;
+	}
+	
+	public function get_authorization()
+	{
+		return $this->authorization;
 	}
 	
 	public static function rewrite_field_name($field_name)

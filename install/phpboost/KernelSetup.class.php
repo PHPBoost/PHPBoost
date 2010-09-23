@@ -369,6 +369,7 @@ class KernelSetup
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'display' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'indexes' => array(

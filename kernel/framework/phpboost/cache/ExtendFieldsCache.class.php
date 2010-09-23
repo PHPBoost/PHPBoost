@@ -40,12 +40,14 @@ class ExtendFieldsCache implements CacheData
 		$this->extend_fields = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display 
+		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display, auth 
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
 			ORDER BY class", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{
+			$auth = unserialize($row['auth']);
+			
 			$this->extend_fields[$row['id']] = array(
 				'id' => $row['id'],
 				'class' => !empty($row['class']) ? $row['class'] : '',
@@ -58,6 +60,7 @@ class ExtendFieldsCache implements CacheData
 				'required' => !empty($row['required']) ? $row['required'] : 0,
 				'display' => !empty($row['display']) ? $row['display'] : 0,
 				'regex' => !empty($row['regex']) ? $row['regex'] : '',
+				'auth' => !empty($auth) ? $auth : array(),
 
 			);
 		}

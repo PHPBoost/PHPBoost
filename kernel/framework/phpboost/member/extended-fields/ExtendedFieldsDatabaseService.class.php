@@ -37,7 +37,7 @@ class ExtendedFieldsDatabaseService
 	{
 		self::add_extended_field_to_member($extended_field);
 		
-		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $extended_field->get_name() . "', '" . $extended_field->get_position() . "', '" . $extended_field->get_field_name() . "', '" . $extended_field->get_content() . "', '" . $extended_field->get_field_type() . "', '" . $extended_field->get_possible_values() . "', '" . $extended_field->get_default_values() . "', '" . $extended_field->get_required() . "',	'" . $extended_field->get_display() . "','" . $extended_field->get_regex() . "')", __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex, auth) VALUES ('" . $extended_field->get_name() . "', '" . $extended_field->get_position() . "', '" . $extended_field->get_field_name() . "', '" . $extended_field->get_content() . "', '" . $extended_field->get_field_type() . "', '" . $extended_field->get_possible_values() . "', '" . $extended_field->get_default_values() . "', '" . $extended_field->get_required() . "',	'" . $extended_field->get_display() . "','" . $extended_field->get_regex() . "','" . serialize($extended_field->get_authorization()) . "')", __LINE__, __FILE__);
 	}
 	
 	public static function update_extended_field(ExtendedField $extended_field)
@@ -54,7 +54,8 @@ class ExtendedFieldsDatabaseService
 			default_values = '" . $extended_field->get_default_values() . "', 
 			required = '" . $extended_field->get_required() . "', 
 			display = '" . $extended_field->get_display() . "', 
-			regex = '" . $extended_field->get_regex() . "' 
+			regex = '" . $extended_field->get_regex() . "',
+			auth = '" . serialize($extended_field->get_authorization()) . "'
 			WHERE id = '" . $extended_field->get_id() . "'"
 		, __LINE__, __FILE__);
 	}
