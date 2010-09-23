@@ -8,7 +8,7 @@ class DisplayExtendField
 		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();	
 		foreach ($extend_fields_cache as $id => $extend_field)
 		{
-			if ($extend_field['display'])
+			if ($extend_field['display'] == 1 && AppContext::get_user()->check_auth($extend_field['auth'], ExtendedField::AUTHORIZATION))
 			{
 				if ($extend_field['required'])
 				{	
@@ -38,22 +38,25 @@ class DisplayExtendField
 		ORDER BY exc.class", __LINE__, __FILE__);
 		while ($extend_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
-			$field_value = !empty($extend_field[$extend_field['field_name']]) ? $extend_field[$extend_field['field_name']] : $extend_field['default_values'];
-
-			if ($extend_field['required'])
+			if ($extend_field['display'] == 1 && AppContext::get_user()->check_auth($extend_field['auth'], ExtendedField::AUTHORIZATION))
 			{
-				$Template->assign_block_vars('extend_fields_js_list', array(
-					'L_REQUIRED' => sprintf(LangLoader::get_message('required_field', 'main'), ucfirst($extend_field['name'])),
-					'ID' => $extend_field['field_name']
+				$field_value = !empty($extend_field[$extend_field['field_name']]) ? $extend_field[$extend_field['field_name']] : $extend_field['default_values'];
+
+				if ($extend_field['required'])
+				{
+					$Template->assign_block_vars('extend_fields_js_list', array(
+						'L_REQUIRED' => sprintf(LangLoader::get_message('required_field', 'main'), ucfirst($extend_field['name'])),
+						'ID' => $extend_field['field_name']
+					));
+				}
+				
+				$Template->assign_block_vars('extend_fields_list', array(
+					'NAME' => $extend_field['required'] ? '* ' . ucfirst($extend_field['name']) : ucfirst($extend_field['name']),
+					'ID' => $extend_field['field_name'],
+					'DESC' => !empty($extend_field['contents']) ? ucfirst($extend_field['contents']) : '',
+					'FIELD' => $this->get_field($extend_field['field'], $extend_field['field_name'], $extend_field['possible_values'], $field_value)
 				));
 			}
-			
-			$Template->assign_block_vars('extend_fields_list', array(
-				'NAME' => $extend_field['required'] ? '* ' . ucfirst($extend_field['name']) : ucfirst($extend_field['name']),
-				'ID' => $extend_field['field_name'],
-				'DESC' => !empty($extend_field['contents']) ? ucfirst($extend_field['contents']) : '',
-				'FIELD' => $this->get_field($extend_field['field'], $extend_field['field_name'], $extend_field['possible_values'], $field_value)
-			));
 		}
 		PersistenceContext::get_sql()->query_close($result);
 	}

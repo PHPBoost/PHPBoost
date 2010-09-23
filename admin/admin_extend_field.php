@@ -64,6 +64,7 @@ elseif (!empty($_POST['valid']) && !empty($id))
 	$extended_field->set_is_required(retrieve(POST, 'required', 0));
 	$extended_field->set_display(retrieve(POST, 'display', 0));
 	$extended_field->set_regex($regex);
+	$extended_field->set_authorization(Authorizations::auth_array_simple(ExtendedField::AUTHORIZATION, $extended_field->get_id()));
 	
 	ExtendedFieldsService::update($extended_field);
 	
@@ -114,7 +115,7 @@ elseif (!empty($id))
 		$regex_checked = 1;
 		$predef_regex = true;
 	}
-		
+		print_r($extend_field['auth']);
 	$Template->assign_vars(array(
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
@@ -128,6 +129,7 @@ elseif (!empty($id))
 		'DISABLED' => ($extend_field['field'] > 2) ? ' disabled="disabled"' : '',
 		'DISPLAY' => $extend_field['display'] ? 'checked="checked"' : '',
 		'NOT_DISPLAY' => $extend_field['display'] ? '' : 'checked="checked"',
+		'AUTH' => Authorizations::generate_select(ExtendedField::AUTHORIZATION, $extend_field['auth'], array(2 => true), $extend_field['id'])
 	));
 
 	//Gestion erreur.

@@ -155,6 +155,7 @@ CREATE TABLE `phpboost_member_extend_cat` (
   `required` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) NOT NULL default '0',
   `regex` varchar(255) NOT NULL default '',
+  `auth` text,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
