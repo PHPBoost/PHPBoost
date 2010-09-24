@@ -48,7 +48,7 @@ class ThemesCache implements CacheData
 			$this->themes[$theme['theme']] = array(
 				'left_column' => (bool)$theme['left_column'],
 				'right_column' => (bool)$theme['right_column'],
-				'auth' => unserialize($theme['secure']),
+				'auth' => !empty($theme['theme']) ? ($theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? array('r-1' => 1, 'r0' => 1, 'r1' => 1) : unserialize($theme['secure'])) : array('r-1' => 1, 'r0' => 1, 'r1' => 1),
 				'enabled' => $theme['activ']
 			);
 		}

@@ -200,7 +200,7 @@ else
 			'MAIN_COLOR' => $info_theme['main_color'],
 			'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
 			'WIDTH' => $info_theme['width'],
-			'OPTIONS' => Authorizations::generate_select(AUTH_THEME)
+			'OPTIONS' => Authorizations::generate_select(AUTH_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1))
 		));
 		$z++;
 	}

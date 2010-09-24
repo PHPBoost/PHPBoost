@@ -86,10 +86,11 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		));
 		
 		//Récupération des configuration dans la base de données.
-		$config_theme = $Sql->query_array(PREFIX . "themes", "theme", "left_column", "right_column", "secure", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$theme = $Sql->query_array(DB_TABLE_THEMES, "theme", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
+		$config_theme = ThemesCache::load()->get_theme_properties($theme['theme']);
 		//On récupère la configuration du thème.
-		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', get_ulang());
+		$info_theme = load_ini_file('../templates/' . $theme['theme'] . '/config/', get_ulang());
 
 		$Template->assign_vars(array(
 			'C_EDIT_THEME' => true,
@@ -97,7 +98,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 			'THEME_NAME' => $info_theme['name'],
 			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="checked"' : '',
 			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="checked"' : '',
-			'AUTH_THEME' => $config_theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? $LANG['guest'] : Authorizations::generate_select(AUTH_THEME, unserialize($config_theme['secure'])),
+			'AUTH_THEME' => $theme['theme'] !== UserAccountsConfig::load()->get_default_theme() ? Authorizations::generate_select(AUTH_THEME, $config_theme['auth']) : $LANG['guest'],
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 			'L_THEME' => $LANG['theme'],
