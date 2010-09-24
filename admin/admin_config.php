@@ -59,6 +59,9 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	UserAccountsConfig::save();
 	
+	ThemesCache::load()->update_authorization_for_default_theme(stripslashes(retrieve(POST, 'theme', '')));
+	ThemesCache::invalidate();
+	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($check_advanced && empty($_POST['advanced']))

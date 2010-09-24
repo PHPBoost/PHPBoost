@@ -39,21 +39,28 @@ class ThemesCache implements CacheData
 		$this->themes = array();
 		$db_connection = PersistenceContext::get_querier();
 		
-		$result = $db_connection->select("SELECT theme, left_column, right_column, secure, activ
+		$result = $db_connection->select("SELECT id, theme, left_column, right_column, secure, activ
 		FROM " . DB_TABLE_THEMES . "
 		WHERE activ = 1");
 
 		foreach ($result as $theme)
 		{
 			$this->themes[$theme['theme']] = array(
+				'id' => $theme['id'],
 				'left_column' => (bool)$theme['left_column'],
 				'right_column' => (bool)$theme['right_column'],
-				'auth' => !empty($theme['theme']) ? ($theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? array('r-1' => 1, 'r0' => 1, 'r1' => 1) : unserialize($theme['secure'])) : array('r-1' => 1, 'r0' => 1, 'r1' => 1),
+				'auth' => unserialize($theme['secure']),
 				'enabled' => $theme['activ']
 			);
 		}
 	}
 
+	public function update_authorization_for_default_theme($theme)
+	{
+		$default_auth = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '". addslashes(serialize($default_auth)) ."' WHERE theme = '" . $theme . "'", __LINE__, __FILE__);
+	}
+	
 	public function get_installed_themes()
 	{
 		return $this->themes;
