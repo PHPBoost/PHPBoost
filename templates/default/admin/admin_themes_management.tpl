@@ -90,12 +90,6 @@
 								<label><input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}</label>
 							</p>
 							<p>
-								<strong>{L_RANK} :</strong>
-								<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'"> 
-									{list.OPTIONS}
-								</select>
-							</p>
-							<p>
 								<br />
 								<br />
 								<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
@@ -108,10 +102,6 @@
 							<p>
 								<strong>{L_ACTIV} :</strong>
 								{L_YES}
-							</p>
-							<p>
-								<strong>{L_RANK} :</strong>
-								{L_GUEST}
 							</p>
 						</td>
 						# ENDIF #
@@ -157,6 +147,14 @@
 				<fieldset> 
 				<legend>{L_THEME_MANAGEMENT}</legend>
 					<p>{L_THEME} <strong>{THEME_NAME}</strong></p>
+					<dl>
+						<dt>
+							<label for="auth_theme">{L_AUTH}</label>
+						</dt>
+						<dd>
+							{AUTH_THEME}
+						</dd>
+					</dl>
 					<dl>
 						<dt><label for="left_column">{L_LEFT_COLUMN}</label></dt>
 						<dd><label><input type="checkbox" {LEFT_COLUMN_ENABLED} name="left_column" id="left_column" value="1" /></label></dd>

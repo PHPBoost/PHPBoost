@@ -54,6 +54,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	GraphicalEnvironmentConfig::save();
 	
 	$user_accounts_config = UserAccountsConfig::load();
+	// TODO change read authorization theme and lang for the guest
 	$user_accounts_config->set_default_lang(stripslashes(retrieve(POST, 'lang', '')));
 	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	UserAccountsConfig::save();

@@ -187,6 +187,7 @@ class Environment
 		define('AUTH_MENUS', 		0x01);
 		define('AUTH_FILES', 		0x01);
 		define('ACCESS_MODULE', 	0x01);
+		define('AUTH_THEME', 		0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
@@ -263,7 +264,7 @@ class Environment
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemesCache::load()->get_theme_properties($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_user()->check_level($user_theme_properties['auth']))
+		|| !AppContext::get_user()->check_auth($user_theme_properties['auth'], AUTH_THEME))
 		{
 			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}

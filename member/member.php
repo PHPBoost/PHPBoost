@@ -207,7 +207,7 @@ if (!empty($id_get)) //Espace membre
 			$utheme = get_utheme();
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($User->check_level($theme_properties['auth']) && $theme != 'default'))
+				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($User->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default'))
 				{
 					$selected = ($utheme == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());

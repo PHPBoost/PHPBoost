@@ -155,7 +155,6 @@ CREATE TABLE `phpboost_member_extend_cat` (
   `required` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) NOT NULL default '0',
   `regex` varchar(255) NOT NULL default '',
-  `auth` text,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -317,7 +316,7 @@ CREATE TABLE `phpboost_themes` (
   `id` int(11) NOT NULL auto_increment,
   `theme` varchar(50) NOT NULL default '',
   `activ` tinyint(1) NOT NULL default '0',
-  `secure` tinyint(1) NOT NULL default '0',
+  `secure` text TEXT NULL DEFAULT NULL,
   `left_column` tinyint(1) NOT NULL default '0',
   `right_column` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)

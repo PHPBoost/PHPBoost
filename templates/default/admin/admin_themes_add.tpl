@@ -95,10 +95,8 @@
 								<label><input type="radio" name="{list.IDTHEME}activ" value="0" /> {L_NO}</label>
 							</p>
 							<p>
-								<strong>{L_RANK} :</strong>
-								<select name="{list.IDTHEME}secure">								
+								<strong>{L_RANK} :</strong>								
 									{list.OPTIONS}
-								</select>
 							</p>
 							<p>
 								<br />

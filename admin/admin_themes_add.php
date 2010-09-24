@@ -43,7 +43,7 @@ if ($install)
 		if ($value == $LANG['install'])
 			$theme = $key;
 			
-	$secure = retrieve(POST, $theme . 'secure', -1);
+	$secure = Authorizations::build_auth_array_from_form(AUTH_THEME);
 	$activ = retrieve(POST, $theme . 'activ', 0);
 		
 	$check_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE theme = '" . TextHelper::strprotect($theme) . "'", __LINE__, __FILE__);	
@@ -52,7 +52,7 @@ if ($install)
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
 
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . TextHelper::strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . (int)$info_theme['left_column'] . "', '" . (int)$info_theme['right_column'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . TextHelper::strprotect($theme) . "', '" . $activ . "', '" .  addslashes(serialize($secure)) . "', '" . (int)$info_theme['left_column'] . "', '" . (int)$info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
 		ThemesCache::invalidate();
 		
@@ -185,13 +185,6 @@ else
 	foreach ($tpl_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
 	{
 		$info_theme = load_ini_file('../templates/' . $value_array . '/config/', get_ulang());
-	
-		$options = '';
-		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-		{
-			$selected = ($i == -1) ? 'selected="selected"' : '';
-			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-		}
 		
 		$Template->assign_block_vars('list', array(
 			'IDTHEME' =>  $value_array,		
@@ -207,7 +200,7 @@ else
 			'MAIN_COLOR' => $info_theme['main_color'],
 			'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
 			'WIDTH' => $info_theme['width'],
-			'OPTIONS' => $options
+			'OPTIONS' => Authorizations::generate_select(AUTH_THEME)
 		));
 		$z++;
 	}
