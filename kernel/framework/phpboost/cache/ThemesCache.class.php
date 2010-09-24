@@ -48,7 +48,7 @@ class ThemesCache implements CacheData
 			$this->themes[$theme['theme']] = array(
 				'left_column' => (bool)$theme['left_column'],
 				'right_column' => (bool)$theme['right_column'],
-				'auth' => $theme['secure'],
+				'auth' => unserialize($theme['secure']),
 				'enabled' => $theme['activ']
 			);
 		}

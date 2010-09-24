@@ -43,14 +43,6 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
-{
-	$Session->csrf_get_protect(); //Protection csrf
-	
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . UserAccountsConfig::load()->get_default_theme() . "'", __LINE__, __FILE__);
-	ThemesCache::invalidate();		
-	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
-}
 elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
 {	
 	$result = $Sql->query_while("SELECT id, name, activ, secure
@@ -79,8 +71,9 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 	{
 		$left_column = retrieve(POST, 'left_column', false, TBOOL);
 		$right_column = retrieve(POST, 'right_column', false, TBOOL);
+		$secure = Authorizations::build_auth_array_from_form(AUTH_THEME);
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "', secure = '". addslashes(serialize($secure)) ."' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		ThemesCache::invalidate();
 		
@@ -93,20 +86,22 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		));
 		
 		//Récupération des configuration dans la base de données.
-		$config_theme = $Sql->query_array(PREFIX . "themes", "theme", "left_column", "right_column", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$config_theme = $Sql->query_array(PREFIX . "themes", "theme", "left_column", "right_column", "secure", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', get_ulang());
-			
+
 		$Template->assign_vars(array(
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
 			'THEME_NAME' => $info_theme['name'],
 			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="checked"' : '',
 			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="checked"' : '',
+			'AUTH_THEME' => $config_theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? $LANG['guest'] : Authorizations::generate_select(AUTH_THEME, unserialize($config_theme['secure'])),
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 			'L_THEME' => $LANG['theme'],
+			'L_AUTH' => $LANG['auth_access'],
 			'L_LEFT_COLUMN' => $LANG['activ_left_column'],
 			'L_RIGHT_COLUMN' => $LANG['activ_right_column'],
 			'L_RESET' => $LANG['reset'],
@@ -203,7 +198,7 @@ else
 		'L_PREVIEW' => $LANG['preview'],
 		'L_EXPLAIN_DEFAULT_THEME' => $LANG['explain_default_theme'],
 		'L_NO_THEME_ON_SERV' => $LANG['no_theme_on_serv'],
-		'L_RANK' => $LANG['rank'],
+		'L_AUTH' => $LANG['rank'],
 		'L_AUTHOR' => $LANG['author'],
 		'L_COMPAT' => $LANG['compat'],
 		'L_DESC' => $LANG['description'],
@@ -242,13 +237,6 @@ else
 		//On selectionne le theme suivant les valeurs du tableau. 
 		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
 		
-		$options = '';
-		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-		{
-			$selected = ($i == $row['secure']) ? 'selected="selected"' : '';
-			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-		}	
-		
 		$default_theme = ($row['theme'] == UserAccountsConfig::load()->get_default_theme());
 		$Template->assign_block_vars('list', array(
 			'C_THEME_DEFAULT' => $default_theme ? true : false,
@@ -266,7 +254,6 @@ else
 			'MAIN_COLOR' => $info_theme['main_color'],
 			'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
 			'WIDTH' => $info_theme['width'],
-			'OPTIONS' => $options,
 			'THEME_ACTIV' => ($row['activ'] == 1) ? 'checked="checked"' : '',
 			'THEME_UNACTIV' => ($row['activ'] == 0) ? 'checked="checked"' : ''
 		));

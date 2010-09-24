@@ -601,7 +601,7 @@ class KernelSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'secure' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'secure' => array('type' => 'text', 'length' => 65000),
 			'left_column' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'right_column' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);

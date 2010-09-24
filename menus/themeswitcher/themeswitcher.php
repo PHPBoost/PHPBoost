@@ -60,7 +60,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     $utheme = get_utheme();
     foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
     {
-    	if ($User->check_level($theme_properties['auth']) && $theme != 'default' && $theme_properties['enabled'] == 1)
+    	if ($User->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default' && $theme_properties['enabled'] == 1)
     	{
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
     		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
