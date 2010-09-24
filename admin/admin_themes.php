@@ -51,10 +51,9 @@ elseif (isset($_POST['valid'])) //Modification de tous les thèmes.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
-		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 	ThemesCache::invalidate();
@@ -71,7 +70,9 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 	{
 		$left_column = retrieve(POST, 'left_column', false, TBOOL);
 		$right_column = retrieve(POST, 'right_column', false, TBOOL);
-		$secure = Authorizations::build_auth_array_from_form(AUTH_THEME);
+
+		$theme = $Sql->query_array(DB_TABLE_THEMES, "theme", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$secure = $theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? array('r-1' => 1, 'r0' => 1, 'r1' => 1) : Authorizations::build_auth_array_from_form(AUTH_THEME);
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "', secure = '". addslashes(serialize($secure)) ."' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
