@@ -36,6 +36,7 @@
 class DeprecatedTemplate extends FileTemplate
 {
 	private $modules = array();
+    private $subtpls = array();
 
 	public function __construct()
 	{
@@ -63,6 +64,19 @@ class DeprecatedTemplate extends FileTemplate
 			// Auto assign the module data path
 			// Use of MODULE_DATA_PATH is deprecated
 			$new_template->assign_vars(array('PICTURES_DATA_PATH' => $module_data_path));
+			
+			$this->subtpls[] = $new_template;
+		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function add_lang(array $lang)
+	{
+		foreach ($this->subtpls as $subtpl)
+		{
+            $subtpl->add_lang($lang);
 		}
 	}
 
