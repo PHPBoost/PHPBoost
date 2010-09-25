@@ -52,9 +52,7 @@ if (!empty($_POST['erase']))
 
 $Template->add_lang(LangLoader::get('admin-errors-Common'));
 $Template->assign_vars(array(
-    'L_ERRORS_MANAGEMENT' => $LANG['error_management'],
 	'L_ERRORS' => $LANG['errors'],
-	'L_ALL_ERRORS' => $LANG['all_errors'],
 	'L_DESC' => $LANG['description'],
 	'L_DATE' => $LANG['date'],
 	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
@@ -81,20 +79,15 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 				$errinfo['errno'] = $buffer;
 				break;
 				case 3:
-				$errinfo['errstr'] = $buffer;
+				$errinfo['errmsg'] = $buffer;
 				break;
 				case 4:
-				$errinfo['errfile'] = $buffer;
-				break;
-				case 5:
-				$errinfo['errline'] = $buffer;	
+				$errinfo['errstacktrace'] = $buffer;
 				$i = 0;	
-				$errinfo['errclass'] = Errors::get_errno_class($errinfo['errno']);
 				$array_errinfo[] = array(
-				'errclass' => $errinfo['errclass'], 
-				'errstr' => $errinfo['errstr'], 
-				'errline'=> $errinfo['errline'], 
-				'errfile' => $errinfo['errfile'], 
+				'errclass' => Errors::get_errno_class($errinfo['errno']), 
+				'errmsg' => $errinfo['errmsg'], 
+				'errstacktrace'=> $errinfo['errstacktrace'], 
 				'errdate' => $errinfo['errdate']
 				);
 				break;	
@@ -115,18 +108,20 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		$i = 0;
 		foreach ($array_errinfo as $key => $errinfo)
 		{
-			$str_error = sprintf($LANG[$errinfo['errclass']], str_replace('&lt;br /&gt;', '<br />', htmlentities($errinfo['errstr'])), $errinfo['errline'], $errinfo['errfile']);
-			
 			$Template->assign_block_vars('errors', array(
 				'IMG' => $images[$errinfo['errclass']],
-				'CLASS' => $errinfo['errclass'],
 				'DATE' => $errinfo['errdate'],
-				'L_ERROR_DESC' => wordwrap(str_replace(',', ', ', $str_error), 80, "\n", true)
+				'CLASS' => $errinfo['errclass'],
+				'ERROR_TYPE' => LangLoader::get_message(str_replace('error_', 'e_', $errinfo['errclass']), 'errors'),
+				'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
+				'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
 			));
 			$i++;
 			
 			if ($i > 15 && !$all)
+			{
 				break;
+			}
 		}
 	}
 	else

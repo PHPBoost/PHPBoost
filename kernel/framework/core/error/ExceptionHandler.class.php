@@ -61,9 +61,7 @@ class ExceptionHandler
 
 	private function log()
 	{
-		$information_to_log = $this->exception->getMessage() .
-            "\n" . $this->exception->getTraceAsString();
-		ErrorHandler::add_error_in_log($information_to_log, $this->exception->getFile(), $this->exception->getLine());
+		ErrorHandler::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(0, $this->exception), E_USER_ERROR);
 	}
 
 	private function prepare_controller()
