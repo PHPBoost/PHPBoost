@@ -458,7 +458,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"((?: ?[a-z]+="[^"]*")*) /&gt;`is', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")?(?: title="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?((?: ?[a-z]+="[^"]*")*) /&gt;`is', array($this, 'parse_img'), $this->content);
 		}
 
 		//indent tag
@@ -700,6 +700,8 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_img($matches)
 	{
 		$style = $matches[1];
+		$alt = $matches[4];
+		$title = $matches[2];
 		foreach (explode('" ', $matches[3] . ' ') as $raw_property)
 		{
 			$exp = explode('="', $raw_property);
@@ -723,7 +725,7 @@ class TinyMCEParser extends ContentFormattingParser
 					break;
 			}
 		}
-	 	return '<img src="' . $matches[2] . '" alt="" style="' . $style . '" />';
+	 	return '<img src="' . $matches[3] . '" alt="' . $alt . '" title="' . $title . '" style="' . $style . '" />';
 	}
 
 	/**

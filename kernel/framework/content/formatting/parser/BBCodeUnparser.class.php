@@ -182,7 +182,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)" alt=""(?: style="([^"]+)")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
@@ -199,13 +199,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 	private function unparse_img($matches)
 	{
-		$style = '';
-		if (!empty($matches[2]))
-		{
-			$style = ' style="' . $matches[2] . '"';
-		}
+		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
+        $title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
+        $style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 
-		return '[img' . $style . ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . ']' . $matches[1] . '[/img]';
 	}
 
 	/**

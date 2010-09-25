@@ -97,7 +97,7 @@ class BBCodeParser extends ContentFormattingParser
 		}
 
 		parent::parse();
-		 
+			
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
@@ -272,7 +272,7 @@ class BBCodeParser extends ContentFormattingParser
             //Image tag
             if (!in_array('img', $this->forbidden_tags))
             {
-            	$this->content = preg_replace_callback('`\[img(?: style="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
+            	$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
             }
 
             //Wikipedia tag
@@ -313,7 +313,7 @@ class BBCodeParser extends ContentFormattingParser
             {
             	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
             }
-            
+
             // Feed tag
             if (!in_array('feed', $this->forbidden_tags))
             {
@@ -461,18 +461,17 @@ class BBCodeParser extends ContentFormattingParser
 		else
 		return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
 	}
-	
-		
+
+
 	protected function parse_img($matches)
 	{
-		$style = '';
-		if (!empty($matches[1]))
-		{
-			$style = ' style="' . $matches[1] . '"';
-		}
-		return '<img src="' . $matches[2] . '" alt=""' . $style .' />';
+		$alt = !empty($matches[1]) ? $matches[1] : '';
+		$title = !empty($matches[2]) ? ' title="' . $matches[2] . '"' : '';
+		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
+		
+		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $title . $style .' />';
 	}
-	
+
 
 	/**
 	 * @desc Callback which parses the wikipedia tag
