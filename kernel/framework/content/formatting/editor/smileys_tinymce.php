@@ -32,12 +32,12 @@
 /**
 * Constant definition
 */
-define('PATH_TO_ROOT', '../../../..');
+define('PATH_TO_ROOT', '../../../../..');
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$tpl_smileys = new template('framework/content/smileys_tinymce.tpl');
+$tpl_smileys = new FileTemplate('framework/content/smileys_tinymce.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
