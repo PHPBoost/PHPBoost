@@ -154,12 +154,12 @@ class ErrorHandler
                 <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
-                <em>' . Debug::get_stacktrace_as_string(4) . '</em></div>';
+                <em>' . Debug::get_stacktrace_as_string(5) . '</em></div>';
 		}
 		else
 		{
 			echo "\n" . $this->errdesc . ': ' . $this->exception->getMessage() .
-				"\n" . Debug::get_stacktrace_as_string(4) . "\n";
+				"\n" . Debug::get_stacktrace_as_string(5) . "\n";
 		}
 	}
 
@@ -170,7 +170,7 @@ class ErrorHandler
 
 	private function log()
 	{
-		self::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(2), $this->errno);
+		self::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(3), $this->errno);
 	}
 
 	public static function add_error_in_log($error_msg, $error_stacktrace, $errno = 0)
