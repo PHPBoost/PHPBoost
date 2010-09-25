@@ -11,7 +11,7 @@
 			// Register commands
 			ed.addCommand('mceEmotion', function() {
 				ed.windowManager.open({
-					file : url + '/../../../editor/smileys_tinymce.php',
+					file : url + '/../../../../../framework/content/formatting/editor/smileys_tinymce.php',
 					width : 480 + parseInt(ed.getLang('emotions.delta_width', 0)),
 					height : 340 + parseInt(ed.getLang('emotions.delta_height', 0)),
 					inline : 1
