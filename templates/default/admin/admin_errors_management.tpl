@@ -57,12 +57,13 @@
 				# START errors #
 				<tr>
 					<td class="row2">
-						<p class="{errors.CLASS}" style="width:500px;margin:auto;padding:8px;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> {errors.L_ERROR_DESC}
-							<br /><br />						
+						<p class="{errors.CLASS}" style="width:auto;margin:auto;padding:8px;">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> 
+							<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
+                            <em>{errors.ERROR_STACKTRACE}</em>
 						</p>
 					</td>
-					<td class="row2" style="text-align: center;">
+					<td class="row2" style="text-align:center;width:80px;">
 						{errors.DATE}
 					</td>
 				</tr>

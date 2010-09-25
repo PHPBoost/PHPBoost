@@ -634,10 +634,6 @@ $LANG['robots'] = 'Robots';
 $LANG['erase_rapport'] = 'Effacer le rapport';
 $LANG['number_r_visit'] = 'Nombre de visite(s)';
 
-//Erreurs
-$LANG['all_errors'] = 'Afficher toutes les erreurs';
-$LANG['error_management'] = 'Gestionnaire d\'erreurs';
-
 //Divers
 $LANG['select_type_bbcode'] = 'BBCode';
 $LANG['select_type_html'] = 'HTML';

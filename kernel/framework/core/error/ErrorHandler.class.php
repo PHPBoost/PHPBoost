@@ -40,13 +40,12 @@ class ErrorHandler
 	private static $LOG_FILE_MAX_SIZE = 1048576;
 
 	protected $errno;
-	protected $errstr;
-	protected $errfile;
-	protected $errline;
 	protected $errdesc;
 	protected $errclass;
 	protected $errimg;
 	protected $fatal;
+	protected $stacktrace;
+	protected $exception;
 
 	/**
 	 * @desc log the error and displays it in debug mode
@@ -59,9 +58,9 @@ class ErrorHandler
 	 */
 	public function handle($errno, $errstr, $errfile, $errline)
 	{
-		$this->prepare($errno, $errstr, $errfile, $errline);
-		if ($this->needs_to_be_processed())
+		if ($this->needs_to_be_processed($errno))
 		{
+			$this->prepare($errno, $errstr);
 			$this->process();
 			$this->display();
 			$this->log();
@@ -73,25 +72,25 @@ class ErrorHandler
 		return true;
 	}
 
-	private function prepare($errno, $errstr, $errfile, $errline)
+	private function prepare($errno, $errstr)
 	{
-		$this->errno = $errno;
-		$this->errstr = $errstr;
-		$this->errfile = $errfile;
-		$this->errline = $errline;
+		$this->exception = new Exception($errstr);
+        $this->errno = $errno;
+		$this->stacktrace = '';
 		$this->errdesc = '';
 		$this->errclass = '';
 		$this->errimg = '';
 		$this->fatal = false;
+		
 	}
 
 	/**
 	 * @return boolean true if the error is not thrown by a functionprefixed with an @ and if the
 	 * errno is in the ERROR_REPORTING level
 	 */
-	private function needs_to_be_processed()
+	private function needs_to_be_processed($errno)
 	{
-		return error_reporting() != 0 && ($this->errno & ERROR_REPORTING);
+		return error_reporting() != 0 && ($errno & ERROR_REPORTING);
 	}
 
 	private function process()
@@ -151,18 +150,16 @@ class ErrorHandler
 		if (Debug::is_output_html())
 		{
 			echo '<span id="errorh"></span>
-			<div class="' . $this->errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
-				<img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
-					alt="" style="float:left;padding-right:6px;" />
-				<strong>' . $this->errdesc . ' : </strong>' . $this->errstr . '<br /><br /><em>'
-				. Path::get_path_from_root($this->errfile) . '</em>:' . $this->errline . '
-				<br />
-			</div>';
+            <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
+                <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
+                    alt="" style="float:left;padding-right:6px;" />
+                <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
+                <em>' . Debug::get_stacktrace_as_string(4) . '</em></div>';
 		}
 		else
 		{
-			echo "\n" . $this->errdesc . ': ' . $this->errstr .
-				"\n" . Path::get_path_from_root($this->errfile) . ':' . $this->errline . "\n";
+			echo "\n" . $this->errdesc . ': ' . $this->exception->getMessage() .
+				"\n" . Debug::get_stacktrace_as_string(4) . "\n";
 		}
 	}
 
@@ -173,14 +170,14 @@ class ErrorHandler
 
 	private function log()
 	{
-		self::add_error_in_log($this->errstr, $this->errfile, $this->errline, $this->errno);
+		self::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(2), $this->errno);
 	}
 
-	public static function add_error_in_log($error_msg, $file, $line, $errno = 0)
+	public static function add_error_in_log($error_msg, $error_stacktrace, $errno = 0)
 	{
 		$error_log_file = PATH_TO_ROOT . '/cache/error.log';
 		self::clear_error_log_file($error_log_file);
-		self::add_error_in_log_file($error_log_file, $error_msg, $file, $line, $errno);
+		self::add_error_in_log_file($error_log_file, $error_msg, $error_stacktrace, $errno);
 	}
 
 	private static function clear_error_log_file($log_file)
@@ -193,10 +190,10 @@ class ErrorHandler
 		}
 	}
 
-	private static function add_error_in_log_file($log_file, $error_msg, $file, $line, $errno = 0)
+	private static function add_error_in_log_file($log_file, $error_msg, $error_stacktrace, $errno = 0)
 	{
 		$handle = @fopen($log_file, 'a+');
-		$write = @fwrite($handle, self::compute_error_log_string($error_msg, $file, $line, $errno));
+		$write = @fwrite($handle, self::compute_error_log_string($error_msg, $error_stacktrace, $errno));
 		$close = @fclose($handle);
 
 		if ($handle === false || $write === false || $close === false)
@@ -205,13 +202,12 @@ class ErrorHandler
 		}
 	}
 
-	private static function compute_error_log_string($error_msg, $file, $line, $errno = 0)
+	private static function compute_error_log_string($error_msg, $error_stacktrace, $errno = 0)
 	{
 		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
 		$errno . "\n" .
 		self::clean_error_string($error_msg) . "\n" .
-		Path::get_path_from_root($file) . "\n" .
-		$line . "\n";
+		self::clean_error_string($error_stacktrace) . "\n";
 	}
 
 	private static function clean_error_string($message)
