@@ -1,6 +1,6 @@
 <?php
 
-define('MAGIC_QUOTES', false);
+defined('MAGIC_QUOTES') or define('MAGIC_QUOTES', false);
 
 class PHPBoostUnitTestCase extends PHPUnit_Framework_TestCase {
 

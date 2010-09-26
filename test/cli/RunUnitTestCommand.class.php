@@ -45,8 +45,8 @@ class RunUnitTestCommand implements CLICommand
 		import('/test/PHPUnit/TextUI/TestRunner', '.php');
 		import('/test/PHPUnit/Framework/TestCase', '.php');
 		include_once $class_path;
-		$run = PHPUnit_TextUI_TestRunner::run(new $class_to_test, array());
-		// TODO continue debugging here, the method doesn't seem to return
+		$class = new ReflectionClass($class_to_test);
+		PHPUnit_TextUI_TestRunner::run($class);
 	}
 	
 	private function get_class_to_test_path($class_name)
