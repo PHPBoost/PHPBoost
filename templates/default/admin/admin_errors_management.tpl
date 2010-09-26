@@ -4,12 +4,12 @@
                 <li>
                     <a href="admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>
                     <br />
-                    <a href="admin_errors.php" class="quick_link">{L_LOGGED_ERRORS}</a>
+                    <a href="admin_errors.php" class="quick_link">${i18n('logged_errors')}</a>
                 </li>
                 <li>
                     <a href="errors/?url=/404/list/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>
                     <br />
-                    <a href="errors/?url=/404/list/" class="quick_link">{L_404_ERRORS}</a>
+                    <a href="errors/?url=/404/list/" class="quick_link">${i18n('404_errors')}</a>
                 </li>
 			</ul>
 		</div>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr> 
 					<td class="row2" style="text-align: center;" colspan="2">
-						<a href="admin_errors.php?all=1">{L_ALL_ERRORS}</a>
+						<a href="admin_errors.php?all=1">${i18n('all_errors')}</a>
 					</td>
 				</tr>
 				<tr> 
