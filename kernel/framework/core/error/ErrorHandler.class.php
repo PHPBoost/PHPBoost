@@ -150,10 +150,10 @@ class ErrorHandler
 	}
 
 	protected function get_stackstrace_as_string() {
-		if ($this->errno == E_NOTICE || $this->errno == E_USER_NOTICE) {
+		if (count($this->exception->getTrace()) <= 2) {
 			return Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		} else {
-            return Debug::get_stacktrace_as_string(0);
+            return Debug::get_stacktrace_as_string(6);
 		}
 	}
 	
