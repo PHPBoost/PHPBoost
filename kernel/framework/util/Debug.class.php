@@ -259,11 +259,11 @@ class Debug
 			}
 			elseif (is_array($arg))
 			{
-				$string_stacktrace .= 'Array[' . count($arg) . ']';
+				$string_stacktrace .= print_r($arg, true);
 			}
 			else
 			{
-				$string_maxlength = 20;
+				$string_maxlength = 150;
 				if (strlen($arg) > $string_maxlength)
 				{
 					$arg = substr($arg, 0, $string_maxlength - 3) . '...';
