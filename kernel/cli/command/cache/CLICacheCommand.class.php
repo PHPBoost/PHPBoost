@@ -39,19 +39,5 @@ class CLICacheCommand extends CLIMultipleGoalsCommand
 	{
 		return 'manages the phpboost cache';
 	}
-
-	private function call($goal_name, array $args)
-	{
-		if (isset(self::$goals[$goal_name]))
-		{
-			$goal = new self::$goals[$goal_name]();
-			$goal->execute($args);
-		}
-		else
-		{
-			CLIOutput::writeln('goal ' . $goal . ' does not exist');
-			$this->help(array());
-		}
-	}
 }
 ?>

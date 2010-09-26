@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        UnitTestCommand.class.php
+ *                       ListUnitTestsCommand.class.php
  *                            -------------------
- *   begin                : September 11, 2010
+ *   begin                : September 26, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -25,19 +25,43 @@
  *
  ###################################################*/
 
-class UnitTestCommand extends CLIMultipleGoalsCommand
+class ListUnitTestsCommand implements CLICommand 
 {
-	private static $name = 'test';
-	private static $goals = array('run' => 'RunUnitTestCommand', 'list' => 'ListUnitTestsCommand');
-	 
-	public function __construct()
-	{
-		parent::__construct(self::$name, self::$goals);
-	}
-	
 	public function short_description()
 	{
-		return "unit testing utilities";
+		return "list all available unit tests";
+	}
+	
+	public function execute(array $args)
+	{
+		$tests = $this->get_tests();
+		foreach ($tests as $test)
+		{
+			CLIOutput::writeln($test);
+		}
+	}
+	
+	private function get_tests()
+	{
+		import('/test/util/phpboost_unit_tests', INC_IMPORT);
+		$tests = list_tu(PATH_TO_ROOT . '/test/kernel');
+		return $this->extract_tests_names($tests);
+	}
+	
+	private function extract_tests_names(array $tests)
+	{
+		$tests_names = array();
+		foreach ($tests as $test)
+		{
+			$tests_names[] = preg_replace('`.+/([^./]+)\.php`', '$1', $test);
+		}
+		return $tests_names;
+	}
+	
+	public function help(array $args)
+	{
+		return "Shows all available unit tests. Run the run goal to run one or more tests";
 	}
 }
+
 ?>
