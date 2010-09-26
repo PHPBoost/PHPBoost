@@ -149,11 +149,11 @@ class ErrorHandler
 		}
 	}
 
-	protected function get_stackstrace_as_string() {
+	protected function get_stackstrace_as_string($start_trace_index) {
 		if (count($this->exception->getTrace()) <= 2) {
-			return Path::get_path_from_root($this->errfile) . ':' . $this->errline;
+			return '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		} else {
-            return Debug::get_stacktrace_as_string(6);
+            return Debug::get_stacktrace_as_string($start_trace_index);
 		}
 	}
 	
@@ -166,12 +166,12 @@ class ErrorHandler
                 <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
-                <em>' . $this->get_stackstrace_as_string() . '</em></div>';
+                <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
 		}
 		else
 		{
 			echo "\n" . $this->errdesc . ': ' . $this->exception->getMessage() .
-				"\n" . $this->get_stackstrace_as_string() . "\n";
+				"\n" . $this->get_stackstrace_as_string(6) . "\n";
 		}
 	}
 
@@ -182,7 +182,7 @@ class ErrorHandler
 
 	private function log()
 	{
-		self::add_error_in_log($this->exception->getMessage(), $this->get_stackstrace_as_string(), $this->errno);
+		self::add_error_in_log($this->exception->getMessage(), $this->get_stackstrace_as_string(4), $this->errno);
 	}
 
 	public static function add_error_in_log($error_msg, $error_stacktrace, $errno = 0)
