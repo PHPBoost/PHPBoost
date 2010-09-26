@@ -130,22 +130,21 @@ elseif (!empty($id_get)) //Edition + suppression!
 			$Template = new FileTemplate('guestbook/guestbook.tpl');
 
 			//Update form
-			$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
+			$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get));
 			$fieldset = new FormFieldsetHTML('update_msg', $LANG['update_msg']);
 
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormFieldTextEditor('pseudo', $row['login'], array(
-					'title' => $LANG['pseudo'], 'class' => 'text', 
-					'required' => $LANG['require_pseudo'], 'maxlength' => 25)
+				$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['pseudo'], $row['login'], array(
+					'class' => 'text', 'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 				));
 			}
-			$fieldset->add_field(new FormFieldTextEditor('contents', FormatingHelper::unparse($row['contents']), array(
-				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-				'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
+			$fieldset->add_field(new FormFieldTextEditor('contents', $LANG['message'], FormatingHelper::unparse($row['contents']), array(
+				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
-			$form->set_form_submit($LANG['update']);
+			$form->add_button(new FormButtonReset());
+            $form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 
 			$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
 
@@ -229,23 +228,25 @@ else //Affichage.
 		$is_guest = !$User->check_level(MEMBER_LEVEL);
 
 		//Post form
-		$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
+		$form = new HTMLForm('guestbookForm');
 		$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 		if ($is_guest) //Visiteur
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['guest'], array(
-				'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
-				'maxlength' => 25)
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $LANG['pseudo'], $LANG['guest'], array(
+				'class' => 'text', 'required' => $LANG['require_pseudo'], 'maxlength' => 25)
 			));
 		}
-		$fieldset->add_field(new FormFieldTextEditor('contents', '', array(
-			'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'],
-			'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
+		$fieldset->add_field(new FormFieldRichTextEditor('contents',  $LANG['message'], '', array(
+			'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 		));
 		if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
 		{
 			$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 		}
+		
+		$form->add_button(new FormButtonReset());
+        $form->add_button(new FormButtonDefaultSubmit());
+		
 		$form->add_fieldset($fieldset);
 	   
 		$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());

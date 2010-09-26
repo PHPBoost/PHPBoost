@@ -33,6 +33,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 {
     protected $rows = 5;
     protected $cols = 40;
+    protected $forbiddentags = array();
 
     /**
      * @desc Constructs a multi line text edit.
@@ -88,6 +89,11 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
                 case 'cols':
                     $this->cols = $value;
                     unset($field_options['cols']);
+                    break;
+                    //TODO Gérer cette option
+                case 'forbiddentags':
+                    $this->forbiddentags = $value;
+                    unset($field_options['forbiddentags']);
                     break;
             }
         }
