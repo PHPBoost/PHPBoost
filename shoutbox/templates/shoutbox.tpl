@@ -6,7 +6,7 @@
 		-->
 		</script>
 
-		{SHOUTBOX_FORM}
+		# INCLUDE SHOUTBOX_FORM #
 		
 		<br />
 		# IF C_ERROR_HANDLER #

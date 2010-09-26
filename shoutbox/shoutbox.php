@@ -121,21 +121,19 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $row['login'], array(
-					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
-					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
+				$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['pseudo'], $row['login'], array(
+					'class' => 'text', 'required' => true, 'maxlength' => 25)
 				));
 			}
-			$fieldset->add_field(new FormFieldTextEditor('shoutbox_contents', FormatingHelper::unparse($row['contents']), array(
-				'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
-				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+			$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], FormatingHelper::unparse($row['contents']), array(
+				'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 
+				'rows' => 10, 'cols' => 47, 'required' => true)
 			));
 			$form->add_fieldset($fieldset);
-			$form->set_form_submit($LANG['update']);	
+			$form->add_button(new FormButtonReset());
+            $form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 			
-			$Template->assign_vars(array(
-				'SHOUTBOX_FORM' =>  $form->display()
-			));
+            $Template->add_subtemplate('SHOUTBOX_FORM', $form->display());
 			
 			$Template->pparse('shoutbox'); 
 		}
@@ -216,24 +214,27 @@ else //Affichage.
 	$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
-		$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['guest'], array(
-			'title' => $LANG['pseudo'], 'class' => 'text', 'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
+		$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['pseudo'], $LANG['guest'], array(
+			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 	}
-	$fieldset->add_field(new FormFieldTextEditor('shoutbox_contents', '', array(
-		'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 'title' => $LANG['message'], 
-		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+	$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], '', array(
+		'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 
+		'rows' => 10, 'cols' => 47, 'required' => true)
 	));
-	$form->add_fieldset($fieldset);
 	
+	$form->add_fieldset($fieldset);
+	$form->add_button(new FormButtonReset());
+    $form->add_button(new FormButtonDefaultSubmit());
+            
+    $Template->add_subtemplate('SHOUTBOX_FORM', $form->display());
+            
 	//On crée une pagination si le nombre de messages est trop important.
 	$nbr_shout = $Sql->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
-	 
 	$Pagination = new DeprecatedPagination();
 		
 	$Template->assign_vars(array(
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
-		'SHOUTBOX_FORM' =>  $form->display(),
 		'PAGINATION' => $Pagination->display('shoutbox' . url('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));
 	
