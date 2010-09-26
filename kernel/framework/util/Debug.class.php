@@ -259,7 +259,7 @@ class Debug
 			}
 			elseif (is_array($arg))
 			{
-				$string_stacktrace .= print_r($arg, true);
+				$string_stacktrace .= htmlspecialchars(addslashes(print_r($arg, true)));
 			}
 			else
 			{
