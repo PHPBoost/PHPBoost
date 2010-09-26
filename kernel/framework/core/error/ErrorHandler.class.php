@@ -40,6 +40,8 @@ class ErrorHandler
 	private static $LOG_FILE_MAX_SIZE = 1048576;
 
 	protected $errno;
+	protected $errfile;
+	protected $errline;
 	protected $errdesc;
 	protected $errclass;
 	protected $errimg;
@@ -60,7 +62,7 @@ class ErrorHandler
 	{
 		if ($this->needs_to_be_processed($errno))
 		{
-			$this->prepare($errno, $errstr);
+			$this->prepare($errno, $errstr, $errfile, $errline);
 			$this->process();
 			$this->display();
 			$this->log();
@@ -72,10 +74,12 @@ class ErrorHandler
 		return true;
 	}
 
-	private function prepare($errno, $errstr)
+	private function prepare($errno, $errstr, $errfile, $errline)
 	{
 		$this->exception = new Exception($errstr);
         $this->errno = $errno;
+        $this->errfile = $errfile;
+        $this->errline = $errline;
 		$this->stacktrace = '';
 		$this->errdesc = '';
 		$this->errclass = '';
@@ -145,6 +149,14 @@ class ErrorHandler
 		}
 	}
 
+	protected function get_stackstrace_as_string() {
+		if ($this->errno == E_NOTICE || $this->errno == E_USER_NOTICE) {
+			return Path::get_path_from_root($this->errfile) . ':' . $this->errline;
+		} else {
+            return Debug::get_stacktrace_as_string(0);
+		}
+	}
+	
 	protected function display_debug()
 	{
 		if (Debug::is_output_html())
@@ -154,12 +166,12 @@ class ErrorHandler
                 <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
-                <em>' . Debug::get_stacktrace_as_string(5) . '</em></div>';
+                <em>' . $this->get_stackstrace_as_string() . '</em></div>';
 		}
 		else
 		{
 			echo "\n" . $this->errdesc . ': ' . $this->exception->getMessage() .
-				"\n" . Debug::get_stacktrace_as_string(5) . "\n";
+				"\n" . $this->get_stackstrace_as_string() . "\n";
 		}
 	}
 
@@ -170,7 +182,7 @@ class ErrorHandler
 
 	private function log()
 	{
-		self::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(3), $this->errno);
+		self::add_error_in_log($this->exception->getMessage(), $this->get_stackstrace_as_string(), $this->errno);
 	}
 
 	public static function add_error_in_log($error_msg, $error_stacktrace, $errno = 0)
