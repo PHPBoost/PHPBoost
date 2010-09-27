@@ -37,6 +37,7 @@ class ExtendedField
 	private $name;
 	private $position;
 	private $field_name;
+	private $field_type;
 	private $content;
 	private $possible_values;
 	private $default_values;
