@@ -33,13 +33,15 @@ class DisplayMemberExtendedField
 {
 	private $field_type;
 	private $field_name;
+	private $name;
 	private $description;
 	private $required;
 	private $regex;
-	private $value;
 	private $default_values;
 	private $possible_values;
 	private $user_id;
+	private $template;
+	private $fieldset;
 	
 	public function set_field_type($field_type)
 	{
@@ -59,6 +61,16 @@ class DisplayMemberExtendedField
 	public function get_field_name()
 	{
 		return $this->field_name;
+	}
+	
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+	
+	public function get_name()
+	{
+		return $this->name;
 	}
 	
 	public function set_description($description)
@@ -120,5 +132,27 @@ class DisplayMemberExtendedField
 	{
 		return $this->user_id;
 	}
+	
+	public function set_template($template)
+	{
+		$this->template = $template;
+	}
+	
+	public function get_template()
+	{
+		return $this->template;
+	}
+	
+	public function set_fieldset()
+	{
+		$this->fieldset = $fieldset;
+	}
+	
+	public function get_fieldset()
+	{
+		return $this->fieldset;
+	}
+	
+	
 }
 ?>
