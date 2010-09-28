@@ -52,24 +52,24 @@ class TemplateFunctions
         $this->i18n->add_language_maps($lang);
     }
     
-    public function i18n($key, $filename = null, $module = '')
+    public function i18n($key, array $parameters = null)
     {
-        return $this->i18n->i18n($key, $filename, $module);
+        return $this->i18n->i18n($key, $parameters);
     }
     
-    public function i18njs($key, $filename = null, $module = '')
+    public function i18njs($key, array $parameters = null)
     {
-        return $this->i18n->i18njs($key, $filename, $module);    
+        return $this->i18n->i18njs($key, $parameters);    
     }
     
-    public function i18njsraw($key, $filename = null, $module = '')
+    public function i18njsraw($key, array $parameters = null)
     {
-        return $this->i18n->i18njsraw($key, $filename, $module);      
+        return $this->i18n->i18njsraw($key, $parameters);      
     }
     
-    public function i18nraw($key, $filename = null, $module = '')
+    public function i18nraw($key, array $parameters = null)
     {
-        return $this->i18n->i18nraw($key, $filename, $module);
+        return $this->i18n->i18nraw($key, $parameters);
     }
 
     /**

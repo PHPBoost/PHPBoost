@@ -79,36 +79,28 @@ class I18NMessages
     	}
     }
 
-    public function i18n($key, $filename = null, $module = '')
+    public function i18n($key, $parameters)
     {
-        return htmlspecialchars($this->i18nraw($key, $filename, $module));
+        return htmlspecialchars($this->i18nraw($key, $parameters));
     }
 
-    public function i18njs($key, $filename = null, $module = '')
+    public function i18njs($key, $parameters)
     {
-        return TextHelper::to_js_string($this->i18n($key, $filename, $module));
+        return TextHelper::to_js_string($this->i18n($key, $parameters));
     }
 
-    public function i18njsraw($key, $filename = null, $module = '')
+    public function i18njsraw($key, $parameters)
     {
-        return TextHelper::to_js_string($this->i18nraw($key, $filename, $module));
+        return TextHelper::to_js_string($this->i18nraw($key, $parameters));
     }
 
-    public function i18nraw($key, $filename = null, $module = '')
+    public function i18nraw($key, $parameters)
     {
-        if ($filename !== null)
+        if (!empty($parameters))
         {
-        	return LangLoader::get_message($key, $filename, $module);
+        	StringVars::replace_vars($this->messages[$key], $parameters);
         }
-        else
-        {
-        	return $this->messages[$key];
-        }
-    }
-
-    private function get_message($key, $filename, $module)
-    {
-        return LangLoader::get_message($key, $filename, $module);
+        return $this->messages[$key];
     }
 }
 ?>
