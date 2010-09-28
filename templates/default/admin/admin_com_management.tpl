@@ -50,7 +50,7 @@
 						<div class="msg_top_row">
 							<div class="msg_pseudo_mbr">{com.USER_ONLINE} {com.USER_PSEUDO}</div>
 							<span style="float:left;">&nbsp;&nbsp;<a href="{com.U_PROV}#anchor_{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</span>
-							<span style="float:right;">&nbsp;&nbsp;<a href="{com.U_EDIT_COM}#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" /></a>&nbsp;&nbsp;<a href="{com.U_DEL_COM}#{com.COM_SCRIPT}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" /></a>&nbsp;&nbsp;</span>
+							<span style="float:right;">&nbsp;&nbsp;<a href="{com.U_EDIT_COM}\#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" /></a>&nbsp;&nbsp;<a href="{com.U_DEL_COM}\#{com.COM_SCRIPT}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" /></a>&nbsp;&nbsp;</span>
 						</div>
 						<div class="msg_contents_container">
 							<div class="msg_info_mbr">
@@ -67,7 +67,7 @@
 								<div class="msg_contents_overflow">
 									{com.CONTENTS}
 									<br /><br /><br />
-									<a href="{com.U_PROV}#{com.COM_SCRIPT}">{L_DISPLAY_TOPIC_COM}</a> <a href="{com.U_PROV}#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
+									<a href="{com.U_PROV}\#{com.COM_SCRIPT}">{L_DISPLAY_TOPIC_COM}</a> <a href="{com.U_PROV}\#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
 								</div>
 							</div>
 						</div>
