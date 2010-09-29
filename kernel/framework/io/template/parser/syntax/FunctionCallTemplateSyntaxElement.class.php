@@ -27,14 +27,22 @@
 
 class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
+    /**
+     * @var StringInputStream
+     */
     private $input;
+    /**
+     * @var StringOutputStream
+     */
     private $output;
     private $ended = false;
+    private $begin_pos;
 
     public function parse(StringInputStream $input, StringOutputStream $output)
     {
         $this->input = $input;
         $this->output = $output;
+        $this->begin_pos = $input->tell();
         $this->do_parse();
     }
 
@@ -63,13 +71,29 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function process_expression_content()
     {
-        $element = new FunctionTemplateSyntaxElement();
-        $element->parse($this->input, $this->output);
+    	try
+    	{
+	        $element = new FunctionTemplateSyntaxElement();
+	        $element->parse($this->input, $this->output);
+    	}
+    	catch (TemplateParserException $ex)
+    	{
+    		$encountered = $this->encountered();
+            throw new TemplateParserException('Invalid function call, expecting #{aFunction()} but was ' . $encountered, $this->input);
+    	}
     }
 
     private function missing_expression_end()
     {
         throw new TemplateParserException('Missing function call expression end \'}\'', $this->input);
+    }
+    
+    private function encountered()
+    {
+    	$this->input->consume_next('.*\}', 'U');
+        $end_pos = $this->input->tell();
+        $length = $end_pos - $this->begin_pos;
+    	return $this->input->to_string(-$length, $length + 1);
     }
 }
 ?>
