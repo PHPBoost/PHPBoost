@@ -34,7 +34,7 @@ interface CLICommand
     function short_description();
     
     /**
-     * @desc prints the help corresponding to this command
+     * @desc Returns the help corresponding to this command
      * @param array $args precises the help message to print
      */
     function help(array $args);
