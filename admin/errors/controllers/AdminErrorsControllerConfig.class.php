@@ -91,6 +91,12 @@ class AdminErrorsControllerConfig extends AdminController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('unexisted_member', 'Membre inexistant', ErrorsConfig::load()->get_unexisted_member(), array('forbiddentags' => $this->forbidden_tags())));
 
+		$fieldset->add_field(new FormFieldRichTextEditor('member_banned', 'Membre banni', ErrorsConfig::load()->get_member_banned(), array('forbiddentags' => $this->forbidden_tags())));
+
+		$fieldset->add_field(new FormFieldRichTextEditor('unexisted_category', 'Catégorie inéxistante', ErrorsConfig::load()->get_unexisted_category(), array('forbiddentags' => $this->forbidden_tags())));
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('unknow_error', 'Erreur Inconnue', ErrorsConfig::load()->get_unknow_error(), array('forbiddentags' => $this->forbidden_tags())));
+
 		$this->form->add_fieldset($fieldset);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
