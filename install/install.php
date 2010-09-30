@@ -539,7 +539,7 @@ switch($step)
 				$info_theme = load_ini_file('../templates/' . DISTRIBUTION_THEME . '/config/', $lang);
 				PersistenceContext::get_querier()->inject(
 					"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
-					VALUES (:theme, 1, -1, :left_column, :right_column)",
+					VALUES (:theme, 1, '". addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1)))."', :left_column, :right_column)",
 				array(
 						'theme' => DISTRIBUTION_THEME,
 						'left_column' => $info_theme['left_column'],
