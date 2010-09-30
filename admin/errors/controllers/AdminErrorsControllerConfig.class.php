@@ -48,6 +48,10 @@ class AdminErrorsControllerConfig extends AdminController
 				$errors_config->set_read_only($this->form->get_value('read_only'));
 				$errors_config->set_unexisted_page($this->form->get_value('unexisted_page'));
 				$errors_config->set_unexisted_member($this->form->get_value('unexisted_member'));
+				$errors_config->set_member_banned($this->form->get_value('member_banned'));
+				$errors_config->set_unexisted_category($this->form->get_value('unexisted_category'));
+				$errors_config->set_unknow_error($this->form->get_value('unknow_error'));
+				
 				ErrorsConfig::save();
 			}
 		}
