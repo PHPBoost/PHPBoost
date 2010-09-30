@@ -37,6 +37,9 @@ class ErrorsConfig extends AbstractConfigData
 	const READ_ONLY = 'read_only';
 	const UNEXISTED_PAGE ='unexisted_page';
 	const UNEXISTED_MEMBER = 'unexisted_member';
+	const UNKNOW_ERROR = 'unknow_error';
+	const UNEXISTED_CATEGORY = 'unexisted_category';
+	const MEMBER_BANNED = 'member_banned';
 	
 	public function set_not_required_level($error)
 	{
@@ -98,6 +101,36 @@ class ErrorsConfig extends AbstractConfigData
 		return $this->return_correct_lang_for_country(self::UNEXISTED_MEMBER);
 	}
 	
+	public function set_unknow_error($error)
+	{
+		$this->set_property(self::UNKNOW_ERROR, $error);
+	}
+	
+	public function get_unknow_error()
+	{
+		return $this->return_correct_lang_for_country(self::UNKNOW_ERROR);
+	}
+	
+	public function set_unexisted_category($error)
+	{
+		$this->set_property(self::UNEXISTED_CATEGORY, $error);
+	}
+	
+	public function get_unexisted_category()
+	{
+		return $this->return_correct_lang_for_country(self::UNEXISTED_CATEGORY);
+	}
+	
+	public function set_member_banned($error)
+	{
+		$this->set_property(self::MEMBER_BANNED, $error);
+	}
+	
+	public function get_member_banned()
+	{
+		return $this->return_correct_lang_for_country(self::MEMBER_BANNED);
+	}
+	
 	
 	public function get_default_values()
 	{
@@ -108,6 +141,9 @@ class ErrorsConfig extends AbstractConfigData
 			self::READ_ONLY => LangLoader::get_message('e_readonly', 'errors'),
 			self::UNEXISTED_PAGE => LangLoader::get_message('e_unexist_page', 'errors'),
 			self::UNEXISTED_MEMBER => LangLoader::get_message('e_unexist_member', 'errors'),
+			self::UNKNOW_ERROR => LangLoader::get_message('unknow_error', 'errors'),
+			self::UNEXISTED_CATEGORY => LangLoader::get_message('e_unexist_cat', 'errors'),
+			self::MEMBER_BANNED => LangLoader::get_message('e_member_ban_w', 'errors'),
 		);
 	}
 	
