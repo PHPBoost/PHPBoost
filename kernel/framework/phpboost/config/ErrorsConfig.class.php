@@ -2,9 +2,9 @@
 /*##################################################
  *                      	 ErrorsConfig.class.php
  *                            -------------------
- *   begin                : December 12, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : September 30, 2010
+ *   copyright            : (C) 2010 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,6 +25,10 @@
  *
  ###################################################*/
 
+ /**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @package {@package}
+ */
 class ErrorsConfig extends AbstractConfigData
 {
 	const NOT_REQUIRED_LEVEL = 'not_required_level';
@@ -118,9 +122,9 @@ class ErrorsConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'errors');
 	}
 	
-	private function return_correct_lang_for_country(Const $const)
+	private function return_correct_lang_for_country($const)
 	{
-		if (AppContext::get_user()->get_attribute('user_lang') == UserAccountsConfig::load()->set_default_lang())
+		if (AppContext::get_user()->get_attribute('user_lang') == UserAccountsConfig::load()->get_default_lang())
 		{
 			return $this->get_property($const);
 		}

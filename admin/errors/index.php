@@ -33,6 +33,7 @@ $url_controller_mappers = array(
 new UrlControllerMapper('AdminErrorsController404List', '`^/404(?:/list)?/?$`'),
 new UrlControllerMapper('AdminErrorsController404Clear', '`^/404/clear/?$`'),
 new UrlControllerMapper('AdminErrorsController404Delete', '`^/404/([0-9]+)/delete/?$`', array('id')),
+new UrlControllerMapper('AdminErrorsControllerConfig', '`^/config/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
