@@ -160,7 +160,7 @@ class InstallationServices
 		$info_theme = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $locale);
 		PersistenceContext::get_querier()->inject(
 			"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
-			VALUES (:theme, 1, -1, :left_column, :right_column)", array(
+			VALUES (:theme, 1, '". addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1)))."', :left_column, :right_column)", array(
 				'theme' => $theme,
 				'left_column' => $info_theme['left_column'],
 				'right_column' => $info_theme['right_column']
