@@ -51,20 +51,20 @@
  */
 class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 {
-    public function test_parse_text()
-    {
-        $input = 'this is a simple text';
-        $output = '<?php $_result=\'this is a simple text\'; ?>';
-        $this->assert_parse($input, $output);
-    }
-    
-    public function test_parse_text_with_php()
-    {
-        $input = 'this is a <?php simple(); ?> text';
-        $output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
+	public function test_parse_text()
+	{
+		$input = 'this is a simple text';
+		$output = '<?php $_result=\'this is a simple text\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_parse_text_with_php()
+	{
+		$input = 'this is a <?php simple(); ?> text';
+		$output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
         'simple();if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+		$this->assert_parse($input, $output);
+	}
 
 	public function test_parse_text_with_char_to_escape()
 	{
@@ -177,145 +177,172 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-    public function test_tpl_function()
-    {
-        $input = 'this is a simple ${call()}';
-        try
-        {
-            $this->assert_parse($input, null);
-            $this->fail('unauthorized method call not detected');
-        }
-        catch (TemplateParserException $ex)
-        {   
-        }
-    }
+	public function test_tpl_function()
+	{
+		$input = 'this is a simple ${call()}';
+		try
+		{
+			$this->assert_parse($input, null);
+			$this->fail('unauthorized method call not detected');
+		}
+		catch (TemplateParserException $ex)
+		{
+			// Successful
+		}
+	}
 
-    public function test_function_call()
-    {
-        $input = 'this is a simple #{resources(\'main\')}';
-        $output = '<?php $_result=\'this is a simple \';$_functions->resources(\'main\');$_result=\'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_function_call()
+	{
+		$input = 'this is a simple #{resources(\'main\')}';
+		$output = '<?php $_result=\'this is a simple \';$_functions->resources(\'main\');$_result=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_function()
-    {
-        $input = 'this is a simple ${resources(\'main\')}';
-        $output = '<?php $_result=\'this is a simple \' . $_functions->resources(\'main\') . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_function()
+	{
+		$input = 'this is a simple ${resources(\'main\')}';
+		$output = '<?php $_result=\'this is a simple \' . $_functions->resources(\'main\') . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_php_function()
-    {
-        $input = 'this is a simple ${PHP::strlen(\'toto\')}';
-        $output = '<?php $_result=\'this is a simple \' . strlen(\'toto\') . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_php_function()
+	{
+		$input = 'this is a simple ${PHP::strlen(\'toto\')}';
+		$output = '<?php $_result=\'this is a simple \' . strlen(\'toto\') . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_function_without_parameters()
-    {
-        $input = 'this is a simple ${Function::call()}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call() . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_unexisting_php_function()
+	{
+		$input = 'this is a simple ${PHP::strlen2()}';
+		try
+		{
+			$this->assert_parse($input, null);
+			$this->fail('expecting exception TemplateParserException');
+		} catch (TemplateParserException $ex)
+		{
+			// Successful
+		}
+	}
 
-    public function test_function_with_a_parameter()
-    {
-        $input = 'this is a simple ${Function::call(coucou)}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call($_data->get_var(\'coucou\')) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_unexisting_static_method()
+	{
+		$input = 'this is a simple ${Static::method()}';
+		try
+		{
+			$this->assert_parse($input, null);
+			$this->fail('expecting exception TemplateParserException');
+		} catch (TemplateParserException $ex)
+		{
+			// Successful
+		}
+	}
 
-    public function test_function_with_a_constant_parameter()
-    {
-        $input = 'this is a simple ${Function::call(\'coucou\')}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call(\'coucou\') . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_function_without_parameters()
+	{
+		$input = 'this is a simple ${AppContext::get_uid()}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid() . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_function_with_a_numeric_constant_parameter()
-    {
-        $input = 'this is a simple ${Function::call(42)}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call(42) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_function_with_a_parameter()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(coucou)}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid($_data->get_var(\'coucou\')) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_function_with_a_floating_constant_parameter()
-    {
-        $input = 'this is a simple ${Function::call(42.37)}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call(42.37) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_function_with_a_constant_parameter()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(\'coucou\')}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(\'coucou\') . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_function_with_mixed_parameters()
-    {
-        $input = 'this is a simple ${Function::call(42, \'coucou\',
+	public function test_function_with_a_numeric_constant_parameter()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(42)}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_function_with_a_floating_constant_parameter()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(42.37)}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42.37) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_function_with_mixed_parameters()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(42, \'coucou\',
         42.37)}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call(42, \'coucou\', 42.37) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42, \'coucou\', 42.37) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_imbricated_functions_call()
-    {
-        $input = 'this is a simple ${Function::call(SubFunction::callAgain())}';
-        $output = '<?php $_result=\'this is a simple \' . Function::call(SubFunction::callAgain()) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_imbricated_functions_call()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(AppContext::get_uid())}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(AppContext::get_uid()) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_include_tpl()
-    {
-        $input = 'this is a simple # INCLUDE tpl #';
-        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+	public function test_include_tpl()
+	{
+		$input = 'this is a simple # INCLUDE tpl #';
+		$output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate(\'tpl\');if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_simple_block_include_tpl()
-    {
-        $input = 'this is a simple # INCLUDE block.tpl #';
-        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+	public function test_simple_block_include_tpl()
+	{
+		$input = 'this is a simple # INCLUDE block.tpl #';
+		$output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_block[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_imbricated_block_include_tpl()
-    {
-        $input = 'this is a simple # INCLUDE block.imbricated.tpl #';
-        $output = '<?php $_result=\'this is a simple \';' . "\n" .
+	public function test_imbricated_block_include_tpl()
+	{
+		$input = 'this is a simple # INCLUDE block.imbricated.tpl #';
+		$output = '<?php $_result=\'this is a simple \';' . "\n" .
 '$_subtemplate = $_data->get_subtemplate_from_list(\'tpl\', $_tmp_imbricated[\'subtemplates\']);if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n" .
 '$_result.=\'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_parse_empty_array()
-    {
-        $input = 'this is a simple ${My::call([])}';
-        $output = '<?php $_result=\'this is a simple \' . My::call(array()) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_parse_empty_array()
+	{
+		$input = 'this is a simple ${AppContext::get_uid([])}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array()) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_parse_one_parameter_array()
-    {
-        $input = 'this is a simple ${My::call([\'coucou\'])}';
-        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\')) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_parse_one_parameter_array()
+	{
+		$input = 'this is a simple ${AppContext::get_uid([\'coucou\'])}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'coucou\')) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_parse_multi_parameters_array()
-    {
-        $input = 'this is a simple ${My::call([\'coucou\', COUCOU, 42.3])}';
-        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
+	public function test_parse_multi_parameters_array()
+	{
+		$input = 'this is a simple ${AppContext::get_uid([\'coucou\', COUCOU, 42.3])}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
 
-    public function test_parse_one_parameter_map()
-    {
-        $input = 'this is a simple ${My::call([\'key\': \'coucou\'])}';
-        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'key\'=>\'coucou\')) . \'\'; ?>';
-        $this->assert_parse($input, $output);
-    }
-    
+	public function test_parse_one_parameter_map()
+	{
+		$input = 'this is a simple ${AppContext::get_uid([\'key\': \'coucou\'])}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'key\'=>\'coucou\')) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
 	private function assert_parse($input, $expected_output)
 	{
 		$parser = new TemplateSyntaxParser();

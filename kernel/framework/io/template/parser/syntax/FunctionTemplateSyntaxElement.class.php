@@ -39,51 +39,62 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
 	}
 
-    public function parse(StringInputStream $input, StringOutputStream $output)
-    {
-        $matches = array();
-        if ($input->consume_next('(?:(?P<class>\w+)::)?(?P<method>\w+)\(', '', $matches))
-        {
-            $class = $matches['class'];
-            $method = $matches['method'];
-            $this->check_method_call($class, $method, $input, $output);
-            $this->write($class, $method, $output);
-            $this->parameters($input, $output);
-            $this->end($input, $output);
-        }
-        else
-        {
-            throw new TemplateParserException('invalid function call', $input);
-        }
-    }
+	public function parse(StringInputStream $input, StringOutputStream $output)
+	{
+		$matches = array();
+		if ($input->consume_next('(?:(?P<class>\w+)::)?(?P<method>\w+)\(', '', $matches))
+		{
+			$class = $matches['class'];
+			$method = $matches['method'];
+			$this->check_method_call($class, $method, $input, $output);
+			$this->write($class, $method, $output);
+			$this->parameters($input, $output);
+			$this->end($input, $output);
+		}
+		else
+		{
+			throw new TemplateParserException('invalid function call', $input);
+		}
+	}
 
-    private function check_method_call($class, $method, StringInputStream $input, StringOutputStream $output)
-    {
-        if (empty($class))
-        {
-            if (!in_array($method, self::$renderer_methods))
-            {
-                throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', self::$renderer_methods) .
-                   ' functions calls and static methods calls are allowed', $input);
-            }
-            else
-            {
-                $output->write('$_functions->');
-            }
-        }
-    }
-    
-    private function write($class, $method, StringOutputStream $output)
-    {
-        if (!empty($class))
-        {
-            if (strtoupper($class) != 'PHP')
-            {
-                $output->write($class . '::');
-            }
-        }
-        $output->write($method . '(');
-    }
+	private function check_method_call($class, $method, StringInputStream $input, StringOutputStream $output)
+	{
+		if (empty($class))
+		{
+			if (!in_array($method, self::$renderer_methods))
+			{
+				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', self::$renderer_methods) .
+                    ' functions calls and static methods calls are allowed', $input);
+			}
+		}
+		elseif ($this->is_php_function($class))
+		{
+			if (!function_exists($method))
+			{
+                throw new TemplateParserException('PHP function ' . $method . '() does not exist', $input);
+			}
+		}
+		elseif (!method_exists($class, $method))
+		{
+			throw new TemplateParserException('Static method ' . $class . '::' . $method . '() does not exist', $input);
+		}
+	}
+
+	private function write($class, $method, StringOutputStream $output)
+	{
+		if (!empty($class))
+		{
+			if (!$this->is_php_function($class))
+			{
+				$output->write($class . '::');
+			}
+		}
+		else
+		{
+			$output->write('$_functions->');
+		}
+		$output->write($method . '(');
+	}
 
 	private function parameters(StringInputStream $input, StringOutputStream $output)
 	{
@@ -99,5 +110,13 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		$output->write(')');
 	}
+
+	private function is_php_function($prefix)
+	{
+		return strtoupper($prefix) == 'PHP';
+	}
 }
+
+class InvalidTemplateFunctionCallException extends TemplateParserException {}
+
 ?>
