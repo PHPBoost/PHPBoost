@@ -2,7 +2,7 @@ ${resources('install/install')}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
 	<head>
-		<title>${i18n('installation.title')} - {STEP_TITLE}</title>
+		<title>{@installation.title} - {STEP_TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
@@ -21,7 +21,7 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						${i18n('change_lang')}
+						{@change_lang}
 					</td>
 				</tr>
 				<tr>
@@ -36,7 +36,7 @@ ${resources('install/install')}
 								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							</p>
 							<p id="button_change_lang">
-								<input type="submit" class="submit" value="${i18n('change')}" />
+								<input type="submit" class="submit" value="{@change}" />
 							</p>
 							<script type="text/javascript">
 							<!--
@@ -51,7 +51,7 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						${i18n('steps_list')}
+						{@steps_list}
 					</td>
 				</tr>
 				# START step #
@@ -65,7 +65,7 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						${i18n('install_progress')}
+						{@install_progress}
 					</td>
 				</tr>
 				<tr>
@@ -82,21 +82,21 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						${i18n('appendices')}
+						{@appendices}
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/help.png" alt="${i18n('documentation')}" class="valign_middle" />
+						<img src="templates/images/help.png" alt="{@documentation}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_DOCUMENTATION}">${i18n('documentation')}</a>
+						<a href="{U_DOCUMENTATION}">{@documentation}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<img src="templates/images/intro.png" alt="${i18n('restart_installation')}" class="valign_middle" />
+						<img src="templates/images/intro.png" alt="{@restart_installation}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_RESTART}" onclick="return confirm('${i18n('confirm_restart_installation')}');">${i18n('restart_installation')}</a>
+						<a href="{U_RESTART}" onclick="return confirm('{@confirm_restart_installation}');">{@restart_installation}</a>
 					</td>
 				</tr>					
 			</table>
@@ -120,7 +120,7 @@ ${resources('install/install')}
 	</div>
 	<div id="footer">
 		<span>
-			${i18n('powered_by')} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> ${i18n('phpboost_right')}
+			{@powered_by} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost_right}
 		</span>	
 	</div>
 	</body>

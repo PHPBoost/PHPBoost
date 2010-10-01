@@ -32,7 +32,7 @@
 		return PersistenceContext::get_sql()->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	}
 	
-	public static update_aprobation($key)
+	public static function update_aprobation($key)
 	{
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	}

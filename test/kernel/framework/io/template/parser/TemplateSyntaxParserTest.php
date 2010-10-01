@@ -89,11 +89,18 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 			'\' sim\' . $_data->get_var(\'pl\') . \'e text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
-	
+    
     public function test_lang_var()
     {
         $input = 'this is a {@lang.var}';
-        $output = '<?php $_result=\'this is a \' . $_function->i18n(\'lang.var\') . \'\'; ?>';
+        $output = '<?php $_result=\'this is a \' . $_functions->i18n(\'lang.var\') . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+    
+    public function test_html_lang_var()
+    {
+        $input = 'this is a {@H|html.lang.var}';
+        $output = '<?php $_result=\'this is a \' . $_functions->i18nraw(\'html.lang.var\') . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 

@@ -63,7 +63,7 @@ class DisplayMemberExtendedFields
 				$display_extended_field->set_field_name($extended_field['field_name']);
 				$display_extended_field->set_content($extended_field['contents']);
 				$display_extended_field->set_field_type($extended_field['field']);
-				$display_extended_field->set_possible_values()$extended_field['possible_values'];
+				$display_extended_field->set_possible_values($extended_field['possible_values']);
 				$display_extended_field->set_default_values($extended_field['default_values']);
 				$display_extended_field->set_required($extended_field['required']);
 				$display_extended_field->set_display($extended_field['display']);
@@ -92,7 +92,7 @@ class DisplayMemberExtendedFields
 				$display_extended_field->set_field_name($extended_field['field_name']);
 				$display_extended_field->set_content($extended_field['contents']);
 				$display_extended_field->set_field_type($extended_field['field']);
-				$display_extended_field->set_possible_values()$extended_field['possible_values'];
+				$display_extended_field->set_possible_values($extended_field['possible_values']);
 				$display_extended_field->set_default_values($extended_field['default_values']);
 				$display_extended_field->set_required($extended_field['required']);
 				$display_extended_field->set_display($extended_field['display']);

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    TemplateTemplateSyntaxElement.class.php
+ *                    BaseTemplateSyntaxElement.class.php
  *                            -------------------
  *   begin                : July 10 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class BaseTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	/**
 	 * @var StringInputStream
@@ -49,7 +49,7 @@ class TemplateTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$element = null;
 			$current = $this->input->next();
-		    if ($current == '{' && $this->input->assert_next('@?(?:\w+\.)*\w+\}'))
+		    if ($current == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}'))
             {
                 $element = new VariableExpressionTemplateSyntaxElement();
             }
