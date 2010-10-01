@@ -58,7 +58,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_php()
+	public function test_php()
 	{
 		$input = 'this is a <?php simple(); ?> text';
 		$output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
@@ -66,14 +66,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_char_to_escape()
+	public function test_char_to_escape()
 	{
 		$input = 'this is a simpl\' text';
 		$output = '<?php $_result=\'this is a simpl\\\' text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_line_breaks()
+	public function test_line_breaks()
 	{
 		$input = 'this is a simple
 	text';
@@ -82,15 +82,22 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_simple_vars()
+	public function test_simple_vars()
 	{
 		$input = 'this is {a} sim{pl}e text';
 		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
 			'\' sim\' . $_data->get_var(\'pl\') . \'e text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
+	
+    public function test_lang_var()
+    {
+        $input = 'this is a {@lang.var}';
+        $output = '<?php $_result=\'this is a \' . $_function->i18n(\'lang.var\') . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
 
-	public function test_parse_text_with_loop_vars()
+	public function test_loop_vars()
 	{
 		$input = 'this is {a} sim{p.l}e
 # START tex #
@@ -108,7 +115,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_condition()
+	public function test_condition()
 	{
 		$input = '
 # IF condition #
@@ -121,7 +128,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_negative_condition()
+	public function test_negative_condition()
 	{
 		$input = '
 # IF NOT condition #
@@ -134,7 +141,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_condition_and_else()
+	public function test_condition_and_else()
 	{
 		$input = '
 # IF condition #
@@ -151,7 +158,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
-	public function test_parse_text_with_loop_and_conditions()
+	public function test_loop_and_conditions()
 	{
 		$input = 'this is {a} sim{p.l}e
 # START tex #

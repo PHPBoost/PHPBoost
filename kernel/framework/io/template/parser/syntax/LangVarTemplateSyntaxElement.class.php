@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    VariableTemplateSyntaxElement.class.php
+ *                    LangVarTemplateSyntaxElement.class.php
  *                            -------------------
- *   begin                : July 0810 2010
+ *   begin                : October 01 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,35 +25,25 @@
  *
  ###################################################*/
 
-class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class LangVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	public static function is_element(StringInputStream $input)
-	{
-		return $input->assert_next('\s*@?(?:[a-zA-Z_]\w+\.)*[a-zA-Z_]\w+\s*');
-	}
-
-	public function parse(StringInputStream $input, StringOutputStream $output)
-	{
-		$input->consume_next('\s*');
-		$element = null;
-		if (LangVarTemplateSyntaxElement::is_element($input))
-		{
-			$element = new LangVarTemplateSyntaxElement();
-		}
-		elseif (LoopVarTemplateSyntaxElement::is_element($input))
-		{
-			$element = new LoopVarTemplateSyntaxElement();
-		}
-		elseif (SimpleVarTemplateSyntaxElement::is_element($input))
-		{
-			$element = new SimpleVarTemplateSyntaxElement();
-		}
-		else
-		{
-			throw new TemplateParserException('invalid variable', $input);
-		}
-		$element->parse($input, $output);
-		$input->consume_next('\s*');
-	}
+    public static function is_element(StringInputStream $input)
+    {
+        return $input->assert_next('@[a-zA-Z_][\w_.]*');
+    }
+    
+    public function parse(StringInputStream $input, StringOutputStream $output)
+    {
+        $matches = array();
+        if ($input->consume_next('@(?P<msg>[a-zA-Z_][\w_.]*)', '', $matches))
+        {
+            $msg = $matches['msg'];
+            $output->write('$_function->i18n(\'' . $msg . '\')');
+        }
+        else
+        {
+            throw new TemplateParserException('invalid simple variable name', $input);
+        }
+    }
 }
 ?>
