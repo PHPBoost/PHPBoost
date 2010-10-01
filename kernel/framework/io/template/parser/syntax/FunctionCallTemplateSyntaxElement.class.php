@@ -76,7 +76,7 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	        $element = new FunctionTemplateSyntaxElement();
 	        $element->parse($this->input, $this->output);
     	}
-    	catch (TemplateParserException $ex)
+    	catch (InvalidTemplateFunctionCallException $ex)
     	{
     		$encountered = $this->encountered();
             throw new TemplateParserException('Invalid function call, expecting #{aFunction()} but was ' . $encountered, $this->input);
