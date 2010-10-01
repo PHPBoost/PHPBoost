@@ -64,7 +64,7 @@ class ConfirmController extends AbstractController
 	private function check_activation($key)
 	{
 		$check_mbr = ConfirmHelper::check_activation_pass_exist($key);
-		if ($check_mbr || empty($key))
+		if ($check_mbr && !empty($key))
 		{
 			ConfirmHelper::update_aprobation($key);
 			
