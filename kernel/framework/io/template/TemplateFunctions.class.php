@@ -93,7 +93,7 @@ class TemplateFunctions
         return TextHelper::to_js_string($string, $add_quotes);
     }
     
-    public function setvars($string, array $parameters)
+    public function set($string, array $parameters)
     {
     	return StringVars::replace_vars($string, $parameters);
     }
