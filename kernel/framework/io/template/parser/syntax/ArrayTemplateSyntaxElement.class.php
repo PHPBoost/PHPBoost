@@ -29,12 +29,12 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('\s*array\(');
+		return $input->assert_next('\s*\[');
 	}
 
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-		if ($input->consume_next('\s*array\('))
+		if ($input->consume_next('\s*\['))
 		{
 			$output->write('array(');
 			$this->content($input, $output);
@@ -54,7 +54,7 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function end(StringInputStream $input, StringOutputStream $output)
 	{
-		if (!$input->consume_next('\)\s*'))
+		if (!$input->consume_next('\]\s*'))
 		{
 			throw new TemplateParserException('invalid array: missing enclosing parenthesis', $input);
 		}

@@ -29,7 +29,7 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	public function parse(StringInputStream $input, StringOutputStream $output)
 	{
-        while (!$input->assert_next('\s*\)'))
+        while (!$input->assert_next('\s*\]'))
         {
             $this->process_key($input, $output);
             $this->process_value($input, $output);
@@ -37,9 +37,9 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
             {
                 $output->write(', ');
             }
-            else if (!$input->assert_next('\s*\)\s*'))
+            else if (!$input->assert_next('\s*\]\s*'))
             {
-                throw new TemplateParserException('invalid array definition, missing "," or ")"', $input);
+                throw new TemplateParserException('invalid array definition, missing "," or "]"', $input);
             }
         }
 	}
@@ -47,9 +47,9 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function process_key(StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
-		if ($input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*=>\s*', '', $matches))
+		if ($input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*:\s*', '', $matches))
 		{
-			$output->write($matches['key'] . ' => ');
+			$output->write($matches['key'] . '=>');
 		}
 	}
 
