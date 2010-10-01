@@ -204,6 +204,13 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
         $this->assert_parse($input, $output);
     }
 
+    public function test_php_function()
+    {
+        $input = 'this is a simple ${PHP::strlen(\'toto\')}';
+        $output = '<?php $_result=\'this is a simple \' . strlen(\'toto\') . \'\'; ?>';
+        $this->assert_parse($input, $output);
+    }
+
     public function test_function_without_parameters()
     {
         $input = 'this is a simple ${Function::call()}';
@@ -283,29 +290,29 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 
     public function test_parse_empty_array()
     {
-        $input = 'this is a simple ${My::call(array())}';
+        $input = 'this is a simple ${My::call([])}';
         $output = '<?php $_result=\'this is a simple \' . My::call(array()) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_one_parameter_array()
     {
-        $input = 'this is a simple ${My::call(array(\'coucou\'))}';
+        $input = 'this is a simple ${My::call([\'coucou\'])}';
         $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\')) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_multi_parameters_array()
     {
-        $input = 'this is a simple ${My::call(array(\'coucou\', COUCOU, 42.3))}';
+        $input = 'this is a simple ${My::call([\'coucou\', COUCOU, 42.3])}';
         $output = '<?php $_result=\'this is a simple \' . My::call(array(\'coucou\', $_data->get_var(\'COUCOU\'), 42.3)) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
 
     public function test_parse_one_parameter_map()
     {
-        $input = 'this is a simple ${My::call(array(\'key\' => \'coucou\'))}';
-        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'key\' => \'coucou\')) . \'\'; ?>';
+        $input = 'this is a simple ${My::call([\'key\': \'coucou\'])}';
+        $output = '<?php $_result=\'this is a simple \' . My::call(array(\'key\'=>\'coucou\')) . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
     
