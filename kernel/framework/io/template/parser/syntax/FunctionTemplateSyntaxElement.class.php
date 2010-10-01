@@ -31,7 +31,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public static function __static()
 	{
-		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw', 'escape', 'escapejs', 'setvars');
+		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw', 'escape', 'escapejs', 'set');
 	}
 
 	public static function is_element(StringInputStream $input)
