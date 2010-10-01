@@ -72,7 +72,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_content()
 	{
-		$element = new TemplateTemplateSyntaxElement();
+		$element = new BaseTemplateSyntaxElement();
 		$element->parse($this->input, $this->output);
 	}
 

@@ -73,7 +73,7 @@ class TemplateSyntaxParser implements TemplateParser
 	
 	private function do_parse()
 	{
-		$template_element = new TemplateTemplateSyntaxElement();
+		$template_element = new BaseTemplateSyntaxElement();
 		$template_element->parse($this->input, $this->output);
 		if ($this->input->has_next())
 		{

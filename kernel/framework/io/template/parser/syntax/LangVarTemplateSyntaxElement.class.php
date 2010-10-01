@@ -29,16 +29,18 @@ class LangVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
     public static function is_element(StringInputStream $input)
     {
-        return $input->assert_next('@[a-zA-Z_][\w_.]*');
+        return $input->assert_next('@(?:H\|)?[a-zA-Z_][\w_.]*');
     }
     
     public function parse(StringInputStream $input, StringOutputStream $output)
     {
         $matches = array();
-        if ($input->consume_next('@(?P<msg>[a-zA-Z_][\w_.]*)', '', $matches))
+        if ($input->consume_next('@(?P<html>H\|)?(?P<msg>[a-zA-Z_][\w_.]*)', '', $matches))
         {
+            $is_html = $matches['html'];
             $msg = $matches['msg'];
-            $output->write('$_function->i18n(\'' . $msg . '\')');
+            $function = $is_html ? 'i18nraw' : 'i18n';
+            $output->write('$_functions->' . $function . '(\'' . $msg . '\')');
         }
         else
         {

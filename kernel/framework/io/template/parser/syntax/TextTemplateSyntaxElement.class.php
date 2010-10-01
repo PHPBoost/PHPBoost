@@ -69,7 +69,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		elseif (!$this->escaped && 
 		((($char == '$' || $char == '#') && $this->input->assert_next('\{')) ||
-		($char == '{' && $this->input->assert_next('@?(?:\w+\.)*\w+\}')) ||
+		($char == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}')) ||
 		($char == '#'&& $this->input->assert_next('[\s]')) ||
         ($char == '<' && $this->input->assert_next('\?php'))))
 		{

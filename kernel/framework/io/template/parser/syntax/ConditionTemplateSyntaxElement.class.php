@@ -89,7 +89,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_condition()
 	{
-		$element = new TemplateTemplateSyntaxElement();
+		$element = new BaseTemplateSyntaxElement();
 		$element->parse($this->input, $this->output);
 	}
 

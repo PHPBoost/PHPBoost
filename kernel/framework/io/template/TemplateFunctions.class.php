@@ -81,6 +81,11 @@ class TemplateFunctions
     {
         return htmlspecialchars($string);
     }
+    
+    public function html($string)
+    {
+        return htmlspecialchars_decode($string);
+    }
 
     /**
      * @desc Exports a variable to be used in a javascript script.

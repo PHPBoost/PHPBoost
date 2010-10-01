@@ -29,7 +29,7 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('\s*@?(?:[a-zA-Z_]\w+\.)*[a-zA-Z_]\w+\s*');
+		return $input->assert_next('\s*(?:@(?:H\|)?)?(?:[a-zA-Z_]\w+\.)*[a-zA-Z_]\w+\s*');
 	}
 
 	public function parse(StringInputStream $input, StringOutputStream $output)

@@ -27,13 +27,6 @@
 
 class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private static $renderer_methods;
-
-	public static function __static()
-	{
-		self::$renderer_methods = array('resources', 'i18n', 'i18njs', 'i18nraw', 'i18njsraw', 'escape', 'escapejs', 'set');
-	}
-
 	public static function is_element(StringInputStream $input)
 	{
 		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
@@ -61,9 +54,9 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (empty($class))
 		{
-			if (!in_array($method, self::$renderer_methods))
+			if (!method_exists('TemplateFunctions', $method))
 			{
-				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', self::$renderer_methods) .
+				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', get_class_methods('TemplateFunctions')) .
                     ' functions calls and static methods calls are allowed', $input);
 			}
 		}
