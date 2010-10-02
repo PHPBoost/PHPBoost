@@ -27,21 +27,12 @@
 
 class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-    /**
-     * @var StringInputStream
-     */
-    private $input;
-    /**
-     * @var StringOutputStream
-     */
-    private $output;
     private $ended = false;
     private $begin_pos;
 
-    public function parse(StringInputStream $input, StringOutputStream $output)
+    public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
     {
-        $this->input = $input;
-        $this->output = $output;
+        $this->register($context, $input, $output);
         $this->begin_pos = $input->tell();
         $this->do_parse();
     }
@@ -73,8 +64,7 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
     {
     	try
     	{
-	        $element = new FunctionTemplateSyntaxElement();
-	        $element->parse($this->input, $this->output);
+	        $this->parse_elt(new FunctionTemplateSyntaxElement());
     	}
     	catch (InvalidTemplateFunctionCallException $ex)
     	{

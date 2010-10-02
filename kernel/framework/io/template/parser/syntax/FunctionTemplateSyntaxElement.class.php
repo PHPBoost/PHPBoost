@@ -32,17 +32,18 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
 	}
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+        $this->register($context, $input, $output);
 		$matches = array();
 		if ($input->consume_next('(?:(?P<class>\w+)::)?(?P<method>\w+)\(', '', $matches))
 		{
 			$class = $matches['class'];
 			$method = $matches['method'];
-			$this->check_method_call($class, $method, $input, $output);
-			$this->write($class, $method, $output);
-			$this->parameters($input, $output);
-			$this->end($input, $output);
+			$this->check_method_call($class, $method);
+			$this->write($class, $method);
+			$this->parameters();
+			$this->end();
 		}
 		else
 		{
@@ -50,58 +51,57 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function check_method_call($class, $method, StringInputStream $input, StringOutputStream $output)
+	private function check_method_call($class, $method)
 	{
 		if (empty($class))
 		{
 			if (!method_exists('TemplateFunctions', $method))
 			{
 				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', get_class_methods('TemplateFunctions')) .
-                    ' functions calls and static methods calls are allowed', $input);
+                    ' functions calls and static methods calls are allowed', $this->input);
 			}
 		}
 		elseif ($this->is_php_function($class))
 		{
 			if (!function_exists($method))
 			{
-                throw new TemplateParserException('PHP function ' . $method . '() does not exist', $input);
+                throw new TemplateParserException('PHP function ' . $method . '() does not exist', $this->input);
 			}
 		}
 		elseif (!method_exists($class, $method))
 		{
-			throw new TemplateParserException('Static method ' . $class . '::' . $method . '() does not exist', $input);
+			throw new TemplateParserException('Static method ' . $class . '::' . $method . '() does not exist', $this->input);
 		}
 	}
 
-	private function write($class, $method, StringOutputStream $output)
+	private function write($class, $method)
 	{
 		if (!empty($class))
 		{
 			if (!$this->is_php_function($class))
 			{
-				$output->write($class . '::');
+				$this->output->write($class . '::');
 			}
 		}
 		else
 		{
-			$output->write(TemplateSyntaxElement::FUNCTIONS . '->');
+			$this->output->write(TemplateSyntaxElement::FUNCTIONS . '->');
 		}
-		$output->write($method . '(');
+		$this->output->write($method . '(');
 	}
 
-	private function parameters(StringInputStream $input, StringOutputStream $output)
+	private function parameters()
 	{
-		$parameters = new ParametersTemplateSyntaxElement();
-		$parameters->parse($input, $output);
+		$this->parse_elt(new ParametersTemplateSyntaxElement());
 	}
 
-	private function end(StringInputStream $input, StringOutputStream $output)
+	private function end()
 	{
-		if (!$input->consume_next('\)'))
+		if (!$this->input->consume_next('\)'))
 		{
-			throw new TemplateParserException('invalid function call: missing enclosing parenthesis', $input);
+			throw new TemplateParserException('invalid function call: missing enclosing parenthesis', $this->input);
 		}
-		$output->write(')');
+		$this->output->write(')');
 	}
 
 	private function is_php_function($prefix)

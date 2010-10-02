@@ -27,16 +27,16 @@
 
 interface TemplateSyntaxElement
 {
-	
     const RESULT = '$_result';
     const DATA = '$_data';
     const FUNCTIONS = '$_functions';
 	
 	/**
+	 * @param TemplateSyntaxParserContext $context
 	 * @param StringInputStream $input
 	 * @param StringOutputStream $output
 	 */
-	function parse(StringInputStream $input, StringOutputStream $output);
+	function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output);
 }
 
 ?>

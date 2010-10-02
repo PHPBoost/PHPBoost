@@ -32,13 +32,14 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('\s*\[');
 	}
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+        $this->register($context, $input, $output);
 		if ($input->consume_next('\s*\['))
 		{
 			$output->write('array(');
-			$this->content($input, $output);
-			$this->end($input, $output);
+			$this->content();
+			$this->end();
 		}
 		else
 		{
@@ -46,19 +47,18 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function content(StringInputStream $input, StringOutputStream $output)
+	private function content()
 	{
-		$parameters = new ArrayContentTemplateSyntaxElement();
-		$parameters->parse($input, $output);
+		$this->parse_elt(new ArrayContentTemplateSyntaxElement());
 	}
 
-	private function end(StringInputStream $input, StringOutputStream $output)
+	private function end()
 	{
-		if (!$input->consume_next('\]\s*'))
+		if (!$this->input->consume_next('\]\s*'))
 		{
-			throw new TemplateParserException('invalid array: missing enclosing parenthesis', $input);
+			throw new TemplateParserException('invalid array: missing enclosing parenthesis', $this->input);
 		}
-		$output->write(')');
+		$this->output->write(')');
 	}
 }
 ?>

@@ -106,14 +106,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 
 	public function test_loop_vars()
 	{
-		$input = 'this is {a} sim{p.l}e
+		$input = 'this is {a} sim{pl}e
 # START tex #
 	# START tex.ext #
 		{tex.ext.text}
 	# END #
 # END #';
 		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
-			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
+			'\' sim\' . $_data->get_var(\'pl\') . \'e
 \';foreach($_data->get_block(\'tex\') as $_tmp_tex){$_result.=\'
 	\';foreach($_data->get_block(\'tex.ext\') as $_tmp_tex_ext){$_result.=\'
 		\' . $_data->get_var_from_list(\'text\', $_tmp_tex_ext[\'vars\']) . \'
@@ -122,6 +122,24 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
+
+    public function test_loop_vars_outside_loop_scope()
+    {
+        $input = '# START loop1 #
+    # START loop1.loop2 #
+        {loop1.loop3.MYVAR}
+    # END #
+# END #';
+        try
+        {
+            $this->assert_parse($input, null);
+            $this->fail('expecting exception TemplateParserException');
+        } catch (TemplateParserException $ex)
+        {
+            // Successful
+        }
+    }
+	
 	public function test_condition()
 	{
 		$input = '
@@ -167,7 +185,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 
 	public function test_loop_and_conditions()
 	{
-		$input = 'this is {a} sim{p.l}e
+		$input = 'this is {a} sim{pl}e
 # START tex #
 	# IF tex.coucou #
 		# START tex.ext #
@@ -178,7 +196,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	# END #
 # END #';
 		$output = '<?php $_result=\'this is \' . $_data->get_var(\'a\') . ' .
-			'\' sim\' . $_data->get_var_from_list(\'l\', $_tmp_p[\'vars\']) . \'e
+			'\' sim\' . $_data->get_var(\'pl\') . \'e
 \';foreach($_data->get_block(\'tex\') as $_tmp_tex){$_result.=\'
 	\';if($_data->get_var_from_list(\'coucou\', $_tmp_tex[\'vars\'])){$_result.=\'
 		\';foreach($_data->get_block(\'tex.ext\') as $_tmp_tex_ext){$_result.=\'

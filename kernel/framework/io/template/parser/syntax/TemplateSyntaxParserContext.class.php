@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    LangVarTemplateSyntaxElement.class.php
+ *                      TemplateSyntaxParserContext.class.php
  *                            -------------------
- *   begin                : October 01 2010
+ *   begin                : October 02 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,27 +25,29 @@
  *
  ###################################################*/
 
-class LangVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
+class TemplateSyntaxParserContext
 {
-    public static function is_element(StringInputStream $input)
-    {
-        return $input->assert_next('@(?:H\|)?[a-zA-Z_][\w_.]*');
-    }
-    
-    public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
-    {
-        $matches = array();
-        if ($input->consume_next('@(?P<html>H\|)?(?P<msg>[a-zA-Z_][\w_.]*)', '', $matches))
-        {
-            $is_html = $matches['html'];
-            $msg = $matches['msg'];
-            $function = $is_html ? 'i18nraw' : 'i18n';
-            $output->write(TemplateSyntaxElement::FUNCTIONS . '->' . $function . '(\'' . $msg . '\')');
-        }
-        else
-        {
-            throw new TemplateParserException('invalid simple variable name', $input);
-        }
-    }
+	private $loops = array();
+	
+	public function enter_loop($name)
+	{
+		$this->loops[] = $name;
+	}
+	
+	public function exit_loop()
+	{
+		array_pop($this->loops);
+	}
+	
+	public function is_in_loop($name)
+	{
+		return in_array($name, $this->loops);
+	}
+	
+	public function loops_scopes()
+	{
+		return $this->loops;
+	}
 }
+
 ?>

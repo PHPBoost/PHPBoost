@@ -32,7 +32,7 @@ class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('\w+');
 	}
 	
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
 		if ($input->consume_next('(?P<var>\w+)', '', $matches))

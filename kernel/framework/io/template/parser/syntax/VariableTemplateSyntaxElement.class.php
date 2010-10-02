@@ -32,8 +32,9 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('\s*(?:@(?:H\|)?)?(?:[a-zA-Z_]\w+\.)*[a-zA-Z_]\w+\s*');
 	}
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+        $this->register($context, $input, $output);
 		$input->consume_next('\s*');
 		$element = null;
 		if (LangVarTemplateSyntaxElement::is_element($input))
@@ -52,7 +53,7 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			throw new TemplateParserException('invalid variable', $input);
 		}
-		$element->parse($input, $output);
+		$this->parse_elt($element);
 		$input->consume_next('\s*');
 	}
 }
