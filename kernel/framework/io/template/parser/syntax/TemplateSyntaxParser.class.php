@@ -65,7 +65,7 @@ class TemplateSyntaxParser implements TemplateParser
 	{
 		$this->input = new StringInputStream($content);
 		$this->output = new StringOutputStream();
-		$this->output->write('<?php $_result=\'');
+		$this->output->write('<?php ' . TemplateSyntaxElement::RESULT . '=\'');
 		$this->do_parse();
 		$this->output->write('\'; ?>');
 		return $this->output->to_string();

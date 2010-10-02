@@ -39,7 +39,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']) . '[\'vars\']';
 			$varname =  $matches['var'];
-			$output->write('$_data->get_var_from_list(\'' . $varname . '\', ' . $loop_var . ')');
+			$output->write(TemplateSyntaxElement::DATA . '->get_var_from_list(\'' . $varname . '\', ' . $loop_var . ')');
 		}
 		else
 		{

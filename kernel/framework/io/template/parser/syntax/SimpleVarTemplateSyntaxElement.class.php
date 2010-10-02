@@ -38,7 +38,7 @@ class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		if ($input->consume_next('(?P<var>\w+)', '', $matches))
 		{
 			$varname = $matches['var'];
-			$output->write('$_data->get_var(\'' . $varname . '\')');
+			$output->write(TemplateSyntaxElement::DATA . '->get_var(\'' . $varname . '\')');
 		}
 		else
 		{

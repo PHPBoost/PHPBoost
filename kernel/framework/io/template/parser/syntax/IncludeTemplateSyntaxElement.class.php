@@ -27,6 +27,8 @@
 
 class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
+	private static $subtpl = '$_subtpl';
+	
 	private $input;
 	private $output;
 	private $ended = false;
@@ -68,7 +70,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
         else
         {
-            $this->output->write('$_subtemplate = $_data->get_subtemplate(\'' . $name . '\');');
+            $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_subtemplate(\'' . $name . '\');');
         }
     }
     
@@ -76,13 +78,13 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
     {
     	$blocks = explode('.', $block);
         $block_var = '$_tmp_' . array_pop($blocks) . '[\'subtemplates\']';
-        $this->output->write('$_subtemplate = $_data->get_subtemplate_from_list(\'' . $name . '\', ' . $block_var . ');');
+        $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_subtemplate_from_list(\'' . $name . '\', ' . $block_var . ');');
     }
     
     private function write_subtemplate_call()
     {
-        $this->output->write('if ($_subtemplate !== null){$_result.=$_subtemplate->to_string();}' . "\n");
-        $this->output->write('$_result.=\'');
+        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->to_string();}' . "\n");
+        $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
     }
 }
 ?>

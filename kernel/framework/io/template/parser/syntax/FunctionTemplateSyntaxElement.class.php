@@ -84,7 +84,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			$output->write('$_functions->');
+			$output->write(TemplateSyntaxElement::FUNCTIONS . '->');
 		}
 		$output->write($method . '(');
 	}

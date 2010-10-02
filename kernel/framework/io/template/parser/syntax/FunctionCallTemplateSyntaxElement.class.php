@@ -66,7 +66,7 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
     private function process_expression_end()
     {
         $this->ended = $this->input->next() == '}';
-        $this->output->write(';$_result=\'');
+        $this->output->write(';' . TemplateSyntaxElement::RESULT . '=\'');
     }
 
     private function process_expression_content()

@@ -40,7 +40,7 @@ class LangVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
             $is_html = $matches['html'];
             $msg = $matches['msg'];
             $function = $is_html ? 'i18nraw' : 'i18n';
-            $output->write('$_functions->' . $function . '(\'' . $msg . '\')');
+            $output->write(TemplateSyntaxElement::FUNCTIONS . '->' . $function . '(\'' . $msg . '\')');
         }
         else
         {
