@@ -496,7 +496,8 @@ class Date
 	
 	public static function set_default_timezone()
 	{
-		date_default_timezone_set(date_default_timezone_get());
+		$default = @date_default_timezone_get();
+        @date_default_timezone_set($default);
 	}
 }
 ?>
