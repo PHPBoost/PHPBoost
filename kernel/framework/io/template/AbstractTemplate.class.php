@@ -77,17 +77,25 @@ abstract class AbstractTemplate implements Template
     /**
      * {@inheritdoc}
      */
-	public function put($key, $value)
-	{
+    public function put($key, $value)
+    {
         $this->data->put($key, $value);
-	}
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function put_all(array $vars)
+    {
+        $this->data->put_all($key, $value);
+    }
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function assign_vars(array $array_vars)
 	{
-		$this->data->assign_vars($array_vars);
+		$this->data->put_all($array_vars);
 	}
 
 	/**
@@ -144,7 +152,7 @@ abstract class AbstractTemplate implements Template
 	 */
 	public function add_subtemplate($identifier, Template $template)
 	{
-		$this->data->add_subtemplate($identifier, $template);
+		$this->data->put($identifier, $template);
 	}
 
 	/**

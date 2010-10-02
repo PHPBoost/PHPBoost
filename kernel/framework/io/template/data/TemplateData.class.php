@@ -40,18 +40,18 @@
  */
 interface TemplateData
 {
-    /**
-     * @desc Assigns the value <code>$code</code> to the template variable of name <code>$key</code>
-     * @param $key the template parameter name
-     * @param $value the template parameter value
-     */
-    function put($key, $value);
-    
 	/**
-	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
-	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * @desc Assigns the value <code>$value</code> to the template variable of name <code>$key</code>
+	 * @param $key the template parameter name
+	 * @param $value the template parameter value
 	 */
-	function assign_vars(array $array_vars);
+	function put($key, $value);
+
+	/**
+	 * @desc Assigns template variables. It could be simple variables, loop or subtemplates.
+	 * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
+	 */
+	function put_all(array $vars);
 
 	/**
 	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
@@ -61,30 +61,6 @@ interface TemplateData
 	 * @param Template[] $subtemplates The list of subtemplates to embed in the loop's iteration.
 	 */
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
-
-	/**
-	 * @desc Adds a subtemplate that could be used using the following template code <code># include identifier #</code>
-	 * @param string $identifier the identifier
-	 * @param Template $template the template
-	 */
-	function add_subtemplate($identifier, Template $template);
-
-	/**
-	 * @desc Returns the subtemplate identified by the $identifier tag
-	 * @param string $identifier the template identifier
-	 * @return Template the subtemplate identified by the $identifier tag
-	 */
-	function get_subtemplate($identifier);
-
-	/**
-	 * @desc Returns the subtemplate identified by the $identifier tag
-	 * @param string $identifier the template identifier
-	 * @param Template[string] $list the template list in which we will the search for the
-	 * template identifier
-	 * @return Template the subtemplate identified by the $identifier tag
-	 */
-	function get_subtemplate_from_list($identifier, $list);
-
 
 	/**
 	 * @desc Returns the block $blockname in the template block list
@@ -122,7 +98,7 @@ interface TemplateData
 	 * @param mixed[] $list the list in which the variable will be searched for
 	 * @return string the $varname variable content
 	 */
-	function get_var($varname);
+	function get($varname);
 
 	/**
 	 * @desc Similar from the get_var method but it works with loop variables instead of global variables.
@@ -130,7 +106,7 @@ interface TemplateData
 	 * @param mixed[] $list The list into which retrieve the variable
 	 * @return string The variable content
 	 */
-	function get_var_from_list($varname, &$list);
+	function get_from_list($varname, &$list);
 
 	/**
 	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:

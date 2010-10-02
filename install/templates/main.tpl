@@ -112,7 +112,7 @@ ${resources('install/install')}
 				
 				<tr> 				
 					<td class="row_contents">						
-                        # INCLUDE step #					
+                        # INCLUDE installStep #					
 					</td>
 				</tr>
 			</table>		
