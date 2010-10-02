@@ -55,7 +55,7 @@ class DeprecatedTemplate extends FileTemplate
 		foreach ($array_tpl as $identifier => $filename)
 		{
 			$new_template = new FileTemplate($filename);
-			$module_data_path = $new_template->get_data()->get_var('PICTURES_DATA_PATH');
+			$module_data_path = $new_template->get_data()->get('PICTURES_DATA_PATH');
 				
 			$this->bind_vars($new_template);
 			$this->add_subtemplate($identifier, $new_template);
@@ -99,7 +99,7 @@ class DeprecatedTemplate extends FileTemplate
 	 */
 	public function pparse($identifier)
 	{
-		$template = $this->get_data()->get_subtemplate($identifier);
+		$template = $this->get_data()->get($identifier);
 		if ($template != null)
 		{
 			$template->display();

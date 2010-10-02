@@ -33,8 +33,6 @@
 class DefaultTemplateData implements TemplateData
 {
 	protected $vars = array();
-	protected $blocks = array();
-	protected $subtemplates = array();
     
     /**
      * {@inheritdoc}
@@ -44,84 +42,49 @@ class DefaultTemplateData implements TemplateData
         $this->vars[$key] = $value;
     }
     
-	/**
-	 * {@inheritdoc}
-	 */
-	public function assign_vars(array $array_vars)
-	{
-		foreach ($array_vars as $key => $val)
-		{
-			$this->vars[$key] = $val;
-		}
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function put_all(array $vars)
+    {
+        foreach ($vars as $key => $val)
+        {
+            $this->vars[$key] = $val;
+        }
+    }
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
-		if (strpos($block_name, '.') !== false) //Bloc imbriqué.
+		$current_block = null;
+		if (strpos($block_name, '.') !== false) // nested block
 		{
 			$blocks = explode('.', $block_name);
 			$blockcount = count($blocks) - 1;
 
-			$str = &$this->blocks;
+			$str = &$this->vars;
 			for ($i = 0; $i < $blockcount; $i++)
 			{
 				$str = &$str[$blocks[$i]];
 				$str = &$str[count($str) - 1];
 			}
-			$str[$blocks[$blockcount]][] = array(
-				'vars' => $array_vars,
-				'subtemplates' => $subtemplates
-			);
+			$current_block = &$str[$blocks[$blockcount]][];
 		}
 		else
 		{
-			$this->blocks[$block_name][] = array(
-				'vars' => $array_vars,
-				'subtemplates' => $subtemplates
-			);
+			$current_block = &$this->vars[$block_name][];
 		}
+		$current_block = array_merge($array_vars, $subtemplates);
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function add_subtemplate($identifier, Template $template)
-	{
-		$this->subtemplates[$identifier] =& $template;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_subtemplate($identifier)
-	{
-		if (isset($this->subtemplates[$identifier]))
-		{
-			return $this->subtemplates[$identifier];
-		}
-		return null;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_subtemplate_from_list($identifier, $list)
-	{
-		if (isset($list[$identifier]))
-		{
-			return $list[$identifier];
-		}
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_block($blockname)
 	{
-		return $this->get_block_from_list($blockname, $this->blocks);
+		return $this->get_block_from_list($blockname, $this->vars);
 	}
 
 	/**
@@ -155,22 +118,21 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_var($varname)
+	public function get($varname)
 	{
-		return $this->get_var_from_list($varname, $this->vars);
+		return $this->get_from_list($varname, $this->vars);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_var_from_list($varname, &$list)
+	public function get_from_list($varname, &$list)
 	{
 		if (isset($list[$varname]))
 		{
 			return $list[$varname];
 		}
-		$empty_value = '';
-		return $this->register_var($varname, $empty_value, $list);
+		return null;
 	}
 
 	/**
@@ -180,7 +142,7 @@ class DefaultTemplateData implements TemplateData
 	{
 		$session = AppContext::get_session();
 		$member_connected = AppContext::get_user()->check_level(MEMBER_LEVEL);
-		$this->assign_vars(array(
+		$this->put_all(array(
 			'SID' => SID,
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
@@ -204,9 +166,6 @@ class DefaultTemplateData implements TemplateData
 	public function bind_vars(TemplateData $data)
 	{
 		$data->vars =& $this->vars;
-		$data->blocks =& $this->blocks;
-		$data->langs =& $this->langs;
-		$data->subtemplates =& $this->subtemplates;
 	}
 }
 ?>

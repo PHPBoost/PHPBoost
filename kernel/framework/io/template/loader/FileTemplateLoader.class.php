@@ -63,9 +63,7 @@ class FileTemplateLoader implements TemplateLoader
 		$this->filepath = $identifier;
 		$this->compute_real_file_path();
 		$this->compute_cache_file_path();
-		$data->assign_vars(array(
-			'PICTURES_DATA_PATH' => $this->pictures_data_path)
-		);
+		$data->put('PICTURES_DATA_PATH', $this->pictures_data_path);
 	}
 
 	private function compute_cache_file_path()

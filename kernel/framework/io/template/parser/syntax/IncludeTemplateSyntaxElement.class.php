@@ -67,15 +67,15 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
         else
         {
-            $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_subtemplate(\'' . $name . '\');');
+            $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get(\'' . $name . '\');');
         }
     }
     
     private function write_block_subtemplate_initialization($name, $block)
     {
     	$blocks = explode('.', $block);
-        $block_var = '$_tmp_' . array_pop($blocks) . '[\'subtemplates\']';
-        $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_subtemplate_from_list(\'' . $name . '\', ' . $block_var . ');');
+        $block_var = '$_tmp_' . array_pop($blocks);
+        $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_from_list(\'' . $name . '\', ' . $block_var . ');');
     }
     
     private function write_subtemplate_call()

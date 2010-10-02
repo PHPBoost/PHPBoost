@@ -86,10 +86,17 @@ interface Template
 	function put($key, $value);
 	
 	/**
-	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {VAR_NAME} syntax.
-	 * @param string[] $array_vars A map VAR_NAME => var_value. Generally, <code>VAR_NAME</code> is written in caps characters.
-	 */
-	function assign_vars(array $array_vars);
+     * @desc Assigns template variables. It could be simple variables, loop or subtemplates.
+     * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
+     */
+    function put_all(array $vars);
+    
+    /**
+     * @deprecated Use put_all instead
+     * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
+     * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+     */
+    function assign_vars(array $array_vars);
 
 	/**
 	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.

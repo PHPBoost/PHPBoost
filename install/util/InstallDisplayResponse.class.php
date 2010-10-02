@@ -69,7 +69,7 @@ class InstallDisplayResponse extends AbstractResponse
 	{
 		$this->current_step = $step_number;
 		$this->full_view = new FileTemplate('install/main.tpl');
-		$this->full_view->add_subtemplate('step', $view);
+		$this->full_view->add_subtemplate('installStep', $view);
 		$this->full_view->add_lang($this->lang);
 		$this->full_view->add_lang($this->distribution_lang);
 		$view->add_lang($this->lang);
