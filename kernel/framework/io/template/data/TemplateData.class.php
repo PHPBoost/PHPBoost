@@ -82,15 +82,7 @@ interface TemplateData
 	 * @param string $varname the name of the variable to check if it is true
 	 * @return bool true if the variable $varname exists and is not considered as false
 	 */
-	function is_true($varname);
-
-	/**
-	 * @desc Tells whether a condition is true in a block. It works for loop conditions.
-	 * @param string $varname the name of the variable to check if it is true
-	 * @param mixed[] $list the array in which we varname will be searched for
-	 * @return bool true if the variable $varname exists and is not considered as false
-	 */
-	function is_true_from_list($varname, $list);
+	function is_true($value);
 
 	/**
 	 * @desc Returns the $varname variable content searched in from the $list

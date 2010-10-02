@@ -32,7 +32,7 @@
  */
 class DefaultTemplateData implements TemplateData
 {
-	protected $vars = array();
+	private $vars = array();
     
     /**
      * {@inheritdoc}
@@ -47,9 +47,9 @@ class DefaultTemplateData implements TemplateData
      */
     public function put_all(array $vars)
     {
-        foreach ($vars as $key => $val)
+        foreach ($vars as $key => $value)
         {
-            $this->vars[$key] = $val;
+            $this->vars[$key] = $value;
         }
     }
 
@@ -102,17 +102,9 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	public function is_true($varname)
+	public function is_true($value)
 	{
-		return $this->is_true_from_list($varname, $this->vars);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_true_from_list($varname, $list)
-	{
-		return isset($list[$varname]) && $list[$varname];
+		return !empty($value);
 	}
 
 	/**

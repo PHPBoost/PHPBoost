@@ -54,12 +54,13 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$this->output->write('!');
 		}
+        $this->output->write(TemplateSyntaxElement::DATA . '->is_true(');
 		$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
 		if (!$this->input->consume_next('\s*#'))
 		{
 			throw new TemplateParserException('invalid condition statement', $this->input);
 		}
-		$this->output->write('){' . TemplateSyntaxElement::RESULT . '.=\'');
+		$this->output->write(')){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_end()

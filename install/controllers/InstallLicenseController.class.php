@@ -32,7 +32,7 @@ class InstallLicenseController extends InstallController
 	{
         parent::load_lang($request);
 		$view = new FileTemplate('install/license.tpl');
-		$this->add_build_form($view);
+		$this->build_form($view);
 		$this->add_navigation($view);
 		return $this->create_response($view);
 	}
@@ -48,7 +48,7 @@ class InstallLicenseController extends InstallController
 		return $response;
 	}
 
-	private function add_build_form(Template $view)
+	private function build_form(Template $view)
     {
     	$form = new HTMLForm('licenseForm', InstallUrlBuilder::server_configuration()->absolute());
     	$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);

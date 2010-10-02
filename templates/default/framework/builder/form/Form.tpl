@@ -19,7 +19,7 @@
 </script>
 
 
-<form id="${escape(HTML_ID)}" action="${escape(TARGET)}" method="${escape(METHOD)}" onsubmit="return HTMLForms.get('${escape(HTML_ID)}').validate();" class="${escape(FORMCLASS)}">
+<form id="${escape(HTML_ID)}" action="${TARGET}" method="${escape(METHOD)}" onsubmit="return HTMLForms.get('${escape(HTML_ID)}').validate();" class="${escape(FORMCLASS)}">
 	# IF C_HAS_REQUIRED_FIELDS #
 	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
 	# ENDIF #
