@@ -35,7 +35,15 @@ class DefaultTemplateData implements TemplateData
 	protected $vars = array();
 	protected $blocks = array();
 	protected $subtemplates = array();
-
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function put($key, $value)
+    {
+        $this->vars[$key] = $value;
+    }
+    
 	/**
 	 * {@inheritdoc}
 	 */
