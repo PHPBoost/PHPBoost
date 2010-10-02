@@ -57,7 +57,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function process_start()
 	{
 		$this->input->consume_next('#\sIF\s+');
-		$this->output->write('\'; if (');
+		$this->output->write('\';if(');
 		if ($this->input->consume_next('NOT\s+'))
 		{
 			$this->output->write('!');
@@ -68,13 +68,13 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			throw new TemplateParserException('invalid condition statement', $this->input);
 		}
-		$this->output->write(') { $_result.=\'');
+		$this->output->write('){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_end()
 	{
 		$this->ended = $this->input->consume_next('#\s*END(?:\s*IF)?\s*#');
-		$this->output->write('\';} $_result.=\'');
+		$this->output->write('\';}' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_content()
@@ -82,7 +82,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->process_condition();
 		if ($this->input->consume_next('#\sELSE\s#'))
 		{
-			$this->output->write('\';} else { $_result.=\'');
+			$this->output->write('\';}else{' . TemplateSyntaxElement::RESULT . '.=\'');
 			$this->process_condition();
 		}
 	}

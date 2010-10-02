@@ -28,6 +28,10 @@
 interface TemplateSyntaxElement
 {
 	
+    const RESULT = '$_result';
+    const DATA = '$_data';
+    const FUNCTIONS = '$_functions';
+	
 	/**
 	 * @param StringInputStream $input
 	 * @param StringOutputStream $output

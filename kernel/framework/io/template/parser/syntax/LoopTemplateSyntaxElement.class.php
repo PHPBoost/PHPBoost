@@ -60,14 +60,14 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
 		$loop_expression = $matches['loop'];
 		$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']);
-		$this->output->write('\'; foreach ($_data->get_block(\'' . $loop_expression .
-			'\') as ' . $loop_var . ') { $_result.=\'');
+		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->get_block(\'' . $loop_expression .
+			'\') as ' . $loop_var . '){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_end()
 	{
 		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)*\w+)?\s#');
-		$this->output->write('\';} $_result.=\'');
+		$this->output->write('\';}' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_content()
