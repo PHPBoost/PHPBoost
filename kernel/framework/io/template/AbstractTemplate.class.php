@@ -74,6 +74,14 @@ abstract class AbstractTemplate implements Template
 		$this->data = $data;
 	}
 
+    /**
+     * {@inheritdoc}
+     */
+	public function put($key, $value)
+	{
+        $this->data->put($key, $value);
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

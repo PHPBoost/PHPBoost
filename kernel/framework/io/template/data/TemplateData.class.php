@@ -40,6 +40,13 @@
  */
 interface TemplateData
 {
+    /**
+     * @desc Assigns the value <code>$code</code> to the template variable of name <code>$key</code>
+     * @param $key the template parameter name
+     * @param $value the template parameter value
+     */
+    function put($key, $value);
+    
 	/**
 	 * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
 	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
