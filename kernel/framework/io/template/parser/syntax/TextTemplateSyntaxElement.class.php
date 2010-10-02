@@ -27,21 +27,12 @@
 
 class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	/**
-	 * @var StringInputStream
-	 */
-	private $input;
-	/**
-	 * @var StringOutputStream
-	 */
-	private $output;
 	private $ended = false;
 	private $escaped = false;
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
+        $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 

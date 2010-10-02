@@ -32,18 +32,31 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('(?:\w+\.)+\w+');
 	}
 	
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+		$this->register($context, $input, $output);
 		$matches = array();
 		if ($input->consume_next('(?P<loop>\w+(?:\.\w+)*)\.(?P<var>\w+)', '', $matches))
 		{
-			$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']) . '[\'vars\']';
-			$varname =  $matches['var'];
+			$loop_name =  $matches['loop'];
+            $varname =  $matches['var'];
+			$this->check_loop($loop_name, $varname);
+			$loop_var = '$_tmp_' . str_replace('.', '_', $loop_name) . '[\'vars\']';
 			$output->write(TemplateSyntaxElement::DATA . '->get_var_from_list(\'' . $varname . '\', ' . $loop_var . ')');
 		}
 		else
 		{
 			throw new TemplateParserException('invalid loop variable name', $input);
+		}
+	}
+	
+	private function check_loop($loop, $var)
+	{
+		if (!$this->context->is_in_loop($loop))
+		{
+			throw new TemplateParserException('Variable {' . $loop . '.' . $var .
+                '} is outsite of loop "' . $loop . '" scope.' . "\n" . 'loops scopes: ' .
+			    '[' . implode(', ', $this->context->loops_scopes()) . ']', $this->input);
 		}
 	}
 }

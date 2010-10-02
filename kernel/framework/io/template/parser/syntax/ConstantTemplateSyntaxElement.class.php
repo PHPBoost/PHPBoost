@@ -32,7 +32,7 @@ class ConstantTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('(?:[0-9]+(?:\.[0-9]+)?)|(?:\'[^\']*\')');
 	}
 	
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
 		$matches = array();
 		if ($input->consume_next('(?P<constant>(?:[0-9]+(?:\.[0-9]+)?)|(?:\'[^\']*\'))', '', $matches))

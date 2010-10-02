@@ -29,8 +29,6 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	private static $subtpl = '$_subtpl';
 	
-	private $input;
-	private $output;
 	private $ended = false;
 
 	public static function is_element(StringInputStream $input)
@@ -38,10 +36,9 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('#\s+INCLUDE\s+');
 	}
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
+        $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 

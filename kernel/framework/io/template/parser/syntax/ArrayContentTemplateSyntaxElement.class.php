@@ -27,12 +27,13 @@
 
 class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+		$this->register($context, $input, $output);
         while (!$input->assert_next('\s*\]'))
         {
-            $this->process_key($input, $output);
-            $this->process_value($input, $output);
+            $this->process_key();
+            $this->process_value();
             if ($input->consume_next('\s*,\s*'))
             {
                 $output->write(', ');
@@ -44,19 +45,18 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
 	}
 
-	private function process_key(StringInputStream $input, StringOutputStream $output)
+	private function process_key()
 	{
 		$matches = array();
-		if ($input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*:\s*', '', $matches))
+		if ($this->input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*:\s*', '', $matches))
 		{
-			$output->write($matches['key'] . '=>');
+			$this->output->write($matches['key'] . '=>');
 		}
 	}
 
-	private function process_value(StringInputStream $input, StringOutputStream $output)
+	private function process_value()
 	{
-		$element = new ExpressionContentTemplateSyntaxElement();
-		$element->parse($input, $output);
+		$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
 	}
 }
 ?>

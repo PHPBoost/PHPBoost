@@ -27,8 +27,6 @@
 
 class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
 	private $ended = false;
 
 	public static function is_element(StringInputStream $input)
@@ -36,15 +34,9 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('#\sIF\s');
 	}
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
-		$this->do_parse();
-	}
-
-	private function do_parse()
-	{
+        $this->register($context, $input, $output);
 		$this->process_start();
 		$this->process_content();
 		$this->process_end();
@@ -62,8 +54,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$this->output->write('!');
 		}
-		$condition = new ExpressionContentTemplateSyntaxElement();
-		$condition->parse($this->input, $this->output);
+		$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
 		if (!$this->input->consume_next('\s*#'))
 		{
 			throw new TemplateParserException('invalid condition statement', $this->input);
@@ -89,8 +80,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_condition()
 	{
-		$element = new BaseTemplateSyntaxElement();
-		$element->parse($this->input, $this->output);
+        $this->parse_elt(new BaseTemplateSyntaxElement());
 	}
 
 	private function missing_end()

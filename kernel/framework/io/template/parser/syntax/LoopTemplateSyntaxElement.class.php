@@ -27,8 +27,6 @@
 
 class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
 	private $ended = false;
 
 	public static function is_element(StringInputStream $input)
@@ -36,10 +34,9 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return $input->assert_next('#\sSTART\s+(?:\w+\.)*\w+\s#');
 	}
 	
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
+        $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
@@ -58,22 +55,23 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		$matches = array();
 		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
-		$loop_expression = $matches['loop'];
+		$loop_name = $matches['loop'];
+		$this->context->enter_loop($loop_name);
 		$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']);
-		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->get_block(\'' . $loop_expression .
+		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->get_block(\'' . $loop_name .
 			'\') as ' . $loop_var . '){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_end()
 	{
 		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)*\w+)?\s#');
+		$this->context->exit_loop();
 		$this->output->write('\';}' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function process_content()
 	{
-		$element = new BaseTemplateSyntaxElement();
-		$element->parse($this->input, $this->output);
+		$this->parse_elt(new BaseTemplateSyntaxElement());
 	}
 
 	private function loop_end()

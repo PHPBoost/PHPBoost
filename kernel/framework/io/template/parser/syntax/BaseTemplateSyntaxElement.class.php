@@ -27,19 +27,9 @@
 
 class BaseTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	/**
-	 * @var StringInputStream
-	 */
-	private $input;
-	/**
-	 * @var StringOutputStream
-	 */
-	private $output;
-
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
+        $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
@@ -77,7 +67,7 @@ class BaseTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			{
 				$element = $this->build_text_elt();
 			}
-			$element->parse($this->input, $this->output);
+			$this->parse_elt($element);
 		}
 	}
 

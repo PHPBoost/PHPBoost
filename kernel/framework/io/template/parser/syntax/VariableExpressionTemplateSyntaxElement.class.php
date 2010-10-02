@@ -27,14 +27,11 @@
 
 class VariableExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $input;
-	private $output;
 	private $ended = false;
 
-	public function parse(StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$this->input = $input;
-		$this->output = $output;
+        $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
@@ -62,8 +59,7 @@ class VariableExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElem
 
 	private function process_expression_content()
 	{
-		$element = new VariableTemplateSyntaxElement();
-		$element->parse($this->input, $this->output);
+		$this->parse_elt(new VariableTemplateSyntaxElement());
 	}
 
 	private function missing_expression_end()

@@ -27,12 +27,12 @@
 
 class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-    public function parse(StringInputStream $input, StringOutputStream $output)
+    public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
+        $this->register($context, $input, $output);
 		while (!$input->assert_next('\s*\)\s*'))
 		{
-			$parameter = new ExpressionContentTemplateSyntaxElement();
-			$parameter->parse($input, $output);
+			$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
             if ($input->consume_next('\s*,\s*'))
             {
             	$output->write(', ');
