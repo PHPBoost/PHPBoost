@@ -147,7 +147,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	coucou
 # END #';
 		$output = '<?php $_result=\'
-\';if($_data->get(\'condition\')){$_result.=\'
+\';if($_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
@@ -160,7 +160,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	coucou
 # END #';
 		$output = '<?php $_result=\'
-\';if(!$_data->get(\'condition\')){$_result.=\'
+\';if(!$_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
@@ -175,7 +175,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	hello
 # END #';
 		$output = '<?php $_result=\'
-\';if($_data->get(\'condition\')){$_result.=\'
+\';if($_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}else{$_result.=\'
 	hello
@@ -198,7 +198,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is \' . $_data->get(\'a\') . ' .
 			'\' sim\' . $_data->get(\'pl\') . \'e
 \';foreach($_data->get_block(\'tex\') as $_tmp_tex){$_result.=\'
-	\';if($_data->get_from_list(\'coucou\', $_tmp_tex)){$_result.=\'
+	\';if($_data->is_true($_data->get_from_list(\'coucou\', $_tmp_tex))){$_result.=\'
 		\';foreach($_data->get_block(\'tex.ext\') as $_tmp_tex_ext){$_result.=\'
 			\' . $_data->get_from_list(\'text\', $_tmp_tex_ext) . \'
 		\';}$_result.=\'

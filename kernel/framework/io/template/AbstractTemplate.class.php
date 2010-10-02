@@ -87,7 +87,7 @@ abstract class AbstractTemplate implements Template
      */
     public function put_all(array $vars)
     {
-        $this->data->put_all($key, $value);
+        $this->data->put_all($vars);
     }
 	
 	/**
@@ -105,6 +105,14 @@ abstract class AbstractTemplate implements Template
 	{
 		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
 	}
+
+    /**
+     * {@inheritdoc}
+     */
+    public function add_subtemplate($identifier, Template $template)
+    {
+        $this->data->put($identifier, $template);
+    }
 
 	/**
 	 * {@inheritdoc}
@@ -145,15 +153,7 @@ abstract class AbstractTemplate implements Template
     public function add_lang(array $lang)
     {
         $this->renderer->add_lang($lang);
-    }    
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_subtemplate($identifier, Template $template)
-	{
-		$this->data->put($identifier, $template);
-	}
+    }
 
 	/**
 	 * {@inheritdoc}

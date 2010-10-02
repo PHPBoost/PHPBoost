@@ -185,8 +185,8 @@ class HTMLForm
 		global $LANG;
 
 		$template = $this->get_template_to_use();
-
-		$template->assign_vars(array(
+		
+		$template->put_all(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
 			'FORMCLASS' => $this->css_class,

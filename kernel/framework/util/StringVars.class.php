@@ -34,15 +34,21 @@
 class StringVars
 {
 	private $parameters;
+	private $strict;
 	
-    public static function replace_vars($string, array $parameters)
+    public static function replace_vars($string, array $parameters, $strict = false)
     {
     	if (empty($parameters))
     	{
     		return $string;
     	}
-    	$string_var = new StringVars();
+    	$string_var = new StringVars($strict);
     	return $string_var->replace($string, $parameters);
+    }
+    
+    public function __construct($strict = false)
+    {
+    	$this->strict = $strict;
     }
     
     public function replace($string, array $parameters)
@@ -58,7 +64,14 @@ class StringVars
         {
             return $this->set_var($this->parameters[$varname]);
         }
-        throw new RemainingStringVarException($varname);
+        if ($this->strict)
+        {
+        	throw new RemainingStringVarException($varname);
+        }
+        else
+        {
+        	return ':' . $varname;
+        }
     }
     
     protected function set_var($parameter)

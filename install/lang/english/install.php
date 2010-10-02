@@ -90,17 +90,17 @@ $lang = array(
 
 // Server setup
 	'step.server.title' => 'Looking up server configuration...',
-	'config_server_explain' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
+	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
-	'php_version' => 'PHP version',
-	'check_php_version' => 'PHP higher than 5.1.2',
-	'check_php_version_explain' => '<span style="font-weight:bold;color:red;">Required :</span> To run PHPBoost, your server must run PHP 4.1.x or higher. Below that, you might have issues with some modules. Since PHP 4 is no longer supported, we encourage you to ask your hosting company to migrate PHP to version 5.',
-	'extensions' => 'Extensions',
-	'check_extensions' => '<span style="font-weight:bold;">Optional :</span> The activation of these extensions will provide additional features but it is not essential to its operation.',
-	'gd_library' => 'GD library',
-	'gd_library_explain' => 'Library used to generate pictures such as Robot Protection, Statistics Graphics and much more.',
-	'url_rewriting' => 'URL Rewriting',
-	'url_rewriting_explain' => 'Not only does it rewrite URLs, but it helps a lot with search engine robots.',
+	'php.version' => 'PHP version',
+	'php.version.check' => 'PHP higher than :min_php_version',
+	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.',
+	'php.extensions' => 'Extensions',
+	'php.extensions.check' => '<span style="font-weight:bold;">Optional :</span> The activation of these extensions will provide additional features but it is not essential to its operation.',
+	'php.extensions.check.gd_library' => 'GD library',
+	'php.extensions.check.gd_library.explanation' => 'Library used to generate pictures such as Robot Protection, Statistics Graphics and much more.',
+	'server.url_rewriting' => 'URL Rewriting',
+	'server.url_rewriting.explanation' => 'Not only does it rewrite URLs, but it helps a lot with search engine robots.',
 	'auth_dir' => 'Directories permissions',
 	'check_auth_dir' => '<span style="font-weight:bold;color:red;">Required :</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help in our <a href="http://www.phpboost.net/wiki/change-the-chmod-of-a-directory" title="PHPBoost documentation : chmod">PHPBoost documentation</a> or on your host website.',
 
