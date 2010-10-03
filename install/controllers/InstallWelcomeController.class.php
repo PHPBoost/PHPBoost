@@ -48,7 +48,7 @@ class InstallWelcomeController extends InstallController
 
 	private function add_navigation(Template $view)
     {
-        $form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->absolute());
+        $form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel());
         $form->add_button(new InstallNavigationBar());
         $view->add_subtemplate('LICENSE_FORM', $form->display());
     }

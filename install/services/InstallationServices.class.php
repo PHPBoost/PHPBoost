@@ -41,11 +41,17 @@ class InstallationServices
 	 */
 	private $messages;
 	
+	/**
+	 * @var mixed[string] Distribution configuration
+	 */
+	private $distribution_config;
+	
 	public function __construct($locale)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
+        $this->load_distribution_configuration();
 	}
 
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
@@ -64,16 +70,11 @@ class InstallationServices
 	public function configure_website($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
 		$this->get_installation_token();
-
-		$modules_to_install = $this->load_distribution_configuration($locale);
+		$modules_to_install = $this->distribution_config['modules'];
 		$this->generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->generate_cache();
-
-		$server_environment_config = ServerEnvironmentConfig::load();
-		$server_environment_config->set_debug_mode_enabled(DISTRIBUTION_ENABLE_DEBUG_MODE);
-		ServerEnvironmentConfig::save();
 		return true;
 	}
 	
@@ -84,12 +85,11 @@ class InstallationServices
 		$this->delete_installation_token();
 		return true;
 	}
-	
-	private function load_distribution_configuration($locale)
-	{
-		include PATH_TO_ROOT . '/install/distribution/' . $locale . '.php';
-		return $DISTRIBUTION_MODULES;
-	}
+    
+    private function load_distribution_configuration()
+    {
+        $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
+    }
 
 	private function generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
@@ -102,7 +102,7 @@ class InstallationServices
 		$this->init_server_environment_config();
 		$this->init_user_accounts_config($locale);
 		$this->install_locale($locale);
-		$this->configure_theme(DISTRIBUTION_THEME, $locale);
+		$this->configure_theme($this->distribution_config['theme'], $locale);
 	}
 	
 	private function save_general_config($server_url, $server_path, $site_name, $site_description, $site_keywords, $site_timezone)
@@ -113,7 +113,7 @@ class InstallationServices
 		$general_config->set_site_name($site_name);
 		$general_config->set_site_description($site_description);
 		$general_config->set_site_keywords($site_keywords);
-		$general_config->set_home_page(DISTRIBUTION_START_PAGE);
+		$general_config->set_home_page($this->distribution_config['start_page']);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone((int)$site_timezone);
@@ -130,14 +130,14 @@ class InstallationServices
 	private function init_graphical_config()
 	{
 		$graphical_environment_config = GraphicalEnvironmentConfig::load();
-		$graphical_environment_config->set_page_bench_enabled(DISTRIBUTION_ENABLE_BENCH);
+		$graphical_environment_config->set_page_bench_enabled($this->distribution_config['bench']);
 		GraphicalEnvironmentConfig::save();
 	}
 	
 	private function init_server_environment_config()
 	{
 		$server_environment_config = ServerEnvironmentConfig::load();
-		$server_environment_config->set_debug_mode_enabled(DISTRIBUTION_ENABLE_DEBUG_MODE);
+		$server_environment_config->set_debug_mode_enabled($this->distribution_config['debug']);
 		ServerEnvironmentConfig::save();
 	}
 	
@@ -145,7 +145,7 @@ class InstallationServices
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$user_accounts_config->set_default_lang($locale);
-		$user_accounts_config->set_default_theme(DISTRIBUTION_THEME);
+		$user_accounts_config->set_default_theme($this->distribution_config['theme']);
 		UserAccountsConfig::save();
 	}
 	
@@ -188,10 +188,6 @@ class InstallationServices
 
 	private function generate_cache()
 	{
-		// TODO see if those lines are necessary
-		//		$Cache = new Cache();
-		//		$Cache->generate_all_files();
-		//		ModulesCssFilesCache::invalidate();
 		AppContext::get_cache_service()->clear_phpboost_cache();
 	}
 
@@ -262,7 +258,7 @@ class InstallationServices
 		global $Cache;
 		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, $locale, DISTRIBUTION_THEME, GeneralConfig::load()->get_site_timezone());
+		$this->update_first_admin_account($login, $password, $email, $locale, $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
@@ -310,7 +306,7 @@ class InstallationServices
 	private function configure_accounts_policy()
 	{
 		$user_account_config = UserAccountsConfig::load();
-		$user_account_config->set_registration_enabled(DISTRIBUTION_ENABLE_USER);
+		$user_account_config->set_registration_enabled($this->distribution_config['allow_members_registration']);
 		UserAccountsConfig::save();
 	}
 
