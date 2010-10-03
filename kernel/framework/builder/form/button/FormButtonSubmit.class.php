@@ -40,14 +40,7 @@ class FormButtonSubmit extends AbstractFormButton
     {
         $request = AppContext::get_request();
         $button_attribute = $request->get_string($this->get_name(), '');
-        if (!empty($button_attribute))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return !empty($button_attribute);
     }
 }
 

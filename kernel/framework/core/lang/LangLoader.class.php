@@ -48,6 +48,15 @@ class LangLoader
 	{
 		self::$locale = $locale;
 	}
+	
+	/**
+	 * @desc Returns the current language locale
+	 * @return string the current language locale
+	 */
+	public static function get_locale()
+	{
+		return self::$locale;
+	}
 
 	/**
 	 * @param string $message_id the language message identifier
