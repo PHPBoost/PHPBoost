@@ -433,7 +433,7 @@
 				<td style="vertical-align:top;" class="row2">
 					<form action="member.php?token={TOKEN}" method="post">
 						<span style="float:left;">
-							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
 						</span>
 						<span style="float:left;margin-left:5px;">
@@ -641,7 +641,7 @@
 								{group_select.OPTION}
 							# END group_select #
 						</select>
-						&nbsp;&nbsp;{group.ADMIN_GROUPS}
+						&nbsp;&nbsp;{ADMIN_GROUPS}
 						<noscript>
 							<input type="submit" name="valid" value="{L_SEARCH}" class="submit" />
 						</noscript>
