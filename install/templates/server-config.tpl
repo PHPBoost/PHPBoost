@@ -23,7 +23,7 @@
     <legend>{@php.extensions}</legend> 
     <p>{@php.extensions.check}</p>
     <dl>
-        <dt><label>{@php.extensions.check.gd_library}</label><br /><span>{@php.extensions.check.gd_library.explanation}</span></dt>
+        <dt><label>{@php.extensions.check.gdLibrary}</label><br /><span>{@php.extensions.check.gdLibrary.explanation}</span></dt>
         <dd>
         # IF HAS_GD_LIBRARY #
             <img src="templates/images/success.png" alt="{@yes}" />
@@ -33,7 +33,7 @@
         </dd>                               
     </dl>
     <dl>
-        <dt><label>{@server.url_rewriting}</label><br /><span>{@server.url_rewriting.explanation}</span></dt>
+        <dt><label>{@server.urlRewriting}</label><br /><span>{@server.urlRewriting.explanation}</span></dt>
         <dd>
         # IF URL_REWRITING_KNOWN #
             # IF URL_REWRITING_AVAILABLE #
@@ -49,22 +49,22 @@
 </fieldset>
 
 <fieldset>
-    <legend>{L_AUTH_DIR}</legend>
-    <p>{L_CHECK_AUTH_DIR}</p>
+    <legend>{@folders.chmod}</legend>
+    <p>{@H|folders.chmod.check}</p>
     <div id="chmod">
-        # START chmod #                         
+        # START folder #                         
         <dl>
-            <dt><label>{chmod.TITLE}</label></dt>
+            <dt><label>{folder.NAME}</label></dt>
             <dd>
-                # IF chmod.C_EXISTING_DIR #
-                    <div class="success_block">{L_EXISTING}</div>
+                # IF folder.EXISTS #
+                    <div class="success_block">{@folder.exists}</div>
                 # ELSE #
-                    <div class="failure_block">{L_NOT_EXISTING}</div>
+                    <div class="failure_block">{@folder.doesNotExists}</div>
                 # ENDIF #
-                # IF chmod.C_WRITIBLE_DIR #
-                    <div class="success_block">{L_WRITABLE}</div>
+                # IF folder.IS_WRITABLE #
+                    <div class="success_block">{@folder.isWritable}</div>
                 # ELSE #
-                    <div class="failure_block">{L_NOT_WRITABLE}</div>
+                    <div class="failure_block">{@folder.isNotWritable}</div>
                 # ENDIF #
             </dd>                               
         </dl>
@@ -88,29 +88,4 @@
     </div>
 </fieldset>
 
-# IF C_ERROR #
-<script type="text/javascript">
-<!--
-    document.getElementById("result_box").style.display = "block";
-    load_progress_bar(5, '');
-    progress_bar(100, "{L_QUERY_SUCCESS}");
--->
-</script>
-# ENDIF #
-
-<form action="{U_CURRENT_STEP}#result_box" method="post">
-    <fieldset class="submit_case">
-        <a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
-        <a href="{U_CURRENT_STEP}" title="{L_REFRESH}" id="enougth_js_preview">
-            <img src="templates/images/refresh.png" alt="{L_REFRESH}" class="valign_middle" />
-        </a>
-        <script type="text/javascript">
-        <!--
-            document.getElementById("enougth_js_preview").style.display = "none";
-            document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
-        -->
-        </script>
-        <input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
-        <input type="hidden"  name="submit" value="next" />
-    </fieldset>
-</form>
+# INCLUDE CONTINUE_FORM #

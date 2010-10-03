@@ -39,9 +39,9 @@ abstract class PHPBoostFoldersPermissions
 	public static function validate()
 	{
 		$permissions = self::get_permissions();
-		foreach ($permissions as $folder => $permission)
+		foreach ($permissions as $folder_name => $folder)
 		{
-			if ($permission == false)
+			if (!$folder->is_writable())
 			{
 				return false;
 			}
@@ -56,7 +56,7 @@ abstract class PHPBoostFoldersPermissions
 		foreach (self::$folders_path as $folder_path)
 		{
 			$folder = new Folder(PATH_TO_ROOT . $folder_path);
-			$permissions[$folder->get_path_from_root()] = $folder->is_writable();
+			$permissions[$folder_path] = $folder;
 		}
 		return $permissions;
 	}
