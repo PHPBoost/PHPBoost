@@ -145,14 +145,30 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the relative url if defined, else the absolute one
-	 * @return string the relative url if defined, else the absolute one
+	 * @desc Returns the root relative url if defined, else the absolute one
+	 * @return string the root relative url if defined, else the absolute one
 	 */
 	public function relative()
 	{
 		if ($this->is_relative())
 		{
 			return $this->url;
+		}
+		else
+		{
+			return $this->absolute();
+		}
+	}
+	
+	/**
+     * @desc Returns the relative url if defined, else the absolute one
+     * @return string the relative url if defined, else the absolute one
+     */
+	public function rel()
+	{
+		if ($this->is_relative())
+		{
+			return PATH_TO_ROOT . '/' . ltrim($this->relative(), '/');
 		}
 		else
 		{

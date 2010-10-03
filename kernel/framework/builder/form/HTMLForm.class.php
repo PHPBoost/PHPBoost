@@ -316,7 +316,14 @@ class HTMLForm
 	 */
 	public function set_target($target)
 	{
-		$this->target = $target;
+		if ($target instanceof Url)
+		{
+			$this->target = $target->rel();
+		}
+		else
+		{
+            $this->target = $target;
+		}
 	}
 
 	/**

@@ -96,9 +96,9 @@ class InstallServerConfigController extends InstallController
 
 	private function add_navigation()
     {
-    	$form = new HTMLForm('continueForm', InstallUrlBuilder::database()->absolute());
+    	$form = new HTMLForm('continueForm', InstallUrlBuilder::database());
     	$nav = new InstallNavigationBar();
-    	$nav->set_previous_step_url(InstallUrlBuilder::license()->absolute());
+    	$nav->set_previous_step_url(InstallUrlBuilder::license()->rel());
         $form->add_button($nav);
         $this->view->put('CONTINUE_FORM', $form->display());
     }

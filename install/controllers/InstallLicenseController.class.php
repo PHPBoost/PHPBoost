@@ -50,7 +50,7 @@ class InstallLicenseController extends InstallController
 
 	private function build_form(Template $view)
     {
-    	$form = new HTMLForm('licenseForm', InstallUrlBuilder::server_configuration()->absolute());
+    	$form = new HTMLForm('licenseForm', InstallUrlBuilder::server_configuration());
     	$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
     	$form->add_fieldset($fieldset);
     	$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
