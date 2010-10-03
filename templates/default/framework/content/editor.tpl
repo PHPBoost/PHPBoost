@@ -182,7 +182,7 @@
 										# END smiley #
 										# IF C_BBCODE_SMILEY_MORE #
 										<br />
-										<a style="font-size: 10px;" href="#" onclick="window.open('{PATH_TO_ROOT}/kernel/framework/content/editor/smileys.php?field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
+										<a style="font-size: 10px;" href="#" onclick="window.open('{PATH_TO_ROOT}/kernel/framework/content/editor/smileys.php?field={FIELD}', '{L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
 										# ENDIF #
 									</div>
 								</div>
