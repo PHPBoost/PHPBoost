@@ -67,7 +67,22 @@ class InstallServerConfigController extends InstallController
         {
             $this->view->put('URL_REWRITING_KNOWN', false);
         }
+        $this->check_folders_permissions();
 	}
+	
+    private function check_folders_permissions()
+    {
+        $folders = array();
+        foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
+        {
+        	$folders[] = array(
+               'NAME' => $folder_name,
+               'EXISTS' => $folder->exists(),
+               'IS_WRITABLE' => $folder->is_writable(),
+        	);
+        }
+        $this->view->put('folder', $folders);
+    }
 	
 	/**
 	 * @return InstallDisplayResponse
@@ -81,9 +96,11 @@ class InstallServerConfigController extends InstallController
 
 	private function add_navigation()
     {
+    	$form = new HTMLForm('continueForm', InstallUrlBuilder::database()->absolute());
     	$nav = new InstallNavigationBar();
     	$nav->set_previous_step_url(InstallUrlBuilder::license()->absolute());
-        return $nav;
+        $form->add_button($nav);
+        $this->view->put('CONTINUE_FORM', $form->display());
     }
 }
 ?>

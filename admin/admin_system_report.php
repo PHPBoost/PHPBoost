@@ -74,13 +74,13 @@ $lang_ini_file = load_ini_file('../lang/', get_ulang());
 $template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', get_ulang());
 
 $directories_summerization = '';
-foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $value)
+foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $folder)
 {
 	$template->assign_block_vars('directories', array(
 		'NAME' => $key,
-		'C_AUTH_DIR' => $value
+		'C_AUTH_DIR' => $folder->is_writable()
 	));
-	$directories_summerization .= $key . str_repeat(' ', 25 - strlen($key)) . ": " . (int)$value . "
+	$directories_summerization .= $key . str_repeat(' ', 25 - strlen($key)) . ": " . (int)($folder->is_writable()) . "
 ";
 }
 

@@ -216,11 +216,11 @@ class CLIInstallCommand implements CLICommand
 		CLIOutput::writeln("\t" . 'folder permissions...');
 		if (!PHPBoostFoldersPermissions::validate())
 		{
-			foreach (PHPBoostFoldersPermissions::get_permissions() as $folder => $is_writable)
+			foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 			{
-				if (!$is_writable)
+				if (!$folder->is_writable())
 				{
-					CLIOutput::writeln('Folder ' . $folder . ' is not writable. Please change its rights');
+					CLIOutput::writeln('Folder ' . $folder_name . ' is not writable. Please change its rights');
 				}
 			}
 			return false;
