@@ -11,6 +11,13 @@ ${resources('install/install')}
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="templates/global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
+        <script type="text/javascript">
+        <!--
+        var PATH_TO_ROOT = "{PATH_TO_ROOT}";
+        var TOKEN = "{TOKEN}";
+        var THEME = "{THEME}";
+        -->
+        </script>
 	</head>
 	<body>
 	<div id="global">

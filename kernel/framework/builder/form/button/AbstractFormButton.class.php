@@ -49,17 +49,13 @@ abstract class AbstractFormButton implements FormButton
      */
     public function display()
     {
-        global $LANG;
-
-        $template = new StringTemplate('<input type="${escape(TYPE)}" name="${escape(BUTTON_NAME)}" value="${escape(VALUE)}" class="submit" onclick="${escape(ONCLICK_ACTION)}" />');
-
-        $template->assign_vars(array(
+        $template = $this->get_template();
+        $template->put_all(array(
 			'VALUE' => $this->label,
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
         ));
-
         return $template;
     }
 
@@ -81,6 +77,11 @@ abstract class AbstractFormButton implements FormButton
     public function set_label($label)
     {
         $this->label = $label;
+    }
+    
+    protected function get_template()
+    {
+    	return new StringTemplate('<input type="${TYPE}" name="${BUTTON_NAME}" value="${escape(VALUE)}" class="submit" onclick="${escape(ONCLICK_ACTION)}" />');
     }
 }
 ?>

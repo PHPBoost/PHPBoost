@@ -6,5 +6,4 @@
     </a>
     # END #
     <input src="templates/images/right.png" title="{@step.next}" class="img_submit" type="image">
-    <input name="submit" value="next" type="hidden">
 </fieldset> 

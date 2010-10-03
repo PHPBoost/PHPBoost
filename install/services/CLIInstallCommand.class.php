@@ -124,7 +124,7 @@ class CLIInstallCommand implements CLICommand
 		if (is_numeric($timezone))
 		{
 			$timezone = (int) $timezone;
-			if ($timezone >= -12 && $timezone <= 12)
+			if ($timezone >= -12 && $timezone <= 14)
 			{
 				$this->website_timezone = $timezone;
 			}

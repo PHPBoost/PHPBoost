@@ -30,7 +30,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
 interface FormButton
-{
+{	
     /**
      * @return Template
      */

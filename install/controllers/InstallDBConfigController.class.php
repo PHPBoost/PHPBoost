@@ -27,59 +27,93 @@
 
 class InstallDBConfigController extends InstallController
 {
+	/**
+	 * @var Template
+	 */
+	private $view;
+
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var HTMLForm
+	 */
+	private $submit_button;
 
 	public function execute(HTTPRequest $request)
 	{
-        parent::load_lang($request);
-		$view = new FileTemplate('install/database.tpl');
-		$this->build_form($view);
-		$this->add_navigation($view);
-		return $this->create_response($view);
+		parent::load_lang($request);
+		$this->build_form();
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$installation_services = new InstallationServices(LangLoader::get_locale());
+			try
+			{
+				$create_tables_if_needed = true;
+				$installation_services->create_phpboost_tables('mysql',
+				$this->form->get_value('host'), $this->form->get_value('port'),
+				$this->form->get_value('schema'), $this->form->get_value('login'),
+				$this->form->get_value('password'), $this->form->get_value('tablePrefix'),
+				$create_tables_if_needed);
+				AppContext::get_response()->redirect(InstallUrlBuilder::website());
+			}
+			catch (DBConnectionException $ex)
+			{
+				// TODO forward this to form
+				Debug::dump($ex);
+				die('DBConnectionException');
+			}
+		}
+		return $this->create_response();
 	}
 
+	private function build_form()
+	{
+		$this->form = new HTMLForm('databaseForm');
+
+		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.paramters']);
+		$this->form->add_fieldset($fieldset_server);
+
+		$host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
+		array('description' => $this->lang['dbms.host.explanation'], 'required' => true));
+		$fieldset_server->add_field($host);
+		$host = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
+		array('description' => $this->lang['dbms.port.explanation'], 'required' => true));
+		$host->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
+		$fieldset_server->add_field($host);
+		$login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
+		array('description' => $this->lang['dbms.login.explanation'], 'required' => true));
+		$fieldset_server->add_field($login);
+		$password = new FormFieldTextEditor('password', $this->lang['dbms.password'], '',
+		array('description' => $this->lang['dbms.password.explanation']));
+		$fieldset_server->add_field($password);
+
+		$fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['schema.properties']);
+		$this->form->add_fieldset($fieldset_schema);
+
+		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
+		array('description' => $this->lang['schema.explanation'], 'required' => true));
+		$fieldset_schema->add_field($schema);
+		$table_prefix = new FormFieldTextEditor('tablePrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
+		array('description' => $this->lang['schema.tablePrefix.explanation']));
+		$fieldset_schema->add_field($table_prefix);
+
+		$this->submit_button = new FormButtonSubmitImg('templates/images/right.png', $this->lang['step.next'], 'submit');
+		$this->form->add_button($this->submit_button);
+	}
+	
 	/**
 	 * @param Template $view
 	 * @return InstallDisplayResponse
 	 */
-	private function create_response(Template $view)
+	private function create_response()
 	{
-        $step_title = $this->lang['step.dbConfig.title'];
-		$response = new InstallDisplayResponse(4, $step_title, $view);
+		$this->view = new FileTemplate('install/database.tpl');
+		$this->view->add_subtemplate('DATABASE_FORM', $this->form->display());
+		$step_title = $this->lang['step.dbConfig.title'];
+		$response = new InstallDisplayResponse(3, $step_title, $this->view);
 		return $response;
 	}
-
-	private function build_form(Template $view)
-    {
-    	$form = new HTMLForm('databaseForm', InstallUrlBuilder::server_configuration()->absolute());
-    	
-    	$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.paramters']);
-    	$form->add_fieldset($fieldset_server);
-    	
-        $host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost', array('description' => $this->lang['dbms.host.explanation']));
-        $fieldset_server->add_field($host);
-        $login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root', array('description' => $this->lang['dbms.login.explanation']));
-        $fieldset_server->add_field($login);
-        $password = new FormFieldTextEditor('password', $this->lang['dbms.password'], '', array('description' => $this->lang['dbms.password.explanation']));
-        $fieldset_server->add_field($password);
-        
-        $fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['schema.properties']);
-        $form->add_fieldset($fieldset_schema);
-        
-        $schema = new FormFieldTextEditor('schema', $this->lang['schema'], '', array('description' => $this->lang['schema.explanation']));
-        $fieldset_schema->add_field($schema);
-        $table_prefix = new FormFieldTextEditor('tablePrefix', $this->lang['schema.tablePrefix'], 'phpboost_', array('description' => $this->lang['schema.tablePrefix.explanation']));
-        $fieldset_schema->add_field($table_prefix);
-    	
-    	$navigation_bar = $this->add_navigation();
-    	$form->add_button($navigation_bar);
-		$view->add_subtemplate('DATABASE_FORM', $form->display());
-    }
-
-	private function add_navigation()
-    {
-    	$nav = new InstallNavigationBar();
-    	$nav->set_previous_step_url(InstallUrlBuilder::website()->absolute());
-        return $nav;
-    }
 }
 ?>
