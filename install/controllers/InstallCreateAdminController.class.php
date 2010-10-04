@@ -50,8 +50,8 @@ class InstallCreateAdminController extends InstallController
             $installation_services = new InstallationServices(LangLoader::get_locale());
 			$installation_services->create_admin(
 			$this->form->get_value('login'), $this->form->get_value('password'),
-			$this->form->get_value('email'), LangLoader::get_locale(),
-			$this->form->get_value('createSession'), $this->form->get_value('autoconnect'));
+			$this->form->get_value('email'), $this->form->get_value('createSession'),
+			$this->form->get_value('autoconnect'));
 			AppContext::get_response()->redirect(InstallUrlBuilder::finish());
 		}
 		return $this->create_response();

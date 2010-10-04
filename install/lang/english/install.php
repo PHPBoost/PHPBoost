@@ -224,7 +224,8 @@ Best regards,
 The PHPBoost Team.',
 
 // End of installation
-	'end_installation' => '<fieldset>
+    'step.finish.title' => 'End of installation',
+	'finish.message' => '<fieldset>
                             <legend>PHPBoost is now installed and ready to run !</legend>
                             <p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
                             <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
@@ -260,8 +261,8 @@ The PHPBoost Team.',
                                 <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer</li>
                             </ul>
                         </fieldset>',
-	'site_index' => 'Go to the website',
-	'admin_index' => 'Go to the administration panel',
+	'site.index' => 'Go to the website',
+	'admin.index' => 'Go to the administration panel',
 
 // Miscalleneous
 	'yes' => 'Yes',
