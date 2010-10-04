@@ -184,13 +184,13 @@ class CLIInstallCommand implements CLICommand
 			return false;
 		}
 		CLIOutput::writeln("\t" . 'modules...');
-		if (!$this->installation->configure_website($this->website_locale, $this->website_server, $this->website_path, $this->website_name,
+		if (!$this->installation->configure_website($this->website_server, $this->website_path, $this->website_name,
 			'PHPBoost command line installation', '', $this->website_timezone))
 		{
 			return false;
 		}
 		CLIOutput::writeln("\t" . 'admin creation...');
-		if (!$this->installation->create_admin($this->user_login, $this->user_password, $this->user_email, $this->website_locale, false, false))
+		if (!$this->installation->create_admin($this->user_login, $this->user_password, $this->user_email, false, false))
 		{
 			return false;
 		}

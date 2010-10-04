@@ -225,7 +225,8 @@ Ce code permet le déverrouillage de l\'administration en cas de tentative d\'int
 Cordialement l\'équipe PHPBoost.',
 
 //Fin de l'installation
-	'end_installation' => '<fieldset>
+    'step.finish.title' => 'Fin de l\'installation',
+	'finish.message' => '<fieldset>
                             <legend>PHPBoost est désormais installé !</legend>
                             <p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
                             <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
@@ -261,8 +262,8 @@ Cordialement l\'équipe PHPBoost.',
                                 <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur</li>
                             </ul>
                         </fieldset>',
-	'site_index' => 'Aller à l\'accueil du site',
-	'admin_index' => 'Aller dans le panneau d\'administration',
+	'site.index' => 'Aller à l\'accueil du site',
+	'admin.index' => 'Aller dans le panneau d\'administration',
 
 //Divers
 	'yes' => 'Oui',

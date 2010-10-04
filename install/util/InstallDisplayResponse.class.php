@@ -116,7 +116,7 @@ class InstallDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['administrator_account_creation'], 'img' => 'admin.png'),
 			array('name' => $this->lang['end'], 'img' => 'end.png')
 		);
-		$this->nb_steps = count($steps);
+		$this->nb_steps = count($steps) - 1;
 
 		for ($i = 0; $i < $this->nb_steps; $i++)
 		{

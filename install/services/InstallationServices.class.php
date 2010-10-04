@@ -67,21 +67,21 @@ class InstallationServices
 		return true;
 	}
 
-	public function configure_website($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
+	public function configure_website($server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
 		$this->get_installation_token();
 		$modules_to_install = $this->distribution_config['modules'];
-		$this->generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
+		$this->generate_website_configuration($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->generate_cache();
 		return true;
 	}
 	
-	public function create_admin($login, $password, $email, $locale, $create_session = true, $auto_connect = true)
+	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
-		$this->create_first_admin($login, $password, $email, $locale, $create_session, $auto_connect);
+		$this->create_first_admin($login, $password, $email, $create_session, $auto_connect);
 		$this->delete_installation_token();
 		return true;
 	}
@@ -91,8 +91,9 @@ class InstallationServices
         $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
     }
 
-	private function generate_website_configuration($locale, $server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
+	private function generate_website_configuration($server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
+		$locale = LangLoader::get_locale();
 		$user = new User();
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
@@ -253,12 +254,12 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($login, $password, $email, $locale, $create_session, $auto_connect)
+	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
 	{
 		global $Cache;
 		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, $locale, $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$this->update_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
