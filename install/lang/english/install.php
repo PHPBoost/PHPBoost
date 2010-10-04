@@ -52,6 +52,7 @@ $lang = array(
 	'installation.title' => 'PHPBoost installation',
 	'steps_list' => 'Steps list',
 	'introduction' => 'Preamble',
+	'config_server' => 'Server Configuration',
 	'database_config' => 'Database settings',
 	'advanced_config' => 'General settings',
 	'administrator_account_creation' => 'Administrator details',
