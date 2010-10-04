@@ -315,8 +315,8 @@ class InstallationServices
 		$mail = new Mail();
 		$mail->set_sender($email, 'admin');
 		$mail->add_recipient($email);
-		$mail->set_subject($this->messages['admin_mail_object']);
-		$mail->set_content(sprintf($this->messages['admin_mail_unlock_code'], stripslashes($login),
+		$mail->set_subject($this->messages['admin.created.email.object']);
+		$mail->set_content(sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
 		stripslashes($login), $password, $unlock_admin, HOST . DIR));
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
@@ -324,7 +324,7 @@ class InstallationServices
 	private function connect_admin($password, $auto_connect)
 	{
 		$Session = new Session();
-		$this->querier->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
 		$Session->start(1, $password, 2, '/install/install.php', '', $this->messages['page_title'], $auto_connect);
 	}
 
