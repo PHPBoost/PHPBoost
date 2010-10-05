@@ -39,11 +39,11 @@ class UrlControllerMapper extends AbstractUrlMapper
 	 * @desc build a new UrlDispatcherItem
 	 * @param string $classpath the controller classname
 	 * @param string $capture_regex the regular expression matching the url
-	 * and capturing the controller method parameters
+	 * and capturing the controller method parameters. By default, match the empty url <code>/</code>
      * @param string $parameters_names the names of the parameters in the capture order
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($classname, $capture_regex, $parameters_names = array())
+	public function __construct($classname, $capture_regex = '`^/?$`', $parameters_names = array())
 	{
 		$this->classname =& $classname;
 		$this->parameters_names = $parameters_names;
