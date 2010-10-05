@@ -42,7 +42,7 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
         $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
         $this->add_link($LANG['config_main'], '/admin/admin_config.php', $img);
         $this->add_link($LANG['config_advanced'], '/admin/admin_config.php?adv=1', $img);
-        $this->add_link($this->lang['mail_config'], '/admin/config/index.php?url=/mail', $img);
+        $this->add_link($this->lang['mail_config'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
 	}
 	
 	private function load_lang()

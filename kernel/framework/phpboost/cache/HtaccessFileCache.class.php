@@ -103,27 +103,43 @@ class HtaccessFileCache implements CacheData
 	private function add_core_rules()
 	{
 		$this->add_section('Core');
-		$this->add_line('RewriteRule ^(.*)admin/errors/404/(?:list/?)?$ ' . DIR . '/admin/errors/?url=/404/list [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)admin/errors/404/clear/?$ ' . DIR . '/admin/errors/?url=/404/clear [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)admin/errors/404/([0-9]+)/delete/?$ ' . DIR . '/admin/errors/?url=/404/$2/delete [L,QSA]');
+        $this->add_rewrite_rule('^admin/config/mail/?$', '/admin/config/index.php?url=/mail');
+        
+        $this->add_rewrite_rule('^admin/cache(?:/data)/?$', '/admin/cache/index.php?url=/data');
+        $this->add_rewrite_rule('^admin/cache/syndication/?$', '/admin/cache/index.php?url=/syndication');
+        $this->add_rewrite_rule('^admin/cache/config/?$', '/admin/cache/index.php?url=/config');
+        
+		$this->add_rewrite_rule('^admin/errors/404/(?:list/?)?$', '/admin/errors/?url=/404/list');
+		$this->add_rewrite_rule('^admin/errors/404/clear/?$', '/admin/errors/?url=/404/clear');
+		$this->add_rewrite_rule('^admin/errors/404/([0-9]+)/delete/?$', '/admin/errors/?url=/404/$2/delete');
 		
-		$this->add_line('RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]');
+		$this->add_rewrite_rule('^member/member-([0-9]+)-?([0-9]*)\.php$', '/member/member.php?id=$2&p=$3');
+		$this->add_rewrite_rule('^member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5');
 	}
 
 	private function add_feeds_rules()
 	{
 		$this->add_section('Feeds');
-		$this->add_line('RewriteRule ^(.*)rss/?$ ' . DIR . '/syndication.php?m=news&feed=rss [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&feed=rss [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&feed=rss [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&name=$3&feed=rss [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)rss/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$3&name=$2&feed=rss [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)atom/?$ ' . DIR . '/syndication.php?m=news&feed=atom [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&feed=atom [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&feed=atom [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$2&name=$3&feed=atom [L,QSA]');
-		$this->add_line('RewriteRule ^(.*)atom/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$ ' . DIR . '/syndication.php?m=$1&cat=$3&name=$2&feed=atom [L,QSA]');
+        $this->add_rewrite_rule('^rss/?$', '/syndication.php?m=news&feed=rss');
+        $this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/?$', '/syndication.php?m=$1&feed=rss');
+        $this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([0-9]+)/?$', '/syndication.php?m=$1&cat=$2&feed=rss');
+        $this->add_rewrite_rule('^rss/?$', '/syndication.php?m=news&feed=rss');
+        $this->add_rewrite_rule('^rss/?$', '/syndication.php?m=news&feed=rss');
+        $this->add_rewrite_rule('^rss/?$', '/syndication.php?m=news&feed=rss');
+        $this->add_rewrite_rule('^rss/?$', '/syndication.php?m=news&feed=rss');
+        
+		$this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', '/syndication.php?m=$1&cat=$2&name=$3&feed=rss');
+		$this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', '/syndication.php?m=$1&cat=$3&name=$2&feed=rss');
+		$this->add_rewrite_rule('^atom/?$', '/syndication.php?m=news&feed=atom');
+		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/?$', '/syndication.php?m=$1&feed=atom');
+		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([0-9]+)/?$', '/syndication.php?m=$1&cat=$2&feed=atom');
+		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', '/syndication.php?m=$1&cat=$2&name=$3&feed=atom');
+		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', '/syndication.php?m=$1&cat=$3&name=$2&feed=atom');
+	}
+	
+	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
+	{
+        $this->add_line('RewriteRule ' . $match . ' ' . DIR . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
 
 	private function add_bandwidth_protection()

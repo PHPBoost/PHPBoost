@@ -30,7 +30,7 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminCacheController', '`^/data/?$`'),
+	new UrlControllerMapper('AdminCacheController', '`^(?:/data/?)?$`'),
 	new UrlControllerMapper('AdminSyndicationCacheController', '`^/syndication/?$`'),
 	new UrlControllerMapper('AdminCacheConfigController', '`^/config/?$`')
 );

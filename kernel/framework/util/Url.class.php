@@ -542,5 +542,32 @@ class Url
 			return $regex_match_all;
 		}
 	}
+    
+    public static function to_rel($url)
+    {
+        if (!($url instanceof Url))
+        {
+            $url = new Url($url);
+        }
+        return $url->rel();
+    }
+    
+    public static function to_relative($url)
+    {
+        if (!($url instanceof Url))
+        {
+            $url = new Url($url);
+        }
+        return $url->relative();
+    }
+    
+    public static function to_absolute($url)
+    {
+        if (!($url instanceof Url))
+        {
+            $url = new Url($url);
+        }
+        return $url->absolute();
+    }
 }
 ?>

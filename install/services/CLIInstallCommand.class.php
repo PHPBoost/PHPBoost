@@ -71,7 +71,7 @@ class CLIInstallCommand implements CLICommand
 
 	public function help(array $args)
 	{
-		CLIOutput::writeln('this is the phpboost install command line manual.');
+        CLIOutput::writeln('this is the phpboost install command line manual.');
 		CLIOutput::writeln('this commands have optionals parameters. Here is theirs default values:');
 
 		$this->show_parameter_section('database');
