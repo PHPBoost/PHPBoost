@@ -1,13 +1,13 @@
 <?php
 /*##################################################
- *                          KernelExtensionPointProvider.class.php
+ *                          UrlMappings.class.php
  *                            -------------------
- *   begin                : February 06, 2010
+ *   begin                : October 06, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
- ###################################################
+ *###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,27 +23,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+ *###################################################
+ */
 
-class KernelExtensionPointProvider extends ExtensionPointProvider
-{
-	public function __construct()
+class UrlMappings implements UrlMappingsExtensionPoint
+{	
+	private $mappings;
+	
+	/**
+	 * @param UrlMapping[] $mappings
+	 */
+	public function __construct(array $mappings)
 	{
-		parent::__construct('kernel');
+		$this->mappings = $mappings;
 	}
-
-	public function commands()
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function list_mappings()
 	{
-		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand'));
-	}
-
-	public function url_mappings()
-	{
-		return new UrlMappings(array(
-			new DispatcherUrlMapping('/admin/config/index.php'),
-            new DispatcherUrlMapping('/admin/cache/index.php'),
-            new DispatcherUrlMapping('/admin/errors/index.php')
-		));
+		return $this->mappings;
 	}
 }
 ?>

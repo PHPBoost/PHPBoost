@@ -1,13 +1,13 @@
 <?php
 /*##################################################
- *                          KernelExtensionPointProvider.class.php
+ *                          UrlMappingsExtensionPoint.class.php
  *                            -------------------
- *   begin                : February 06, 2010
+ *   begin                : October 06, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
- ###################################################
+ *###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,27 +23,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+ *###################################################
+ */
 
-class KernelExtensionPointProvider extends ExtensionPointProvider
+interface UrlMappingsExtensionPoint extends ExtensionPoint
 {
-	public function __construct()
-	{
-		parent::__construct('kernel');
-	}
-
-	public function commands()
-	{
-		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand'));
-	}
-
-	public function url_mappings()
-	{
-		return new UrlMappings(array(
-			new DispatcherUrlMapping('/admin/config/index.php'),
-            new DispatcherUrlMapping('/admin/cache/index.php'),
-            new DispatcherUrlMapping('/admin/errors/index.php')
-		));
-	}
+	const EXTENSION_POINT = 'url_mappings';
+	
+	/**
+	 * @return UrlMapping[]
+	 */
+	function list_mappings();
 }
 ?>
