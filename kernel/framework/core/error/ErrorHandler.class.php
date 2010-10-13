@@ -85,7 +85,7 @@ class ErrorHandler
 		$this->errclass = '';
 		$this->errimg = '';
 		$this->fatal = false;
-		
+
 	}
 
 	/**
@@ -150,13 +150,15 @@ class ErrorHandler
 	}
 
 	protected function get_stackstrace_as_string($start_trace_index) {
-		if (count($this->exception->getTrace()) <= 2) {
-			return '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
-		} else {
-            return Debug::get_stacktrace_as_string($start_trace_index);
+		$stack = '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
+		if (count($this->exception->getTrace()) > 2)
+		{
+            $stack .= (Debug::is_output_html() ? '<br />' : "\n");
+            $stack .= Debug::get_stacktrace_as_string($start_trace_index);
 		}
+		return $stack;
 	}
-	
+
 	protected function display_debug()
 	{
 		if (Debug::is_output_html())
