@@ -38,7 +38,7 @@ class InstallFinishController extends InstallController
 	 * @param Template $view
 	 * @return InstallDisplayResponse
 	 */
-	private function create_response(Template $view)
+	private function create_response(View $view)
 	{
         $step_title = $this->lang['step.finish.title'];
 		$response = new InstallDisplayResponse(6, $step_title, $view);

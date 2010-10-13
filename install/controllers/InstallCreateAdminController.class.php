@@ -76,7 +76,7 @@ class InstallCreateAdminController extends InstallController
         array('required' => true));
         $fieldset->add_field($repeatPassword);
         $this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
-        
+
 		$email = new FormFieldTextEditor('email', $this->lang['admin.email'], '', array('required' => true));
 		$email->add_constraint(new FormFieldConstraintMailAddress());
 		$fieldset->add_field($email);
@@ -84,13 +84,12 @@ class InstallCreateAdminController extends InstallController
 		$fieldset->add_field($createSession);
 		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true);
 		$fieldset->add_field($autoconnect);
-		
+
 		$this->submit_button = new FormButtonSubmitImg('templates/images/right.png', $this->lang['step.next'], 'submit');
 		$this->form->add_button($this->submit_button);
 	}
-	
+
 	/**
-	 * @param Template $view
 	 * @return InstallDisplayResponse
 	 */
 	private function create_response()

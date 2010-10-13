@@ -28,13 +28,13 @@
 class AdminCacheConfigController extends AbstractAdminFormPageController
 {
 	private $lang;
-	
+
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
 		parent::__construct($this->lang['cache_cleared_successfully']);
 	}
-	
+
 	protected function create_form()
 	{
 		$form = new HTMLForm('cache_config');
@@ -42,32 +42,32 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp', $this->lang['explain_php_cache']));
 		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['apc_available'], $this->is_apc_available(), array('description' => $this->lang['explain_apc_available'])));
-		
+
 		if ($this->is_apc_available())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], false));
 		}
-		
+
 		$button = new FormButtonDefaultSubmit();
 		$this->set_submit_button($button);
 		$form->add_button($button);
 		$this->set_form($form);
 	}
-	
+
 	protected function is_apc_available()
 	{
 		// TODO implement this method
 		return true;
 	}
-	
+
 	protected function handle_submit()
 	{
 		// TODO Enable APC
 	}
-	
-	protected function generate_response(Template $template)
+
+	protected function generate_response(View $view)
 	{
-		return new AdminCacheMenuDisplayResponse($template);
+		return new AdminCacheMenuDisplayResponse($view);
 	}
 }
 ?>

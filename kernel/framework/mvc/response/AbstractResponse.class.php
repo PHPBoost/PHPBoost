@@ -44,7 +44,7 @@ abstract class AbstractResponse implements Response
 	 */
 	private $graphical_environment;
 
-	protected function __construct(GraphicalEnvironment $graphical_environment, Template $view)
+	protected function __construct(GraphicalEnvironment $graphical_environment, View $view)
 	{
 		$this->graphical_environment = $graphical_environment;
 		$this->view = $view;
@@ -58,7 +58,7 @@ abstract class AbstractResponse implements Response
 	public function send()
 	{
 		$this->graphical_environment->display_header();
-		$this->view->display();
+		echo $this->view->render();
 		$this->graphical_environment->display_footer();
 	}
 }
