@@ -72,7 +72,7 @@ class AdminContactController extends AdminController
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['enable_captcha'], $config->is_captcha_enabled(),
 			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
-		$fieldset->add_field(new FormFieldTextEditor('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(), 
+		$fieldset->add_field(new FormFieldTextEditor('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(),
 			array('disabled' => !$config->is_captcha_enabled(), 'required' => true),
 			array(new FormFieldConstraintIntegerRange(0, 4))));
 
@@ -92,15 +92,15 @@ class AdminContactController extends AdminController
 			$config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level'));
 		}
 		else
-		{ 
+		{
 			$config->disable_captcha();
 		}
 		ContactConfig::save();
 	}
 
-	private function build_response(Template $tpl)
+	private function build_response(View $view)
 	{
-		$response = new AdminMenuDisplayResponse($tpl);
+		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['title_contact']);
 		$response->add_link($this->lang['contact_config'], '/contact/' . url('index.php?url=/admin', 'admin/'), 'contact/contact.png');
 		return $response;

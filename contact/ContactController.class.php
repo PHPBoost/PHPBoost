@@ -48,10 +48,10 @@ class ContactController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$mail_success = $this->send_mail();
-			
+
 			$tpl->assign_vars(array(
 				'C_SUBMITED' => true,
-				'C_SUCCESS' => $mail_success 
+				'C_SUCCESS' => $mail_success
 			));
 		}
 
@@ -99,19 +99,19 @@ class ContactController extends ModuleController
 		$mail->set_sender($this->form->get_value('sender_mail'), 'user');
 		$mail->set_subject($this->form->get_value('subject'));
 		$mail->set_content($this->form->get_value('message'));
-		
+
 		$admin_mails = MailServiceConfig::load()->get_administrators_mails();
 		foreach ($admin_mails as $mail_address)
 		{
 			$mail->add_recipient($mail_address);
 		}
-		
+
 		return AppContext::get_mail_service()->try_to_send($mail);
 	}
-	
-	private function build_response(Template $tpl)
+
+	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($tpl);
+		$response = new SiteDisplayResponse($view);
 		$response->get_graphical_environment()->set_page_title($this->lang['title_contact']);
 		return $response;
 	}

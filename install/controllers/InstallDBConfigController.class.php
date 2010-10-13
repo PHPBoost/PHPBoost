@@ -102,9 +102,8 @@ class InstallDBConfigController extends InstallController
 		$this->submit_button = new FormButtonSubmitImg('templates/images/right.png', $this->lang['step.next'], 'submit');
 		$this->form->add_button($this->submit_button);
 	}
-	
+
 	/**
-	 * @param Template $view
 	 * @return InstallDisplayResponse
 	 */
 	private function create_response()

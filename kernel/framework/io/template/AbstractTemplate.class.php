@@ -81,7 +81,7 @@ abstract class AbstractTemplate implements Template
     {
         $this->data->put($key, $value);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -89,7 +89,7 @@ abstract class AbstractTemplate implements Template
     {
         $this->data->put_all($vars);
     }
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -125,6 +125,14 @@ abstract class AbstractTemplate implements Template
 	/**
 	 * {@inheritdoc}
 	 */
+    public function render()
+    {
+    	return $this->renderer->render($this->data, $this->loader);
+    }
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function display()
 	{
 		echo $this->render();
@@ -136,15 +144,6 @@ abstract class AbstractTemplate implements Template
     public function to_string()
     {
         return $this->render();
-    }
-    
-    /**
-     * @return string the template parsed in a result string
-     * @throws TemplateParserException
-     */
-    protected function render()
-    {
-    	return $this->renderer->render($this->data, $this->loader);
     }
 
     /**

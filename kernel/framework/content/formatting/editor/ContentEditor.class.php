@@ -32,7 +32,11 @@
  */
 abstract class ContentEditor
 {
-    function ContentEditor()
+    private $forbidden_tags = array();
+    private $identifier = 'contents';
+    private $template = null;
+
+    public function __construct()
     {
         $content_formatting_config = ContentFormattingConfig::load();
         $this->forbidden_tags = $content_formatting_config->get_forbidden_tags();
@@ -42,7 +46,7 @@ abstract class ContentEditor
 	 * @desc Set the forbidden tags
 	 * @param array List of forbidden tags.
 	 */
-    function set_forbidden_tags($forbidden_tags)
+    public function set_forbidden_tags($forbidden_tags)
     {
         $this->forbidden_tags = $forbidden_tags;
     }
@@ -51,7 +55,7 @@ abstract class ContentEditor
 	 * @desc Get the fordidden tags.
 	 * @return array List of forbidden tags.
 	 */
-    function get_forbidden_tags()
+    public function get_forbidden_tags()
     {
         return $this->forbidden_tags;
     }
@@ -60,7 +64,7 @@ abstract class ContentEditor
 	 * @desc Set the html identifier of the textarea field which contain the content to edit.
 	 * @param string The html identifier.
 	 */
-    function set_identifier($identifier)
+    public function set_identifier($identifier)
     {
         $this->identifier = $identifier;
     }
@@ -69,7 +73,7 @@ abstract class ContentEditor
 	 * @desc Set an alternative template for the editor.
 	 * @param Template $template.
 	 */
-    function set_template($template)
+    public function set_template($template)
     {
         $this->template = $template;
     }
@@ -78,7 +82,7 @@ abstract class ContentEditor
 	 * @desc Get the template used for the editor.
 	 * @return Template The template
 	 */
-    function get_template()
+    public function get_template()
     {
         if (!is_object($this->template) || !($this->template instanceof Template))
         {
@@ -89,11 +93,6 @@ abstract class ContentEditor
             return $this->template;
         }
     }
-
-    ## Private ##
-    var $forbidden_tags = array();
-    var $identifier = 'contents';
-    var $template = null;
 }
 
 ?>

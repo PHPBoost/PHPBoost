@@ -136,8 +136,8 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 
 		MailServiceConfig::save();
 	}
-	
-	protected function generate_response(Template $template)
+
+	protected function generate_response(View $view)
 	{
 		$tpl = new StringTemplate('<script type="text/javascript">
 <!--
@@ -145,7 +145,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 	{
 		$FFS("smtp_configuration").enable();
 	}
-	
+
 	function hide_smtp_config()
 	{
 		$FFS("smtp_configuration").disable();
@@ -153,7 +153,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 -->
 </script>
 # INCLUDE form #');
-		$tpl->add_subtemplate('form', $template);
+		$tpl->put('form', $view);
 		return new AdminConfigDisplayResponse($tpl);
 	}
 }

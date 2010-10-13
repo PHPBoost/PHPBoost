@@ -39,7 +39,7 @@
  * <h1>Lang variables</h1>
  * To speed the development up, you can avoid setting all the localized variables to use. You just have to associate one or more lang map
  * (lang_identifier => localized lang) with the {@link add_lang()} method. In the template, you just have to
- * add the 'L_' prefix before the variable name and it will be searched in the langs map. 
+ * add the 'L_' prefix before the variable name and it will be searched in the langs map.
  * <h2>Loops</h2>
  * You can make some loops to repeat a pattern, those loops can be nested. A loop has a name (name) and each iteration contains some variables, for example, the variable VAR.
  * # START name #
@@ -76,7 +76,7 @@
  * </ul>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-interface Template
+interface Template extends View
 {
 	/**
 	 * @desc Assigns the value <code>$code</code> to the template variable of name <code>$key</code>
@@ -84,21 +84,22 @@ interface Template
 	 * @param $value the template parameter value
 	 */
 	function put($key, $value);
-	
+
 	/**
      * @desc Assigns template variables. It could be simple variables, loop or subtemplates.
      * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
      */
     function put_all(array $vars);
-    
+
     /**
-     * @deprecated Use put_all instead
+     * @deprecated Use <code>put_all</code> or <code>put</code> instead
      * @desc Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
      * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
      */
     function assign_vars(array $array_vars);
 
 	/**
+     * @deprecated Use <code>put_all</code> or <code>put</code> instead
 	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
 	 * @param string $block_name Block name.
@@ -113,6 +114,7 @@ interface Template
 	function display();
 
 	/**
+	 * @deprecated use <code>render()</code> instead
 	 * @desc Returns the result of the template interpretation.
 	 */
 	function to_string();
@@ -124,6 +126,7 @@ interface Template
     function add_lang(array $lang);
 
 	/**
+     * @deprecated Use <code>put_all</code> or <code>put</code> instead
 	 * @desc Adds a subtemplate to embed with the INCLUDE instruction
 	 * @param string $identifier the identifier
 	 * @param Template $template the template to include (variables must be set in this template)

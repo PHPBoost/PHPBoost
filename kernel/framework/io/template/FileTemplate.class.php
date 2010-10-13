@@ -29,7 +29,7 @@
  * @package {@package}
  * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
  * @desc This class allows you to handle a template file.
- * Your template files should have the .tpl extension. 
+ * Your template files should have the .tpl extension.
  * To be more efficient, this class uses a cache and parses each file only once.
  * <h1>File identifiers</h1>
  * The web site can have several themes whose files aren't in the same folders. When you load a file, you just have to load the generic file and the right template file will
@@ -49,7 +49,7 @@
 class FileTemplate extends AbstractTemplate
 {
 	private $file_identifier;
-	
+
 	/**
 	 * @desc Builds a FileTemplate object
 	 * @param string $file_identifier The identifier of the file you want to load (see this class' description)
@@ -64,15 +64,15 @@ class FileTemplate extends AbstractTemplate
 		$renderer = new DefaultTemplateRenderer();
 		parent::__construct($loader, $renderer, $data);
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
-    protected function render()
+    public function render()
     {
         try
         {
-            return $this->renderer->render($this->data, $this->loader);
+            return parent::render();
         }
         catch (TemplateParserException $exception)
         {

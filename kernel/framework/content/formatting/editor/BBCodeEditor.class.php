@@ -36,17 +36,17 @@ class BBCodeEditor extends ContentEditor
 	 * @var Usefull to know if we have to include all the necessary JS includes
 	 */
 	private static $editor_already_included = false;
-	
-    function BBCodeEditor()
+
+    function __construct()
     {
-        parent::ContentEditor();
+        parent::__construct();
     }
 
     /**
 	 * @desc Display the editor
 	 * @return string Formated editor.
 	 */
- 	function display()
+ 	public function display()
     {
         global $Sql, $LANG, $Cache, $User;
 
@@ -132,7 +132,7 @@ class BBCodeEditor extends ContentEditor
         {
             if ($forbidden_tag == 'fieldset')
             	$forbidden_tag = 'block';
-            	
+
         	$template->assign_vars(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
@@ -154,10 +154,10 @@ class BBCodeEditor extends ContentEditor
                 $z++;
                 break;
             }
-             
+
             $width_source = 18; //Valeur par défaut.
             $height_source = 18;
-             
+
             // On recupère la hauteur et la largeur de l'image.
             list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
             if ($width_source > $width_max || $height_source > $height_max)
@@ -180,7 +180,7 @@ class BBCodeEditor extends ContentEditor
                 $width = $width_source;
                 $height = $height_source;
             }
-             
+
             $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'] . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 
             $template->assign_block_vars('smiley', array(
@@ -188,7 +188,7 @@ class BBCodeEditor extends ContentEditor
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 				));
-					
+
 				$i++;
 				$z++;
         }

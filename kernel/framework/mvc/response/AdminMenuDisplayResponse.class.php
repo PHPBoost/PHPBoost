@@ -32,14 +32,17 @@
  */
 class AdminMenuDisplayResponse extends AbstractResponse
 {
+	/**
+	 * @var Template
+	 */
 	private $full_view;
 
-	public function __construct(Template $view)
+	public function __construct(View $view)
 	{
 		$env = new AdminDisplayGraphicalEnvironment();
 
 		$this->full_view = new FileTemplate('admin/AdminMenuDisplayResponse.tpl');
-		$this->full_view->add_subtemplate('content', $view);
+		$this->full_view->put('content', $view);
 
 		parent::__construct($env , $this->full_view);
 	}

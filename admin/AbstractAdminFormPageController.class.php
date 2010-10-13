@@ -36,7 +36,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 	 */
 	private $submit_button;
 	protected $success_message;
-	
+
 	protected function __construct($success_message)
 	{
 		$this->success_message = $success_message;
@@ -45,7 +45,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$template = new StringTemplate('# IF C_SUCCESS # <div class="success" id="success_message">{SUCCESS_MESSAGE}</div> # ENDIF #
-		<script type="text/javascript"><!-- 
+		<script type="text/javascript"><!--
 		window.setTimeout(function() { Effect.Fade("success_message"); }, 5000);
 		--></script>
 		# INCLUDE form #');
@@ -59,30 +59,30 @@ abstract class AbstractAdminFormPageController extends AdminController
 			));
 		}
 		$template->add_subtemplate('form', $this->form->display());
-		return $this->generate_response($template); 
+		return $this->generate_response($template);
 	}
-	
+
 	protected abstract function create_form();
-	
+
 	private function has_been_submited()
 	{
 		return $this->submit_button->has_been_submited() && $this->form->validate();
 	}
-	
+
 	protected abstract function handle_submit();
-	
-	protected abstract function generate_response(Template $template);
-	
+
+	protected abstract function generate_response(View $template);
+
 	protected function get_form()
 	{
 		return $this->form;
 	}
-	
+
 	protected function set_form(HTMLForm $form)
 	{
 		$this->form = $form;
 	}
-	
+
 	protected function set_submit_button(FormButtonSubmit $submit_button)
 	{
 		$this->submit_button = $submit_button;

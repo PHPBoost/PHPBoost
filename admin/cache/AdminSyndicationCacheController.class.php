@@ -36,13 +36,13 @@ class AdminSyndicationCacheController extends AbstractAdminFormPageController
 	 */
 	private $submit_button;
 	private $lang;
-	
+
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
 		parent::__construct($this->lang['cache_cleared_successfully']);
 	}
-	
+
 	protected function create_form()
 	{
 		$form = new HTMLForm('syndication_cache_config');
@@ -54,15 +54,15 @@ class AdminSyndicationCacheController extends AbstractAdminFormPageController
 		$form->add_button($button);
 		$this->set_form($form);
 	}
-	
+
 	protected function handle_submit()
 	{
 		AppContext::get_cache_service()->clear_syndication_cache();
 	}
-	
-	protected function generate_response(Template $template)
+
+	protected function generate_response(View $view)
 	{
-		return new AdminCacheMenuDisplayResponse($template);
+		return new AdminCacheMenuDisplayResponse($view);
 	}
 }
 ?>
