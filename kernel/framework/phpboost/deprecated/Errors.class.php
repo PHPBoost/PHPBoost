@@ -176,7 +176,7 @@ class Errors
 					//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
 					$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-					$this->template->assign_vars(array(
+					$this->template->put_all(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'success',
     					'ERRORH_CLASS' => 'error_success',
@@ -187,7 +187,7 @@ class Errors
 				case E_USER_NOTICE:
 				case E_NOTICE:
 					$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
-					$this->template->assign_vars(array(
+					$this->template->put_all(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'notice',
     					'ERRORH_CLASS' => 'error_notice',
@@ -198,7 +198,7 @@ class Errors
 				case E_USER_WARNING:
 				case E_WARNING:
 					$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
-					$this->template->assign_vars(array(
+					$this->template->put_all(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'important',
     					'ERRORH_CLASS' => 'error_warning',
@@ -274,7 +274,7 @@ class Errors
 			//				//Message de succès, étrange pour une classe d'erreur non?
 			//				case E_USER_SUCCESS:
 			//					$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-			//					$Template->assign_vars(array(
+			//					$Template->put_all(array(
 			//    					'ERRORH_IMG' => 'success',
 			//    					'ERRORH_CLASS' => 'error_success',
 			//    					'L_ERRORH' => $errstr
@@ -284,7 +284,7 @@ class Errors
 			//				case E_USER_NOTICE:
 			//				case E_NOTICE:
 			//					$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
-			//					$Template->assign_vars(array(
+			//					$Template->put_all(array(
 			//    					'ERRORH_IMG' => 'notice',
 			//    					'ERRORH_CLASS' => 'error_notice',
 			//    					'L_ERRORH' => $errstr
@@ -294,7 +294,7 @@ class Errors
 			//				case E_USER_WARNING:
 			//				case E_WARNING:
 			//					$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
-			//					$Template->assign_vars(array(
+			//					$Template->put_all(array(
 			//    					'ERRORH_IMG' => 'important',
 			//    					'ERRORH_CLASS' => 'error_warning',
 			//    					'L_ERRORH' => $errstr

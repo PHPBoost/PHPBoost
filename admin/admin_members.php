@@ -323,7 +323,7 @@ elseif ($add)
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);  
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_USERS_ADD' => true,
 		'L_USERS_MANAGEMENT' => $LANG['members_management'],
 		'L_USERS_ADD' => $LANG['members_add'],
@@ -564,7 +564,7 @@ elseif (!empty($id))
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_USERS_MANAGEMENT' => true,
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
@@ -681,7 +681,7 @@ else
 		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY_SEARCH_RESULT' => false
 	));
 	
@@ -700,7 +700,7 @@ else
 				$Template->assign_block_vars('search', array(
 					'RESULT' => '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
 				));
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_DISPLAY_SEARCH_RESULT' => true
 				));
 			}
@@ -708,7 +708,7 @@ else
 		}
 		else
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_DISPLAY_SEARCH_RESULT' => true
 			));
 			$Template->assign_block_vars('search', array(
@@ -748,7 +748,7 @@ else
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),

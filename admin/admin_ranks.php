@@ -70,7 +70,7 @@ else //Sinon on rempli le formulaire
 		'admin_ranks'=> 'admin/admin_ranks.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],

@@ -33,7 +33,7 @@ $Template->set_filenames(array(
 	'admin_members_punishment'=> 'admin/admin_members_punishment.tpl')
 );
 	
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
@@ -78,7 +78,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
@@ -97,7 +97,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
 		}	
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
@@ -128,7 +128,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 		
 		if ($i === 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -167,7 +167,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 		}	
 		
 		array_pop($array_sanction);
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
@@ -244,7 +244,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',		
@@ -263,7 +263,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 		}		
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
@@ -294,7 +294,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		
 		if ($i === 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -315,7 +315,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
@@ -357,7 +357,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
@@ -376,7 +376,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 		}	
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_ban_until'],
@@ -407,7 +407,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 		
 		if ($i === 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -447,7 +447,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
 		}
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_BAN' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'BAN_OPTIONS' => $ban_options,

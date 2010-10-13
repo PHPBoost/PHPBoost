@@ -150,7 +150,7 @@ $template = new FileTemplate('member/contribution_panel.tpl');
 
 if ($contribution_id > 0)
 {
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
@@ -161,7 +161,7 @@ if ($contribution_id > 0)
 	$contribution_creation_date = $contribution->get_creation_date();
 	$contribution_fixing_date = $contribution->get_fixing_date();
 	
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
@@ -177,14 +177,14 @@ if ($contribution_id > 0)
 	
 	//Si la contribution a été traitée
 	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => url('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
 	
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'L_CONTRIBUTION' => $LANG['contribution'],
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_DESCRIPTION' => $LANG['contribution_description'],
@@ -205,7 +205,7 @@ if ($contribution_id > 0)
 //Modification d'une contribution
 elseif ($id_update > 0)
 {
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_EDIT_CONTRIBUTION' => true,
 		'EDITOR' => display_editor(),
 		'ENTITLED' => $contribution->get_entitled(),
@@ -233,7 +233,7 @@ else
 	
 	$pagination = new DeprecatedPagination();
 	
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_CONTRIBUTION_LIST' => true
 	));
 	
@@ -282,11 +282,11 @@ else
 	}
 	
 	if ($num_contributions > 1)
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'PAGINATION' => $pagination->display('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
 	else
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_NO_CONTRIBUTION' => true,
 			'L_NO_CONTRIBUTION_TO_DISPLAY' => $LANG['no_contribution']
 		));
@@ -316,7 +316,7 @@ else
 		}
 	}
 		
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_STATUS' => $LANG['contribution_status'],
 		'L_POSTER' => $LANG['contributor'],
@@ -333,7 +333,7 @@ else
 	));
 	
 	//Gestion du tri
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
 		'U_ORDER_ENTITLED_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',

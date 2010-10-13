@@ -133,7 +133,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			$form->add_button(new FormButtonReset());
             $form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 			
-            $Template->add_subtemplate('SHOUTBOX_FORM', $form->display());
+            $Template->put('SHOUTBOX_FORM', $form->display());
 			
 			$Template->pparse('shoutbox'); 
 		}
@@ -173,12 +173,12 @@ else //Affichage.
 	
 	//Pseudo du membre connecté.
 	if ($User->get_attribute('user_id') !== -1)
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SHOUTBOX_PSEUDO' => $LANG['guest'],
 			'C_VISIBLE_SHOUT' => true
 		));
@@ -227,13 +227,13 @@ else //Affichage.
 	$form->add_button(new FormButtonReset());
     $form->add_button(new FormButtonDefaultSubmit());
             
-    $Template->add_subtemplate('SHOUTBOX_FORM', $form->display());
+    $Template->put('SHOUTBOX_FORM', $form->display());
             
 	//On crée une pagination si le nombre de messages est trop important.
 	$nbr_shout = $Sql->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
 	$Pagination = new DeprecatedPagination();
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 		'PAGINATION' => $Pagination->display('shoutbox' . url('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));

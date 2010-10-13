@@ -41,7 +41,7 @@ class InstallNavigationBar implements FormButton
     public function display()
     {
     	$tpl = new FileTemplate('install/InstallNavigationBar.tpl');
-    	$tpl->assign_vars(array(
+    	$tpl->put_all(array(
             'HAS_PREVIOUS_STEP' => !empty($this->previous_step_url),
             'PREVIOUS_STEP_URL' => $this->previous_step_url
         ));

@@ -85,7 +85,7 @@ if (!empty($id_article))
 	}
 	$Sql->query_close($result);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => $LANG['date'],
 		'L_AUTHOR' => $LANG['wiki_author'],

@@ -278,7 +278,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'upload_move'=> 'member/upload_move.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -313,7 +313,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$Template->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
 			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
@@ -352,13 +352,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
 		));
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
@@ -383,7 +383,7 @@ else
 	if (isset($LANG[$get_l_error]))
 		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -516,7 +516,7 @@ else
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
@@ -527,7 +527,7 @@ else
 
 	if ($total_directories == 0 && $total_files == 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));

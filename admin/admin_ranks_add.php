@@ -100,7 +100,7 @@ else //Sinon on rempli le formulaire
 		$rank_options .= '<option value="' . PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/' . $file . '">' . $file . '</option>';
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'RANK_OPTIONS' => $rank_options,
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],

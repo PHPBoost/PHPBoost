@@ -41,7 +41,7 @@ $Template->set_filenames(array(
 
 $backup = new Backup();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
@@ -130,7 +130,7 @@ if (!empty($table) && $action == 'data')
 		$i++;
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
 		'QUERY' => Sql::indent_query($query),
@@ -176,7 +176,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	}
 	elseif (!empty($field) && !empty($value))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME' => $field,
 			'FIELD_VALUE' => $value,
@@ -244,7 +244,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME' => '',
 			'FIELD_VALUE' => '',
@@ -292,7 +292,7 @@ elseif (!empty($table) && $action == 'query')
 {
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DATABASE_TABLE_QUERY' => true
 	));
 
@@ -300,7 +300,7 @@ elseif (!empty($table) && $action == 'query')
 	{
 		$Session->csrf_get_protect(); //Protection csrf
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
 	
@@ -343,7 +343,7 @@ elseif (!empty($table) && $action == 'query')
 	elseif (!empty($table))
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'QUERY' => Sql::indent_query($query),
 		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
@@ -403,7 +403,7 @@ elseif (!empty($table))
 	$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 	$index = ($index > 1024) ? NumberHelper::round($index/1024, 1) . ' MB' : $index . ' kB';
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DATABASE_TABLE_STRUCTURE' => true,
 		'C_DATABASE_TABLE_DATA' => false,
 		'C_AUTOINDEX' => !empty($backup->tables[$table]['auto_increment']) ? true : false,

@@ -124,7 +124,7 @@ class MiniCalendar
 		//On crée le code selon le template
 		$template = new FileTemplate('framework/mini_calendar.tpl');
 		
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_SHORT) : '',
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,

@@ -87,17 +87,17 @@ function shoutbox_mini($position, $block)
     
     	//Pseudo du membre connecté.
     	if ($User->get_attribute('user_id') !== -1)
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
     			'C_HIDDEN_SHOUT' => true
     		));
     	else
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'SHOUTBOX_PSEUDO' => $LANG['guest'],
     			'C_VISIBLE_SHOUT' => true
     		));
     	
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
     		'SID' => SID,
     		'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
     		'L_ALERT_TEXT' => $LANG['require_text'],

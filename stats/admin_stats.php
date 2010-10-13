@@ -62,7 +62,7 @@ if (!empty($_POST['erase'])) //Suppression de robots.txt
 	}
 }
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_SITE' => $LANG['site'],
 	'L_STATS' => $LANG['stats'],
 	'L_USERS' => $LANG['member_s'],
@@ -81,7 +81,7 @@ if (!empty($members))
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_USERS' => true,
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
@@ -187,7 +187,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -220,7 +220,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
@@ -242,14 +242,14 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
 
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 				));
 					
@@ -280,7 +280,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 				
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_STATS_NO_GD' => true
 			));
 				
@@ -365,7 +365,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
 			
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
@@ -396,7 +396,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 				$selected = ($i == $year) ? ' selected="selected"' : '';
 				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 			'C_STATS_MONTH' => true,
 			'C_STATS_YEAR' => true,
 			'STATS_MONTH' => $months,
@@ -405,7 +405,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 
 			if (@extension_loaded('gd'))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 				));
 					
@@ -430,7 +430,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 				//Mois selectionné.
 				if (!empty($month) && !empty($year))
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 					));
 
@@ -547,7 +547,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	$compteur_total = $compteur_total + $compteur_day;
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -568,7 +568,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$next_year = $pages_year + 1;
 		$previous_year = $pages_year - 1;
 			
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -590,14 +590,14 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
 
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 				));
 					
@@ -628,7 +628,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 				
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_STATS_NO_GD' => true
 			));
 				
@@ -713,7 +713,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -751,7 +751,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 			'STATS_DAY' => $days,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years,
@@ -786,7 +786,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? $month - 1 : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -818,7 +818,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'C_STATS_MONTH' => true,
 			'STATS_YEAR' => $years,
@@ -827,7 +827,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 
 			if (@extension_loaded('gd'))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 				));
 					
@@ -852,7 +852,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 				//Mois selectionné.
 				if (!empty($month) && !empty($year))
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 					));
 
@@ -982,7 +982,7 @@ elseif (!empty($referer))
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_REFERER' => true,
 		'PAGINATION' => $Pagination->display('admin_stats' . url('.php?referer=1&amp;p=%d'), $nbr_referer, 'p', 15, 3),
 		'L_URL' => $LANG['url'],
@@ -1039,7 +1039,7 @@ elseif (!empty($keyword))
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_KEYWORD' => true,
 		'PAGINATION' => $Pagination->display('admin_stats' . url('.php?keyword=1&amp;p=%d'), $nbr_keyword, 'p', 15, 3),
 		'L_SEARCH_ENGINE' => $LANG['keyword_s'],
@@ -1055,7 +1055,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 
 	if (!empty($browser))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_BROWSERS' => true,
 			'GRAPH_RESULT' => '<img src="display_stats.php?browsers=1" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
@@ -1066,7 +1066,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	}
 	elseif (!empty($os))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_OS' => true,
 			'GRAPH_RESULT' => '<img src="display_stats.php?os=1" alt="" />',
 			'L_OS' => $LANG['os']
@@ -1077,7 +1077,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	}
 	elseif (!empty($user_lang))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_LANG' => true,
 			'GRAPH_RESULT' => '<img src="display_stats.php?lang=1" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
@@ -1136,7 +1136,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 }
 elseif ($bot)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_ROBOTS' => true,
 		'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
 		'L_ERASE' => $LANG['erase'],
@@ -1168,7 +1168,7 @@ elseif ($bot)
 }
 else
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_SITE' => true,
 		'START' => GeneralConfig::load()->get_site_install_date()->format(DATE_FORMAT_SHORT),
 		'VERSION' => Environment::get_phpboost_version(),

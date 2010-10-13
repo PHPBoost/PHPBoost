@@ -182,7 +182,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
          //Notes
         
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
             'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
             'U_IMG' => $result_data['image'],

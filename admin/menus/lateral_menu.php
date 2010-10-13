@@ -30,7 +30,7 @@ function lateral_menu()
 {
     global $LANG;
     $tpl = new FileTemplate('admin/menus/panel.tpl');
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
         'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
         'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
         'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],

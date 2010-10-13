@@ -82,7 +82,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
@@ -100,7 +100,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -200,7 +200,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_FORUM_CUT_CAT' => true,
 		'CATEGORIES' => $cat_forum,
 		'KERNEL_EDITOR' => display_editor(),
@@ -247,7 +247,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			$nbr_poll_field++;
 		}
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => FormatingHelper::unparse($msg['contents']),
@@ -302,7 +302,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		//Type de réponses du sondage.
 		$poll_type = retrieve(POST, 'poll_type', 0);
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'TITLE' => $title,
 			'DESC' => $subtitle,
 			'CONTENTS' => $contents,
@@ -331,7 +331,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,

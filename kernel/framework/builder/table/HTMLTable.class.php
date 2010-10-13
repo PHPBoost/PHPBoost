@@ -120,7 +120,7 @@ class HTMLTable extends HTMLElement
 		if ($filters)
 		{
 			$form_id = 'filters_form_' . $this->arg_id;
-			$this->tpl->assign_vars(array('C_FILTERS' => $has_filters));
+			$this->tpl->put_all(array('C_FILTERS' => $has_filters));
 			$fieldset = new FormFieldsetHorizontal('filters');
 			$fieldset->set_description(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters as $filter)
@@ -137,8 +137,8 @@ class HTMLTable extends HTMLElement
 			// TODO translate submit button label
             $submit = new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit');
             $form->add_button($submit);
-			$this->tpl->add_subtemplate('filters', $form->display());
-			$this->tpl->assign_vars(array(
+			$this->tpl->put('filters', $form->display());
+			$this->tpl->put_all(array(
 				'SUBMIT_FUNCTION' => $submit_function,
 				'SUBMIT_URL' => $this->parameters->get_js_submit_url()
 			));
@@ -156,7 +156,7 @@ class HTMLTable extends HTMLElement
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $this->model->has_nb_rows_options()
 		);
-		$this->tpl->assign_vars($tpl_vars);
+		$this->tpl->put_all($tpl_vars);
 
 		if ($this->model->has_nb_rows_options())
 		{
@@ -244,7 +244,7 @@ class HTMLTable extends HTMLElement
 			'end' => $end,
 			'total' => $this->nb_rows
 		));
-		$this->tpl->assign_vars(array(
+		$this->tpl->put_all(array(
 			'NUMBER_OF_ELEMENTS' => $elements
 		));
 	}
@@ -254,7 +254,7 @@ class HTMLTable extends HTMLElement
 		$nb_pages =  ceil($this->nb_rows / $this->get_nb_rows_per_page());
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
-		$this->tpl->add_subtemplate('pagination', $pagination->export());
+		$this->tpl->put('pagination', $pagination->export());
 	}
 
 	private function get_nb_rows_per_page()

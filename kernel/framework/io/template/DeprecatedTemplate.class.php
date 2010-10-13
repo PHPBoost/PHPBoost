@@ -58,12 +58,12 @@ class DeprecatedTemplate extends FileTemplate
 			$module_data_path = $new_template->get_data()->get('PICTURES_DATA_PATH');
 				
 			$this->bind_vars($new_template);
-			$this->add_subtemplate($identifier, $new_template);
+			$this->put($identifier, $new_template);
 			$this->find_module($filename, $identifier);
 				
 			// Auto assign the module data path
 			// Use of MODULE_DATA_PATH is deprecated
-			$new_template->assign_vars(array('PICTURES_DATA_PATH' => $module_data_path));
+			$new_template->put_all(array('PICTURES_DATA_PATH' => $module_data_path));
 			
 			$this->subtpls[] = $new_template;
 		}

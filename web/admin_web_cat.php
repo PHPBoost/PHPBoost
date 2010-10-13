@@ -163,7 +163,7 @@ else
 	foreach ($img_array as $key => $img_path)
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],		

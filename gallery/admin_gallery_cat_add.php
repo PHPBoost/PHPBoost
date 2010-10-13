@@ -118,7 +118,7 @@ else
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'CATEGORIES' => $galleries,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),

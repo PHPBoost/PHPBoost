@@ -48,7 +48,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 		$tpl_src = '<option value="${escape(VALUE)}" # IF C_SELECTED # selected="selected" # ENDIF # >{LABEL}</option>';
 		
 		$tpl = new StringTemplate($tpl_src);
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'VALUE' => $this->get_raw_value(),
 			'C_SELECTED' => $this->is_active(),
 			'LABEL' => $this->get_label()

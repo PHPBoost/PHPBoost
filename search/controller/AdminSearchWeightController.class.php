@@ -90,7 +90,7 @@ class AdminSearchWeightController extends AdminSearchController {
 
 	private function send()
 	{
-		$this->view->add_subtemplate('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 		return $this->prepare_to_send($this->view);
 	}
 

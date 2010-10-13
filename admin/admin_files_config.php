@@ -100,7 +100,7 @@ else
 		$auth_extensions .= '</optgroup>';
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_EXTENSIONS' => $i,
 		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $file_upload_config->get_authorization_enable_interface_files(), array(2 => true)),
 		'SIZE_LIMIT' => NumberHelper::round($file_upload_config->get_maximum_size_upload()/1024, 2),

@@ -65,7 +65,7 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TITLE' => $LANG['wiki_explorer'],
 	'L_ROOT' => $LANG['wiki_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
@@ -97,7 +97,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 }
 $Sql->query_close($result);
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'wiki_selected_cat',
 	'CAT_LIST' => '',

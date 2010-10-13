@@ -152,7 +152,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'MENU' => $article_infos['menu']
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
@@ -247,7 +247,7 @@ else
 		
 		if ($articles_number == 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
 			));
 		}
@@ -273,13 +273,13 @@ else
 		}
 		if ($i == 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'L_NO_CAT' => $LANG['wiki_no_cat'],
 			));
 		}
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
 		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 		'L_EXPLORER' => $LANG['wiki_explorer'],

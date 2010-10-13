@@ -105,7 +105,7 @@ if (in_array($id_error, $array_error))
 		if (!empty($errstr))
 			$Errorh->handler($errstr, $errno);
 			
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_ERRORH_CONNEXION' => true,
 			'L_CONNECT' => $LANG['connect'],
 			'L_PSEUDO' => $LANG['pseudo'],
@@ -132,14 +132,14 @@ elseif (!empty($id_error))
 	if (is_dir('../' . $module))
 		load_module_lang($module); //Chargement de la langue du module.
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_ERROR' => $LANG['error'],
 		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 		'U_INDEX' => '<a href="' . url(Environment::get_home_page()) .'">' . $LANG['home'] . '</a>',
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ERRORH_CONNEXION' => false,
 		'C_ERRORH' => true,
 		'ERRORH_IMG' => 'important',
@@ -155,7 +155,7 @@ elseif ($User->get_attribute('user_id') === -1)
 		'error'=> 'member/error.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ERRORH_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],

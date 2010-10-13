@@ -163,7 +163,7 @@ lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/links.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_NAME' => $LANG['name'],
@@ -217,7 +217,7 @@ $array_location = array(
 );
 
 $edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
-$edit_menu_tpl->assign_vars(array(
+$edit_menu_tpl->put_all(array(
     'L_NAME' => $LANG['name'],
     'L_IMAGE' => $LANG['img'],
     'L_URL' => $LANG['url'],
@@ -244,7 +244,7 @@ else
     $menu = new LinksMenu('', '', '', LinksMenu::VERTICAL_MENU);
 }
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'IDMENU' => $menu_id,
 	'AUTH_MENUS' => Authorizations::generate_select(
         AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
@@ -276,7 +276,7 @@ foreach ($array_location as $key => $name)
     ));
 }
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'ID_MAX' => AppContext::get_uid()
 ));
 $tpl->display();

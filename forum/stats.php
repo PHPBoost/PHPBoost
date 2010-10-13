@@ -53,7 +53,7 @@ JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
 $nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,
 	'NBR_TOPICS' => $sum['total_topics'],
@@ -138,7 +138,7 @@ $Sql->query_close($result);
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,

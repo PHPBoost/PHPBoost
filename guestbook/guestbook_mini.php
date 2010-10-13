@@ -47,7 +47,7 @@ function guestbook_mini($position, $block)
 		
 		if ($guestbook_rand === array())
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 	    		'C_ANY_MESSAGE_GESTBOOK' => false,
 				'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 				'L_NO_MESSAGE_GESTBOOK' => $LANG['no_message_guestbook']
@@ -61,7 +61,7 @@ function guestbook_mini($position, $block)
 	    	else
 	    		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	    	
-	    	$tpl->assign_vars(array(
+	    	$tpl->put_all(array(
 				'C_ANY_MESSAGE_GESTBOOK' => true,
 				'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 	    		'RAND_MSG_ID' => $guestbook_rand['id'],

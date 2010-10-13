@@ -103,7 +103,7 @@ class BreadCrumb
 			$start_page_url .= $site_path . '/';
 		}
 		
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
 			'START_PAGE' => $start_page_url,
 			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
         ));

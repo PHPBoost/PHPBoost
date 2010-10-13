@@ -93,7 +93,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme['theme'] . '/config/', get_ulang());
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
 			'THEME_NAME' => $info_theme['name'],
@@ -166,7 +166,7 @@ elseif ($uninstall) //Désinstallation.
 			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 		));
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DEL_THEME' => true,
 			'IDTHEME' => $idtheme,
 			'THEME' => get_utheme(),
@@ -189,7 +189,7 @@ else
 		'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 	));
 	 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_THEME_MAIN' => true,
 		'THEME' => get_utheme(),	
 		'LANG' => get_ulang(),	
@@ -265,13 +265,13 @@ else
 	
 	if ($z != 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_THEME_PRESENT' => true
 		));
 	}
 	else
 	{
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 	}

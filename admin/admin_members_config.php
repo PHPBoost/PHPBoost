@@ -80,7 +80,7 @@ else
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
 		'ACTIV_REGISTER_ENABLED' => $user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
 		'ACTIV_REGISTER_DISABLED' => !$user_account_config->is_registration_enabled() ? 'selected="selected"' : '',

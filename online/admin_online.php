@@ -53,7 +53,7 @@ else
 	
 	$Cache->load('online');
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,
 		'L_ONLINE_CONFIG' => $LANG['online_config'],
 		'L_NBR_ONLINE_DISPLAYED' => $LANG['nbr_online_displayed'],

@@ -67,7 +67,7 @@ else
 	}
 	$Sql->query_close($result); 
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'COOKIE_NAME' => !empty($CONFIG_POLL['poll_cookie']) ? $CONFIG_POLL['poll_cookie'] : 'poll',
 		'COOKIE_LENGHT' => !empty($CONFIG_POLL['poll_cookie_lenght']) ? number_format($CONFIG_POLL['poll_cookie_lenght']/86400, 0) : 500,		
 		'MINI_POLL_LIST' => $mini_poll_list,		

@@ -34,7 +34,7 @@ require_once('articles_constants.php');
 
 $tpl = new FileTemplate('articles/admin_articles_management.tpl');
 require_once('admin_articles_menu.php');
-$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 $nbr_articles = $Sql->count_table(PREFIX . 'articles', __LINE__, __FILE__);
 
@@ -42,7 +42,7 @@ $nbr_articles = $Sql->count_table(PREFIX . 'articles', __LINE__, __FILE__);
 
 $Pagination = new DeprecatedPagination();
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),

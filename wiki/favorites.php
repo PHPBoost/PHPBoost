@@ -123,7 +123,7 @@ else
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_TITLE' => $LANG['title'],
 		'L_UNTRACK' => $LANG['wiki_unwatch']

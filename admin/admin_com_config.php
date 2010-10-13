@@ -76,7 +76,7 @@ else
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_TAGS' => $j,
 		'AUTH_POST_COMMENTS' => Authorizations::generate_select(Comments::POST_COMMENT_AUTH, $comments_config->get_auth_post_comments()),
 		'COM_MAX' => $comments_config->get_number_comments_per_page(),

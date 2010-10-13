@@ -52,7 +52,7 @@ class SandboxMigrationController extends ModuleController
 			GeneralConfig::save();
 		}
 		
-		$view->add_subtemplate('form', $form->display());
+		$view->put('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 

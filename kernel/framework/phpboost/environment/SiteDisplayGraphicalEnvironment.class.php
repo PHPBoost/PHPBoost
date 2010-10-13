@@ -66,7 +66,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$general_config = GeneralConfig::load();
 		
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'SITE_NAME' => $general_config->get_site_name(),
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'TITLE' => $this->get_page_title(),
@@ -116,7 +116,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_COMPTEUR' => true,
 				'COMPTEUR_TOTAL' => $compteur_total,
 				'COMPTEUR_DAY' => $compteur_day
@@ -148,7 +148,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_MENUS_HEADER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__HEADER]),
 		    'MENUS_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__HEADER],
 			'C_MENUS_SUB_HEADER_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]),
@@ -164,7 +164,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			// Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 			$left_column_content = $MENUS[Menu::BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '');
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_MENUS_LEFT_CONTENT' => !empty($left_column_content),
 				'MENUS_LEFT_CONTENT' => $left_column_content
 			));
@@ -173,13 +173,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			// Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 			$right_column_content = $MENUS[Menu::BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '');
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_MENUS_RIGHT_CONTENT' => !empty($right_column_content),
 				'MENUS_RIGHT_CONTENT' => $right_column_content
 			));
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]),
 			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]
 		));
@@ -245,7 +245,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				$array_now = array('0', '0', '0', '0', '0', '0');
 			}
 
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_ALERT_MAINTAIN' => true,
 				'C_MAINTAIN_DELAY' => true,
 				'UNSPECIFIED' => $maintenance_config->is_unlimited_maintenance() ? 0 : 1,
@@ -303,7 +303,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$theme = load_ini_file(
 		PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'THEME' => get_utheme(),
 			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
 			'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL],
@@ -327,7 +327,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(),
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() + 

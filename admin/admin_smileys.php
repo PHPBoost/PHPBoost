@@ -91,7 +91,7 @@ elseif (!empty($id) && $edit) //Edition.
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'IDSMILEY' => $info_smiley['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $info_smiley['code_smiley'],
@@ -117,7 +117,7 @@ else
 		'admin_smileys_management'=> 'admin/admin_smileys_management.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],

@@ -359,7 +359,7 @@ class Comments
 					}
 					elseif ($editcom > 0) //Edition du commentaire.
 					{
-						$Template->assign_vars(array(
+						$Template->put_all(array(
 							'CURRENT_PAGE_COM' => $integrated_in_environment,
 							'POPUP_PAGE_COM' => !$integrated_in_environment,
 							'AUTH_POST_COM' => true
@@ -389,7 +389,7 @@ class Comments
 						$form->add_fieldset($fieldset);
 						$form->set_form_submit($LANG['update']);	
 						
-						$Template->assign_vars(array(
+						$Template->put_all(array(
 							'COM_FORM' =>  $form->display(),
 							'SCRIPT' => $this->script,
 							'L_XML_LANGUAGE' => $LANG['xml_lang'],
@@ -459,7 +459,7 @@ class Comments
 				//Affichage du lien de verrouillage/déverrouillage.
 				if ($User->check_level(MODO_LEVEL))
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'COM_LOCK' => true,
 						'IMG' => ($this->lock_com >= 1) ? 'unlock' : 'lock',
 						'L_LOCK' => ($this->lock_com >= 1) ? $LANG['unlock'] : $LANG['lock'],
@@ -499,7 +499,7 @@ class Comments
 				$Errorh->set_template($Template); //On spécifie le template utilisé.
 				if (!empty($errstr))
 				{	
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'ERROR_HANDLER' => $Errorh->display($errstr, E_USER_NOTICE)
 					));
 				}
@@ -509,20 +509,20 @@ class Comments
 				{
 					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
 					{	
-						$Template->assign_vars(array(
+						$Template->put_all(array(
 							'AUTH_POST_COM' => true
 						));
 					}
 					else
 					{	
-						$Template->assign_vars(array(
+						$Template->put_all(array(
 							'ERROR_HANDLER' => $Errorh->display($LANG['e_unauthorized'], E_USER_NOTICE)
 						));
 					}
 				}
 				else
 				{	
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'ERROR_HANDLER' => $Errorh->display($LANG['com_locked'], E_USER_NOTICE)
 					));
 				}
@@ -568,7 +568,7 @@ class Comments
 				//On crée une pagination si le nombre de commentaires est trop important.
 				$pagination = new DeprecatedPagination();
 				
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
 					'C_IS_MODERATOR' => $is_modo,
 					'COM_FORM' => $form->display(),

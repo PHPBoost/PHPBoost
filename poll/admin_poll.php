@@ -150,7 +150,7 @@ elseif (!empty($id))
 
 	$row = $Sql->query_array(PREFIX . 'poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],	
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
@@ -231,7 +231,7 @@ elseif (!empty($id))
 		$i++;
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'MAX_ID' => $i
 	));
 	
@@ -248,7 +248,7 @@ else
 	 
 	$Pagination = new DeprecatedPagination();
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
 		'LANG' => get_ulang(),
 		'L_CONFIRM_ERASE_POOL' => $LANG['confirm_del_poll'],

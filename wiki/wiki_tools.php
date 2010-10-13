@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)	exit;
 //On charge le template associé
 $Template->set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_CONTRIBUTION_TOOLS' => $LANG['wiki_contribution_tools'],
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
 ));
@@ -186,7 +186,7 @@ if ($User->check_level(MEMBER_LEVEL))
 //Discussion
 if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)))
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')

@@ -382,7 +382,7 @@ abstract class AbstractFormField implements FormField
 			));
 		}
 
-		$js_tpl->assign_vars(array(
+		$js_tpl->put_all(array(
 			'C_DISABLED' => $this->is_disabled(),
 			'ID' => $this->id,
 			'HTML_ID' => $this->get_html_id(),
@@ -391,10 +391,10 @@ abstract class AbstractFormField implements FormField
 			'FIELDSET_ID' => $this->fieldset_id
 		));
 		
-		$template->add_subtemplate('ADD_FIELD_JS', $js_tpl);
+		$template->put('ADD_FIELD_JS', $js_tpl);
 
 		$description = $this->get_description();
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'ID' => $this->get_html_id(),
 			'LABEL' => $this->get_label(),
 			'DESCRIPTION' => $description,

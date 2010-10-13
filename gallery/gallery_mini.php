@@ -97,22 +97,22 @@ function gallery_mini($position, $block)
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
 			case 0:
-        	$tpl->assign_vars(array(
+        	$tpl->put_all(array(
     			'C_FADE' => true
     		));
     		break;
     		case 1:
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'C_VERTICAL_SCROLL' => true
     		));
     		break;
     		case 2:
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'C_HORIZONTAL_SCROLL' => true
     		));
     		break;
 			case 3:
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
     			'C_STATIC' => true
     		));
 			break;
@@ -150,7 +150,7 @@ function gallery_mini($position, $block)
     	}
     }
 
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
     	'SID' => SID,
     	'ARRAY_PICS' => $array_pics_mini,
     	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],

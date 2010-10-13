@@ -118,7 +118,7 @@ else
 		'admin_lang_add'=> 'admin/admin_lang_add.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),		
 		'LANG' => get_ulang(),
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -187,11 +187,11 @@ else
 	}
 
 	if ($z != 0)
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
 	

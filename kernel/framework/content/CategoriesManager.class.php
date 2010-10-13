@@ -456,14 +456,14 @@ class CategoriesManager
 		//If there is no category
 		if (count($this->cache_var) == 0)
 		{
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
 				'C_NO_CATEGORY' => true
 			));
 			return $template->to_string();
 		}
 		
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_AJAX_MODE' => (int)$ajax_mode,
 			'CONFIG_XMLHTTPREQUEST_FILE' => $this->display_config['xmlhttprequest_file'],
 			'L_COULD_NOT_BE_MOVED' => $LANG['cats_managment_could_not_be_moved'],
@@ -499,7 +499,7 @@ class CategoriesManager
 		if ($num_auth != 0)
 			$general_auth = $User->check_auth($array_auth, $num_auth);
 		
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'FORM_ID' =>  $form_id,
 			'FORM_NAME' =>  $form_name,
 			'SELECTED_ROOT' => $selected_id == 0 ? ' selected="selected"' : '',
@@ -647,7 +647,7 @@ class CategoriesManager
 		
 		$template = clone $reference_template;
 		
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'C_AJAX_MODE' => $ajax_mode,
 			'L_MANAGEMENT_HIDE_CAT' => $LANG['cats_management_hide_cat'],
 			'L_MANAGEMENT_SHOW_CAT' => $LANG['cats_management_show_cat'],

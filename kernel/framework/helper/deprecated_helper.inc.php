@@ -424,7 +424,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 
 	$template = new FileTemplate('framework/confirm.tpl');
 
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'URL_ERROR' => !empty($url_error) ? $url_error : Environment::get_home_page(),
 		'DELAY_REDIRECT' => $delay_redirect,
 		'L_ERROR' => $l_error,

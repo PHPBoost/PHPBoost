@@ -60,7 +60,7 @@ $Template->set_filenames(array(
 	'admin_database_management'=> 'database/admin_database_management.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
@@ -80,7 +80,7 @@ if (!empty($_GET['query']))
 	
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DATABASE_QUERY' => true
 	));
 
@@ -88,7 +88,7 @@ if (!empty($_GET['query']))
 	{
 		$Session->csrf_get_protect(); //Protection csrf
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
 	
@@ -129,7 +129,7 @@ if (!empty($_GET['query']))
 		}
 	}	
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'QUERY' => Sql::indent_query($query),
 		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
@@ -211,7 +211,7 @@ elseif ($action == 'restore')
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DATABASE_FILES' => true,
 		'L_LIST_FILES' => $LANG['db_file_list'],
 		'L_CONFIRM_RESTORE' => $LANG['db_confirm_restore'],
@@ -279,11 +279,11 @@ elseif ($action == 'restore')
 	}
 	
 	if ($i == 0)
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_INFO' => $LANG['db_empty_dir'],
 		));
 	else
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_INFO' => $LANG['db_restore_file'],
 		));
 }
@@ -311,7 +311,7 @@ else
 	if ($tables_backup) //Liste des tables pour les sauvegarder
 	{
 		$tables = PersistenceContext::get_dbms_utils()->list_tables();
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($tables),
 			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
@@ -402,7 +402,7 @@ else
 		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
 		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
 			'NBR_TABLES' => count(PersistenceContext::get_dbms_utils()->list_tables()),

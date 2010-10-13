@@ -93,7 +93,7 @@ class FormFieldCheckbox extends AbstractFormField
         $tpl_src = '<input type="checkbox" name="${escape(NAME)}" id="${escape(ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # />';
 
         $tpl = new StringTemplate($tpl_src);
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),

@@ -55,7 +55,7 @@ class InstallDisplayResponse extends AbstractResponse
 		$this->init_steps();
 		$this->update_progress_bar();
 
-		$this->full_view->assign_vars(array(
+		$this->full_view->put_all(array(
             'STEP_TITLE' => $step_title,
             'C_HAS_PREVIOUS_STEP' => false,
             'C_HAS_NEXT_STEP' => false,
@@ -69,7 +69,7 @@ class InstallDisplayResponse extends AbstractResponse
 	{
 		$this->current_step = $step_number;
 		$this->full_view = new FileTemplate('install/main.tpl');
-		$this->full_view->add_subtemplate('installStep', $view);
+		$this->full_view->put('installStep', $view);
 		$this->full_view->add_lang($this->lang);
 		$this->full_view->add_lang($this->distribution_lang);
 		$view->add_lang($this->lang);
@@ -99,7 +99,7 @@ class InstallDisplayResponse extends AbstractResponse
 
 				if ($folder->get_name() == $lang)
 				{
-					$this->full_view->assign_vars(array('LANG_IDENTIFIER' => $info_lang['identifier']));
+					$this->full_view->put_all(array('LANG_IDENTIFIER' => $info_lang['identifier']));
 				}
 			}
 		}

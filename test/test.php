@@ -41,7 +41,7 @@ $params = htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : '');
 
 $tpl = new FileTemplate('test/test.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'PARAMS' => $params
 ));
 

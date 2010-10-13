@@ -78,7 +78,7 @@ elseif (isset($_POST['preview']))
 		$date->set_minutes($news['min']);
 	}
 
-	$preview->assign_vars(array('C_NEWS_BLOCK' => true));
+	$preview->put_all(array('C_NEWS_BLOCK' => true));
 
 	$preview->assign_block_vars('news', array(
 		'C_NEWS_ROW' => false,

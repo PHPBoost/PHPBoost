@@ -64,7 +64,7 @@ class InstallLicenseController extends InstallController
     	$fieldset->add_field($agree_checkbox);
     	$navigation_bar = $this->add_navigation();
     	$form->add_button($navigation_bar);
-		$view->add_subtemplate('LICENSE_FORM', $form->display());
+		$view->put('LICENSE_FORM', $form->display());
     }
 
 	private function add_navigation()

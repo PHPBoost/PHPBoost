@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 //On charge le template associé
 $Template->set_filenames(array('post_js_tools'=> 'wiki/wiki_js_tools.tpl'));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_PLEASE_ENTER_A_TITLE' => $LANG['wiki_please_enter_a_link_name'],
 	'L_INSERT_LINK' => $LANG['wiki_insert_a_link'],
 	'L_INSERT' => $LANG['wiki_insert_link'],

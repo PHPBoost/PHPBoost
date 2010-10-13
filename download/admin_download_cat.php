@@ -64,7 +64,7 @@ elseif ($cat_to_del > 0)
 		'admin_download_cat_remove'=> 'download/admin_download_cat_remove.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'CATEGORY_TREE' => $download_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
 		'L_REMOVING_CATEGORY' => $DOWNLOAD_LANG['removing_category'],
@@ -187,7 +187,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		}
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'IMG_LIST' => $img_str,
 		'L_CATEGORY' => $LANG['category'],
@@ -211,7 +211,7 @@ elseif ($new_cat XOR $id_edit > 0)
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
 			'DESCRIPTION' => FormatingHelper::unparse($DOWNLOAD_CATS[$id_edit]['description']),
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
@@ -231,7 +231,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	else
 	{
 		$id_edit = '0';
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
@@ -294,7 +294,7 @@ else
 
 	$download_categories->set_display_config($cat_config);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'CATEGORIES' => $download_categories->build_administration_interface(),
 		'L_RECOUNT_SUBFILES' => $DOWNLOAD_LANG['recount_subfiles'],
 		'U_RECOUNT_SUBFILES' => url('admin_download_cat.php?recount=1')

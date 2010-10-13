@@ -57,7 +57,7 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 		$tpl_src = '<optgroup label="${escape(LABEL)}" > # START options # # INCLUDE options.OPTION # # END options # </optgroup>';
 
 		$tpl = new StringTemplate($tpl_src);
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'LABEL' => $this->get_label()
 		));
 

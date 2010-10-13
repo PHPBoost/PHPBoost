@@ -66,7 +66,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$field_tpl->assign_vars(array(
+		$field_tpl->put_all(array(
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),

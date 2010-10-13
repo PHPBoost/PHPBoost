@@ -70,7 +70,7 @@ else
 	$CONFIG_GUESTBOOK['guestbook_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_verifcode'] : 0;
 	$CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] : 2;
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TAGS' => $tags,
 		'NBR_TAGS' => $i,
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',

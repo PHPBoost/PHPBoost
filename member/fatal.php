@@ -54,7 +54,7 @@ $Template->set_filenames(array(
 
 $class = Errors::get_errno_class($errinfo['errno']);
 	
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'THEME' => get_utheme(),
 	'ERRORH_IMG' => 'stop',
 	'ERRORH_CLASS' => $class,

@@ -59,7 +59,7 @@ $Template->set_filenames(array(
 
 $array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),

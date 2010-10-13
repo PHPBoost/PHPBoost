@@ -42,7 +42,7 @@ ob_end_clean();
 
 ob_start();
 
-$template->assign_vars(array(
+$template->put_all(array(
     'PHPINFO' => $phpinfo,
 	'L_SYSTEM_REPORT' => $LANG['system_report'],
 	'L_SERVER' => $LANG['server'],

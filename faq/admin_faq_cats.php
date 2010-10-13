@@ -47,7 +47,7 @@ $Template->set_filenames(array(
 	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
@@ -78,7 +78,7 @@ elseif ($id_hide > 0)
 }
 elseif ($cat_to_del > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REMOVING_CATEGORY' => $FAQ_LANG['removing_category'],
 		'L_EXPLAIN_REMOVING' => $FAQ_LANG['explain_removing_category'],
 		'L_DELETE_CATEGORY_AND_CONTENT' => $FAQ_LANG['delete_category_and_its_content'],
@@ -137,7 +137,7 @@ elseif (!empty($_GET['recount']))
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_REQUIRED_FIELDS' => $FAQ_LANG['required_fields'],
@@ -212,7 +212,7 @@ else
 		'CATEGORIES' => $faq_categories->build_administration_interface()
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number'],
 		'THEME' => get_utheme()
 	));

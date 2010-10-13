@@ -49,13 +49,13 @@ class ContactController extends ModuleController
 		{
 			$mail_success = $this->send_mail();
 
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_SUBMITED' => true,
 				'C_SUCCESS' => $mail_success
 			));
 		}
 
-		$tpl->add_subtemplate('FORM', $this->form->display());
+		$tpl->put('FORM', $this->form->display());
 
 		return $this->build_response($tpl);
 	}

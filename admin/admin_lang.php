@@ -115,7 +115,7 @@ elseif ($uninstall) //Désinstallation.
 			'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 		));
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DEL_LANG' => true,
 			'IDLANG' => $idlang,
 			'L_LANG_ADD' => $LANG['lang_add'],	
@@ -137,7 +137,7 @@ else
 		'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 	));
 	 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_LANG_MAIN' => true,
 		'THEME' => get_utheme(),		
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -201,11 +201,11 @@ else
 	$Sql->query_close($result);
 	
 	if ($z != 0)
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
 		

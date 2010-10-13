@@ -35,7 +35,7 @@ class ExtendFieldMember
 		$extend_field_exist = count($extend_fields_cache);
 		if ($extend_field_exist > 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
 			));

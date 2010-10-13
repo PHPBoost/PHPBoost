@@ -183,7 +183,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 	
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		$Pagination = new DeprecatedPagination();
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
@@ -264,7 +264,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';
 	}
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IMG_GROUPS' => $img_groups,
@@ -307,7 +307,7 @@ else //Liste des groupes.
 	$nbr_group = count($group_cache);
 	
 	$Pagination = new DeprecatedPagination();
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),

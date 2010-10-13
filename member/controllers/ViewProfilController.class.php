@@ -39,7 +39,7 @@ class ViewProfilController extends AbstractController
 	
 		$view->add_lang($this->lang);
 
-		$view->add_subtemplate('form', $form->display());
+		$view->put('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 	

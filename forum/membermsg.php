@@ -59,7 +59,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1" . $auth_cats . "
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -111,7 +111,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '" . DIR . "/forum/%'");
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,

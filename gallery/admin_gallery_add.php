@@ -138,7 +138,7 @@ else
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
@@ -199,7 +199,7 @@ else
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics
 			));

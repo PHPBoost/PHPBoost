@@ -68,7 +68,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 
     private function assign_textarea_template_variables(Template $template)
     {
-        $template->assign_vars(array(
+        $template->put_all(array(
 			'ROWS' => $this->rows,
 			'COLS' => $this->cols,
 			'DISABLED' => ($this->is_disabled() ? 'disabled="disabled" ' : '')

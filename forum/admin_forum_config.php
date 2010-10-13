@@ -113,7 +113,7 @@ else
 	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
 	$CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
 		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',

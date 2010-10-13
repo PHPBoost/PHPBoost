@@ -43,7 +43,7 @@ require_once('../kernel/header.php');
 //Template
 $tpl = new FileTemplate('articles/contribution.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $ARTICLES_LANG['contribution_confirmation'],
 	'L_CONTRIBUTION_SUCCESS' => $ARTICLES_LANG['contribution_success'],
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $ARTICLES_LANG['contribution_confirmation_explain']

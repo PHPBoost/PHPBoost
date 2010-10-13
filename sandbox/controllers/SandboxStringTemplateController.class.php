@@ -53,7 +53,7 @@ class SandboxStringTemplateController extends ModuleController
 		$bench_cached->start();
 		$this->run_cached_parsing();
 		$bench_cached->stop();
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'CACHED_TIME' => $bench_cached->to_string(5),
 			'NON_CACHED_TIME' => $bench_non_cached->to_string(5),
 			'STRING_LENGTH' => strlen($this->test)
@@ -64,7 +64,7 @@ class SandboxStringTemplateController extends ModuleController
 
 	private function assign_template(Template $tpl)
 	{
-		$tpl->assign_vars(array('CONTENT' => 'fruits:'));
+		$tpl->put_all(array('CONTENT' => 'fruits:'));
 
 		foreach ($this->fruits as $fruit)
 		{

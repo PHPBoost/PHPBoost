@@ -85,7 +85,7 @@ lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/content.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'KERNEL_EDITOR' => display_editor(),
 	'L_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
 	'L_REQUIRE_TEXT' => TextHelper::to_js_string($LANG['require_text']),
@@ -130,7 +130,7 @@ if ($edit)
 	$block = $menu->get_block();
 	$content = $menu->get_content();
 	
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
@@ -141,7 +141,7 @@ if ($edit)
 }
 else
 {
-   $tpl->assign_vars(array(
+   $tpl->put_all(array(
        'C_ENABLED' => true,
        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
    ));
@@ -151,7 +151,7 @@ $locations = '';
 foreach ($array_location as $key => $name)
     $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 
-$tpl->assign_vars(array('LOCATIONS' => $locations));
+$tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

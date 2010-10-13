@@ -86,7 +86,7 @@ if (!empty($id_get))
 	//Affichage des sous forums s'il y en a.
 	if (($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1) //Intervalle > 1 => sous forum présent.
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_FORUM_SUB_CATS' => true
 		));
 		
@@ -225,7 +225,7 @@ if (!empty($id_get))
 	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
 	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,
 		'PAGINATION' => $Pagination->display('forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
@@ -342,7 +342,7 @@ if (!empty($id_get))
 	//Affichage message aucun topics.
 	if ($nbr_topics_display == 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_NO_TOPICS' => true,
 			'L_NO_TOPICS' => $LANG['no_topics']
 		));
@@ -351,7 +351,7 @@ if (!empty($id_get))
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'");
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,

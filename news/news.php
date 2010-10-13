@@ -124,7 +124,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $auth_edit,
 			'C_DELETE' => $auth_delete,
@@ -227,7 +227,7 @@ elseif ($user)
 
 	if ($i == 0)
 	{
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'C_NEWS_NO_AVAILABLE' => true,
 			'L_LAST_NEWS' => $NEWS_LANG['waiting_news'],
 			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available'],

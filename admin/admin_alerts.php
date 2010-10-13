@@ -91,7 +91,7 @@ foreach ($alerts_list as $alert)
 	));
 }
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
 	'C_PAGINATION' => AdministratorAlertService::get_number_alerts() > NUM_ALERTS_PER_PAGE,
 	'PAGINATION' => $pagination->display('admin_alerts.php?p=%d&criteria=' . $criteria . '&order=' . $order, AdministratorAlertService::get_number_alerts(), 'p', NUM_ALERTS_PER_PAGE, 3),	

@@ -99,7 +99,7 @@ function online_mini($position, $block)
     	$l_modo = ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'];
     	$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
     
-    	$tpl->assign_vars(array(
+    	$tpl->put_all(array(
     		'VISIT' => $count_visit,
     		'USER' => $count_member,
     		'MODO' => $count_modo,

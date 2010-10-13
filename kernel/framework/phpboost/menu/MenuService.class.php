@@ -624,7 +624,7 @@ class MenuService
 	public static function assign_positions_conditions($template, $position)
 	{
 		$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
-		$template->assign_vars(array(
+		$template->put_all(array(
             'C_HEADER' => $position == Menu::BLOCK_POSITION__HEADER,
             'C_SUBHEADER' => $position == Menu::BLOCK_POSITION__SUB_HEADER,
             'C_TOP_CENTRAL' => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,

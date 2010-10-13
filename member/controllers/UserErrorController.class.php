@@ -98,7 +98,7 @@ class UserErrorController extends AbstractController
 
 	private function fill_view()
 	{
-		$this->view->assign_vars(array(
+		$this->view->put_all(array(
             'ERROR_TYPE' => $this->get_error_type(),
             'ERROR_IMG' => $this->get_error_type_associated_image(),
             'TITLE' => $this->title,

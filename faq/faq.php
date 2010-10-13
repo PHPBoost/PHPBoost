@@ -60,7 +60,7 @@ include_once('../kernel/header.php');
 
 $template = new FileTemplate('faq/faq.tpl');
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'TITLE' => $TITLE,
 ));
 
@@ -83,7 +83,7 @@ foreach ($FAQ_CATS as $id => $value)
 //listing of subcategories
 if ($num_subcats > 0)
 {	
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_FAQ_CATS' => true
 	));	
 	
@@ -107,7 +107,7 @@ if ($num_subcats > 0)
 			));
 			
 			if (!empty($value['image']))
-				$template->assign_vars(array(
+				$template->put_all(array(
 					'C_CAT_IMG' => true
 				));
 				
@@ -131,7 +131,7 @@ if ($num_rows > 0)
 	$faq_display_block = ($FAQ_CATS[$id_faq]['display_mode'] > 0) ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
 	
 	//Displaying administration tools
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'C_ADMIN_TOOLS' => $auth_write
 	));
 	
@@ -192,7 +192,7 @@ else
 	$template->assign_block_vars('no_question', array());
 }
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'L_EDIT' => $FAQ_LANG['update'],

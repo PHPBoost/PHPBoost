@@ -34,7 +34,7 @@ $server_configuration = new ServerConfiguration();
 
 $template = new FileTemplate('admin/admin_system_report.tpl');
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'L_YES' => $LANG['yes'],
 	'L_NO' => $LANG['no'],
 	'L_UNKNOWN' => $LANG['unknown'],
@@ -122,7 +122,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 " . $directories_summerization;
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
 	'DBMS_VERSION' => PersistenceContext::get_dbms_utils()->get_dbms_version(),
 	'C_SERVER_GD_LIBRARY' => $server_configuration->has_gd_libray(),

@@ -68,7 +68,7 @@ else
 	// Chargement du menu de l'administration.
 	require_once('admin_news_menu.php');
 
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'ADMIN_MENU' => $admin_menu,
 		'KERNEL_EDITOR' => display_editor(),
 		'PAGINATION' => !empty($NEWS_CONFIG['pagination_news']) ? $NEWS_CONFIG['pagination_news'] : 6,

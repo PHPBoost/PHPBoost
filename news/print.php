@@ -46,7 +46,7 @@ if ($id > 0) //Si on connait son titre
 	
 	$template = new FileTemplate('framework/content/print.tpl');
 
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'PAGE_TITLE' => $news['title'] . ' - ' . GeneralConfig::load()->get_site_name(),
 		'TITLE' => $news['title'],
 		'L_XML_LANGUAGE' => $LANG['xml_lang'],

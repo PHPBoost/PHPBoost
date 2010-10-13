@@ -37,7 +37,7 @@ function newsletter_mini($position, $block)
     
     MenuService::assign_positions_conditions($tpl, $block);
     
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
     	'SUBSCRIBE' => $LANG['subscribe'],
     	'UNSUBSCRIBE' => $LANG['unsubscribe'],
     	'USER_MAIL' => ($User->get_attribute('user_mail') != '') ? $User->get_attribute('user_mail') : '',

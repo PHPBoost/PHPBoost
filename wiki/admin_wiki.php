@@ -65,7 +65,7 @@ $content_editor = new BBCodeFormattingFactory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
 	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],

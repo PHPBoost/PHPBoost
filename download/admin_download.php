@@ -42,7 +42,7 @@ $nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
 
 $Pagination = new DeprecatedPagination();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'PAGINATION' => $Pagination->display('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),

@@ -406,7 +406,7 @@ else
 					));
 			}
 
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
 				'JS_CONTRIBUTION' => 'false',
@@ -485,7 +485,7 @@ else
 			FROM " . DB_TABLE_ARTICLES_MODEL 
 			, __LINE__, __FILE__);
 
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_ADD' => false,
 				'C_CONTRIBUTION' => $auth_contrib ,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
@@ -536,7 +536,7 @@ else
 
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
 
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'KERNEL_EDITOR_DESC' => display_editor('description'),
 		'TITLE' => '',	

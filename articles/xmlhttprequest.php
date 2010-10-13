@@ -79,7 +79,7 @@ elseif (retrieve(POST,'preview',false))
 		
 	$date->set_minutes($articles['min']);
 
-	$preview->assign_vars(array(
+	$preview->put_all(array(
 		'C_DISPLAY_ARTICLE'=>true,
 		'C_TAB'=>false,
 		'ID' => $articles['id'],
@@ -134,7 +134,7 @@ elseif (retrieve(POST,'model_extend_field',false))
 		}	
 	}
 
-	$tpl_model->assign_vars(array(
+	$tpl_model->put_all(array(
 		'C_EXTEND_FIELD'=>	!empty($extend_field_tab),
 		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
@@ -150,7 +150,7 @@ elseif (retrieve(POST,'model_desc',false))
 	
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
 	
-	$tpl_model->assign_vars(array(
+	$tpl_model->put_all(array(
 		'C_EXTEND_FIELD'=>	false,
 		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],

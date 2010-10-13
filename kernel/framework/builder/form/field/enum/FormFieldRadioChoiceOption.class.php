@@ -45,7 +45,7 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 		
 		$tpl = new StringTemplate($tpl_src);
 		
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'NAME' => $this->get_field_id(),
 			'VALUE' => $this->get_raw_value(),
 			'C_CHECKED' => $this->is_active(),

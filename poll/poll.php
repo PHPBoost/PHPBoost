@@ -197,7 +197,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$array_vote = explode('|', $poll['votes']);
 		
 		$sum_vote = array_sum($array_vote);
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
@@ -229,7 +229,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	}
 	else //Questions.
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
 			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
@@ -295,7 +295,7 @@ elseif (!$archives) //Menu principal.
 	if ($User->check_level(ADMIN_LEVEL))
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_POLL_MAIN' => true,
 		'EDIT' => $edit,
 		'U_ARCHIVE' => $show_archives,
@@ -328,7 +328,7 @@ elseif ($archives) //Archives.
 	
 	$Pagination = new DeprecatedPagination();
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
 		'THEME' => get_utheme(),		

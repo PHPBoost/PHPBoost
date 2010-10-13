@@ -40,7 +40,7 @@ class FormButtonReset implements FormButton
 
         $template = new StringTemplate('<input type="reset" value="{L_RESET}" class="reset" />');
 
-        $template->assign_vars(array(
+        $template->put_all(array(
 			'L_RESET' => $LANG['reset']
         ));
 

@@ -196,7 +196,7 @@ else
 
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY' => 1,
 		'L_FILTER' => $MEDIA_LANG['filter'],
 		'L_DISPLAY_FILE' => $MEDIA_LANG['display_file'],

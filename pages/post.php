@@ -221,7 +221,7 @@ if ($id_edit > 0)
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'CONTENTS' => !empty($error) ? htmlspecialchars(stripslashes($contents)) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
@@ -250,7 +250,7 @@ else
 		));
 	}
 	if (!empty($error))
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'CONTENTS' => stripslashes(htmlspecialchars($contents)),
 			'PAGE_TITLE' => stripslashes($title)
 		));
@@ -262,7 +262,7 @@ else
 	$cat_list = display_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => '',
@@ -277,7 +277,7 @@ if (!empty($page_infos['auth']))
 else
 	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'ID_EDIT' => $id_edit,
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => Authorizations::generate_select(EDIT_PAGE, $array_auth),

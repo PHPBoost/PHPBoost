@@ -108,7 +108,7 @@ else
 		'admin_poll_add'=> 'poll/admin_poll_add.tpl'
 	));
 	 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],

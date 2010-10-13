@@ -102,7 +102,7 @@ if ($edit_question > 0)
 		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'ID_QUESTION' => $edit_question
 	));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
@@ -120,7 +120,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 		'ID_AFTER' => $new_after_id,
 		'ID_CAT' => $cat_of_new_question
 	));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
@@ -137,7 +137,7 @@ elseif ($id_move > 0)
 		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
 	));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TARGET' => $FAQ_LANG['target_category'],
 		'L_MOVE' => $FAQ_LANG['move'],
 		'ID_QUESTION' => $id_move,
@@ -146,7 +146,7 @@ elseif ($id_move > 0)
 }
 else
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'TARGET' => url('action.php?idcat=' . $id_faq . '&amp;cat_properties=1&amp;token=' . $Session->get_token()),
 		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
@@ -183,7 +183,7 @@ else
 	//Special authorization
 	if (!empty($FAQ_CATS[$id_faq]['auth']))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'GLOBAL_CHECKED' => 'checked="checked"',
 			'DISPLAY_GLOBAL' => 'block',
 			'JS_GLOBAL' => 'true'
@@ -191,7 +191,7 @@ else
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'GLOBAL_CHECKED' => '',
 			'DISPLAY_GLOBAL' => 'none',
 			'JS_GLOBAL' => 'false'
@@ -227,7 +227,7 @@ else
 	
 	if ($num_rows > 0 || $id_faq == 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DISPLAY_ANSWERS' => true,
 			'NUM_QUESTIONS' => $num_rows,
 			'L_HIDE_ANSWERS' => addslashes($FAQ_LANG['hide_all_answers']),
@@ -255,7 +255,7 @@ else
 	}
 }
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'THEME' => get_utheme(),
 	'L_SUBMIT' => $edit_question > 0 ? $LANG['update'] : $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],

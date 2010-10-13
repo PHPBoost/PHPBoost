@@ -83,7 +83,7 @@ elseif (!empty($_POST['previs']))
 		'L_CAT' => $LANG['categorie'],
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,
@@ -142,7 +142,7 @@ else
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'COMPT' => '0',
 		'CHECK_ENABLED' => 'checked="ckecked"',
 		'CHECK_DISABLED' => '',

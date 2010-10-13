@@ -55,7 +55,7 @@ class BBCodeEditor extends ContentEditor
         //Chargement de la configuration.
         $smileys_cache = SmileysCache::load();
 
-        $template->assign_vars(array(
+        $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
@@ -133,7 +133,7 @@ class BBCodeEditor extends ContentEditor
             if ($forbidden_tag == 'fieldset')
             	$forbidden_tag = 'block';
 
-        	$template->assign_vars(array(
+        	$template->put_all(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
 			));
@@ -195,7 +195,7 @@ class BBCodeEditor extends ContentEditor
 
         if ($z > $smile_max) //Lien vers tous les smiley!
         {
-            $template->assign_vars(array(
+            $template->put_all(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']

@@ -79,7 +79,7 @@ class MenuControllerConfigurationEdit extends AdminController
 		$menu_config = MenuConfigurationDAO::instance()->find_by_id($this->object_id);
 
 			
-		$this->view->assign_vars(array(
+		$this->view->put_all(array(
             'NAME' => $menu_config->get_name(),
             'MATCH_REGEX' => $menu_config->get_match_regex(),
 			'U_CONFIGURE' =>

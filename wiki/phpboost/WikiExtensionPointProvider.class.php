@@ -74,7 +74,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
 		$args['WikiWhere'] = 'title';
 
-		$tpl->assign_vars(Array(
+		$tpl->put_all(Array(
             'L_WHERE' => $LANG['wiki_search_where'],
             'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
             'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
@@ -207,7 +207,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 					
 				if ($articles_number == 0)
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 					'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
 					));
 				}
@@ -232,12 +232,12 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 					}
 				}
 				if ($i == 0)
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 				'L_NO_CAT' => $LANG['wiki_no_cat'],
 				));
 			}
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 			'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
 			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 			'L_EXPLORER' => $LANG['wiki_explorer'],

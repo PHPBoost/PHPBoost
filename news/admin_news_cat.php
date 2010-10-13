@@ -49,7 +49,7 @@ $tpl = new FileTemplate('news/admin_news_cat.tpl');
 
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
-$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 if ($id_up > 0)
 {
@@ -94,7 +94,7 @@ elseif ($cat_to_del > 0)
 	else
 	{
 		
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'EMPTY_CATS' => count($NEWS_CAT) < 2 ? true : false,
 			// 'EMPTY_CATS' => false,
 			'L_REMOVING_CATEGORY' => $NEWS_LANG['removing_category'],
@@ -157,7 +157,7 @@ elseif (!empty($_POST['submit']))
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRE' => $LANG['require'],

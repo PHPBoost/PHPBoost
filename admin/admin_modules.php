@@ -84,7 +84,7 @@ elseif ($uninstall) //Désinstallation du module
 			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 		));
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_MODULES_DEL' => true,
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
@@ -110,7 +110,7 @@ else
 		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_MODULES_LIST' => true,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -180,13 +180,13 @@ else
 
 	if ($i == 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_NO_MODULE_INSTALLED' => true
 		));
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_MODULES_INSTALLED' => true
 		));
 	}

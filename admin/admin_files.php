@@ -187,7 +187,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	else
 		$url = Uploads::get_admin_url($folder, '');
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'URL' => $url,
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
@@ -219,7 +219,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$Template->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
 			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token())
@@ -258,13 +258,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token())
 		));
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
@@ -314,7 +314,7 @@ else
 	else
 		$url = Uploads::get_admin_url($folder, '');
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
@@ -477,7 +477,7 @@ else
 	
 
 	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload", __LINE__, __FILE__);
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDERS' => $total_directories,
@@ -485,7 +485,7 @@ else
 	));
 
 	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));

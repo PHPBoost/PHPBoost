@@ -60,7 +60,7 @@ class LinksMenuLink extends LinksMenuElement
 		}
 
 		parent::_assign($template, $mode);
-		$template->assign_vars(array(
+		$template->put_all(array(
   			'C_LINK' => true
 		));
 
@@ -74,7 +74,7 @@ class LinksMenuLink extends LinksMenuElement
 	public function cache_export($template = false)
 	{
 		parent::_assign($template);
-		$template->assign_vars(array(
+		$template->put_all(array(
             'C_LINK' => true
 		));
 		return parent::cache_export_begin() . $template->to_string() . parent::cache_export_end();

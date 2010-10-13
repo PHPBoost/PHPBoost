@@ -42,7 +42,7 @@ function stats_mini($position, $block)
     $stats_cache = StatsCache::load();
     $l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
     
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
     	'SID' => SID,
     	'L_STATS' => $LANG['stats'],
     	'L_MORE_STAT' => $LANG['more_stats'],

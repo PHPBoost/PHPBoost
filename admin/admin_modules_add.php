@@ -125,7 +125,7 @@ else
 		'admin_modules_add'=> 'admin/admin_modules_add.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -193,13 +193,13 @@ else
 
 	if (empty($uninstalled_modules))
 	{
-		$Template->assign_vars( array(
+		$Template->put_all( array(
 			'C_NO_MODULE' => true,
 		));
 	}
 	else
 	{
-		$Template->assign_vars( array(
+		$Template->put_all( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
 		foreach ($uninstalled_modules as $name => $module)

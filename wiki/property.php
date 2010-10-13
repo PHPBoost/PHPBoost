@@ -165,7 +165,7 @@ elseif ($id_auth > 0) //gestion du niveau d'autorisation
 	));
 	
 	//On assigne les variables pour le POST en précisant l'idurl.	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
 		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
@@ -294,7 +294,7 @@ elseif ($redirect > 0) //Redirections de l'article
 		$Template->assign_block_vars('redirect.no_redirection', array(
 			'L_NO_REDIRECTION' => $LANG['wiki_no_redirection']
 		));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 		'L_REDIRECTION_ACTIONS' => $LANG['wiki_possible_actions'],
 		'REDIRECTION_DELETE' => $LANG['wiki_redirection_delete'],
@@ -305,7 +305,7 @@ elseif ($redirect > 0) //Redirections de l'article
 }
 elseif ($create_redirection > 0) //Création d'une redirection
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 	));
 	$Template->assign_block_vars('create', array(
@@ -324,7 +324,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_COMMENTS' => true,
 		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?idcom=' . $idcom . '&amp;com=%s'), 'wiki')
 	));
@@ -388,7 +388,7 @@ $content_editor = new BBCodeFormattingFactory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_SUBMIT' => $LANG['submit'],
