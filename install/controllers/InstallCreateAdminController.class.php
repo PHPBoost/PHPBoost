@@ -95,7 +95,7 @@ class InstallCreateAdminController extends InstallController
 	private function create_response()
 	{
 		$this->view = new FileTemplate('install/admin.tpl');
-		$this->view->add_subtemplate('ADMIN_FORM', $this->form->display());
+		$this->view->put('ADMIN_FORM', $this->form->display());
 		$step_title = $this->lang['step.admin.title'];
 		$response = new InstallDisplayResponse(5, $step_title, $this->view);
 		return $response;

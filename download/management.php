@@ -158,7 +158,7 @@ $Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'KERNEL_EDITOR' => display_editor(),
 	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
 	'C_PREVIEW' => $preview,
@@ -319,7 +319,7 @@ if ($edit_file_id > 0)
 		if ($file_visibility < 0 || $file_visibility > 2)
 			$file_visibility = 0;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DISPLAY_DOWNLOAD' => true,
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
@@ -350,7 +350,7 @@ if ($edit_file_id > 0)
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CONTRIBUTION' => false,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
@@ -405,7 +405,7 @@ if ($edit_file_id > 0)
 		else
 			$file_visibility = 0;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CONTRIBUTION' => false,
 			'TITLE' => $file_infos['title'],
 			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,
@@ -566,7 +566,7 @@ else
 		if ($file_visibility < 0 || $file_visibility > 2)
 			$file_visibility = 0;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DISPLAY_DOWNLOAD' => true,
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
@@ -600,7 +600,7 @@ else
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
@@ -649,7 +649,7 @@ else
 		$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 		$file_visibility = 0;
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => '',
 			'COUNT' => 0,
@@ -678,7 +678,7 @@ else
 			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_NOTICE_CONTRIBUTION' => $DOWNLOAD_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $DOWNLOAD_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $DOWNLOAD_LANG['contribution_counterpart_explain'],

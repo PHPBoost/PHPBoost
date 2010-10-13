@@ -129,7 +129,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
-		$Tpl->assign_vars(Array(
+		$Tpl->put_all(Array(
             'L_DATE' => $LANG['date'],
             'L_DAY' => $LANG['day'],
             'L_DAYS' => $LANG['day_s'],
@@ -312,12 +312,12 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 		$tpl = new FileTemplate('forum/forum_generic_results.tpl');
 
-		$tpl->assign_vars(Array(
+		$tpl->put_all(Array(
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
 		));
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
             'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result_data['user_id'],'-'.$result_data['user_id'].'.php') : '',
             'USER_PSEUDO' => !empty($result_data['login']) ? TextHelper::wordwrap_html($result_data['login'], 13) : $LANG['guest'],

@@ -42,7 +42,7 @@ class ConfirmController extends AbstractController
 		}
 		
 		
-		$view->add_subtemplate('form', $form->display());
+		$view->put('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 	

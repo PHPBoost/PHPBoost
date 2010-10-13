@@ -31,7 +31,7 @@ require_once('../kernel/begin.php');
 require_once('../kernel/header.php');
 
 $tpl = new FileTemplate('member/csrf-attack.tpl');
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'L_ATTACK_EXPLAIN' => $LANG['csrf_attack'],
     'L_PREVIOUS' => $LANG['previous'],
 ));

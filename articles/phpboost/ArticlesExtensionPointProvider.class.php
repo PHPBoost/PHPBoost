@@ -207,7 +207,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
 		$array_class = array('member', 'modo', 'admin');
 
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL) ? true : false,
 		'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
@@ -274,7 +274,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		##### Catégories disponibles #####
 		if ($total_cat > 0)
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 			'C_ARTICLES_CAT' => true,
 			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
@@ -304,7 +304,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 		if ($nbr_articles > 0 ||  $invisible)
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 			'C_ARTICLES_LINK' => true,
 			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $ARTICLES_CAT[$idartcat]['name']
@@ -342,7 +342,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 			if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
 			{
-				$tpl->assign_vars(array(
+				$tpl->put_all(array(
 					'C_INVISIBLE'=>true,
 					'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
 					'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : '',

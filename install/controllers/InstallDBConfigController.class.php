@@ -109,7 +109,7 @@ class InstallDBConfigController extends InstallController
 	private function create_response()
 	{
 		$this->view = new FileTemplate('install/database.tpl');
-		$this->view->add_subtemplate('DATABASE_FORM', $this->form->display());
+		$this->view->put('DATABASE_FORM', $this->form->display());
 		$step_title = $this->lang['step.dbConfig.title'];
 		$response = new InstallDisplayResponse(3, $step_title, $this->view);
 		return $response;

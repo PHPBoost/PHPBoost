@@ -49,7 +49,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 
 	public function set_title($title)
 	{
-		$this->full_view->assign_vars(array('TITLE' => $title));
+		$this->full_view->put_all(array('TITLE' => $title));
 	}
 
 	public function add_link($name, $url, $img)

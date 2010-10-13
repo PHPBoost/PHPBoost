@@ -237,7 +237,7 @@ class SitemapLink extends SitemapElement
 		//We get the stream in which we are going to write
 		$template = $export_config->get_link_stream();
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'LOC' => $this->get_url(),
 			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,

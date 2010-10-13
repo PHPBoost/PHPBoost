@@ -198,7 +198,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 				}
 
 				$forum_name = $Sql->query("SELECT name FROM " . PREFIX . "forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'IDCAT' => $idcat,
 					'FORUM_NAME' => $forum_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -289,7 +289,7 @@ elseif (!empty($id))
 	elseif ($forum_info['level'] == 0)
 		$type = 1;
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'ID' => $id,
 		'TYPE' => $type,
@@ -345,7 +345,7 @@ else
 	'admin_forum_cat'=> 'forum/admin_forum_cat.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -407,7 +407,7 @@ else
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)

@@ -198,7 +198,7 @@ if ($id_edit > 0)//On édite
 	
 	$l_action_submit = $LANG['update'];
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SELECTED_CAT' => $id_edit,
 	));
 }
@@ -236,7 +236,7 @@ else
 			$i++;
 		}
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$id_cat]['name'];
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
 			'CAT_LIST' => $cat_list,
@@ -270,7 +270,7 @@ else
 			}
 		}
 		$Sql->query_close($result);
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'SELECTED_CAT' => 0,
 			'CAT_0' => 'wiki_selected_cat',
 			'CAT_LIST' => '',
@@ -285,7 +285,7 @@ $content_editor = new BBCodeFormattingFactory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',

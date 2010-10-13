@@ -51,7 +51,7 @@ if (!empty($_POST['erase']))
 }
 
 $Template->add_lang(LangLoader::get('admin-errors-Common'));
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_ERRORS' => $LANG['errors'],
 	'L_DESC' => $LANG['description'],
 	'L_DATE' => $LANG['date'],

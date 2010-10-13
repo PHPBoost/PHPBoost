@@ -64,7 +64,7 @@ class FormFieldTextEditor extends AbstractFormField
 
         $field = new StringTemplate(self::$tpl_src);
 
-        $field->assign_vars(array(
+        $field->put_all(array(
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),

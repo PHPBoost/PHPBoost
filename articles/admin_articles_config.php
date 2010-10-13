@@ -132,7 +132,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 else
 {
 	$tpl = new FileTemplate('articles/admin_articles_config.tpl');
-	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+	$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 	$Cache->load('articles');
 		
@@ -156,7 +156,7 @@ else
 		$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 	}
 	
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
@@ -201,7 +201,7 @@ else
 		'2' => $LANG['admin']
 	);
 			
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$CONFIG_ARTICLES['global_auth']),
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$CONFIG_ARTICLES['global_auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$CONFIG_ARTICLES['global_auth']),

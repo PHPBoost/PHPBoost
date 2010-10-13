@@ -71,7 +71,7 @@ else
 		));
 	}
 	
-	$template->assign_vars(array(
+	$template->put_all(array(
 		'BBCODE_SELECTED' => ($content_formatting_config->get_default_editor() == 'bbcode') ? 'selected="selected"' : '',
 		'TINYMCE_SELECTED' => ($content_formatting_config->get_default_editor() == 'tinymce') ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $content_formatting_config->get_html_tag_auth()),

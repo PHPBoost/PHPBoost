@@ -59,7 +59,7 @@ class MenuControllerConfigurationsList extends AdminController
 		}
 
 		$default_menu_config = MenuConfigurationDAO::instance()->find_by_id(1);
-		$this->view->assign_vars(array(
+		$this->view->put_all(array(
 			'U_DEFAULT_MENU_CONFIG_CONFIGURE' =>
 		MenuUrlBuilder::menu_configuration_configure($default_menu_config->get_id())->absolute()
 		));

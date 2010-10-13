@@ -117,7 +117,7 @@ class SitemapSection extends SitemapElement
 		//We get the stream in which we are going to write
 		$template = $export_config->get_section_stream();
 		 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'SECTION_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
@@ -126,7 +126,7 @@ class SitemapSection extends SitemapElement
 		
 		if (is_object($this->link))
 		{
-			$template->add_subtemplate('LINK', $this->link->export($export_config));
+			$template->put('LINK', $this->link->export($export_config));
 		}
 
 		foreach ($this->elements as $element)

@@ -49,7 +49,7 @@ else
 
 	$calendar_config = CalendarConfig::load();
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REQUIRE' => $LANG['require'],	
 		'L_CALENDAR' => $LANG['title_calendar'],
 		'L_CALENDAR_CONFIG' => $LANG['calendar_config'],

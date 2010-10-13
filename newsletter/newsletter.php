@@ -113,7 +113,7 @@ else
 	if ($total_msg == 0)
 		$Errorh->handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('newsletter.php?p=%d', $total_msg, 'p', 5, 3),
 		'L_NEWSLETTER_ARCHIVES' => $LANG['newsletter_archives'],
 		'L_NEWSLETTER_ARCHIVES_EXPLAIN' => $LANG['newsletter_archives_explain']

@@ -44,7 +44,7 @@ class SandboxFormController extends ModuleController
 		{
 			if ($form->validate())
 			{
-				$view->assign_vars(array(
+				$view->put_all(array(
 					'C_RESULT' => true, 
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -66,11 +66,11 @@ class SandboxFormController extends ModuleController
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
-					$view->assign_vars(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+					$view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
 				}
 			}
 		}
-		$view->add_subtemplate('form', $form->display());
+		$view->put('form', $form->display());
 		return new SiteDisplayResponse($view);
 	}
 

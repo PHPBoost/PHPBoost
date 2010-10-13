@@ -94,7 +94,7 @@ function get_html_results($results, $html_results, $results_name)
     $display_all_results = ($results_name == 'all' ? true : false);
     
     $tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
-    $tpl_results->assign_vars(Array(
+    $tpl_results->put_all(Array(
         'RESULTS_NAME' => $results_name,
         'C_ALL_RESULTS' => $display_all_results
     ));
@@ -134,19 +134,19 @@ function get_html_results($results, $html_results, $results_name)
                 if ($display_all_results)
                 {
                     $module = $modules->get_provider($results[$num_item]['module']);
-                    $tpl_result->assign_vars(array(
+                    $tpl_result->put_all(array(
                         'C_ALL_RESULTS' => true,
                         'L_MODULE_NAME' => $module->get_name()
                     ));
                 }
                 else
                 {
-                    $tpl_result->assign_vars(array(
+                    $tpl_result->put_all(array(
                         'C_ALL_RESULTS' => false,
                         'L_MODULE_NAME' => $module->get_name(),
                     ));
                 }
-                $tpl_result->assign_vars(array(
+                $tpl_result->put_all(array(
                     'TITLE' => $results[$num_item]['title'],
                     'U_LINK' => url($results[$num_item]['link'])
                 ));

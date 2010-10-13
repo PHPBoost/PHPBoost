@@ -77,7 +77,7 @@ $tpl = new FileTemplate('framework/content/print.tpl');
 
 $contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'PAGE_TITLE' => $articles['title'] . ' - ' . GeneralConfig::load()->get_site_name(),
 	'TITLE' => $articles['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],

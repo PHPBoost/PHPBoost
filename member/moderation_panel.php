@@ -56,7 +56,7 @@ if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
 
 $moderation_panel_template = new FileTemplate('member/moderation_panel.tpl');	
 
-$moderation_panel_template->assign_vars(array(
+$moderation_panel_template->put_all(array(
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
@@ -103,7 +103,7 @@ switch ($action)
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 		}
 		
-		$moderation_panel_template->assign_vars(array(
+		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['punishment_management'],
 			'L_LOGIN' => $LANG['pseudo'],
@@ -124,7 +124,7 @@ switch ($action)
 					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 			}	
 					
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_LIST' => true,
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_INFO' => $LANG['user_punish_until'],
@@ -154,7 +154,7 @@ switch ($action)
 			}
 			if ($i === 0)
 			{
-				$moderation_panel_template->assign_vars(array(
+				$moderation_panel_template->put_all(array(
 					'C_EMPTY_LIST' => true,
 					'L_NO_USER' => $LANG['no_punish'],
 				));
@@ -193,7 +193,7 @@ switch ($action)
 			}	
 			
 			array_pop($array_sanction);
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
@@ -256,7 +256,7 @@ switch ($action)
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 		}
 		
-		$moderation_panel_template->assign_vars(array(
+		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['ban_management'],
 			'L_LOGIN' => $LANG['pseudo'],
@@ -277,7 +277,7 @@ switch ($action)
 					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 			}	
 			
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_LIST' => true,
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_INFO' => $LANG['user_ban_until'],
@@ -307,7 +307,7 @@ switch ($action)
 			}
 			if ($i === 0)
 			{
-				$moderation_panel_template->assign_vars(array(
+				$moderation_panel_template->put_all(array(
 					'C_EMPTY_LIST' => true,
 					'L_NO_USER' => $LANG['no_ban'],
 				));
@@ -316,7 +316,7 @@ switch ($action)
 		else //On affiche les infos sur l'utilisateur
 		{
 			$mbr = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_BAN' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
@@ -398,7 +398,7 @@ switch ($action)
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 		}
 		
-		$moderation_panel_template->assign_vars(array(
+		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['warning_management'],
 			'L_LOGIN' => $LANG['pseudo'],
@@ -419,7 +419,7 @@ switch ($action)
 					AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 			}		
 			
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_LIST' => true,
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_INFO' => $LANG['user_warning_level'],
@@ -449,7 +449,7 @@ switch ($action)
 			}
 			if ($i === 0)
 			{
-				$moderation_panel_template->assign_vars(array(
+				$moderation_panel_template->put_all(array(
 					'C_EMPTY_LIST' => true,
 					'L_NO_USER' => $LANG['no_user_warning'],
 				));
@@ -469,7 +469,7 @@ switch ($action)
 				else
 					$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 			}
-			$moderation_panel_template->assign_vars(array(
+			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),

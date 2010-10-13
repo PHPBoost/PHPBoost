@@ -125,7 +125,7 @@ else
 		$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'WIDTH' => isset($CONFIG_GALLERY['width']) ? $CONFIG_GALLERY['width'] : '150',
 		'HEIGHT' => isset($CONFIG_GALLERY['height']) ? $CONFIG_GALLERY['height'] : '150',
 		'WIDTH_MAX' => isset($CONFIG_GALLERY['width_max']) ? $CONFIG_GALLERY['width_max'] : '640',

@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 AdminError404Service::register_404();
 
 $lang = LangLoader::get('errors');
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'C_ERRORH' => true,
 	'ERRORH_IMG' => 'important',
 	'ERRORH_CLASS' => 'error_warning',

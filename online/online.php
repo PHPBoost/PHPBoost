@@ -38,7 +38,7 @@ $nbr_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE 
  
 $Pagination = new DeprecatedPagination();
 	
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'PAGINATION' => $Pagination->display('online' . url('.php?p=%d'), $nbr_member, 'p', 25, 3),
 	'L_LOGIN' => $LANG['pseudo'],
 	'L_LOCATION' => $LANG['location'],

@@ -148,7 +148,7 @@ switch($step)
 {
 	//Préambule
 	case STEP_INTRO:
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'C_INTRO' => true,
     		'L_INTRO_TITLE' => $LANG['intro_title'],
     		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
@@ -175,7 +175,7 @@ switch($step)
 			AppContext::get_response()->redirect(HOST . FILE . add_lang('?step=' . (STEP_LICENSE + 1), true));
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'C_LICENSE' => true,
     		'TARGET' => add_lang('install.php?step=' . STEP_LICENSE),
     		'U_PREVIOUS_PAGE' => add_lang('install.php?step=' . (STEP_LICENSE - 1)),
@@ -202,7 +202,7 @@ switch($step)
 			$check_rewrite = -1;
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'C_SERVER_CONFIG' => true,
     		'C_PHP_VERSION_OK' => ServerConfiguration::get_phpversion() >= '4.1.0',
     		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
@@ -252,7 +252,7 @@ switch($step)
 		{
 			if (!$all_dirs_ok)
 			{
-				$template->assign_vars(array(
+				$template->put_all(array(
     				'C_ERROR' => true,
     				'L_ERROR' => $LANG['config_server_dirs_not_ok']
 				));
@@ -263,7 +263,7 @@ switch($step)
 			}
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
     		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
     		'L_PHP_VERSION' => $LANG['php_version'],
@@ -417,7 +417,7 @@ switch($step)
 			$tables_prefix = 'phpboost_';
 		}
 
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'C_DATABASE_CONFIG' => true,
     		'C_DISPLAY_RESULT' => !empty($error),
     		'ERROR' => !empty($error) ? $error : '',
@@ -580,7 +580,7 @@ switch($step)
 			}
 
 			//Interface configuration du site
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_SITE_CONFIG' => true,
 				'SITE_URL' => $server_name,
 				'SITE_PATH' => $server_path
@@ -611,7 +611,7 @@ switch($step)
 					));
 			}
 
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'IMG_THEME' => DISTRIBUTION_THEME,
 				'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_SITE_CONFIG - 1)),
 				'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_SITE_CONFIG),
@@ -767,7 +767,7 @@ switch($step)
 				}
 			}
 
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'C_ADMIN_ACCOUNT' => true,
 				'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_ADMIN_ACCOUNT - 1)),
 				'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_ADMIN_ACCOUNT),
@@ -816,7 +816,7 @@ switch($step)
 
 		$Cache = new Cache;
 
-		$template->assign_vars(array(
+		$template->put_all(array(
     		'C_END' => true,
     		'CONTENTS' => sprintf($LANG['end_installation']),
     		'L_ADMIN_INDEX' => $LANG['admin_index'],
@@ -856,14 +856,14 @@ foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
 
 			if ($folder->get_name() == $lang)
 			{
-				$template->assign_vars(array(
+				$template->put_all(array(
 				'LANG_IDENTIFIER' => $info_lang['identifier']
 				));
 			}
 	}
 }
 
-$template->assign_vars(array(
+$template->put_all(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'LANG' => $lang,
 	'NUM_STEP' => $step,

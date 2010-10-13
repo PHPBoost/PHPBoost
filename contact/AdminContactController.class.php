@@ -48,12 +48,12 @@ class AdminContactController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_SUBMITED' => true,
 			));
 		}
 
-		$tpl->add_subtemplate('FORM', $this->form->display());
+		$tpl->put('FORM', $this->form->display());
 
 		return $this->build_response($tpl);
 	}

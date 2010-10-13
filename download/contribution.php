@@ -50,7 +50,7 @@ require_once('../kernel/header.php');
 //Template
 $download_template = new FileTemplate('download/contribution.tpl');
 
-$download_template->assign_vars(array(
+$download_template->put_all(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $DOWNLOAD_LANG['contribution_confirmation'],
 	'L_CONTRIBUTION_SUCCESS' => $DOWNLOAD_LANG['contribution_success'],
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $DOWNLOAD_LANG['contribution_confirmation_explain']

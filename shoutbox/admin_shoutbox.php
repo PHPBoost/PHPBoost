@@ -61,7 +61,7 @@ else
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
 	'sub' => 0, 'indent' => 1, 'pre' => 0, 'table' => 1, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 1, 'math' => 1, 'anchor' => 0, 'acronym' => 0);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' =>  $config_shoutbox->get_max_messages_number(),
 		'AUTH_READ' => Authorizations::generate_select(AUTH_SHOUTBOX_READ, $config_shoutbox->get_authorization()),

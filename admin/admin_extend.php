@@ -36,7 +36,7 @@ $Template->set_filenames(array(
 
 $home_page = GeneralConfig::load()->get_home_page();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'L_CONFIGURATION' => $LANG['configuration'],

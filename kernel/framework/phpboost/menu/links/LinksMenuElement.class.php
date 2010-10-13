@@ -126,7 +126,7 @@ abstract class LinksMenuElement extends Menu
 	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		parent::_assign($template);
-		$template->assign_vars(array(
+		$template->put_all(array(
             'TITLE' => $this->title,
             'C_FIRST_LEVEL' => $this->depth == 1,
             'DEPTH' => $this->depth,
@@ -144,7 +144,7 @@ abstract class LinksMenuElement extends Menu
 		//Full displaying: we also show the authorization formulary
 		if ($mode)
 		{
-			$template->assign_vars(array(
+			$template->put_all(array(
   				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
 			));
 		}

@@ -49,7 +49,7 @@ function faq_mini($position, $block)
     //Aucune question à afficher
     if (empty($RANDOM_QUESTIONS))
     {
-    	$tpl->assign_vars($no_random_question);
+    	$tpl->put_all($no_random_question);
     	return $tpl->to_string();
     }
     
@@ -70,7 +70,7 @@ function faq_mini($position, $block)
     //Question trouvée avant 5 essais
     if ($i < 5 && !empty($random_question['question']))
     {
-    	$tpl->assign_vars(array(
+    	$tpl->put_all(array(
     		'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     		'FAQ_QUESTION' => $random_question['question'],
     		'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . ($random_question['idcat'] > 0 ? url('faq.php?id=' . $random_question['idcat'] . '&amp;question=' . $random_question['id'], 'faq-' . $random_question['idcat'] . '+' . Url::encode_rewrite($FAQ_CATS[$random_question['idcat']]['name']) . '.php?question=' . $random_question['id']) . '#q' . $random_question['id'] : url('faq.php?question=' . $random_question['id'], 'faq.php?question=' . $random_question['id']) . '#q' . $random_question['id'])
@@ -79,7 +79,7 @@ function faq_mini($position, $block)
     //Echec
     else
     {
-    	$tpl->assign_vars($no_random_question);
+    	$tpl->put_all($no_random_question);
     }
     //On retourne le contenu du bloc
     return $tpl->to_string();

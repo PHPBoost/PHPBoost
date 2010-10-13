@@ -49,7 +49,7 @@ $page = $page <= 0 ? 1 : $page;
 
 $Template->set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_SEARCH' => $LANG['wiki_search'],
 	'L_KEY_WORDS' => $LANG['wiki_search_key_words'],
 	'TARGET' => url('search.php?token=' . $Session->get_token()),

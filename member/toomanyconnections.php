@@ -73,7 +73,7 @@ header('Pragma: no-cache');
 
 
 $tpl = new FileTemplate('framework/fatal.tpl');
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'ERROR_TITLE' => $LANG['too_many_connections'],
     'ERROR_EXPLAIN' => $LANG['too_many_connections_explain'],
     'PREVIOUS_PAGE' =>  $LANG['previous_page']

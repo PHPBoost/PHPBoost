@@ -77,7 +77,7 @@ if (empty($id_media) && $id_cat >= 0)
 		}
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_CATEGORIES' => true,
 		'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 		'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
@@ -134,7 +134,7 @@ if (empty($id_media) && $id_cat >= 0)
 			$selected_fields['desc'] = ' selected="selected"';
 		}
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_ALPHA' => $MEDIA_LANG['sort_title'],
 			'L_DATE' => $LANG['date'],
 			'L_NBR' => $MEDIA_LANG['sort_popularity'],
@@ -168,7 +168,7 @@ if (empty($id_media) && $id_cat >= 0)
 		
 		
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
@@ -204,7 +204,7 @@ if (empty($id_media) && $id_cat >= 0)
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_NO_FILE_THIS_CATEGORY' => $MEDIA_LANG['none_media'],
 			'C_NO_FILE' => true
 		));
@@ -244,7 +244,7 @@ elseif ($id_media > 0)
 	
 	
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
 		'ID_MEDIA' => $id_media,
@@ -287,7 +287,7 @@ elseif ($id_media > 0)
 	//Affichage commentaires.
 	if (isset($_GET['com']) && ($MEDIA_CATS[$media['idcat']]['active'] & (MEDIA_DV_COM + MEDIA_DL_COM)) !== 0)
 	{
-		$Template->assign_vars(array('COMMENTS' => display_comments('media', $id_media, url('media.php?id=' . $id_media . '&amp;com=%s', 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=%s'))));
+		$Template->put_all(array('COMMENTS' => display_comments('media', $id_media, url('media.php?id=' . $id_media . '&amp;com=%s', 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=%s'))));
 	}
 }
 

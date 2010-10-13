@@ -38,12 +38,12 @@ class GenerateXMLSitemapController extends AdminController
 		}
 		catch(IOException $ex)
 		{
-			$view->assign_vars(
+			$view->put_all(
 				array('C_GOT_ERROR' => true)
 			);
 		}
 		
-		$view->assign_vars(array(
+		$view->put_all(array(
 			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
 		));
 

@@ -52,7 +52,7 @@ class TinyMCEEditor extends ContentEditor
 
         $template = $this->get_template();
 
-        $template->assign_vars(array(
+        $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
@@ -95,7 +95,7 @@ class TinyMCEEditor extends ContentEditor
                 $theme_advanced_buttons3 .= $tinymce_tag . ',';
             }
         }
-        $template->assign_vars(array(
+        $template->put_all(array(
 			'THEME_ADVANCED_BUTTONS1' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons1, ',')),
 			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ',')),
 			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))

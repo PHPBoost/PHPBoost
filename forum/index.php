@@ -116,7 +116,7 @@ while ($row = $Sql->fetch_assoc($result))
 		}
 		
 		$subforums = '';
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_FORUM_ROOT_CAT' => false,
 			'C_FORUM_CHILD_CAT' => true,
 			'C_END_S_CATS' => false
@@ -206,7 +206,7 @@ if ($i > 0) //Fermeture de la catégorie racine.
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'NBR_MSG' => $total_msg,
 	'NBR_TOPIC' => $total_topic,

@@ -162,7 +162,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		
 		if ($nbr_news == 0)
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_NEWS_NO_AVAILABLE' => true,
 				'L_LAST_NEWS' => $NEWS_LANG['last_news'],
 				'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
@@ -186,7 +186,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 				$show_pagin = (($NEWS_CONFIG['nbr_news'] > $NEWS_CONFIG['pagination_news']) && ($NEWS_CONFIG['nbr_news'] != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php' . '?arch=1" title="' . $NEWS_LANG['display_archive'] . '">' . $NEWS_LANG['display_archive'] . '</a>' : '';
 				$first_msg = 0;
 			}
-			$tpl->assign_vars(array('PAGINATION' => $show_pagin));
+			$tpl->put_all(array('PAGINATION' => $show_pagin));
 			
 			if($NEWS_CONFIG['type'] ==1 || $NEWS_CONFIG['type'] ==0)
 			{
@@ -196,7 +196,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
 					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
 
-					$tpl->assign_vars(array(
+					$tpl->put_all(array(
 						'C_NEWS_LINK_COLUMN' => true,
 						'COLUMN_WIDTH' => $column_width
 					));
@@ -306,7 +306,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		
 		
 		// Var commune
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
 			'L_SYNDICATION' => $LANG['syndication'],
@@ -328,7 +328,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		// Affichage de l'édito
 		if($cat > 0)
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_EDITO' => !empty($NEWS_CAT[$cat]['desc']) ? true : false,
 				'C_CAT' => true,
 				'EDITO_NAME' => $NEWS_CAT[$cat]['name'],
@@ -337,7 +337,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		}
 		elseif($NEWS_CONFIG['activ_edito'])
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_EDITO' => true,
 				'EDITO_NAME' => $NEWS_CONFIG['edito_title'],
 				'EDITO_CONTENTS' => FormatingHelper::second_parse($NEWS_CONFIG['edito'])
@@ -345,7 +345,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		}
 		else
 		{
-			$tpl->assign_vars(array('C_EDITO' => false));
+			$tpl->put_all(array('C_EDITO' => false));
 		}
 
 		// Vérification de la date de parution des news.

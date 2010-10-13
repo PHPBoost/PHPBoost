@@ -156,7 +156,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     {
         $tpl = new FileTemplate('faq/search_result.tpl');
         
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
             'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result_data['idcat'] . '&amp;question=' . $result_data['id'] . '#q' . $result_data['id'],
             'QUESTION' => $result_data['question'],
             'ANSWER' => FormatingHelper::second_parse($result_data['answer'])

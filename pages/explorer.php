@@ -70,7 +70,7 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $Sql->query_close($result);
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'PAGES_PATH' => $module_data_path,
 	'TITLE' => $LANG['pages_explorer'],
 	'L_ROOT' => $LANG['pages_root'],
@@ -103,7 +103,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 }
 $Sql->query_close($result);
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'pages_selected_cat',
 	'CAT_LIST' => ''

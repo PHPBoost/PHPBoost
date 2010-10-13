@@ -72,7 +72,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	}
     }
     
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
     	'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
     	'L_SWITCH_THEME' => $LANG['switch_theme'],
     	'L_DEFAULT_THEME' => $LANG['defaut_theme'],

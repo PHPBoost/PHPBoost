@@ -237,7 +237,7 @@ else
 		
 		if ($updates_availables = (count($updates) > 0))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
 				'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
 				'L_TYPE' => $LANG['type'],
@@ -258,18 +258,18 @@ else
 		}
 		else
 		{
-			$Template->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
+			$Template->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
 		}
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], PHP_MIN_VERSION_UPDATES),
 			'C_INCOMPATIBLE_PHP_VERSION' => true,
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_WEBSITE_UPDATES' => $LANG['website_updates'],
 		'L_KERNEL' => $LANG['kernel'],
 		'L_MODULES' => $LANG['modules'],
@@ -285,7 +285,7 @@ else
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
 		'L_UPDATE_MODULES' => $LANG['update_modules'],

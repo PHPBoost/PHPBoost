@@ -136,7 +136,7 @@ class Captcha
 
 		if ($this->is_available())
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
 				'CAPTCHA_WIDTH' => $this->width,
 				'CAPTCHA_HEIGHT' => $this->height,

@@ -84,7 +84,7 @@ lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/feed.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'JL_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
 	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
 	'L_FEED' => $LANG['feed'],
@@ -130,7 +130,7 @@ if ($edit)
 	$block = $menu->get_block();
 	$feed_url = $menu->get_url(true);
 
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
@@ -140,7 +140,7 @@ if ($edit)
 }
 else
 {
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
    	    'C_NEW' => true,
         'C_ENABLED' => true,
         'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
@@ -227,7 +227,7 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-$tpl->assign_vars(array('LOCATIONS' => $locations));
+$tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

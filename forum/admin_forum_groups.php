@@ -59,7 +59,7 @@ else
 	
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'FLOOD_AUTH' => Authorizations::generate_select(FLOOD_FORUM, $array_auth),
 		'EDIT_MARK_AUTH' => Authorizations::generate_select(EDIT_MARK_FORUM, $array_auth),
 		'TRACK_TOPIC_AUTH' => Authorizations::generate_select(TRACK_TOPIC_FORUM, $array_auth),

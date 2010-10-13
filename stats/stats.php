@@ -33,7 +33,7 @@ require_once('../kernel/header.php');
 
 $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'U_STATS_SITE' => url('.php?site=1', '-site.php'),
 	'U_STATS_USERS' => url('.php?members=1', '-members.php'),
 	'U_STATS_VISIT' => url('.php?visit=1', '-visit.php'),
@@ -60,7 +60,7 @@ if ($members)
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_USERS' => true,
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
@@ -166,7 +166,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -199,7 +199,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
@@ -221,14 +221,14 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
 		
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 			));
 			
@@ -259,7 +259,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}
 				
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_STATS_NO_GD' => true
 			));
 			
@@ -344,7 +344,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
 			
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
@@ -375,7 +375,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'C_STATS_MONTH' => true,
 			'STATS_YEAR' => $years,
@@ -384,7 +384,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
@@ -409,7 +409,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			//Mois selectionné.
 			if (!empty($month) && !empty($year))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
 				
@@ -526,7 +526,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	$compteur_total = $compteur_total + $compteur_day;
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -550,7 +550,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->query_array(DB_TABLE_STATS, 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year", __LINE__, __FILE__);
 	
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -572,14 +572,14 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'STATS_YEAR' => $years
 		));
 		
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 			));
 			
@@ -610,7 +610,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}
 						
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_STATS_NO_GD' => true
 			));
 			
@@ -695,7 +695,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -733,7 +733,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_DAY' => true,
 			'C_STATS_MONTH' => true,
 			'C_STATS_YEAR' => true,
@@ -771,7 +771,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? $month - 1 : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
@@ -802,7 +802,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_YEAR' => true,
 			'C_STATS_MONTH' => true,
 			'STATS_YEAR' => $years,
@@ -811,7 +811,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		
 		if (@extension_loaded('gd'))
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
@@ -836,7 +836,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			//Mois selectionné.
 			if (!empty($month) && !empty($year))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
 				
@@ -966,7 +966,7 @@ elseif ($referer)
 	}
 	$Sql->query_close($result);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_REFERER' => true,
 		'PAGINATION' => $Pagination->display('stats' . url('.php?referer=1&amp;p=%d', '-referer.php?p=%d'), $nbr_referer, 'p', 15, 3),
 		'L_URL' => $LANG['url'],
@@ -1023,7 +1023,7 @@ elseif ($keyword)
 	}
 	$Sql->query_close($result);
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_KEYWORD' => true,
 		'PAGINATION' => $Pagination->display('stats' . url('.php?keyword=1&amp;p=%d', '-keyword.php?p=%d'), $nbr_keyword, 'p', 15, 3),
 		'L_SEARCH_ENGINE' => $LANG['keyword_s'],
@@ -1040,7 +1040,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	$path = '../images/stats/';
 	if (!empty($browser))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_BROWSERS' => true,
 			'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="" />' : '<img src="../cache/browsers.png" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
@@ -1051,7 +1051,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	}
 	elseif (!empty($os))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_OS' => true,
 			'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="" />' : '<img src="../cache/os.png" alt="" />',
 			'L_OS' => $LANG['os']
@@ -1062,7 +1062,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	}
 	elseif (!empty($user_lang))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_STATS_LANG' => true,
 			'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="" />' : '<img src="../cache/lang.png" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
@@ -1121,7 +1121,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 }
 else
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_STATS_SITE' => true,
 		'START' => GeneralConfig::load()->get_site_install_date()->format(DATE_FORMAT_SHORT),
 		'VERSION' => GeneralConfig::load()->get_phpboost_major_version(),

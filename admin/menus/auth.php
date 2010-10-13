@@ -58,7 +58,7 @@ lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/auth.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'KERNEL_EDITOR' => display_editor(),
     'L_REQUIRE_TITLE' => $LANG['require_title'],
     'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -80,7 +80,7 @@ $tpl->assign_vars(array(
 ));
 
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'IDMENU' => $id,
     'NAME' => $menu->get_title(),
     'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),

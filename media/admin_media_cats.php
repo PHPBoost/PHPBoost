@@ -66,7 +66,7 @@ elseif ($id_hide > 0)
 }
 elseif ($cat_to_del > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REMOVING_CATEGORY' => $MEDIA_LANG['removing_category'],
 		'L_EXPLAIN_REMOVING' => $MEDIA_LANG['removing_category_explain'],
 		'L_DELETE_CATEGORY_AND_CONTENT' => $MEDIA_LANG['remove_category_and_its_content'],
@@ -140,7 +140,7 @@ elseif (!empty($_POST['submit']))
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_CATEGORY' => $MEDIA_LANG['category'],
 		'L_REQUIRED_FIELDS' => $MEDIA_LANG['required_fields'],
@@ -269,7 +269,7 @@ else
 	$media_categories->set_display_config($cat_config);
 
 	$Template->assign_block_vars('categories_management', array('CATEGORIES' => $media_categories->build_administration_interface()));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_MANAGEMENT_CATS' => $MEDIA_LANG['management_cat'],
 	));
 }

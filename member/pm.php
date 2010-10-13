@@ -118,7 +118,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 		'pm'=> 'member/pm.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'LANG' => get_ulang(),
 		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => display_editor(),
@@ -186,7 +186,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 		'pm'=> 'member/pm.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'LANG' => get_ulang(),
 		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => display_editor(),
@@ -232,7 +232,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 		'pm'=> 'member/pm.tpl'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -474,7 +474,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					'pm'=> 'member/pm.tpl'
 				));
 				
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'LANG' => get_ulang(),
 					'THEME' => get_utheme(),
 					'KERNEL_EDITOR' => display_editor(),
@@ -508,7 +508,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 
 				if ($id_first == $pm_edit) //Premier message de la convers => Edition de celle-ci
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'SUBMIT_NAME' => 'convers',
 						'L_TITLE' => $LANG['title'],
 					));
@@ -518,7 +518,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					));
 				}
 				else
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
@@ -573,7 +573,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -746,7 +746,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 
 	if ($convers['user_id'] > 0 && !$is_guest_in_convers)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'KERNEL_EDITOR' => display_editor(),
 		));
 		
@@ -822,7 +822,7 @@ else //Liste des conversation, dans la boite du membre.
 			$Errorh->handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],

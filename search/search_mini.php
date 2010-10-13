@@ -33,7 +33,7 @@ function search_mini($position, $block)
     $tpl = new FileTemplate('search/search_mini.tpl');
     
     MenuService::assign_positions_conditions($tpl, $block);
-    $tpl->assign_vars(Array(
+    $tpl->put_all(Array(
         'SEARCH' => $lang['title'],
         'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : $lang['title'] . '...',
         'WARNING_LENGTH_STRING_SEARCH' => addslashes($lang['warning_length_string_searched']),

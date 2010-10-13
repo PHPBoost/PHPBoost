@@ -48,7 +48,7 @@ if (!empty($id) && !$del)
 	$aprob_disabled = ($row['aprob'] == 0) ? 'checked="checked"' : '';
 	$idcat = $row['idcat'];
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'IDWEB' => $row['id'],
 		'NAME' => $row['title'],
 		'CONTENTS' => FormatingHelper::unparse($row['contents']),
@@ -138,7 +138,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_CATEGORY' => $LANG['categorie'],
 	));
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
@@ -235,7 +235,7 @@ else
 	 
 	$Pagination = new DeprecatedPagination();
 
-	$Template->assign_vars(array(	
+	$Template->put_all(array(	
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),

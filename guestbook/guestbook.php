@@ -146,7 +146,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 			$form->add_button(new FormButtonReset());
             $form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 
-			$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
+			$Template->put('GUESTBOOK_FORM', $form->display());
 
 			$Template->display();
 		}
@@ -249,14 +249,14 @@ else //Affichage.
 		
 		$form->add_fieldset($fieldset);
 	   
-		$Template->add_subtemplate('GUESTBOOK_FORM', $form->display());
+		$Template->put('GUESTBOOK_FORM', $form->display());
 	}
 	
 	//On crée une pagination si le nombre de msg est trop important.
 	$nbr_guestbook = $Sql->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
 	$Pagination = new DeprecatedPagination();
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 	));

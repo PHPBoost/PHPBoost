@@ -106,7 +106,7 @@ function articles_mini($position, $block)
     	));
     }
 
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
 		'L_TYPE_MINI' => $l_type,
 		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article'],
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],

@@ -46,7 +46,7 @@ $width_max = 50;
 $smile_by_line = 4;
 
 $field = retrieve(GET, 'field', 'contents');
-$tpl_smileys->assign_vars(array(
+$tpl_smileys->put_all(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'TITLE' => stripslashes(TITLE),
 	'THEME' => UserAccountsConfig::load()->get_default_theme(),

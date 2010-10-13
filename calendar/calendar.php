@@ -125,7 +125,7 @@ if ($checkdate === true && empty($id) && !$add)
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_CALENDAR_DISPLAY' => true,
 		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_WRITE) ? '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
@@ -272,7 +272,7 @@ if ($checkdate === true && empty($id) && !$add)
 			));
 		}
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']
 		));
@@ -281,7 +281,7 @@ if ($checkdate === true && empty($id) && !$add)
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'COMMENTS' => display_comments('calendar', $get_event, url('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
 		));
 	}
@@ -355,7 +355,7 @@ elseif (!empty($id))
 			//Récupération des infos
 			$row = $Sql->query_array(PREFIX . 'calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
 				'UPDATE' => url('?edit=1&amp;id=' . $id . '&amp;token=' . $Session->get_token()),
@@ -457,7 +457,7 @@ elseif ($add) //Ajout d'un évenement
 		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
 			'UPDATE' => url('?add=1&amp;token=' . $Session->get_token()),

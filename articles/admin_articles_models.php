@@ -43,7 +43,7 @@ $articles_categories = new ArticlesCats();
 $tpl = new FileTemplate('articles/admin_articles_models.tpl');
 
 require_once('admin_articles_menu.php');
-$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 if ($model_to_del > 0)
 {
@@ -71,7 +71,7 @@ if ($model_to_del > 0)
 	{
 		$nbr_models = (int)$Sql->count_table('articles_models' , __LINE__, __FILE__);
 		
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'EMPTY_CATS' => count($ARTICLES_CAT) < 2 ? true : false,
 			'L_REMOVING_MODEL' => $ARTICLES_LANG['removing_model'],
 			'L_EXPLAIN_REMOVING_MODEL' => $ARTICLES_LANG['explain_removing_model'],
@@ -151,7 +151,7 @@ if ($model_to_del > 0)
 }
 elseif ($new_model XOR $id_edit > 0)
 {
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_MODEL' => $ARTICLES_LANG['model'],
 		'L_DESCRIPTION' => $ARTICLES_LANG['model_desc'],

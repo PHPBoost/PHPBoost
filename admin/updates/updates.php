@@ -113,7 +113,7 @@ if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
 
     if ($updates_availables = (count($updates) > 0))
     {
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
             'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
             'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
             'L_TYPE' => $LANG['type'],
@@ -133,17 +133,17 @@ if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         
     }
     else
-        $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
+        $tpl->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
 }
 else
 {
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
         'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], PHP_MIN_VERSION_UPDATES),
         'C_INCOMPATIBLE_PHP_VERSION' => true,
     ));
 }
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates'],
     'L_KERNEL' => $LANG['kernel'],
     'L_MODULES' => $LANG['modules'],

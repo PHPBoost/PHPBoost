@@ -141,7 +141,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		{
 			$template = new FileTemplate('admin/AdminLoginController.tpl');
 
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'L_XML_LANGUAGE' => $LANG['xml_lang'],
 				'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 				'TITLE' => TITLE,
@@ -156,7 +156,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 			if ($flood)
 			{
-				$template->assign_vars(array(
+				$template->put_all(array(
 					'TITLE' => TITLE,
 					'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
 					'L_UNLOCK' => $LANG['unlock_admin_panel'],
@@ -183,7 +183,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
-		$header_tpl->assign_vars(array(
+		$header_tpl->put_all(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
@@ -193,7 +193,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_EXTEND_MENU' => $LANG['extend_menu'],
 		));
 
-		$header_tpl->add_subtemplate('subheader_menu', self::get_subheader_tpl());
+		$header_tpl->put('subheader_menu', self::get_subheader_tpl());
 
 		$header_tpl->display();
 	}
@@ -204,7 +204,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 
-		$subheader_tpl->assign_vars(array(
+		$subheader_tpl->put_all(array(
 			'L_ADMINISTRATION' => $LANG['administration'],
 			'L_INDEX' => $LANG['index'],
 			'L_SITE' => $LANG['site'],
@@ -278,7 +278,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			{
 				$array_pos[$menu_pos-1]++;
 				$idmenu = $array_pos[$menu_pos - 1];
-				$subheader_tpl->assign_vars(array(
+				$subheader_tpl->put_all(array(
 					'C_ADMIN_LINKS_' . $menu_pos => true
 				));
 
@@ -352,7 +352,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => $LANG['powered_by'],
@@ -367,7 +367,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +

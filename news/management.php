@@ -301,7 +301,7 @@ else
 				));
 			}
 			
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
 				'JS_CONTRIBUTION' => 'false',
@@ -361,7 +361,7 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
-			$tpl->assign_vars(array(
+			$tpl->put_all(array(
 				'C_ADD' => false,
 				'C_CONTRIBUTION' => $auth_contrib,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
@@ -401,7 +401,7 @@ else
 	}
 	require_once('../kernel/header.php');
 
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),

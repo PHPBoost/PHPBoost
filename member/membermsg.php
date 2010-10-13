@@ -54,7 +54,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		));
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_USER_MSG' => $LANG['member_msg'],
 		'L_USER_MSG_DISPLAY' => $LANG['member_msg_display'],
 		'L_COMMENTS' => $LANG['com_s'],
@@ -71,7 +71,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		$Pagination = new DeprecatedPagination();
 
 		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_START_MSG' => true,
 			'PAGINATION' => $Pagination->display('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
 			'L_GO_MSG' => $LANG['go_msg'],

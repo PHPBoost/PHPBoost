@@ -87,7 +87,7 @@ $Sql->query_close($result);
 
 $writing_pad_content = WritingPadConfig::load()->get_content();
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'WRITING_PAD_CONTENT' => $writing_pad_content,
 	'C_NO_COM' => $i == 0 ? $LANG['no_comment'] : '',
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),

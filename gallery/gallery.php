@@ -225,7 +225,7 @@ elseif ($g_add)
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -332,7 +332,7 @@ else
 		));
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'ARRAY_JS' => '',
 		'NBR_PICS' => 0,
 		'MAX_START' => 0,
@@ -396,7 +396,7 @@ else
 	##### Catégorie disponibles #####
 	if ($total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_GALLERY_CATS' => true,
 			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 		));
@@ -480,7 +480,7 @@ else
 		elseif ($g_notes)
 			$g_sql_sort = ' ORDER BY g.note DESC';
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_GALLERY_PICS' => true,
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 		));
@@ -584,7 +584,7 @@ else
 				$html_protected_name = TextHelper::strprotect($info_pics['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE);
 
 				//Affichage de l'image et de ses informations.
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_GALLERY_PICS_MAX' => true,
 					'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 					'ID' => $info_pics['id'],
@@ -644,7 +644,7 @@ else
 				//Commentaires
 				if (isset($_GET['com']))
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'COMMENTS' => display_comments('gallery', $g_idpics, url('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;com=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?com=%s'))
 					));
 				}
@@ -657,7 +657,7 @@ else
 			$Pagination = new DeprecatedPagination();
 
 			$sort = retrieve(GET, 'sort', '');
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
 				'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
 				'L_EDIT' => $LANG['edit'],

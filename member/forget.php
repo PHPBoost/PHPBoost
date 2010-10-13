@@ -89,7 +89,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		if (!empty($errstr))
 			$Errorh->handler($errstr, $errno);			
 	
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_REQUIRE' => $LANG['require'],

@@ -67,7 +67,7 @@ if ($calendar_type == 'date')
     $LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
     $month_day = $array_month[$month - 1];
     	
-    $Template->assign_vars(array(
+    $Template->put_all(array(
 		'FIELD' => $field,
 		'INPUT_FIELD' => $input_field,
 		'LYEAR' => $lyear,

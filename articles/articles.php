@@ -95,7 +95,7 @@ if (!empty($idart) && isset($cat) )
 	//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
-	$tpl->assign_vars( array(
+	$tpl->put_all( array(
 		'TOTAL_TAB'=> count($array_page[1]),
 		'C_CAROUSEL'=>count($array_page[1]) > 5 ? true : false
 	));
@@ -157,7 +157,7 @@ if (!empty($idart) && isset($cat) )
 	
 	
 	
-	$tpl->assign_vars(array(
+	$tpl->put_all(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
@@ -220,7 +220,7 @@ if (!empty($idart) && isset($cat) )
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'COMMENTS' => display_comments('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
 		));
 	}	

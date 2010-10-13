@@ -116,7 +116,7 @@ elseif (!empty($id))
 		$predef_regex = true;
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
@@ -170,7 +170,7 @@ elseif (!empty($id))
 		$option_regex .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
 		'OPTION_REGEX' => $option_regex,
 		'OPTION_FIELD' => $option_field,
@@ -223,7 +223,7 @@ else
 		'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_FIELD_MANAGEMENT' => true,
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
 		'L_EXTEND_FIELD_ADD' => $LANG['extend_field_add'],

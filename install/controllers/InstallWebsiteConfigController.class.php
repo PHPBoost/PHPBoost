@@ -115,7 +115,7 @@ class InstallWebsiteConfigController extends InstallController
 	private function create_response()
 	{
 		$this->view = new FileTemplate('install/website.tpl');
-		$this->view->add_subtemplate('WEBSITE_FORM', $this->form->display());
+		$this->view->put('WEBSITE_FORM', $this->form->display());
 		$step_title = $this->lang['step.websiteConfig.title'];
 		$response = new InstallDisplayResponse(4, $step_title, $this->view);
 		return $response;

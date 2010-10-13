@@ -43,7 +43,7 @@ class ViewSitemapController extends ModuleController
 		
 		$tpl = new FileTemplate('sitemap/ViewSitemapController.tpl');
 		$tpl->add_lang($this->lang);
-		$tpl->add_subtemplate('SITEMAP', $sitemap->export($config_html));
+		$tpl->put('SITEMAP', $sitemap->export($config_html));
 		
 		$response = new SiteDisplayResponse($tpl);
 		

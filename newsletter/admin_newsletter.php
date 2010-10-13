@@ -44,7 +44,7 @@ $Template->set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
@@ -96,7 +96,7 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 
 	//On envoie une confirmation
 	$Template->assign_block_vars('end', array());
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_ARCHIVES' => $LANG['newsletter_go_to_archives'],
 		'L_BACK' => $LANG['newsletter_back'],
 		'L_NEWSLETTER' => $LANG['newsletter'],
@@ -111,7 +111,7 @@ elseif (!empty($type)) //Rédaction
 {
 	if ($type == 'bbcode')
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'KERNEL_EDITOR' => display_editor()
 		));
 	}
@@ -130,7 +130,7 @@ elseif (!empty($type)) //Rédaction
 		'TITLE' => $mail_object,
 		'PREVIEW_BUTTON' => $type == 'bbcode' ? '<input value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview();" class="submit" type="button">' : ''
 	));
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_WRITE_TYPE' => $LANG['newsletter_write_type'],
 		'L_TITLE' => $LANG['title'],
 		'L_MESSAGE' => $LANG['message'],
@@ -180,7 +180,7 @@ else
 	));
 }
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_REQUIRE_MAIL' => $LANG['require_mail'],

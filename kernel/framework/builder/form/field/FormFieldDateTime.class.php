@@ -45,7 +45,7 @@ class FormFieldDateTime extends FormFieldDate
 
         $template = parent::display();
 
-        $template->assign_vars(array(
+        $template->put_all(array(
 			'C_HOUR' => true,
 			'HOURS' => $this->get_value()->get_hours(),
 			'MINUTES' => $this->get_value()->get_minutes(),

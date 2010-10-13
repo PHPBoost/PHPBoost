@@ -51,7 +51,7 @@ class AdminErrorsController404List extends AdminController
                 'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->absolute(),
 			));
 		}
-		$this->view->assign_vars(array('U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->absolute()));
+		$this->view->put_all(array('U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->absolute()));
 
 		return $this->response;
 	}

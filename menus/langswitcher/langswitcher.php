@@ -76,7 +76,7 @@ function menu_langswitcher_langswitcher($position, $block)
     }
     
     $lang_identifier = str_replace('en', 'uk', $LANG['xml_lang']);
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
     	'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
     	'IMG_LANG_IDENTIFIER' => TPL_PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
     	'L_SWITCH_LANG' => $LANG['switch_lang'],

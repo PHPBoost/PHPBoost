@@ -173,7 +173,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_NO_TRACKED_TOPICS' => true,
 			'L_NO_TRACKED_TOPICS' => '0 ' . $LANG['show_topic_track']
 		));
@@ -181,7 +181,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 
 	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,
@@ -211,7 +211,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/track.php'");
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,

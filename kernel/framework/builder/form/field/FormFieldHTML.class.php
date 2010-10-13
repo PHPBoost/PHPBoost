@@ -48,7 +48,7 @@ class FormFieldHTML extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'HTML' => $this->get_value()
 		));
 

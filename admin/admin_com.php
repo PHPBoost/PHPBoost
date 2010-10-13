@@ -58,7 +58,7 @@ $Sql->query_close($result);
 $Pagination = new DeprecatedPagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table(DB_TABLE_COM, __LINE__, __FILE__);
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $comments_config->get_max_links_comment(), 3),

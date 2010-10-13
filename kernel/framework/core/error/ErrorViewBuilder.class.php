@@ -44,7 +44,7 @@ class ErrorViewBuilder
 	{	
 		$this->init_view();
 
-		$this->view->assign_vars(array(
+		$this->view->put_all(array(
             'TITLE' => $this->get_title($title),
             'CODE' => $this->get_code($code, $exception),
 			'MESSAGE' => $this->get_message($message, $exception),

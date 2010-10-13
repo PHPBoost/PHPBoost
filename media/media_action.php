@@ -117,7 +117,7 @@ elseif ($delete > 0)
 // Formulaire d'ajout ou d'édition.
 elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ADD_MEDIA' => true,
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
@@ -163,7 +163,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			$auth = MEDIA_TYPE_VIDEO;
 		}
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
@@ -184,7 +184,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	{
 		bread_crumb($add);
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
 			'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),

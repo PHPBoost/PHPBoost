@@ -205,16 +205,16 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
 
-		$js_tpl->assign_vars(array(
+		$js_tpl->put_all(array(
 			'ID' => $this->id,
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
 			'FORM_ID' => $this->form_id
 		));
 
-		$template->add_subtemplate('ADD_FIELDSET_JS', $js_tpl);
+		$template->put('ADD_FIELDSET_JS', $js_tpl);
 
-		$template->assign_vars(array(
+		$template->put_all(array(
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
 			'ID' => $this->get_html_id(),

@@ -31,7 +31,7 @@ $Template->set_filenames(array(
 	'admin_download_menu'=> 'download/admin_download_menu.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 	'L_CATS_MANAGEMENT' => $LANG['cat_management'],
 	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],

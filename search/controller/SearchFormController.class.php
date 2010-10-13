@@ -76,7 +76,7 @@ class SearchFormController extends ModuleController {
 	
 	private function prepare_to_send()
 	{
-		$this->view->add_subtemplate('SEARCH_FORM', $this->form->display());
+		$this->view->put('SEARCH_FORM', $this->form->display());
 		$response = new SiteDisplayResponse($this->view);
 		$environment = $response->get_graphical_environment();
 		$environment->set_page_title($this->lang['page_title']);

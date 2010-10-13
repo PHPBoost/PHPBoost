@@ -216,7 +216,7 @@ if ($action == 'save') //Save menus positions.
 $tpl = new FileTemplate('admin/menus/menus.tpl');
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
-$menu_template->assign_vars(array(
+$menu_template->put_all(array(
     'THEME' => get_utheme(),
     'L_ENABLED' => $LANG['enabled'],
     'L_DISABLED' => $LANG['disabled'],
@@ -251,7 +251,7 @@ foreach ($menus_blocks as $block_id => $menus)
         
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
 		
-        $menu_tpl->assign_vars(array(
+        $menu_tpl->put_all(array(
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
             'CONTENTS' => $menu->admin_display(),
@@ -271,7 +271,7 @@ foreach ($menus_blocks as $block_id => $menus)
 		
 		if($enabled)
 		{
-			$menu_tpl->assign_vars(array(
+			$menu_tpl->put_all(array(
 				'ACTIV' => ($enabled ? 'disable' : 'enable'),
 				'UNACTIV' => ($enabled ? 'enable' : 'disable'),
 				'L_ACTIVATE' => $LANG['activate'],
@@ -299,7 +299,7 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 	
 	
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'NAME_THEME' => $name_theme,
 	'CHECKED_RIGHT_COLUMM' => $theme_properties['right_column'] ? 'checked="checked"' : '',
 	'CHECKED_LEFT_COLUMM' => $theme_properties['left_column'] ? 'checked="checked"' : '',

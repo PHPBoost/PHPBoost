@@ -48,7 +48,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'LANG' => get_ulang(),
 	'SID' => SID,
@@ -216,7 +216,7 @@ if (!empty($valid_search) && !empty($search))
 			$Errorh->handler($LANG['no_result'], E_USER_NOTICE);
 		else
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_FORUM_SEARCH'  => true
 			));
 		}
@@ -230,7 +230,7 @@ elseif (!empty($valid_search))
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/search.php'");
 	
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,

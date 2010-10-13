@@ -95,7 +95,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
 		'SERVER_PATH' 		=> $general_config->get_site_path(),
 		'SELECT_TIMEZONE' 	=> $select_timezone,
@@ -247,7 +247,7 @@ else //Sinon on rempli le formulaire
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$user_accounts_config = UserAccountsConfig::load();
 	
-	$Template->assign_vars(array(		
+	$Template->put_all(array(		
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $user_accounts_config->get_default_theme(),
 		'SITE_NAME' => $general_config->get_site_name(),
@@ -309,7 +309,7 @@ else //Sinon on rempli le formulaire
     	}
 	}	
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => '../images/stats/countries/' . $lang_identifier. '.png'
 	));

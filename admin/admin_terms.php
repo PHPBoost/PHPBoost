@@ -45,14 +45,14 @@ else
 		'admin_terms'=> 'admin/admin_terms.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TERMS' => $LANG['register_terms'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'CONTENTS' => FormatingHelper::unparse($user_accounts_config->get_registration_agreement()),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],

@@ -72,7 +72,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
         $editor = $this->formatter->get_editor();
         $editor->set_identifier($this->get_html_id());
 
-        $template->assign_vars(array(
+        $template->put_all(array(
 			'C_EDITOR_ENABLED' => true,
 			'EDITOR' => $editor->display(),
 			'VALUE' => $this->get_raw_value(),

@@ -50,7 +50,7 @@ function poll_mini($position, $block)
     	}
     	if (in_array($poll_mini['id'], $array_cookie))
     	{
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'THEME' => get_utheme(),
     			'L_MINI_POLL' => $LANG['mini_poll'],
     			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
@@ -73,7 +73,7 @@ function poll_mini($position, $block)
     	else
     	{
     		#####################Questions######################
-    		$tpl->assign_vars(array(
+    		$tpl->put_all(array(
     			'L_MINI_POLL' => $LANG['mini_poll'],
     			'L_VOTE' => $LANG['poll_vote'],
     			'L_POLL_RESULT' => $LANG['poll_result'],

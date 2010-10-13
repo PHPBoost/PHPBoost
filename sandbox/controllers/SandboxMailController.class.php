@@ -46,13 +46,13 @@ class SandboxMailController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$result = $this->send_mail();
-			$view->assign_vars(array(
+			$view->put_all(array(
 				'C_MAIL_SENT' => true,
 				'C_SUCCESS' => empty($result),
 				'ERROR' => $result
 			));
 		}
-		$view->add_subtemplate('SMTP_FORM', $this->form->display());
+		$view->put('SMTP_FORM', $this->form->display());
 		return new SiteDisplayResponse($view);
 	}
 

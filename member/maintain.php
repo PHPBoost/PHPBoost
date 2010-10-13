@@ -81,7 +81,7 @@ else //Délai indéterminé.
 
 $maintenance_message = $maintenance_config->get_message();
 
-$Template->assign_vars(array(	
+$Template->put_all(array(	
 	'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 	'THEME' => get_utheme(),
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
@@ -103,7 +103,7 @@ $Template->assign_vars(array(
 
 if ($maintenance_config->get_display_duration() && !$maintenance_config->is_unlimited_maintenance())
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY_DELAY' => true,
 		'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 		'L_MAINTAIN_DELAY' => $LANG['maintain_delay']

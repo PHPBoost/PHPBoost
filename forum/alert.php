@@ -66,7 +66,7 @@ if (!empty($alert) && empty($alert_post))
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'KERNEL_EDITOR' => display_editor(),
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
@@ -84,7 +84,7 @@ if (!empty($alert) && empty($alert_post))
 	}
 	else //Une alerte a déjà été postée
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
 			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php')
@@ -99,7 +99,7 @@ if (!empty($alert) && empty($alert_post))
 //Si on enregistre une alerte
 if (!empty($alert_post))
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_ALERT' => $LANG['alert_topic'],
 		'L_BACK_TOPIC' => $LANG['alert_back'],
 		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
@@ -133,7 +133,7 @@ if (!empty($alert_post))
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/%'");
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
 	'SID' => SID,
 	'DESC' => $topic['subtitle'],

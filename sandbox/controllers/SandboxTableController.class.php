@@ -31,7 +31,7 @@ class SandboxTableController extends ModuleController
 	{
 		$view = new FileTemplate('sandbox/SandboxTableController.tpl');
 		$table = $this->build_table();
-		$view->add_subtemplate('table', $table->export());
+		$view->put('table', $table->export());
 		return new SiteDisplayResponse($view);
 	}
 

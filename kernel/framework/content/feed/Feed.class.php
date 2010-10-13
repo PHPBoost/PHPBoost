@@ -118,7 +118,7 @@ class Feed
 			if (!empty($this->data))
 			{
 				$desc = FormatingHelper::second_parse($this->data->get_desc());
-				$tpl->assign_vars(array(
+				$tpl->put_all(array(
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
                     'DATE_RFC3339' => $this->data->get_date_rfc3339(),
@@ -259,7 +259,7 @@ class Feed
 		{
 			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
-			$template->assign_vars($tpl);
+			$template->put_all($tpl);
 		}
 
 		// Get the cache content or recreate it if not existing
@@ -321,7 +321,7 @@ class Feed
 		$general_config = GeneralConfig::load();
 		$feed_absolut_url = $general_config->get_site_url() . $general_config->get_site_path() . '/' . trim($feed_url, '/');
 
-		$feed_menu->assign_vars(array(
+		$feed_menu->put_all(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,

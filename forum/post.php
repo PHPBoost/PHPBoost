@@ -111,7 +111,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token());
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
 			'P_UPDATE' => $post_update,
@@ -231,7 +231,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
 			else
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => (($type == '0') ? 'checked="ckecked"' : ''),
 					'CHECKED_POSTIT' => (($type == '1') ? 'checked="ckecked"' : ''),
@@ -269,7 +269,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//Type de réponses du sondage.
 			$poll_type = retrieve(POST, 'poll_type', 0);
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'THEME' => get_utheme(),
 				'LANG' => get_ulang(),
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -327,7 +327,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -348,7 +348,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$nbr_poll_field++;
 			}
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
 				'TITLE' => '',
@@ -543,7 +543,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					$type = ($type == 1 || $type == 0) ? $type : 0;
 				else
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($type == 0) ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($type == 1) ? 'checked="ckecked"' : ''),
@@ -581,7 +581,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Type de réponses du sondage.
 				$poll_type = retrieve(POST, 'poll_type', 0);
 
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'THEME' => get_utheme(),
 					'LANG' => get_ulang(),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -646,7 +646,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				if ($is_modo)
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
@@ -669,7 +669,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'C_DISPLAY_MSG' => true,
 						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" />' : '',
 						'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
@@ -705,7 +705,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					$nbr_poll_field++;
 				}
 
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
 					'TITLE' => $topic['title'],
@@ -748,13 +748,13 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Type de réponses du sondage.
 				if (isset($poll['type']) && $poll['type'] == '0')
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'SELECTED_SIMPLE' => 'checked="ckecked"'
 					));
 				}
 				elseif (isset($poll['type']) && $poll['type'] == '1')
 				{
-					$Template->assign_vars(array(
+					$Template->put_all(array(
 						'SELECTED_MULTIPLE' => 'checked="ckecked"'
 					));
 				}
@@ -811,7 +811,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				if ($get_error_e == 'incomplete')
 					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
@@ -874,7 +874,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			if (!empty($errstr))
 				$Errorh->handler($errstr, $type);
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
@@ -904,7 +904,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
-				$Template->assign_vars(array(
+				$Template->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -950,7 +950,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$nbr_poll_field++;
 			}
 
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
 				'TITLE' => '',

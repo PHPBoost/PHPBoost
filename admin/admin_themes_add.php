@@ -122,7 +122,7 @@ else
 		'admin_themes_add'=> 'admin/admin_themes_add.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'THEME' => get_utheme(),		
 		'LANG' => get_ulang(),
 		'L_THEME_ADD' => $LANG['theme_add'],	
@@ -206,11 +206,11 @@ else
 	}
 
 	if ($z != 0)
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->assign_vars(array(		
+		$Template->put_all(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 	

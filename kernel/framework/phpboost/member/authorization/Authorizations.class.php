@@ -130,7 +130,7 @@ class Authorizations
 		
 		$tpl = new FileTemplate('framework/groups_auth.tpl');
        
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
 			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
             'THEME' => get_utheme(),
@@ -218,7 +218,7 @@ class Authorizations
 		}
 		$advanced_auth = count($array_auth_members) > 0;
 
-		$tpl->assign_vars(array(
+		$tpl->put_all(array(
 			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;'),
 			'C_ADVANCED_AUTH_OPEN' => $advanced_auth
 		));

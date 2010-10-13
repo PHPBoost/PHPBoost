@@ -53,12 +53,12 @@ abstract class AbstractAdminFormPageController extends AdminController
 		if ($this->has_been_submited())
 		{
 			$this->handle_submit();
-			$template->assign_vars(array(
+			$template->put_all(array(
 				'SUCCESS_MESSAGE' => $this->success_message,
 				'C_SUCCESS' => $this->form
 			));
 		}
-		$template->add_subtemplate('form', $this->form->display());
+		$template->put('form', $this->form->display());
 		return $this->generate_response($template);
 	}
 

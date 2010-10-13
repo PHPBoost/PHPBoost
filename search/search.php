@@ -47,7 +47,7 @@ $query_mode = retrieve(POST, 'query_mode', true);
 define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
-$Template->assign_vars(Array(
+$Template->put_all(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => !empty($unsecure_search) ? $unsecure_search : $LANG['search'] . '...',
@@ -197,7 +197,7 @@ if (!empty($search))
     	get_html_results($results, $all_html_result, $search_in);
     }
     
-    $Template->assign_vars(Array(
+    $Template->put_all(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
         'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
         'L_RESULTS' => $LANG['results'],

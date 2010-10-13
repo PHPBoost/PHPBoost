@@ -95,7 +95,7 @@ class ModuleMap extends SitemapSection
 		//We get the stream in which we are going to write
 		$template = $export_config->get_module_map_stream();
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 			'MODULE_ID' => $this->get_module_id(),
 			'C_MODULE_ID' => $this->get_module_id() != '',
 			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
@@ -107,7 +107,7 @@ class ModuleMap extends SitemapSection
 
 		if (is_object($this->link) && $this->link instanceof SitemapSection)
 		{
-			$template->add_subtemplate('LINK', $this->link->export($export_config));
+			$template->put('LINK', $this->link->export($export_config));
 		}
 
 		//We export all the elements contained by the module map

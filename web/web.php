@@ -66,7 +66,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		$java = '';
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'JAVA' => $java,
 		'EDIT' => $edit,
 		'DEL' => $del
@@ -78,7 +78,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	
 	
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY_WEB' => true,
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
@@ -102,7 +102,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'COMMENTS' => display_comments('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'))
 		));
 	}	
@@ -123,7 +123,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	FROM " . PREFIX . "web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_WEB_LINK' => true,
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
@@ -176,7 +176,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	 
 	$Pagination = new DeprecatedPagination();
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
@@ -223,7 +223,7 @@ else
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
 	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_WEB_CAT' => true,
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),

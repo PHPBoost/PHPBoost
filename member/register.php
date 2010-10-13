@@ -53,7 +53,7 @@ if (empty($key))
 			'register' => 'member/register.tpl'
 		));
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_CONFIRM_REGISTER' => true,
 			'L_HAVE_TO_ACCEPT' => !empty($register_valid) ? $LANG['register_have_to_accept'] : '',
 			'MSG_REGISTER' => FormatingHelper::second_parse($registration_agreement),
@@ -104,7 +104,7 @@ if (empty($key))
 		if (isset($LANG[$get_erroru]))
 			$Errorh->handler($LANG[$get_erroru], E_USER_WARNING);  
 			
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_REGISTER' => true
 		));	
 			
@@ -128,7 +128,7 @@ if (empty($key))
 		if ($Captcha->is_available() && $user_accounts_config->is_registration_captcha_enabled() == '1')
 		{
 			$Captcha->set_difficulty($user_accounts_config->get_registration_captcha_difficulty());
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_VERIF_CODE' => true,
 				'VERIF_CODE' => $Captcha->display_form(),
 				'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
@@ -190,7 +190,7 @@ if (empty($key))
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier,
 			'SELECT_EDITORS' => $select_editors,
@@ -294,7 +294,7 @@ elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation 
 		'register' => 'member/register.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ACTIVATION_REGISTER' => true
 	));	
 	
@@ -303,14 +303,14 @@ elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation 
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_success']
 		));	
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_error']
 		));	

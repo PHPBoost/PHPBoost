@@ -73,7 +73,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
 
         $tpl = new StringTemplate($tpl_src);
 
-        $tpl->assign_vars(array(
+        $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'CSS_CLASS' => $this->get_css_class(),

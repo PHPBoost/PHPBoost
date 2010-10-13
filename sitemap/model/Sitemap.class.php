@@ -144,7 +144,7 @@ class Sitemap
 		//We get the stream in which we are going to write
 		$template = $export_config->get_site_map_stream();
 
-		$template->assign_vars(array(
+		$template->put_all(array(
 		    'C_SITE_MAP' => true,
             'SITE_NAME' => htmlspecialchars($this->site_name, ENT_QUOTES)
 		));

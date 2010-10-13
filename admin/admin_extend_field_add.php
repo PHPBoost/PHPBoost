@@ -57,7 +57,7 @@ else
 		'admin_extend_field_add'=> 'admin/admin_extend_field_add.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'AUTH' => Authorizations::generate_select(ExtendedField::AUTHORIZATION, array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1), array(2 => true), 'auth'),
 		'L_AUTH' => $LANG['authorizations'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],

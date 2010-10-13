@@ -58,7 +58,7 @@ else
 		'admin_web_config'=> 'web/admin_web_config.tpl'
 	));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'NBR_WEB_MAX' => !empty($CONFIG_WEB['nbr_web_max']) ? $CONFIG_WEB['nbr_web_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_WEB['nbr_cat_max']) ? $CONFIG_WEB['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : '2',

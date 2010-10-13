@@ -115,7 +115,7 @@ else
 	foreach ($smileys_array as $smiley)
 		$smiley_options .= '<option value="' . $smiley . '">' . $smiley . '</option>';
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],

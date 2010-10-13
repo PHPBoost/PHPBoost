@@ -159,7 +159,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	//Affichage des commentaires si il y en a la possibilité
 	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_COM))))
 	{	
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => url('pages.php?id=' . $page_infos['id'] . '&amp;com=0'),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
@@ -170,7 +170,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	if ($page_infos['count_hits'] == 1)
 		$Sql->query_inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TITLE' => $page_infos['title'],
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
@@ -198,7 +198,7 @@ elseif ($id_com > 0)
 	
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s'))
 	));
 	
@@ -209,7 +209,7 @@ elseif (!empty($error))
 {
 	$Template->set_filenames(array('error'=> 'pages/error.tpl'));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TITLE' => $LANG['error']
 	));
 	
@@ -247,7 +247,7 @@ else
 	
 	$pages_data_path = $Template->get_module_data_path('pages');
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGES_PATH' => $pages_data_path,
 		'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
 		'NUM_COMS' => sprintf($LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
@@ -303,7 +303,7 @@ else
 	}
 	$Sql->query_close($result);
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'TITLE' => $LANG['pages'],
 		'L_ROOT' => $LANG['pages_root'],
 		'ROOT_CONTENTS' => $root,

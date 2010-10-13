@@ -78,7 +78,7 @@ function connect_mini($position, $block)
     		}
     	}
     	
-    	$tpl->assign_vars(array(
+    	$tpl->put_all(array(
     		'C_ADMIN_AUTH' => $user->check_level(ADMIN_LEVEL),
     		'C_MODERATOR_AUTH' => $user->check_level(MODERATOR_LEVEL),
     		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
@@ -101,7 +101,7 @@ function connect_mini($position, $block)
     }
     else
     {
-    	$tpl->assign_vars(array(
+    	$tpl->put_all(array(
     		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
     		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_PASSWORD' => $LANG['require_password'],

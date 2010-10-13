@@ -107,7 +107,7 @@ $Sql->query_close($result);
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
 	'ADMIN_MENU' => $admin_menu,
 	'NO_NEWS' => $nbr_news == 0 ? $NEWS_LANG['no_news_available'] : 0,
 	'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),

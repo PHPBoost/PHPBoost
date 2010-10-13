@@ -38,7 +38,7 @@ require_once('../kernel/header.php');
 
 $media_template = new FileTemplate('media/contribution.tpl');
 
-$media_template->assign_vars(array(
+$media_template->put_all(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $MEDIA_LANG['contribution_confirmation'],
 	'L_CONTRIBUTION_SUCCESS' => $MEDIA_LANG['contribution_success'],
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $MEDIA_LANG['contribution_confirmation_explain']

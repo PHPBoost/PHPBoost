@@ -72,7 +72,7 @@ if (!$is_guest)
 //Formulaire de connexion sur le forum.
 if ($CONFIG_FORUM['display_connexion'])
 {
-	$Template->assign_vars(array(	
+	$Template->put_all(array(	
 		'C_FORUM_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_DISCONNECT' => $LANG['disconnect'],
@@ -82,7 +82,7 @@ if ($CONFIG_FORUM['display_connexion'])
 }
 
 $sid = (SID != '' ? '?' . SID : '');
-$Template->assign_vars(array(	
+$Template->put_all(array(	
 	'C_DISPLAY_UNREAD_DETAILS' => ($User->get_attribute('user_id') !== -1) ? true : false,
 	'C_MODERATION_PANEL' => $User->check_level(1) ? true : false,
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',

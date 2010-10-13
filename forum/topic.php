@@ -88,7 +88,7 @@ $module_data_path = $Template->get_module_data_path('forum');
 $check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
 if ($check_group_edit_auth)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_FORUM_MODERATOR' => true,
 		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1') ? true : false,
 		'U_TOPIC_LOCK' => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . $Session->get_token()),
@@ -105,7 +105,7 @@ if ($check_group_edit_auth)
 }
 else
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_FORUM_MODERATOR' => false
 	));
 }
@@ -148,7 +148,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 	$i++;
 }
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,		
 	'MODULE_DATA_PATH' => $module_data_path,
@@ -228,7 +228,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	//Gestion des sondages => executé une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
-		$Template->assign_vars(array(				
+		$Template->put_all(array(				
 			'C_POLL_EXIST' => true,
 			'QUESTION' => $row['question'],				
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
@@ -259,7 +259,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		}
 		else //Affichage des formulaires (radio/checkbox) pour voter.
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_POLL_QUESTION' => true
 			));
 			
@@ -425,7 +425,7 @@ $Sql->query_close($result);
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/topic.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'");
 
-$Template->assign_vars(array(
+$Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -472,14 +472,14 @@ if (!empty($quote_get))
 //Formulaire de réponse, non présent si verrouillé.
 if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
 elseif (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
 	));
@@ -489,7 +489,7 @@ else
 	$img_track_display = $track ? 'untrack_mini.png' : 'track_mini.png';
 	$img_track_pm_display = $track_pm ? 'untrack_pm_mini.png' : 'track_pm_mini.png';
 	$img_track_mail_display = $track_mail ? 'untrack_mail_mini.png' : 'track_mail_mini.png';
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => display_editor(),
@@ -506,7 +506,7 @@ else
 	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
 			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',

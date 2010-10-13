@@ -50,7 +50,7 @@ if ($file_id > 0) //Contenu
 	
 	
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
 		'C_EDIT_AUTH' => $auth_write,
@@ -88,7 +88,7 @@ if ($file_id > 0) //Contenu
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'COMMENTS' => display_comments('download', $file_id, url('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
 		));
 	}
@@ -99,7 +99,7 @@ else
 {
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_ADMIN' => $auth_write,
 		'C_DOWNLOAD_CAT' => true,
 		'C_ADD_FILE' => $auth_write || $auth_contribution,
@@ -123,7 +123,7 @@ else
 	//listing of subcategories
 	if ($num_subcats > 0)
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_SUB_CATS' => true
 		));	
 		
@@ -204,7 +204,7 @@ else
 		
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_FILE' => $DOWNLOAD_LANG['file'],
 			'L_ALPHA' => $DOWNLOAD_LANG['sort_alpha'],
 			'L_SIZE' => $LANG['size'],
@@ -233,7 +233,7 @@ else
 		
 		
 		
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
@@ -267,7 +267,7 @@ else
 	}
 	else
 	{
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'L_NO_FILE_THIS_CATEGORY' => $DOWNLOAD_LANG['none_download'],
 			'C_NO_FILE' => true
 		));

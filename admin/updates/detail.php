@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $identifier = retrieve(GET, 'identifier', '');
 $tpl = new FileTemplate('admin/updates/detail.tpl');
 
-$tpl->assign_vars(array(
+$tpl->put_all(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates'],
     'L_KERNEL' => $LANG['kernel'],
     'L_MODULES' => $LANG['modules'],
@@ -80,7 +80,7 @@ if ($app !== null && $app->check_compatibility())
             break;
     }
     
-    $tpl->assign_vars(array(
+    $tpl->put_all(array(
         'APP_NAME' => $app->get_name(),
         'APP_VERSION' => $app->get_version(),
         'APP_LANGUAGE' => $app->get_localized_language(),
@@ -123,7 +123,7 @@ if ($app !== null && $app->check_compatibility())
     foreach ($security_improvments as $security_improvment)
         $tpl->assign_block_vars('security', array('description' => $security_improvment));
 }
-else $tpl->assign_vars((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));
+else $tpl->put_all((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));
     
 $tpl->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

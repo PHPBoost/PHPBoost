@@ -262,7 +262,7 @@ if ($del_cat > 0)
 	else
 		$current_cat = $LANG['pages_no_selected_cat'];
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_TITLE' => sprintf($LANG['pages_remove_this_cat'], $page_infos['title']),
 		'L_REMOVE_ALL_CONTENTS' => $LANG['pages_remove_all_contents'],
 		'L_MOVE_ALL_CONTENTS' => $LANG['pages_move_all_contents'],
@@ -295,7 +295,7 @@ if ($del_cat > 0)
 }
 elseif ($id_rename > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
 		'TARGET' => url('action.php?token=' . $Session->get_token()),
@@ -316,7 +316,7 @@ elseif ($id_rename > 0)
 //Création d'une redirection
 elseif ($id_new > 0)
 {
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'ID_NEW' => $id_new,
 		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
@@ -353,7 +353,7 @@ elseif ($id_redirection > 0)
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'U_CREATE_REDIRECTION' => url('action.php?new=' . $id_redirection),
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
@@ -394,7 +394,7 @@ else
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
 		'L_REDIRECTION_TARGET' => $LANG['pages_redirection_target'],

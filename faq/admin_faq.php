@@ -78,7 +78,7 @@ if ($page > 0)
 		));
 	}
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_CATEGORY' => $FAQ_LANG['category'],
@@ -104,7 +104,7 @@ else
 	$FAQ_CONFIG['num_cols'] = isset($FAQ_CONFIG['num_cols']) ? $FAQ_CONFIG['num_cols'] : 4;
 	$FAQ_CONFIG['display_block'] = isset($FAQ_CONFIG['display_block']) ? $FAQ_CONFIG['display_block'] : true;
 	
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],

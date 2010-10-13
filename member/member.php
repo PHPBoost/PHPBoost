@@ -96,7 +96,7 @@ if (!empty($id_get)) //Espace membre
 			$user_sex = ($row['user_sex'] == 1) ? 'man.png' : 'woman.png';
 		}
 	
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_UPDATE_PROFIL' => true,
 			'USER_THEME' => $row['user_theme'],
 			'USER_LOGIN' => $User->get_attribute('login'),
@@ -196,7 +196,7 @@ if (!empty($id_get)) //Espace membre
 				));
 			}
 		}
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
@@ -269,7 +269,7 @@ if (!empty($id_get)) //Espace membre
 		//Autorisation d'uploader un avatar sur le serveur.
 		if ($user_account_config->is_avatar_upload_enabled())
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_UPLOAD_AVATAR' => true,
 				'WEIGHT_MAX' => $user_account_config->get_max_avatar_weight(),
 				'HEIGHT_MAX' => $user_account_config->get_max_avatar_height(),
@@ -527,7 +527,7 @@ if (!empty($id_get)) //Espace membre
 		//Droit d'accès?.
 		$is_auth_files = $User->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
 	
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $User->get_attribute('level') >= MODERATOR_LEVEL,
 			'SID' => SID,
@@ -553,7 +553,7 @@ if (!empty($id_get)) //Espace membre
 		//Affichage du lien vers l'interface des fichiers.
 		if ($is_auth_files)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_USER_AUTH_FILES' => true
 			));
 		}
@@ -636,7 +636,7 @@ if (!empty($id_get)) //Espace membre
 		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
-		$Template->assign_vars(array(
+		$Template->put_all(array(
 			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_USER_VIEW' => true,
 			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->get_attribute('user_id') == $id_get,
@@ -689,7 +689,7 @@ if (!empty($id_get)) //Espace membre
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
-			$Template->assign_vars(array(
+			$Template->put_all(array(
 				'C_PROFIL_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
@@ -752,7 +752,7 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 		AppContext::get_response()->redirect('/member/member.php');
 	}
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,
 		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
@@ -841,7 +841,7 @@ else //Show all member!
 			$login = $LANG['no_result'];
 	}
 
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'C_USER_LIST' => true,
 		'SID' => SID,
 		'LANG' => get_ulang(),
@@ -908,7 +908,7 @@ else //Show all member!
 	
 	$Pagination = new DeprecatedPagination();
 		
-	$Template->assign_vars(array(
+	$Template->put_all(array(
 		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
 	));
 
