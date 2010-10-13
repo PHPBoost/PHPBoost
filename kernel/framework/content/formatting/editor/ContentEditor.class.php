@@ -32,9 +32,9 @@
  */
 abstract class ContentEditor
 {
-    private $forbidden_tags = array();
-    private $identifier = 'contents';
     private $template = null;
+    protected $forbidden_tags = array();
+    protected $identifier = 'contents';
 
     public function __construct()
     {
