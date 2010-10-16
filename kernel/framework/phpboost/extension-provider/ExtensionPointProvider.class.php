@@ -54,8 +54,7 @@ abstract class ExtensionPointProvider
 	public function __construct($extension_provider_id = '')
 	{
 		$this->id = $extension_provider_id;
-		$ext_point_provider_service = AppContext::get_extension_provider_service();
-		$this->extensions_points = $ext_point_provider_service->get_provider_extensions_points($this);
+		$this->extensions_points = $this->get_provider_extensions_points($this);
 	}
 
 	/**
@@ -107,6 +106,13 @@ abstract class ExtensionPointProvider
 			}
 		}
 		return true;
+	}
+
+	private function get_provider_extensions_points($provider)
+	{
+		$module_methods = get_class_methods($provider);
+		$generics_methods = get_class_methods('ExtensionPointProvider');
+		return array_values(array_diff($module_methods, $generics_methods));
 	}
 }
 

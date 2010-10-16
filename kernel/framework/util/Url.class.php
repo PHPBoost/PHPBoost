@@ -85,7 +85,7 @@ class Url
 			{
 				$this->server_url = self::server_url();
 			}
-				
+
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
@@ -159,7 +159,7 @@ class Url
 			return $this->absolute();
 		}
 	}
-	
+
 	/**
      * @desc Returns the relative url if defined, else the absolute one
      * @return string the relative url if defined, else the absolute one
@@ -221,10 +221,10 @@ class Url
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);
 		$url = trim($url, ' -');
-	
+
 		return $url;
 	}
-	
+
 	/**
 	 * @desc Compress a url by removing all "folder/.." occurrences
 	 * @param string $url the url to compress
@@ -542,7 +542,12 @@ class Url
 			return $regex_match_all;
 		}
 	}
-    
+
+    /**
+     * @desc Returns an url relative from the server root
+     * @param mixed $url the url representation. Could be a string or an Url object
+     * @return string an url relative from the server root
+     */
     public static function to_rel($url)
     {
         if (!($url instanceof Url))
@@ -551,7 +556,12 @@ class Url
         }
         return $url->rel();
     }
-    
+
+    /**
+     * @desc Returns an url relative from PHPBoost root
+     * @param mixed $url the url representation. Could be a string or an Url object
+     * @return string an url relative from PHPBoost root
+     */
     public static function to_relative($url)
     {
         if (!($url instanceof Url))
@@ -560,7 +570,12 @@ class Url
         }
         return $url->relative();
     }
-    
+
+    /**
+     * @desc Returns an absolute url
+     * @param mixed $url the url representation. Could be a string or an Url object
+     * @return string an absolute url
+     */
     public static function to_absolute($url)
     {
         if (!($url instanceof Url))
