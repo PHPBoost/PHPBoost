@@ -33,7 +33,7 @@
 class DefaultTemplateData implements TemplateData
 {
 	private $vars = array();
-    
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +41,7 @@ class DefaultTemplateData implements TemplateData
     {
         $this->vars[$key] = $value;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -78,7 +78,7 @@ class DefaultTemplateData implements TemplateData
 		}
 		$current_block = array_merge($array_vars, $subtemplates);
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -138,8 +138,9 @@ class DefaultTemplateData implements TemplateData
 			'SID' => SID,
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
-			'C_USER_CONNECTED' => $member_connected,
-			'C_USER_NOTCONNECTED' => !$member_connected,
+			'IS_USER_CONNECTED' => $member_connected,
+			'C_USER_CONNECTED' => $member_connected, // @deprecated
+			'C_USER_NOTCONNECTED' => !$member_connected, // @deprecated
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($session) ? $session->get_token() : ''
@@ -151,7 +152,7 @@ class DefaultTemplateData implements TemplateData
         $list[$name] = $value;
         return $value;
     }
-    
+
 	/**
 	 * {@inheritdoc}
 	 */
