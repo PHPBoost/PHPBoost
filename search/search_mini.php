@@ -27,11 +27,11 @@
 
 function search_mini($position, $block)
 {
-    $lang = LangLoader::get('main', 'search');    
+    $lang = LangLoader::get('main', 'search');
     $search = retrieve(REQUEST, 'q', '');
-    
+
     $tpl = new FileTemplate('search/search_mini.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
     $tpl->put_all(Array(
         'SEARCH' => $lang['title'],
@@ -42,8 +42,8 @@ function search_mini($position, $block)
         'L_ADVANCED_SEARCH' => $lang['advanced_search'],
         'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
     ));
-    
-    return $tpl->to_string();
+
+    return $tpl->render();
 }
 
 ?>

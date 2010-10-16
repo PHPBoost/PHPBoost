@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 function articles_mini($position, $block)
 {
 	global $Cache, $LANG, $CONFIG_ARTICLES,$ARTICLES_LANG;
-	 
+
 	$Cache->load('articles');
 	load_module_lang('articles');
 
@@ -80,11 +80,11 @@ function articles_mini($position, $block)
         'a.idcat',
 		'a.description',
 		'a.icon',
-		'a.timestamp', 
-		'a.views', 
+		'a.timestamp',
+		'a.views',
 		'a.note',
-		'a.nbrnote', 
-		'a.nbr_com', 
+		'a.nbrnote',
+		'a.nbr_com',
         'a.user_id'
     );
     $condition = 'WHERE a.visible=1 ORDER BY ' . $sort . ' DESC LIMIT :limit OFFSET 0';
@@ -112,7 +112,7 @@ function articles_mini($position, $block)
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
     ));
     */
-    return $tpl->to_string();
+    return $tpl->render();
 }
 
 ?>

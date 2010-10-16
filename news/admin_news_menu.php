@@ -38,6 +38,6 @@ $tpl_menu->Assign_vars(array(
 	'L_ADD_CAT' => $NEWS_LANG['add_category']
 ));
 
-$admin_menu = $tpl_menu->to_string();
+$admin_menu = $tpl_menu->render();
 
 ?>

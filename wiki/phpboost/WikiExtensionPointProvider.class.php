@@ -30,7 +30,7 @@
 class WikiExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
 	public function __construct()
 	{
 		$this->sql_querier = PersistenceContext::get_sql();
@@ -83,7 +83,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
             'L_CONTENTS' => $LANG['wiki_search_where_contents']
 		));
 
-		return $tpl->to_string();
+		return $tpl->render();
 	}
 
 	public function get_search_args()
@@ -188,12 +188,12 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 			ORDER BY c.timestamp DESC
 			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);
 				$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
-					
+
 				$Template->assign_block_vars('last_articles', array(
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
 				'RSS' => $articles_number > 0 ? '<a href="{PATH_TO_ROOT}/syndication.php?m=wiki"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 				));
-					
+
 				$i = 0;
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
@@ -204,7 +204,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 					));
 					$i++;
 				}
-					
+
 				if ($articles_number == 0)
 				{
 					$Template->put_all(array(
@@ -250,7 +250,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 			$tmp = $Template->pparse('wiki', TRUE);
 			return $tmp;
 	}
-	
+
 	public function sitemap()
 	{
 		return new WikiSitemapExtensionPoint();

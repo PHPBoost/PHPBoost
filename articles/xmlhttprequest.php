@@ -39,7 +39,7 @@ if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 	$note = retrieve(POST, 'note', 0);
 
 	// intialize management system class
-	
+
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 
 	if (!empty($note) && !empty($id))
@@ -49,13 +49,13 @@ elseif (retrieve(GET,'img_preview',false)) // image preview
 	echo FormatingHelper::second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 elseif (retrieve(POST,'preview',false))
 {
-	
+
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new FileTemplate('articles/articles.tpl');
 	$Cache->load('articles');
 	//loading module language
 	load_module_lang('articles');
-	
+
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -76,7 +76,7 @@ elseif (retrieve(POST,'preview',false))
 
 	if (!empty($articles['date']) && !empty($articles['hour']) && !empty($articles['min']))
 		$date->set_hours($articles['hour']);
-		
+
 	$date->set_minutes($articles['min']);
 
 	$preview->put_all(array(
@@ -94,17 +94,17 @@ elseif (retrieve(POST,'preview',false))
 		'L_ON' => $LANG['on'],
 	));
 
-	echo $preview->to_string();
+	echo $preview->render();
 }
 elseif (retrieve(POST,'model_extend_field',false))
 {
 	$id_model = retrieve(POST, 'models', 1, TINTEGER);
-	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);	
-	
+	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);
+
 	$tpl_model = new FileTemplate('articles/extend_field.tpl');
 
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
-	
+
 	if($id_art != 0)
 	{
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id_art . "'", __LINE__, __FILE__);
@@ -112,7 +112,7 @@ elseif (retrieve(POST,'model_extend_field',false))
 		{
 			$extend_field_articles = unserialize($articles['extend_field']);
 			$model_extend_tab=unserialize($model['extend_field']);
-			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : $model_extend_tab;	
+			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : $model_extend_tab;
 		}
 		else
 			$extend_field_tab='';
@@ -126,12 +126,12 @@ elseif (retrieve(POST,'model_extend_field',false))
 	if(!empty($extend_field_tab))
 	{
 		foreach ($model_extend_tab as $field)
-		{	
+		{
 			$tpl_model->assign_block_vars('extend_field', array(
 				'NAME' => $field['name'],
 				'CONTENTS'=>!empty($extend_field_articles[$field['name']]['contents']) ? $extend_field_articles[$field['name']]['contents']: '',
 			));
-		}	
+		}
 	}
 
 	$tpl_model->put_all(array(
@@ -139,24 +139,24 @@ elseif (retrieve(POST,'model_extend_field',false))
 		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
-	
-	echo $tpl_model->to_string();
+
+	echo $tpl_model->render();
 }
 elseif (retrieve(POST,'model_desc',false))
 {
-	$id_model = retrieve(POST, 'models', 1, TINTEGER);    
-	
+	$id_model = retrieve(POST, 'models', 1, TINTEGER);
+
 	$tpl_model = new FileTemplate('articles/extend_field.tpl');
-	
+
 	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
-	
+
 	$tpl_model->put_all(array(
 		'C_EXTEND_FIELD'=>	false,
 		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
 		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
 	));
-	
-	echo $tpl_model->to_string();
+
+	echo $tpl_model->render();
 }
 else
 	echo -2;

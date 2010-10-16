@@ -28,7 +28,7 @@
 class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
 	private static $subtpl = '$_subtpl';
-	
+
 	private $ended = false;
 
 	public static function is_element(StringInputStream $input)
@@ -56,31 +56,31 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         	throw new TemplateParserException('invalid include template name', $this->input);
         }
 	}
-    
+
     private function write_subtemplate_initialization(array $matches)
     {
         $name = $matches['name'];
         $is_in_block = !empty($matches['block']);
         if ($is_in_block)
         {
-            $this->write_block_subtemplate_initialization($name, $matches['block']);           
+            $this->write_block_subtemplate_initialization($name, $matches['block']);
         }
         else
         {
             $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get(\'' . $name . '\');');
         }
     }
-    
+
     private function write_block_subtemplate_initialization($name, $block)
     {
     	$blocks = explode('.', $block);
         $block_var = '$_tmp_' . array_pop($blocks);
         $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_from_list(\'' . $name . '\', ' . $block_var . ');');
     }
-    
+
     private function write_subtemplate_call()
     {
-        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->to_string();}' . "\n");
+        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();}' . "\n");
         $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
     }
 }

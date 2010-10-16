@@ -34,14 +34,14 @@
 class LinksMenu extends LinksMenuElement
 {
 	const LINKS_MENU__CLASS = 'LinksMenu';
-	
+
 	## Menu types ##
 	const VERTICAL_MENU = 'vertical';
 	const HORIZONTAL_MENU = 'horizontal';
 	const TREE_MENU = 'tree';
 	const VERTICAL_SCROLLING_MENU = 'vertical_scrolling';
 	const HORIZONTAL_SCROLLING_MENU = 'horizontal_scrolling';
-	
+
     /**
 	* @access protected
 	* @var string menu's type
@@ -52,7 +52,7 @@ class LinksMenu extends LinksMenuElement
 	* @var LinksMenuElement[] Direct menu children list
 	*/
     protected $elements = array();
-	
+
     /**
 	* @desc Constructor
 	* @param string $title Menu title
@@ -65,11 +65,11 @@ class LinksMenu extends LinksMenuElement
     {
         // Set the menu type
         $this->type = in_array($type, self::get_menu_types_list()) ? $type : self::VERTICAL_SCROLLING_MENU;
-        
+
         // Build the menu element on witch is based the menu
         parent::__construct($title, $url, $image);
     }
-    
+
 	/**
 	* @desc Add a list of LinksMenu or (sub)Menu to the current one
 	* @param LinksMenuElement[] $menu_elements A reference to a list of LinksMenuLink and / or Menu to add
@@ -81,7 +81,7 @@ class LinksMenu extends LinksMenuElement
         	$this->add($element);
         }
     }
-    
+
 	/**
 	* @desc Add a single LinksMenuLink or (sub) Menu
 	* @param LinksMenuElement $element the LinksMenuLink or Menu to add
@@ -96,10 +96,10 @@ class LinksMenu extends LinksMenuElement
         {
         	$element->_parent($this->type);
         }
-        
+
         $this->elements[] = $element;
     }
-    
+
     /**
 	* Update the menu uid
 	*/
@@ -111,7 +111,7 @@ class LinksMenu extends LinksMenuElement
         	$element->update_uid();
         }
     }
-    
+
 	/**
 	* @desc Display the menu
 	* @param Template $template the template to use
@@ -124,7 +124,7 @@ class LinksMenu extends LinksMenuElement
         {
             return '';
         }
-        
+
         // Get the good Template object
         if (!is_object($template) || !($template instanceof Template))
         {
@@ -135,13 +135,13 @@ class LinksMenu extends LinksMenuElement
             $tpl = clone $template;
         }
         $original_tpl = clone $tpl;
-        
+
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
             $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
         }
-        
+
         // Menu assignment
         parent::_assign($tpl, $mode);
         $tpl->put_all(array(
@@ -150,10 +150,10 @@ class LinksMenu extends LinksMenuElement
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'C_HAS_CHILD' => count($this->elements) > 0
         ));
-        
-        return $tpl->to_string();
+
+        return $tpl->render();
     }
-    
+
 
     /**
 	* @return string the string to write in the cache file
@@ -170,13 +170,13 @@ class LinksMenu extends LinksMenuElement
             $tpl = clone $template;
         }
         $original_tpl = clone $tpl;
-        
+
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
             $tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
         }
-        
+
         // Menu assignment
         parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
         $tpl->put_all(array(
@@ -187,11 +187,11 @@ class LinksMenu extends LinksMenuElement
             'ID' => '##.#GET_UID#.##',
             'ID_VAR' => '##.#GET_UID_VAR#.##',
         ));
-        
+
         if ($this->depth == 0)
         {   // We protect and unprotect only on the top level
             $cache_str = parent::cache_export_begin() . '\'.' .
-                var_export($tpl->to_string(), true) .
+                var_export($tpl->render(), true) .
                 '.\'' . parent::cache_export_end();
             $cache_str = str_replace(
                 array('#GET_UID#', '#GET_UID_VAR#', '##'),
@@ -200,9 +200,9 @@ class LinksMenu extends LinksMenuElement
             );
             return $cache_str;
         }
-        return parent::cache_export_begin() . $tpl->to_string() . parent::cache_export_end();
-    }   
-     
+        return parent::cache_export_begin() . $tpl->render() . parent::cache_export_end();
+    }
+
     /**
 	* static method which returns all the menu types
 	*
@@ -213,7 +213,7 @@ class LinksMenu extends LinksMenuElement
     {
         return array(self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::VERTICAL_SCROLLING_MENU, self::HORIZONTAL_SCROLLING_MENU/*, self::TREE_MENU*/);
     }
-   
+
     /**
 	* @desc Increase the Menu Depth and set the menu type to its parent one
 	* @access protected
@@ -222,27 +222,27 @@ class LinksMenu extends LinksMenuElement
     protected function _parent($type)
     {
         parent::_parent($type);
-        
+
         $this->type = $type;
         foreach ($this->elements as $element)
         {
             $element->_parent($type);
         }
     }
-    
+
     ## Getters ##
 	/**
 	* @return string the menu type
 	*/
     public function get_type() { return $this->type; }
-    
+
     /**
 	* Sets the type of the menu
 	*
 	* @param string $type Type of the menu
 	*/
     public function set_type($type) { $this->type = $type; }
-    
+
     /**
 	* @return LinksMenuElement[] the menu children elements
 	*/

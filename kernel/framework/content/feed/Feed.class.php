@@ -149,7 +149,7 @@ class Feed
 				}
 			}
 		}
-		return $tpl->to_string();
+		return $tpl->render();
 	}
 
 	/**
@@ -330,7 +330,7 @@ class Feed
 	        'L_ATOM' => $LANG['atom']
 		));
 
-		return $feed_menu->to_string();
+		return $feed_menu->render();
 	}
 }
 ?>

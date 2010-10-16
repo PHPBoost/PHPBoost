@@ -32,11 +32,11 @@ function newsletter_mini($position, $block)
     global  $LANG, $User;
     //Chargement de la langue du module.
     load_module_lang('newsletter');
-    
+
     $tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
-    
+
     $tpl->put_all(array(
     	'SUBSCRIBE' => $LANG['subscribe'],
     	'UNSUBSCRIBE' => $LANG['unsubscribe'],
@@ -45,7 +45,7 @@ function newsletter_mini($position, $block)
     	'L_SUBMIT' => $LANG['submit'],
     	'L_ARCHIVES' => $LANG['archives']
     ));
-    
-    return $tpl->to_string();
+
+    return $tpl->render();
 }
 ?>

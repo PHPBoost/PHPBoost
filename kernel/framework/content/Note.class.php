@@ -62,7 +62,7 @@ class Note
 		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(TextHelper::strprotect($script), NumberHelper::numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 		$this->sql_table = $this->get_module_table();
 	}
-	
+
 	/**
 	 * @desc Add a note on the item. It has to be into the notation scale.
 	 * @param int $note The note given by the user.
@@ -71,7 +71,7 @@ class Note
 	public function add($note)
 	{
 		global $Sql, $User;
-		
+
 		if ($User->check_level(MEMBER_LEVEL))
 		{
 			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.
@@ -82,9 +82,9 @@ class Note
 			{
 				$note = (($row_note['note'] * $row_note['nbrnote']) + $note)/($row_note['nbrnote'] + 1);
 				$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $user_id : $user_id; //On ajoute l'id de l'utilisateur.
-				
+
 				$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-				
+
 				return 'get_note = ' . $note . ';get_nbrnote = ' . ($row_note['nbrnote'] + 1) . ';';
 			}
 			else
@@ -93,7 +93,7 @@ class Note
 		else
 			return -2;
 	}
-	
+
 	/**
 	 * @desc Display the ajax notation form.
 	 * @param object $template Template object to use another template file.
@@ -102,7 +102,7 @@ class Note
 	public function display_form($template = false)
 	{
 		global $Sql, $LANG, $Session;
-		
+
 		$note = !empty($_POST['note']) ? NumberHelper::numeric($_POST['note']) : 0;
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->script_path), 0);
 
@@ -111,32 +111,32 @@ class Note
 		{
 			if (!is_object($template) || !($template instanceof Template))
 			$template = new template('framework/note.tpl');
-			
+
 			###########################Insertion##############################
 			if (!empty($_POST['valid_note']))
 			{
 				if (!empty($note))
 					$this->add($note); //Ajout de la note.
-				
+
 				AppContext::get_response()->redirect($path_redirect);
 			}
 			else
 			{
 				###########################Affichage##############################
 				$row_note = $Sql->query_array(PREFIX . $this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-					
+
 				//Génération de l'échelle de notation pour ceux ayant le javascript désactivé.
 				$select = '<option value="-1" selected="selected">' . $LANG['note'] . '</option>';
 				for ($i = 0; $i <= $this->notation_scale; $i++)
 					$select .= '<option value="' . $i . '">' . $i . '</option>';
-					
+
 				### Notation Ajax ###
 				$row_note['note'] = (round($row_note['note'] / 0.25) * 0.25);
-				
+
 				$l_note = ($this->options & NOTE_DISPLAY_NOTE) !== 0 ? '<strong>' . $LANG['note'] . ':</strong>&nbsp;' : ''; //Affichage du titre devant la note.
 				$display = ($this->options & NOTE_DISPLAY_BLOCK) !== 0 ? 'block' : 'inline'; //Affichage en bloc ou en inline suivant besoin.
 				$width = ($this->options & NOTE_DISPLAY_BLOCK) !== 0 ? 'width:' . ($this->notation_scale*16) . 'px;margin:auto;' : '';
-				
+
 				$ajax_note = '<div style="' . $width . 'display:none" id="note_stars' . $this->idprov . '" onmouseout="out_div(' . $this->idprov . ', array_note[' . $this->idprov . '])" onmouseover="over_div()">';
 				for ($i = 1; $i <= $this->notation_scale; $i++)
 				{
@@ -159,7 +159,7 @@ class Note
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
 				else
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span> <div style="display:' . $display . '" id="nbrnote' . $this->idprov . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
-				
+
 				$template->put_all(array(
 					'C_JS_NOTE' => !defined('HANDLE_NOTE'),
 					'ID' => $this->idprov,
@@ -176,19 +176,19 @@ class Note
 					'L_VALID_NOTE' => $LANG['valid_note']
 				));
 			}
-            
+
 			if (!defined('HANDLE_NOTE'))
 				define('HANDLE_NOTE', true);
-            
-			return $template->to_string();
+
+			return $template->render();
 		}
 		else
         {
             $controller = PHPBoostErrors::unexisting_page();
-            DispatchManager::redirect($controller);        
+            DispatchManager::redirect($controller);
         }
 	}
-	
+
 	/**
 	 * @desc Static method which display the notation with images, you can restrain the number of images displayed with the argument $num_stars_display
 	 * @param int $note The note of the item.
@@ -201,7 +201,7 @@ class Note
 	{
 		if ($notation_scale == 0)
 			return '';
-			
+
 		$display_note = '';
 		if ($num_stars_display > 0)
 		{
@@ -225,10 +225,10 @@ class Note
 			}
 			$display_note .= '<img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" />';
 		}
-		
+
 		return $display_note;
 	}
-	
+
 	/**
 	 * @desc Accessor
 	 * @param string $varname
@@ -238,7 +238,7 @@ class Note
 	{
 		return $this->$varname;
 	}
-	
+
 	/**
 	 * @desc Check if the notation system is correctly loaded.
 	 * @return bool
@@ -246,16 +246,16 @@ class Note
 	private function is_correctly_loaded()
 	{
 		global $Errorh;
-		
+
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 		{
 			$controller = PHPBoostErrors::unexisting_page();
-            DispatchManager::redirect($controller);        
+            DispatchManager::redirect($controller);
 		}
-		
+
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->script_path));
 	}
-	
+
 	/**
 	 * @desc Get the sql table of the associated module
 	 * @return string The sql table of the associated module
@@ -276,7 +276,7 @@ class Note
 					$check_script = true;
 			}
 		}
-		
+
 		return $check_script ? $info_module['note'] : '0';
 	}
 }

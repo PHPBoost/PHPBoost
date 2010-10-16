@@ -114,12 +114,6 @@ interface Template extends View
 	function display();
 
 	/**
-	 * @deprecated use <code>render()</code> instead
-	 * @desc Returns the result of the template interpretation.
-	 */
-	function to_string();
-
-	/**
      * @desc Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
      * @param string[string] $lang the language map
      */

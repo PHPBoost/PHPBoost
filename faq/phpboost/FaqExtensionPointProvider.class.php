@@ -32,13 +32,13 @@ define('FAQ_MAX_SEARCH_RESULTS', 100);
 class FaqExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
     public function __construct()
     {
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('faq');
     }
-    
+
 	//Récupération du cache.
 	public function get_cache()
 	{
@@ -49,7 +49,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 		unset($config['root']);
 		$string = 'global $FAQ_CONFIG, $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
 		$string .= '$FAQ_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
-		
+
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
@@ -75,20 +75,20 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 			true)
 			. ';' . "\n";
 		}
-		
+
 		//Random questions
 		$query = $this->sql_querier->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20", __LINE__, __FILE__);
 		$questions = array();
 		while ($row = $this->sql_querier->fetch_assoc($query))
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
-		
+
 		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
-		
+
 		return $string;
 	}
 
 	/**
-	 * @desc Returns the SQL query which will return the result of the researched keywords 
+	 * @desc Returns the SQL query which will return the result of the researched keywords
 	 * @param $args string[] parameters of the research
 	 * @return string The SQL query corresponding to the research.
 	 */
@@ -96,14 +96,14 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     {
         global $Cache;
 		$Cache->load('faq');
-		
+
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         $Cats = new FaqCats();
         $auth_cats = array();
         $Cats->build_children_id_list(0, $auth_cats);
-        
+
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
-        
+
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             f.id AS id_content,
             f.question AS title,
@@ -112,11 +112,11 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
             FROM " . PREFIX . "faq f
             WHERE ( FT_SEARCH(f.question, '" . $args['search'] . "') OR FT_SEARCH(f.answer, '" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, FAQ_MAX_SEARCH_RESULTS);
-        
+
         return $request;
     }
-	
-    
+
+
     /**
      * @desc Return the array containing the result's data list
      * @param &string[][] $args The array containing the result's id list
@@ -125,28 +125,28 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     public function compute_search_results($args)
     {
         $results_data = array();
-        
+
         $results =& $args['results'];
         $nb_results = count($results);
-        
+
         $ids = array();
         for ($i = 0; $i < $nb_results; $i++)
             $ids[] = $results[$i]['id_content'];
-        
+
         $request = "SELECT idcat, id, question, answer
             FROM " . PREFIX . "faq
             WHERE id IN (" . implode(',', $ids) . ")";
-        
+
         $request_results = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
         while ($row = $this->sql_querier->fetch_assoc($request_results))
         {
             $results_data[] = $row;
         }
         $this->sql_querier->query_close($request_results);
-        
+
         return $results_data;
     }
-    
+
     /**
      *  @desc Return the string to print the result
      *  @param &string[] $result_data the result's data
@@ -155,14 +155,14 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     function parse_search_result($result_data)
     {
         $tpl = new FileTemplate('faq/search_result.tpl');
-        
+
         $tpl->put_all(array(
             'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result_data['idcat'] . '&amp;question=' . $result_data['id'] . '#q' . $result_data['id'],
             'QUESTION' => $result_data['question'],
             'ANSWER' => FormatingHelper::second_parse($result_data['answer'])
         ));
-        
-        return $tpl->to_string();
+
+        return $tpl->render();
     }
 
     public function sitemap()

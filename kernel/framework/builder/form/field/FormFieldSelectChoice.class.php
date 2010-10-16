@@ -59,7 +59,7 @@ class FormFieldSelectChoice extends AbstractFormFieldChoice
         $this->assign_common_template_variables($template);
 
         $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $this->get_html_code()->to_string(),
+			'ELEMENT' => $this->get_html_code()->render(),
         ));
 
         return $template;

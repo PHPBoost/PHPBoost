@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -52,11 +52,11 @@ class MiniCalendar
 	 * @var Date The date it displays
 	 */
 	private $date;
-	
+
     private static $num_instances = 0;
-    
+
     private static $js_inclusion_already_done = false;
-    
+
 	/**
 	 * @desc Builds a calendar which will be displayable.
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
@@ -66,7 +66,7 @@ class MiniCalendar
 	{
 		$this->form_name = $form_name;
 		$this->num_instance = ++self::$num_instances;
-		
+
 		if (is_numeric($date))
 		{
 			$this->set_date($date);
@@ -76,7 +76,7 @@ class MiniCalendar
 			$this->set_date(new Date(DATE_NOW));
 		}
 	}
-	
+
 	/**
 	 * @desc Sets the date at which will be initialized the calendar.
 	 * @param Date $date Date
@@ -85,9 +85,9 @@ class MiniCalendar
 	{
 		$this->date = $date;
 	}
-	
+
 	/**
-	 * @desc Sets the CSS properties of the element. 
+	 * @desc Sets the CSS properties of the element.
 	 * You can use it if you want to customize the mini calendar, but the best solution is to redefine the template in your module.
 	 * The template used is framework/mini_calendar.tpl.
 	 * @param string $style The CSS properties
@@ -96,7 +96,7 @@ class MiniCalendar
 	{
 		$this->style = $style;
 	}
-	
+
 	/**
 	 * @desc Returns the date
 	 * @return Date the date
@@ -105,7 +105,7 @@ class MiniCalendar
 	{
 		return $this->date;
 	}
-	
+
 	/**
 	 * Returns the html ID of the element.
 	 * @return string The ID
@@ -114,7 +114,7 @@ class MiniCalendar
 	{
 		return 'calendar_' . $this->num_instance;
 	}
-	
+
 	/**
 	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
 	 * @return string The code to write in the HTML page.
@@ -123,7 +123,7 @@ class MiniCalendar
 	{
 		//On crée le code selon le template
 		$template = new FileTemplate('framework/mini_calendar.tpl');
-		
+
 		$template->put_all(array(
 			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_SHORT) : '',
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
@@ -135,12 +135,12 @@ class MiniCalendar
 			'CALENDAR_STYLE' => $this->style,
 			'C_INCLUDE_JS' => !self::$js_inclusion_already_done
 		));
-		
+
 		self::$js_inclusion_already_done = true;
-		
-		return $template->to_string();
+
+		return $template->render();
 	}
-	
+
 	/**
 	 * @desc Retrieves a date entered in a mini calendar.
 	 * @param string $calendar_name Name of the calendar (HTML identifier).

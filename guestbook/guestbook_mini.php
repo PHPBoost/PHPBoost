@@ -30,21 +30,21 @@ if (defined('PHPBOOST') !== true) exit;
 function guestbook_mini($position, $block)
 {
     global $LANG, $Cache, $_guestbook_rand_msg;
-    
+
     //Mini guestbook non activée si sur la page archive guestbook.
     if (strpos(SCRIPT, '/guestbook/guestbook.php') === false)
     {
     	load_module_lang('guestbook');
     	$Cache->load('guestbook'); //Chargement du cache
-    	
+
     	###########################Affichage##############################
     	$tpl = new FileTemplate('guestbook/guestbook_mini.tpl');
-        
+
         MenuService::assign_positions_conditions($tpl, $block);
 
 		$rand = array_rand($_guestbook_rand_msg);
     	$guestbook_rand = isset($_guestbook_rand_msg[$rand]) ? $_guestbook_rand_msg[$rand] : array();
-		
+
 		if ($guestbook_rand === array())
 		{
 			$tpl->put_all(array(
@@ -60,7 +60,7 @@ function guestbook_mini($position, $block)
 	    		$guestbook_login = '<a class="small_link" href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $guestbook_rand['user_id'], '-' . $guestbook_rand['user_id'] . '.php') . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
 	    	else
 	    		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
-	    	
+
 	    	$tpl->put_all(array(
 				'C_ANY_MESSAGE_GESTBOOK' => true,
 				'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
@@ -70,7 +70,7 @@ function guestbook_mini($position, $block)
 	    		'L_BY' => $LANG['by']
 	    	));
 		}
-		return $tpl->to_string();
+		return $tpl->render();
     }
 	return '';
 }

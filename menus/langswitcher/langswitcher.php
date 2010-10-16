@@ -30,7 +30,7 @@ function menu_langswitcher_langswitcher($position, $block)
 	global $User, $LANG, $Session;
 
 	load_menu_lang('langswitcher');
-	
+
 	$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
     if (!empty($switchlang))
     {
@@ -38,7 +38,7 @@ function menu_langswitcher_langswitcher($position, $block)
         {
             $Session->csrf_get_protect();
         }
-        
+
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchlang) && strpos($switchlang, '\'') === false)
     	{
     		$User->update_user_lang($switchlang); //Mise à jour du thème du membre.
@@ -52,9 +52,9 @@ function menu_langswitcher_langswitcher($position, $block)
     			AppContext::get_response()->redirect(HOST . SCRIPT);
     	}
     }
-    
+
     $tpl = new FileTemplate('menus/langswitcher/langswitcher.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
 
     $array_js_identifier = '';
@@ -65,7 +65,7 @@ function menu_langswitcher_langswitcher($position, $block)
     	if ($User->check_level($properties['auth']) && $properties['enabled'] == 1)
     	{
     		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
-    		
+
 			$selected = ($ulang == $lang) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(
     			'NAME' => $info_lang['name'],
@@ -74,7 +74,7 @@ function menu_langswitcher_langswitcher($position, $block)
     		));
     	}
     }
-    
+
     $lang_identifier = str_replace('en', 'uk', $LANG['xml_lang']);
     $tpl->put_all(array(
     	'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
@@ -83,8 +83,8 @@ function menu_langswitcher_langswitcher($position, $block)
     	'L_DEFAULT_LANG' => $LANG['default_lang'],
     	'L_SUBMIT' => $LANG['submit']
     ));
-    
-    return $tpl->to_string();
+
+    return $tpl->render();
 }
 
 ?>

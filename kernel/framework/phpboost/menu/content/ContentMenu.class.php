@@ -33,22 +33,22 @@
 class ContentMenu extends Menu
 {
 	const CONTENT_MENU__CLASS = 'ContentMenu';
-	
+
     /**
      * @var string the menu's content
      */
     private $content = '';
-    
+
     /**
      * @var bool If true, the content menu title will be displayed
      */
     private $display_title = true;
-	
+
     public function __construct($title)
     {
        parent::__construct($title);
     }
-    
+
 	/**
      * @desc Display the content menu.
      * @return a string of the parsed template ready to be displayed
@@ -65,32 +65,32 @@ class ContentMenu extends Menu
             'TITLE' => $this->title,
         	'CONTENT' => FormatingHelper::second_parse($this->content)
         ));
-        return $tpl->to_string();
+        return $tpl->render();
     }
-    
+
     public function cache_export($template = false)
     {
         return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
     }
-    
+
     ## Setters ##
     /**
      * @param bool $display_title if false, the title won't be displayed
      */
     public function set_display_title($display_title) { $this->display_title = $display_title; }
-    
+
     /**
      * @param string $content the content to set
      */
     public function set_content($content) { $this->content = FormatingHelper::strparse($content, array(), false); }
-    
+
     ## Getters ##
     /**
      * @desc Returns true if the title will be displayed
      * @return bool true if the title will be displayed
      */
     public function get_display_title() { return $this->display_title; }
-    
+
     /**
      * @return string the menu content
      */

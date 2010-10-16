@@ -77,7 +77,7 @@ class FormFieldTextEditor extends AbstractFormField
         $this->assign_common_template_variables($template);
 
         $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $field->to_string()
+			'ELEMENT' => $field->render()
         ));
 
         return $template;

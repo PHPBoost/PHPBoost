@@ -30,35 +30,35 @@ if (defined('PHPBOOST') !== true) exit;
 function faq_mini($position, $block)
 {
     global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
-    
+
     load_module_lang('faq');
     $Cache->load('faq'); //Chargement du cache
-    
+
     include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
-    
+
     $tpl = new FileTemplate('faq/faq_mini.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
-    
+
     $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     	'FAQ_QUESTION' => $FAQ_LANG['no_random_question'],
     	'U_FAQ_QUESTION' => TPL_PATH_TO_ROOT . '/faq/' . url('faq.php')
     );
-    
+
     //Aucune question à afficher
     if (empty($RANDOM_QUESTIONS))
     {
     	$tpl->put_all($no_random_question);
-    	return $tpl->to_string();
+    	return $tpl->render();
     }
-    
+
     $random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
-    
+
     $faq_cats = new FaqCats();
-    
+
     $i = 0;
-    
+
     //Tant que la question tirée aléatoirement n'est pas lisible par le visiteur, on en choisit une
     //On met un "timeout" de 5 essais pour ne pas perdre trop de temps
     while (!$faq_cats->check_auth($random_question['idcat']) && $i < 5)
@@ -66,7 +66,7 @@ function faq_mini($position, $block)
     	$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
     	$i++;
     }
-    
+
     //Question trouvée avant 5 essais
     if ($i < 5 && !empty($random_question['question']))
     {
@@ -82,6 +82,6 @@ function faq_mini($position, $block)
     	$tpl->put_all($no_random_question);
     }
     //On retourne le contenu du bloc
-    return $tpl->to_string();
+    return $tpl->render();
 }
 ?>

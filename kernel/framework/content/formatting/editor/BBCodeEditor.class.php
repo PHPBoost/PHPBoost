@@ -207,7 +207,7 @@ class BBCodeEditor extends ContentEditor
         	self::$editor_already_included = true;
         }
 
-        return $template->to_string();
+        return $template->render();
     }
 }
 

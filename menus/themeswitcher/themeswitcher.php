@@ -30,7 +30,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
 	global $User, $LANG, $Session;
 
 	load_menu_lang('themeswitcher');
-	
+
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
@@ -38,7 +38,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
         {
             $Session->csrf_get_protect();
         }
-        
+
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
     	{
     		$User->update_user_theme($switchtheme); //Mise à jour du thème du membre.
@@ -52,11 +52,11 @@ function menu_themeswitcher_themeswitcher($position, $block)
     			AppContext::get_response()->redirect(HOST . SCRIPT);
     	}
     }
-    
+
     $tpl = new FileTemplate('menus/themeswitcher/themeswitcher.tpl');
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
-    
+
     $utheme = get_utheme();
     foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
     {
@@ -71,15 +71,15 @@ function menu_themeswitcher_themeswitcher($position, $block)
     		));
     	}
     }
-    
+
     $tpl->put_all(array(
     	'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
     	'L_SWITCH_THEME' => $LANG['switch_theme'],
     	'L_DEFAULT_THEME' => $LANG['defaut_theme'],
     	'L_SUBMIT' => $LANG['submit']
     ));
-    
-    return $tpl->to_string();
+
+    return $tpl->render();
 }
 
 ?>

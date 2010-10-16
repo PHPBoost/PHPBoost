@@ -57,7 +57,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 		foreach ($this->get_options() as $option)
 		{
 			$template->assign_block_vars('fieldelements', array(
-				'ELEMENT' => $option->display()->to_string(),
+				'ELEMENT' => $option->display()->render(),
 			));
 		}
 
