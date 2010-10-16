@@ -68,23 +68,11 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			), true) . ';' . "\n\n";
 		}
 		return $string;
-
 	}
 
-	//Changement de jour.
-	function on_changeday()
+	function scheduled_jobs()
 	{
-		//Publication des articles en attente pour la date donnée.
-		$result = $this->sql_querier->query_while("SELECT id, start, end
-		FROM " . DB_TABLE_ARTICLES . "
-		WHERE visible != 0", __LINE__, __FILE__);
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			if ($row['start'] <= time() && $row['start'] != 0)
-			$this->sql_querier->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			if ($row['end'] <= time() && $row['end'] != 0)
-			$this->sql_querier->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-		}
+		return new ArticlesScheduledJobs();
 	}
 
 	public function search()

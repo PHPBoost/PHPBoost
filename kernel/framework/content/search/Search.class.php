@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              search.class.php
+ *                              Search.class.php
  *                            -------------------
  *   begin                : February 1, 2008
  *   copyright            : (C) 2008 Loic Rouchon
@@ -37,7 +37,7 @@ class Search
 {
     //----------------------------------------------------------------- PUBLIC
     //---------------------------------------------------------- Constructeurs
-    
+
     /**
      * @desc Builds a search object.
      * Query Complexity: 6 + k / 10 database queries. (k represent the number of
@@ -50,27 +50,27 @@ class Search
     function Search($search = '', $modules = array())
     {
         global $Sql, $User;
-        
+
         $this->errors = 0;
         $this->search = md5($search); // Generating a search id;
         $this->modules = $modules;
         $this->id_search = array();
         $this->cache = array();
-        
+
         $this->id_user = $User->get_attribute('user_id');
         $this->modules_conditions = $this->_get_modules_conditions($this->modules);
-                
-        
+
+
         // Deletes old results from cache
-        
+
         // Here, 3 queries in order to avoid a multi-table delete which is not portable
         // or 2 queries with a NOT IN (a bit long)
-        
+
         // Lists old results to delete
         $reqOldIndex = "SELECT id_search FROM " . PREFIX . "search_index
                         WHERE  last_search_use <= '".(time() - (CACHE_TIME * 60))."'
                             OR times_used >= '".CACHE_TIMES_USED."'";
-        
+
         $nbIdsToDelete = 0;
         $idsToDelete = '';
         $request = $Sql->query_while ($reqOldIndex, __LINE__, __FILE__);
@@ -84,17 +84,17 @@ class Search
             $nbIdsToDelete++;
         }
         $Sql->query_close($request);
-        
+
         // Deletes old results
         if ($nbIdsToDelete > 0)
         {
             $reqDeleteIdx = "DELETE FROM " . DB_TABLE_SEARCH_INDEX . " WHERE id_search IN (".$idsToDelete.")";
             $reqDeleteRst = "DELETE FROM " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search IN (".$idsToDelete.")";
-            
+
             $Sql->query_inject($reqDeleteIdx, __LINE__, __FILE__);
             $Sql->query_inject($reqDeleteRst, __LINE__, __FILE__);
         }
-        
+
         // Don't compute anything if no text is searched
         // (useful for based-id searches)
         if ($this->search != '')
@@ -106,7 +106,7 @@ class Search
             {
                 $reqCache .= " AND " . $this->modules_conditions;
             }
-            
+
             $request = $Sql->query_while ($reqCache, __LINE__, __FILE__);
             while ($row = $Sql->fetch_assoc($request))
             {   // retrieves cache result meta-inf
@@ -114,7 +114,7 @@ class Search
                 $this->id_search[$row['module']] = $row['id_search'];
             }
             $Sql->query_close($request);
-            
+
             // Updates cache results meta-inf
             if (count($this->id_search) > 0)
             {
@@ -122,13 +122,13 @@ class Search
                 $reqUpdate .= "id_search IN (" . implode(',', $this->id_search) . ");";
                 $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             }
-            
+
             // Adds modules missing in cache
             if (count($modules) > count($this->cache))
             {
                 $nbReqInsert = 0;
                 $reqInsert = '';
-                
+
                 foreach ($modules as $module_name => $options)
                 {
                     if (!$this->is_in_cache($module_name))
@@ -149,13 +149,13 @@ class Search
                         }
                     }
                 }
-                
+
                 // Executes last insertions queries
                 if ($nbReqInsert > 0)
                 {
                     $Sql->query_inject("INSERT INTO " . DB_TABLE_SEARCH_INDEX . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
                 }
-                
+
                 // Checks and retrieves cache meta-informations
                 $reqCache  = "SELECT id_search, module FROM " . DB_TABLE_SEARCH_INDEX . " WHERE ";
                 $reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
@@ -163,7 +163,7 @@ class Search
                 {
                     $reqCache .= " AND " . $this->modules_conditions;
                 }
-                
+
                 $request = $Sql->query_while ($reqCache, __LINE__, __FILE__);
                 while ($row = $Sql->fetch_assoc($request))
                 {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
@@ -173,8 +173,8 @@ class Search
             }
         }
     }
-    
-    
+
+
     /**
      * @desc Puts results from the search results identified by the $id_search parameter
      * in the $results parameter and returns the number of results.
@@ -189,7 +189,7 @@ class Search
     {
         global $Sql;
         $results = array();
-        
+
         // Building request
         $reqResults = "SELECT module, id_content, title, relevance, link
                         FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
@@ -199,7 +199,7 @@ class Search
         {
             $reqResults .= $Sql->limit($offset, $nb_lines);
         }
-        
+
         // Retrieves results
         $request = $Sql->query_while ($reqResults, __LINE__, __FILE__);
         while ($result = $Sql->fetch_assoc($request))
@@ -208,11 +208,11 @@ class Search
         }
         $nbResults = $Sql->num_rows($request, "SELECT COUNT(*) " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search = ".$id_search);
         $Sql->query_close($request);
-        
+
         return $nbResults;
     }
-    
-    
+
+
     /**
      * @desc Puts results from the search results in the $results parameter and
      * returns the number of results.
@@ -230,7 +230,7 @@ class Search
         $results = array();
         $num_modules = 0;
         $modules_conditions = '';
-        
+
         // Builds search conditions
         foreach ($module_ids as $module_id)
         {
@@ -246,7 +246,7 @@ class Search
                 $num_modules++;
             }
         }
-        
+
         // Builds search results retrieval request
         $reqResults  = "SELECT module, id_content, title, relevance, link
                         FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
@@ -260,7 +260,7 @@ class Search
         {
             $reqResults .= $Sql->limit($offset, $nb_lines);
         }
-        
+
         // Executes search
         $request = $Sql->query_while ($reqResults, __LINE__, __FILE__);
         while ($result = $Sql->fetch_assoc($request))
@@ -268,13 +268,13 @@ class Search
             $results[] = $result;
         }
         $nbResults = $Sql->num_rows($request, __LINE__, __FILE__  );
-        
+
         $Sql->query_close($request);
-        
+
         return $nbResults;
     }
-    
-    
+
+
     /**
      * @desc Inserts search results in the database cache in order to speed up next searches.
      * Query complexity: 1 + k / 10 queries. (k represent the number of results to insert in the database)
@@ -287,7 +287,7 @@ class Search
         $nbReqSEARCH = 0;
         $reqSEARCH = "";
         $results = array();
-        
+
         // Checks results in cache
         foreach ($requestAndResults as $module_name => $request)
         {
@@ -299,7 +299,7 @@ class Search
                     {
                         $reqSEARCH .= " UNION ";
                     }
-                    
+
                     $reqSEARCH .= "(".trim( $request, ' ;' ).")";
                     $nbReqSEARCH++;
                 }
@@ -309,14 +309,14 @@ class Search
                 $results += $requestAndResults[$module_name];
             }
         }
-        
+
         $nbResults = count($results);
         // If there is many results to insert
         if (($nbReqSEARCH > 0) || ($nbResults > 0))
         {
             $nbReqInsert = 0;
             $reqInsert = '';
-            
+
             // Group insertions by 10
             for ($nbReqInsert = 0; $nbReqInsert < $nbResults; $nbReqInsert++)
             {
@@ -343,7 +343,7 @@ class Search
                     $nbReqInsert++;
                 }
             }
-            
+
             // Executes last insertions
             if ($nbReqInsert > 0)
             {
@@ -351,8 +351,8 @@ class Search
             }
         }
     }
-    
-    
+
+
     /**
      * @desc Returns true if the id_search is in cache, else, false.
      * @param int $id_search the search id to check.
@@ -373,13 +373,13 @@ class Search
             $reqUpdate  = "UPDATE " . DB_TABLE_SEARCH_INDEX . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
             $reqUpdate .= "id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
             $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
-            
+
             return true;
         }
         return false;
     }
-    
-    
+
+
     /**
      * @desc Returns true if the module results are in cache, else, false.
      * @param string $module_id the module to check.
@@ -389,8 +389,8 @@ class Search
     {
         return in_array($module_id, $this->cache);
     }
-    
-    
+
+
     /**
      * @desc Returns the list of the modules ids present in the cache
      * @return string[] the list of the modules present in the cache
@@ -399,7 +399,7 @@ class Search
     {
         return array_keys($this->id_search);
     }
-    
+
     /**
      * @desc Returns the search id
      * @return int the search id
@@ -408,8 +408,8 @@ class Search
     {
         return $this->id_search;
     }
-    
-    
+
+
     /**
      * @desc Builds modules search conditions on the meta-information cache
      * @param mixed[string] $modules An array with modules ids keys and values
@@ -431,7 +431,7 @@ class Search
             foreach ($modules as $module_id => $options)
             {
                 $modules_conditions .= "( module='" . $module_id . "' AND options='" . md5(implode('|', $options)) . "' )";
-                
+
                 if ($i < ($nbModules - 1))
                 {
                     $modules_conditions .= " OR ";
@@ -443,10 +443,10 @@ class Search
                 $i++;
             }
         }
-        
+
         return $modules_conditions;
     }
-    
+
     //----------------------------------------------------- Attributs protégés
     var $id_search;
     var $search;

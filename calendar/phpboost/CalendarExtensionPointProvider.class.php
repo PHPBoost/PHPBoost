@@ -27,11 +27,8 @@
 
 class CalendarExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
-	
     function __construct()
-    {	
-		$this->sql_querier = PersistenceContext::get_sql();
+    {
         parent::__construct('calendar');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        shoutboxExtensionPointProvider.class.php
+ *                       AbstractScheduledJobExtensionPoint.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 16, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,11 @@
  *
  ###################################################*/
 
-
-
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+abstract class AbstractScheduledJobExtensionPoint implements ScheduledJobExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
-    }
-
-	public function scheduled_jobs()
-	{
-		return new ShoutboxScheduledJobs();
-	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today) { }
 }
-
 ?>

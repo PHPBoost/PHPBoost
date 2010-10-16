@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        shoutboxExtensionPointProvider.class.php
+ *                       SearchableExtensionPoint.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : February 08, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,30 @@
  *
  ###################################################*/
 
-
-
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
+    /**
+	 * {@inheritDoc}
+     */
+    public function has_search_options()
     {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
+    	return false;
     }
 
-	public function scheduled_jobs()
-	{
-		return new ShoutboxScheduledJobs();
-	}
-}
+    /**
+	 * {@inheritDoc}
+     */
+    public function build_search_form(array $values)
+    {
+    	throw UnsupportedOperationException();
+    }
 
+    /**
+	 * {@inheritDoc}
+     */
+    public function build_output()
+    {
+
+    }
+}
 ?>

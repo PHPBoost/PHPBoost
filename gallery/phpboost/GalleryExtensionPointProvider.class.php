@@ -32,7 +32,7 @@ if (defined('PHPBOOST') !== true) exit;
 class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
     public function __construct()
     {
         $this->sql_querier = PersistenceContext::get_sql();
@@ -102,13 +102,6 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$_array_random_pics .= ');';
 
 		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
-	}
-
-	//Actions journalière.
-	function on_changeday()
-	{
-		//TODO Why that ? We don't do anything with that we loaded
-		$this->get_cache();
 	}
 }
 

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          Searchable.class.php
+ *                         SitemapScheduledJobs.class.php
  *                            -------------------
- *   begin                : February 08, 2010
+ *   begin                : October 16, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,18 +25,14 @@
  *
  ###################################################*/
 
-interface Searchable extends ExtensionPoint
+class SitemapScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-	const EXTENSION_POINT = 'search';
-    
-    function get_search_request($args = null);
-    
-//    function has_search_options();
-//    
-//    function build_search_form(array $values);
-//    
-//    function has_special_output();
-//    
-//    function build_output();
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today)
+	{
+		SitemapXMLFileService::generate_if_needed();
+	}
 }
 ?>

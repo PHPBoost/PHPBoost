@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        shoutboxExtensionPointProvider.class.php
+ *                        SearchExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -25,21 +25,22 @@
  *
  ###################################################*/
 
-
-
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+class SearchExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
+	public function __construct()
+	{
+		parent::__construct('search');
+	}
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
-    }
 
 	public function scheduled_jobs()
 	{
-		return new ShoutboxScheduledJobs();
+		return new SearchNewsScheduledJobs();
+	}
+
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
 	}
 }
 

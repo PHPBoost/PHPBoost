@@ -30,27 +30,27 @@ if (defined('PHPBOOST') !== true) exit;
 class GuestbookExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
     public function __construct()
     {
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('guestbook');
     }
-    
+
 	//Récupération du cache.
 	function get_cache()
 	{
 		$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
-			
+
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_GUESTBOOK = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
-		
+
 		if (isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
 			$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = unserialize($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-			
+
 		$guestbook_code .= '$CONFIG_GUESTBOOK = ' . var_export($CONFIG_GUESTBOOK, true) . ';' . "\n";
-		
+
 		$guestbook_code .= "\n\n" . 'global $_guestbook_rand_msg;' . "\n";
 		$guestbook_code .= "\n" . '$_guestbook_rand_msg = array();' . "\n";
 		$result = $this->sql_querier->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
@@ -63,16 +63,8 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 			$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(nl2br(TextHelper::substr_html(strip_tags(FormatingHelper::second_parse($row['contents'])), 0, 150)), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
 		}
 		$this->sql_querier->query_close($result);
-		
-		return $guestbook_code;
-	}
 
-	//Actions journalière.
-	function on_changeday()
-	{
-		global $Cache;
-		
-		$Cache->Generate_module_file('guestbook');
+		return $guestbook_code;
 	}
 }
 
