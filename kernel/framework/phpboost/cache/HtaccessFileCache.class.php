@@ -85,38 +85,13 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteEngine on');
 	}
 
-	private function add_modules_rules()
-	{
-		$this->add_section('Modules rules');
-
-		$modules = ModulesManager::get_installed_modules_map();
-		$eps = AppContext::get_extension_provider_service();
-		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
-		foreach ($modules as $module)
-		{
-			$configuration = $module->get_configuration();
-			foreach ($configuration->get_url_rewrite_rules() as $rule)
-			{
-				$this->add_line(str_replace('DIR', DIR, $rule));
-			}
-			if (!empty($mappings[$module->get_id()]))
-			{
-                $this->add_url_mapping($mappings[$module->get_id()]);
-			}
-		}
-	}
-    
 	private function add_core_rules()
 	{
 		$this->add_section('Core');
-        
-		$this->add_rewrite_rule('^admin/errors/404/(?:list/?)?$', 'admin/errors/?url=/404/list');
-		$this->add_rewrite_rule('^admin/errors/404/clear/?$', 'admin/errors/?url=/404/clear');
-		$this->add_rewrite_rule('^admin/errors/404/([0-9]+)/delete/?$', 'admin/errors/?url=/404/$2/delete');
-		
+
 		$this->add_rewrite_rule('^member/member-([0-9]+)-?([0-9]*)\.php$', 'member/member.php?id=$2&p=$3');
 		$this->add_rewrite_rule('^member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'member/pm.php?pm=$2&id=$3&p=$4&quote=$5');
-		
+
         $eps = AppContext::get_extension_provider_service();
         $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel', 'install'));
 		foreach ($mappings as $mapping_list)
@@ -128,28 +103,48 @@ class HtaccessFileCache implements CacheData
 	private function add_feeds_rules()
 	{
 		$this->add_section('Feeds');
-        $this->add_rewrite_rule('^rss/?$', 'syndication.php?m=news&feed=rss');
-        $this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&feed=rss');
-        $this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$2&feed=rss');
-        $this->add_rewrite_rule('^rss/?$', 'syndication.php?m=news&feed=rss');
-        $this->add_rewrite_rule('^rss/?$', 'syndication.php?m=news&feed=rss');
-        $this->add_rewrite_rule('^rss/?$', 'syndication.php?m=news&feed=rss');
-        $this->add_rewrite_rule('^rss/?$', 'syndication.php?m=news&feed=rss');
-        
-		$this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&cat=$2&name=$3&feed=rss');
-		$this->add_rewrite_rule('^rss/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$3&name=$2&feed=rss');
-		$this->add_rewrite_rule('^atom/?$', 'syndication.php?m=news&feed=atom');
-		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&feed=atom');
-		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$2&feed=atom');
-		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&cat=$2&name=$3&feed=atom');
-		$this->add_rewrite_rule('^atom/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$3&name=$2&feed=atom');
+		foreach (array('rss', 'atom') as $feed_type)
+		{
+	        $this->add_rewrite_rule('^' . $feed_type . '/?$', 'syndication.php?m=news&feed=' . $feed_type);
+	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&feed=' . $feed_type);
+	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$2&feed=' . $feed_type);
+			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&cat=$2&name=$3&feed=' . $feed_type);
+			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$3&name=$2&feed=' . $feed_type);
+		}
 	}
-	
+
+	private function add_modules_rules()
+	{
+		$this->add_section('Modules rules');
+
+		$modules = ModulesManager::get_installed_modules_map();
+		$eps = AppContext::get_extension_provider_service();
+		foreach ($modules as $module)
+		{
+			$id = $module->get_id();
+			$configuration = $module->get_configuration();
+			$this->add_section($id);
+			foreach ($configuration->get_url_rewrite_rules() as $rule)
+			{
+				$this->add_line(str_replace('DIR', DIR, $rule));
+			}
+			if ($eps->provider_exists($id))
+			{
+				$provider = $eps->get_provider($id);
+				if ($provider->has_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT))
+				{
+					$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
+					$this->add_url_mapping($url_mappings);
+				}
+			}
+		}
+	}
+
 	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
 	{
         $this->add_line('RewriteRule ' . $match . ' ' . DIR . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
-    
+
     private function add_url_mapping(UrlMappingsExtensionPoint $mapping_list)
     {
         foreach ($mapping_list->list_mappings() as $mapping)

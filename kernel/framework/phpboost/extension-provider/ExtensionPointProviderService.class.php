@@ -104,15 +104,28 @@ class ExtensionPointProviderService
 	 * @return ExtensionPointProvider The corresponding ExtensionPointProvider.
 	 * @throws UnexistingExtensionPointProviderException
 	 */
-	public function get_provider($provider_id = '')
+	public function get_provider($provider_id)
 	{
 		if (!$this->loaded_providers->contains($provider_id))
 		{
-			$this->try_to_reload_modules_providers($provider_id);
+			if (!$this->provider_exists($provider_id))
+			{
+				$this->try_to_reload_modules_providers($provider_id);
+			}
 			$classname = $this->compute_provider_classname($provider_id);
 			$this->loaded_providers->store($provider_id, new $classname());
 		}
 		return $this->loaded_providers->get($provider_id);
+	}
+
+	/**
+	 * @desc Returns true if the provider exists.
+	 * @param string $provider_id the provider id
+	 * @return bool true if the provider exists
+	 */
+	public function provider_exists($provider_id)
+	{
+		return in_array($provider_id, $this->available_providers_ids);
 	}
 
 	private function load_modules_providers()

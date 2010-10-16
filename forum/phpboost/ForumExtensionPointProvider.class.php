@@ -31,23 +31,20 @@ define('FORUM_MAX_SEARCH_RESULTS', 50);
 
 class ForumExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
-
-	## Public Methods ##
-	function __construct() //Constructeur de la classe ForumInterface
+	public function __construct() //Constructeur de la classe ForumInterface
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct('forum');
 	}
 
 	//Récupération du cache.
 	function get_cache()
 	{
+		$sql_querier = PersistenceContext::get_sql();
 		//Configuration du forum
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
+		$CONFIG_FORUM = unserialize($sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
 
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
@@ -55,10 +52,10 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		//Liste des catégories du forum
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
-		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
+		$result = $sql_querier->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
 		FROM " . PREFIX . "forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $sql_querier->fetch_assoc($result))
 		{
 			if (empty($row['auth']))
 			$row['auth'] = serialize(array());
@@ -72,7 +69,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'url\'] = ' . var_export($row['url'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 		}
-		$this->sql_querier->query_close($result);
+		$sql_querier->query_close($result);
 
 		return $forum_config . "\n" . $forum_cats;
 	}
@@ -84,7 +81,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 		//Suppression des marqueurs de vue du forum trop anciens.
 		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
-		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 	}
 
 	public function user()
