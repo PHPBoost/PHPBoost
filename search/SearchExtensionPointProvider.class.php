@@ -25,25 +25,23 @@
  *
  ###################################################*/
 
-
-
 class SearchExtensionPointProvider extends ExtensionPointProvider
 {
-	/**
-	 * @var DBQuerier
-	 */
-	private $sql_querier;
-
 	public function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_querier();
 		parent::__construct('search');
 	}
 
 	function on_changeday()
 	{
-		$this->sql_querier->truncate(PREFIX . 'search_results');
-		$this->sql_querier->truncate(PREFIX . 'search_index');
+		$querier = PersistenceContext::get_querier();
+		$querier->truncate(PREFIX . 'search_results');
+		$querier->truncate(PREFIX . 'search_index');
+	}
+
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
 	}
 }
 
