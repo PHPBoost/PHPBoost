@@ -67,9 +67,9 @@
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
 - [color=red]Nouveauté:[/color] Template JSON.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
-+ [color=red]Nouveauté:[/color] Refonte des installateurs des modules (X-sgbd).
-+ [color=red]Nouveauté:[/color] Installation via des services.
-+ [color=red]Nouveauté:[/color] Installation en ligne de commande.
+* [color=red]Nouveauté:[/color] Refonte des installateurs des modules (X-sgbd).
+* [color=red]Nouveauté:[/color] Installation via des services.
+* [color=red]Nouveauté:[/color] Installation en ligne de commande.
 - [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
 - [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.
