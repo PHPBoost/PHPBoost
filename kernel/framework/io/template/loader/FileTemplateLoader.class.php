@@ -106,7 +106,6 @@ class FileTemplateLoader implements TemplateLoader
 			throw new FileTemplateLoadingException($this->filepath, $this->real_filepath);
 		}
 
-//		$parser = new DefaultTemplateParser();
 		$parser = new TemplateSyntaxParser();
 		$result = $parser->parse($real_file_content);
 
@@ -180,7 +179,7 @@ class FileTemplateLoader implements TemplateLoader
 		}
 		elseif ($this->module == 'menus')
 		{   // Framework - Templates priority order
-			//      /templates/$theme/menus/$menu/filename.tpl
+			//      /templates/$theme/menus/$menu/$file.tpl
 			//      /menus/$menu/default/framework/.../$file.tpl
 			$this->get_menus_paths();
 		}

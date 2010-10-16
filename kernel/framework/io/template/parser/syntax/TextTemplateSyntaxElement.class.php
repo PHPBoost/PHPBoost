@@ -58,7 +58,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$this->escaped = true;
 		}
-		elseif (!$this->escaped && 
+		elseif (!$this->escaped &&
 		((($char == '$' || $char == '#') && $this->input->assert_next('\{')) ||
 		($char == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}')) ||
 		($char == '#'&& $this->input->assert_next('[\s]')) ||
@@ -79,7 +79,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_escaped_char($char)
 	{
-		if (!in_array($char, array('\\', '{', '}', '#')))
+		if (!in_array($char, array('\\', '{', '}', '#', '$')))
 		{
             $this->write('\\');
 		}
