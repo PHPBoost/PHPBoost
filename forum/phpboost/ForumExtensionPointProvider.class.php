@@ -87,25 +87,9 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 	}
 
-	//Récupère le lien vers la listes des messages du membre.
-	function get_member_msg_link($memberId)
+	public function user()
 	{
-		return PATH_TO_ROOT . '/forum/membermsg.php?id=' . $memberId[0];
-	}
-
-	//Récupère le nom associé au lien.
-	function get_member_msg_name()
-	{
-		global $LANG;
-		load_module_lang('forum'); //Chargement de la langue du module.
-
-		return $LANG['forum'];
-	}
-
-	//Récupère l'image associé au lien.
-	function get_member_msg_img()
-	{
-		return PATH_TO_ROOT . '/forum/forum_mini.png';
+		return new ForumUserExtensionPoint();
 	}
 
 	// Recherche
@@ -329,16 +313,6 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
             ));
 
             return $tpl->render();
-	}
-
-	private function _feeds_add_category($cat_tree, $category)
-	{
-		$child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
-		foreach ($category['children'] as $sub_category)
-		{
-			ForumInterface::_feeds_add_category($child, $sub_category);
-		}
-		$cat_tree->add_child($child);
 	}
 
 	public function feeds()

@@ -71,24 +71,6 @@ class ExtensionPointProviderService
         return $extensions_points;
     }
 
-    /**
-     * @desc Returns all extension point <code>$extension_point</code> registered implementations
-     * @param string $extension_point the requested extension point
-     * @param string[] $authorized_providers_ids the extension point providers that are allowed
-     * to provide the extension point. If not specified, all providers are allowed
-     * @return Object[string] the requested extension point implementations
-     */
-    public function get_extension_point_with($extension_point, $authorized_providers_ids = null)
-    {
-        $providers = $this->get_providers($extension_point, $authorized_providers_ids);
-        $extensions_points = array();
-        foreach ($providers as $provider)
-        {
-            $extensions_points[$provider->get_id()] = $provider->get_extension_point($extension_point);
-        }
-        return $extensions_points;
-    }
-
 	/**
 	 * @desc Returns the ExtensionPointProvider list.
 	 * @param string $extension_point the extension point name. By default, returns
@@ -131,13 +113,6 @@ class ExtensionPointProviderService
 			$this->loaded_providers->store($provider_id, new $classname());
 		}
 		return $this->loaded_providers->get($provider_id);
-	}
-
-	public function get_provider_extensions_points($provider)
-	{
-		$module_methods = get_class_methods($provider);
-		$generics_methods = get_class_methods('ExtensionPointProvider');
-		return array_values(array_diff($module_methods, $generics_methods));
 	}
 
 	private function load_modules_providers()

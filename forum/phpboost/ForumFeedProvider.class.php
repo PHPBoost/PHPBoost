@@ -28,7 +28,7 @@
 
 class ForumFeedProvider implements FeedProvider
 {
-	function get_feeds_list()
+	public function get_feeds_list()
     {
         global $LANG;
         $feed = array();
@@ -36,7 +36,7 @@ class ForumFeedProvider implements FeedProvider
         $categories = $forum->get_cats_tree();
         $cat_tree = new FeedsCat('forum', 0, $LANG['root']);
 
-        ForumInterface::_feeds_add_category($cat_tree, $categories);
+        $this->feeds_add_category($cat_tree, $categories);
 
         $children = $cat_tree->get_children();
         $feeds = new FeedsList();
@@ -47,7 +47,7 @@ class ForumFeedProvider implements FeedProvider
         return $feeds;
     }
 
-    function get_feed_data_struct($idcat = 0, $name = '')
+    public function get_feed_data_struct($idcat = 0, $name = '')
     {
     	$querier = PersistenceContext::get_querier();
         global $Cache, $LANG, $CONFIG_FORUM, $CAT_FORUM, $User;
@@ -111,5 +111,15 @@ class ForumFeedProvider implements FeedProvider
 
         return $data;
     }
+
+	private function feeds_add_category($cat_tree, $category)
+	{
+		$child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
+		foreach ($category['children'] as $sub_category)
+		{
+			$this->feeds_add_category($child, $sub_category);
+		}
+		$cat_tree->add_child($child);
+	}
 }
 ?>
