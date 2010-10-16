@@ -32,18 +32,18 @@ function online_mini($position, $block)
     if (strpos(SCRIPT, '/online/online.php') === false)
     {
         global $LANG, $Cache, $Sql, $CONFIG_ONLINE;
-        
+
     	//Chargement de la langue du module.
     	load_module_lang('online');
     	$Cache->load('online');
-    	
+
     	$tpl = new FileTemplate('online/online_mini.tpl');
-        
+
         MenuService::assign_positions_conditions($tpl, $block);
-    
+
     	//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
     	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);
-    
+
     	$i = 0;
     	$array_class = array('member', 'modo', 'admin');
     	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.user_groups, m.login
@@ -65,7 +65,7 @@ function online_mini($position, $block)
     				$i++;
     			}
     		}
-    		
+
     		switch ($row['level'])
     		{
     			case '-1':
@@ -83,22 +83,22 @@ function online_mini($position, $block)
     		}
     	}
     	$Sql->query_close($result);
-    
-    
+
+
     	$count_visit = (empty($count_visit) && empty($count_member) && empty($count_modo) && empty($count_admin)) ? '1' : $count_visit;
-    
+
     	$total = $count_visit + $count_member + $count_modo + $count_admin;
     	$total_member = $count_member + $count_modo + $count_admin;
-    
+
     	$member_online = $LANG['member_s'] . ' ' . strtolower($LANG['online']);
     	$more = '<br /><a href="../online/online.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />';
     	$more = ($total_member > $CONFIG_ONLINE['online_displayed']) ? $more : ''; //Plus de 4 membres connectés.
-    
+
     	$l_guest = ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'];
     	$l_member = ($count_member > 1) ? $LANG['member_s'] : $LANG['member'];
     	$l_modo = ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'];
     	$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
-    
+
     	$tpl->put_all(array(
     		'VISIT' => $count_visit,
     		'USER' => $count_member,
@@ -113,9 +113,9 @@ function online_mini($position, $block)
     		'L_ONLINE' => $LANG['online'],
     		'L_TOTAL' => $LANG['total']
     	));
-		return $tpl->to_string();
+		return $tpl->render();
     }
-	
+
     return '';
 }
 

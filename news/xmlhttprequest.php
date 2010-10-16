@@ -40,7 +40,7 @@ elseif (isset($_GET['img_url']))
 }
 elseif (isset($_POST['preview']))
 {
-	
+
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new FileTemplate('news/news.tpl');
 	$Cache->load('news');
@@ -100,7 +100,7 @@ elseif (isset($_POST['preview']))
 		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php')
 	));
 
-	echo $preview->to_string();
+	echo $preview->render();
 }
 
 require_once('../kernel/footer_no_display.php');

@@ -77,7 +77,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 		));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $field_tpl->to_string()
+			'ELEMENT' => $field_tpl->render()
 		));
 
 		return $template;

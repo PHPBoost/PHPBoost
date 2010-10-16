@@ -89,14 +89,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 			'\' sim\' . $_data->get(\'pl\') . \'e text\'; ?>';
 		$this->assert_parse($input, $output);
 	}
-    
+
     public function test_lang_var()
     {
         $input = 'this is a {@lang.var}';
         $output = '<?php $_result=\'this is a \' . $_functions->i18n(\'lang.var\') . \'\'; ?>';
         $this->assert_parse($input, $output);
     }
-    
+
     public function test_html_lang_var()
     {
         $input = 'this is a {@H|html.lang.var}';
@@ -139,7 +139,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
             // Successful
         }
     }
-	
+
 	public function test_condition()
 	{
 		$input = '
@@ -324,7 +324,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE tpl #';
 		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->to_string();}' . "\n" .
+'$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -333,7 +333,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE block.tpl #';
 		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->to_string();}' . "\n" .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -342,7 +342,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE block.imbricated.tpl #';
 		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->to_string();}' . "\n" .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}

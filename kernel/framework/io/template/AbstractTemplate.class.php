@@ -138,14 +138,6 @@ abstract class AbstractTemplate implements Template
 		echo $this->render();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-    public function to_string()
-    {
-        return $this->render();
-    }
-
     /**
      * {@inheritdoc}
      */

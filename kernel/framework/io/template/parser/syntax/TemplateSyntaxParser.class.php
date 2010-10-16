@@ -47,7 +47,7 @@
 
 /**
  * @package {@package}
- * @desc 
+ * @desc
  * @author Benoit sautel <ben.popeye@gmail.com>, Loic Rouchon horn@phpboost.com
  */
 class TemplateSyntaxParser implements TemplateParser
@@ -60,7 +60,7 @@ class TemplateSyntaxParser implements TemplateParser
 	 * @var StringOutputStream
 	 */
 	private $output;
-	
+
 	public function parse($content)
 	{
 		$this->input = new StringInputStream($content);
@@ -70,7 +70,7 @@ class TemplateSyntaxParser implements TemplateParser
 		$this->output->write('\'; ?>');
 		return $this->output->to_string();
 	}
-	
+
 	private function do_parse()
 	{
 		$template_element = new BaseTemplateSyntaxElement();

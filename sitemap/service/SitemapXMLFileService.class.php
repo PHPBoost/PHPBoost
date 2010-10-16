@@ -76,7 +76,7 @@ class SitemapXMLFileService
 		$reference_date->set_day($reference_date->get_day() - $life_time);
 		return $reference_date;
 	}
-	
+
 	public static function get_life_time()
 	{
 		return SitemapConfig::load()->get_sitemap_xml_life_time();
@@ -101,7 +101,7 @@ class SitemapXMLFileService
 
 	/**
 	 * @desc Tries to generate the sitemap.xml file and throws an exception if it can't be done.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static function try_to_generate()
 	{
@@ -110,11 +110,11 @@ class SitemapXMLFileService
 
 		$file = new File(PATH_TO_ROOT . '/sitemap.xml');
 
-		$file->write($sitemap->export($export_config)->to_string());
-		
+		$file->write($sitemap->export($export_config)->render());
+
 		self::update_last_generation_date();
 	}
-	
+
 	private static function update_last_generation_date()
 	{
 		$sitemap_config = SitemapConfig::load();

@@ -301,7 +301,7 @@ class Errors
 			//					));
 			//					break;
 			//			}
-			//			return $Template->to_string();
+			//			return $Template->render();
 
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)

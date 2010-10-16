@@ -32,7 +32,7 @@ define('FORUM_MAX_SEARCH_RESULTS', 50);
 class ForumExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
 	## Public Methods ##
 	function __construct() //Constructeur de la classe ForumInterface
 	{
@@ -170,7 +170,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 				}
 			}
 		}
-		return $Tpl->to_string();
+		return $Tpl->render();
 	}
 
 	function get_search_args()
@@ -328,7 +328,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
             'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" />'
             ));
 
-            return $tpl->to_string();
+            return $tpl->render();
 	}
 
 	private function _feeds_add_category($cat_tree, $category)

@@ -40,6 +40,6 @@ $tpl_menu->Assign_vars(array(
 	'L_MODELS_MANAGEMENT'=>$ARTICLES_LANG['models_management']
 ));
 
-$admin_menu = $tpl_menu->to_string();
+$admin_menu = $tpl_menu->render();
 
 ?>

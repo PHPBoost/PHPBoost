@@ -67,7 +67,7 @@ class FormFieldFilePicker extends AbstractFormField
         $this->assign_common_template_variables($template);
 
         $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $file_field_tpl->to_string()
+			'ELEMENT' => $file_field_tpl->render()
         ));
 
         return $template;

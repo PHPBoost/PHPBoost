@@ -33,7 +33,7 @@
 class LinksMenuLink extends LinksMenuElement
 {
 	const LINKS_MENU_LINK__CLASS = 'LinksMenuLink';
-	
+
 	/**
 	* @desc Constructor
 	* @param string $title Menu title
@@ -64,7 +64,7 @@ class LinksMenuLink extends LinksMenuElement
   			'C_LINK' => true
 		));
 
-		return $template->to_string();
+		return $template->render();
 	}
 
 	/**
@@ -77,7 +77,7 @@ class LinksMenuLink extends LinksMenuElement
 		$template->put_all(array(
             'C_LINK' => true
 		));
-		return parent::cache_export_begin() . $template->to_string() . parent::cache_export_end();
+		return parent::cache_export_begin() . $template->render() . parent::cache_export_end();
 	}
 }
 

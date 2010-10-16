@@ -57,7 +57,7 @@ class FormFieldCheckbox extends AbstractFormField
         $this->assign_common_template_variables($template);
 
         $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $this->generate_html_code()->to_string()
+			'ELEMENT' => $this->generate_html_code()->render()
         ));
 
         return $template;

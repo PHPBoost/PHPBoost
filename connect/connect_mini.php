@@ -31,19 +31,19 @@ if (defined('PHPBOOST') !== true) exit;
 function connect_mini($position, $block)
 {
     global $LANG;
-    
+
     $tpl = new FileTemplate('connect/connect_mini.tpl');
     $user = AppContext::get_user();
-    
+
     MenuService::assign_positions_conditions($tpl, $block);
     if ($user->check_level(MEMBER_LEVEL)) //Connecté.
     {
     	$unread_contributions = UnreadContributionsCache::load();
-    	
+
     	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
     	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
     	$contribution_number = 0;
-    	
+
     	if ($user->check_level(ADMIN_LEVEL))
     	{
     		$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
@@ -77,7 +77,7 @@ function connect_mini($position, $block)
     			}
     		}
     	}
-    	
+
     	$tpl->put_all(array(
     		'C_ADMIN_AUTH' => $user->check_level(ADMIN_LEVEL),
     		'C_MODERATOR_AUTH' => $user->check_level(MODERATOR_LEVEL),
@@ -115,7 +115,7 @@ function connect_mini($position, $block)
     		'U_REGISTER' => TPL_PATH_TO_ROOT . '/member/register.php' . SID
     	));
     }
-    
-    return $tpl->to_string();
+
+    return $tpl->render();
 }
 ?>

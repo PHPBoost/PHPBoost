@@ -7,7 +7,7 @@
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
- * 
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
@@ -72,10 +72,10 @@ if (!empty($id))
     $menu = MenuService::load($id);
     if ($menu == null)
         AppContext::get_response()->redirect('menus.php');
-    
+
     // In GET mode so we check it
     $Session->csrf_get_protect();
-        
+
     switch ($action)
     {
     	case 'enable':
@@ -94,12 +94,12 @@ if (!empty($id))
             }
             break;
     }
-    
+
     MenuService::generate_cache();
-    
-    
+
+
     ModulesCssFilesCache::invalidate();
-    
+
     AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
@@ -140,18 +140,18 @@ if ($action == 'save') //Save menus positions.
 	    	$menu_tree[$matches[2][$key]] = $container;
 	    }
     }
-    
+
     //Update all menus.
     $changes = 0;
    	$rebuild_block_list = array();
     foreach ($menus_blocks as $block_id => $menus)
-	{   
+	{
 		// For each block
 	    foreach ($menus as $menu)
 	    {
 			$new_block = $menu_tree[$menu->get_id()];
        		$enabled = $menu->is_enabled();
-        	
+
        		if ($enabled && $new_block == 'mod_central') //Disable menu
        		{
        			MenuService::disable($menu);
@@ -163,7 +163,7 @@ if ($action == 'save') //Save menus positions.
        			$rebuild_block_list[$new_block] = true; //We add a marker to rebuild this container.
        			$changes++;
        		}
-       		
+
        		if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
        		{
        			$new_block_id = array_search($new_block, $blocks);
@@ -176,7 +176,7 @@ if ($action == 'save') //Save menus positions.
        		}
 	    }
 	}
-	
+
 	/*//We build all modified blocks.
 	foreach ($rebuild_block_list as $block_to_build => $value)
 	{
@@ -195,20 +195,20 @@ if ($action == 'save') //Save menus positions.
 	print_r($menu_tree);
 	print_r(array_flip($menu_tree));
     exit;*/
-    
+
 	if ($changes > 0) //Update cache if necessary.
 	{
 	    MenuService::generate_cache();
-	    
+
     	ModulesCssFilesCache::invalidate();
 	}
-	
-	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0; 
-	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0; 
+
+	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0;
+	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0;
 	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE theme = '" . $theme_post . "'", __LINE__, __FILE__);
 	ThemesCache::invalidate();
-	
-	
+
+
 	AppContext::get_response()->redirect('menus.php');
 }
 
@@ -217,7 +217,6 @@ $tpl = new FileTemplate('admin/menus/menus.tpl');
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
 $menu_template->put_all(array(
-    'THEME' => get_utheme(),
     'L_ENABLED' => $LANG['enabled'],
     'L_DISABLED' => $LANG['disabled'],
     'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
@@ -232,25 +231,25 @@ $menu_template->put_all(array(
 ));
 
 foreach ($menus_blocks as $block_id => $menus)
-{   
+{
 	// For each block
     $i = 0;
     $max = count($menus);
     foreach ($menus as $menu)
     {   // For each Menu in this block
         $menu_tpl = clone $menu_template;
-        
+
         $id = $menu->get_id();
         $enabled = $menu->is_enabled();
-        
+
         if (!$enabled)
            $block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
-        
+
         $edit_link = menu_admin_link($menu, 'edit');
         $del_link = menu_admin_link($menu, 'delete');
-        
+
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
-		
+
         $menu_tpl->put_all(array(
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
@@ -268,7 +267,7 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_DOWN' => menu_admin_link($menu, 'down'),
             'U_MOVE' => menu_admin_link($menu, 'move'),
         ));
-		
+
 		if($enabled)
 		{
 			$menu_tpl->put_all(array(
@@ -279,7 +278,7 @@ foreach ($menus_blocks as $block_id => $menus)
 
 			));
         }
-        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->to_string()));
+        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->render()));
         $i++;
     }
 }
@@ -297,8 +296,8 @@ foreach ($menus_blocks as $block_id => $menus)
     		));
     	}
     }
-	
-	
+
+
 $tpl->put_all(array(
 	'NAME_THEME' => $name_theme,
 	'CHECKED_RIGHT_COLUMM' => $theme_properties['right_column'] ? 'checked="checked"' : '',

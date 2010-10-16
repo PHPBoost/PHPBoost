@@ -64,7 +64,7 @@ class Captcha
 			$this->gd_loaded = true;
 		}
 		$this->html_id = 'verif_code' . $this->instance;
-		$this->user_id = $this->get_user_id(); 
+		$this->user_id = $this->get_user_id();
 	}
 
 	/**
@@ -92,10 +92,10 @@ class Captcha
 		{
 			return true;
 		}
-		
+
 		$get_code = retrieve(POST, $this->html_id, '', TSTRING_UNCHANGE);
 		$captcha = $Sql->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
-			
+
 		//Suppression pour éviter une réutilisation du code frauduleuse.
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 
@@ -143,7 +143,7 @@ class Captcha
 				'CAPTCHA_FONT' => $this->font,
 				'CAPTCHA_DIFFICULTY' => $this->difficulty
 			));
-			return $Template->to_string();
+			return $Template->render();
 		}
 		return '';
 	}
@@ -217,7 +217,7 @@ class Captcha
 		//Brouillage de l'image.
 		$style = array($bg, $bg, $bg, $bg, $bg_bis, $bg_bis, $bg_bis, $bg_bis, $bg_bis, $bg_bis);
 		@imagesetstyle($img, $style);
-		
+
 		if ($this->difficulty > 0)
 		{
 			if ($rand)
@@ -232,11 +232,11 @@ class Captcha
 				for ($i = $this->height; $i >= 0; $i = ($i - 2))
 	            {
 	                @imageline($img, 0, $i, $this->width, $i, IMG_COLOR_STYLED);
-                }	
+                }
 			}
 		}
 
-		##Attribut du code à écrire##	
+		##Attribut du code à écrire##
 		//Centrage du texte.
 		$global_font_size = 24;
 		$array_size_ttf = imagettfbbox($global_font_size + 2, 0, $this->font, $this->code);
@@ -262,7 +262,7 @@ class Captcha
 				$angle = 0;
 				$move_y = $text_y - 2;
 			}
-				
+
 			//Ajout de l'ombre.
 			if ($this->difficulty == 4)
 			{
@@ -270,7 +270,7 @@ class Captcha
 				$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			}
 			imagettftext($img, $font_size, $angle, ($text_x + 1), ($move_y + 1), $text_color_dark, $this->font, $letter);
-				
+
 			//Ecriture du code.
 			imagettftext($img, $font_size, $angle, $text_x, $move_y, $text_color, $this->font, $letter);
 			$array_size_ttf = imagettfbbox($font_size, $angle, $this->font, $this->code);
@@ -370,12 +370,12 @@ class Captcha
 	}
 
 	/**
-	 * @desc return a hash computed from the user ip and instance identifier. 
+	 * @desc return a hash computed from the user ip and instance identifier.
 	 */
 	private function get_user_id() {
 		return substr(strhash(USER_IP), 0, 13) . $this->instance;
 	}
-	
+
 	/**
 	 * @desc Return the darker version of a color passed in argument.
 	 * 3D effect, mask_color: 0 for the darkest, 255 for the brightest; similar_color: between 0.40 very different to 0.99 very close.
@@ -437,7 +437,7 @@ class Captcha
 	public function get_height() {return $this->height;}
 	public function get_font() {return $this->font;}
 	public function get_difficulty() {return $this->difficulty;}
-	
+
 	public function get_html_id()
 	{
 		return $this->html_id;

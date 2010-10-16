@@ -36,11 +36,11 @@ function poll_mini($position, $block)
     	//Chargement de la langue du module.
     	load_module_lang('poll');
     	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
-    	
+
     	$tpl = new FileTemplate('poll/poll_mini.tpl');
-        
+
         MenuService::assign_positions_conditions($tpl, $block);
-    		
+
     	#####################Résultats######################
     	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
     	$array_cookie = array();
@@ -55,12 +55,12 @@ function poll_mini($position, $block)
     			'L_MINI_POLL' => $LANG['mini_poll'],
     			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
     		));
-    		
+
     		$tpl->assign_block_vars('result', array(
     			'QUESTION' => $poll_mini['question'],
     			'VOTES' => $poll_mini['total'],
     		));
-    		
+
     		foreach ($poll_mini['votes'] as $answer => $width)
     		{
     			$tpl->assign_block_vars('result.answers', array(
@@ -79,17 +79,17 @@ function poll_mini($position, $block)
     			'L_POLL_RESULT' => $LANG['poll_result'],
     			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
     		));
-    		
+
     		global $Session;
     		$tpl->assign_block_vars('question', array(
     			'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll_mini['id'] . '.php?token=' . $Session->get_token()),
     			'QUESTION' => $poll_mini['question']
     		));
-    			
+
     		$z = 0;
     		if ($poll_mini['type'] == '1')
     		{
-    			
+
     			if (is_array($poll_mini['votes']))
     			{
     			    // FIXME should always be an array, needs to patch cache generation
@@ -115,7 +115,7 @@ function poll_mini($position, $block)
     			}
     		}
     	}
-        return $tpl->to_string();
+        return $tpl->render();
     }
     return '';
 }

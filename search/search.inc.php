@@ -42,9 +42,9 @@ define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
 function execute_search($search, $search_modules, &$modules_args)
 {
     $requests = array();
-    
+
     global $SEARCH_CONFIG;
-    
+
     foreach ($search_modules as $module)
     {
         if (!$search->is_in_cache($module->get_id()))
@@ -55,7 +55,7 @@ function execute_search($search, $search_modules, &$modules_args)
             $requests[$module->get_id()] = $module->get_extension_point('get_search_request', $modules_args[$module->get_id()]);
         }
     }
-    
+
     $search->insert_results($requests);
 }
 
@@ -66,12 +66,12 @@ function execute_search($search, $search_modules, &$modules_args)
 function get_search_results($search_string, $search_modules, &$modules_args, &$results, &$ids_search, $just_insert = false)
 {
     $modules_options = array();
-    
+
     $search = new Search($search_string, $modules_args);
     execute_search($search, $search_modules, $modules_args, $results);
-    
+
     $ids_search = $search->get_ids();
-    
+
     if (!$just_insert)
     {
         $modules_ids = array();
@@ -92,20 +92,20 @@ function get_html_results($results, $html_results, $results_name)
 {
     $modules = AppContext::get_extension_provider_service();
     $display_all_results = ($results_name == 'all' ? true : false);
-    
+
     $tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
     $tpl_results->put_all(Array(
         'RESULTS_NAME' => $results_name,
         'C_ALL_RESULTS' => $display_all_results
     ));
-    
+
     $nb_pages = round(count($results) / NB_RESULTS_PER_PAGE) + 1;
     $nb_results = count($results);
-    
+
     if (!$display_all_results)
     {
         $module = $modules->get_provider(strtolower($results_name));
-        
+
         $results_data = array();
         $personnal_parse_results = $module->has_extension_point('compute_search_results') && $module->has_extension_point('parse_search_result');
         if ($personnal_parse_results && $results_name != 'all')
@@ -114,7 +114,7 @@ function get_html_results($results, $html_results, $results_name)
             $nb_results = min($nb_results, count($results_data));
         }
     }
-    
+
     for ($num_page = 0; $num_page < $nb_pages; $num_page++)
     {
         $tpl_results->assign_block_vars('page', array(
@@ -127,7 +127,7 @@ function get_html_results($results, $html_results, $results_name)
             $num_item = $num_page * NB_RESULTS_PER_PAGE + $i;
             if (($num_item) >= $nb_results)
                 break;
-            
+
             if ($display_all_results || !$personnal_parse_results)
             {
                 $tpl_result = new FileTemplate('search/search_generic_results.tpl');
@@ -150,9 +150,9 @@ function get_html_results($results, $html_results, $results_name)
                     'TITLE' => $results[$num_item]['title'],
                     'U_LINK' => url($results[$num_item]['link'])
                 ));
-                
+
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $tpl_result->to_string()
+                    'result' => $tpl_result->render()
                 ));
             }
             else
@@ -163,7 +163,7 @@ function get_html_results($results, $html_results, $results_name)
             }
         }
     }
-    $html_results = $tpl_results->to_string();
+    $html_results = $tpl_results->render();
 }
 
 ?>

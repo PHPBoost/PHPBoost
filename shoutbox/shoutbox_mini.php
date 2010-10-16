@@ -30,14 +30,14 @@ if (defined('PHPBOOST') !== true) exit;
 function shoutbox_mini($position, $block)
 {
     global $Cache, $LANG, $User, $Sql;
-	
+
     $config_shoutbox = ShoutboxConfig::load();
-	
+
     //Mini Shoutbox non activée si sur la page archive shoutbox.
     if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ))
     {
     	load_module_lang('shoutbox');
-    	
+
     	###########################Insertion##############################
     	$shoutbox = retrieve(POST, 'shoutbox', false);
     	if ($shoutbox)
@@ -48,7 +48,7 @@ function shoutbox_mini($position, $block)
     			$error_controller = PHPBoostErrors::user_in_read_only();
                 DispatchManager::redirect($error_controller);
     		}
-    			
+
     		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
     		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
     		if (!empty($shout_pseudo) && !empty($shout_contents))
@@ -63,28 +63,28 @@ function shoutbox_mini($position, $block)
     					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
     						AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
     				}
-    				
+
     				//Vérifie que le message ne contient pas du flood de lien.
     				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
     				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
     				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
-    					
+
     				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
-    				
+
     				AppContext::get_response()->redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
     			}
     			else //utilisateur non autorisé!
     				AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=auth', '', '&'));
     		}
     	}
-    	
+
     	###########################Affichage##############################
     	$tpl = new FileTemplate('shoutbox/shoutbox_mini.tpl');
-        
+
         MenuService::assign_positions_conditions($tpl, $block);
-    
+
     	//Pseudo du membre connecté.
     	if ($User->get_attribute('user_id') !== -1)
     		$tpl->put_all(array(
@@ -96,7 +96,7 @@ function shoutbox_mini($position, $block)
     			'SHOUTBOX_PSEUDO' => $LANG['guest'],
     			'C_VISIBLE_SHOUT' => true
     		));
-    	
+
 		$tpl->put_all(array(
     		'SID' => SID,
     		'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
@@ -115,7 +115,7 @@ function shoutbox_mini($position, $block)
     		'L_REFRESH' => $LANG['refresh'],
     		'L_ARCHIVES' => $LANG['archives']
     	));
-    	
+
     	$array_class = array('member', 'modo', 'admin');
     	$result = $Sql->query_while("SELECT id, login, user_id, level, contents
     	FROM " . PREFIX . "shoutbox
@@ -130,12 +130,12 @@ function shoutbox_mini($position, $block)
     			--></script><ins><noscript><p><a href="' . TPL_PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
     		else
     			$del_message = '';
-    	
+
     		if ($row['user_id'] !== -1)
     			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
     		else
     			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
-    		
+
     		$tpl->assign_block_vars('shout', array(
     			'IDMSG' => $row['id'],
     			'PSEUDO' => $row['login'],
@@ -143,8 +143,8 @@ function shoutbox_mini($position, $block)
     		));
     	}
     	$Sql->query_close($result);
-    	
-    	return $tpl->to_string();
+
+    	return $tpl->render();
     }
     return '';
 }

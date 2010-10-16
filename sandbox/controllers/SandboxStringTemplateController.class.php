@@ -43,7 +43,7 @@ class SandboxStringTemplateController extends ModuleController
 		$tpl = new StringTemplate($this->result_tpl);
 
 		$this->test = str_repeat($this->test, 1);
-		
+
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();
 		$this->run_non_cached_parsing();
@@ -58,7 +58,7 @@ class SandboxStringTemplateController extends ModuleController
 			'NON_CACHED_TIME' => $bench_non_cached->to_string(5),
 			'STRING_LENGTH' => strlen($this->test)
 		));
-		
+
 		return new SiteDisplayResponse($tpl);
 	}
 
@@ -78,7 +78,7 @@ class SandboxStringTemplateController extends ModuleController
 		{
 			$tpl = new StringTemplate($this->test);
 			$this->assign_template($tpl);
-			$tpl->to_string();
+			$tpl->render();
 		}
 	}
 
@@ -88,7 +88,7 @@ class SandboxStringTemplateController extends ModuleController
 		{
 			$tpl = new StringTemplate($this->test, StringTemplate::DONT_USE_CACHE);
 			$this->assign_template($tpl);
-			$tpl->to_string();
+			$tpl->render();
 		}
 	}
 }
