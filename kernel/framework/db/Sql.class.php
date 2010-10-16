@@ -526,27 +526,6 @@ class Sql
 	}
 
 	/**
-	 * @desc Escapes the dangerous characters in the string you inject in your requests.
-	 * @param string $value String to escape
-	 * @return string The protected string
-	 */
-	public static function escape($value)
-	{
-		if (function_exists('mysql_real_escape_string') && !empty($this->link) && is_resource($this->link))
-		{
-			return mysql_real_escape_string($value, $this->link);
-		}
-		elseif (is_string($value))
-		{
-			return str_replace("'", "\\'" , str_replace('\\', '\\\\', str_replace("\0", "\\\0", $value)));
-		}
-		else
-		{
-			return $value;
-		}
-	}
-
-	/**
 	 * @desc Highlights a SQL query to be more readable by a human.
 	 * @param string $query Query to highlight
 	 * @return string HTML code corresponding to the highlighted query.
