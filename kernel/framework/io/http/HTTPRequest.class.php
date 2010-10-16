@@ -245,7 +245,7 @@ class HTTPRequest
 			case self::t_array:
 			case self::none:
 			default:
-				return $value;
+				return $this->get_raw_string($value);
 		}
 	}
 
@@ -300,7 +300,7 @@ class HTTPRequest
 		}
 		return $value;
 	}
-	
+
 	private function get_raw_array($value)
 	{
 		foreach ($value as &$v)
