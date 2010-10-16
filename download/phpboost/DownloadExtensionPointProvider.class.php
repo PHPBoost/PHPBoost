@@ -82,24 +82,14 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return $code;
 	}
 
-	//Changement de jour.
-	function on_changeday()
+	public function scheduled_jobs()
 	{
-		//Publication des téléchargements en attente pour la date donnée.
-		$result = $this->sql_querier->query_while("SELECT id, start, end
-		FROM " . PREFIX . "download
-		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
-		$time = time();
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			//If the file wasn't visible and it becomes visible
-			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		return new DownloadScheduledJobs();
+	}
 
-			//If it's not visible anymore
-			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-		}
+	public function feeds()
+	{
+		return new DownloadFeedProvider();
 	}
 
 	function get_search_request($args)
@@ -196,11 +186,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
         return $tpl->render();
     }
-
-	public function feeds()
-	{
-		return new DownloadFeedProvider();
-	}
 
     ## Private ##
     function _check_cats_auth($id_cat, $list)

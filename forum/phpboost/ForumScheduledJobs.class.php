@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        shoutboxExtensionPointProvider.class.php
+ *                         ForumScheduledJobs.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 16, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,18 @@
  *
  ###################################################*/
 
-
-
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+class ForumScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
-    }
-
-	public function scheduled_jobs()
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today)
 	{
-		return new ShoutboxScheduledJobs();
+		global $Cache, $CONFIG_FORUM;
+		//Suppression des marqueurs de vue du forum trop anciens.
+		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_view',
+			'WHERE timestamp < :limit', array('limit' => time() - $CONFIG_FORUM['view_time']));
 	}
 }
-
 ?>

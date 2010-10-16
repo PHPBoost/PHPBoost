@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        SearchExtensionPointProvider.class.php
+ *                         ShoutboxScheduledJobs.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 16, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,24 +25,25 @@
  *
  ###################################################*/
 
-class SearchExtensionPointProvider extends ExtensionPointProvider
+class ShoutboxScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-	public function __construct()
-	{
-		parent::__construct('search');
-	}
-
-	function on_changeday()
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today)
 	{
 		$querier = PersistenceContext::get_querier();
-		$querier->truncate(PREFIX . 'search_results');
-		$querier->truncate(PREFIX . 'search_index');
-	}
+		global $Cache, $CONFIG_SHOUTBOX;
+		$Cache->load('shoutbox');
 
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
+		if ($CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1)
+		{
+			// TODO check the X-SGBD request using @comp
+			$querier->select('SELECT @compt := id AS compt FROM ' . PREFIX .
+				'shoutbox ORDER BY id DESC LIMIT 0 OFFSET :offset',
+				array('offset' => $CONFIG_SHOUTBOX['shoutbox_max_msg']));
+			$querier->delete(PREFIX . 'shoutbox', 'WHERE id < @compt');
+		}
 	}
 }
-
 ?>

@@ -31,13 +31,13 @@ class SearchProvidersService {
 	{
 		return array_keys(self::get_providers());
 	}
-	
+
 	public static function get_providers()
 	{
 		$providers = array();
         $unauthorized_providers = SearchModuleConfig::load()->get_unauthorized_providers();
         $provider_service = AppContext::get_extension_provider_service();
-        foreach ($provider_service->get_providers(Searchable::EXTENSION_POINT) as $provider)
+        foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $provider)
         {
         	$provider_id = $provider->get_id();
             if (!in_array($provider_id, $unauthorized_providers))

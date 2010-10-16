@@ -30,18 +30,18 @@
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
     public function __construct()
     {
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('poll');
     }
-    
+
     //Récupération du cache.
 	function get_cache()
 	{
 		$code = 'global $CONFIG_POLL;' . "\n";
-			
+
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_POLL = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
@@ -58,40 +58,27 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 				{
 					$array_answer = explode('|', $poll['answers']);
 					$array_vote = explode('|', $poll['votes']);
-					
+
 					$total_vote = array_sum($array_vote);
 					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //Empêche la division par 0.
-					
+
 					$array_votes = array_combine($array_answer, $array_vote);
 					foreach ($array_votes as $answer => $nbrvote)
 						$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $total_vote), 1);
-						
+
 					$_array_poll .= $key . ' => array(\'id\' => ' . var_export($poll['id'], true) . ', \'question\' => ' . var_export($poll['question'], true) . ', \'votes\' => ' . var_export($array_votes, true) . ', \'total\' => ' . var_export($total_vote, true) . ', \'type\' => ' . var_export($poll['type'], true) . '),' . "\n";
 				}
 			}
 		}
-		
+
 		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 
 		return $code;
 	}
 
-	//Actions journalièe.
-	function on_changeday()
+	public function scheduled_jobs()
 	{
-		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . "poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
-
-		//Publication des news en attente pour la date donnéé.
-		$result = $this->sql_querier->query_while("SELECT id, start, end
-		FROM " . PREFIX . "poll
-		WHERE visible != 0", __LINE__, __FILE__);
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			if ($row['start'] <= time() && $row['start'] != 0)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			if ($row['end'] <= time() && $row['end'] != 0)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-		}
+		return new PollNewsScheduledJobs();
 	}
 }
 

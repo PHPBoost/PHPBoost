@@ -170,10 +170,10 @@ class Environment
 		define('MODO_LEVEL', 		1);
 		define('MODERATOR_LEVEL', 	1);
 		define('ADMIN_LEVEL', 		2);
-		
+
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
-		
+
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
@@ -431,11 +431,12 @@ class Environment
 
 	private static function execute_modules_changedays_tasks()
 	{
-		$providers = AppContext::get_extension_provider_service();
-		$changeday_providers = $providers->get_providers('on_changeday');
-		foreach ($changeday_providers as $module)
+		$today = new Date();
+		$yesterday = new Date(); // FIXME set yesterday date
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $jobs)
 		{
-			$module->get_extension_point('on_changeday');
+			$job->on_changeday($yesterday, $today);
 		}
 	}
 
@@ -517,7 +518,7 @@ class Environment
 		$minor_version = self::get_phpboost_minor_version();
 		return $major_version . '.' . $minor_version;
 	}
-	
+
 	private static function get_phpboost_minor_version()
 	{
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
@@ -620,7 +621,7 @@ class Environment
 		}
 		return self::$graphical_environment;
 	}
-	
+
 	/**
 	 * This method is not called automatically but can be called if you know that an action can
 	 * take a long time. By default, max execution time is 30 seconds.

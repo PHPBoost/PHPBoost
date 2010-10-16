@@ -32,9 +32,9 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('sitemap');
 	}
 
-	public function on_changeday()
+	public function scheduled_jobs()
 	{
-		SitemapXMLFileService::generate_if_needed();
+		return new SitemapScheduledJobs();
 	}
 
 	public function commands()

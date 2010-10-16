@@ -34,7 +34,7 @@ require_once PATH_TO_ROOT . '/news/news_constants.php';
 class NewsExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-	
+
 	public function __construct() //Constructeur de la classe ForumInterface
 	{
 		$this->sql_querier = PersistenceContext::get_sql();
@@ -55,10 +55,10 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_NEWS_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
-		
+
 		//Racine
 		$string .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'],'auth' => $news_config['global_auth']), true) . ';' . "\n\n";
-		
+
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
@@ -76,37 +76,25 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 		return $string;
 	}
-	
-	function on_changeday()
+
+	public function scheduled_jobs()
 	{
-		//Publication des news en attente
-		$result = $this->sql_querier->query_while("SELECT id, start, end
-		FROM " . PREFIX . "news
-		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
-		$time = time();
-		while ($row = $this->sql_querier->fetch_assoc($result))
-		{
-			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "news SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			
-			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . "news SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-		}
+		return new NewsScheduledJobs();
 	}
-	
+
 	public function search()
 	{
 		return new NewsSearchable();
 	}
-	
+
 	public function feeds()
 	{
 		return new NewsFeedProvider();
 	}
-	
+
 	public function sitemap()
 	{
-		return new NewsSitemapExtensionPoint();	
+		return new NewsSitemapExtensionPoint();
 	}
 
 	public function get_home_page()
@@ -129,26 +117,26 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		// Variables d'archive
 		$arch = retrieve(GET, 'arch', false);
 		$cat = retrieve(GET, 'cat', 0);
-		
+
 		// Couleurs du login
 		$level = array('', ' modo', ' admin');
-		
+
 		$filetpl = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' :'news/news_list.tpl';
 
 		$tpl = new FileTemplate($filetpl);
 
 		$c_add = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
 		$c_writer = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE);
-		
+
 		$last_release = 0;
-		
+
 		if ($cat > 0)
 			$where = " WHERE n.visible = 1 AND n.idcat = ".$cat." AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
 		else
 			$where = " WHERE n.visible = 1 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)";
 
 		$nbr_news = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n".$where, __LINE__, __FILE__);
-		
+
 		// Construction du tableau des catégories.
 		$array_cat = array();
 		if ($cat > 0)
@@ -159,7 +147,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		{
 			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		}
-		
+
 		if ($nbr_news == 0)
 		{
 			$tpl->put_all(array(
@@ -187,7 +175,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 				$first_msg = 0;
 			}
 			$tpl->put_all(array('PAGINATION' => $show_pagin));
-			
+
 			if($NEWS_CONFIG['type'] ==1 || $NEWS_CONFIG['type'] ==0)
 			{
 				if ($NEWS_CONFIG['nbr_column'] > 1)
@@ -201,7 +189,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 						'COLUMN_WIDTH' => $column_width
 					));
 				}
-			}			
+			}
 			// News en bloc => news_cat.tpl
 			if($NEWS_CONFIG['type'] == 1)
 			{
@@ -231,7 +219,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 						$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 						$last_release = max($last_release, $row['start']);
-				
+
 						$tpl->assign_block_vars('news', array(
 							'ID' => $row['id'],
 							'C_NEWS_ROW' => $new_row,
@@ -239,7 +227,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
 							'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
-							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),	
+							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 							'C_DELETE' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE),
 							'C_IMG' => !empty($row['img']),
 							'IMG' => FormatingHelper::second_parse_url($row['img']),
@@ -269,7 +257,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					ORDER BY n.timestamp DESC" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
-				{	
+				{
 					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.
@@ -303,8 +291,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 				$this->sql_querier->query_close($result);
 			}
 		}
-		
-		
+
+
 		// Var commune
 		$tpl->put_all(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
@@ -324,7 +312,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			'L_LAST_NEWS' => $NEWS_LANG['last_news'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 		));
-		
+
 		// Affichage de l'édito
 		if($cat > 0)
 		{

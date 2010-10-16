@@ -74,14 +74,9 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		return $forum_config . "\n" . $forum_cats;
 	}
 
-	//Changement de jour.
-	function on_changeday()
+	public function scheduled_jobs()
 	{
-		global $Cache, $CONFIG_FORUM;
-
-		//Suppression des marqueurs de vue du forum trop anciens.
-		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+		return new ForumScheduledJobs();
 	}
 
 	public function user()

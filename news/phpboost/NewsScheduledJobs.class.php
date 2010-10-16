@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          AbstractSearchable.class.php
+ *                         NewsScheduledJobs.class.php
  *                            -------------------
- *   begin                : March 24, 2010
+ *   begin                : October 16, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,20 +25,31 @@
  *
  ###################################################*/
 
-abstract class AbstractSearchable implements Searchable
+class NewsScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-    public function has_search_options()
-    {
-    	return false;
-    }
-    
-    public function build_search_form(array $values)
-    {
-    	
-    }
-//    
-//    function has_special_output();
-//    
-//    function build_output();
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today)
+	{
+		$querier = PersistenceContext::get_querier();
+		$results = $querier->select_rows($table_name, array('id', 'start', 'end'), 'WHERE start > 0 AND end > 0');
+		foreach ($results as $row)
+		{
+			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
+			{
+				$this->update_news_table_row($row['id'], array('visible' => 1));
+			}
+			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
+			{
+				$this->update_news_table_row($row['id'], array('visible' => 0));
+			}
+		}
+	}
+
+	private function update_news_table_row($id, array $fields)
+	{
+		PersistenceContext::get_querier()->update(PREFIX . 'news', $fields, 'WHERE id=:id', array('id' => $id));
+	}
 }
 ?>

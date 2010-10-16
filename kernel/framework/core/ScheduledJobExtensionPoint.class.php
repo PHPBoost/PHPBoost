@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              contactExtensionPointProvider.class.php
+ *                       ScheduledJobExtensionPoint.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 16, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,13 +25,15 @@
  *
  ###################################################*/
 
-class ContactExtensionPointProvider extends ExtensionPointProvider
+interface ScheduledJobExtensionPoint extends ExtensionPoint
 {
-    ## Public Methods ##
-    function ContactInterface() //Constructeur de la classe ForumInterface
-    {
-        parent::__construct('contact');
-    }
-}
+	const EXTENSION_POINT = 'scheduled_jobs';
 
+	/**
+	 * @desc Execute daily commands. This extension point is called by the first request of the day.
+	 * @param Date $yesterday date representing yesterday
+	 * @param Date $today date representing today
+	 */
+	function on_changeday(Date $yesterday, Date $today);
+}
 ?>

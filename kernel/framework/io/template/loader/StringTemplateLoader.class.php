@@ -40,6 +40,11 @@ class StringTemplateLoader implements TemplateLoader
 	 */
 	private static $parsing_cache = null;
 
+	public static function __static()
+	{
+		self::$parsing_cache = new RAMDataStore();
+	}
+
 	/**
 	 * @desc Constructs the {@link StringTemplateLoader} from the input source.
 	 * @param string $content The input source
@@ -48,11 +53,6 @@ class StringTemplateLoader implements TemplateLoader
 	{
 		$this->content = $content;
 		$this->hashed_content = md5($content);
-	}
-	
-	public static function static_construct()
-	{
-		self::$parsing_cache = new RAMDataStore();
 	}
 
 	/**
@@ -104,7 +104,5 @@ class StringTemplateLoader implements TemplateLoader
 		return null;
 	}
 }
-
-StringTemplateLoader::static_construct();
 
 ?>
