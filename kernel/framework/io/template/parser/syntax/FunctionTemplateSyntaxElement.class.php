@@ -47,7 +47,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('invalid function call', $input);
+			throw new TemplateRenderingException('invalid function call', $input);
 		}
 	}
 
@@ -57,7 +57,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			if (!method_exists('TemplateFunctions', $method))
 			{
-				throw new TemplateParserException('Unauthorized method call. Only ' . implode(', ', get_class_methods('TemplateFunctions')) .
+				throw new TemplateRenderingException('Unauthorized method call. Only ' . implode(', ', get_class_methods('TemplateFunctions')) .
                     ' functions calls and static methods calls are allowed', $this->input);
 			}
 		}
@@ -65,12 +65,12 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			if (!function_exists($method))
 			{
-                throw new TemplateParserException('PHP function ' . $method . '() does not exist', $this->input);
+                throw new TemplateRenderingException('PHP function ' . $method . '() does not exist', $this->input);
 			}
 		}
 		elseif (!method_exists($class, $method))
 		{
-			throw new TemplateParserException('Static method ' . $class . '::' . $method . '() does not exist', $this->input);
+			throw new TemplateRenderingException('Static method ' . $class . '::' . $method . '() does not exist', $this->input);
 		}
 	}
 
@@ -99,7 +99,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!$this->input->consume_next('\)'))
 		{
-			throw new TemplateParserException('invalid function call: missing enclosing parenthesis', $this->input);
+			throw new TemplateRenderingException('invalid function call: missing enclosing parenthesis', $this->input);
 		}
 		$this->output->write(')');
 	}
@@ -110,6 +110,6 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	}
 }
 
-class InvalidTemplateFunctionCallException extends TemplateParserException {}
+class InvalidTemplateFunctionCallException extends TemplateRenderingException {}
 
 ?>

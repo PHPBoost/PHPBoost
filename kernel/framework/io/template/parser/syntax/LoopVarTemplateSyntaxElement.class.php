@@ -46,7 +46,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('invalid loop variable name', $input);
+			throw new TemplateRenderingException('invalid loop variable name', $input);
 		}
 	}
 	
@@ -54,7 +54,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!$this->context->is_in_loop($loop))
 		{
-			throw new TemplateParserException('Variable {' . $loop . '.' . $var .
+			throw new TemplateRenderingException('Variable {' . $loop . '.' . $var .
                 '} is outsite of loop "' . $loop . '" scope.' . "\n" . 'loops scopes: ' .
 			    '[' . implode(', ', $this->context->loops_scopes()) . ']', $this->input);
 		}

@@ -40,7 +40,7 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
             }
             else if (!$input->assert_next('\s*\]\s*'))
             {
-                throw new TemplateParserException('invalid array definition, missing "," or "]"', $input);
+                throw new TemplateRenderingException('invalid array definition, missing "," or "]"', $input);
             }
         }
 	}

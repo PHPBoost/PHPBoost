@@ -45,7 +45,7 @@ class PHPTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('Missing php code ends: "?>"', $this->input);
+			throw new TemplateRenderingException('Missing php code ends: "?>"', $this->input);
 		}
 	}
 

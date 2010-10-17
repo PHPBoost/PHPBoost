@@ -93,28 +93,25 @@ function gallery_mini($position, $block)
     				break;
     		}
     	}
-
+		$tpl->put_all(array(
+    		'C_FADE' => false,
+    		'C_VERTICAL_SCROLL' => false,
+    		'C_HORIZONTAL_SCROLL' => false,
+    		'C_STATIC' => false
+    	));
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
 			case 0:
-        	$tpl->put_all(array(
-    			'C_FADE' => true
-    		));
+        	$tpl->put('C_FADE', true);
     		break;
     		case 1:
-    		$tpl->put_all(array(
-    			'C_VERTICAL_SCROLL' => true
-    		));
+    		$tpl->put('C_VERTICAL_SCROLL', true);
     		break;
     		case 2:
-    		$tpl->put_all(array(
-    			'C_HORIZONTAL_SCROLL' => true
-    		));
+    		$tpl->put('C_HORIZONTAL_SCROLL', true);
     		break;
 			case 3:
-			$tpl->put_all(array(
-    			'C_STATIC' => true
-    		));
+			$tpl->put('C_STATIC', true);
 			break;
     	}
 

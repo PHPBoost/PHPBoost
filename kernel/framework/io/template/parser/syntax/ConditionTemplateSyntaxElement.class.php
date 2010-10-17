@@ -58,7 +58,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
 		if (!$this->input->consume_next('\s*#'))
 		{
-			throw new TemplateParserException('invalid condition statement', $this->input);
+			throw new TemplateRenderingException('invalid condition statement', $this->input);
 		}
 		$this->output->write(')){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
@@ -86,7 +86,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function missing_end()
 	{
-		throw new TemplateParserException('Missing condition end', $this->input);
+		throw new TemplateRenderingException('Missing condition end', $this->input);
 	}
 }
 ?>

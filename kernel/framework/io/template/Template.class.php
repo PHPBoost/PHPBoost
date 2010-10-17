@@ -79,6 +79,18 @@
 interface Template extends View
 {
 	/**
+	 * @desc Enables the strict mode. If a variable that does not exist in the object is requested,
+	 *   then an exception will be raised.
+	 */
+	function enable_strict_mode();
+
+	/**
+	 * @desc Disables the strict mode. If a variable that does not exist in the object is requested,
+	 *   then an empty value will be returned.
+	 */
+	function disable_strict_mode();
+
+	/**
 	 * @desc Assigns the value <code>$code</code> to the template variable of name <code>$key</code>
 	 * @param $key the template parameter name
 	 * @param $value the template parameter value

@@ -40,7 +40,7 @@ abstract class LinksMenuElement extends Menu
 	const LINKS_MENU_ELEMENT__CLASS = 'LinksMenuElement';
 	const LINKS_MENU_ELEMENT__FULL_DISPLAYING = true;
 	const LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING = false;
-	
+
 	/**
 	 * @access protected
 	 * @var string the LinksMenuElement url
@@ -61,7 +61,7 @@ abstract class LinksMenuElement extends Menu
 	 * @var int Menu's depth
 	 */
 	protected $depth = 0;
-	
+
 	/**
 	 * @desc Build a LinksMenuElement object
 	 * @param $title
@@ -87,7 +87,7 @@ abstract class LinksMenuElement extends Menu
 	 */
 	//TODO Loic faire une bidouille pour que la surchage ne pose pas de problème
 	//abstract public function display($template = false, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
-	
+
 	/**
 	 * @desc returns the string to write in the cache file at the beginning of the Menu element
 	 * @return string the string to write in the cache file at the beginning of the Menu element;
@@ -127,6 +127,7 @@ abstract class LinksMenuElement extends Menu
 	{
 		parent::_assign($template);
 		$template->put_all(array(
+            'C_MENU' => false,
             'TITLE' => $this->title,
             'C_FIRST_LEVEL' => $this->depth == 1,
             'DEPTH' => $this->depth,
@@ -167,7 +168,7 @@ abstract class LinksMenuElement extends Menu
 			return $url->absolute();
 		}
 	}
-	
+
 	/**
 	 * @desc Increase the Menu Depth and set the menu type to its parent one
 	 * @access protected
@@ -176,7 +177,7 @@ abstract class LinksMenuElement extends Menu
 	{
 		$this->depth++;
 	}
-	
+
 	## Setters ##
 	/**
 	 * @param string $image the value to set

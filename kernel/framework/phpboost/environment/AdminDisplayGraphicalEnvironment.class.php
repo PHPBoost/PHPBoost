@@ -39,9 +39,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		global $LANG;
-		
+
 		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 
 		$this->check_admin_auth();
@@ -253,7 +253,13 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_CACHE_CONFIG' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
 			'L_CONTENT_CONFIG' => $LANG['content_config'],
 			'U_INDEX_SITE' => Environment::get_home_page(),
-		    'L_WEBSITE_UPDATES' => $LANG['website_updates']
+		    'L_WEBSITE_UPDATES' => $LANG['website_updates'],
+			'C_ADMIN_LINKS_1' => false,
+			'C_ADMIN_LINKS_2' => false,
+			'C_ADMIN_LINKS_3' => false,
+			'C_ADMIN_LINKS_4' => false,
+			'C_ADMIN_LINKS_5' => false,
+			'C_ADMIN_LINKS_1' => false
 		));
 
 		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
@@ -278,9 +284,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			{
 				$array_pos[$menu_pos-1]++;
 				$idmenu = $array_pos[$menu_pos - 1];
-				$subheader_tpl->put_all(array(
-					'C_ADMIN_LINKS_' . $menu_pos => true
-				));
+				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);
 
 				$admin_links = $configuration->get_admin_links();
 				if (!empty($admin_links))
@@ -329,6 +333,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				else
 				{
 					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+							'C_ADMIN_LINKS_EXTEND' => false,
 							'IDMENU' => $menu_pos,
 							'NAME' => $configuration->get_name(),
 							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
