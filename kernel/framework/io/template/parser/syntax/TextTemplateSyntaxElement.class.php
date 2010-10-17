@@ -32,7 +32,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-        $this->register($context, $input, $output);
+		$this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
@@ -58,22 +58,22 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			$this->escaped = true;
 		}
-		elseif (!$this->escaped &&
-		((($char == '$' || $char == '#') && $this->input->assert_next('\{')) ||
-		($char == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}')) ||
-		($char == '#'&& $this->input->assert_next('[\s]')) ||
-        ($char == '<' && $this->input->assert_next('\?php'))))
+		elseif ($char == '\'')
 		{
-			$this->input->move(-1);
-			$this->ended = true;
+			$this->write('\\');
+			$this->write($char);
 		}
 		else
 		{
-			if ($char == '\'')
+			$element = $this->parse_text($char);
+			if ($element != null)
 			{
-				$this->write('\\');
+				$this->parse_elt($element);
 			}
-			$this->write($char);
+			elseif (!$this->ended)
+			{
+				$this->write($char);
+			}
 		}
 	}
 
@@ -81,7 +81,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!in_array($char, array('\\', '{', '}', '#', '$')))
 		{
-            $this->write('\\');
+			$this->write('\\');
 		}
 		$this->escaped = false;
 		$this->write($char);
@@ -90,6 +90,53 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function write($char)
 	{
 		$this->output->write($char);
+	}
+
+	private function parse_text($current)
+	{
+		if ($current == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}'))
+		{
+			return new VariableExpressionTemplateSyntaxElement();
+		}
+		elseif ($current == '$' && $this->input->assert_next('\{'))
+		{
+			return new ExpressionTemplateSyntaxElement();
+		}
+		elseif ($current == '#' && $this->input->assert_next('\{'))
+		{
+			return new FunctionCallTemplateSyntaxElement();
+		}
+		elseif ($current == '#' && $this->input->assert_next('[\s]'))
+		{
+			return $this->build_statement_elt();
+		}
+		elseif ($current == '<' && $this->input->assert_next('\?php'))
+		{
+			return new PHPTemplateSyntaxElement();
+		}
+		return null;
+	}
+
+	private function build_statement_elt()
+	{
+		$this->input->move(-1);
+		if (ConditionTemplateSyntaxElement::is_element($this->input))
+		{
+			return new ConditionTemplateSyntaxElement();
+		}
+		elseif (LoopTemplateSyntaxElement::is_element($this->input))
+		{
+			return new LoopTemplateSyntaxElement();
+		}
+		elseif (IncludeTemplateSyntaxElement::is_element($this->input))
+		{
+			return new IncludeTemplateSyntaxElement();
+		}
+		else
+		{
+			$this->ended = true;
+			return null;
+		}
 	}
 }
 ?>

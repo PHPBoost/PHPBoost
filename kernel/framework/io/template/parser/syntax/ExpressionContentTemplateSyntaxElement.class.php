@@ -46,13 +46,13 @@ class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxEleme
 		{
 			$element = new FunctionTemplateSyntaxElement();
 		}
+		elseif (ConstantTemplateSyntaxElement::is_element($this->input))
+		{
+			$element = new ConstantTemplateSyntaxElement();
+		}
 		elseif (VariableTemplateSyntaxElement::is_element($this->input))
 		{
 			$element = new VariableTemplateSyntaxElement();
-		}
-		elseif (ConstantTemplateSyntaxElement::is_element($this->input))
-		{	
-			$element = new ConstantTemplateSyntaxElement();
 		}
 		else
 		{

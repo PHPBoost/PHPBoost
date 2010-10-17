@@ -33,7 +33,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		return $input->assert_next('#\sSTART\s+(?:\w+\.)*\w+\s#');
 	}
-	
+
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
         $this->register($context, $input, $output);
@@ -71,7 +71,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_content()
 	{
-		$this->parse_elt(new BaseTemplateSyntaxElement());
+		$this->parse_elt(new TextTemplateSyntaxElement());
 	}
 
 	private function loop_end()
