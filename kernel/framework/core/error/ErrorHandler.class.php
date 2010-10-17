@@ -172,8 +172,7 @@ class ErrorHandler
 		}
 		else
 		{
-			echo "\n" . $this->errdesc . ': ' . $this->exception->getMessage() .
-				"\n" . $this->get_stackstrace_as_string(6) . "\n";
+			Debug::fatal($this->exception);
 		}
 	}
 
