@@ -38,6 +38,11 @@ class SearchFormController extends ModuleController {
 	private $lang;
 
 	/**
+	 * @var SearchableExtensionPoint[string]
+	 */
+	private $searchables;
+
+	/**
 	 * @var HTMLForm
 	 */
 	private $form;
@@ -51,29 +56,65 @@ class SearchFormController extends ModuleController {
 
 	public function execute(HTTPRequest $request)
 	{
+		$this->init_search_providers();
         $this->build_form();
         $this->execute_search();
 		return $this->prepare_to_send();
+	}
+
+	private function init_search_providers()
+	{
+		$eps = AppContext::get_extension_provider_service();
+		$ep_list = $eps->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
+		foreach ($ep_list as $id => $ep)
+		{
+			$name = null;
+			try
+			{
+				$name = ModuleConfigurationManager::get($id)->get_name();
+			}
+			catch (Exception $ex)
+			{
+				$name = $id;
+			}
+			$this->searchables[$name] = $ep;
+		}
+		ksort($this->searchables);
 	}
 
 	private function build_form()
 	{
 		$this->form = new HTMLForm('full_search_form');
 		$fieldset = new FormFieldsetHTML('search', $this->lang['title']);
-		$value = 'coucou';
-		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], $value);
+		$searched_input_text = new FormFieldTextEditor('searched_text', $this->lang['title'], 'Recherche...');
+		$searched_input_text->add_constraint(new FormFieldConstraintLengthRange(3, 300));
 		$fieldset->add_field($searched_input_text);
 		$this->form->add_fieldset($fieldset);
+
+		$this->build_special_search_options_form_fieldset();
+
 		$button = new FormButtonSubmit($this->lang['do_search'], 'search_submit');
 		$this->form->add_button($button);
 		return $this->form;
 	}
 
+	private function build_special_search_options_form_fieldset()
+	{
+		foreach ($this->searchables as $searchable)
+		{
+			if ($searchable->has_search_options())
+			{
+				$this->form->add_fieldset($searchable->build_search_form());
+			}
+		}
+		ksort($this->searchables);
+	}
+
 	private function execute_search()
-	{	
+	{
 		$providers = SearchProvidersService::get_providers();
 	}
-	
+
 	private function prepare_to_send()
 	{
 		$this->view->put('SEARCH_FORM', $this->form->display());

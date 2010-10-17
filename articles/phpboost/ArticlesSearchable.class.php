@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              articlesExtensionPointProvider.class.php
+ *                           ArticlesSearchable.class.php
  *                            -------------------
- *   begin                : April 9, 2008
- *   copyright            : (C) 2008 Loic Rouchon
+ *   begin                : October 17, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-class ArticlesSearchable extends AbstractSearchable
+class ArticlesSearchable extends AbstractSearchableExtensionPoint
 {
-	function get_search_request($args = null)
+	public function get_search_request($search_text, $form)
 	{
 		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
 		$Cache->load('articles');
