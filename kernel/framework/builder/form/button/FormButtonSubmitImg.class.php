@@ -31,38 +31,10 @@
  */
 class FormButtonSubmitImg extends FormButtonSubmit
 {
-	private $img;
-	private $css_class;
-	
-    public function __construct($img, $title, $name, $onclick_action = '', $css_class = 'img_submit')
+    public function __construct($label, $image, $id, $onclick_action = '', $css_class = 'img_submit')
     {
-        $this->img = $img;
-        $this->css_class = $css_class;
-        parent::__construct($title, $name, $onclick_action);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function display()
-    {
-        $template = parent::display();
-        $template->put('IMG', $this->img);
-        $template->put('CSS_CLASS', $this->css_class);
-        return $template;
-    }
-
-    public function has_been_submited()
-    {
-        $request = AppContext::get_request();
-        $button_attribute_x = $request->get_string($this->get_name() . '_x', '');
-        $button_attribute_y = $request->get_string($this->get_name() . '_y', '');
-        return !empty($button_attribute_x) && !empty($button_attribute_y);
-    }
-    
-    protected function get_template()
-    {
-        return new StringTemplate('<input type="image" src="${IMG}" name="${BUTTON_NAME}" title="${escape(VALUE)}" class="${escape(CSS_CLASS)}" onclick="${escape(ONCLICK_ACTION)}" />');
+    	$full_label = '<img src="' . $image . '" alt="' . $label . '" title="' . $label . '" />';
+        parent::__construct($full_label, $label, $id, $onclick_action);
     }
 }
 ?>
