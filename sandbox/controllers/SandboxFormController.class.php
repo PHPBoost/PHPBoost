@@ -202,12 +202,14 @@ class SandboxFormController extends ModuleController
         $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS
-		$form->add_button(new FormButtonReset());
+		$buttons_fieldset = new FormFieldsetButtons('buttons');
+		$buttons_fieldset->add_button(new FormButtonReset());
 		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
-		$form->add_button($this->preview_button);
+		$buttons_fieldset->add_button($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+		$buttons_fieldset->add_button($this->submit_button);
+		$buttons_fieldset->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+		$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));

@@ -224,10 +224,15 @@ class HTMLForm
 			}
 		}
 
-		foreach ($this->buttons as $button)
+		if (count($this->buttons) > 0)
 		{
-			$template->assign_block_vars('buttons', array(), array(
-				'BUTTON' => $button->display() 
+			$buttons_fieldset = new FormFieldsetButtons('fbuttons');
+			foreach ($this->buttons as $button)
+			{
+				$buttons_fieldset->add_button($button);
+			}
+			$template->assign_block_vars('fieldsets', array(), array(
+				'FIELDSET' => $buttons_fieldset->display()
 			));
 		}
 

@@ -74,7 +74,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 					unset($options['disabled']);
 					break;
 				default :
-					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
+					throw new FormBuilderException('The class ' . get_class($this) . ' doesn\'t support the ' . $attribute . ' attribute');
 			}
 		}
 	}
