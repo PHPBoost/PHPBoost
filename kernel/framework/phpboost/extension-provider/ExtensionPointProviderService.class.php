@@ -119,13 +119,35 @@ class ExtensionPointProviderService
 	}
 
 	/**
-	 * @desc Returns true if the provider exists.
+	 * @desc Returns true if the provider exists and has all the requested extensions points.
 	 * @param string $provider_id the provider id
+	 * @param mixed $extension_points the extension point list that the provider must provides.
+	 *   <ul>
+	 *     <li>If <code>null</code>, nothing will be checked.</li>
+	 *     <li>If it's of type string, then it will check that the provider provides this extension point.</li>
+	 *     <li>If it's an array, it will check that all given extensions points are provided by the provider.</li>
+	 *   </ul>
 	 * @return bool true if the provider exists
 	 */
-	public function provider_exists($provider_id)
+	public function provider_exists($provider_id, $extensions_points = null)
 	{
-		return in_array($provider_id, $this->available_providers_ids);
+		if (!in_array($provider_id, $this->available_providers_ids))
+		{
+			return false;
+		}
+		if (!empty($extensions_points))
+		{
+			$provider = $this->get_provider($provider_id);
+			if (is_string($extensions_points))
+			{
+				return $provider->has_extension_point($extensions_points);
+			}
+			else
+			{
+				return $provider->has_extensions_points($extensions_points);
+			}
+		}
+		return true;
 	}
 
 	private function load_modules_providers()

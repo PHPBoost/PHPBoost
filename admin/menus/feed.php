@@ -147,11 +147,7 @@ else
 	));
 }
 
-
-
-
-$modules = AppContext::get_extension_provider_service();
-$feeds_modules = $modules->get_providers('get_feeds_list');
+$feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
 
 function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 {
@@ -162,7 +158,7 @@ function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 	foreach ($elts as $elt)
 	{
 		$url = $elt->get_url($feed_type);
-		 
+
 		if (!$already_selected && $edit && $feed_url == $url)
 		{
 			$selected = true;
@@ -172,7 +168,7 @@ function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 		{
 			$selected = false;
 		}
-		 
+
 		$urls[] = array(
     		'name' => $elt->get_category_name(),
     		'url' => $url,
@@ -180,7 +176,7 @@ function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
     		'feed_name' => $feed_type,
     		'selected' => $selected
 		);
-		 
+
 		$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, $level + 1));
 	}
 	return $urls;
@@ -196,7 +192,7 @@ ksort($sorted_modules);
 
 foreach ($sorted_modules as $module)
 {
-	$list = $module->get_extension_point('get_feeds_list');
+	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
 	$list = $list->get_feeds_list();
 	$urls = array();
 	foreach ($list as $feed_type => $elt)
