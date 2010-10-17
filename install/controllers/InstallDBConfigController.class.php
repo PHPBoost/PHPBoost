@@ -99,7 +99,7 @@ class InstallDBConfigController extends InstallController
 		array('description' => $this->lang['schema.tablePrefix.explanation']));
 		$fieldset_schema->add_field($table_prefix);
 
-		$this->submit_button = new FormButtonSubmitImg('templates/images/right.png', $this->lang['step.next'], 'submit');
+		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'submit');
 		$this->form->add_button($this->submit_button);
 	}
 

@@ -88,7 +88,7 @@ class InstallWebsiteConfigController extends InstallController
 		array('description' => $this->lang['website.timezone.explanation']));
 		$fieldset->add_field($timezone);
 
-		$this->submit_button = new FormButtonSubmitImg('templates/images/right.png', $this->lang['step.next'], 'submit');
+		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'submit');
 		$this->form->add_button($this->submit_button);
 	}
 

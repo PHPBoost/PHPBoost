@@ -81,7 +81,7 @@ abstract class AbstractFormButton implements FormButton
     
     protected function get_template()
     {
-    	return new StringTemplate('<input type="${TYPE}" name="${BUTTON_NAME}" value="${escape(VALUE)}" class="submit" onclick="${escape(ONCLICK_ACTION)}" />');
+    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}">{VALUE}</button>');
     }
 }
 ?>

@@ -25,7 +25,7 @@ div.block_contents {
 	border:none;
 	text-align:justify;
 } 
-/* Entête de conteneur et des tableaux */
+/* Entï¿½te de conteneur et des tableaux */
 div.block_top, table tr:first-child th {
     padding:5px 6px;
     color:#FFFFFF;
@@ -168,7 +168,7 @@ input.text{
 	-webkit-border-radius:3px;
 }
 
-input.submit{
+input.submit, button.submit{
 	padding:1px 2px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	border:1px solid #515C68;	
@@ -197,7 +197,7 @@ input.file{
 	font-size:10px;
 }
 
-input.reset{
+input.reset, button.reset{
 	padding:1px 2px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	border:1px solid #515C68;	
@@ -212,7 +212,7 @@ input.reset{
     border-radius:5px;
 }
 
-input.reset:hover, input.submit:hover{
+input.reset:hover, button.reset:hover, input.submit:hover, button.submit:hover{
 	border:1px solid #11365f;
 	cursor:pointer;
 	color:#3776ba;
@@ -360,7 +360,7 @@ fieldset dl dd label:hover {
     color:#183A4F;
 }
 
-/* Messages postés par les membres (messages privés, commentaires, etc...) 
+/* Messages postï¿½s par les membres (messages privï¿½s, commentaires, etc...) 
 --------------------------------------*/
     /* Classe du lien du pseudo des messages */
 a.msg_link_pseudo {
@@ -396,7 +396,7 @@ a.msg_link_pseudo:hover {
     background:#F4F9FA url(images/border.png) repeat-y right;
 }
 
-/* Barre supérieur des messages */
+/* Barre supï¿½rieur des messages */
 .msg_top_l{
 	margin-right:0px !important;
 	margin-right:-3px;
@@ -484,7 +484,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_contents_overflow {
-    /* Case du contents du message, évite que les images trop grandes déforme */
+    /* Case du contents du message, ï¿½vite que les images trop grandes dï¿½forme */
     width:99%;
     height:auto;
     min-height:80px;
@@ -513,7 +513,7 @@ a.msg_link_pseudo:hover {
     overflow:hidden;
 }
 
-.msg_bottom_l { /* Barre inférieure des messages */
+.msg_bottom_l { /* Barre infï¿½rieure des messages */
     
 }
 
@@ -537,7 +537,7 @@ a.msg_link_pseudo:hover {
     margin:auto;
 }
 
-.module_top_l { /* Barre supérieure des modules */
+.module_top_l { /* Barre supï¿½rieure des modules */
     
 }
 
@@ -565,7 +565,7 @@ a.msg_link_pseudo:hover {
     text-align:justify;
 }
 
-.module_bottom_l { /* Barre inférieure des modules */
+.module_bottom_l { /* Barre infï¿½rieure des modules */
     
 }
 
@@ -581,7 +581,7 @@ a.msg_link_pseudo:hover {
 }
 
 
-/* Tableau global, utilisé dans les différents modules */
+/* Tableau global, utilisï¿½ dans les diffï¿½rents modules */
 .module_table {
     width:98%;
     margin:auto;
@@ -629,7 +629,7 @@ a.msg_link_pseudo:hover {
     padding-bottom:0px;
 }
 
-.module_mini_bottom { /* Bordure inférieure des modules minis */
+.module_mini_bottom { /* Bordure infï¿½rieure des modules minis */
     height:15px;
 }
 
