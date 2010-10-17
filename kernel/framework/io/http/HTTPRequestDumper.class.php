@@ -37,12 +37,12 @@ class HTTPRequestDumper
 	private $is_parameter_row_odd = true;
 
 	private static $container_style = 'border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;';
-	private static $header_style = 'font-size:26px;font-weight:bold;background-color:#f9f9aa;';
-	private static $section_style = 'font-size:18px;background-color:#f9f9aa;';
+	private static $header_style = 'text-align:left;font-size:26px;font-weight:bold;background-color:#ffffcc;padding:5px;border-bottom:1px #aaaaaa solid;';
+	private static $section_style = 'font-size:18px;background-color:#ffffcc;height:30px;';
 	private static $parameter_row_style = '';
 	private static $parameter_odd_row_style = 'background-color:#f0f9ff;';
 	private static $parameter_even_row_style = 'background-color:#f0fff9;';
-	private static $parameter_name_style = 'font-size:16px;padding:0 10px;';
+	private static $parameter_name_style = 'font-size:14px;font-weight:bold;padding:0 10px;';
 	private static $parameter_value_style = 'font-size:14px;';
 
 	/**
@@ -52,7 +52,7 @@ class HTTPRequestDumper
 	{
 		$this->request = $request;
 		$this->output = '<div style="' . self::$container_style . '">' .
-		'<table><caption style="' . self::$header_style . '">HTTP Request</caption>';
+			'<table cellspacing="0" cellpadding="3 5px"><caption style="' . self::$header_style . '">HTTP Request</caption>';
 		$this->dump_get();
 		$this->dump_post();
 		$this->dump_cookie();
@@ -83,10 +83,13 @@ class HTTPRequestDumper
 
 	private function dump_var($title, $parameters)
 	{
-		$this->add_section($title);
-		foreach ($parameters as $key => $value)
+		if (!empty($parameters))
 		{
-			$this->add_parameter($key, $value);
+			$this->add_section($title);
+			foreach ($parameters as $key => $value)
+			{
+				$this->add_parameter($key, $value);
+			}
 		}
 	}
 

@@ -32,10 +32,9 @@ interface SearchableExtensionPoint extends ExtensionPoint
 	/**
 	 * @desc
 	 * @param string $search_text
-	 * @param string $search_text
 	 * @return
 	 */
-	function get_search_request($search_text, $form);
+	function get_search_request($search_text);
 
 	/**
 	 * @desc Returns <code>true</code> if special search options could be applied to this module
@@ -62,8 +61,9 @@ interface SearchableExtensionPoint extends ExtensionPoint
 	/**
 	 * @desc Returns a View that will be inserted in the specialized result list for the element of
 	 *   id <code>$element_id</code>.
+	 * @param SearchResult the search result that will be formatted for output
 	 * @return View the View that will be inserted in the specialized result list
 	 */
-	function format_element($element_id);
+	function format_element(SearchResult $result);
 }
 ?>

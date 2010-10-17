@@ -25,10 +25,10 @@
  *
  ###################################################*/
 
-class NewsSearchable extends AbstractSearchable
+class NewsSearchable extends AbstractSearchableExtensionPoint
 {
 	public function get_search_request($args)
-	{		
+	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		$news_cat = new NewsCats();

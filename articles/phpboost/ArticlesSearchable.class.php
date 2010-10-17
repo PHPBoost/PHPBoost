@@ -27,7 +27,7 @@
 
 class ArticlesSearchable extends AbstractSearchableExtensionPoint
 {
-	public function get_search_request($search_text, $form)
+	public function get_search_request($search_text)
 	{
 		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
 		$Cache->load('articles');
