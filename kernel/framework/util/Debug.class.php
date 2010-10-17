@@ -112,7 +112,18 @@ class Debug
 		}
 		echo $message;
 		Debug::print_stacktrace(0, $exception);
+		echo self::get_http_context();
 		exit;
+	}
+
+	public static function get_http_context()
+	{
+		if (self::$html_output)
+		{
+			$dumper = new HTTPRequestDumper();
+			return $dumper->dump(AppContext::get_request());
+		}
+		return '';
 	}
 
 	/**
@@ -126,6 +137,7 @@ class Debug
 			Debug::dump($object);
 		}
 		self::print_stacktrace();
+		echo self::get_http_context();
 		exit;
 	}
 
