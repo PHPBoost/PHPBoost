@@ -28,12 +28,6 @@
 		# INCLUDE fieldsets.FIELDSET #
 	# END fieldsets #
 	
-	<fieldset class="fieldset_submit">
-		<legend>{L_SUBMIT}</legend>
-		# START buttons #
-			# INCLUDE buttons.BUTTON #
-		# END buttons #
-		<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="" />
-		<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="" />
-	</fieldset>
+	<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="" />
+	<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="" />
 </form>
