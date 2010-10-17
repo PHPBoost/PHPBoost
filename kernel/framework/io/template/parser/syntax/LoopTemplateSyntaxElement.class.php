@@ -76,7 +76,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function loop_end()
 	{
-		throw new TemplateParserException('Missing loop end', $this->input);
+		throw new TemplateRenderingException('Missing loop end', $this->input);
 	}
 }
 ?>

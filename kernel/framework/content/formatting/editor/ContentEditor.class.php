@@ -86,12 +86,9 @@ abstract class ContentEditor
     {
         if (!is_object($this->template) || !($this->template instanceof Template))
         {
-            return new FileTemplate('framework/content/editor.tpl');
+            $this->template = new FileTemplate('framework/content/editor.tpl');
         }
-        else
-        {
-            return $this->template;
-        }
+        return $this->template;
     }
 }
 

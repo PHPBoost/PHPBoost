@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                     FileTemplateParserException.class.php
+ *                     FileTemplateRenderingException.class.php
  *                            -------------------
  *   begin                : September 05 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class FileTemplateParserException extends Exception
+class FileTemplateRenderingException extends Exception
 {   
 	public function __construct($file_identifier, Exception $exception)
 	{

@@ -31,6 +31,10 @@ require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
 function articles_mini($position, $block)
 {
+	$tpl = new StringTemplate('TO BE FIXED');
+	return $tpl->render();
+	// FIXME update the article module and then correct this mini module
+	/*
 	global $Cache, $LANG, $CONFIG_ARTICLES,$ARTICLES_LANG;
 
 	$Cache->load('articles');
@@ -44,8 +48,6 @@ function articles_mini($position, $block)
 	$note = false;
 	$date = false;
 	$view = false;
-	// FIXME update the article module and then correct this mini module
-	/*
 	$mini_conf = unserialize($CONFIG_ARTICLES['mini']);
 	$sort = 'date';
 	switch ($mini_conf['type'])
@@ -111,8 +113,8 @@ function articles_mini($position, $block)
 		'L_MORE_ARTICLE' => $ARTICLES_LANG['more_article'],
 		'READ_ARTICLE'=>$ARTICLES_LANG['read_article'],
     ));
-    */
     return $tpl->render();
+    */
 }
 
 ?>

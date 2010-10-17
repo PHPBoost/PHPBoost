@@ -133,8 +133,8 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
         try
         {
             $this->assert_parse($input, null);
-            $this->fail('expecting exception TemplateParserException');
-        } catch (TemplateParserException $ex)
+            $this->fail('expecting exception TemplateRenderingException');
+        } catch (TemplateRenderingException $ex)
         {
             // Successful
         }
@@ -217,7 +217,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 			$this->assert_parse($input, null);
 			$this->fail('unauthorized method call not detected');
 		}
-		catch (TemplateParserException $ex)
+		catch (TemplateRenderingException $ex)
 		{
 			// Successful
 		}
@@ -250,8 +250,8 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		try
 		{
 			$this->assert_parse($input, null);
-			$this->fail('expecting exception TemplateParserException');
-		} catch (TemplateParserException $ex)
+			$this->fail('expecting exception TemplateRenderingException');
+		} catch (TemplateRenderingException $ex)
 		{
 			// Successful
 		}
@@ -263,8 +263,8 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		try
 		{
 			$this->assert_parse($input, null);
-			$this->fail('expecting exception TemplateParserException');
-		} catch (TemplateParserException $ex)
+			$this->fail('expecting exception TemplateRenderingException');
+		} catch (TemplateRenderingException $ex)
 		{
 			// Successful
 		}

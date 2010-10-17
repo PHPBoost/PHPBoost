@@ -34,7 +34,7 @@ interface View
 	/**
 	 * @desc Returns a string representation of the view.
      * @return string a string representation of the view
-     * @throws TemplateParserException
+     * @throws TemplateRenderingException
      */
 	function render();
 }

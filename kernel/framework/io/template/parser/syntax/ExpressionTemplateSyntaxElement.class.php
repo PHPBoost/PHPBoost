@@ -65,7 +65,7 @@ class ExpressionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function missing_expression_end()
 	{
-		throw new TemplateParserException('Missing expression end \'}\'', $this->input);
+		throw new TemplateRenderingException('Missing expression end \'}\'', $this->input);
 	}
 }
 ?>

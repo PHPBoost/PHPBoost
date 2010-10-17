@@ -41,6 +41,35 @@
 interface TemplateData
 {
 	/**
+	 * @desc Enables the strict mode. If a variable that does not exist in the object is requested,
+	 *   then an exception will be raised.
+	 */
+	function enable_strict_mode();
+
+	/**
+	 * @desc Disables the strict mode. If a variable that does not exist in the object is requested,
+	 *   then an empty value will be returned.
+	 */
+	function disable_strict_mode();
+
+	/**
+	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
+	 * <ul>
+	 * 	<li>SID for the session id</li>
+	 * 	<li>THEME the theme used by the current user</li>
+	 * 	<li>LANG the lang used by the current user</li>
+	 * 	<li>C_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
+	 * 	<li>C_USER_NOTCONNECTED is the negation of C_USER_CONNECTED</li>
+	 * 	<li>PATH_TO_ROOT is the path which starts from the domain root (in HTTP context) and goes to the PHPBoost
+	 * root. For instance if PHPBoost is installed at www.example.com/directory/, its value will be /directory.</li>
+	 * 	<li>PHP_PATH_TO_ROOT is the server side path, it's the path which goes to the PHPBoost's root.</li>
+	 * 	<li>TOKEN is the CSRF protection token. It's to use in the critical actions to show that the user really
+	 * intended doing the action</li>
+	 * </ul>
+	 */
+	function auto_load_frequent_vars();
+
+	/**
 	 * @desc Assigns the value <code>$value</code> to the template variable of name <code>$key</code>
 	 * @param $key the template parameter name
 	 * @param $value the template parameter value
@@ -99,23 +128,6 @@ interface TemplateData
 	 * @return string The variable content
 	 */
 	function get_from_list($varname, &$list);
-
-	/**
-	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
-	 * <ul>
-	 * 	<li>SID for the session id</li>
-	 * 	<li>THEME the theme used by the current user</li>
-	 * 	<li>LANG the lang used by the current user</li>
-	 * 	<li>C_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
-	 * 	<li>C_USER_NOTCONNECTED is the negation of C_USER_CONNECTED</li>
-	 * 	<li>PATH_TO_ROOT is the path which starts from the domain root (in HTTP context) and goes to the PHPBoost
-	 * root. For instance if PHPBoost is installed at www.example.com/directory/, its value will be /directory.</li>
-	 * 	<li>PHP_PATH_TO_ROOT is the server side path, it's the path which goes to the PHPBoost's root.</li>
-	 * 	<li>TOKEN is the CSRF protection token. It's to use in the critical actions to show that the user really
-	 * intended doing the action</li>
-	 * </ul>
-	 */
-	function auto_load_frequent_vars();
 
 	/**
 	 * @desc Binds vars on another {@link TemplateData} object. The two instances will share the same data.

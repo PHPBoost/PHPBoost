@@ -77,7 +77,7 @@ class TemplateSyntaxParser implements TemplateParser
 		$template_element->parse(new TemplateSyntaxParserContext(), $this->input, $this->output);
 		if ($this->input->has_next())
 		{
-			throw new TemplateParserException('Unknown statement', $this->input);
+			throw new TemplateRenderingException('Unknown statement', $this->input);
 		}
 	}
 }

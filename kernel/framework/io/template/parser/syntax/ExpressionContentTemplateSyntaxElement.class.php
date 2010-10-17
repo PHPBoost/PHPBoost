@@ -56,7 +56,7 @@ class ExpressionContentTemplateSyntaxElement extends AbstractTemplateSyntaxEleme
 		}
 		else
 		{
-			throw new TemplateParserException('bad expression statement', $this->input);
+			throw new TemplateRenderingException('bad expression statement', $this->input);
 		}
 		$this->parse_elt($element);
 	}

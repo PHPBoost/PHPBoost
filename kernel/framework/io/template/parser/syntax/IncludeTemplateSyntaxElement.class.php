@@ -57,7 +57,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
         else
         {
-        	throw new TemplateParserException('invalid include template name', $this->input);
+        	throw new TemplateRenderingException('invalid include template name', $this->input);
         }
         $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
 	}

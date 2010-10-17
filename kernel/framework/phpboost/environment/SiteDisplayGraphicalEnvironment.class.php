@@ -65,7 +65,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->add_menus_css_files();
 
 		$general_config = GeneralConfig::load();
-		
+
 		$template->put_all(array(
 			'SITE_NAME' => $general_config->get_site_name(),
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
@@ -76,6 +76,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
 			'L_TODAY' => LangLoader::get_message('today', 'main'),
+			'C_MAINTAIN_DELAY' => false,
+			'C_COMPTEUR' => false,
+			'C_MENUS_RIGHT_CONTENT' => false
 		));
 
 		$this->display_counter($template);
@@ -138,11 +141,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			global $Cache;
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
-				
+
 			//On inclut une nouvelle fois
 			if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                     $LANG['e_cache_modules'], UserErrorController::FATAL);
                 DispatchManager::redirect($controller);
 			}
@@ -197,11 +200,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
 			21600, 25200, 28800, 57600, 86400, 172800, 604800);
 			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . LangLoader::get_message('minute', 'main'),
-				'5 ' . LangLoader::get_message('minutes', 'main'), '10 ' . LangLoader::get_message('minutes', 'main'), '15 ' . LangLoader::get_message('minutes', 'main'), 
-				'30 ' . LangLoader::get_message('minutes', 'main'), '1 ' . LangLoader::get_message('hour', 'main'), '2 ' . LangLoader::get_message('hours', 'main'), 
-				'3 ' . LangLoader::get_message('hours', 'main'), '4 ' . LangLoader::get_message('hours', 'main'), '5 ' . LangLoader::get_message('hours', 'main'), 
-				'6 ' . LangLoader::get_message('hours', 'main'), '7 ' . LangLoader::get_message('hours', 'main'), '8 ' . LangLoader::get_message('hours', 'main'), 
-				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'main'), 
+				'5 ' . LangLoader::get_message('minutes', 'main'), '10 ' . LangLoader::get_message('minutes', 'main'), '15 ' . LangLoader::get_message('minutes', 'main'),
+				'30 ' . LangLoader::get_message('minutes', 'main'), '1 ' . LangLoader::get_message('hour', 'main'), '2 ' . LangLoader::get_message('hours', 'main'),
+				'3 ' . LangLoader::get_message('hours', 'main'), '4 ' . LangLoader::get_message('hours', 'main'), '5 ' . LangLoader::get_message('hours', 'main'),
+				'6 ' . LangLoader::get_message('hours', 'main'), '7 ' . LangLoader::get_message('hours', 'main'), '8 ' . LangLoader::get_message('hours', 'main'),
+				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'main'),
 				'1 ' . LangLoader::get_message('week', 'main'));
 
 			//Retourne le délai de maintenance le plus proche.
@@ -330,7 +333,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$template->put_all(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(),
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() + 
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
 				'L_REQ' => LangLoader::get_message('sql_req', 'main'),
 				'L_ACHIEVED' => LangLoader::get_message('achieved', 'main'),
@@ -340,7 +343,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template->display();
 	}
-	
+
 	/**
 	 * Returns the bread crumb
 	 * @return BreadCrumb The breadcrumb
@@ -349,7 +352,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		return $this->breadcrumb;
 	}
-	
+
 	/**
 	 * Sets the page's bread crumb
 	 * @param BreadCrumb $breadcrumb The bread crumb to use

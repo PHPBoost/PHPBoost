@@ -43,7 +43,7 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('invalid array', $input);
+			throw new TemplateRenderingException('invalid array', $input);
 		}
 	}
 
@@ -56,7 +56,7 @@ class ArrayTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	{
 		if (!$this->input->consume_next('\]\s*'))
 		{
-			throw new TemplateParserException('invalid array: missing enclosing parenthesis', $this->input);
+			throw new TemplateRenderingException('invalid array: missing enclosing parenthesis', $this->input);
 		}
 		$this->output->write(')');
 	}

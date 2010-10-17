@@ -42,7 +42,7 @@ class SimpleVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('invalid simple variable name', $input);
+			throw new TemplateRenderingException('invalid simple variable name', $input);
 		}
 	}
 }

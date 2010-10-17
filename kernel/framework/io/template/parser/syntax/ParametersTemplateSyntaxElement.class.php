@@ -39,7 +39,7 @@ class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
             }
             else if (!$input->assert_next('\s*\)\s*'))
             {
-            	throw new TemplateParserException('invalid function call, missing "," or ")"', $input);
+            	throw new TemplateRenderingException('invalid function call, missing "," or ")"', $input);
             }
 		}
 	}

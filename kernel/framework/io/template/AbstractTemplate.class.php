@@ -72,6 +72,22 @@ abstract class AbstractTemplate implements Template
     /**
      * {@inheritdoc}
      */
+	public function enable_strict_mode()
+	{
+		$this->data->enable_strict_mode();
+	}
+
+    /**
+     * {@inheritdoc}
+     */
+	public function disable_strict_mode()
+	{
+		$this->data->disable_strict_mode();
+	}
+
+    /**
+     * {@inheritdoc}
+     */
     public function put($key, $value)
     {
         $this->data->put($key, $value);

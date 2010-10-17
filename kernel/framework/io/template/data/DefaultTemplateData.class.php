@@ -32,26 +32,67 @@
  */
 class DefaultTemplateData implements TemplateData
 {
+	private $strict = false;
 	private $vars = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function put($key, $value)
-    {
-        $this->vars[$key] = $value;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function enable_strict_mode()
+	{
+		$this->strict = true;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function put_all(array $vars)
-    {
-        foreach ($vars as $key => $value)
-        {
-            $this->vars[$key] = $value;
-        }
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function disable_strict_mode()
+	{
+		$this->strict = false;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function auto_load_frequent_vars()
+	{
+		$session = AppContext::get_session();
+		$user = AppContext::get_user();
+		$is_connected = $user->check_level(MEMBER_LEVEL);
+		$this->put_all(array(
+			'SID' => SID,
+			'THEME' => get_utheme(),
+			'LANG' => get_ulang(),
+			'IS_USER_CONNECTED' => $is_connected,
+			'IS_ADMIN' => $user->check_level(ADMIN_LEVEL),
+    		'IS_MODERATOR' => $user->check_level(MODERATOR_LEVEL),
+			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
+			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
+			'TOKEN' => !empty($session) ? $session->get_token() : '',
+		// @deprecated
+			'C_USER_CONNECTED' => $is_connected,
+			'C_USER_NOTCONNECTED' => !$is_connected
+		));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function put($key, $value)
+	{
+		$this->vars[$key] = $value;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function put_all(array $vars)
+	{
+		foreach ($vars as $key => $value)
+		{
+			$this->vars[$key] = $value;
+		}
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -96,6 +137,10 @@ class DefaultTemplateData implements TemplateData
 		{
 			return $parent_block[$blockname];
 		}
+		elseif ($this->strict)
+		{
+			throw new TemplateRenderingException('Undefined block \'' . $blockname . '\'');
+		}
 		return array();
 	}
 
@@ -124,38 +169,18 @@ class DefaultTemplateData implements TemplateData
 		{
 			return $list[$varname];
 		}
+		elseif ($this->strict)
+		{
+			throw new TemplateRenderingException('Undefined variable \'' . $varname . '\'');
+		}
 		return null;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function auto_load_frequent_vars()
-	{
-		$session = AppContext::get_session();
-		$user = AppContext::get_user();
-		$is_connected = $user->check_level(MEMBER_LEVEL);
-		$this->put_all(array(
-			'SID' => SID,
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
-			'IS_USER_CONNECTED' => $is_connected,
-			'IS_ADMIN' => $user->check_level(ADMIN_LEVEL),
-    		'IS_MODERATOR' => $user->check_level(MODERATOR_LEVEL),
-			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
-			'TOKEN' => !empty($session) ? $session->get_token() : '',
-			// @deprecated
-			'C_USER_CONNECTED' => $is_connected,
-			'C_USER_NOTCONNECTED' => !$is_connected
-		));
-	}
-
 	private function register_var($name, $value, &$list)
-    {
-        $list[$name] = $value;
-        return $value;
-    }
+	{
+		$list[$name] = $value;
+		return $value;
+	}
 
 	/**
 	 * {@inheritdoc}

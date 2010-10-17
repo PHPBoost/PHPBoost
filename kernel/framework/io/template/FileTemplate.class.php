@@ -74,13 +74,13 @@ class FileTemplate extends AbstractTemplate
         {
             return parent::render();
         }
-        catch (TemplateParserException $exception)
+        catch (TemplateRenderingException $exception)
         {
-            throw new FileTemplateParserException($this->file_identifier, $exception);
+            throw new FileTemplateRenderingException($this->file_identifier, $exception);
         }
         catch (LangNotFoundException $exception)
         {
-            throw new FileTemplateParserException($this->file_identifier, $exception);
+            throw new FileTemplateRenderingException($this->file_identifier, $exception);
         }
     }
 }

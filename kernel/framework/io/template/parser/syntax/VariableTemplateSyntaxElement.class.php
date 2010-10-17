@@ -51,7 +51,7 @@ class VariableTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 		else
 		{
-			throw new TemplateParserException('invalid variable', $input);
+			throw new TemplateRenderingException('invalid variable', $input);
 		}
 		$this->parse_elt($element);
 		$input->consume_next('\s*');
