@@ -46,9 +46,19 @@ abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPo
     /**
 	 * {@inheritDoc}
      */
-    public function build_output()
+    public function build_output_as_list()
     {
+    	return true;
+    }
 
+    /**
+	 * {@inheritDoc}
+     */
+    public function format_element()
+    {
+		$tpl = new FileTemplate('framework/content/search/SearchGenericResult.tpl');
+		$tpl->put();
+		return $tpl;
     }
 }
 ?>
