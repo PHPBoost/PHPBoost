@@ -128,6 +128,12 @@ interface Template extends View
 	function add_subtemplate($identifier, Template $template);
 
 	/**
+	 * @desc Inject data into the template. This is for internal use only.
+	 * @param TemplateData the data to inject into the template
+	 */
+	function set_data(TemplateData $data);
+
+	/**
 	 * @desc Returns the template data
 	 * @return TemplateData
 	 */

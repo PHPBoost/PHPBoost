@@ -323,8 +323,17 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_include_tpl()
 	{
 		$input = 'this is a simple # INCLUDE tpl #';
-		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
+		$output = '<?php $_result=\'this is a simple \';' .
+'$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->render();}' .
+'$_result.=\'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
+	public function test_includefile_tpl()
+	{
+		$input = 'this is a simple # INCLUDEFILE my/file.tpl #';
+		$output = '<?php $_result=\'this is a simple \';' .
+'$_subtpl=new FileTemplate(\'my/file.tpl\');$_subtpl->set_data($_data);$_result.=$_subtpl->render();' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -332,8 +341,8 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_simple_block_include_tpl()
 	{
 		$input = 'this is a simple # INCLUDE block.tpl #';
-		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
+		$output = '<?php $_result=\'this is a simple \';' .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}
@@ -341,8 +350,8 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	public function test_imbricated_block_include_tpl()
 	{
 		$input = 'this is a simple # INCLUDE block.imbricated.tpl #';
-		$output = '<?php $_result=\'this is a simple \';' . "\n" .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->render();}' . "\n" .
+		$output = '<?php $_result=\'this is a simple \';' .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($input, $output);
 	}

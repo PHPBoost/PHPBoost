@@ -33,7 +33,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public static function is_element(StringInputStream $input)
 	{
-		return $input->assert_next('#\s+INCLUDE\s+');
+		return $input->assert_next('#\s+INCLUDE');
 	}
 
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
@@ -45,9 +45,13 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function do_parse()
 	{
 		$matches = array();
-		if ($this->input->consume_next('#\s+INCLUDE\s+(?:(?P<block>(?:\w+\.)*\w+)\.)?(?P<name>\w+)\s+#', '', $matches))
+        $this->output->write('\';');
+		if ($this->input->consume_next('#\s+INCLUDEFILE (?P<file>[\w_/.]+)\s+#', '', $matches))
 		{
-            $this->output->write('\';' . "\n");
+            $this->write_includefile($matches);
+		}
+		elseif ($this->input->consume_next('#\s+INCLUDE\s+(?:(?P<block>(?:\w+\.)*\w+)\.)?(?P<name>\w+)\s+#', '', $matches))
+		{
             $this->write_subtemplate_initialization($matches);
             $this->write_subtemplate_call();
         }
@@ -55,7 +59,15 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         {
         	throw new TemplateParserException('invalid include template name', $this->input);
         }
+        $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
 	}
+
+	private function write_includefile(array $matches)
+    {
+    	$this->output->write(self::$subtpl . '=new FileTemplate(\'' . $matches['file'] . '\');');
+        $this->output->write(self::$subtpl . '->set_data(' . TemplateSyntaxElement::DATA . ');');
+        $this->output->write(TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();');
+    }
 
     private function write_subtemplate_initialization(array $matches)
     {
@@ -80,8 +92,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function write_subtemplate_call()
     {
-        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();}' . "\n");
-        $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
+        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();}');
     }
 }
 ?>

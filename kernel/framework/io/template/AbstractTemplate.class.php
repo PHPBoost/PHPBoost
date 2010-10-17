@@ -69,11 +69,6 @@ abstract class AbstractTemplate implements Template
 		$this->renderer = $renderer;
 	}
 
-	private function set_data(TemplateData $data)
-	{
-		$this->data = $data;
-	}
-
     /**
      * {@inheritdoc}
      */
@@ -145,6 +140,14 @@ abstract class AbstractTemplate implements Template
     {
         $this->renderer->add_lang($lang);
     }
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_data(TemplateData $data)
+	{
+		$this->data = $data;
+	}
 
 	/**
 	 * {@inheritdoc}
