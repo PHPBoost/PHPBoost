@@ -32,6 +32,11 @@ define('NO_SESSION_LOCATION', true);
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
 
+function no_available_feeds()
+{
+	AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
+}
+
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
 {
@@ -56,33 +61,18 @@ if (!empty($module_id))
 	}
 	else
 	{
-		$modules_discovery_service = AppContext::get_extension_provider_service();
-		$not_installed = false;
-		try
+		$eps = AppContext::get_extension_provider_service();
+		if ($eps->provider_exists($module_id, FeedProvider::EXTENSION_POINT))
 		{
-			$module = $modules_discovery_service->get_provider($module_id);
-			if ($module->has_extension_point(FeedProvider::EXTENSION_POINT))
-			{
-				$feeds = $module->feeds();
-				$feed->load_data($feeds->get_feed_data_struct($category_id, $feed_name));
-				$feed->cache();
-
-				// Print the feed
-				echo $feed->export();
-			}
-			else
-			{
-				$not_installed = true;
-			}
+			$provider = $eps->get_provider($module_id);
+			$feeds = $provider->feeds();
+			$feed->load_data($feeds->get_feed_data_struct($category_id, $feed_name));
+			$feed->cache();
+			echo $feed->export();
 		}
-		catch (UnexistingExtensionPointProviderException $ex)
+		else
 		{
-			$not_installed = true;
-		}
-		if ($not_installed)
-		{
-			die('not installed');
-            AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
+			no_available_feeds();
 		}
 	}
 }

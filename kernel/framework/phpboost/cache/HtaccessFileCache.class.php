@@ -128,14 +128,11 @@ class HtaccessFileCache implements CacheData
 			{
 				$this->add_line(str_replace('DIR', DIR, $rule));
 			}
-			if ($eps->provider_exists($id))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
-				if ($provider->has_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT))
-				{
-					$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
-					$this->add_url_mapping($url_mappings);
-				}
+				$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
+				$this->add_url_mapping($url_mappings);
 			}
 		}
 	}
