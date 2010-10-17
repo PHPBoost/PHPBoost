@@ -81,7 +81,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_condition()
 	{
-        $this->parse_elt(new BaseTemplateSyntaxElement());
+        $this->parse_elt(new TextTemplateSyntaxElement());
 	}
 
 	private function missing_end()
