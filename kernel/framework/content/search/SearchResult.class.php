@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       SearchableExtensionPoint.class.php
+ *                          SearchResult.class.php
  *                            -------------------
- *   begin                : February 08, 2010
+ *   begin                : October 17, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,41 +25,46 @@
  *
  ###################################################*/
 
-abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPoint
+class SearchResult
 {
-    /**
-	 * {@inheritDoc}
-     */
-    public function has_search_options()
-    {
-    	return false;
-    }
+	private $id;
+	private $title;
+	private $link;
+	private $relevance;
 
-    /**
-	 * {@inheritDoc}
-     */
-    public function build_search_form()
-    {
-    	throw new UnsupportedOperationException();
-    }
+	/**
+	 * @desc Builds a <code>SearchResult</code> object
+	 * @param int $id the element identifier in its own module
+	 * @param string $title the element title
+	 * @param string $link a link to a page that will display the element
+	 * @param float $relevance the relevance of the element within the current search
+	 */
+	public function __construct($id, $title, $link, $relevance)
+	{
+		$this->id = $id;
+		$this->title = $title;
+		$this->link = $link;
+		$this->relevance = $relevance;
+	}
 
-    /**
-	 * {@inheritDoc}
-     */
-    public function build_output_as_list()
-    {
-    	return true;
-    }
+	public function get_id()
+	{
+		return $this->module_id;
+	}
 
-    /**
-	 * {@inheritDoc}
-     */
-    public function format_element(SearchResult $result)
-    {
-		$tpl = new FileTemplate('framework/content/search/SearchGenericResult.tpl');
-		$tpl->put('title', $result->get_title());
-		$tpl->put('link', $result->get_link());
-		return $tpl;
-    }
+	public function get_title()
+	{
+		return $this->title;
+	}
+
+	public function get_link()
+	{
+		return Url::to_rel($this->link);
+	}
+
+	public function get_relevance()
+	{
+		return $this->relevance;
+	}
 }
 ?>

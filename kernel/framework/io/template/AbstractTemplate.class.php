@@ -69,37 +69,37 @@ abstract class AbstractTemplate implements Template
 		$this->renderer = $renderer;
 	}
 
-    /**
-     * {@inheritdoc}
-     */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function enable_strict_mode()
 	{
 		$this->data->enable_strict_mode();
 	}
 
-    /**
-     * {@inheritdoc}
-     */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function disable_strict_mode()
 	{
 		$this->data->disable_strict_mode();
 	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function put($key, $value)
-    {
-        $this->data->put($key, $value);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function put($key, $value)
+	{
+		$this->data->put($key, $value);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function put_all(array $vars)
-    {
-        $this->data->put_all($vars);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function put_all(array $vars)
+	{
+		$this->data->put_all($vars);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -117,29 +117,29 @@ abstract class AbstractTemplate implements Template
 		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
 	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add_subtemplate($identifier, Template $template)
-    {
-        $this->data->put($identifier, $template);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function add_subtemplate($identifier, Template $template)
+	{
+		$this->data->put($identifier, $template);
+	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function __clone()
 	{
-        $this->data = clone $this->data;
+		$this->data = clone $this->data;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-    public function render()
-    {
-    	return $this->renderer->render($this->data, $this->loader);
-    }
+	public function render()
+	{
+		return $this->renderer->render($this->data, $this->loader);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -149,13 +149,13 @@ abstract class AbstractTemplate implements Template
 		echo $this->render();
 	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add_lang(array $lang)
-    {
-        $this->renderer->add_lang($lang);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function add_lang(array $lang)
+	{
+		$this->renderer->add_lang($lang);
+	}
 
 	/**
 	 * {@inheritdoc}
