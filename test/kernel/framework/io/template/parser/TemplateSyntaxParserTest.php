@@ -305,6 +305,13 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$this->assert_parse($input, $output);
 	}
 
+	public function test_function_with_boolean_constant_parameters()
+	{
+		$input = 'this is a simple ${AppContext::get_uid(true, false)}';
+		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(true, false) . \'\'; ?>';
+		$this->assert_parse($input, $output);
+	}
+
 	public function test_function_with_mixed_parameters()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(42, \'coucou\',
