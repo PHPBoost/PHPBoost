@@ -50,6 +50,7 @@ class HTTPFatalExceptionPrinter
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#exceptionContext .stacktrace {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#exceptionContext .stacktrace span.class {font-weight:bold;}
+			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#httpContext {border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;}
 			div#httpContext .header {text-align:left;font-size:26px;font-weight:bold;background-color:#536F8B;padding:5px;border-bottom:1px #aaaaaa solid;}
 			div#httpContext .section {font-size:18px;background-color:#7A99B1;height:30px;}
@@ -65,6 +66,11 @@ class HTTPFatalExceptionPrinter
 			<h1>' . $this->type . '</h1>
 			<div class="message">' . $this->message. '</div>
 			<div class="stacktrace">' . $this->build_stack_trace() . '</div>
+		</div>
+		<div id="whyISeeThisPage">
+			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
+			I you want to see the related user error page, you could disable the <em>DEBUG</em> mode
+			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1">administration panel</a>.
 		</div>
 		<div id="httpContext">' . $this->get_http_context() . '</div>
 	</body>
