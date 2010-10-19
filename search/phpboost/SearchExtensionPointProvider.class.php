@@ -35,7 +35,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	public function scheduled_jobs()
 	{
-		return new SearchNewsScheduledJobs();
+		return new SearchScheduledJobs();
 	}
 
 	public function url_mappings()

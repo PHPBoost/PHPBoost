@@ -78,7 +78,7 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 
 	public function scheduled_jobs()
 	{
-		return new PollNewsScheduledJobs();
+		return new PollScheduledJobs();
 	}
 }
 

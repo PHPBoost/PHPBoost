@@ -36,28 +36,18 @@ class HTTPRequestDumper
 	private $output;
 	private $is_parameter_row_odd = true;
 
-	private static $container_style = 'border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;';
-	private static $header_style = 'text-align:left;font-size:26px;font-weight:bold;background-color:#ffffcc;padding:5px;border-bottom:1px #aaaaaa solid;';
-	private static $section_style = 'font-size:18px;background-color:#ffffcc;height:30px;';
-	private static $parameter_row_style = '';
-	private static $parameter_odd_row_style = 'background-color:#f0f9ff;';
-	private static $parameter_even_row_style = 'background-color:#f0fff9;';
-	private static $parameter_name_style = 'font-size:14px;font-weight:bold;padding:0 10px;';
-	private static $parameter_value_style = 'font-size:14px;';
-
 	/**
 	 * @desc Returns a formatted dump of the submitted HTTP request
 	 */
 	public function dump(HTTPRequest $request)
 	{
 		$this->request = $request;
-		$this->output = '<div style="' . self::$container_style . '">' .
-			'<table cellspacing="0" cellpadding="3 5px"><caption style="' . self::$header_style . '">HTTP Request</caption>';
+		$this->output = '<table cellspacing="0" cellpadding="3 5px"><caption class="header">HTTP Request</caption>';
 		$this->dump_get();
 		$this->dump_post();
 		$this->dump_cookie();
 		$this->dump_server();
-		$this->output .= '</table></div>';
+		$this->output .= '</table>';
 		return $this->output;
 	}
 
@@ -95,25 +85,25 @@ class HTTPRequestDumper
 
 	private function add_section($title)
 	{
-		$this->output .= '<tr style="' . self::$section_style . '">' .
+		$this->output .= '<tr class="section">' .
 			'<th colspan="2" style="text-align:left;padding:0 10px;">' . $title . '</th></tr>';
 		$this->is_parameter_row_odd = true;
 	}
 
 	private function add_parameter($key, $value)
 	{
-		$row_style = self::$parameter_row_style;
+		$row_class = '';
 		if ($this->is_parameter_row_odd)
 		{
-			$row_style .= self::$parameter_odd_row_style;
+			$row_class = 'parameterOddRow';
 		}
 		else
 		{
-			$row_style .= self::$parameter_even_row_style;
+			$row_class = 'parameterEvenRow';
 		}
-		$this->output .= '<tr style="' . $row_style. '">' .
-			'<td style="' . self::$parameter_name_style . '">' . $key . '</td>' .
-			'<td style="' . self::$parameter_value_style . '">' . htmlspecialchars($value) . '</td>' .
+		$this->output .= '<tr class="parameterRow ' . $row_class. '">' .
+			'<td class="parameterName">' . $key . '</td>' .
+			'<td class="parameterValue">' . htmlspecialchars($value) . '</td>' .
 		'</tr>' ;
 		$this->is_parameter_row_odd = !$this->is_parameter_row_odd;
 	}

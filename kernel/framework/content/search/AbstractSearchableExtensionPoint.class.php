@@ -27,39 +27,48 @@
 
 abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPoint
 {
-    /**
-	 * {@inheritDoc}
-     */
-    public function has_search_options()
-    {
-    	return false;
-    }
+	private $has_search_options;
+	private $build_output_as_list;
 
-    /**
-	 * {@inheritDoc}
-     */
-    public function build_search_form()
-    {
-    	throw new UnsupportedOperationException();
-    }
+	public function __construct($has_search_options = false, $build_output_as_list = true)
+	{
+		$this->has_search_options = $has_search_options;
+		$this->build_output_as_list = $build_output_as_list;
+	}
 
-    /**
+	/**
 	 * {@inheritDoc}
-     */
-    public function build_output_as_list()
-    {
-    	return true;
-    }
+	 */
+	public function has_search_options()
+	{
+		return $this->has_search_options;
+	}
 
-    /**
+	/**
 	 * {@inheritDoc}
-     */
-    public function format_element(SearchResult $result)
-    {
+	 */
+	public function build_search_form()
+	{
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function build_output_as_list()
+	{
+		return $this->build_output_as_list;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function format_element(SearchResult $result)
+	{
 		$tpl = new FileTemplate('framework/content/search/SearchGenericResult.tpl');
 		$tpl->put('title', $result->get_title());
 		$tpl->put('link', $result->get_link());
 		return $tpl;
-    }
+	}
 }
 ?>
