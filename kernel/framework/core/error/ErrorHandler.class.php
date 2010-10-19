@@ -77,9 +77,9 @@ class ErrorHandler
 	private function prepare($errno, $errstr, $errfile, $errline)
 	{
 		$this->exception = new Exception($errstr);
-        $this->errno = $errno;
-        $this->errfile = $errfile;
-        $this->errline = $errline;
+		$this->errno = $errno;
+		$this->errfile = $errfile;
+		$this->errline = $errline;
 		$this->stacktrace = '';
 		$this->errdesc = '';
 		$this->errclass = '';
@@ -139,13 +139,23 @@ class ErrorHandler
 
 	private function display()
 	{
-		if (Debug::is_debug_mode_enabled())
+		if ($this->fatal)
+		{
+			AppContext::get_response()->clean_output();
+			if (Debug::is_debug_mode_enabled())
+			{
+				Debug::fatal($this->exception);
+			}
+			else
+			{
+				echo self::FATAL_MESSAGE;
+				Environment::destroy();
+				exit;
+			}
+		}
+		else
 		{
 			$this->display_debug();
-		}
-		elseif ($this->fatal)
-		{
-			$this->display_fatal();
 		}
 	}
 
@@ -153,27 +163,20 @@ class ErrorHandler
 		$stack = '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		if (count($this->exception->getTrace()) > 2)
 		{
-            $stack .= (Debug::is_output_html() ? '<br />' : "\n");
-            $stack .= Debug::get_stacktrace_as_string($start_trace_index);
+			$stack .= (Debug::is_output_html() ? '<br />' : "\n");
+			$stack .= Debug::get_stacktrace_as_string($start_trace_index);
 		}
 		return $stack;
 	}
 
 	protected function display_debug()
 	{
-		if (Debug::is_output_html())
-		{
-			echo '<span id="errorh"></span>
+		echo '<span id="errorh"></span>
             <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
                 <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
-		}
-		else
-		{
-			Debug::fatal($this->exception);
-		}
 	}
 
 	protected function display_fatal()

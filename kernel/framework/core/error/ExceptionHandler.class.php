@@ -49,8 +49,7 @@ class ExceptionHandler
 		$this->exception = $exception;
 		$this->clean_output_buffer();
 		$this->log();
-		$controller = $this->prepare_controller();
-		$this->send_response($controller);
+		$this->display();
 		$this->destroy_app();
 	}
 
@@ -62,6 +61,38 @@ class ExceptionHandler
 	private function log()
 	{
 		ErrorHandler::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(0, $this->exception), E_USER_ERROR);
+	}
+
+	private function display()
+	{
+
+		if (Debug::is_debug_mode_enabled())
+		{
+			$this->raw_display();
+		}
+		else
+		{
+			$controller = $this->prepare_controller();
+			$this->send_response($controller);
+		}
+	}
+
+	private function destroy_app()
+	{
+		Environment::destroy();
+		exit;
+	}
+
+	private function raw_display()
+	{
+		if (Debug::is_debug_mode_enabled())
+		{
+			Debug::fatal($this->exception);
+		}
+		else
+		{
+			echo ErrorHandler::FATAL_MESSAGE;
+		}
 	}
 
 	private function prepare_controller()
@@ -85,28 +116,10 @@ class ExceptionHandler
 		}
 	}
 
-	private function destroy_app()
-	{
-		Environment::destroy();
-		exit;
-	}
-
 	private function integrated_display(Controller $controller)
 	{
 		$request = AppContext::get_request();
 		$response = $controller->execute($request);
 		$response->send();
-	}
-
-	private function raw_display()
-	{
-		if (Debug::is_debug_mode_enabled())
-		{
-			Debug::fatal($this->exception);
-		}
-		else
-		{
-			die(ErrorHandler::FATAL_MESSAGE);
-		}
 	}
 }
