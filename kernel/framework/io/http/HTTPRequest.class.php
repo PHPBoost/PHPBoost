@@ -288,24 +288,24 @@ class HTTPRequest
 
 	private function get_raw_string($value)
 	{
-		$value = self::strip_value_slashes_if_needed($value);
+		$value = self::sanitize($value);
 		return (string) $value;
 	}
 
-	private static function strip_value_slashes_if_needed($value)
+	private static function sanitize($value)
 	{
 		if (MAGIC_QUOTES)
 		{
 			$value = stripslashes($value);
 		}
-		return $value;
+		return str_replace(array("\r\n", "\r"), "\n", $value);
 	}
 
-	private function get_raw_array($value)
+	private function get_raw_array(array $array)
 	{
-		foreach ($value as &$v)
+		foreach ($array as &$item)
 		{
-			$v = self::strip_value_slashes_if_needed($v);
+			$item = self::sanitize($item);
 		}
 	}
 }

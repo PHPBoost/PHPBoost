@@ -27,6 +27,12 @@
 
 class NewsSearchable extends AbstractSearchableExtensionPoint
 {
+	public function __construct()
+	{
+		$has_special_options = true;
+		parent::__construct($has_special_options);
+	}
+
 	public function get_search_request($args)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
