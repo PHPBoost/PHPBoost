@@ -53,7 +53,10 @@ class HTTPFatalExceptionPrinter
 			h2 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin-bottom:0px;}
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#exceptionContext .stacktrace {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
-			div#exceptionContext .stacktrace ul li span.call {font-weight:bold;}
+			div#exceptionContext .stacktrace table.stack td.prototype {font-weight:bold;padding-right:10px;}
+			div#exceptionContext .stacktrace table.stack td.file {font-style:italic;}
+			div#exceptionContext .stacktrace table.stack td.args {font-size:12px;padding-right:10px;}
+			div#exceptionContext .stacktrace table.stack td.argsDetails {}
 			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#httpContext {border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;}
 			div#httpContext .header {text-align:left;font-size:26px;font-weight:bold;background-color:#536F8B;padding:5px;border-bottom:1px #aaaaaa solid;}
@@ -86,7 +89,7 @@ class HTTPFatalExceptionPrinter
 		</div>
 		<div id="whyISeeThisPage">
 			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
-			I you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
+			If you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
 			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1">administration panel</a>.
 		</div>
 		<div id="httpContext">' . $this->get_http_context() . '</div>
@@ -97,13 +100,13 @@ class HTTPFatalExceptionPrinter
 
 	private function build_stack_trace()
 	{
-		$stack = '<table cellpadding="2"><tr><th></th><th>Method</th><th>File</th></tr>';
+		$stack = '<table cellpadding="2" class="stack"><tr><th></th><th>Method</th><th>File</th></tr>';
 		$i = 0;
 		foreach ($this->exception->getTrace() as $call)
 		{
 			$has_args = ExceptionUtils::has_args($call);
 			$id = 'call' . $i . 'Arguments';
-			$stack .= '<tr><td>';
+			$stack .= '<tr><td class="args">';
 			if ($has_args)
 			{
 				$stack .= '<a href="#" onclick="toggleDisplay(\'' . $id . '\');">args</a>';
@@ -111,12 +114,12 @@ class HTTPFatalExceptionPrinter
 			else {
 				$stack .= 'no args';
 			}
-			$stack .= '</td><td><strong>' . ExceptionUtils::get_method_prototype($call) .
-				'()</strong></td><td>' . ExceptionUtils::get_file($call) .
+			$stack .= '</td><td class="prototype">' . ExceptionUtils::get_method_prototype($call) .
+				'</td><td class="file">' . ExceptionUtils::get_file($call) .
 				'</td></tr>';
 			if ($has_args)
 			{
-				$stack .= '<tr id="' . $id . '" style="display:none;"><td colspan="3">' .
+				$stack .= '<tr id="' . $id . '" style="display:none;"><td colspan="3" class="argsDetails">' .
 					ExceptionUtils::get_args($call) . '</td></tr>';
 			}
 			$i++;

@@ -43,13 +43,54 @@ class ExceptionUtils
 		{
 			$prototype .= $call['class'] . $call['type'];
 		}
-		$prototype .= $call['function'];
+		$prototype .= $call['function'] . '(';
+		$prototype .= implode(', ', self::get_args_types($call));
+		$prototype .= ')';
 		return $prototype;
 	}
 
 	public static function has_args($call)
 	{
 		return !empty($call['args']);
+	}
+
+	private static function get_args_types($call)
+	{
+		$types = array();
+		foreach ($call['args'] as $arg)
+		{
+			$types[] = self::get_arg_type($arg);
+		}
+		return $types;
+	}
+
+	public static function get_arg_type($arg)
+	{
+		if (is_array($arg))
+		{
+			return 'array';
+		}
+		elseif (is_bool($arg))
+		{
+			return 'boolean';
+		}
+		elseif (is_int($arg))
+		{
+			return 'int';
+		}
+		elseif (is_float($arg))
+		{
+			return 'float';
+		}
+		elseif (is_string($arg))
+		{
+			return 'string';
+		}
+		elseif (is_object($arg))
+		{
+			return get_class($arg);
+		}
+		return 'null';
 	}
 
 	public static function get_args($call)
