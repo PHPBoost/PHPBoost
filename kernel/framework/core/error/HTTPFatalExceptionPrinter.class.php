@@ -30,6 +30,7 @@ class HTTPFatalExceptionPrinter
 	private $type;
 	private $message;
 	private $exception;
+	private $is_row_odd = true;
 	private $output = '';
 
 	public function __construct(Exception $exception)
@@ -49,33 +50,35 @@ class HTTPFatalExceptionPrinter
 		<meta http-equiv="Content-Language" content="en" />
 		<style type="text/css">
 			body {background-color:#dddddd;}
-			h1 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin-bottom:0px;}
-			h2 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin-bottom:0px;}
+			table {width:100%;}
+			caption {text-align:left;font-size:26px;font-weight:bold;background-color:#536F8B;padding:5px;border-bottom:1px #aaaaaa solid;}
+			th {font-size:18px;background-color:#7A99B1;height:30px;}
+			tr.section {}
+			tr.oddRow {background-color:#ECEEEF;}
+			tr.evenRow {background-color:#D2E3F1;}
+			td.parameterName {font-size:14px;font-weight:bold;padding:0 10px;}
+			td.parameterValue {font-size:14px;}
+			h1 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin:0px;}
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
-			div#exceptionContext .stacktrace {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
-			div#exceptionContext .stacktrace table.stack td.prototype {font-weight:bold;padding-right:10px;}
-			div#exceptionContext .stacktrace table.stack td.file {font-style:italic;}
-			div#exceptionContext .stacktrace table.stack td.args {font-size:12px;padding-right:10px;}
-			div#exceptionContext .stacktrace table.stack td.argsDetails {}
+			table.stack td.prototype {font-weight:bold;padding-right:10px;}
+			table.stack td.file {font-size:14px;font-style:italic;}
+			table.stack td.args {font-size:12px;padding-right:10px;}
+			table.stack td.argsDetails {border-top:1px #aaaaaa solid;}
+			div#exceptionContext {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
-			div#httpContext {border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;}
-			div#httpContext .header {text-align:left;font-size:26px;font-weight:bold;background-color:#536F8B;padding:5px;border-bottom:1px #aaaaaa solid;}
-			div#httpContext .section {font-size:18px;background-color:#7A99B1;height:30px;}
-			div#httpContext .parameterRow {}
-			div#httpContext .parameterOddRow {background-color:#ECEEEF;}
-			div#httpContext .parameterEvenRow {background-color:#D2E3F1;}
-			div#httpContext .parameterRow .parameterName {font-size:14px;font-weight:bold;padding:0 10px;}
-			div#httpContext .parameterRow .parameterValue {font-size:14px;}
+			div#httpContext {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 		</style>
 		<script type="text/javascript">
 		<!--
-		function toggleDisplay(eltId) {
+		function toggleDisplay(link, eltId) {
 			var elt = document.getElementById(eltId);
 			var mode = elt.style.display;
 			if (mode != \'none\') {
 				elt.style.display = \'none\';
+				link.innerHTML = \'+\';
 			} else {
 				elt.style.display = \'table-row\';
+				link.innerHTML = \'-\';
 			}
 		}
 		-->
@@ -85,14 +88,21 @@ class HTTPFatalExceptionPrinter
 		<div id="exceptionContext">
 			<h1>' . $this->type . '</h1>
 			<div class="message">' . $this->message. '</div>
-			<div class="stacktrace">' . $this->build_stack_trace() . '</div>
+			<table cellpadding="2" cellspacing="0" class="stack">
+				<caption>STACKTRACE</caption>
+				<tr><th></th><th>METHOD</th><th>FILE</th></tr>' . $this->build_stack_trace() . '
+			</table>
 		</div>
 		<div id="whyISeeThisPage">
 			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
 			If you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
 			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1">administration panel</a>.
 		</div>
-		<div id="httpContext">' . $this->get_http_context() . '</div>
+		<div id="httpContext">
+			<table cellspacing="0" cellpadding="3 5px"><caption>HTTP Request</caption>
+			' . $this->get_http_context() . '
+			</table>
+		</div>
 	</body>
 </html>';
 		return $this->output;
@@ -100,38 +110,67 @@ class HTTPFatalExceptionPrinter
 
 	private function build_stack_trace()
 	{
-		$stack = '<table cellpadding="2" class="stack"><tr><th></th><th>Method</th><th>File</th></tr>';
 		$i = 0;
+		$this->is_row_odd = true;
+		$stack = '';
 		foreach ($this->exception->getTrace() as $call)
 		{
+			$row_class = $this->is_row_odd ? 'oddRow' : 'evenRow';
 			$has_args = ExceptionUtils::has_args($call);
 			$id = 'call' . $i . 'Arguments';
-			$stack .= '<tr><td class="args">';
+			$stack .= '<tr class="' . $row_class . '">';
+			$stack .= '<td class="args">';
 			if ($has_args)
 			{
-				$stack .= '<a href="#" onclick="toggleDisplay(\'' . $id . '\');">args</a>';
+				$stack .= '<a href="#" onclick="toggleDisplay(this, \'' . $id . '\');">+</a>';
 			}
-			else {
-				$stack .= 'no args';
-			}
-			$stack .= '</td><td class="prototype">' . ExceptionUtils::get_method_prototype($call) .
-				'</td><td class="file">' . ExceptionUtils::get_file($call) .
-				'</td></tr>';
+			$stack .= '</td>';
+			$stack .= '<td class="prototype">' . ExceptionUtils::get_method_prototype($call) . '</td>';
+			$stack .= '<td class="file">' . ExceptionUtils::get_file($call) . '</td></tr>';
 			if ($has_args)
 			{
-				$stack .= '<tr id="' . $id . '" style="display:none;"><td colspan="3" class="argsDetails">' .
-					ExceptionUtils::get_args($call) . '</td></tr>';
+				$stack .= '<tr id="' . $id . '" style="display:none;" class="' . $row_class . '">
+				<td colspan="3" class="argsDetails">' . ExceptionUtils::get_args($call) . '</td></tr>';
 			}
 			$i++;
+			$this->is_row_odd = !$this->is_row_odd;
 		}
-		$stack .= '</table>';
 		return $stack;
 	}
 
 	private function get_http_context()
 	{
-		$dumper = new HTTPRequestDumper();
-		return $dumper->dump(AppContext::get_request());
+		$http_context = '';
+		$http_context .= $this->dump_var('GET', $_GET);
+		$http_context .= $this->dump_var('POST', $_POST);
+		$http_context .= $this->dump_var('COOKIE', $_COOKIE);
+		$http_context .= $this->dump_var('SERVER', $_SERVER);
+		return $http_context;
+	}
+
+	private function dump_var($title, $parameters)
+	{
+		$dump =  '';
+		if (!empty($parameters))
+		{
+			$this->is_row_odd = true;
+			$dump .= '<tr class="section"><th colspan="2" style="text-align:left;padding:0 10px;">' . $title . '</th></tr>';
+			foreach ($parameters as $key => $value)
+			{
+				$dump .= $this->add_parameter($key, $value);
+			}
+		}
+		return $dump;
+	}
+
+	private function add_parameter($key, $value)
+	{
+		$row_class = $this->is_row_odd ? 'oddRow' : 'evenRow';
+		$this->is_row_odd = !$this->is_row_odd;
+		return '<tr class="' . $row_class. '">' .
+			'<td class="parameterName">' . $key . '</td>' .
+			'<td class="parameterValue">' . nl2br(htmlspecialchars($value), true) . '</td>' .
+		'</tr>' ;
 	}
 }
 

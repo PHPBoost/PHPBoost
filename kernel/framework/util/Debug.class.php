@@ -43,8 +43,15 @@ class Debug
 		if (self::$enabled === null)
 		{
 			$debug = true;
-			@include PATH_TO_ROOT . '/cache/debug.php';
-			self::$enabled = $debug;
+			if (@include PATH_TO_ROOT . '/cache/debug.php')
+			{
+				self::$enabled = $debug;
+			}
+			else
+			{
+				self::$enabled = false;
+			}
+
 		}
 		return self::$enabled;
 	}
@@ -109,7 +116,6 @@ class Debug
 		}
 		else
 		{
-			// $message = str_replace("\n", '<br />', $message);
 			$printer = new HTTPFatalExceptionPrinter($exception);
 			echo $printer->render();
 		}
@@ -172,7 +178,7 @@ class Debug
 		{
 			$trace =& $stacktrace[$i];
 			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' .
-			self::get_file($trace) . ' - ' . self::get_method_prototype($trace) . '<br />';
+			ExceptionUtils::get_file($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . '<br />';
 		}
 
 		if (self::is_output_html())
@@ -211,74 +217,6 @@ class Debug
 		{
 			echo "\n"; print_r($object); echo "\n";
 		}
-	}
-
-	private static function get_file($trace)
-	{
-		if (!empty($trace['file']))
-		{
-			return Path::get_path_from_root($trace['file']) . ':' . $trace['line'];
-		}
-		return 'Internal';
-	}
-
-	private static function get_method_prototype($call)
-	{
-		$prototype = '<b>';
-		if (!empty($call['class']))
-		{
-			$prototype .= $call['class'] . $call['type'];
-		}
-		$prototype .= $call['function'] . '(</b>';
-		if (!empty($call['args']))
-		{
-			$prototype .= self::get_args($call['args']);
-		}
-		$prototype .= '<b>)</b>';
-		return $prototype;
-	}
-
-	private static function get_args($args)
-	{
-		$string_stacktrace = '';
-
-		$i = 0;
-		$count = count($args) - 1;
-		foreach ($args as $arg)
-		{
-			if (is_numeric($arg))
-			{
-				$string_stacktrace .= (int) $arg;
-			}
-			elseif (is_bool($arg))
-			{
-				$string_stacktrace .= ($arg ? 'True' : 'False');
-			}
-			elseif (is_object($arg))
-			{
-				$string_stacktrace .= get_class($arg);
-			}
-			elseif (is_array($arg))
-			{
-				$string_stacktrace .= htmlspecialchars(addslashes(print_r($arg, true)));
-			}
-			else
-			{
-				$string_maxlength = 150;
-				if (strlen($arg) > $string_maxlength)
-				{
-					$arg = substr($arg, 0, $string_maxlength - 3) . '...';
-				}
-				$string_stacktrace .= '\'' . htmlspecialchars(addslashes($arg)) . '\'';
-			}
-
-			if ($i < $count)
-			{
-				$string_stacktrace .= ', ';
-			}
-			$i++;
-		}
-		return $string_stacktrace;
 	}
 
 	private static function to_plain_text($text)
