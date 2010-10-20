@@ -41,15 +41,19 @@ class HTTPFatalExceptionPrinter
 
 	public function render()
 	{
-		$this->output .= '<html>
+		$this->output .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 	<head>
 		<title>' . $this->type . ' caught</title>
-		<style>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="Content-Language" content="en" />
+		<style type="text/css">
 			body {background-color:#dddddd;}
 			h1 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin-bottom:0px;}
+			h2 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin-bottom:0px;}
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#exceptionContext .stacktrace {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
-			div#exceptionContext .stacktrace span.class {font-weight:bold;}
+			div#exceptionContext .stacktrace ul li span.call {font-weight:bold;}
 			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#httpContext {border:1px #aaaaaa solid;margin-top:10px;padding-top:0px;}
 			div#httpContext .header {text-align:left;font-size:26px;font-weight:bold;background-color:#536F8B;padding:5px;border-bottom:1px #aaaaaa solid;}
@@ -60,6 +64,19 @@ class HTTPFatalExceptionPrinter
 			div#httpContext .parameterRow .parameterName {font-size:14px;font-weight:bold;padding:0 10px;}
 			div#httpContext .parameterRow .parameterValue {font-size:14px;}
 		</style>
+		<script type="text/javascript">
+		<!--
+		function toggleDisplay(eltId) {
+			var elt = document.getElementById(eltId);
+			var mode = elt.style.display;
+			if (mode != \'none\') {
+				elt.style.display = \'none\';
+			} else {
+				elt.style.display = \'table-row\';
+			}
+		}
+		-->
+		</script>
 	</head>
 	<body>
 		<div id="exceptionContext">
@@ -69,7 +86,7 @@ class HTTPFatalExceptionPrinter
 		</div>
 		<div id="whyISeeThisPage">
 			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
-			I you want to see the related user error page, you could disable the <em>DEBUG</em> mode
+			I you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
 			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1">administration panel</a>.
 		</div>
 		<div id="httpContext">' . $this->get_http_context() . '</div>
@@ -80,83 +97,32 @@ class HTTPFatalExceptionPrinter
 
 	private function build_stack_trace()
 	{
-		$stack = '<ul>';
+		$stack = '<table cellpadding="2"><tr><th></th><th>Method</th><th>File</th></tr>';
+		$i = 0;
 		foreach ($this->exception->getTrace() as $call)
 		{
-			$stack .= '<li>';
-			$stack .= $this->get_file($call) . '</a> - ' . $this->get_method_prototype($call);
-			$stack .= '</li>';
-		}
-		$stack .= '</ul>';
-		return $stack;
-	}
-
-	private function get_file($call)
-	{
-		if (!empty($call['file']))
-		{
-			return Path::get_path_from_root($call['file']) . ':' . $call['line'];
-		}
-		return 'Internal';
-	}
-
-	private function get_method_prototype($call)
-	{
-		$prototype = '<span class="class">';
-		if (!empty($call['class']))
-		{
-			$prototype .= $call['class'] . $call['type'];
-		}
-		$prototype .= $call['function'] . '(</span>';
-		if (!empty($call['args']))
-		{
-			$prototype .= $this->get_args($call['args']);
-		}
-		$prototype .= '<span class="class">)</span>';
-		return $prototype;
-	}
-
-	private function get_args($args)
-	{
-		$trace = '';
-
-		$i = 0;
-		$count = count($args) - 1;
-		foreach ($args as $arg)
-		{
-			if (is_numeric($arg))
+			$has_args = ExceptionUtils::has_args($call);
+			$id = 'call' . $i . 'Arguments';
+			$stack .= '<tr><td>';
+			if ($has_args)
 			{
-				$trace .= (int) $arg;
+				$stack .= '<a href="#" onclick="toggleDisplay(\'' . $id . '\');">args</a>';
 			}
-			elseif (is_bool($arg))
-			{
-				$trace .= ($arg ? 'True' : 'False');
+			else {
+				$stack .= 'no args';
 			}
-			elseif (is_object($arg))
+			$stack .= '</td><td><strong>' . ExceptionUtils::get_method_prototype($call) .
+				'()</strong></td><td>' . ExceptionUtils::get_file($call) .
+				'</td></tr>';
+			if ($has_args)
 			{
-				$trace .= get_class($arg);
-			}
-			elseif (is_array($arg))
-			{
-				$trace .= 'array[' . count($arg) . ']';
-			}
-			else
-			{
-				$string_maxlength = 150;
-				if (strlen($arg) > $string_maxlength)
-				{
-					$arg = substr($arg, 0, $string_maxlength - 3) . '...';
-				}
-				$trace .= '\'' . htmlspecialchars(addslashes($arg)) . '\'';
-			}
-
-			if ($i < $count)
-			{
-				$trace .= ', ';
+				$stack .= '<tr id="' . $id . '" style="display:none;"><td colspan="3">' .
+					ExceptionUtils::get_args($call) . '</td></tr>';
 			}
 			$i++;
 		}
-		return $trace;
+		$stack .= '</table>';
+		return $stack;
 	}
 
 	private function get_http_context()
