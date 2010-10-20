@@ -434,7 +434,7 @@ class Environment
 		$today = new Date();
 		$yesterday = new Date(); // FIXME set yesterday date
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $jobs)
+		foreach ($jobs as $job)
 		{
 			$job->on_changeday($yesterday, $today);
 		}

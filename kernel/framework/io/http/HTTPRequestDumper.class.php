@@ -103,7 +103,7 @@ class HTTPRequestDumper
 		}
 		$this->output .= '<tr class="parameterRow ' . $row_class. '">' .
 			'<td class="parameterName">' . $key . '</td>' .
-			'<td class="parameterValue">' . htmlspecialchars($value) . '</td>' .
+			'<td class="parameterValue">' . str_replace("\n", '<br />', htmlspecialchars($value)) . '</td>' .
 		'</tr>' ;
 		$this->is_parameter_row_odd = !$this->is_parameter_row_odd;
 	}
