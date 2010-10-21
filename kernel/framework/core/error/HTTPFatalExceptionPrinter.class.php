@@ -62,7 +62,8 @@ class HTTPFatalExceptionPrinter
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			table.stack td.prototype {font-weight:bold;padding-right:10px;}
 			table.stack td.file {font-size:14px;font-style:italic;}
-			table.stack td.args {font-size:12px;padding-right:10px;}
+			table.stack td.line {text-align:right;font-size:12px;width:30px;}
+			table.stack td.args {font-size:14px;padding-right:10px;}
 			table.stack td.argsDetails {border-top:1px #aaaaaa solid;}
 			div#exceptionContext {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
@@ -90,7 +91,7 @@ class HTTPFatalExceptionPrinter
 			<div class="message">' . $this->message. '</div>
 			<table cellpadding="2" cellspacing="0" class="stack">
 				<caption>STACKTRACE</caption>
-				<tr><th></th><th>METHOD</th><th>FILE</th></tr>' . $this->build_stack_trace() . '
+				<tr><th></th><th>METHOD</th><th>FILE</th><th>LINE</th></tr>' . $this->build_stack_trace() . '
 			</table>
 		</div>
 		<div id="whyISeeThisPage">
@@ -126,11 +127,13 @@ class HTTPFatalExceptionPrinter
 			}
 			$stack .= '</td>';
 			$stack .= '<td class="prototype">' . ExceptionUtils::get_method_prototype($call) . '</td>';
-			$stack .= '<td class="file">' . ExceptionUtils::get_file($call) . '</td></tr>';
+			$stack .= '<td class="file">' . ExceptionUtils::get_file($call) . '</td>';
+			$stack .= '<td class="line">' . ExceptionUtils::get_line($call) . '</td>';
+			$stack .= '</tr>';
 			if ($has_args)
 			{
 				$stack .= '<tr id="' . $id . '" style="display:none;" class="' . $row_class . '">
-				<td colspan="3" class="argsDetails">' . ExceptionUtils::get_args($call) . '</td></tr>';
+				<td colspan="4" class="argsDetails">' . ExceptionUtils::get_args($call) . '</td></tr>';
 			}
 			$i++;
 			$this->is_row_odd = !$this->is_row_odd;

@@ -27,13 +27,22 @@
 
 class ExceptionUtils
 {
-	public static function get_file($call)
+public static function get_file($call)
 	{
 		if (!empty($call['file']))
 		{
-			return Path::get_path_from_root($call['file']) . ':' . $call['line'];
+			return Path::get_path_from_root($call['file']) ;
 		}
 		return 'Internal';
+	}
+
+	public static function get_line($call)
+	{
+		if (!empty($call['file']))
+		{
+			return $call['line'];
+		}
+		return '';
 	}
 
 	public static function get_method_prototype($call)
