@@ -33,7 +33,7 @@ class DownloadScheduledJobs extends AbstractScheduledJobExtensionPoint
 	public function on_changeday(Date $yesterday, Date $today)
 	{
 		$querier = PersistenceContext::get_querier();
-		$results = $querier->select_rows($table_name, array('id', 'start', 'end'), 'WHERE start > 0 AND end > 0');
+		$results = $querier->select_rows(PREFIX . 'download', array('id', 'start', 'end'), 'WHERE start > 0 AND end > 0');
 		foreach ($results as $row)
 		{
 			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
