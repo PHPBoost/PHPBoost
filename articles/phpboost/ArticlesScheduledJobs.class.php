@@ -33,7 +33,7 @@ class ArticlesScheduledJobs extends AbstractScheduledJobExtensionPoint
 	public function on_changeday(Date $yesterday, Date $today)
 	{
 		$querier = PersistenceContext::get_querier();
-		$results = $querier->select_rows($table_name, array('id', 'start', 'end'), 'WHERE visible != 0');
+		$results = $querier->select_rows(PREFIX . 'articles', array('id', 'start', 'end'), 'WHERE visible != 0');
 		foreach ($results as $row)
 		{
 			if ($row['start'] <= time() && $row['start'] != 0)
