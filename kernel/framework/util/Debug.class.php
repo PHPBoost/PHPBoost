@@ -110,8 +110,7 @@ class Debug
 			{
 				$message .= 'An exception has been thrown';
 			}
-			$message .= '<hr />';
-			$message = self::to_plain_text('<hr />' . $message);
+			echo $message . "\n--------------------------------------------------------------------------------\n";
 			Debug::print_stacktrace(0, $exception);
 		}
 		else
@@ -177,18 +176,15 @@ class Debug
 		for ($i = $start_trace_index; $i < $stacktrace_size; $i++)
 		{
 			$trace =& $stacktrace[$i];
-			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' .
-			ExceptionUtils::get_file($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . '<br />';
+			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' . ExceptionUtils::get_file($trace) .
+				':' . ExceptionUtils::get_line($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . "\n";
 		}
 
 		if (self::is_output_html())
 		{
-			return $string_stacktrace;
+			$string_stacktrace = nl2br($string_stacktrace, true);
 		}
-		else
-		{
-			return self::to_plain_text($string_stacktrace);
-		}
+		return $string_stacktrace;
 	}
 
 	/**
@@ -217,15 +213,6 @@ class Debug
 		{
 			echo "\n"; print_r($object); echo "\n";
 		}
-	}
-
-	private static function to_plain_text($text)
-	{
-		$text = str_replace(
-		array('<br />', '<hr />'),
-		array("\n", "\n--------------------------------------------------------------------------------\n"),
-		$text);
-		return strip_tags($text);
 	}
 }
 ?>
