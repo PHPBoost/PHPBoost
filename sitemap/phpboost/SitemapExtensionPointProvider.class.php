@@ -41,5 +41,10 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new CLICommandsList(array('generate-sitemap' => 'CLIGenerateSitemapCommand'));
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/sitemap/index.php')));
+	}
 }
 ?>
