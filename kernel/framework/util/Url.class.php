@@ -51,6 +51,9 @@ class Url
 	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=,_~:;/\.\?\'\%]+(?:=[a-z0-9-+=_~:;/\.\?\'\%]+)?)*)?';
 	const ANCHOR_REGEX = '\#[a-z0-9-_/]*';
 
+	private static $root = TPL_PATH_TO_ROOT;
+	private static $server = SERVER_URL;
+
 	private $url = '';
 	private $is_relative = false;
 	private $path_to_root = '';
@@ -74,7 +77,7 @@ class Url
 			}
 			else
 			{
-				$this->path_to_root = self::path_to_root();
+				$this->path_to_root = self::$root;
 			}
 
 			if ($server_url !== null)
@@ -83,7 +86,7 @@ class Url
 			}
 			else
 			{
-				$this->server_url = self::server_url();
+				$this->server_url = self::$server;
 			}
 
 			$anchor = '';
@@ -168,7 +171,7 @@ class Url
 	{
 		if ($this->is_relative())
 		{
-			return PATH_TO_ROOT . '/' . ltrim($this->relative(), '/');
+			return TPL_PATH_TO_ROOT . '/' . ltrim($this->relative(), '/');
 		}
 		else
 		{
@@ -270,17 +273,17 @@ class Url
 	 */
 	public static function html_convert_root_relative2absolute($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = self::path_to_root();
-		$server_url_bak = self::server_url();
+		$path_to_root_bak = self::$root;
+		$server_url_bak = self::$server;
 
-		self::path_to_root($path_to_root);
-		self::server_url($server_url);
+		self::$root = $path_to_root;
+		self::$server = $server_url;
 
 		$result = preg_replace_callback(self::build_html_match_regex(true),
 		array('Url', 'convert_url_to_absolute'), $html_text);
 
-		self::path_to_root($path_to_root_bak);
-		self::server_url($server_url_bak);
+		self::$root = $path_to_root_bak;
+		self::$server = $server_url_bak;
 
 		return $result;
 	}
@@ -294,17 +297,17 @@ class Url
 	 */
 	public static function html_convert_absolute2root_relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = self::path_to_root();
-		$server_url_bak = self::server_url();
+		$path_to_root_bak = self::$root;
+		$server_url_bak = self::$server;
 
-		self::path_to_root($path_to_root);
-		self::server_url($server_url);
+		self::$root = $path_to_root;
+		self::$server = $server_url;
 
 		$result = preg_replace_callback(self::build_html_match_regex(),
 		array('Url', 'convert_url_to_root_relative'), $html_text);
 
-		self::path_to_root($path_to_root_bak);
-		self::server_url($server_url_bak);
+		self::$root = $path_to_root_bak;
+		self::$server = $server_url_bak;
 
 		return $result;
 	}
@@ -318,17 +321,17 @@ class Url
 	 */
 	public static function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = self::path_to_root();
-		$server_url_bak = self::server_url();
+		$path_to_root_bak = self::$root;
+		$server_url_bak = self::$server;
 
-		self::path_to_root($path_to_root);
-		self::server_url($server_url);
+		self::$root = $path_to_root;
+		self::$server = $server_url;
 
 		$result = preg_replace_callback(self::build_html_match_regex(true),
 		array('Url', 'convert_url_to_relative'), $html_text);
 
-		self::path_to_root($path_to_root_bak);
-		self::server_url($server_url_bak);
+		self::$root = $path_to_root_bak;
+		self::$server = $server_url_bak;
 
 		return $result;
 	}
@@ -343,39 +346,6 @@ class Url
 	{
 		$o_url = new Url($url, $path_to_root, $server_url);
 		return $o_url->relative();
-	}
-
-	/**
-	 * @desc Overrides the used PATH_TO_ROOT. if the argument is null, the value is only returned.
-	 * Please note this is a PHP4 hack to allow a Class variable.
-	 * @param string $path the new PATH_TO_ROOT to use
-	 * @return string the used PATH_TO_ROOT
-	 */
-	public static function path_to_root($path = null)
-	{
-		// TODO remove this remanent variable
-		static $path_to_root = PATH_TO_ROOT;
-		if ($path != null)
-		{
-			$path_to_root = $path;
-		}
-		return $path_to_root;
-	}
-
-	/**
-	 * @desc Overrides the used SERVER URL. if the argument is null, the value is only returned.
-	 * Please note this is a PHP4 hack to allow a Class variable.
-	 * @param string $path the new SERVER URL to use
-	 * @return string the used SERVER URL
-	 */
-	public static function server_url($url = null)
-	{
-		static $server_url = SERVER_URL;
-		if ($url !== null)
-		{
-			$server_url = $url;
-		}
-		return $server_url;
 	}
 
 	/**
@@ -484,7 +454,7 @@ class Url
 		$url = new Url($url_params[2]);
 		if ($url->is_relative())
 		{
-			$url_params[2] = self::compress(self::path_to_root() . $url->relative());
+			$url_params[2] = self::compress(self::$root . $url->relative());
 		}
 		return $url_params[1] . $url_params[2] . $url_params[3];
 	}
