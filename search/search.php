@@ -109,7 +109,7 @@ foreach ($search_providers as $search_provider)
 //	                }
 //	            }
 //	        }
-//	        
+//
 //	        $Template->assign_block_vars('forms', array(
 //	            'MODULE_NAME' => $module->get_id(),
 //	            'L_MODULE_NAME' => ucfirst($module->get_name()),
@@ -126,7 +126,7 @@ foreach ($search_providers as $search_provider)
 	            'SEARCH_FORM' => $LANG['search_no_options']
 	        ));
 	    }
-	    
+
 	    // Récupération de la liste des modules à traiter
 	    if ( ($selected_modules === array()) || ($search_in === $provider_id) ||
 	    	(($search_in === 'all') && (in_array($provider_id, $selected_modules))) )
@@ -138,7 +138,7 @@ foreach ($search_providers as $search_provider)
 	    {
 	    	$selected = '';
 	    }
-	    
+
 	    $Template->assign_block_vars('searched_modules', array(
 	        'MODULE' => $provider_id,
 	        'L_MODULE_NAME' => ucfirst($provider_id),
@@ -154,7 +154,7 @@ if (!empty($search))
 {
     $results = array();
     $idsSearch = array();
-    
+
     if ( $search_in != 'all' ) // If we are searching in only one module
     {
         if (isset($used_modules[$search_in]) && isset($modules_args[$search_in]))
@@ -181,7 +181,7 @@ if (!empty($search))
     }
     // Génération des résultats et passage aux templates
     $nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
-    
+
     foreach ($used_modules as $module)
     {
         $Template->assign_block_vars('results', array(
@@ -190,13 +190,13 @@ if (!empty($search))
             'ID_SEARCH' => $idsSearch[$module->get_id()]
         ));
     }
-    
+
     $all_html_result = '';
     if ( $nbResults > 0 )
     {
     	get_html_results($results, $all_html_result, $search_in);
     }
-    
+
     $Template->put_all(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
         'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
@@ -210,7 +210,7 @@ if (!empty($search))
         'SEARCH_IN' => $search_in,
         'C_SIMPLE_SEARCH' => ($search_in == 'all') ? true : false
     ));
-    
+
     // parsage des résultats de la recherche
     $Template->pparse('search_results');
 }

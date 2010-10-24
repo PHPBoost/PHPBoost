@@ -30,6 +30,7 @@ class HTTPFatalExceptionPrinter
 	private $type;
 	private $message;
 	private $exception;
+	private $ob_content = '';
 	private $is_row_odd = true;
 	private $output = '';
 
@@ -38,6 +39,7 @@ class HTTPFatalExceptionPrinter
 		$this->exception = $exception;
 		$this->type = get_class($this->exception);
 		$this->message = str_replace("\n", "<br />", $this->exception->getMessage());
+		$this->ob_content = AppContext::get_response()->get_previous_ob_content();
 	}
 
 	public function render()
@@ -60,6 +62,7 @@ class HTTPFatalExceptionPrinter
 			td.parameterValue {font-size:14px;}
 			h1 {background-color:#536F8B;border:1px #aaaaaa solid;padding:10px;margin:0px;}
 			div#exceptionContext .message {font-weight:bold;background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
+			.outputBuffer {font-size:12px;background-color:#eeeeee;border-left:1px #aaaaaa solid;border-right:1px #aaaaaa solid;padding:10px;}
 			table.stack td.prototype {font-weight:bold;padding-right:10px;}
 			table.stack td.file {font-size:14px;font-style:italic;}
 			table.stack td.line {text-align:right;font-size:12px;width:30px;}
@@ -82,6 +85,20 @@ class HTTPFatalExceptionPrinter
 				link.innerHTML = \'-\';
 			}
 		}
+		function getOutputBufferContent() {
+			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', addslashes(htmlspecialchars($this->ob_content))) . '\';
+		}
+		function openOutputBufferPopup(content) {
+			var obWindow = window.open(\'\', \'Output Buffer\', \'\');
+			obWindow.document.open();
+			obWindow.document.write(content);
+			obWindow.document.close();
+		}
+		function displayOutputBufferContent() {
+			var content = getOutputBufferContent();
+			content = \'<html><head><title>OUTPUT BUFFER RAW</title></head><body><pre>\' + content + \'</body></html>\';
+			openOutputBufferPopup(content);
+		}
 		-->
 		</script>
 	</head>
@@ -94,6 +111,7 @@ class HTTPFatalExceptionPrinter
 				<tr><th></th><th>METHOD</th><th>FILE</th><th>LINE</th></tr>' . $this->build_stack_trace() . '
 			</table>
 		</div>
+		<div class="outputBuffer"><a href="javascript:displayOutputBufferContent()">output buffer</a></div>
 		<div id="whyISeeThisPage">
 			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
 			If you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
@@ -123,7 +141,7 @@ class HTTPFatalExceptionPrinter
 			$stack .= '<td class="args">';
 			if ($has_args)
 			{
-				$stack .= '<a href="#" onclick="toggleDisplay(this, \'' . $id . '\');">+</a>';
+				$stack .= '<a href="javascript:toggleDisplay(this, \'' . $id . '\');">+</a>';
 			}
 			$stack .= '</td>';
 			$stack .= '<td class="prototype">' . ExceptionUtils::get_method_prototype($call) . '</td>';

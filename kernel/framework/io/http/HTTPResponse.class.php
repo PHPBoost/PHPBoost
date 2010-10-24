@@ -74,8 +74,9 @@ class HTTPResponse
  	    '502' => 'Bad Gateway',
  	    '503' => 'Service Unavailable',
  	    '504' => 'Gateway Timeout',
- 	    '505' => 'HTTP Version Not Supported'
-	);
+ 	    '505' => 'HTTP Version Not Supported');
+
+	private $last_ob_content_before_clean = '';
 
 	public function __construct($status_code = 200)
 	{
@@ -136,7 +137,23 @@ class HTTPResponse
 	 */
 	public function clean_output()
 	{
-		@ob_clean();
+		if (Debug::is_debug_mode_enabled())
+		{
+			$this->last_ob_content_before_clean = @ob_get_clean();
+		}
+		else
+		{
+			@ob_clean();
+		}
+	}
+
+	/**
+	 * @desc Returns the previous output buffer content.
+	 * @return string the previous output buffer content.
+	 */
+	public function get_previous_ob_content()
+	{
+		return $this->last_ob_content_before_clean;
 	}
 
 	/**
