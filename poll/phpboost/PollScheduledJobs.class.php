@@ -34,7 +34,7 @@ class PollScheduledJobs extends AbstractScheduledJobExtensionPoint
 	{
 		$querier = PersistenceContext::get_querier();
 		$querier->delete(PREFIX . 'poll', 'WHERE user_id = -1 AND timestamp < :limit', array('limit' => time() - (3600 * 24)));
-		$results = $querier->select_rows($table_name, array('id', 'start', 'end'), 'WHERE start > 0 AND end > 0');
+		$results = $querier->select_rows(PREFIX . 'poll', array('id', 'start', 'end'), 'WHERE start > 0 AND end > 0');
 		foreach ($results as $row)
 		{
 			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
