@@ -34,9 +34,9 @@ class AdminMenusDisplayResponse extends AdminMenuDisplayResponse
 	public function __construct($view)
 	{
         global $LANG;
-        
+
         parent::__construct($view);
-        
+
         $view->add_lang($LANG);
         $this->set_title($LANG['menus_management']);
         $img = '/templates/' . get_utheme() . '/images/admin/menus.png';
