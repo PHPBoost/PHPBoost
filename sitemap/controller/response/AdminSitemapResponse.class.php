@@ -28,27 +28,27 @@
 class AdminSitemapResponse extends AdminMenuDisplayResponse
 {
 	private $lang = array();
-	
+
 	public function __construct(Template $view)
 	{
 		parent::__construct($view);
-		
+
 		$this->lang = LangLoader::get('common', 'sitemap');
-		
+
 		$this->prepare_menu();
 	}
-	
+
 	private function prepare_menu()
 	{
 		$this->set_title($this->lang['sitemap']);
 		$this->add_menu_link($this->lang['general_config'], SitemapUrlBuilder::get_general_config());
-		
+
 		$this->add_menu_link($this->lang['generate_xml_file'], SitemapUrlBuilder::get_xml_file_generation());
 	}
-	
+
 	private function add_menu_link($label, Url $url)
 	{
-		$this->add_link($label, $url->relative(), 'sitemap/sitemap.png');
+		$this->add_link($label, $url->relative(), '/sitemap/sitemap.png');
 	}
 }
 

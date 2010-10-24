@@ -36,14 +36,13 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	 * @var Template
 	 */
 	private $full_view;
+	private $links = array();
 
 	public function __construct(View $view)
 	{
 		$env = new AdminDisplayGraphicalEnvironment();
-
 		$this->full_view = new FileTemplate('admin/AdminMenuDisplayResponse.tpl');
 		$this->full_view->put('content', $view);
-
 		parent::__construct($env , $this->full_view);
 	}
 
@@ -54,11 +53,17 @@ class AdminMenuDisplayResponse extends AbstractResponse
 
 	public function add_link($name, $url, $img)
 	{
-		$this->full_view->assign_block_vars('links', array(
+		$this->links[] = array(
 		    'LINK' => $name,
-		    'U_LINK' => ltrim(Url::to_rel($url), '/'),
-		    'U_IMG' => ltrim($img, '/')
-		));
+		    'U_LINK' => Url::to_rel($url),
+		    'U_IMG' => Url::to_rel($img)
+		);
+	}
+
+	public function send()
+	{
+		$this->full_view->put('links', $this->links);
+		parent::send();
 	}
 }
 ?>

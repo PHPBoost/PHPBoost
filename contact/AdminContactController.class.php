@@ -102,7 +102,7 @@ class AdminContactController extends AdminController
 	{
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['title_contact']);
-		$response->add_link($this->lang['contact_config'], '/contact/' . url('index.php?url=/admin', 'admin/'), 'contact/contact.png');
+		$response->add_link($this->lang['contact_config'], '/contact/' . url('index.php?url=/admin', 'admin/'), '/contact/contact.png');
 		return $response;
 	}
 }
