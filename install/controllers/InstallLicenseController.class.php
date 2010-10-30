@@ -66,8 +66,8 @@ class InstallLicenseController extends InstallController
     	$license_block = '<div style="width:auto;height:340px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1">' . $license_content . '</div>';
     	$license = new FormFieldHTML('licenseContent', $license_block);
     	$fieldset->add_field($license);
-    	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree']);
-    	$agree_checkbox->add_constraint(new FormFieldConstraintNotEmpty());
+    	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
+    	array('required' => true));
     	$fieldset->add_field($agree_checkbox);
 
     	$action_fieldset = new FormFieldsetButtons('actions');
