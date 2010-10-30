@@ -86,23 +86,24 @@ class InstallDisplayResponse extends AbstractResponse
 	{
 		$lang = AppContext::get_request()->get_string('lang', self::INSTALL_DEFAULT_LANGUAGE);
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
+		$langs = array();
 		foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
 		{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $folder->get_name());
 			if (!empty($info_lang['name']))
 			{
-				$this->full_view->assign_block_vars('lang', array(
+				$langs[] = array(
 					'LANG' => $folder->get_name(),
 					'LANG_NAME' => $info_lang['name'],
 					'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
-				));
-
+				);
 				if ($folder->get_name() == $lang)
 				{
-					$this->full_view->put_all(array('LANG_IDENTIFIER' => $info_lang['identifier']));
+					$this->full_view->put('LANG_IDENTIFIER', $info_lang['identifier']);
 				}
 			}
 		}
+		$this->full_view->put('lang', $langs);
 	}
 
 	private function init_steps()
