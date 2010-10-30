@@ -30,80 +30,102 @@ class InstallServerConfigController extends InstallController
 	/**
 	 * @var Template
 	 */
-    private $view;
-    /**
-     * @var ServerConfiguration
-     */
-    private $server_conf;
+	private $view;
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit;
+	/**
+	 * @var ServerConfiguration
+	 */
+	private $server_conf;
 
-    public function __construct()
-    {
-    	$this->server_conf = new ServerConfiguration();
-    }
+	public function __construct()
+	{
+		$this->server_conf = new ServerConfiguration();
+	}
 
 	public function execute(HTTPRequest $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
+		$this->build_form();
+		if ($this->submit->has_been_submited())
+		{
+			$this->handle_form();
+		}
 		$this->build_view();
-		$this->add_navigation();
 		return $this->create_response();
+	}
+
+	private function build_form()
+	{
+		$this->form = new HTMLForm('continueForm');
+		$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration(), 'templates/images/refresh.png');
+		$action_fieldset->add_button($refresh);
+		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
+		$action_fieldset->add_button($this->submit);
+		$this->form->add_fieldset($action_fieldset);
+	}
+
+	private function handle_form()
+	{
+		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate())
+		{
+			AppContext::get_response()->redirect(InstallUrlBuilder::database());
+		}
 	}
 
 	private function build_view()
 	{
-        $this->view = new FileTemplate('install/server-config.tpl');
-        $this->view->put_all(array(
+		$this->view = new FileTemplate('install/server-config.tpl');
+		$this->view->put_all(array(
             'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
             'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
             'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_libray(),
             'URL_REWRITING_AVAILABLE' => $this->server_conf->has_url_rewriting()
-        ));
+		));
 		try
-        {
-            $this->view->put('URL_REWRITING_KNOWN', true);
-            $this->view->put('URL_REWRITING_AVAILABLE', $this->server_conf->has_url_rewriting());
-        }
-        catch (UnsupportedOperationException $ex)
-        {
-            $this->view->put('URL_REWRITING_KNOWN', false);
-        }
-        $this->check_folders_permissions();
+		{
+			$this->view->put('URL_REWRITING_KNOWN', true);
+			$this->view->put('URL_REWRITING_AVAILABLE', $this->server_conf->has_url_rewriting());
+		}
+		catch (UnsupportedOperationException $ex)
+		{
+			$this->view->put('URL_REWRITING_KNOWN', false);
+		}
+		$this->check_folders_permissions();
+		$this->view->put('CONTINUE_FORM', $this->form->display());
 	}
 
-    private function check_folders_permissions()
-    {
-        $folders = array();
-        foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
-        {
-        	$folders[] = array(
+	private function check_folders_permissions()
+	{
+		$folders = array();
+		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
+		{
+			$folders[] = array(
                'NAME' => $folder_name,
                'EXISTS' => $folder->exists(),
                'IS_WRITABLE' => $folder->is_writable(),
-        	);
-        }
-        $this->view->put('folder', $folders);
-    }
+			);
+		}
+		$this->view->put('folder', $folders);
+	}
 
 	/**
 	 * @return InstallDisplayResponse
 	 */
 	private function create_response()
 	{
-        $step_title = $this->lang['step.server.title'];
+		$step_title = $this->lang['step.server.title'];
 		$response = new InstallDisplayResponse(2, $step_title, $this->view);
 		return $response;
 	}
-
-	private function add_navigation()
-    {
-    	$form = new HTMLForm('continueForm', InstallUrlBuilder::database());
-    	$action_fieldset = new FormFieldsetButtons('actions');
-		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
-		$action_fieldset->add_button($back);
-		$next = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
-		$action_fieldset->add_button($next);
-		$form->add_fieldset($action_fieldset);
-        $this->view->put('CONTINUE_FORM', $form->display());
-    }
 }
 ?>
