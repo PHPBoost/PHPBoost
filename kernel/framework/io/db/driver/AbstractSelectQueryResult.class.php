@@ -32,8 +32,13 @@
  * @package {@package}
  * @desc this class encapsulate a query result set
  */
-abstract class AbstractSelectQueryResult implements SelectQueryResult
+abstract class AbstractSelectQueryResult extends AbstractQueryResult implements SelectQueryResult
 {
+	public function  __construct($query, array $parameters)
+	{
+		parent::__construct($query, $parameters);
+	}
+	
 	public function has_next()
 	{
 		return $this->valid();

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           QueryResult.class.php
+ *                           AbstractQueryResult.class.php
  *                            -------------------
- *   begin                : October 1, 2009
+ *   begin                : December 30, 2010
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,23 +25,33 @@
  *
  ###################################################*/
 
+
+
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @package {@package}
+ * @desc this class encapsulate a query result set
  */
-interface QueryResult
+abstract class AbstractQueryResult implements QueryResult
 {
-	/**
-	 * @desc Returns the executed query converted to dbms dialect
-	 * @return string the executed query converted to dbms dialect
-	 */
-	function get_query();
+	private $query;
+	private $parameters;
 
-	/**
-	 * @desc Returns the parameters injected in the query
-	 * @return mixed[string] the parameters injected in the query
-	 */
-	function get_parameters();
+	public function __construct($query, array $parameters)
+	{
+		$this->query = $query;
+		$this->parameters = $parameters;
+	}
+
+	public function get_query()
+	{
+		return $this->query;
+	}
+
+	public function get_parameters()
+	{
+		return $this->parameters;
+	}
 }
 
 ?>

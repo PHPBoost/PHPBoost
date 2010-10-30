@@ -37,14 +37,14 @@ class PDOQuerier extends AbstractSQLQuerier
 	{
 		$statement = $this->prepare_statement($query);
 		$this->execute($statement, $query, $parameters);
-		return new PDOSelectQueryResult($query, $statement, $fetch_mode);
+		return new PDOSelectQueryResult($query, $parameters, $statement, $fetch_mode);
 	}
 
 	public function inject($query, $parameters = array())
 	{
 		$statement = $this->prepare_statement($query, $parameters);
 		$this->execute($statement, $query, $parameters);
-		return new PDOInjectQueryResult($query, $statement, $this->link);
+		return new PDOInjectQueryResult($query, $parameters, $statement, $this->link);
 
 	}
 
