@@ -153,7 +153,7 @@ class ErrorHandler
 				exit;
 			}
 		}
-		else
+		elseif (Debug::is_debug_mode_enabled())
 		{
 			$this->display_debug();
 		}

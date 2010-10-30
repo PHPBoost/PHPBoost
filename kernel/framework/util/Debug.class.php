@@ -42,10 +42,10 @@ class Debug
 	{
 		if (self::$enabled === null)
 		{
-			$debug = true;
 			$file = new File(PATH_TO_ROOT . '/cache/debug.php');
 			if ($file->exists())
 			{
+				$debug = true;
 				include $file->get_path();
 				self::$enabled = $debug;
 			}
