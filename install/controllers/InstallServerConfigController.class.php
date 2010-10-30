@@ -35,12 +35,12 @@ class InstallServerConfigController extends InstallController
      * @var ServerConfiguration
      */
     private $server_conf;
-	
+
     public function __construct()
     {
     	$this->server_conf = new ServerConfiguration();
     }
-    
+
 	public function execute(HTTPRequest $request)
 	{
         parent::load_lang($request);
@@ -69,7 +69,7 @@ class InstallServerConfigController extends InstallController
         }
         $this->check_folders_permissions();
 	}
-	
+
     private function check_folders_permissions()
     {
         $folders = array();
@@ -83,7 +83,7 @@ class InstallServerConfigController extends InstallController
         }
         $this->view->put('folder', $folders);
     }
-	
+
 	/**
 	 * @return InstallDisplayResponse
 	 */
@@ -97,9 +97,12 @@ class InstallServerConfigController extends InstallController
 	private function add_navigation()
     {
     	$form = new HTMLForm('continueForm', InstallUrlBuilder::database());
-    	$nav = new InstallNavigationBar();
-    	$nav->set_previous_step_url(InstallUrlBuilder::license()->rel());
-        $form->add_button($nav);
+    	$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$next = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
+		$action_fieldset->add_button($next);
+		$form->add_fieldset($action_fieldset);
         $this->view->put('CONTINUE_FORM', $form->display());
     }
 }

@@ -33,7 +33,6 @@ class InstallLicenseController extends InstallController
         parent::load_lang($request);
 		$view = new FileTemplate('install/license.tpl');
 		$this->build_form($view);
-		$this->add_navigation($view);
 		return $this->create_response($view);
 	}
 
@@ -62,16 +61,13 @@ class InstallLicenseController extends InstallController
     	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree']);
     	$agree_checkbox->add_constraint(new FormFieldConstraintNotEmpty());
     	$fieldset->add_field($agree_checkbox);
-    	$navigation_bar = $this->add_navigation();
-    	$form->add_button($navigation_bar);
+    	$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$next = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'license');
+		$action_fieldset->add_button($next);
+		$form->add_fieldset($action_fieldset);
 		$view->put('LICENSE_FORM', $form->display());
-    }
-
-	private function add_navigation()
-    {
-    	$nav = new InstallNavigationBar();
-    	$nav->set_previous_step_url(InstallUrlBuilder::welcome()->absolute());
-        return $nav;
     }
 }
 ?>

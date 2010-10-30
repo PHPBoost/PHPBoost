@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        FormButtonSubmitImg.class.php
+ *                        FormButtonLink.class.php
  *                            -------------------
- *   begin                : October 03, 2010
+ *   begin                : October 30, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -29,12 +29,20 @@
  * @author Loic Rouchon <horn@phpboost.com>
  * @package {@package}
  */
-class FormButtonSubmitImg extends FormButtonSubmit
+class FormButtonLink extends FormButtonButton
 {
-    public function __construct($label, $image, $name, $onclick_action = '')
+    public function __construct($label, $link, $img = '')
     {
-    	$full_label = '<img src="' . $image . '" alt="' . $label . '" title="' . $label . '" />';
-        parent::__construct($full_label, $name, $onclick_action);
+    	$full_label = '';
+    	if (!empty($img))
+    	{
+    		$full_label = '<img src="' . Url::to_rel($img) . '" alt="' . $label . '" title="' . $label . '" />';
+    	}
+    	else
+    	{
+    		$full_label = $label;
+    	}
+        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_absolute($link)));
     }
 }
 ?>

@@ -91,7 +91,7 @@ class FormFieldsetButtons implements FormFieldset
 	{
 		$template = $this->get_template_to_use();
 		$template->put_all(array(
-			'ID', $this->get_html_id(),
+			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
 		));
 		$loop_vars = array();
@@ -147,7 +147,7 @@ class FormFieldsetButtons implements FormFieldset
 	{
 		$this->template = $template;
 	}
-	
+
 	public function add_button(FormButton $button)
 	{
 		$this->buttons[] = $button;
