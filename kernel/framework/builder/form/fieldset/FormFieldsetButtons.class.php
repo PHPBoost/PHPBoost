@@ -70,6 +70,7 @@ class FormFieldsetButtons implements FormFieldset
 
 	public function validate()
 	{
+		return true;
 	}
 
 	public function disable()
