@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               date.class.php
+ *                               Date.class.php
  *                            -------------------
  *   begin                : June 1st, 2008
  *   copyright            : (C) 2008 Sautel Benoit
@@ -98,7 +98,6 @@ class Date
 	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
 	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>
 	 * </ul>
-	 * Here are the rules:
 	 *
 	 */
 	public function __construct()
@@ -289,12 +288,11 @@ class Date
 
 	/**
 	 * @desc Returns the timestamp associated to the date
-	 * @param $timezone The timezone in which you want this value
 	 * @return int The timestamp
 	 */
-	public function get_timestamp($timezone = TIMEZONE_SYSTEM)
+	public function get_timestamp()
 	{
-		return $this->get_adjusted_timestamp($timezone);
+		return $this->timestamp;
 	}
 
 	/**
