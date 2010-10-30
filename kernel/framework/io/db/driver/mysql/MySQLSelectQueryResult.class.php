@@ -33,11 +33,6 @@
 class MySQLSelectQueryResult extends AbstractSelectQueryResult
 {
 	/**
-	 * @var string
-	 */
-	private $query;
-
-	/**
 	 * @var Resource
 	 */
 	private $resource = null;
@@ -62,21 +57,16 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct($query, $resource, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct($query, $parameters, $resource, $fetch_mode = self::FETCH_ASSOC)
 	{
-		$this->query = $query;
 		$this->fetch_mode = $fetch_mode;
 		$this->resource = $resource;
+		parent::__construct($query, $parameters);
 	}
 
 	public function __destruct()
 	{
 		$this->dispose();
-	}
-
-	public function get_query()
-	{
-		return $this->query;
 	}
 
 	public function set_fetch_mode($fetch_mode)

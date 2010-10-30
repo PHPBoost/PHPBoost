@@ -30,13 +30,8 @@
  * @package {@package}
  * @desc
  */
-class PDOInjectQueryResult implements InjectQueryResult
+class PDOInjectQueryResult extends AbstractQueryResult implements InjectQueryResult
 {
-	/**
-	 * @var string
-	 */
-	private $query;
-
 	/**
 	 * @var PDOStatement
 	 */
@@ -57,22 +52,17 @@ class PDOInjectQueryResult implements InjectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct($query, PDOStatement $statement, PDO $pdo)
+	public function __construct($query, $parameters, PDOStatement $statement, PDO $pdo)
 	{
 		// TODO change this for pgsql
 		$this->last_inserted_id = $pdo->lastInsertId();
-		$this->query = $query;
 		$this->statement = $statement;
+        parent::__construct($query, $parameters);
 	}
 
 	public function __destruct()
 	{
 		$this->dispose();
-	}
-
-	public function get_query()
-	{
-		return $this->query;
 	}
 
 	public function get_last_inserted_id()

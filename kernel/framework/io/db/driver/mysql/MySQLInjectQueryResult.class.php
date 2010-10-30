@@ -30,13 +30,8 @@
  * @package {@package}
  * @desc
  */
-class MySQLInjectQueryResult implements InjectQueryResult
+class MySQLInjectQueryResult extends AbstractQueryResult implements InjectQueryResult
 {
-	/**
-	 * @var string
-	 */
-	private $query;
-
 	/**
 	 * @var Resource
 	 */
@@ -57,22 +52,17 @@ class MySQLInjectQueryResult implements InjectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct($query, $resource, $link)
+	public function __construct($query, $parameters, $resource, $link)
 	{
-		$this->query = $query;
 		$this->resource = $resource;
 		$this->affected_rows = mysql_affected_rows($link);
 		$this->last_inserted_id = mysql_insert_id($link);
+		parent::__construct($query, $parameters);
 	}
 
 	public function __destruct()
 	{
 		$this->dispose();
-	}
-
-	public function get_query()
-	{
-		return $this->query;
 	}
 
 	public function get_affected_rows()

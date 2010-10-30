@@ -33,11 +33,6 @@
 class PDOSelectQueryResult extends AbstractSelectQueryResult
 {
 	/**
-	 * @var string
-	 */
-	private $query;
-
-	/**
 	 * @var PDOStatement
 	 */
 	private $statement = null;
@@ -57,21 +52,16 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 	 */
 	private $is_disposed = false;
 
-	public function __construct($query, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
+	public function __construct($query, array $parameters, PDOStatement $statement, $fetch_mode = self::FETCH_ASSOC)
 	{
-		$this->query = $query;
 		$this->statement = $statement;
 		$this->fetch_mode = $fetch_mode;
+        parent::__construct($query, $parameters);
 	}
 
 	public function __destruct()
 	{
 		$this->dispose();
-	}
-
-	public function get_query()
-	{
-		return $this->query;
 	}
 
 	public function set_fetch_mode($fetch_mode)
