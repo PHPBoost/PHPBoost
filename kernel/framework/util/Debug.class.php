@@ -182,7 +182,7 @@ class Debug
 
 		if (self::is_output_html())
 		{
-			$string_stacktrace = nl2br($string_stacktrace, true);
+			$string_stacktrace = str_replace("\n", '<br />', $string_stacktrace);
 		}
 		return $string_stacktrace;
 	}

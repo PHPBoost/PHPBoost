@@ -53,13 +53,6 @@ $Cache = new Cache();
 
 Environment::init();
 
-//Si PHPBoost n'est pas installé, on renvoie vers l'installateur
-if (!defined('PHPBOOST_INSTALLED'))
-{
-	import('util/unusual_functions', INC_IMPORT);
-	AppContext::get_response()->redirect(get_server_url_page('install/install.php'));
-}
-
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
 $start_page = Environment::get_home_page();
 

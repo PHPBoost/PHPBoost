@@ -56,9 +56,11 @@ class ConfigManager
 		}
 		catch(CacheDataNotFoundException $ex)
 		{
+			$data = null;
 			try
 			{
 				$data = self::load_in_db($module_name, $entry_name);
+                CacheManager::save($data, $module_name, $entry_name);
 			}
 			catch(ConfigNotFoundException $ex)
 			{
@@ -66,8 +68,13 @@ class ConfigManager
 				$data->set_default_values();
 				$name = self::compute_entry_name($module_name, $entry_name);
 				self::save_in_db($name, $data);
+                CacheManager::save($data, $module_name, $entry_name);
 			}
-			CacheManager::save($data, $module_name, $entry_name);
+			catch (PHPBoostNotInstalledException $ex)
+			{
+				$data = new $classname();
+                $data->set_default_values();
+			}
 			return $data;
 		}
 	}
