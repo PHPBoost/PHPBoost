@@ -188,11 +188,25 @@ class HTTPFatalExceptionPrinter
 
 	private function add_parameter($key, $value)
 	{
+		$value_to_display = '';
+		if (is_array($value))
+		{
+			$value_to_display = '<ul>';
+			foreach ($value as $a_value)
+			{
+				$value_to_display .= '<li>' . htmlspecialchars($a_value) . '</li>';
+			}
+			$value_to_display .= '</ul>';
+		}
+		else
+		{
+			$value_to_display = htmlspecialchars($value);
+		}
 		$row_class = $this->is_row_odd ? 'oddRow' : 'evenRow';
 		$this->is_row_odd = !$this->is_row_odd;
 		return '<tr class="' . $row_class. '">' .
 			'<td class="parameterName">' . $key . '</td>' .
-			'<td class="parameterValue">' . str_replace("\n", '<br />', htmlspecialchars($value)) . '</td>' .
+			'<td class="parameterValue">' . str_replace("\n", '<br />', $value_to_display) . '</td>' .
 		'</tr>' ;
 	}
 }
