@@ -185,7 +185,7 @@ class HTMLForm
 		global $LANG;
 
 		$template = $this->get_template_to_use();
-		
+
 		$template->put_all(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS' => $this->has_required_fields(),
@@ -277,7 +277,7 @@ class HTMLForm
 	public function validate()
 	{
 		$this->handle_disabled_fields();
-			
+
 		$validation_result = true;
 
 		foreach ($this->fieldsets as $fieldset)
