@@ -51,7 +51,7 @@ abstract class AbstractFormButton implements FormButton
     {
         $template = $this->get_template();
         $template->put_all(array(
-			'VALUE' => $this->label,
+			'LABEL' => $this->label,
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
@@ -81,7 +81,7 @@ abstract class AbstractFormButton implements FormButton
     
     protected function get_template()
     {
-    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}">{VALUE}</button>');
+    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}" value="true">{LABEL}</button>');
     }
 }
 ?>

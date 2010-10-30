@@ -83,22 +83,4 @@ function cancel_register_globals_effect()
     unset($input);
 }
 
-/**
- * @desc Computes the path at which we must redirect the user when PHPBoost is not installed.
- * @param string $path Path to add after the site path.
- * @return string The URL to which you have to redirect.
- */
-function get_server_url_page($path)
-{
-    $server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
-    $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-    if (!$server_path)
-        $server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-
-	$server_path = rtrim($server_path, '/');
-    $real_path = substr($server_path, 0, strrpos($server_path, '/')) . '/'. $path;
-
-	return 'http://' . $server_name . $real_path;
-}
-
 ?>

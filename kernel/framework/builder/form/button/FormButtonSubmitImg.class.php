@@ -34,7 +34,7 @@ class FormButtonSubmitImg extends FormButtonSubmit
     public function __construct($label, $image, $id, $onclick_action = '', $css_class = 'img_submit')
     {
     	$full_label = '<img src="' . $image . '" alt="' . $label . '" title="' . $label . '" />';
-        parent::__construct($full_label, $label, $id, $onclick_action);
+        parent::__construct($full_label, $id, $id, $onclick_action);
     }
 }
 ?>

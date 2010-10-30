@@ -61,8 +61,7 @@ class InstallDBConfigController extends InstallController
 			catch (DBConnectionException $ex)
 			{
 				// TODO forward this to form
-				Debug::dump($ex);
-				die('DBConnectionException');
+				Debug::fatal($ex);
 			}
 		}
 		return $this->create_response();

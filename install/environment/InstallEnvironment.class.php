@@ -31,13 +31,7 @@ class InstallEnvironment extends Environment
 {
 	public static function load_imports()
 	{
-		try
-		{
-			Environment::load_imports();
-		}
-		catch(Exception $ex)
-		{
-		}
+		Environment::load_imports();
 	}
 
 	public static function init()
@@ -46,9 +40,14 @@ class InstallEnvironment extends Environment
 		Environment::init_http_services();
 		Environment::load_static_constants();
 		self::load_dynamic_constants();
-		Environment::init_output_bufferization();
-        self::set_locale();
-        self::init_admin_role();
+		self::init_output_bufferization();
+		self::set_locale();
+		self::init_admin_role();
+	}
+
+	public static function init_output_bufferization()
+	{
+		ob_start();
 	}
 
 	public static function load_dynamic_constants()
@@ -61,17 +60,17 @@ class InstallEnvironment extends Environment
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
 
-    private static function set_locale()
-    {
-        $locale = AppContext::get_request()->get_getstring('locale', 'french');
-        LangLoader::set_locale($locale);
-    }
+	private static function set_locale()
+	{
+		$locale = AppContext::get_request()->get_getstring('locale', 'french');
+		LangLoader::set_locale($locale);
+	}
 
-    private static function init_admin_role()
-    {
-        AppContext::set_user(new AdminUser());
-        AppContext::set_session(new AdminSession());
-    }
+	private static function init_admin_role()
+	{
+		AppContext::set_user(new AdminUser());
+		AppContext::set_session(new AdminSession());
+	}
 
 	public static function load_distribution_properties($prefered_lang)
 	{

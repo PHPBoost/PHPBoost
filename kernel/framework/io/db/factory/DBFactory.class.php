@@ -80,6 +80,14 @@ class DBFactory
 		}
 		return self::$db_connection;
 	}
+	
+	public static function close_db_connection()
+    {
+    	if (self::$db_connection != null)
+        {
+        	self::$db_connection->disconnect();
+        }
+    }
 
 	public static function set_db_connection(DBConnection $connection)
 	{
@@ -94,7 +102,7 @@ class DBFactory
 	{
 		return self::get_factory()->new_db_connection();
 	}
-
+	
 	/**
 	 * @desc returns a new <code>SQLQuerier</code> instance
 	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use

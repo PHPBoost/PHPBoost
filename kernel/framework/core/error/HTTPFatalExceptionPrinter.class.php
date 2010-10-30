@@ -25,6 +25,8 @@
  *
  ###################################################*/
 
+defined('TPL_PATH_TO_ROOT') or define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
+
 class HTTPFatalExceptionPrinter
 {
 	private $type;
@@ -86,7 +88,7 @@ class HTTPFatalExceptionPrinter
 			}
 		}
 		function getOutputBufferContent() {
-			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', addslashes(htmlspecialchars($this->ob_content))) . '\';
+			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', str_replace("\r", '', addslashes(htmlspecialchars($this->ob_content)))) . '\';
 		}
 		function openOutputBufferPopup(content) {
 			var obWindow = window.open(\'\', \'Output Buffer\', \'\');
@@ -96,7 +98,7 @@ class HTTPFatalExceptionPrinter
 		}
 		function displayOutputBufferContent() {
 			var content = getOutputBufferContent();
-			content = \'<html><head><title>OUTPUT BUFFER RAW</title></head><body><pre>\' + content + \'</body></html>\';
+			content = \'&lt;html&gt;&lt;head&gt;&lt;title&gt;OUTPUT BUFFER RAW&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;\' + content + \'&lt;/body&gt;&lt;/html&gt;\';
 			openOutputBufferPopup(content);
 		}
 		-->
@@ -190,7 +192,7 @@ class HTTPFatalExceptionPrinter
 		$this->is_row_odd = !$this->is_row_odd;
 		return '<tr class="' . $row_class. '">' .
 			'<td class="parameterName">' . $key . '</td>' .
-			'<td class="parameterValue">' . nl2br(htmlspecialchars($value), true) . '</td>' .
+			'<td class="parameterValue">' . str_replace("\n", '<br />', htmlspecialchars($value)) . '</td>' .
 		'</tr>' ;
 	}
 }

@@ -61,6 +61,20 @@ class Environment
 	 */
 	public static function init()
 	{
+		try
+		{
+			self::try_init();
+		}
+		catch (PHPBoostNotInstalledException $ex)
+		{
+//			import('util/unusual_functions', INC_IMPORT);
+//			AppContext::get_response()->redirect(get_server_url_page('install/'));
+            AppContext::get_response()->redirect('/install/');
+		}
+	}
+
+	public static function try_init()
+	{
 		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();

@@ -106,7 +106,7 @@ class PersistenceContext
 	 */
 	public static function close_db_connection()
 	{
-		DBFactory::get_db_connection()->disconnect();
+		DBFactory::close_db_connection();
 	}
 
 	/**
