@@ -413,6 +413,7 @@ function delete_file($filepath)
 }
 
 /**
+ * @deprecated
  * @desc Displays a confirmation message during a defined delay and then redirects the user.
  * @param string $url_error Url at which you want to redirect him.
  * @param string $l_error The message to show him
@@ -435,6 +436,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 }
 
 /**
+ * @deprecated
  * @desc Returns the current user's theme.
  * @return string The theme identifier (name of its folder).
  */
@@ -445,6 +447,7 @@ function get_utheme()
 }
 
 /**
+ * @deprecated
  * @desc Returns the current user's language.
  * @return string The lang identifier (name of its folder).
  */
@@ -455,6 +458,7 @@ function get_ulang()
 }
 
 /**
+ * @deprecated
  * @desc Returns the HTML code of the user editor. It uses the ContentFormattingFactory class, it allows you to write less code lines.
  * @param string $field The name of the HTTP parameter which you will retrieve the value entered by the user.
  * @param string[] $forbidden_tags The list of the tags you don't want to appear in the editor.
@@ -473,6 +477,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 }
 
 /**
+ * @deprecated
  * @desc Returns the HTML code of the comments manager.
  * @param string $script
  * @param int $idprov The data base id of the item for which you want to display the commenting interface.
@@ -489,43 +494,31 @@ function display_comments($script, $idprov, $vars, $module_folder = '')
 }
 
 /**
+ * @deprecated
  * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
  * @param string $module_name The identifier of the module for which you want to load the lang file.
  * @param string Path of the folder in which is the file. This path mustn't finish by the / character.
+ * @depre
  */
 function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
 	global $LANG;
 
 	$file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
-	if (!Debug::is_debug_mode_enabled()) {
-		$result = @include_once($file);
-	}
-	else
-	{
-		$result = include_once($file);
-	}
+	$result = include_once $file;
 
 	if (!$result)
 	{
 		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), false);
 		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
-
-		if (!Debug::is_debug_mode_enabled())
-		{
-			$result2 = @include_once($file2);
-		}
-		else
-		{
-			$result2 = include_once($file2);
-		}
+		$result2 = include_once $file2;
 
 		if (!$result2)
 		{
 			$error_message = sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php');
-			
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                 $error_message, UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -533,6 +526,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 }
 
 /**
+ * @deprecated
  * @desc Loads a menu lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this menu.
  * @param string $menu_name The identifier of the menu for which you want to load the lang file.
@@ -543,6 +537,7 @@ function load_menu_lang($menu_name)
 }
 
 /**
+ * @deprecated
  * @desc Loads a configuration file. You choose a bases path, and you specify a folder name in which you file should be found, if it doesn't exist, it will take a file in another folder.
  * It's very interesting when you want to
  * @param string $dir_path Path of the file (relative from this page).
@@ -554,11 +549,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
 	$dir = find_require_dir($dir_path, $require_dir, false);
 	$file = $dir_path . $dir . '/' . $ini_name;
-	if (!Debug::is_debug_mode_enabled())
-	{
-		$result = @parse_ini_file($file);
-	}
-	elseif(file_exists($file))
+	if(file_exists($file))
 	{
 		$result = parse_ini_file($file);
 	}
@@ -571,6 +562,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
 /**
+ * @deprecated
  * @desc Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.
  * If it doesn't exist, you want to choose the file in another language.
  * This function returns the path of an existing file (if the required lang exists, it will be it, otherwise it will be one of the existing files).
@@ -605,8 +597,8 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 	if ($fatal_error)
 	{
 		$error_message = sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir);
-            
-        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+
+        $controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
             $error_message, UserErrorController::FATAL);
         DispatchManager::redirect($controller);
 	}
