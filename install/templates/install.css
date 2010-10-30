@@ -90,19 +90,6 @@ html>body #row_contents{
 	-khtml-border-radius: 9px;
 	-webkit-border-radius: 9px;
 }
-.submit_case{
-	width:250px;
-	margin:auto;
-	margin-top:30px;
-	margin-bottom:20px;
-	padding:2px;
-	text-align:center;
-	background-color:#E5E5E5;
-	border:1px solid #B2B2B2;
-	-moz-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
 
 h1{
 	color:#5C5C5C;
@@ -417,12 +404,17 @@ fieldset{
 	-webkit-border-radius: 5px;
 }
 fieldset.fieldset_submit{
-	margin-top:-10px;
-	padding-bottom:15px;
-	width:99%;
+	width:250px;
+	margin:auto;
+	margin-top:30px;
+	margin-bottom:20px;
+	padding:2px;
 	text-align:center;
-	background:none;
-	border:none;
+	background-color:#E5E5E5;
+	border:1px solid #B2B2B2;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 fieldset.fieldset_submit legend{
 	display:none;

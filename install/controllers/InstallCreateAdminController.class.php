@@ -85,8 +85,12 @@ class InstallCreateAdminController extends InstallController
 		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true);
 		$fieldset->add_field($autoconnect);
 
-		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'submit');
-		$this->form->add_button($this->submit_button);
+		$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::website(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'admin');
+		$action_fieldset->add_button($this->submit_button);
+		$this->form->add_fieldset($action_fieldset);
 	}
 
 	/**

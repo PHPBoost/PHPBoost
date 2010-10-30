@@ -1,5 +1,5 @@
-{@H|finish.message}                      
-<fieldset class="submit_case" style="width:450px;text-align:center">
+{@H|finish.message}
+<fieldset class="fieldset_submit" style="width:450px;text-align:center">
     <table style="margin:auto;">
         <tr>
             <td style="width:50%">

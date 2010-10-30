@@ -88,8 +88,12 @@ class InstallWebsiteConfigController extends InstallController
 		array('description' => $this->lang['website.timezone.explanation']));
 		$fieldset->add_field($timezone);
 
-		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'submit');
-		$this->form->add_button($this->submit_button);
+		$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::database(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'website');
+		$action_fieldset->add_button($this->submit_button);
+		$this->form->add_fieldset($action_fieldset);
 	}
 
 	private function current_server_host()

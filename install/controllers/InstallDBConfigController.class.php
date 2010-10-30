@@ -47,22 +47,7 @@ class InstallDBConfigController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$installation_services = new InstallationServices(LangLoader::get_locale());
-			try
-			{
-				$create_tables_if_needed = true;
-				$installation_services->create_phpboost_tables('mysql',
-				$this->form->get_value('host'), $this->form->get_value('port'),
-				$this->form->get_value('schema'), $this->form->get_value('login'),
-				$this->form->get_value('password'), $this->form->get_value('tablePrefix'),
-				$create_tables_if_needed);
-				AppContext::get_response()->redirect(InstallUrlBuilder::website());
-			}
-			catch (DBConnectionException $ex)
-			{
-				// TODO forward this to form
-				Debug::fatal($ex);
-			}
+			$this->handle_form();
 		}
 		return $this->create_response();
 	}
@@ -84,7 +69,7 @@ class InstallDBConfigController extends InstallController
 		$login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
 		array('description' => $this->lang['dbms.login.explanation'], 'required' => true));
 		$fieldset_server->add_field($login);
-		$password = new FormFieldTextEditor('password', $this->lang['dbms.password'], '',
+		$password = new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
 		array('description' => $this->lang['dbms.password.explanation']));
 		$fieldset_server->add_field($password);
 
@@ -98,8 +83,32 @@ class InstallDBConfigController extends InstallController
 		array('description' => $this->lang['schema.tablePrefix.explanation']));
 		$fieldset_schema->add_field($table_prefix);
 
-		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'submit');
-		$this->form->add_button($this->submit_button);
+		$action_fieldset = new FormFieldsetButtons('actions');
+		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
+		$action_fieldset->add_button($back);
+		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'database');
+		$action_fieldset->add_button($this->submit_button);
+		$this->form->add_fieldset($action_fieldset);
+	}
+
+	private function handle_form()
+	{
+		$installation_services = new InstallationServices(LangLoader::get_locale());
+		try
+		{
+			$create_tables_if_needed = true;
+			$installation_services->create_phpboost_tables('mysql',
+			$this->form->get_value('host'), $this->form->get_value('port'),
+			$this->form->get_value('schema'), $this->form->get_value('login'),
+			$this->form->get_value('password'), $this->form->get_value('tablePrefix'),
+			$create_tables_if_needed);
+			AppContext::get_response()->redirect(InstallUrlBuilder::website());
+		}
+		catch (DBConnectionException $ex)
+		{
+			// TODO forward this to form
+			Debug::fatal($ex);
+		}
 	}
 
 	/**
