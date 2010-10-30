@@ -34,3 +34,4 @@ class ViewXMLSitemapController extends ModuleController
 		return new SiteNodisplayResponse($sitemap->export(SitemapXMLFileService::get_export_config()));
 	}
 }
+?>
