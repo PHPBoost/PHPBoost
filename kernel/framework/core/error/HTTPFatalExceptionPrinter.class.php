@@ -98,7 +98,8 @@ class HTTPFatalExceptionPrinter
 		}
 		function displayOutputBufferContent() {
 			var content = getOutputBufferContent();
-			content = \'&lt;html&gt;&lt;head&gt;&lt;title&gt;OUTPUT BUFFER RAW&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;\' + content + \'&lt;/body&gt;&lt;/html&gt;\';
+			content = \'&lt;html&gt;&lt;head&gt;&lt;title&gt;OUTPUT BUFFER RAW&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;\'.replace(/&lt;/g, \'<\').replace(/&gt;/g, \'>\') +
+				content + \'&lt;/body&gt;&lt;/html&gt;\'.replace(/&lt;/g, \'<\').replace(/&gt;/g, \'>\');
 			openOutputBufferPopup(content);
 		}
 		-->

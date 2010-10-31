@@ -48,7 +48,7 @@ class MySQLDBConnection implements DBConnection
 	public function connect(array $db_connection_data)
 	{
 		$mysql_link = @mysql_connect(
-		$db_connection_data['host'],
+		$db_connection_data['host'] . ':' . $db_connection_data['port'],
 		$db_connection_data['login'],
 		$db_connection_data['password']);
 		if ($mysql_link)
