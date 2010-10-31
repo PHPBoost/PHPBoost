@@ -104,10 +104,11 @@ var HTMLForm = Class.create( {
 	},
 	validate : function() {
 		var validated = true;
+		var form = this;
 		this.getFields().each(function(field) {
 			var validation = field.validate();
 			if (validation != "") {
-				this.displayValidationError(validation);
+				form.displayValidationError(validation);
 				validated = false;
 				throw $break;
 			}
