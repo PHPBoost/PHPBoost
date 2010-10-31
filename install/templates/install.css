@@ -416,6 +416,10 @@ fieldset.fieldset_submit{
 	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
+fieldset.fieldset_submit button{
+	border:0px;
+	background-color:#E5E5E5;
+}
 fieldset.fieldset_submit legend{
 	display:none;
 }
