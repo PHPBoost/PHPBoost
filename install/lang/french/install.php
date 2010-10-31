@@ -110,8 +110,8 @@ $lang = array(
 	'folder.doesNotExist' => 'Inexistant',
 	'folder.isWritable' => 'Inscriptible',
 	'folder.isNotWritable' => 'Non inscriptible',
-	
-	
+
+
 	'unknown' => 'Indéterminable',
 	'config_server_dirs_not_ok' => 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.',
 
@@ -133,7 +133,7 @@ $lang = array(
 	'schema.explanation' => 'Fourni par l\'hébergeur. Si cette base n\'existe pas, PHPBoost essaiera de la créer si la configuration le lui permet.',
 	'schema.tablePrefix' => 'Préfixe des tables',
 	'schema.tablePrefix.explanation' => 'Par défaut <em>phpboost_</em>. A changer si vous souhaitez installer plusieurs fois PHPBoost dans la même base de données.',
-//	'test_db_config' => 'Essayer',
+	'db.config.check' => 'Essayer',
 //	'result' => 'Résultats',
 //	'empty_field' => 'Le champ %s est vide',
 //	'field_dbms' => 'système de gestion de base de données',

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                          FormButtonLink.class.php
+ *                          FormButtonAjax.class.php
  *                            -------------------
- *   begin                : October 30, 2010
+ *   begin                : October 31, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -29,9 +29,9 @@
  * @author Loic Rouchon <horn@phpboost.com>
  * @package {@package}
  */
-class FormButtonLink extends FormButtonButton
+class FormButtonAjax extends FormButtonButton
 {
-    public function __construct($label, $link, $img = '')
+    public function __construct($label, AjaxRequest $request, $img = '', $fields)
     {
     	$full_label = '';
     	if (!empty($img))
@@ -42,7 +42,19 @@ class FormButtonLink extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_absolute($link)));
+        parent::__construct($full_label, $this->build_ajax_request($request, $fields));
+    }
+
+    private function build_ajax_request(AjaxRequest $request, $fields)
+    {
+    	if (is_array($fields))
+    	{
+	    	foreach ($fields as $field)
+	    	{
+	    		$request->add_param($field->get_id(), '$FF(\'' . $field->get_id() . '\').getValue()');
+	    	}
+    	}
+    	return $request->render();
     }
 }
 ?>

@@ -86,6 +86,11 @@ class InstallDBConfigController extends InstallController
 		$action_fieldset = new FormFieldsetButtons('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
 		$action_fieldset->add_button($back);
+		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){alert(response.responseJSON.port);}');
+		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png', array(
+			$host, $login, $password, $schema, $table_prefix
+		));
+		$action_fieldset->add_button($check);
 		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'database');
 		$action_fieldset->add_button($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
