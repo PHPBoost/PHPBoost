@@ -24,9 +24,9 @@ if ($("${escape(HTML_ID)}") != null)
 		HTMLForms.get("${escape(FORM_ID)}").getField("{related_field.E_ID}").liveValidate();
 		# END related_field #
 	});
-	
+
 	# START event_handler #
-	Event.observe("${escape(HTML_ID)}", '{event_handler.E_EVENT}', function() {
+	Event.observe("${escape(HTML_ID)}", '{event_handler.EVENT}', function() {
 		{event_handler.HANDLER}
 	});
 	# END event_hander #

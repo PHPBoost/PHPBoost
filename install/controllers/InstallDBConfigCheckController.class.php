@@ -49,7 +49,7 @@ class InstallDBConfigCheckController extends InstallController
 		$this->status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
 		if ($this->status == InstallationServices::CONNECTION_SUCCESSFUL)
 		{
-			$this->already_installed = $service->tables_already_exists();
+			$this->already_installed = $service->is_already_installed();
 		}
 	}
 
@@ -77,7 +77,7 @@ class InstallDBConfigCheckController extends InstallController
 			case InstallationServices::CONNECTION_SUCCESSFUL:
 				if ($this->already_installed)
 				{
-					return $this->lang['phpboost.alreadyInstalled'];
+					return $this->lang['phpboost.alreadyInstalled.alert'];
 				}
 				return $this->lang['db.connection.success'];
 			case InstallationServices::CONNECTION_ERROR:

@@ -315,6 +315,11 @@ abstract class AbstractFormField implements FormField
 		implode(",", $this->get_js_validations()) . '));';
 	}
 
+	public function add_event($event, $handler)
+	{
+		$this->events[$event] = $handler;
+	}
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -343,8 +348,12 @@ abstract class AbstractFormField implements FormField
 					unset($field_options['hidden']);
 					break;
 				case 'required':
-					$this->set_required($value);
-					if ($value)
+					$this->set_required(true);
+					if (is_string($value))
+					{
+						$this->add_constraint(new FormFieldConstraintNotEmpty($value, $value));
+					}
+					else
 					{
 						$this->add_constraint(new FormFieldConstraintNotEmpty());
 					}
@@ -374,7 +383,7 @@ abstract class AbstractFormField implements FormField
 				'HANDLER' => $handler
 			));
 		}
-		
+
 		foreach ($this->get_js_validations() as $constraint)
 		{
 			$js_tpl->assign_block_vars('constraint', array(
@@ -390,7 +399,7 @@ abstract class AbstractFormField implements FormField
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id
 		));
-		
+
 		$template->put('ADD_FIELD_JS', $js_tpl);
 
 		$description = $this->get_description();

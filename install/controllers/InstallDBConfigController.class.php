@@ -40,6 +40,15 @@ class InstallDBConfigController extends InstallController
 	 * @var HTMLForm
 	 */
 	private $submit_button;
+	/**
+	 * @var FormFieldsetHTML
+	 */
+	private $overwrite_fieldset;
+	/**
+	 * @var FormFieldCheckbox
+	 */
+	private $overwrite_field;
+	private $error = null;
 
 	public function execute(HTTPRequest $request)
 	{
@@ -47,7 +56,13 @@ class InstallDBConfigController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->handle_form();
+			$host = $this->form->get_value('host');
+			$port = $this->form->get_value('port');
+			$login = $this->form->get_value('login');
+			$password = $this->form->get_value('password');
+			$schema = $this->form->get_value('schema');
+			$tables_prefix = $this->form->get_value('tablesPrefix');
+			$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
 		}
 		return $this->create_response();
 	}
@@ -60,14 +75,14 @@ class InstallDBConfigController extends InstallController
 		$this->form->add_fieldset($fieldset_server);
 
 		$host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
-		array('description' => $this->lang['dbms.host.explanation'], 'required' => true));
+		array('description' => $this->lang['dbms.host.explanation'], 'required' => $this->lang['db.required.host']));
 		$fieldset_server->add_field($host);
 		$port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
-		array('description' => $this->lang['dbms.port.explanation'], 'required' => true));
+		array('description' => $this->lang['dbms.port.explanation'], 'required' => $this->lang['db.required.port']));
 		$port->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
 		$fieldset_server->add_field($port);
 		$login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
-		array('description' => $this->lang['dbms.login.explanation'], 'required' => true));
+		array('description' => $this->lang['dbms.login.explanation'], 'required' => $this->lang['db.required.login']));
 		$fieldset_server->add_field($login);
 		$password = new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
 		array('description' => $this->lang['dbms.password.explanation']));
@@ -77,42 +92,75 @@ class InstallDBConfigController extends InstallController
 		$this->form->add_fieldset($fieldset_schema);
 
 		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
-		array('description' => $this->lang['schema.explanation'], 'required' => true));
+		array('description' => $this->lang['schema.explanation'], 'required' => $this->lang['db.required.schema']));
+		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
 		array('description' => $this->lang['schema.tablePrefix.explanation']));
 		$fieldset_schema->add_field($tables_prefix);
 
+		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);
+		$this->form->add_fieldset($this->overwrite_fieldset);
+
+		$overwrite_message = new FormFieldHTML('', $this->lang['phpboost.alreadyInstalled.explanation']);
+		$this->overwrite_fieldset->add_field($overwrite_message);
+		$this->overwrite_field = new FormFieldCheckbox('overwrite', $this->lang['phpboost.alreadyInstalled.overwrite'], false,
+			array('required' => $this->lang['phpboost.alreadyInstalled.overwrite.confirm']));
+		$this->overwrite_fieldset->add_field($this->overwrite_field);
+		$this->overwrite_fieldset->disable();
+
 		$action_fieldset = new FormFieldsetButtons('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
 		$action_fieldset->add_button($back);
-		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){alert(response.responseJSON.message);}');
-		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png', array(
-			$host, $port, $login, $password, $schema, $tables_prefix
-		));
+		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){
+		alert(response.responseJSON.message);
+		if (response.responseJSON.alreadyInstalled) {
+			$FFS(\'overwriteFieldset\').enable();
+		} else {
+			$FFS(\'overwriteFieldset\').disable();
+		}}');
+		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png',
+		array($host, $port, $login, $password, $schema, $tables_prefix), '$HF(\'databaseForm\').validate()');
 		$action_fieldset->add_button($check);
 		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'database');
 		$action_fieldset->add_button($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	private function handle_form()
+	private function handle_form($host, $port, $login, $password, $schema, $tables_prefix)
 	{
-		$installation_services = new InstallationServices(LangLoader::get_locale());
-		try
+		$service = new InstallationServices(LangLoader::get_locale());
+		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
+		switch ($status)
 		{
-			$create_tables_if_needed = true;
-			$installation_services->create_phpboost_tables('mysql',
-			$this->form->get_value('host'), $this->form->get_value('port'),
-			$this->form->get_value('schema'), $this->form->get_value('login'),
-			$this->form->get_value('password'), $this->form->get_value('tablesPrefix'),
-			$create_tables_if_needed);
+			case InstallationServices::CONNECTION_SUCCESSFUL:
+				$this->create_tables($service, $host, $port, $login, $password, $schema, $tables_prefix);
+				break;
+			case InstallationServices::CONNECTION_ERROR:
+				$this->error = $this->lang['db.connection.error'];
+				break;
+			case InstallationServices::UNABLE_TO_CREATE_DATABASE:
+				$this->error = $this->lang['db.creation.error'];
+				break;
+			case InstallationServices::UNKNOWN_ERROR:
+			default:
+				$this->error = $this->lang['db.unknown.error'];
+				break;
+		}
+	}
+
+	private function create_tables(InstallationServices $service, $host, $port, $login, $password, $schema, $tables_prefix)
+	{
+		if (!$service->is_already_installed() || (!$this->overwrite_field->is_disabled() && $this->overwrite_field->is_checked()))
+		{
+			PersistenceContext::close_db_connection();
+			$service->create_phpboost_tables(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
 			AppContext::get_response()->redirect(InstallUrlBuilder::website());
 		}
-		catch (DBConnectionException $ex)
+		else
 		{
-			// TODO forward this to form
-			Debug::fatal($ex);
+			$this->overwrite_fieldset->enable();
+			$this->error = $this->lang['phpboost.alreadyInstalled'];
 		}
 	}
 
@@ -123,6 +171,10 @@ class InstallDBConfigController extends InstallController
 	{
 		$this->view = new FileTemplate('install/database.tpl');
 		$this->view->put('DATABASE_FORM', $this->form->display());
+		if (!empty($this->error))
+		{
+			$this->view->put('ERROR', $this->error);
+		}
 		$step_title = $this->lang['step.dbConfig.title'];
 		$response = new InstallDisplayResponse(3, $step_title, $this->view);
 		return $response;

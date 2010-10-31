@@ -59,7 +59,7 @@ class InstallationServices
         $this->load_distribution_configuration();
 	}
 
-	public function tables_already_exists()
+	public function is_already_installed()
 	{
 		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
 		return in_array(PREFIX . 'member', $tables_list) || in_array(PREFIX . 'configs', $tables_list);
@@ -119,14 +119,11 @@ class InstallationServices
 		return in_array($database, $databases_list);
 	}
 
-	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
+	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix)
 	{
 		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
-		$password, $tables_prefix, $create_db_if_needed);
-        if (!$this->create_tables($override_previous_phpboost_install))
-		{
-			return false;
-		}
+		$password, $tables_prefix);
+        $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
 		$this->generate_installation_token();
 		return true;
@@ -257,52 +254,46 @@ class InstallationServices
 		AppContext::get_cache_service()->clear_phpboost_cache();
 	}
 
-	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed)
+	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
 	{
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = array(
 			'dbms' => $dbms,
-			'dsn' => 'mysql:host=' . $host . ';dbname=' . $database,
+			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
 			'driver_options' => array(),
 			'host' => $host,
+			'port' => $port,
 			'login' => $login,
 			'password' => $password,
 			'database' => $database,
 		);
-		$this->connect_to_database($dbms, $db_connection_data, $database, $create_db_if_needed);
+		$this->connect_to_database($dbms, $db_connection_data, $database);
 		return $db_connection_data;
 	}
 
-	private function connect_to_database($dbms, array $db_connection_data, $database, $create_db_if_needed)
+	private function connect_to_database($dbms, array $db_connection_data, $database)
 	{
 		DBFactory::init_factory($dbms);
 		$connection = DBFactory::new_db_connection();
+		DBFactory::set_db_connection($connection);
 		try
 		{
 			$connection->connect($db_connection_data);
 		}
 		catch (UnexistingDatabaseException $exception)
 		{
-			if ($create_db_if_needed)
-			{
-				DBFactory::new_dbms_util(DBFactory::new_sql_querier($connection))->create_database($database);
-				$connection->disconnect();
-				$connection->connect($db_connection_data);
-			}
-			else
-			{
-				throw $exception;
-			}
+			PersistenceContext::get_dbms_utils()->create_database($database);
+			PersistenceContext::close_db_connection();
+			$connection = DBFactory::new_db_connection();
+			$connection->connect($db_connection_data);
+			DBFactory::set_db_connection($connection);
 		}
-		DBFactory::set_db_connection($connection);
 	}
 
-	private function create_tables($override_previous_phpboost_install)
+	private function create_tables()
 	{
-		// TODO implements $override_previous_phpboost_install test
 		$kernel = new KernelSetup();
 		$kernel->install();
-		return true;
 	}
 
 	private function write_connection_config_file(array $db_connection_data, $tables_prefix)

@@ -234,17 +234,17 @@ class CLIInstallCommand implements CLICommand
 		try
 		{
 			$this->installation->create_phpboost_tables(DBFactory::MYSQL, $this->db_host, $this->db_port,
-			$this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix, true, true);
+			$this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix);
 			return true;
-		}
-		catch (DBConnectionException $exception)
-		{
-			CLIOutput::writeln('Connection to database failed, check your connection parameters');
 		}
 		catch (UnexistingDatabaseException $exception)
 		{
 			CLIOutput::writeln('Database ' . $this->db_schema .
 				' does not exist and attempt to create it failed. Create it and relaunch the installation');
+		}
+		catch (DBConnectionException $exception)
+		{
+			CLIOutput::writeln('Connection to database failed, check your connection parameters');
 		}
 		catch (IOException $exception)
 		{

@@ -31,7 +31,7 @@
  */
 class FormButtonAjax extends FormButtonButton
 {
-    public function __construct($label, AjaxRequest $request, $img = '', $fields)
+    public function __construct($label, AjaxRequest $request, $img = '', array $fields, $condition = null)
     {
     	$full_label = '';
     	if (!empty($img))
@@ -42,10 +42,10 @@ class FormButtonAjax extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, $this->build_ajax_request($request, $fields));
+        parent::__construct($full_label, $this->build_ajax_request($request, $fields, $condition));
     }
 
-    private function build_ajax_request(AjaxRequest $request, $fields)
+    private function build_ajax_request(AjaxRequest $request, array $fields, $condition)
     {
     	if (is_array($fields))
     	{
@@ -53,6 +53,10 @@ class FormButtonAjax extends FormButtonButton
 	    	{
 	    		$request->add_param($field->get_id(), '$FF(\'' . $field->get_id() . '\').getValue()');
 	    	}
+    	}
+    	if (!empty($condition))
+    	{
+    		return 'if (' . $condition . '){' . $request->render() . '}';
     	}
     	return $request->render();
     }
