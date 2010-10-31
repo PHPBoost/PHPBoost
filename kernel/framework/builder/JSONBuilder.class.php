@@ -44,7 +44,7 @@ class JSONBuilder
 		{
 			if ($is_map)
 			{
-				$values[] = '\'' . $key . '\':' . self::build_element($value);
+				$values[] = '"' . $key . '":' . self::build_element($value);
 			}
 			else
 			{
@@ -77,7 +77,7 @@ class JSONBuilder
 		{
 			return strval($value);
 		}
-		return TextHelper::to_js_string($value);
+		return TextHelper::to_json_string($value);
 	}
 
 	private static function is_map(array $array)

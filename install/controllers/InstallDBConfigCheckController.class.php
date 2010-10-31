@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                         InstallDBConfigCheckController.class.php
  *                            -------------------
- *   begin                : June 13 2010
+ *   begin                : October 31 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,21 +25,14 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
-InstallEnvironment::load_imports();
-InstallEnvironment::init();
-
-$url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallDBConfigCheckController', '`^/database/check/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+class InstallDBConfigCheckController extends InstallController
+{
+	public function execute(HTTPRequest $request)
+	{
+		$object = array(
+			'port' => '42'//$request->get_value('port')
+		);
+		return new JSONResponse($object);
+	}
+}
 ?>

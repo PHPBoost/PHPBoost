@@ -89,7 +89,7 @@ class HTTPResponse
 	 */
 	public function set_header($name, $value)
 	{
-		header($name . ' : ' . $value);
+		header($name . ': ' . $value);
 	}
 
 	/**

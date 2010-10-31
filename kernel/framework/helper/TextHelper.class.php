@@ -123,7 +123,7 @@ class TextHelper
 	/**
 	 * @desc Exports a variable to be used in a javascript script.
      * @param string $string A PHP string to convert to a JS one
-     * @param string $add_quotes If true, returned string will be bounded by quotes
+     * @param string $add_quotes If true, returned string will be bounded by single quotes
 	 * @return string The js equivalent string
 	 */
 	public static function to_js_string($string, $add_quotes = true)
@@ -131,6 +131,19 @@ class TextHelper
 		$bounds = $add_quotes ? '\'' : '';
 		return $bounds . str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'),
 		addcslashes($string, '\'')) . $bounds;
+	}
+
+	/**
+	 * @desc Exports a variable to be used in a json javascript script.
+     * @param string $string A PHP string to convert to a json one
+     * @param string $add_quotes If true, returned string will be bounded by double quotes
+	 * @return string The json equivalent string
+	 */
+	public static function to_json_string($string, $add_quotes = true)
+	{
+		$bounds = $add_quotes ? '"' : '';
+		return $bounds . str_replace(array("\r\n", "\r", "\n", ), array('\n', '\n', '\n', ),
+		addcslashes($string, '"')) . $bounds;
 	}
 
 	/**

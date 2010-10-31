@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                           JSONResponse.class.php
  *                            -------------------
- *   begin                : June 13 2010
+ *   begin                : October 31 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,21 +25,27 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
-InstallEnvironment::load_imports();
-InstallEnvironment::init();
 
-$url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallDBConfigCheckController', '`^/database/check/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc the response
+ * @package {@package}
+ */
+class JSONResponse implements Response
+{
+	private $json;
+
+	public function __construct(array $json_object)
+	{
+		$this->json = JSONBuilder::build($json_object);
+	}
+
+	public function send()
+	{
+		$response = AppContext::get_response();
+		$response->set_header('Content-type', 'application/json; charset=iso-8859-1');
+		echo $this->json;
+	}
+}
 ?>

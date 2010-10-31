@@ -48,14 +48,14 @@ class JSONBuilderTest extends PHPBoostUnitTestCase
 	public function test_map()
 	{
 		$object = array('1' => 'coucou', '2' => 'toto', 'tata' => 'titi');
-		$json = "{'1':'coucou','2':'toto','tata':'titi'}";
+		$json = '{"1":"coucou","2":"toto","tata":"titi"}';
 		$this->assert_json($json, $object);
 	}
 
 	public function test_types()
 	{
 		$object = array(true, 0, 1, 1.42, 'string with \' slashes');
-		$json = "{true,0,1,1.42,'string with \' slashes'}";
+		$json = '{true,0,1,1.42,"string with \' slashes"}';
 		$this->assert_json($json, $object);
 	}
 
@@ -63,7 +63,7 @@ class JSONBuilderTest extends PHPBoostUnitTestCase
 	{
 		$object = array('string with \' slashes, quotes ",
 		lines breaks, ...');
-		$json = "{'string with \' slashes, quotes &quot;,\\n		lines breaks, ...'}";
+		$json = '{"string with \' slashes, quotes \",\\n		lines breaks, ..."}';
 		$this->assert_json($json, $object);
 	}
 
@@ -88,9 +88,9 @@ class JSONBuilderTest extends PHPBoostUnitTestCase
 				)
 			)
 		);
-		$json = "{'Person':{'firstName':'John','lastName':'Smith','age':25,'Address':" .
-			"{'streetAddress':'21 2nd Street','city':'New York','state':'NY','postalCode':'10021'}," .
-     		"'PhoneNumbers':{'home':'212 555-1234','fax':'646 555-4567'}}}";
+		$json = '{"Person":{"firstName":"John","lastName":"Smith","age":25,"Address":' .
+			'{"streetAddress":"21 2nd Street","city":"New York","state":"NY","postalCode":"10021"},' .
+     		'"PhoneNumbers":{"home":"212 555-1234","fax":"646 555-4567"}}}';
 		$this->assert_json($json, $object);
 	}
 
