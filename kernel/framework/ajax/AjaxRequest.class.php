@@ -92,6 +92,7 @@ class AjaxRequest implements View
 	{
 		$this->parameters[$key] = $value;
 	}
+
 	public function render()
 	{
 		$tpl = $this->get_template();
@@ -99,12 +100,14 @@ class AjaxRequest implements View
 		return $tpl->render();
 
 	}
+
 	private function get_template()
 	{
 		return new StringTemplate('new Ajax.Request(${escapejs(TARGET)},' .
 			'{method:${escapejs(METHOD)},parameters:{# START param #{param.NAME}:{param.VALUE},# END #},' .
 			'# START event #{event.NAME}:{event.CALLBACK},# END #});');
 	}
+
 	private function assign(Template $tpl)
 	{
 		$tpl->put('TARGET', $this->target);

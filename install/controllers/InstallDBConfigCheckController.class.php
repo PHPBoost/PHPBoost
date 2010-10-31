@@ -27,12 +27,68 @@
 
 class InstallDBConfigCheckController extends InstallController
 {
+	private $status;
+	private $already_installed = false;
+
 	public function execute(HTTPRequest $request)
 	{
+		parent::load_lang($request);
+		$host = $request->get_value('host');
+		$port = $request->get_value('port');
+		$login = $request->get_value('login');
+		$password = $request->get_value('password');
+		$schema = $request->get_value('schema');
+		$tables_prefix = $request->get_value('tablesPrefix');
+		$this->check_configuration($host, $port, $login, $password, $schema, $tables_prefix);
+		return $this->build_response($host, $port, $login, $password, $schema, $tables_prefix);
+	}
+
+	private function check_configuration($host, $port, $login, $password, $schema, $tables_prefix)
+	{
+		$service = new InstallationServices();
+		$this->status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
+		if ($this->status == InstallationServices::CONNECTION_SUCCESSFUL)
+		{
+			$this->already_installed = $service->tables_already_exists();
+		}
+	}
+
+	private function build_response($host, $port, $login, $password, $schema, $tables_prefix)
+	{
 		$object = array(
-			'port' => '42'//$request->get_value('port')
+			'message' => $this->get_message(),
+			'connectionStatus' => $this->status,
+			'alreadyInstalled' => $this->already_installed,
+			'connectionData' => array(
+				'host' => $host,
+				'port' => $port,
+				'login' => $login,
+				'schema' => $schema,
+				'tablesPrefix' => $tables_prefix
+		)
 		);
 		return new JSONResponse($object);
+	}
+
+	private function get_message()
+	{
+		switch ($this->status)
+		{
+			case InstallationServices::CONNECTION_SUCCESSFUL:
+				if ($this->already_installed)
+				{
+					return $this->lang['phpboost.alreadyInstalled'];
+				}
+				return $this->lang['db.connection.success'];
+			case InstallationServices::CONNECTION_ERROR:
+				return $this->lang['db.connection.error'];
+			case InstallationServices::UNABLE_TO_CREATE_DATABASE:
+				return $this->lang['db.creation.error'];
+			case InstallationServices::UNKNOWN_ERROR:
+			default:
+				return $this->lang['db.unknown.error'];
+
+		}
 	}
 }
 ?>
