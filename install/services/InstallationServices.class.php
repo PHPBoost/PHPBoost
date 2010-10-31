@@ -27,6 +27,11 @@
 
 class InstallationServices
 {
+	const CONNECTION_SUCCESSFUL = 0;
+	const CONNECTION_ERROR = 1;
+	const UNABLE_TO_CREATE_DATABASE = 2;
+	const UNKNOWN_ERROR = 3;
+
 	private static $token_file_content = '1';
 	private static $min_php_version = '5.1.2';
 	private static $phpboost_major_version = '3.1';
@@ -35,23 +40,83 @@ class InstallationServices
 	 * @var File
 	 */
 	private $token;
-	
+
 	/**
 	 * @var string[string]
 	 */
 	private $messages;
-	
+
 	/**
 	 * @var mixed[string] Distribution configuration
 	 */
 	private $distribution_config;
-	
-	public function __construct($locale)
+
+	public function __construct($locale = LangLoader::DEFAULT_LOCALE)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
         $this->load_distribution_configuration();
+	}
+
+	public function tables_already_exists()
+	{
+		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
+		return in_array(PREFIX . 'member', $tables_list) || in_array(PREFIX . 'configs', $tables_list);
+	}
+
+	public function check_db_connection($host, $port, $login, $password, &$database, $tables_prefix)
+	{
+		try
+		{
+			$this->try_db_connection($host, $port, $login, $password, $database, $tables_prefix);
+		}
+		catch (UnexistingDatabaseException $ex)
+		{
+			if (!$this->create_database($database))
+			{
+				return self::UNABLE_TO_CREATE_DATABASE;
+			}
+			else
+			{
+				return $this->check_db_connection($host, $port, $login, $password, $database, $tables_prefix);
+			}
+		}
+		catch (DBConnectionException $ex)
+		{
+			return self::CONNECTION_ERROR;
+		}
+		catch (Exception $ex)
+		{
+			return self::UNKNOWN_ERROR;
+		}
+		return self::CONNECTION_SUCCESSFUL;
+	}
+
+	private function try_db_connection($host, $port, $login, $password, $database, $tables_prefix)
+	{
+		defined('PREFIX') or define('PREFIX', $tables_prefix);
+		$db_connection_data = array(
+			'dbms' => DBFactory::MYSQL,
+			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
+			'driver_options' => array(),
+			'host' => $host,
+			'login' => $login,
+			'password' => $password,
+			'database' => $database,
+		);
+		$db_connection = new MySQLDBConnection();
+		DBFactory::init_factory($db_connection_data['dbms']);
+		DBFactory::set_db_connection($db_connection);
+		$db_connection->connect($db_connection_data);
+	}
+
+	private function create_database($database)
+	{
+		$database = PersistenceContext::get_dbms_utils()->create_database($database);
+		$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
+		PersistenceContext::close_db_connection();
+		return in_array($database, $databases_list);
 	}
 
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix, $create_db_if_needed = true, $override_previous_phpboost_install = false)
@@ -77,7 +142,7 @@ class InstallationServices
 		$this->generate_cache();
 		return true;
 	}
-	
+
 	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
@@ -85,7 +150,7 @@ class InstallationServices
 		$this->delete_installation_token();
 		return true;
 	}
-    
+
     private function load_distribution_configuration()
     {
         $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
@@ -105,7 +170,7 @@ class InstallationServices
 		$this->install_locale($locale);
 		$this->configure_theme($this->distribution_config['theme'], $locale);
 	}
-	
+
 	private function save_general_config($server_url, $server_path, $site_name, $site_description, $site_keywords, $site_timezone)
 	{
 		$general_config = GeneralConfig::load();
@@ -120,28 +185,28 @@ class InstallationServices
 		$general_config->set_site_timezone((int)$site_timezone);
 		GeneralConfig::save();
 	}
-	
+
 	private function init_maintenance_config()
 	{
 		$maintenance_config = MaintenanceConfig::load();
 		$maintenance_config->set_message($this->messages['site_config_maintain_text']);
 		MaintenanceConfig::save();
 	}
-	
+
 	private function init_graphical_config()
 	{
 		$graphical_environment_config = GraphicalEnvironmentConfig::load();
 		$graphical_environment_config->set_page_bench_enabled($this->distribution_config['bench']);
 		GraphicalEnvironmentConfig::save();
 	}
-	
+
 	private function init_server_environment_config()
 	{
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_debug_mode_enabled($this->distribution_config['debug']);
 		ServerEnvironmentConfig::save();
 	}
-	
+
 	private function init_user_accounts_config($locale)
 	{
 		$user_accounts_config = UserAccountsConfig::load();
@@ -149,7 +214,7 @@ class InstallationServices
 		$user_accounts_config->set_default_theme($this->distribution_config['theme']);
 		UserAccountsConfig::save();
 	}
-	
+
 	private function install_locale($locale)
 	{
 		PersistenceContext::get_querier()->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
@@ -168,7 +233,7 @@ class InstallationServices
 				'right_column' => $info_theme['right_column']
 		));
 	}
-	
+
 	private function install_modules(array $modules_to_install)
 	{
 		foreach ($modules_to_install as $module_name)

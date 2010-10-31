@@ -62,10 +62,10 @@ class InstallDBConfigController extends InstallController
 		$host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
 		array('description' => $this->lang['dbms.host.explanation'], 'required' => true));
 		$fieldset_server->add_field($host);
-		$host = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
+		$port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
 		array('description' => $this->lang['dbms.port.explanation'], 'required' => true));
-		$host->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
-		$fieldset_server->add_field($host);
+		$port->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
+		$fieldset_server->add_field($port);
 		$login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
 		array('description' => $this->lang['dbms.login.explanation'], 'required' => true));
 		$fieldset_server->add_field($login);
@@ -79,16 +79,16 @@ class InstallDBConfigController extends InstallController
 		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
 		array('description' => $this->lang['schema.explanation'], 'required' => true));
 		$fieldset_schema->add_field($schema);
-		$table_prefix = new FormFieldTextEditor('tablePrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
+		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
 		array('description' => $this->lang['schema.tablePrefix.explanation']));
-		$fieldset_schema->add_field($table_prefix);
+		$fieldset_schema->add_field($tables_prefix);
 
 		$action_fieldset = new FormFieldsetButtons('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
 		$action_fieldset->add_button($back);
-		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){alert(response.responseJSON.port);}');
+		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){alert(response.responseJSON.message);}');
 		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png', array(
-			$host, $login, $password, $schema, $table_prefix
+			$host, $port, $login, $password, $schema, $tables_prefix
 		));
 		$action_fieldset->add_button($check);
 		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'database');
@@ -105,7 +105,7 @@ class InstallDBConfigController extends InstallController
 			$installation_services->create_phpboost_tables('mysql',
 			$this->form->get_value('host'), $this->form->get_value('port'),
 			$this->form->get_value('schema'), $this->form->get_value('login'),
-			$this->form->get_value('password'), $this->form->get_value('tablePrefix'),
+			$this->form->get_value('password'), $this->form->get_value('tablesPrefix'),
 			$create_tables_if_needed);
 			AppContext::get_response()->redirect(InstallUrlBuilder::website());
 		}
