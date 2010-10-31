@@ -65,7 +65,7 @@
 + [color=red]Nouveauté:[/color] Générateur automatique de tableau avec gestion de la pagination, filtres, tris.
 + [color=red]Nouveauté:[/color] Framework MVC (DAO, Controller).
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
-- [color=red]Nouveauté:[/color] Template JSON.
+* [color=red]Nouveauté:[/color] Template JSON.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
 * [color=red]Nouveauté:[/color] Refonte des installateurs des modules (X-sgbd).
 * [color=red]Nouveauté:[/color] Installation via des services.
@@ -76,6 +76,8 @@
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Possibilité de désactiver l'affichage d'un lien dans les menus
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)
+	ex : dans FormButtonButton, param $label => $html_content ou autre... 
 
 ------------------------------------ MODULES -----------------------------------
 

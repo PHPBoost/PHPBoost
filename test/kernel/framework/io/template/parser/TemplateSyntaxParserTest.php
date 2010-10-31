@@ -55,7 +55,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple text';
 		$output = '<?php $_result=\'this is a simple text\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_php()
@@ -63,14 +63,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is a <?php simple(); ?> text';
 		$output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
         'simple();if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_char_to_escape()
 	{
 		$input = 'this is a simpl\' text';
 		$output = '<?php $_result=\'this is a simpl\\\' text\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_line_breaks()
@@ -79,7 +79,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	text';
 		$output = '<?php $_result=\'this is a simple
 	text\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_simple_vars()
@@ -87,21 +87,21 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is {a} sim{pl}e text';
 		$output = '<?php $_result=\'this is \' . $_data->get(\'a\') . ' .
 			'\' sim\' . $_data->get(\'pl\') . \'e text\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
     public function test_lang_var()
     {
         $input = 'this is a {@lang.var}';
         $output = '<?php $_result=\'this is a \' . $_functions->i18n(\'lang.var\') . \'\'; ?>';
-        $this->assert_parse($input, $output);
+        $this->assert_parse($output, $input);
     }
 
     public function test_html_lang_var()
     {
         $input = 'this is a {@H|html.lang.var}';
         $output = '<?php $_result=\'this is a \' . $_functions->i18nraw(\'html.lang.var\') . \'\'; ?>';
-        $this->assert_parse($input, $output);
+        $this->assert_parse($output, $input);
     }
 
 	public function test_loop_vars()
@@ -119,7 +119,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		\' . $_data->get_from_list(\'text\', $_tmp_tex_ext) . \'
 	\';}$_result.=\'
 \';}$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 
@@ -132,7 +132,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 # END #';
         try
         {
-            $this->assert_parse($input, null);
+            $this->assert_parse(null, $input);
             $this->fail('expecting exception TemplateRenderingException');
         } catch (TemplateRenderingException $ex)
         {
@@ -150,7 +150,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 \';if($_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_negative_condition()
@@ -163,7 +163,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 \';if(!$_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_condition_and_else()
@@ -180,7 +180,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 \';}else{$_result.=\'
 	hello
 \';}$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_loop_and_conditions()
@@ -206,7 +206,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		pas de \' . $_data->get(\'coucou\') . \'
 	\';}$_result.=\'
 \';}$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_tpl_function()
@@ -214,7 +214,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is a simple ${call()}';
 		try
 		{
-			$this->assert_parse($input, null);
+			$this->assert_parse(null, $input);
 			$this->fail('unauthorized method call not detected');
 		}
 		catch (TemplateRenderingException $ex)
@@ -227,21 +227,21 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple #{resources(\'main\')}';
 		$output = '<?php $_result=\'this is a simple \';$_functions->resources(\'main\');$_result=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function()
 	{
 		$input = 'this is a simple ${resources(\'main\')}';
 		$output = '<?php $_result=\'this is a simple \' . $_functions->resources(\'main\') . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_php_function()
 	{
 		$input = 'this is a simple ${PHP::strlen(\'toto\')}';
 		$output = '<?php $_result=\'this is a simple \' . strlen(\'toto\') . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_unexisting_php_function()
@@ -249,7 +249,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is a simple ${PHP::strlen2()}';
 		try
 		{
-			$this->assert_parse($input, null);
+			$this->assert_parse(null, $input);
 			$this->fail('expecting exception TemplateRenderingException');
 		} catch (TemplateRenderingException $ex)
 		{
@@ -262,7 +262,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is a simple ${Static::method()}';
 		try
 		{
-			$this->assert_parse($input, null);
+			$this->assert_parse(null, $input);
 			$this->fail('expecting exception TemplateRenderingException');
 		} catch (TemplateRenderingException $ex)
 		{
@@ -274,42 +274,42 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple ${AppContext::get_uid()}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid() . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_a_parameter()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(coucou)}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid($_data->get(\'coucou\')) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_a_constant_parameter()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(\'coucou\')}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(\'coucou\') . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_a_numeric_constant_parameter()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(42)}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_a_floating_constant_parameter()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(42.37)}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42.37) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_boolean_constant_parameters()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(true, false)}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(true, false) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_function_with_mixed_parameters()
@@ -317,14 +317,14 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$input = 'this is a simple ${AppContext::get_uid(42, \'coucou\',
         42.37)}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(42, \'coucou\', 42.37) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_imbricated_functions_call()
 	{
 		$input = 'this is a simple ${AppContext::get_uid(AppContext::get_uid())}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(AppContext::get_uid()) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_include_tpl()
@@ -333,7 +333,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is a simple \';' .
 '$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_includefile_tpl()
@@ -342,7 +342,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is a simple \';' .
 '$_subtpl=new FileTemplate(\'my/file.tpl\');$_subtpl->set_data($_data);$_result.=$_subtpl->render();' .
 '$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_simple_block_include_tpl()
@@ -351,7 +351,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is a simple \';' .
 '$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_imbricated_block_include_tpl()
@@ -360,42 +360,42 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is a simple \';' .
 '$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_parse_empty_array()
 	{
 		$input = 'this is a simple ${AppContext::get_uid([])}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array()) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_parse_one_parameter_array()
 	{
 		$input = 'this is a simple ${AppContext::get_uid([\'coucou\'])}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'coucou\')) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_parse_multi_parameters_array()
 	{
 		$input = 'this is a simple ${AppContext::get_uid([\'coucou\', COUCOU, 42.3])}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'coucou\', $_data->get(\'COUCOU\'), 42.3)) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
 	public function test_parse_one_parameter_map()
 	{
 		$input = 'this is a simple ${AppContext::get_uid([\'key\': \'coucou\'])}';
 		$output = '<?php $_result=\'this is a simple \' . AppContext::get_uid(array(\'key\'=>\'coucou\')) . \'\'; ?>';
-		$this->assert_parse($input, $output);
+		$this->assert_parse($output, $input);
 	}
 
-	private function assert_parse($input, $expected_output)
+	private function assert_parse($expected, $input)
 	{
 		$parser = new TemplateSyntaxParser();
 		$output = $parser->parse($input);
-		$this->assertEquals($expected_output, $output);
+		$this->assertEquals($expected, $output);
 	}
 }
 ?>
