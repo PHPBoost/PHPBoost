@@ -56,6 +56,7 @@ class InstallDisplayResponse extends AbstractResponse
 		$this->update_progress_bar();
 
 		$this->full_view->put_all(array(
+			'RESTART' => InstallUrlBuilder::welcome()->rel(),
             'STEP_TITLE' => $step_title,
             'C_HAS_PREVIOUS_STEP' => false,
             'C_HAS_NEXT_STEP' => false,
@@ -109,13 +110,13 @@ class InstallDisplayResponse extends AbstractResponse
 	private function init_steps()
 	{
 		$steps = array(
-			array('name' => $this->lang['step.welcome.title'], 'img' => 'intro.png'),
-			array('name' => $this->lang['step.license.title'], 'img' => 'license.png'),
-			array('name' => $this->lang['config_server'], 'img' => 'config.png'),
-			array('name' => $this->lang['database_config'], 'img' => 'database.png'),
-			array('name' => $this->lang['advanced_config'], 'img' => 'advanced_config.png'),
-			array('name' => $this->lang['administrator_account_creation'], 'img' => 'admin.png'),
-			array('name' => $this->lang['end'], 'img' => 'end.png')
+			array('name' => $this->lang['step.list.introduction'], 'img' => 'intro.png'),
+			array('name' => $this->lang['step.list.license'], 'img' => 'license.png'),
+			array('name' => $this->lang['step.list.server'], 'img' => 'config.png'),
+			array('name' => $this->lang['step.list.database'], 'img' => 'database.png'),
+			array('name' => $this->lang['step.list.website'], 'img' => 'advanced_config.png'),
+			array('name' => $this->lang['step.list.admin'], 'img' => 'admin.png'),
+			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
 		);
 		$this->nb_steps = count($steps) - 1;
 

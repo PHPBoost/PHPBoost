@@ -28,14 +28,14 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{@change_lang}
+						{@language.change}
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final" style="text-align:center;">
 						<form action="{U_CHANGE_LANG}" method="post">
 							<p>
-								<select name="new_language" id="change_lang" onchange="document.location='index.php?url=/welcome&amp;lang=' + document.getElementById('change_lang').value;">
+								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
 									# START lang #
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
@@ -58,21 +58,21 @@ ${resources('install/install')}
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{@steps_list}
+						{@steps.list}
 					</td>
 				</tr>
 				# START step #
 					<tr>
 						<td class="{step.CSS_CLASS}">
 							<img src="templates/images/{step.IMG}" alt="${escape(step.NAME)}" class="valign_middle" />&nbsp;&nbsp;{step.NAME}
-						</td>				
+						</td>
 					</tr>
 				# END step #
 			</table>
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
-						{@install_progress}
+						{@installation.progression}
 					</td>
 				</tr>
 				<tr>
@@ -84,7 +84,7 @@ ${resources('install/install')}
 							</div>
 						</div>
 					</td>
-				</tr>						
+				</tr>
 			</table>
 			<table class="table_left">
 				<tr>
@@ -96,39 +96,39 @@ ${resources('install/install')}
 					<td class="row_next">
 						<img src="templates/images/help.png" alt="{@documentation}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_DOCUMENTATION}">{@documentation}</a>
+						<a href="{@documentation.link}">{@documentation}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<img src="templates/images/intro.png" alt="{@restart_installation}" class="valign_middle" />
+						<img src="templates/images/intro.png" alt="{@installation.restart}" class="valign_middle" />
 						&nbsp;&nbsp;
-						<a href="{U_RESTART}" onclick="return confirm('{@confirm_restart_installation}');">{@restart_installation}</a>
+						<a href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');">{@installation.restart}</a>
 					</td>
-				</tr>					
+				</tr>
 			</table>
 		</div>
-		
+
 		<div id="main">
 			<table class="table_contents">
-				<tr> 
+				<tr>
 					<th colspan="2">
 						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {STEP_TITLE}</div>
 					</th>
 				</tr>
-				
-				<tr> 				
-					<td class="row_contents">						
-                        # INCLUDE installStep #					
+
+				<tr>
+					<td class="row_contents">
+                        # INCLUDE installStep #
 					</td>
 				</tr>
-			</table>		
+			</table>
 		</div>
 	</div>
 	<div id="footer">
 		<span>
-			{@powered_by} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost_right}
-		</span>	
+			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost.rights}
+		</span>
 	</div>
 	</body>
 </html>

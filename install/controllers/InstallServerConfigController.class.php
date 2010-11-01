@@ -63,11 +63,11 @@ class InstallServerConfigController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('continueForm');
+		$this->form = new HTMLForm('continueForm', '#error');
 		$action_fieldset = new FormFieldsetButtons('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
 		$action_fieldset->add_button($back);
-		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration(), 'templates/images/refresh.png');
+		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->absolute(), 'templates/images/refresh.png');
 		$action_fieldset->add_button($refresh);
 		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
 		$action_fieldset->add_button($this->submit);
@@ -91,6 +91,10 @@ class InstallServerConfigController extends InstallController
             'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_libray(),
             'URL_REWRITING_AVAILABLE' => $this->server_conf->has_url_rewriting()
 		));
+		if (!PHPBoostFoldersPermissions::validate())
+		{
+			$this->view->put('ERROR', $this->lang['folders.chmod.error']);
+		}
 		try
 		{
 			$this->view->put('URL_REWRITING_KNOWN', true);
