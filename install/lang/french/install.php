@@ -44,31 +44,35 @@ $lang = array(
     'install.rank.missile' => 'Booster Missile',
     'install.rank.fusee' => 'Booster Fusée',
 
-	'cache_tpl_must_exist_and_be_writable' => '<h1>Installation de PHPBoost</h1>
-<p><strong>Attention</strong> : les dossiers cache et cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
+	'chmod.cache.notWritable' => '<h1>Installation de PHPBoost</h1>
+<p><strong>Attention</strong> : les dossiers /cache et /cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 775) pour pouvoir lancer l\'installation.</p>
 <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>',
 
 	//Variables générales
 	'installation.title' => 'Installation de PHPBoost',
-	'steps_list' => 'Liste des étapes',
-	'introduction' => 'Préambule',
-	'config_server' => 'Configuration du serveur',
-	'database_config' => 'Configuration base de données',
-	'advanced_config' => 'Configuration du site',
-	'administrator_account_creation' => 'Compte administrateur',
-	'end' => 'Fin de l\'installation',
-	'install_progress' => 'Progression de l\'installation',
-	'generated_by' => 'Généré par %s',
-	'previous_step' => 'Etape précédente',
-	'next_step' => 'Etape suivante',
-	'query_loading' => 'Chargement de la requête au serveur',
-	'query_sent' => 'Requête envoyée au serveur, attente d\'une réponse',
-	'query_processing' => 'Traitement de la requête en cours',
-	'query_success' => 'Traitement terminé',
-	'query_failure' => 'Traitement échoué',
-
+	'steps.list' => 'Liste des étapes',
+	'step.list.introduction' => 'Préambule',
+	'step.list.license' => 'Licence',
+	'step.list.server' => 'Configuration du serveur',
+	'step.list.database' => 'Configuration base de données',
+	'step.list.website' => 'Configuration du site',
+	'step.list.admin' => 'Compte administrateur',
+	'step.list.end' => 'Fin de l\'installation',
+	'installation.progression' => 'Progression de l\'installation',
+	'appendices' => 'Annexes',
+	'documentation' => 'Documentation',
+	'documentation.link' => 'http://www.phpboost.com/wiki/installer-phpboost',
+	'installation.restart' => 'Recommencer l\'installation',
+	'installation.confirmRestart' => 'Etes-vous certain de vouloir recommencer l\'installation ?',
+	'language.change' => 'Changer de langue',
+	'change' => 'Changer',
     'step.previous' => 'Etape précédente',
     'step.next' => 'Etape suivante',
+    'yes' => 'Oui',
+    'no' => 'Non',
+	'generatedBy' => 'Généré par %s',
+	'poweredBy' => 'Boosté par',
+	'phpboost.rights' => '',
 
 //Introduction
 	'step.welcome.title' => 'Préambule',
@@ -110,10 +114,7 @@ $lang = array(
 	'folder.doesNotExist' => 'Inexistant',
 	'folder.isWritable' => 'Inscriptible',
 	'folder.isNotWritable' => 'Non inscriptible',
-
-
-	'unknown' => 'Indéterminable',
-	'config_server_dirs_not_ok' => 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.',
+	'folders.chmod.error' => 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.',
 
 //Base de données
     'step.dbConfig.title' => 'Configuration base de données',
@@ -170,10 +171,6 @@ $lang = array(
 	'website.host.warning' => 'L\'adresse du site que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir cette adresse ?',
 	'website.path.warning' => 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?',
 //	'site_config_mail_signature' => 'Cordialement, l\'équipe du site.',
-//	'site_config_msg_mbr' => 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.',
-//	'site_config_msg_register' => 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br />
-//<br />
-//Merci, l\'équipe du site.',
 
 //administration
     'step.admin.title' => 'Compte administrateur',
@@ -188,14 +185,14 @@ $lang = array(
 	'admin.password.repeat' => 'Répéter le mot de passe',
 	'admin.email' => 'Courrier électronique',
 	'admin.email.explanation' => 'Doit être valide pour recevoir le code de déverrouillage',
-//	'admin_require_login' => 'Vous devez entrer un pseudo',
-//	'admin_login_too_short' => 'Votre pseudo est trop court (3 caractères minimum)',
-//	'admin_password_too_short' => 'Votre mot de passe est trop court (6 caractères minimum)',
-//	'admin_require_password' => 'Vous devez entrer un mot de passe',
-//	'admin_require_password_repeat' => 'Vous devez confirmer votre mot de passe',
-//	'admin_require_mail' => 'Vous devez entrer une adresse de courier électronique',
-//	'admin_passwords_error' => 'Les deux mots de passe que vous avez entrés ne correspondent pas',
-//	'admin_email_error' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
+	'admin.login.required' => 'Vous devez choisir un pseudo',
+	'admin.login.length' => 'Votre pseudo est trop court (3 caractères minimum)',
+	'admin.password.required' => 'Vous devez entrer un mot de passe',
+	'admin.password.length' => 'Votre mot de passe est trop court (6 caractères minimum)',
+	'admin.confirmPassword.required' => 'Vous devez confirmer votre mot de passe',
+	'admin.passwords.mismatch' => 'Les deux mots de passe que vous avez entrés ne correspondent pas',
+	'admin.email.required' => 'Vous devez entrer une adresse de courier électronique',
+	'admin.email.invalid' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
 //	'admin_invalid_email_error' => 'Mail invalide',
 	'admin.connectAfterInstall' => 'Me connecter à la fin de l\'installation',
 	'admin.autoconnect' => 'Rester connecté systématiquement à chacune de mes visites',
@@ -255,20 +252,6 @@ Cordialement l\'équipe PHPBoost.',
                             </ul>
                         </fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',
-	'admin.index' => 'Aller dans le panneau d\'administration',
-
-//Divers
-	'yes' => 'Oui',
-	'no' => 'Non',
-	'appendices' => 'Annexes',
-	'documentation' => 'Documentation',
-	'documentation_link' => 'http://www.phpboost.com/wiki/installer-phpboost',
-	'restart_installation' => 'Recommencer l\'installation',
-	'confirm_restart_installation' => addslashes('Etes-vous certain de vouloir recommencer l\'installation ?'),
-	'change_lang' => 'Changer de langue',
-	'change' => 'Changer',
-
-	'powered_by' => 'Boosté par',
-	'phpboost_right' => ''
+	'admin.index' => 'Aller dans le panneau d\'administration'
 );
 ?>

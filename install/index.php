@@ -25,20 +25,33 @@
  *
  ###################################################*/
 
+if (version_compare(phpversion(), '5.1.2', '<') == -1)
+{
+	// Version is not retrieved from the ServerConfiguration::MIN_PHP_VERSION constant because
+	// it would imply that bootstraping will work and that PHP version is at least 5.0 (static keyword)
+	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP 5.1.2 is needed but your current PHP version is ' . phpversion() . '</p>');
+}
+
 define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
 InstallEnvironment::load_imports();
 InstallEnvironment::init();
 
+$permissions = PHPBoostFoldersPermissions::get_permissions();
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
+{
+	die(LangLoader::get_message('chmod.cache.notWritable', 'install', 'install'));
+}
+
 $url_controller_mappers = array(
-new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
-new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-new UrlControllerMapper('InstallDBConfigCheckController', '`^/database/check/?$`'),
-new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
+	new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
+	new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
+	new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
+	new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
+	new UrlControllerMapper('InstallDBConfigCheckController', '`^/database/check/?$`'),
+	new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
+	new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
+	new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 

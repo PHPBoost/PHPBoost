@@ -44,31 +44,36 @@ $lang = array(
    'install.rank.missile' => 'Missile booster',
    'install.rank.fusee' => 'Spaceship boost',
 
-   'cache_tpl_must_exist_and_be_writable' => '<h1>PHPBoost installation</h1>
-<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
+   'chmod.cache.notWritable' => '<h1>PHPBoost installation</h1>
+<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (775) to be able to continue the installation.</p>
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>',
 
 // General variables
 	'installation.title' => 'PHPBoost installation',
-	'steps_list' => 'Steps list',
-	'introduction' => 'Preamble',
-	'config_server' => 'Server Configuration',
-	'database_config' => 'Database settings',
-	'advanced_config' => 'General settings',
-	'administrator_account_creation' => 'Administrator details',
-	'end' => 'End of installation',
-	'install_progress' => 'Installation progression',
-	'generated_by' => 'Powered by %s',
-	'previous_step' => 'Go back to previous step',
-	'next_step' => 'Proceed to next step',
-	'query_loading' => 'Sending query to the server',
-	'query_sent' => 'Query sent, waiting for response',
-	'query_processing' => 'Query processing',
-	'query_success' => 'The process has been done successfully',
-	'query_failure' => 'An error occured during query processing',
+	'steps.list' => 'Steps list',
+	'step.list.introduction' => 'Preamble',
+	'step.list.license' => 'License',
+	'step.list.server' => 'Server Configuration',
+	'step.list.database' => 'Database settings',
+	'step.list.website' => 'General settings',
+	'step.list.admin' => 'Administrator details',
+	'step.list.end' => 'End of installation',
+	'installation.progression' => 'Installation progression',
+	'appendices' => 'Appendices',
+	'documentation' => 'Documentation',
+	'documentation.link' => 'http://www.phpboost.org/wiki/install-phpboost',
+	'installation.restart' => 'Restart the installation',
+	'installation.confirmRestart' => 'Are you sure you want to restart the installation ?',
+	'language.change' => 'Change language',
+	'change' => 'Change',
+    'step.previous' => 'Previous step',
+    'step.next' => 'Next step',
+    'yes' => 'Yes',
+    'no' => 'No',
+	'generatedBy' => 'Powered by %s',
+	'poweredBy' => 'Powered by',
+	'phpboost.rights' => '',
 
-    'step.previous' => 'Etape précédente',
-    'step.next' => 'Etape suivante',
 
 // Introduction
 	'step.welcome.title' => 'Preamble',
@@ -108,10 +113,7 @@ $lang = array(
 	'folder.doesNotExist' => 'Not found',
 	'folder.isWritable' => 'Writable',
 	'folder.isNotWritable' => 'Not writable',
-
-
-	'unknown' => 'Unknown',
-	'config_server_dirs_not_ok' => 'Some directories seem to be missing and/or not writable. You need to create the missing directories or make the directories writable.',
+	'folders.chmod.error' => 'Some directories seem to be missing and/or not writable. You need to create the missing directories or make the directories writable.',
 
 // Database
     'step.dbConfig.title' => 'Database settings',
@@ -168,10 +170,6 @@ $lang = array(
 	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed ?',
 	'website.path.warning' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?',
 //	'site_config_mail_signature' => 'Best regards, the site team.',
-//	'site_config_msg_mbr' => 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.',
-//	'site_config_msg_register' => 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br />
-//<br />
-//Thanks, the site team.',
 
 // Administration
     'step.admin.title' => 'Admin Account',
@@ -186,14 +184,14 @@ $lang = array(
 	'admin.password.repeat' => 'Confirm administrator password',
 	'admin.email' => 'Contact e-mail address',
 	'admin.email.explanation' => 'Must be valid to receive unlock administration code.',
-//	'admin_require_login' => 'You must enter a username !',
-//	'admin_login_too_short' => 'Your username is too short (at least 3 characters)',
-//	'admin_password_too_short' => 'Your password is too short (at least 6 characters)',
-//	'admin_require_password' => ' You must enter a password !',
-//	'admin_require_password_repeat' => 'You must confirm your password !',
-//	'admin_require_mail' => 'You must enter an e-mail address !',
-//	'admin_passwords_error' => 'The passwords you entered did not match.',
-//	'admin_email_error' => 'The email address you entered is invalid.',
+	'admin.login.required' => 'You must enter a username !',
+	'admin.login.length' => 'Your username is too short (at least 3 characters)',
+	'admin.password.required' => ' You must enter a password !',
+	'admin.password.length' => 'Your password is too short (at least 6 characters)',
+	'admin.confirmPassword.required' => 'You must confirm your password !',
+	'admin.passwords.mismatch' => 'The passwords you entered did not match.',
+	'admin.email.required' => 'You must enter an e-mail address !',
+	'admin.email.invalid' => 'The email address you entered is invalid.',
 //	'admin_invalid_email_error' => 'The email address you entered is invalid.',
 	'admin.connectAfterInstall' => 'Log me on at the end of the installation',
 	'admin.autoconnect' => 'Log me on automatically each visit',
@@ -254,19 +252,6 @@ The PHPBoost Team.',
                             </ul>
                         </fieldset>',
 	'site.index' => 'Go to the website',
-	'admin.index' => 'Go to the administration panel',
-
-// Miscalleneous
-	'yes' => 'Yes',
-	'no' => 'No',
-	'appendices' => 'Appendices',
-	'documentation' => 'Documentation',
-	'documentation_link' => 'http://www.phpboost.org/wiki/install-phpboost',
-	'restart_installation' => 'Restart the installation',
-	'confirm_restart_installation' => addslashes('Are you sure you want to restart the installation ?'),
-	'change_lang' => 'Change language',
-	'change' => 'Change',
-	'powered_by' => 'Powered by',
-	'phpboost_right' => ''
+	'admin.index' => 'Go to the administration panel'
 );
 ?>

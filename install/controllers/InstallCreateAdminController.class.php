@@ -65,20 +65,20 @@ class InstallCreateAdminController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$login = new FormFieldTextEditor('login', $this->lang['admin.login'], '',
-		array('description' => $this->lang['admin.login.explanation'], 'required' => true));
-		$login->add_constraint(new FormFieldConstraintLengthRange(3, 64));
+		array('description' => $this->lang['admin.login.explanation'], 'required' => $this->lang['admin.login.required'], 'maxlength' => 64));
+		$login->add_constraint(new FormFieldConstraintLengthRange(3, 64, $this->lang['admin.login.length']));
 		$fieldset->add_field($login);
         $password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
-        array('description' => $this->lang['admin.password.explanation'], 'required' => true));
-        $password->add_constraint(new FormFieldConstraintLengthRange(6, 64));
+        array('description' => $this->lang['admin.password.explanation'], 'required' => $this->lang['admin.password.required'], 'maxlength' => 64));
+        $password->add_constraint(new FormFieldConstraintLengthRange(6, 64, $this->lang['admin.password.length']));
         $fieldset->add_field($password);
         $repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
-        array('required' => true));
+        array('required' => $this->lang['admin.confirmPassword.required']));
         $fieldset->add_field($repeatPassword);
-        $this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
+        $this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword, $this->lang['admin.passwords.mismatch']));
 
-		$email = new FormFieldTextEditor('email', $this->lang['admin.email'], '', array('required' => true));
-		$email->add_constraint(new FormFieldConstraintMailAddress());
+		$email = new FormFieldTextEditor('email', $this->lang['admin.email'], '', array('required' => $this->lang['admin.email.required']));
+		$email->add_constraint(new FormFieldConstraintMailAddress($this->lang['admin.email.invalid']));
 		$fieldset->add_field($email);
 		$createSession = new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true);
 		$fieldset->add_field($createSession);
