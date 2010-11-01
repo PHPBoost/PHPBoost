@@ -78,6 +78,16 @@ class User
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 
+	public function get_theme()
+	{
+		$theme = $this->get_attribute('user_theme');
+		if (empty($theme))
+		{
+			return 'base';
+		}
+		return $theme;
+	}
+
 	/**
 	 * @desc Get the user id
 	 * @return int The user id.

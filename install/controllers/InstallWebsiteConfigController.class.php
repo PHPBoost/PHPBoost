@@ -47,12 +47,7 @@ class InstallWebsiteConfigController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-            $installation_services = new InstallationServices(LangLoader::get_locale());
-			$installation_services->configure_website(
-			$this->form->get_value('host'), $this->form->get_value('path'),
-			$this->form->get_value('name'), $this->form->get_value('description'),
-			$this->form->get_value('metaKeywords'), $this->form->get_value('timezone'));
-			AppContext::get_response()->redirect(InstallUrlBuilder::admin());
+			$this->handle_form();
 		}
 		return $this->create_response();
 	}
@@ -65,13 +60,15 @@ class InstallWebsiteConfigController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$host = new FormFieldTextEditor('host', $this->lang['website.host'], $this->current_server_host(),
-		array('description' => $this->lang['website.host.explanation'], 'required' => true));
+		array('description' => $this->lang['website.host.explanation'], 'required' => $this->lang['website.host.required']));
+		$host->add_event('change', $this->warning_if_not_equals($host, $this->lang['website.host.warning']));
 		$host->add_constraint(new FormFieldConstraintUrl());
 		$fieldset->add_field($host);
 		$path = new FormFieldTextEditor('path', $this->lang['website.path'], $this->current_server_path(),
 		array('description' => $this->lang['website.path.explanation'], 'required' => true));
+		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['website.path.warning']));
 		$fieldset->add_field($path);
-		$name = new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => true));
+		$name = new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => $this->lang['website.name.required']));
 		$fieldset->add_field($name);
 		$description = new FormFieldMultiLineTextEditor('description', $this->lang['website.description'], '',
 		array('description' => $this->lang['website.description.explanation']));
@@ -96,6 +93,16 @@ class InstallWebsiteConfigController extends InstallController
 		$this->form->add_fieldset($action_fieldset);
 	}
 
+	private function handle_form()
+	{
+		$installation_services = new InstallationServices(LangLoader::get_locale());
+		$installation_services->configure_website(
+		$this->form->get_value('host'), $this->form->get_value('path'),
+		$this->form->get_value('name'), $this->form->get_value('description'),
+		$this->form->get_value('metaKeywords'), $this->form->get_value('timezone')->get_raw_value());
+		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
+	}
+
 	private function current_server_host()
 	{
 		return 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
@@ -110,6 +117,17 @@ class InstallWebsiteConfigController extends InstallController
 		}
 		$server_path = trim(preg_replace('`/install$`', '', dirname($server_path)));
 		return $server_path = ($server_path == '/') ? '' : $server_path;
+	}
+
+	private function warning_if_not_equals(FormField $field, $message)
+	{
+		$tpl = new StringTemplate('var field = $FF(${escapejs(ID)});
+var value = ${escapejs(VALUE)};
+if(field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(value);}');
+		$tpl->put('ID', $field->get_id());
+		$tpl->put('VALUE', $field->get_value());
+		$tpl->put('MESSAGE', $message);
+		return $tpl->render();
 	}
 
 	/**

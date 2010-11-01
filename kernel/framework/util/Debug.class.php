@@ -95,7 +95,7 @@ class Debug
 	private static function write_debug_file($enabled)
 	{
 		$file = new File(PATH_TO_ROOT . '/cache/debug.php');
-		$file->write('<?php $debug = ' . var_export($enabled, true) . '; ?>');
+		$file->write('<?php $debug = ' . ($enabled ? 'true' : 'false') . '; ?>');
 		$file->close();
 	}
 
