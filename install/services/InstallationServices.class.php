@@ -156,11 +156,10 @@ class InstallationServices
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_desc = '', $site_keyword = '', $site_timezone = '')
 	{
 		$locale = LangLoader::get_locale();
-		$user = new User();
+		$user = new AdminUser();
 		$user->set_user_lang($locale);
 		AppContext::set_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
-		$this->init_maintenance_config();
 		$this->init_graphical_config();
 		$this->init_server_environment_config();
 		$this->init_user_accounts_config($locale);
@@ -181,13 +180,6 @@ class InstallationServices
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone((int)$site_timezone);
 		GeneralConfig::save();
-	}
-
-	private function init_maintenance_config()
-	{
-		$maintenance_config = MaintenanceConfig::load();
-		$maintenance_config->set_message($this->messages['site_config_maintain_text']);
-		MaintenanceConfig::save();
 	}
 
 	private function init_graphical_config()

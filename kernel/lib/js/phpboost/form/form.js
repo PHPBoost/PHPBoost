@@ -259,6 +259,9 @@ var FormField = Class
 			getValue : function() {
 				return $F(this.getHTMLId());
 			},
+			setValue : function(value) {
+				Form.Element.setValue($(this.getHTMLId()), value);
+			},
 			enableValidationMessage : function() {
 				this.validationMessageEnabled = true;
 			},

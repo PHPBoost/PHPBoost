@@ -44,12 +44,12 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
 	}
-	
+
 	public function get_htaccess_manual_content()
 	{
 		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
 	}
-	
+
 	public function set_htaccess_manual_content($content)
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
@@ -59,17 +59,17 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::OUTPUT_GZIPING_ENABLED);
 	}
-	
+
 	public function set_output_gziping_enabled($enabled)
 	{
 		$this->set_property(self::OUTPUT_GZIPING_ENABLED, $enabled);
 	}
-	
+
 	public function is_debug_mode_enabled()
 	{
 		return $this->get_property(self::DEBUG_MODE_ENABLED);
 	}
-	
+
 	public function set_debug_mode_enabled($enabled)
 	{
 		$this->set_property(self::DEBUG_MODE_ENABLED, $enabled);
@@ -82,7 +82,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			Debug::disable_debug_mode();
 		}
 	}
-	
+
 	public function get_default_values()
 	{
 		return array(

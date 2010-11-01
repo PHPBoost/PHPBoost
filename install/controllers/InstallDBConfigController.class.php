@@ -160,7 +160,7 @@ class InstallDBConfigController extends InstallController
 		else
 		{
 			$this->overwrite_fieldset->enable();
-			$this->error = $this->lang['phpboost.alreadyInstalled'];
+			$this->error = $this->lang['phpboost.alreadyInstalled.explanation'];
 		}
 	}
 

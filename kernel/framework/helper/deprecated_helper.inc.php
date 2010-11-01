@@ -443,7 +443,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 function get_utheme()
 {
 	$user = AppContext::get_user();
-	return $user->get_attribute('user_theme');
+	return $user->get_theme();
 }
 
 /**

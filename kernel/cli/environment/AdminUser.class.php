@@ -33,32 +33,21 @@
 class AdminUser extends User
 {
 	private $is_admin = false;
-	private $user_data; //Données du membres, obtenues à partir de la class de session.
-	private $groups_auth; //Tableau contenant le nom des groupes disponibles.
-	private $user_groups; //Groupes du membre.
+	private $user_data = array();
+	private $groups_auth = array(); //Tableau contenant le nom des groupes disponibles.
+	private $user_groups = array(); //Groupes du membre.
 
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
 	public function __construct()
 	{
-//		parent::__construct();
 		$this->is_admin = true;
 	}
 
 	public function is_admin()
 	{
 		return true;
-	}
-
-	/**
-	 * @desc Accessor
-	 * @param string $attribute The attribute name.
-	 * @return unknown_type
-	 */
-	public function get_attribute($attribute)
-	{
-		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 
 	/**

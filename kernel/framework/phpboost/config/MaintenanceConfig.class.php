@@ -37,37 +37,37 @@ class MaintenanceConfig extends AbstractConfigData
 	const AUTH = 'auth';
 	const DISPLAY_DURATION = 'display_duration';
 	const DISPLAY_DURATION_FOR_ADMIN = 'display_duration_admin';
-	
+
 	public function is_maintenance_enabled()
 	{
 		return $this->get_property(self::ENABLED);
 	}
-	
+
 	public function set_maintenance_enabled($enabled)
 	{
 		$this->set_property(self::ENABLED, $enabled);
 	}
-	
+
 	public function enable_maintenance()
 	{
 		$this->set_maintenance_enabled(true);
 	}
-	
+
 	public function disable_maintenance()
 	{
 		$this->set_maintenance_enabled(false);
 	}
-	
+
 	public function is_unlimited_maintenance()
 	{
 		return $this->get_property(self::UNLIMITED_DURATION);
 	}
-	
+
 	public function set_unlimited_maintenance($unlimited)
 	{
 		$this->set_property(self::UNLIMITED_DURATION, $unlimited);
 	}
-	
+
 	/**
 	 * @return Date
 	 */
@@ -75,37 +75,37 @@ class MaintenanceConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::END_DATE);
 	}
-	
+
 	public function set_end_date(Date $date)
 	{
 		$this->set_property(self::END_DATE, $date);
 	}
-	
+
 	public function get_message()
 	{
 		return $this->get_property(self::MESSAGE);
 	}
-	
+
 	public function set_message($message)
 	{
 		$this->set_property(self::MESSAGE, $message);
 	}
-	
+
 	public function get_auth()
 	{
 		return $this->get_property(self::AUTH);
 	}
-	
+
 	public function set_auth(array $auth)
 	{
 		$this->set_property(self::AUTH, $auth);
 	}
-	
+
 	public function get_display_duration()
 	{
 		return $this->get_property(self::DISPLAY_DURATION);
 	}
-	
+
 	public function set_display_duration($display)
 	{
 		$this->set_property(self::DISPLAY_DURATION, $display);
@@ -115,22 +115,22 @@ class MaintenanceConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DISPLAY_DURATION_FOR_ADMIN);
 	}
-	
+
 	public function set_display_duration_for_admin($display)
 	{
 		$this->set_property(self::DISPLAY_DURATION_FOR_ADMIN, $display);
 	}
-	
+
 	public function is_end_date_not_reached()
 	{
 		return $this->get_end_date()->is_posterior_to(new Date());
 	}
-	
+
 	public function is_under_maintenance()
 	{
 		return $this->is_maintenance_enabled() && ($this->is_unlimited_maintenance() || $this->is_end_date_not_reached());
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -140,7 +140,7 @@ class MaintenanceConfig extends AbstractConfigData
 			self::ENABLED => false,
 			self::UNLIMITED_DURATION => false,
 			self::END_DATE => new Date(),
-			self::MESSAGE => '',
+			self::MESSAGE => LangLoader::get_message('maintain', 'main'),
 			self::AUTH => array(),
 			self::DISPLAY_DURATION => true,
 			self::DISPLAY_DURATION_FOR_ADMIN => true

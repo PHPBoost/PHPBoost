@@ -3,7 +3,6 @@
 var field = new FormField("${escape(ID)}");
 var fieldset = HTMLForms.getFieldset("${escape(FIELDSET_ID)}");
 fieldset.addField(field);
-
 field.doValidate = function() {
 	var result = "";
 	# START constraint #
@@ -14,7 +13,6 @@ field.doValidate = function() {
 	# END constraint #
 	return result;
 }
-
 if ($("${escape(HTML_ID)}") != null)
 {
 	Event.observe("${escape(HTML_ID)}", 'blur', function() {
@@ -38,9 +36,6 @@ else
 		return "";
 	}
 }
-
 {JS_SPECIALIZATION_CODE}
-
-
 -->
 </script>

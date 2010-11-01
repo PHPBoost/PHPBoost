@@ -163,16 +163,15 @@ $lang = array(
 	'site_description_explain' => '<span style="font-weight:bold;">Optional:</span> Useful for search engine optimization',
 	'site_keywords' => 'Website keywords',
 	'site_keywords_explain' => '<span style="font-weight:bold;">Optional:</span> Enter keywords separated by commas.',
-	'require_site_url' => 'You must enter your website\'s url !',
-	'require_site_name' => 'You must enter your website\'s name !',
-	'confirm_site_url' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed ?',
-	'confirm_site_path' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?',
-	'site_config_maintain_text' => 'The site is currently under maintenance.',
-	'site_config_mail_signature' => 'Best regards, the site team.',
-	'site_config_msg_mbr' => 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.',
-	'site_config_msg_register' => 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br />
-<br />
-Thanks, the site team.',
+	'website.host.required' => 'You must enter your website\'s url !',
+	'website.name.required' => 'You must enter your website\'s name !',
+	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed ?',
+	'website.path.warning' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?',
+//	'site_config_mail_signature' => 'Best regards, the site team.',
+//	'site_config_msg_mbr' => 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.',
+//	'site_config_msg_register' => 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br />
+//<br />
+//Thanks, the site team.',
 
 // Administration
     'step.admin.title' => 'Admin Account',

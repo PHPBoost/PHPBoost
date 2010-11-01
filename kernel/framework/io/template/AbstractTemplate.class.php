@@ -91,6 +91,7 @@ abstract class AbstractTemplate implements Template
 	public function put($key, $value)
 	{
 		$this->data->put($key, $value);
+		return $this;
 	}
 
 	/**
@@ -99,6 +100,7 @@ abstract class AbstractTemplate implements Template
 	public function put_all(array $vars)
 	{
 		$this->data->put_all($vars);
+		return $this;
 	}
 
 	/**
@@ -107,6 +109,7 @@ abstract class AbstractTemplate implements Template
 	public function assign_vars(array $array_vars)
 	{
 		$this->data->put_all($array_vars);
+		return $this;
 	}
 
 	/**
@@ -115,6 +118,7 @@ abstract class AbstractTemplate implements Template
 	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
 		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
+		return $this;
 	}
 
 	/**
@@ -123,6 +127,7 @@ abstract class AbstractTemplate implements Template
 	public function add_subtemplate($identifier, Template $template)
 	{
 		$this->data->put($identifier, $template);
+		return $this;
 	}
 
 	/**
