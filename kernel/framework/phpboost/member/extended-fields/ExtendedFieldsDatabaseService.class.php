@@ -36,34 +36,57 @@ class ExtendedFieldsDatabaseService
 	public static function add_extended_field(ExtendedField $extended_field)
 	{
 		self::add_extended_field_to_member($extended_field);
-		
-		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex, auth) VALUES ('" . $extended_field->get_name() . "', '" . $extended_field->get_position() . "', '" . $extended_field->get_field_name() . "', '" . $extended_field->get_content() . "', '" . $extended_field->get_field_type() . "', '" . $extended_field->get_possible_values() . "', '" . $extended_field->get_default_values() . "', '" . $extended_field->get_required() . "',	'" . $extended_field->get_display() . "','" . $extended_field->get_regex() . "','" . serialize($extended_field->get_authorization()) . "')", __LINE__, __FILE__);
+
+		PersistenceContext::get_querier()->inject(
+			"INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex, auth)
+			VALUES (:name, :position, :field_name, :content, :field_type, :possible_values, :default_values, :required, :display, :regex, :auth)", array(
+                'name' => $extended_field->get_name(),
+                'position' => $extended_field->get_position(),
+				'field_name' => $extended_field->get_field_name(),
+				'content' => $extended_field->get_content(),
+				'field_type' => $extended_field->get_field_type(),
+				'possible_values' => $extended_field->get_possible_values(),
+				'default_values' => $extended_field->get_default_values(),
+				'required' => $extended_field->get_required(),
+				'display' => $extended_field->get_display(),
+				'regex' => $extended_field->get_regex(),
+				'auth' => serialize($extended_field->get_authorization()),
+		));
 	}
 	
 	public static function update_extended_field(ExtendedField $extended_field)
 	{
 		self::change_extended_field_to_member($extended_field);
 
-		PersistenceContext::get_sql()->query_inject(
+		PersistenceContext::get_querier()->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
-			name = '" . $extended_field->get_name() . "', 
-			field_name = '" . $extended_field->get_field_name() . "', 
-			contents = '" . $extended_field->get_content() . "', 
-			field = '" . $extended_field->get_field_type() . "', 
-			possible_values = '" . $extended_field->get_possible_values() . "', 
-			default_values = '" . $extended_field->get_default_values() . "', 
-			required = '" . $extended_field->get_required() . "', 
-			display = '" . $extended_field->get_display() . "', 
-			regex = '" . $extended_field->get_regex() . "',
-			auth = '" . serialize($extended_field->get_authorization()) . "'
-			WHERE id = '" . $extended_field->get_id() . "'"
-		, __LINE__, __FILE__);
+			name = :name, field_name = :field_name, contents = :content, field = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, auth = :auth
+			WHERE id = :id"
+			, array(
+                'name' => $extended_field->get_name(),
+                'class' => $extended_field->get_position(),
+				'field_name' => $extended_field->get_field_name(),
+				'content' => $extended_field->get_content(),
+				'field_type' => $extended_field->get_field_type(),
+				'possible_values' => $extended_field->get_possible_values(),
+				'default_values' => $extended_field->get_default_values(),
+				'required' => $extended_field->get_required(),
+				'display' => $extended_field->get_display(),
+				'regex' => $extended_field->get_regex(),
+				'auth' => serialize($extended_field->get_authorization()),
+				'id' => $extended_field->get_id(),
+		));
 	}
 	
 	public static function delete_extended_field(ExtendedField $extended_field)
 	{
-		self::drop_extended_field_to_member($extended_field);		
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $extended_field->get_id() . "'", __LINE__, __FILE__);
+		self::drop_extended_field_to_member($extended_field);	
+
+		PersistenceContext::get_querier()->inject(
+			"DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = :id"
+			, array(
+				'id' => $extended_field->get_id(),
+		));
 	}
 	
 	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
