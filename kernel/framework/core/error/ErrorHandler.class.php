@@ -66,7 +66,7 @@ class ErrorHandler
 			$this->process();
 			$this->display();
 			$this->log();
-			if ($this->fatal)
+			if ($this->fatal || Debug::is_strict_mode_enabled())
 			{
 				exit;
 			}
