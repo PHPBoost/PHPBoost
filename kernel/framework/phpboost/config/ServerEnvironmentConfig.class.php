@@ -75,7 +75,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		$this->set_property(self::DEBUG_MODE_ENABLED, $enabled);
 		if ($enabled)
 		{
-			Debug::enabled_debug_mode();
+			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
 		}
 		else
 		{

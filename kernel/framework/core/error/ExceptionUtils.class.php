@@ -66,6 +66,10 @@ public static function get_file($call)
 	private static function get_args_types($call)
 	{
 		$types = array();
+		if (empty($call['args']))
+		{
+			return $types;
+		}
 		foreach ($call['args'] as $arg)
 		{
 			$types[] = self::get_arg_type($arg);
