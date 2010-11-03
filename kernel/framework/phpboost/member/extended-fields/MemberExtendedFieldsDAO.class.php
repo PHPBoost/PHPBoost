@@ -54,7 +54,7 @@ class MemberExtendedFieldsDAO
 	
 	public function get_request($user_id)
 	{
-		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$check_member = PersistenceContext::get_querier()->select("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = :user_id", array('user_id' => $user_id));
 		if ($check_member)
 		{
 			$this->get_request_update($user_id);
