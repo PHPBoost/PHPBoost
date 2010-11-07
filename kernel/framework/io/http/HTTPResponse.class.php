@@ -123,13 +123,22 @@ class HTTPResponse
 	}
 
 	/**
-	 * Set cookie for the application's client.
+	 * @desc Sets cookie for the application's client.
 	 * @param HTTPCookie $cookie
 	 */
 	public function set_cookie(HTTPCookie $cookie)
 	{
-		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(),
+		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiry_date(), $cookie->get_path(),
 		$cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
+	}
+
+	/**
+	 * @desc Deletes the cookie
+	 * @param string $cookie_name the name of the cookie to delete
+	 */
+	public function delete_cookie($cookie_name)
+	{
+		setcookie($cookie_name, '', time() - 31536000);
 	}
 
 	/**

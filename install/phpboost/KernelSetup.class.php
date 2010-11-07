@@ -166,13 +166,13 @@ class KernelSetup
 		$fields = array(
 			'idcom' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idprov' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'script' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => "''"),
-			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
+			'script' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => '""'),
+			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
+			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""')
 		);
 		$options = array(
 			'primary' => array('idcom'),
@@ -187,7 +187,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
+			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
 			'time' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
 			'total' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -203,7 +203,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => '""'),
 			'value' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
@@ -269,10 +269,10 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'img' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'color' => array('type' => 'string', 'length' => 6, 'notnull' => 1, 'default' => "''"),
-			'auth' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => '""'),
+			'img' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
+			'color' => array('type' => 'string', 'length' => 6, 'notnull' => 1, 'default' => '""'),
+			'auth' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'members' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
@@ -285,7 +285,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'lang' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'lang' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => '""'),
 			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'secure' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0)
 		);
@@ -299,25 +299,25 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'login' => array('type' => 'string', 'length' => 255, 'default' => '""'),
+			'password' => array('type' => 'string', 'length' => 64, 'default' => '""'),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_groups' => array('type' => 'text', 'length' => 65000),
-			'user_lang' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-			'user_theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_mail' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'user_lang' => array('type' => 'string', 'length' => 25, 'default' => '""'),
+			'user_theme' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'user_mail' => array('type' => 'string', 'length' => 50, 'default' => '""'),
 			'user_show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
-			'user_editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
+			'user_editor' => array('type' => 'string', 'length' => 15, 'default' => '""'),
 			'user_timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => '""'),
 			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'user_local' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_msn' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_yahoo' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_web' => array('type' => 'string', 'length' => 70, 'default' => "''"),
-			'user_occupation' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_hobbies' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'user_local' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'user_msn' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'user_yahoo' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'user_web' => array('type' => 'string', 'length' => 70, 'default' => '""'),
+			'user_occupation' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'user_hobbies' => array('type' => 'string', 'length' => 50, 'default' => '""'),
 			'user_desc' => array('type' => 'text', 'length' => 65000),
 			'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
@@ -328,9 +328,10 @@ class KernelSetup
 			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
 			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
-			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
+			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => '""'),
 			'user_ban' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => '""')
 
 		);
 
@@ -360,15 +361,15 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'class' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
+			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'field' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
 			'default_values' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'display' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
@@ -439,7 +440,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => '""'),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_dest' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_convers_status' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -462,9 +463,9 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => '""'),
 			'msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'special' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -479,8 +480,8 @@ class KernelSetup
 			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_user' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'module' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => 0),
-			'search' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'options' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
+			'search' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
+			'options' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
 			'last_search_use' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'times_used' => array('type' => 'integer', 'length' => 3, 'notnull' => 1, 'default' => 0)
 		);
@@ -499,9 +500,9 @@ class KernelSetup
 		$fields = array(
 			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_content' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""'),
 			'relevance' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0.00),
-			'link' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
+			'link' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => '""')
 
 		);
 
@@ -516,25 +517,42 @@ class KernelSetup
 
 	private function create_sessions_table()
 	{
+//		$fields = array(
+//			'session_id' => array('type' => 'string', 'length' =>64, 'default' => '""'),
+//			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+//			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+//			'session_ip' => array('type' => 'string', 'length' =>64, 'default' => '""'),
+//			'session_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+//			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
+//			'session_script_get' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => 0),
+//			'session_script_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => '""'),
+//			'session_flag' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+//			'user_theme' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
+//			'user_lang' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
+//			'modules_parameters' => array('type' => 'text', 'length' => 65000),
+//			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1)
+//		);
 		$fields = array(
-			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'session_ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
-			'session_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
-			'session_script_get' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => 0),
-			'session_script_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'session_flag' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_theme' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'user_lang' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'modules_parameters' => array('type' => 'text', 'length' => 65000),
-			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1)
+			'session_id' => array('type' => 'string', 'length' => 64, 'default' => '""'),
+			'token' => array('type' => 'string', 'length' => 16, 'notnull' => 1),
+			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'ip' => array('type' => 'string', 'length' => 39, 'default' => '""'),
+			'data' => array('type' => 'text', 'length' => 65000),
+//			'data_checksum' => array('type' => 'text', 'length' => 64),
+//			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
+//			'session_script_get' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => 0),
+//			'session_script_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => '""'),
+//			'session_flag' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+//			'user_theme' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
+//			'user_lang' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => '""'),
+//			'modules_parameters' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('session_id'),
 			'indexes' => array(
-				'user_id' => array('type' => 'key', 'fields' => array('user_id', 'session_time'))
+				'user_id' => array('type' => 'key', 'fields' => 'user_id'),
+				'expiry' => array('type' => 'key', 'fields' => 'expiry')
 			)
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);
@@ -544,8 +562,8 @@ class KernelSetup
 	{
 		$fields = array(
 			'idsmiley' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'code_smiley' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'url_smiley' => array('type' => 'string', 'length' => 50, 'default' => "''")
+			'code_smiley' => array('type' => 'string', 'length' => 50, 'default' => '""'),
+			'url_smiley' => array('type' => 'string', 'length' => 50, 'default' => '""')
 		);
 		$options = array(
 			'primary' => array('idsmiley')
@@ -577,8 +595,8 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'relative_url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'url' => array('type' => 'string', 'length' => 255, 'default' => '""'),
+			'relative_url' => array('type' => 'string', 'length' => 255, 'default' => '""'),
 			'total_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'today_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'yesterday_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -599,7 +617,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'theme' => array('type' => 'string', 'length' => 50, 'default' => '""'),
 			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'secure' => array('type' => 'text', 'length' => 65000),
 			'left_column' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -616,11 +634,11 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 150, 'default' => "''"),
-			'path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 150, 'default' => '""'),
+			'path' => array('type' => 'string', 'length' => 255, 'default' => '""'),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'size' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
-			'type' => array('type' => 'string', 'length' => 10, 'default' => "''"),
+			'type' => array('type' => 'string', 'length' => 10, 'default' => '""'),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -635,7 +653,7 @@ class KernelSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 150, 'default' => "''")
+			'name' => array('type' => 'string', 'length' => 150, 'default' => '""')
 		);
 		$options = array(
 			'primary' => array('id')

@@ -112,7 +112,7 @@ class DBQuerier implements SQLQuerier
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
 	 * @param string $condition the update condition beginning just after the where clause.
-	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 * @return InjectQueryResult the query result set
 	 */
@@ -134,7 +134,7 @@ class DBQuerier implements SQLQuerier
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the update condition beginning just after the from clause.
-	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 */
 	public function delete($table_name, $condition, array $parameters = array())
@@ -149,13 +149,13 @@ class DBQuerier implements SQLQuerier
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[] $columns the columns to retrieve.
 	 * @param string $condition the update condition beginning just after the where clause.
-	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
 	public function select_single_row($table_name, array $columns, $condition, array $parameters = array())
 	{
-		$query_result = self::select_rows($table_name, $columns, $condition, $parameters);
+		$query_result = $this->select_rows($table_name, $columns, $condition, $parameters);
 		$query_result->rewind();
 		if (!$query_result->valid())
 		{
@@ -168,6 +168,19 @@ class DBQuerier implements SQLQuerier
 			throw new NotASingleRowFoundException();
 		}
 		return $result;
+	}
+
+	/**
+	 * @desc Returns true if a or multiple rows match the given condition.
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string $condition the condition beginning just after the where clause.
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
+	 * @return bool true if a or multiple rows match the given condition.
+	 */
+	public function row_exists($table_name, $condition, array $parameters = array())
+	{
+		return $this->count($table_name, $condition, $parameters) > 0;
 	}
 
 	/**
@@ -192,7 +205,7 @@ class DBQuerier implements SQLQuerier
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[] $columns the columns to retrieve.
 	 * @param string $condition the update condition beginning just after the where clause.
-	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed[string] the row returned
 	 */
@@ -208,7 +221,7 @@ class DBQuerier implements SQLQuerier
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the update condition beginning just after the where clause.
-	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
 	 * @param string $count_column the column name on which count or * if all
 	 * @param string[string] $parameters the query_var map
 	 * @return int the number of rows returned

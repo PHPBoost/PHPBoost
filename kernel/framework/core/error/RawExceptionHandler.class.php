@@ -59,8 +59,7 @@ class RawExceptionHandler
 
 	private function log()
 	{
-		$information_to_log = $this->exception->getMessage() .
-            "\n" . $this->exception->getTraceAsString();
+		$information_to_log = $this->exception->getMessage() . "\n" . $this->exception->getTraceAsString();
 		ErrorHandler::add_error_in_log($information_to_log, $this->exception->getFile(), $this->exception->getLine());
 	}
 
@@ -72,7 +71,9 @@ class RawExceptionHandler
 		}
 		else
 		{
-			die(ErrorHandler::FATAL_MESSAGE);
+			echo ErrorHandler::FATAL_MESSAGE;
+			Environment::destroy();
+			exit;
 		}
 	}
 }

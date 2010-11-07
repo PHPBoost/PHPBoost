@@ -39,6 +39,22 @@ class HTTPRequest
 	const t_array = 0x04;
 	const none = 0x05;
 
+	/**
+	 * @desc Returns the ip address of the user viewing the page.
+	 * The address returned could be an ipv6 or an ipv4 address. If the given address does not match
+	 * an ipv4 or an ipv6 format, null is returned.
+	 * @return string the user ip address
+	 */
+	public function get_ip_address()
+	{
+		$ip = getenv('REMOTE_ADDR');
+		if (preg_match('`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{1,4}:{1,2}){7}[0-9abcdef]{1,4})`', $ip))
+		{
+			return $ip;
+		}
+		return null;
+	}
+
 	public function is_post_method()
 	{
 		return $_SERVER['REQUEST_METHOD'] == 'POST';

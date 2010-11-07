@@ -112,7 +112,9 @@ class Environment
 	public static function init_services()
 	{
 		Environment::init_http_services();
-		AppContext::init_session();
+		NewSession::gc();
+		$session_data = NewSession::start();
+		AppContext::set_session($session_data);
 		AppContext::init_extension_provider_service();
 	}
 
@@ -253,24 +255,8 @@ class Environment
 
 	public static function init_session()
 	{
-		AppContext::get_session()->load();
-		AppContext::get_session()->act();
 
 		AppContext::init_user();
-
-		// TODO do we need to keep that feature? It's not supported every where
-		if (AppContext::get_session()->supports_cookies())
-		{
-			define('SID', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
-				'&amp;suid=' . AppContext::get_user()->get_attribute('user_id'));
-			define('SID2', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
-				'&suid=' . AppContext::get_user()->get_attribute('user_id'));
-		}
-		else
-		{
-			define('SID', '');
-			define('SID2', '');
-		}
 
 		$user_theme = AppContext::get_user()->get_attribute('user_theme');
 		//Is that theme authorized for this member? If not, we assign it the default theme

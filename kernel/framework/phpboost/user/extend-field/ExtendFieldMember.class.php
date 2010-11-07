@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                               ExtendFieldMember.class.php
  *                            -------------------
- *   begin                : September 18, 2010 2009
+ *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,20 +25,31 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('ConfirmController', '`^/confirm(?:/([0-9]+))?/?$`', array('key')),
-	new UrlControllerMapper('RegisterController', '`^/register/?$`'),
-	new UrlControllerMapper('ViewProfilController', '`^/profil(?:/([0-9]+))?/?$`', array('user_id')),
-	new UrlControllerMapper('EditProfilController', '`^/profil/edit/?$`'),
-	new UrlControllerMapper('404Controller', '`^/404/?$`'),
-	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),
-	new UrlControllerMapper('ErrorController', '`^/error/([a-z0-9]+)/?$`', array('type')),
-	new UrlControllerMapper('MemberHomeController', '`^/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+class ExtendFieldMember
+{
+	public static function display(Template $Template, $user_id = '')
+	{
+		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+		
+		$extend_field_exist = count($extend_fields_cache);
+		if ($extend_field_exist > 0)
+		{
+			$Template->put_all(array(
+				'C_MISCELLANEOUS' => true,
+				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
+			));
+			
+			$display_extend_field = new DisplayExtendField();
+			if(!empty($user_id))
+			{
+				$display_extend_field->display_for_member($Template, $user_id);
+			}
+			else
+			{
+				$display_extend_field->display_for_register($Template);
+			}
+		}
+	}
+}
 ?>
