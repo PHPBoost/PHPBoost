@@ -62,7 +62,8 @@ class SessionData
 		$data->token = Random::hexa64uid(16);
 		$data->expiry = time() + SessionsConfig::load()->get_session_duration();
 		$data->ip = AppContext::get_request()->get_ip_address();
-		$data->save();
+		self::fill_user_cached_data($data);
+		$data->create();
 		return $data;
 	}
 
@@ -101,6 +102,7 @@ class SessionData
 		$data->token = $row['token'];
 		$data->expiry = $row['expiry'];
 		$data->ip = $row['ip'];
+		$data->cached_data = unserialize($row['cached_data']);
 		$data->data = unserialize($row['data']);
 		return $data;
 	}
@@ -115,12 +117,36 @@ class SessionData
 		return $data;
 	}
 
+	private static function fill_user_cached_data(SessionData $data)
+	{
+			$columns = array('level AS level', 'user_lang AS lang', 'user_theme AS theme');
+			$condition = 'WHERE user_id=:user_id';
+			$parameters = array('user_id' => $data->user_id);
+			try
+			{
+				$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+			}
+			catch (RowNotFoundException $ex)
+			{
+				$config = UserAccountsConfig::load();
+				$data->cached_data = array(
+					'level' => -1,
+					'lang' => $config->get_default_lang(),
+					'theme' => $config->get_default_theme()
+				);
+			}
+	}
+
 	private $user_id;
 	private $session_id;
 	private $token;
 	private $expiry;
 	private $ip;
+	private $cached_data = array();
 	private $data = array();
+
+	private $cached_data_modified = false;
+	private $data_modified = false;
 
 	protected function __construct($user_id, $session_id)
 	{
@@ -153,31 +179,101 @@ class SessionData
 		return $this->ip;
 	}
 
-	public function get_data()
+	public function get_all_cached_data()
+	{
+		return $this->cached_data;
+	}
+
+	public function has_cached_data($key)
+	{
+		return isset($this->cached_data[$key]);
+	}
+
+	public function get_cached_data($key)
+	{
+		return $this->cached_data[$key];
+	}
+
+	public function add_cached_data($key, $value)
+	{
+		$this->cached_data_modified = true;
+		$this->cached_data[$key] = $value;
+	}
+
+	public function remove_cached_data($key)
+	{
+		$this->cached_data_modified = true;
+		unset($this->cached_data[$key]);
+	}
+
+	public function get_all_data()
 	{
 		return $this->data;
 	}
 
+	public function has_data($key)
+	{
+		return isset($this->data[$key]);
+	}
+
+	public function get_data_value($key)
+	{
+		return $this->data[$key];
+	}
+
+	public function add_data($key, $value)
+	{
+		$this->data_modified = true;
+		$this->data[$key] = $value;
+	}
+
+	public function remove_data($key)
+	{
+		$this->data_modified = true;
+		unset($this->data[$key]);
+	}
+
 	public function save()
+	{
+		if ($this->cached_data_modified || $this->data_modified)
+		{
+			$columns = array();
+			if ($this->cached_data_modified)
+			{
+				$columns['cached_data'] = $this->cached_data;
+			}
+			if ($this->data_modified)
+			{
+				$columns['data'] = $this->data;
+			}
+			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
+			$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+			PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+			$this->cached_data_modified = false;
+			$this->data_modified = false;
+		}
+	}
+
+	private function create()
 	{
 		$this->create_in_db();
 		$this->create_cookie();
 	}
 
-	public function delete()
+	private function delete()
 	{
 		$this->delete_in_db();
 		$this->delete_cookie();
 	}
 
-	public function delete_in_db()
+	private function delete_in_db()
 	{
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $this->user_id, 'session_id' => $this->session_id);
 		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
 
-	public function delete_cookie()
+	private function delete_cookie()
 	{
 		$this->response->delete_cookie(self::$DATA_COOKIE_NAME);
 	}
@@ -190,6 +286,7 @@ class SessionData
 			'token' => $this->token,
 			'expiry' => $this->expiry,
 			'ip' => $this->ip,
+			'cached_data' => serialize($this->cached_data),
 			'data' => serialize($this->data)
 		);
 		$row = PersistenceContext::get_querier()->insert(DB_TABLE_SESSIONS, $columns);

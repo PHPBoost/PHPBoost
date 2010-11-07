@@ -538,6 +538,7 @@ class KernelSetup
 			'token' => array('type' => 'string', 'length' => 16, 'notnull' => 1),
 			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'ip' => array('type' => 'string', 'length' => 39, 'default' => '""'),
+			'cached_data' => array('type' => 'text', 'length' => 65000),
 			'data' => array('type' => 'text', 'length' => 65000),
 //			'data_checksum' => array('type' => 'text', 'length' => 64),
 //			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
