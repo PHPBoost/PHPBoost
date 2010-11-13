@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                        admin-AdminLoginController.php
  *                            -------------------
- *   begin                : October 25 2009
+ *   begin                : December 14, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,22 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+ ####################################################
+#                     French                       #
+ ####################################################
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
+$lang = array(
+    'xml_lang' => 'fr',
+	'require_pseudo' => 'Veuillez entrer un pseudo !',
+	'require_password' => 'Veuillez entrer un mot de passe!',
+	'connect' => 'Log in',
+	'admin' => 'Administrator',
+	'pseudo' => 'Login',
+	'password' => 'Password',
+	'autoconnect' => 'Autoconnect',
+	'flood_block' => ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!',
+    'flood_max' => 'You have failed too many authentication attempts, your account is locked for 5 minutes',
+	'unlock_admin_panel' => 'Unlock administration'
 );
-DispatchManager::dispatch($url_controller_mappers);
 
 ?>

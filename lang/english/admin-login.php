@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                        admin-AdminLoginController.php
  *                            -------------------
- *   begin                : October 25 2009
+ *   begin                : December 14, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,16 +25,22 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+ ####################################################
+#                     French                       #
+ ####################################################
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
+$lang = array(
+    'xml_lang' => 'en',
+	'require_pseudo' => 'Veuillez entrer un pseudo !',
+	'require_password' => 'Veuillez entrer un mot de passe!',
+	'connect' => 'Se connecter',
+	'admin' => 'Administrateur',
+	'pseudo' => 'Pseudo',
+	'password' => 'Mot de passe',
+	'autoconnect' => 'Connexion automatique',
+	'flood_block' => 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!',
+    'flood_max' => 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes',
+	'unlock_admin_panel' => 'Déverrouillage de l\'administration'
 );
-DispatchManager::dispatch($url_controller_mappers);
 
 ?>

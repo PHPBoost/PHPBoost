@@ -41,6 +41,8 @@ class IntegratedErrorHandler extends ErrorHandler
 	{
 		// TODO manage languages here
 		AppContext::get_response()->clean_output();
-		die(ErrorHandler::FATAL_MESSAGE);
+		echo ErrorHandler::FATAL_MESSAGE;
+		Environment::destroy();
+		exit;
 	}
 }

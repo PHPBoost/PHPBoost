@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                               Random.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : November 05, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
- *
  *
  ###################################################
  *
@@ -25,16 +24,17 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @desc This class provides Random utility methods
+ * @package {@package}
+ */
+class Random
+{
+	public static function hexa64uid($maxlength = 64)
+	{
+		return substr(strhash(uniqid(mt_rand(), true)), 0, $maxlength);
+	}
+}
 
 ?>
