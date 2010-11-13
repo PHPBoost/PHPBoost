@@ -58,7 +58,7 @@
                 # IF folder.EXISTS #
                     <div class="success_block">{@folder.exists}</div>
                 # ELSE #
-                    <div class="failure_block">{@folder.doesNotExists}</div>
+                    <div class="failure_block">{@folder.doesNotExist}</div>
                 # ENDIF #
                 # IF folder.IS_WRITABLE #
                     <div class="success_block">{@folder.isWritable}</div>
