@@ -413,7 +413,7 @@
 									</label>
 									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 									# START post_convers.user_id_dest.search #
-										{search.RESULT}
+										{post_convers.user_id_dest.search.RESULT}
 									# END post_convers.user_id_dest.search #
 								</dd>
 							</dl>		
@@ -425,7 +425,7 @@
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
 							<br />
 						</fieldset>
 						
