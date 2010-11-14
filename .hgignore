@@ -1,0 +1,9 @@
+
+syntax: regexp
+cache/*
+syntax: regexp
+^sitemap\.xml$
+syntax: regexp
+^kernel/db/config\.php$
+syntax: regexp
+^.htaccess$

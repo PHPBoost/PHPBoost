@@ -89,6 +89,11 @@ class DBFactory
         }
     }
 
+	public static function reset_db_connection()
+	{
+		self::$db_connection = null;
+	}
+
 	public static function set_db_connection(DBConnection $connection)
 	{
 		self::$db_connection = $connection;

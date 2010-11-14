@@ -165,7 +165,7 @@ class DBQuerier implements SQLQuerier
 		$query_result->next();
 		if ($query_result->valid())
 		{
-			throw new NotASingleRowFoundException();
+			throw new NotASingleRowFoundException($query_result);
 		}
 		return $result;
 	}

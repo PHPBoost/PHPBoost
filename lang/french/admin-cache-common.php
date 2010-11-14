@@ -51,5 +51,6 @@ A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</
 $lang['enable_apc'] = 'Activer le cache d\'APC';
 $lang['apc_available'] = 'Disponibilité de l\'extension APC';
 $lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement profiter des gains de performances qu\'elle permet d\'obtenir.';
+$lang['cache_config_changed_successfully'] = 'La configuration du cache a été changée avec succès';
 
 ?>
