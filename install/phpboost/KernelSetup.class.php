@@ -439,7 +439,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'title' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_dest' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_convers_status' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
