@@ -210,14 +210,15 @@ class Feed
 		if ($module_id !== false)
 		{   // Clear only this module cache
 			$files = $folder->get_files('`' . $module_id . '_.*`');
+			foreach ($files as $file)
+			{
+				$file->delete();
+			}
 		}
 		else
 		{   // Clear the whole cache
-			$files = $folder->get_files();
+			CacheService::clear_syndication_cache();
 		}
-
-		foreach ($files as $file)
-		$file->delete();
 	}
 
 
