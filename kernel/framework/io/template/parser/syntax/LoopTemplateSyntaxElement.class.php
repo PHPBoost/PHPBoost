@@ -57,9 +57,27 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
 		$loop_name = $matches['loop'];
 		$this->context->enter_loop($loop_name);
-		$loop_var = '$_tmp_' . str_replace('.', '_', $matches['loop']);
-		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->get_block(\'' . $loop_name .
-			'\') as ' . $loop_var . '){' . TemplateSyntaxElement::RESULT . '.=\'');
+
+		$exploded = explode('.', $loop_name);
+		$name = array_pop($exploded);
+
+		$loop_var = $this->get_tmp_var_name($loop_name);
+		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->');
+		if (strpos($loop_name, '.') === false)
+		{
+			$this->output->write('get_block(\'' . $name . '\')');
+		}
+		else
+		{
+			$parent_loop = $this->get_tmp_var_name(implode('.', $exploded));
+			$this->output->write('get_block_from_list(\'' . $name . '\', ' . $parent_loop . ')');
+		}
+		$this->output->write(' as ' . $loop_var . '){' . TemplateSyntaxElement::RESULT . '.=\'');
+	}
+
+	private function get_tmp_var_name($loop_name)
+	{
+		return '$_tmp_' . str_replace('.', '_', $loop_name);
 	}
 
 	private function process_end()
