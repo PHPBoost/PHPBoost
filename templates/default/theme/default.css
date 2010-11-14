@@ -29,6 +29,10 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     background:#FFFFFF !important;
 }
 
+button {	
+	cursor:pointer;
+}
+
 /* Imite l'affichage fieldset / legend */
 .fieldset_content {
     width:95%;

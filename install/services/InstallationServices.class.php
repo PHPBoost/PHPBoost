@@ -75,6 +75,7 @@ class InstallationServices
 		{
 			if (!$this->create_database($database))
 			{
+				DBFactory::reset_db_connection();
 				return self::UNABLE_TO_CREATE_DATABASE;
 			}
 			else
@@ -84,10 +85,12 @@ class InstallationServices
 		}
 		catch (DBConnectionException $ex)
 		{
+			DBFactory::reset_db_connection();
 			return self::CONNECTION_ERROR;
 		}
 		catch (Exception $ex)
 		{
+			DBFactory::reset_db_connection();
 			return self::UNKNOWN_ERROR;
 		}
 		return self::CONNECTION_SUCCESSFUL;
