@@ -80,7 +80,7 @@
 						<dt><label for="login_mbr">* {L_PSEUDO}</label><br /><span>{L_JOKER}</span></dt>
 						<dd>
 							<div style="float:left;">
-								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text" />
 								<span id="search_img"></span>
 							
 							</div>
