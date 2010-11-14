@@ -103,6 +103,10 @@ class AppContext
 	 */
 	public static function get_request()
 	{
+		if (self::$request == null)
+		{
+			self::$request = new HTTPRequest();
+		}
 		return self::$request;
 	}
 

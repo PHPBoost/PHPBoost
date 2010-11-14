@@ -156,8 +156,15 @@ class ClassLoader
 	private static function generate_autoload_cache()
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
-		$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
-		$file->close();
+		try 
+		{
+		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
+		 	$file->close();
+		} 
+		catch (IOException $ex) 
+		{
+			die('The cache folder is not writeable, please set CHMOD to 777');
+		}
 	}
 
 	private static function inc($file)
