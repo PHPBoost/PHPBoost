@@ -48,7 +48,7 @@ class File extends FileSystemElement
 	/**
 	 * @var File descriptor of the open file.
 	 */
-	private $fd;
+	private $file_descriptor;
 
 	/**
 	 * @desc Builds a File object.
@@ -85,7 +85,7 @@ class File extends FileSystemElement
 	{
 		$this->open(self::$READ);
 
-		fseek($this->fd, $start);
+		fseek($this->file_descriptor, $start);
 
 		if ($len == -1)
 		{
@@ -93,9 +93,9 @@ class File extends FileSystemElement
 		}
 
 		$content = '';
-		while (!feof($this->fd) && $len > 0)
+		while (!feof($this->file_descriptor) && $len > 0)
 		{
-			$content .= fread($this->fd, min($len, self::$BUFFER_SIZE));
+			$content .= fread($this->file_descriptor, min($len, self::$BUFFER_SIZE));
 			$len -= self::$BUFFER_SIZE;
 		}
 
@@ -139,7 +139,7 @@ class File extends FileSystemElement
 	public function erase()
 	{
 		$this->open(self::$WRITE);
-		ftruncate($this->fd, 0);
+		ftruncate($this->file_descriptor, 0);
 	}
 
 	/**
@@ -150,7 +150,7 @@ class File extends FileSystemElement
 		if ($this->is_open())
 		{
 			$this->mode = 0;
-			fclose($this->fd);
+			fclose($this->file_descriptor);
 		}
 	}
 
@@ -177,7 +177,7 @@ class File extends FileSystemElement
 	public function lock($blocking = true)
 	{
 		$this->open(self::$WRITE);
-		if (!@flock($this->fd, LOCK_EX, $blocking))
+		if (!@flock($this->file_descriptor, LOCK_EX, $blocking))
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been locked');
 		}
@@ -190,7 +190,7 @@ class File extends FileSystemElement
 	public function unlock()
 	{
 		$this->open(self::$WRITE);
-		if (!@flock($this->fd, LOCK_UN))
+		if (!@flock($this->file_descriptor, LOCK_UN))
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
 		}
@@ -203,7 +203,7 @@ class File extends FileSystemElement
 	{
 		if ($this->is_open())
 		{
-			fflush($this->fd);
+			fflush($this->file_descriptor);
 		}
 	}
 
@@ -238,16 +238,16 @@ class File extends FileSystemElement
 			switch ($this->mode)
 			{
 				case self::$APPEND:
-					$this->fd = @fopen($this->get_path(), 'a+b');
+					$this->file_descriptor = @fopen($this->get_path(), 'a+b');
 					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
 				case self::$WRITE:
-					$this->fd = @fopen($this->get_path(), 'w+b');
+					$this->file_descriptor = @fopen($this->get_path(), 'w+b');
 					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
 				case self::$READ:
 				default:
-					$this->fd = @fopen($this->get_path(), 'rb');
+					$this->file_descriptor = @fopen($this->get_path(), 'rb');
 					$this->check_file_descriptor('Can\'t open the file for reading');
 					break;
 			}
@@ -260,7 +260,7 @@ class File extends FileSystemElement
 	 */
 	private function is_open()
 	{
-		return is_resource($this->fd);
+		return is_resource($this->file_descriptor);
 	}
 
 	private function write_data($data)
@@ -269,7 +269,7 @@ class File extends FileSystemElement
 		$bytes_written = 0;
 		while ($bytes_written < $bytes_to_write)
 		{
-			$bytes = fwrite($this->fd, substr($data, $bytes_written, self::$BUFFER_SIZE));
+			$bytes = fwrite($this->file_descriptor, substr($data, $bytes_written, self::$BUFFER_SIZE));
 			if ($bytes === false || $bytes == 0)
 			{
 				break;
@@ -280,7 +280,7 @@ class File extends FileSystemElement
 
 	private function check_file_descriptor($message)
 	{
-		if ($this->fd === false)
+		if ($this->file_descriptor === false)
 		{
 			throw new IOException($message . ' : ' . $this->get_path());
 		}

@@ -37,7 +37,7 @@ catch (IOException $ex)
 {
 	if (!file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
 	{
-		header('Location:install/install.php');
+		header('Location:install/index.php');
 		exit;
 	}
 	else
