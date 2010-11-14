@@ -33,37 +33,37 @@ class CacheService
 	private static $tpl_cache_folder;
 	private static $syndication_cache_folder;
 
-	public static function __static()
+	public function __construct()
 	{
 		self::$cache_folder = new Folder(PATH_TO_ROOT . '/cache');
 		self::$tpl_cache_folder = new Folder(self::$cache_folder->get_path() . '/tpl');
 		self::$syndication_cache_folder = new Folder(self::$cache_folder->get_path() . '/syndication');
 	}
 
-	public static function clear_cache()
+	public function clear_cache()
 	{
-		self::clear_phpboost_cache();
-		self::clear_template_cache();
-		self::clear_syndication_cache();
+		$this->clear_phpboost_cache();
+		$this->clear_template_cache();
+		$this->clear_syndication_cache();
 	}
 
-	public static function clear_phpboost_cache()
+	public function clear_phpboost_cache()
 	{
 		CacheManager::clear();
-		self::delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
 	}
 
-	public static function clear_template_cache()
+	public function clear_template_cache()
 	{
-		self::delete_files(self::$tpl_cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_with_extensions);
 	}
 
-	public static function clear_syndication_cache()
+	public function clear_syndication_cache()
 	{
-		self::delete_files(self::$syndication_cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$syndication_cache_folder, self::$all_files_regex_with_extensions);
 	}
 
-	private static function delete_files(Folder $folder, $regex = '')
+	private function delete_files(Folder $folder, $regex = '')
 	{
 		$files_to_delete = $folder->get_files($regex);
 		foreach ($files_to_delete as $file)
