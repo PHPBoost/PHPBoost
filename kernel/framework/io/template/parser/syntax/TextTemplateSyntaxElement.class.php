@@ -54,14 +54,9 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_char($char)
 	{
-		if ($char == '\\')
+		if ($char == '\\' && $this->input->assert_next('[\\{}$#]'))
 		{
 			$this->escaped = true;
-		}
-		elseif ($char == '\'')
-		{
-			$this->write('\\');
-			$this->write($char);
 		}
 		else
 		{
@@ -89,7 +84,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function write($char)
 	{
-		$this->output->write($char);
+		$this->output->write(addcslashes($char, '\\\''));
 	}
 
 	private function parse_text($current)
