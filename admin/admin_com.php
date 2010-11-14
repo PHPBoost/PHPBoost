@@ -121,15 +121,15 @@ while ($row = $Sql->fetch_assoc($result))
 	$user_group = $user_rank;
 	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
-		$user_rank = $ranks_cache[-2][0];
+		$user_rank = $ranks_cache[-2]['name'];
 		$user_group = $user_rank;
-		$user_rank_icon = $ranks_cache[-2][1];
+		$user_rank_icon = $ranks_cache[-2]['icon'];
 	}
 	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
-		$user_rank = $ranks_cache[-1][0];
+		$user_rank = $ranks_cache[-1]['name'];
 		$user_group = $user_rank;
-		$user_rank_icon = $ranks_cache[-1][1];
+		$user_rank_icon = $ranks_cache[-1]['icon'];
 	}
 	else
 	{
@@ -137,8 +137,8 @@ while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($msg >= 0 && $msg <= $row['user_msg'])
 			{ 
-				$user_rank = $ranks_info[0];
-				$user_rank_icon = $ranks_info[1];
+				$user_rank = $ranks_info['name'];
+				$user_rank_icon = $ranks_info['icon'];
 				break;
 			}
 		}
