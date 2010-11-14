@@ -3,11 +3,10 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Ajouter dans l'administration la liste des hôtes autorisés pour le proxy
-- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 - Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)
-- Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
+- [color=red]Nouveauté:[/color] Possibilité de gérer les catégories par drag'n drop.
 - Balises Youtube, Dailymotion
+- Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -37,14 +36,12 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
-
-- [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre, logo et couleurs du site.
-- [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
 
 - Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 ------------------------------------ MODULES -----------------------------------
+- [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 ##################################################################################
 [b]Galerie:[/b]
@@ -62,22 +59,14 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ [color=red]Nouveauté:[/color] Générateur automatique de tableau avec gestion de la pagination, filtres, tris.
-+ [color=red]Nouveauté:[/color] Framework MVC (DAO, Controller).
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
-* [color=red]Nouveauté:[/color] Template JSON.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
-* [color=red]Nouveauté:[/color] Refonte des installateurs des modules (X-sgbd).
-* [color=red]Nouveauté:[/color] Installation via des services.
-* [color=red]Nouveauté:[/color] Installation en ligne de commande.
-- [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
-- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
 - [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
-- Possibilité de désactiver l'affichage d'un lien dans les menus
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)
 	ex : dans FormButtonButton, param $label => $html_content ou autre... 
+? [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -90,6 +79,8 @@
 ###################################### PHPBoost 3.2 ##################################
 
 [b]Structure et fonctionnement:[/b]
+- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
+- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 - [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
 - [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
 - [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
