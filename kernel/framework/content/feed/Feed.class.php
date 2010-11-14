@@ -217,7 +217,7 @@ class Feed
 		}
 		else
 		{   // Clear the whole cache
-			CacheService::clear_syndication_cache();
+			AppContext::get_cache_service()->clear_syndication_cache();
 		}
 	}
 
