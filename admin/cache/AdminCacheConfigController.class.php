@@ -32,7 +32,7 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
-		parent::__construct($this->lang['cache_cleared_successfully']);
+		parent::__construct($this->lang['cache_config_changed_successfully']);
 	}
 
 	protected function create_form()
@@ -45,24 +45,41 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 
 		if ($this->is_apc_available())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], false));
+			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], $this->is_apc_enabled()));
 		}
 
 		$button = new FormButtonDefaultSubmit();
 		$this->set_submit_button($button);
-		$form->add_button($button);
+		if ($this->is_apc_available())
+		{
+			$form->add_button($button);
+		}
 		$this->set_form($form);
 	}
 
-	protected function is_apc_available()
+	private function is_apc_available()
 	{
-		// TODO implement this method
-		return true;
+		return DataStoreFactory::is_apc_available();
+	}
+	
+	private function is_apc_enabled()
+	{
+		return DataStoreFactory::is_apc_enabled();
 	}
 
 	protected function handle_submit()
 	{
-		// TODO Enable APC
+		if ($this->is_apc_available())
+		{
+			if ($this->get_form()->get_value('enable_apc'))
+			{
+				DataStoreFactory::set_apc_enabled(true);
+			}
+			else
+			{
+				DataStoreFactory::set_apc_enabled(false);
+			}
+		}
 	}
 
 	protected function generate_response(View $view)

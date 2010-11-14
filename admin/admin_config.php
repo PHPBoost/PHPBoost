@@ -98,6 +98,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	$Template->put_all(array(
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
 		'SERVER_PATH' 		=> $general_config->get_site_path(),
+		'MAIL_CONFIG_URL' => DispatchManager::get_url('/admin/config/index.php', '/mail')->rel(),
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> $server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> !$server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
@@ -251,6 +252,7 @@ else //Sinon on rempli le formulaire
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $user_accounts_config->get_default_theme(),
 		'SITE_NAME' => $general_config->get_site_name(),
+		'MAIL_CONFIG_URL' => DispatchManager::get_url('/admin/config/index.php', '/mail')->relative(),
 		'SITE_DESCRIPTION' => $general_config->get_site_description(),
 		'SITE_KEYWORD' => $general_config->get_site_keywords(),		
 		'SELECT_PAGE' => $select_page, 
