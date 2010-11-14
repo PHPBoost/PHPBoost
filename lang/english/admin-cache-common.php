@@ -51,5 +51,6 @@ PHP supports <acronym title="Advanced PHP Cache">APC</acronym> which is the cach
 $lang['enable_apc'] = 'Enable APC cache';
 $lang['apc_available'] = 'Availability of the APC extension';
 $lang['explain_apc_available'] = 'The extension is available on a few servers. If it\'s not available, you cannot benefit from the performance improvement.';
+$lang['cache_config_changed_successfully'] = 'The cache configuration has been changed successfully';
 
 ?>

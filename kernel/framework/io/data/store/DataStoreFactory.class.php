@@ -32,16 +32,17 @@
  */
 class DataStoreFactory
 {
+	private static $apc_available = null;
 	private static $apc_enabled = null;
 
 	/**
-	 * @desc Returns an efficient data store whose life span can be not infinie.
+	 * @desc Returns an efficient data store whose life span can be not infinite.
 	 * @param string $id Identifier of the data store.
 	 * @return DataStore The best data store you can use with the current configuration
 	 */
 	public static function get_ram_store($id)
 	{
-		if (self::is_apc_enabled())
+		if (self::is_apc_available())
 		{
 			return new APCDataStore($id);
 		}
@@ -50,32 +51,61 @@ class DataStoreFactory
 
 	/**
 	 * @desc Returns an infinite-life span data store that can be not very efficient.
-	 * @param string $id Ifentifier of the data store.
+	 * @param string $id Identifier of the data store.
 	 * @return DataStore The best data store you can use with the current configuration
 	 */
 	public static function get_filesystem_store($id)
 	{
-		if (self::is_apc_enabled())
+		if (self::is_apc_available() && self::is_apc_enabled())
 		{
 			return new APCDataStore($id);
 		}
 		return new FileSystemDataStore($id);
 	}
 
-	private static function is_apc_enabled()
+	public static function is_apc_available()
 	{
-		if (self::$apc_enabled === null)
+		if (self::$apc_available === null)
 		{
 			if (function_exists('apc_cache_info'))
 			{
-				self::$apc_enabled = true;
+				self::$apc_available = true;
 			}
 			else
 			{
-				self::$apc_enabled = false;
+				self::$apc_available = false;
 			}
 		}
-		return self::$apc_enabled;
+		return self::$apc_available;
+	}
+	
+	public static function is_apc_enabled()
+	{
+		if (self::$apc_enabled === null)
+		{
+			$file = new File(PATH_TO_ROOT . '/cache/apc.php');
+			if ($file->exists())
+			{
+				include $file->get_path();
+				if (isset($enable_apc))
+				{
+					return $enable_apc;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Enables or disables APC. Writes in the file /cache/apc.php
+	 * @param bool $enabled
+	 * @throws IOException If the file cannot be written
+	 */
+	public static function set_apc_enabled($enabled)
+	{
+		$file = new File(PATH_TO_ROOT . '/cache/apc.php');
+		$file->write('<?php $enable_apc = ' . ($enabled ?  'true' : 'false') . ';');
+		$file->close();
 	}
 }
 ?>
