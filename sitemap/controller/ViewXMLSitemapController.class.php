@@ -30,7 +30,7 @@ class ViewXMLSitemapController extends ModuleController
 	public function execute(HTTPRequest $request)
 	{
 		$sitemap = SitemapService::get_public_sitemap();
-		
+		AppContext::get_response()->set_header('content-type', 'text/xml');
 		return new SiteNodisplayResponse($sitemap->export(SitemapXMLFileService::get_export_config()));
 	}
 }

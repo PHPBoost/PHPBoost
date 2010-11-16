@@ -105,7 +105,7 @@ class ModuleMap extends SitemapSection
             'C_MODULE_MAP' => true
 		));
 
-		if (is_object($this->link) && $this->link instanceof SitemapSection)
+		if ($this->link != null)
 		{
 			$template->put('LINK', $this->link->export($export_config));
 		}

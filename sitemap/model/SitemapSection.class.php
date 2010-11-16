@@ -124,7 +124,7 @@ class SitemapSection extends SitemapElement
             'C_SECTION' => true
 		));
 		
-		if (is_object($this->link))
+		if ($this->link != null)
 		{
 			$template->put('LINK', $this->link->export($export_config));
 		}
