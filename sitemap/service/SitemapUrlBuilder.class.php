@@ -34,7 +34,7 @@ class SitemapUrlBuilder
 	 */
 	public static function get_general_config()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin');
 	}
 
 	/**
@@ -42,7 +42,7 @@ class SitemapUrlBuilder
 	 */
 	public static function get_xml_file_generation()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/generate/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/generate');
 	}
 }
 
