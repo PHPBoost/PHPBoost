@@ -46,7 +46,7 @@ if (!empty($idurl))
     while ($id_cat_for_download > 0)
     {
     	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
-    	if (!empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
+    	if (is_array($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
     	{
     		//If we can't read a category, we can't read sub elements.
     		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);

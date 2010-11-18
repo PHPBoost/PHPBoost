@@ -137,11 +137,11 @@ elseif (retrieve(POST, 'submit', false))
 
 		if ($id_cat > 0)
 		{
-			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
+			$error_string = $download_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
 		}
 		else
 		{
-			$error_string = $download_categories->add($id_parent, $name, $description, $icon, $new_auth, $visible);
+			$error_string = $download_categories->add_category($id_parent, $name, $description, $icon, $new_auth, $visible);
 		}
 
         // Feeds Regeneration

@@ -157,8 +157,10 @@ class FaqCats extends CategoriesManager
 		//We read the categories recursively
 		while ($id_cat > 0)
 		{
-			if (!empty($FAQ_CONFIG[$id_cat]['auth']))
+			if (is_array($FAQ_CONFIG[$id_cat]['auth']))
+			{
 				$auth_read  = $auth_read && $User->check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
+			}
 			
 			$id_cat = (int)$FAQ_CATS[$id_cat]['id_parent'];
 		}
