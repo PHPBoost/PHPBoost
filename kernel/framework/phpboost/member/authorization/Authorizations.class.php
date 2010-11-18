@@ -292,7 +292,7 @@ class Authorizations
 		//Parcours des différents types d'utilisateur
 		$merged = array();
 
-		if (empty($child))
+		if (!is_array($child))
 		{
 			return $parent;
 		}
