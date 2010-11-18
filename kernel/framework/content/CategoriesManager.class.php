@@ -123,7 +123,7 @@ class CategoriesManager
 	/**
 	 * @var mixed[] Reference to the module cache variable containing the categories tree.
 	 */
-	private $cache_var = array();
+	protected $cache_var = array();
 	
 	
 	/**
@@ -629,9 +629,14 @@ class CategoriesManager
 			$result = $this->cache_var[$ids[0]]['auth'];
 
 			for ($i = 1; $i < $length; $i++)
-				$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
+			{
+				$auth_array = $this->cache_var[$ids[$i]]['auth'];
+				if (is_array($auth_array))
+				{
+					$result = Authorizations::merge_auth($result, $auth_array, $bit, $mode);
+				}
+			}
 		}
-
 		return $result;
 	}
 
