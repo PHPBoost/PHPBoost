@@ -38,7 +38,7 @@ while ($id_cat_for_bread_crumb > 0)
 	$Bread_crumb->add($FAQ_CATS[$id_cat_for_bread_crumb]['name'], url('faq.php?id=' . $id_cat_for_bread_crumb, 'faq-' . $id_cat_for_bread_crumb . '+' . Url::encode_rewrite($FAQ_CATS[$id_cat_for_bread_crumb]['name']) . '.php'));
 	
 	//If the category has special authorizations
-	if (!empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']))
+	if (is_array($FAQ_CATS[$id_cat_for_bread_crumb]['auth']))
 	{
 			//If we can't read a category, we can't read sub elements.
 			$auth_read = $auth_read && $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_READ);

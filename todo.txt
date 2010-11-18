@@ -3,7 +3,6 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Corriger les problèmes de la classe de catégories. Problème avec l'héritage des autorisations (différencier null et array vide)
 - [color=red]Nouveauté:[/color] Possibilité de gérer les catégories par drag'n drop.
 - Balises Youtube, Dailymotion
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)

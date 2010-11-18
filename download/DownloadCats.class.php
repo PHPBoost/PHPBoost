@@ -48,7 +48,7 @@ class DownloadCats extends CategoriesManager
 	{
 		global $Cache;
 		//We delete the content of the category
-		$this->_delete_category_with_content($id);
+		$this->delete_category_with_content($id);
 		//Then its sub categories
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
@@ -87,7 +87,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which adds a category
-	function add($id_parent, $name, $description, $image, $auth, $visible)
+	function add_category($id_parent, $name, $description, $image, $auth, $visible)
 	{
 		global $Sql;
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
@@ -102,7 +102,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which updates a category
-	function Update_category($id_cat, $id_parent, $name, $description, $icon, $auth, $visible)
+	function update_category($id_cat, $id_parent, $name, $description, $icon, $auth, $visible)
 	{
 		global $Sql, $Cache;
 		if ($id_cat == 0 || array_key_exists($id_cat, $this->cache_var))
@@ -144,7 +144,7 @@ class DownloadCats extends CategoriesManager
 	function recount_sub_files($no_cache_generation = false)
 	{
 		global $Cache, $DOWNLOAD_CATS;
-		$this->_recount_cat_subquestions($DOWNLOAD_CATS, 0);
+		$this->recount_cat_subquestions($DOWNLOAD_CATS, 0);
 
 		if (!$no_cache_generation)
 			$Cache->Generate_module_file('download');
@@ -197,9 +197,8 @@ class DownloadCats extends CategoriesManager
 		return $result;
 	}
 	
-	## Private methods ##
 	//method which deletes a category and its content (not recursive)
-	function _delete_category_with_content($id)
+	private function delete_category_with_content($id)
 	{
 		global $Sql;
 		
@@ -215,7 +214,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Recursive function which counts for each category
-	function _recount_cat_subquestions($categories, $cat_id)
+	private function recount_cat_subquestions($categories, $cat_id)
 	{
 		global $Sql;
 		
@@ -224,7 +223,7 @@ class DownloadCats extends CategoriesManager
 		foreach ($categories as $id => $value)
 		{
 			if ($id != 0 && $value['id_parent'] == $cat_id && $value['visible'])
-				$num_subquestions += $this->_recount_cat_subquestions($categories, $id);
+				$num_subquestions += $this->recount_cat_subquestions($categories, $id);
 		}
 		
 		//If its not the root we save it into the database
