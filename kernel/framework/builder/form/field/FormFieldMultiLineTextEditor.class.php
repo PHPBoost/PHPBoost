@@ -90,11 +90,6 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
                     $this->cols = $value;
                     unset($field_options['cols']);
                     break;
-                    //TODO Gérer cette option
-                case 'forbiddentags':
-                    $this->forbiddentags = $value;
-                    unset($field_options['forbiddentags']);
-                    break;
             }
         }
         parent::compute_options($field_options);
