@@ -6,6 +6,8 @@
 - [color=red]Nouveauté:[/color] Possibilité de gérer les catégories par drag'n drop.
 - Balises Youtube, Dailymotion
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
+- Changer de format de stockage des fuseaux horaires
+- Intégrer au formbuilder des checkboxes multiples
 
 ------------------------------------ MODULES -----------------------------------
 

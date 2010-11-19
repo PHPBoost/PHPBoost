@@ -66,6 +66,17 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 	{
 		$this->forbidden_tags[] = $tag;
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function add_forbidden_tags(array $tags)
+	{
+		foreach ($tags as $tag)
+		{
+			$this->forbidden_tags[] = $tag;
+		}
+	}
 	
 	/**
 	 * {@inheritdoc}

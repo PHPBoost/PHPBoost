@@ -76,6 +76,8 @@ interface ContentFormattingFactory
 	 */
 	function add_forbidden_tag($tag);
 	
+	function add_forbidden_tags(array $tags);
+	
 	function set_html_auth(array $array_auth);
 	
 	function get_html_auth();
