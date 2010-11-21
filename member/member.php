@@ -406,7 +406,7 @@ if (!empty($id_get)) //Espace membre
 			
 			if ($user_accounts_config->is_avatar_upload_enabled())
 			{
-				if ($user_accounts_config->is_avatar_auto_resizing_enabled() && isset($_FILES['avatars']))
+				if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($_FILES['avatars']['name']))
 				{
 					import('io/image/Image');
 					import('io/image/ImageResizer');
@@ -417,7 +417,7 @@ if (!empty($id_get)) //Espace membre
 					$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $dir . $name_image);
 					
 					$user_avatar = $dir . $name_image;
-					
+					//TODO Changer le texte dans la description du champs du profil dans ce cas là
 					// TODO gestion des erreurs 
 				}
 				else
