@@ -68,7 +68,7 @@ class ContentMenu extends Menu
         return $tpl->render();
     }
 
-    public function cache_export($template = false)
+    public function cache_export()
     {
         return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
     }

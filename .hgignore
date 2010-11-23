@@ -17,3 +17,5 @@ syntax: regexp
 syntax: regexp
 ^images/maths/*
 
+syntax: regexp
+^templates/vita*
