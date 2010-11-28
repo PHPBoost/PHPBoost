@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            NewSession.class.php
+ *                            Session.class.php
  *                            -------------------
  *   begin                : November 04, 2010
  *   copyright            : (C) 2010 loic rouchon
@@ -33,7 +33,7 @@
  *
  * @package {@package}
  */
-class NewSession
+class Session
 {
 	const VISITOR_SESSION_ID = -1;
 
@@ -76,6 +76,11 @@ class NewSession
 
 	public static function create($user_id, $autoconnect = false)
 	{
+		self::$data = SessionData::create_from_user_id($user_id);
+		if ($autoconnect)
+		{
+			AutoConnectData::create_cookie($user_id);
+		}
 		return self::$data;
 	}
 

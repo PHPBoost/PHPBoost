@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                               ExtendFieldMember.class.php
+ *                            AuthenticationMethod.class.php
  *                            -------------------
- *   begin                : August 10, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
- *
+ *   begin                : November 28, 2010
+ *   copyright            : (C) 2010 loic rouchon
+ *   email                : horn@phpboost.com
  *
  ###################################################
  *
@@ -25,31 +24,23 @@
  *
  ###################################################*/
 
-
-class ExtendFieldMember
+/**
+ * @author Loic Rouchon <horn@phpboost.com>
+ * @desc The AuthenticationMethod interface could be implemented in different ways to enable specifics
+ * authentication mecanisms.
+ * PHPBoost comes with a PHPBoostAuthenticationMethod which will be performed on the internal member
+ * list. But it is possible to implement external authentication mecanism by providing others
+ * implementations of this class to support LDAP authentication, OpenID, Facebook connect and more...
+ *
+ * @package {@package}
+ */
+interface AuthenticationMethod
 {
-	public static function display(Template $Template, $user_id = '')
-	{
-		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
-		
-		$extend_field_exist = count($extend_fields_cache);
-		if ($extend_field_exist > 0)
-		{
-			$Template->put_all(array(
-				'C_MISCELLANEOUS' => true,
-				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
-			));
-			
-			$display_extend_field = new DisplayExtendField();
-			if(!empty($user_id))
-			{
-				$display_extend_field->display_for_member($Template, $user_id);
-			}
-			else
-			{
-				$display_extend_field->display_for_register($Template);
-			}
-		}
-	}
+	/**
+	 * @desc Tries to authenticate the user and returns true on success, false otherwise.
+	 * @return bool true, if authentication has been performed successfully
+	 */
+	function authenticate();
 }
+
 ?>

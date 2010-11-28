@@ -53,19 +53,35 @@ class AutoConnectData
 		{
 			return $user_id;
 		}
-		return NewSession::VISITOR_SESSION_ID;
+		return Session::VISITOR_SESSION_ID;
 	}
 
-	public static function create_autoconnect($user_id)
+	public static function create_cookie($user_id)
 	{
-		$data = new AutoConnectData($autoconnect['user_id'], Random::hexa64uid());
-		$data->save();
+		if ($user_id != Session::VISITOR_SESSION_ID)
+		{
+			$columns = array('autoconnect_key');
+			$condition = 'WHERE user_id=:user_id';
+			$parameters = array('user_id' => $user_id);
+			$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+			$data = null;
+			if (!empty($row['autoconnect_key']))
+			{
+				$data = new AutoConnectData($autoconnect['user_id'], $row['autoconnect_key']);
+			}
+			else
+			{
+				$data = self::change_key($user_id);
+			}
+			$data->save();
+		}
 	}
 
 	public static function change_key($user_id)
 	{
 		$data = new AutoConnectData($autoconnect['user_id'], Random::hexa64uid());
 		$data->save_in_db();
+		return $data;
 	}
 
 	private $user_id;

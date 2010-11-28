@@ -48,7 +48,7 @@ class SessionData
 	 */
 	public static function create_visitor()
 	{
-		return self::create_from_user_id(NewSession::VISITOR_SESSION_ID);
+		return self::create_from_user_id(Session::VISITOR_SESSION_ID);
 	}
 
 	/**
@@ -294,7 +294,7 @@ class SessionData
 
 	private function create_cookie()
 	{
-		$cookie = new HTTPCookie(NewSession::$DATA_COOKIE_NAME);
+		$cookie = new HTTPCookie(Session::$DATA_COOKIE_NAME);
 		$cookie->set_expiry_date(time() + 31536000);
 		$cookie->set_value($this->get_serialized_content());
 		AppContext::get_response()->set_cookie($cookie);
