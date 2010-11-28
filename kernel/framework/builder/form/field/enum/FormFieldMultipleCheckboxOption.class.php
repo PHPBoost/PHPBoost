@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                  FormFieldMiltipleCheckboxOption.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
+ *   begin                : November 20, 2010
+ *   copyright            : (C) 2010 Sautel Benoit
+ *   email                : ben.popeye@phpboost.com
  *
  ###################################################
  *
@@ -25,16 +24,31 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class represents an option for the FormFieldMultipleCheckbox
+ * @package {@package}
+ */
+class FormFieldMultipleCheckboxOption
+{
+	private $id;
+	private $label;
+	
+	public function __construct($id, $label)
+	{
+		$this->id = id;
+		$this->label = $label;
+	}
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
+	public function get_id()
+	{
+		return $this->id;
+	}
+	
+	public function get_label()
+	{
+		return $this->label;
+	}
+}
 
 ?>

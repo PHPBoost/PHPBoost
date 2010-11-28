@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                           UrlRedirectMapper.class.php
  *                            -------------------
  *   begin                : November 06 2010
  *   copyright            : (C) 2010 Loic Rouchon
@@ -25,14 +25,34 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc Redirect to the an url
+ * @package {@package}
+ */
+class UrlRedirectMapper extends AbstractUrlMapper
+{
+	private $redirect_url;
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+	/**
+	 * @desc build a new UrlDispatcherItem
+	 * @param string $redirect_url the url on which the redirection will be done
+	 * @param string $capture_regex the regular expression matching the url
+	 * and capturing the controller method parameters. By default, match the empty url <code>/</code>
+	 * @throws NoSuchControllerException
+	 */
+	public function __construct($redirect_url, $capture_regex = '`^/?$`')
+	{
+		$this->redirect_url = $redirect_url;
+		parent::__construct($capture_regex);
+	}
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminLoginController', '`^/login/?$`'),
-	new UrlRedirectMapper('/admin/admin_index.php', '`^.*$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+	/**
+	 * @desc Call the controller method if the url match and if the method exists
+	 */
+	public function call()
+	{
+		AppContext::get_response()->redirect($this->redirect_url);
+	}
+}
 ?>

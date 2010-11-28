@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                            AdminSessionData.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : September 12, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,16 +25,25 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+class AdminSessionData extends SessionData
+{
+	public function __construct()
+	{
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+	}
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
+	public function  get_user_id()
+	{
+		return 1;
+	}
+	public function  get_session_id()
+	{
+		return 1;
+	}
 
+	public function get_token()
+	{
+		return 42;
+	}
+}
 ?>

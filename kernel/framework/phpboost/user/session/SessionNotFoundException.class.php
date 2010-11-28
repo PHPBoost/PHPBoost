@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                            SessionNotFoundException.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
+ *   begin                : November 06, 2010
+ *   copyright            : (C) 2010 loic rouchon
+ *   email                : horn@phpboost.com
  *
  ###################################################
  *
@@ -25,16 +24,17 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
+/**
+ * @author Loic Rouchon <horn@phpboost.com>
+ * @desc This class manages all sessions for the users.
+ * @package {@package}
+ */
+class SessionNotFoundException extends Exception
+{
+	public function __construct($user_id, $session_id)
+	{
+		parent::__construct('No session found for user ' . $user_id . ' and session ' . $session_id);
+	}
+}
 
 ?>
