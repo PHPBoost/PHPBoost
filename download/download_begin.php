@@ -95,7 +95,7 @@ $Bread_crumb->reverse();
 
 if (!$auth_read)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
