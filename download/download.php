@@ -40,15 +40,11 @@ if ($file_id > 0) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
-	
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
 	
 	//Affichage notation.
-	
 	$Note = new Note('download', $file_id, url('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
-	
-	
 	
 	$Template->put_all(array(
 		'C_DISPLAY_DOWNLOAD' => true,
@@ -226,12 +222,7 @@ else
 		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		 
 		$Pagination = new DeprecatedPagination();
-		
-		//Notes
-		
-		
 		
 		$Template->put_all(array(
 			'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
