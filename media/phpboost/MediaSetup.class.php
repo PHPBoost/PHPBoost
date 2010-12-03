@@ -80,7 +80,7 @@ class MediaSetup extends DefaultModuleSetup
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'users_note' => array('type' => 'text', 'length' => 2048),
-			'nbr_note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'nbrnote' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'note' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0),
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
