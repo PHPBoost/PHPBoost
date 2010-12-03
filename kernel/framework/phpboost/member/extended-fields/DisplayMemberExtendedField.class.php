@@ -143,7 +143,7 @@ class DisplayMemberExtendedField
 		return $this->template;
 	}
 	
-	public function set_fieldset()
+	public function set_fieldset($fieldset)
 	{
 		$this->fieldset = $fieldset;
 	}
