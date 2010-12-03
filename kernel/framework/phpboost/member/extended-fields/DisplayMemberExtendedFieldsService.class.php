@@ -77,7 +77,10 @@ class DisplayMemberExtendedFieldsService
 				$display_extended_field->set_regex($extended_field['regex']);
 				$display_extended_field->set_authorization($extended_field['auth']);
 			
-				$this->display_field($display_extended_field);
+				if ($User->check_auth($extended_field['auth'], ExtendedField::AUTHORIZATION)
+				{
+					$this->display_field($display_extended_field);
+				}
 			}
 		}
 		
@@ -106,7 +109,10 @@ class DisplayMemberExtendedFieldsService
 				$display_extended_field->set_regex($extended_field['regex']);
 				$display_extended_field->set_authorization($extended_field['auth']);
 				
-				$this->display_field($display_extended_field);
+				if ($User->check_auth($extended_field['auth'], ExtendedField::AUTHORIZATION)
+				{
+					$this->display_field($display_extended_field);
+				}
 			}
 		}
 		PersistenceContext::get_sql()->query_close($result);
