@@ -58,6 +58,8 @@ class RegisterController extends AbstractController
 			if ($form->validate())
 			{
 				$this->user_registration_database($form, $view);
+				
+				MemberExtendedFieldsService::register_fields($form, 1);
 			}
 		}
 	
@@ -273,8 +275,8 @@ class RegisterController extends AbstractController
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
-		$member_extended_fields_service = new MemberExtendedFieldsService();
-		$member_extended_fields_service->display_form_fields($member_extended_field);
+		$member_extended_field->set_user_id(1);
+		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button(new FormButtonDefaultSubmit());

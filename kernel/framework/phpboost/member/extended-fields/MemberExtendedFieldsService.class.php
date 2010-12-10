@@ -37,7 +37,7 @@ class MemberExtendedFieldsService
 	 * @desc This function displayed fields form
 	 * @param required object DisplayMemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
 	 */
-	public function display_form_fields(MemberExtendedField $member_extended_field)
+	public static function display_form_fields(MemberExtendedField $member_extended_field)
 	{
 		// TODO Change for a new function verification if the fields is activate
 		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
@@ -53,11 +53,11 @@ class MemberExtendedFieldsService
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id !== null)
 			{
-				$this->display_create_form($member_extended_field);
+				self::display_create_form($member_extended_field);
 			}
 			else
 			{
-				$this->display_update_form($member_extended_field);
+				self::display_update_form($member_extended_field);
 			}
 		}
 	}
@@ -66,7 +66,7 @@ class MemberExtendedFieldsService
 	 * @desc This function displayed fields profile
 	 * @param required object DisplayMemberExtendedField containing user_id, Template and field_type.
 	 */
-	public function display_profile_fields(MemberExtendedField $member_extended_field)
+	public static function display_profile_fields(MemberExtendedField $member_extended_field)
 	{
 		// TODO Change for a new function verification if the fields is activate
 		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
@@ -112,7 +112,7 @@ class MemberExtendedFieldsService
 	 * @desc This function register fields
 	 * @param required instance of HTMLForm and user id.
 	 */
-	public function register_fields(HTMLForm $form, $user_id)
+	public static function register_fields(HTMLForm $form, $user_id)
 	{
 		if(!empty($user_id))
 		{
@@ -137,12 +137,13 @@ class MemberExtendedFieldsService
 						$member_extended_field->set_possible_values($extended_field['possible_values']);
 						
 						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
-						$value_rewrite = MemberExtendedFieldsFactory::rewrite($value);
+						$value_rewrite = MemberExtendedFieldsFactory::rewrite($member_extended_field, $value);
 						$member_extended_field->set_field_value($value_rewrite);
 						MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
 					}
-					$member_extended_fields_dao->get_request($user_id);
 				}
+				//exit($member_extended_fields_dao->request_insert);
+				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
 	}
@@ -151,7 +152,7 @@ class MemberExtendedFieldsService
 	 * @desc This private function display form create
 	 * @param required instance of MemberExtendedField.
 	 */
-	private function display_create_form(MemberExtendedField $member_extended_field)
+	private static function display_create_form(MemberExtendedField $member_extended_field)
 	{
 		$extended_fields_cache = ExtendFieldsCache::load()->get_extend_fields();	
 		foreach ($extended_fields_cache as $id => $extended_field)
@@ -176,7 +177,7 @@ class MemberExtendedFieldsService
 	 * @desc This private function display form update
 	 * @param required instance of MemberExtendedField.
 	 */
-	private function display_update_form(MemberExtendedField $member_extended_field)
+	private static function display_update_form(MemberExtendedField $member_extended_field)
 	{
 		$user_id = $member_extended_field->get_user_id();
 		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, exc.regex, ex.*

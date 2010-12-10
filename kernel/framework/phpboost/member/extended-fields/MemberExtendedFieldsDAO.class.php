@@ -33,9 +33,9 @@
 class MemberExtendedFieldsDAO
 {
 	private $db_connection;
-	private $request_insert;
-	private $request_update;
-	private $request_field;
+	public $request_insert;
+	public $request_update;
+	public $request_field;
 	
 	public function __construct()
 	{
@@ -54,7 +54,8 @@ class MemberExtendedFieldsDAO
 	
 	public function get_request($user_id)
 	{
-		$check_member = PersistenceContext::get_querier()->select("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = :user_id", array('user_id' => $user_id));
+		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+
 		if ($check_member)
 		{
 			$this->get_request_update($user_id);
@@ -68,7 +69,7 @@ class MemberExtendedFieldsDAO
 	public function set_request_insert(MemberExtendedField $member_extended_field)
 	{
 		$this->set_request_field($member_extended_field);
-		$this->request_insert .= '\'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
+		$this->request_insert .= '\'' . trim($member_extended_field->get_field_value(), '|') . '\', ';
 	}
 	
 	private function get_request_insert($user_id)
@@ -86,7 +87,7 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request_update(MemberExtendedField $member_extended_field)
 	{
-		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim(MemberExtendedFieldsService::rewrite_field($member_extended_field), '|') . '\', ';
+		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim($member_extended_field->get_field_value(), '|') . '\', ';
 	}
 	
 	private function get_request_update($user_id)
@@ -96,12 +97,7 @@ class MemberExtendedFieldsDAO
 			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 	}
-	
-	public static function level_user($user_id)
-	{
-		return PersistenceContext::get_sql()->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__) > 0 ? true : false;
-	}
-	
+
 	public function get_field_type($field_type)
 	{
 		if (is_numeric($field_type))
