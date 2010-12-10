@@ -33,9 +33,9 @@
 class MemberExtendedFieldsDAO
 {
 	private $db_connection;
-	public $request_insert;
-	public $request_update;
-	public $request_field;
+	private $request_insert;
+	private $request_update;
+	private $request_field;
 	
 	public function __construct()
 	{
