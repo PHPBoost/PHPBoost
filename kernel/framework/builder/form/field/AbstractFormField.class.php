@@ -348,13 +348,14 @@ abstract class AbstractFormField implements FormField
 					unset($field_options['hidden']);
 					break;
 				case 'required':
-					$this->set_required(true);
 					if (is_string($value))
 					{
+						$this->set_required(true);
 						$this->add_constraint(new FormFieldConstraintNotEmpty($value, $value));
 					}
-					else
+					elseif (is_bool($value) && $value === true)
 					{
+						$this->set_required(true);
 						$this->add_constraint(new FormFieldConstraintNotEmpty());
 					}
 					unset($field_options['required']);
