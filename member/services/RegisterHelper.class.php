@@ -62,7 +62,7 @@
 				'user_web' => $form->get_value('user_web'),
 				'user_occupation' => $form->get_value('user_occupation'),
 				'user_hobbies' => $form->get_value('user_hobbies'),
-				'user_se' => $form->get_value('user_sex')->get_raw_value(),
+				'user_sex' => $form->get_value('user_sex')->get_raw_value(),
 				'user_born' => $form->get_value('user_born')->format(DATE_TIMESTAMP),
 				'user_sign' => $form->get_value('user_sign'),
 				'last_connect' => time(),
