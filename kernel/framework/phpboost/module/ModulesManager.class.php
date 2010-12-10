@@ -243,8 +243,6 @@ class ModulesManager
 
 			ModulesCssFilesCache::invalidate();
 
-			MenuService::generate_cache();
-
 			//Régénération des feeds.
 			Feed::clear_cache($module_id);
 
@@ -256,6 +254,7 @@ class ModulesManager
 
 			MenuService::delete_mini_module($module_id);
 			MenuService::delete_module_feeds_menus($module_id);
+			MenuService::generate_cache();
 
 			ModulesConfig::load()->remove_module_by_id($module_id);
 			ModulesConfig::save();
