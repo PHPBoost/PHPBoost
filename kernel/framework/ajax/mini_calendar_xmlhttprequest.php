@@ -42,9 +42,7 @@ $field = !empty($_GET['field']) ? trim($_GET['field']) : 'calendar';
 $input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
 $lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
 
-$Template->set_filenames(array(
-    'calendar' => 'framework/mini_calendar_response.tpl'
-));
+$Template = new FileTemplate('framework/mini_calendar_response.tpl');
 
 //Type date.
 if ($calendar_type == 'date')
@@ -162,7 +160,7 @@ else
     //Non supporté
 }
 
-$Template->pparse('calendar');
+$Template->render();
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>
