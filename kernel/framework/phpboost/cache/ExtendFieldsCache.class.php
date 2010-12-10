@@ -40,7 +40,7 @@ class ExtendFieldsCache implements CacheData
 		$this->extend_fields = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display, auth 
+		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display, regex, auth 
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
 			ORDER BY class", __LINE__, __FILE__);
 		
@@ -88,19 +88,19 @@ class ExtendFieldsCache implements CacheData
 	}
 	
 	/**
-	 * Loads and returns the extend_fields cached data.
+	 * Loads and returns the extended_fields cached data.
 	 * @return ExtendFieldsCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'extend-fields');
+		return CacheManager::load(__CLASS__, 'kernel', 'extended-fields');
 	}
 	
 	/**
-	 * Invalidates the current extend_fields cached data.
+	 * Invalidates the current extended_fields cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'extend-fields');
+		CacheManager::invalidate('kernel', 'extended-fields');
 	}
 }

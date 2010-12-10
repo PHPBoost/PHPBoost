@@ -271,10 +271,10 @@ class RegisterController extends AbstractController
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['avatar_link_where'])
 		));
 		
-		$display_extended_field = new DisplayMemberExtendedField();
-		$display_extended_field->set_template($form);
-		$display = new DisplayMemberExtendedFieldsService();
-		$display->display($display_extended_field);
+		$member_extended_field = new MemberExtendedField();
+		$member_extended_field->set_template($form);
+		$member_extended_fields_service = new MemberExtendedFieldsService();
+		$member_extended_fields_service->display_form_fields($member_extended_field);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button(new FormButtonDefaultSubmit());

@@ -110,7 +110,7 @@ elseif (!empty($id))
 
 	$regex_checked = 2;
 	$predef_regex = false;
-	if (is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5)
+	if (is_numeric($extend_field['regex']))
 	{
 		$regex_checked = 1;
 		$predef_regex = true;
@@ -123,7 +123,7 @@ elseif (!empty($id))
 		'CONTENTS' => str_replace('<br />', '', $extend_field['contents']),
 		'POSSIBLE_VALUES' => $extend_field['possible_values'],
 		'DEFAULT_VALUES' => $extend_field['default_values'],
-		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
+		'REGEX' => ($predef_regex) ? $extend_field['regex'] : '',
 		'REGEX1_CHECKED' => ($regex_checked == 1) ? 'checked="checked"' : '',
 		'REGEX2_CHECKED' => ($regex_checked == 2) ? 'checked="checked"' : '',
 		'DISABLED' => ($extend_field['field'] > 2) ? ' disabled="disabled"' : '',
