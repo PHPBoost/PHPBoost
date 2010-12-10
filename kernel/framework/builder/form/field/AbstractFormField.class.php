@@ -113,7 +113,10 @@ abstract class AbstractFormField implements FormField
 
 		foreach ($constraints as $constraint)
 		{
-			$this->add_constraint($constraint);
+			if (!empty($constraint))
+			{
+				$this->add_constraint($constraint);
+			}
 		}
 	}
 
