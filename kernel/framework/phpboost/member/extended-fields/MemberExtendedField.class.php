@@ -31,6 +31,9 @@
  */
 class MemberExtendedField
 {
+	private $name;
+	private $value;
+	private $description;
 	private $field_type;
 	private $field_name;
 	private $field_value;
@@ -40,6 +43,38 @@ class MemberExtendedField
 	private $default_values;
 	private $possible_values;
 	private $user_id;
+	private $template;
+	private $fieldset;
+	
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+	
+	public function get_name()
+	{
+		return $this->name;
+	}
+	
+	public function set_value($value)
+	{
+		$this->value = $value;
+	}
+	
+	public function get_value()
+	{
+		return $this->value;
+	}
+	
+	public function set_description($description)
+	{
+		$this->description = $description;
+	}
+	
+	public function get_description()
+	{
+		return $this->description;
+	}
 	
 	public function set_field_type($field_type)
 	{
@@ -129,6 +164,26 @@ class MemberExtendedField
 	public function get_user_id()
 	{
 		return $this->user_id;
+	}
+	
+	public function set_template($template)
+	{
+		$this->template = $template;
+	}
+	
+	public function get_template()
+	{
+		return $this->template;
+	}
+	
+	public function set_fieldset($fieldset)
+	{
+		$this->fieldset = $fieldset;
+	}
+	
+	public function get_fieldset()
+	{
+		return $this->fieldset;
 	}
 	
 	public static function rewrite_regex($regex_type)
