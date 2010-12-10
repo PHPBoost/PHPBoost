@@ -142,7 +142,6 @@ class MemberExtendedFieldsService
 						MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
 					}
 				}
-				//exit($member_extended_fields_dao->request_insert);
 				$member_extended_fields_dao->get_request($user_id);
 			}
 		}
