@@ -34,11 +34,15 @@
  */
 class Repository
 {
+	
+	private $url = '';
+	private $xml = null;
+	
 	/**
 	 * @desc constructor of the class
 	 * @param $url
 	 */
-	function Repository($url)
+	function __construct($url)
 	{
 		$this->url = $url;
 		if (function_exists('simplexml_load_file'))
@@ -94,9 +98,5 @@ class Repository
 	 * @desc Accessor of url
 	 */
 	function get_url() { return $this->url; }
-
-	var $url = '';
-	var $xml = null;
-};
-
+}
 ?>

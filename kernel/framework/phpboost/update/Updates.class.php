@@ -40,12 +40,15 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
  */
 class Updates
 {
+	private $repositories = array();
+    private $apps = array();
+	
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
     /**
 	* @desc constructor of the class
 	* @param $checks
 	*/
-    function Updates($checks = CHECK_ALL_UPDATES)
+    function __construct($checks = CHECK_ALL_UPDATES)
     {
         $this->_load_apps($checks);
         $this->_load_repositories();
@@ -155,9 +158,5 @@ class Updates
             AdministratorAlertService::save_alert($alert);
         }
     }
-
-    var $repositories = array();
-    var $apps = array();
-};
-
+}
 ?>

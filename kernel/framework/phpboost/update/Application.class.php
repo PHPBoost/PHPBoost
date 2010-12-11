@@ -39,6 +39,35 @@ define('APPLICATION_TYPE__TEMPLATE', 'template');
  */
 class Application
 {
+	private $id = '';
+	private $name = '';
+	private $language = '';
+	private $localized_language = '';
+	private $type = '';
+
+	private $repository = '';
+
+	private $version = '';
+	private $compatibility_min = '';
+	private $compatibility_max = '';
+	private $pubdate = null;
+	private $priority = null;
+	private $security_update = false;
+
+	private $download_url = '';
+	private $update_url = '';
+
+	private $authors = array();
+
+	private $description = '';
+	private $new_features = array();
+	private $improvments = array();
+	private $bug_corrections = array();
+	private $security_improvments = array();
+
+	private $warning_level = null;
+	private $warning = null;
+	
 	/**
 	 * @desc constructor of the class
 	 * @param $id
@@ -47,7 +76,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	function Application($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
+	function __construct($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -347,38 +376,5 @@ class Application
 				return '0';
 		}
 	}
-
-	## PRIVATE ATTRIBUTES ##
-
-	var $id = '';
-	var $name = '';
-	var $language = '';
-	var $localized_language = '';
-	var $type = '';
-
-	var $repository = '';
-
-	var $version = '';
-	var $compatibility_min = '';
-	var $compatibility_max = '';
-	var $pubdate = null;
-	var $priority = null;
-	var $security_update = false;
-
-	var $download_url = '';
-	var $update_url = '';
-
-	var $authors = array();
-
-	var $description = '';
-	var $new_features = array();
-	var $improvments = array();
-	var $bug_corrections = array();
-	var $security_improvments = array();
-
-	var $warning_level = null;
-	var $warning = null;
-
-};
-
+}
 ?>
