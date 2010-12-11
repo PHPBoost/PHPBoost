@@ -118,7 +118,7 @@ class ImageResizer
 		}
 	}
 	
-	private function extension_news_path($directory)
+	private function extension_new_path($directory)
 	{
 		$explode = explode('/', $directory);
 		$name_and_extension = array_pop($explode);
@@ -128,7 +128,7 @@ class ImageResizer
 	
 	private function create_image(Image $image, $create_picture, $directory)
 	{
-		$extension = $this->extension_news_path($directory);
+		$extension = $this->extension_new_path($directory);
 		switch ($extension) 
 		{
 			case 'jpeg':
