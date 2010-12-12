@@ -69,7 +69,7 @@ class MemberExtendedFieldsDAO
 	public function set_request_insert(MemberExtendedField $member_extended_field)
 	{
 		$this->set_request_field($member_extended_field);
-		$this->request_insert .= '\'' . trim($member_extended_field->get_field_value(), '|') . '\', ';
+		$this->request_insert .= '\'' . trim($member_extended_field->get_value(), '|') . '\', ';
 	}
 	
 	private function get_request_insert($user_id)
@@ -87,7 +87,7 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request_update(MemberExtendedField $member_extended_field)
 	{
-		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim($member_extended_field->get_field_value(), '|') . '\', ';
+		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim($member_extended_field->get_value(), '|') . '\', ';
 	}
 	
 	private function get_request_update($user_id)
@@ -97,7 +97,15 @@ class MemberExtendedFieldsDAO
 			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 	}
-
+	
+	/**
+	 * @desc Return true if exist displayed extended fields.
+	 */
+	public static function extended_fields_displayed()
+	{
+		return (bool)PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
+	}
+	
 	public function get_field_type($field_type)
 	{
 		if (is_numeric($field_type))
