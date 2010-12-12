@@ -121,7 +121,7 @@ class MemberExtendedFieldsService
 						$member_extended_field->set_field_name($extended_field['field_name']);
 						
 						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
-						$value_rewrite = MemberExtendedFieldsFactory::rewrite($member_extended_field, $value);
+						$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
 						$member_extended_field->set_value($value_rewrite);
 						MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
 					}
@@ -170,13 +170,12 @@ class MemberExtendedFieldsService
 		ORDER BY exc.class", __LINE__, __FILE__);
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
-			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_values'];
-			
+			$member_extended_field->set_field_type($extended_field['field']);
+			$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 			$member_extended_field->set_name($extended_field['name']);
 			$member_extended_field->set_field_name($extended_field['field_name']);
 			$member_extended_field->set_description($extended_field['contents']);
 			$member_extended_field->set_value($value);
-			$member_extended_field->set_field_type($extended_field['field']);
 			$member_extended_field->set_possible_values($extended_field['possible_values']);
 			$member_extended_field->set_required($extended_field['required']);
 			$member_extended_field->set_regex($extended_field['regex']);
