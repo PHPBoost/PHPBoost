@@ -56,10 +56,16 @@ interface MemberExtendedFieldType
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field);
 
 	/**
-	 * @desc This function rewrite value
+	 * @desc This function parse value
 	 * @param string $value.
 	 */
-	public function rewrite($value);
+	public function parse($value);
+	
+	/**
+	 * @desc This function unparse value
+	 * @param string $value.
+	 */
+	public function unparse($value);
 	
 	/**
 	 * @desc This function execute the database request

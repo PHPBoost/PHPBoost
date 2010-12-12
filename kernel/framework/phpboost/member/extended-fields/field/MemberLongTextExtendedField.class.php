@@ -27,6 +27,12 @@
  
 class MemberLongTextExtendedField extends AbstractMemberExtendedField
 {
+	public function __construct()
+	{
+		$this->parse_field = true;
+		$this->unparse_field = true;
+	}
+	
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();

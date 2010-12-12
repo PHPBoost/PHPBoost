@@ -32,10 +32,19 @@
  */
 abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 {
+	protected $field_used_once;
+	protected $parse_field;
+	protected $unparse_field;
+	
 	/**
-	 * @const bool
+	 * @var bool
 	 */
-	const FIELD_USED_ONCE = false;
+	public function __construct()
+	{
+		$this->field_used_once = false;
+		$this->parse_field = false;
+		$this->unparse_field = false;
+	}
 	
 	/**
 	 * {@inheritdoc}
@@ -75,9 +84,31 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rewrite($value)
+	public function parse($value)
 	{
-		return FormatingHelper::strparse($value);
+		if($this->parse_field == true)
+		{
+			return FormatingHelper::strparse($value);
+		}
+		else
+		{
+			return $value;
+		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function unparse($value)
+	{
+		if($this->unparse_field == true)
+		{
+			return FormatingHelper::unparse($value);
+		}
+		else
+		{
+			return $value;
+		}
 	}
 	
 	/**

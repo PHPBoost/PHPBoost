@@ -83,17 +83,28 @@ class MemberExtendedFieldsFactory
 	}
 
 	/**
-	 * @desc This function rewrite value
+	 * @desc This function parse value
 	 * @param instance of MemberExtendedField $member_extended_field and string $value.
 	 */
-	public static function rewrite(MemberExtendedField $member_extended_field, $value)
+	public static function parse(MemberExtendedField $member_extended_field, $value)
 	{
 		$name_class = self::name_class($member_extended_field);
 
 		$instance_class = new $name_class();
-		return $instance_class->rewrite($value);
+		return $instance_class->parse($value);
 	}
 	
+	/**
+	 * @desc This function unparse value
+	 * @param instance of MemberExtendedField $member_extended_field and string $value.
+	 */
+	public static function unparse(MemberExtendedField $member_extended_field, $value)
+	{
+		$name_class = self::name_class($member_extended_field);
+
+		$instance_class = new $name_class();
+		return $instance_class->unparse($value);
+	}
 	/**
 	 * @desc This function execute the database request
 	 * @param instance of MemberExtendedField $member_extended_field and instance of MemberExtendedFieldsDAO $member_extended_fields_dao.
