@@ -17,6 +17,7 @@
 		<div style="text-align:center;">{PREVIEW_BUTTON}</div>
 		<br />
 	# ENDIF #
+	<br />
 </div>
 		
 # INCLUDE ADD_FIELD_JS #
