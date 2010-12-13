@@ -149,7 +149,7 @@ class HTMLForm
 			{
 				return $default_value;
 			}
-			return throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
+			throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 		}
 		return $field->get_value();
 	}
