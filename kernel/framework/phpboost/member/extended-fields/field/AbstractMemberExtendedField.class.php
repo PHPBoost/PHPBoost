@@ -131,13 +131,13 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 			switch ($value)
 			{
 				case 1:
-					return new FormFieldConstraintRegex('`^[0-9]+$`');
+					return new FormFieldConstraintRegex('`^[0-9]+$`i');
 					break;
 				case 2:
-					return new FormFieldConstraintRegex('`^[a-z]+$`');
+					return new FormFieldConstraintRegex('`^[a-z]+$`i');
 					break;
 				case 3:
-					return new FormFieldConstraintRegex('`^[a-z0-9]+$`');
+					return new FormFieldConstraintRegex('`^[a-z0-9]+$`i');
 					break;
 				case 4:
 					return new FormFieldConstraintMailAddress();
