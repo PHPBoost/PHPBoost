@@ -32,6 +32,7 @@
  */
 abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 {
+	protected $lang;
 	protected $field_used_once;
 	protected $parse_field;
 	protected $unparse_field;
@@ -41,6 +42,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	 */
 	public function __construct()
 	{
+		$this->lang = LangLoader::get('main');
 		$this->field_used_once = false;
 		$this->parse_field = false;
 		$this->unparse_field = false;

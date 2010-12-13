@@ -30,7 +30,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-		
+
 		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_theme(),
 			$this->list_theme(),
 			array('events' => array('change' => 'change_img_theme(\'img_theme\', HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue())'))
@@ -41,7 +41,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-		
+
 		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_theme(),
 			$this->list_theme(),
 			array('events' => array('change' => 'change_img_theme(\'img_theme\', HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue())'))
@@ -59,12 +59,11 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 	{
 		$choices_list = array();
 		$user_accounts_config = UserAccountsConfig::load();
-		
 		if (!$user_accounts_config->is_users_theme_forced()) // If users can choose the theme they use
 		{
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if (UserAccountsConfig::load()->get_default_theme() == $theme || ($User->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default'))
+				if (UserAccountsConfig::load()->get_default_theme() == $theme || (AppContext::get_user()->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default'))
 				{				
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
 					$choices_list[] = new FormFieldSelectChoiceOption( $info_theme['name'], $theme);
