@@ -30,7 +30,7 @@ class ExtendFieldMember
 {
 	public static function display(Template $Template, $user_id = '')
 	{
-		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+		$extend_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;
 		
 		$extend_field_exist = count($extend_fields_cache);
 		if ($extend_field_exist > 0)

@@ -38,7 +38,7 @@ class ExtendedField
 	private $position;
 	private $field_name;
 	private $field_type;
-	private $content;
+	private $description;
 	private $possible_values;
 	private $default_values;
 	private $required;
@@ -86,14 +86,14 @@ class ExtendedField
 		return !empty($this->field_name) ? $this->field_name : '';
 	}
 	
-	public function set_content($content)
+	public function set_description($description)
 	{
-		$this->content = $content;
+		$this->description = $description;
 	}
 	
-	public function get_content()
+	public function get_description()
 	{
-		return !empty($this->content) ? $this->content : '';
+		return !empty($this->description) ? $this->description : '';
 	}
 	
 	public function set_field_type($field_type)

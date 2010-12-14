@@ -38,12 +38,12 @@ class ExtendedFieldsDatabaseService
 		self::add_extended_field_to_member($extended_field);
 
 		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex, auth)
-			VALUES (:name, :position, :field_name, :content, :field_type, :possible_values, :default_values, :required, :display, :regex, :auth)", array(
+			"INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, auth)
+			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :auth)", array(
                 'name' => $extended_field->get_name(),
                 'position' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
-				'content' => $extended_field->get_content(),
+				'description' => $extended_field->get_description(),
 				'field_type' => $extended_field->get_field_type(),
 				'possible_values' => $extended_field->get_possible_values(),
 				'default_values' => $extended_field->get_default_values(),
@@ -60,13 +60,12 @@ class ExtendedFieldsDatabaseService
 
 		PersistenceContext::get_querier()->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
-			name = :name, field_name = :field_name, contents = :content, field = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, auth = :auth
+			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, auth = :auth
 			WHERE id = :id"
 			, array(
                 'name' => $extended_field->get_name(),
-                'class' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
-				'content' => $extended_field->get_content(),
+				'description' => $extended_field->get_description(),
 				'field_type' => $extended_field->get_field_type(),
 				'possible_values' => $extended_field->get_possible_values(),
 				'default_values' => $extended_field->get_default_values(),

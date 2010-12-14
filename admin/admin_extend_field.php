@@ -56,8 +56,8 @@ elseif (!empty($_POST['valid']) && !empty($id))
 	$extended_field->set_id($id);
 	$extended_field->set_name(retrieve(POST, 'name', ''));
 	$extended_field->set_field_name(ExtendedField::rewrite_field_name(retrieve(POST, 'name', '')));
-	$extended_field->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
-	$extended_field->set_content(retrieve(POST, 'contents', '', TSTRING));
+	$extended_field->set_position($Sql->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+	$extended_field->set_description(retrieve(POST, 'contents', '', TSTRING));
 	$extended_field->set_field_type(retrieve(POST, 'field', 0));
 	$extended_field->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_field->set_default_values(retrieve(POST, 'default_values', ''));
@@ -76,11 +76,11 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{	
 		$idmoins = ($top - 1);
 			
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = 0 WHERE position='" . $top . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position=" . $top . " WHERE position = '" . $idmoins . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position=" . $idmoins . " WHERE position = 0", __LINE__, __FILE__);
 		
-		ExtendFieldsCache::invalidate();
+		ExtendedFieldsCache::invalidate();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 	}
@@ -88,11 +88,11 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{
 		$idplus = ($bottom + 1);
 			
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = 0 WHERE position = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = " . $bottom . " WHERE position = '" . $idplus . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = " . $idplus . " WHERE position = 0", __LINE__, __FILE__);
 			
-		ExtendFieldsCache::invalidate();
+		ExtendedFieldsCache::invalidate();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#e' . $id);
 		
@@ -106,11 +106,11 @@ elseif (!empty($id))
 	elseif ($get_error == 'exist_field')
 		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
 		
-	$extend_field = ExtendFieldsCache::load()->get_extend_field($id);
+	$extended_field = ExtendedFieldsCache::load()->get_extended_field($id);
 
 	$regex_checked = 2;
 	$predef_regex = false;
-	if (is_numeric($extend_field['regex']))
+	if (is_numeric($extended_field['regex']))
 	{
 		$regex_checked = 1;
 		$predef_regex = true;
@@ -118,18 +118,18 @@ elseif (!empty($id))
 
 	$Template->put_all(array(
 		'C_FIELD_EDIT' => true,
-		'ID' => $extend_field['id'],
-		'NAME' => $extend_field['name'],
-		'CONTENTS' => str_replace('<br />', '', $extend_field['contents']),
-		'POSSIBLE_VALUES' => $extend_field['possible_values'],
-		'DEFAULT_VALUES' => $extend_field['default_values'],
-		'REGEX' => ($predef_regex) ? $extend_field['regex'] : '',
+		'ID' => $extended_field['id'],
+		'NAME' => $extended_field['name'],
+		'CONTENTS' => str_replace('<br />', '', $extended_field['description']),
+		'POSSIBLE_VALUES' => $extended_field['possible_values'],
+		'DEFAULT_VALUES' => $extended_field['default_values'],
+		'REGEX' => ($predef_regex) ? $extended_field['regex'] : '',
 		'REGEX1_CHECKED' => ($regex_checked == 1) ? 'checked="checked"' : '',
 		'REGEX2_CHECKED' => ($regex_checked == 2) ? 'checked="checked"' : '',
-		'DISABLED' => ($extend_field['field'] > 2) ? ' disabled="disabled"' : '',
-		'DISPLAY' => $extend_field['display'] ? 'checked="checked"' : '',
-		'NOT_DISPLAY' => $extend_field['display'] ? '' : 'checked="checked"',
-		'AUTH' => Authorizations::generate_select(ExtendedField::AUTHORIZATION, $extend_field['auth'], array(2 => true), $extend_field['id'])
+		'DISABLED' => ($extended_field['field_type'] > 2) ? ' disabled="disabled"' : '',
+		'DISPLAY' => $extended_field['display'] ? 'checked="checked"' : '',
+		'NOT_DISPLAY' => $extended_field['display'] ? '' : 'checked="checked"',
+		'AUTH' => Authorizations::generate_select(ExtendedField::AUTHORIZATION, $extended_field['auth'], array(2 => true), $extended_field['id'])
 	));
 
 	//Gestion erreur.
@@ -150,7 +150,7 @@ elseif (!empty($id))
 	$option_field = '';
 	foreach ($array_field as $key => $value)
 	{
-		$selected = ($key == $extend_field['field']) ? 'selected="selected"' : '';
+		$selected = ($key == $extended_field['field_type']) ? 'selected="selected"' : '';
 		$option_field .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
@@ -166,16 +166,16 @@ elseif (!empty($id))
 	$option_regex = '<option value="0" ' . $selected . '>--</option>';
 	foreach ($array_regex as $key => $value)
 	{
-		$selected = ($key == $extend_field['regex']) ? 'selected="selected"' : '';
+		$selected = ($key == $extended_field['regex']) ? 'selected="selected"' : '';
 		$option_regex .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
 	$Template->put_all(array(
-		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
+		'REGEX' => (!$predef_regex) ? $extended_field['regex'] : '',
 		'OPTION_REGEX' => $option_regex,
 		'OPTION_FIELD' => $option_field,
-		'REQUIRED_FIELD_ENABLE' => $extend_field['required'] ? 'checked="checked"' : '',
-		'REQUIRED_FIELD_DISABLE' => !$extend_field['required'] ? 'checked="checked"' : '',
+		'REQUIRED_FIELD_ENABLE' => $extended_field['required'] ? 'checked="checked"' : '',
+		'REQUIRED_FIELD_DISABLE' => !$extended_field['required'] ? 'checked="checked"' : '',
 		'L_AUTH' => $LANG['authorizations'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
@@ -237,17 +237,17 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$extend_field = ExtendFieldsCache::load()->get_extend_fields();
+	$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
 
-	foreach($extend_field as $id => $row)
+	foreach($extended_field as $id => $row)
 	{
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		$top_link = $min_cat != $row['position'] ? '<a href="admin_extend_field.php?top=' . $row['position'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		$bottom_link = $max_cat != $row['position'] ? '<a href="admin_extend_field.php?bot=' . $row['position'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
 		$Template->assign_block_vars('field', array(

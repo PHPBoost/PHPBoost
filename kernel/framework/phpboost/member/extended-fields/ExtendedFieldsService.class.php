@@ -44,7 +44,7 @@ class ExtendedFieldsService
 			{		
 				ExtendedFieldsDatabaseService::add_extended_field($extended_field);
 				
-				ExtendFieldsCache::invalidate();
+				ExtendedFieldsCache::invalidate();
 			}
 			else
 			{
@@ -72,7 +72,7 @@ class ExtendedFieldsService
 			{
 				ExtendedFieldsDatabaseService::update_extended_field($extended_field);
 				
-				ExtendFieldsCache::invalidate();
+				ExtendedFieldsCache::invalidate();
 			}
 			else
 			{
@@ -96,7 +96,7 @@ class ExtendedFieldsService
 		{
 			ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
 			
-			ExtendFieldsCache::invalidate();
+			ExtendedFieldsCache::invalidate();
 		}
 		else
 		{
