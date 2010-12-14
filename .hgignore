@@ -19,3 +19,10 @@ syntax: regexp
 
 syntax: regexp
 ^templates/vita*
+
+syntax: regexp
+^gallery/pics/*
+
+syntax: regexp
+^upload/*
+
