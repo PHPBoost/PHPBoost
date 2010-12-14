@@ -30,8 +30,6 @@ define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
 
-
-
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -76,7 +74,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	function __construct($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
+	public function __construct($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -93,24 +91,24 @@ class Application
 	 * @desc Loads an XML description
 	 * @param $xml_desc reference to xml description
 	 */
-	function load($xml_desc)
+	public function load($xml_desc)
 	{
 		$attributes = $xml_desc->attributes();
 
-		$name = Application::_get_attribute($xml_desc, 'name');
+		$name = Application::get_attribute($xml_desc, 'name');
 		$this->name = !empty($name) ? $name : $this->id;
 
-		$this->language = Application::_get_attribute($xml_desc, 'language');
+		$this->language = Application::get_attribute($xml_desc, 'language');
 
-		$language = Application::_get_attribute($xml_desc, 'localized_language');
+		$language = Application::get_attribute($xml_desc, 'localized_language');
 		$this->localized_language = !empty($language) ? ($language) : $this->language;
 
-		$this->version = Application::_get_attribute($xml_desc, 'num');
+		$this->version = Application::get_attribute($xml_desc, 'num');
 
-		$this->compatibility_min = Application::_get_attribute($xml_desc, 'min', 'compatibility');
-		$this->compatibility_max = Application::_get_attribute($xml_desc, 'max', 'compatibility');
+		$this->compatibility_min = Application::get_attribute($xml_desc, 'min', 'compatibility');
+		$this->compatibility_max = Application::get_attribute($xml_desc, 'max', 'compatibility');
 
-		$pubdate = Application::_get_attribute($xml_desc, 'pubdate');
+		$pubdate = Application::get_attribute($xml_desc, 'pubdate');
 		if (!empty($pubdate))
 		{
 			$this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate, 'y/m/d');
@@ -120,10 +118,10 @@ class Application
 			$this->pubdate = new Date();
 		}
 
-		$this->security_update = Application::_get_attribute($xml_desc, 'security-update');
+		$this->security_update = Application::get_attribute($xml_desc, 'security-update');
 		$this->security_update = strtolower($this->security_update) == 'true' ? true : false;
 
-		$this->priority = Application::_get_attribute($xml_desc, 'priority');
+		$this->priority = Application::get_attribute($xml_desc, 'priority');
 		switch ($this->priority)
 		{
 			case 'high':
@@ -139,16 +137,16 @@ class Application
 		if ($this->security_update)
 		$this->priority++;
 
-		$this->download_url =  Application::_get_attribute($xml_desc, 'url', '//download');
-		$this->update_url = Application::_get_attribute($xml_desc, 'url', '//update');;
+		$this->download_url =  Application::get_attribute($xml_desc, 'url', '//download');
+		$this->update_url = Application::get_attribute($xml_desc, 'url', '//update');;
 
 		$this->authors = array();
 		$authors_elts = $xml_desc->xpath('authors/author');
 		foreach ($authors_elts as $author)
 		{
 			$this->authors[] = array(
-                'name' => Application::_get_attribute($author, 'name'),
-                'email' => Application::_get_attribute($author, 'email')
+                'name' => Application::get_attribute($author, 'name'),
+                'email' => Application::get_attribute($author, 'email')
 			);
 		}
 
@@ -182,7 +180,7 @@ class Application
 			}
 		}
 
-		$this->warning_level = Application::_get_attribute($xml_desc, 'level', 'warning');
+		$this->warning_level = Application::get_attribute($xml_desc, 'level', 'warning');
 		if (!empty($this->warning_level))
 		{
 			$this->warning = $xml_desc->xpath('warning');
@@ -193,7 +191,7 @@ class Application
 	 * @desc Gets an identifier of the application
 	 * @return string identifier
 	 */
-	function get_identifier()
+	public function get_identifier()
 	{
 		return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
 	}
@@ -201,7 +199,7 @@ class Application
 	 * @desc Checks compatibility with limits
 	 * @return boolean TRUE if compatible FALSE if not
 	 */
-	function check_compatibility()
+	public function check_compatibility()
 	{
 		$current_version = '0';
 		switch ($this->type)
@@ -252,91 +250,91 @@ class Application
 	/**
 	 * @desc Accessor of id
 	 */
-	function get_id() { return $this->id; }
+	public function get_id() { return $this->id; }
 	/**
 	 * @desc Accessor of name
 	 */
-	function get_name() { return $this->name; }
+	public function get_name() { return $this->name; }
 	/**
 	 * @desc Accessor of Language
 	 */
-	function get_language() { return $this->language; }
+	public function get_language() { return $this->language; }
 	/**
 	 * @desc Accessor of Localized language
 	 */
-	function get_localized_language() { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
+	public function get_localized_language() { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
 	/**
 	 * @desc Accessor of Type
 	 */
-	function get_type() { return $this->type; }
+	public function get_type() { return $this->type; }
 	/**
 	 * @desc Accessor of Repository
 	 */
-	function get_repository() { return $this->repository; }
+	public function get_repository() { return $this->repository; }
 	/**
 	 * @desc Accessor of Version
 	 */
-	function get_version() { return $this->version; }
+	public function get_version() { return $this->version; }
 	/**
 	 * @desc Accessor of Compatibility min value
 	 */
-	function get_compatibility_min() { return $this->compatibility_min; }
+	public function get_compatibility_min() { return $this->compatibility_min; }
 	/**
 	 * @desc Accessor of Compatibility Max value
 	 */
-	function get_compatibility_max() { return $this->compatibility_max; }
+	public function get_compatibility_max() { return $this->compatibility_max; }
 	/**
 	 * @desc Accessor of Publication Date
 	 */
-	function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
+	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
 	/**
 	 * @desc Accessor of Priority
 	 */
-	function get_priority() { return $this->priority; }
+	public function get_priority() { return $this->priority; }
 	/**
 	 * @desc Accessor of Security Update
 	 */
-	function get_security_update() { return $this->security_update; }
+	public function get_security_update() { return $this->security_update; }
 	/**
 	 * @desc Accessor of Download URL
 	 */
-	function get_download_url() { return $this->download_url; }
+	public function get_download_url() { return $this->download_url; }
 	/**
 	 * @desc Accessor of Update URL
 	 */
-	function get_update_url() { return $this->update_url; }
+	public function get_update_url() { return $this->update_url; }
 	/**
 	 * @desc Accessor of Authors
 	 */
-	function get_authors() { return $this->authors; }
+	public function get_authors() { return $this->authors; }
 	/**
 	 * @desc Accessor of Description Text
 	 */
-	function get_description() { return $this->description; }
+	public function get_description() { return $this->description; }
 	/**
 	 * @desc Accessor of New Features Text
 	 */
-	function get_new_features() { return $this->new_features; }
+	public function get_new_features() { return $this->new_features; }
 	/**
 	 * @desc Accessor of Improvments Text
 	 */
-	function get_improvments() { return $this->improvments; }
+	public function get_improvments() { return $this->improvments; }
 	/**
 	 * @desc Accessor of Bug Corrections Text
 	 */
-	function get_bug_corrections() { return $this->bug_corrections; }
+	public function get_bug_corrections() { return $this->bug_corrections; }
 	/**
 	 * @desc Accessor of Security Improvments
 	 */
-	function get_security_improvments() { return $this->security_improvments; }
+	public function get_security_improvments() { return $this->security_improvments; }
 	/**
 	 * @desc Accessor of Warning level
 	 */
-	function get_warning_level() { return $this->warning_level; }
+	public function get_warning_level() { return $this->warning_level; }
 	/**
 	 * @desc Accessor of Warning
 	 */
-	function get_warning() { return $this->warning; }
+	public function get_warning() { return $this->warning; }
 
 	## PRIVATE METHODS ##
 	/**
@@ -346,7 +344,7 @@ class Application
 	 * @param xpath_query
 	 * @return string attrbute value
 	 */
-	function _get_attribute($xdoc, $attibute_name, $xpath_query = '.')
+	private function get_attribute($xdoc, $attibute_name, $xpath_query = '.')
 	{
 		$elements = $xdoc->xpath($xpath_query);
 		if (count($elements) > 0)
@@ -360,7 +358,7 @@ class Application
 	 * @desc Get the number of the installed version
 	 * @return string version
 	 */
-	function _get_installed_version()
+	private function get_installed_version()
 	{
 		switch ($this->type)
 		{

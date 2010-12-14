@@ -48,18 +48,18 @@ class Updates
 	* @desc constructor of the class
 	* @param $checks
 	*/
-    function __construct($checks = CHECK_ALL_UPDATES)
+    public function __construct($checks = CHECK_ALL_UPDATES)
     {
-        $this->_load_apps($checks);
-        $this->_load_repositories();
-        $this->_check_repositories();
+        $this->load_apps($checks);
+        $this->load_repositories();
+        $this->check_repositories();
     }
 
     /**
 	* @desc Load Application Classes
 	* @param $checks
 	*/
-    function _load_apps($checks = CHECK_ALL_UPDATES)
+    private function load_apps($checks = CHECK_ALL_UPDATES)
     {
         if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
@@ -99,7 +99,7 @@ class Updates
     /**
 	* @desc Load Repository Classes
 	*/
-    function _load_repositories()
+    private function load_repositories()
     {
         if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
@@ -115,7 +115,7 @@ class Updates
     /**
 	* @desc Check Repository for Update Notification
 	*/
-    function _check_repositories()
+    private function check_repositories()
     {
         if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
         {
@@ -124,7 +124,7 @@ class Updates
                 $result = $this->repositories[$app->get_repository()]->check($app);
                 if ($result !== null)
                 {   // processing to the update notification
-                    $this->_add_update_alert($result);
+                    $this->add_update_alert($result);
                 }
             }
         }
@@ -133,7 +133,7 @@ class Updates
     /**
 	* @desc Save an alert for Update Notification
 	*/
-    function _add_update_alert($app)
+    private function add_update_alert($app)
     {
 
         $identifier = $app->get_identifier();
