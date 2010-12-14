@@ -46,6 +46,7 @@ if (!$User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_READ)
 		
 if ($guestbook && empty($id_get)) //Enregistrement
 {
+	die('"test");');
 	$guestbook_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$guestbook_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, 'pseudo', $LANG['guest']);
 
@@ -129,6 +130,9 @@ elseif (!empty($id_get)) //Edition + suppression!
 		{
 			$Template = new FileTemplate('guestbook/guestbook.tpl');
 
+			$formatter = AppContext::get_content_formatting_service()->create_factory();
+			$formatter->set_forbidden_tags($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+		
 			//Update form
 			$form = new HTMLForm('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get));
 			$fieldset = new FormFieldsetHTML('update_msg', $LANG['update_msg']);
@@ -140,7 +144,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 				));
 			}
 			$fieldset->add_field(new FormFieldTextEditor('contents', $LANG['message'], FormatingHelper::unparse($row['contents']), array(
-				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
+				'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
 			$form->add_button(new FormButtonReset());
@@ -227,6 +231,9 @@ else //Affichage.
 	{
 		$is_guest = !$User->check_level(MEMBER_LEVEL);
 
+		$formatter = AppContext::get_content_formatting_service()->create_factory();
+		$formatter->set_forbidden_tags($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+		
 		//Post form
 		$form = new HTMLForm('guestbookForm');
 		$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
@@ -237,7 +244,7 @@ else //Affichage.
 			));
 		}
 		$fieldset->add_field(new FormFieldRichTextEditor('contents',  $LANG['message'], '', array(
-			'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
+			'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 		));
 		if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
 		{
