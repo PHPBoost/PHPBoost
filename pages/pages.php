@@ -37,13 +37,13 @@ include_once('pages_functions.php');
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
 		$redirect_title = '';
@@ -115,6 +115,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//Génération des liens de la page
 	$links = array();
+	$is_page_admin = false;
 	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 	{
 		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/edit.png');
@@ -122,10 +123,13 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
 		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/redirect.png');
 		$links[$LANG['pages_create']] = array(url('post.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/create_page.png');
+		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/explorer.png');
+		$is_page_admin = true;
+	}
+	if ($User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) && ($page_infos['display_print_link'] || $is_page_admin))
+	{
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
 	}
-	if ($User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE))
-		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/explorer.png');
 		
 	$nbr_values = count($links);
 	$i = 1;
@@ -139,6 +143,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 			$Template->assign_block_vars('link.separation', array());
 			
 		$Template->assign_block_vars('links_list', array(
+			'BULL' => $i > 1 ? '&bull;' : '',
 			'DM_A_CLASS' => $value[1],
 			'U_ACTION' => $value[0],
 			'L_ACTION' => $key,
