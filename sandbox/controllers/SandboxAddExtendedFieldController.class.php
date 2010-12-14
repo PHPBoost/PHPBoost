@@ -39,7 +39,14 @@ class SandboxAddExtendedFieldController extends ModuleController
 		$this->init();
 		$form = $this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl = new StringTemplate('<script type="text/javascript">
+				<!--
+					Event.observe(window, \'load\', function() {
+						HTMLForms.getField("possible_values").disable();
+						HTMLForms.getField("regex").disable();
+					});
+				-->		
+				</script># INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $form->validate())
@@ -154,8 +161,8 @@ class SandboxAddExtendedFieldController extends ModuleController
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($form->get_value('name'));
 		$extended_field->set_field_name(ExtendedField::rewrite_field_name($form->get_value('name')));
-		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
-		$extended_field->set_content($form->get_value('description'));
+		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+		$extended_field->set_description($form->get_value('description'));
 		$extended_field->set_field_type($form->get_value('field_type')->get_raw_value());
 		$extended_field->set_possible_values($form->get_value('possible_values'));
 		$extended_field->set_default_values($form->get_value('default_values'));

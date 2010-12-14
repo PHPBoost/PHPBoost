@@ -37,8 +37,8 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 	$extended_field = new ExtendedField();
 	$extended_field->set_name(retrieve(POST, 'name', ''));
 	$extended_field->set_field_name(ExtendedField::rewrite_field_name(retrieve(POST, 'name', '')));
-	$extended_field->set_position($Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
-	$extended_field->set_content(retrieve(POST, 'contents', '', TSTRING));
+	$extended_field->set_position($Sql->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+	$extended_field->set_description(retrieve(POST, 'contents', '', TSTRING));
 	$extended_field->set_field_type(retrieve(POST, 'field', 0));
 	$extended_field->set_possible_values(retrieve(POST, 'possible_values', ''));
 	$extended_field->set_default_values(retrieve(POST, 'default_values', ''));

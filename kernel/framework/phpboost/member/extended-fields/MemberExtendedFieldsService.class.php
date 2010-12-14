@@ -78,13 +78,14 @@ class MemberExtendedFieldsService
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id !== null)
 			{
-				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, ex.*
+				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $user_id . "'
 				WHERE exc.display = 1
-				ORDER BY exc.class", __LINE__, __FILE__);
+				ORDER BY exc.position", __LINE__, __FILE__);
 				while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 				{
+					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 					$member_extended_field->set_name($extended_field['name']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
 					$member_extended_field->set_value($value);
@@ -111,7 +112,7 @@ class MemberExtendedFieldsService
 			if ($extended_fields_displayed)
 			{
 				$member_extended_fields_dao = new MemberExtendedFieldsDAO();
-				$extended_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+				$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields();
 				foreach ($extended_fields_cache as $id => $extended_field)
 				{
 					if ($extended_field['display'] == 1)
@@ -137,15 +138,15 @@ class MemberExtendedFieldsService
 	 */
 	private static function display_create_form(MemberExtendedField $member_extended_field)
 	{
-		$extended_fields_cache = ExtendFieldsCache::load()->get_extend_fields();	
+		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;	
 		foreach ($extended_fields_cache as $id => $extended_field)
 		{
 			if ($extended_field['display'] == 1)
 			{
 				$member_extended_field->set_name($extended_field['name']);
 				$member_extended_field->set_field_name($extended_field['field_name']);
-				$member_extended_field->set_description($extended_field['contents']);
-				$member_extended_field->set_field_type($extended_field['field']);
+				$member_extended_field->set_description($extended_field['description']);
+				$member_extended_field->set_field_type($extended_field['field_type']);
 				$member_extended_field->set_possible_values($extended_field['possible_values']);
 				$member_extended_field->set_default_values($extended_field['default_values']);
 				$member_extended_field->set_required($extended_field['required']);
@@ -163,18 +164,19 @@ class MemberExtendedFieldsService
 	private static function display_update_form(MemberExtendedField $member_extended_field)
 	{
 		$user_id = $member_extended_field->get_user_id();
-		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, exc.regex, ex.*
+		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, exc.regex, ex.*
 		FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $user_id . "'
 		WHERE exc.display = 1
-		ORDER BY exc.class", __LINE__, __FILE__);
+		ORDER BY exc.position", __LINE__, __FILE__);
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
-			$member_extended_field->set_field_type($extended_field['field']);
+			$member_extended_field->set_field_type($extended_field['field_type']);
 			$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
+			
 			$member_extended_field->set_name($extended_field['name']);
 			$member_extended_field->set_field_name($extended_field['field_name']);
-			$member_extended_field->set_description($extended_field['contents']);
+			$member_extended_field->set_description($extended_field['description']);
 			$member_extended_field->set_value($value);
 			$member_extended_field->set_possible_values($extended_field['possible_values']);
 			$member_extended_field->set_required($extended_field['required']);
