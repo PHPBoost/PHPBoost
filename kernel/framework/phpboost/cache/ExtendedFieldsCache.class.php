@@ -40,9 +40,9 @@ class ExtendedFieldsCache implements CacheData
 		$this->extended_fields = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display, regex, auth 
+		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, auth 
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
-			ORDER BY class", __LINE__, __FILE__);
+			ORDER BY position", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{
@@ -50,11 +50,11 @@ class ExtendedFieldsCache implements CacheData
 			
 			$this->extended_fields[$row['id']] = array(
 				'id' => $row['id'],
-				'class' => !empty($row['class']) ? $row['class'] : '',
+				'position' => !empty($row['position']) ? $row['position'] : '',
 				'name' => !empty($row['name']) ? $row['name'] : '',
 				'field_name' => !empty($row['field_name']) ? $row['field_name'] : '',
-				'contents' => !empty($row['contents']) ? $row['contents'] : '',
-				'field' => !empty($row['field']) ? $row['field'] : '',
+				'description' => !empty($row['description']) ? $row['description'] : '',
+				'field_type' => !empty($row['field_type']) ? $row['field_type'] : '',
 				'possible_values' => !empty($row['possible_values']) ? $row['possible_values'] : '',
 				'default_values' => !empty($row['default_values']) ? $row['default_values'] : '',
 				'required' => !empty($row['required']) ? $row['required'] : 0,
