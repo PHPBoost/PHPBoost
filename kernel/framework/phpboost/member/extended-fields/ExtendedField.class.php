@@ -143,7 +143,7 @@ class ExtendedField
 	
 	public function get_display()
 	{
-		return $this->display;
+		return !empty($this->display) ? $this->display : 0;
 	}
 	
 	public function set_regex($regex)
