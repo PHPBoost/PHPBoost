@@ -55,6 +55,11 @@ class SelectQueryResultMapper implements SelectQueryResult
 		return  $this->query_result->get_query();
 	}
 
+	public function get_parameters()
+	{
+		return  $this->query_result->get_parameters();
+	}
+	
 	public function set_fetch_mode($fetch_mode)
 	{
 		return  $this->query_result->set_fetch_mode($fetch_mode);
