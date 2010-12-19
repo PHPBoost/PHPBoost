@@ -62,7 +62,7 @@
 [b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
-[*] Tri des images conservé dans la pagination
+[*] Tri des images conservé dans la pagination.
 
 [b]News :[/b]
 [*] Refonte complète du module, collaboration des utilisateurs possible.
@@ -74,10 +74,13 @@
 [*] Possibilité des gérer les autorisations d'écriture et de lecture
 
 [b]Livre d'or :[/b]
-[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération ( édition et suppression )
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+
+[b]Pages :[/b]
+[*] Possibilité de cacher le lien d'impression pour chacune des pages.
 
 [b]Calendrier :[/b]
-[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération ( édition et suppression )
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
 
 [b]Téléchargement[/b]
 - Possibilité de signaler les liens cassés.
