@@ -150,5 +150,11 @@ interface Template extends View
 	 * @return TemplateData
 	 */
 	function get_data();
+	
+	/**
+	 * @desc Returns the pictures data path
+	 * @return String
+	 */
+	function get_pictures_data_path();
 }
 ?>

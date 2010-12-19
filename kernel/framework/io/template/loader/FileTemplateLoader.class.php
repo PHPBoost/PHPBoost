@@ -290,5 +290,9 @@ class FileTemplateLoader implements TemplateLoader
 		}
 		return $this->cache_filepath;
 	}
+	
+	public function get_pictures_data_path() {
+		return $this->pictures_data_path;
+	}
 }
 ?>
