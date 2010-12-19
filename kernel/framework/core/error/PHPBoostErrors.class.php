@@ -121,4 +121,22 @@ class PHPBoostErrors
 		
         return $controller;
 	}
+	
+	public static function link_flood()
+	{
+        $lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		LangLoader::get_message('e_l_flood', 'errors'));
+
+		return $controller;
+	}
+	
+	public static function link_login_flood()
+	{
+        $lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		LangLoader::get_message('e_link_pseudo', 'errors'));
+
+		return $controller;
+	}
 }
