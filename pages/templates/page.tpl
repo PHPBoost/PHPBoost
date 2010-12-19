@@ -24,7 +24,7 @@
 
 				<div style="float:right">
 					# IF C_ACTIV_COM #
-					<img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}">{L_COM}</a>&nbsp;
+					<img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}" class="small_link">{L_COM}</a>&nbsp;
 					# ENDIF #
 					# START links_list #
 					{links_list.BULL}

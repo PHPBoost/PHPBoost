@@ -40,10 +40,9 @@ $cat = retrieve(GET, 'cat', 0);
 
 require_once('../kernel/header.php');
 
+$Template = new FileTemplate('wiki/explorer.tpl');
 
-$Template->set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
-
-$module_data_path = $Template->get_module_data_path('wiki');
+$module_data_path = $Template->get_pictures_data_path();
 
 //Contenu de la racine:
 $Cache->load('wiki');

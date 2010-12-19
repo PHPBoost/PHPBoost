@@ -1,6 +1,6 @@
 		<script type="text/javascript">
 		<!--
-			var path = '{PAGES_PATH}';
+			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
 				# IF C_BBCODE_TINYMCE_MODE #
@@ -34,7 +34,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PAGES_PATH}/images/pages.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
 	
 		# IF C_ERROR_HANDLER #
 			<div class="{ERRORH_CLASS}">
@@ -84,7 +84,7 @@
 					<dt><label>{L_CAT}</label></dt>
 					<dd>
 						<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PAGES_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 						<br />
 						<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
 						{CAT_LIST}

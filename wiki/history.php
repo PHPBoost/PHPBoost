@@ -46,7 +46,7 @@ require_once('../kernel/header.php');
 
 if (!empty($id_article))
 {
-	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
+	$Template = new FileTemplate('wiki/history.tpl');
 
 	$Template->assign_block_vars('article', array(
 		'L_TITLE' => $LANG['wiki_history'] . ': <a href="' . $article_infos['encoded_title'] . '">' . $article_infos['title'] . '</a>',
@@ -71,7 +71,7 @@ if (!empty($id_article))
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
 		$Template->assign_block_vars('article.list', array(
@@ -92,7 +92,7 @@ if (!empty($id_article))
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		));
 	
-	$Template->pparse('wiki_history');	
+	$Template->display();	
 }
 else //On affiche la liste des modifications 
 {
@@ -110,7 +110,7 @@ else //On affiche la liste des modifications
 	$Pagination = new DeprecatedPagination();
 	$show_pagin = $Pagination->display(url('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
-	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
+	$Template = new FileTemplate('wiki/history.tpl');
 
 	$Template->assign_block_vars('index', array(
 		'L_HISTORY' => $LANG['wiki_history'],
@@ -141,7 +141,7 @@ else //On affiche la liste des modifications
 		));
 	}
 	
-	$Template->pparse('wiki_history');
+	$Template->display();
 }
 
 require_once('../kernel/footer.php'); 

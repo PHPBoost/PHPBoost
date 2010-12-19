@@ -82,7 +82,8 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$module_data_path = $Template->get_module_data_path('forum');
+$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
+$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
 $check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
