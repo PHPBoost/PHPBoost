@@ -153,7 +153,21 @@ class HTMLForm
 		}
 		return $field->get_value();
 	}
-
+	
+	/**
+	 * @desc Returns true if the $field_id is in the form.
+	 * @param string $field_id The HTML id of the field
+	 * @return mixed true if the $field_id is in the form, false otherwise
+	 */
+	public function has_field($field_id) {
+		try {
+			$this->get_field_by_id($field_id);
+		} catch (FormBuilderException $ex) {
+			return false;
+		}
+		return true;
+	}
+	
 	private function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
