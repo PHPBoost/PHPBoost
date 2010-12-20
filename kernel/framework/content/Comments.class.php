@@ -62,7 +62,7 @@ class Comments
 	 * @param string $module_folder Module's folder
 	 * @param string $is_kernel_script
 	 */
-	public function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
+	public function __construct($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
 	{
 		$this->module_folder = !empty($module_folder) ? TextHelper::strprotect($module_folder) : TextHelper::strprotect($script);
 		list($this->script, $this->idprov, $this->vars, $this->path) = array(TextHelper::strprotect($script), NumberHelper::numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
