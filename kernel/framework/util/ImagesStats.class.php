@@ -45,9 +45,9 @@ class ImagesStats
 	public  $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
 	private $nbr_color = 14;
 	public  $data_stats; //Tableau des données.
-	private $nbr_entry; //Nombre d'entrée à traiter.
+	public $nbr_entry; //Nombre d'entrée à traiter.
 	public $array_allocated_color = array(); //Tableau des couleurs allouées.
-	private $color_index = 0; //Couleur courante.
+	public $color_index = 0; //Couleur courante.
 	private $decimal = 1; //Arrondi
 
 	/**
