@@ -47,7 +47,7 @@ class InstallCreateAdminController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-            $installation_services = new InstallationServices(LangLoader::get_locale());
+            $installation_services = new InstallationServices();
 			$installation_services->create_admin(
 			$this->form->get_value('login'), $this->form->get_value('password'),
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
