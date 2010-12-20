@@ -132,7 +132,7 @@ class CategoriesManager
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] $cache_var Array containing the correct data, descripted in the description of the class.
 	 */
-	public function __construct($table, $cache_file_name, &$cache_var)
+	public function CategoriesManager($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
