@@ -42,7 +42,7 @@ class RSS extends Feed
      * @param string $feed_name the feeds name / type. default is Feed::DEFAULT_FEED_NAME
      * @param int $id_cat the feed category id
      */
-    function RSS($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
+    public function __construct($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
     {
         parent::__construct($module_id, $feed_name, $id_cat);
         $this->tpl = new FileTemplate(self::$default_rss_template);
@@ -52,7 +52,7 @@ class RSS extends Feed
      * @desc Loads a feed by its url
      * @param string $url the feed url
      */
-    function load_file($url)
+    public function load_file($url)
     {
         if (($file = @file_get_contents_emulate($url)) !== false)
         {
@@ -87,9 +87,6 @@ class RSS extends Feed
         }
         return false;
     }
-    
-    ## Private Methods ##
-    ## Private attributes ##
 }
 
 ?>

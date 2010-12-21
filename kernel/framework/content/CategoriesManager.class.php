@@ -132,7 +132,7 @@ class CategoriesManager
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] $cache_var Array containing the correct data, descripted in the description of the class.
 	 */
-	function CategoriesManager($table, $cache_file_name, &$cache_var)
+	public function CategoriesManager($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
@@ -149,7 +149,7 @@ class CategoriesManager
 	 * @return int The id of the category which has been added and 0 if it couldn't be added (the error will be explained in the check_error method).
 	 * The error can be only NEW_PARENT_CATEGORY_DOES_NOT_EXIST, which means that its parent category doesn't exist.
 	 */
-	function add($id_parent, $name, $visible = CAT_VISIBLE, $order = 0)
+	public function add($id_parent, $name, $visible = CAT_VISIBLE, $order = 0)
 	{
 		global $Sql, $Cache;
 		$this->clear_error();
@@ -193,7 +193,7 @@ class CategoriesManager
 	 *		<li>ERROR_UNKNOWN_MOTION if the motion you asked is neither MOVE_CATEGORY_UP nor MOVE_CATEGORY_DOWN</li>
 	 * </ul>
 	 */
-	function move($id, $way)
+	public function move($id, $way)
 	{
 		global $Sql, $Cache;
 		$this->clear_error();
@@ -270,7 +270,7 @@ class CategoriesManager
 	 * 		<li>CATEGORY_DOES_NOT_EXIST when the category you want to move doesn't exist</li>
 	 * </ul>
 	 */
-	function move_into_another($id, $new_id_cat, $position = 0)
+	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		global $Sql, $Cache;
 		$this->clear_error();
@@ -330,7 +330,7 @@ class CategoriesManager
 	 * @return bool true if the category has been deleted successfully and false otherwise, and in this case you can find the error in the check_error method.
 	 * The error CATEGORY_DOES_NOT_EXIST is raised if the category to delete doesn't exist.
 	 */
-	function delete($id)
+	public function delete($id)
 	{
 		global $Sql, $Cache;
 		$this->clear_error();
@@ -367,7 +367,7 @@ class CategoriesManager
 	 * 	<li>CATEGORY_DOES_NOT_EXIST when the category for which you want to change the visibility doesn't exist</li>
 	 * </ul>
 	 */
-	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		global $Sql, $Cache;
 
@@ -411,7 +411,7 @@ class CategoriesManager
 	 * @param $config
 	 * @return unknown_type
 	 */
-	function set_display_config($config)
+	public function set_display_config($config)
 	{
 		//Respect du standard à vérifier
 		$this->display_config = $config;
@@ -424,7 +424,7 @@ class CategoriesManager
 	 * @param bool $debug DEBUG_MODE if you want to display the errors, or PRODUCTION_MODE to return false if it fails.
 	 * @return bool true if the configuration is correct, false otherwise.
 	 */
-	function check_display_config($debug = PRODUCTION_MODE)
+	public function check_display_config($debug = PRODUCTION_MODE)
 	{
 		if (!empty($this->display_config))
 		{
@@ -461,7 +461,7 @@ class CategoriesManager
 	 * If there is an error, it will return false and you will be able to know the error by using the wheck_error method.
 	 * The raised erros can be INCORRECT_DISPLAYING_CONFIGURATION if the displaying configuration hasn't be established or is not correct.
 	 */
-	function build_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
+	public function build_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
 	{
 		global $LANG;
 
@@ -512,7 +512,7 @@ class CategoriesManager
 	 * @param Template $template If you want to customize the displaying, you can give the method a template objet in which variables will be assigned. The default template is framework/content/categories_select_form.tpl.
 	 * @return string The HTML code which displays the select form.
 	 */
-	function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
+	public function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
 		global $LANG, $User;
 
@@ -545,7 +545,7 @@ class CategoriesManager
 	 * @param int $num_auth If you want to filter the category according to an authorization bit, put its value here
 	 * @return int[] The list of the ids of the subcategories.
 	 */
-	function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
+	public function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
 		global $User;
 		//Boolean variable which is true when we can stop the loop : optimization
@@ -583,7 +583,7 @@ class CategoriesManager
 	 * @param bool $add_this If you want to add the current cat at the list. Use ADD_THIS_CATEGORY_IN_LIST if you want, DO_NOT_ADD_THIS_CATEGORY_IN_LIST otherwise.
 	 * @return int[] The list of the ids of the parent categories.
 	 */
-	function build_parents_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
+	public function build_parents_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
 	{
 		$list = array();
 		if ($add_this)
@@ -605,7 +605,7 @@ class CategoriesManager
 	 * @param int $error Constant corresponding to the error to check. Use the constant corresponding to the error (detailed in each method description).
 	 * @return bool true if the error has been raised and false else.
 	 */
-	function check_error($error)
+	public function check_error($error)
 	{
 		return (bool)($this->errors ^ $error);
 	}
@@ -617,7 +617,7 @@ class CategoriesManager
 	 * @param int $mode Merge mode. If it corresponds to a read autorization, use Authorizations::AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or Authorizations::AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
 	 * @return mixed[] The merged array that you can use only for the bit $bit.
 	 */
-	function compute_heritated_auth($category_id, $bit, $mode)
+	public function compute_heritated_auth($category_id, $bit, $mode)
 	{
 		$ids = array_reverse($this->build_parents_id_list($category_id, ADD_THIS_CATEGORY_IN_LIST));
 		$length = count($ids);
@@ -644,7 +644,7 @@ class CategoriesManager
 	 * @desc Computes the list of the feeds corresponding to each category of the category tree.
 	 * @return FeedsList The list.
 	 */
-	function get_feeds_list()
+	public function get_feeds_list()
 	{
 	    global $LANG;
 
@@ -850,7 +850,7 @@ class CategoriesManager
 	 * @param FeedsCat $tree The tree in which we must add the list.
 	 * @param int $parent_id Id of the category to build
 	 */
-	function build_feeds_sub_list($tree, $parent_id)
+	public function build_feeds_sub_list($tree, $parent_id)
 	{
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
