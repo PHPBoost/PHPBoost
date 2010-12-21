@@ -63,7 +63,7 @@ class ArticlesCats extends CategoriesManager
 
 		if (!array_key_exists($id_category, $this->cache_var))
 		{
-			parent::_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
+			parent::add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
 
