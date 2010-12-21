@@ -136,20 +136,38 @@ class HTMLForm
 
 	/**
 	 * @desc Returns the value of a form field.
-	 * @param string $field_id The HTML id of the field
+	 * @param string $field_id The HTML id of the field and string $default_value The default value
 	 * @return mixed The value of the field (the type depends of the field)
 	 * @throws FormBuilderException
 	 */
-	public function get_value($field_id)
+	public function get_value($field_id, $default_value = null)
 	{
 		$field = $this->get_field_by_id($field_id);
 		if ($field->is_disabled())
 		{
+			if ($default_value !== null)
+			{
+				return $field->set_value($default_value);
+			}
 			throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 		}
 		return $field->get_value();
 	}
-
+	
+	/**
+	 * @desc Returns true if the $field_id is in the form.
+	 * @param string $field_id The HTML id of the field
+	 * @return mixed true if the $field_id is in the form, false otherwise
+	 */
+	public function has_field($field_id) {
+		try {
+			$this->get_field_by_id($field_id);
+		} catch (FormBuilderException $ex) {
+			return false;
+		}
+		return true;
+	}
+	
 	private function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)

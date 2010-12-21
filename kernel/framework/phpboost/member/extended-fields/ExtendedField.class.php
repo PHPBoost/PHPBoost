@@ -38,12 +38,13 @@ class ExtendedField
 	private $position;
 	private $field_name;
 	private $field_type;
-	private $content;
+	private $description;
 	private $possible_values;
 	private $default_values;
 	private $required;
 	private $display;
 	private $regex;
+	private $freeze;
 	private $authorization;
 	
 	public function set_id($id)
@@ -86,14 +87,14 @@ class ExtendedField
 		return !empty($this->field_name) ? $this->field_name : '';
 	}
 	
-	public function set_content($content)
+	public function set_description($description)
 	{
-		$this->content = $content;
+		$this->description = $description;
 	}
 	
-	public function get_content()
+	public function get_description()
 	{
-		return !empty($this->content) ? $this->content : '';
+		return !empty($this->description) ? $this->description : '';
 	}
 	
 	public function set_field_type($field_type)
@@ -143,7 +144,7 @@ class ExtendedField
 	
 	public function get_display()
 	{
-		return $this->display;
+		return !empty($this->display) ? $this->display : 0;
 	}
 	
 	public function set_regex($regex)
@@ -156,6 +157,16 @@ class ExtendedField
 		return !empty($this->regex) ? $this->regex : '';
 	}
 	
+	public function set_is_freeze($freeze)
+	{
+		$this->freeze = $freeze;
+	}
+	
+	public function get_is_freeze()
+	{
+		return !empty($this->freeze) ? $this->freeze : 0;
+	}
+	
 	public function set_authorization($authorization)
 	{
 		$this->authorization = $authorization;
@@ -163,7 +174,7 @@ class ExtendedField
 	
 	public function get_authorization()
 	{
-		return $this->authorization;
+		return !empty($this->authorization) ? $this->authorization : array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1);
 	}
 	
 	public static function rewrite_field_name($field_name)

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      	 ExtendFieldCache.class.php
+ *                      	 ExtendedFieldCache.class.php
  *                            -------------------
  *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -28,33 +28,33 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class ExtendFieldsCache implements CacheData
+class ExtendedFieldsCache implements CacheData
 {
-	private $extend_fields = array();
+	private $extended_fields = array();
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->extend_fields = array();
+		$this->extended_fields = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, class, name , field_name , contents, field, possible_values, default_values, required, display, auth 
+		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, auth 
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
-			ORDER BY class", __LINE__, __FILE__);
+			ORDER BY position", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{
 			$auth = unserialize($row['auth']);
 			
-			$this->extend_fields[$row['id']] = array(
+			$this->extended_fields[$row['id']] = array(
 				'id' => $row['id'],
-				'class' => !empty($row['class']) ? $row['class'] : '',
+				'position' => !empty($row['position']) ? $row['position'] : '',
 				'name' => !empty($row['name']) ? $row['name'] : '',
 				'field_name' => !empty($row['field_name']) ? $row['field_name'] : '',
-				'contents' => !empty($row['contents']) ? $row['contents'] : '',
-				'field' => !empty($row['field']) ? $row['field'] : '',
+				'description' => !empty($row['description']) ? $row['description'] : '',
+				'field_type' => !empty($row['field_type']) ? $row['field_type'] : '',
 				'possible_values' => !empty($row['possible_values']) ? $row['possible_values'] : '',
 				'default_values' => !empty($row['default_values']) ? $row['default_values'] : '',
 				'required' => !empty($row['required']) ? $row['required'] : 0,
@@ -68,39 +68,39 @@ class ExtendFieldsCache implements CacheData
 		$db_connection->query_close($result);
 	}
 
-	public function get_extend_fields()
+	public function get_extended_fields()
 	{
-		return $this->extend_fields;
+		return $this->extended_fields;
 	}
 	
-	public function get_exist_field()
+	public function get_exist_fields()
 	{
-		return (count($this->extend_fields) > 0) ? true : false;
+		return (count($this->extended_fields) > 0) ? true : false;
 	}
 
-	public function get_extend_field($id)
+	public function get_extended_field($id)
 	{
-		if (isset($this->extend_fields[$id]))
+		if (isset($this->extended_fields[$id]))
 		{
-			return $this->extend_fields[$id];
+			return $this->extended_fields[$id];
 		}
 		return null;
 	}
 	
 	/**
-	 * Loads and returns the extend_fields cached data.
-	 * @return ExtendFieldsCache The cached data
+	 * Loads and returns the extended_fields cached data.
+	 * @return ExtendedFieldsCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'extend-fields');
+		return CacheManager::load(__CLASS__, 'kernel', 'extended-fields');
 	}
 	
 	/**
-	 * Invalidates the current extend_fields cached data.
+	 * Invalidates the current extended_fields cached data.
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'extend-fields');
+		CacheManager::invalidate('kernel', 'extended-fields');
 	}
 }

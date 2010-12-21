@@ -67,8 +67,6 @@ class FormatingHelper
 	/**
 	 * @desc Unparses a string with several default parameters. This methods exists to lighten the number of lines written.
 	 * @param string $content Content to unparse
-	 * @param string[] $forbidden_tags List of the forbidden formatting tags
-	 * @param bool $addslashes if true, the unparsed string will be escaped.
 	 * @return string The unparsed string.
 	 * @see ContentFormattingUnparser
 	 */
@@ -84,8 +82,6 @@ class FormatingHelper
 	/**
 	 * @desc Second parses a string with several default parameters. This methods exists to lighten the number of lines written.
 	 * @param string $content Content to second parse
-	 * @param string[] $forbidden_tags List of the forbidden formatting tags
-	 * @param bool $addslashes if true, the second parsed string will be escaped.
 	 * @return string The second parsed string.
 	 * @see ContentSecondParser
 	 */

@@ -177,5 +177,12 @@ abstract class AbstractTemplate implements Template
 	{
 		return $this->data;
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_pictures_data_path() {
+		return $this->loader->get_pictures_data_path();
+	}
 }
 ?>

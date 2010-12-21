@@ -18,6 +18,12 @@
 		<br />		
 		# ENDIF #
 		
+		# IF C_ERROR_WRITING_AUTH #
+		<div style="text-align:center;margin:10px;margin-bottom:25px;">
+			{L_ERROR_WRITING_AUTH}
+		</div>
+		# ENDIF #
+		
 		<div class="msg_position">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>

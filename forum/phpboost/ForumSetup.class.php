@@ -290,11 +290,11 @@ class ForumSetup extends DefaultModuleSetup
 	private function insert_member_extend_cat_data()
 	{
 		$this->querier->insert(self::$member_extend_cat, array(
-			'class' => 0,
+			'position' => 0,
 			'name' => 'last_view_forum',
 	 		'field_name' => 'last_view_forum',
-			'contents' => '',
-			'field' => 0,
+			'description' => '',
+			'field_type' => 0,
 			'possible_values' => '',
 			'default_values' => '',
 			'required' => 0,

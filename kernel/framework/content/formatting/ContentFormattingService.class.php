@@ -60,7 +60,7 @@ class ContentFormattingService
 	 * @param string $language
 	 * @return ContentFormattingFactory
 	 */
-	public function create_factory($language)
+	public function create_factory($language = '')
 	{
 		switch ($this->get_existing_editor($language))
 		{

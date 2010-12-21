@@ -34,7 +34,7 @@ class SandboxHomeController extends ModuleController
 	# END parts #
 	</ul>';
 
-	private static $links = array('Form builder' => '?url=/form', 'Form builder Register' => '?url=/register', 'Table builder' => '?url=/table', 'String template bencher' => '?url=/template', 'Mail sender' => '?url=/mail');
+	private static $links = array('Form builder' => '?url=/form', 'Form builder add extended field' => '?url=/field', 'Table builder' => '?url=/table', 'String template bencher' => '?url=/template', 'Mail sender' => '?url=/mail');
 
 	public function execute(HTTPRequest $request)
 	{

@@ -95,7 +95,7 @@ class InstallWebsiteConfigController extends InstallController
 
 	private function handle_form()
 	{
-		$installation_services = new InstallationServices(LangLoader::get_locale());
+		$installation_services = new InstallationServices();
 		$installation_services->configure_website(
 		$this->form->get_value('host'), $this->form->get_value('path'),
 		$this->form->get_value('name'), $this->form->get_value('description'),

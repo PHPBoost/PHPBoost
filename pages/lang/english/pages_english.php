@@ -58,6 +58,7 @@ $LANG['pages_edit'] = 'Edit this page';
 $LANG['pages_delete'] = 'Delete this page';
 $LANG['pages_create'] = 'Create a page';
 $LANG['pages_activ_com'] = 'Activate comments';
+$LANG['pages_display_print_link'] = 'Display print link';
 $LANG['pages_own_auth'] = 'Apply individual permissions to this page';
 $LANG['pages_is_cat'] = 'This page is a category';
 $LANG['pages_parent_cat'] = 'Parent category';

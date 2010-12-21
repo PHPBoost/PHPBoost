@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -34,11 +32,14 @@
  */
 class Repository
 {
+	private $url = '';
+	private $xml = null;
+	
 	/**
 	 * @desc constructor of the class
 	 * @param $url
 	 */
-	function Repository($url)
+	public function __construct($url)
 	{
 		$this->url = $url;
 		if (function_exists('simplexml_load_file'))
@@ -55,7 +56,7 @@ class Repository
 	 * @desc Check Application
 	 * @param $app
 	 */
-	function check($app)
+	public function check($app)
 	{
 		$xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
 		// can't compare strings with XPath, so we check the version number with PHP.
@@ -93,10 +94,6 @@ class Repository
 	/**
 	 * @desc Accessor of url
 	 */
-	function get_url() { return $this->url; }
-
-	var $url = '';
-	var $xml = null;
-};
-
+	public function get_url() { return $this->url; }
+}
 ?>
