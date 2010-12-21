@@ -78,16 +78,17 @@ class MemberExtendedFieldsService
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id !== null)
 			{
-				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, ex.*
+				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $user_id . "'
 				WHERE exc.display = 1
 				ORDER BY exc.position", __LINE__, __FILE__);
 				while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 				{
-					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 					$member_extended_field->set_name($extended_field['name']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
+					$member_extended_field->set_field_type($extended_field['field_type']);
+					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 					$member_extended_field->set_value($value);
 					
 					if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::AUTHORIZATION))
@@ -118,7 +119,7 @@ class MemberExtendedFieldsService
 					if ($extended_field['display'] == 1)
 					{
 						$member_extended_field = new MemberExtendedField();		
-						$member_extended_field->set_field_type($extended_field['field']);
+						$member_extended_field->set_field_type($extended_field['field_type']);
 						$member_extended_field->set_field_name($extended_field['field_name']);
 						
 						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
@@ -179,7 +180,8 @@ class MemberExtendedFieldsService
 			$member_extended_field->set_description($extended_field['description']);
 			$member_extended_field->set_value($value);
 			$member_extended_field->set_possible_values($extended_field['possible_values']);
-			$member_extended_field->set_required($extended_field['required']);
+			$required = $member_extended_field->get_is_admin() ? 0 : $extended_field['required'];
+			$member_extended_field->set_required($required);
 			$member_extended_field->set_regex($extended_field['regex']);
 
 			MemberExtendedFieldsFactory::display_field_update($member_extended_field);
