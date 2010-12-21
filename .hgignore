@@ -1,0 +1,21 @@
+
+syntax: regexp
+cache/*
+
+syntax: regexp
+^sitemap\.xml$
+
+syntax: regexp
+^kernel/db/config\.php$
+
+syntax: regexp
+^.htaccess$
+
+syntax: regexp
+^images/avatars/*
+
+syntax: regexp
+^images/maths/*
+
+syntax: regexp
+^templates/vita*
