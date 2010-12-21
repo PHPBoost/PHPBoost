@@ -139,7 +139,7 @@ class MediaSetup extends DefaultModuleSetup
 			'height' => 438,
 			'counter' => 0,
 			'users_note' => '',
-			'nbr_note' => 0,
+			'nbrnote' => 0,
 			'note' => 0,
 			'nbr_com' => 0,
 			'lock_com' => 0

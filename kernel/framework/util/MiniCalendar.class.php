@@ -67,14 +67,11 @@ class MiniCalendar
 		$this->form_name = $form_name;
 		$this->num_instance = ++self::$num_instances;
 
-		if (is_numeric($date))
-		{
-			$this->set_date($date);
-		}
-		elseif($date !== null)
+		if($date !== null)
 		{
 			$this->set_date(new Date(DATE_NOW));
 		}
+		$this->set_date($date);
 	}
 
 	/**

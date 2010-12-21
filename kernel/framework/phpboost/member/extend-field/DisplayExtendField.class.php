@@ -5,7 +5,7 @@ class DisplayExtendField
 
 	public function display_for_register($Template)
 	{
-		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();	
+		$extend_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;	
 		foreach ($extend_fields_cache as $id => $extend_field)
 		{
 			if ($extend_field['display'] == 1 && AppContext::get_user()->check_auth($extend_field['auth'], ExtendedField::AUTHORIZATION))

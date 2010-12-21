@@ -15,8 +15,8 @@
 	<textarea id="${escape(ID)}" name="${escape(ID)}" rows="{ROWS}" cols="{COLS}" class="${escape(CLASS)}" onblur="{ONBLUR}"{DISABLED}>{VALUE}</textarea>
 	# IF C_EDITOR_ENABLED #
 		<div style="text-align:center;">{PREVIEW_BUTTON}</div>
-		<br />
 	# ENDIF #
+	<br />
 </div>
 		
 # INCLUDE ADD_FIELD_JS #

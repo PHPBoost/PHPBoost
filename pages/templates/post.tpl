@@ -103,6 +103,10 @@
 					<dt><label for="activ_com">{L_ACTIV_COM}</label></dt>
 					<dd><label><input type="checkbox" id="activ_com" name="activ_com" {ACTIV_COM_CHECKED} /></label></dd>					
 				</dl>
+				<dl>
+					<dt><label for="activ_com">{L_DISPLAY_PRINT_LINK}</label></dt>
+					<dd><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED} /></label></dd>					
+				</dl>
 			</fieldset>
 			
 			<fieldset>

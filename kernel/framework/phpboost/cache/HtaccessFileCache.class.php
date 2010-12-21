@@ -34,6 +34,7 @@
 class HtaccessFileCache implements CacheData
 {
 	private $htaccess_file_content = '';
+	private $general_config;
 
 	/**
 	 * {@inheritdoc}
@@ -41,7 +42,8 @@ class HtaccessFileCache implements CacheData
 	public function synchronize()
 	{
 		$this->htaccess_file_content = '';
-
+		$this->general_config = GeneralConfig::load();
+		
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
@@ -126,7 +128,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section($id);
 			foreach ($configuration->get_url_rewrite_rules() as $rule)
 			{
-				$this->add_line(str_replace('DIR', DIR, $rule));
+				$this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
 			}
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
@@ -139,7 +141,7 @@ class HtaccessFileCache implements CacheData
 
 	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
 	{
-        $this->add_line('RewriteRule ' . $match . ' ' . DIR . '/' . ltrim($path, '/') . ' [' . $options . ']');
+        $this->add_line('RewriteRule ' . $match . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
 
     private function add_url_mapping(UrlMappingsExtensionPoint $mapping_list)
@@ -158,7 +160,7 @@ class HtaccessFileCache implements CacheData
 		{
 			$this->add_section('Bandwith protection');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
-			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . HOST);
+			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
 			$this->add_line('ReWriteRule .*upload/.*$ - [F]');
 		}
 	}
@@ -176,7 +178,7 @@ class HtaccessFileCache implements CacheData
 		//Error page
 		$this->add_empty_line();
 		$this->add_line('# Error page #');
-		$this->add_line('ErrorDocument 404 ' . DIR . '/member/404.php');
+		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . '/member/404.php');
 	}
 
 	private function add_manual_content()

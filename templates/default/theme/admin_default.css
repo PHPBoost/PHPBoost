@@ -99,9 +99,10 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border:1px solid #8F8F8F;
 	cursor:move;
    	-moz-border-radius:3px;
-    -khtml-border-radius:3px;
-    -webkit-border-radius:3px;
-    border-radius:3px;
+	-khtml-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	overflow:auto;
 }
 .menus_block_top {
 	margin-bottom:5px;

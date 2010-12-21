@@ -31,24 +31,29 @@
  */
 class MemberExtendedField
 {
-	private $field_type;
+	private $name;
 	private $field_name;
-	private $field_value;
-	private $required;
-	private $regex_type;
-	private $regex;
+	private $description;
+	private $field_type;
+	private $value;
 	private $default_values;
 	private $possible_values;
-	private $user_id;
+	private $required;
+	private $regex;
 	
-	public function set_field_type($field_type)
+	private $user_id;
+	private $is_admin;
+	private $template;
+	private $fieldset;
+	
+	public function set_name($name)
 	{
-		$this->field_type = $field_type;
+		$this->name = $name;
 	}
 	
-	public function get_field_type()
+	public function get_name()
 	{
-		return $this->field_type;
+		return $this->name;
 	}
 	
 	public function set_field_name($field_name)
@@ -61,44 +66,34 @@ class MemberExtendedField
 		return $this->field_name;
 	}
 	
-	public function set_field_value($field_value)
+	public function set_field_type($field_type)
 	{
-		$this->field_value = $field_value;
+		$this->field_type = $field_type;
 	}
 	
-	public function get_field_value()
+	public function get_field_type()
 	{
-		return $this->field_value;
+		return $this->field_type;
 	}
 	
-	public function set_required($required)
+	public function set_value($value)
 	{
-		$this->required = $required;
+		$this->value = $value;
 	}
 	
-	public function get_required()
+	public function get_value()
 	{
-		return $this->required;
+		return $this->value;
+	}
+
+	public function set_description($description)
+	{
+		$this->description = $description;
 	}
 	
-	public function set_regex_type($regex_type)
+	public function get_description()
 	{
-		$this->regex_type = $regex_type;
-	}
-	
-	public function get_regex_type()
-	{
-		return $this->regex_type;
-	}
-	
-	public function set_regex($regex)
-	{
-		$this->regex = $regex;
-	}
-	
-	public function get_regex()
-	{
-		return $this->regex;
+		return $this->description;
 	}
 	
 	public function set_default_values($default_values)
@@ -121,6 +116,26 @@ class MemberExtendedField
 		return $this->possible_values;
 	}
 	
+	public function set_required($required)
+	{
+		$this->required = $required;
+	}
+	
+	public function get_required()
+	{
+		return $this->required;
+	}
+	
+	public function set_regex($regex)
+	{
+		$this->regex = $regex;
+	}
+	
+	public function get_regex()
+	{
+		return $this->regex;
+	}
+	
 	public function set_user_id($user_id)
 	{
 		$this->user_id = $user_id;
@@ -131,24 +146,34 @@ class MemberExtendedField
 		return $this->user_id;
 	}
 	
-	public static function rewrite_regex($regex_type)
+	public function set_is_admin($is_admin)
 	{
-		if (is_numeric($regex_type))
-		{
-			$array_regex = array(
-				1 => '`^[0-9]+$`',
-				2 => '`^[a-z]+$`',
-				3 => '`^[a-z0-9]+$`',
-				4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
-				5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
-			);
-			
-			return $array_regex[$regex_type];
-		}
-		else
-		{
-			return $regex_type;
-		}
+		$this->is_admin = $is_admin;
+	}
+	
+	public function get_is_admin()
+	{
+		return $this->is_admin;
+	}
+	
+	public function set_template($template)
+	{
+		$this->template = $template;
+	}
+	
+	public function get_template()
+	{
+		return $this->template;
+	}
+	
+	public function set_fieldset($fieldset)
+	{
+		$this->fieldset = $fieldset;
+	}
+	
+	public function get_fieldset()
+	{
+		return $this->fieldset;
 	}
 }
 ?>

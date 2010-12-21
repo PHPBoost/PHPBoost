@@ -359,16 +359,17 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'class' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'default' => 0),
+			'position' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
-			'field' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'description' => array('type' => 'text', 'length' => 65000),
+			'field_type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
 			'default_values' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'display' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'freeze' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(

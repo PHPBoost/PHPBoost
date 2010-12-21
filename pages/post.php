@@ -39,6 +39,7 @@ $enable_com = !empty($_POST['activ_com']) ? 1 : 0;
 $own_auth = !empty($_POST['own_auth']);
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
 $id_cat = retrieve(POST, 'id_cat', 0);
+$display_print_link = !empty($_POST['display_print_link']) ? 1 : 0;
 $preview = !empty($_POST['preview']);
 $del_article = retrieve(GET, 'del', 0);
 
@@ -51,7 +52,7 @@ else
 	
 if ($id_edit > 0)
 {
-	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
 	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
@@ -87,7 +88,7 @@ if (!empty($contents))
 		//Edition d'une page
 		if ($id_edit > 0)
 		{
-			$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', 'display_print_link', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
@@ -110,7 +111,7 @@ if (!empty($contents))
 			if ($page_infos['is_cat'] == 0)
 			{		
 				//On met à jour la table
-				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "', display_print_link = '" . $display_print_link . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
@@ -123,7 +124,7 @@ if (!empty($contents))
 					$Sql->query_inject("UPDATE " . PREFIX . "pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 				}
 				//On met à jour la table
-				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', display_print_link = '" . $display_print_link . "'  WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
@@ -142,7 +143,7 @@ if (!empty($contents))
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if ($is_cat > 0)
 				{
@@ -172,7 +173,7 @@ elseif ($del_article > 0)
     //Vérification de la validité du jeton
     $Session->csrf_get_protect();
     
-	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -225,6 +226,7 @@ if ($id_edit > 0)
 		'CONTENTS' => !empty($error) ? htmlspecialchars(stripslashes($contents)) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : ($page_infos['display_print_link'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => !empty($page_infos['auth']) ? 'checked="checked"' : '',
 		'CAT_0' => $id_cat_display == 0 ? 'pages_selected_cat' : '',
 		'ID_CAT' => $id_cat_display,
@@ -265,6 +267,7 @@ else
 	$Template->put_all(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : 'checked="checked"',
 		'OWN_AUTH_CHECKED' => '',
 		'CAT_0' => 'pages_selected_cat',
 		'ID_CAT' => '0',
@@ -289,6 +292,7 @@ $Template->put_all(array(
 	'KERNEL_EDITOR' => display_editor(),
 	'L_AUTH' => $LANG['pages_auth'],
 	'L_ACTIV_COM' => $LANG['pages_activ_com'],
+	'L_DISPLAY_PRINT_LINK' => $LANG['pages_display_print_link'],
 	'L_COUNT_HITS' => $LANG['pages_count_hits'],
 	'L_ALERT_CONTENTS' => $LANG['page_alert_contents'],
 	'L_ALERT_TITLE' => $LANG['page_alert_title'],
