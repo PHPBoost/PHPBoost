@@ -182,11 +182,6 @@ class Note
 
 			return $template->render();
 		}
-		else
-        {
-            $controller = PHPBoostErrors::unexisting_page();
-            DispatchManager::redirect($controller);
-        }
 	}
 
 	/**
@@ -249,8 +244,7 @@ class Note
 
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 		{
-			$controller = PHPBoostErrors::unexisting_page();
-            DispatchManager::redirect($controller);
+			return false;
 		}
 
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->script_path));
@@ -264,6 +258,7 @@ class Note
 	{
 		global $Sql;
 
+		//TODO A gérer avec les ExtensionPoints
 		//Récupération des informations sur le module.
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
 		$check_script = false;

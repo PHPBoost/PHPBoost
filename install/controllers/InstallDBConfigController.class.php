@@ -129,7 +129,7 @@ class InstallDBConfigController extends InstallController
 
 	private function handle_form($host, $port, $login, $password, $schema, $tables_prefix)
 	{
-		$service = new InstallationServices(LangLoader::get_locale());
+		$service = new InstallationServices();
 		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
 		switch ($status)
 		{

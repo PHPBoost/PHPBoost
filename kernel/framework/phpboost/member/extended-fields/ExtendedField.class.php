@@ -44,6 +44,7 @@ class ExtendedField
 	private $required;
 	private $display;
 	private $regex;
+	private $freeze;
 	private $authorization;
 	
 	public function set_id($id)
@@ -154,6 +155,16 @@ class ExtendedField
 	public function get_regex()
 	{
 		return !empty($this->regex) ? $this->regex : '';
+	}
+	
+	public function set_is_freeze($freeze)
+	{
+		$this->freeze = $freeze;
+	}
+	
+	public function get_is_freeze()
+	{
+		return !empty($this->freeze) ? $this->freeze : 0;
 	}
 	
 	public function set_authorization($authorization)

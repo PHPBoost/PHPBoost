@@ -147,7 +147,7 @@ class HTMLForm
 		{
 			if ($default_value !== null)
 			{
-				return $default_value;
+				return $field->set_value($default_value);
 			}
 			throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 		}

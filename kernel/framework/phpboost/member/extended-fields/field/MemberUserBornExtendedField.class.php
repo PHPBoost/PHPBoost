@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               MemberUserLangExtendedFieldType.class.php
+ *                               MemberUserBornExtendedField.class.php
  *                            -------------------
- *   begin                : December 09, 2010
+ *   begin                : December 19, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
  
-class MemberUserLangExtendedField extends AbstractMemberExtendedField
+class MemberUserBornExtendedField extends AbstractMemberExtendedField
 {
 	public function __construct()
 	{
@@ -36,53 +36,33 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_lang(),
-			$this->list_langs(),
-			array('description' => $member_extended_field->get_description())
-		));	
+		
+		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(), 
+			array('description' => $this->lang['valid'])
+		));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), AppContext::get_user()->get_attribute('user_lang'),
-			$this->list_langs(),
-			array('description' => $member_extended_field->get_description())
-		));	
+		
+		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value()), 
+			array('description' => $this->lang['valid'])
+		));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', AppContext::get_user()->get_attribute('user_lang'));
-
-		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_lang['name']));
+		$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value());
+		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $date->format(DATE_FORMAT_SHORT)));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return $form->get_value($field_name)->get_raw_value();
-	}
-	
-	private function list_langs()
-	{
-		$array = array();
-		$langs_cache = LangsCache::load();
-		foreach($langs_cache->get_installed_langs() as $lang => $properties)
-		{
-			if ($properties['auth'] == -1)
-			{
-				$info_lang = load_ini_file('../lang/', $lang);
-
-				$array[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
-			}
-			
-		}
-		return $array;
+		return $form->get_value($field_name)->format(TIMESTAMP);
 	}
 }
 ?>
