@@ -72,6 +72,11 @@ class ViewProfilController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('age', $this->lang['age'], $row['user_born']));
 		$fieldset->add_field(new FormFieldFree('user_sign', $this->lang['user_sign'], $row['user_sign']));
 		
+		$member_extended_field = new MemberExtendedField();
+		$member_extended_field->set_template($form);
+		$member_extended_field->set_user_id(1);
+		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
+		
 		$this->submit_welcome_button = new FormButtonDefaultSubmit();
 		return $form;
 	}

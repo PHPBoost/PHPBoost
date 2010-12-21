@@ -84,5 +84,11 @@ interface MemberExtendedFieldType
 	 * @return bool
 	 */
 	public function get_field_used_once();
+	
+	/**
+	 * @desc Return true if the field used in the phpboost configuration and can't deleted
+	 * @return bool
+	 */
+	public function get_field_used_phpboost_configuration();
 }
 ?>

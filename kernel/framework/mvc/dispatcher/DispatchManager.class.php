@@ -92,7 +92,7 @@ class DispatchManager
 			{
 				$exploded = explode('?', $url, 2);
 				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
-				    '=/' . $exploded[0] . '&amp;' . $exploded[1]);
+				    '=/' . $exploded[0] . '&' . $exploded[1]);
 			}
 			else
 			{

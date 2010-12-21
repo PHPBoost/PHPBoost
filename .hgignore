@@ -1,4 +1,3 @@
-
 syntax: regexp
 cache/*
 
@@ -25,4 +24,8 @@ syntax: regexp
 
 syntax: regexp
 ^upload/*
+
+syntax: regexp
+^shop/*
+
 

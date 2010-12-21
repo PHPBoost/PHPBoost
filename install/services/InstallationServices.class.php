@@ -51,10 +51,9 @@ class InstallationServices
 	 */
 	private $distribution_config;
 
-	public function __construct($locale = LangLoader::DEFAULT_LOCALE)
+	public function __construct()
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
-		LangLoader::set_locale($locale);
 		$this->messages = LangLoader::get('install', 'install');
         $this->load_distribution_configuration();
 	}
@@ -240,7 +239,6 @@ class InstallationServices
 		$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
 		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
 		MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
-		MenuService::save($modules_menu);
 		MenuService::generate_cache();
 	}
 
