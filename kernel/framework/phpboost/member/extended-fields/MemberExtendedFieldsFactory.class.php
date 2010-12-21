@@ -52,7 +52,7 @@ class MemberExtendedFieldsFactory
 	public static function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$name_class = self::name_class($member_extended_field);
-		
+	
 		$instance_class = new $name_class();
 		return $instance_class->display_field_update($member_extended_field);
 		
@@ -65,7 +65,7 @@ class MemberExtendedFieldsFactory
 	public static function display_field_profile(MemberExtendedField $member_extended_field)
 	{
 		$name_class = self::name_class($member_extended_field);
-
+	
 		$instance_class = new $name_class();
 		return $instance_class->display_field_profile($member_extended_field);
 	}
@@ -119,9 +119,9 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function determines the class depending on the type of field
-	 * @param instance of MemberExtendedField $member_extended_field.
+	 * @param instance of MemberExtendedField or ExtendedField $member_extended_field.
 	 */
-	private static function name_class(MemberExtendedField $member_extended_field)
+	public static function name_class($member_extended_field)
 	{
 		$field_type = $member_extended_field->get_field_type();
 		switch ($field_type) 
