@@ -42,6 +42,7 @@ class MemberExtendedField
 	private $regex;
 	
 	private $user_id;
+	private $is_admin;
 	private $template;
 	private $fieldset;
 	
@@ -143,6 +144,16 @@ class MemberExtendedField
 	public function get_user_id()
 	{
 		return $this->user_id;
+	}
+	
+	public function set_is_admin($is_admin)
+	{
+		$this->is_admin = $is_admin;
+	}
+	
+	public function get_is_admin()
+	{
+		return $this->is_admin;
 	}
 	
 	public function set_template($template)
