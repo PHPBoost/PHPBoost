@@ -36,7 +36,7 @@ class FormFieldMultipleCheckboxOption
 	
 	public function __construct($id, $label)
 	{
-		$this->id = id;
+		$this->id = $id;
 		$this->label = $label;
 	}
 
