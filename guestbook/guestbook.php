@@ -170,11 +170,15 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 			
 			if ($is_edition_mode && $has_edit_auth) 
 			{
-				$guestbook_login_sql = '';
+				$columns = array(
+					'contents' => $guestbook_contents
+				);
+				
 				if ($user_id == -1) {
-					$guestbook_login_sql = ", login = '" . $guestbook_login . "'";
+					$columns['login'] = $guestbook_login;
 				}
-				$Sql->query_inject("UPDATE " . PREFIX . "guestbook SET contents = '" . $guestbook_contents . "'" . $guestbook_login_sql . " WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+				
+				PersistenceContext::get_querier()->update(PREFIX . "guestbook", $columns, " WHERE id = :id", array('id' => $id_get));
 
 				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 
@@ -182,7 +186,14 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 			}
 			else
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_login . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+				$columns = array(
+					'contents' => $guestbook_contents,
+					'login' => $guestbook_login,
+					'user_id' => $User->get_attribute('user_id'),
+					'timestamp' => time()
+				);
+				PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
+				
 				$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
 	
 				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
