@@ -27,7 +27,7 @@
 
 class NewsletterService
 {
-	function send_html($mail_object, $message, $email_test = '')
+	public static function send_html($mail_object, $message, $email_test = '')
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
@@ -64,7 +64,7 @@ class NewsletterService
 			    $mail->add_recipient($array_mail[1]);
                 $mail->set_content(str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message));
 
-                if (!$this->send_mail($mail))
+                if (!self::send_mail($mail))
                 {
                     $error_mailing_list[] = $array_mail[1];
                 }
@@ -81,12 +81,12 @@ class NewsletterService
 		    $mail->set_content($message);
 		    $mail->set_subject($mail_object);
 		    
-		    $this->send_mail($mail);
+		    self::send_mail($mail);
 			return true;
 		}		
 	}
 	
-	function send_bbcode($mail_object, $message, $email_test = '')
+	public static function send_bbcode($mail_object, $message, $email_test = '')
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
@@ -127,7 +127,7 @@ class NewsletterService
     	        $mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
                 $mail->set_content($mail_contents . $mail_contents_end);
     
-                if (!$this->send_mail($mail))
+                if (!self::send_mail($mail))
                 {
                     $error_mailing_list[] = $array_mail[1];
                 }
@@ -144,12 +144,12 @@ class NewsletterService
             $mail->set_content($mail_contents . '</body></html>');
             $mail->set_subject($mail_object);
             
-           $this->send_mail($mail);
+           self::send_mail($mail);
             return true;
 		}
 	}
 	
-	function send_text($mail_object, $message, $email_test = '')
+	public static function send_text($mail_object, $message, $email_test = '')
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
@@ -184,7 +184,7 @@ class NewsletterService
                 $mail->add_recipient($array_mail[1]);
                 $mail->set_content($message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0]);
     
-                if (!$this->send_mail($mail))
+                if (!self::send_mail($mail))
                 {
                     $error_mailing_list[] = $array_mail[1];
                 }
@@ -201,20 +201,20 @@ class NewsletterService
             $mail->set_content($message);
             $mail->set_subject($mail_object);
             
-            $this->send_mail($mail);
+            self::send_mail($mail);
             return true;
 		}
 	}
 	
 	//Fonction qui remplace les caractères spéciaux par leurs entités en conservant les balises html
-	private function clean_html($text)
+	private static function clean_html($text)
 	{
 		$text = htmlentities($text, ENT_NOQUOTES);
 		$text = str_replace(array('&amp;', '&lt;', '&gt;'), array('&', '<', '>'), $text);
 		return $text;
 	}
 	
-	private function send_mail(Mail $mail)
+	private static function send_mail(Mail $mail)
 	{
 		return AppContext::get_mail_service()->try_to_send($mail);
 	}
