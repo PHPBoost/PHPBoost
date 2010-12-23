@@ -172,8 +172,6 @@ class Session
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 
 		########Insertion dans le compteur si l'ip est inconnue.########
-
-
 		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
 		$_include_once = empty($check_ip) && (StatsSaver::check_bot() === false);
 		if ($_include_once)
@@ -227,7 +225,7 @@ class Session
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				}
 
-				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '', '" . $this->data['token'] . "')", __LINE__, __FILE__);
+				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '" . addslashes($this->data['modules_parameters']) . "', '" . $this->data['token'] . "')", __LINE__, __FILE__);
 			}
 			else //Session visiteur, echec!
 			{
@@ -443,8 +441,19 @@ class Session
 		{
 			$module = Environment::get_running_module_name();
 		}
-
-		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+		
+		if ($this->data['user_id'] == -1) 
+		{
+			$sql_condition = "session_id = '" . $this->data['session_id'] . "' AND user_id = -1";
+		}
+		else 
+		{
+			$sql_condition = "user_id = '" . (int)$this->data['user_id'] . "'";
+		}
+		
+		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters 
+			FROM " . DB_TABLE_SESSIONS . " 
+			WHERE " . $sql_condition, __LINE__, __FILE__);
 		if ($this->data['modules_parameters'] !== false) // test permettant d'ecrire la premiere fois si le contenu est vide
 		{
 			$modules_parameters = unserialize($this->data['modules_parameters']);
@@ -454,7 +463,7 @@ class Session
 
 			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" .
 			TextHelper::strprotect($this->data['modules_parameters'], false) .
-				"' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+				"' WHERE " . $sql_condition, __LINE__, __FILE__);
 		}
 		else
 		{
@@ -479,7 +488,18 @@ class Session
 			$module = Environment::get_running_module_name();
 		}
 
-		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+		if ($this->data['user_id'] == -1) 
+		{
+			$sql_condition = "session_id = '" . $this->data['session_id'] . "' AND user_id = -1";
+		}
+		else 
+		{
+			$sql_condition = "user_id = '" . (int)$this->data['user_id'] . "'";
+		}
+		
+		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters 
+			FROM " . DB_TABLE_SESSIONS . " 
+			WHERE " . $sql_condition, __LINE__, __FILE__);
 		if ($this->data['modules_parameters'] != false)
 		{
 			$array = unserialize($this->data['modules_parameters']);
