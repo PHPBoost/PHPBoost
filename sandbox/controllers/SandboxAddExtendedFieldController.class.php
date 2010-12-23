@@ -161,7 +161,7 @@ class SandboxAddExtendedFieldController extends ModuleController
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($form->get_value('name'));
 		$extended_field->set_field_name(ExtendedField::rewrite_field_name($form->get_value('name')));
-		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
 		$extended_field->set_description($form->get_value('description'));
 		$extended_field->set_field_type($form->get_value('field_type')->get_raw_value());
 		$extended_field->set_possible_values($form->get_value('possible_values'));
