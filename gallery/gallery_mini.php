@@ -38,6 +38,8 @@ function gallery_mini($position, $block)
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 
+    $i = 0;
+    
     //Affichage des miniatures disponibles
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
     list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
@@ -142,6 +144,8 @@ function gallery_mini($position, $block)
 
 			if ($CONFIG_GALLERY['scroll_type'] == 3)
 				break;
+				
+			$i++;
     	}
     }
 
