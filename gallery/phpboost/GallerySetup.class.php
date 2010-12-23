@@ -133,7 +133,7 @@ class GallerySetup extends DefaultModuleSetup
 			'aprob' => 1,
 			'views' => 0,
 			'timestamp' => time(),
-			'user_note' => '',
+			'users_note' => '',
 			'nbrnote' => 0,
 			'note' => 0,
 			'nbr_com' => 0,
