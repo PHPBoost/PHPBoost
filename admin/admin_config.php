@@ -197,6 +197,8 @@ elseif (!empty($_POST['advanced']))
 		$sessions_config->set_active_session_duration($active_session_duration);
 		SessionsConfig::save();
 		
+		AppContext::get_cache_service()->clear_cache();
+		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
 	else
