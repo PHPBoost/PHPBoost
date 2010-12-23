@@ -56,7 +56,13 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		
 		$tpl = new StringTemplate('<script type="text/javascript">
-				Event.observe(window, \'load\', function() {HTMLForms.getField("possible_values").disable();HTMLForms.getField("regex").disable();});</script>
+				Event.observe(window, \'load\', function() {if ({FIELD_TYPE} > 2 || {FIELD_TYPE} > 6)
+				{HTMLForms.getField("regex_type").disable();HTMLForms.getField("regex").disable();}
+				if ({FIELD_TYPE} < 3){HTMLForms.getField("regex_type").enable();}
+				if ({FIELD_TYPE} < 3 || {FIELD_TYPE} > 6){HTMLForms.getField("possible_values").disable();} 
+				if ({FIELD_TYPE} > 2 && {FIELD_TYPE} < 7){HTMLForms.getField("possible_values").enable();}
+				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF # });
+				</script>
 				# IF C_SUBMITED #
 					<div class="success" id="edit_success">{L_SUCCESS_UPDATE}</div>
 					<script type="text/javascript">
@@ -68,13 +74,19 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				# INCLUDE FORM #');
 				
 		$tpl->add_lang($this->lang);
-
+		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
+		$tpl->put_all(array(
+			'FIELD_TYPE' => $extended_field_cache['field_type'],
+			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
+		));
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
 			$tpl->put_all(array(
 				'C_SUBMITED' => true,
-				'L_SUCCESS_UPDATE' =>  $this->lang['extended-fields-sucess-update']
+				'L_SUCCESS_UPDATE' =>  $this->lang['extended-fields-sucess-update'],
+				'FIELD_TYPE' => $extended_field_cache['field_type']
 			));
 		}
 
@@ -92,22 +104,22 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	{
 		$form = new HTMLForm('extended-fields-edit');
 		
-		$extended_field = ExtendedFieldsCache::load()->get_extended_field($id);
-		$regex_type = is_numeric($extended_field['regex']) ? $extended_field['regex'] : 0;
-		$regex = is_string($extended_field['regex']) ? $extended_field['regex'] : '';
+		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
+		$regex_type = is_numeric($extended_field_cache['regex']) ? $extended_field_cache['regex'] : 0;
+		$regex = is_string($extended_field_cache['regex']) ? $extended_field_cache['regex'] : '';
 		
 		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field['name'], array(
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field_cache['name'], array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field['description'],
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
 		array('rows' => 4, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldSelectChoice('field_type', $this->lang['field.type'], $extended_field['field_type'],
+		$fieldset->add_field(new FormFieldSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
@@ -117,9 +129,10 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '6'),
 				new FormFieldSelectChoiceOption($this->lang['type.date'], '7'),
 				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-				new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '8'),
-				new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
-				new FormFieldSelectChoiceOption($this->lang['type.user_born'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '8'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '11'),
 				))
 			),
 			array('required' => true, 'events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 2 || HTMLForms.getField("field_type").getValue() > 6){
@@ -150,29 +163,30 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'class' => 'text', 'maxlength' => 25)
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], $extended_field['required'],
+		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], (string)$extended_field_cache['required'],
 			array(
 				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
-			), array('description' => $this->lang['field.required_explain'], 'required' => true)
+			), array('description' => $this->lang['field.required_explain'])
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('possible_values', $this->lang['field.possible-values'], $extended_field['possible_values'], array(
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('possible_values', $this->lang['field.possible-values'], $extended_field_cache['possible_values'], array(
 			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.possible-values-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], $extended_field['default_values'], array(
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], $extended_field_cache['default_values'], array(
 			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'])
 		));
 
-		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), $extended_field['display'],
+		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), (string)$extended_field_cache['display'],
 			array(
 				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
-			), array('required' => true)
+			)
 		));
 		
-		/*$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
+		/*
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
@@ -199,26 +213,31 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		{
 			$extended_field->set_field_name($extended_field->get_field_name());
 		}
+		
+		$field_type = $this->form->get_value('field_type')->get_raw_value();
 		$extended_field->set_name($this->form->get_value('name'));
-		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
 		$extended_field->set_description($this->form->get_value('description'));
 		$extended_field->set_field_type($this->form->get_value('field_type')->get_raw_value());
 		$extended_field->set_possible_values($this->form->get_value('possible_values', ''));
 		$extended_field->set_default_values($this->form->get_value('default_values'));
 		$extended_field->set_is_required($this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display($this->form->get_value('display')->get_raw_value());
-		$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
+		if ($field_type <= 2)
+		{
+			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
+		}
 		$extended_field->set_regex($regex);
 
 		ExtendedFieldsService::update($extended_field);
 		
-		//$this->redirect();
+		$this->redirect();
 	}
 	
 	private function redirect()
 	{
 		$controller = new UserErrorController($this->lang['field.success'], $this->lang['extended-fields-sucess-edit'], UserErrorController::SUCCESS);
-		$controller->set_correction_link($this->lang['extended-field'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'));
+		$controller->set_correction_link($this->lang['extended-field'], PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/list/');
 		DispatchManager::redirect($controller);
 	}
 

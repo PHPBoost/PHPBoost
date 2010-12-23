@@ -232,33 +232,6 @@ $LANG['modo'] = 'Modérateur';
 $LANG['a_admin'] = 'admin';
 $LANG['admin'] = 'Administrateur';
 
-//Champs supplémentaires
-$LANG['extend_field_management'] = 'Gestion des champs membres';
-$LANG['extend_field_add'] = 'Ajouter un champ membre';
-$LANG['require_field'] = 'Champ requis';
-$LANG['required_field_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
-$LANG['required'] = 'Requis';
-$LANG['not_required'] = 'Non requis';
-$LANG['regex'] = 'Contrôle de la forme de l\'entrée';
-$LANG['regex_explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entrée. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalié en tapant une expression régulière (utilisateurs expérimentés seulement).';
-$LANG['possible_values'] = 'Valeurs possibles';
-$LANG['possible_values_explain'] = 'Séparez les différentes valeurs par le symbole |';
-$LANG['default_values'] = 'Valeurs par défaut';
-$LANG['default_values_explain'] = 'Séparez les différentes valeurs par le symbole |';
-$LANG['short_text'] = 'Texte court (max 255 caractères)';
-$LANG['long_text'] = 'Texte long (illimité)';
-$LANG['sel_uniq'] = 'Sélection unique (parmi plusieurs valeurs)';
-$LANG['sel_mult'] = 'Sélection multiple (parmi plusieurs valeurs)';
-$LANG['check_uniq'] = 'Choix unique (parmi plusieurs valeurs)';
-$LANG['check_mult'] = 'Choix multiples (parmi plusieurs valeurs)';
-$LANG['personnal_regex'] = 'Expression régulière personnalisée';
-$LANG['predef_regexp'] = 'Forme prédéfinie';
-$LANG['figures'] = 'Chiffres';
-$LANG['letters'] = 'Lettres';
-$LANG['figures_letters'] = 'Chiffres et lettres';
-$LANG['default_field_possible_values'] = 'Oui|Non';
-$LANG['extend_field_edit'] = 'Editer le champs';
-
 //Index
 $LANG['update_available'] = 'Mises à jour disponibles';
 $LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost! <a href="http://www.phpboost.com">Plus d\'informations</a>';

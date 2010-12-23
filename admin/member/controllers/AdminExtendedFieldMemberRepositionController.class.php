@@ -38,16 +38,16 @@ class AdminExtendedFieldMemberRepositionController extends AdminController
 		if ($type == 'top')
 		{
 			$idbottom = ($data['position'] - 1);
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = 0 WHERE position='" . $data['position'] . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position=" . $data['position'] . " WHERE position = '" . $idbottom . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position=" . $idbottom . " WHERE position = 0");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = 0 WHERE position='" . $data['position'] . "'");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position=" . $data['position'] . " WHERE position = '" . $idbottom . "'");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position=" . $idbottom . " WHERE position = 0");
 		}
 		elseif ($type == 'bottom')
 		{
 			$idtop = ($data['position'] + 1);
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = 0 WHERE position = '" . $data['position'] . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = " . $data['position'] . " WHERE position = '" . $idtop . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET position = " . $idtop . " WHERE position = 0");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = 0 WHERE position = '" . $data['position'] . "'");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $data['position'] . " WHERE position = '" . $idtop . "'");
+			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $idtop . " WHERE position = 0");
 		}
 		
 		ExtendedFieldsCache::invalidate();

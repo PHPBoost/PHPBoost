@@ -42,12 +42,6 @@ class MemberExtendedFieldsService
 		$extended_fields_displayed = MemberExtendedFieldsDAO::extended_fields_displayed();
         if ($extended_fields_displayed)
 		{
-			$template = $member_extended_field->get_template();
-			
-			$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
-			$member_extended_field->set_fieldset($fieldset);
-			$template->add_fieldset($fieldset);
-			
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id == null)
 			{
@@ -69,18 +63,12 @@ class MemberExtendedFieldsService
 		$extended_fields_displayed = MemberExtendedFieldsDAO::extended_fields_displayed();
         if ($extended_fields_displayed)
 		{
-			$template = $member_extended_field->get_template();
-			
-			$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
-			$member_extended_field->set_fieldset($fieldset);
-			$template->add_fieldset($fieldset);
-			
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id !== null)
 			{
 				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
-				FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
-				LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $user_id . "'
+				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 				WHERE exc.display = 1
 				ORDER BY exc.position", __LINE__, __FILE__);
 				while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
@@ -139,7 +127,7 @@ class MemberExtendedFieldsService
 	 */
 	private static function display_create_form(MemberExtendedField $member_extended_field)
 	{
-		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;	
+		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields();	
 		foreach ($extended_fields_cache as $id => $extended_field)
 		{
 			if ($extended_field['display'] == 1)
@@ -166,8 +154,8 @@ class MemberExtendedFieldsService
 	{
 		$user_id = $member_extended_field->get_user_id();
 		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, exc.regex, ex.*
-		FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $user_id . "'
+		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 		WHERE exc.display = 1
 		ORDER BY exc.position", __LINE__, __FILE__);
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))

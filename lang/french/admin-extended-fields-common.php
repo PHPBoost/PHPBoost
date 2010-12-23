@@ -35,7 +35,7 @@ $lang['extended-field-add'] = 'Ajouter un champ membre';
 $lang['extended-field-edit'] = 'Editer un champ membre';
 $lang['extended-field'] = 'Champs membres';
 $lang['extended-fields-management'] = 'Gestion des champs membres';
-$lang['extended-fields-sucess-update'] = 'Le champs étendus à été mise à jour avec succès.';
+$lang['extended-fields-sucess-edit'] = 'Le champs étendus à été mise à jour avec succès.';
 $lang['extended-fields-sucess-add'] = 'Le champs étendus à été ajouté avec succès.';
 $lang['extended-fields-sucess-delete'] = 'Le champs étendus à été supprimé avec succès.';
 
@@ -46,14 +46,11 @@ $lang['type.simple-select'] = 'Sélection unique (parmi plusieurs valeurs)';
 $lang['type.multiple-select'] = 'Sélection multiple (parmi plusieurs valeurs)';
 $lang['type.simple-check'] = 'Choix unique (parmi plusieurs valeurs)';
 $lang['type.multiple-check'] = 'Choix multiples (parmi plusieurs valeurs)';
-
-## ADD TO ENGLISH LANG #
-
-//Liste type field
 $lang['type.date'] = 'Date';
 $lang['type.user-themes-choice'] = 'Choix des thèmes';
 $lang['type.user-lang-choice'] = 'Choix des langues';
 $lang['type.user_born'] = 'Date de naissance';
+$lang['type.avatar'] = 'Gestion de l\'avatar';
 
 $lang['default-field'] = 'Champs par défaut';
 
@@ -87,7 +84,6 @@ $lang['field.success'] = 'Succès';
 $lang['field.delete_field'] = 'Souhaitez vous vraiment supprimer ce champ ?';
 $lang['field.position'] = 'Position';
 
-//Del 
 $lang['field.is-required'] = 'Requis';
 $lang['field.is-not-required'] = 'Non requis';
 

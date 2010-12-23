@@ -38,7 +38,7 @@ class ExtendedFieldsDatabaseService
 		self::add_extended_field_to_member($extended_field);
 
 		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
+			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
 			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :freeze, :auth)", array(
                 'name' => $extended_field->get_name(),
                 'position' => $extended_field->get_position(),
@@ -64,7 +64,7 @@ class ExtendedFieldsDatabaseService
 		$new_field_type = $extended_field->get_field_type();
 
 		PersistenceContext::get_querier()->inject(
-			"UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
+			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
 			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
 			, array(
@@ -94,7 +94,7 @@ class ExtendedFieldsDatabaseService
 		self::drop_extended_field_to_member($extended_field);	
 
 		PersistenceContext::get_querier()->inject(
-			"DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = :id"
+			"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
 			, array(
 				'id' => $extended_field->get_id(),
 		));
@@ -102,49 +102,49 @@ class ExtendedFieldsDatabaseService
 	
 	public static function select_data_field_by_id(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTEND_CAT, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
 	}
 
 	public static function select_data_field_by_field_name(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTEND_CAT, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
 	}
 	
 	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTEND_CAT, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_id(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTEND_CAT, "WHERE id = '" . $extended_field->get_id() . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE id = '" . $extended_field->get_id() . "'") > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_type(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTEND_CAT, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0 ? true : false;
 	}
 	
 	private static function delete_empty_fields_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
 	}
 	
 	private static function add_extended_field_to_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
 	}
 	
 	private static function change_extended_field_to_member(ExtendedField $extended_field)
 	{
 		$data = self::select_data_field_by_id($extended_field);
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
 	}
 
 	private static function drop_extended_field_to_member(ExtendedField $extended_field)
 	{
 		$data = self::select_data_field_by_id($extended_field);
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $data['field_name'], __LINE__, __FILE__);	
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name'], __LINE__, __FILE__);	
 	}
 	
 	public static function type_columm_field(ExtendedField $extended_field)

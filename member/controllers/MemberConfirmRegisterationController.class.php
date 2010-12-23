@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               ExtendFieldMember.class.php
+ *                      MemberConfirmRegisterationController.class.php
  *                            -------------------
- *   begin                : August 10, 2010
+ *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,31 +25,41 @@
  *
  ###################################################*/
 
-
-class ExtendFieldMember
+class MemberConfirmRegisterationController extends AbstractController
 {
-	public static function display(Template $Template, $user_id = '')
+	public function execute(HTTPRequest $request)
 	{
-		$extend_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;
+		$view = new StringTemplate('# INCLUDE form #');
+		$key = $request->get_getint('key', 0);
 		
-		$extend_field_exist = count($extend_fields_cache);
-		if ($extend_field_exist > 0)
+		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
-			$Template->put_all(array(
-				'C_MISCELLANEOUS' => true,
-				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
-			));
-			
-			$display_extend_field = new DisplayExtendField();
-			if(!empty($user_id))
-			{
-				$display_extend_field->display_for_member($Template, $user_id);
-			}
-			else
-			{
-				$display_extend_field->display_for_register($Template);
-			}
+			// TODO redirect error already registered
 		}
+		else
+		{
+			$form = $this->check_activation($key);
+		}
+		
+		
+		$view->put('form', $form->display());
+		return new SiteDisplayResponse($view);
 	}
+	
+	private function check_activation($key)
+	{
+		$check_mbr = ConfirmHelper::check_activation_pass_exist($key);
+		if ($check_mbr && !empty($key))
+		{
+			ConfirmHelper::update_aprobation($key);
+			
+			// TODO redirect activation success
+		}
+		else
+		{
+			//TODO redirect error key isn't exist
+		}
+	}	
 }
+
 ?>

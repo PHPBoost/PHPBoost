@@ -148,13 +148,16 @@ class MemberExtendedFieldsFactory
 				return 'MemberDateExtendedField';
 				break;
 			case 8:
-				return 'MemberUserThemeExtendedField';
+				return 'MemberUserBornExtendedField';
 				break;
 			case 9:
 				return 'MemberUserLangExtendedField';
 				break;
 			case 10:
-				return 'MemberUserBornExtendedField';
+				return 'MemberUserThemeExtendedField';
+				break;
+			case 11:
+				return 'MemberUserAvatarExtendedField';
 				break;
 		}
 	}

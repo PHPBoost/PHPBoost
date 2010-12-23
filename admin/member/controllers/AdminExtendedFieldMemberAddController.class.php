@@ -105,15 +105,18 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '6'),
 				new FormFieldSelectChoiceOption($this->lang['type.date'], '7'),
 				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-				new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '8'),
-				new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
-				new FormFieldSelectChoiceOption($this->lang['type.user_born'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '8'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '11'),
 				))
 			),
 			array('required' => true, 'events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 2 || HTMLForms.getField("field_type").getValue() > 6){
 				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 3) { HTMLForms.getField("regex_type").enable(); }
 				if (HTMLForms.getField("field_type").getValue() < 3 || HTMLForms.getField("field_type").getValue() > 6)	{HTMLForms.getField("possible_values").disable(); } 
-				if (HTMLForms.getField("field_type").getValue() > 2 && HTMLForms.getField("field_type").getValue() < 7) {HTMLForms.getField("possible_values").enable();}'))
+				if (HTMLForms.getField("field_type").getValue() > 2 && HTMLForms.getField("field_type").getValue() < 7) {HTMLForms.getField("possible_values").enable();}
+				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
+				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}'))
 		));
 		
 		$fieldset->add_field(new FormFieldSelectChoice('regex_type', $this->lang['field.regex'], '0',
@@ -160,12 +163,13 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			)
 		));
 		
-		/*$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
+		/*
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 		*/
-		
+
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -178,25 +182,29 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($this->form->get_value('name'));
 		$extended_field->set_field_name(ExtendedField::rewrite_field_name($this->form->get_value('name')));
-		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__));
+		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
 		$extended_field->set_description($this->form->get_value('description'));
-		$extended_field->set_field_type($this->form->get_value('field_type')->get_raw_value());
+		$field_type = $this->form->get_value('field_type')->get_raw_value();
+		$extended_field->set_field_type($field_type);
 		$extended_field->set_possible_values($this->form->get_value('possible_values', ''));
 		$extended_field->set_default_values($this->form->get_value('default_values', ''));
 		$extended_field->set_is_required($this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display($this->form->get_value('display')->get_raw_value());
-		$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
+		if ($field_type <= 2)
+		{
+			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
+		}
 		$extended_field->set_regex($regex);
 
 		ExtendedFieldsService::add($extended_field);
 		
-		//$this->redirect();
+		$this->redirect();
 	}
 	
 	private function redirect()
 	{
 		$controller = new UserErrorController($this->lang['field.success'], $this->lang['extended-fields-sucess-add'], UserErrorController::SUCCESS);
-		$controller->set_correction_link($this->lang['extended-field'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'));
+		$controller->set_correction_link($this->lang['extended-field'], PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/list/');
 		DispatchManager::redirect($controller);
 	}
 

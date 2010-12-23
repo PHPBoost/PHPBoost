@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ViewProfilController.class.php
+ *                       MemberViewProfileController.class.php
  *                            -------------------
- *   begin                : September 23, 2010 2009
+ *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,34 +25,58 @@
  *
  ###################################################*/
 
-class ViewProfilController extends AbstractController
+class MemberViewProfileController extends AbstractController
 {
+	private $lang;
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
+
 	public function execute(HTTPRequest $request)
 	{
-		$this->lang = LangLoader::get('main');
-		
-		$view = new StringTemplate('# INCLUDE form #');
+		$this->init();
 
 		$user_id = $request->get_getint('user_id', AppContext::get_user()->get_attribute('user_id'));
 
-		$form = $this->build_form_view_profil($user_id);
-	
-		$view->add_lang($this->lang);
+		if ($this->user_exist($user_id))
+		{
+			$this->build_form($user_id);
+		}
+		else
+		{
+			$error_controller = PHPBoostErrors::unexisting_member();
+			DispatchManager::redirect($error_controller);
+		}
 
-		$view->put('form', $form->display());
-		return new SiteDisplayResponse($view);
+		$tpl = new StringTemplate('# INCLUDE FORM #');
+
+		$tpl->add_lang($this->lang);
+
+		$tpl->put('FORM', $this->form->display());
+
+		return $this->build_response($tpl);
+	}
+
+	private function init()
+	{
+		$this->lang = LangLoader::get('main');
 	}
 	
-	private function build_form_view_profil($id)
+	private function build_form($user_id)
 	{
-		$form = new HTMLForm('profil');
-		
-		$fieldset = new FormFieldsetHTML('profil', $this->lang['profile']);
+		$form = new HTMLForm('member-view-profile');
+
+		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
 		$form->add_fieldset($fieldset);
 		
-		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_aprob = 1 AND user_id = '" . $id . "' " , __LINE__, __FILE__);
+		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_aprob = 1 AND user_id = '" . $user_id . "' " , __LINE__, __FILE__);
 
-		$link_edit = '<a href="'. PATH_TO_ROOT .'/member/index?url=/profil/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
+		$link_edit = '<a href="'. PATH_TO_ROOT .'/member/?url=/profil/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
 		$fieldset->add_field(new FormFieldFree('profile_edition', $this->lang['profile_edition'], $link_edit));
 		
 		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $row['login']));
@@ -62,26 +86,29 @@ class ViewProfilController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('status', $this->lang['status'], ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $row['level'] : $this->lang['banned']));
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $row['user_groups']));
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registered_on'], gmdate_format('date_format_short', $row['timestamp'])));
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['nbr_message'], $row['user_msg'] . '<br>' . '<a href="membermsg.php?id='.$id.'">'. $this->lang['member_msg_display'] .'</a>'));
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connect'], $row['last_connect']));
-		$fieldset->add_field(new FormFieldFree('web_site', $this->lang['web_site'], $row['user_web']));
-		$fieldset->add_field(new FormFieldFree('localisation', $this->lang['localisation'], $row['user_local']));
-		$fieldset->add_field(new FormFieldFree('job', $this->lang['job'], $row['user_occupation']));
-		
-		$fieldset->add_field(new FormFieldFree('hobbies', $this->lang['hobbies'], $row['user_hobbies']));
-		$fieldset->add_field(new FormFieldFree('age', $this->lang['age'], $row['user_born']));
-		$fieldset->add_field(new FormFieldFree('user_sign', $this->lang['user_sign'], $row['user_sign']));
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['nbr_message'], $row['user_msg'] . '<br>' . '<a href="membermsg.php?id='.$user_id.'">'. $this->lang['member_msg_display'] .'</a>'));
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connect'], gmdate_format('date_format_short', $row['last_connect'])));
 		
 		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_template($form);
+		$member_extended_field->set_fieldset($fieldset);
 		$member_extended_field->set_user_id(1);
 		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
 		
-		$this->submit_welcome_button = new FormButtonDefaultSubmit();
-		return $form;
+		$this->form = $form;
 	}
 
+	private function build_response(View $view)
+	{
+		$response = new SiteDisplayResponse($view);
+		$env = $response->get_graphical_environment();
+		$env->set_page_title($this->lang['profile']);
+		return $response;
+	}
 	
+	private function user_exist($user_id)
+	{
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+	}
 }
 
 ?>

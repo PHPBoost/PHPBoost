@@ -37,14 +37,15 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
 
-		$min_cat = PersistenceContext::get_sql()->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "");
-		$max_cat = PersistenceContext::get_sql()->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "");
+		$min_cat = PersistenceContext::get_sql()->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
+		$max_cat = PersistenceContext::get_sql()->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
 
 		foreach ($extended_field as $id => $row)
 		{
-			$top_link = $min_cat != $row['position'] ? '<a href="'. PATH_TO_ROOT .'/admin/member/index.php?url=/extended-fields/position/'.$row['id'].'/top/" title="">
+			
+			$top_link = $min_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/top/')->absolute() .'" title="">
 				<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-			$bottom_link = $max_cat != $row['position'] ? '<a href="'. PATH_TO_ROOT .'/admin/member/index.php?url=/extended-fields/position/'.$row['id'].'/bottom/" title="">
+			$bottom_link = $max_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/bottom/')->absolute() .'" title="">
 				<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 		
 			$this->view->assign_block_vars('list_extended_fields', array(
@@ -54,8 +55,8 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				'L_DISPLAY' => $row['display'] ? $this->lang['field.yes'] : $this->lang['field.no'],
 				'TOP' => $top_link,
 				'BOTTOM' => $bottom_link,
-				'DELETE_LINK' => PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/'.$row['id'].'/delete/',
-				'EDIT_LINK' => PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/'.$row['id'].'/edit/',
+				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/delete/?token=' . AppContext::get_session()->get_token())->absolute(),
+				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
 			));
 		}
 		
