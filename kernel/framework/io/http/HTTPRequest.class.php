@@ -243,6 +243,7 @@ class HTTPRequest
 			case self::string:
 				return $this->get_raw_string($value);
 			case self::t_array:
+				return $this->get_raw_array($value, $default_value);
 			case self::none:
 			default:
 				return $this->get_raw_string($value);
@@ -301,12 +302,17 @@ class HTTPRequest
 		return str_replace(array("\r\n", "\r"), "\n", $value);
 	}
 
-	private function get_raw_array(array $array)
+	private function get_raw_array(array $array, array $default_value)
 	{
+		if (!is_array($array))
+		{
+			return $default_value;	
+		}
 		foreach ($array as &$item)
 		{
 			$item = self::sanitize($item);
 		}
+		return $array;
 	}
 }
 ?>
