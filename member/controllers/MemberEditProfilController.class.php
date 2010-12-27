@@ -74,12 +74,14 @@ class MemberEditProfilController extends AbstractController
 
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], $row['login'], array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo_how']),
-			array(new FormFieldConstraintLengthRange(3, 25))
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['mail'], $row['user_mail'], array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid']),
 		array(new FormFieldConstraintMailAddress())
 		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], FormFieldCheckbox::CHECKED));
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_fieldset($fieldset);

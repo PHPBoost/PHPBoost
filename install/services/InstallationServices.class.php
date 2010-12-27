@@ -138,6 +138,7 @@ class InstallationServices
 		$this->generate_website_configuration($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
+		$this->add_extended_fields();
 		$this->generate_cache();
 		return true;
 	}
@@ -242,6 +243,66 @@ class InstallationServices
 		MenuService::generate_cache();
 	}
 
+	private function add_extended_fields()
+	{
+		$lang = LangLoader::get('admin-extended-fields-common');
+		
+		//Lang
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.default-lang']);
+		$extended_field->set_field_name('f_user_lang');
+		$extended_field->set_description($lang['field-install.default-lang-explain']);
+		$extended_field->set_field_type('10');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Theme
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.default-theme']);
+		$extended_field->set_field_name('f_user_theme');
+		$extended_field->set_description($lang['field-install.default-theme-explain']);
+		$extended_field->set_field_type('11');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Editor
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.default-editor']);
+		$extended_field->set_field_name('f_user_editor');
+		$extended_field->set_description($lang['field-install.default-editor-explain']);
+		$extended_field->set_field_type('12');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Timezone
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.timezone']);
+		$extended_field->set_field_name('f_user_timezone');
+		$extended_field->set_description($lang['field-install.timezone-explain']);
+		$extended_field->set_field_type('13');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Website
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.website']);
+		$extended_field->set_field_name('f_user_website');
+		$extended_field->set_description($lang['field-install.website-explain']);
+		$extended_field->set_field_type('1');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_regex('5');
+		ExtendedFieldsService::add($extended_field);
+	}
+	
 	private function generate_cache()
 	{
 		AppContext::get_cache_service()->clear_phpboost_cache();

@@ -31,6 +31,9 @@
  */
 class ExtendedFieldsService
 {
+	const SORT_BY_ID = 1;
+	const SORT_BY_FIELD_NAME = 2;
+	
 	/*
 	 * This function required object ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
 	 */
@@ -123,12 +126,22 @@ class ExtendedFieldsService
 	}
 	
 	/*
-	 * This function required object ExtendedField containing the id
+	 * This function required object ExtendedField containing the id or the field name
 	 * Return Object ExtendedField containing the informations field
 	 */
-	public static function data_field(ExtendedField $extended_field)
+	public static function data_field(ExtendedField $extended_field, $sort = self::SORT_BY_ID)
 	{
-		$data = ExtendedFieldsDatabaseService::select_data_field_by_id($extended_field);
+		$field_name = $extended_field->get_field_name();
+		$id = $extended_field->get_id();
+		if ($sort == self::SORT_BY_ID && $id > 0)
+		{
+			$data = ExtendedFieldsDatabaseService::select_data_field_by_id($extended_field);
+		}
+		else if ($sort == self::SORT_BY_FIELD_NAME && !empty($field_name))
+		{
+			$data = ExtendedFieldsDatabaseService::select_data_field_by_field_name($extended_field);
+		}
+
 		$extended_field->set_name($data['name']);
 		$extended_field->set_field_name($data['field_name']);
 		$extended_field->set_position($data['position']);

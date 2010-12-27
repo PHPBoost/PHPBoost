@@ -56,11 +56,11 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		
 		$tpl = new StringTemplate('<script type="text/javascript">
-				Event.observe(window, \'load\', function() {if ({FIELD_TYPE} > 2 || {FIELD_TYPE} > 6)
+				Event.observe(window, \'load\', function() {if ({FIELD_TYPE} > 3 || {FIELD_TYPE} > 7)
 				{HTMLForms.getField("regex_type").disable();HTMLForms.getField("regex").disable();}
-				if ({FIELD_TYPE} < 3){HTMLForms.getField("regex_type").enable();}
-				if ({FIELD_TYPE} < 3 || {FIELD_TYPE} > 6){HTMLForms.getField("possible_values").disable();} 
-				if ({FIELD_TYPE} > 2 && {FIELD_TYPE} < 7){HTMLForms.getField("possible_values").enable();}
+				if ({FIELD_TYPE} < 4){HTMLForms.getField("regex_type").enable();}
+				if ({FIELD_TYPE} < 4 || {FIELD_TYPE} > 8){HTMLForms.getField("possible_values").disable(); HTMLForms.getField("default_values").disable();} 
+				if ({FIELD_TYPE} > 3 || {FIELD_TYPE} < 8){HTMLForms.getField("possible_values").enable(); HTMLForms.getField("default_values").enable();}
 				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF # });
 				</script>
 				# IF C_SUBMITED #
@@ -123,22 +123,28 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '3'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '4'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '5'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '6'),
-				new FormFieldSelectChoiceOption($this->lang['type.date'], '7'),
+				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
+				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
+				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
+				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '7'),
+				new FormFieldSelectChoiceOption($this->lang['type.date'], '8'),
 				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '8'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '10'),
-					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '11'),
+					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '9'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '11'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-editor'], '12'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-timezone'], '13'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-sex'], '14'),
+					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '15'),
 				))
 			),
-			array('required' => true, 'events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 2 || HTMLForms.getField("field_type").getValue() > 6){
-				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 3) { HTMLForms.getField("regex_type").enable(); }
-				if (HTMLForms.getField("field_type").getValue() < 3 || HTMLForms.getField("field_type").getValue() > 6)	{HTMLForms.getField("possible_values").disable(); } 
-				if (HTMLForms.getField("field_type").getValue() > 2 && HTMLForms.getField("field_type").getValue() < 7) {HTMLForms.getField("possible_values").enable();}'))
+			array('events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 3 || HTMLForms.getField("field_type").getValue() > 7){
+				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
+				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
+				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
+				if (HTMLForms.getField("field_type").getValue() > 9){HTMLForms.getField("default_values").disable(); }
+				if (HTMLForms.getField("field_type").getValue() < 10){HTMLForms.getField("default_values").enable();}'))
 		));
 		
 		$fieldset->add_field(new FormFieldSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
@@ -185,13 +191,13 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			)
 		));
 		
-		/*
+		$auth = $extended_field_cache['auth'];
+		
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
-		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
+		$auth_settings->build_from_auth_array($auth);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
-		*/
-		
+
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -228,6 +234,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
 		}
 		$extended_field->set_regex($regex);
+		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
 		

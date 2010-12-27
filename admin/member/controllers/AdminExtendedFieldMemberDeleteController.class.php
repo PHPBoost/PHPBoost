@@ -27,6 +27,8 @@
 
 class AdminExtendedFieldMemberDeleteController extends AdminController
 {
+	private $lang;
+	
 	public function execute(HTTPRequest $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
@@ -44,6 +46,11 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('admin-extended-fields-common');
 	}
 	
 	private function redirect()

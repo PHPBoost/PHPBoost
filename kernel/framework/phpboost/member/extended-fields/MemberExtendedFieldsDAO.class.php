@@ -106,22 +106,12 @@ class MemberExtendedFieldsDAO
 		return (bool)PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1", __LINE__, __FILE__);
 	}
 	
-	public function get_field_type($field_type)
+	/**
+	 * @desc Return Array containing list fields and the value.
+	 */
+	public static function select_data_field_by_user_id(MemberExtendedField $member_extended_field)
 	{
-		if (is_numeric($field_type))
-		{
-			$array_field_type = array(
-				1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
-				2 => 'TEXT NOT NULL', 
-				3 => 'TEXT NOT NULL', 
-				4 => 'TEXT NOT NULL', 
-				5 => 'TEXT NOT NULL', 
-				6 => 'TEXT NOT NULL'
-			);
-			
-			return $array_field_type[$field_type];
-		}
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('*'), "WHERE user_id = '" . $member_extended_field->get_user_id() . "'");
 	}
-
 }
 ?>

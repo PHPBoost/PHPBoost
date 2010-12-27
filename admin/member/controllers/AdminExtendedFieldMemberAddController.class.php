@@ -99,24 +99,28 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '3'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '4'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '5'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '6'),
-				new FormFieldSelectChoiceOption($this->lang['type.date'], '7'),
+				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
+				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
+				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
+				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '7'),
+				new FormFieldSelectChoiceOption($this->lang['type.date'], '8'),
 				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '8'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '9'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '10'),
-					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '11'),
+					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '9'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '10'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '11'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-editor'], '12'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-timezone'], '13'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-sex'], '14'),
+					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '15'),
 				))
 			),
-			array('required' => true, 'events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 2 || HTMLForms.getField("field_type").getValue() > 6){
-				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 3) { HTMLForms.getField("regex_type").enable(); }
-				if (HTMLForms.getField("field_type").getValue() < 3 || HTMLForms.getField("field_type").getValue() > 6)	{HTMLForms.getField("possible_values").disable(); } 
-				if (HTMLForms.getField("field_type").getValue() > 2 && HTMLForms.getField("field_type").getValue() < 7) {HTMLForms.getField("possible_values").enable();}
-				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
-				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}'))
+			array('events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 3 || HTMLForms.getField("field_type").getValue() > 7){
+				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
+				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
+				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
+				if (HTMLForms.getField("field_type").getValue() > 9){HTMLForms.getField("default_values").disable(); }
+				if (HTMLForms.getField("field_type").getValue() < 10){HTMLForms.getField("default_values").enable();}'))
 		));
 		
 		$fieldset->add_field(new FormFieldSelectChoice('regex_type', $this->lang['field.regex'], '0',
@@ -162,13 +166,11 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
 			)
 		));
-		
-		/*
+
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
-		*/
 
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -195,6 +197,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
 		}
 		$extended_field->set_regex($regex);
+		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 
 		ExtendedFieldsService::add($extended_field);
 		

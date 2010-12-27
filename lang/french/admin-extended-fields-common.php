@@ -42,6 +42,7 @@ $lang['extended-fields-sucess-delete'] = 'Le champs étendus à été supprimé avec 
 //Type 
 $lang['type.short-text'] = 'Texte court (max 255 caractères)';
 $lang['type.long-text'] = 'Texte long (illimité)';
+$lang['type.half-text'] = 'Text semi long';
 $lang['type.simple-select'] = 'Sélection unique (parmi plusieurs valeurs)';
 $lang['type.multiple-select'] = 'Sélection multiple (parmi plusieurs valeurs)';
 $lang['type.simple-check'] = 'Choix unique (parmi plusieurs valeurs)';
@@ -50,6 +51,9 @@ $lang['type.date'] = 'Date';
 $lang['type.user-themes-choice'] = 'Choix des thèmes';
 $lang['type.user-lang-choice'] = 'Choix des langues';
 $lang['type.user_born'] = 'Date de naissance';
+$lang['type.user-editor'] = 'Choix de l\'éditeur';
+$lang['type.user-timezone'] = 'Choix du timezone';
+$lang['type.user-sex'] = 'Choix du sexe';
 $lang['type.avatar'] = 'Gestion de l\'avatar';
 
 $lang['default-field'] = 'Champs par défaut';
@@ -88,6 +92,50 @@ $lang['field.is-required'] = 'Requis';
 $lang['field.is-not-required'] = 'Non requis';
 
 
+//Install
+$lang['field-install.default-lang'] = 'Langue par defaut';
+$lang['field-install.default-lang-explain'] = 'Séléctionner le language que vous souhaitez utiliser';
 
+$lang['field-install.default-theme'] = 'Theme par defaut';
+$lang['field-install.default-theme-explain'] = 'Séléctionner le thème que vous souhaitez utiliser';
+
+$lang['field-install.default-editor'] = 'Editeur de texte par défaut';
+$lang['field-install.default-editor-explain'] = 'Séléctionner l\'éditeur de texte que vous souhaitez utiliser';
+
+$lang['field-install.timezone'] = 'Choix du fuseau horaire';
+$lang['field-install.timezone-explain'] = 'Vous permet d\'ajuster l\'heure en fonction de votre localisation';
+
+$lang['field-install.sex'] = 'Sexe';
+$lang['field-install.sex-explain'] = '';
+
+$lang['field-install.date-birth'] = 'Date de naissance';
+$lang['field-install.date-birth-explain'] = 'De type JJ/MM/AAAA';
+
+$lang['field-install.avatar'] = 'Avatar';
+$lang['field-install.avatar-explain'] = '';
+
+$lang['field-install.website'] = 'Site web';
+$lang['field-install.website-explain'] = 'Veuillez renseigner un site web valide';
+
+$lang['field-install.location'] = 'Localisation';
+$lang['field-install.location-explain'] = '';
+
+$lang['field-install.job'] = 'Emploi';
+$lang['field-install.job-explain'] = '';
+
+$lang['field-install.entertainement'] = 'Loisirs';
+$lang['field-install.entertainement-explain'] = '';
+
+$lang['field-install.signing'] = 'Signature';
+$lang['field-install.signing-explain'] = 'Apparaît sous chacun de vos messages';
+
+$lang['field-install.biography'] = 'Biographie';
+$lang['field-install.biography-explain'] = '';
+
+$lang['field-install.msn'] = 'MSN';
+$lang['field-install.msn-explain'] = '';
+
+$lang['field-install.yahoo'] = 'Yahoo';
+$lang['field-install.yahoo-explain'] = '';
 
 ?>

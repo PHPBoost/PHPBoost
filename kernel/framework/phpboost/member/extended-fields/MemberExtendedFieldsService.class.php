@@ -32,7 +32,8 @@
  */
 class MemberExtendedFieldsService
 {	
-
+	const REWRITE = 1;
+	
 	/**
 	 * @desc This function displayed fields form
 	 * @param required object DisplayMemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
@@ -109,6 +110,7 @@ class MemberExtendedFieldsService
 						$member_extended_field = new MemberExtendedField();		
 						$member_extended_field->set_field_type($extended_field['field_type']);
 						$member_extended_field->set_field_name($extended_field['field_name']);
+						$member_extended_field->set_user_id($user_id);
 						
 						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
 						$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
@@ -177,5 +179,20 @@ class MemberExtendedFieldsService
 		PersistenceContext::get_sql()->query_close($result);
 	}
 	
+	/**
+	 * @desc This public function return the data sent by the user depending field_name
+	 * @param required instance of MemberExtendedField containing user_id and field_name.
+	 */
+	public static function return_field_member(MemberExtendedField $member_extended_field, $rewrite = false)
+	{
+		if ($rewrite == self::REWRITE)
+		{
+			$field_name = 'f_' . $member_extended_field->get_field_name();
+		}
+	
+		$field_name = $member_extended_field->get_field_name();
+		$data = MemberExtendedFieldsDAO::select_data_field_by_user_id($member_extended_field);
+		return $data[$field_name];
+	}
 }
 ?>
