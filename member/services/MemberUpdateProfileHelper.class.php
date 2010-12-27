@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ViewProfilHelper.class.php
+ *                       MemberUpdateProfileHelper.class.php
  *                            -------------------
- *   begin                : September 23, 2010 2009
+ *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,9 +25,21 @@
  *
  ###################################################*/
  
- class ViewProfil
+ class MemberUpdateProfileHelper
  {
+	public function update_profile(HTMLForm $form)
+	{
+		
+	}
 	
- 
+	public function delete_member()
+	{
+	
+	}
+	
+	public function change_password()
+	{
+	
+	}
  }
  ?>

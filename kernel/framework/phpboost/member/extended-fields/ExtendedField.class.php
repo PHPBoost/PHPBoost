@@ -74,7 +74,12 @@ class ExtendedField
 	
 	public function get_position()
 	{
-		return !empty($this->position) ? $this->position : 1;
+		if (empty($this->position))
+		{
+			$request = PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
+			$this->position = !empty($request) ? $request : 1;
+		}
+		return $this->position;
 	}
 	
 	public function set_field_name($field_name)
@@ -84,6 +89,10 @@ class ExtendedField
 	
 	public function get_field_name()
 	{
+		if (empty($this->field_name) && !empty($this->name))
+		{
+			$this->field_name = $this->rewrite_field_name($this->name);
+		}
 		return !empty($this->field_name) ? $this->field_name : '';
 	}
 	
@@ -154,7 +163,7 @@ class ExtendedField
 	
 	public function get_regex()
 	{
-		return !empty($this->regex) ? $this->regex : '';
+		return !empty($this->regex) ? $this->regex : 0;
 	}
 	
 	public function set_is_freeze($freeze)
@@ -174,7 +183,7 @@ class ExtendedField
 	
 	public function get_authorization()
 	{
-		return !empty($this->authorization) ? $this->authorization : array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1);
+		return !empty($this->authorization) ? $this->authorization : array('r1' => 2, 'r0' => 2, 'r-1' => 2);
 	}
 	
 	public static function rewrite_field_name($field_name)

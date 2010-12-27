@@ -133,30 +133,42 @@ class MemberExtendedFieldsFactory
 				return 'MemberLongTextExtendedField';
 				break;
 			case 3:
+				return 'MemberHalfLongTextExtendedField';
+				break;	
+			case 4:
 				return 'MemberSimpleSelectExtendedField';
 				break;
-			case 4:
+			case 5:
 				return 'MemberMultipleSelectExtendedField';
 				break;
-			case 5:
+			case 6:
 				return 'MemberSimpleChoiceExtendedField';
 				break;
-			case 6:
+			case 7:
 				return 'MemberMultipleChoiceExtendedField';
 				break;
-			case 7:
+			case 8:
 				return 'MemberDateExtendedField';
 				break;
-			case 8:
+			case 9:
 				return 'MemberUserBornExtendedField';
 				break;
-			case 9:
+			case 10:
 				return 'MemberUserLangExtendedField';
 				break;
-			case 10:
+			case 11:
 				return 'MemberUserThemeExtendedField';
 				break;
-			case 11:
+			case 12:
+				return 'MemberUserEditorExtendedField';
+				break;
+			case 13:
+				return 'MemberUserTimezoneExtendedField';
+				break;
+			case 14:
+				return 'MemberUserSexExtendedField';
+				break;
+			case 15:
 				return 'MemberUserAvatarExtendedField';
 				break;
 		}

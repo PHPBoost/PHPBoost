@@ -29,30 +29,23 @@ class MemberConfirmRegisterationController extends AbstractController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$view = new StringTemplate('# INCLUDE form #');
-		$key = $request->get_getint('key', 0);
-		
+		$key = $request->get_value('key', '');
 		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
 			// TODO redirect error already registered
 		}
 		else
 		{
-			$form = $this->check_activation($key);
+			$this->check_activation($key);
 		}
-		
-		
-		$view->put('form', $form->display());
-		return new SiteDisplayResponse($view);
 	}
 	
 	private function check_activation($key)
 	{
-		$check_mbr = ConfirmHelper::check_activation_pass_exist($key);
-		if ($check_mbr && !empty($key))
+		$check_mbr = $this->check_activation_pass_exist($key);
+		if ((bool)$check_mbr && !empty($key))
 		{
-			ConfirmHelper::update_aprobation($key);
-			
+			$this->update_aprobation($key);
 			// TODO redirect activation success
 		}
 		else
@@ -60,6 +53,16 @@ class MemberConfirmRegisterationController extends AbstractController
 			//TODO redirect error key isn't exist
 		}
 	}	
+	
+	public function check_activation_pass_exist($key)
+	{
+		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'");
+	}
+	
+	public function update_aprobation($key)
+	{
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = :key", array('key' => $key));
+	}
 }
 
 ?>

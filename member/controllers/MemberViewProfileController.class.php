@@ -42,8 +42,12 @@ class MemberViewProfileController extends AbstractController
 		$this->init();
 
 		$user_id = $request->get_getint('user_id', AppContext::get_user()->get_attribute('user_id'));
-
-		if ($this->user_exist($user_id))
+		
+		if (!AppContext::get_user()->check_level(MEMBER_LEVEL))
+		{
+			//redirect to page registered member
+		}
+		else if ($this->user_exist($user_id))
 		{
 			$this->build_form($user_id);
 		}
