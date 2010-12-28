@@ -37,10 +37,13 @@ function regexFormFieldValidator(field_id, regexPattern, options, message)
 	if (field)
 	{
 		var value = field.getValue();
-		regex = new RegExp(regexPattern, options);
-		if (!regex.test(value))
+		if (value !== '')
 		{
-			return message;
+			regex = new RegExp(regexPattern, options);
+			if (!regex.test(value))
+			{
+				return message;
+			}
 		}
 	}
 	return '';
@@ -52,9 +55,12 @@ function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 	if (field)
 	{
 		var value = field.getValue();
-		if (!integerIntervalValidator(value, lbound, rbound))
+		if (value !== '')
 		{
-			return message;
+			if (!integerIntervalValidator(value, lbound, rbound))
+			{
+				return message;
+			}
 		}
 	}
 	return '';
@@ -66,9 +72,12 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 	if (field)
 	{
 		var value = field.getValue();
-		if (!lengthIntervalValidator(value, lbound, rbound))
+		if (value !== '')
 		{
-			return message;
+			if (!lengthIntervalValidator(value, lbound, rbound))
+			{
+				return message;
+			}
 		}
 	}
 	return '';

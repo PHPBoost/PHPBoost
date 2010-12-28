@@ -49,7 +49,12 @@ class FormFieldConstraintLengthRange implements FormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = strlen($field->get_value());
-		return ($value >= $this->lboundary && $value <= $this->rboundary);
+		$is_required = $field->is_required();
+		if (!empty($value) || $is_required)
+		{
+			return ($value >= $this->lboundary && $value <= $this->rboundary);
+		}
+		return true;
 	}
 
 	public function get_js_validation(FormField $field)
