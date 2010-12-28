@@ -41,10 +41,10 @@ class FormFieldTimezone extends FormFieldSimpleSelectChoice
      */
     public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
     {
-        parent::__construct($id, $label, $value, $this->options(), $field_options, $constraints);
+        parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
 
-    private function options()
+    private function generate_options()
 	{
 		$options = array();
 		for ($i = -12; $i <= 14; $i++)
