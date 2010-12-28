@@ -52,6 +52,8 @@ class LinksMenu extends LinksMenuElement
 	* @var LinksMenuElement[] Direct menu children list
 	*/
     protected $elements = array();
+    
+    protected $filters = array('/');
 
     /**
 	* @desc Constructor
@@ -242,6 +244,18 @@ class LinksMenu extends LinksMenuElement
 	* @param string $type Type of the menu
 	*/
     public function set_type($type) { $this->type = $type; }
+    
+	/**
+	* @return string the menu filters
+	*/
+    public function get_filters() { return $this->filters; }
+
+    /**
+	* Sets the filters of the menu
+	*
+	* @param string $filters Filters of the menu
+	*/
+    public function set_filters($filters) { $this->filters = $filters; }
 
     /**
 	* @return LinksMenuElement[] the menu children elements
