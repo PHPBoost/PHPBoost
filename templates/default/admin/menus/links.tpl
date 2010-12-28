@@ -50,7 +50,7 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, onclick: "this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_ELEMENT};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, onclick: "if(this.value=={JL_ADD_SUB_ELEMENT})this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_ELEMENT};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
@@ -145,6 +145,22 @@ function deleteElement(element_id)
     }
 }
 
+function add_filter(nbr_filter)
+{
+	if (typeof this.max_filter_p == 'undefined' )
+		this.max_filter_p = nbr_filter;
+	else
+		this.max_filter_p++;
+
+	document.getElementById('add_filter' + this.max_filter_p).innerHTML +=  
+		'{PATH_TO_ROOT} / <select name="filter_module' + (this.max_filter_p + 1) + '" id="filter_module">' +
+		# START modules #
+		'<option value="{modules.ID}">{modules.ID}</option>' +
+		# END modules #
+		'</select> / <input type="text" name="f' + (this.max_filter_p + 1) + '" value="" size="25" /><br />' +
+		'<span id="add_filter' + (this.max_filter_p + 1) + '"></span>';
+}
+
 -->
 </script>
 <div id="admin_contents">
@@ -207,6 +223,34 @@ function deleteElement(element_id)
 			</dl>
 		</fieldset>
 		
+		<fieldset>
+			<legend>{L_FILTERS}</legend>
+			<p>
+				{L_LINKS_MENUS_FILTERS_EXPLAIN}
+			</p>
+			<br />
+			<dl>
+				<dt><label>{L_FILTERS}</label></dt>
+				<dd>
+					# START filters #
+					{PATH_TO_ROOT} / 
+					<select name="filter_module{filters.ID}" id="filter_module">
+						# START filters.modules #
+						<option value="{filters.modules.ID}"{filters.modules.SELECTED}>{filters.modules.ID}</option>
+						# END filters.modules #
+					</select>
+					/ <input type="text" name="f{filters.ID}" value="{filters.FILTER}" size="25" />
+					<br />
+					# END filters #
+					
+					<span id="add_filter{NBR_FILTER}"></span>
+					<p style="text-align:center;margin-top:10px;">
+						<a href="javascript:add_filter({NBR_FILTER})" title="Ajouter un filtre"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
+					</p>
+				</dd>
+			</dl>
+	    </fieldset>
+	    
 		<fieldset>
 			<legend>* {L_CONTENT}</legend>
 			{MENU_TREE}

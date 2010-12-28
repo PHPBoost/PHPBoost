@@ -129,6 +129,26 @@ if ($action == 'save')
         AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
     ));
     
+    //Filters
+    $request = AppContext::get_request();
+    $filters = array();
+    $i = 0;
+    while (true) {
+    	if (!$request->has_postparameter('filter_module' . $i)) {
+    		break;
+    	}
+    	
+    	$filter_module = $request->get_poststring('filter_module' . $i);
+    	$filter_regex = $request->get_poststring('f' . $i);
+    	$filters[] = $filter_module . '/' . $filter_regex;
+    	
+    	$i++;
+    }
+    if (empty($filters)) {
+    	$filters = array('/');
+    }
+    $menu->set_filters($filters);
+    
     if ($menu->is_enabled())
     {
         if ($previous_menu != null && $menu->get_block() == $previous_menu->get_block())
@@ -276,9 +296,60 @@ foreach ($array_location as $key => $name)
     ));
 }
 
+//Filtres
+$tpl->assign_block_vars('modules', array(
+	'ID' => '',
+));
+foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+{
+	$configuration = $module->get_configuration();
+	
+	$tpl->assign_block_vars('modules', array(
+		'ID' => $module->get_id(),
+	));
+}
+
+//Ajout du menu
+if ($menu->get_id() == ''){
+	$menu->set_filters(array('/'));
+}
+
+// Installed modules
+foreach ($menu->get_filters() as $key => $filter) {
+	$filter_infos = explode('/', $filter);
+	$module_name = $filter_infos[0];
+	$regex = substr(strstr($filter, '/'), 1);
+
+	$tpl->assign_block_vars('filters', array(
+		'ID' => $key,
+		'FILTER' => $regex
+	));
+		
+	$tpl->assign_block_vars('filters.modules', array(
+		'ID' => '',
+		'SELECTED' => $filter == '/' ? ' selected="selected"' : ''
+	));
+	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+	{
+		$configuration = $module->get_configuration();
+	
+		$tpl->assign_block_vars('filters.modules', array(
+			'ID' => $module->get_id(),
+			'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
+		));
+	}
+}
+$tpl->put_all(array(
+    'NBR_FILTER' => ($menu->get_title() == '') ? 0 : count($menu->get_filters()) - 1,
+	'L_FILTERS' => 'Filtres',
+    'L_LINKS_MENUS_FILTERS_EXPLAIN' => "Les filtres permettent de définir sur quelles pages doit apparaitre ce menu.
+		Ils peuvent être définis sur un module complet, ou des pages de ce module. A noter que par défaut le menu est visible partout"
+));
+
 $tpl->put_all(array(
     'ID_MAX' => AppContext::get_uid()
 ));
+
 $tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
