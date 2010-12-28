@@ -40,9 +40,9 @@ $cat = retrieve(GET, 'cat', 0);
 
 require_once('../kernel/header.php');
 
-$Template = new FileTemplate('wiki/explorer.tpl');
+$template = new FileTemplate('wiki/explorer.tpl');
 
-$module_data_path = $Template->get_pictures_data_path();
+$module_data_path = $template->get_pictures_data_path();
 
 //Contenu de la racine:
 $Cache->load('wiki');
@@ -64,7 +64,7 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 
 
-$Template->put_all(array(
+$template->put_all(array(
 	'TITLE' => $LANG['wiki_explorer'],
 	'L_ROOT' => $LANG['wiki_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
@@ -83,27 +83,27 @@ while ($row = $Sql->fetch_assoc($result))
 	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if ($sub_cats_number > 0)
 	{	
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
 			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else
 	{
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 }
 $Sql->query_close($result);
-$Template->put_all(array(
+$template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'wiki_selected_cat',
 	'CAT_LIST' => '',
 	'CURRENT_CAT' => $LANG['wiki_no_selected_cat']
 ));
 
-$Template->pparse('wiki_explorer');
+echo $template->render();
 
 
 require_once('../kernel/footer.php');
