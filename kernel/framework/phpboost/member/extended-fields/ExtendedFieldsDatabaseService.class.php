@@ -82,7 +82,7 @@ class ExtendedFieldsDatabaseService
 				'id' => $extended_field->get_id(),
 		));
 		
-		// If change field type, delete former information
+		// If change field type, delete old informations
 		if ($former_field_type !== $new_field_type)
 		{
 			self::delete_empty_fields_member($extended_field);

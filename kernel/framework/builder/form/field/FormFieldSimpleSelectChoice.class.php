@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldSelect.class.php
+ *                             FormFieldSimpleSelectChoice.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -33,10 +33,10 @@
  * </ul>
  * @package {@package}
  */
-class FormFieldSelectChoice extends AbstractFormFieldChoice
+class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 {
     /**
-     * @desc Constructs a FormFieldSelectChoice.
+     * @desc Constructs a FormFieldSimpleSelectChoice.
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)

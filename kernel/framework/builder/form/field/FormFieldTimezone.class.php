@@ -29,7 +29,7 @@
  * @desc This class timezone fields.
  * @package {@package}
  */
-class FormFieldTimezone extends FormFieldSelectChoice
+class FormFieldTimezone extends FormFieldSimpleSelectChoice
 {
     /**
      * @desc Constructs a FormFieldTimezone.

@@ -142,7 +142,7 @@ class SandboxFormController extends ModuleController
 
 		// SELECT
 		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', $default_select_option,
 		array(
 		$default_select_option,
 		new FormFieldSelectChoiceOption('Choix 2', '2'),

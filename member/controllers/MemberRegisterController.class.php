@@ -72,21 +72,22 @@ class MemberRegisterController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->warn_confirmation_register()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo_how']),
+			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo_how'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25))
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['mail'], '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid']),
+			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password_how']),
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password_how'], 'required' => true),
 		array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['confirm_password'], '', array(
-			'class' => 'text', 'maxlength' => 25),
+			'class' => 'text', 'maxlength' => 25, 'required' => true),
 		array(new FormFieldConstraintLengthRange(6, 12))
 		));
+		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], FormFieldCheckbox::CHECKED));
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_fieldset($fieldset);
@@ -114,7 +115,7 @@ class MemberRegisterController extends AbstractController
 	
 	private function save()
 	{
-		
+		MemberRegisterHelper::registeration($this->form);
 		//$this->redirect();
 	}
 	

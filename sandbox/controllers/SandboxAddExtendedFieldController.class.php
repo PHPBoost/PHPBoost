@@ -71,7 +71,7 @@ class SandboxAddExtendedFieldController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add_fields', $this->lang['extend_field_add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSelectChoice('field_type', $this->lang['type'], '1',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['type'], '1',
 			array(
 				new FormFieldSelectChoiceOption($this->lang['short_text'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['long_text'], '2'),
@@ -91,7 +91,7 @@ class SandboxAddExtendedFieldController extends ModuleController
 					}'))
 		));
 		
-		$fieldset->add_field(new FormFieldSelectChoice('regex_type', $this->lang['predef_regexp'], '0',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['predef_regexp'], '0',
 			array(
 				new FormFieldSelectChoiceOption('--', '0'),
 				new FormFieldSelectChoiceOption($this->lang['personnal_regex'], '1'),
