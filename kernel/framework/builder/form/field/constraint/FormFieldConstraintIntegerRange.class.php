@@ -48,13 +48,19 @@ class FormFieldConstraintIntegerRange implements FormFieldConstraint
 	}
 	
 	public function validate(FormField $field)
-	{
-		if (!is_numeric($field->get_value()))
+	{	
+		$is_required = $field->is_required();
+		$value = $field->get_value();
+		if (!is_numeric($value))
 		{
 			return false;
 		}
-		$value = (int)$field->get_value();		
-		return ($value >= $this->lower_bound && $value <= $this->upper_bound);
+		$value = (int)$value;
+		if (!empty($value) || $is_required)
+		{
+			return ($value >= $this->lower_bound && $value <= $this->upper_bound);
+		}
+		return true;
 	}
 
 	public function get_js_validation(FormField $field)

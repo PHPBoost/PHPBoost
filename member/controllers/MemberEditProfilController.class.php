@@ -78,14 +78,17 @@ class MemberEditProfilController extends AbstractController
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['previous_password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['fill_only_if_modified']))
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['fill_only_if_modified']),
+		array(new FormFieldConstraintMailAddress()))
 		);
 		
 		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password'], '', array(
-			'class' => 'text', 'maxlength' => 25)
+			'class' => 'text', 'maxlength' => 25),
+		array(new FormFieldConstraintMailAddress())
 		));
 		$fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['confirm_password'], '', array(
-			'class' => 'text', 'maxlength' => 25)
+			'class' => 'text', 'maxlength' => 25),
+		array(new FormFieldConstraintMailAddress())
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], $row['user_show_mail']));
