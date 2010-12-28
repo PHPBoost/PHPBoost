@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               MemberSimpleSelectExtendedField.class.php
+ *                               MemberMultipleSelectExtendedField.class.php
  *                            -------------------
  *   begin                : December 08, 2010
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
  
-class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
+class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 {
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
@@ -33,18 +33,15 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
+		$default_values = $this->default_values($member_extended_field);
 		$i = 0;
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
-			if ($values == $member_extended_field->get_default_values())
-			{
-				$default = $member_extended_field->get_field_name() . '_' . $i;
-			}
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $field));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -53,18 +50,15 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
+		$default_values = $this->default_values($member_extended_field);
 		$i = 0;
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
-			if ($values == $member_extended_field->get_value())
-			{
-				$default = $member_extended_field->get_field_name() . '_' . $i;
-			}
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $field));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
@@ -76,6 +70,11 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 	private function possible_values(MemberExtendedField $member_extended_field)
 	{
 		return explode('|', $member_extended_field->get_possible_values());
+	}
+	
+	private function default_values(MemberExtendedField $member_extended_field)
+	{
+		return explode('|', $member_extended_field->get_default_values());
 	}
 }
 ?>

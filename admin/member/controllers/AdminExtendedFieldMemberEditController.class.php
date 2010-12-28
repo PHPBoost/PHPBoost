@@ -119,7 +119,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
@@ -147,7 +147,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				if (HTMLForms.getField("field_type").getValue() < 10){HTMLForms.getField("default_values").enable();}'))
 		));
 		
-		$fieldset->add_field(new FormFieldSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
 			array(
 				new FormFieldSelectChoiceOption('--', '0'),
 				new FormFieldSelectChoiceOption($this->lang['regex.figures'], '1'),

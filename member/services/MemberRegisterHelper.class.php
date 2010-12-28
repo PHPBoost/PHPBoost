@@ -49,7 +49,7 @@
                 'login' => $form->get_value('login'),
                 'password' => strhash($form->get_value('password')),
 				'user_mail' => $form->get_value('mail'),
-				'user_show_mail' => $form->get_value('user_hide_mail'),
+				'user_show_mail' => (string)$form->get_value('user_hide_mail'),
 				'timestamp' => time(),
 				'last_connect' => time(),
 				'activ_pass' => $activation_key,

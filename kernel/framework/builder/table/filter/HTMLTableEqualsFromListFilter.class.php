@@ -43,7 +43,7 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 		{
 			$this->options[] = new FormFieldSelectChoiceOption($option_label, $option_value);
 		}
-		$select = new FormFieldSelectChoice($name, $label, $default_value, array_values($this->options));
+		$select = new FormFieldSimpleSelectChoice($name, $label, $default_value, array_values($this->options));
 		parent::__construct($name, $select);
 	}
 

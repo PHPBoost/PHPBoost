@@ -37,7 +37,7 @@ class MemberUserEditorExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(),
 		array(
 			new FormFieldSelectChoiceOption('BBCode', '1'),
 			new FormFieldSelectChoiceOption('TinyMCE', '2'),
@@ -50,7 +50,7 @@ class MemberUserEditorExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
 		array(
 			new FormFieldSelectChoiceOption('BBCode', '1'),
 			new FormFieldSelectChoiceOption('TinyMCE', '2'),

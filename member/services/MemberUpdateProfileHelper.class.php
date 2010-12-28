@@ -27,19 +27,45 @@
  
  class MemberUpdateProfileHelper
  {
-	public function update_profile(HTMLForm $form)
+	public static function update_profile($form, $user_id, $mail)
 	{
+		PersistenceContext::get_querier()->inject(
+			"UPDATE " . DB_TABLE_MEMBER . " SET 
+			user_mail = :user_mail
+			WHERE user_id = :user_id"
+			, array(
+				'user_mail' => $mail,
+				'user_id' => $user_id
+		));
 		
+		MemberExtendedFieldsService::register_fields($form, $user_id);
 	}
 	
-	public function delete_member()
+	public static function delete_account($user_id)
 	{
-	
+		PersistenceContext::get_querier()->inject(
+			"DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = :user_id"
+			, array(
+				'user_id' => $user_id,
+		));
 	}
 	
-	public function change_password()
+	public static function change_password($password, $user_id)
 	{
+		PersistenceContext::get_querier()->inject(
+			"UPDATE " . DB_TABLE_MEMBER . " SET 
+			password = :password
+			WHERE user_id = :user_id"
+			, array(
+				'password' => $password,
+				'user_id' => $user_id
+		));
+	}
 	
+	public static function get_old_password($user_id)
+	{
+		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), "WHERE user_id = '" . $user_id . "'");
+		return $row['password'];
 	}
  }
  ?>

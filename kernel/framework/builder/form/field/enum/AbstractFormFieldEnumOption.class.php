@@ -34,7 +34,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	private $label = '';
 
 	private $raw_value = '';
-
+	private $active;
 	/**
 	 * @var FormField
 	 */
@@ -91,9 +91,21 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		$this->field = $field;
 	}
 
+	public function set_active($value = true)
+	{
+		$this->active = $value;
+	}
+	
 	protected function is_active()
 	{
-		return $this->get_field()->get_value() === $this;
+		if (isset($this->active))
+		{
+			return $this->active;
+		}
+		else
+		{
+			return $this->get_field()->get_value() === $this;
+		}
 	}
 
 	protected function get_field_id()
