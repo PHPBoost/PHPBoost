@@ -340,7 +340,7 @@ foreach ($menu->get_filters() as $key => $filter) {
 	}
 }
 $tpl->put_all(array(
-    'NBR_FILTER' => ($menu->get_title() == '') ? 0 : count($menu->get_filters()) - 1,
+    'NBR_FILTER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
 	'L_FILTERS' => 'Filtres',
     'L_LINKS_MENUS_FILTERS_EXPLAIN' => "Les filtres permettent de définir sur quelles pages doit apparaitre ce menu.
 		Ils peuvent être définis sur un module complet, ou des pages de ce module. A noter que par défaut le menu est visible partout"
