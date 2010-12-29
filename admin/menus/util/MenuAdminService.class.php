@@ -1,0 +1,108 @@
+<?php
+/*##################################################
+ *                                 MenuAdminService.class.php
+ *                            -------------------
+ *   begin                : December, 29 2010
+ *   copyright            : (C) 2010 Régis Viarre
+ *   email                : crowkait@phpboost.com
+ *
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+class MenuAdminService
+{
+	public static function set_retrieved_filters(Menu $menu) 
+	{
+		$request = AppContext::get_request();
+	    $filters = array();
+	    $i = 0;
+	    while (true) {
+	    	if (!$request->has_postparameter('filter_module' . $i)) {
+	    		break;
+	    	}
+	    	
+	    	$filter_module = trim($request->get_poststring('filter_module' . $i), '/');
+	    	$filter_regex = trim($request->get_poststring('f' . $i), '/');
+	    	$filters[] = $filter_module . '/' . $filter_regex;
+	    	
+	    	$i++;
+	    }
+	    if (empty($filters)) {
+	    	$filters = array('/');
+	    }
+	    $menu->set_filters($filters);
+	}
+	
+	public static function add_filter_fieldset(Menu $menu, Template $tpl) 
+	{
+		$tpl_filter = new FileTemplate('admin/menus/filters.tpl');
+		
+		$tpl_filter->assign_block_vars('modules', array(
+			'ID' => '',
+		));
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+		{
+			$configuration = $module->get_configuration();
+			
+			$tpl_filter->assign_block_vars('modules', array(
+				'ID' => $module->get_id(),
+			));
+		}
+		
+		//Ajout du menu
+		if ($menu->get_id() == ''){
+			$menu->set_filters(array('/'));
+		}
+		
+		// Installed modules
+		foreach ($menu->get_filters() as $key => $filter) {
+			$filter_infos = explode('/', $filter);
+			$module_name = $filter_infos[0];
+			$regex = substr(strstr($filter, '/'), 1);
+		
+			$tpl_filter->assign_block_vars('filters', array(
+				'ID' => $key,
+				'FILTER' => $regex
+			));
+				
+			$tpl_filter->assign_block_vars('filters.modules', array(
+				'ID' => '',
+				'SELECTED' => $filter == '/' ? ' selected="selected"' : ''
+			));
+			foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+			{
+				$configuration = $module->get_configuration();
+			
+				$tpl_filter->assign_block_vars('filters.modules', array(
+					'ID' => $module->get_id(),
+					'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
+				));
+			}
+		}
+		
+		$tpl_filter->add_lang(LangLoader::get('admin-menus-Common'));
+		$tpl_filter->put_all(array(
+		    'NBR_FILTER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
+		));
+		
+		$tpl->put('filters', $tpl_filter);
+	}
+}
+?>
