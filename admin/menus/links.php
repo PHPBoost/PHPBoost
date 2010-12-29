@@ -128,24 +128,7 @@ if ($action == 'save')
     ));
     
     //Filters
-    $request = AppContext::get_request();
-    $filters = array();
-    $i = 0;
-    while (true) {
-    	if (!$request->has_postparameter('filter_module' . $i)) {
-    		break;
-    	}
-    	
-    	$filter_module = trim($request->get_poststring('filter_module' . $i), '/');
-    	$filter_regex = trim($request->get_poststring('f' . $i), '/');
-    	$filters[] = $filter_module . '/' . $filter_regex;
-    	
-    	$i++;
-    }
-    if (empty($filters)) {
-    	$filters = array('/');
-    }
-    $menu->set_filters($filters);
+    MenuAdminService::set_retrieved_filters($menu);
     
     if ($menu->is_enabled())
     {
@@ -295,53 +278,7 @@ foreach ($array_location as $key => $name)
 }
 
 //Filtres
-$tpl->assign_block_vars('modules', array(
-	'ID' => '',
-));
-foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
-{
-	$configuration = $module->get_configuration();
-	
-	$tpl->assign_block_vars('modules', array(
-		'ID' => $module->get_id(),
-	));
-}
-
-//Ajout du menu
-if ($menu->get_id() == ''){
-	$menu->set_filters(array('/'));
-}
-
-// Installed modules
-foreach ($menu->get_filters() as $key => $filter) {
-	$filter_infos = explode('/', $filter);
-	$module_name = $filter_infos[0];
-	$regex = substr(strstr($filter, '/'), 1);
-
-	$tpl->assign_block_vars('filters', array(
-		'ID' => $key,
-		'FILTER' => $regex
-	));
-		
-	$tpl->assign_block_vars('filters.modules', array(
-		'ID' => '',
-		'SELECTED' => $filter == '/' ? ' selected="selected"' : ''
-	));
-	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
-	{
-		$configuration = $module->get_configuration();
-	
-		$tpl->assign_block_vars('filters.modules', array(
-			'ID' => $module->get_id(),
-			'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
-		));
-	}
-}
-
-$tpl->add_lang(LangLoader::get('admin-menus-Common'));
-$tpl->put_all(array(
-    'NBR_FILTER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
-));
+MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->put_all(array(
     'ID_MAX' => AppContext::get_uid()
