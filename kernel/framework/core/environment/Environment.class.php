@@ -185,6 +185,7 @@ class Environment
 
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
+		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
 
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
