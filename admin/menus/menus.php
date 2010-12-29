@@ -39,8 +39,6 @@ $theme_post = retrieve(POST, 'theme', '');
 $action = retrieve(GET, 'action', '');
 $move = retrieve(GET, 'move', '');
 
-
-
 function menu_admin_link($menu, $mode)
 {
     $link = '';

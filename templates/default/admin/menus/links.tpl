@@ -224,13 +224,13 @@ function add_filter(nbr_filter)
 		</fieldset>
 		
 		<fieldset>
-			<legend>{L_FILTERS}</legend>
+			<legend>{@filters}</legend>
 			<p>
-				{L_LINKS_MENUS_FILTERS_EXPLAIN}
+				{@links_menus_filters_explain}
 			</p>
 			<br />
 			<dl>
-				<dt><label>{L_FILTERS}</label></dt>
+				<dt><label>{@filters}</label></dt>
 				<dd>
 					# START filters #
 					{PATH_TO_ROOT} / 
@@ -245,7 +245,7 @@ function add_filter(nbr_filter)
 					
 					<span id="add_filter{NBR_FILTER}"></span>
 					<p style="text-align:center;margin-top:10px;">
-						<a href="javascript:add_filter({NBR_FILTER})" title="Ajouter un filtre"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
+						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
 					</p>
 				</dd>
 			</dl>
