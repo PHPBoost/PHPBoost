@@ -111,7 +111,6 @@ interface Template extends View
     function assign_vars(array $array_vars);
 
 	/**
-     * @deprecated Use <code>put_all</code> or <code>put</code> instead
 	 * @desc Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
 	 * @param string $block_name Block name.
