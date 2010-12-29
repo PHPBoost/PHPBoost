@@ -152,7 +152,7 @@ class MenuService
 	 * @desc Delete a Menu from the database
 	 * @param mixed $menu The (Menu) Menu or its (int) id to delete from the database
 	 */
-	public static function delete(Menu $menu)
+	public static function delete($menu)
 	{
 		if (!is_object($menu))
 		{
