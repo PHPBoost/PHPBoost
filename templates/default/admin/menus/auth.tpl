@@ -19,6 +19,10 @@ function check_msg(){
         <fieldset> 
             <legend>{L_ACTION_MENUS}</legend>
             <dl>
+                <dt><label>{L_NAME}</label></dt>
+                <dd><label>{NAME}</label></dd>
+            </dl>
+            <dl>
                 <dt><label for="activ">{L_STATUS}</label></dt>
                 <dd><label>
                     <select name="activ" id="activ">
@@ -36,7 +40,9 @@ function check_msg(){
                 <dt><label for="auth">{L_AUTHS}</label></dt>
                 <dd><label>{AUTH_MENUS}</label></dd>
             </dl>
-        </fieldset>     
+        </fieldset>   
+        
+        # INCLUDE filters #  
     
         <fieldset class="fieldset_submit">
             <legend>{L_ACTION}</legend>
