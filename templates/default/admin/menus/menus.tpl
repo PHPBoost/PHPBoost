@@ -112,13 +112,21 @@ function createSortableMenu()
 			</tr>
 			<tr>
 				<td id="container_header" colspan="3">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);"
+onmouseout="menu_hide_block('addmenu1', 0);">
+								    <p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+								    <p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+								    <p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'header')" type="checkbox" name="{L_HEADER}" checked="checked" /> {L_HEADER}</label></p>
@@ -137,13 +145,21 @@ function createSortableMenu()
 			</tr>
 			<tr>
 				<td id="container_subheader" colspan="3">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);"
+onmouseout="menu_hide_block('addmenu2', 0);">
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'subheader')" type="checkbox" name="{L_SUB_HEADER}" checked="checked" /> {L_SUB_HEADER}</label></p>
@@ -162,13 +178,21 @@ function createSortableMenu()
 			</tr>
 			<tr>				
 				<td id="container_leftmenu">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);"
+onmouseout="menu_hide_block('addmenu3', 0);">
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMM} /> {L_LEFT_MENU}</label></p>
@@ -195,13 +219,21 @@ function createSortableMenu()
 					<table style="width:100%;">
 						<tr>
 							<td id="container_topcentral">
-								<div style="width:145px;margin:auto;">
+								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
-											<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+											<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);"
+onmouseout="menu_hide_block('addmenu4', 0);">
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 											</div>
 										</div>
 										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topcentral')" type="checkbox" name="{L_TOP_CENTRAL_MENU}" checked="checked" /> {L_TOP_CENTRAL_MENU}</label></p>
@@ -220,7 +252,7 @@ function createSortableMenu()
 						</tr>
 						<tr>
 							<td id="container_central">
-								<div style="width:145px;margin:auto;">
+								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;margin-top:10px;">
 										<p class="menu_block_libelle">{L_MENUS_AVAILABLE}</p>
 										<p class="menus_block_add" style="height:3px;"></p>
@@ -239,13 +271,21 @@ function createSortableMenu()
 						</tr>
 						<tr>
 							<td id="container_bottomcentral">
-								<div style="width:145px;margin:auto;">
+								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
-											<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-												<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+											<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);"
+onmouseout="menu_hide_block('addmenu5', 0);">
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+												<p
+class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 											</div>
 										</div>
 										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="{L_BOTTOM_CENTRAL_MENU}" checked="checked" /> {L_BOTTOM_CENTRAL_MENU}</label></p>
@@ -265,13 +305,21 @@ function createSortableMenu()
 					</table>
 				</td>
 				<td id="container_rightmenu">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);"
+onmouseout="menu_hide_block('addmenu6', 0);">
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMM} /> {L_RIGHT_MENU}</label></p>
@@ -297,13 +345,21 @@ function createSortableMenu()
 			</tr>
 			<tr>
 				<td colspan="3" id="container_topfooter">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);"
+onmouseout="menu_hide_block('addmenu7', 0);">
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topfooter')" type="checkbox" name="{L_TOP_FOOTER}" checked="checked" /> {L_TOP_FOOTER}</label></p>
@@ -322,13 +378,21 @@ function createSortableMenu()
 			</tr>
 			<tr>
 				<td colspan="3" id="container_footer">
-					<div style="width:145px;margin:auto;">
+					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
-								<div style="position:absolute;bottom:28px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add" style="margin:0px;margin-top:-1px;"><a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div
+style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);"
+onmouseout="menu_hide_block('addmenu8', 0);">
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
+									<p class="menus_block_add
+menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
+href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small_link">{L_ADD_FEED_MENUS}</a></p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'footer')" type="checkbox" name="{L_FOOTER}" checked="checked" /> {L_FOOTER}</label></p>

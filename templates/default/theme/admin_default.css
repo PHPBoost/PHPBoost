@@ -61,7 +61,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 .menu_block_libelle {
 	color:#0E2A48;
-	width:145px;
+	width:165px;
 	height:15px;
 	margin:0px;
 	text-align:center;
@@ -71,12 +71,13 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border-bottom:none;
 	-moz-border-radius:4px 4px 0px 0px;
 	-khtml-border-radius-topleft:5px;
+	-khtml-border-radius-topright:5px;
 	-webkit-border-top-left-radius:5px;
-    border-radius:5px;
+	-webkit-border-top-right-radius:5px;
 }
 .menus_block_add {
 	color:#0E2A48;
-	width:145px;
+	width:165px;
 	height:20px;
 	margin:0px;
 	background:#f9f9f9;
@@ -86,8 +87,17 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	text-align:center;
 	-moz-border-radius:0px 0px 4px 4px;
 	-khtml-border-radius-bottomleft:5px;
+	-khtml-border-radius-bottomright:5px;
 	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+}
+.menus_block_add_links {
+	padding:2px 0px;
+	-moz-border-radius:0px;
+	-khtml-border-radius-bottomleft:0px;
+	-khtml-border-radius-bottomright:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
 }
 .menus_block_container {
 	width:190px;
