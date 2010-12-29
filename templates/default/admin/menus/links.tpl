@@ -145,22 +145,6 @@ function deleteElement(element_id)
     }
 }
 
-function add_filter(nbr_filter)
-{
-	if (typeof this.max_filter_p == 'undefined' )
-		this.max_filter_p = nbr_filter;
-	else
-		this.max_filter_p++;
-
-	document.getElementById('add_filter' + this.max_filter_p).innerHTML +=  
-		'{PATH_TO_ROOT} / <select name="filter_module' + (this.max_filter_p + 1) + '" id="filter_module">' +
-		# START modules #
-		'<option value="{modules.ID}">{modules.ID}</option>' +
-		# END modules #
-		'</select> / <input type="text" name="f' + (this.max_filter_p + 1) + '" value="" size="25" /><br />' +
-		'<span id="add_filter' + (this.max_filter_p + 1) + '"></span>';
-}
-
 -->
 </script>
 <div id="admin_contents">
