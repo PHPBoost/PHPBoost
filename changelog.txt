@@ -31,7 +31,7 @@
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
-[*] [color=red]Nouveauté:[/color] Possibilité d'afficher/masquer un menu sur un module ou une catégorie/page donnée.
+[*] [color=red]Nouveauté:[/color] Possibilité d'afficher/masquer un menu sur un module ou une page donnée.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 
