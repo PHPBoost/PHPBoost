@@ -68,7 +68,6 @@
 ------------------------------------- NOYAU ------------------------------------
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
-- [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)

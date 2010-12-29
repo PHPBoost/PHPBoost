@@ -318,8 +318,19 @@ class MenuService
 				{
 					if ($menu->is_enabled())
 					{
+						$filters = '';
+						$has_filter = false;
+						foreach ($menu->get_filters() as $filter) 
+						{
+							$has_filter = ($filter != '/') ? true : false;
+							$filters .= 'strpos(REWRITED_SCRIPT, "' . $filter . '") !== false || ';
+						}
+						$filters = trim($filters, '|| ');
+						
+						$cache_str .= ($has_filter) ? 'if (' . $filters . ') {' . "\n" : '';
 						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
 						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+						$cache_str .= ($has_filter) ? '}' . "\n" : '';
 					}
 				}
 			}
