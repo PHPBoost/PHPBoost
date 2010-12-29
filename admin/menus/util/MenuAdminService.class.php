@@ -38,9 +38,11 @@ class MenuAdminService
 	    		break;
 	    	}
 	    	
-	    	$filter_module = trim($request->get_poststring('filter_module' . $i), '/');
+	    	$filter_module = $request->get_poststring('filter_module' . $i);
 	    	$filter_regex = trim($request->get_poststring('f' . $i), '/');
-	    	$filters[] = $filter_module . '/' . $filter_regex;
+	    	if ($filter_regex != '_deleted') {
+	    		$filters[] = $filter_module . '/' . $filter_regex;
+	    	}
 	    	
 	    	$i++;
 	    }
