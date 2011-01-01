@@ -29,18 +29,21 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-abstract class AbstractFormButton implements FormButton
+abstract class AbstractFormButton extends AbstractFormField implements FormButton
 {
-    private $name = '';
-    private $label = '';
     private $type = '';
+    private $name = '';
     private $onclick_action = '';
 
-    public function __construct($type, $label, $name, $onclick_action = '')
+    public function __construct($type, $value, $name, $onclick_action = '', $field_options = array())
     {
-        $this->type = $type;
-        $this->label = $label;
+        parent::__construct($name, '', $value, $field_options, array());
+    	
+        if ($this->get_css_field_class() == '') {
+        	$this->set_css_field_class('inline');
+        }
         $this->name = $name;
+        $this->type = $type;
         $this->onclick_action = $onclick_action;
     }
 
@@ -49,9 +52,11 @@ abstract class AbstractFormButton implements FormButton
      */
     public function display()
     {
-        $template = $this->get_template();
+        $template = $this->get_default_template();
+        $this->assign_common_template_variables($template);
+        
         $template->put_all(array(
-			'LABEL' => $this->label,
+			'VALUE' => $this->get_value(),
 			'BUTTON_NAME' => $this->name,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
@@ -61,12 +66,12 @@ abstract class AbstractFormButton implements FormButton
 
     public function get_name()
     {
-        return $this->name;
+        return $this->value;
     }
 
     public function set_name($name)
     {
-        $this->name = $name;
+        $this->value = $name;
     }
 
     public function get_label()
@@ -79,9 +84,11 @@ abstract class AbstractFormButton implements FormButton
         $this->label = $label;
     }
 
-    protected function get_template()
+    protected function get_default_template()
     {
-    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}" value="true">{LABEL}</button>');
+    	return new StringTemplate('<dl# IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}"# ENDIF #>
+    		<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}" value="true">{VALUE}</button>
+    	</dl>');
     }
 }
 ?>

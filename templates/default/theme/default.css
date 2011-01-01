@@ -40,6 +40,24 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     margin-top:20px;
 }
 
+/* Alignements */
+.inline {
+    display:inline;
+}
+.center {
+	text-align:center;
+	display:block;
+}
+.left {
+    text-align:left;
+    display:block;
+}
+.right {
+    text-align:right;
+    display:block;
+}
+	
+
 div.block_title span {
     border:1px solid;
     padding:2px 8px;

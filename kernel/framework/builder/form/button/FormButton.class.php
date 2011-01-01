@@ -31,10 +31,6 @@
  */
 interface FormButton
 {	
-    /**
-     * @return Template
-     */
-    function display();
 }
 
 ?>

@@ -31,9 +31,9 @@
  */
 class FormButtonSubmit extends AbstractFormButton
 {
-    public function __construct($label, $name, $onclick_action = '')
+    public function __construct($value, $name, $onclick_action = '', $field_options = array())
     {
-        parent::__construct('submit', $label, $name, $onclick_action);
+        parent::__construct('submit', $value, $name, $onclick_action, $field_options);
     }
 
     public function has_been_submited()
