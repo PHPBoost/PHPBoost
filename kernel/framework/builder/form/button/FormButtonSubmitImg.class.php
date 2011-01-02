@@ -34,7 +34,8 @@ class FormButtonSubmitImg extends FormButtonSubmit
     public function __construct($value, $image, $name, $onclick_action = '', $field_options = array())
     {
     	$new_value = '<img src="' . $image . '" alt="' . $value . '" title="' . $value . '" />';
-        parent::__construct($new_value, $name, $onclick_action, array());
+        $this->set_button_css_class('image');
+    	parent::__construct($new_value, $name, $onclick_action, $field_options);
     }
 }
 ?>

@@ -325,6 +325,11 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 }
 
 /* Fieldsets */
+fieldset.horizontal_fieldset {
+    float:left;
+    margin:0 5px;
+}
+
 div.horizontal_fieldset, div.vertical_fieldset {
     margin:20px 0;
 }
@@ -350,6 +355,13 @@ div.horizontal_fieldset dl dd{
 
 div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label {
     font-weight:bold;
+}
+
+/* Boutons */
+button.image{
+    background:none;
+    border:none;
+    cursor:pointer;
 }
 
 /* Lightbox*/

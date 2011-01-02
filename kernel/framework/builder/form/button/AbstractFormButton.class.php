@@ -34,6 +34,7 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
     private $type = '';
     private $name = '';
     private $onclick_action = '';
+    private $button_css_class = '';
 
     public function __construct($type, $value, $name, $onclick_action = '', $field_options = array())
     {
@@ -58,6 +59,7 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
         $template->put_all(array(
 			'VALUE' => $this->get_value(),
 			'BUTTON_NAME' => $this->name,
+			'BUTTON_CLASS' => $this->button_css_class,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
         ));
@@ -83,11 +85,21 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
     {
         $this->label = $label;
     }
+    
+    public function get_button_css_class()
+    {
+        return $this->button_css_class;
+    }
+
+    public function set_button_css_class($button_css_class)
+    {
+        $this->button_css_class = $button_css_class;
+    }
 
     protected function get_default_template()
     {
     	return new StringTemplate('<dl# IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}"# ENDIF #>
-    		<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}" value="true">{VALUE}</button>
+    		<button type="${TYPE}" name="${BUTTON_NAME}"  class="{BUTTON_CLASS} onclick="${escape(ONCLICK_ACTION)}" value="true">{VALUE}</button>
     	</dl>');
     }
 }
