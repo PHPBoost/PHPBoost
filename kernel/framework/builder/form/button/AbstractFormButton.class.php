@@ -66,12 +66,12 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
 
     public function get_name()
     {
-        return $this->value;
+        return $this->name;
     }
 
     public function set_name($name)
     {
-        $this->value = $name;
+        $this->name = $name;
     }
 
     public function get_label()

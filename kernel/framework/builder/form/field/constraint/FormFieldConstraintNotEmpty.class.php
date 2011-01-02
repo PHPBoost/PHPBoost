@@ -40,7 +40,7 @@ class FormFieldConstraintNotEmpty implements FormFieldConstraint
 		{
 			$js_onblur_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
 		}
-		$this->js_onblur_message = TextHelper::to_js_string($js_onblur_message);
+		$this->js_onblur_message = $js_onblur_message;
 		
 		$this->js_onsubmit_message = $js_onsubmit_message;
 	}
@@ -54,7 +54,7 @@ class FormFieldConstraintNotEmpty implements FormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . $this->js_onblur_message . ')';
+			', ' . TextHelper::to_js_string($this->js_onblur_message . ' : ' . $field->get_label()) . ')';
 	}
 }
 
