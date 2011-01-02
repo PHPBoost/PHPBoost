@@ -36,7 +36,7 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
     private $onclick_action = '';
     private $button_css_class = '';
 
-    public function __construct($type, $value, $name, $onclick_action = '', $field_options = array())
+    public function __construct($type, $value, $name, $onclick_action = '', array $field_options = array())
     {
         parent::__construct($name, '', $value, $field_options, array());
     	

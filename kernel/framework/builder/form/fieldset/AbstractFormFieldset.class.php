@@ -241,10 +241,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		{
 			return $this->template;
 		}
-		else
-		{
-			return $this->get_default_template();
-		}
+		return $this->get_default_template();
 	}
 
 	/**

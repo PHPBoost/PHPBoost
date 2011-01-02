@@ -47,14 +47,20 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 .center {
 	text-align:center;
 	display:block;
+	padding:0;
+	margin:2px 0px;
 }
 .left {
     text-align:left;
     display:block;
+    padding:0;
+    margin:2px 0px;
 }
 .right {
     text-align:right;
     display:block;
+    padding:0;
+    margin:2px 0px;
 }
 	
 
