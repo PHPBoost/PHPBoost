@@ -29,11 +29,8 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormFieldsetButtons implements FormFieldset
+class FormFieldsetButtons extends AbstractFormFieldset
 {
-	private $id;
-	private $form_id;
-	private $disabled;
 	/**
 	 * @var Template
 	 */
@@ -42,16 +39,10 @@ class FormFieldsetButtons implements FormFieldset
 	 * @var FormButton[]
 	 */
 	private $buttons;
-	private $css_class = false;
 
-	public function __construct($id)
+	public function __construct($id, $options = array())
 	{
-		$this->id = $id;
-	}
-
-	public function get_id()
-	{
-		return $this->id;
+		parent::__construct($id, $options);
 	}
 
 	public function add_field(FormField $form_field)
@@ -59,34 +50,9 @@ class FormFieldsetButtons implements FormFieldset
 		throw new UnsupportedOperationException("FormFieldsetButtons supports only buttons and not fields");
 	}
 
-	public function set_form_id($prefix)
-	{
-		$this->form_id = $prefix;
-	}
-
-	function get_html_id()
-	{
-		return $this->form_id . '_' . $this->id;
-	}
-
 	public function validate()
 	{
 		return true;
-	}
-
-	public function disable()
-	{
-		$this->disabled = true;
-	}
-
-	public function enable()
-	{
-		$this->disabled = false;
-	}
-
-	public function is_disabled()
-	{
-		return $this->disabled;
 	}
 
 	public function display()
@@ -107,19 +73,15 @@ class FormFieldsetButtons implements FormFieldset
 		return $template;
 	}
 
-	private function get_template_to_use()
+	protected function get_default_template()
 	{
-		if ($this->template != null)
-		{
-			return $this->template;
-		}
 		return new StringTemplate('<fieldset id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF # class="fieldset_submit">
 		# START buttons #
 			# INCLUDE buttons.BUTTON #
 		# END buttons #
 	</fieldset>');
 	}
-
+	
 	public function get_onsubmit_validations()
 	{
 		return array();
