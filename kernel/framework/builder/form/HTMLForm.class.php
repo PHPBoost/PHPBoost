@@ -220,9 +220,12 @@ class HTMLForm
 
 		foreach ($this->validation_error_messages as $error_message)
 		{
-			$template->assign_block_vars('validation_error_messages', array(
-				'ERROR_MESSAGE' => $error_message
-			));
+			if (!empty($error_message)) 
+			{
+				$template->assign_block_vars('validation_error_messages', array(
+					'ERROR_MESSAGE' => $error_message
+				));
+			}
 		}
 
 		self::$js_already_included = true;

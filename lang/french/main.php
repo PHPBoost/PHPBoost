@@ -85,7 +85,7 @@ $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
 $LANG['forget_pass'] = 'Mot de passe oublié';
 
-$LANG['require'] = 'Les champs marqués * sont obligatoires!';
+$LANG['require'] = 'Les champs marqués * sont obligatoires !';
 $LANG['required_field'] = 'Le champs \"%s\" est obligatoire !';
 
 //Alertes formulaires
