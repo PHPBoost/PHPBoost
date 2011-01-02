@@ -42,6 +42,7 @@ class FormFieldsetButtons implements FormFieldset
 	 * @var FormButton[]
 	 */
 	private $buttons;
+	private $css_class = false;
 
 	public function __construct($id)
 	{
