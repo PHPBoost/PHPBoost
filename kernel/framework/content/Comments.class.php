@@ -181,17 +181,17 @@ class Comments
 		if (!$this->is_kernel_script)
 		{
 
-			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
+			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->get_info_module();
 		}
 		//Sinon c'est le noyau
 		else
 		{
-			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_kernel_script();
+			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->get_info_kernel_script();
 		}
 	}
 
    //Récupération de la table du module associée aux commentaires.
-    private function _get_info_module()
+    private function get_info_module()
     {
         global $Sql;
 
@@ -214,7 +214,7 @@ class Comments
     }
 
     //Initialisation des paramètres quand il s'agit du noyau qui appelle
-    private function _get_info_kernel_script()
+    private function get_info_kernel_script()
     {
         global $Sql;
 
