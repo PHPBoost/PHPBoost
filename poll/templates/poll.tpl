@@ -123,7 +123,7 @@
 						# START list.result #
 						<div class="row1 text_small">
 							<p>{list.result.ANSWERS}</p>
-							<img src="../templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll.png" height="10px" width="{list.result.WIDTH}" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /> {result.PERCENT}% [{list.result.NBRVOTE} {list.result.L_VOTE}]
+							<img src="../templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll.png" height="10px" width="{list.result.WIDTH}" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /> {list.result.PERCENT}% [{list.result.NBRVOTE} {list.result.L_VOTE}]
 						</div>
 						# END list.result #	
 						<div class="row2">

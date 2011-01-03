@@ -87,8 +87,8 @@ else
 			include_once('../gallery/gallery.class.php');
 			$Gallery = new Gallery;
 
-			$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
-			$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
+			$name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
+			$previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 			
 			if (!empty($id_file))
 				echo $Gallery->Rename_pics($id_file, $name, $previous_name);
