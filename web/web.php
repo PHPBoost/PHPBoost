@@ -29,10 +29,11 @@ require_once('../kernel/begin.php');
 require_once('../web/web_begin.php'); 
 require_once('../kernel/header.php'); 
 
+$tpl = new FileTemplate('web/web.tpl');
+
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {
-	$Template->set_filenames(array('web'=> 'web/web.tpl'));
-	
+
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -66,7 +67,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		$java = '';
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'JAVA' => $java,
 		'EDIT' => $edit,
 		'DEL' => $del
@@ -75,10 +76,8 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage notation.
 	 
 	$Note = new Note('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
-	
-	
-	
-	$Template->put_all(array(
+
+	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
@@ -102,17 +101,13 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'COMMENTS' => display_comments('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'))
 		));
 	}	
-
-	$Template->pparse('web');
 }
 elseif (!empty($idcat) && empty($idweb)) //Catégories.
 {
-	$Template->set_filenames(array('web'=> 'web/web.tpl'));
-	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -123,7 +118,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	FROM " . PREFIX . "web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
@@ -176,12 +171,9 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	 
 	$Pagination = new DeprecatedPagination();
 		
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
-
-	//Notes
-	
 
 	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM " . PREFIX . "web
@@ -193,7 +185,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
-		$Template->assign_block_vars('web', array(			
+		$tpl->assign_block_vars('web', array(			
 			'NAME' => $row['title'],
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -204,13 +196,9 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		));
 	}
 	$Sql->query_close($result);
-	
-	$Template->pparse('web');
 }
 else
 {
-	$Template->set_filenames(array('web'=> 'web/web.tpl'));
-	
 	$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
 	LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
 	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
@@ -223,7 +211,7 @@ else
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
 	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_WEB_CAT' => true,
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
@@ -246,7 +234,7 @@ else
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$Template->assign_block_vars('cat_list', array(
+		$tpl->assign_block_vars('cat_list', array(
 			'WIDTH' => $column_width,
 			'TOTAL' => $row['count'],
 			'CAT' => $row['name'],
@@ -256,10 +244,9 @@ else
 		));
 	}
 	$Sql->query_close($result);
-	
-	$Template->pparse('web');
 }
-			
+$tpl->display();
+
 require_once('../kernel/footer.php'); 
 
 ?>
