@@ -48,6 +48,16 @@ class FormFieldConstraintNotEmpty implements FormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
+		if (is_array($value))
+		{
+			foreach ($value->get_raw_value() as $key => $value)
+			{
+				if ($value !== null && $value != '')
+				{
+					return false;
+				}
+			}
+		}
 		return $value !== null && $value != '';
 	}
 
