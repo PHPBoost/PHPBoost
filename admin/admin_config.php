@@ -95,6 +95,14 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
 	
+	$rewrite_unspecified = false;
+	$check_rewrite = false;
+	try {
+		$check_rewrite = $server_configuration->has_url_rewriting();
+	} catch (UnsupportedOperationException $ex) {
+		$rewrite_unspecified = true;
+	}
+	
 	$Template->put_all(array(
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
 		'SERVER_PATH' 		=> $general_config->get_site_path(),
@@ -102,7 +110,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'SELECT_TIMEZONE' 	=> $select_timezone,
 		'CHECKED' 			=> $server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
 		'UNCHECKED' 		=> !$server_environment_config->is_url_rewriting_enabled() ? 'checked="checked"' : '',
-		'CHECK_REWRITE' 	=> $server_configuration->has_url_rewriting() ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>',
+		'C_REWRITE_NO' 	=> !$check_rewrite && !$rewrite_unspecified,
+		'C_REWRITE_OK' 	=> $check_rewrite,
+		'C_REWRITE_UNSPECIFIED' 	=> $rewrite_unspecified,
 		'HTACCESS_MANUAL_CONTENT' => $server_environment_config->get_htaccess_manual_content(),
 		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($server_environment_config->is_output_gziping_enabled() && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
@@ -151,6 +161,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_UNLOCK_ADMIN' 	=> $LANG['unlock_admin'],
 		'L_UNLOCK_ADMIN_EXPLAIN' 	=> $LANG['unlock_admin_explain'],
 		'L_UNLOCK_LINK' 	=> $LANG['send_unlock_admin'],
+		'L_YES' 			=> $LANG['yes'],
+		'L_NO' 			=> $LANG['no'],
+		'L_UNSPECIFIED' 			=> $LANG['unspecified'],
 		'L_UPDATE' 			=> $LANG['update'],
 		'L_RESET' 			=> $LANG['reset']	
 	));
@@ -183,12 +196,14 @@ elseif (!empty($_POST['advanced']))
 		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
 		
+		$debug = retrieve(POST, 'debug', false);
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
 		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
 		$server_environment_config->set_output_gziping_enabled(retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
-		$server_environment_config->set_debug_mode_enabled(retrieve(POST, 'debug', false));
+		$server_environment_config->set_debug_mode_enabled($debug);
 		ServerEnvironmentConfig::save();
+		
 		HtaccessFileCache::regenerate();
 		
 		$sessions_config = SessionsConfig::load();
@@ -198,6 +213,13 @@ elseif (!empty($_POST['advanced']))
 		SessionsConfig::save();
 		
 		AppContext::get_cache_service()->clear_cache();
+
+		// Activation du mode débug après la suppression du cache
+		if ($debug) {
+			Debug::enabled_debug_mode(array());
+		} else {
+			Debug::disable_debug_mode();
+		}
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
