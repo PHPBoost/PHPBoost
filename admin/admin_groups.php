@@ -152,9 +152,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 }
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
-	$Template->set_filenames(array(
-		'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
-	));
+	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
 	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	if (!empty($group['id']))
@@ -183,7 +181,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 	
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		$Pagination = new DeprecatedPagination();
-		$Template->put_all(array(
+		$template->put_all(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
@@ -234,7 +232,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . NumberHelper::numeric($user_id) . "'", __LINE__, __FILE__);
 			if (!empty($login))
 			{
-				$Template->assign_block_vars('member', array(
+				$template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
 					'U_USER_ID' => url('.php?id=' . $user_id, '-' . $user_id . '.php')
@@ -245,13 +243,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 	else
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	
-	$Template->pparse('admin_groups_management2');
+	$template->display();
 }
 elseif ($add) //Interface d'ajout du groupe.
 {
-	$Template->set_filenames(array(
-	'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
-	));
+	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
@@ -264,7 +260,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';
 	}
 		
-	$Template->put_all(array(
+	$template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IMG_GROUPS' => $img_groups,
@@ -294,20 +290,18 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_ADD' => $LANG['add']
 	));
 
-	$Template->pparse('admin_groups_management2');
+	$template->display();
 }
 else //Liste des groupes.
 {
-	$Template->set_filenames(array(
-		'admin_groups_management'=> 'admin/admin_groups_management.tpl'
-	 ));
+	$template = new FileTemplate('admin/admin_groups_management.tpl');
 	 
 	$group_cache = GroupsCache::load()->get_groups();
 	
 	$nbr_group = count($group_cache);
 	
 	$Pagination = new DeprecatedPagination();
-	$Template->put_all(array(
+	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -328,7 +322,7 @@ else //Liste des groupes.
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$Template->assign_block_vars('group', array(
+		$template->assign_block_vars('group', array(
 			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -337,7 +331,7 @@ else //Liste des groupes.
 	}
 	$Sql->query_close($result);
 	
-	$Template->pparse('admin_groups_management');
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

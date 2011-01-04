@@ -35,9 +35,7 @@ $edit = !empty($_GET['edit']) ? true : false;
 $idcom = retrieve(GET, 'id', 0);
 $module = retrieve(GET, 'module', '');
 
-$Template->set_filenames(array(
-	'admin_com_management'=> 'admin/admin_com_management.tpl'
-));
+$tpl = new FileTemplate('admin/admin_com_management.tpl');
 
 //Chargement du cache
 $comments_config = CommentsConfig::load();
@@ -58,7 +56,7 @@ $Sql->query_close($result);
 $Pagination = new DeprecatedPagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table(DB_TABLE_COM, __LINE__, __FILE__);
-$Template->put_all(array(
+$tpl->put_all(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $comments_config->get_max_links_comment(), 3),
@@ -85,7 +83,7 @@ foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 		$info_module = load_ini_file('../' . $modulef . '/lang/', get_ulang());
 		if (isset($info_module['info']) && !empty($info_module['com']))
 		{
-			$Template->assign_block_vars('modules_com', array(
+			$tpl->assign_block_vars('modules_com', array(
 				'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
 				'U_MODULES' => $info_module['com']
 			));
@@ -203,7 +201,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	$row['path'] = preg_replace('`&quote=[0-9]+`', '', $row['path']);
 	
-	$Template->assign_block_vars('com', array(
+	$tpl->assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 		'COM_SCRIPT' => 'anchor_' . $row['script'],
@@ -230,7 +228,7 @@ while ($row = $Sql->fetch_assoc($result))
 	));
 }
 
-$Template->pparse('admin_com_management'); // traitement du modele	
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

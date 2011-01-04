@@ -34,6 +34,8 @@ $edit = retrieve(GET, 'edit', false, TBOOL);
 $id = retrieve(GET, 'id', 0);
 $name = retrieve(GET, 'name', '');
 
+$template = new FileTemplate('admin/admin_themes_management.tpl');
+
 if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
 	$Session->csrf_get_protect(); //Protection csrf
@@ -81,11 +83,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 	}
 	else
-	{
-		$Template->set_filenames(array(
-			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
-		));
-		
+	{		
 		//Récupération des configuration dans la base de données.
 		$theme = $Sql->query_array(DB_TABLE_THEMES, "theme", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
@@ -93,7 +91,7 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme['theme'] . '/config/', get_ulang());
 
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
 			'THEME_NAME' => $info_theme['name'],
@@ -109,8 +107,6 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 			'L_RESET' => $LANG['reset'],
 			'L_UPDATE' => $LANG['update']
 		));
-
-		$Template->pparse('admin_themes_management'); 
 	}
 }
 elseif ($uninstall) //Désinstallation.
@@ -161,12 +157,8 @@ elseif ($uninstall) //Désinstallation.
 				$idtheme = $key;
 			}
 		}
-				
-		$Template->set_filenames(array(
-			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
-		));
-		
-		$Template->put_all(array(
+
+		$template->put_all(array(
 			'C_DEL_THEME' => true,
 			'IDTHEME' => $idtheme,
 			'THEME' => get_utheme(),
@@ -180,16 +172,12 @@ elseif ($uninstall) //Désinstallation.
 			'L_DELETE' => $LANG['delete']
 		));
 
-		$Template->pparse('admin_themes_management'); 
 	}
 }		
 else
 {			
-	$Template->set_filenames(array(
-		'admin_themes_management'=> 'admin/admin_themes_management.tpl'
-	));
-	 
-	$Template->put_all(array(
+
+	$template->put_all(array(
 		'C_THEME_MAIN' => true,
 		'THEME' => get_utheme(),	
 		'LANG' => get_ulang(),	
@@ -240,7 +228,7 @@ else
 		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
 		
 		$default_theme = ($row['theme'] == UserAccountsConfig::load()->get_default_theme());
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'C_THEME_DEFAULT' => $default_theme ? true : false,
 			'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
 			'IDTHEME' =>  $row['id'],		
@@ -265,18 +253,18 @@ else
 	
 	if ($z != 0)
 	{
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_THEME_PRESENT' => true
 		));
 	}
 	else
 	{
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 	}
 		
-	$Template->pparse('admin_themes_management'); 
+	$template->display(); 
 }
 
 require_once '../admin/admin_footer.php';

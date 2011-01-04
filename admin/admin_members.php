@@ -295,10 +295,8 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 }
 elseif ($add)
 {
-	$Template->set_filenames(array(
-		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
-	));
-
+	$template = new FileTemplate('admin/admin_members_management2.tpl');
+	
 	//Gestion des erreurs.
 	switch ($get_error)
 	{
@@ -323,7 +321,7 @@ elseif ($add)
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);  
 		
-	$Template->put_all(array(
+	$template->put_all(array(
 		'C_USERS_ADD' => true,
 		'L_USERS_MANAGEMENT' => $LANG['members_management'],
 		'L_USERS_ADD' => $LANG['members_add'],
@@ -341,13 +339,11 @@ elseif ($add)
 		'L_ADD' => $LANG['add']
 	));
 	
-	$Template->pparse('admin_members_management2'); 	
+	$template->display(); 	
 }
 elseif (!empty($id))	
 {		
-	$Template->set_filenames(array(
-		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
-	));
+	$template = new FileTemplate('admin/admin_members_management2.tpl');
 	
 	$mbr = $Sql->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 
@@ -507,7 +503,7 @@ elseif (!empty($id))
 			$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
 		}
 		$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
-		$Template->assign_block_vars('select_lang', array(
+		$template->assign_block_vars('select_lang', array(
 			'NAME' => !empty($info_lang['name']) ? $info_lang['name'] : $lang,
 			'IDNAME' => $lang,
 			'SELECTED' => $selected
@@ -521,7 +517,7 @@ elseif (!empty($id))
 		{
 			$selected = (UserAccountsConfig::load()->get_default_theme() == $theme) ? ' selected="selected"' : '';
 			$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
-			$Template->assign_block_vars('select_theme', array(
+			$template->assign_block_vars('select_theme', array(
 				'NAME' => $info_theme['name'],
 				'IDNAME' => $theme,
 				'SELECTED' => $selected
@@ -564,7 +560,7 @@ elseif (!empty($id))
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
-	$Template->put_all(array(
+	$template->put_all(array(
 		'C_USERS_MANAGEMENT' => true,
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
@@ -673,15 +669,13 @@ elseif (!empty($id))
 		'L_RESET' => $LANG['reset']
 	));
 
-	$Template->pparse('admin_members_management2');
+	$template->display();
 }
 else
 {			
-	$Template->set_filenames(array(
-		'admin_members_management'=> 'admin/admin_members_management.tpl'
-	));
+	$template = new FileTemplate('admin/admin_members_management.tpl');
 	 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'C_DISPLAY_SEARCH_RESULT' => false
 	));
 	
@@ -697,10 +691,10 @@ else
 			$result = $Sql->query_while ($req, __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 			{ 
-				$Template->assign_block_vars('search', array(
+				$template->assign_block_vars('search', array(
 					'RESULT' => '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
 				));
-				$Template->put_all(array(
+				$template->put_all(array(
 					'C_DISPLAY_SEARCH_RESULT' => true
 				));
 			}
@@ -708,10 +702,10 @@ else
 		}
 		else
 		{
-			$Template->put_all(array(
+			$template->put_all(array(
 				'C_DISPLAY_SEARCH_RESULT' => true
 			));
-			$Template->assign_block_vars('search', array(
+			$template->assign_block_vars('search', array(
 				'RESULT' => $LANG['no_result']
 			));
 		}		
@@ -748,7 +742,7 @@ else
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -808,7 +802,7 @@ else
 		
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
-		$Template->assign_block_vars('member', array(
+		$template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],
 			'NAME' => $row['login'],
 			'RANK' => $rank,
@@ -821,7 +815,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->pparse('admin_members_management'); 
+	$template->display(); 
 }
 require_once('../admin/admin_footer.php');
 
