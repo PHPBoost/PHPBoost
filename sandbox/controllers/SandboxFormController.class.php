@@ -117,6 +117,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
+		
+		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'J\'aime', array(), array(new FormFieldMultipleCheckboxOption('meet', 'la viande'), new FormFieldMultipleCheckboxOption('fish', 'le poisson'))));
 
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
@@ -134,9 +136,7 @@ class SandboxFormController extends ModuleController
 			array(
 				$default_option,
 				new FormFieldRadioChoiceOption('Choix 2', '2')
-			),
-			array('required' => true) //TODO Ne gère pas correctement cette option
-		));
+			)));
 
 		// CHECKBOX
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));

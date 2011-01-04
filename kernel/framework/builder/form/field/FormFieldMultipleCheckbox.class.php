@@ -104,31 +104,36 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     public function retrieve_value()
     {
         $request = AppContext::get_request();
-        if ($request->has_parameter($this->get_html_id()))
+        $value = array();
+        foreach ($this->available_options as $option)
         {
-            $this->set_value($request->get_value($this->get_html_id()) == 'on' ? true : false);
+        	$option_id = $this->get_option_id($option);
+        	if ($request->has_parameter($option_id))
+        	{
+        		if ($request->get_value($option_id) == 'on')
+        		{
+        			$value[] = $option;
+        		}
+        	}
         }
-        else
-        {
-            $this->set_value(false);
-        }
+        $this->set_value($value);
     }
 
     /**
 	 * @return Template
      */
-    private function generate_html_code($option)
+    private function generate_html_code()
     {
         $tpl_src = '# START choice #
-        <input type="checkbox" name="${escape(choice.NAME)}" id="${escape(choice.ID)}" # IF choice.C_CHECKED # checked="checked" # ENDIF # />&nbsp;${escape(choice.NAME)}<br />
+        <label><input type="checkbox" name="${escape(choice.ID)}" id="${escape(choice.ID)}" # IF choice.C_CHECKED # checked="checked" # ENDIF # />&nbsp;${escape(choice.NAME)}</label><br />
         # END choice #';
 		
         $rows = array();
         foreach ($this->available_options as $option)
         {
         	$rows[] = array(
-        		'NAME' => $option->get_name(),
-        		'ID' => $option->get_id(),
+        		'NAME' => $option->get_label(),
+        		'ID' => $this->get_option_id($option),
         		'C_CHECKED' => $this->is_selected($option)
         	);
         }
@@ -139,6 +144,11 @@ class FormFieldMultipleCheckbox extends AbstractFormField
         return $tpl;
     }
     
+    private function get_option_id(FormFieldMultipleCheckboxOption $option)
+    {
+    	return $this->get_html_id() . '_' . $option->get_id();
+    }
+    
     private function is_selected(FormFieldMultipleCheckboxOption $option)
     {
     	return in_array($option, $this->get_value()); 
@@ -147,6 +157,11 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     protected function get_default_template()
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
+    }
+    
+    public function get_available_options()
+    {
+    	return $this->available_options;
     }
 }
 
