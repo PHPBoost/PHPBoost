@@ -95,7 +95,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_rewrite_rule('^member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'member/pm.php?pm=$2&id=$3&p=$4&quote=$5');
 
         $eps = AppContext::get_extension_provider_service();
-        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel', 'install'));
+        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel'));
 		foreach ($mappings as $mapping_list)
 		{
             $this->add_url_mapping($mapping_list);
@@ -119,7 +119,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Modules rules');
 
-		$modules = ModulesManager::get_installed_modules_map();
+		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
 		foreach ($modules as $module)
 		{
@@ -242,7 +242,7 @@ class HtaccessFileCache implements CacheData
 		}
 		catch(IOException $ex)
 		{
-			ErrorHandler::add_error_in_log('Couldn\'t write the .htaccess file. Please check the site root read authorizations.');
+			ErrorHandler::add_error_in_log('Couldn\'t write the .htaccess file. Please check the site root read authorizations.', '');
 		}
 	}
 
