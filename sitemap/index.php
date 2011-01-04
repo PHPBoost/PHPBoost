@@ -30,10 +30,10 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('ViewXMLSitemapController', '`^/view/xml$`'),
-	new UrlControllerMapper('ViewSitemapController', '`^/(?:view)?$`'),
-	new UrlControllerMapper('AdminSitemapController', '`^/admin$`'),
-	new UrlControllerMapper('GenerateXMLSitemapController', '`^/admin/generate$`')
+	new UrlControllerMapper('ViewXMLSitemapController', '`^/view/xml?$`'),
+	new UrlControllerMapper('ViewSitemapController', '`^(?:/view)?$`'),
+	new UrlControllerMapper('AdminSitemapController', '`^/admin/?$`'),
+	new UrlControllerMapper('GenerateXMLSitemapController', '`^/admin/generate?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);

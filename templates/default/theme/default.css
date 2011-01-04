@@ -40,6 +40,30 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     margin-top:20px;
 }
 
+/* Alignements */
+.inline {
+    display:inline;
+}
+.center {
+	text-align:center;
+	display:block;
+	padding:0;
+	margin:2px 0px;
+}
+.left {
+    text-align:left;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+.right {
+    text-align:right;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+	
+
 div.block_title span {
     border:1px solid;
     padding:2px 8px;
@@ -307,6 +331,11 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 }
 
 /* Fieldsets */
+fieldset.horizontal_fieldset {
+    float:left;
+    margin:0 5px;
+}
+
 div.horizontal_fieldset, div.vertical_fieldset {
     margin:20px 0;
 }
@@ -332,6 +361,13 @@ div.horizontal_fieldset dl dd{
 
 div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label {
     font-weight:bold;
+}
+
+/* Boutons */
+button.image{
+    background:none;
+    border:none;
+    cursor:pointer;
 }
 
 /* Lightbox*/

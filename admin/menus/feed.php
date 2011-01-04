@@ -31,8 +31,6 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-
-
 $id = retrieve(REQUEST, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 
@@ -67,9 +65,14 @@ if ($action_post == 'save')
 
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
 	if ($menu->is_enabled())
-	$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+	{
+		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+	}
 	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-
+	
+    //Filters
+    MenuAdminService::set_retrieved_filters($menu);
+	
 	MenuService::save($menu);
 	MenuService::generate_cache();
 
@@ -145,6 +148,9 @@ else
         'C_ENABLED' => true,
         'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
+	
+   // Create a new generic menu
+    $menu = new FeedMenu('', '', '');
 }
 
 $feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
@@ -222,6 +228,11 @@ foreach ($array_location as $key => $name)
 {
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
+
+
+//Filtres
+MenuAdminService::add_filter_fieldset($menu, $tpl);    
+
 
 $tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();

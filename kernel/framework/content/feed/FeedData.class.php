@@ -32,11 +32,20 @@
  */
 class FeedData
 {
+	private $title = '';        // Feed Title
+    private $link = '';         // Feed Url
+    private $date = null;       // Feed date
+    private $desc = '';         // Feed Description
+    private $lang = '';         // Feed Language
+    private $host = '';         // Feed Host
+    private $items = array();   // Items
+    private $auth_bit = 0;      // Auth bit
+	
     /**
      * @desc Builds a FeedData Object
      * @param FeedData $data an other FeedData object to clone
      */
-    function FeedData($data = null)
+    public function __construct($data = null)
     {
 		if ($data !== null && $data instanceof FeedData)
 		{
@@ -55,37 +64,37 @@ class FeedData
      * @desc Sets the feed title
      * @param string $value The title
      */
-    function set_title($value) { $this->title = strip_tags($value); }
+    public function set_title($value) { $this->title = strip_tags($value); }
     /**
      * @desc Sets the feed data date
      * @param Date $value a date object representing the feed date
      */
-    function set_date($value) { $this->date = $value; }
+    public function set_date($value) { $this->date = $value; }
     /**
      * @desc Sets the feed description
      * @param string $value the feed description
      */
-    function set_desc($value) { $this->desc = $value; }
+    public function set_desc($value) { $this->desc = $value; }
     /**
      * @desc Sets the feed language
      * @param string $value the feed language
      */
-    function set_lang($value) { $this->lang = $value; }
+    public function set_lang($value) { $this->lang = $value; }
     /**
      * @desc Sets the feed host
      * @param string $value the feed host
      */
-    function set_host($value) { $this->host = $value; }
+    public function set_host($value) { $this->host = $value; }
     /**
      * @desc Sets the feed auth bit, useful to check authorizations
      * @param int $value the bit position in an int (from 1 to 32)
      */
-    function set_auth_bit($value) { $this->auth_bit = $value; }
+    public function set_auth_bit($value) { $this->auth_bit = $value; }
     /**
      * @desc Sets the feed item link
      * @param mixed $value a string url or an Url object
      */
-    function set_link($value)
+    public function set_link($value)
     {
         if (!($value instanceof Url))
         {
@@ -94,23 +103,23 @@ class FeedData
         $this->link = $value->absolute();
     }
     
-    function add_item($item) { array_push($this->items, $item); }
+    public function add_item($item) { array_push($this->items, $item); }
     
     ## Getters ##
-    function get_title() { return $this->title; }
-    function get_link() { return $this->link; }
-    function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
-    function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
-    function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
-    function get_desc() { return $this->desc; }
-    function get_lang() { return $this->lang; }
-    function get_host() { return $this->host; }
+    public function get_title() { return $this->title; }
+    public function get_link() { return $this->link; }
+    public function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
+    public function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
+    public function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
+    public function get_desc() { return $this->desc; }
+    public function get_lang() { return $this->lang; }
+    public function get_host() { return $this->host; }
     
     /**
      * @desc Returns the feed items
      * @return FeedItem[] the feed items
      */
-    function get_items()
+    public function get_items()
     {
         global $User;
         $items = array();
@@ -123,7 +132,7 @@ class FeedData
         return $items;
     }
     
-    function serialize()
+    public function serialize()
     {
         return serialize($this);
     }
@@ -135,7 +144,7 @@ class FeedData
      * @param int $begin_at the number of the first to retrieve
      * @return FeedItem[] the items list containing $number items starting from the $begin_at one
      */
-    function subitems($number = 10, $begin_at = 0)
+    public function subitems($number = 10, $begin_at = 0)
     {
         $secured_items = $this->get_items();
         $nb_items = count($secured_items);
@@ -147,18 +156,7 @@ class FeedData
         
         return $items;
     }
-    
-    ## Private Methods ##
-    
-    ## Private attributes ##
-    var $title = '';        // Feed Title
-    var $link = '';         // Feed Url
-    var $date = null;       // Feed date
-    var $desc = '';         // Feed Description
-    var $lang = '';         // Feed Language
-    var $host = '';         // Feed Host
-    var $items = array();   // Items
-    var $auth_bit = 0;      // Auth bit
+
 }
 
 ?>

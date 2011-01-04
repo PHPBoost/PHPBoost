@@ -38,8 +38,8 @@ class ExtendedFieldsDatabaseService
 		self::add_extended_field_to_member($extended_field);
 
 		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, auth)
-			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :auth)", array(
+			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
+			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :freeze, :auth)", array(
                 'name' => $extended_field->get_name(),
                 'position' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
@@ -50,6 +50,7 @@ class ExtendedFieldsDatabaseService
 				'required' => $extended_field->get_required(),
 				'display' => $extended_field->get_display(),
 				'regex' => $extended_field->get_regex(),
+				'freeze' => $extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 		));
 	}
@@ -58,9 +59,13 @@ class ExtendedFieldsDatabaseService
 	{
 		self::change_extended_field_to_member($extended_field);
 
+		$data_field = self::select_data_field_by_id($extended_field);
+		$former_field_type = $data_field['field_type'];
+		$new_field_type = $extended_field->get_field_type();
+
 		PersistenceContext::get_querier()->inject(
-			"UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET 
-			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, auth = :auth
+			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
 			, array(
                 'name' => $extended_field->get_name(),
@@ -72,9 +77,16 @@ class ExtendedFieldsDatabaseService
 				'required' => $extended_field->get_required(),
 				'display' => $extended_field->get_display(),
 				'regex' => $extended_field->get_regex(),
+				'freeze' => $extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),
 		));
+		
+		// If change field type, delete old informations
+		if ($former_field_type !== $new_field_type)
+		{
+			self::delete_empty_fields_member($extended_field);
+		}
 	}
 	
 	public static function delete_extended_field(ExtendedField $extended_field)
@@ -82,56 +94,72 @@ class ExtendedFieldsDatabaseService
 		self::drop_extended_field_to_member($extended_field);	
 
 		PersistenceContext::get_querier()->inject(
-			"DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = :id"
+			"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
 			, array(
 				'id' => $extended_field->get_id(),
 		));
 	}
 	
+	public static function select_data_field_by_id(ExtendedField $extended_field)
+	{
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
+	}
+
+	public static function select_data_field_by_field_name(ExtendedField $extended_field)
+	{
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
+	}
+	
 	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $extended_field->get_field_name() . "'", __LINE__, __FILE__) > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_id(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $extended_field->get_id() . "'", __LINE__, __FILE__) > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE id = '" . $extended_field->get_id() . "'") > 0 ? true : false;
 	}
 	
-	public static function add_extended_field_to_member(ExtendedField $extended_field)
+	public static function check_field_exist_by_type(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0 ? true : false;
 	}
 	
-	public static function change_extended_field_to_member(ExtendedField $extended_field)
+	private static function delete_empty_fields_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . self::select_field_name($extended_field) . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
+	}
+	
+	private static function add_extended_field_to_member(ExtendedField $extended_field)
+	{
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+	}
+	
+	private static function change_extended_field_to_member(ExtendedField $extended_field)
+	{
+		$data = self::select_data_field_by_id($extended_field);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
 	}
 
-	public static function drop_extended_field_to_member(ExtendedField $extended_field)
+	private static function drop_extended_field_to_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . self::select_field_name($extended_field), __LINE__, __FILE__);	
-	}
-	
-	public static function select_field_name(ExtendedField $extended_field)
-	{
-		return PersistenceContext::get_sql()->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $extended_field->get_id() . "'", __LINE__, __FILE__);
+		$data = self::select_data_field_by_id($extended_field);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name'], __LINE__, __FILE__);	
 	}
 	
 	public static function type_columm_field(ExtendedField $extended_field)
 	{
-		if (is_numeric($extended_field->get_field_type()))
+		$field_type = $extended_field->get_field_type();
+		if (is_numeric($field_type))
 		{
-			$array_field_type = array(
-				1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
-				2 => 'TEXT NOT NULL', 
-				3 => 'TEXT NOT NULL', 
-				4 => 'TEXT NOT NULL', 
-				5 => 'TEXT NOT NULL', 
-				6 => 'TEXT NOT NULL'
-			);
-			
-			return $array_field_type[$extended_field->get_field_type()];
+			switch ($field_type) 
+			{
+				case 1:
+					return 'VARCHAR(255) NOT NULL DEFAULT \'\'';
+					break;
+				default:
+					return 'TEXT NOT NULL';
+			}
 		}
 	}
 	

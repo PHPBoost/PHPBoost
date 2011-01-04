@@ -129,7 +129,7 @@ class InstallDBConfigController extends InstallController
 
 	private function handle_form($host, $port, $login, $password, $schema, $tables_prefix)
 	{
-		$service = new InstallationServices(LangLoader::get_locale());
+		$service = new InstallationServices();
 		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
 		switch ($status)
 		{
@@ -153,6 +153,11 @@ class InstallDBConfigController extends InstallController
 	{
 		if (!$service->is_already_installed() || (!$this->overwrite_field->is_disabled() && $this->overwrite_field->is_checked()))
 		{
+			// TODO, à activer quand la suppression du cache fonctionnera correctement
+			/*
+			$cache = new CacheService();
+			$cache->clear_phpboost_cache();
+			*/
 			PersistenceContext::close_db_connection();
 			$service->create_phpboost_tables(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
 			AppContext::get_response()->redirect(InstallUrlBuilder::website());

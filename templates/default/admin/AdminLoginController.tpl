@@ -28,11 +28,11 @@
 		<!--
 		function check_connect(){
 			if(document.getElementById('login').value == "") {
-				alert({JL_REQUIRE_PSEUDO});
+				alert('{L_REQUIRE_PSEUDO}');
 				return false;
 			}
 			if(document.getElementById('password').value == "") {
-				alert({JL_REQUIRE_PASSWORD});
+				alert('{L_REQUIRE_PASSWORD}');
 				return false;
 			}
 			return true;
@@ -43,28 +43,28 @@
 		
 		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset_content" style="width:550px;margin:auto;margin-top:10%">
 			<fieldset>
-				<legend>{EL_ADMIN}</legend>
+				<legend>{L_ADMIN}</legend>
 				<dl>
-					<dt><label for="login">{EL_PSEUDO}</label></dt>
+					<dt><label for="login">{L_PSEUDO}</label></dt>
 					<dd><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label></dd>
 				</dl>
 				<dl>
-					<dt><label for="password">{EL_PASSWORD}</label></dt>
+					<dt><label for="password">{L_PASSWORD}</label></dt>
 					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label></dd>
 				</dl>
 				# IF C_UNLOCK #
 				<dl>
-					<dt><label for="unlock">{EL_UNLOCK_ADMIN_PANEL}</label></dt>
+					<dt><label for="unlock">{L_UNLOCK_ADMIN_PANEL}</label></dt>
 					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30" /></label></dd>
 				</dl>
 				# ENDIF #
 				<dl>
-					<dt><label for="auto">{EL_AUTOCONNECT}</label></dt>
+					<dt><label for="auto">{L_AUTOCONNECT}</label></dt>
 					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto" /></label></dd>
 				</dl>
 			</fieldset>			
 			<fieldset class="fieldset_submit">
-				<legend>{EL_DELETE}</legend>
+				<legend>{L_DELETE}</legend>
 				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />		
 			</fieldset>	
 		</form>

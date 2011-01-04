@@ -31,8 +31,6 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-
-
 $menu_id = retrieve(REQUEST, 'id', 0);
 $action = retrieve(GET, 'action', '');
 
@@ -128,6 +126,9 @@ if ($action == 'save')
     $menu->set_auth(Authorizations::build_auth_array_from_form(
         AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
     ));
+    
+    //Filters
+    MenuAdminService::set_retrieved_filters($menu);
     
     if ($menu->is_enabled())
     {
@@ -276,9 +277,13 @@ foreach ($array_location as $key => $name)
     ));
 }
 
+//Filtres
+MenuAdminService::add_filter_fieldset($menu, $tpl);
+
 $tpl->put_all(array(
     'ID_MAX' => AppContext::get_uid()
 ));
+
 $tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

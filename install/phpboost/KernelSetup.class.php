@@ -43,8 +43,8 @@ class KernelSetup
 	private static $group_table;
 	private static $lang_table;
 	private static $member_table;
-	private static $member_extend_table;
-	private static $member_extend_cat_table;
+	private static $member_extended_fields_table;
+	private static $member_extended_fields_list;
 	private static $menus_table;
 	private static $menu_configuration_table;
 	private static $pm_msg_table;
@@ -74,8 +74,8 @@ class KernelSetup
 		self::$group_table = PREFIX . 'group';
 		self::$lang_table = PREFIX . 'lang';
 		self::$member_table = PREFIX . 'member';
-		self::$member_extend_table = PREFIX . 'member_extend';
-		self::$member_extend_cat_table = PREFIX . 'member_extend_cat';
+		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
+		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
 		self::$menus_table = PREFIX . 'menus';
 		self::$menu_configuration_table = PREFIX . 'menu_configuration';
 		self::$pm_msg_table = PREFIX . 'pm_msg';
@@ -112,8 +112,8 @@ class KernelSetup
 			self::$group_table,
 			self::$lang_table,
 			self::$member_table,
-			self::$member_extend_table,
-			self::$member_extend_cat_table,
+			self::$member_extended_fields_table,
+			self::$member_extended_fields_list,
 			self::$menus_table,
 			self::$menu_configuration_table,
 			self::$pm_msg_table,
@@ -142,8 +142,8 @@ class KernelSetup
 		$this->create_group_table();
 		$this->create_lang_table();
 		$this->create_member_table();
-		$this->create_member_extend_table();
-		$this->create_member_extend_cat_table();
+		$this->create_member_extended_fields_table();
+		$this->create_member_extended_fields_list_table();
 		$this->create_menus_table();
 		$this->create_menu_configuration_table();
 		$this->create_pm_msg_table();
@@ -343,7 +343,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$member_table, $fields, $options);
 	}
 
-	private function create_member_extend_table()
+	private function create_member_extended_fields_table()
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -352,10 +352,10 @@ class KernelSetup
 		$options = array(
 			'primary' => array('user_id'),
 		);
-		self::$db_utils->create_table(self::$member_extend_table, $fields, $options);
+		self::$db_utils->create_table(self::$member_extended_fields_table, $fields, $options);
 	}
 
-	private function create_member_extend_cat_table()
+	private function create_member_extended_fields_list_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -369,13 +369,14 @@ class KernelSetup
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'display' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'freeze' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'indexes' => array(
 				'id' => array('type' => 'unique', 'fields' => 'id')
 		));
-		self::$db_utils->create_table(self::$member_extend_cat_table, $fields, $options);
+		self::$db_utils->create_table(self::$member_extended_fields_list, $fields, $options);
 	}
 
 	private function create_menus_table()

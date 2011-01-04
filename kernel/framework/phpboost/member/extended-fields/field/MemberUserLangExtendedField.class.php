@@ -27,12 +27,19 @@
  
 class MemberUserLangExtendedField extends AbstractMemberExtendedField
 {
+	public function __construct()
+	{
+		$this->field_used_once = true;
+		$this->field_used_phpboost_config = true;
+	}
+	
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_lang(),
-			$this->list_langs()
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_lang(),
+			$this->list_langs(),
+			array('description' => $member_extended_field->get_description())
 		));	
 	}
 	
@@ -40,9 +47,19 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_lang(),
-			$this->list_langs()
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), AppContext::get_user()->get_attribute('user_lang'),
+			$this->list_langs(),
+			array('description' => $member_extended_field->get_description())
 		));	
+	}
+	
+	public function display_field_profile(MemberExtendedField $member_extended_field)
+	{
+		$fieldset = $member_extended_field->get_fieldset();
+		
+		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', AppContext::get_user()->get_attribute('user_lang'));
+
+		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_lang['name']));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)

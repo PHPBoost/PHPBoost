@@ -103,7 +103,7 @@ require_once('../kernel/header.php');
 
 if (!empty($encoded_title) && $num_rows == 1)
 {
-	$Template->set_filenames(array('page'=> 'pages/page.tpl'));
+	$Template = new FileTemplate('pages/page.tpl');
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -157,7 +157,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
-			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $pages_data_path . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
 		));
 	}
 	
@@ -182,7 +182,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		'L_LINKS' => $LANG['pages_links_list']
 	));
 	
-	$Template->pparse('page');
+	$Template->display();
 }
 //Page non trouvée
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
@@ -201,18 +201,18 @@ elseif ($id_com > 0)
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth_com');
 	
-	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
-	
+	$Template = new FileTemplate('pages/com.tpl');
+		
 	$Template->put_all(array(
 		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s'))
 	));
 	
-	$Template->pparse('com');
+	$Template->display();
 }
 //gestionnaire d'erreurs
 elseif (!empty($error))
 {
-	$Template->set_filenames(array('error'=> 'pages/error.tpl'));
+	$Template = new FileTemplate('pages/error.tpl');
 	
 	$Template->put_all(array(
 		'L_TITLE' => $LANG['error']
@@ -241,19 +241,16 @@ elseif (!empty($error))
 		default :
 			AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php'));
 	}
-	$Template->pparse('error');
+	$Template->display();
 }
 else
 {
-	$Template->set_filenames(array('index'=> 'pages/index.tpl'));
+	$Template = new FileTemplate('pages/index.tpl');
 	
 	$num_pages = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '0'", __LINE__, __FILE__);
 	$num_coms = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE script = 'pages'", __LINE__, __FILE__);
 	
-	$pages_data_path = $Template->get_module_data_path('pages');
-	
 	$Template->put_all(array(
-		'PAGES_PATH' => $pages_data_path,
 		'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
 		'NUM_COMS' => sprintf($LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
 		'L_EXPLAIN_PAGES' => $LANG['pages_explain'],
@@ -286,7 +283,7 @@ else
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 			{
-				$root .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+				$root .= '<tr><td class="row2"><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 			}
 		}
 	}
@@ -303,7 +300,7 @@ else
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
-			$root .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+			$root .= '<tr><td class="row2"><img src="' . $Template->get_pictures_data_path() . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
 	}
 	$Sql->query_close($result);
@@ -331,20 +328,20 @@ else
 		if ($sub_cats_number > 0)
 		{	
 			$Template->assign_block_vars('list', array(
-				'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $pages_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-				<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $pages_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+				<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 			));
 		}
 		else
 		{
 			$Template->assign_block_vars('list', array(
-				'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 			));
 		}
 	}
 	$Sql->query_close($result);
 	
-	$Template->pparse('index');
+	$Template->display();
 }
 
 require_once('../kernel/footer.php'); 

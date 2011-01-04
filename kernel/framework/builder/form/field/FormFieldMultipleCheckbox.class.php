@@ -32,6 +32,7 @@
 class FormFieldMultipleCheckbox extends AbstractFormField
 {
 	private $available_options;
+	
     /**
      * @desc Constructs a FormFieldCheckbox.
      * @param string $id Field identifier
@@ -51,7 +52,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     private function set_selected_options(array $selected_options)
     {
     	$value = array();
-    	foreach ($option as $selected_options)
+    	foreach ($selected_options as $option)
     	{
     		if (is_string($option))
     		{
@@ -71,7 +72,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     
     private function get_option($identifier)
     {
-    	foreach ($option as $this->available_options)
+    	foreach ($this->available_options as $option)
     	{
     		if ($option->get_id() == $identifier)
     		{
@@ -113,19 +114,34 @@ class FormFieldMultipleCheckbox extends AbstractFormField
         }
     }
 
-    private function generate_html_code()
+    /**
+	 * @return Template
+     */
+    private function generate_html_code($option)
     {
-        $tpl_src = '<input type="checkbox" name="${escape(NAME)}" id="${escape(ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # />';
-
+        $tpl_src = '# START choice #
+        <input type="checkbox" name="${escape(choice.NAME)}" id="${escape(choice.ID)}" # IF choice.C_CHECKED # checked="checked" # ENDIF # />&nbsp;${escape(choice.NAME)}<br />
+        # END choice #';
+		
+        $rows = array();
+        foreach ($this->available_options as $option)
+        {
+        	$rows[] = array(
+        		'NAME' => $option->get_name(),
+        		'ID' => $option->get_id(),
+        		'C_CHECKED' => $this->is_selected($option)
+        	);
+        }
+        
         $tpl = new StringTemplate($tpl_src);
-        $tpl->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
-			'C_CHECKED' => $this->is_checked()
-        ));
+        $tpl->put_all(array('choice' => $rows));
 
         return $tpl;
+    }
+    
+    private function is_selected(FormFieldMultipleCheckboxOption $option)
+    {
+    	return in_array($option, $this->get_value()); 
     }
 
     protected function get_default_template()

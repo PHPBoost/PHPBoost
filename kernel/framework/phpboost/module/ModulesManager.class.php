@@ -53,6 +53,20 @@ class ModulesManager
 	{
 		return ModulesConfig::load()->get_modules();
 	}
+	
+	/**
+	 * @return Module[string] the Modules map (name => module) of the installed modules (and activated )
+	 */
+	public static function get_activated_modules_map()
+	{
+		$installed_modules = array();
+		foreach (ModulesConfig::load()->get_modules() as $module) {
+			if ($module->is_activated()) {
+				$installed_modules[] = $module;
+			}
+		}
+		return $installed_modules;
+	}
 
 	/**
 	 * @return Module[string] the Modules map (name => module) of the uninstalled modules (activated or not)
@@ -68,11 +82,22 @@ class ModulesManager
 	 */
 	public static function get_installed_modules_map_sorted_by_localized_name()
 	{
-		$modules = ModulesConfig::load()->get_modules();
+		$modules = self::get_installed_modules_map();
 		usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
 		return $modules;
 	}
 
+	/**
+	 * @return Module[string] the Modules map (name => module) of the installed modules (and activated)
+	 * sorted by name
+	 */
+	public static function get_activated_modules_map_sorted_by_localized_name()
+	{
+		$modules = self::get_activated_modules_map();
+		usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		return $modules;
+	}
+	
 	public static function callback_sort_modules_by_name(Module $module1, Module $module2)
 	{
 		if ($module1->get_configuration()->get_name() > $module2->get_configuration()->get_name())
@@ -110,6 +135,10 @@ class ModulesManager
 		return ModulesConfig::load()->get_module($module_id)->check_auth();
 	}
 
+	/**
+	 * @desc tells whether the requested module is installed (and activated)
+	 * @return bool true if the requested module is installed
+	 */
 	public static function is_module_installed($module_id)
 	{
 		return in_array($module_id, self::get_installed_modules_ids_list());

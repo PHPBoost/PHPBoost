@@ -1,10 +1,10 @@
 /* --------------------------------------
 		generic.css
- Contient les classes gÃ©nÃ©riques, ne devant pas Ãªtre modifiÃ©e pour chaque thÃ¨me.
---------------------------------------*/ /* Balises */
+ Contient les classes génériques, ne devant pas être modifiée pour chaque thême.
+--------------------------------------*/ 
+/* Balises */
 img {
     border:none;
-	max-width:500px;
 	overflow:scroll;
 }
 

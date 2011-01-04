@@ -154,7 +154,7 @@ else
 
 require_once('../kernel/header.php');
 
-$Template->set_filenames(array('pages_redirections'=> 'pages/redirections.tpl'));
+$Template = new FileTemplate('pages/redirections.tpl');
 
 if ($id_rename > 0)
 {
@@ -205,7 +205,7 @@ elseif ($id_redirection > 0)
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
-			'ACTIONS' => '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
+			'ACTIONS' => '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
 		));
 
 		if ($nbr_rows == 0)
@@ -244,7 +244,7 @@ else
 		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="redirections.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
+			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="redirections.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}
 	
@@ -261,14 +261,10 @@ else
 	));
 }
 
-
-
-
 //Contenu de la racine:
 $Cache->load('pages');
 
-$Template->pparse('pages_redirections');
-
+$Template->display();
 
 require_once('../kernel/footer.php');
 

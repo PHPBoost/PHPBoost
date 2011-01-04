@@ -29,18 +29,22 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-abstract class AbstractFormButton implements FormButton
+abstract class AbstractFormButton extends AbstractFormField implements FormButton
 {
-    private $name = '';
-    private $label = '';
     private $type = '';
+    private $name = '';
     private $onclick_action = '';
+    private $button_css_class = '';
 
-    public function __construct($type, $label, $name, $onclick_action = '')
+    public function __construct($type, $value, $name, $onclick_action = '', array $field_options = array())
     {
-        $this->type = $type;
-        $this->label = $label;
+        parent::__construct($name, '', $value, $field_options, array());
+    	
+        if ($this->get_css_field_class() == '') {
+        	$this->set_css_field_class('inline');
+        }
         $this->name = $name;
+        $this->type = $type;
         $this->onclick_action = $onclick_action;
     }
 
@@ -49,10 +53,13 @@ abstract class AbstractFormButton implements FormButton
      */
     public function display()
     {
-        $template = $this->get_template();
+        $template = $this->get_default_template();
+        $this->assign_common_template_variables($template);
+        
         $template->put_all(array(
-			'LABEL' => $this->label,
+			'VALUE' => $this->get_value(),
 			'BUTTON_NAME' => $this->name,
+			'BUTTON_CLASS' => $this->button_css_class,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
         ));
@@ -78,10 +85,22 @@ abstract class AbstractFormButton implements FormButton
     {
         $this->label = $label;
     }
-
-    protected function get_template()
+    
+    public function get_button_css_class()
     {
-    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="submit" onclick="${escape(ONCLICK_ACTION)}" value="true">{LABEL}</button>');
+        return $this->button_css_class;
+    }
+
+    public function set_button_css_class($button_css_class)
+    {
+        $this->button_css_class = $button_css_class;
+    }
+
+    protected function get_default_template()
+    {
+    	return new StringTemplate('<dl# IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}"# ENDIF #>
+    		<button type="${TYPE}" name="${BUTTON_NAME}"  class="{BUTTON_CLASS} onclick="${escape(ONCLICK_ACTION)}" value="true">{VALUE}</button>
+    	</dl>');
     }
 }
 ?>

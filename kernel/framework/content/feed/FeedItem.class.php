@@ -34,43 +34,45 @@
  */
 class FeedItem
 {
-    ## Public Methods ##
-    /**
-     * @desc Builds a FeedItem element
-     */
-    function FeedItem() {}
-
+	private $title = '';        // Item Title
+    private $link = '';         // Item Url
+    private $date = null;       // Feed date
+    private $desc = '';         // Item Description
+    private $guid = '';         // Item GUID
+    private $image_url = '';    // Item Image
+    private $auth = null;       // Authorizations
+	
     ## Setters ##
     /**
      * @desc Sets the feed item title
      * @param string $value The title
      */
-    function set_title($value) { $this->title = strip_tags($value); }
+    public function set_title($value) { $this->title = strip_tags($value); }
     /**
      * @desc Sets the feed item date
      * @param Date $value a date object representing the item date
      */
-    function set_date($value) { $this->date = $value; }
+    public function set_date($value) { $this->date = $value; }
     /**
      * @desc Sets the feed item description
      * @param string $value the feed item description
      */
-    function set_desc($value) { $this->desc = $value; }
+    public function set_desc($value) { $this->desc = $value; }
     /**
      * @desc Sets the feed item picture
      * @param string $value the picture url
      */
-    function set_image_url($value) { $this->image_url = $value; }
+    public function set_image_url($value) { $this->image_url = $value; }
     /**
      * @desc Sets the feed item auth, useful to check authorizations
      * @param int[string] $value the item authorizations array
      */
-    function set_auth($auth) { $this->auth = $auth; }
+    public function set_auth($auth) { $this->auth = $auth; }
     /**
      * @desc Sets the feed item link
      * @param mixed $value a string url or an Url object
      */
-    function set_link($value)
+	public function set_link($value)
     {
         if (!($value instanceof Url))
         {
@@ -82,7 +84,7 @@ class FeedItem
      * @desc Sets the feed item guid
      * @param mixed $value a string url or an Url object
      */
-    function set_guid($value)
+    public function set_guid($value)
     {
         if ($value instanceof Url)
         {
@@ -95,25 +97,15 @@ class FeedItem
     }
     
     ## Getters ##
-    function get_title() { return $this->title; }
-    function get_link() { return $this->link; }
-    function get_guid() { return $this->guid; }
-    function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
-    function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
-    function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
-    function get_desc() { return $this->desc; }
-    function get_image_url() { return $this->image_url; }
-    function get_auth() { return $this->auth; }
-    
-    ## Private Methods ##
-    ## Private attributes ##
-    var $title = '';        // Item Title
-    var $link = '';         // Item Url
-    var $date = null;       // Feed date
-    var $desc = '';         // Item Description
-    var $guid = '';         // Item GUID
-    var $image_url = '';    // Item Image
-    var $auth = null;       // Authorizations
+    public function get_title() { return $this->title; }
+    public function get_link() { return $this->link; }
+    public function get_guid() { return $this->guid; }
+    public function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
+    public function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
+    public function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
+    public function get_desc() { return $this->desc; }
+    public function get_image_url() { return $this->image_url; }
+    public function get_auth() { return $this->auth; }
 }
 
 ?>

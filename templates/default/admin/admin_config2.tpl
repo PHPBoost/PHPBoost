@@ -83,7 +83,15 @@
 				<br />
 				<p style="text-align:center;">			
 					{L_REWRITE_SERVER}
-					{CHECK_REWRITE}
+					# IF C_REWRITE_OK #
+					<span class="success_test">{L_YES}</span>
+					# ENDIF #
+					# IF C_REWRITE_UNSPECIFIED #
+					<span class="unspecified_test">{L_UNSPECIFIED}</span>
+					# ENDIF #
+					# IF C_REWRITE_NO #
+					<span class="failure_test">{L_NO}</span>
+					# ENDIF #
 				</p>					
 				<p style="text-align:center;">
 					<label><input type="radio" name="rewrite_engine" value="1" {CHECKED} /> {L_ACTIV}</label>

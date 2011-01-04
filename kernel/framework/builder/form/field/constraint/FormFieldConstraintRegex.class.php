@@ -67,7 +67,12 @@ class FormFieldConstraintRegex implements FormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		return preg_match($this->php_regex, $value) > 0;
+		$is_required = $field->is_required();
+		if (!empty($value) || $is_required)
+		{	
+			return preg_match($this->php_regex, $value) > 0;
+		}
+		return true;
 	}
 
 	public function get_js_validation(FormField $field)

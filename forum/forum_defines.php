@@ -54,5 +54,4 @@ define('H_WAIT_ALERT', 'wait_alert'); //Mise en attente d'une alerte.
 define('H_DEL_ALERT', 'del_alert'); //Suppression d'une alerte.
 define('H_READONLY_USER', 'readonly_user'); //Modification lecture seule d'un membre.
 
-
 ?>

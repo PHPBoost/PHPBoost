@@ -30,12 +30,12 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('ConfirmController', '`^/confirm(?:/[0-9]+)?/?$`', array('key')),
-	new UrlControllerMapper('RegisterController', '`^/register/?$`'),
-	new UrlControllerMapper('MemberController', '`^/member/?$`'),
-	new UrlControllerMapper('ViewProfilController', '`^/profil(?:/[0-9]+)?/?$`', array('user_id')),
-	new UrlControllerMapper('EditProfilController', '`^/profil/edit/?$`'),
-	new UrlControllerMapper('404Controller', '`^/404/?$`'),
+	new UrlControllerMapper('MemberConfirmRegisterationController', '`^/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
+	new UrlControllerMapper('MemberRegisterController', '`^/register/?$`'),
+	new UrlControllerMapper('MemberViewProfileController', '`^/profil(?:/([0-9]+))?/?$`', array('user_id')),
+	new UrlControllerMapper('MemberEditProfilController', '`^/profil/edit/?$`'),
+	
+	new UrlControllerMapper('MemberViewAllMembersController', '`^/member/?$`'),
 	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),
 	new UrlControllerMapper('ErrorController', '`^/error/([a-z][0-9]+)/?$`', array('type')),
 	new UrlControllerMapper('MemberHomeController', '`^.*$`')
