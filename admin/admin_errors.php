@@ -31,9 +31,7 @@ require_once('../admin/admin_header.php');
 
 $all = !empty($_GET['all']) ? true : false;
 
-$Template->set_filenames(array(
-	'admin_errors_management'=> 'admin/admin_errors_management.tpl'
-));
+$tpl = new FileTemplate('admin/admin_errors_management.tpl');
 
 $file_path = '../cache/error.log';
 
@@ -50,8 +48,8 @@ if (!empty($_POST['erase']))
 	}
 }
 
-$Template->add_lang(LangLoader::get('admin-errors-Common'));
-$Template->put_all(array(
+$tpl->add_lang(LangLoader::get('admin-errors-Common'));
+$tpl->put_all(array(
 	'L_ERRORS' => $LANG['errors'],
 	'L_DESC' => $LANG['description'],
 	'L_DATE' => $LANG['date'],
@@ -108,7 +106,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		$i = 0;
 		foreach ($array_errinfo as $key => $errinfo)
 		{
-			$Template->assign_block_vars('errors', array(
+			$tpl->assign_block_vars('errors', array(
 				'IMG' => $images[$errinfo['errclass']],
 				'DATE' => $errinfo['errdate'],
 				'CLASS' => $errinfo['errclass'],
@@ -126,7 +124,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 	}
 	else
 	{
-		$Template->assign_block_vars('errors', array(
+		$tpl->assign_block_vars('errors', array(
 			'TYPE' => '&nbsp;',
 			'DESC' => '',
 			'FILE' => '',
@@ -136,7 +134,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 	}
 }
 
-$Template->pparse('admin_errors_management');
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 
