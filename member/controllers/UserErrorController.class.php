@@ -67,6 +67,11 @@ class UserErrorController extends AbstractController
 		$this->link = $link;
 	}
 	
+	public function set_error_type($error_type)
+	{
+		$this->error_type = $error_type;
+	}
+	
 	public function set_time_redirect($time)
 	{
 		if (is_numeric($time))
