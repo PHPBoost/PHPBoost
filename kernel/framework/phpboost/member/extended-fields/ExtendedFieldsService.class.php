@@ -31,6 +31,8 @@
  */
 class ExtendedFieldsService
 {
+	const BY_ID = 1;
+	const BY_FIELD_NAME = 2;
 	const SORT_BY_ID = 1;
 	const SORT_BY_FIELD_NAME = 2;
 	
@@ -103,7 +105,7 @@ class ExtendedFieldsService
 	/*
 	 * This function required object ExtendedField containing the id
 	 */
-	public static function delete(ExtendedField $extended_field)
+	public static function delete(ExtendedField $extended_field, $by = self::BY_ID)
 	{
 		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
 		$class = new $name_class();
@@ -112,17 +114,24 @@ class ExtendedFieldsService
 			// TODO Change exception and applicate to display fields
 			throw new Exception('Le champs est utilisé dans la configuration de phpboost et ne peux pas être supprimé !');
 		}
-		if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
+		if ($by == self::BY_ID) 
 		{
-			ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
-			
-			ExtendedFieldsCache::invalidate();
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
+			{
+				ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+				
+				ExtendedFieldsCache::invalidate();
+			}
 		}
-		else
+		else if ($by == self::BY_FIELD_NAME)
 		{
-			// The field is not exited
-			throw new Exception('The field is not existed !');
-		}	
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+			{
+				ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+				
+				ExtendedFieldsCache::invalidate();
+			}
+		}
 	}
 	
 	/*

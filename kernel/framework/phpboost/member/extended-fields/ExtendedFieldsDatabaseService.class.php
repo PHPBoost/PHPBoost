@@ -91,13 +91,27 @@ class ExtendedFieldsDatabaseService
 	
 	public static function delete_extended_field(ExtendedField $extended_field)
 	{
+		$id = $extended_field->get_id();
+		$field_name = $extended_field->get_field_name();
+		
 		self::drop_extended_field_to_member($extended_field);	
-
-		PersistenceContext::get_querier()->inject(
-			"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
-			, array(
-				'id' => $extended_field->get_id(),
-		));
+		if (!empty($id))
+		{
+			PersistenceContext::get_querier()->inject(
+				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
+				, array(
+					'id' => $id,
+			));
+		}
+		else if (!empty($field_name))
+		{
+			PersistenceContext::get_querier()->inject(
+				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE field_name = :field_name"
+				, array(
+					'field_name' => $field_name,
+			));
+		}
+		
 	}
 	
 	public static function select_data_field_by_id(ExtendedField $extended_field)
@@ -143,8 +157,17 @@ class ExtendedFieldsDatabaseService
 
 	private static function drop_extended_field_to_member(ExtendedField $extended_field)
 	{
-		$data = self::select_data_field_by_id($extended_field);
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name'], __LINE__, __FILE__);	
+		$field_name = $extended_field->get_field_name();
+		if (!empty($field_name))
+		{
+			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $field_name, __LINE__, __FILE__);	
+		}
+		else
+		{
+			$data = self::select_data_field_by_id($extended_field);
+			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name'], __LINE__, __FILE__);	
+		}
+		
 	}
 	
 	public static function type_columm_field(ExtendedField $extended_field)
