@@ -30,65 +30,67 @@
 #                                                           French                                                                               #
  ####################################################
 
+$lang = array();
+ 
 //Titre
-$LANG['title_stats'] = 'Statistiques';
+$lang['title_stats'] = 'Statistiques';
 
 //Error
-$LANG['error_gd'] = 'Librairie GD non chargée!';
+$lang['error_gd'] = 'Librairie GD non chargée!';
 
 //Statistiques
-$LANG['stats'] = 'Statistiques';
-$LANG['more_stats'] = 'Plus de stats';
-$LANG['site'] = 'Site';
-$LANG['referer_s'] = 'Sites référents';
-$LANG['page_s'] = 'Pages vues';
-$LANG['browser_s'] = 'Navigateurs';
-$LANG['keyword_s'] = 'Mots clés';
-$LANG['fai'] = 'Fournisseurs d\'accès Internet';
-$LANG['all_fai'] = 'Voir la liste complète des fournisseurs d\'accès Internet';
-$LANG['10_fai'] = 'Voir les 10 principaux fournisseurs d\'accès Internet';
-$LANG['os'] = 'Systèmes d\'exploitation';
-$LANG['other'] = 'Autres';
-$LANG['number'] = 'Nombre ';
-$LANG['start'] = 'Création du site';
-$LANG['stat_lang'] = 'Pays des visiteurs';
-$LANG['all_langs'] = 'Voir la liste complète des pays des visiteurs';
-$LANG['10_langs'] = 'Voir les 10 principaux pays des visiteurs';
-$LANG['visits_year'] = 'Voir les statistiques de l\'année';
-$LANG['unknown'] = 'Inconnu';
-$LANG['last_member'] = 'Dernier membre';
-$LANG['top_10_posters'] = 'Top 10 : posteurs';
-$LANG['version'] = 'Version';
-$LANG['colors'] = 'Couleurs';
+$lang['stats'] = 'Statistiques';
+$lang['more_stats'] = 'Plus de stats';
+$lang['site'] = 'Site';
+$lang['referer_s'] = 'Sites référents';
+$lang['page_s'] = 'Pages vues';
+$lang['browser_s'] = 'Navigateurs';
+$lang['keyword_s'] = 'Mots clés';
+$lang['fai'] = 'Fournisseurs d\'accès Internet';
+$lang['all_fai'] = 'Voir la liste complète des fournisseurs d\'accès Internet';
+$lang['10_fai'] = 'Voir les 10 principaux fournisseurs d\'accès Internet';
+$lang['os'] = 'Systèmes d\'exploitation';
+$lang['other'] = 'Autres';
+$lang['number'] = 'Nombre ';
+$lang['start'] = 'Création du site';
+$lang['stat_lang'] = 'Pays des visiteurs';
+$lang['all_langs'] = 'Voir la liste complète des pays des visiteurs';
+$lang['10_langs'] = 'Voir les 10 principaux pays des visiteurs';
+$lang['visits_year'] = 'Voir les statistiques de l\'année';
+$lang['unknown'] = 'Inconnu';
+$lang['last_member'] = 'Dernier membre';
+$lang['top_10_posters'] = 'Top 10 : posteurs';
+$lang['version'] = 'Version';
+$lang['colors'] = 'Couleurs';
 
 //Calendrier
-$LANG['calendar'] = 'Calendrier';
-$LANG['events'] = 'Evènements';
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
+$lang['calendar'] = 'Calendrier';
+$lang['events'] = 'Evènements';
+$lang['january'] = 'Janvier';
+$lang['february'] = 'Février';
+$lang['march'] = 'Mars';
+$lang['april'] = 'Avril';
+$lang['may'] = 'Mai';
+$lang['june'] = 'Juin';
+$lang['july'] = 'Juillet';
+$lang['august'] = 'Août';
+$lang['september'] = 'Septembre';
+$lang['october'] = 'Octobre';
+$lang['november'] = 'Novembre';
+$lang['december'] = 'Décembre';
+$lang['monday'] = 'Lun';
+$lang['tuesday'] = 'Mar';
+$lang['wenesday'] = 'Mer';
+$lang['thursday'] = 'Jeu';
+$lang['friday'] = 'Ven';
+$lang['saturday'] = 'Sam';
+$lang['sunday']	= 'Dim';
 
 //Sites référents.
-$LANG['total_visit'] = 'Total des visites';
-$LANG['average_visit'] = 'Visites moyennes';
-$LANG['trend'] = 'Tendance';
-$LANG['last_update'] = 'Dernière visite';
+$lang['total_visit'] = 'Total des visites';
+$lang['average_visit'] = 'Visites moyennes';
+$lang['trend'] = 'Tendance';
+$lang['last_update'] = 'Dernière visite';
 
 //Navigateurs.
 $stats_array_browsers = array(
@@ -407,4 +409,7 @@ $stats_array_lang = array(
 	'other' => array('Autres', '../other.png')
 );
 
+// DEPRECATED
+global $LANG;
+$LANG = array_merge($LANG, $lang);
 ?>
