@@ -57,9 +57,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 }
 else
 {			
-	$Template->set_filenames(array(
-		'admin_members_config'=> 'admin/admin_members_config.tpl'
-	));
+	$template = new FileTemplate('admin/admin_members_config.tpl');
 	
 	$user_account_config = UserAccountsConfig::load();
 	
@@ -74,13 +72,13 @@ else
 	
 	for ($i = 0; $i < 5; $i++)
 	{
-		$Template->assign_block_vars('difficulty', array(
+		$template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
 			'SELECTED' => ($user_account_config->get_registration_captcha_difficulty() == $i) ? 'selected="selected"' : ''
 		));
 	}
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
 		'ACTIV_REGISTER_ENABLED' => $user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
 		'ACTIV_REGISTER_DISABLED' => !$user_account_config->is_registration_enabled() ? 'selected="selected"' : '',
@@ -146,7 +144,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->pparse('admin_members_config'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');

@@ -114,11 +114,9 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_lang_add'=> 'admin/admin_lang_add.tpl'
-	));
+	$template = new FileTemplate('admin/admin_lang_add.tpl');
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'THEME' => get_utheme(),		
 		'LANG' => get_ulang(),
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -174,7 +172,7 @@ else
 		}
 		
 		$info_lang = load_ini_file('../lang/', $value_array);
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'IDLANG' =>  $value_array,		
 			'LANG' =>  $info_lang['name'],	
 			'IDENTIFIER' =>  $info_lang['identifier'],
@@ -187,15 +185,15 @@ else
 	}
 
 	if ($z != 0)
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
 	
-	$Template->pparse('admin_lang_add'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');
