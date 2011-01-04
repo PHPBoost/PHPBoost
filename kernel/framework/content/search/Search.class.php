@@ -35,6 +35,13 @@ define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_use_times());
  */
 class Search
 {
+	private $id_search;
+    private $search;
+    private $modules;
+    private $modules_conditions;
+    private $id_user;
+    private $errors;
+	
     //----------------------------------------------------------------- PUBLIC
     //---------------------------------------------------------- Constructeurs
 
@@ -47,7 +54,7 @@ class Search
      * This argument is an array which keys are module id's and values are arrays
      * containing the specialized search arguments for a particular module.
      */
-    function Search($search = '', $modules = array())
+    public function __construct($search = '', $modules = array())
     {
         global $Sql, $User;
 
@@ -58,7 +65,7 @@ class Search
         $this->cache = array();
 
         $this->id_user = $User->get_attribute('user_id');
-        $this->modules_conditions = $this->_get_modules_conditions($this->modules);
+        $this->modules_conditions = $this->get_modules_conditions($this->modules);
 
 
         // Deletes old results from cache
@@ -185,7 +192,7 @@ class Search
      * @param int $offset the offset from which return results
      * @return int The number of results
      */
-    function get_results_by_id(&$results, $id_search = 0, $nb_lines = 0, $offset = 0)
+    public function get_results_by_id(&$results, $id_search = 0, $nb_lines = 0, $offset = 0)
     {
         global $Sql;
         $results = array();
@@ -223,7 +230,7 @@ class Search
      * @param int $offset the offset from which return results
      * @return int The number of results
      */
-    function get_results(&$results, $module_ids, $nb_lines = 0, $offset = 0 )
+    public function get_results(&$results, $module_ids, $nb_lines = 0, $offset = 0 )
     {
         global $Sql;
 
@@ -281,7 +288,7 @@ class Search
      * @param mixed[] $requestAndResults This parameters is an array with keys that are
      * modules ids and values that could be both a SQL query or a results array.
      */
-    function insert_results($requestAndResults)
+    public function insert_results($requestAndResults)
     {
         global $Sql;
         $nbReqSEARCH = 0;
@@ -358,7 +365,7 @@ class Search
      * @param int $id_search the search id to check.
      * @return bool true if the id_search is in cache, else, false.
      */
-    function is_search_id_in_cache($id_search)
+    public function is_search_id_in_cache($id_search)
     {
         if (in_array($id_search, $this->id_search))
         {
@@ -385,7 +392,7 @@ class Search
      * @param string $module_id the module to check.
      * @return bool true if the module results are in cache, else, false.
      */
-    function is_in_cache($module_id)
+    public function is_in_cache($module_id)
     {
         return in_array($module_id, $this->cache);
     }
@@ -395,7 +402,7 @@ class Search
      * @desc Returns the list of the modules ids present in the cache
      * @return string[] the list of the modules present in the cache
      */
-    function modules_in_cache()
+    public function modules_in_cache()
     {
         return array_keys($this->id_search);
     }
@@ -404,7 +411,7 @@ class Search
      * @desc Returns the search id
      * @return int the search id
      */
-    function get_ids()
+    public function get_ids()
     {
         return $this->id_search;
     }
@@ -416,7 +423,7 @@ class Search
      * containings modules specifics options.
      * @return string The condition to put in a query WHERE clause
      */
-    function _get_modules_conditions($modules)
+    private function get_modules_conditions($modules)
     /**
      *  Génère les conditions de la clause WHERE pour limiter les requêtes
      *  aux seuls modules avec les bonnes options de recherches concernés.
@@ -446,16 +453,6 @@ class Search
 
         return $modules_conditions;
     }
-
-    //----------------------------------------------------- Attributs protégés
-    var $id_search;
-    var $search;
-    var $modules;
-    var $modules_conditions;
-    var $id_user;
-    var $errors;
-
 }
-
 ?>
 

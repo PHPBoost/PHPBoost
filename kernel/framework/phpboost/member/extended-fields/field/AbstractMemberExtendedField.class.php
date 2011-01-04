@@ -34,6 +34,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 {
 	protected $lang;
 	protected $field_used_once;
+	protected $field_used_phpboost_config;
 	protected $parse_field;
 	protected $unparse_field;
 	
@@ -44,6 +45,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		$this->lang = LangLoader::get('main');
 		$this->field_used_once = false;
+		$this->field_used_phpboost_config = false;
 		$this->parse_field = false;
 		$this->unparse_field = false;
 	}
@@ -152,12 +154,21 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 			return new FormFieldConstraintRegex($value);
 		}
 	}	
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public function get_field_used_once()
 	{
-		return self::FIELD_USED_ONCE;
+		return $this->field_used_once;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_field_used_phpboost_configuration()
+	{
+		return $this->field_used_phpboost_config;
 	}
 }
 ?>

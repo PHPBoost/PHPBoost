@@ -89,7 +89,7 @@ class SandboxMailController extends ModuleController
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', 'SMTP password', '', array('disabled' => true)));
 
 		$select_option = new FormFieldSelectChoiceOption('None', 'none');
-		$fieldset->add_field(new FormFieldSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'), new FormFieldSelectChoiceOption('SSL', 'ssl')), array('disabled' => true)));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('secure_protocol', 'Secure protocol', $select_option, array($select_option, new FormFieldSelectChoiceOption('TLS', 'tls'), new FormFieldSelectChoiceOption('SSL', 'ssl')), array('disabled' => true)));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);

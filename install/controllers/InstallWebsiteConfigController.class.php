@@ -76,12 +76,7 @@ class InstallWebsiteConfigController extends InstallController
 		$meta_keywords = new FormFieldMultiLineTextEditor('metaKeywords', $this->lang['website.metaKeywords'], '',
 		array('description' => $this->lang['website.metaKeywords.explanation']));
 		$fieldset->add_field($meta_keywords);
-		$options = array();
-		for ($i = -12; $i <= 14; $i++)
-		{
-			$options[] = new FormFieldSelectChoiceOption('UTC' . ($i >= 0 ? '+' : '') . $i, $i);
-		}
-		$timezone = new FormFieldSelectChoice('timezone', $this->lang['website.timezone'], 'UTC+0', $options,
+		$timezone = new FormFieldTimezone('timezone', $this->lang['website.timezone'], 'UTC+0',
 		array('description' => $this->lang['website.timezone.explanation']));
 		$fieldset->add_field($timezone);
 
@@ -95,7 +90,7 @@ class InstallWebsiteConfigController extends InstallController
 
 	private function handle_form()
 	{
-		$installation_services = new InstallationServices(LangLoader::get_locale());
+		$installation_services = new InstallationServices();
 		$installation_services->configure_website(
 		$this->form->get_value('host'), $this->form->get_value('path'),
 		$this->form->get_value('name'), $this->form->get_value('description'),

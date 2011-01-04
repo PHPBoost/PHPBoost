@@ -31,7 +31,7 @@
  */
 class FormButtonLink extends FormButtonButton
 {
-    public function __construct($label, $link, $img = '')
+    public function __construct($label, $link, $img = '', $field_options = array())
     {
     	$full_label = '';
     	if (!empty($img))
@@ -42,7 +42,7 @@ class FormButtonLink extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_absolute($link)));
+        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_absolute($link)), '', $field_options);
     }
 }
 ?>

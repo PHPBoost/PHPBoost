@@ -34,8 +34,6 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $id = retrieve(REQUEST, 'id', 0);
 $post = retrieve(POST, 'id', -1) >= 0 ? true : false;
 
-
-
 $menu = MenuService::load($id);
 
 if ($menu == null)
@@ -45,6 +43,9 @@ if ($post)
 {   // Edit a Menu authorizations
     $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+    
+    //Filters
+    MenuAdminService::set_retrieved_filters($menu);
     
     MenuService::save($menu);
     MenuService::generate_cache();
@@ -86,6 +87,9 @@ $tpl->put_all(array(
     'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
     'C_ENABLED' => $menu->is_enabled(),
 ));
+
+//Filtres
+MenuAdminService::add_filter_fieldset($menu, $tpl);    
 
 $tpl->display();
 

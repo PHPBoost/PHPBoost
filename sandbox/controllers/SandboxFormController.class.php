@@ -87,40 +87,40 @@ class SandboxFormController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
-		array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
+			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
-		array(new FormFieldConstraintUrl())
+			array(new FormFieldConstraintUrl())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Mail valide'),
-		array(new FormFieldConstraintMailAddress())
+			array(new FormFieldConstraintMailAddress())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
-		array(new FormFieldConstraintIntegerRange(10, 100))
+			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-		array(new FormFieldConstraintLengthRange(6, 12))
+			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-		array(new FormFieldConstraintLengthRange(6, 12))
+			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
-		array('rows' => 6, 'cols' => 47, 'description' => 'Description')
+			array('rows' => 6, 'cols' => 47, 'description' => 'Description')
 		));
 
 		// RICH TEXT
@@ -131,10 +131,11 @@ class SandboxFormController extends ModuleController
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
 		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option,
-		array(
-		$default_option,
-		new FormFieldRadioChoiceOption('Choix 2', '2')
-		)
+			array(
+				$default_option,
+				new FormFieldRadioChoiceOption('Choix 2', '2')
+			),
+			array('required' => true) //TODO Ne gère pas correctement cette option
 		));
 
 		// CHECKBOX
@@ -142,21 +143,21 @@ class SandboxFormController extends ModuleController
 
 		// SELECT
 		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSelectChoice('select', 'Liste déroulante', $default_select_option,
-		array(
-		$default_select_option,
-		new FormFieldSelectChoiceOption('Choix 2', '2'),
-		new FormFieldSelectChoiceOption('Choix 3', '3'),
-		new FormFieldSelectChoiceGroupOption('Groupe 1', array(
-		new FormFieldSelectChoiceOption('Choix 4', '4'),
-		new FormFieldSelectChoiceOption('Choix 5', '5'),
-		)),
-		new FormFieldSelectChoiceGroupOption('Groupe 2', array(
-		new FormFieldSelectChoiceOption('Choix 6', '6'),
-		new FormFieldSelectChoiceOption('Choix 7', '7'),
-		))
-		)
-		));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', $default_select_option,
+			array(
+				$default_select_option,
+				new FormFieldSelectChoiceOption('Choix 2', '2'),
+				new FormFieldSelectChoiceOption('Choix 3', '3'),
+				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
+					new FormFieldSelectChoiceOption('Choix 4', '4'),
+					new FormFieldSelectChoiceOption('Choix 5', '5'),
+				)),
+				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
+					new FormFieldSelectChoiceOption('Choix 6', '6'),
+					new FormFieldSelectChoiceOption('Choix 7', '7'),
+				)
+			)
+		)));
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', 'Fieldset 2');
 		$form->add_fieldset($fieldset2);

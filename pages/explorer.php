@@ -33,9 +33,9 @@ $Bread_crumb->add($LANG['pages'], url('pages.php'));
 $Bread_crumb->add($LANG['pages_explorer'], url('explorer.php'));
 require_once('../kernel/header.php');
 
-$Template->set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
+$Template = new FileTemplate('pages/explorer.tpl');
 
-$module_data_path = $Template->get_module_data_path('pages');
+$module_data_path = $Template->get_pictures_data_path();
 
 //Liste des dossiers de la racine
 $root = '';
@@ -109,7 +109,7 @@ $Template->put_all(array(
 	'CAT_LIST' => ''
 ));
 
-$Template->pparse('pages_explorer');
+$Template->display();
 
 
 require_once('../kernel/footer.php');

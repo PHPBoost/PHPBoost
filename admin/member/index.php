@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               ExtendFieldMember.class.php
+ *                           admin-extended-fields-common.php
  *                            -------------------
- *   begin                : August 10, 2010
+ *   begin                : December 17, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,31 +25,17 @@
  *
  ###################################################*/
 
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
-class ExtendFieldMember
-{
-	public static function display(Template $Template, $user_id = '')
-	{
-		$extend_fields_cache = ExtendedFieldsCache::load()->get_extended_fields;
-		
-		$extend_field_exist = count($extend_fields_cache);
-		if ($extend_field_exist > 0)
-		{
-			$Template->put_all(array(
-				'C_MISCELLANEOUS' => true,
-				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
-			));
-			
-			$display_extend_field = new DisplayExtendField();
-			if(!empty($user_id))
-			{
-				$display_extend_field->display_for_member($Template, $user_id);
-			}
-			else
-			{
-				$display_extend_field->display_for_register($Template);
-			}
-		}
-	}
-}
+require_once PATH_TO_ROOT . '/kernel/begin.php';
+
+$url_controller_mappers = array(
+new UrlControllerMapper('AdminExtendedFieldsMemberListController', '`^/extended-fields(?:/list)?/?$`'),
+new UrlControllerMapper('AdminExtendedFieldMemberAddController', '`^/extended-fields/add/?$`'),
+new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-fields/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/([0-9]+)/delete/?$`', array('id')),
+new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
+);
+DispatchManager::dispatch($url_controller_mappers);
+
 ?>

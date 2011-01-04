@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       RegisterHelper.class.php
+ *                       MemberRegisterHelper.class.php
  *                            -------------------
  *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,12 +25,12 @@
  *
  ###################################################*/
  
- class RegisterHelper
+ class MemberRegisterHelper
  {
 	public static function registeration($form)
 	{
 		$activation_key = self::generate_activation_key();
-		
+
 		// Write to DataBase
 		self::register_member_request($form, $activation_key);
 		
@@ -44,31 +44,19 @@
 		$user_aprobation = UserAccountsConfig::load()->get_member_accounts_validation_method() == 0 ? 1 : 0;
 		
 		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
-			VALUES (:login, :password, 0, '', :user_lang, :user_theme, :user_mail, :user_show_mail, :user_editor, :user_timezone, :timestamp, :user_avatar, 0, :user_local, :user_msn, :user_yahoo, :user_web, user_occupation, :user_hobbies, '', :user_sex, :user_born , :user_sign, 0, 0, :last_connect, 0, :activ_pass, '', 0, :user_aprob)", array(
+			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
+			VALUES (:login, :password, 0, '', :user_mail, :user_show_mail, :timestamp, 0, 0, :last_connect, 0, :activ_pass, '', 0, :user_aprob)", array(
                 'login' => $form->get_value('login'),
                 'password' => strhash($form->get_value('password')),
-				'user_lang' => $form->get_value('user_lang')->get_raw_value(),
-				'user_theme' => $form->get_value('user_theme')->get_raw_value(),
 				'user_mail' => $form->get_value('mail'),
-				'user_show_mail' => $form->get_value('user_hide_mail'),
-				'user_editor' => $form->get_value('user_editor')->get_raw_value(),
-				'user_timezone' => $form->get_value('user_timezone')->get_raw_value(),
+				'user_show_mail' => (string)$form->get_value('user_hide_mail'),
 				'timestamp' => time(),
-				'user_avatar' => self::upload_avatar($form),
-				'user_local' => $form->get_value('user_local'),
-				'user_msn' => $form->get_value('user_msn'),
-				'user_yahoo' => $form->get_value('user_yahoo'),
-				'user_web' => $form->get_value('user_web'),
-				'user_occupation' => $form->get_value('user_occupation'),
-				'user_hobbies' => $form->get_value('user_hobbies'),
-				'user_sex' => $form->get_value('user_sex')->get_raw_value(),
-				'user_born' => $form->get_value('user_born')->format(DATE_TIMESTAMP),
-				'user_sign' => $form->get_value('user_sign'),
 				'last_connect' => time(),
 				'activ_pass' => $activation_key,
 				'user_aprob' => $user_aprobation
 		));
+		
+		MemberExtendedFieldsService::register_fields($form, self::last_user_id_registered());
 	}
 	
 	private static function generate_activation_key()
@@ -82,7 +70,7 @@
 		{
 			// Administrator alert
 			self::add_administrator_alert();
-			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), HOST . DIR . '/member/register.php?key=' . $activation_key);
+			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), DispatchManager::get_url('/member', '/confirm/'.$activation_key.'')->absolute());
 		}
 		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 1)
 		{
@@ -92,6 +80,9 @@
 		{
 			// Connect user
 			self::connect_user($form);
+			
+			// redirect to confirm registered member
+			
 			$valid = '';
 		}
 		self::send_mail_confirmation($form, $valid);
@@ -111,7 +102,6 @@
 	
 	private static function send_mail_confirmation($form, $valid)
 	{
-		//Send Mail
 		AppContext::get_mail_service()->send_from_properties($form->get_value('mail'), sprintf(LangLoader::get_message('register_title_mail', 'main'), GeneralConfig::load()->get_site_name()), sprintf(LangLoader::get_message('register_mail', 'main'), $form->get_value('login'), GeneralConfig::load()->get_site_name(), GeneralConfig::load()->get_site_name(), stripslashes($form->get_value('login')), $form->get_value('password'), $valid, MailServiceConfig::load()->get_mail_signature()));
 	}
 	
@@ -126,7 +116,7 @@
 	
 	private static function last_user_id_registered()
 	{
-		return PersistenceContext::get_sql()->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MEMBER);
+		return PersistenceContext::get_sql()->query("SELECT MAX(user_id) FROM " . DB_TABLE_MEMBER);
 	}
 	
 	private static function add_administrator_alert()
@@ -140,51 +130,5 @@
 		
 		AdministratorAlertService::save_alert($alert);
 	}
-	
-	private static function upload_avatar($form)
-	{
-		if ($form->get_value('user_avatar'))
-		{
-			return $form->get_value('user_avatar');
-		}
-		elseif(UserAccountsConfig::load()->is_avatar_upload_enabled())
-		{
-			$user_accounts_config = UserAccountsConfig::load();
-			$dir = '../images/avatars/';
-			
-			$avatar = $form->get_value('avatar', 0);
-			if ($user_accounts_config->is_avatar_auto_resizing_enabled() && !empty($avatar))
-			{
-				import('io/image/Image');
-				import('io/image/ImageResizer');
-				
-				$avatar = $form->get_value('avatar');
-				$name_image = $avatar['name'];
-				$image = new Image($avatar['tmp_name']);
-				$resizer = new ImageResizer();
-				$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $dir . $name_image);
-				
-				return $dir . $name_image;
-				
-				// TODO gestion des erreurs 
-			}
-			else
-			{
-				$Upload = new Upload($dir);
-				if ($Upload->get_size() > 0)
-				{
-					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
-					
-					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
-					if (!empty($error))
-					// Error		
-					
-					return $dir . $Upload->get_filename();
-				}
-			}
-			
-		}
-	}
- 
  }
  ?>

@@ -38,8 +38,9 @@ function gallery_mini($position, $block)
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 
-    //Affichage des miniatures disponibles
     $i = 0;
+    
+    //Affichage des miniatures disponibles
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
     list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
     if (isset($_array_random_pics) && $_array_random_pics !== array())
@@ -130,7 +131,7 @@ function gallery_mini($position, $block)
     			list($row['width'], $row['height']) = array(142, 142);
 
     		$tpl->assign_block_vars('pics_mini', array(
-    			'ID' => $i,
+    			'ID' => $row['id'],
     			'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
     			'NAME' => TextHelper::strprotect($row['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE),
     			'HEIGHT' => $row['height'],
@@ -140,10 +141,11 @@ function gallery_mini($position, $block)
 
     		$sum_height += $row['height'] + 5;
     		$sum_width += $row['width'] + 5;
-    		$i++;
 
 			if ($CONFIG_GALLERY['scroll_type'] == 3)
 				break;
+				
+			$i++;
     	}
     }
 

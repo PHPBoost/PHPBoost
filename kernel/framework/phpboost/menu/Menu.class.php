@@ -81,6 +81,12 @@ abstract class Menu
 	 * @var int The Menu position on the website
 	 */
     protected $position = -1;
+    /**
+	 * @access protected
+	 * @var int The Menu filters
+	 */
+    protected $filters = array('/');
+    
     
     /**
 	 * @desc Build a Menu element.
@@ -216,6 +222,18 @@ abstract class Menu
 	 * @return bool true if the Menu is enabled, false otherwise
 	 */
     public function is_enabled() { return $this->enabled; }
+	/**
+	* @return string the menu filters
+	*/
+    public function get_filters() { return $this->filters; }
+
+    /**
+	* Sets the filters of the menu
+	*
+	* @param string $filters Filters of the menu
+	*/
+    public function set_filters($filters) { $this->filters = $filters; }
+    
 }
 
 ?>

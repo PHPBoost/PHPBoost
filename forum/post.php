@@ -663,7 +663,8 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
-				$module_data_path = $Template->get_module_data_path('forum');
+				$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
+				$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))

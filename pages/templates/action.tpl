@@ -140,11 +140,11 @@
 		# START remove #
 		<script type="text/javascript">
 		<!--
-			var path = '{PAGES_PATH}';
+			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {remove.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PAGES_PATH}/images/pages.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
 
 		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
@@ -166,7 +166,7 @@
 					<dt><label>{L_FUTURE_CAT}</label></dt>
 					<dd>
 						<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat" />
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PAGES_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
 						<br />
 						{remove.CATS}
 					</dd>					

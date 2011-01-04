@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       ConfirmController.class.php
+ *                      MemberConfirmRegisterationController.class.php
  *                            -------------------
  *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,67 +25,44 @@
  *
  ###################################################*/
 
-class ConfirmController extends AbstractController
+class MemberConfirmRegisterationController extends AbstractController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$view = new StringTemplate('# INCLUDE form #');
-
+		$key = $request->get_value('key', '');
 		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
-			// TODO
-			$form = $this->already_registered();
+			// TODO redirect error already registered
 		}
 		else
 		{
-			$form = $this->check_activation($request->get_getint('key', 0));
+			$this->check_activation($key);
 		}
-		
-		
-		$view->put('form', $form->display());
-		return new SiteDisplayResponse($view);
-	}
-	
-	private function already_registered()
-	{
-		// You are already registered !
-		// Redirect ...
-		// TODO
-		
-		$form = new HTMLForm('already_register');
-		
-		$fieldset = new FormFieldsetHTML('already_register', 'Vous êtes déjà enregistré !');
-		$fieldset->set_description('Vous êtes déjà enregistré !');
-		$form->add_fieldset($fieldset);
-		
-		return $form;
 	}
 	
 	private function check_activation($key)
 	{
-		$check_mbr = ConfirmHelper::check_activation_pass_exist($key);
-		if ($check_mbr && !empty($key))
+		$check_mbr = $this->check_activation_pass_exist($key);
+		if ((bool)$check_mbr && !empty($key))
 		{
-			ConfirmHelper::update_aprobation($key);
-			
-			$this->activation_sucess();
+			$this->update_aprobation($key);
+			// TODO redirect activation success
 		}
 		else
 		{
-			$this->activation_error();
+			//TODO redirect error key isn't exist
 		}
-	}
+	}	
 	
-	private function activation_sucess()
+	public function check_activation_pass_exist($key)
 	{
-		return LangLoader::get_message('activ_mbr_mail_success', 'main');
+		return PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'");
 	}
 	
-	private function activation_error()
+	public function update_aprobation($key)
 	{
-		return LangLoader::get_message('activ_mbr_mail_error', 'main');
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = :key", array('key' => $key));
 	}
-	
 }
 
 ?>

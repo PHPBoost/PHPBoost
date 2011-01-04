@@ -1,4 +1,3 @@
-
 syntax: regexp
 cache/*
 
@@ -9,7 +8,7 @@ syntax: regexp
 ^kernel/db/config\.php$
 
 syntax: regexp
-^.htaccess$
+^.*$
 
 syntax: regexp
 ^images/avatars/*
@@ -21,8 +20,12 @@ syntax: regexp
 ^templates/vita*
 
 syntax: regexp
-^gallery/pics/*
+gallery/pics/*
 
 syntax: regexp
 ^upload/*
+
+syntax: regexp
+^shop/*
+
 

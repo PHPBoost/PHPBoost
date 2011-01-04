@@ -262,7 +262,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_ADMIN_LINKS_1' => false
 		));
 
-		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		$array_pos = array(0, 4, 3, 3, 3, 1);
 		$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4,
 			 'content' => 5, 'modules' => 6);

@@ -189,7 +189,7 @@ class MySQLDBMSUtils implements DBMSUtils
 			AND TABLE_NAME=:member_extend AND COLUMN_NAME=:column_name',
 		array(
 				'schema' => $this->get_database_name(),
-				'member_extend' => DB_TABLE_MEMBER_EXTEND,
+				'member_extend' => DB_TABLE_MEMBER_EXTENDED_FIELDS,
 				'column_name' => $column_name
 		)
 		);

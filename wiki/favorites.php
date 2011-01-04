@@ -83,7 +83,7 @@ elseif ($remove_favorite > 0)
 }
 else
 {
-	$Template->set_filenames(array('wiki_favorites'=> 'wiki/favorites.tpl'));
+	$Template = new FileTemplate('wiki/favorites.tpl');
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? TextHelper::strprotect($_GET['error']) : '';
@@ -112,7 +112,7 @@ else
 		));
 	}
 	
-	$module_data_path = $Template->get_module_data_path('wiki');
+	$module_data_path = $Template->get_pictures_data_path();
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('list', array(
@@ -129,7 +129,7 @@ else
 		'L_UNTRACK' => $LANG['wiki_unwatch']
 	));
 
-	$Template->pparse('wiki_favorites');
+	$Template->display();
 }
 
 require_once('../kernel/footer.php'); 

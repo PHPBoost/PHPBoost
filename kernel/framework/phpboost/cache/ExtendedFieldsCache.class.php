@@ -41,7 +41,7 @@ class ExtendedFieldsCache implements CacheData
 		$db_connection = PersistenceContext::get_sql();
 		
 		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, auth 
-			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
+			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "
 			ORDER BY position", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))

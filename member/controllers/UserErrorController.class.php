@@ -41,6 +41,7 @@ class UserErrorController extends AbstractController
 	private $error_type = E_UNKNOWN;
 	private $title = '';
 	private $message = '';
+	private $time;
 	private $link = self::PREVIOUS_PAGE;
     private $link_name = '';
     private $response_classname = self::SITE_RESPONSE;
@@ -64,6 +65,14 @@ class UserErrorController extends AbstractController
 	{
 		$this->link_name = $link_name;
 		$this->link = $link;
+	}
+	
+	public function set_time_redirect($time)
+	{
+		if (is_numeric($time))
+		{
+			$this->time = $time;
+		}
 	}
 	
 	public function set_response_classname($response_classname)
@@ -104,8 +113,10 @@ class UserErrorController extends AbstractController
             'TITLE' => $this->title,
             'MESSAGE' => $this->message,
             'U_LINK' => $this->link,
+			'U_TIME' => $this->time,
             'LINK_NAME' => $this->link_name,
-		    'HAS_LINK' => !empty($this->link) && !empty($this->link_name)
+		    'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
+			'HAS_TIME' => !empty($this->time) && !empty($this->link),
 		));
 	}
 

@@ -60,6 +60,11 @@ class UploadedFile
 		return $this->size;
 	}
 	
+	public function get_temporary_filename()
+	{
+		return $this->tmp_name;
+	}
+	
 	/**
 	 * @desc Saves the uploaded file on the server's filesystem.
 	 * @param File $destination The destination file 

@@ -34,13 +34,18 @@
  */
 class FeedsCat
 {
+	private $id = 0;
+    private $cat_name = '';
+    private $module_id = '';
+    private $children = array();
+	
     /**
      * @desc Builds a FeedsCat Object
      * @param string $module_id the feed module id
      * @param int $category_id the category id
      * @param string $category_name the category name
      */
-    function FeedsCat($module_id, $category_id, $category_name)
+    public function __construct($module_id, $category_id, $category_name)
     {
         $this->id = $category_id;
         $this->module_id = $module_id;
@@ -52,7 +57,7 @@ class FeedsCat
      * @param string $feed_type The feed type
      * @return string the feed url
      */
-    function get_url($feed_type = '')
+    public function get_url($feed_type = '')
     {
         $url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . '&amp;name=' . $feed_type);
         return $url->relative();
@@ -62,7 +67,7 @@ class FeedsCat
      * @desc Returns the module id
      * @return string the module id
      */
-    function get_module_id()
+    public function get_module_id()
     {
         return $this->module_id;
     }
@@ -72,7 +77,7 @@ class FeedsCat
      * @desc Returns the category id
      * @return int the category id
      */
-    function get_category_id()
+    public function get_category_id()
     {
         return $this->id;
     }
@@ -81,7 +86,7 @@ class FeedsCat
      * @desc Returns the category name
      * @return string the category name
      */
-    function get_category_name()
+    public function get_category_name()
     {
         return $this->cat_name;
     }
@@ -90,7 +95,7 @@ class FeedsCat
      * @desc Adds a FeedsCat child to the current FeedsCat object
      * @param FeedsCat $child The element to add
      */
-    function add_child($child)
+    public function add_child($child)
     {
         $this->children[] = $child;
     }
@@ -99,15 +104,10 @@ class FeedsCat
      * @desc Returns the current category children
      * @return FeedsCat[] The current category children
      */
-    function get_children()
+    public function get_children()
     {
         return $this->children;
     }
-    
-    var $id = 0;
-    var $cat_name = '';
-    var $module_id = '';
-    var $children = array();
 }
 
 ?>

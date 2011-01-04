@@ -20,8 +20,8 @@
 							animOut: Marquee.blindOut,
 							# ENDIF #
 							# IF C_HORIZONTAL_SCROLL #
-							animIn: Marquee.slideOut,
-							animOut: Marquee.slideIn,
+							animIn: Marquee.slideIn,
+							animOut: Marquee.slideOut,
 							# ENDIF #
 							# IF C_FADE #
 							animIn: Marquee.fadeIn,

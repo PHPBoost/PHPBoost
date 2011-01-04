@@ -261,13 +261,13 @@ elseif ($read) //Marquer comme lu.
 		AppContext::get_response()->redirect('/member/error.php');
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTEND . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	else
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__);
 
 	AppContext::get_response()->redirect('/forum/index.php' . SID2);
 }

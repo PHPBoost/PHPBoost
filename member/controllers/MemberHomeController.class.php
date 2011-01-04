@@ -34,7 +34,7 @@ class MemberHomeController extends AbstractController
 	# END parts #
 	</ul>';
 
-	private static $links = array('Register' => '?url=/register', 'Confirm key member' => '?url=/confirm', 'View Profil' => '?url=/profil');
+	private static $links = array('Register' => '?url=/register', 'Confirm key member' => '?url=/confirm', 'View Profil' => '?url=/profil/', 'Edit Profil' => '?url=/profil/edit');
 
 	public function execute(HTTPRequest $request)
 	{

@@ -52,7 +52,7 @@ class MemberExtendedFieldsFactory
 	public static function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$name_class = self::name_class($member_extended_field);
-		
+	
 		$instance_class = new $name_class();
 		return $instance_class->display_field_update($member_extended_field);
 		
@@ -65,7 +65,7 @@ class MemberExtendedFieldsFactory
 	public static function display_field_profile(MemberExtendedField $member_extended_field)
 	{
 		$name_class = self::name_class($member_extended_field);
-
+	
 		$instance_class = new $name_class();
 		return $instance_class->display_field_profile($member_extended_field);
 	}
@@ -119,9 +119,9 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function determines the class depending on the type of field
-	 * @param instance of MemberExtendedField $member_extended_field.
+	 * @param instance of MemberExtendedField or ExtendedField $member_extended_field.
 	 */
-	private static function name_class(MemberExtendedField $member_extended_field)
+	public static function name_class($member_extended_field)
 	{
 		$field_type = $member_extended_field->get_field_type();
 		switch ($field_type) 
@@ -133,28 +133,43 @@ class MemberExtendedFieldsFactory
 				return 'MemberLongTextExtendedField';
 				break;
 			case 3:
+				return 'MemberHalfLongTextExtendedField';
+				break;	
+			case 4:
 				return 'MemberSimpleSelectExtendedField';
 				break;
-			case 4:
+			case 5:
 				return 'MemberMultipleSelectExtendedField';
 				break;
-			case 5:
+			case 6:
 				return 'MemberSimpleChoiceExtendedField';
 				break;
-			case 6:
+			case 7:
 				return 'MemberMultipleChoiceExtendedField';
 				break;
-			case 7:
+			case 8:
 				return 'MemberDateExtendedField';
 				break;
-			case 8:
-				return 'MemberUserThemeExtendedField';
-				break;
 			case 9:
-				return 'MemberUserLangExtendedField';
+				return 'MemberUserBornExtendedField';
 				break;
 			case 10:
-				return 'MemberUserBornExtendedField';
+				return 'MemberUserLangExtendedField';
+				break;
+			case 11:
+				return 'MemberUserThemeExtendedField';
+				break;
+			case 12:
+				return 'MemberUserEditorExtendedField';
+				break;
+			case 13:
+				return 'MemberUserTimezoneExtendedField';
+				break;
+			case 14:
+				return 'MemberUserSexExtendedField';
+				break;
+			case 15:
+				return 'MemberUserAvatarExtendedField';
 				break;
 		}
 	}

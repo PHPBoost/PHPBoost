@@ -39,6 +39,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	 * @var boolean
 	 */
 	protected $disabled = false;
+	private $css_class = false;
 
 	/**
 	 * @var Template
@@ -219,13 +220,14 @@ abstract class AbstractFormFieldset implements FormFieldset
             'DESCRIPTION' => $this->description,
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
+			'CSS_CLASS' => $this->css_class,
 			'FORM_ID' => $this->form_id
 		));
 
 		foreach($this->fields as $field)
 		{
 			$template->assign_block_vars('fields', array(), array(
-			'FIELD' => $field->display(),
+				'FIELD' => $field->display(),
 			));
 		}
 	}
@@ -239,10 +241,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		{
 			return $this->template;
 		}
-		else
-		{
-			return $this->get_default_template();
-		}
+		return $this->get_default_template();
 	}
 
 	/**
@@ -258,6 +257,11 @@ abstract class AbstractFormFieldset implements FormFieldset
 	public function set_template(Template $template)
 	{
 		$this->template = $template;
+	}
+	
+	public function set_css_class($css_class)
+	{
+		$this->css_class = $css_class;
 	}
 }
 ?>

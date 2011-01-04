@@ -115,7 +115,7 @@ class MenuService
 	 * @param Menu $menu The Menu to save
 	 * @return bool true if the save have been correctly done
 	 */
-	public static function save($menu)
+	public static function save(Menu $menu)
 	{
 		$block_position = $menu->get_block_position();
 
@@ -166,7 +166,7 @@ class MenuService
 	 * @desc Enable a menu
 	 * @param Menu $menu the menu to enable
 	 */
-	public static function enable($menu)
+	public static function enable(Menu $menu)
 	{
 		// Commputes the new Menu position and save it
 		MenuService::move($menu, $menu->get_block());
@@ -176,7 +176,7 @@ class MenuService
 	 * @desc Disable a menu
 	 * @param Menu $menu the menu to disable
 	 */
-	public static function disable($menu)
+	public static function disable(Menu $menu)
 	{
 		// Commputes menus positions of the previous block and save the current menu
 		MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
@@ -188,7 +188,7 @@ class MenuService
 	 * @param int $block the destination block
 	 * @param bool $save if true, save also the menu
 	 */
-	public static function move($menu, $block, $save = true)
+	public static function move(Menu $menu, $block, $save = true)
 	{
 		if ($menu->get_id() > 0 && $menu->is_enabled())
 		{   // Updates the previous block position counter
@@ -218,44 +218,20 @@ class MenuService
 	}
 
 	/**
-	 * @desc Change the menu position in a block
-	 * @param Menu $menu The menu to move
-	 * @param int $diff the direction to move it. positives integers move down, negatives, up.
+	 * @desc Set the menu position in a block
+	 * @param Menu $menu The menu
+	 * @param int $block_position the new position.
 	 */
-	public static function change_position($menu, $direction = self::MOVE_UP)
+	public static function set_position(Menu $menu, $block_position)
 	{
-		$block_position = $menu->get_block_position();
-		$new_block_position = $block_position;
-		$update_query = '';
-
-		$parameters = array('block' => $menu->get_block());
-		if ($direction > 0)
-		{   // Moving the menu down
-			$max_position = self::get_next_position($menu->get_block()) - 1;
-			$new_block_position = ($menu->get_block_position() + $direction);
-			$new_block_position = min(array($new_block_position, $max_position));
-			$parameters['min_position'] = $block_position + 1;
-			$parameters['max_position'] = $new_block_position;
-		}
-		else if ($direction < 0)
-		{   // Moving the menu up
-			$new_block_position = $menu->get_block_position() + $direction;
-			$new_block_position = max(array($new_block_position, 0));
-			$parameters['min_position'] = $new_block_position;
-			$parameters['max_position'] = $block_position - 1;
-		}
-
-		if ($block_position != $new_block_position)
-		{   // Updating other menus
-			self::$querier->inject('UPDATE ' . DB_TABLE_MENUS . ' SET position=position - 1
-				WHERE block=:block AND position BETWEEN :min_position AND :max_position', $parameters);
+		if ($block_position != $menu->get_block_position())
+		{   
 			// Updating the current menu
-			$menu->set_block_position($new_block_position);
+			$menu->set_block_position($block_position);
 			MenuService::save($menu);
 		}
 	}
-
-
+	
 	/**
 	 * @desc Enables or disables all menus
 	 * @param bool $enable if true enables all menus otherwise, disables them
@@ -318,8 +294,19 @@ class MenuService
 				{
 					if ($menu->is_enabled())
 					{
+						$filters = '';
+						$has_filter = false;
+						foreach ($menu->get_filters() as $filter) 
+						{
+							$has_filter = ($filter != '/') ? true : false;
+							$filters .= 'strpos(REWRITED_SCRIPT, "' . $filter . '") !== false || ';
+						}
+						$filters = trim($filters, '|| ');
+						
+						$cache_str .= ($has_filter) ? 'if (' . $filters . ') {' . "\n" : '';
 						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
 						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+						$cache_str .= ($has_filter) ? '}' . "\n" : '';
 					}
 				}
 			}

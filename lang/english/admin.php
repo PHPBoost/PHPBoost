@@ -232,33 +232,6 @@ $LANG['modo'] = 'Moderator';
 $LANG['a_admin'] = 'admin';
 $LANG['admin'] = 'Administrator';
 
-//Extend fields
-$LANG['extend_field_management'] = 'Member field management';
-$LANG['extend_field_add'] = 'Add member field';
-$LANG['required_field'] = 'Required field';
-$LANG['required_field_explain'] = 'Required in the member profile and registration area';
-$LANG['required'] = 'Required';
-$LANG['not_required'] = 'Not Required';
-$LANG['regex'] = 'Entry form control';
-$LANG['regex_explain'] = 'You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.';
-$LANG['possible_values'] = 'Possible values';
-$LANG['possible_values_explain'] = 'Separate each value with |';
-$LANG['default_values'] = 'Default values';
-$LANG['default_values_explain'] = 'Separate each value with |';
-$LANG['short_text'] = 'Short text (max 255 characters)';
-$LANG['long_text'] = 'Long text (unlimited)';
-$LANG['sel_uniq'] = 'Single selection (between several values)';
-$LANG['sel_mult'] = 'Multiple selection (between several values)';
-$LANG['check_uniq'] = 'Single choice (between several values)';
-$LANG['check_mult'] = 'Multiple choice (between several values)';
-$LANG['personnal_regex'] = 'Personal pattern';
-$LANG['predef_regexp'] = 'Predefined pattern';
-$LANG['figures'] = 'Numbers';
-$LANG['letters'] = 'Letters';
-$LANG['figures_letters'] = 'Numbers and letters';
-$LANG['default_field_possible_values'] = 'Yes|No';
-$LANG['extend_field_edit'] = 'Edit field';
-
 //Index
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';

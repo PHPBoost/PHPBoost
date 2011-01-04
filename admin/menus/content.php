@@ -31,8 +31,6 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-
-
 $id = retrieve(REQUEST, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 
@@ -42,7 +40,6 @@ $action_post = retrieve(POST, 'action', '');
 if ($action_post == 'save')
 {
     // Save a Menu (New / Edit)
-    
     $menu = null;
     
     $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
@@ -70,6 +67,9 @@ if ($action_post == 'save')
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     $menu->set_display_title(retrieve(POST, 'display_title', false));
     $menu->set_content((string) $_POST['contents']);
+    
+    //Filters
+    MenuAdminService::set_retrieved_filters($menu);
     
     MenuService::save($menu);
     MenuService::generate_cache();
@@ -145,11 +145,19 @@ else
        'C_ENABLED' => true,
        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
    ));
+   
+   // Create a new generic menu
+    $menu = new ContentMenu('');
 }
 
 $locations = '';
 foreach ($array_location as $key => $name)
     $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+
+
+//Filtres
+MenuAdminService::add_filter_fieldset($menu, $tpl);    
+
 
 $tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();

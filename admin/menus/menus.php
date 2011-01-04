@@ -39,8 +39,6 @@ $theme_post = retrieve(POST, 'theme', '');
 $action = retrieve(GET, 'action', '');
 $move = retrieve(GET, 'move', '');
 
-
-
 function menu_admin_link($menu, $mode)
 {
     $link = '';
@@ -97,7 +95,6 @@ if (!empty($id))
 
     MenuService::generate_cache();
 
-
     ModulesCssFilesCache::invalidate();
 
     AppContext::get_response()->redirect('menus.php#m' . $id);
@@ -132,36 +129,35 @@ if ($action == 'save') //Save menus positions.
 {
 	// We build the array representing the tree
     $menu_tree = array();
+    $reverse_menu_tree = array();
     preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', retrieve(POST, 'menu_tree', '', TSTRING_HTML), $matches);
     if (is_array($matches[1]))
     {
     	foreach($matches[1] as $key => $container)
 	    {
 	    	$menu_tree[$matches[2][$key]] = $container;
+	    	$reverse_menu_tree[$container][] = $matches[2][$key];
 	    }
     }
-
+    
     //Update all menus.
-    $changes = 0;
-   	$rebuild_block_list = array();
+    $menu_list = array();
     foreach ($menus_blocks as $block_id => $menus)
 	{
 		// For each block
 	    foreach ($menus as $menu)
 	    {
+			$menu_list[$menu->get_id()] = $menu;
 			$new_block = $menu_tree[$menu->get_id()];
        		$enabled = $menu->is_enabled();
 
        		if ($enabled && $new_block == 'mod_central') //Disable menu
        		{
        			MenuService::disable($menu);
-       			$changes++;
        		}
        		elseif(!$enabled && $new_block != 'mod_central') //Enable menu
        		{
        			MenuService::enable($menu);
-       			$rebuild_block_list[$new_block] = true; //We add a marker to rebuild this container.
-       			$changes++;
        		}
 
        		if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
@@ -170,44 +166,30 @@ if ($action == 'save') //Save menus positions.
        			if ($new_block_id !== false)
        			{
        				MenuService::move($menu, $new_block_id);
-       				$rebuild_block_list[$new_block] = true; //We add a marker to rebuild this container.
-       				$changes++;
        			}
        		}
 	    }
 	}
-
-	/*//We build all modified blocks.
-	foreach ($rebuild_block_list as $block_to_build => $value)
+	
+	//Sort the menus according to their new positions
+	$current_block_in_tree = '';
+	foreach ($reverse_menu_tree as $block_in_tree => $menus) //Retrieve position's menu in the sorted tree.
 	{
-		foreach ($menu_tree as $block_id => $block_in_tree) //Retrieve position's menu in the sorted tree.
+		$block_position = 0;
+		foreach ($menus as $menu_id) 
 		{
-			if ($block_to_build == $block_in_tree)
-			{
-				//Update position's menus in the modified block.
-				foreach($menus_blocks[array_search($block_to_build, $blocks)] as $menu)
-				{
-					echo $menu->get_id()."\n";
-				}
-			}
+			MenuService::set_position($menu_list[$menu_id], $block_position);
+			$block_position++;
 		}
 	}
-	print_r($menu_tree);
-	print_r(array_flip($menu_tree));
-    exit;*/
 
-	if ($changes > 0) //Update cache if necessary.
-	{
-	    MenuService::generate_cache();
-
-    	ModulesCssFilesCache::invalidate();
-	}
+    MenuService::generate_cache();
+    ModulesCssFilesCache::invalidate();
 
 	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0;
 	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0;
 	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE theme = '" . $theme_post . "'", __LINE__, __FILE__);
 	ThemesCache::invalidate();
-
 
 	AppContext::get_response()->redirect('menus.php');
 }

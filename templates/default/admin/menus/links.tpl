@@ -50,7 +50,7 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, onclick: "this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_ELEMENT};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, onclick: "if(this.value=={JL_ADD_SUB_ELEMENT})this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_ELEMENT};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
@@ -207,6 +207,8 @@ function deleteElement(element_id)
 			</dl>
 		</fieldset>
 		
+		# INCLUDE filters #
+	    
 		<fieldset>
 			<legend>* {L_CONTENT}</legend>
 			{MENU_TREE}

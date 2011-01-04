@@ -36,9 +36,9 @@ class ForumSetup extends DefaultModuleSetup
 	private static $forum_track_table;
 	private static $forum_view_table;
 
-	private static $member_extend;
-	private static $member_extend_cat;
-	private static $member_extend_last_view_forum_column = 'last_view_forum';
+	private static $member_extended_fields;
+	private static $member_extended_fields_list;
+	private static $member_extended_field_last_view_forum_column = 'last_view_forum';
 
 	private $querier;
 
@@ -57,8 +57,8 @@ class ForumSetup extends DefaultModuleSetup
 		self::$forum_topics_table = PREFIX . 'forum_topics';
 		self::$forum_track_table = PREFIX . 'forum_track';
 		self::$forum_view_table = PREFIX . 'forum_view';
-		self::$member_extend = PREFIX . 'member_extend';
-		self::$member_extend_cat = PREFIX . 'member_extend_cat';
+		self::$member_extended_fields = PREFIX . 'member_extended_fields';
+		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
 	}
 
 	public function __construct()
@@ -70,14 +70,14 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$this->uninstall();
 		$this->create_tables();
-		$this->add_member_extend_last_view_forum_column();
+		$this->add_member_extended_last_view_forum_column();
 		$this->insert_data();
 	}
 
 	public function uninstall()
 	{
 		$this->drop_tables();
-		$this->drop_member_extend_last_view_forum_column();
+		$this->drop_member_extended_last_view_forum_column();
 	}
 
 	private function drop_tables()
@@ -266,30 +266,30 @@ class ForumSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_view_table, $fields, $options);
 	}
 
-	private function add_member_extend_last_view_forum_column()
+	private function add_member_extended_last_view_forum_column()
 	{
-		$column_name = self::$member_extend_last_view_forum_column;
+		$column_name = self::$member_extended_field_last_view_forum_column;
 		$column_description = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
-		PersistenceContext::get_dbms_utils()->add_column(self::$member_extend, $column_name, $column_description);
+		PersistenceContext::get_dbms_utils()->add_column(self::$member_extended_fields, $column_name, $column_description);
 	}
 
-	private function drop_member_extend_last_view_forum_column()
+	private function drop_member_extended_last_view_forum_column()
 	{
-		PersistenceContext::get_dbms_utils()->drop_column(self::$member_extend, self::$member_extend_last_view_forum_column);
+		PersistenceContext::get_dbms_utils()->drop_column(self::$member_extended_fields, self::$member_extended_field_last_view_forum_column);
 	}
 
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'forum');
-		$this->insert_member_extend_cat_data();
+		$this->insert_member_extended_fields_list_data();
 		$this->insert_forum_cats_data();
 		$this->insert_forum_topics_data();
 		$this->insert_forum_msg_data();
 	}
 
-	private function insert_member_extend_cat_data()
+	private function insert_member_extended_fields_list_data()
 	{
-		$this->querier->insert(self::$member_extend_cat, array(
+		$this->querier->insert(self::$member_extended_fields_list, array(
 			'position' => 0,
 			'name' => 'last_view_forum',
 	 		'field_name' => 'last_view_forum',

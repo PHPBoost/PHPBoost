@@ -34,15 +34,15 @@
  * @package {@package}
  */
 class FeedsList
-{
-    function FeedsList() {}
-    
+{    
+	private $list = array();
+	
     /**
      * @desc Adds the FeedsCat $cat_tree to the current feeds list
      * @param FeedsCat $cat_tree The feed to add to the list
      * @param string $feed_type The feed category name
      */
-    function add_feed($cat_tree, $feed_type)
+    public function add_feed($cat_tree, $feed_type)
     {
         $this->list[$feed_type] = $cat_tree;
     }
@@ -51,15 +51,11 @@ class FeedsList
      * @desc Returns the feeds list
      * @return FeedsCat[] the feeds list
      */
-    function get_feeds_list()
+    public function get_feeds_list()
     {
         return $this->list;
     }
-    
-    /**
-     * @var array Contains the feeds trees
-     */
-    var $list = array();
+
 }
 
 ?>

@@ -73,6 +73,8 @@ function CheckForm() {
 			</dl>
 		</fieldset>		
 	
+		# INCLUDE filters #
+	
 		<fieldset class="fieldset_submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}" />

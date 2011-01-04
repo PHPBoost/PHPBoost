@@ -132,9 +132,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 }
 elseif ($g_add)
 {
-	$Template->set_filenames(array(
-		'gallery_add'=> 'gallery/gallery_add.tpl'
-	));
+	$Template = new FileTemplate('gallery/gallery_add.tpl');
 
 	if (!empty($g_idcat))
 	{
@@ -188,7 +186,7 @@ elseif ($g_add)
 	elseif ($get_error == 'unexist_cat')
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 
-	$module_data_path = $Template->get_module_data_path('gallery');
+	$module_data_path = $Template->get_pictures_data_path();
 	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
 
 	//Aficchage de la photo uploadée.
@@ -254,13 +252,11 @@ elseif ($g_add)
 		'U_INDEX' => url('.php')
 	));
 
-	$Template->pparse('gallery_add');
+	$Template->display();
 }
 else
 {
-	$Template->set_filenames(array(
-		'gallery'=> 'gallery/gallery.tpl'
-	));
+	$Template = new FileTemplate('gallery/gallery.tpl');
 
 	if (!empty($g_idcat))
 	{
@@ -320,7 +316,7 @@ else
 	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 
-	$module_data_path = $Template->get_module_data_path('gallery');
+	$module_data_path = $Template->get_pictures_data_path();
 	$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 
 	//Ordonnement.
@@ -738,7 +734,7 @@ else
 		}
 	}
 
-	$Template->pparse('gallery');
+	$Template->display();
 }
 
 require_once('../kernel/footer.php');
