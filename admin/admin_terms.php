@@ -40,19 +40,17 @@ if (!empty($_POST['msg_register'])) //Message à l'inscription.
 	AppContext::get_response()->redirect(HOST . SCRIPT); 	
 }
 else
-{			
-	$Template->set_filenames(array(
-		'admin_terms'=> 'admin/admin_terms.tpl'
-	));
+{
+	$template = new FileTemplate('admin/admin_terms.tpl');
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'L_TERMS' => $LANG['register_terms'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'CONTENTS' => FormatingHelper::unparse($user_accounts_config->get_registration_agreement()),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
@@ -63,7 +61,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));		
 	
-	$Template->pparse('admin_terms'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');

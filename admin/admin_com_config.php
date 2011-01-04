@@ -51,15 +51,13 @@ if (!empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_com_config'=> 'admin/admin_com_config.tpl'
-	));
+	$tpl = new FileTemplate('admin/admin_com_config.tpl');
 	
 	$comments_config = CommentsConfig::load();
 
 	for ($i = 0; $i < 5; $i++)
 	{
-		$Template->assign_block_vars('difficulty', array(
+		$tpl->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
 			'SELECTED' => ($comments_config->get_captcha_difficulty() == $i) ? 'selected="selected"' : ''
 		));
@@ -68,7 +66,7 @@ else
 	$j = 0;
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $identifier => $name)
 	{	
-		$Template->assign_block_vars('tag', array(
+		$tpl->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
 			'CODE' => $identifier,
 			'TAG_NAME' => $name,
@@ -76,7 +74,7 @@ else
 		));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'NBR_TAGS' => $j,
 		'AUTH_POST_COMMENTS' => Authorizations::generate_select(Comments::POST_COMMENT_AUTH, $comments_config->get_auth_post_comments()),
 		'COM_MAX' => $comments_config->get_number_comments_per_page(),
@@ -110,7 +108,7 @@ else
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
 	
-	$Template->pparse('admin_com_config'); // traitement du modele	
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

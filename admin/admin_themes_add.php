@@ -118,11 +118,9 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 }
 else  
 {
-	$Template->set_filenames(array(
-		'admin_themes_add'=> 'admin/admin_themes_add.tpl'
-	));
+	$template = new FileTemplate('admin/admin_themes_add.tpl');
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'THEME' => get_utheme(),		
 		'LANG' => get_ulang(),
 		'L_THEME_ADD' => $LANG['theme_add'],	
@@ -186,7 +184,7 @@ else
 	{
 		$info_theme = load_ini_file('../templates/' . $value_array . '/config/', get_ulang());
 		
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'IDTHEME' =>  $value_array,		
 			'THEME' =>  $info_theme['name'],			
 			'ICON' => $value_array,
@@ -206,15 +204,15 @@ else
 	}
 
 	if ($z != 0)
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 	
-	$Template->pparse('admin_themes_add'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');
