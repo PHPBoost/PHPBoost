@@ -77,9 +77,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$Template->set_filenames(array(
-		'admin_ranks_add'=> 'admin/admin_ranks_add.tpl'
-	));
+	$template = new FileTemplate('admin/admin_ranks_add.tpl');
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -100,7 +98,7 @@ else //Sinon on rempli le formulaire
 		$rank_options .= '<option value="' . PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/' . $file . '">' . $file . '</option>';
 	}
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'RANK_OPTIONS' => $rank_options,
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
@@ -119,7 +117,7 @@ else //Sinon on rempli le formulaire
 		'L_ADD' => $LANG['add']
 	));
 
-	$Template->pparse('admin_ranks_add');
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

@@ -30,13 +30,11 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Template->set_filenames(array(
-	'admin_extend'=> 'admin/admin_extend.tpl'
-));
+$template = new FileTemplate('admin/admin_extend.tpl');
 
 $home_page = GeneralConfig::load()->get_home_page();
 
-$Template->put_all(array(
+$template->put_all(array(
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'L_CONFIGURATION' => $LANG['configuration'],
@@ -75,7 +73,7 @@ foreach ($modules as $module)
 	$admin_home_page = $configuration->get_admin_main_page();
 	if (!empty($admin_home_page))
 	{
-		$Template->assign_block_vars('modules_extend', array(
+		$template->assign_block_vars('modules_extend', array(
 		'NAME' => $name,
 		'IMG' => '../' . $module->get_id() . '/' . $module->get_id() . '.png',
 		'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
@@ -91,14 +89,14 @@ if ($i != 0)
 	$i--;
 	while (($i % 5) != 0)
 	{
-		$Template->assign_block_vars('modules_extend.td', array(
+		$template->assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
 			));
 			$i++;
 	}
 }
 
-$Template->pparse('admin_extend');
+$template->display();
 
 require_once('../admin/admin_footer.php');
 

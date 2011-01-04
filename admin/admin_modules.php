@@ -33,6 +33,8 @@ $uninstall = retrieve(GET, 'uninstall', false);
 $id = retrieve(GET, 'id', 0);
 $error = retrieve(GET, 'error', '');
 
+$template = new FileTemplate('admin/admin_modules_management.tpl');
+
 //Modification des propriétés des modules (activés et autorisations globales d'accès)
 if (isset($_POST['valid']))
 {
@@ -80,11 +82,7 @@ elseif ($uninstall) //Désinstallation du module
 			}
 		}
 
-		$Template->set_filenames(array(
-			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
-		));
-
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_MODULES_DEL' => true,
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
@@ -101,16 +99,12 @@ elseif ($uninstall) //Désinstallation du module
 			'L_SUBMIT' => $LANG['submit']
 		));
 
-		$Template->pparse('admin_modules_management');
+		$template->display();
 	}
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
-	));
-
-	$Template->put_all(array(
+	$template->put_all(array(
 		'C_MODULES_LIST' => true,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -160,7 +154,7 @@ else
 		$configuration = $module->get_configuration();
 		$array_auth = $module->get_authorizations();
 
-		$Template->assign_block_vars('installed', array(
+		$template->assign_block_vars('installed', array(
 			'ID' => $module->get_id(),
 			'NAME' => ucfirst($configuration->get_name()),
 			'ICON' => $module->get_id(),
@@ -180,18 +174,18 @@ else
 
 	if ($i == 0)
 	{
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_NO_MODULE_INSTALLED' => true
 		));
 	}
 	else
 	{
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_MODULES_INSTALLED' => true
 		));
 	}
 
-	$Template->pparse('admin_modules_management');
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

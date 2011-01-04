@@ -156,9 +156,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 }
 elseif (!empty($move_folder) || !empty($move_file))
 {
-	$Template->set_filenames(array(
-		'admin_files_move'=> 'admin/admin_files_move.tpl'
-	));
+	$template = new FileTemplate('admin/admin_files_move.tpl');
 	
 	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
@@ -187,7 +185,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	else
 		$url = Uploads::get_admin_url($folder, '');
 		
-	$Template->put_all(array(
+	$template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'URL' => $url,
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
@@ -216,10 +214,10 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
-		$Template->assign_block_vars('folder', array(
+		$template->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$Template->put_all(array(
+		$template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
 			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token())
@@ -251,32 +249,30 @@ elseif (!empty($move_folder) || !empty($move_file))
 		
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
 		
-		$Template->assign_block_vars('file', array(
+		$template->assign_block_vars('file', array(
 			'C_DISPLAY_REAL_IMG' => $display_real_img,		
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
-		$Template->put_all(array(
+		$template->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token())
 		));
 	}
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
 	
-	$Template->pparse('admin_files_move');
+	$template->display();
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_files_management'=> 'admin/admin_files_management.tpl'
-	));
-
+	$template = new FileTemplate('admin/admin_files_management.tpl');
+	
 	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
@@ -314,7 +310,7 @@ else
 	else
 		$url = Uploads::get_admin_url($folder, '');
 		
-	$Template->put_all(array(
+	$template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
@@ -348,7 +344,7 @@ else
 
 	if ($folder == 0 && !$show_member && empty($folder_member))
 	{	
-		$Template->assign_block_vars('folder', array(
+		$template->assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'U_FOLDER' => '?showm=1',
 			'IMG_FOLDER' => 'member_max.png',
@@ -397,7 +393,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$Template->assign_block_vars('folder', array(
+		$template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
@@ -455,7 +451,7 @@ else
 				$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			}
 			
-			$Template->assign_block_vars('files', array(
+			$template->assign_block_vars('files', array(
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
@@ -477,7 +473,7 @@ else
 	
 
 	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload", __LINE__, __FILE__);
-	$Template->put_all(array(
+	$template->put_all(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDERS' => $total_directories,
@@ -485,12 +481,12 @@ else
 	));
 
 	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
-		$Template->put_all(array(
+		$template->put_all(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 		
-	$Template->pparse('admin_files_management');
+	$template->display();
 }
 	
 require_once('../admin/admin_footer.php');

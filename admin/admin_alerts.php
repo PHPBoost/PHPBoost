@@ -31,11 +31,7 @@ require_once('../admin/admin_header.php');
 
 $template = new FileTemplate('admin/admin_alerts.tpl');
 
-
-
 define('NUM_ALERTS_PER_PAGE', 20);
-
-
 
 $pagination = new DeprecatedPagination();
 
