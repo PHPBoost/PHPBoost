@@ -183,12 +183,14 @@ elseif (!empty($_POST['advanced']))
 		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
 		
+		$debug = retrieve(POST, 'debug', false);
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
 		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
 		$server_environment_config->set_output_gziping_enabled(retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
-		$server_environment_config->set_debug_mode_enabled(retrieve(POST, 'debug', false));
+		$server_environment_config->set_debug_mode_enabled($debug);
 		ServerEnvironmentConfig::save();
+		
 		HtaccessFileCache::regenerate();
 		
 		$sessions_config = SessionsConfig::load();
@@ -198,6 +200,13 @@ elseif (!empty($_POST['advanced']))
 		SessionsConfig::save();
 		
 		AppContext::get_cache_service()->clear_cache();
+
+		// Activation du mode débug après la suppression du cache
+		if ($debug) {
+			Debug::enabled_debug_mode(array());
+		} else {
+			Debug::disable_debug_mode();
+		}
 		
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
