@@ -39,8 +39,8 @@ class PHPBoostErrors
 
 	public static function module_not_activated()
 	{
-		// TODO
-        $controller = new UserErrorController('TODO', 'Module not activated');
+	    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+ 		LangLoader::get_message('e_unactivated_module', 'errors'));
         return $controller;
 	}
 	
