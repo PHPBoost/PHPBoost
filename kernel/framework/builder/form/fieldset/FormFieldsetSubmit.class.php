@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       FormFieldsetHorizontal.class.php
+ *                       FormFieldsetSubmit.class.php
  *                            -------------------
- *   begin                : February 17, 2010
+ *   begin                : October 16, 2010
  *   copyright            : (C) 2010 Benoit Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -29,34 +29,25 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class FormFieldsetHorizontal extends AbstractFormFieldset
+class FormFieldsetSubmit extends FormFieldsetHTML
 {
-	private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div class="horizontal_fieldset" id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF #>
-	    # IF C_DESCRIPTION #<span style="display:inline-table; vertical-align:middle;">${escape(DESCRIPTION)}</span># ENDIF #
-	    # START elements #<div style="display:inline-table; vertical-align:middle;"># INCLUDE elements.ELEMENT #</div># END elements #
-    </div>
-	<div class="spacer"></div>';
+	/**
+	 * @var Template
+	 */
+	private $template;
+	/**
+	 * @var FormButton[]
+	 */
+	private $buttons;
 
 	public function __construct($id, $options = array())
 	{
-		parent::__construct($id, $options);
-	}
-
-	/**
-	 * @return Template
-	 */
-	public function display()
-	{
-		$template = $this->get_template_to_use();
-
-		$this->assign_template_fields($template);
-
-		return $template;
-	}
-
-	protected function get_default_template()
-	{
-		return new StringTemplate(self::$tpl_src);
+		if (!isset($options['css_class']))
+		{
+			$options['css_class'] = 'fieldset_submit';
+		}
+		parent::__construct($id, '', $options);
 	}
 }
+
 ?>

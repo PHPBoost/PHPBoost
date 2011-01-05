@@ -250,10 +250,10 @@ class HTMLForm
 
 		if (count($this->buttons) > 0)
 		{
-			$buttons_fieldset = new FormFieldsetButtons('fbuttons');
+			$buttons_fieldset = new FormFieldsetSubmit('fbuttons');
 			foreach ($this->buttons as $button)
 			{
-				$buttons_fieldset->add_button($button);
+				$buttons_fieldset->add_element($button);
 			}
 			$template->assign_block_vars('fieldsets', array(), array(
 				'FIELDSET' => $buttons_fieldset->display()
