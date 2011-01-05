@@ -107,6 +107,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
+		
+		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
@@ -203,13 +205,13 @@ class SandboxFormController extends ModuleController
         $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS
-		$buttons_fieldset = new FormFieldsetButtons('buttons');
-		$buttons_fieldset->add_button(new FormButtonReset());
+		$buttons_fieldset = new FormFieldsetSubmit('buttons');
+		$buttons_fieldset->add_element(new FormButtonReset());
 		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
-		$buttons_fieldset->add_button($this->preview_button);
+		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$buttons_fieldset->add_button($this->submit_button);
-		$buttons_fieldset->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+		$buttons_fieldset->add_element($this->submit_button);
+		$buttons_fieldset->add_element(new FormButtonButton('Bouton', 'alert("coucou");'));
 		$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS

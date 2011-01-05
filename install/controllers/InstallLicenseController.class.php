@@ -70,11 +70,11 @@ class InstallLicenseController extends InstallController
     	array('required' => $this->lang['step.license.submit.alert']));
     	$fieldset->add_field($agree_checkbox);
 
-    	$action_fieldset = new FormFieldsetButtons('actions');
+    	$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'templates/images/left.png');
-		$action_fieldset->add_button($back);
+		$action_fieldset->add_element($back);
 		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'license');
-		$action_fieldset->add_button($this->submit);
+		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
     }
 

@@ -33,6 +33,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 {
 	private $form_id = '';
 	protected $fields = array();
+	protected $elements = array();
 	protected $description = '';
 	protected $id = '';
 	/**
@@ -74,6 +75,9 @@ abstract class AbstractFormFieldset implements FormFieldset
 					}
 					unset($options['disabled']);
 					break;
+				case 'css_class':
+					$this->set_css_class($value);
+					break;
 				default :
 					throw new FormBuilderException('The class ' . get_class($this) . ' doesn\'t support the ' . $attribute . ' attribute');
 			}
@@ -97,24 +101,30 @@ abstract class AbstractFormFieldset implements FormFieldset
 
 	/**
 	 * @desc Store fields in the fieldset.
-	 * @param FormField $form_field
+	 * @param FormField $field
 	 */
-	public function add_field(FormField $form_field)
+	public function add_field(FormField $field)
 	{
-		if (isset($this->fields[$form_field->get_id()]))
+		$this->add_element($field);
+		if (isset($this->fields[$field->get_id()]))
 		{
-			throw new FormBuilderException('Field with identifier "<strong>' . $form_field->get_id() . '</strong>" already exists,
+			throw new FormBuilderException('Field with identifier "<strong>' . $field->get_id() . '</strong>" already exists,
 			please chose a different one!');
 		}
-		$this->fields[$form_field->get_id()] = $form_field;
+		$this->fields[$field->get_id()] = $field;
 
 		if ($this->is_disabled())
 		{
-			$form_field->disable();
+			$field->disable();
 		}
 
-		$form_field->set_form_id($this->form_id);
-		$form_field->set_fieldset_id($this->get_id());
+		$field->set_form_id($this->form_id);
+		$field->set_fieldset_id($this->get_id());
+	}
+	
+	public function add_element(FormElement $element)
+	{
+		$this->elements[] = $element;
 	}
 
 	/**
@@ -224,10 +234,10 @@ abstract class AbstractFormFieldset implements FormFieldset
 			'FORM_ID' => $this->form_id
 		));
 
-		foreach($this->fields as $field)
+		foreach($this->elements as $element)
 		{
-			$template->assign_block_vars('fields', array(), array(
-				'FIELD' => $field->display(),
+			$template->assign_block_vars('elements', array(), array(
+				'ELEMENT' => $element->display(),
 			));
 		}
 	}
