@@ -107,6 +107,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
+		
+		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
@@ -117,6 +119,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
+		
+		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'J\'aime', array(), array(new FormFieldMultipleCheckboxOption('meet', 'la viande'), new FormFieldMultipleCheckboxOption('fish', 'le poisson'))));
 
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
@@ -134,9 +138,7 @@ class SandboxFormController extends ModuleController
 			array(
 				$default_option,
 				new FormFieldRadioChoiceOption('Choix 2', '2')
-			),
-			array('required' => true) //TODO Ne gère pas correctement cette option
-		));
+			)));
 
 		// CHECKBOX
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
@@ -203,13 +205,13 @@ class SandboxFormController extends ModuleController
         $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS
-		$buttons_fieldset = new FormFieldsetButtons('buttons');
-		$buttons_fieldset->add_button(new FormButtonReset());
+		$buttons_fieldset = new FormFieldsetSubmit('buttons');
+		$buttons_fieldset->add_element(new FormButtonReset());
 		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
-		$buttons_fieldset->add_button($this->preview_button);
+		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$buttons_fieldset->add_button($this->submit_button);
-		$buttons_fieldset->add_button(new FormButtonButton('Bouton', 'alert("coucou");'));
+		$buttons_fieldset->add_element($this->submit_button);
+		$buttons_fieldset->add_element(new FormButtonButton('Bouton', 'alert("coucou");'));
 		$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS

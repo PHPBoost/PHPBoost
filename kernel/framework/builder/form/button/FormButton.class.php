@@ -29,7 +29,7 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-interface FormButton
+interface FormButton extends FormElement
 {	
 }
 

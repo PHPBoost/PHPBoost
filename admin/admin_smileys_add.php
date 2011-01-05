@@ -80,9 +80,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_smileys_add'=> 'admin/admin_smileys_add.tpl'
-	));
+	$template = new FileTemplate('admin/admin_smileys_add.tpl');
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -115,7 +113,7 @@ else
 	foreach ($smileys_array as $smiley)
 		$smiley_options .= '<option value="' . $smiley . '">' . $smiley . '</option>';
 	
-	$Template->put_all(array(
+	$template->put_all(array(
 		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -132,7 +130,7 @@ else
 		'L_RESET' => $LANG['reset'],
 	));
 		
-	$Template->pparse('admin_smileys_add'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');

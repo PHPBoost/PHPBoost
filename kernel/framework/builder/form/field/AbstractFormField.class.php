@@ -415,10 +415,7 @@ abstract class AbstractFormField implements FormField
 			'FIELDSET_ID' => $this->fieldset_id
 		));
 
-		if ($has_js_validations) 
-		{
-			$template->put('ADD_FIELD_JS', $js_tpl);
-		} 
+		$template->put('ADD_FIELD_JS', $js_tpl);
 
 		$description = $this->get_description();
 		$template->put_all(array(

@@ -33,6 +33,8 @@ $uninstall = retrieve(GET, 'uninstall', false);
 $id = retrieve(GET, 'id', 0);
 $error = retrieve(GET, 'error', ''); 
 
+$template = new FileTemplate('admin/admin_lang_management.tpl');
+		
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
 	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
@@ -72,7 +74,7 @@ elseif (isset($_POST['valid'])) //Mise à jour
 elseif ($uninstall) //Désinstallation.
 {
 	if (!empty($_POST['valid_del']))
-	{		
+	{
 		$idlang = retrieve(POST, 'idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
@@ -110,12 +112,8 @@ elseif ($uninstall) //Désinstallation.
 		foreach ($_POST as $key => $value)
 			if ($value == $LANG['uninstall'])
 				$idlang = $key;
-				
-		$Template->set_filenames(array(
-			'admin_lang_management'=> 'admin/admin_lang_management.tpl'
-		));
-		
-		$Template->put_all(array(
+
+		$template->put_all(array(
 			'C_DEL_LANG' => true,
 			'IDLANG' => $idlang,
 			'L_LANG_ADD' => $LANG['lang_add'],	
@@ -127,17 +125,11 @@ elseif ($uninstall) //Désinstallation.
 			'L_NO' => $LANG['no'],
 			'L_DELETE' => $LANG['delete']
 		));
-
-		$Template->pparse('admin_lang_management'); 
 	}
 }		
 else
-{			
-	$Template->set_filenames(array(
-		'admin_lang_management'=> 'admin/admin_lang_management.tpl'
-	));
-	 
-	$Template->put_all(array(
+{
+	$template->put_all(array(
 		'C_LANG_MAIN' => true,
 		'THEME' => get_utheme(),		
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -183,7 +175,7 @@ else
 		}
 		
 		$default_lang = ($row['lang'] == UserAccountsConfig::load()->get_default_lang());
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'C_LANG_DEFAULT' => $default_lang ? true : false,
 			'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
 			'IDLANG' =>  $row['id'],		
@@ -201,16 +193,16 @@ else
 	$Sql->query_close($result);
 	
 	if ($z != 0)
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->put_all(array(		
+		$template->put_all(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
-		
-	$Template->pparse('admin_lang_management'); 
 }
+
+$template->display();
 
 require_once('../admin/admin_footer.php');
 

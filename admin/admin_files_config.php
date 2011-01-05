@@ -66,10 +66,7 @@ if (!empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-
-	$Template->set_filenames(array(
-		'admin_files_config'=> 'admin/admin_files_config.tpl'
-	));
+	$template = new FileTemplate('admin/admin_files_config.tpl');
 	
 	$file_upload_config = FileUploadConfig::load();
 	
@@ -100,7 +97,7 @@ else
 		$auth_extensions .= '</optgroup>';
 	}
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'NBR_EXTENSIONS' => $i,
 		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $file_upload_config->get_authorization_enable_interface_files(), array(2 => true)),
 		'SIZE_LIMIT' => NumberHelper::round($file_upload_config->get_maximum_size_upload()/1024, 2),
@@ -127,7 +124,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->pparse('admin_files_config'); // traitement du modele	
+	$template->display(); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

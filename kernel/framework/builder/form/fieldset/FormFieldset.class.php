@@ -34,9 +34,15 @@ interface FormFieldset
 	function get_id();
     /**
      * @desc Adds a list in the container
-     * @param FormField $form_field The field to add
+     * @param FormField $field The field to add
      */
-    function add_field(FormField $form_field);
+    function add_field(FormField $field);
+    
+    /**
+     * @desc Adds a form element to the fieldset
+     * @param FormElement $element The element to add
+     */
+    function add_element(FormElement $element);
 
     /**
      * @desc Sets the id prefix for fields

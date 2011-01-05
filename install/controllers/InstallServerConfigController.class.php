@@ -64,13 +64,13 @@ class InstallServerConfigController extends InstallController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('continueForm', '#error');
-		$action_fieldset = new FormFieldsetButtons('actions');
+		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
-		$action_fieldset->add_button($back);
+		$action_fieldset->add_element($back);
 		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->absolute(), 'templates/images/refresh.png');
-		$action_fieldset->add_button($refresh);
+		$action_fieldset->add_element($refresh);
 		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
-		$action_fieldset->add_button($this->submit);
+		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
 	}
 

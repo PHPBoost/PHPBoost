@@ -174,9 +174,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 }
 else
 {			
-	$Template->set_filenames(array(
-		'admin_modules_update'=> 'admin/admin_modules_update.tpl'
-	));
+	$template = new FileTemplate('admin/admin_modules_update.tpl');
 
     // Intégration du système d'updates des modules avec celui du site
 	
@@ -222,7 +220,7 @@ else
 			$length = strlen($short_description) > $maxlength ?  $maxlength + strpos(substr($short_description, $maxlength), ' ') : 0;
 			$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
 			
-			$Template->assign_block_vars('apps', array(
+			$template->assign_block_vars('apps', array(
 				'type' => $update->get_type(),
 				'name' => $update->get_name(),
 				'version' => $update->get_version(),
@@ -237,7 +235,7 @@ else
 		
 		if ($updates_availables = (count($updates) > 0))
 		{
-			$Template->put_all(array(
+			$template->put_all(array(
 				'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
 				'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
 				'L_TYPE' => $LANG['type'],
@@ -258,18 +256,18 @@ else
 		}
 		else
 		{
-			$Template->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
+			$template->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
 		}
 	}
 	else
 	{
-		$Template->put_all(array(
+		$template->put_all(array(
 			'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], PHP_MIN_VERSION_UPDATES),
 			'C_INCOMPATIBLE_PHP_VERSION' => true,
 		));
 	}
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'L_WEBSITE_UPDATES' => $LANG['website_updates'],
 		'L_KERNEL' => $LANG['kernel'],
 		'L_MODULES' => $LANG['modules'],
@@ -285,7 +283,7 @@ else
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	$Template->put_all(array(
+	$template->put_all(array(
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
 		'L_UPDATE_MODULES' => $LANG['update_modules'],
@@ -294,7 +292,7 @@ else
 		'L_UPLOAD' => $LANG['upload'],
 	));
 		
-	$Template->pparse('admin_modules_update'); 
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');

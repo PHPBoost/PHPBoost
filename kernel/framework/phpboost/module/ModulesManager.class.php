@@ -59,13 +59,13 @@ class ModulesManager
 	 */
 	public static function get_activated_modules_map()
 	{
-		$installed_modules = array();
+		$activated_modules = array();
 		foreach (ModulesConfig::load()->get_modules() as $module) {
 			if ($module->is_activated()) {
-				$installed_modules[] = $module;
+				$activated_modules[$module->get_id()] = $module;
 			}
 		}
-		return $installed_modules;
+		return $activated_modules;
 	}
 
 	/**
@@ -112,7 +112,15 @@ class ModulesManager
 	 */
 	public static function get_installed_modules_ids_list()
 	{
-		return array_keys(ModulesConfig::load()->get_modules());
+		return array_keys(self::get_installed_modules_map());
+	}
+
+	/**
+	 * @return string[] the names list of the installed modules (and activated)
+	 */
+	public static function get_activated_modules_ids_list()
+	{
+		return array_keys(self::get_activated_modules_map());
 	}
 
 	/**
