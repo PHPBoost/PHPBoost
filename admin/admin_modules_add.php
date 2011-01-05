@@ -121,11 +121,9 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_modules_add'=> 'admin/admin_modules_add.tpl'
-	));
+	$template = new FileTemplate('admin/admin_modules_add.tpl');
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -193,13 +191,13 @@ else
 
 	if (empty($uninstalled_modules))
 	{
-		$Template->put_all( array(
+		$template->put_all( array(
 			'C_NO_MODULE' => true,
 		));
 	}
 	else
 	{
-		$Template->put_all( array(
+		$template->put_all( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
 		foreach ($uninstalled_modules as $name => $module)
@@ -210,7 +208,7 @@ else
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 
-			$Template->assign_block_vars('available', array(
+			$template->assign_block_vars('available', array(
 				'ID' => $module->get_id(),
 				'NAME' => ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
@@ -225,7 +223,7 @@ else
 		}
 	}
 
-	$Template->pparse('admin_modules_add');
+	$template->display(); 
 }
 
 require_once('../admin/admin_footer.php');

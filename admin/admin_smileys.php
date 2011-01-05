@@ -66,9 +66,7 @@ elseif (!empty($id) && $del) //Suppression.
 }
 elseif (!empty($id) && $edit) //Edition.
 {
-	$Template->set_filenames(array(
-		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
-	));
+	$template = new FileTemplate('admin/admin_smileys_management2.tpl');
 
 	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $info_smiley['url_smiley'];
@@ -91,7 +89,7 @@ elseif (!empty($id) && $edit) //Edition.
 	}
 	$Sql->query_close($result);
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'IDSMILEY' => $info_smiley['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $info_smiley['code_smiley'],
@@ -109,15 +107,13 @@ elseif (!empty($id) && $edit) //Edition.
 		'L_RESET' => $LANG['reset'],
 	));
 	
-	$Template->pparse('admin_smileys_management2');
+	$template->display();
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_smileys_management'=> 'admin/admin_smileys_management.tpl'
-	));
+	$template = new FileTemplate('admin/admin_smileys_management.tpl');
 
-	$Template->put_all(array(
+	$template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],
@@ -132,14 +128,14 @@ else
 	$smileys_cache = SmileysCache::load()->get_smileys();
 	foreach($smileys_cache as $code => $row)
 	{
-		$Template->assign_block_vars('list', array(
+		$template->assign_block_vars('list', array(
 			'IDSMILEY' => $row['idsmiley'],
 			'URL_SMILEY' => $row['url_smiley'],
 			'CODE_SMILEY' => $code
 		));
 	}
 	
-	$Template->pparse('admin_smileys_management');
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

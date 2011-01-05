@@ -109,9 +109,9 @@ class InstallDBConfigController extends InstallController
 		$this->overwrite_fieldset->add_field($this->overwrite_field);
 		$this->overwrite_fieldset->disable();
 
-		$action_fieldset = new FormFieldsetButtons('actions');
+		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
-		$action_fieldset->add_button($back);
+		$action_fieldset->add_element($back);
 		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){
 		alert(response.responseJSON.message);
 		if (response.responseJSON.alreadyInstalled) {
@@ -121,9 +121,9 @@ class InstallDBConfigController extends InstallController
 		}}');
 		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png',
 		array($host, $port, $login, $password, $schema, $tables_prefix), '$HF(\'databaseForm\').validate()');
-		$action_fieldset->add_button($check);
+		$action_fieldset->add_element($check);
 		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'database');
-		$action_fieldset->add_button($this->submit_button);
+		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
 

@@ -79,9 +79,7 @@ if (!empty($_POST['valid']))
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$Template->set_filenames(array(
-		'admin_maintain'=> 'admin/admin_maintain.tpl'
-	));
+	$template = new FileTemplate('admin/admin_maintain.tpl');
 	
 	$maintenance_config = MaintenanceConfig::load();
 	
@@ -116,7 +114,7 @@ else //Sinon on rempli le formulaire
 	
 	$maintenance_terminates_after_tomorrow = $maintenance_config->get_end_date()->is_posterior_to(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time() + 86400));
 	$check_until = (!$maintenance_config->is_unlimited_maintenance() && $maintenance_terminates_after_tomorrow);
-	$Template->put_all(array(
+	$template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'AUTH_WEBSITE' => Authorizations::generate_select(1, $maintenance_config->get_auth()),
@@ -144,7 +142,7 @@ else //Sinon on rempli le formulaire
 		'L_RESET' => $LANG['reset']		
 	));
 	
-	$Template->pparse('admin_maintain');
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

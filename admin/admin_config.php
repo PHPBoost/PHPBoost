@@ -247,7 +247,7 @@ else //Sinon on rempli le formulaire
 	$select_page = '';
 	$start_page = array();
 	$i = 0;
-	foreach (ModulesManager::get_installed_modules_ids_list() as $name)
+	foreach (ModulesManager::get_activated_modules_ids_list() as $name)
 	{
 		$module_configuration = ModuleConfigurationManager::get($name);
 		

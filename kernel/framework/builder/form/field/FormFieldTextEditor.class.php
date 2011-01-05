@@ -90,11 +90,11 @@ class FormFieldTextEditor extends AbstractFormField
             $attribute = strtolower($attribute);
             switch ($attribute)
             {
-                case 'size' :
+                case 'size':
                     $this->size = $value;
                     unset($field_options['size']);
                     break;
-                case 'maxlength' :
+                case 'maxlength':
                     $this->maxlength = $value;
                     unset($field_options['maxlength']);
                     break;

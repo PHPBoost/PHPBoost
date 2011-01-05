@@ -29,7 +29,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @package {@package}
  */
-interface FormField
+interface FormField extends FormElement
 {
 	/**
 	 * @desc Returns the id.
@@ -82,11 +82,6 @@ interface FormField
 	 * @return string
 	 */
 	function get_html_id();
-
-	/**
-	 * @return Template
-	 */
-	function display();
 	
 	/**
 	 * @desc Tells whether the field is disabled

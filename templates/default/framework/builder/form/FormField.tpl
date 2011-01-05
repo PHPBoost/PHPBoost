@@ -26,5 +26,4 @@
 			</dd>
 			# ENDIF #
 		</dl>
-		
 		# INCLUDE ADD_FIELD_JS #

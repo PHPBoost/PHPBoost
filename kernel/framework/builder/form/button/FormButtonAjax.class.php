@@ -31,7 +31,7 @@
  */
 class FormButtonAjax extends FormButtonButton
 {
-    public function __construct($label, AjaxRequest $request, $img = '', array $fields, $condition = null, $field_options = array())
+    public function __construct($label, AjaxRequest $request, $img = '', array $fields, $condition = null)
     {
     	$full_label = '';
     	if (!empty($img))
@@ -42,7 +42,7 @@ class FormButtonAjax extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, $this->build_ajax_request($request, $fields, $condition), '', $field_options);
+        parent::__construct($full_label, $this->build_ajax_request($request, $fields, $condition), '');
     }
 
     private function build_ajax_request(AjaxRequest $request, array $fields, $condition)

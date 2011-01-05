@@ -105,7 +105,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/FormField.tpl');;
+		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
 }
 
