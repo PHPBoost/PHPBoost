@@ -43,6 +43,11 @@ class MemberExtendedFieldsService
 		$extended_fields_displayed = MemberExtendedFieldsDAO::extended_fields_displayed();
         if ($extended_fields_displayed)
 		{
+			$template = $member_extended_field->get_template();
+			$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
+			$member_extended_field->set_fieldset($fieldset);
+			$template->add_fieldset($fieldset);
+
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id == null)
 			{
@@ -67,6 +72,11 @@ class MemberExtendedFieldsService
 			$user_id = $member_extended_field->get_user_id();
 			if($user_id !== null)
 			{
+				$template = $member_extended_field->get_template();
+				$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
+				$member_extended_field->set_fieldset($fieldset);
+				$template->add_fieldset($fieldset);
+			
 				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
@@ -192,6 +202,7 @@ class MemberExtendedFieldsService
 	
 		$field_name = $member_extended_field->get_field_name();
 		$data = MemberExtendedFieldsDAO::select_data_field_by_user_id($member_extended_field);
+		$field_member = !empty($data[$field_name]) && isset($data[$field_name]) ? $data[$field_name] : '';
 		return $data[$field_name];
 	}
 }

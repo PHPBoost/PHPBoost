@@ -363,7 +363,7 @@ class KernelSetup
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'field_type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
 			'default_values' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),

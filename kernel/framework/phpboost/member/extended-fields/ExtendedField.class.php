@@ -106,6 +106,9 @@ class ExtendedField
 		return !empty($this->description) ? $this->description : '';
 	}
 	
+	/*
+	 * Containing $field_type integer or personal classe name herite of AbstractMemberExtendedField
+	*/
 	public function set_field_type($field_type)
 	{
 		$this->field_type = $field_type;
