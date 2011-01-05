@@ -90,7 +90,7 @@ class MemberRegisterController extends AbstractController
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], FormFieldCheckbox::CHECKED));
 		
 		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_fieldset($fieldset);
+		$member_extended_field->set_template($form);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
 		$form->add_button(new FormButtonReset());
