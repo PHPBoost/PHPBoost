@@ -99,7 +99,7 @@ abstract class AbstractFormButton extends AbstractFormField implements FormButto
     protected function get_default_template()
     {
     	return new StringTemplate('<dl# IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}"# ENDIF #>
-    		<button type="${TYPE}" name="${BUTTON_NAME}"  class="{BUTTON_CLASS} onclick="${escape(ONCLICK_ACTION)}" value="true">{VALUE}</button>
+    		<button type="${TYPE}" name="${BUTTON_NAME}"  class="{BUTTON_CLASS}" onclick="${escape(ONCLICK_ACTION)}">{VALUE}</button>
     	</dl>');
     }
 }
