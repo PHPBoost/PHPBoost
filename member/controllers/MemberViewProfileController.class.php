@@ -94,7 +94,7 @@ class MemberViewProfileController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connect'], gmdate_format('date_format_short', $row['last_connect'])));
 		
 		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_fieldset($fieldset);
+		$member_extended_field->set_template($form);
 		$member_extended_field->set_user_id(1);
 		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
 		

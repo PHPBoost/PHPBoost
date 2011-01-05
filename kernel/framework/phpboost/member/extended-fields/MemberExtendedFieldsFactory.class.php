@@ -124,53 +124,61 @@ class MemberExtendedFieldsFactory
 	public static function name_class($member_extended_field)
 	{
 		$field_type = $member_extended_field->get_field_type();
-		switch ($field_type) 
+		$is_integer = preg_match('`^[0-9]+$`i', $field_type) > 0;
+		if ($is_integer)
 		{
-			case 1:
-				return 'MemberShortTextExtendedField';
-				break;
-			case 2:
-				return 'MemberLongTextExtendedField';
-				break;
-			case 3:
-				return 'MemberHalfLongTextExtendedField';
-				break;	
-			case 4:
-				return 'MemberSimpleSelectExtendedField';
-				break;
-			case 5:
-				return 'MemberMultipleSelectExtendedField';
-				break;
-			case 6:
-				return 'MemberSimpleChoiceExtendedField';
-				break;
-			case 7:
-				return 'MemberMultipleChoiceExtendedField';
-				break;
-			case 8:
-				return 'MemberDateExtendedField';
-				break;
-			case 9:
-				return 'MemberUserBornExtendedField';
-				break;
-			case 10:
-				return 'MemberUserLangExtendedField';
-				break;
-			case 11:
-				return 'MemberUserThemeExtendedField';
-				break;
-			case 12:
-				return 'MemberUserEditorExtendedField';
-				break;
-			case 13:
-				return 'MemberUserTimezoneExtendedField';
-				break;
-			case 14:
-				return 'MemberUserSexExtendedField';
-				break;
-			case 15:
-				return 'MemberUserAvatarExtendedField';
-				break;
+			switch ($field_type) 
+			{
+				case 1:
+					return 'MemberShortTextExtendedField';
+					break;
+				case 2:
+					return 'MemberLongTextExtendedField';
+					break;
+				case 3:
+					return 'MemberHalfLongTextExtendedField';
+					break;	
+				case 4:
+					return 'MemberSimpleSelectExtendedField';
+					break;
+				case 5:
+					return 'MemberMultipleSelectExtendedField';
+					break;
+				case 6:
+					return 'MemberSimpleChoiceExtendedField';
+					break;
+				case 7:
+					return 'MemberMultipleChoiceExtendedField';
+					break;
+				case 8:
+					return 'MemberDateExtendedField';
+					break;
+				case 9:
+					return 'MemberUserBornExtendedField';
+					break;
+				case 10:
+					return 'MemberUserLangExtendedField';
+					break;
+				case 11:
+					return 'MemberUserThemeExtendedField';
+					break;
+				case 12:
+					return 'MemberUserEditorExtendedField';
+					break;
+				case 13:
+					return 'MemberUserTimezoneExtendedField';
+					break;
+				case 14:
+					return 'MemberUserSexExtendedField';
+					break;
+				case 15:
+					return 'MemberUserAvatarExtendedField';
+					break;
+			}
+		}
+		else if (is_string($field_type))
+		{
+			return $field_type;
 		}
 	}
 	
