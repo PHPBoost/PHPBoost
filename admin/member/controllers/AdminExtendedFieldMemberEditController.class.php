@@ -226,7 +226,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_description($this->form->get_value('description'));
 		$extended_field->set_field_type($this->form->get_value('field_type')->get_raw_value());
 		$extended_field->set_possible_values($this->form->get_value('possible_values', ''));
-		$extended_field->set_default_values($this->form->get_value('default_values'));
+		$extended_field->set_default_values($this->form->get_value('default_values', ''));
 		$extended_field->set_is_required($this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display($this->form->get_value('display')->get_raw_value());
 		if ($field_type <= 2)

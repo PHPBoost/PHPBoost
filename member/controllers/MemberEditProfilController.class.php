@@ -96,7 +96,7 @@ class MemberEditProfilController extends AbstractController
 		$fieldset->add_field(new FormFieldCheckbox('delete_account', $this->lang['del_member'], FormFieldCheckbox::UNCHECKED));
 		
 		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_fieldset($fieldset);
+		$member_extended_field->set_template($form);
 		$member_extended_field->set_user_id($user_id);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
