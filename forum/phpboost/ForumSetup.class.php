@@ -64,14 +64,13 @@ class ForumSetup extends DefaultModuleSetup
 
 	public function install()
 	{
-		$this->uninstall();
+		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
 
 	public function uninstall()
 	{
-		$this->drop_tables();
 		$this->delete_member_extended_last_view_forum();
 	}
 
