@@ -271,7 +271,7 @@
 									<br />
 									{cat.list.LOCK} <span class="text_small">{cat.list.L_NBR_PICS}</span> 
 								</td>	
-							{list.TR_END}
+							{cat.list.TR_END}
 							# END cat.list #						
 						
 							# START cat.end_td #
