@@ -46,11 +46,11 @@ function minimize_container(input, containerName)
 
 	if(input.checked == false)
 	{
-		container.style.visibility = 'hidden';
+		container.style.display = 'none';
 	}
 	else
 	{
-		container.style.visibility = 'visible';
+		container.style.display = 'block';
 	}
 }
 
@@ -116,7 +116,7 @@ function createSortableMenu()
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);"
 onmouseout="menu_hide_block('addmenu1', 0);">
 								    <p
 class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -149,7 +149,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_ME
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);"
 onmouseout="menu_hide_block('addmenu2', 0);">
 									<p class="menus_block_add
 menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -182,7 +182,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_ME
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);"
 onmouseout="menu_hide_block('addmenu3', 0);">
 									<p class="menus_block_add
 menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -223,7 +223,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_ME
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
 											<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);"
 onmouseout="menu_hide_block('addmenu4', 0);">
 												<p
 class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -275,7 +275,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_ME
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
 											<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);"
 onmouseout="menu_hide_block('addmenu5', 0);">
 												<p
 class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -309,7 +309,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_ME
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);"
 onmouseout="menu_hide_block('addmenu6', 0);">
 									<p class="menus_block_add
 menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -349,7 +349,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_ME
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);"
 onmouseout="menu_hide_block('addmenu7', 0);">
 									<p class="menus_block_add
 menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
@@ -382,7 +382,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_ME
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
 								<div
-style="position:absolute;bottom:18px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);"
+style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);"
 onmouseout="menu_hide_block('addmenu8', 0);">
 									<p class="menus_block_add
 menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
