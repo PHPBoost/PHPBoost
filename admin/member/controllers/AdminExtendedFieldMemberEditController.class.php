@@ -214,10 +214,12 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		if (!$freeze)
 		{
 			$extended_field->set_field_name(ExtendedField::rewrite_field_name($this->form->get_value('name')));
+			$extended_field->set_field_type($this->form->get_value('field_type')->get_raw_value());
 		}
 		else
 		{
 			$extended_field->set_field_name($extended_field->get_field_name());
+			$extended_field->set_field_type($extended_field->get_field_type());
 		}
 		
 		$field_type = $this->form->get_value('field_type')->get_raw_value();

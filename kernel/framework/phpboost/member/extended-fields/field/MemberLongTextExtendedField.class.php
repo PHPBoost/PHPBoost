@@ -37,7 +37,7 @@ class MemberLongTextExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(), array(
 			'class' => 'text', 'required' => (bool)$member_extended_field->get_required(), 'rows' => 5, 'cols' => 47, 'description' => $member_extended_field->get_description()),
 			array($this->constraint($member_extended_field->get_regex()))
 		));
@@ -47,7 +47,7 @@ class MemberLongTextExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
 			'class' => 'text', 'required' => (bool)$member_extended_field->get_required(), 'rows' => 5, 'cols' => 47, 'description' => $member_extended_field->get_description()),
 			array($this->constraint($member_extended_field->get_regex()))
 		));
