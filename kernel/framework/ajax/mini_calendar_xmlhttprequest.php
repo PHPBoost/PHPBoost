@@ -160,7 +160,7 @@ else
     //Non supporté
 }
 
-$Template->render();
+$Template->display();
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>
