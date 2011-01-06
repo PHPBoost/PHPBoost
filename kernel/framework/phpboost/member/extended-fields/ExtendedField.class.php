@@ -196,26 +196,5 @@ class ExtendedField
 		$field = str_replace('-', '_', $field);
 		return 'f_' . $field;
 	}
-	
-	public static function rewrite_regex($regex_type)
-	{
-		if (is_numeric($regex_type))
-		{
-			$array_regex = array(
-				1 => '`^[0-9]+$`',
-				2 => '`^[a-z]+$`',
-				3 => '`^[a-z0-9]+$`',
-				4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
-				5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
-			);
-			
-			return $array_regex[$regex_type];
-		}
-		else
-		{
-			return $regex_type;
-		}
-	}
-
 }
 ?>

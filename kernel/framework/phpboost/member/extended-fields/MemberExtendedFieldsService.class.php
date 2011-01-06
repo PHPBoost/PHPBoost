@@ -203,7 +203,7 @@ class MemberExtendedFieldsService
 		$field_name = $member_extended_field->get_field_name();
 		$data = MemberExtendedFieldsDAO::select_data_field_by_user_id($member_extended_field);
 		$field_member = !empty($data[$field_name]) && isset($data[$field_name]) ? $data[$field_name] : '';
-		return $data[$field_name];
+		return $field_member;
 	}
 }
 ?>

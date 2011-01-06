@@ -20,8 +20,11 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées (création d'une classe).
-- Gérer finement les autorisations des thèmes/langues
+- Terminer le passage du dossier member et de la partie membre dans l'administration.
+- Corriger des soucis lorsqu'un champ est en mode freeze, il peut être supprimé.
+- Débugger voir refaire les classes Comments et Note.
+- Créer des contraintes permettant de voir si un login/adresse email existe déjà.
+- Gérer finement les autorisations des langues
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -89,7 +92,6 @@
 - [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
-- [color=red]Nouveauté:[/color] Possibilité de mettre les champs à l'inscription en obligatoire.
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
