@@ -21,7 +21,7 @@
 			<div class="module_top"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module_contents">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
-					# INCLUDE message_helper ##
+					# INCLUDE message_helper #
 
 					# IF C_FORUM_PREVIEW_MSG #
 					<div class="module_position">
