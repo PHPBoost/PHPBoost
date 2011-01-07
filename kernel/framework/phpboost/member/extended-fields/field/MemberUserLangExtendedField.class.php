@@ -63,7 +63,10 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 		$member_value = $member_extended_field->get_value();
 		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_lang();
 		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $value);
-		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_lang['name']));
+		if (!empty($info_lang['name']))
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_lang['name']));
+		}
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
