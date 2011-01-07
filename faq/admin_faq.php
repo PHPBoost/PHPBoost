@@ -73,6 +73,8 @@ if ($page > 0)
 			'QUESTION' => $row['question'],
 			'CATEGORY' => !empty($row['idcat']) ? $row['name'] : $LANG['root'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+			'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+			'U_EDIT' => url('management.php?edit=' . $row['id']),
 			'U_QUESTION' => url('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
 			'U_CATEGORY' => !empty($row['idcat']) ? url('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php') : url('faq.php')
 		));
@@ -82,6 +84,9 @@ if ($page > 0)
 		'PAGINATION' => $Pagination->display('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_CATEGORY' => $FAQ_LANG['category'],
+		'L_EDIT' => $FAQ_LANG['update'],
+		'L_DELETE' => $FAQ_LANG['delete'],
+		'L_CONFIRM_DELETE' => addslashes($FAQ_LANG['confirm_delete']),
 		'L_DATE' => $LANG['date'],
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],

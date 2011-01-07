@@ -158,9 +158,7 @@
 				# END questions_block #
 				
 				# START no_question #
-					<div class="notice">
-						{L_NO_QUESTION_THIS_CATEGORY}
-					</div>
+				<p class="center">{L_NO_QUESTION_THIS_CATEGORY}</p>
 				# END no_question #
 				<div class="spacer"></div>
 			</div>
