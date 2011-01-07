@@ -42,15 +42,19 @@ $lang['extended-fields-sucess-delete'] = 'The field is deleted successfuly.';
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
 $lang['type.long-text'] = 'Long text (unlimited)';
+$lang['type.half-text'] = 'Medium text';
 $lang['type.simple-select'] = 'Single selection (between several values)';
 $lang['type.multiple-select'] = 'Multiple selection (between several values)';
 $lang['type.simple-check'] = 'Single choice (between several values)';
 $lang['type.multiple-check'] = 'Multiple choice (between several values)';
 $lang['type.date'] = 'Date';
-$lang['type.user-themes-choice'] = 'Choice themes';
-$lang['type.user-lang-choice'] = 'Choice languages';
+$lang['type.user-theme-choice'] = 'Theme';
+$lang['type.user-lang-choice'] = 'Language';
 $lang['type.user_born'] = 'Date of birth';
-$lang['type.avatar'] = 'Management avatar';
+$lang['type.user-editor'] = 'Editor';
+$lang['type.user-timezone'] = 'Timezone choice';
+$lang['type.user-sex'] = 'Sex';
+$lang['type.avatar'] = 'Avatar';
 
 $lang['default-field'] = 'Default field';
 
@@ -88,6 +92,50 @@ $lang['field.is-required'] = 'Required';
 $lang['field.is-not-required'] = 'Not required';
 
 
+//Install
+$lang['field-install.default-lang'] = 'Default language';
+$lang['field-install.default-lang-explain'] = 'Select the language you want to use';
 
+$lang['field-install.default-theme'] = 'Default theme';
+$lang['field-install.default-theme-explain'] = 'Select the theme you want to use';
+
+$lang['field-install.default-editor'] = 'Default text editor';
+$lang['field-install.default-editor-explain'] = 'Select the editor which with you want to format text';
+
+$lang['field-install.timezone'] = 'Timezone';
+$lang['field-install.timezone-explain'] = 'Select the timezone corresponding to the place you live';
+
+$lang['field-install.sex'] = 'Sex';
+$lang['field-install.sex-explain'] = '';
+
+$lang['field-install.date-birth'] = 'Birth date';
+$lang['field-install.date-birth-explain'] = 'MM/DD/YYYY';
+
+$lang['field-install.avatar'] = 'Avatar';
+$lang['field-install.avatar-explain'] = '';
+
+$lang['field-install.website'] = 'Website';
+$lang['field-install.website-explain'] = 'Please enter a valid url';
+
+$lang['field-install.location'] = 'Localization';
+$lang['field-install.location-explain'] = '';
+
+$lang['field-install.job'] = 'Job';
+$lang['field-install.job-explain'] = '';
+
+$lang['field-install.entertainement'] = 'Hobbies';
+$lang['field-install.entertainement-explain'] = '';
+
+$lang['field-install.signing'] = 'Signature';
+$lang['field-install.signing-explain'] = 'The signature appears beyond all your messages';
+
+$lang['field-install.biography'] = 'Biography';
+$lang['field-install.biography-explain'] = 'A few lines describing you';
+
+$lang['field-install.msn'] = 'MSN';
+$lang['field-install.msn-explain'] = '';
+
+$lang['field-install.yahoo'] = 'Yahoo';
+$lang['field-install.yahoo-explain'] = '';
 
 ?>

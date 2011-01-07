@@ -44,6 +44,7 @@ class CLIEnvironment extends Environment
 	{
 		$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_FILENAME'];
 		$_SERVER['QUERY_STRING'] = '';
+		$_SERVER['REQUEST_URI'] = '';
 		$_SERVER['REMOTE_ADDR'] = '';
 	}
 
