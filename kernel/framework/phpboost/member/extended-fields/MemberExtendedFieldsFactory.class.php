@@ -133,11 +133,11 @@ class MemberExtendedFieldsFactory
 					return 'MemberShortTextExtendedField';
 					break;
 				case 2:
+					return 'MemberHalfLongTextExtendedField';
+					break;		
+				case 3:
 					return 'MemberLongTextExtendedField';
 					break;
-				case 3:
-					return 'MemberHalfLongTextExtendedField';
-					break;	
 				case 4:
 					return 'MemberSimpleSelectExtendedField';
 					break;

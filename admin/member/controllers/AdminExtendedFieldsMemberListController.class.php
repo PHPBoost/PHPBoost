@@ -42,22 +42,24 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 		foreach ($extended_field as $id => $row)
 		{
+			if ($row['display'] == 1)
+			{
+				$top_link = $min_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/top/')->absolute() .'" title="">
+					<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
+				$bottom_link = $max_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/bottom/')->absolute() .'" title="">
+					<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 			
-			$top_link = $min_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/top/')->absolute() .'" title="">
-				<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-			$bottom_link = $max_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/bottom/')->absolute() .'" title="">
-				<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
-		
-			$this->view->assign_block_vars('list_extended_fields', array(
-				'ID' => $row['id'],
-				'NAME' => $row['name'],
-				'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-				'L_DISPLAY' => $row['display'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-				'TOP' => $top_link,
-				'BOTTOM' => $bottom_link,
-				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/delete/?token=' . AppContext::get_session()->get_token())->absolute(),
-				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
-			));
+				$this->view->assign_block_vars('list_extended_fields', array(
+					'ID' => $row['id'],
+					'NAME' => $row['name'],
+					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
+					'L_DISPLAY' => $row['display'] ? $this->lang['field.yes'] : $this->lang['field.no'],
+					'TOP' => $top_link,
+					'BOTTOM' => $bottom_link,
+					'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/delete/?token=' . AppContext::get_session()->get_token())->absolute(),
+					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
+				));
+			}
 		}
 		
 		$this->view->put_all(array(

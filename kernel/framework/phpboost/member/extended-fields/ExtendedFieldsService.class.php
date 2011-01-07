@@ -103,32 +103,43 @@ class ExtendedFieldsService
 	}
 	
 	/*
-	 * This function required object ExtendedField containing the id
+	 * This function required object ExtendedField containing the id or field_name
 	 */
 	public static function delete(ExtendedField $extended_field, $by = self::BY_ID)
 	{
-		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
-		$class = new $name_class();
-		if ($class->get_field_used_phpboost_configuration())
-		{
-			// TODO Change exception and applicate to display fields
-			throw new Exception('Le champs est utilisé dans la configuration de phpboost et ne peux pas être supprimé !');
-		}
 		if ($by == self::BY_ID) 
 		{
+			$data = self::data_field($extended_field, self::SORT_BY_ID);
+			$extended_field->set_field_type($data->get_field_type());
+			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$class = new $name_class();
+
 			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
 			{
-				ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
-				
+				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				{
+					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+				}
+				$extended_field->set_display('0');
+				ExtendedFieldsDatabaseService::update_extended_field_display_by_id($extended_field);
 				ExtendedFieldsCache::invalidate();
 			}
 		}
 		else if ($by == self::BY_FIELD_NAME)
 		{
+			$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
+			$extended_field->set_field_type($data->get_field_type());
+			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$class = new $name_class();
+
 			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
 			{
-				ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
-				
+				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				{
+					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+				}
+				$extended_field->set_display('0');
+				ExtendedFieldsDatabaseService::update_extended_field_display_by_field_name($extended_field);
 				ExtendedFieldsCache::invalidate();
 			}
 		}

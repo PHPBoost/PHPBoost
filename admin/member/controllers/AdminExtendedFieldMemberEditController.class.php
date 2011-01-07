@@ -122,8 +122,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '3'),
 				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
 				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
 				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
@@ -143,8 +143,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
 				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
 				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
-				if (HTMLForms.getField("field_type").getValue() > 9){HTMLForms.getField("default_values").disable(); }
-				if (HTMLForms.getField("field_type").getValue() < 10){HTMLForms.getField("default_values").enable();}'))
+				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
+				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
@@ -192,8 +192,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		));
 		
 		$auth = $extended_field_cache['auth'];
-		
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
+
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION), new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)));
 		$auth_settings->build_from_auth_array($auth);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);

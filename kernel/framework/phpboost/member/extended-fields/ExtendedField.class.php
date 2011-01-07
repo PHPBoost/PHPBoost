@@ -31,7 +31,8 @@
  */
 class ExtendedField
 {
-	const AUTHORIZATION = 1;
+	const READ_PROFILE_AUTHORIZATION = 1;
+	const READ_EDIT_AND_ADD_AUTHORIZATION = 2;
 	
 	private $id;
 	private $name;
@@ -186,7 +187,7 @@ class ExtendedField
 	
 	public function get_authorization()
 	{
-		return !empty($this->authorization) ? $this->authorization : array('r1' => 2, 'r0' => 2, 'r-1' => 2);
+		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 1);
 	}
 	
 	public static function rewrite_field_name($field_name)

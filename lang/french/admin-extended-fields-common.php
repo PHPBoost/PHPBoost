@@ -71,6 +71,8 @@ $lang['field.possible-values-explain'] = 'Séparez les différentes valeurs par le
 $lang['field.default-values'] = 'Valeurs par défaut';
 $lang['field.default-values-explain'] = 'Séparez les différentes valeurs par le symbole |';
 $lang['field.default-possible-values'] = 'Oui|Non';
+$lang['field.read_authorizations'] = 'Autorisations de lecture du champ dans le profil';
+$lang['field.actions_authorizations'] = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
 
 // Regex
 $lang['regex.figures'] = 'Chiffres';
@@ -94,7 +96,7 @@ $lang['field.is-not-required'] = 'Non requis';
 
 //Install
 $lang['field-install.default-lang'] = 'Langue par defaut';
-$lang['field-install.default-lang-explain'] = 'Séléctionner le language que vous souhaitez utiliser';
+$lang['field-install.default-lang-explain'] = 'Séléctionner le langage que vous souhaitez utiliser';
 
 $lang['field-install.default-theme'] = 'Theme par defaut';
 $lang['field-install.default-theme-explain'] = 'Séléctionner le thème que vous souhaitez utiliser';

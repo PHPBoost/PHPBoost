@@ -37,29 +37,34 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_theme(),
+		$value = UserAccountsConfig::load()->get_default_theme();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_theme(),
-			array('description' => $member_extended_field->get_description(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "../templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="../templates/'. UserAccountsConfig::load()->get_default_theme() .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), AppContext::get_user()->get_theme(),
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_theme();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_theme(),
-			array('description' => $member_extended_field->get_description(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "../templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="../templates/'. AppContext::get_user()->get_theme() .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $member_extended_field->get_name(), AppContext::get_user()->get_theme() . '/config/' . get_ulang() . '/config.ini');
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_theme();
+		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $value, '/config/' . get_ulang() . '/config.ini');
 		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_theme['name']));
 	}
 	

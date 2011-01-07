@@ -114,6 +114,30 @@ class ExtendedFieldsDatabaseService
 		
 	}
 	
+	public static function update_extended_field_display_by_id(ExtendedField $extended_field)
+	{
+		PersistenceContext::get_querier()->inject(
+			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+			display = :display
+			WHERE id = :id"
+			, array(
+				'display' => $extended_field->get_display(),
+				'id' => $extended_field->get_id(),
+		));
+	}
+	
+	public static function update_extended_field_display_by_field_name(ExtendedField $extended_field)
+	{
+		PersistenceContext::get_querier()->inject(
+			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+			display = :display
+			WHERE field_name = :field_name"
+			, array(
+				'display' => $extended_field->get_display(),
+				'field_name' => $extended_field->get_field_name(),
+		));
+	}
+	
 	public static function select_data_field_by_id(ExtendedField $extended_field)
 	{
 		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
