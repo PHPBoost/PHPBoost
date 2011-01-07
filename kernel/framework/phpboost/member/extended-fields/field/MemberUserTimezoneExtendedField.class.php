@@ -58,7 +58,10 @@ class MemberUserTimezoneExtendedField extends AbstractMemberExtendedField
 		
 		$member_value = $member_extended_field->get_value();
 		$value = !empty($member_value) ? $member_value : GeneralConfig::load()->get_site_timezone();
-		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), 'UTC ' . $value));
+		if (!empty($value))
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), 'UTC ' . $value));
+		}
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)

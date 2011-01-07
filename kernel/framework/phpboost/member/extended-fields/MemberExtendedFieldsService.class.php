@@ -92,10 +92,7 @@ class MemberExtendedFieldsService
 					
 					if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_PROFILE_AUTHORIZATION))
 					{
-						if (!empty($value))
-						{
-							MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
-						}
+						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
 					}
 				}
 				PersistenceContext::get_sql()->query_close($result);

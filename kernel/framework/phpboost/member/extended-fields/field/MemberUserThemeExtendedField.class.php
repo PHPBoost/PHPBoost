@@ -65,7 +65,10 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 		$member_value = $member_extended_field->get_value();
 		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_theme();
 		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $value, '/config/' . get_ulang() . '/config.ini');
-		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_theme['name']));
+		if (!empty($info_theme['name']))
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_theme['name']));
+		}
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)

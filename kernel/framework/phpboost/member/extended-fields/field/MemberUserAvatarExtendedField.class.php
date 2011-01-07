@@ -77,18 +77,21 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="'. $user_accounts_config->get_default_avatar_name() .'" alt="" title="" />';
+			$avatar = '<img src="'. PATH_TO_ROOT .'/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name() .'" alt="" title="" />';
 		}
 		elseif (!empty($value))
 		{
-			$avatar = '<img src="'. $member_extended_field->get_value() .'" alt="" title="" />';
+			$avatar = '<img src="'. $value .'" alt="" title="" />';
 		}
 		else
 		{
-			$value = LangLoader::get_message('no_avatar', 'main');
+			$avatar = LangLoader::get_message('no_avatar', 'main');
 		}
-
-		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $avatar));
+		
+		if (!empty($avatar))
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $avatar));
+		}
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
@@ -118,7 +121,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		elseif(UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$user_accounts_config = UserAccountsConfig::load();
-			$dir = '../images/avatars/';
+			$dir = PATH_TO_ROOT .'/images/avatars/';
 			
 			$avatar = $form->get_value('upload_avatar', 0);
 			$former_avatar = MemberExtendedFieldsService::return_value($member_extended_field);
