@@ -21,15 +21,7 @@
 		
 		<div id="admin_contents">
 			
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<form action="admin_modules_add.php" method="post" enctype="multipart/form-data" class="fieldset_content">
 				<fieldset>

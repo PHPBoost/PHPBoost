@@ -237,11 +237,11 @@ if (!empty($idart) && isset($cat) )
 		
 		if (AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
 		{
-			$Errorh->handler($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS);
+			$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS, 4));
 		}
 		else
 		{
-			$Errorh->handler($ARTICLES_LANG['error_send_mail'], E_USER_WARNING);
+			$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['error_send_mail'], E_USER_WARNING));
 		}
 	}
 	$tpl->display();

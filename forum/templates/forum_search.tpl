@@ -72,12 +72,7 @@
 					</fieldset>
 					
 					<p><span id="search_forum"></span></p>
-					# IF C_ERROR_HANDLER #
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					</div>		
-					# ENDIF #
+					# INCLUDE message_helper #
 					
 					# IF C_FORUM_SEARCH #
 					<div class="module_position" style="width:100%;">

@@ -103,7 +103,7 @@ if (in_array($id_error, $array_error))
 		}
 			
 		if (!empty($errstr))
-			$Errorh->handler($errstr, $errno);
+			$Template->put('message_helper', MessageHelper::display($errstr, $errno));
 			
 		$Template->put_all(array(
 			'C_ERRORH_CONNEXION' => true,

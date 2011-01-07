@@ -212,36 +212,42 @@ elseif ($id_com > 0)
 //gestionnaire d'erreurs
 elseif (!empty($error))
 {
-	$Template = new FileTemplate('pages/error.tpl');
-	
-	$Template->put_all(array(
-		'L_TITLE' => $LANG['error']
-	));
-	
 	switch ($error)
 	{
 		case 'e_page_not_found' :
-			$Errorh->handler($LANG['pages_not_found'], E_USER_WARNING);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_not_found']);
+			$controller->set_error_type(UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 			break;
 		case 'e_auth' :
-			$Errorh->handler($LANG['pages_error_auth_read'], E_USER_WARNING);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_read']);
+			$controller->set_error_type(UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 			break;
 		case 'e_auth_com' :
-			$Errorh->handler($LANG['pages_error_auth_com'], E_USER_WARNING);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
+			$controller->set_error_type(UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 			break;
 		case 'e_unactiv_com' :
-			$Errorh->handler($LANG['pages_error_unactiv_com'], E_USER_WARNING);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_unactiv_com']);
+			$controller->set_error_type(UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 			break;
 		case 'delete_success' :
-			$Errorh->handler($LANG['pages_delete_success'], E_USER_NOTICE);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_delete_success']);
+			$controller->set_error_type(UserErrorController::NOTICE);
+			DispatchManager::redirect($controller);
 			break;
 		case 'delete_failure' :
-			$Errorh->handler($LANG['pages_delete_failure'], E_USER_NOTICE);
+			$controller = new UserErrorController($LANG['error'], $LANG['pages_delete_failure']);
+			$controller->set_error_type(UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 			break;
+			
 		default :
 			AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php'));
 	}
-	$Template->display();
 }
 else
 {

@@ -205,7 +205,7 @@ elseif (!empty($id))
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['incomplete'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], E_USER_NOTICE));
 	
 	$array_answer = explode('|', $row['answers']);
 	$array_vote = explode('|', $row['votes']);

@@ -108,7 +108,7 @@ else
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails');
 	if (in_array($get_error, $array_error))
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 
 	//Création de la liste des catégories.
 	$cat_list = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';

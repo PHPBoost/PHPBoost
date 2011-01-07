@@ -49,14 +49,7 @@
 			}	 
 		-->
 		</script>
-		# IF C_ERROR_HANDLER #
-		<span id="errorh"></span>
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			<br />	
-		</div>
-		<br />		
-		# ENDIF #
+		# INCLUDE message_helper #
 		
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<div class="module_position">					
@@ -262,15 +255,7 @@
 
 
 		# START post_pm #
-		# IF C_ERROR_HANDLER #
-		<br />
-		<span id="errorh"></span>
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			<br />	
-		</div>
-		<br />		
-		# ENDIF #
+		# INCLUDE message_helper #
 		<span id="quote"></span>			
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
 			<div>					
@@ -371,15 +356,7 @@
 				<div class="module_top_r"></div>
 				<div class="module_top">&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
 				<div class="module_contents">	
-					# IF C_ERROR_HANDLER #
-					<br />
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						<br />	
-					</div>
-					<br />		
-					# ENDIF #
+					# INCLUDE message_helper #
 					
 					# START post_convers.show_convers #		
 					<table class="module_table">
