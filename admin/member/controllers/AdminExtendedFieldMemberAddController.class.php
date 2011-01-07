@@ -108,7 +108,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
 					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '9'),
 					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '10'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-themes-choice'], '11'),
+					new FormFieldSelectChoiceOption($this->lang['type.user-theme-choice'], '11'),
 					new FormFieldSelectChoiceOption($this->lang['type.user-editor'], '12'),
 					new FormFieldSelectChoiceOption($this->lang['type.user-timezone'], '13'),
 					new FormFieldSelectChoiceOption($this->lang['type.user-sex'], '14'),
