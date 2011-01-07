@@ -247,10 +247,32 @@ class InstallationServices
 	{
 		$lang = LangLoader::get('admin-extended-fields-common');
 		
+		//Sex
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.sex']);
+		$extended_field->set_field_name('user_sex');
+		$extended_field->set_description($lang['field-install.sex-explain']);
+		$extended_field->set_field_type('14');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Date Birth
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.date-birth']);
+		$extended_field->set_field_name('user_born');
+		$extended_field->set_description($lang['field-install.date-birth-explain']);
+		$extended_field->set_field_type('9');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
 		//Lang
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-lang']);
-		$extended_field->set_field_name('f_user_lang');
+		$extended_field->set_field_name('user_lang');
 		$extended_field->set_description($lang['field-install.default-lang-explain']);
 		$extended_field->set_field_type('10');
 		$extended_field->set_is_required('0');
@@ -261,7 +283,7 @@ class InstallationServices
 		//Theme
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-theme']);
-		$extended_field->set_field_name('f_user_theme');
+		$extended_field->set_field_name('user_theme');
 		$extended_field->set_description($lang['field-install.default-theme-explain']);
 		$extended_field->set_field_type('11');
 		$extended_field->set_is_required('0');
@@ -272,7 +294,7 @@ class InstallationServices
 		//Editor
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-editor']);
-		$extended_field->set_field_name('f_user_editor');
+		$extended_field->set_field_name('user_editor');
 		$extended_field->set_description($lang['field-install.default-editor-explain']);
 		$extended_field->set_field_type('12');
 		$extended_field->set_is_required('0');
@@ -283,9 +305,20 @@ class InstallationServices
 		//Timezone
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.timezone']);
-		$extended_field->set_field_name('f_user_timezone');
+		$extended_field->set_field_name('user_timezone');
 		$extended_field->set_description($lang['field-install.timezone-explain']);
 		$extended_field->set_field_type('13');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Location
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.location']);
+		$extended_field->set_field_name('user_location');
+		$extended_field->set_description($lang['field-install.location-explain']);
+		$extended_field->set_field_type('1');
 		$extended_field->set_is_required('0');
 		$extended_field->set_display('1');
 		$extended_field->set_is_freeze('1');
@@ -294,12 +327,92 @@ class InstallationServices
 		//Website
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.website']);
-		$extended_field->set_field_name('f_user_website');
+		$extended_field->set_field_name('user_website');
 		$extended_field->set_description($lang['field-install.website-explain']);
 		$extended_field->set_field_type('1');
 		$extended_field->set_is_required('0');
 		$extended_field->set_display('1');
 		$extended_field->set_regex('5');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Job
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.job']);
+		$extended_field->set_field_name('user_job');
+		$extended_field->set_description($lang['field-install.job-explain']);
+		$extended_field->set_field_type('1');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Entertainement
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.entertainement']);
+		$extended_field->set_field_name('user_entertainement');
+		$extended_field->set_description($lang['field-install.entertainement-explain']);
+		$extended_field->set_field_type('1');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Sign
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.signing']);
+		$extended_field->set_field_name('user_sign');
+		$extended_field->set_description($lang['field-install.signing-explain']);
+		$extended_field->set_field_type('3');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Biography
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.biography']);
+		$extended_field->set_field_name('user_biography');
+		$extended_field->set_description($lang['field-install.biography-explain']);
+		$extended_field->set_field_type('3');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//MSN
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.msn']);
+		$extended_field->set_field_name('user_msn');
+		$extended_field->set_description($lang['field-install.msn-explain']);
+		$extended_field->set_field_type('1');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_regex('4');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Yahoo
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.yahoo']);
+		$extended_field->set_field_name('user_yahoo');
+		$extended_field->set_description($lang['field-install.yahoo-explain']);
+		$extended_field->set_field_type('1');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_regex('4');
+		$extended_field->set_is_freeze('1');
+		ExtendedFieldsService::add($extended_field);
+		
+		//Avatar
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.avatar']);
+		$extended_field->set_field_name('user_avatar');
+		$extended_field->set_description($lang['field-install.avatar-explain']);
+		$extended_field->set_field_type('15');
+		$extended_field->set_is_required('0');
+		$extended_field->set_display('1');
+		$extended_field->set_is_freeze('1');
 		ExtendedFieldsService::add($extended_field);
 	}
 	

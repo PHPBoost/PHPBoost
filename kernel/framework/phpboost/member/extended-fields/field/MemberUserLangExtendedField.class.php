@@ -37,9 +37,10 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), UserAccountsConfig::load()->get_default_lang(),
+		$value = UserAccountsConfig::load()->get_default_lang();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_langs(),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));	
 	}
 	
@@ -47,9 +48,11 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), AppContext::get_user()->get_attribute('user_lang'),
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_lang();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_langs(),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));	
 	}
 	
@@ -57,8 +60,9 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', AppContext::get_user()->get_attribute('user_lang'));
-
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_lang();
+		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $value);
 		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $info_lang['name']));
 	}
 	

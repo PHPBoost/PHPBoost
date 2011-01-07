@@ -76,7 +76,7 @@ class MemberExtendedFieldsService
 				$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
 				$member_extended_field->set_fieldset($fieldset);
 				$template->add_fieldset($fieldset);
-			
+
 				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
@@ -90,9 +90,12 @@ class MemberExtendedFieldsService
 					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 					$member_extended_field->set_value($value);
 					
-					if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::AUTHORIZATION))
+					if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_PROFILE_AUTHORIZATION))
 					{
-						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
+						if (!empty($value))
+						{
+							MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
+						}
 					}
 				}
 				PersistenceContext::get_sql()->query_close($result);
@@ -125,7 +128,11 @@ class MemberExtendedFieldsService
 						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
 						$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
 						$member_extended_field->set_value($value_rewrite);
-						MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
+						
+						if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+						{
+							MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
+						}
 					}
 				}
 				$member_extended_fields_dao->get_request($user_id);
@@ -153,7 +160,10 @@ class MemberExtendedFieldsService
 				$member_extended_field->set_required($extended_field['required']);
 				$member_extended_field->set_regex($extended_field['regex']);
 				
-				MemberExtendedFieldsFactory::display_field_create($member_extended_field);
+				if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+				{
+					MemberExtendedFieldsFactory::display_field_create($member_extended_field);
+				}
 			}
 		}
 	}
@@ -183,8 +193,11 @@ class MemberExtendedFieldsService
 			$required = $member_extended_field->get_is_admin() ? 0 : $extended_field['required'];
 			$member_extended_field->set_required($required);
 			$member_extended_field->set_regex($extended_field['regex']);
-
-			MemberExtendedFieldsFactory::display_field_update($member_extended_field);
+			
+			if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+			{
+				MemberExtendedFieldsFactory::display_field_update($member_extended_field);
+			}
 		}
 		PersistenceContext::get_sql()->query_close($result);
 	}

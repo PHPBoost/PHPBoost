@@ -37,16 +37,28 @@ class MemberUserTimezoneExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldTimezone($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(), 
-		array('description' => $member_extended_field->get_description())));
+		$value = GeneralConfig::load()->get_site_timezone();
+		$fieldset->add_field(new FormFieldTimezone($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value, 
+		array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldTimezone($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
-		array('description' => $member_extended_field->get_description())));
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : GeneralConfig::load()->get_site_timezone();
+		$fieldset->add_field(new FormFieldTimezone($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
+		array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())));
+	}
+	
+	public function display_field_profile(MemberExtendedField $member_extended_field)
+	{
+		$fieldset = $member_extended_field->get_fieldset();
+		
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : GeneralConfig::load()->get_site_timezone();
+		$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), 'UTC ' . $value));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)

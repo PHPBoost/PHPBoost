@@ -36,26 +36,29 @@ class MemberUserEditorExtendedField extends AbstractMemberExtendedField
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(),
+		
+		$value = ContentFormattingConfig::load()->get_default_editor();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 		array(
 			new FormFieldSelectChoiceOption('BBCode', '1'),
 			new FormFieldSelectChoiceOption('TinyMCE', '2'),
 		),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));	
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
+		
+		$member_value = $member_extended_field->get_value();
+		$value = !empty($member_value) ? $member_value : ContentFormattingConfig::load()->get_default_editor();
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 		array(
 			new FormFieldSelectChoiceOption('BBCode', '1'),
 			new FormFieldSelectChoiceOption('TinyMCE', '2'),
 		),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 	

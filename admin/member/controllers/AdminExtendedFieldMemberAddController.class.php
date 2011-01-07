@@ -98,8 +98,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], '1',
 			array(
 				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '3'),
 				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
 				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
 				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
@@ -119,8 +119,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
 				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
 				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
-				if (HTMLForms.getField("field_type").getValue() > 9){HTMLForms.getField("default_values").disable(); }
-				if (HTMLForms.getField("field_type").getValue() < 10){HTMLForms.getField("default_values").enable();}'))
+				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
+				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], '0',
@@ -167,8 +167,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			)
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization(LangLoader::get_message('authorizations', 'main'), 2)));
-		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION), new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)));
+		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 3, 'r-1' => 1));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 

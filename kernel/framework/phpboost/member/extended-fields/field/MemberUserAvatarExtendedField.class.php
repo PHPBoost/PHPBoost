@@ -39,12 +39,12 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', LangLoader::get_message('upload_avatar', 'main'),
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['upload_avatar'],
 				array('description' => LangLoader::get_message('upload_avatar_where', 'main'))
 			));
 		}
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', LangLoader::get_message('avatar_link', 'main'), '', 
-			array('class' => 'text', 'maxlength' => 255, 'description' => LangLoader::get_message('avatar_link_where', 'main'))
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
+			array('class' => 'text', 'maxlength' => 255, 'description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 	
@@ -53,20 +53,20 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. $value .'" alt="" title="" />' : LangLoader::get_message('no_avatar', 'main');
-		$fieldset->add_field(new FormFieldFree('current_avatar', LangLoader::get_message('current_avatar', 'main'), $image));
+		$image = !empty($value) ? '<img src="'. $value .'" alt="" title="" />' : $this->lang['no_avatar'];
+		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['current_avatar'], $image));
 		
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', LangLoader::get_message('upload_avatar', 'main'),
-				array('description' => LangLoader::get_message('upload_avatar_where', 'main'))
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['upload_avatar'],
+				array('description' => $this->lang['upload_avatar_where'])
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', LangLoader::get_message('avatar_link', 'main'), '', 
-			array('class' => 'text', 'maxlength' => 255, 'description' => LangLoader::get_message('avatar_link_where', 'main'))
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
+			array('class' => 'text', 'maxlength' => 255, 'description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
 		));
-		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', LangLoader::get_message('avatar_del', 'main'), FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['avatar_del'], FormFieldCheckbox::UNCHECKED));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)

@@ -37,13 +37,13 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), '0',
 		array(
 			new FormFieldSelectChoiceOption('--', '0'),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('mal', 'main'), '1'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
 		),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));	
 	}
 	
@@ -54,10 +54,10 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
 		array(
 			new FormFieldSelectChoiceOption('--', '0'),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('mal', 'main'), '1'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
 		),
-			array('description' => $member_extended_field->get_description())
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 	
