@@ -32,15 +32,15 @@ require_once('../kernel/header.php');
 require_once('shoutbox_constants.php');
 	
 $shout_id = retrieve(GET, 'id', 0);
-$shoutbox = retrieve(POST, 'shoutboxForm', false);
+$add = retrieve(GET, 'add', false);
 
 if (!$User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ)) //Autorisation de lecture
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
-		
-if ($shoutbox && empty($shout_id)) //Insertion
+
+if ($add && empty($shout_id)) //Insertion
 {		
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
@@ -49,11 +49,11 @@ if ($shoutbox && empty($shout_id)) //Insertion
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
-	$shout_contents = retrieve(POST, 'shoutbox_contents', '', TSTRING_UNCHANGE);
+	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
-	{		
+	{
 		//Accès pour poster.		
 		if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
 		{
@@ -74,7 +74,7 @@ if ($shoutbox && empty($shout_id)) //Insertion
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
-			AppContext::get_response()->redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
+			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
 		else //utilisateur non autorisé!
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
@@ -114,8 +114,9 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				'shoutbox'=> 'shoutbox/shoutbox.tpl'
 			));
 			
-			//Update form
-			
+			$formatter = AppContext::get_content_formatting_service()->create_factory();
+			$formatter->set_forbidden_tags($config_shoutbox->get_forbidden_formatting_tags());
+	
 			$form = new HTMLForm('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
 			$fieldset = new FormFieldsetHTML('update_msg', $LANG['update_msg']);
 			
@@ -126,7 +127,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				));
 			}
 			$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], FormatingHelper::unparse($row['contents']), array(
-				'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 
+				'formatter' => $formatter, 
 				'rows' => 10, 'cols' => 47, 'required' => true)
 			));
 			$form->add_fieldset($fieldset);
@@ -139,8 +140,8 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shoutbox_contents', '', TSTRING_UNCHANGE);			
-			$shout_pseudo = retrieve(POST, 'shoutbox_pseudo', $LANG['guest']);
+			$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_UNCHANGE);			
+			$shout_pseudo = retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']);
 			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
 			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
@@ -208,9 +209,10 @@ else //Affichage.
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
-	//Post form
+	$formatter = AppContext::get_content_formatting_service()->create_factory();
+	$formatter->set_forbidden_tags($config_shoutbox->get_forbidden_formatting_tags());
 	
-	$form = new HTMLForm('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
+	$form = new HTMLForm('shoutboxForm', 'shoutbox.php?add=1&amp;token=' . $Session->get_token());
 	$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
@@ -219,7 +221,7 @@ else //Affichage.
 		));
 	}
 	$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], '', array(
-		'forbiddentags' => $config_shoutbox->get_forbidden_formatting_tags(), 
+		'formatter' => $formatter, 
 		'rows' => 10, 'cols' => 47, 'required' => true)
 	));
 	
