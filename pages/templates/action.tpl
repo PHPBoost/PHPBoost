@@ -82,11 +82,7 @@
 
 		
 		# START rename #
-		# IF C_ERROR_HANDLER #
-		<div class="{ERRORH_CLASS}">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-		</div>
-		# ENDIF #
+		# INCLUDE message_helper #
 		<form action="{TARGET}" method="post" class="fieldset_content">				
 			<fieldset>
 				<legend>{L_TITLE}</legend>
@@ -112,11 +108,7 @@
 
 		
 		# START new #
-		# IF C_ERROR_HANDLER #
-			<div class="{ERRORH_CLASS}">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			</div>
-		# ENDIF #
+		# INCLUDE message_helper #
 		<form action="{TARGET}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>
@@ -146,12 +138,7 @@
 		</script>
 		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
 
-		# IF C_ERROR_HANDLER #
-			<span id="errorh"></span>
-			<div class="{ERRORH_CLASS}">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			</div>
-		# ENDIF #
+		# INCLUDE message_helper #
 		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>

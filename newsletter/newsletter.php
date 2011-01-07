@@ -56,10 +56,10 @@ if (!empty($mail_newsletter))
 			{
 				//On enregistre le mail
 				$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
-				$Errorh->handler($LANG['newsletter_add_success'], E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display($LANG['newsletter_add_success'], E_USER_NOTICE));
 			}			
 			else
-				$Errorh->handler($LANG['newsletter_add_failure'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($LANG['newsletter_add_failure'], E_USER_WARNING));
 		}
 		else
 		{
@@ -67,20 +67,20 @@ if (!empty($mail_newsletter))
 			if ($check_mail >= 1)
 			{
 				$Sql->query_inject("DELETE FROM " . PREFIX . "newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
-				$Errorh->handler($LANG['newsletter_del_success'], E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display($LANG['newsletter_del_success'], E_USER_NOTICE));
 			}
 			else
-				$Errorh->handler($LANG['newsletter_del_failure'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($LANG['newsletter_del_failure'], E_USER_WARNING));
 		}
 	}
 	else
-		$Errorh->handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING));
 }
 //Désinscription demandée suite à la réception d'une newsletter
 elseif ($id > 0)
 {
 	$check_mail = $Sql->query_inject("DELETE FROM " . PREFIX . "newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$Errorh->handler($LANG['newsletter_del_success'], E_USER_NOTICE);
+	$Template->put('message_helper', MessageHelper::display($LANG['newsletter_del_success'], E_USER_NOTICE));
 }
 //Affichage des archives
 else
@@ -111,7 +111,7 @@ else
 	$total_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "newsletter_arch", __LINE__, __FILE__);
 	
 	if ($total_msg == 0)
-		$Errorh->handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['newsletter_no_archives'], E_USER_NOTICE));
 	
 	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('newsletter.php?p=%d', $total_msg, 'p', 5, 3),

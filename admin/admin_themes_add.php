@@ -150,7 +150,7 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_theme_already_exist', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;

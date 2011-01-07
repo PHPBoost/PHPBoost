@@ -206,7 +206,7 @@ else //Affichage.
 		$errstr = '';
 	}	
 	if (!empty($errstr))
-		$Errorh->handler($errstr, E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
 	//Post form
 	

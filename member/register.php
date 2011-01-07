@@ -99,10 +99,10 @@ if (empty($key))
 			$errstr = '';
 		}
 		if (!empty($errstr))
-			$Errorh->handler($errstr, E_USER_NOTICE);  
+			$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));  
 
 		if (isset($LANG[$get_erroru]))
-			$Errorh->handler($LANG[$get_erroru], E_USER_WARNING);  
+			$Template->put('message_helper', MessageHelper::display($LANG[$get_erroru], E_USER_WARNING));  
 			
 		$Template->put_all(array(
 			'C_REGISTER' => true

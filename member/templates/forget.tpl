@@ -24,18 +24,11 @@
 							<span class="text_white">{L_NEW_PASS}</span>
 						</th>
 					</tr>
-					# IF C_ERROR_HANDLER #
 					<tr>
 						<td class="row2" style="text-align: center;">
-							<br />
-							<span id="errorh"></span>
-							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-								<br />	
-							</div>
+							# INCLUDE message_helper #
 						</td>
 					</tr>
-					# ENDIF #
 					<tr>	
 						<td colspan="2" class="row2" style="text-align: center;">
 							{L_REQUIRE}

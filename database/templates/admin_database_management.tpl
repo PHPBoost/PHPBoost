@@ -44,14 +44,7 @@
 					</div>
 					<div class="spacer"></div>
 				</div>
-				# IF C_ERROR_HANDLER #
-				<div class="block_contents1">
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					</div>
-				</div>
-				# ENDIF #
+				# INCLUDE message_helper #
 			</div>
 			</form>
 
@@ -366,16 +359,7 @@
 							{L_LIST_FILES}
 						</th>
 					</tr>
-					# IF C_ERROR_HANDLER #
-					<tr>
-						<td class="row1" colspan="4" style="text-align:center;">
-							<span id="errorh"></span>
-							<div class="{ERRORH_CLASS}">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-							</div>
-						</td>
-					</tr>
-					# ENDIF #
+					# INCLUDE message_helper #
 					<tr>
 						<td class="row1" colspan="4" style="text-align:center;">
 							{L_INFO}

@@ -302,12 +302,12 @@ if (!empty($id_get)) //Espace membre
 		}
 		if (!empty($errstr))
 		{
-			$Errorh->handler($errstr, E_USER_NOTICE);
+			$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 		}
 
 		if (isset($LANG[$get_l_error]))
 		{
-			$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
+			$Template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));
 		}
 	}
 	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil

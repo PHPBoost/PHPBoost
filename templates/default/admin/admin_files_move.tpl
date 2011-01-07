@@ -42,16 +42,11 @@
 						<br />
 						<form action="{TARGET}" method="post">
 						<table class="module_table">
-							# IF C_ERROR_HANDLER #
 							<tr>
 								<td class="row1" colspan="3">
-									<span id="errorh"></span>
-									<div class="{ERRORH_CLASS}">
-										<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-									</div>
+									# INCLUDE message_helper #
 								</td>
 							</tr>
-							# ENDIF #
 							<tr> 
 								<td class="row1" style="width:210px;">
 									# START folder #	

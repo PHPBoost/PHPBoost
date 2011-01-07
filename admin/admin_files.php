@@ -198,7 +198,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	));
 	
 	if ($get_error == 'folder_contains_folder')
-		$Errorh->handler($LANG['upload_folder_contains_folder'], E_USER_WARNING);
+		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
 	
 	//liste des fichiers disponibles
 	include_once('../member/upload_functions.php');
@@ -294,12 +294,12 @@ else
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);  
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));  
 
 	if (isset($LANG[$get_l_error]))
-		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);  
+		$template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));  
 
 	if ($show_member)
 		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
