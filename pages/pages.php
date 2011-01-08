@@ -235,8 +235,9 @@ elseif (!empty($error))
 			DispatchManager::redirect($controller);
 			break;
 		case 'delete_success' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_delete_success']);
-			$controller->set_error_type(UserErrorController::NOTICE);
+			$controller = new UserErrorController($LANG['success'], $LANG['pages_delete_success']);
+			$controller->set_error_type(UserErrorController::SUCCESS);
+			$controller->set_correction_link($LANG['back'], PATH_TO_ROOT . '/pages/pages.php');
 			DispatchManager::redirect($controller);
 			break;
 		case 'delete_failure' :
