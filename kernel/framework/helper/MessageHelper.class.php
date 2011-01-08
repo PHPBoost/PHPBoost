@@ -32,50 +32,43 @@
  */
 class MessageHelper 
 {
-	private static $css_class = '';
-	private static $image = '';
-	
-	public static function display($content, $type, $timeout = 4)
+	public static function display($content, $type, $timeout = 0)
 	{
 		$tpl = new FileTemplate('framework/message.tpl');
 		
-		self::compute_message_type($type);
+		switch ($type)
+		{
+			case E_USER_SUCCESS:
+				$css_class = 'success';
+				$image = 'error_success';
+			break;
+			//Notice utilisateur.
+			case E_USER_NOTICE:
+			case E_NOTICE:
+				$css_class = 'notice';
+				$image = 'error_notice';
+			break;
+			//Warning utilisateur.
+			case E_USER_WARNING:
+			case E_WARNING:
+				$css_class = 'important';
+				$image = 'error_warning';
+			break;
+			//Erreur fatale.
+			case E_USER_ERROR:
+				$css_class = 'error';
+				$image = 'error_fatal';
+		}
 		
 		$tpl->put_all(array(
-			'MESSAGE_CSS_CLASS' => self::$css_class,
-			'MESSAGE_IMG' => self::$image,
+			'MESSAGE_CSS_CLASS' => $css_class,
+			'MESSAGE_IMG' => $image,
 			'MESSAGE_CONTENT' => $content,
 			'C_TIMEOUT' => $timeout > 0,
 			'TIMEOUT' => $timeout * 1000
 		));
 		
 		return $tpl;
-	}
-	
-	private static function compute_message_type($type) {
-		switch ($type)
-		{
-			case E_USER_SUCCESS:
-				self::$css_class = 'success';
-				self::$image = 'error_success';
-			break;
-			//Notice utilisateur.
-			case E_USER_NOTICE:
-			case E_NOTICE:
-				self::$css_class = 'notice';
-				self::$image = 'error_notice';
-			break;
-			//Warning utilisateur.
-			case E_USER_WARNING:
-			case E_WARNING:
-				self::$css_class = 'important';
-				self::$image = 'error_warning';
-			break;
-			//Erreur fatale.
-			case E_USER_ERROR:
-				self::$css_class = 'error';
-				self::$image = 'error_fatal';
-		}
 	}
 }
 
