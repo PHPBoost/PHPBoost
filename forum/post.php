@@ -642,7 +642,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
-					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 
 				if ($is_modo)
 				{
@@ -810,7 +810,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
-					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 
 				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
@@ -873,7 +873,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$errstr = '';
 			}
 			if (!empty($errstr))
-				$Errorh->handler($errstr, $type);
+				$Template->put('message_helper', MessageHelper::display($errstr, $type));
 
 			$Template->put_all(array(
 				'P_UPDATE' => '',
@@ -938,7 +938,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$errstr = '';
 			}
 			if (!empty($errstr))
-				$Errorh->handler($errstr, $type);
+				$Template->put('message_helper', MessageHelper::display($errstr, $type));
 
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;

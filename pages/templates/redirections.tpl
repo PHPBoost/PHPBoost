@@ -82,11 +82,7 @@
 
 		
 		# START rename #
-		# IF C_ERROR_HANDLER #
-			<div class="{ERRORH_CLASS}">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			</div>
-		# ENDIF #
+		# INCLUDE message_helper #
 		<form action="{TARGET}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>
@@ -113,11 +109,7 @@
 
 		
 		# START new #
-		# IF C_ERROR_HANDLER #
-			<div class="{ERRORH_CLASS}">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			</div>
-		# ENDIF #
+		# INCLUDE message_helper #
 		<form action="{TARGET}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>

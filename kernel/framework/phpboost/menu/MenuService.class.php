@@ -577,7 +577,7 @@ class MenuService
 	public static function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
 	{
 		$modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
-		$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($modules as $module)
 		{
 			$configuration = $module->get_configuration();

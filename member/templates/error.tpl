@@ -21,14 +21,7 @@
 				<div class="module_top_r"></div>
 				<div class="module_top"><strong>{L_CONNECT}</strong></div>
 				<div class="module_contents" style="text-align:center;">
-					# IF C_ERROR_HANDLER #
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						<br />	
-					</div>
-					<br />	
-					# ENDIF #
+					# INCLUDE message_helper #
 					
 					<p style="margin:2px;"><label>{L_PSEUDO} <input size="15" type="text" class="text" id="login_error" name="login" maxlength="25" /></label></p>
 					<p style="margin:2px;"><label>{L_PASSWORD}	<input size="15" type="password" name="password" id="password_error" class="text" maxlength="30" /></label></p>

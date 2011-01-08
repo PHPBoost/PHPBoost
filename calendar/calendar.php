@@ -118,7 +118,7 @@ if ($checkdate === true && empty($id) && !$add)
 		$errstr = '';
 	}
 	if (!empty($errstr))
-		$Errorh->handler($errstr, E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
@@ -393,7 +393,7 @@ elseif (!empty($id))
 				$errstr = '';
 			}
 			if (!empty($errstr))
-				$Errorh->handler($errstr, E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 			
 			$Template->display();
 		}
@@ -495,7 +495,7 @@ elseif ($add) //Ajout d'un évenement
 			$errstr = '';
 		}
 		if (!empty($errstr))
-			$Errorh->handler($errstr, E_USER_NOTICE);
+			$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 
 		$Template->display();
 	}

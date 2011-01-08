@@ -149,7 +149,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	if (!$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
-		$Errorh->handler($LANG['e_pm_full_post'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], E_USER_WARNING));
 	else
 	{
 		//Gestion des erreurs
@@ -172,7 +172,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 				$errstr = '';
 		}
 		if (!empty($errstr))
-			$Errorh->handler($errstr, $type);
+			$Template->put('message_helper', MessageHelper::display($errstr, $type));
 	}
 	
 	$Template->assign_block_vars('post_convers.user_id_dest', array(
@@ -771,7 +771,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 				$errstr = '';
 		}
 		if (!empty($errstr))
-			$Errorh->handler($errstr, $type);
+			$Template->put('message_helper', MessageHelper::display($errstr, $type));
 	}
 	
 	$Template->pparse('pm');

@@ -183,7 +183,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$errstr = '';
 	}
 	if (!empty($errstr))
-		$Errorh->handler($errstr, $type);
+		$Template->put('message_helper', MessageHelper::display($errstr, $type));
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = array();

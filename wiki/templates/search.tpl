@@ -5,16 +5,11 @@
 						{L_SEARCH}
 					</th>
 				</tr>
-				# IF C_ERROR_HANDLER #
 				<tr>
 					<td colspan="3">
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;margin-top:15px;margin-bottom:15px;">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						</div>
+						# INCLUDE message_helper #
 					</td>
 				</tr>
-				# ENDIF #
 				<tr>
 					<td class="row2" style="text-align:center;">
 						{L_KEY_WORDS} &nbsp;
@@ -65,16 +60,11 @@
 					</td>
 				</tr>
 				# END search_result.item #
-				# IF C_ERROR_HANDLER #
 				<tr>
 					<td colspan="2" class="row2">
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						</div>
+						# INCLUDE message_helper #
 					</td>
 				</tr>
-				# ENDIF #
 				<tr>
 					<td class="row2" colspan="2" style="text-align:center;">
 						{search_result.PAGES}

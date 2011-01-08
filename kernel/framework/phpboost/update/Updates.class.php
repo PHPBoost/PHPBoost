@@ -70,7 +70,7 @@ class Updates
 
             if ($checks & CHECK_MODULES)
             {
-                foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+                foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
                 {
                     $this->apps[] = new Application($module->get_id(),
                     get_ulang(), APPLICATION_TYPE__MODULE,

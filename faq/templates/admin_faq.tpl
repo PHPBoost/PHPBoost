@@ -31,12 +31,7 @@
 
 		<div id="admin_contents">
 		
-			# IF C_ERROR_HANDLER #
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>		
-			# ENDIF #
+			# INCLUDE message_helper #
 		
 			<form action="admin_faq.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>

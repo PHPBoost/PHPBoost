@@ -9,13 +9,7 @@
 		# INCLUDE SHOUTBOX_FORM #
 
 		<br />
-		# IF C_ERROR_HANDLER #
-		<span id="errorh"></span>
-		<div class="{ERRORH_CLASS}">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-		</div>
-		<br />
-		# ENDIF #
+		# INCLUDE message_helper #
 
 		<div class="msg_position">
 			<div class="msg_top_l"></div>

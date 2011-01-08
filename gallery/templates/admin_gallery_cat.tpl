@@ -243,18 +243,11 @@
 						{L_GALLERY_CAT_MANAGEMENT}
 					</th>
 				</tr>
-				# IF C_ERROR_HANDLER #
 				<tr> 
 					<td class="row1" colspan="2" style="text-align:center;">
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-							<br />	
-						</div>
-						<br />		
+						# INCLUDE message_helper #		
 					</td>
 				</tr>
-				# ENDIF #			
 				<tr>
 					<td style="padding-left:20px;" class="row2">
 						<span id="display"></span>

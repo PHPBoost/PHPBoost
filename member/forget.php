@@ -63,10 +63,10 @@ if (!$User->check_level(MEMBER_LEVEL))
 					AppContext::get_response()->redirect('/member/forget.php?error=forget_mail_send');
 				}
 				else
-					$Errorh->handler($LANG['e_mail_forget'], E_USER_NOTICE);
+					$Template->put('message_helper', MessageHelper::display($LANG['e_mail_forget'], E_USER_NOTICE));
 			}
 			else
-				$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 		}
 		
 		$get_error = retrieve(GET, 'error', '', TSTRING_UNCHANGE);			
@@ -87,7 +87,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 			$errstr = '';
 		}	
 		if (!empty($errstr))
-			$Errorh->handler($errstr, $errno);			
+			$Template->put('message_helper', MessageHelper::display($errstr, $errno));			
 	
 		$Template->put_all(array(
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
