@@ -168,8 +168,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex, array(
 			'class' => 'text', 'maxlength' => 25)
 		));
-		
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], (string)$extended_field_cache['required'],
+		$required = $extended_field_cache['required'] ? (string)$extended_field_cache['required'] : '0';
+		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], $required,
 			array(
 				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
@@ -183,8 +183,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], $extended_field_cache['default_values'], array(
 			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'])
 		));
-
-		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), (string)$extended_field_cache['display'],
+		$display = $extended_field_cache['display'] ? (string)$extended_field_cache['display'] : '0';
+		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), $display,
 			array(
 				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
@@ -229,8 +229,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_field_type($this->form->get_value('field_type')->get_raw_value());
 		$extended_field->set_possible_values($this->form->get_value('possible_values', ''));
 		$extended_field->set_default_values($this->form->get_value('default_values', ''));
-		$extended_field->set_is_required($this->form->get_value('field_required')->get_raw_value());
-		$extended_field->set_display($this->form->get_value('display')->get_raw_value());
+		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
+		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		if ($field_type <= 2)
 		{
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');

@@ -71,6 +71,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	public function uninstall()
 	{
+		$this->drop_tables();
 		$this->delete_member_extended_last_view_forum();
 	}
 
@@ -281,8 +282,8 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
-		$extended_field->set_field_type('0');
-		$extended_field->set_is_freeze('1');
+		$extended_field->set_field_type(0);
+		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
 

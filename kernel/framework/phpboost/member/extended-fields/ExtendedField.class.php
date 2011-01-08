@@ -147,7 +147,7 @@ class ExtendedField
 	
 	public function get_required()
 	{
-		return !empty($this->required) ? $this->required : 0;
+		return !empty($this->required) ? $this->required : false;
 	}
 	
 	public function set_display($values)
@@ -157,7 +157,7 @@ class ExtendedField
 	
 	public function get_display()
 	{
-		return !empty($this->display) ? $this->display : 0;
+		return !empty($this->display) ? $this->display : false;
 	}
 	
 	public function set_regex($regex)
@@ -177,7 +177,7 @@ class ExtendedField
 	
 	public function get_is_freeze()
 	{
-		return !empty($this->freeze) ? $this->freeze : 0;
+		return !empty($this->freeze) ? $this->freeze : false;
 	}
 	
 	public function set_authorization($authorization)

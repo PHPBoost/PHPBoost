@@ -120,7 +120,7 @@ class ExtendedFieldsService
 				{
 					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
 				}
-				$extended_field->set_display('0');
+				$extended_field->set_display(false);
 				ExtendedFieldsDatabaseService::update_extended_field_display_by_id($extended_field);
 				ExtendedFieldsCache::invalidate();
 			}
@@ -138,7 +138,7 @@ class ExtendedFieldsService
 				{
 					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
 				}
-				$extended_field->set_display('0');
+				$extended_field->set_display(false);
 				ExtendedFieldsDatabaseService::update_extended_field_display_by_field_name($extended_field);
 				ExtendedFieldsCache::invalidate();
 			}

@@ -40,7 +40,7 @@ class ExtendedFieldsCache implements CacheData
 		$this->extended_fields = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, auth 
+		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, freeze, auth 
 			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "
 			ORDER BY position", __LINE__, __FILE__);
 		
@@ -57,8 +57,9 @@ class ExtendedFieldsCache implements CacheData
 				'field_type' => !empty($row['field_type']) ? $row['field_type'] : '',
 				'possible_values' => !empty($row['possible_values']) ? $row['possible_values'] : '',
 				'default_values' => !empty($row['default_values']) ? $row['default_values'] : '',
-				'required' => !empty($row['required']) ? $row['required'] : 0,
-				'display' => !empty($row['display']) ? $row['display'] : 0,
+				'required' => !empty($row['required']) ? (bool)$row['required'] : false,
+				'display' => !empty($row['display']) ? (bool)$row['display'] : false,
+				'freeze' => !empty($row['freeze']) ? (bool)$row['freeze'] : false,
 				'regex' => !empty($row['regex']) ? $row['regex'] : '',
 				'auth' => !empty($auth) ? $auth : array(),
 
