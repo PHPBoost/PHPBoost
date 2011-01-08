@@ -336,31 +336,33 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		$style = '';
 		$params = '';
-		foreach (explode(';', $matches[2]) as $style_att)
-		{
-			$exp = explode(':', $style_att);
-			if (count($exp) < 2)
+		if (isset($matches[2])) {
+			foreach (explode(';', $matches[2]) as $style_att)
 			{
-				continue;
+				$exp = explode(':', $style_att);
+				if (count($exp) < 2)
+				{
+					continue;
+				}
+				$value = trim($exp[1]);
+				switch (trim($exp[0]))
+				{
+					case 'width':
+						$params .= 'width="' . str_replace('px', '', $value) . '" ';
+						break;
+					case 'height':
+						$params .= 'height="' . str_replace('px', '', $value) . '" ';
+						break;
+					case 'border':
+						$style .= 'border:' . $value . ';';
+						break;
+				}
 			}
-			$value = trim($exp[1]);
-			switch (trim($exp[0]))
+			
+			if (!empty($style))
 			{
-				case 'width':
-					$params .= 'width="' . str_replace('px', '', $value) . '" ';
-					break;
-				case 'height':
-					$params .= 'height="' . str_replace('px', '', $value) . '" ';
-					break;
-				case 'border':
-					$style .= 'border:' . $value . ';';
-					break;
+				$style = ' style="' . $style . '"';
 			}
-		}
-		
-		if (!empty($style))
-		{
-			$style = ' style="' . $style . '"';
 		}
 		return '<img' . $style . ' src="' . $matches[1] . '" alt="" ' . $params . '/>';
 	}
