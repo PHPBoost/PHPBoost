@@ -149,7 +149,7 @@ else
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 	{
 		$configuration = $module->get_configuration();
 		$array_auth = $module->get_authorizations();

@@ -64,7 +64,7 @@ $template->put_all(array(
 
 //Listing des modules disponibles:
 $i = 1;
-$modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 $nbr_modules = count($modules);
 foreach ($modules as $module)
 {
