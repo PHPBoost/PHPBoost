@@ -42,11 +42,11 @@ class NewsletterService
 		$message = NewsletterService::clean_html($message);
 		$message = ContentSecondParser::export_html_text($message);
 				
-		if ($email_test == '') // envoi définitif
+		if ($email_test == '') // envoi dï¿½finitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
-			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
+			//On enregistre dans les archives la newsletter envoyï¿½e
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . addslashes($mail_object) . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 
@@ -103,11 +103,11 @@ class NewsletterService
 <head><title>' . $mail_object . '</title></head><body>';
 		$mail_contents .= $message;
 		
-		if ($email_test == '') // envoi définitif
+		if ($email_test == '') // envoi dï¿½finitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
-			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			//On enregistre dans les archives la newsletter envoyï¿½e
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . addslashes($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 
@@ -160,10 +160,10 @@ class NewsletterService
 		$header = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n"; 
 		$header .= 'Reply-To: ' . $_NEWSLETTER_CONFIG['sender_mail'] . "\r\n";
 		
-		if ($email_test == '') // envoi définitif
+		if ($email_test == '') // envoi dï¿½finitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
-			//On enregistre dans les archives la newsletter envoyée
+			//On enregistre dans les archives la newsletter envoyï¿½e
 			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . strprotect($mail_object, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . strprotect($message, HTML_NO_PROTECT, ADDSLASHES_FORCE) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
@@ -208,7 +208,7 @@ class NewsletterService
 		}
 	}
 	
-	//Fonction qui remplace les caractères spéciaux par leurs entités en conservant les balises html
+	//Fonction qui remplace les caractï¿½res spï¿½ciaux par leurs entitï¿½s en conservant les balises html
 	function clean_html($text)
 	{
 		$text = htmlentities($text, ENT_NOQUOTES);
