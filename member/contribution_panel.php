@@ -294,7 +294,7 @@ else
 	//Liste des modules proposant de contribuer
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
-    $modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+    $modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 	foreach ($modules as $name => $module)
 	{
 		$contribution_interface = $module->get_configuration()->get_contribution_interface();
