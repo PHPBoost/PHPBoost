@@ -41,16 +41,19 @@ $lang['extended-fields-sucess-delete'] = 'The field is deleted successfuly.';
 
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
-$lang['type.half-text'] = 'Half Text';
 $lang['type.long-text'] = 'Long text (unlimited)';
+$lang['type.half-text'] = 'Medium text';
 $lang['type.simple-select'] = 'Single selection (between several values)';
 $lang['type.multiple-select'] = 'Multiple selection (between several values)';
 $lang['type.simple-check'] = 'Single choice (between several values)';
 $lang['type.multiple-check'] = 'Multiple choice (between several values)';
 $lang['type.date'] = 'Date';
-$lang['type.user-theme-choice'] = 'Choice themes';
-$lang['type.user-lang-choice'] = 'Choice languages';
+$lang['type.user-theme-choice'] = 'Theme';
+$lang['type.user-lang-choice'] = 'Language';
 $lang['type.user_born'] = 'Date of birth';
+$lang['type.user-editor'] = 'Editor';
+$lang['type.user-timezone'] = 'Timezone choice';
+$lang['type.user-sex'] = 'Sex';
 $lang['type.avatar'] = 'Avatar';
 
 $lang['default-field'] = 'Default field';
@@ -87,6 +90,7 @@ $lang['field.position'] = 'Position';
 
 $lang['field.is-required'] = 'Required';
 $lang['field.is-not-required'] = 'Not required';
+
 
 //Install
 $lang['field-install.default-lang'] = 'Default language';
@@ -133,8 +137,5 @@ $lang['field-install.msn-explain'] = '';
 
 $lang['field-install.yahoo'] = 'Yahoo';
 $lang['field-install.yahoo-explain'] = '';
-
-
-
 
 ?>

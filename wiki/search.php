@@ -96,7 +96,7 @@ if (!empty($search_string)) //recherche
 			'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
 		));
 	else
-		$Errorh->handler($LANG['wiki_empty_search'], E_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['wiki_empty_search'], E_NOTICE));
 	
 	$i = 1; //On �mule le "limit" 10 r�sultats par page
 	while ($row = $Sql->fetch_assoc($result))

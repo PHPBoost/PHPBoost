@@ -111,7 +111,7 @@ class Environment
 
 	public static function init_services()
 	{
-		Environment::init_http_services();
+		self::init_http_services();
 		AppContext::init_session();
 		AppContext::init_extension_provider_service();
 	}

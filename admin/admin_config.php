@@ -74,11 +74,11 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	}
 	elseif (isset($_GET['mail']))
 	{
-		$Errorh->handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['unlock_admin_confirm'], E_USER_NOTICE));
 	}
 	
 	$general_config = GeneralConfig::load();
@@ -238,7 +238,7 @@ else //Sinon on rempli le formulaire
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	}
 	
 	$general_config = GeneralConfig::load();

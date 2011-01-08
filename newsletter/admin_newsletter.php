@@ -67,7 +67,7 @@ if ($member_list)
 			$Errorh->handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
-			$Errorh->handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
+			$Template->put('message_helper', MessageHelper::display($LANG['newsletter_member_does_not_exists'], E_USER_WARNING));
 	}
 	$result = $Sql->query_while ("SELECT id, mail FROM " . PREFIX . "newsletter ORDER by id", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -103,7 +103,7 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	));
 
 	if (count($error_mailing_list) == 0) //Aucune erreur
-		$Errorh->handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['newsletter_sent_successful'], E_USER_NOTICE));
 	else
 		$Errorh->handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
 }
@@ -145,9 +145,9 @@ elseif (!empty($type)) //Rédaction
 		));
 
 	if (empty($mail_object) && $send_test)
-		$Errorh->handler($LANG['require_title'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['require_title'], E_USER_WARNING));
 	elseif (empty($mail_contents) && $send_test)
-		$Errorh->handler($LANG['require_text'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['require_text'], E_USER_WARNING));
 	elseif ($send_test) //Si on doit envoyer un test
 	{
 		switch ($type)

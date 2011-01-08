@@ -47,7 +47,6 @@ catch (IOException $ex)
 }
 
 /* DEPRECATED VARS */
-$Errorh = new Errors();
 $Cache = new Cache();
 /* END DEPRECATED */
 

@@ -227,7 +227,7 @@
 								<label for="entitled">{L_ENTITLED}</label>
 							</dt>
 							<dd>
-								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="60" id="entitled" name="entitled" />
+								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="50" id="entitled" name="entitled" />
 							</dd>
 						</dl>
 						<label for="contents">{L_ANSWER}</label>

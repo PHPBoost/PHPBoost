@@ -28,18 +28,11 @@
 								{L_MODULES_INSTALLED}
 							</th>
 						</tr>
-						# IF C_ERROR_HANDLER #
 						<tr> 
 							<td class="row2" colspan="5" style="text-align:center;">
-								<span id="errorh"></span>
-								<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-									<br />	
-								</div>
-								<br />		
+								# INCLUDE message_helper #	
 							</td>
 						</tr>
-						# ENDIF #
 					
 						# IF C_MODULES_INSTALLED #
 						<tr>

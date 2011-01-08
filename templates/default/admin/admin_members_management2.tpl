@@ -56,15 +56,8 @@
 	
 			# IF C_USERS_ADD #
 			
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
+			
 			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_ADD}</legend>
@@ -152,15 +145,7 @@
 			</script>
 			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 				
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>

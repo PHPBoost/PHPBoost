@@ -161,11 +161,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
-			$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 		}
 		elseif ($get_error == 'already_group')
 		{
-			$Errorh->handler($LANG['e_already_group'], E_USER_NOTICE);
+			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], E_USER_NOTICE));
 		}
 		
 		//On recupère les dossier des images des groupes.

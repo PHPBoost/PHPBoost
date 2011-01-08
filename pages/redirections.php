@@ -171,7 +171,7 @@ if ($id_rename > 0)
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], E_USER_WARNING));
 	}
 }
 //Création d'une redirection
@@ -188,7 +188,7 @@ elseif ($id_new > 0)
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], E_USER_WARNING));
 	}
 }
 //Liste des redirections vers cette page

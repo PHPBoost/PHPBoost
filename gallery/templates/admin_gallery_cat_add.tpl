@@ -30,16 +30,7 @@
 		</div>
 						 
 		<div id="admin_contents">
-			
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 				
 			<form action="admin_gallery_cat_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>
