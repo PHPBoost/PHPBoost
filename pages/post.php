@@ -206,11 +206,10 @@ if ($id_edit > 0)
 	
 	//Erreur d'enregistrement ?
 	if ($error == 'cat_contains_cat')
-		$Errorh->handler($LANG['pages_cat_contains_cat'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_cat_contains_cat'], E_USER_WARNING));
 	elseif ($error == 'preview')
 	{
-		//TODO à remettre une fois le gestionnaire d'erreur réparé
-		//$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], E_USER_NOTICE));
 		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
@@ -243,10 +242,10 @@ else
 		
 	//La page existe déjà !
 	if ($error == 'page_already_exists')
-		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], E_USER_WARNING));
 	elseif ($error == 'preview')
 	{
-		//$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], E_USER_NOTICE));
 		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)

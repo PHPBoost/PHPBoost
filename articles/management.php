@@ -584,7 +584,7 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	}
 	$tpl->display();
 }

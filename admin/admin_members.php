@@ -319,7 +319,7 @@ elseif ($add)
 		$errstr = '';
 	}
 	if (!empty($errstr))
-		$Errorh->handler($errstr, E_USER_NOTICE);  
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));  
 		
 	$template->put_all(array(
 		'C_USERS_ADD' => true,
@@ -395,10 +395,10 @@ elseif (!empty($id))
 		$errstr = '';
 	}
 	if (!empty($errstr))
-		$Errorh->handler($errstr, E_USER_NOTICE);  
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));  
 
 	if (isset($LANG[$get_l_error]))
-		$Errorh->handler($errstr, E_USER_WARNING);   
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));   
 
 	$user_sex = '';
 	if (!empty($mbr['user_sex']))

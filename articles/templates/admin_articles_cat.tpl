@@ -1,21 +1,8 @@
 <link href="{PICTURES_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
 {ADMIN_MENU}
 <div id="admin_contents">
-# IF C_ERROR_HANDLER #
-			<span id="errorh"></span>
-			<div id="error_msg">
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>
-			<br />
-			</div>
-			<script type="text/javascript">
-			<!--
-				//Javascript timeout to hide this message
-				setTimeout('Effect.Fade("error_msg");', 4000);
-			-->
-			</script>
-	# ENDIF #
+	# INCLUDE message_helper #
+	
 	# START removing_interface #
 	<form action="admin_articles_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>

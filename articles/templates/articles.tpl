@@ -220,21 +220,9 @@
 		}
 	</style>
 	# ENDIF #
-	# IF C_ERROR_HANDLER #
-	<span id="errorh"></span>
-	<div id="error_msg">
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-		</div>
-	<br />
-	</div>
-	<script type="text/javascript">
-	<!--
-		//Javascript timeout to hide this message
-		setTimeout('Effect.Fade("error_msg");', 4000);
-	-->
-	</script>
-	# ENDIF #
+	
+	# INCLUDE message_helper #
+	
 	<div class="module_position">					
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>

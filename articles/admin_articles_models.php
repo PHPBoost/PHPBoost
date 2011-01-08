@@ -485,22 +485,22 @@ else
 		switch ($error)
 		{
 			case 'e_required_fields_empty' :
-				$Errorh->handler($ARTICLES_LANG['required_fields_empty'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['required_fields_empty'], E_USER_WARNING));
 				break;
 			case 'e_unexisting_category' :
-				$Errorh->handler($ARTICLES_LANG['unexisting_category'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['unexisting_category'], E_USER_WARNING));
 				break;
 			case 'e_new_cat_does_not_exist' :
-				$Errorh->handler($ARTICLES_LANG['new_cat_does_not_exist'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['new_cat_does_not_exist'], E_USER_WARNING));
 				break;
 			case 'e_infinite_loop' :
-				$Errorh->handler($ARTICLES_LANG['infinite_loop'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['infinite_loop'], E_USER_WARNING));
 				break;
 			case 'e_success' :
-				$Errorh->handler($ARTICLES_LANG['successful_operation'], E_USER_SUCCESS);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['successful_operation'], E_USER_SUCCESS));
 				break;
 			case 'e_del_default_model' :
-				$Errorh->handler($ARTICLES_LANG['model_default_del_explain'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['model_default_del_explain'], E_USER_WARNING));
 				break;
 		}
 	}

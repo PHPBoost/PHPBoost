@@ -571,7 +571,7 @@ class Sql
 	//		global $Errorh;
 	//		//Enregistrement dans le log d'erreur.
 	//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
-	//		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
+	//		$Template->put('message_helper', MessageHelper::display($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections));
 	//		AppContext::get_response()->redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
 	}
 
