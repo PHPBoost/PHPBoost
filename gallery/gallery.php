@@ -182,9 +182,9 @@ elseif ($g_add)
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	elseif ($get_error == 'unexist_cat')
-		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 
 	$module_data_path = $Template->get_pictures_data_path();
 	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
@@ -297,7 +297,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'unexist_cat')
-		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 
 	//On crée une pagination si le nombre de catégories est trop important.
 

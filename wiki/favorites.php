@@ -94,7 +94,7 @@ else
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Errorh->handler($errstr, E_USER_WARNING);
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
 	
 	//on liste les favoris
 	$result = $Sql->query_while("SELECT f.id, a.id, a.title, a.encoded_title

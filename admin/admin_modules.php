@@ -137,11 +137,11 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	}
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
 	{
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	}
 
 	// Installed modules
@@ -149,7 +149,7 @@ else
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 	{
 		$configuration = $module->get_configuration();
 		$array_auth = $module->get_authorizations();

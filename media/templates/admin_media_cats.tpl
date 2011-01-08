@@ -1,20 +1,6 @@
 		# INCLUDE admin_media_menu #
 		<div id="admin_contents">
-			# IF C_ERROR_HANDLER #
-					<span id="errorh"></span>
-					<div id="error_msg">
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						</div>
-					<br />
-					</div>
-					<script type="text/javascript">
-					<!--
-						//Javascript timeout to hide this message
-						setTimeout('Effect.Fade("error_msg");', 4000);
-					-->
-					</script>
-			# ENDIF #
+			# INCLUDE message_helper #
 
 			# START categories_management #
 				<table class="module_table" style="width:99%;">

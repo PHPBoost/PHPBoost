@@ -213,7 +213,7 @@ if (!empty($valid_search) && !empty($search))
 		$Sql->query_close($result);
 		
 		if ($check_result !== true)
-			$Errorh->handler($LANG['no_result'], E_USER_NOTICE);
+			$Template->put('message_helper', MessageHelper::display($LANG['no_result'], E_USER_NOTICE));
 		else
 		{
 			$Template->put_all(array(
@@ -222,10 +222,10 @@ if (!empty($valid_search) && !empty($search))
 		}
 	}
 	else //Gestion erreur.
-		$Errorh->handler($LANG['invalid_req'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['invalid_req'], E_USER_NOTICE));
 }
 elseif (!empty($valid_search))
-	$Errorh->handler($LANG['invalid_req'], E_USER_WARNING);
+	$Template->put('message_helper', MessageHelper::display($LANG['invalid_req'], E_USER_WARNING));
 	
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/search.php'");

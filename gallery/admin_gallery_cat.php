@@ -714,7 +714,7 @@ elseif (!empty($id)) //Edition des catégories.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
 
 	$Template->put_all(array(
 		'THEME' => get_utheme(),
@@ -775,7 +775,7 @@ elseif (!empty($root)) //Edition de la racine.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
 	
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->put_all(array(
@@ -816,7 +816,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 		
 	$Template->put_all(array(
 		'THEME' => get_utheme(),

@@ -264,22 +264,22 @@ else
 		switch ($error)
 		{
 			case 'e_required_fields_empty' :
-				$Errorh->handler($DOWNLOAD_LANG['required_fields_empty'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['required_fields_empty'], E_USER_WARNING));
 				break;
 			case 'e_unexisting_category' :
-				$Errorh->handler($DOWNLOAD_LANG['unexisting_category'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['unexisting_category'], E_USER_WARNING));
 				break;
 			case 'e_new_cat_does_not_exist' :
-				$Errorh->handler($DOWNLOAD_LANG['new_cat_does_not_exist'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['new_cat_does_not_exist'], E_USER_WARNING));
 				break;
 				case 'e_infinite_loop' :
-				$Errorh->handler($DOWNLOAD_LANG['infinite_loop'], E_USER_WARNING);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['infinite_loop'], E_USER_WARNING));
 				break;
 			case 'e_success' :
-				$Errorh->handler($DOWNLOAD_LANG['successful_operation'], E_USER_SUCCESS);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['successful_operation'], E_USER_SUCCESS, 4));
 				break;
 			case 'e_recount_success' :
-				$Errorh->handler($DOWNLOAD_LANG['recount_success'], E_USER_SUCCESS);
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['recount_success'], E_USER_SUCCESS, 4));
 				break;
 		}
 	}

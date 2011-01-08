@@ -61,14 +61,7 @@
 
 		<div id="admin_contents">
 		
-			# IF C_ERROR_HANDLER #
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-				<br />	
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<form action="admin_forum_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>

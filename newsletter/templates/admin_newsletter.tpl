@@ -80,14 +80,7 @@
 
 			-->
 			</script>
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-			<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<form action="admin_newsletter.php?type={write.TYPE}&amp;token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -134,12 +127,7 @@
 				</tr>
 				<tr> 
 					<td class="row1" style="text-align:center;">
-						# IF C_ERROR_HANDLER #
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						</div>
-						# ENDIF #
+						# INCLUDE message_helper #
 						
 						<br />
 						<a href="admin_newsletter.php">{L_BACK}</a> / <a href="../newsletter/newsletter.php">{L_ARCHIVES}</a>
@@ -152,14 +140,7 @@
 			
 			# START config #
 			
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			<form action="admin_newsletter_config.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWSLETTER}</legend>
@@ -185,14 +166,7 @@
 			
 			# START member_list #
 			
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-			<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>
-			</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<table class="module_table" style="width:50%;">
 				<tr> 

@@ -227,19 +227,19 @@ else
 		switch ($error)
 		{
 			case 'e_required_fields_empty' :
-				$Errorh->handler($NEWS_LANG['required_fields_empty'], E_USER_WARNING);
+				$tpl->put('message_helper', MessageHelper::display($NEWS_LANG['required_fields_empty'], E_USER_WARNING));
 				break;
 			case 'e_unexisting_category' :
-				$Errorh->handler($NEWS_LANG['unexisting_category'], E_USER_WARNING);
+				$tpl->put('message_helper', MessageHelper::display($NEWS_LANG['unexisting_category'], E_USER_WARNING));
 				break;
 			case 'e_new_cat_does_not_exist' :
-				$Errorh->handler($NEWS_LANG['new_cat_does_not_exist'], E_USER_WARNING);
+				$tpl->put('message_helper', MessageHelper::display($NEWS_LANG['new_cat_does_not_exist'], E_USER_WARNING));
 				break;
 			case 'e_infinite_loop' :
-				$Errorh->handler($NEWS_LANG['infinite_loop'], E_USER_WARNING);
+				$tpl->put('message_helper', MessageHelper::display($NEWS_LANG['infinite_loop'], E_USER_WARNING));
 				break;
 			case 'e_success' :
-				$Errorh->handler($NEWS_LANG['successful_operation'], E_USER_SUCCESS);
+				$tpl->put('message_helper', MessageHelper::display($NEWS_LANG['successful_operation'], E_USER_SUCCESS, 4));
 				break;
 		}
 	}
