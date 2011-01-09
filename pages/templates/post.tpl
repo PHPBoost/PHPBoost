@@ -61,12 +61,12 @@
 				<legend>{L_TITLE_POST}</legend>
 				# START create #
 				<dl>
-					<dt><label for="title">{L_TITLE_FIELD}</label></dt>
+					<dt><label for="title">* {L_TITLE_FIELD}</label></dt>
 					<dd><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{PAGE_TITLE}" /></label></dd>					
 				</dl>
 				# END create #
 				<br />
-				<label for="contents">{L_CONTENTS}</label>
+				<label for="contents">* {L_CONTENTS}</label>
 				<br />
 				<br />
 				{KERNEL_EDITOR}
