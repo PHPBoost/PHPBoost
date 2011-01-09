@@ -43,7 +43,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	));
 	
 	
-	$Pagination = new Pagination();
+	$Pagination = new DeprecatedPagination();
 	
 	$auth_cats = '';
 	foreach ($CAT_FORUM as $idcat => $key)
