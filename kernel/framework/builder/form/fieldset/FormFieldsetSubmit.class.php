@@ -46,7 +46,7 @@ class FormFieldsetSubmit extends FormFieldsetHTML
 		{
 			$options['css_class'] = 'fieldset_submit';
 		}
-		parent::__construct($id, '', $options);
+		parent::__construct($id, $id, $options);
 	}
 }
 
