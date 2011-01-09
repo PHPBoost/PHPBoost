@@ -40,6 +40,12 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     margin-top:20px;
 }
 
+.low_opacity {
+    filter:alpha(opacity=40);
+    opacity: 0.40;
+    -moz-opacity:0.40;
+}
+
 /* Alignements */
 .inline {
     display:inline;

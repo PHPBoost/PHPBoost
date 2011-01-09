@@ -34,7 +34,7 @@ class FormFieldTextEditor extends AbstractFormField
     private $size = 30;
     private $maxlength = 255;
     private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}"
-	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # />';
+	class="# IF C_READONLY #low_opacity # ENDIF #${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # />';
 
     /**
      * @desc Constructs a FormFieldTextEditor.
@@ -71,7 +71,8 @@ class FormFieldTextEditor extends AbstractFormField
 			'ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'C_READONLY' => $this->is_readonly()
         ));
 
         $this->assign_common_template_variables($template);
