@@ -32,7 +32,7 @@
 class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 {
 	private $width = 94;
-    private static $tpl_src = '<textarea id="${escape(ID)}" name="${escape(NAME)}" rows="{ROWS}" cols="{COLS}" class="${escape(CLASS)}" style="width:{WIDTH}%;margin:0px;" # IF C_DISABLED # disabled="disabled" # ENDIF #>{VALUE}</textarea>';
+    private static $tpl_src = '<textarea id="${escape(ID)}" name="${escape(NAME)}" rows="{ROWS}" cols="{COLS}" class="# IF C_READONLY #low_opacity # ENDIF #${escape(CLASS)}" style="width:{WIDTH}%;margin:0px;" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>{VALUE}</textarea>';
 
     /**
      * @desc Constructs a FormFieldShortMultiLineTextEditor.

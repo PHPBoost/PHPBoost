@@ -60,6 +60,10 @@ abstract class AbstractFormField implements FormField
 	 */
 	protected $disabled = false;
 	/**
+	 * @var boolean
+	 */
+	protected $readonly = false;
+	/**
 	 * @var string
 	 */
 	protected $css_class = '';/**
@@ -341,6 +345,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_disabled($value);
 					unset($field_options['disabled']);
 					break;
+				case 'readonly':
+					$this->set_readonly($value);
+					unset($field_options['readonly']);
+					break;
 				case 'class':
 					$this->set_css_class($value);
 					unset($field_options['class']);
@@ -432,7 +440,8 @@ abstract class AbstractFormField implements FormField
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id,
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'C_READONLY' => $this->is_readonly()
 		));
 	}
 
@@ -491,6 +500,16 @@ abstract class AbstractFormField implements FormField
 	protected function set_disabled($disabled)
 	{
 		$this->disabled = $disabled;
+	}
+	
+	public function is_readonly()
+	{
+		return $this->readonly;
+	}
+	
+	public function set_readonly($readonly)
+	{
+		$this->readonly = $readonly;
 	}
 
 	public function set_template(Template $template)
