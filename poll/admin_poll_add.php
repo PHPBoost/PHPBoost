@@ -100,7 +100,7 @@ if (!empty($_POST['valid']))
 		AppContext::get_response()->redirect('/poll/admin_poll.php');
 	}
 	else
-		AppContext::get_response()->redirect('/poll/admin_poll_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/poll/admin_poll_add.php?error=incomplete#message_helper');
 }
 else	
 {		

@@ -93,7 +93,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
-		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
 	$dir = 'pics/';
 
@@ -105,23 +105,23 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
-		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
-			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
+			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#message_helper');
 		else
 		{
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
 
 			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#errorh');
+				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');

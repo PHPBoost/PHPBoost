@@ -50,7 +50,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#message_helper');
 }
 elseif (!empty($id) && $del) //Suppression.
 {

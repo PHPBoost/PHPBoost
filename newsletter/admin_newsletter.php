@@ -64,10 +64,12 @@ if ($member_list)
 		if (!empty($member_mail))
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
-			$Errorh->handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
+			$Template->put('message_helper', MessageHelper::display(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE));
 		}
 		else
+		{
 			$Template->put('message_helper', MessageHelper::display($LANG['newsletter_member_does_not_exists'], E_USER_WARNING));
+		}
 	}
 	$result = $Sql->query_while ("SELECT id, mail FROM " . PREFIX . "newsletter ORDER by id", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -103,9 +105,13 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	));
 
 	if (count($error_mailing_list) == 0) //Aucune erreur
+	{
 		$Template->put('message_helper', MessageHelper::display($LANG['newsletter_sent_successful'], E_USER_NOTICE));
+	}
 	else
-		$Errorh->handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
+	{
+		$Template->put('message_helper', MessageHelper::display(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE));
+	}
 }
 elseif (!empty($type)) //Rédaction
 {
@@ -162,7 +168,7 @@ elseif (!empty($type)) //Rédaction
 				NewsletterService::send_text($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 			break;
 		}
-		$Errorh->handler(sprintf($LANG['newsletter_test_sent'], $User->get_attribute('user_mail')), E_USER_NOTICE);
+		$Template->put('message_helper', MessageHelper::display(sprintf($LANG['newsletter_test_sent'], $User->get_attribute('user_mail')), E_USER_NOTICE));
 	}
 }
 //On fait choisir un type

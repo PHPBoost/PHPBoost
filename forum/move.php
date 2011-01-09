@@ -410,7 +410,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
 		}
 		else
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#message_helper');
 	}
 	else
 	{

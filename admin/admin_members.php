@@ -60,9 +60,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		$check_user = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#message_helper');
 		elseif ($check_mail >= 1) 
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#message_helper');
 		else
 		{
 			//Vérification des password.
@@ -80,10 +80,10 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                     }
 					else //Longueur minimale du password
-						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#message_helper');
 				}
 				else
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#message_helper');
 			}
 			
 			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
@@ -148,13 +148,13 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			if ($Upload->get_size() > 0)
 			{
 				if ($Upload->get_error() != '') //Erreur, on arrête ici
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#message_helper');
 				else
 				{
 					$path = $dir . $Upload->get_filename();
 					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
 					else
 					{
 						//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -174,7 +174,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				$path = TextHelper::strprotect($_POST['avatar']);
 				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -229,11 +229,11 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
 			else
-				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
 		}
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
 }
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
@@ -250,9 +250,9 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#message_helper');
 		elseif ($check_mail >= 1) 
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#message_helper');
 		else
 		{
 			if (strlen($password) >= 6 && strlen($password_bis) >= 6)
@@ -269,14 +269,14 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					AppContext::get_response()->redirect(HOST . SCRIPT); 	
 				}
 				else
-					AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#message_helper');
 			}
 			else //Longueur minimale du password
-				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#message_helper');
 		}
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#message_helper');
 }
 elseif (!empty($id) && $delete) //Suppression du membre.
 {

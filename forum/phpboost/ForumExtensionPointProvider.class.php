@@ -90,7 +90,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $User, $Errorh, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
+		global $User, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
 		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
 

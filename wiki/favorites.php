@@ -58,7 +58,7 @@ if ($add_favorite > 0)//Ajout d'un favori
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#message_helper');
 }
 elseif ($remove_favorite > 0)
 {
@@ -79,7 +79,7 @@ elseif ($remove_favorite > 0)
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_no_favorite', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_no_favorite', '', '&') . '#message_helper');
 }
 else
 {

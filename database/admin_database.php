@@ -355,19 +355,19 @@ else
 			if ($repair)
 			{
 				$Sql->repair_tables($selected_tables);
-				$Errorh->handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_SUCCESS));
 			}
 			else
 			{
 				$Sql->optimize_tables($selected_tables);
-				$Errorh->handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_SUCCESS));
 			}	
 		}
 		
 		if (!empty($_GET['error']))
 		{
 			if (trim($_GET['error']) == 'backup_success' && !empty($_GET['file']))
-				$Errorh->handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE);
+				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_SUCCESS));
 		}
 		
 		//liste des tables

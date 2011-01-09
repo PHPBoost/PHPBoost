@@ -171,7 +171,7 @@ class ErrorHandler
 
 	protected function display_debug()
 	{
-		echo '<span id="errorh"></span>
+		echo '<span id="message_helper"></span>
             <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
                 <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
@@ -214,7 +214,7 @@ class ErrorHandler
 
 		if ($handle === false || $write === false || $close === false)
 		{
-			echo '<span id="errorh">Can\'t write error to log file</span>';
+			echo '<span id="message_handler">Can\'t write error to log file</span>';
 		}
 	}
 

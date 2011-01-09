@@ -50,10 +50,10 @@ if (!empty($_POST['add']))
 			AppContext::get_response()->redirect('/admin/admin_smileys.php');
 		}
 		else
-			AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
+			AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#message_helper');
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=incomplete#message_helper');
 }
 elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

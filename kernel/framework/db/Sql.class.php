@@ -568,7 +568,6 @@ class Sql
 	 */
 	private function _error($query, $errstr, $errline = '', $errfile = '')
 	{	// TODO review this
-	//		global $Errorh;
 	//		//Enregistrement dans le log d'erreur.
 	//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
 	//		$Template->put('message_helper', MessageHelper::display($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections));

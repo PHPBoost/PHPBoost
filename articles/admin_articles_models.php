@@ -54,7 +54,7 @@ if ($model_to_del > 0)
 	if(!empty($model_default['id']))
 	{
 		$error_string = 'e_del_default_model';
-		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 	}
 	
 	$nbr_models_articles = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
@@ -65,7 +65,7 @@ if ($model_to_del > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del . "'", __LINE__, __FILE__);
 	
 		$error_string = 'e_success';
-		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 	}
 	else
 	{
@@ -441,7 +441,7 @@ elseif (retrieve(POST,'submit',false))
 		$default_model=retrieve(POST, 'default', 1);
 			
 		if (empty($name))
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 		
 		if($default_model == 1)
 		{
@@ -476,7 +476,7 @@ elseif (retrieve(POST,'submit',false))
 	}
 	
 	$Cache->Generate_module_file('articles');
-	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
 else
 {

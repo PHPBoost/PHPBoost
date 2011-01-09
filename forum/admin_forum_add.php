@@ -132,7 +132,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 		AppContext::get_response()->redirect('/forum/admin_forum.php');
 	}
 	else
-		AppContext::get_response()->redirect('/forum/admin_forum_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/forum/admin_forum_add.php?error=incomplete#message_helper');
 }
 else
 {

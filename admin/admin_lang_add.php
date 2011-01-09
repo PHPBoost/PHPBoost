@@ -57,7 +57,7 @@ if ($install)
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
+		AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#message_helper');
 }
 elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

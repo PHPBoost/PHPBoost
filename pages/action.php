@@ -154,7 +154,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
 		{
-			AppContext::get_response()->redirect('/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
+			AppContext::get_response()->redirect('/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#message_helper', '','&'));
 		}
 	}
 	

@@ -50,7 +50,7 @@ if (!empty($_POST['add']))
 		AppContext::get_response()->redirect('/admin/admin_ranks.php');	
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#message_helper');
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {

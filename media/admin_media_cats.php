@@ -121,7 +121,7 @@ elseif (!empty($_POST['submit']))
 
 		if (empty($name))
 		{
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 		}
 
 		if ($id_cat > 0)
@@ -136,7 +136,7 @@ elseif (!empty($_POST['submit']))
 
 	$Cache->Generate_module_file('media');
 
-	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
 elseif ($new_cat XOR $id_edit > 0)
 {

@@ -113,7 +113,7 @@ if ($update) //Mise à jour du module
 		AppContext::get_response()->redirect(HOST . SCRIPT);	
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#message_helper');
 }			
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

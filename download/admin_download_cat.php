@@ -132,7 +132,7 @@ elseif (retrieve(POST, 'submit', false))
 
 		if (empty($name))
 		{
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 		}
 
 		if ($id_cat > 0)
@@ -151,7 +151,7 @@ elseif (retrieve(POST, 'submit', false))
 
 	$Cache->Generate_module_file('download');
 
-	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
 //Updating the number of subquestions of each category
 elseif (retrieve(GET, 'recount', false))

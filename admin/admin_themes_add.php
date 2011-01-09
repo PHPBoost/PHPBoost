@@ -61,7 +61,7 @@ if ($install)
 		AppContext::get_response()->redirect(HOST . SCRIPT); 
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_themes_add.php?error=e_theme_already_exist#errorh');
+		AppContext::get_response()->redirect('/admin/admin_themes_add.php?error=e_theme_already_exist#message_helper');
 }
 elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

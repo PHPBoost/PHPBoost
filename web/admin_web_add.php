@@ -47,7 +47,7 @@ if (!empty($_POST['valid']))
 		AppContext::get_response()->redirect('/web/admin_web.php');
 	}
 	else
-		AppContext::get_response()->redirect('/web/admin_web_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/web/admin_web_add.php?error=incomplete#message_helper');
 }
 elseif (!empty($_POST['previs']))
 {

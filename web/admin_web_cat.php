@@ -136,7 +136,7 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#message_helper');
 }
 //Sinon on rempli le formulaire
 else	

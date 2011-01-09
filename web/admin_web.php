@@ -209,7 +209,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#message_helper');
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {

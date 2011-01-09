@@ -111,13 +111,13 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						{
 							$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 							if ($Upload->get_error() != '') //Erreur, on arrête ici
-								AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#errorh');
+								AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $Upload->get_error()) . '#message_helper');
 							else
 							{
 								$path = $dir . $Upload->get_filename();
 								$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 								if (!empty($error)) //Erreur, on arrête ici
-									AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+									AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#message_helper');
 								else
 									$user_avatar = $path; //Avatar uploadé et validé.
 							}
@@ -129,7 +129,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				{
 					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-						AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
+						AppContext::get_response()->redirect('/member/register' . url('.php?erroru=' . $error) . '#message_helper');
 					else
 						$user_avatar = $path; //Avatar posté et validé.
 				}
@@ -140,9 +140,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
 				if ($check_user >= 1)
-					AppContext::get_response()->redirect('/member/register' . url('.php?error=pseudo_auth') . '#errorh');
+					AppContext::get_response()->redirect('/member/register' . url('.php?error=pseudo_auth') . '#message_helper');
 				elseif ($check_mail >= 1)
-					AppContext::get_response()->redirect('/member/register' . url('.php?error=mail_auth') . '#errorh');
+					AppContext::get_response()->redirect('/member/register' . url('.php?error=mail_auth') . '#message_helper');
 				else //Succes.
 				{
 					$user_aprob = ($user_accounts_config->get_member_accounts_validation_method() == 0) ? 1 : 0;
@@ -212,18 +212,18 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				}
 			}
 			elseif (!empty($_POST['register_valid']) && $password !== $password_bis)
-				AppContext::get_response()->redirect('/member/register' . url('.php?error=pass_same') . '#errorh');
+				AppContext::get_response()->redirect('/member/register' . url('.php?error=pass_same') . '#message_helper');
 			else
-				AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/member/register' . url('.php?error=incomplete') . '#message_helper');
 		}
 		else
-			AppContext::get_response()->redirect('/member/register' . url('.php?error=lenght_mini') . '#errorh');
+			AppContext::get_response()->redirect('/member/register' . url('.php?error=lenght_mini') . '#message_helper');
 	}
 	else
-		AppContext::get_response()->redirect('/member/register' . url('.php?error=verif_code') . '#errorh');
+		AppContext::get_response()->redirect('/member/register' . url('.php?error=verif_code') . '#message_helper');
 }
 elseif (!empty($user_mail))
-	AppContext::get_response()->redirect('/member/register' . url('.php?error=invalid_mail') . '#errorh');
+	AppContext::get_response()->redirect('/member/register' . url('.php?error=invalid_mail') . '#message_helper');
 else
 	AppContext::get_response()->redirect(Environment::get_home_page());
 	
