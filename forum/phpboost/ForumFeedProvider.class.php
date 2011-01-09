@@ -102,7 +102,7 @@ class ForumFeedProvider implements FeedProvider
             $item->set_link($link);
             $item->set_guid($link);
             $item->set_desc(FormatingHelper::second_parse($row['contents']));
-            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
+            $item->set_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['last_timestamp']));
             $item->set_auth(unserialize($row['auth']));
 
             $data->add_item($item);

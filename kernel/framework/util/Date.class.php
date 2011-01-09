@@ -41,7 +41,7 @@ define('DATE_RFC3339_F', 		6);
 define('DATE_RFC822_FORMAT', 	'D, d M Y H:i:s O');
 define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 
-define('TIMEZONE_AUTO', 		TIMEZONE_USER);
+define('TIMEZONE_AUTO', 		Timezone::USER_TIMEZONE);
 
 /**
  * @package {@package}
@@ -60,14 +60,18 @@ class Date
 	 * @var int The timestamp of the current date
 	 */
 	private $timestamp = 0;
+	/**
+	 * @var DateTime The wrapped date time
+	 */
+	private $date_time;
 
 	/**
 	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
 	 * The second parameter allows us to chose what time referential we use to create the date:
 	 * <ul>
-	 * 	<li>TIMEZONE_SYSTEM if that date comes from for example the database (dates must be stored under this referential).</li>
-	 * 	<li>TIMEZONE_SITE if it's an entry coming from the site (nearly never used).</li>
-	 * 	<li>TIMEZONE_USER if it's an entry coming from the user (it's own timezone will be used)</li>
+	 * 	<li>Timezone::SERVER_TIMEZONE if that date comes from for example the database (dates must be stored under this referential).</li>
+	 * 	<li>Timezone::SITE_TIMEZONE if it's an entry coming from the site (nearly never used).</li>
+	 * 	<li>Timezone::USER_TIMEZONE if it's an entry coming from the user (it's own timezone will be used)</li>
 	 * </ul>
 	 * The first parameter determines how to initialize the date, here are the rules to use for the other parameters:
 	 * <ul>
@@ -79,7 +83,7 @@ class Date
 	 * 			<li>int The month (for example 11)</li>
 	 * 			<li>int The day (for example 09)</li>
 	 * 		</ul>
-	 * For example, $date = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_USER, 2009, 11, 09);
+	 * For example, $date = new Date(DATE_YEAR_MONTH_DAY, Timezone::USER_TIMEZONE, 2009, 11, 09);
 	 * 	</li>
 	 * 	<li>DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND if you want to build a date from a specified time. Here is the rule for the following parameters:
 	 * 		<ul>
@@ -93,7 +97,7 @@ class Date
 	 * For instance $date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, 2009, 11, 09, 12, 34, 12);
 	 * 	</li>
 	 * 	<li>DATE_TIMESTAMP which builds a date from a UNIX timestamp.
-	 * For example $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time()); is equivalent to $date = new Date(DATE_NOW);</li>
+	 * For example $date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()); is equivalent to $date = new Date(DATE_NOW);</li>
 	 * 	<li>DATE_FROM_STRING which decodes a date written in a string by matching a pattern you have to specify.
 	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
 	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>
@@ -114,43 +118,35 @@ class Date
 			$format = func_get_arg(0);
 		}
 
-		if ($format != DATE_NOW)
+		// Fuseau horaire
+		if ($num_args >= 2)
 		{
-			// Fuseau horaire
-			if ($num_args >= 2)
-			{
-				$referencial_timezone = func_get_arg(1);
-			}
-			else
-			{
-				$referencial_timezone = TIMEZONE_USER;
-			}
-
-			$time_difference = self::compute_server_user_difference($referencial_timezone);
+			$referential_timezone = func_get_arg(1);
 		}
+		else
+		{
+			$referential_timezone = Timezone::USER_TIMEZONE;
+		}
+		// TODO remove
+		$time_difference = self::compute_server_user_difference($referential_timezone);
+		$timezone = Timezone::get_timezone($referential_timezone);
+		
+		$this->date_time = new DateTime();
+//		$this->date_time->setTimezone($timezone);
 
 		switch ($format)
 		{
-			case DATE_NOW:
-				$this->timestamp = time();
-				break;
-
-				// Année mois jour
 			case DATE_YEAR_MONTH_DAY:
 				if ($num_args >= 5)
 				{
 					$year 	= func_get_arg(2);
 					$month 	= func_get_arg(3);
 					$day 	= func_get_arg(4);
+					// TODO remove
 					$this->timestamp = mktime(0, 0, 0, $month, $day, $year) - $time_difference * 3600;
-				}
-				else
-				{
-					$this->timestamp = 0;
+					$this->date_time->setDate($year, $month, $day);
 				}
 				break;
-
-				// Année mois jour heure minute seconde
 			case DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
 				if ($num_args >= 7)
 				{
@@ -159,31 +155,25 @@ class Date
 					$day 		= func_get_arg(4);
 					$hour 		= func_get_arg(5);
 					$minute 	= func_get_arg(6);
-					$seconds 	= func_get_arg(7);
-					$this->timestamp = mktime($hour, $minute, $seconds, $month, $day, $year) - $time_difference * 3600;
-				}
-				else
-				{
-					$this->timestamp = 0;
+					$second 	= func_get_arg(7);
+					// TODO remove
+					$this->timestamp = mktime($hour, $minute, $second, $month, $day, $year) - $time_difference * 3600;
+					$this->date_time->setDate($year, $month, $day);
+					$this->date_time->setTime($hour, $minute, $second);
 				}
 				break;
-
 			case DATE_TIMESTAMP:
 				if ($num_args >= 3)
 				{
-					$this->timestamp = func_get_arg(2) - $time_difference * 3600;
-				}
-				else
-				{
-					$this->timestamp = 0;
+					// TODO remove
+					$this->timestamp = func_get_arg(2);
+					$this->date_time->setTimestamp(func_get_arg(2));
 				}
 				break;
-
 			case DATE_FROM_STRING:
 				if ($num_args < 4)
 				{
-					$this->timestamp = 0;
-					break;
+					throw new InvalidArgumentException('Call with DATE_FROM_STRING must have 4 arguments.');
 				}
 				list($month, $day, $year) = array(0, 0, 0);
 				$str 				= func_get_arg(2);
@@ -211,16 +201,17 @@ class Date
 				//Vérification du format de la date.
 				if (self::check_date($month, $day, $year))
 				{
-					$this->timestamp = @mktime(0, 0, 1, $month, $day, $year) - $time_difference * 3600;
+					// TODO remove
+					$this->timestamp = @mktime(0, 0, 0, $month, $day, $year) - $time_difference * 3600;
+					$this->date_time->setDate($year, $month, $day);
 				}
-				else
-				{
-					$this->timestamp = time();
-				}
+				throw new InvalidArgumentException('The date you entered is not correct');
 				break;
-
+			case DATE_NOW:
 			default:
-				$this->timestamp = 0;
+				// Nothing to do
+				// TODO remove
+				$this->timestamp = time();
 		}
 	}
 
@@ -235,52 +226,58 @@ class Date
 	 * 	<li>DATE_RFC822_F to format according to what the RFC822 announces</li>
 	 * 	<li>DATE_RFC3339_F to format according to what the RFC3339 announces</li>
 	 * </ul>
-	 * @param int $referencial_timezone One of the following enumeration:
+	 * @param int $referential_timezone One of the following enumeration:
 	 * <ul>
-	 * 	<li>TIMEZONE_SYSTEM</li>
+	 * 	<li>Timezone::SERVER_TIMEZONE</li>
 	 * 	<li>TIMZONE_SITE</li>
-	 * 	<li>TIMEZONE_USER</li>
+	 * 	<li>Timezone::USER_TIMEZONE</li>
 	 * </ul>
 	 * @return string The formatted date
 	 */
-	public function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
+	public function format($format = DATE_FORMAT_TINY, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
-		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
-
-		if ($timestamp <= 0)
-		{
-			return '';
-		}
+		$timezone = Timezone::get_timezone($referential_timezone);
+		// TODO remove
+		$timestamp = $this->timestamp + self::compute_server_user_difference($referential_timezone) * 3600;
 
 		switch ($format)
 		{
 			case DATE_FORMAT_TINY:
+				return $this->date_time->format(LangLoader::get_message('date_format_tiny', 'main'));
+				// TODO remove
 				return date(LangLoader::get_message('date_format_tiny', 'main'), $timestamp);
 				break;
-
 			case DATE_FORMAT_SHORT:
+				return $this->date_time->format(LangLoader::get_message('date_format_short', 'main'));
+				// TODO remove
 				return date(LangLoader::get_message('date_format_short', 'main'), $timestamp);
 				break;
 			case DATE_FORMAT:
+				return $this->date_time->format(LangLoader::get_message('date_format', 'main'));
+				// TODO remove
 				return date(LangLoader::get_message('date_format', 'main'), $timestamp);
 				break;
-
 			case DATE_FORMAT_LONG:
+				return $this->date_time->format(LangLoader::get_message('date_format_long', 'main'));
+				// TODO remove
 				return date(LangLoader::get_message('date_format_long', 'main'), $timestamp);
 				break;
-
 			case DATE_TIMESTAMP:
+				return $this->date_time->getTimestamp();
+				// TODO remove
 				return $timestamp;
 				break;
-
 			case DATE_RFC822_F:
+				return $this->date_time->format(DATE_RFC822_FORMAT);
+				// TODO remove
 				return date(DATE_RFC822_FORMAT, $timestamp);
 				break;
-
 			case DATE_RFC3339_F:
+				// TODO implement this method
+				return $this->date_time->format(DateTime::ATOM);
+				// TODO remove
 				return date(DATE_RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
 				break;
-
 			default:
 				return '';
 		}
@@ -444,24 +441,24 @@ class Date
 	 * @desc Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
 	 */
-	private static function compute_server_user_difference($referencial_timezone = TIMEZONE_SYSTEM)
+	private static function compute_server_user_difference($referential_timezone = Timezone::SERVER_TIMEZONE)
 	{
 		// Number of hours separating GMT and server's timezone
 		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
 			
-		switch ($referencial_timezone)
+		switch ($referential_timezone)
 		{
 			// Référentiel : heure du site
-			case TIMEZONE_SITE:
+			case Timezone::SITE_TIMEZONE:
 				$timezone = GeneralConfig::load()->get_site_timezone() - $server_hour;
 				break;
 
 				//Référentiel : heure du serveur
-			case TIMEZONE_SYSTEM:
+			case Timezone::SERVER_TIMEZONE:
 				$timezone = 0;
 				break;
 
-			case TIMEZONE_USER:
+			case Timezone::USER_TIMEZONE:
 				$timezone = AppContext::get_user()->get_attribute('user_timezone')
 					 - $server_hour;
 				break;

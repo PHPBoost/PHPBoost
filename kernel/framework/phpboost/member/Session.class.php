@@ -177,8 +177,8 @@ class Session
 		if ($_include_once)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
-			$this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
-			$this->sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . DB_TABLE_VISIT_COUNTER . " (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0)", __LINE__, __FILE__);
+			$this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
+			$this->sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . DB_TABLE_VISIT_COUNTER . " (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', 0)", __LINE__, __FILE__);
 
 			//Mise à jour du last_connect, pour un membre qui vient d'arriver sur le site.
 			if ($user_id !== '-1')

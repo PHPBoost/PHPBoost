@@ -16,7 +16,7 @@ class ApplicationTest extends PHPBoostUnitTestCase {
 		self::assertEquals('', $app->get_repository());
 		self::assertEquals(0, $app->get_version());
 		$d = new Date();
-		self::assertEquals($d->format(DATE_FORMAT_SHORT, TIMEZONE_USER), $app->get_pubdate());
+		self::assertEquals($d->format(DATE_FORMAT_SHORT, Timezone::USER_TIMEZONE), $app->get_pubdate());
 		
 		$vers 	= 1;
 		$repo	= 'repository';

@@ -40,8 +40,8 @@ if ($file_id > 0) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
- 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
- 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
+ 	$creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $download_info['timestamp']);
+ 	$release_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $download_info['release_timestamp']);
 	
 	//Affichage notation.
 	$Note = new Note('download', $file_id, url('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);

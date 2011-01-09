@@ -46,7 +46,7 @@ if (!empty($_POST['valid']))
 			}
 			else if ($maintain > 0)
 			{
-				$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, time() + 5 + $maintain);
+				$date = new Date(DATE_TIMESTAMP, Timezone::USER_TIMEZONE, time() + 5 + $maintain);
 				$maintenance_config->enable_maintenance();
 				$maintenance_config->set_unlimited_maintenance(false);
 				$maintenance_config->set_end_date($date);
@@ -59,7 +59,7 @@ if (!empty($_POST['valid']))
 		case 2:
 			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $maintain);
+			$date = new Date(DATE_TIMESTAMP, Timezone::USER_TIMEZONE, $maintain);
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(false);
 			$maintenance_config->set_end_date($date);
@@ -92,7 +92,7 @@ else //Sinon on rempli le formulaire
 	{
 		$key_delay = 0;
 		$current_time = time();
-		$timestamp_end = $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_SYSTEM);
+		$timestamp_end = $maintenance_config->get_end_date()->get_timestamp(Timezone::SERVER_TIMEZONE);
 		for ($i = $array_size; $i >= 1; $i--)
 		{					
 			if (($timestamp_end - $current_time) - $array_time[$i] < 0 && ($timestamp_end - $current_time) - $array_time[$i-1] > 0)
@@ -112,7 +112,7 @@ else //Sinon on rempli le formulaire
 		$delay_maintain_option .= '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>' . "\n";
 	}
 	
-	$maintenance_terminates_after_tomorrow = $maintenance_config->get_end_date()->is_posterior_to(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time() + 86400));
+	$maintenance_terminates_after_tomorrow = $maintenance_config->get_end_date()->is_posterior_to(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time() + 86400));
 	$check_until = (!$maintenance_config->is_unlimited_maintenance() && $maintenance_terminates_after_tomorrow);
 	$template->put_all(array(
 		'KERNEL_EDITOR' => display_editor(),
@@ -126,7 +126,7 @@ else //Sinon on rempli le formulaire
 		'MAINTAIN_CHECK_NO' => !$maintenance_config->is_maintenance_enabled() || !$maintenance_config->is_end_date_not_reached() ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && $maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow) ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_UNTIL' => $maintenance_config->is_maintenance_enabled() && $check_until ? ' checked="checked"' : '',
-		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_USER)) : '',
+		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(Timezone::USER_TIMEZONE)) : '',
 		'L_MAINTAIN' => $LANG['maintain'],
 		'L_UNTIL' => $LANG['until'],
 		'L_DURING' => $LANG['during'],

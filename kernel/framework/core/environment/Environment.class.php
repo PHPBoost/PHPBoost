@@ -343,9 +343,9 @@ class Environment
 
 			$num_entry_today = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
 			. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
-			TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
-			$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
-				  'd', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
+			Timezone::SERVER_TIMEZONE) . "' AND stats_month = '" . gmdate_format('m',
+			$yesterday_timestamp, Timezone::SERVER_TIMEZONE) . "' AND stats_day = '" . gmdate_format(
+				  'd', $yesterday_timestamp, Timezone::SERVER_TIMEZONE) . "'", __LINE__, __FILE__);
 
 			if ((int) $num_entry_today == 0)
 			{
@@ -380,8 +380,8 @@ class Environment
 		//We insert today's entry in the stats table
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
 		"stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y',
-		$yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp,
-		TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) .
+		$yesterday_timestamp, Timezone::SERVER_TIMEZONE) . "', '" . gmdate_format('m', $yesterday_timestamp,
+		Timezone::SERVER_TIMEZONE) . "', '" . gmdate_format('d', $yesterday_timestamp, Timezone::SERVER_TIMEZONE) .
 		"', 0, 0, '')", __LINE__, __FILE__);
 
 		//We retrieve the id we just come to create
@@ -411,12 +411,12 @@ class Environment
 			" WHERE id <> 1", __LINE__, __FILE__);
 		//We update the last changeday date
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
-			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) .
+			" SET time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) .
 				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(),
-		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
+		Timezone::SERVER_TIMEZONE) . "', '0')", __LINE__, __FILE__);
 
 		//We update the stats table: the number of visits today
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .

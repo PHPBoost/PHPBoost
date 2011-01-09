@@ -25,10 +25,6 @@
  *
  ###################################################*/
 
-define('TIMEZONE_SITE', 1);
-define('TIMEZONE_SYSTEM', 2);
-define('TIMEZONE_USER', 3);
-
 /**
  * @deprecated
  * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.

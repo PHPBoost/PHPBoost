@@ -39,9 +39,9 @@ class LastUseDateConfig extends AbstractConfigData
 	 */
 	public function set_last_use_date(Date $date)
 	{
-		$this->set_property('year', $date->get_year(TIMEZONE_SYSTEM));
-		$this->set_property('month', $date->get_month(TIMEZONE_SYSTEM));
-		$this->set_property('day', $date->get_day(TIMEZONE_SYSTEM));
+		$this->set_property('year', $date->get_year(Timezone::SERVER_TIMEZONE));
+		$this->set_property('month', $date->get_month(Timezone::SERVER_TIMEZONE));
+		$this->set_property('day', $date->get_day(Timezone::SERVER_TIMEZONE));
 	}
 
 	/**
@@ -55,7 +55,7 @@ class LastUseDateConfig extends AbstractConfigData
 			$year = $this->get_property('year');
 			$month = $this->get_property('month');
 			$day = $this->get_property('day');
-			return new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, $year, $month, $day);
+			return new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, $year, $month, $day);
 		}
 		catch(PropertyNotFoundException $ex)
 		{

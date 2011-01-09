@@ -57,7 +57,7 @@ class AdministratorAlertService
 		{
 			//Creation of the object we are going to return
 			$alert = new AdministratorAlert();
-			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
+			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
 			return $alert;
 		}
 		else
@@ -106,7 +106,7 @@ class AdministratorAlertService
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$alert = new AdministratorAlert();
-				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 				$array_result[] = $alert;
 			}
 			
@@ -138,7 +138,7 @@ class AdministratorAlertService
 		if ($row = $Sql->fetch_assoc($result))
 		{
             $alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
             
 			return $alert;
         }
@@ -171,7 +171,7 @@ class AdministratorAlertService
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			$array_result[] = $alert;
 		}
 		
