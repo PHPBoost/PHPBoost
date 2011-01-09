@@ -33,7 +33,7 @@ require_once('../kernel/header.php');
 $tpl = new FileTemplate('member/csrf-attack.tpl');
 $tpl->put_all(array(
     'L_ATTACK_EXPLAIN' => $LANG['csrf_attack'],
-    'L_PREVIOUS' => $LANG['previous'],
+    'L_BACK' => $LANG['back'],
 ));
 $tpl->display();
 
