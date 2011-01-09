@@ -225,7 +225,7 @@ elseif (!empty($_POST['advanced']))
 	}
 	else
 	{
-		AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&error=incomplete#message_helper');
 	}
 }
 else //Sinon on rempli le formulaire	 

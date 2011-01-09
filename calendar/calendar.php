@@ -343,10 +343,10 @@ elseif (!empty($id))
 					AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
-					AppContext::get_response()->redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
+					AppContext::get_response()->redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#message_helper');
 			}
 			else
-				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#message_helper');
 		}
 		else //Formulaire d'édition
 		{
@@ -438,10 +438,10 @@ elseif ($add) //Ajout d'un évenement
 				AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
 			else //Champs incomplet!
-				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#errorh');
+				AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#message_helper');
 		}
 		else
-			AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
+			AppContext::get_response()->redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#message_helper');
 	}
 	else
 	{
@@ -501,7 +501,7 @@ elseif ($add) //Ajout d'un évenement
 	}
 }
 else
-	AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#errorh');
+	AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#message_helper');
 
 require_once('../kernel/footer.php');
 

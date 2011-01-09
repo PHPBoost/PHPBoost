@@ -117,7 +117,7 @@ elseif (!empty($_POST['submit']))
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		
 		if (empty($name))
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 		
 		if ($id_cat > 0)
 			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
@@ -127,7 +127,7 @@ elseif (!empty($_POST['submit']))
 
 	$Cache->Generate_module_file('faq');
 	
-	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
 //Updating the number of subquestions of each category
 elseif (!empty($_GET['recount']))

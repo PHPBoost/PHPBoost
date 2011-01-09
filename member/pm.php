@@ -93,7 +93,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
 	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
-		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#message_helper');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
@@ -107,10 +107,10 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Destinataire non trouvé.
-			AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
+			AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#message_helper');
 	}
 	else //Champs manquants.
-		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#message_helper');
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('user_id')) && $pm_get > '0') //Interface pour poster la conversation.
 {
@@ -291,10 +291,10 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
-			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
+			AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#message_helper');
 	}
 	else //Champs manquants.
-		AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
+		AppContext::get_response()->redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#message_helper');
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
@@ -819,7 +819,9 @@ else //Liste des conversation, dans la boite du membre.
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 		//Gestion erreur.
 		if ($nbr_waiting_pm > 0)
-			$Errorh->handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
+		{
+			$Template->put('message_helper', MessageHelper::display(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING));
+		}
 	}
 	
 	$Template->put_all(array(

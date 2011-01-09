@@ -1,4 +1,3 @@
-		<span id="errorh"></span>
 		<div class="error_handler_position" id="message_helper">
 			<div class="{MESSAGE_CSS_CLASS}" style="width:500px;margin:auto;padding:10px;text-indent:35px;line-height:22px;">
 				{MESSAGE_CONTENT}

@@ -66,7 +66,7 @@ if (!empty($_POST['valid']))
 		AppContext::get_response()->redirect(HOST . SCRIPT);	
 	}
 	else
-		AppContext::get_response()->redirect('/forum/admin_forum_config.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/forum/admin_forum_config.php?error=incomplete#message_helper');
 }
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {

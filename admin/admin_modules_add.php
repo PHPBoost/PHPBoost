@@ -47,14 +47,14 @@ if ($install) //Installation du module
 	switch (ModulesManager::install_module($module_id, $enable_module, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
 		case CONFIG_CONFLICT:
-			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_config_conflict#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_config_conflict#message_helper');
 			break;
 		case UNEXISTING_MODULE:
 		case MODULE_ALREADY_INSTALLED:
-			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=incomplete#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=incomplete#message_helper');
 			break;
 		case PHP_VERSION_CONFLICT:
-			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_php_version_conflict#errorh');
+			AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_php_version_conflict#message_helper');
 			break;
 		case MODULE_INSTALLED:
 		default:

@@ -153,8 +153,6 @@ class Comments
 	 */
 	public function is_loaded()
 	{
-		global $Errorh;
-
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
@@ -238,7 +236,7 @@ class Comments
 	 */
 	public function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $User, $Errorh, $Sql, $LANG, $Session;
+		global $User, $Sql, $LANG, $Session;
 
 		if ($integrated_in_environment)
 		{
@@ -298,24 +296,24 @@ class Comments
 						{
 							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcule la fin du delai.
 							{
-								AppContext::get_response()->redirect($path_redirect . '&errorh=flood#errorh');
+								AppContext::get_response()->redirect($path_redirect . '&errorh=flood#message_helper');
 							}
 						}
 
 						//Code de vérification anti-bots.
 						if ($comments_config->get_display_captcha() && !$captcha->is_valid())
 						{
-							AppContext::get_response()->redirect($path_redirect . '&errorh=verif#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=verif#message_helper');
 						}
 						$contents = FormatingHelper::strparse($contents, $comments_config->get_forbidden_tags());
 
 						if (!TextHelper::check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 						{
-							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=l_pseudo#message_helper');
 						}
 						if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
 						{
-							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#message_helper');
 						}
 
 						//Récupération de l'adresse de la page.
@@ -326,12 +324,12 @@ class Comments
 					}
 					else //utilisateur non autorisé!
 					{
-						AppContext::get_response()->redirect($path_redirect . '&errorh=auth#errorh');
+						AppContext::get_response()->redirect($path_redirect . '&errorh=auth#message_helper');
 					}
 				}
 				else
 				{
-					AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+					AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#message_helper');
 				}
 			}
 			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
@@ -409,7 +407,7 @@ class Comments
 
 							if (!TextHelper::check_nbr_links($contents, $comments_config->get_max_links_comment())) //Nombre de liens max dans le message.
 							{
-								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#errorh');
+								AppContext::get_response()->redirect($path_redirect . '&errorh=l_flood#message_helper');
 							}
 
 							$this->update($contents, $login);
@@ -419,12 +417,12 @@ class Comments
 						}
 						else //Champs incomplet!
 						{
-							AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+							AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#message_helper');
 						}
 					}
 					else
 					{
-						AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#errorh');
+						AppContext::get_response()->redirect($path_redirect . '&errorh=incomplete#message_helper');
 					}
 				}
 				else
@@ -496,12 +494,9 @@ class Comments
 						$errstr = '';
 				}
 
-				$Errorh->set_template($Template); //On spécifie le template utilisé.
 				if (!empty($errstr))
 				{
-					$Template->put_all(array(
-						'ERROR_HANDLER' => $Errorh->display($errstr, E_USER_NOTICE)
-					));
+					$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 				}
 
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
@@ -515,16 +510,12 @@ class Comments
 					}
 					else
 					{
-						$Template->put_all(array(
-							'ERROR_HANDLER' => $Errorh->display($LANG['e_unauthorized'], E_USER_NOTICE)
-						));
+						$Template->put('message_helper', MessageHelper::display($LANG['e_unauthorized'], E_USER_NOTICE));
 					}
 				}
 				else
 				{
-					$Template->put_all(array(
-						'ERROR_HANDLER' => $Errorh->display($LANG['com_locked'], E_USER_NOTICE)
-					));
+					$Template->put('message_helper', MessageHelper::display($LANG['com_locked'], E_USER_NOTICE));
 				}
 
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');

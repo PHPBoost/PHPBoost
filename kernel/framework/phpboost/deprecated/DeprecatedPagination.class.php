@@ -175,8 +175,6 @@ class DeprecatedPagination
 	 */
 	private function check_page($nbr_page)
 	{
-		global $Errorh;
-
 		if ($this->page < 0) //Erreur => redirection!
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();

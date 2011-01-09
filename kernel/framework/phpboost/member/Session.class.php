@@ -98,21 +98,21 @@ class Session
 					}
 					else //plus d'essais
 					{
-						AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#errorh');
+						AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#message_helper');
 					}
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_unactiv_member#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_unactiv_member#message_helper');
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban_w#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban_w#message_helper');
 				}
 				else
 				{
 					$delay_ban = ceil((0 - $delay_ban)/60);
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#message_helper');
 				}
 
 				if (!empty($error_report)) //Erreur
@@ -120,7 +120,7 @@ class Session
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 					$info_connect['test_connect']++;
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
+					AppContext::get_response()->redirect('/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#message_helper');
 				}
 				elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 				{
@@ -129,7 +129,7 @@ class Session
 			}
 			else
 			{
-				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#errorh');
+				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#message_helper');
 			}
 
 			$query_string = QUERY_STRING;
@@ -734,7 +734,6 @@ class Session
 	 */
 	private function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
-		global $Errorh;
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 

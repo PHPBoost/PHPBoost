@@ -155,7 +155,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 				$error = $Upload->get_error();
 				if ($Upload->get_error() == 'e_upload_max_weight')
 					$error = 'e_max_data_reach';
-				AppContext::get_response()->redirect('/member/upload.php?f=' . $folder . '&erroru=' . $error . '&' . $popup_noamp . '#errorh');
+				AppContext::get_response()->redirect('/member/upload.php?f=' . $folder . '&erroru=' . $error . '&' . $popup_noamp . '#message_helper');
 			}
 			else //Insertion dans la bdd
 			{
@@ -166,7 +166,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$error = 'e_upload_failed_unwritable';
 	}
 	
-	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#errorh' : '&' . $popup_noamp;
+	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp;
 	AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . $error, '', '&'));
 }
 elseif (!empty($del_folder)) //Supprime un dossier.

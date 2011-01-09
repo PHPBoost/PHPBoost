@@ -154,7 +154,7 @@ elseif ($move > 0) //Déplacement d'un article
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 		}
 		else //On redirige vers une page d'erreur
-			AppContext::get_response()->redirect('/wiki/' .  url('property.php?move=' . $move  . '&error=e_cat_contains_cat', '', '&') . '#errorh');
+			AppContext::get_response()->redirect('/wiki/' .  url('property.php?move=' . $move  . '&error=e_cat_contains_cat', '', '&') . '#message_helper');
 	}
 }
 elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
@@ -181,7 +181,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	elseif ($already_exists > 0) //Si le titre existe déjà erreur, on le signale
-		AppContext::get_response()->redirect('/wiki/' . url('property.php?rename=' . $id_to_rename  . '&error=title_already_exists', '', '&') . '#errorh');
+		AppContext::get_response()->redirect('/wiki/' . url('property.php?rename=' . $id_to_rename  . '&error=title_already_exists', '', '&') . '#message_helper');
 	elseif ($already_exists == 0)
 	{
 		if ($create_redirection_while_renaming) //On crée un nouvel article
@@ -265,7 +265,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($redirection_title), Url::encode_rewrite($redirection_title), '&'));
 		}
 		else
-			AppContext::get_response()->redirect('/wiki/' . url('property.php?create_redirection=' . $create_redirection  . '&error=title_already_exists', '', '&') . '#errorh');
+			AppContext::get_response()->redirect('/wiki/' . url('property.php?create_redirection=' . $create_redirection  . '&error=title_already_exists', '', '&') . '#message_helper');
 	}
 }
 //Restauration d'une archive
@@ -377,11 +377,11 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	{	
 		//Si la nouvelle catégorie n'est pas une catégorie
 		if (!array_key_exists($report_cat, $_WIKI_CATS) && $report_cat > 0)
-			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#errorh', '', '&'));
+			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#message_helper', '', '&'));
 			
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $article_infos['id_cat'])//Si on veut reporter dans une catégorie parente
-			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_cat_contains_cat#errorh', '','&'));
+			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_cat_contains_cat#message_helper', '','&'));
 	}
 
 	//Quoi qu'il arrive on supprime l'article associé

@@ -93,7 +93,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php');	
 	}	
 	else
-		AppContext::get_response()->redirect('/gallery/admin_gallery_cat_add.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_cat_add.php?error=incomplete#message_helper');
 }
 else	
 {		

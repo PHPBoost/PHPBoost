@@ -450,7 +450,7 @@ class Gallery
 	//Arguments de l'image, hauteur, largeur, extension.
 	public function Arg_pics($path)
 	{
-		global $Errorh, $LANG;
+		global $LANG;
 		
 		//Vérification du chargement de la librairie GD.
 		if (!@extension_loaded('gd')) 

@@ -126,7 +126,7 @@ elseif ($uninstall) //Désinstallation.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
 		}
 		else
-			AppContext::get_response()->redirect('/admin/admin_themes.php?error=incomplete#errorh');
+			AppContext::get_response()->redirect('/admin/admin_themes.php?error=incomplete#message_helper');
 		
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))

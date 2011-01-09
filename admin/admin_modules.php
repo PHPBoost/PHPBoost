@@ -60,10 +60,10 @@ elseif ($uninstall) //Désinstallation du module
 		{
 			case NOT_INSTALLED_MODULE:
 				die('module not installed');
-				AppContext::get_response()->redirect('/admin/admin_modules.php?error=incomplete#errorh');
+				AppContext::get_response()->redirect('/admin/admin_modules.php?error=incomplete#message_helper');
 				break;
 			case MODULE_FILES_COULD_NOT_BE_DROPPED:
-				AppContext::get_response()->redirect('/admin/admin_modules.php?error=files_del_failed#errorh');
+				AppContext::get_response()->redirect('/admin/admin_modules.php?error=files_del_failed#message_helper');
 				break;
 			case MODULE_UNINSTALLED:
 			default:

@@ -240,8 +240,6 @@ class Note
 	 */
 	private function is_correctly_loaded()
 	{
-		global $Errorh;
-
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 		{
 			return false;

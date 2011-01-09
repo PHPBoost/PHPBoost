@@ -75,7 +75,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	}
 	else
 	{
-		AppContext::get_response()->redirect('/admin/admin_groups.php?error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_groups.php?error=incomplete#message_helper');
 	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
@@ -107,12 +107,12 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 		}
 		else
 		{
-			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
+			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#message_helper');
 		}
 	}
 	else
 	{
-		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#message_helper');
 	}
 }
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.

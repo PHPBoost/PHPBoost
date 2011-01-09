@@ -140,7 +140,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
+		AppContext::get_response()->redirect('/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#message_helper');
 }	
 elseif (!empty($id))
 {

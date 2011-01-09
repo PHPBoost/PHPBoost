@@ -75,7 +75,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FilesConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
 		
 		if ($Upload->get_error() != '') //Erreur, on arrête ici
-			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#errorh');
+			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
 			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
@@ -88,7 +88,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	else
 		$error = 'e_upload_failed_unwritable';
 	
-	$error = !empty($error) ? '&error=' . $error . '#errorh' : '';
+	$error = !empty($error) ? '&error=' . $error . '#message_helper' : '';
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
 }
 elseif (!empty($del_folder)) //Supprime un dossier.

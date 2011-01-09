@@ -335,12 +335,12 @@ if (!empty($id_get)) //Espace membre
 					}
 					else //Longueur minimale du password
 					{
-						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
+						AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#message_helper');
 					}
 				}
 				else //Password non identiques.
 				{
-					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#message_helper');
 				}
 			}
 		}
@@ -431,7 +431,7 @@ if (!empty($id_get)) //Espace membre
 						{
 							if ($Upload->get_error() != '') //Erreur, on arrête ici
 							{
-								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#errorh');
+								AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->get_error()) . '#message_helper');
 							}
 							else
 							{
@@ -439,7 +439,7 @@ if (!empty($id_get)) //Espace membre
 								$error = $Upload->check_img($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 								if (!empty($error)) //Erreur, on arrête ici
 								{
-									AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+									AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#message_helper');
 								}
 								else
 								{
@@ -469,7 +469,7 @@ if (!empty($id_get)) //Espace membre
 				$error = Util::check_img_dimension($user_account_config->get_max_avatar_width(), $user_account_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 				{
-					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#message_helper');
 				}
 				else
 				{
@@ -484,7 +484,7 @@ if (!empty($id_get)) //Espace membre
 				$user_mail = "user_mail = '" . $user_mail . "', ";
 				if ($check_mail >= 1) //Autre utilisateur avec le même mail!
 				{
-					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
+					AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#message_helper');
 				}
 				
 				//Suppression des images des stats concernant les membres, si l'info a été modifiée.
@@ -511,12 +511,12 @@ if (!empty($id_get)) //Espace membre
 			}
 			else
 			{
-				AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+				AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#message_helper');
 			}
 		}
 		else
 		{
-			AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
+			AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#message_helper');
 		}
 	}
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
