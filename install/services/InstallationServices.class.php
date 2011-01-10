@@ -51,9 +51,13 @@ class InstallationServices
 	 */
 	private $distribution_config;
 
-	public function __construct()
+	public function __construct($locale = '')
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
+		if (!empty($locale))
+		{
+			LangLoader::set_locale($locale);
+		}
 		$this->messages = LangLoader::get('install', 'install');
         $this->load_distribution_configuration();
 	}
