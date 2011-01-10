@@ -101,8 +101,15 @@
 	}
 	
 	private static function send_mail_confirmation($form, $valid)
-	{
-		AppContext::get_mail_service()->send_from_properties($form->get_value('mail'), sprintf(LangLoader::get_message('register_title_mail', 'main'), GeneralConfig::load()->get_site_name()), sprintf(LangLoader::get_message('register_mail', 'main'), $form->get_value('login'), GeneralConfig::load()->get_site_name(), GeneralConfig::load()->get_site_name(), stripslashes($form->get_value('login')), $form->get_value('password'), $valid, MailServiceConfig::load()->get_mail_signature()));
+	{	
+		$subject = sprintf(LangLoader::get_message('register_title_mail', 'main'), GeneralConfig::load()->get_site_name());
+		$content = sprintf(LangLoader::get_message('register_mail', 'main'), $form->get_value('login'), GeneralConfig::load()->get_site_name(), GeneralConfig::load()->get_site_name(), stripslashes($form->get_value('login')), $form->get_value('password'), $valid, MailServiceConfig::load()->get_mail_signature());
+		
+		$mail = new Mail();
+		$mail->add_recipient($form->get_value('mail'), $form->get_value('login'));
+		$mail->set_sender(MailServiceConfig::load()get_default_mail_sender(), GeneralConfig::load()->get_site_name());
+		$mail->set_subject($subject);
+		$mail->set_content($content);
 	}
 	
 	private static function regenerate_cache()
