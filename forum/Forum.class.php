@@ -584,8 +584,8 @@ class Forum
 	 */
 	function get_cats_tree()
 	{
-		global $LANG, $CAT_FORUM;
-		Cache::load('forum');
+		global $LANG, $CAT_FORUM, $Cache;
+		$Cache->load('forum');
 	  
 		if (!(isset($CAT_FORUM) && is_array($CAT_FORUM)))
 		{
