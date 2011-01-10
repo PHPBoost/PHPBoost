@@ -328,8 +328,7 @@ class Session
 	 */
 	public function check($session_script_title)
 	{
-		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', REWRITED_SCRIPT);
-		$session_script = preg_replace('`&token=[^&]+`', '', $session_script);
+		$session_script = preg_replace('`&token=[^&]+`', '', REWRITED_SCRIPT);
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
 		$sessions_config = SessionsConfig::load();
 		if ((!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect)
