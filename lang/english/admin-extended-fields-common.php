@@ -38,6 +38,9 @@ $lang['extended-fields-management'] = 'Member field management';
 $lang['extended-fields-sucess-edit'] = 'The field is updated successfuly.';
 $lang['extended-fields-sucess-add'] = 'The field is added successfuly.';
 $lang['extended-fields-sucess-delete'] = 'The field is deleted successfuly.';
+$lang['extended-fields-error-already-exist'] = 'The extended field are already exist.';
+$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not multiple created, please choose another type field.';
+
 
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
