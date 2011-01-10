@@ -55,7 +55,12 @@ class FormConstraintFieldsEquality implements FormConstraint
 
 	public function validate()
 	{
-		return $this->first_field->get_value() == $this->second_field->get_value();
+		$first_value = $this->first_field->get_value();
+		$second_value = $this->second_field->get_value();
+		if (!empty($first_value) && !empty($second_value))
+		{
+			return $first_value == $second_value;
+		}
 	}
 
 	public function get_js_validation()
