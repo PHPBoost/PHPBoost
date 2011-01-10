@@ -37,8 +37,8 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
 
-		$min_cat = PersistenceContext::get_sql()->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
-		$max_cat = PersistenceContext::get_sql()->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
+		$min_cat = PersistenceContext::get_sql()->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1");
+		$max_cat = PersistenceContext::get_sql()->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1");
 
 		foreach ($extended_field as $id => $row)
 		{

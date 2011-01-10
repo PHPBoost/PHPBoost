@@ -27,6 +27,8 @@
 
 class AdminExtendedFieldMemberEditController extends AdminController
 {
+	private $tpl;
+	
 	private $lang;
 	/**
 	 * @var HTMLForm
@@ -55,7 +57,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$tpl = new StringTemplate('<script type="text/javascript">
+		$this->tpl = new StringTemplate('<script type="text/javascript">
 				Event.observe(window, \'load\', function() {if ({FIELD_TYPE} > 3 || {FIELD_TYPE} > 7)
 				{HTMLForms.getField("regex_type").disable();HTMLForms.getField("regex").disable();}
 				if ({FIELD_TYPE} < 4){HTMLForms.getField("regex_type").enable();}
@@ -63,19 +65,12 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				if ({FIELD_TYPE} > 3 || {FIELD_TYPE} < 8){HTMLForms.getField("possible_values").enable(); HTMLForms.getField("default_values").enable();}
 				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF # });
 				</script>
-				# IF C_SUBMITED #
-					<div class="success" id="edit_success">{L_SUCCESS_UPDATE}</div>
-					<script type="text/javascript">
-					<!--
-					window.setTimeout(function() { Effect.Fade("edit_success"); }, 5000);
-					-->
-					</script>
-				# ENDIF #
+				# INCLUDE MSG #
 				# INCLUDE FORM #');
 				
-		$tpl->add_lang($this->lang);
+		$this->tpl->add_lang($this->lang);
 		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
-		$tpl->put_all(array(
+		$this->tpl->put_all(array(
 			'FIELD_TYPE' => $extended_field_cache['field_type'],
 			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
 		));
@@ -83,16 +78,14 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$tpl->put_all(array(
-				'C_SUBMITED' => true,
-				'L_SUCCESS_UPDATE' =>  $this->lang['extended-fields-sucess-update'],
+			$this->tpl->put_all(array(
 				'FIELD_TYPE' => $extended_field_cache['field_type']
 			));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($this->tpl);
 	}
 
 	private function init()
@@ -231,6 +224,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_default_values($this->form->get_value('default_values', ''));
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
+		$regex = 0;
 		if ($field_type <= 2)
 		{
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
@@ -239,15 +233,11 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
-		
-		$this->redirect();
-	}
-	
-	private function redirect()
-	{
-		$controller = new UserErrorController($this->lang['field.success'], $this->lang['extended-fields-sucess-edit'], UserErrorController::SUCCESS);
-		$controller->set_correction_link($this->lang['extended-field'], PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/list/');
-		DispatchManager::redirect($controller);
+		$error = ExtendedFieldsService::get_error();
+		if (!empty($error))
+		{
+			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+		}
 	}
 
 	private function build_response(View $view)
