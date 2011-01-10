@@ -198,7 +198,7 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 			
 				//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 				if (empty($list_cats))
-					AppContext::get_response()->redirect(HOST . SCRIPT);
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 					
 				//Dernier topic des parents du forum à supprimer.
 				if (!empty($list_parent_cats))

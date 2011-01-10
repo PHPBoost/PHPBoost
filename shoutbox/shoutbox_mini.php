@@ -73,7 +73,7 @@ function shoutbox_mini($position, $block)
 
     				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 
-    				AppContext::get_response()->redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
+    				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     			}
     			else //utilisateur non autorisé!
     				AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=auth', '', '&'));

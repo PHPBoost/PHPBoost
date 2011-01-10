@@ -45,7 +45,7 @@ if (!empty($_POST['valid']))
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 	$Cache->Generate_module_file('wiki');
 
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 else	
 {		

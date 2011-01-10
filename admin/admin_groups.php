@@ -90,7 +90,7 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 		
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
@@ -241,7 +241,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		}
 	}
 	else
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	
 	$template->display();
 }

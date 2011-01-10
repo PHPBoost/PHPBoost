@@ -58,7 +58,7 @@ if ($install)
 		
     	ModulesCssFilesCache::invalidate();
 
-		AppContext::get_response()->redirect(HOST . SCRIPT); 
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_themes_add.php?error=e_theme_already_exist#message_helper');

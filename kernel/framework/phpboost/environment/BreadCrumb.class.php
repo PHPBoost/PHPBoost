@@ -93,7 +93,7 @@ class BreadCrumb
     {
         if (empty($this->array_links))
         {
-            $this->add($this->get_page_title(), HOST . SCRIPT . SID);
+            $this->add($this->get_page_title(), HOST . REWRITED_SCRIPT);
         }
 
 		$start_page_url = GeneralConfig::load()->get_site_url();

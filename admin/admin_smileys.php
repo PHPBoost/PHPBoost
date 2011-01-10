@@ -47,7 +47,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();
 		
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#message_helper');
@@ -62,7 +62,7 @@ elseif (!empty($id) && $del) //Suppression.
 	###### Régénération du cache des smileys #######
 	SmileysCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($id) && $edit) //Edition.
 {

@@ -89,7 +89,7 @@
 		{
 			// Connect user
 			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '" . self::last_user_id_registered() . "'", __LINE__, __FILE__);
-			AppContext::get_session()->start(self::last_user_id_registered(), strhash($form->get_value('password')), 0, SCRIPT, QUERY_STRING, LangLoader::get_message('register', 'main'), 1);
+			AppContext::get_session()->start(self::last_user_id_registered(), strhash($form->get_value('password')), 0, REWRITED_SCRIPT, '', LangLoader::get_message('register', 'main'), 1);
 			$valid = '';
 		}
 		

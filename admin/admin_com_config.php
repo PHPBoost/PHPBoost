@@ -46,7 +46,7 @@ if (!empty($_POST['valid']) )
 	$comments_config->set_max_links_comment(retrieve(POST, 'max_link', -1));
 	CommentsConfig::save();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

@@ -69,7 +69,7 @@ elseif (isset($_POST['valid'])) //Mise à jour
 	//Régénération du cache.
 	LangsCache::invalidate();
 		
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 elseif ($uninstall) //Désinstallation.
 {

@@ -62,7 +62,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	ThemesCache::load()->update_authorization_for_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	ThemesCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($check_advanced && empty($_POST['advanced']))
 {

@@ -49,7 +49,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		//On régénère le cache
 		StatsCache::invalidate();
 			
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 
 	$login = !empty($_POST['name']) ?  TextHelper::strprotect(substr($_POST['name'], 0, 25)) : '';
@@ -226,7 +226,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
 				MemberExtendedFieldsService::update_fields($id_post);
 				
-				AppContext::get_response()->redirect(HOST . SCRIPT);
+				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 			}
 			else
 				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
@@ -266,7 +266,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					//On régénère le cache
 					StatsCache::invalidate();
 						
-					AppContext::get_response()->redirect(HOST . SCRIPT); 	
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 				}
 				else
 					AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#message_helper');
@@ -291,7 +291,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	//On régénère le cache
 	StatsCache::invalidate();
 		
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($add)
 {

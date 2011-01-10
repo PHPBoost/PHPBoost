@@ -53,7 +53,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	
 	UserAccountsConfig::save();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 }
 else
 {			
