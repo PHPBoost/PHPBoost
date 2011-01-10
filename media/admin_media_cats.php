@@ -108,16 +108,8 @@ elseif (!empty($_POST['submit']))
 		$activ_array = retrieve(POST, 'activ', 0, TARRAY);
 		$activ = is_array($activ_array) ? array_sum($activ_array) : 0;
 
-		//Autorisations
-		if (!empty($_POST['special_auth']))
-		{
-			$array_auth_all = Authorizations::build_auth_array_from_form(MEDIA_AUTH_READ, MEDIA_AUTH_CONTRIBUTION, MEDIA_AUTH_WRITE);
-			$new_auth = addslashes(serialize($array_auth_all));
-		}
-		else
-		{
-			$new_auth = addslashes(serialize($MEDIA_CATS[0]['auth']));
-		}
+		$array_auth_all = Authorizations::build_auth_array_from_form(MEDIA_AUTH_READ, MEDIA_AUTH_CONTRIBUTION, MEDIA_AUTH_WRITE);
+		$new_auth = addslashes(serialize($array_auth_all));
 
 		if (empty($name))
 		{
