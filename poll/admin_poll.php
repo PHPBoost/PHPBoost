@@ -51,7 +51,7 @@ if ($del && !empty($id)) //Suppresion poll
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('poll');
 	}
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
@@ -137,7 +137,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		if ($id_post == $CONFIG_POLL['poll_mini'])
 			$Cache->Generate_module_file('poll');
 		
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#message_helper');

@@ -63,7 +63,7 @@ if (!empty($_POST['valid']))
 		###### Régénération du cache du forum ###### 
 		$Cache->Generate_module_file('forum');
 				
-		AppContext::get_response()->redirect(HOST . SCRIPT);	
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 	}
 	else
 		AppContext::get_response()->redirect('/forum/admin_forum_config.php?error=incomplete#message_helper');
@@ -91,7 +91,7 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 	}
 	$Sql->query_close($result);
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 else	
 {	

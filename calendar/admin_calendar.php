@@ -40,7 +40,7 @@ if (!empty($_POST['valid']) )
 	
 	CalendarConfig::save();
 
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

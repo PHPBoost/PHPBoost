@@ -63,7 +63,7 @@ if (!empty($_POST['valid']))
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
@@ -76,7 +76,7 @@ elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du l
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
@@ -133,7 +133,7 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
 	
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#message_helper');

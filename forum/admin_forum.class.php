@@ -339,7 +339,7 @@ class Admin_forum
 		
 		//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 		if (empty($list_cats))
-			AppContext::get_response()->redirect(HOST . SCRIPT);
+			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.

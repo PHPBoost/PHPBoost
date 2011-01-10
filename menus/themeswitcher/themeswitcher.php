@@ -49,7 +49,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
 				AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
     		}
 			else
-    			AppContext::get_response()->redirect(HOST . SCRIPT);
+    			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     	}
     }
 

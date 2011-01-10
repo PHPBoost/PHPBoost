@@ -47,7 +47,7 @@ if (isset($_POST['valid']))
 		ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
 	}
 	MenuService::generate_cache();
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($uninstall) //Désinstallation du module
 {

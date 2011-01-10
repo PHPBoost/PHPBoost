@@ -110,7 +110,7 @@ if ($update) //Mise à jour du module
 			HtaccessFileCache::regenerate();
 		}	
 		
-		AppContext::get_response()->redirect(HOST . SCRIPT);	
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#message_helper');

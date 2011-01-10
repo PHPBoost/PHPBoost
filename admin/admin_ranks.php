@@ -52,7 +52,7 @@ if (!empty($_POST['valid']))
 
 	RanksCache::invalidate();
 		
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
@@ -62,7 +62,7 @@ elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 	###### Régénération du cache des rangs #######
 	RanksCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 }
 else //Sinon on rempli le formulaire	 
 {	

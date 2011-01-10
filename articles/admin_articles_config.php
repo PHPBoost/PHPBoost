@@ -80,7 +80,7 @@ if (retrieve(POST,'valid',false))
 
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
 {

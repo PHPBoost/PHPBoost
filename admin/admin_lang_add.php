@@ -54,7 +54,7 @@ if ($install)
 		//Régénération du cache.
 		LangsCache::invalidate();
 		
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#message_helper');

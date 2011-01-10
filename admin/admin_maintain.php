@@ -75,7 +75,7 @@ if (!empty($_POST['valid']))
 	
 	MaintenanceConfig::save();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 else //Sinon on rempli le formulaire	 
 {		

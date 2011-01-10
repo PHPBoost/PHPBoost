@@ -132,7 +132,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			else
 			AppContext::get_response()->redirect('/member/error.php?unexist=1');
 
-			AppContext::get_response()->redirect(HOST . SCRIPT);
+			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 		}
 
 		$flood = retrieve(GET, 'flood', 0);

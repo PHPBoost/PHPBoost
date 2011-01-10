@@ -141,7 +141,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 			$admin_forum->del_cat($idcat, $confirm_delete);
 
 			forum_generate_feeds();
-			AppContext::get_response()->redirect(HOST . SCRIPT);
+			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 		}
 		else //Sinon on propose de déplacer les topics existants dans une autre catégorie.
 		{
@@ -224,12 +224,12 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 				$admin_forum->del_cat($idcat, $confirm_delete);
 
 				forum_generate_feeds();
-				AppContext::get_response()->redirect(HOST . SCRIPT);
+				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 			}
 		}
 	}
 	else
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
@@ -247,7 +247,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		$admin_forum->move_updown_cat($id, $move);
 
 	forum_generate_feeds();
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($id))
 {

@@ -50,7 +50,7 @@ if (!empty($_POST['submit']) )
 	$user_accounts_config->set_max_private_messages_number(retrieve(POST, 'pm_max', 25));
 	UserAccountsConfig::save();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

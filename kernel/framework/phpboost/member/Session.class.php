@@ -85,16 +85,16 @@ class Session
 					if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 					{
 						$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
 					}
 					elseif ($delay_connect >= 300) //2 essais 5 minutes après
 					{
 						$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
-						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
 					}
 					elseif ($info_connect['test_connect'] < 5) //Succès.
 					{
-						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
 					}
 					else //plus d'essais
 					{
@@ -131,14 +131,10 @@ class Session
 			{
 				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#message_helper');
 			}
-
-			$query_string = QUERY_STRING;
-			$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $this->data['session_id'] . '&suid=' . $this->data['user_id'] : '?sid=' . $this->data['session_id'] . '&suid=' . $this->data['user_id'];
-
-			//Redirection avec les variables de session dans l'url.
+		
 			if (SCRIPT != DIR . '/member/error.php')
 			{
-				AppContext::get_response()->redirect(HOST . SCRIPT . $query_string);
+				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 			}
 			else
 			{
@@ -165,7 +161,7 @@ class Session
 		{
 			$password = strhash($password);
 		}
-
+			
 		$error = '';
 		$session_script = addslashes($session_script);
 		$session_script_title = addslashes($session_script_title);
@@ -332,8 +328,8 @@ class Session
 	 */
 	public function check($session_script_title)
 	{
-		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', SCRIPT);
-		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
+		$session_script = preg_replace('`^' . preg_quote(DIR) . '`', '', REWRITED_SCRIPT);
+		$session_script = preg_replace('`&token=[^&]+`', '', $session_script);
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
 		$sessions_config = SessionsConfig::load();
 		if ((!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect)
@@ -347,7 +343,7 @@ class Session
 			//Localisation du membre.
 			if (!defined('NO_SESSION_LOCATION'))
 			{
-				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', ";
+				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '', session_script_title = '" . addslashes($session_script_title) . "', ";
 			}
 			else
 			{
@@ -366,14 +362,7 @@ class Session
 					}
 
 					//Redirection une fois la session lancée.
-					if (QUERY_STRING != '')
-					{
-						AppContext::get_response()->redirect(HOST . SCRIPT . '?' . QUERY_STRING);
-					}
-					else
-					{
-						AppContext::get_response()->redirect(HOST . SCRIPT);
-					}
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 				}
 			}
 		}
@@ -382,7 +371,7 @@ class Session
 			//Localisation du visiteur.
 			if (!defined('NO_SESSION_LOCATION'))
 			{
-				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', ";
+				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '', session_script_title = '" . addslashes($session_script_title) . "', ";
 			}
 			else
 			{
@@ -536,8 +525,8 @@ class Session
 			//Redirection pour supprimer les variables de session en clair dans l'url.
 			if (isset($_GET['sid']) && isset($_GET['suid']))
 			{
-				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
-				AppContext::get_response()->redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));
+				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', REWRITED_SCRIPT);
+				AppContext::get_response()->redirect(HOST . $query_string);
 			}
 			
 			$session_data = unserialize(AppContext::get_request()->get_cookie($sessions_config->get_cookie_name() . '_data'));
@@ -605,14 +594,7 @@ class Session
 					//On met à jour la date de dernière connexion.
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 
-					if (QUERY_STRING != '')
-					{
-						AppContext::get_response()->redirect(HOST . SCRIPT . '?' . QUERY_STRING);
-					}
-					else
-					{
-						AppContext::get_response()->redirect(HOST . SCRIPT);
-					}
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 				}
 			}
 			else

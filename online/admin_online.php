@@ -42,7 +42,7 @@ if (!empty($_POST['valid']))
 	###### Régénération du cache des online #######
 	$Cache->Generate_module_file('online');
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

@@ -86,7 +86,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if (empty($list_cats))
-				AppContext::get_response()->redirect(HOST . SCRIPT);
+				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 			
 			//Galeries parentes de la galerie cible.
 			if (!empty($to))
@@ -369,7 +369,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						
 						//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 						if (empty($list_sub_cats))
-							AppContext::get_response()->redirect(HOST . SCRIPT);
+							AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 
 						//Galeries parentes de la galerie cible.
 						if (!empty($f_to))
@@ -471,7 +471,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					
 					$Cache->Generate_module_file('gallery');
 					
-					AppContext::get_response()->redirect(HOST . SCRIPT);
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 				}	
 			}
 		}
@@ -680,7 +680,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		$Cache->Generate_module_file('gallery');
 	}
 		
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($id)) //Edition des catégories.
 {

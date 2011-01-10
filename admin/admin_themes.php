@@ -60,7 +60,7 @@ elseif (isset($_POST['valid'])) //Modification de tous les thèmes.
 	}
 	ThemesCache::invalidate();
 		
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 elseif ($edit && (!empty($id) || !empty($name))) //Edition
 {
