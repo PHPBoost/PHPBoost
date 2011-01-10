@@ -149,26 +149,37 @@ else
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+	foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
 	{
-		$configuration = $module->get_configuration();
-		$array_auth = $module->get_authorizations();
+		try {
+			$configuration = $module->get_configuration();
+			$array_auth = $module->get_authorizations();
 
-		$template->assign_block_vars('installed', array(
-			'ID' => $module->get_id(),
-			'NAME' => ucfirst($configuration->get_name()),
-			'ICON' => $module->get_id(),
-			'VERSION' => $configuration->get_version(),
-			'AUTHOR' => ($configuration->get_author_email() ? '<a href="mailto:' . $configuration->get_author_email() . '">' . $configuration->get_author() . '</a>' : $configuration->get_author()),
-			'AUTHOR_WEBSITE' => ($configuration->get_author_website() ? '<a href="' . $configuration->get_author_website() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-			'DESC' => $configuration->get_description(),
-			'COMPAT' => $configuration->get_compatibility(),
-			'ADMIN' => ($configuration->get_admin_main_page() ? $LANG['yes'] : $LANG['no']),
-			'HOME_PAGE' => ($configuration->get_home_page() ? $LANG['yes'] : $LANG['no']),
-			'ACTIV_ENABLED' => ($module->is_activated() ? 'checked="checked"' : ''),
-			'ACTIV_DISABLED' => (!$module->is_activated() ? 'checked="checked"' : ''),
-			'AUTH_MODULES' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
-		));
+			$template->assign_block_vars('installed', array(
+				'ID' => $module->get_id(),
+				'NAME' => ucfirst($configuration->get_name()),
+				'ICON' => $module->get_id(),
+				'VERSION' => $configuration->get_version(),
+				'AUTHOR' => ($configuration->get_author_email() ? '<a href="mailto:' . $configuration->get_author_email() . '">' . $configuration->get_author() . '</a>' : $configuration->get_author()),
+				'AUTHOR_WEBSITE' => ($configuration->get_author_website() ? '<a href="' . $configuration->get_author_website() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+				'DESC' => $configuration->get_description(),
+				'COMPAT' => $configuration->get_compatibility(),
+				'ADMIN' => ($configuration->get_admin_main_page() ? $LANG['yes'] : $LANG['no']),
+				'HOME_PAGE' => ($configuration->get_home_page() ? $LANG['yes'] : $LANG['no']),
+				'ACTIV_ENABLED' => ($module->is_activated() ? 'checked="checked"' : ''),
+				'ACTIV_DISABLED' => (!$module->is_activated() ? 'checked="checked"' : ''),
+				'AUTH_MODULES' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
+			));
+		} catch (IOException $ex) {
+			$template->assign_block_vars('installed', array(
+				'ID' => $module->get_id(),
+				'NAME' => ucfirst($module->get_id()),
+				'ICON' => $module->get_id(),
+				'ACTIV_ENABLED' => ($module->is_activated() ? 'checked="checked"' : ''),
+				'ACTIV_DISABLED' => (!$module->is_activated() ? 'checked="checked"' : '')
+			));
+		}
+		
 		$i++;
 	}
 

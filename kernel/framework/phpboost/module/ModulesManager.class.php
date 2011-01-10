@@ -83,7 +83,10 @@ class ModulesManager
 	public static function get_installed_modules_map_sorted_by_localized_name()
 	{
 		$modules = self::get_installed_modules_map();
-		usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		try {
+			usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		} catch (IOException $ex) {
+		}
 		return $modules;
 	}
 
@@ -94,7 +97,10 @@ class ModulesManager
 	public static function get_activated_modules_map_sorted_by_localized_name()
 	{
 		$modules = self::get_activated_modules_map();
-		usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		try {
+			usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+		} catch (IOException $ex) {
+		}
 		return $modules;
 	}
 	
@@ -283,10 +289,13 @@ class ModulesManager
 			//Régénération des feeds.
 			Feed::clear_cache($module_id);
 
-			$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
-			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
-			{
-				HtaccessFileCache::regenerate();
+			try {
+				$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
+				if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
+				{
+					HtaccessFileCache::regenerate();
+				}
+			} catch (IOException $ex) {
 			}
 
 			MenuService::delete_mini_module($module_id);
