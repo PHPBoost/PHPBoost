@@ -107,9 +107,10 @@
 		
 		$mail = new Mail();
 		$mail->add_recipient($form->get_value('mail'), $form->get_value('login'));
-		$mail->set_sender(MailServiceConfig::load()get_default_mail_sender(), GeneralConfig::load()->get_site_name());
+		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
 		$mail->set_subject($subject);
 		$mail->set_content($content);
+		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
 	private static function regenerate_cache()
