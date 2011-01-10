@@ -35,11 +35,11 @@ $lang['extended-field-add'] = 'Ajouter un champ membre';
 $lang['extended-field-edit'] = 'Editer un champ membre';
 $lang['extended-field'] = 'Champs membres';
 $lang['extended-fields-management'] = 'Gestion des champs membres';
-$lang['extended-fields-sucess-edit'] = 'Le champ étendus à été mise à jour avec succès.';
-$lang['extended-fields-sucess-add'] = 'Le champ étendus à été ajouté avec succès.';
-$lang['extended-fields-sucess-delete'] = 'Le champ étendus à été supprimé avec succès.';
-$lang['extended-fields-error-already-exist'] = 'Le champ étendus existe déjà.';
-$lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être crées plusieurs fois, veuillez choisir un autre type de champ.';
+$lang['extended-fields-sucess-edit'] = 'Le champ étendu à été mis à jour avec succès.';
+$lang['extended-fields-sucess-add'] = 'Le champ étendu à été ajouté avec succès.';
+$lang['extended-fields-sucess-delete'] = 'Le champ étendu à été supprimé avec succès.';
+$lang['extended-fields-error-already-exist'] = 'Le champ étendu existe déjà.';
+$lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
 //Type 
 $lang['type.short-text'] = 'Texte court (max 255 caractères)';
@@ -54,7 +54,7 @@ $lang['type.user-theme-choice'] = 'Choix des thèmes';
 $lang['type.user-lang-choice'] = 'Choix des langues';
 $lang['type.user_born'] = 'Date de naissance';
 $lang['type.user-editor'] = 'Choix de l\'éditeur';
-$lang['type.user-timezone'] = 'Choix du timezone';
+$lang['type.user-timezone'] = 'Choix du fuseau horaire';
 $lang['type.user-sex'] = 'Choix du sexe';
 $lang['type.avatar'] = 'Gestion de l\'avatar';
 
@@ -64,7 +64,7 @@ $lang['field.name'] = 'Nom';
 $lang['field.description'] = 'Description';
 $lang['field.type'] = 'Type de champ';
 $lang['field.regex'] = 'Contrôle de la forme de l\'entrée';
-$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entrée. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalié en tapant une expression régulière (utilisateurs expérimentés seulement).';
+$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalié en tapant une expression régulière (utilisateurs expérimentés seulement).';
 $lang['field.predefined-regex'] = 'Forme prédéfinie';
 $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
@@ -98,7 +98,7 @@ $lang['field.is-not-required'] = 'Non requis';
 
 //Install
 $lang['field-install.default-lang'] = 'Langue par defaut';
-$lang['field-install.default-lang-explain'] = 'Séléctionner le langage que vous souhaitez utiliser';
+$lang['field-install.default-lang-explain'] = 'Séléctionner la langue que vous souhaitez utiliser';
 
 $lang['field-install.default-theme'] = 'Theme par defaut';
 $lang['field-install.default-theme-explain'] = 'Séléctionner le thème que vous souhaitez utiliser';
