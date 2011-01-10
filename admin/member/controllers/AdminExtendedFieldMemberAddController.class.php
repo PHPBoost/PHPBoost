@@ -27,6 +27,8 @@
 
 class AdminExtendedFieldMemberAddController extends AdminController
 {
+	private $tpl;
+	
 	private $lang;
 	/**
 	 * @var HTMLForm
@@ -42,7 +44,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('<script type="text/javascript">
+		$this->tpl = new StringTemplate('<script type="text/javascript">
 				<!--
 					Event.observe(window, \'load\', function() {
 						HTMLForms.getField("possible_values").disable();
@@ -50,29 +52,18 @@ class AdminExtendedFieldMemberAddController extends AdminController
 					});
 				-->		
 				</script>
-				# IF C_SUBMITED #
-					<div class="success" id="add_success">{L_SUCCESS_ADD}</div>
-					<script type="text/javascript">
-					<!--
-					window.setTimeout(function() { Effect.Fade("add_success"); }, 5000);
-					-->
-					</script>
-				# ENDIF #
+				# INCLUDE MSG #
 				# INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$this->tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put_all(array(
-				'C_SUBMITED' => true,
-				'L_SUCCESS_ADD' =>  $this->lang['extended-fields-sucess-add']
-			));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($this->tpl);
 	}
 
 	private function init()
@@ -192,6 +183,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field->set_default_values($this->form->get_value('default_values', ''));
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
+		$regex = 0;
 		if ($field_type <= 2)
 		{
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
@@ -200,15 +192,15 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 
 		ExtendedFieldsService::add($extended_field);
-		
-		$this->redirect();
-	}
-	
-	private function redirect()
-	{
-		$controller = new UserErrorController($this->lang['field.success'], $this->lang['extended-fields-sucess-add'], UserErrorController::SUCCESS);
-		$controller->set_correction_link($this->lang['extended-field'], PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/list/');
-		DispatchManager::redirect($controller);
+		$error = ExtendedFieldsService::get_error();
+		if (!empty($error))
+		{
+			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+		}
+		else
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
+		}
 	}
 
 	private function build_response(View $view)
