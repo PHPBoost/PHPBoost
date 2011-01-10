@@ -89,7 +89,7 @@ function equalityFormFieldValidator(field_id, field_id2, message)
 	var field1 = HTMLForms.getField(field_id);
 	var field2 = HTMLForms.getField(field_id2);
 	if (field1 && field2) {
-		if (field1.getValue() != field2.getValue()) {
+		if (field1.getValue() != field2.getValue() && field1.getValue() !== '' && field2.getValue() !== '') {
 			return message;
 		}
 	}
@@ -101,7 +101,7 @@ function inequalityFormFieldValidator(field_id, field_id2, message)
 	var field1 = HTMLForms.getField(field_id);
 	var field2 = HTMLForms.getField(field_id2);
 	if (field1 && field2) {
-		if (field1.getValue() == field2.getValue()) {
+		if (field1.getValue() == field2.getValue() && field1.getValue() !== '' && field2.getValue() !== '') {
 			return message;
 		}
 	}
