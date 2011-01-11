@@ -529,12 +529,12 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	}
 	elseif (isset($_GET['d']))
 	{
-		$clause = "AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
+		$clause = " AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
 		$year = retrieve(GET, 'y', (int)$current_year);
 	}
 	else
 	{
-		$clause = "AND stats_month = '" . $month . "'";
+		$clause = " AND stats_month = '" . $month . "'";
 		$year = retrieve(GET, 'y', (int)$current_year);
 	}
 
