@@ -31,6 +31,7 @@
  */
 class ExtendedFieldsService
 {
+	private static $error;
 	const BY_ID = 1;
 	const BY_FIELD_NAME = 2;
 	const SORT_BY_ID = 1;
@@ -49,8 +50,7 @@ class ExtendedFieldsService
 		$class = new $name_class();
 		if ($exit_by_type && $class->get_field_used_once())
 		{
-			// TODO Change exception
-			throw new Exception('Le champs ne peux pas être créer plus d\'une fois !');
+			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-extended-fields-common'));
 		}
 		
 		if (!empty($name) && !empty($type_field))
@@ -63,14 +63,8 @@ class ExtendedFieldsService
 			}
 			else
 			{
-				// The field are already exist
-				throw new Exception('The field are already exist.');
+				self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
 			}
-		}
-		else
-		{
-			// All fields not completed !
-			throw new Exception('Please complete all fields!');
 		}
 	}
 	
@@ -89,16 +83,6 @@ class ExtendedFieldsService
 				
 				ExtendedFieldsCache::invalidate();
 			}
-			else
-			{
-				// The field are already exist
-				throw new Exception('The field are already exist.');
-			}
-		}
-		else
-		{
-			// All fields not completed !
-			throw new Exception('Please complete all required fields!');
 		}
 	}
 	
@@ -176,6 +160,20 @@ class ExtendedFieldsService
 		$extended_field->set_authorization($data['auth']);
 		return $extended_field;
 		
+	}
+	
+	private static function set_error($error)
+	{
+		self::$error = $error;
+	}
+	
+	public static function get_error()
+	{
+		$error = self::$error;
+		if (!empty($error))
+		{
+			return $error;
+		}
 	}
 }
 

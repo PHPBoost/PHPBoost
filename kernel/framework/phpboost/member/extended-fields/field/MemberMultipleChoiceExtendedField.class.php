@@ -36,11 +36,11 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 		$i = 0;
 		foreach ($array_values as $values)
 		{
-			$field[] = new FormFieldMultipleCheckboxOption($values, $member_extended_field->get_field_name() . '_' . $i);
+			$field[] = new FormFieldMultipleCheckboxOption($member_extended_field->get_field_name() . '_' . $i, $values);
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $field, $this->default_values($member_extended_field), array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_default_values()), $field, array('required' => (bool)$member_extended_field->get_required())));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -52,16 +52,21 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 		$i = 0;
 		foreach ($array_values as $values)
 		{
-			$field[] = new FormFieldMultipleCheckboxOption($values, $member_extended_field->get_field_name() . '_' . $i);
+			$field[] = new FormFieldMultipleCheckboxOption($member_extended_field->get_field_name() . '_' . $i, $values);
 			$i++;
 		}
-		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $field, $this->default_values($member_extended_field), array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_value()), $field, array('required' => (bool)$member_extended_field->get_required())));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return $form->get_value($field_name)->get_label();
+		$array = array();
+		foreach ($form->get_value($field_name) as $field => $value)
+		{
+			$array[] = $value->get_label();
+		}
+		return $this->serialise_value($array);
 	}
 	
 	private function possible_values(MemberExtendedField $member_extended_field)
@@ -69,9 +74,14 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 		return explode('|', $member_extended_field->get_possible_values());
 	}
 	
-	private function default_values(MemberExtendedField $member_extended_field)
+	private function default_values($default_values)
 	{
-		return explode('|', $member_extended_field->get_default_values());
+		return explode('|', $default_values);
+	}
+	
+	private function serialise_value(Array $array)
+	{
+		return implode('|', $array);
 	}
 }
 ?>
