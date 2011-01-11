@@ -35,7 +35,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('MemberViewProfileController', '`^/profil(?:/([0-9]+))?/?$`', array('user_id')),
 	new UrlControllerMapper('MemberEditProfilController', '`^/profil/edit/?$`'),
 	
-	new UrlControllerMapper('MemberViewAllMembersController', '`^/member/?$`'),
+	new UrlControllerMapper('MemberViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('type', 'sort', 'page')),
 	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),
 	new UrlControllerMapper('ErrorController', '`^/error/([a-z][0-9]+)/?$`', array('type')),
 	new UrlControllerMapper('MemberHomeController', '`^.*$`')

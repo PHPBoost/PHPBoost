@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute());
 $Bread_crumb->add($LANG['moderation_panel'], url('moderation_panel.php'));
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
@@ -145,7 +145,7 @@ switch ($action)
 				$moderation_panel_template->assign_block_vars('member_list', array(
 					'LOGIN' => $row['login'],
 					'INFO' => gmdate_format('date_format', $row['user_readonly']),
-					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => DispatchManager::get_url('/member', '/profil/'. $row['user_id'])->absolute(),
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
@@ -197,7 +197,7 @@ switch ($action)
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profil/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 				'INFO' => $array_sanction[$key_sanction],
 				'SELECT' => $select,
 				'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -298,7 +298,7 @@ switch ($action)
 				$moderation_panel_template->assign_block_vars('member_list', array(
 					'LOGIN' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 					'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
-					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => DispatchManager::get_url('/member', '/profil/'. $row['user_id'])->absolute(),
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
@@ -319,7 +319,7 @@ switch ($action)
 			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_BAN' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
-				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
+				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profil/'. $id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 				'L_PM' => $LANG['user_contact_pm'],
@@ -441,7 +441,7 @@ switch ($action)
 					'LOGIN' => $row['login'],
 					'INFO' => $row['user_warning'] . '%',
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
-					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => DispatchManager::get_url('/member', '/profil/'. $row['user_id'])->absolute(),
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
@@ -473,7 +473,7 @@ switch ($action)
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profil/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 				'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 				'SELECT' => $select,
 				'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',

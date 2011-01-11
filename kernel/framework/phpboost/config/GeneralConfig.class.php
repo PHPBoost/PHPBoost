@@ -111,7 +111,7 @@ class GeneralConfig extends AbstractConfigData
 		self::SITE_NAME => '',
 		self::SITE_DESCRIPTION => '',
 		self::SITE_KEYWORDS => '',
-		self::HOME_PAGE => '/member/member.php',
+		self::HOME_PAGE => DispatchManager::get_url('/member', '/member')->absolute(),
 		self::PHPBOOST_VERSION => '3.1',
 		self::SITE_INSTALL_DATE => new Date(),
 		self::SITE_TIMEZONE => (int)date('I'),

@@ -113,7 +113,7 @@ if (in_array($id_error, $array_error))
 			'L_REGISTER' => $LANG['register'],
 			'L_FORGOT_PASS' => $LANG['forget_pass'],
 			'L_AUTOCONNECT' => $LANG['autoconnect'],
-			'U_REGISTER' => UserAccountsConfig::load()->is_registration_enabled() ? '<a href="../member/register.php"><img src="../templates/' . get_utheme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
+			'U_REGISTER' => UserAccountsConfig::load()->is_registration_enabled() ? '<a href="'. DispatchManager::get_url('/member', '/register')->absolute() .'"><img src="../templates/' . get_utheme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
 		));
 		
 		$Template->pparse('error');
@@ -163,7 +163,7 @@ elseif ($User->get_attribute('user_id') === -1)
 		'L_REGISTER' => $LANG['register'],
 		'L_FORGOT_PASS' => $LANG['forget_pass'],
 		'L_AUTOCONNECT' => $LANG['autoconnect'],
-		'U_REGISTER' => UserAccountsConfig::load()->is_registration_enabled() ? '<a href="../member/register.php"><img src="../templates/' . get_utheme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
+		'U_REGISTER' => UserAccountsConfig::load()->is_registration_enabled() ? '<a href="'. DispatchManager::get_url('/member', '/register')->absolute() .'"><img src="../templates/' . get_utheme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
 	));
 	
 	$Template->pparse('error');

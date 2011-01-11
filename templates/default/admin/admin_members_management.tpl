@@ -150,7 +150,7 @@
 						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}&amp;token={TOKEN}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="{PATH_TO_ROOT}/member/member.php?id={member.IDMBR}">{member.NAME}</a>				
+						<a href="{PATH_TO_ROOT}/member/index.php?url=/profil/{member.IDMBR}">{member.NAME}</a>				
 					</td>
 					<td class="row2"> 
 						{member.RANK}

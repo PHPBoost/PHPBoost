@@ -75,7 +75,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	$Template->assign_block_vars('users', array(
-		'USER' => !empty($row['login']) ? '<a href="' . HOST . '/member/member.php?id=' . $row['user_id'] . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
+		'USER' => !empty($row['login']) ? '<a href="' . DispatchManager::get_url('/member', '/profil/'. $row['user_id'])->absolute() . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
 		'LOCATION' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 		'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
 	));	
