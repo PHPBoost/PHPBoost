@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_pm']);
-$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute());
 $Bread_crumb->add($LANG['title_pm'], url('pm.php'));
 require_once('../kernel/header.php');
 
@@ -142,7 +142,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$Template->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
 	));
 	
@@ -207,7 +207,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	$Template->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
 		'TITLE' => !empty($_POST['title']) ? stripslashes($_POST['title']) : '',
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : ''
@@ -248,7 +248,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
-		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>',
 	));
 	
 	$Template->assign_block_vars('post_pm', array(
@@ -495,7 +495,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . $Session->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-					'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
+					'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>'
 				));
 				
 				if (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']))
@@ -570,7 +570,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'PAGINATION' => $Pagination->display('pm' . url('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
-		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
+		'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>'
 	));
 
 	$Template->put_all(array(
@@ -801,7 +801,7 @@ else //Liste des conversation, dans la boite du membre.
 		'PAGINATION' => $Pagination->display('pm' . url('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small_link">' . $LANG['mark_pm_as_read'] . '</a>',
 		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
-		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_USER_VIEW' => '<a href="' . DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>',
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
 	));
@@ -908,17 +908,17 @@ else //Liste des conversation, dans la boite du membre.
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];
 		elseif (!empty($row['login']))
-			$author = '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>';
+			$author = '<a href="' . DispatchManager::get_url('/member', '/profil/'. $row['user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>';
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
 		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $User->get_attribute('user_id') ? $row['user_id_dest'] : $row['user_id'];
-		$participants = !empty($participants) ? '<a href="../member/member' . url('.php?id=' . $user_id_dest, '-' . $user_id_dest . '.php') . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
+		$participants = !empty($participants) ? '<a href="' . DispatchManager::get_url('/member', '/profil/'. $user_id_dest)->absolute() . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		
 		//Affichage du dernier message posté.
 		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />';
-		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['last_login'] . '</a>';
+		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . DispatchManager::get_url('/member', '/profil/'. $row['last_user_id'])->absolute() . '" class="small_link">' . $row['last_login'] . '</a>';
 
 		$Template->assign_block_vars('convers.list', array(
 			'INCR' => $i,

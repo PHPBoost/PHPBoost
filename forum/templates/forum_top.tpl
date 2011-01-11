@@ -90,7 +90,7 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/index.php?url=/register"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
 									<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 

@@ -61,7 +61,7 @@ if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //
 }
 else
 {
-	AppContext::get_response()->redirect('/member/member.php');
+	AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member')->absolute());
 }
 
 ?>

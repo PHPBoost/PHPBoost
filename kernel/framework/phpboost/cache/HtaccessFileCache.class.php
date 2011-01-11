@@ -91,7 +91,6 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^member/member-([0-9]+)-?([0-9]*)\.php$', 'member/member.php?id=$2&p=$3');
 		$this->add_rewrite_rule('^member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'member/pm.php?pm=$2&id=$3&p=$4&quote=$5');
 
         $eps = AppContext::get_extension_provider_service();

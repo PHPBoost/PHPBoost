@@ -70,7 +70,7 @@ class Forum
 			if ($User->get_attribute('user_id') > 0)
 			{
 				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-				$pseudo_pm = '[url=' . HOST . DIR . '/member/member.php?id=' . $User->get_attribute('user_id') . ']' . $pseudo . '[/url]';
+				$pseudo_pm = '[url='. DispatchManager::get_url('/member', '/profil/'. $User->get_attribute('user_id') .'/')->absolute() .']' . $pseudo . '[/url]';
 			}
 			else
 			{

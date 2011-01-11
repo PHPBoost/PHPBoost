@@ -43,7 +43,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
 	$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
 	$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
-	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], TextHelper::HTML_NO_PROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], TextHelper::HTML_NO_PROTECT) : '/member/member.php');
+	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], TextHelper::HTML_NO_PROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], TextHelper::HTML_NO_PROTECT) : DispatchManager::get_url('/member', '/member')->absolute());
 	$general_config->set_home_page(stripslashes($start_page));
 	GeneralConfig::save();
 	

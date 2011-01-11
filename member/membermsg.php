@@ -26,7 +26,7 @@
  ###################################################*/
 
 require_once('../kernel/begin.php');
-$Bread_crumb->add($LANG['member_area'], 'member.php' . SID);
+$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/member')->absolute();
 $Bread_crumb->add($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php');
@@ -88,7 +88,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('msg_list', array(
-				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . TextHelper::wordwrap_html($row['login'], 13) . '</span></a>',
+				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="'. DispatchManager::get_url('/member', '/profil/'. $memberId)->absolute() .'"><span class="text_strong">' . TextHelper::wordwrap_html($row['login'], 13) . '</span></a>',
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
