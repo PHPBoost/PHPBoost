@@ -319,8 +319,7 @@ class ImagesStats
 			imagefilledrectangle($image, $x_histo, $margin, $w_histo - $margin, $h_histo - $y_histo, $histo_background);
 
 			//Echelle verticale de l'histogramme.
-			$array_scale = array();
-			$this->generate_scale($array_scale, $max_element);
+			$array_scale = $this->generate_scale($max_element);
 			$scale_pos = $margin;
 			$scale_iteration = NumberHelper::round(($h_histo_content+1)/15, 2);
 			$j = 0;
@@ -497,8 +496,9 @@ class ImagesStats
 	 * @param array $array_scale List of element
 	 * @param resource $max_element Maximal element int the array_scale list
 	 */
-	private function generate_scale($array_scale, $max_element)
+	private function generate_scale($max_element)
 	{
+		$array_scale = array();
 		$max_element += ($max_element * 20/100);
 		while (($max_element%3) != 0)
 			$max_element++;
@@ -510,6 +510,7 @@ class ImagesStats
 			$array_scale[$i] = NumberHelper::round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
+		return $array_scale;
 	}
 
 	/**
