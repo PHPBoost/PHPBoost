@@ -76,6 +76,7 @@ class PagesSetup extends DefaultModuleSetup
 			'count_hits' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'display_print_link' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'activ_com' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'lock_com' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
