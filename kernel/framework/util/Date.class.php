@@ -6,8 +6,6 @@
  *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Date 1.0
- *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
@@ -127,12 +125,10 @@ class Date
 		{
 			$referential_timezone = Timezone::USER_TIMEZONE;
 		}
-		// TODO remove
-		$time_difference = self::compute_server_user_difference($referential_timezone);
 		$timezone = Timezone::get_timezone($referential_timezone);
 		
 		$this->date_time = new DateTime();
-//		$this->date_time->setTimezone($timezone);
+		$this->date_time->setTimezone($timezone);
 
 		switch ($format)
 		{
@@ -142,8 +138,6 @@ class Date
 					$year 	= func_get_arg(2);
 					$month 	= func_get_arg(3);
 					$day 	= func_get_arg(4);
-					// TODO remove
-					$this->timestamp = mktime(0, 0, 0, $month, $day, $year) - $time_difference * 3600;
 					$this->date_time->setDate($year, $month, $day);
 				}
 				break;
@@ -156,8 +150,6 @@ class Date
 					$hour 		= func_get_arg(5);
 					$minute 	= func_get_arg(6);
 					$second 	= func_get_arg(7);
-					// TODO remove
-					$this->timestamp = mktime($hour, $minute, $second, $month, $day, $year) - $time_difference * 3600;
 					$this->date_time->setDate($year, $month, $day);
 					$this->date_time->setTime($hour, $minute, $second);
 				}
@@ -165,8 +157,6 @@ class Date
 			case DATE_TIMESTAMP:
 				if ($num_args >= 3)
 				{
-					// TODO remove
-					$this->timestamp = func_get_arg(2);
 					$this->date_time->setTimestamp(func_get_arg(2));
 				}
 				break;
@@ -201,8 +191,6 @@ class Date
 				//Vérification du format de la date.
 				if (self::check_date($month, $day, $year))
 				{
-					// TODO remove
-					$this->timestamp = @mktime(0, 0, 0, $month, $day, $year) - $time_difference * 3600;
 					$this->date_time->setDate($year, $month, $day);
 				}
 				throw new InvalidArgumentException('The date you entered is not correct');
@@ -210,8 +198,6 @@ class Date
 			case DATE_NOW:
 			default:
 				// Nothing to do
-				// TODO remove
-				$this->timestamp = time();
 		}
 	}
 
@@ -237,49 +223,25 @@ class Date
 	public function format($format = DATE_FORMAT_TINY, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$timezone = Timezone::get_timezone($referential_timezone);
-		// TODO remove
-		$timestamp = $this->timestamp + self::compute_server_user_difference($referential_timezone) * 3600;
 
 		switch ($format)
 		{
 			case DATE_FORMAT_TINY:
 				return $this->date_time->format(LangLoader::get_message('date_format_tiny', 'main'));
-				// TODO remove
-				return date(LangLoader::get_message('date_format_tiny', 'main'), $timestamp);
-				break;
 			case DATE_FORMAT_SHORT:
 				return $this->date_time->format(LangLoader::get_message('date_format_short', 'main'));
-				// TODO remove
-				return date(LangLoader::get_message('date_format_short', 'main'), $timestamp);
-				break;
 			case DATE_FORMAT:
 				return $this->date_time->format(LangLoader::get_message('date_format', 'main'));
-				// TODO remove
-				return date(LangLoader::get_message('date_format', 'main'), $timestamp);
-				break;
 			case DATE_FORMAT_LONG:
 				return $this->date_time->format(LangLoader::get_message('date_format_long', 'main'));
-				// TODO remove
-				return date(LangLoader::get_message('date_format_long', 'main'), $timestamp);
-				break;
 			case DATE_TIMESTAMP:
 				return $this->date_time->getTimestamp();
-				// TODO remove
-				return $timestamp;
-				break;
 			case DATE_RFC822_F:
-				return $this->date_time->format(DATE_RFC822_FORMAT);
-				// TODO remove
-				return date(DATE_RFC822_FORMAT, $timestamp);
-				break;
+				return $this->date_time->format(DateTime::RFC822);
 			case DATE_RFC3339_F:
-				// TODO implement this method
 				return $this->date_time->format(DateTime::ATOM);
-				// TODO remove
-				return date(DATE_RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
-				break;
 			default:
-				return '';
+				return $this->date_time->format($format);
 		}
 	}
 
@@ -393,7 +355,7 @@ class Date
 	 */
 	public function to_date()
 	{
-		return date('Y-m-d', $this->timestamp);
+		return $this->format('Y-m-d');
 	}
 	
 	/**
@@ -403,7 +365,7 @@ class Date
 	 */
 	public function is_anterior_to(Date $date)
 	{
-		return $this->timestamp < $date->timestamp;
+		return $this->date_time < $date->date_time;
 	}
 	
 	/**
@@ -413,7 +375,7 @@ class Date
 	 */
 	public function is_posterior_to(Date $date)
 	{
-		return !$this->is_anterior_to($date);
+		return $this->date_time > $date->date_time;
 	}
 
 	/**
@@ -423,8 +385,9 @@ class Date
 	 */
 	public function equals(Date $date)
 	{
-		return $this->timestamp == $date->timestamp;
+		return $this->date_time == $date->date_time;
 	}
+	
 	/**
 	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
