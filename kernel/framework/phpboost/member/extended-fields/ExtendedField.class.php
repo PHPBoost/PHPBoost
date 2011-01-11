@@ -187,7 +187,7 @@ class ExtendedField
 	
 	public function get_authorization()
 	{
-		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 1);
+		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 2);
 	}
 	
 	public static function rewrite_field_name($field_name)
