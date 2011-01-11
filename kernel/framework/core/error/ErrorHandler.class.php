@@ -230,4 +230,32 @@ class ErrorHandler
 	{
 		return preg_replace("`(\n)+`", '<br />', preg_replace("`\r|\n|\t`", "\n", $message));
 	}
+
+	/**
+	 * @desc Get Error type
+	 */
+	public static function get_errno_class($errno)
+	{
+		switch ($errno)
+		{
+			//Redirection utilisateur.
+			case E_USER_REDIRECT:
+				return 'error_fatal';
+				//Notice utilisateur.
+			case E_USER_NOTICE:
+			case E_NOTICE:
+				return 'error_notice';
+				//Warning utilisateur.
+			case E_USER_WARNING:
+            case E_WARNING:
+                return 'error_warning';
+                //Erreur fatale.
+            case E_USER_ERROR:
+            case E_ERROR:
+            case E_RECOVERABLE_ERROR:
+                return 'error_fatal';
+            default: //Erreur inconnue.
+                return 'error_unknow';
+         }
+	}
 }

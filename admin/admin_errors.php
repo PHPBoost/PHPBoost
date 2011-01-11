@@ -83,7 +83,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 				$errinfo['errstacktrace'] = $buffer;
 				$i = 0;	
 				$array_errinfo[] = array(
-				'errclass' => Errors::get_errno_class($errinfo['errno']), 
+				'errclass' => ErrorHandler::get_errno_class($errinfo['errno']), 
 				'errmsg' => $errinfo['errmsg'], 
 				'errstacktrace'=> $errinfo['errstacktrace'], 
 				'errdate' => $errinfo['errdate']

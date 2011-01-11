@@ -44,7 +44,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 <body><br /><br /><br />';
 
 //Récupération de l'erreur dans les logs.
-$errinfo = Errors::get_last_error_log();
+$errinfo = ErrorHandler::get_last_error_log();
 if (empty($errinfo))
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
@@ -52,7 +52,7 @@ $Template->set_filenames(array(
 	'error'=> 'member/error.tpl'
 ));
 
-$class = Errors::get_errno_class($errinfo['errno']);
+$class = ErrorHandler::get_errno_class($errinfo['errno']);
 	
 $Template->put_all(array(
 	'THEME' => get_utheme(),
