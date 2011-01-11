@@ -223,7 +223,7 @@ if ($id_edit > 0)
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
 	$Template->put_all(array(
-		'CONTENTS' => !empty($error) ? htmlspecialchars(stripslashes($contents)) : pages_unparse($page_infos['contents']),
+		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : ($page_infos['display_print_link'] == 1 ? 'checked="checked"' : ''),
@@ -253,7 +253,7 @@ else
 	}
 	if (!empty($error))
 		$Template->put_all(array(
-			'CONTENTS' => stripslashes(htmlspecialchars($contents)),
+			'CONTENTS' => stripslashes($contents),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
