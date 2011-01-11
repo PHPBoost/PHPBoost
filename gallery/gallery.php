@@ -577,7 +577,7 @@ else
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-				$html_protected_name = TextHelper::strprotect($info_pics['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE);
+				$html_protected_name = $info_pics['name'];
 
 				//Affichage de l'image et de ses informations.
 				$Template->put_all(array(
@@ -585,7 +585,7 @@ else
 					'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 					'ID' => $info_pics['id'],
 					'IMG_MAX' => '<img src="show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
-					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . $info_pics['name'] . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
+					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 					'POSTOR' => '<a class="small_link" href="../member/member' . url('.php?id=' . $info_pics['user_id'], '-' . $info_pics['user_id'] . '.php') . '">' . $info_pics['login'] . '</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
@@ -698,7 +698,7 @@ else
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
 					
-				$html_protected_name = TextHelper::strprotect($row['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE);
+				$html_protected_name = $row['name'];
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
