@@ -42,15 +42,13 @@ class AdminContactController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new FileTemplate('contact/AdminContactController.tpl');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put_all(array(
-				'C_SUBMITED' => true,
-			));
+			$tpl->put('MSG', MessageHelper::display($this->lang['success_saving_config'], E_USER_SUCCESS, 2));
 		}
 
 		$tpl->put('FORM', $this->form->display());
