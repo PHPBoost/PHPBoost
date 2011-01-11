@@ -74,7 +74,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     {
     	foreach ($this->available_options as $option)
     	{
-    		if ($option->get_id() == $identifier)
+    		if ($option->get_id() == $identifier || $option->get_label() == $identifier)
     		{
     			return $option;
     		}
