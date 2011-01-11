@@ -42,7 +42,16 @@ class MemberEditProfilController extends AbstractController
 		$this->init();
 		
 		$user_id = AppContext::get_user()->get_attribute('user_id');
-		$this->build_form($user_id);
+		
+		if ($this->user_exist($user_id))
+		{
+			$this->build_form($user_id);
+		}
+		else
+		{
+			$error_controller = PHPBoostErrors::unexisting_member();
+			DispatchManager::redirect($error_controller);
+		}
 
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 
@@ -52,7 +61,7 @@ class MemberEditProfilController extends AbstractController
 		{
 			$this->save($user_id);
 		}
-
+		
 		$tpl->put('FORM', $this->form->display());
 
 		return $this->build_response($tpl);
@@ -65,9 +74,9 @@ class MemberEditProfilController extends AbstractController
 	
 	private function build_form($user_id)
 	{
-		$form = new HTMLForm('member-edit-profile');
+		$form = new HTMLForm('member_edit_profile');
 		
-		$fieldset = new FormFieldsetHTML('edit-profile', $this->lang['profile_edition']);
+		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile_edition']);
 		$form->add_fieldset($fieldset);
 		
 		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_aprob = 1 AND user_id = '" . $user_id . "' " , __LINE__, __FILE__);
@@ -132,11 +141,6 @@ class MemberEditProfilController extends AbstractController
 			MemberUpdateProfileHelper::change_password(strhash($new_password), $user_id);
 		}
 	}
-	
-	private function redirect()
-	{
-
-	}
 
 	private function build_response(View $view)
 	{
@@ -144,6 +148,11 @@ class MemberEditProfilController extends AbstractController
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['profile_edition']);
 		return $response;
+	}
+	
+	private function user_exist($user_id)
+	{
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 }
 
