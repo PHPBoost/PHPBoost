@@ -249,7 +249,7 @@ class ModulesManager
 	 */
 	public static function uninstall_module($module_id, $drop_files)
 	{
-		global $Cache, $Sql, $MODULES;
+		global $Cache, $MODULES;
 
 		if (!empty($module_id))
 		{
@@ -265,10 +265,12 @@ class ModulesManager
 			//Suppression des commentaires associés.
 			if (!empty($info_module['com']))
 			{
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = '" . addslashes($info_module['com']) . "'");
+				PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_COM." 
+					WHERE script = :script", array('script' => $info_module['com']));
 			}
 
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . addslashes($module_id) . "'");
+			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
+					WHERE name = :name", array('name' => $module_id));
 
 			$dir_db_module = get_ulang();
 			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
