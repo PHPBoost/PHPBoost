@@ -34,6 +34,22 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
+		
+		$success = $request->get_value('success', '');
+		$success = str_replace('success=', '', $success);
+		
+		if ($success == 'delete')
+		{
+			$this->view->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-delete'], E_USER_SUCCESS, 4));
+		}
+		else if ($success == 'add')
+		{
+			$this->view->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 4));
+		}
+		else if ($success == 'edit')
+		{
+			$this->view->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-edit'], E_USER_SUCCESS, 4));
+		}
 	
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
 
