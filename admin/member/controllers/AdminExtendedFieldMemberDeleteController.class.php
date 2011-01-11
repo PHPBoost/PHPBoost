@@ -39,7 +39,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 		if ($exist_field)
 		{
 			ExtendedFieldsService::delete($extended_field);
-			$this->redirect();
+			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/member', '/extended-fields/list/success=delete')->absolute());
 		}
 		else
 		{
@@ -52,13 +52,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 	{
 		$this->lang = LangLoader::get('admin-extended-fields-common');
 	}
-	
-	private function redirect()
-	{
-		$controller = new UserErrorController($this->lang['field.success'], $this->lang['extended-fields-sucess-delete'], UserErrorController::SUCCESS);
-		$controller->set_correction_link($this->lang['extended-field'], PATH_TO_ROOT . '/admin/member/index.php?url=/extended-fields/list/');
-		DispatchManager::redirect($controller);
-	}
+
 }
 
 ?>

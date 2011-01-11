@@ -59,6 +59,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/member', '/extended-fields/list/success=add')->absolute());
 		}
 
 		$this->tpl->put('FORM', $this->form->display());

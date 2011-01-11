@@ -78,9 +78,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$this->tpl->put_all(array(
-				'FIELD_TYPE' => $extended_field_cache['field_type']
-			));
+			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/member', '/extended-fields/list/success=edit')->absolute());
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
