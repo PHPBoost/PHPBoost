@@ -66,7 +66,7 @@ if ($action_post == 'save')
     }
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     $menu->set_display_title(retrieve(POST, 'display_title', false));
-    $menu->set_content((string) $_POST['contents']);
+    $menu->set_content(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
     
     //Filters
     MenuAdminService::set_retrieved_filters($menu);
