@@ -29,6 +29,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 {
 	public function __construct()
 	{
+		parent::__construct();
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
 	}

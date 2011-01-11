@@ -29,6 +29,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 {
 	public function __construct()
 	{
+		parent::__construct();
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
 	}
@@ -42,7 +43,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 			$this->list_theme(),
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -55,7 +56,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 			$this->list_theme(),
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', LangLoader::get_message('preview', 'main'), '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)

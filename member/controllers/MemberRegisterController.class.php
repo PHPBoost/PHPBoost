@@ -39,6 +39,11 @@ class MemberRegisterController extends AbstractController
 
 	public function execute(HTTPRequest $request)
 	{
+		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_user()->check_level(MEMBER_LEVEL))
+		{
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
+
 		$this->init();
 
 		$this->build_form();
