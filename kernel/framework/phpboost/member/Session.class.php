@@ -353,7 +353,7 @@ class Session
 			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);
 			if ($this->sql->affected_rows($resource, "SELECT COUNT(*) FROM " . DB_TABLE_SESSIONS . " WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0) //Aucune session lancée.
 			{
-				if ($this->autoconnect($session_script, $session_script_get, $session_script_title) === false) //On essaie de lancer la session automatiquement.
+				if ($this->autoconnect($session_script, '', $session_script_title) === false) //On essaie de lancer la session automatiquement.
 				{
 					if (AppContext::get_request()->has_cookieparameter($sessions_config->get_cookie_name() . '_data'))
 					{
@@ -385,7 +385,7 @@ class Session
 				{
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_data', '', time() - 31536000)); //Destruction cookie.
 				}
-				$this->start('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
+				$this->start('-1', '', '-1', $session_script, '', $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
 		}
 	}
