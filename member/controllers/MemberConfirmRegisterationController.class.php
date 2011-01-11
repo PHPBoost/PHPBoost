@@ -27,17 +27,24 @@
 
 class MemberConfirmRegisterationController extends AbstractController
 {
+	private $lang;
+	
 	public function execute(HTTPRequest $request)
 	{
 		$key = $request->get_value('key', '');
 		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
-			// TODO redirect error already registered
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else
 		{
 			$this->check_activation($key);
 		}
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('main');
 	}
 	
 	private function check_activation($key)
@@ -46,11 +53,14 @@ class MemberConfirmRegisterationController extends AbstractController
 		if ((bool)$check_mbr && !empty($key))
 		{
 			$this->update_aprobation($key);
-			// TODO redirect activation success
+			$controller = new UserErrorController($this->lang['profile'], $this->lang['activ_mbr_mail_success'], UserErrorController::SUCCESS);
+			DispatchManager::redirect($controller);
+
 		}
 		else
 		{
-			//TODO redirect error key isn't exist
+			$controller = new UserErrorController($this->lang['profile'], $this->lang['activ_mbr_mail_error'], UserErrorController::WARNING);
+			DispatchManager::redirect($controller);
 		}
 	}	
 	

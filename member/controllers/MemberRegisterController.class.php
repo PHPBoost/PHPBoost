@@ -27,6 +27,8 @@
 
 class MemberRegisterController extends AbstractController
 {
+	private $tpl;
+	
 	private $lang;
 	/**
 	 * @var HTMLForm
@@ -48,18 +50,18 @@ class MemberRegisterController extends AbstractController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 
-		$tpl->add_lang($this->lang);
+		$this->tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($this->tpl);
 	}
 
 	private function init()
@@ -121,12 +123,23 @@ class MemberRegisterController extends AbstractController
 	private function save()
 	{
 		MemberRegisterHelper::registeration($this->form);
-		//$this->redirect();
+		$this->confirm();
 	}
 	
-	private function redirect()
+	private function confirm()
 	{
-
+		if (UserAccountsConfig::load()->get_member_accounts_validation_method() == 1)
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['activ_mbr_mail'], E_USER_SUCESS));
+		}
+		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 2)
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['activ_mbr_admin'], E_USER_SUCESS));
+		}
+		else
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['register_ready'], E_USER_SUCESS));
+		}
 	}
 
 	private function build_response(View $view)

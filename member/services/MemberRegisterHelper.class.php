@@ -81,9 +81,7 @@
 			// Connect user
 			self::connect_user($form);
 			
-			// redirect to confirm registered member
-			
-			$valid = '';
+			$valid = LangLoader::get_message('register_ready', 'main');;
 		}
 		self::send_mail_confirmation($form, $valid);
 		
