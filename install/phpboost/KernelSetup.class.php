@@ -558,10 +558,10 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'stats_year' => array('type' => 'boolean', 'length' => 6, 'notnull' => 1, 'default' => 0),
-			'stats_month' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
-			'stats_day' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
-			'nbr' => array('type' => 'boolean', 'length' => 9, 'notnull' => 1, 'default' => 0),
+			'stats_year' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'stats_month' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'stats_day' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'nbr' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'pages' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'pages_detail' => array('type' => 'text', 'length' => 65000)
 		);
