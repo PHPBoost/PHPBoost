@@ -87,18 +87,15 @@ class MemberEditProfilController extends AbstractController
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['previous_password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['fill_only_if_modified']),
-		array(new FormFieldConstraintMailAddress()))
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['fill_only_if_modified']))
 		);
 		
 		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password'], '', array(
-			'class' => 'text', 'maxlength' => 25),
-		array(new FormFieldConstraintMailAddress())
-		));
+			'class' => 'text', 'maxlength' => 25))
+		);
 		$fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['confirm_password'], '', array(
-			'class' => 'text', 'maxlength' => 25),
-		array(new FormFieldConstraintMailAddress())
-		));
+			'class' => 'text', 'maxlength' => 25))
+		);
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], $row['user_show_mail']));
 		
@@ -119,7 +116,7 @@ class MemberEditProfilController extends AbstractController
 	
 	private function save($user_id)
 	{
-		$mail = $old_password = $this->form->get_value('mail');
+		$mail = $this->form->get_value('mail');
 		MemberUpdateProfileHelper::update_profile($this->form, $user_id, $mail);
 		$this->change_password($user_id);
 		$delete_account = $this->form->get_value('delete_account');
