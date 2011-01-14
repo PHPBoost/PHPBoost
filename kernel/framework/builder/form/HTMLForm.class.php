@@ -251,6 +251,7 @@ class HTMLForm
 		if (count($this->buttons) > 0)
 		{
 			$buttons_fieldset = new FormFieldsetSubmit('fbuttons');
+			$buttons_fieldset->set_form_id($this->html_id);
 			foreach ($this->buttons as $button)
 			{
 				$buttons_fieldset->add_element($button);
