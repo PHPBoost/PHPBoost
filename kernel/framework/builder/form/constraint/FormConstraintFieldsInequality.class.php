@@ -62,7 +62,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 	{
 		$first_value = $this->first_field->get_value();
 		$second_value = $this->second_field->get_value();
-		if (!empty($first_value) && !empty($second_value))
+		if ((!empty($first_value) || $first_value !== null) && (!empty($second_value) || $second_value !== null))
 		{
 			return $first_value != $second_value;
 		}
