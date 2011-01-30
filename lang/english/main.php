@@ -65,7 +65,6 @@ $LANG['title_pm'] = 'Private messages';
 $LANG['title_error'] = 'Error';
 $LANG['title_com'] = 'Comments';
 $LANG['title_register'] = 'Sign up';
-$LANG['title_forget'] = 'Forgotten password';
 
 //Form
 $LANG['submit'] = 'Submit';
@@ -84,7 +83,6 @@ $LANG['go'] = 'Go';
 $LANG['pseudo'] = 'Nickname';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
-$LANG['forget_pass'] = 'Forgotten password';
 
 $LANG['require'] = 'The fields marked with an * are required !';
 $LANG['required_field'] = 'The field \"%s\" is required !';
@@ -497,21 +495,19 @@ $LANG['quote_last_msg'] = 'Repost of the preceding message';
 
 //Forgot
 $LANG['forget_pass'] = 'Forgotten password';
-$LANG['forget_pass_send'] = 'Valid to receive a new password by mail, with an activation key to confirm change';
-$LANG['forget_mail_activ_pass'] = 'Activate password';
-$LANG['forget_mail_pass'] = 'Dear %s
+$LANG['change_password'] = 'Change password';
+$LANG['forget_pass_send'] = 'Fill the form to receive a mail with an activation key to change your password';
+$LANG['forget_mail_pass'] = 'Dear %s,
 
-You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. If you have not asked for this new password, please ignore this mail. If you receive another message, contact the website administrator.
+You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. 
+If you have not asked for this new password, please ignore this mail. If you receive another message, contact the website administrator.
 
-To use the new password, you have to confirm it. Click on the link below:
+To change your password, you have to click on the link below and follow the instructions on the website:
 
-%s/member/forget.php?activate=true&u=%d&activ=%s
+%s/member/forget.php?u=%d&activ=%s
 
-After that you will be able to log in with the new password:
 
-Password: %s
-
-Anyway, you can change this password later in your member account. If you encounter issues, contact the administrator.
+If you encounter issues, contact the administrator.
 
 %s';
 

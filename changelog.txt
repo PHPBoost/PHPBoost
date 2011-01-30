@@ -28,6 +28,7 @@
 [*] Récupération du chemin complet du fichier dans les logs d'erreurs.
 [*] Ajout de la balise [feed] permettant d'inclure un flux RSS dans une mise en page
 [*] Nouveau système de champs membres permettant également à un développeur de créer son propre champ personnalisé à partir d'un module.
+[*] Nouveau système de changement de mot de passe en cas d'oubli.
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.

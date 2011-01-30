@@ -118,6 +118,10 @@ function pages_find_subcats(&$array, $id_cat)
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {
+	if (MAGIC_QUOTES)
+	{
+		$contents = stripslashes($contents);
+	}
 	$contents = FormatingHelper::strparse($contents);
 	$contents = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>', $contents);
 	
