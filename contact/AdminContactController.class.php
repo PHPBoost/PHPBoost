@@ -101,6 +101,8 @@ class AdminContactController extends AdminController
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['title_contact']);
 		$response->add_link($this->lang['contact_config'], '/contact/' . url('index.php?url=/admin', 'admin/'), '/contact/contact.png');
+		$env = $response->get_graphical_environment();
+		$env->set_page_title($this->lang['title_contact']);
 		return $response;
 	}
 }
