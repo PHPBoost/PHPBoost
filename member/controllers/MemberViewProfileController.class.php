@@ -91,7 +91,7 @@ class MemberViewProfileController extends AbstractController
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id(1);
+		$member_extended_field->set_user_id($user_id);
 		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
 		
 		$this->form = $form;
