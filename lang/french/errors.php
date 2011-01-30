@@ -27,7 +27,7 @@
 
 
  ####################################################
-#                                                           French                                                                               #
+#                        French                     #
  ####################################################
 
 $lang = array();
@@ -87,8 +87,8 @@ $lang['e_already_group'] = 'Le membre appartient déjà au groupe';
 
 //Oublié
 $lang['e_mail_forget'] = 'Le mail entré ne correspond pas à celui de l\'utilisateur !';
-$lang['e_forget_mail_send'] = 'Un mail vient de vous être envoyé, avec une clé d\'activation pour confirmer !';
-$lang['e_forget_confirm_change'] = 'Mot de passe changé avec succès!<br />Vous pouvez désormais vous enregistrer avec le nouveau mot de passe qui vous a été transmis par email.';
+$lang['e_forget_mail_send'] = 'Un mail vient de vous être envoyé, avec une clé d\'activation pour changer votre mot de passe';
+$lang['e_forget_confirm_change'] = 'Mot de passe changé avec succès !<br />Vous pouvez désormais vous connecter avec le nouveau mot de passe que vous avez choisi.';
 $lang['e_forget_echec_change'] = 'Echec le mot de passe ne peut être changé';
 
 //Register

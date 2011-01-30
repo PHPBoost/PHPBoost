@@ -26,105 +26,108 @@
  ###################################################*/
 
 require_once('../kernel/begin.php'); 
-define('TITLE', $LANG['title_forget']);
+define('TITLE', $LANG['forget_pass']);
 require_once('../kernel/header.php'); 
 
-$activ_confirm = retrieve(GET, 'activate', false);
 $activ_get = retrieve(GET, 'activ', '');
 $user_get = retrieve(GET, 'u', 0);
-$forget = retrieve(POST, 'forget', '');
 
+$tpl = new FileTemplate('member/forget.tpl');
+		
 if (!$User->check_level(MEMBER_LEVEL))
 {
-	if (!$activ_confirm)
-	{	
-		$Template->set_filenames(array(
-			'forget'=> 'member/forget.tpl'
-		));
-			
-		if (!empty($forget))
-		{
-			$user_mail = retrieve(POST, 'mail', '');
-			$login = retrieve(POST, 'name', '');
-
-			if (!empty($user_mail) && check_mail($user_mail))
-			{	
-				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
-				if (!empty($user_id)) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
-				{
-					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
-					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
-					
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
-					
-					AppContext::get_mail_service()->send_from_properties($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, MailServiceConfig::load()->get_mail_signature()));
-
-					//Affichage de la confirmation.
-					AppContext::get_response()->redirect('/member/forget.php?error=forget_mail_send');
-				}
-				else
-					$Template->put('message_helper', MessageHelper::display($LANG['e_mail_forget'], E_USER_NOTICE));
-			}
-			else
-				$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
-		}
-		
-		$get_error = retrieve(GET, 'error', '', TSTRING_UNCHANGE);			
-		$errno = E_USER_NOTICE;
-		switch ($get_error)
-		{ 
-			case 'forget_mail_send':
-				$errstr = $LANG['e_forget_mail_send'];					
-			break;
-			case 'forget_echec_change':
-				$errstr = $LANG['e_forget_echec_change'];					
-				$errno = E_USER_WARNING;
-			break;
-			case 'forget_confirm_change':
-				$errstr = $LANG['e_forget_confirm_change'];
-			break;
-			default:
-			$errstr = '';
-		}	
-		if (!empty($errstr))
-			$Template->put('message_helper', MessageHelper::display($errstr, $errno));			
-	
-		$Template->put_all(array(
-			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-			'L_REQUIRE_MAIL' => $LANG['require_mail'],
-			'L_REQUIRE' => $LANG['require'],
-			'L_NEW_PASS' => $LANG['forget_pass'],
-			'L_PSEUDO' => $LANG['pseudo'],
-			'L_MAIL' => $LANG['mail'],
-			'L_NEW_PASS_FORGET' => $LANG['forget_pass_send'],
-			'L_SUBMIT' => $LANG['submit']
-		));
-		
-		$Template->pparse('forget');
-	}
-	elseif (!empty($activ_get) && !empty($user_get) && $activ_confirm)
+	if (!empty($activ_get) && !empty($user_get))
 	{
-		$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
-		if (!empty($user_id))
+		try 
 		{
-			//Mise é jour du nouveau password.
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-			
-			//Effacement des clées d'activations.
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-			
-			//Affichage de la confirmation de réussite.
-			AppContext::get_response()->redirect('/member/error.php?e=e_forget_confirm_change');
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
+				"WHERE user_id = :user_id AND activ_pass = :activ_pass", array('user_id' => $user_get, 'activ_pass' => $activ_get));
+		} catch (RowNotFoundException $ex) {
+			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_echec_change'], E_USER_NOTICE));
 		}
-		else //Affichage de l'echec.
-			AppContext::get_response()->redirect('/member/forget.php?error=forget_echec_change');
+		
+		$form = new HTMLForm('changePasswordForm', '?activ=' . $activ_get . '&amp;u=' . $user_get);
+		$fieldset = new FormFieldsetHTML('fieldset', $LANG['change_password']);
+		
+		$password = new FormFieldPasswordEditor('new_password', $LANG['new_password'], '', array(
+			'class' => 'text', 'description' => $LANG['password_how'], 'required' => true),
+			array(new FormFieldConstraintLength(6)));
+		$fieldset->add_field($password);
+		
+		$password_bis = new FormFieldPasswordEditor('new_password_bis', $LANG['confirm_password'], '', array(
+			'class' => 'text', 'description' => $LANG['password_how'], 'required' => true),
+			array(new FormFieldConstraintLength(6)));
+		$fieldset->add_field($password_bis);
+		$form->add_fieldset($fieldset);
+		
+		$buttons_fieldset = new FormFieldsetSubmit('buttons', array('css_class' => 'fieldset_submit center'));
+		$submit_button = new FormButtonSubmit($LANG['submit'], 'change_password', '');
+		$buttons_fieldset->add_element($submit_button);
+		$form->add_fieldset($buttons_fieldset);
+		
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+		
+		if ($submit_button->has_been_submited() && $form->validate())
+		{
+			//Mise à jour du nouveau password.
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => strhash($form->get_value('new_password')), 'activ_pass' => ''), 
+				"WHERE user_id = :user_id", array('user_id' => $member['user_id']));
+			
+			//Affichage de la confirmation.
+			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_confirm_change'], E_USER_SUCCESS));
+		} else {
+			$tpl->put('forget_password_form', $form->display());
+		}
 	}	
-	else //Affichage de l'echec.
-		AppContext::get_response()->redirect('/member/forget.php?error=forget_echec_change');
+	else 
+	{	
+		$form = new HTMLForm('changePasswordForm');
+		$fieldset = new FormFieldsetHTML('fieldset', $LANG['forget_pass']);
+		
+		$fieldset->add_field(new FormFieldLabel($LANG['forget_pass_send']));
+		$fieldset->add_field(new FormFieldTextEditor('login', $LANG['pseudo'], '', array(
+			'class' => 'text', 'description' => '', 'required' => true)
+		));
+		$fieldset->add_field(new FormFieldMailEditor('mail', $LANG['mail'], '', array(
+			'class' => 'text', 'description' => '', 'required' => true)
+		));
+		$form->add_fieldset($fieldset);
+		$buttons_fieldset = new FormFieldsetSubmit('buttons', array('css_class' => 'fieldset_submit center'));
+		$submit_button = new FormButtonSubmit($LANG['submit'], 'forget_password', '');
+		$buttons_fieldset->add_element($submit_button);
+		$form->add_fieldset($buttons_fieldset);
+		
+		if ($submit_button->has_been_submited() && $form->validate()) 
+		{
+			//Succés membre trouvé, on envoie la clée pour changer le password par mail au membre
+			try 
+			{
+				$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
+					"WHERE user_mail = :mail AND login = :login", array('mail' => $form->get_value('mail'), 'login' => $form->get_value('login')));
+			} catch (RowNotFoundException $ex) {
+				$tpl->put('message_helper', MessageHelper::display($LANG['e_mail_forget'], E_USER_NOTICE));
+			}
+			
+			$activ_pass = substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
+				"WHERE user_id = :user_id", array('user_id' => $member['user_id'])); //Insertion de la clée d'activation dans la bdd.
+			
+			AppContext::get_mail_service()->send_from_properties($form->get_value('mail'), $LANG['change_password'], sprintf($LANG['forget_mail_pass'], $form->get_value('login'), HOST, (HOST . DIR), $member['user_id'], $activ_pass, MailServiceConfig::load()->get_mail_signature()));
+
+			//Affichage de la confirmation.
+			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_mail_send'], E_USER_SUCCESS));
+		} else {
+			$tpl->put('forget_password_form', $form->display());
+		}
+	}
 }
 else
+{
 	AppContext::get_response()->redirect(Environment::get_home_page());
+}
 
+$tpl->display();
+	
 require_once('../kernel/footer.php'); 
 
 ?>
