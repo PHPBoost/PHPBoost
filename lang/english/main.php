@@ -502,7 +502,7 @@ $LANG['forget_mail_pass'] = 'Dear %s,
 You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. 
 If you have not asked for this new password, please ignore this mail. If you receive another message, contact the website administrator.
 
-To change your password, you have to click on the link below on follow the instructions on the website:
+To change your password, you have to click on the link below and follow the instructions on the website:
 
 %s/member/forget.php?u=%d&activ=%s
 
