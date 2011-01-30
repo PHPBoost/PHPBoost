@@ -64,7 +64,6 @@ $LANG['title_pm'] = 'Messages privés';
 $LANG['title_error'] = 'Erreur';
 $LANG['title_com'] = 'Commentaires';
 $LANG['title_register'] = 'S\'enregistrer';
-$LANG['title_forget'] = 'Mot de passe oublié';
 
 //Form
 $LANG['submit'] = 'Envoyer';
@@ -83,7 +82,6 @@ $LANG['go'] = 'Go';
 $LANG['pseudo'] = 'Pseudo';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
-$LANG['forget_pass'] = 'Mot de passe oublié';
 
 $LANG['require'] = 'Les champs marqués * sont obligatoires !';
 $LANG['required_field'] = 'Le champs \"%s\" est obligatoire !';
@@ -465,7 +463,7 @@ $LANG['register_ready'] = 'Vous pouvez désormais vous connecter à votre compte d
 $LANG['register_valid_email_confirm'] = 'Vous devrez activer votre compte dans l\'email que vous reçevrez avant de pouvoir vous connecter.';
 $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : %s';
 $LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
-$LANG['register_mail'] = 'Cher %s,
+$LANG['register_mail'] = 'Cher(e) %s,
 
 Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
 En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
@@ -496,21 +494,18 @@ $LANG['quote_last_msg'] = 'Reprise du message précédent';
 
 //Oublié
 $LANG['forget_pass'] = 'Mot de passe oublié';
-$LANG['forget_pass_send'] = 'Validez pour recevoir un nouveau mot de passe par mail, avec une clé d\'activation pour confirmer';
-$LANG['forget_mail_activ_pass'] = 'Activation du mot de passe';
-$LANG['forget_mail_pass'] = 'Cher %s
+$LANG['change_password'] = 'Changement de mot de passe';
+$LANG['forget_pass_send'] = 'Renseignez le formulaire pour recevoir un mail avec une clé d\'activation pour pouvoir changer votre mot de passe';
+$LANG['forget_mail_pass'] = 'Cher(e) %s,
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. 
+Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
 
-Pour utiliser le nouveau mot de passe, vous avez besoin de le confirmer. Pour le faire, cliquez sur le lien fourni ci-dessous.
+Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
 
-%s/member/forget.php?activate=true&u=%d&activ=%s
+%s/member/forget.php?u=%d&activ=%s
 
-Après cela vous pourrez vous connecter avec le nouveau mot de passe suivant :
-
-Mot de passe : %s
-
-Vous pourrez bien sur changer vous-même ce mot de passe par la suite via votre profil membre. Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
+Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
 %s';
 
