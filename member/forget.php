@@ -104,18 +104,18 @@ if (!$User->check_level(MEMBER_LEVEL))
 			{
 				$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
 					"WHERE user_mail = :mail AND login = :login", array('mail' => $form->get_value('mail'), 'login' => $form->get_value('login')));
+				
+				$activ_pass = substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
+					"WHERE user_id = :user_id", array('user_id' => $member['user_id'])); //Insertion de la clée d'activation dans la bdd.
+			
+				AppContext::get_mail_service()->send_from_properties($form->get_value('mail'), $LANG['change_password'], sprintf($LANG['forget_mail_pass'], $form->get_value('login'), HOST, (HOST . DIR), $member['user_id'], $activ_pass, MailServiceConfig::load()->get_mail_signature()));
+
+				//Affichage de la confirmation.
+				$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_mail_send'], E_USER_SUCCESS));
 			} catch (RowNotFoundException $ex) {
 				$tpl->put('message_helper', MessageHelper::display($LANG['e_mail_forget'], E_USER_NOTICE));
 			}
-			
-			$activ_pass = substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
-				"WHERE user_id = :user_id", array('user_id' => $member['user_id'])); //Insertion de la clée d'activation dans la bdd.
-			
-			AppContext::get_mail_service()->send_from_properties($form->get_value('mail'), $LANG['change_password'], sprintf($LANG['forget_mail_pass'], $form->get_value('login'), HOST, (HOST . DIR), $member['user_id'], $activ_pass, MailServiceConfig::load()->get_mail_signature()));
-
-			//Affichage de la confirmation.
-			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_mail_send'], E_USER_SUCCESS));
 		} else {
 			$tpl->put('forget_password_form', $form->display());
 		}
