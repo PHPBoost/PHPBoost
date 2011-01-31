@@ -1,0 +1,20 @@
+.calendar_today {
+	border:1px dotted #A20E0E;
+	background:#EFE0E0;
+	font-weight:bold;
+	padding:2px;
+}
+.calendar_event {
+	border:1px solid #7F7F7F;
+	background:#EFE0E0;
+	font-weight:bold;
+	padding:2px;
+}
+.calendar_other {
+	border:1px solid #7F7F7F;
+	padding:2px;
+}
+.calendar_none {
+	border: 1px solid #DFDFDF;
+	padding:2px;
+}
