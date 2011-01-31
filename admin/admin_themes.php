@@ -215,7 +215,6 @@ else
 	}
 	
 	//On listes les thèmes.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$z = 0;
 	$result = $Sql->query_while("SELECT id, theme, activ, secure 
 	FROM " . DB_TABLE_THEMES . "
