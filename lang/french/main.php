@@ -440,7 +440,7 @@ $LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site
 
 //Register
 $LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';
-$LANG['password_how'] = 'Longueur minimale du password : 6 caractères';
+$LANG['password_how'] = 'Longueur minimale du mot de passe : 6 caractères';
 $LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
 $LANG['register_terms'] = 'Règlement';
 $LANG['register_accept'] = 'J\'accepte';
