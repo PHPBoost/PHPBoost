@@ -39,7 +39,11 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 		if ($exist_field)
 		{
 			ExtendedFieldsService::delete($extended_field);
-			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/member', '/extended-fields/list/success=delete')->absolute());
+			
+			$title = $this->lang['extended-field'];
+			$message = $this->lang['extended-fields-sucess-delete'];
+			$controller = new UserErrorController($title, $message, self::SUCCESS);
+			DispatchManager::redirect($controller);
 		}
 		else
 		{
