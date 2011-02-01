@@ -28,7 +28,6 @@
 require_once('../kernel/begin.php');
 require_once('../guestbook/guestbook_begin.php');
 require_once('../kernel/header.php');
-require_once('guestbook_constants.php');
 $id_get = retrieve(GET, 'id', 0);
 $guestbook = retrieve(POST, 'guestbookForm', false);
 //Chargement du cache
