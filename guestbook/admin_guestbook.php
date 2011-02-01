@@ -30,7 +30,6 @@ require_once('../admin/admin_begin.php');
 load_module_lang('guestbook'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-require_once('guestbook_constants.php');
 if (!empty($_POST['valid']) )
 {
 	$guestbook_config = GuestbookConfig::load();
