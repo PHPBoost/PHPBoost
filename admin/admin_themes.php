@@ -260,9 +260,8 @@ else
 			'C_NO_THEME_PRESENT' => true
 		));
 	}
-		
-	$template->display(); 
 }
+$template->display(); 
 
 require_once '../admin/admin_footer.php';
 
