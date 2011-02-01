@@ -65,7 +65,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	//Pseudo.
 	if (!$is_guest) 
-		$com_pseudo = '<a href="'.  DispatchManager::get_url('/member', '/profil/'. $row['user_id'] .'/')->absolute() .'" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</a>';
+		$com_pseudo = '<a href="'.  DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</a>';
 	else
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 	

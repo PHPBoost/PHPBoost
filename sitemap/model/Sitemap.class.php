@@ -218,11 +218,11 @@ class Sitemap
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
-				new Url(DispatchManager::get_url('/member', '/profil/'. $User->get_id())->absolute())));
+				new Url(DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute())));
 					
 				//Profile edition
 				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
-				new Url(DispatchManager::get_url('/member', '/profil/'. $User->get_id())->absolute() .'/edit')));
+				new Url(DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute() .'/edit')));
 					
 				//Private messaging
 				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
