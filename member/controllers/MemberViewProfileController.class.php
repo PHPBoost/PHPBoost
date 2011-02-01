@@ -107,7 +107,7 @@ class MemberViewProfileController extends AbstractController
 	
 	private function user_exist($user_id)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 }
 
