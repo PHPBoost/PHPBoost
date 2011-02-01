@@ -45,26 +45,23 @@ class MemberHomeProfileController extends AbstractController
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
-
-		$this->tpl = new FileTemplate('member/MemberHomeProfileController.tpl');
-
-		$this->tpl->add_lang($this->lang);
-
 		return $this->build_response($this->tpl);
 	}
 
 	private function init()
 	{
+		$this->tpl = new FileTemplate('member/MemberHomeProfileController.tpl');
 		$this->lang = LangLoader::get('main');
+		$this->tpl->add_lang($this->lang);
 	}
 	
 	private function build_form($user_id)
 	{
 		$msg_mbr = FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message());
 
-		$is_auth_files = $User->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
+		$user = AppContext::get_user();$user = AppContext::get_user();
+		$is_auth_files = $user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
 	
-		$user = AppContext::get_user();
 		$this->tpl->put_all(array(
 			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $user->get_attribute('level') >= MODERATOR_LEVEL,
