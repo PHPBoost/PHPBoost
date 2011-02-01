@@ -124,7 +124,6 @@ class MemberEditProfilController extends AbstractController
 		{
 			MemberUpdateProfileHelper::delete_account($user_id);
 		}
-		//$this->redirect();
 	}
 	
 	private function change_password($user_id)
