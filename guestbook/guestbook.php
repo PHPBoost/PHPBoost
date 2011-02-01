@@ -28,13 +28,13 @@
 require_once('../kernel/begin.php');
 require_once('../guestbook/guestbook_begin.php');
 require_once('../kernel/header.php');
-require_once('guestbook_constants.php');
 $id_get = retrieve(GET, 'id', 0);
 $guestbook = retrieve(POST, 'guestbookForm', false);
-//Chargement du cache
-$Cache->load('guestbook');
 
-if (!$User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_READ)) //Autorisation de lire ?
+$guestbook_config = GuestbookConfig::load();
+$authorizations = $guestbook_config->get_authorizations();
+
+if (!$User->check_auth($authorizations, GuestbookConfig::AUTH_READ)) //Autorisation de lire ?
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -48,7 +48,7 @@ if ($del && !empty($id_get)) //Suppression.
 	$row = $Sql->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	$has_edit_auth = $User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_MODO) 
+	$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) 
 		|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
 	if ($has_edit_auth) {
 		$Session->csrf_get_protect(); //Protection csrf
@@ -56,14 +56,14 @@ if ($del && !empty($id_get)) //Suppression.
 		$Sql->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 		$previous_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
 	
-		$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+		GuestbookMessagesCache::invalidate();
 	
 		AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 	}
 }
 
 //Construction du formulaire
-if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE))
+if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 {
 	$is_edition_mode = !empty($id_get);
 	
@@ -80,14 +80,14 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 		$guestbook_login = $row['login'];
 		$guestbook_contents = FormatingHelper::unparse($row['contents']);
 		
-		$has_edit_auth = $User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_MODO) 
+		$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO)
 			|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
 	}
 	
 	$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(MEMBER_LEVEL);
 
 	$formatter = AppContext::get_content_formatting_service()->create_factory();
-	$formatter->set_forbidden_tags($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+	$formatter->set_forbidden_tags($guestbook_config->get_forbidden_tags());
 		
 	//Post form
 	$form = new HTMLForm('guestbookForm');
@@ -102,10 +102,10 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 		'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 	));
 	
-	if ($is_guest && !$is_edition_mode && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
+	if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de vérification, anti-bots.
 	{
 		$captcha = new Captcha();
-		$captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
+		$captcha->set_difficulty($guestbook_config->get_captcha_difficulty());
 		$fieldset->add_field(new FormFieldCaptcha($captcha));
 	}
 		
@@ -157,7 +157,7 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 			$guestbook_contents = $form->get_value('contents');
 			
 			//Nombre de liens max dans le message ou dans le login
-			if (!TextHelper::check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) 
+			if (!TextHelper::check_nbr_links($guestbook_contents, $guestbook_config->get_maximum_links_message())) 
 			{
 				$controller = PHPBoostErrors::link_flood();
 				DispatchManager::redirect($controller);
@@ -180,7 +180,7 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 				
 				PersistenceContext::get_querier()->update(PREFIX . "guestbook", $columns, " WHERE id = :id", array('id' => $id_get));
 
-				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+				GuestbookMessagesCache::invalidate();
 
 				AppContext::get_response()->redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
@@ -196,7 +196,7 @@ if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_WRITE)
 				
 				$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
 	
-				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+				GuestbookMessagesCache::invalidate();
 	
 				AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 			}
@@ -249,7 +249,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 
 	//Edition/suppression.
-	if ($User->check_auth($CONFIG_GUESTBOOK['guestbook_auth'], AUTH_GUESTBOOK_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	if ($User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	{
 		$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 		$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

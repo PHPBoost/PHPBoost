@@ -32,8 +32,9 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('MemberConfirmRegisterationController', '`^/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
 	new UrlControllerMapper('MemberRegisterController', '`^/register/?$`'),
-	new UrlControllerMapper('MemberViewProfileController', '`^/profil(?:/([0-9]+))?/?$`', array('user_id')),
-	new UrlControllerMapper('MemberEditProfilController', '`^/profil/edit/?$`'),
+	new UrlControllerMapper('MemberViewProfileController', '`^/profile(?:/([0-9]+))?/?$`', array('user_id')),
+	new UrlControllerMapper('MemberHomeProfileController', '`^/profile/home/?$`'),
+	new UrlControllerMapper('MemberEditProfileController', '`^/profile/edit/?$`'),
 	
 	new UrlControllerMapper('MemberViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('type', 'sort', 'page')),
 	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),

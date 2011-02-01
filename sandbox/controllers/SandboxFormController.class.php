@@ -89,8 +89,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
 		));
-		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
+		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ d?sactiv?', '', array(
+			'class' => 'text', 'maxlength' => 25, 'description' => 'd?sactiv?', 'disabled' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
@@ -104,7 +104,7 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 ? 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
 		
@@ -134,18 +134,18 @@ class SandboxFormController extends ModuleController
 
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option,
+		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix ?num?ration', $default_option,
 			array(
 				$default_option,
 				new FormFieldRadioChoiceOption('Choix 2', '2')
 			)));
 
 		// CHECKBOX
-		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case ? cocher', FormFieldCheckbox::CHECKED));
 
 		// SELECT
 		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', $default_select_option,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste d?roulante', $default_select_option,
 			array(
 				$default_select_option,
 				new FormFieldSelectChoiceOption('Choix 2', '2'),
@@ -194,20 +194,20 @@ class SandboxFormController extends ModuleController
 		$vertical_fieldset = new FormFieldsetVertical('fieldset4');
         $vertical_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($vertical_fieldset);
-		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
+		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset s?par?'));
 		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
         $horizontal_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($horizontal_fieldset);
-		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset séparé'));
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset s?par?'));
         $horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('buttons');
 		$buttons_fieldset->add_element(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
+		$this->preview_button = new FormButtonSubmit('Pr?visualiser', 'preview', 'alert("Voulez-vous vraiment pr?visualiser ?")');
 		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$buttons_fieldset->add_element($this->submit_button);
