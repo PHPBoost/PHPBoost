@@ -8,11 +8,11 @@
 				<table class="module_table" style="width:99%;margin-top:15px;">
 					<tr>
 						<td class="row2" style="text-align:center;">
-							<a href="/member/index.php?url=/profil/edit" title="">
+							<a href="{PATH_TO_ROOT}/member/index.php?url=/profile/edit" title="">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 							<br />
-							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a> <br /><br />
+							<a href="{PATH_TO_ROOT}/member/index.php?url=/profile/edit">{L_PROFIL_EDIT}</a> <br /><br />
 						</td>
 						<td class="row2" style="text-align:center;">
 							<a href="pm{U_USER_PM}">
