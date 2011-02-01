@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       MemberEditProfilController.class.php
+ *                       MemberEditProfileController.class.php
  *                            -------------------
  *   begin                : September 18, 2010 2009
  *   copyright            : (C) 2010 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class MemberEditProfilController extends AbstractController
+class MemberEditProfileController extends AbstractController
 {
 	private $lang;
 	/**
@@ -124,7 +124,6 @@ class MemberEditProfilController extends AbstractController
 		{
 			MemberUpdateProfileHelper::delete_account($user_id);
 		}
-		//$this->redirect();
 	}
 	
 	private function change_password($user_id)
@@ -149,7 +148,7 @@ class MemberEditProfilController extends AbstractController
 	
 	private function user_exist($user_id)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 }
 

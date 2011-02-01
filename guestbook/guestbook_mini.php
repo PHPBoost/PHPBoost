@@ -29,23 +29,24 @@ if (defined('PHPBOOST') !== true) exit;
 
 function guestbook_mini($position, $block)
 {
-    global $LANG, $Cache, $_guestbook_rand_msg;
+    global $LANG;
 
     //Mini guestbook non activée si sur la page archive guestbook.
     if (strpos(SCRIPT, '/guestbook/guestbook.php') === false)
     {
     	load_module_lang('guestbook');
-    	$Cache->load('guestbook'); //Chargement du cache
-
+		$guestbook_cache = GuestbookMessagesCache::load();
+		$guestbook_msgs_cache = $guestbook_cache->get_messages();
+		
     	###########################Affichage##############################
     	$tpl = new FileTemplate('guestbook/guestbook_mini.tpl');
 
         MenuService::assign_positions_conditions($tpl, $block);
 
-		$rand = array_rand($_guestbook_rand_msg);
-    	$guestbook_rand = isset($_guestbook_rand_msg[$rand]) ? $_guestbook_rand_msg[$rand] : array();
+		$rand = array_rand($guestbook_msgs_cache);
+    	$guestbook_rand = isset($guestbook_msgs_cache[$rand]) ? $guestbook_cache->get_message($rand) : null;
 
-		if ($guestbook_rand === array())
+		if ($guestbook_rand === null)
 		{
 			$tpl->put_all(array(
 	    		'C_ANY_MESSAGE_GESTBOOK' => false,

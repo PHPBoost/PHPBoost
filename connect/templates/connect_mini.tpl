@@ -35,7 +35,7 @@
 				</p>
 				<p style="margin:0;margin-top:5px;">
 					# IF C_USER_REGISTER # 
-					<a class="small_link" href="{PATH_TO_ROOT}/member/register.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
+					<a class="small_link" href="{PATH_TO_ROOT}/member/index.php?url=/register"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
 					# ENDIF #
 					<br />
 					<a class="small_link" href="{PATH_TO_ROOT}/member/forget.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
@@ -54,7 +54,7 @@
 			</div>
 			<div class="module_mini_contents" style="text-align:left;">
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/member{U_USER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/index.php?url=/profile/home" class="small_link">{L_PRIVATE_PROFIL}</a></li>
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
 					
 					# IF C_ADMIN_AUTH # 
@@ -123,7 +123,7 @@
 		
 		# IF C_USER_CONNECTED #
 		<p style="text-align:right;color:#FFFFFF;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/member{U_USER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a>&nbsp;
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/index.php?url=/profile/home" class="small_link">{L_PRIVATE_PROFIL}</a>&nbsp;
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;
 			
 			# IF C_ADMIN_AUTH #
