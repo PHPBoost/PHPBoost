@@ -30,8 +30,6 @@ require_once('../guestbook/guestbook_begin.php');
 require_once('../kernel/header.php');
 $id_get = retrieve(GET, 'id', 0);
 $guestbook = retrieve(POST, 'guestbookForm', false);
-//Chargement du cache
-$Cache->load('guestbook');
 
 $guestbook_config = GuestbookConfig::load();
 $authorizations = $guestbook_config->get_authorizations();
@@ -58,7 +56,7 @@ if ($del && !empty($id_get)) //Suppression.
 		$Sql->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 		$previous_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
 	
-		$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+		GuestbookMessagesCache::invalidate();
 	
 		AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 	}
@@ -182,7 +180,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 				
 				PersistenceContext::get_querier()->update(PREFIX . "guestbook", $columns, " WHERE id = :id", array('id' => $id_get));
 
-				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+				GuestbookMessagesCache::invalidate();
 
 				AppContext::get_response()->redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
@@ -198,7 +196,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 				
 				$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
 	
-				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+				GuestbookMessagesCache::invalidate();
 	
 				AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 			}
