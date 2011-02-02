@@ -40,42 +40,42 @@ class NewsletterMailService
 	const BBCODE_LANGUAGE = 'bbcode';
 	const HTML_LANGUAGE = 'html';
 
-	public set_mail_subject($subject)
+	public function set_mail_subject($subject)
 	{
 		$this->mail_subject = $subject;
 	}
 	
-	public get_mail_subject()
+	public function get_mail_subject()
 	{
 		return $this->mail_subject;
 	}
 	
-	public set_mail_content($content)
+	public function set_mail_content($content)
 	{
 		$this->mail_content = $content;
 	}
 	
-	public get_mail_content()
+	public function get_mail_content()
 	{
 		return $this->mail_content;
 	}
 	
-	public set_mail_sender($sender)
+	public function set_mail_sender($sender)
 	{
 		$this->mail_content = $sender;
 	}
 	
-	public get_mail_sender()
+	public function get_mail_sender()
 	{
 		return $this->mail_sender;
 	}
 	
-	public set_mail_recipient($recipient)
+	public function set_mail_recipient($recipient)
 	{
 		$this->mail_recipient = $recipient;
 	}
 	
-	public get_mail_recipient()
+	public function get_mail_recipient()
 	{
 		return $this->mail_recipient;
 	}
@@ -83,24 +83,42 @@ class NewsletterMailService
 	/* 
 	 * @param use constante TEXT_LANGUAGE, BBCODE_LANGUAGE or HTML_LANGUAGE
 	*/
-	public set_language_type(Const $language_type)
+	public function set_language_type(Const $language_type)
 	{
 		$this->language_type = $language_type;
 	}
 	
-	public get_language_type()
+	public function get_language_type()
 	{
 		return $this->language_type;
 	}
 	
-	public function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail(NewsletterMailService $newsletter_mail_service)
 	{
-		NewsletterMailFactory::send_mail($newsletter_mail_config);
+		NewsletterMailFactory::send_mail($newsletter_mail_service);
+		
+		//Register archive
+		$errors = null;
+		if ($errors === null)
+		{
+			NewsletterMailService::register_archive($newsletter_mail_service);
+		}
 	}
 	
-	public function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function display_mail(NewsletterMailService $newsletter_mail_service)
 	{
-		NewsletterMailFactory::display_mail($newsletter_mail_config);
+		NewsletterMailFactory::display_mail($newsletter_mail_service);
+	}
+	
+	private function register_archive(NewsletterMailService $newsletter_mail_service)
+	{
+		$number_member_registed = $this->number_archive_mail($newsletter_mail_service);
+		
+	}
+	
+	private function number_archive_mail(NewsletterMailService $newsletter_mail_service)
+	{
+	
 	}
 	
 }
