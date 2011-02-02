@@ -33,15 +33,44 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail(NewsletterMailService $newsletter_mail_service)
 	{
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function display_mail(NewsletterMailService $newsletter_mail_service)
 	{
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	{
+	
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function list_members_registered_newsletter()
+	{
+		$member_registered_newsletter = array();
+		$result = $Sql->query_while("SELECT id, mail 
+		FROM " . PREFIX . "newsletter 
+		ORDER BY id", __LINE__, __FILE__);			
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$member_registered_newsletter[] = array(
+				'id' => $row['id'],
+				'mail' => $row['mail']
+			);
+		}
+		$Sql->query_close($result);
+		
+		return $member_registered_newsletter;
 	}
 }
 
