@@ -30,14 +30,37 @@
  */
 class TextNewsletterMail extends AbstractNewsletterMail
 {
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail(NewsletterMailService $newsletter_mail_config)
 	{
-
+		$mail = new Mail();
+		$mail->set_sender($newsletter_mail_service->get_mail_sender());
+		$mail->set_is_html(false);
+		$mail->set_subject($newsletter_mail_service->get_mail_subject());
+		
+		$member_registered_newsletter = $this->list_members_registered_newsletter();
+		foreach ($member_registered_newsletter as $member)
+		{
+			$mail->clear_recipients();
+			$mail->add_recipient($member['mail']);
+			$mail->set_content($this->parse_contents($newsletter_mail_service, $member['id']));
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
+		}
 	}
 	
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function display_mail(NewsletterMailService $newsletter_mail_config)
 	{
 	
+	}
+	
+	private function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	{
+		$contents = stripslashes(FormatingHelper::strparse(addslashes($newsletter_mail_service->get_mail_content())));
+		return str_replace(
+			'[UNSUBSCRIBE_LINK]', 
+			'<br /><br /><a href="' . HOST . DIR . '/newsletter/index.php??url=/unsubscribe/' . $user_id . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />',
+			$contents);
 	}
 }
 
