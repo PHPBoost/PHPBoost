@@ -175,7 +175,7 @@ class MemberSanction extends AdminController
 			
 			if ($this->get_level_punish() == 100)
 			{
-				$this->sql_querier->inject("UPDATE " . DB_TABLE_SESSIONS . " WHERE user_id = :user_id", array('user_id' => $this->get_user_id()));
+				$this->sql_querier->inject("DELETE " . DB_TABLE_SESSIONS . " WHERE user_id = :user_id", array('user_id' => $this->get_user_id()));
 
 				$this->send_mail($this->lang['ban_title_mail'], $this->lang['ban_mail']);
 			}
@@ -240,9 +240,9 @@ class MemberSanction extends AdminController
 		PrivateMsg::start_conversation($this->get_user_id(), addslashes($title), $content, '-1', PrivateMsg::SYSTEM_PM);
 	}
 	
-	private function send_mail($title, $contents)
+	private function send_mail($title, $content)
 	{
-		AppContext::get_mail_service()->send_from_properties($this->mail_member(), addslashes($title), sprintf(addslashes($contents), GeneralConfig::load()->get_site_name(), addslashes(MailServiceConfig::load()->get_mail_signature())));
+		AppContext::get_mail_service()->send_from_properties($this->mail_member(), addslashes($title), sprintf(addslashes($content), GeneralConfig::load()->get_site_name(), addslashes(MailServiceConfig::load()->get_mail_signature())));
 	}
 	
 	private function verificate_user_id()
