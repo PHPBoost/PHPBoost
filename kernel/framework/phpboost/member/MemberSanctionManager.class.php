@@ -30,7 +30,7 @@
  * @desc This class is responsible a punish member
  * @package {@package}
  */
-class MemberSanctionManager extends AdminController
+class MemberSanctionManager
 {
 	private static $sql_querier;
 	private static $lang;
