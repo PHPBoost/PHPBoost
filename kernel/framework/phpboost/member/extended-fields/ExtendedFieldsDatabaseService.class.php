@@ -197,16 +197,13 @@ class ExtendedFieldsDatabaseService
 	public static function type_columm_field(ExtendedField $extended_field)
 	{
 		$field_type = $extended_field->get_field_type();
-		if (is_numeric($field_type))
+		switch ($field_type) 
 		{
-			switch ($field_type) 
-			{
-				case 1:
-					return 'VARCHAR(255) NOT NULL DEFAULT \'\'';
-					break;
-				default:
-					return 'TEXT NOT NULL';
-			}
+			case 1:
+				return "VARCHAR(255) NOT NULL DEFAULT \'\'";
+				break;
+			default:
+				return "TEXT NOT NULL";
 		}
 	}
 	
