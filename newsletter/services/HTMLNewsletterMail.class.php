@@ -30,39 +30,47 @@
  */
 class HTMLNewsletterMail extends AbstractNewsletterMail
 {
-	public function send_mail(NewsletterMailService $newsletter_mail_service)
+	public function send_mail($sender, $subject, $contents)
 	{
 		$mail = new Mail();
-		$mail->set_sender($newsletter_mail_service->get_mail_sender());
+		$mail->set_sender($sender);
 		$mail->set_is_html(true);
-		$mail->set_subject($newsletter_mail_service->get_mail_subject());
+		$mail->set_subject($subject);
 		
 		$member_registered_newsletter = $this->list_members_registered_newsletter();
 		foreach ($member_registered_newsletter as $member)
 		{
 			$mail->clear_recipients();
 			$mail->add_recipient($member['mail']);
-			$mail->set_content($this->parse_contents($newsletter_mail_service, $member['id']));
+			$mail->set_content($contents);
 			
 			//TODO gestion des erreurs
 			AppContext::get_mail_service()->try_to_send($mail);
 		}
 	}
 	
-	public function display_mail(NewsletterMailService $newsletter_mail_service)
+	public function display_mail($title, $contents)
 	{
-	
+		$contents = stripslashes($contents);
+		return = str_replace('<body', '<body onclick = "window.close()" ', $contents);
 	}
 	
-	private function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	public function parse_contents($contents, $user_id)
 	{
-		$contents = stripslashes($newsletter_mail_service->get_mail_content());
-		$contents = NewsletterService::clean_html($contents);
+		$contents = stripslashes($contents);
+		$contents = $this->clean_html($contents);
 		$contents = ContentSecondParser::export_html_text($contents);
 		return str_replace(
 			'[UNSUBSCRIBE_LINK]', 
-			'<br /><br /><a href="' . HOST . DIR . '/newsletter/index.php??url=/unsubscribe/' . $user_id . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />',
+			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $user_id . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
 			$contents);
+	}
+	
+	private function clean_html($contents)
+	{
+		$contents = htmlentities($contents, ENT_NOQUOTES);
+		$contents = str_replace(array('&amp;', '&lt;', '&gt;'), array('&', '<', '>'), $contents);
+		return $contents;
 	}
 }
 

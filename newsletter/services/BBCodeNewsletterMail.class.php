@@ -30,12 +30,17 @@
  */
 class BBCodeNewsletterMail extends AbstractNewsletterMail
 {
-	public function send_mail(NewsletterMailService $newsletter_mail_service)
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	public function send_mail($sender, $subject, $contents)
 	{
 		$mail = new Mail();
-		$mail->set_sender($newsletter_mail_service->get_mail_sender());
+		$mail->set_sender($sender);
 		$mail->set_is_html(false);
-		$mail->set_subject($newsletter_mail_service->get_mail_subject());
+		$mail->set_subject($subject);
 		
 		$member_registered_newsletter = $this->list_members_registered_newsletter();
 		foreach ($member_registered_newsletter as $member)
@@ -43,8 +48,8 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 			$mail->clear_recipients();
 			$mail->add_recipient($member['mail']);
 			
-			$contents = '<html><head><title>' . $newsletter_mail_service->get_mail_subject() . '</title></head><body>';
-			$contents .= $this->parse_contents($newsletter_mail_service, $member['id']);
+			$contents = '<html><head><title>' . $subject . '</title></head><body>';
+			$contents .= $contents;
 			$contents .= '</body></html>';
 			
 			$mail->set_content($contents);
@@ -54,18 +59,19 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 		}
 	}
 	
-	public function display_mail(NewsletterMailService $newsletter_mail_service)
+	public function display_mail($title, $contents)
 	{
-	
+		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] .'"><head><title>' . $title . '</title></head><body onclick = "window.close()"><p>' .$contents . '</p></body></html>';
 	}
 	
-	private function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	public function parse_contents($contents, $user_id)
 	{
-		$contents = stripslashes(FormatingHelper::strparse(addslashes($newsletter_mail_service->get_mail_content())));
+		$contents = stripslashes(FormatingHelper::strparse(addslashes($contents)));
 		$contents = ContentSecondParser::export_html_text($contents);
 		return str_replace(
 			'[UNSUBSCRIBE_LINK]', 
-			'<br /><br /><a href="' . HOST . DIR . '/newsletter/index.php??url=/unsubscribe/' . $user_id . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />',
+			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $user_id . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
 			$contents);
 	}
 }
