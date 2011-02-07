@@ -26,7 +26,7 @@
  ###################################################*/
 
 require_once('../kernel/begin.php');
-$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/member')->absolute();
+$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/member')->absolute());
 $Bread_crumb->add($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php');
