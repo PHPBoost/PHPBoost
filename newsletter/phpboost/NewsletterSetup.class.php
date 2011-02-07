@@ -40,11 +40,13 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
+		$this->create_field_member();
 	}
 
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$this->delete_field_member();
 	}
 
 	private function drop_tables()
@@ -84,6 +86,26 @@ class NewsletterSetup extends DefaultModuleSetup
 			'primary' => array('id')
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_arch, $fields, $options);
+	}
+	
+	private function create_field_member()
+	{
+		//$lang = LangLoader::get('newsletter_common', 'newsletter');
+		
+		$extended_field = new ExtendedField();
+		$extended_field->set_name('test');
+		$extended_field->set_field_name('register_newsletter');
+		$extended_field->set_description('dd');
+		$extended_field->set_field_type('RegisterNewsletterExtendedField');
+		$extended_field->set_display(true);
+		ExtendedFieldsService::add($extended_field);
+	}
+	
+	private function delete_field_member()
+	{
+		$extended_field = new ExtendedField();
+		$extended_field->set_field_name('register_newsletter');
+		ExtendedFieldsService::delete($extended_field, ExtendedFieldsService::BY_FIELD_NAME);
 	}
 }
 

@@ -30,6 +30,15 @@
  */
 abstract class AbstractNewsletterMail implements NewsletterMailType
 {
+	private $lang;
+	private $querier;
+	
+	public function __construct()
+	{
+		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->querier = PersistenceContext::get_querier();
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -55,20 +64,28 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function list_members_registered_newsletter()
+	public function display_mail($title, $contents)
 	{
-		$member_registered_newsletter = array();
-		$result = $Sql->query_while("SELECT id, mail 
+		return $contents;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function list_members_registered_newsletter()
+	{
+	
+		$result = $this->querier->select("SELECT id, mail 
 		FROM " . PREFIX . "newsletter 
-		ORDER BY id", __LINE__, __FILE__);			
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE user_aprob = 1
+		ORDER BY id");
+		while ($row = $result->fetch())
 		{
 			$member_registered_newsletter[] = array(
 				'id' => $row['id'],
 				'mail' => $row['mail']
 			);
 		}
-		$Sql->query_close($result);
 		
 		return $member_registered_newsletter;
 	}

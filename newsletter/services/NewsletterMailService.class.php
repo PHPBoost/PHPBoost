@@ -30,95 +30,53 @@
  */
 class NewsletterMailService
 {
-	public $mail_subject;
-	public $mail_content;
-	public $mail_sender;
-	public $mail_recipient;
-	public $language_type;
-	
+	private static $db_querier;
 	const TEXT_LANGUAGE = 'text';
 	const BBCODE_LANGUAGE = 'bbcode';
 	const HTML_LANGUAGE = 'html';
-
-	public function set_mail_subject($subject)
+	
+	public static function __static()
 	{
-		$this->mail_subject = $subject;
+		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public function get_mail_subject()
+	public static function send_mail($language_type, $sender, $subject, $contents)
 	{
-		return $this->mail_subject;
-	}
-	
-	public function set_mail_content($content)
-	{
-		$this->mail_content = $content;
-	}
-	
-	public function get_mail_content()
-	{
-		return $this->mail_content;
-	}
-	
-	public function set_mail_sender($sender)
-	{
-		$this->mail_content = $sender;
-	}
-	
-	public function get_mail_sender()
-	{
-		return $this->mail_sender;
-	}
-	
-	public function set_mail_recipient($recipient)
-	{
-		$this->mail_recipient = $recipient;
-	}
-	
-	public function get_mail_recipient()
-	{
-		return $this->mail_recipient;
-	}
-	
-	/* 
-	 * @param use constante TEXT_LANGUAGE, BBCODE_LANGUAGE or HTML_LANGUAGE
-	*/
-	public function set_language_type(Const $language_type)
-	{
-		$this->language_type = $language_type;
-	}
-	
-	public function get_language_type()
-	{
-		return $this->language_type;
-	}
-	
-	public function send_mail(NewsletterMailService $newsletter_mail_service)
-	{
-		NewsletterMailFactory::send_mail($newsletter_mail_service);
+		$contents = NewsletterMailFactory::parse_contents($language_type, $contents, $user_id);
+		NewsletterMailFactory::send_mail($language_type, $sender, $subject, $contents)
 		
-		//Register archive
-		$errors = null;
-		if ($errors === null)
-		{
-			NewsletterMailService::register_archive($newsletter_mail_service);
-		}
-	}
-	
-	public function display_mail(NewsletterMailService $newsletter_mail_service)
-	{
-		NewsletterMailFactory::display_mail($newsletter_mail_service);
-	}
-	
-	private function register_archive(NewsletterMailService $newsletter_mail_service)
-	{
-		$number_member_registed = $this->number_archive_mail($newsletter_mail_service);
+		self::register_archive($language_type, $title, $contents);
 		
+		//TOTO Gestion des erreurs
 	}
 	
-	private function number_archive_mail(NewsletterMailService $newsletter_mail_service)
+	public static function display_mail($title, $contents)
 	{
+		$row = $this->querier->select_single_row(PREFIX . 'newsletter', array('*'), "WHERE id = '" . $id . "'");
+		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
+	}
 	
+	private static function register_archive($language_type, $title, $contents)
+	{
+		//TODO voir a quoi sert number archive
+		$number_archive = self::number_archive();
+		$title = TextHelper::strprotect($title, TextHelper::HTML_NO_PROTECT, TextHelper::ADDSLASHES_FORCE);
+		$contents = TextHelper::strprotect($contents, HTML_NO_PROTECT, ADDSLASHES_FORCE);
+		
+		self::$db_querier->inject(
+			"INSERT INTO " . PREFIX . "newsletter (title, contents, timestamp, type, nbr)
+			VALUES (:title, :contents, :timestamp, :type, :field_type, :nbr)", array(
+                'title' => $title,
+                'contents' => $contents,
+				'timestamp' => time(),
+				'type' => $language_type,
+				'nbr' => $number_archive
+		));
+	}
+	
+	private static function number_archive(NewsletterMailService $newsletter_mail_service)
+	{
+		return self::$db_querier->count(PREFIX . 'newsletter');
 	}
 	
 }
