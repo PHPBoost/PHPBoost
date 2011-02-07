@@ -36,6 +36,7 @@ class MemberExtendedFieldsDAO
 	private $request_insert;
 	private $request_update;
 	private $request_field;
+	private $fields;
 	
 	public function __construct()
 	{
@@ -43,6 +44,7 @@ class MemberExtendedFieldsDAO
 		$this->request_field = '';
 		$this->request_insert = '';
 		$this->request_update = '';
+		$this->fields = array();
 	}
 	
 	public function set_request(MemberExtendedField $member_extended_field)
@@ -50,6 +52,8 @@ class MemberExtendedFieldsDAO
 		$this->set_request_update($member_extended_field);
 
 		$this->set_request_insert($member_extended_field);
+		
+		$this->fields[$member_extended_field->get_field_name()] = $member_extended_field->get_value();
 	}
 	
 	public function get_request($user_id)
@@ -95,6 +99,17 @@ class MemberExtendedFieldsDAO
 		if (!empty($this->request_update))
 		{
 			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		}
+	}
+	
+	/**
+	 * @desc Return value field for field_name
+	 */
+	public function get_value($field_name)
+	{
+		if (in_array($field_name, $this->fields))
+		{
+			return $this->fields[$field_name];
 		}
 	}
 	
