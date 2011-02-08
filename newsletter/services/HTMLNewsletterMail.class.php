@@ -42,7 +42,7 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 		{
 			$mail->clear_recipients();
 			$mail->add_recipient($member['mail']);
-			$mail->set_content($contents);
+			$mail->set_content($this->add_unsubscribe_link($contents, $member['mail']));
 			
 			//TODO gestion des erreurs
 			AppContext::get_mail_service()->try_to_send($mail);
@@ -59,11 +59,7 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 	{
 		$contents = stripslashes($contents);
 		$contents = $this->clean_html($contents);
-		$contents = ContentSecondParser::export_html_text($contents);
-		return str_replace(
-			'[UNSUBSCRIBE_LINK]', 
-			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $user_id . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
-			$contents);
+		return ContentSecondParser::export_html_text($contents);
 	}
 	
 	private function clean_html($contents)

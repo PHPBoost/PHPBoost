@@ -76,7 +76,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	{
 	
 		$result = $this->querier->select("SELECT id, mail 
-		FROM " . PREFIX . "newsletter 
+		FROM " . NewsletterSetup::$newsletter_table_subscribers . "
 		WHERE user_aprob = 1
 		ORDER BY id");
 		while ($row = $result->fetch())
@@ -88,6 +88,15 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 		}
 		
 		return $member_registered_newsletter;
+	}
+	
+		
+	public function add_unsubscribe_link($contents, $mail)
+	{
+		return str_replace(
+			'[UNSUBSCRIBE_LINK]', 
+			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $mail . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
+			$contents);
 	}
 }
 
