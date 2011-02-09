@@ -135,7 +135,7 @@ if (!empty($id_get))
 
 				$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . ucfirst($last_topic_title) . '</a><br />
 				<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
-				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
+				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="'. DispatchManager::get_url('/member', '/profile/'.$row['last_user_id'])->absolute() .'" class="small_link">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
 			}
 			else
 			{
@@ -312,7 +312,7 @@ if (!empty($id_get))
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Affichage du dernier message posté.
-		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="'. DispatchManager::get_url('/member', '/profile/'.$row['last_user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
 		//Ancre ajoutée aux messages non lus.	
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
@@ -326,7 +326,7 @@ if (!empty($id_get))
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
+			'AUTHOR' => !empty($row['login']) ? '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION_TOPICS' => $Pagination->display('topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
 			'MSG' => ($row['nbr_msg'] - 1),

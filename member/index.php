@@ -36,9 +36,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('MemberHomeProfileController', '`^/profile/home/?$`'),
 	new UrlControllerMapper('MemberEditProfileController', '`^/profile/edit/?$`'),
 	
-	new UrlControllerMapper('MemberViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('type', 'sort', 'page')),
-	new UrlControllerMapper('MaintainController', '`^/maintain/?$`'),
-	new UrlControllerMapper('ErrorController', '`^/error/([a-z][0-9]+)/?$`', array('type')),
+	new UrlControllerMapper('MemberViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('MemberViewAllGroupController', '`^/group(?:/([a-z]+))?/?$`', array('id')),
 	new UrlControllerMapper('MemberHomeController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);

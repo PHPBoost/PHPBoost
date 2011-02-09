@@ -48,7 +48,7 @@ class AdminMemberConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->put('MSG', MessageHelper::display($this->lang['members.success-saving-config'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.success-saving-config'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());

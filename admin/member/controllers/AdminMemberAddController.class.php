@@ -49,7 +49,7 @@ class AdminMemberAddController extends AdminController
 		{
 			$this->save();
 
-			$this->form->put('MSG', MessageHelper::display($this->lang['members.success-member-add'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.success-member-add'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -143,10 +143,10 @@ class AdminMemberAddController extends AdminController
 	{
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['members.members-management']);
-		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member/index.php', '/user/list'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/user/add'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/user/config'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member/index.php', '/user/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
+		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member/index.php', '/member/list'), '/templates/' . get_utheme() . '/images/admin/members.png');
+		$response->add_link($this->lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/member/add'), '/templates/' . get_utheme() . '/images/admin/members.png');
+		$response->add_link($this->lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/member/config'), '/templates/' . get_utheme() . '/images/admin/members.png');
+		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member/index.php', '/member/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['members.add-member']);
 		
