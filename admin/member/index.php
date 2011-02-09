@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           admin-extended-fields-common.php
+ *                           index.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 K?vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -35,6 +35,11 @@ new UrlControllerMapper('AdminExtendedFieldMemberAddController', '`^/extended-fi
 new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-fields/([0-9]+)/edit/?$`', array('id')),
 new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/([0-9]+)/delete/?$`', array('id')),
 new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
+
+new UrlControllerMapper('AdminMemberAddController', '`^/member/add/?$`'),
+new UrlControllerMapper('AdminMemberConfigController', '`^/member/config/?$`'),
+new UrlControllerMapper('AdminMemberEditController', '`^/member/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminMemberPunishmentController', '`^/member/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
