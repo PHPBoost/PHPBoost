@@ -200,7 +200,7 @@ class ExtendedFieldsDatabaseService
 		switch ($field_type) 
 		{
 			case 1:
-				return "VARCHAR(255) NOT NULL DEFAULT \'\'";
+				return "VARCHAR(255) NOT NULL DEFAULT '' ";
 				break;
 			default:
 				return "TEXT NOT NULL";
