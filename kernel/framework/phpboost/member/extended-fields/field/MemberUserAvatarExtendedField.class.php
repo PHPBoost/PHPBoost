@@ -125,7 +125,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			$dir = PATH_TO_ROOT .'/images/avatars/';
 			
 			$avatar = $form->get_value('upload_avatar', 0);
-			$former_avatar = MemberExtendedFieldsService::return_value($member_extended_field);
+			$former_avatar = MemberExtendedFieldsService::return_field_member($member_extended_field);
 			if ($former_avatar !== $avatar)
 			{
 				@unlink($former_avatar);

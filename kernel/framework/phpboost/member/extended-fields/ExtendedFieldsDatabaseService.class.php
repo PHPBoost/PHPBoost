@@ -33,11 +33,18 @@
  */
 class ExtendedFieldsDatabaseService
 {
+	private static $db_querier;
+	
+	public static function __static()
+	{
+		self::$db_querier = PersistenceContext::get_querier();
+	}
+	
 	public static function add_extended_field(ExtendedField $extended_field)
 	{
 		self::add_extended_field_to_member($extended_field);
 
-		PersistenceContext::get_querier()->inject(
+		self::$db_querier->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
 			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :freeze, :auth)", array(
                 'name' => $extended_field->get_name(),
@@ -63,7 +70,7 @@ class ExtendedFieldsDatabaseService
 		$former_field_type = $data_field['field_type'];
 		$new_field_type = $extended_field->get_field_type();
 
-		PersistenceContext::get_querier()->inject(
+		self::$db_querier->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
 			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
@@ -97,7 +104,7 @@ class ExtendedFieldsDatabaseService
 		self::drop_extended_field_to_member($extended_field);	
 		if (!empty($id))
 		{
-			PersistenceContext::get_querier()->inject(
+			self::$db_querier->inject(
 				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
 				, array(
 					'id' => $id,
@@ -105,7 +112,7 @@ class ExtendedFieldsDatabaseService
 		}
 		else if (!empty($field_name))
 		{
-			PersistenceContext::get_querier()->inject(
+			self::$db_querier->inject(
 				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE field_name = :field_name"
 				, array(
 					'field_name' => $field_name,
@@ -116,7 +123,7 @@ class ExtendedFieldsDatabaseService
 	
 	public static function update_extended_field_display_by_id(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_querier()->inject(
+		self::$db_querier->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
 			display = :display
 			WHERE id = :id"
@@ -128,7 +135,7 @@ class ExtendedFieldsDatabaseService
 	
 	public static function update_extended_field_display_by_field_name(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_querier()->inject(
+		self::$db_querier->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
 			display = :display
 			WHERE field_name = :field_name"
@@ -140,32 +147,32 @@ class ExtendedFieldsDatabaseService
 	
 	public static function select_data_field_by_id(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
+		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
 	}
 
 	public static function select_data_field_by_field_name(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
+		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
 	}
 	
 	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0 ? true : false;
+		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_id(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE id = '" . $extended_field->get_id() . "'") > 0 ? true : false;
+		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE id = '" . $extended_field->get_id() . "'") > 0 ? true : false;
 	}
 	
 	public static function check_field_exist_by_type(ExtendedField $extended_field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0 ? true : false;
+		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0 ? true : false;
 	}
 	
 	private static function delete_empty_fields_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
+		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
 	}
 	
 	private static function add_extended_field_to_member(ExtendedField $extended_field)
