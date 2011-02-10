@@ -27,13 +27,13 @@
 
 class NewsletterSetup extends DefaultModuleSetup
 {
-	private static $newsletter_table;
-	private static $newsletter_table_arch;
+	public static $newsletter_table_subscribers;
+	public static $newsletter_table_archive;
 
 	public static function __static()
 	{
-		self::$newsletter_table = PREFIX . 'newsletter';
-		self::$newsletter_table_arch = PREFIX . 'newsletter_arch';
+		self::$newsletter_table_subscribers = PREFIX . 'newsletter';
+		self::$newsletter_table_archive = PREFIX . 'newsletter_arch';
 	}
 
 	public function install()
@@ -51,16 +51,16 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table, self::$newsletter_table_arch));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_archive));
 	}
 
 	private function create_tables()
 	{
-		$this->create_newsletter_table();
-		$this->create_newsletter_arch_table();
+		$this->create_newsletter_subscribers_table();
+		$this->create_newsletter_archive_table();
 	}
 
-	private function create_newsletter_table()
+	private function create_newsletter_subscribers_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -69,23 +69,23 @@ class NewsletterSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribers, $fields, $options);
 	}
 
-	private function create_newsletter_arch_table()
+	private function create_newsletter_archive_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
-			'message' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'type' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''"),
-			'nbr' => array('type' => 'string', 'length' => 9, 'notnull' => 1, 'default' => 0)
+			'subscribers' => array('type' => 'string', 'length' => 9, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id')
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_arch, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_archive, $fields, $options);
 	}
 	
 	private function create_field_member()

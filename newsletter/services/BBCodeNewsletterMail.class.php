@@ -49,7 +49,7 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 			$mail->add_recipient($member['mail']);
 			
 			$contents = '<html><head><title>' . $subject . '</title></head><body>';
-			$contents .= $contents;
+			$contents .= $this->add_unsubscribe_link($contents, $member['mail']);
 			$contents .= '</body></html>';
 			
 			$mail->set_content($contents);
@@ -65,14 +65,10 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] .'"><head><title>' . $title . '</title></head><body onclick = "window.close()"><p>' .$contents . '</p></body></html>';
 	}
 	
-	public function parse_contents($contents, $user_id)
+	public function parse_contents($contents)
 	{
 		$contents = stripslashes(FormatingHelper::strparse(addslashes($contents)));
-		$contents = ContentSecondParser::export_html_text($contents);
-		return str_replace(
-			'[UNSUBSCRIBE_LINK]', 
-			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $user_id . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
-			$contents);
+		return ContentSecondParser::export_html_text($contents);
 	}
 }
 
