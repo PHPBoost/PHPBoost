@@ -42,7 +42,7 @@ class NewsletterMailService
 	
 	public static function send_mail($language_type, $sender, $subject, $contents)
 	{
-		$contents = NewsletterMailFactory::parse_contents($language_type, $contents, $user_id);
+		$contents = NewsletterMailFactory::parse_contents($language_type, $contents);
 		NewsletterMailFactory::send_mail($language_type, $sender, $subject, $contents)
 		
 		self::register_archive($language_type, $title, $contents);
@@ -52,31 +52,30 @@ class NewsletterMailService
 	
 	public static function display_mail($title, $contents)
 	{
-		$row = $this->querier->select_single_row(PREFIX . 'newsletter', array('*'), "WHERE id = '" . $id . "'");
+		$row = $this->querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
 		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
 	}
 	
 	private static function register_archive($language_type, $title, $contents)
 	{
-		//TODO voir a quoi sert number archive
-		$number_archive = self::number_archive();
+		$number_subscribers = self::number_subscribers();
 		$title = TextHelper::strprotect($title, TextHelper::HTML_NO_PROTECT, TextHelper::ADDSLASHES_FORCE);
 		$contents = TextHelper::strprotect($contents, HTML_NO_PROTECT, ADDSLASHES_FORCE);
 		
 		self::$db_querier->inject(
-			"INSERT INTO " . PREFIX . "newsletter (title, contents, timestamp, type, nbr)
-			VALUES (:title, :contents, :timestamp, :type, :field_type, :nbr)", array(
+			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (title, contents, timestamp, type, subscribers)
+			VALUES (:title, :contents, :timestamp, :type, :field_type, :subscribers)", array(
                 'title' => $title,
                 'contents' => $contents,
 				'timestamp' => time(),
 				'type' => $language_type,
-				'nbr' => $number_archive
+				'subscribers' => $number_subscribers
 		));
 	}
 	
-	private static function number_archive(NewsletterMailService $newsletter_mail_service)
+	private static function number_subscribers(NewsletterMailService $newsletter_mail_service)
 	{
-		return self::$db_querier->count(PREFIX . 'newsletter');
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers);
 	}
 	
 }

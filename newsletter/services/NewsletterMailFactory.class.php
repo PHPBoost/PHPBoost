@@ -46,12 +46,12 @@ class NewsletterMailFactory
 		return $instance_class->display_mail($id);
 	}
 	
-	public static function parse_contents($language_type, $contents, $user_id)
+	public static function parse_contents($language_type, $contents)
 	{
 		$name_class = self::determine_class($language_type);
 		
 		$instance_class = new $name_class();
-		return $instance_class->parse_contents($contents, $user_id);
+		return $instance_class->parse_contents($contents);
 	}
 	
 	private static function determine_class($language_type)
