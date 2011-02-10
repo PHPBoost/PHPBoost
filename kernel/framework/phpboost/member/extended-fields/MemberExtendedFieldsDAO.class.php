@@ -126,7 +126,11 @@ class MemberExtendedFieldsDAO
 	 */
 	public static function select_data_field_by_user_id(MemberExtendedField $member_extended_field)
 	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('*'), "WHERE user_id = '" . $member_extended_field->get_user_id() . "'");
+		$exist = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, "WHERE user_id = '" . $member_extended_field->get_user_id() . "'") > 0 ? true : false;
+		if ($exist)
+		{
+			return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('*'), "WHERE user_id = '" . $member_extended_field->get_user_id() . "'");
+		}
 	}
 }
 ?>

@@ -45,7 +45,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		$field_name = $member_extended_field->get_field_name();
 		
-		return $form->get_value($field_name)->get_label();
+		return $form->get_value($field_name);
 	}
 	
 	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao)
@@ -53,7 +53,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		parent::register($member_extended_field, $member_extended_fields_dao);
 		
 		$mail = PersistenceContext::get_sql()->query("SELECT user_mail FROM " . DB_TABLE_MEMBER . " WHERE user_id = '". $member_extended_field->get_user_id() ."'", __LINE__, __FILE__);
-		if ((bool)$member_extended_field->get_field_value())
+		if ((bool)$member_extended_field->get_value())
 		{
 			NewsletterService::subscribe($mail);
 		}
