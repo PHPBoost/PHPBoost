@@ -34,12 +34,12 @@ class MemberSanctionManager
 {
 	private static $sql_querier;
 	private static $lang;
-	const NO_SEND_CONFIRMATION;
-	const SEND_MAIL;
-	const SEND_MP;
-	const SEND_MP_AND_MP;
+	const NO_SEND_CONFIRMATION = 'no_send_confirmation';
+	const SEND_MAIL = 'send_mail';
+	const SEND_MP = 'send_mp';
+	const SEND_MP_AND_MAIL = 'send_mp_and_mail';
 	
-	public function __construct()
+	public function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('main');
@@ -48,13 +48,13 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public function remove_write_permissions($user_id, $punish_duration, $send_confirmation = SEND_MP, $content_to_send = '')
+	public static function remove_write_permissions($user_id, $punish_duration, $send_confirmation = SEND_MP, $content_to_send = '')
 	{
-		if ($this->verificate_user_id($user_id))
+		if (self::verificate_user_id($user_id))
 		{
 			self::$sql_querier->inject(
 				"UPDATE " . DB_TABLE_MEMBER . " SET 
-				user_readonly = :user_readonly,
+				user_readonly = :user_readonly
 				WHERE user_id = :user_id"
 				, array(
 					'user_readonly' => $punish_duration,
@@ -75,20 +75,20 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send.
 	 */
-	public function banish($user_id, $punish_duration, $send_confirmation = SEND_MAIL, $content_to_send = '')
+	public static function banish($user_id, $punish_duration, $send_confirmation = SEND_MAIL, $content_to_send = '')
 	{
-		if ($this->verificate_user_id($user_id))
+		if (self::verificate_user_id($user_id))
 		{
 			self::$sql_querier->inject(
 				"UPDATE " . DB_TABLE_MEMBER . " SET 
-				user_ban = :user_ban,
+				user_ban = :user_ban
 				WHERE user_id = :user_id"
 				, array(
 					'user_ban' => $punish_duration,
 					'user_id' => $user_id
 			));
 			
-			if ($send_confirmation == SEND_MAIL || $send_confirmation == SEND_MP_AND_MP && !empty($content_to_send))
+			if ($send_confirmation == SEND_MAIL)
 			{
 				$content = !empty($content_to_send) ? $content_to_send : self::$lang['ban_mail'];
 				self::send_mail(self::$lang['ban_title_mail'], $content);
@@ -99,13 +99,13 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_level_punish, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public function caution($user_id, $level_punish, $send_confirmation = SEND_MP, $content_to_send = '')
+	public static function caution($user_id, $level_punish, $send_confirmation = SEND_MP, $content_to_send = '')
 	{
-		if ($this->verificate_user_id($user_id))
+		if (self::verificate_user_id($user_id))
 		{
 			self::$sql_querier->inject(
 				"UPDATE " . DB_TABLE_MEMBER . " SET 
-				user_warning = :user_warning,
+				user_warning = :user_warning
 				WHERE user_id = :user_id"
 				, array(
 					'user_warning' => $level_punish,
@@ -116,7 +116,7 @@ class MemberSanctionManager
 			{
 				self::$sql_querier->inject("DELETE " . DB_TABLE_SESSIONS . " WHERE user_id = :user_id", array('user_id' => $user_id));
 
-				self::send_mail($this->lang['ban_title_mail'], self::$lang['ban_mail']);
+				self::send_mail(self::$lang['ban_title_mail'], self::$lang['ban_mail']);
 			}
 			else
 			{
@@ -135,13 +135,13 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
-	public function restore_write_permissions($user_id)
+	public static function restore_write_permissions($user_id)
 	{
-		if ($this->verificate_user_id($user_id))
+		if (self::verificate_user_id($user_id))
 		{
 			self::$sql_querier->inject(
 				"UPDATE " . DB_TABLE_MEMBER . " SET 
-				user_readonly = :user_readonly,
+				user_readonly = :user_readonly
 				WHERE user_id = :user_id"
 				, array(
 					'user_readonly' => 0,
@@ -153,13 +153,13 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
-	public function cancel_banishment($user_id)
+	public static function cancel_banishment($user_id)
 	{
-		if ($this->verificate_user_id($user_id))
+		if (self::verificate_user_id($user_id))
 		{
 			self::$sql_querier->inject(
 				"UPDATE " . DB_TABLE_MEMBER . " SET 
-				user_ban = :user_ban,
+				user_ban = :user_ban
 				WHERE user_id = :user_id"
 				, array(
 					'user_ban' => 0,

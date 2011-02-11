@@ -55,22 +55,17 @@ if ($action == 'punish') //Gestion des utilisateurs
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
-		if (!empty($info_mbr['user_id']))
+		//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
+		if ($id_get != $User->get_attribute('user_id'))
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-			
-			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+			if (!empty($readonly_contents))
 			{
-				if (!empty($readonly_contents) && !empty($readonly))
-				{					
-					
-					
-					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
-				}
+				MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::SEND_MP, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
 			}
+		}
+		else
+		{
+			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
 		}
 		
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
@@ -116,7 +111,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
-				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
@@ -169,7 +164,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -210,35 +205,19 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
-		if (!empty($info_mbr['user_id']))
+		if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 		{
-			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
+			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
+			if ($id_get != $User->get_attribute('user_id'))
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
-				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
-				{					
-					if (!empty($warning_contents))
-					{					
-						
-						
-						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
-					}
-				}
+				MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 			}
-			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
+			else
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-			
-				//Envoi du mail
-				AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
-			}	
+				MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
+			}
 		}
-		
+
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 	}
 	
@@ -283,7 +262,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
-				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 			
@@ -317,7 +296,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
@@ -338,20 +317,16 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 	$user_ban = retrieve(POST, 'user_ban', 0);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
-	{
+	{	
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-		if (!empty($info_mbr['user_id']))
-		{	
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-			//Si avertissement à 100% et débanni, on réduit l'avertissement à 90%.
-			if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-			
-			if (!empty($user_ban)) //Envoi du mail
-			{
-				AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
-			}				
-		}		
+
+		MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
+
+		if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
+		{
+			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);			
+		}
+		
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 	}
 	
@@ -395,7 +370,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
-				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
@@ -449,7 +424,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			'C_USER_BAN' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'BAN_OPTIONS' => $ban_options,
-			'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
+			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 			'L_PM' => $LANG['user_contact_pm'],
