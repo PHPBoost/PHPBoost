@@ -58,6 +58,7 @@
 [*] Ajout de l'attribut style à la balise image de façon à pouvoir fixer des propriétés comme largeur, hauteur et bordure.
 [*] Nouveau système de champs membres : Les champs peuvent être désactivé, modifier et l'ajout de type de champs supplémentaires ont été ajoutés.
 [*] Possibilité de gérer finement les autorisations des thèmes.
+[*] Possibilité de gérer finement les autorisations d'accès au site quand il est en maintenance.
 
 =================================== Modules =====================================
 [b]BugTracker :[/b]

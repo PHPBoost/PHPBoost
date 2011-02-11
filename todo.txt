@@ -7,7 +7,6 @@
 - Balises Youtube, Dailymotion
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
 - Changer de format de stockage des fuseaux horaires
-- Intégrer au formbuilder des checkboxes multiples
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -21,15 +20,21 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Terminer le passage du dossier member et de la partie membre dans l'administration.
-- Corriger des soucis lorsqu'un champ est en mode freeze, il peut être supprimé.
-- Débugger voir refaire les classes Comments et Note.
+- Débugger voir refaire les classes Comments et Note (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
 - Créer des contraintes permettant de voir si un login/adresse email existe déjà.
 - Gérer finement les autorisations des langues
+- Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
+- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Téléchargement[/b]
 - Possibilité de signaler les liens cassés.
+
+[b]Newsletter[/b]
+- Refonte du module en MVC
+- Gestion des autorisations de lecture, de suppression de la liste des archives.
+- Etudier l'ajouts de notifications de lecture
 
 #################################################################################
 
@@ -45,7 +50,6 @@
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
 - améliorer l'affichage dans l'interface des menus (texte qui se chevauche, boutons ajouter).
-- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 ------------------------------------ MODULES -----------------------------------
 - [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
@@ -113,9 +117,6 @@
 - [color=red]Nouveauté:[/color] Galerie privée pour les membres.
 - [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
 - Possibilité de définir une limite d'upload en fonction des groupes.
-
-[b]Téléchargement[/b]
-- Possibilité d'afficher la dernière mise à jour du fichier.
 
 [b]Liens web[/b]
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
