@@ -50,7 +50,7 @@ class ContentFormattingService
 	{
 		if ($this->default_factory === null)
 		{
-			$this->default_factory = $this->create_factory($this->get_user_language());
+			$this->default_factory = $this->create_factory($this->get_user_editor());
 		}
 		return $this->default_factory;
 	}
@@ -69,7 +69,7 @@ class ContentFormattingService
 			case self::TINYMCE_LANGUAGE:
 				return new TinyMCEFormattingFactory();
 			default:
-				return $this->create_factory($this->get_user_language());
+				return $this->create_factory($this->get_user_editor());
 		}
 	}
 
@@ -77,7 +77,7 @@ class ContentFormattingService
 	 * @desc Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
-	public function get_user_language()
+	public function get_user_editor()
 	{
 		return AppContext::get_user()->get_attribute('user_editor');
 	}
