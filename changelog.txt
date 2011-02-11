@@ -88,7 +88,7 @@
 [*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
 
 [b]Téléchargement[/b]
-- Possibilité de signaler les liens cassés.
+[*] Possibilité de signaler les liens cassés.
 
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl

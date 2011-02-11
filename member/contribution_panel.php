@@ -270,8 +270,8 @@ else
 					'POSTER' => $this_contribution->get_poster_login(),
 					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),
-					'U_POSTER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),
+					'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
+					'U_POSTER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED

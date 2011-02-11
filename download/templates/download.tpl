@@ -162,6 +162,12 @@
 								<img src="{PICTURES_DATA_PATH}/images/download_file.png" alt="" />
 							</a>
 							<p><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
+							# IF IS_USER_CONNECTED #
+							<a href="{U_DEADLINK}">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="" />
+							</a>
+							<p><a href="{U_DEADLINK}">{L_DEADLINK}</a></p>
+							# ENDIF #
 						</td>
 						<td>
 							<p class="text_justify">
