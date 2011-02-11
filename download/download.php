@@ -76,9 +76,11 @@ if ($file_id > 0) //Contenu
 		'L_EDIT_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['edit_file']),
 		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
+		'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
 		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . $Session->get_token()),
-		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php')
+		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'),
+		'U_DEADLINK' => url('download.php?id=' . $file_id . '&deadlink=1')
 	));
 	
 	//Affichage commentaires.
@@ -87,6 +89,42 @@ if ($file_id > 0) //Contenu
 		$Template->put_all(array(
 			'COMMENTS' => display_comments('download', $file_id, url('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
 		));
+	}
+	
+	// Gestion des liens morts
+	if ($deadlink > 0)
+	{
+		$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "events WHERE id_in_module = '" . $file_id . "' AND module='download' AND current_status = 0", __LINE__, __FILE__);
+		if (empty($nbr_alert)) 
+		{
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($file_id);
+			$contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_deadlink'], stripslashes($download_info['title'])));
+			$contribution->set_fixing_url('/download/management.php?edit=' . $file_id . '');
+			$contribution->set_description(stripslashes($DOWNLOAD_LANG['contribution_deadlink_explain']));
+			$contribution->set_poster_id($User->get_attribute('user_id'));
+			$contribution->set_module('download');
+			$contribution->set_type('alert');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					$DOWNLOAD_CATS[$category_id]['auth'],
+					DOWNLOAD_WRITE_CAT_AUTH_BIT, 
+					DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT
+				)
+			);
+
+			if (!$User->check_level(MEMBER_LEVEL))
+			{
+				AppContext::get_response()->redirect('/member/error.php?e=e_auth&_err_stop=1');
+			}
+
+			ContributionService::save_contribution($contribution);
+			AppContext::get_response()->redirect('/download/contribution.php');
+		}
+		else
+		{
+			AppContext::get_response()->redirect('/download/contribution.php');
+		}
 	}
 	
 	$Template->pparse('download');

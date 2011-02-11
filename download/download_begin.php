@@ -36,6 +36,7 @@ require_once('download_auth.php');
 $page = retrieve(GET, 'p', 1);
 $category_id = retrieve(GET, 'cat', 0);
 $file_id = retrieve(GET, 'id', 0);
+$deadlink = retrieve(GET, 'deadlink', 0);
 $id_cat_for_download = 0;
 
 if (!empty($file_id))

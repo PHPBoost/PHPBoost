@@ -28,9 +28,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[b]Téléchargement[/b]
-- Possibilité de signaler les liens cassés.
-
 [b]Newsletter[/b]
 - Refonte du module en MVC
 - Gestion des autorisations de lecture, de suppression de la liste des archives.
