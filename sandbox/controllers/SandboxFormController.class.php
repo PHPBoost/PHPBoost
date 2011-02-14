@@ -84,6 +84,13 @@ class SandboxFormController extends ModuleController
 
 		$fieldset->set_description('Ceci est ma description');
 		
+		$notation = new Notation();
+		$notation->set_module_name('article');
+		$notation->set_module_id(1);
+		$notation->set_note(0.25);
+		$notation->set_notation_scale(15);
+		NotationService::display_static_image($notation);
+		
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
@@ -171,7 +178,7 @@ class SandboxFormController extends ModuleController
 		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
 
 		// FREE FIELD
-		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre', array()));
+		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', NotationService::display_active_image($notation), array()));
 
 		// DATE
 		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));

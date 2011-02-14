@@ -33,7 +33,7 @@ class Notation
 {
 	private $id;
 	private $module_name;
-	private $id_module;
+	private $module_id;
 	private $user_id;
 	private $login;
 	private $note;
@@ -59,14 +59,14 @@ class Notation
 		return $this->module_name;
 	}
 	
-	public function set_id_module($id_module)
+	public function set_module_id($module_id)
 	{
-		$this->id_module = $id_module;
+		$this->module_id = $module_id;
 	}
 	
-	public function get_id_module()
+	public function get_module_id()
 	{
-		return $this->id_module;
+		return $this->module_id;
 	}
 	
 	public function set_user_id($user_id)
