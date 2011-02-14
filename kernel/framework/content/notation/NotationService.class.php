@@ -94,13 +94,12 @@ class NotationService
 	public static function display_active_image(Notation $notation)
 	{
 		$note_post = AppContext::get_request()->get_int('note', 0);
+		$req = AppContext::get_request()->get_bool('valid_note', false);
 		
-		if (AppContext::get_request()->get_bool('valid_note', false))
+		if ($req && !empty($note_post))
 		{
-			if (!empty($note_post))
-				self::register_notation($notation);
-
-			throw new Exception('Register !');
+			$notation->set_note($note_post);
+			self::register_notation($notation);
 		}
 		else
 		{
@@ -108,11 +107,13 @@ class NotationService
 			
 			$average_notes = self::get_average_notes($notation);
 			
-			$select = '<option value="-1" selected="selected">' . self::$lang['note'] . '</option>';
-				for ($i = 0; $i <= $notation->get_notation_scale(); $i++)
-			$select .= '<option value="' . $i . '">' . $i . '</option>';
-					
-			$ajax_note = '<div style="width:' . $notation->get_notation_scale() *16 . 'px;margin:auto;display:none" id="note_stars' . $notation->get_module_id() . '" onmouseout="out_div(' . $notation->get_module_id() . ', array_note[' . $notation->get_module_id() . '])" onmouseover="over_div()">';
+			for ($i = 0; $i <= $notation->get_notation_scale(); $i++)
+			{
+				$template->assign_block_vars('notation_no_js', array(
+					'I' => $i
+				));
+			}
+
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 			{
 				$star_img = 'stars.png';
@@ -128,21 +129,22 @@ class NotationService
 					else
 						$star_img = 'stars3.png';
 				}
-				$ajax_note .= '<a href="javascript:send_note(' . $notation->get_module_id() . ', ' . $i . ', \'' . AppContext::get_session()->get_token() . '\')" onmouseover="select_stars(' . $notation->get_module_id() . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="n' . $notation->get_module_id() . '_stars' . $i . '" /></a>';
+				
+				$template->assign_block_vars('notation', array(
+					'I' => $i,
+					'IMAGE' => $star_img
+				));
 			}
 
-			$ajax_note .= '</div> <span id="noteloading' . $notation->get_module_id() . '"></span>';
-			
-			/*
-			else
-				$ajax_note .= '</div> <span id="noteloading' . $notation->get_module_id() . '"></span> <div style="display:' . $display . '" id="nbrnote' . $notation->get_module_id() . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
-			*/
 			$template->put_all(array(
-				'C_JS_NOTE' => !defined('HANDLE_NOTE'),
-				'ID' => $notation->get_module_id(),
-				'NOTE_MAX' => $notation->get_notation_scale(),
-				'SELECT' => $select,
-				'NOTE' =>  /* TODO */ '<span id="note_value' . $notation->get_module_id() . '">' . ((self::get_number_notes($notation) > 0) ? '<strong>' . $average_notes . '</strong>' : '<em>' . self::$lang['no_note'] . '</em>') . '</span>' . $ajax_note,
+				'L_NOTE' => self::$lang['note'],
+				'MODULE_ID' => $notation->get_module_id(),
+				'NOTATION_SCALE' => $notation->get_notation_scale(),
+				'NUMBER_PIXEL' => $notation->get_notation_scale() *16,
+				'NUMBER_VOTES' => self::get_number_notes($notation),
+				'C_VOTES' => self::get_number_notes($notation) > 0 ? true : false,
+				'L_NO_NOTE' => self::$lang['no_note'],
+				'AVERAGE_NOTES' => $average_notes,
 				'ARRAY_NOTE' => 'array_note[' . $notation->get_module_id() . '] = \'' . $average_notes . '\';',
 				'DISPLAY' => /* TODO */ '',
 				'L_AUTH_ERROR' => /* TODO */ '',
@@ -152,8 +154,7 @@ class NotationService
 				'L_NOTES' => addslashes(self::$lang['notes']),
 				'L_VALID_NOTE' => self::$lang['valid_note']
 			));
-				
-			
+
 			return $template->render();
 		}
 	}
