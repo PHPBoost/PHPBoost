@@ -80,7 +80,6 @@ class NotationService
 				}
 				return $template->render();
 			}
-			throw new Exception('Not notation');
 		}
 		else
 		{
@@ -93,6 +92,8 @@ class NotationService
 	 */
 	public static function display_active_image(Notation $notation)
 	{
+		$html_id = $notation->get_module_name() . '_' . $notation->get_module_id();
+		
 		$note_post = AppContext::get_request()->get_int('note', 0);
 		$req = AppContext::get_request()->get_bool('valid_note', false);
 		
@@ -137,16 +138,15 @@ class NotationService
 			}
 
 			$template->put_all(array(
-				'L_NOTE' => self::$lang['note'],
+				'CURRENT_URL' => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
 				'MODULE_ID' => $notation->get_module_id(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'NUMBER_PIXEL' => $notation->get_notation_scale() *16,
+				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_VOTES' => self::get_number_notes($notation),
 				'C_VOTES' => self::get_number_notes($notation) > 0 ? true : false,
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'AVERAGE_NOTES' => $average_notes,
 				'ARRAY_NOTE' => 'array_note[' . $notation->get_module_id() . '] = \'' . $average_notes . '\';',
-				'DISPLAY' => /* TODO */ '',
 				'L_AUTH_ERROR' => /* TODO */ '',
 				'L_ALERT_ALREADY_VOTE' => addslashes(self::$lang['already_vote']),
 				'L_ALREADY_VOTE' => '',
