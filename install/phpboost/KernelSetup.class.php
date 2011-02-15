@@ -36,7 +36,8 @@ class KernelSetup
 	 */
 	private static $db_querier;
 	private static $com_table;
-	private static $notation_table;
+	private static $note_table;
+	private static $average_notes_table;
 	private static $visit_counter_table;
 	private static $configs_table;
 	private static $events_table;
@@ -68,7 +69,8 @@ class KernelSetup
 		self::$db_querier = PersistenceContext::get_querier();
 
 		self::$com_table = PREFIX . 'com';
-		self::$notation_table = PREFIX . 'notation';
+		self::$note_table = PREFIX . 'note';
+		self::$average_notes_table = PREFIX . 'average_notes';
 		self::$visit_counter_table = PREFIX . 'visit_counter';
 		self::$configs_table = PREFIX . 'configs';
 		self::$events_table = PREFIX . 'events';
@@ -107,7 +109,8 @@ class KernelSetup
 	{
 		self::$db_utils->drop(array(
 			self::$com_table,
-			self::$notation_table,
+			self::$note_table,
+			self::$average_notes_table,
 			self::$visit_counter_table,
 			self::$configs_table,
 			self::$events_table,
@@ -138,7 +141,8 @@ class KernelSetup
 	private function create_tables()
 	{
 		$this->create_com_table();
-		$this->create_notation_table();
+		$this->create_note_table();
+		$this->create_average_notes_table();
 		$this->create_visit_counter_table();
 		$this->create_configs_table();
 		$this->create_events_table();
@@ -186,7 +190,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$com_table, $fields, $options);
 	}
 
-	private function create_notation_table()
+	private function create_note_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -199,7 +203,21 @@ class KernelSetup
 		$options = array(
 			'primary' => array('id'),
 		);
-		self::$db_utils->create_table(self::$notation_table, $fields, $options);
+		self::$db_utils->create_table(self::$note_table, $fields, $options);
+	}
+	
+	private function create_average_notes_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'module_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'average_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		self::$db_utils->create_table(self::$average_notes_table, $fields, $options);
 	}
 
 	private function create_visit_counter_table()
