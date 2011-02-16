@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              note.class.php
+ *                              DeprecatedNote.class.php
  *                            -------------------
  *   begin                : April 08, 2008
  *   copyright            : (C) 2008 Viarre Régis
@@ -34,7 +34,7 @@ define('NOTE_DISPLAY_BLOCK', 0x04);
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class provides you an easy way to manage notation.
  */
-class Note
+class DeprecatedNote
 {
 	private $script = '';
 	private $idprov = 0;

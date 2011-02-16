@@ -100,8 +100,12 @@ elseif ($delete > 0)
 		$Comments->delete_all($delete);
 	}
 
-	// Feeds Regeneration
+	$notation = new Notation();
+	$notation->set_module_name('media');
+	$notation->set_module_id($delete);
+	NotationService::delete_notes_module_id($notation);
 	
+	// Feeds Regeneration
 	Feed::clear_cache('media');
 
 	$media_categories->recount_media_per_cat($media['idcat']);
@@ -371,7 +375,7 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height, users_note) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "', '')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);
@@ -381,9 +385,6 @@ elseif (!empty($_POST['submit']))
 
 		if (!$auth_write)
 		{
-			
-			
-
 			$media_contribution = new Contribution();
 			$media_contribution->set_id_in_module($new_id_media);
 			$media_contribution->set_description(stripslashes($media['counterpart']));

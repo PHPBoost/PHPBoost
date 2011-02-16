@@ -213,6 +213,7 @@ class KernelSetup
 			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'module_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'average_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+			'number_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(
 			'primary' => array('id'),
