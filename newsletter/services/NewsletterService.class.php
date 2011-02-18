@@ -85,7 +85,7 @@ class NewsletterService
 	
 	private static function verificate_valid_mail($mail)
 	{
-		AppContext::get_mail_service()->is_mail_valid($mail).
+		AppContext::get_mail_service()->is_mail_valid($mail);
 	}
 	
 	private static function get_mail_exist($mail)
