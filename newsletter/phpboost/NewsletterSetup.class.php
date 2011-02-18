@@ -40,7 +40,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
-		$this->create_field_member();
+		// TODO $this->create_field_member();
 	}
 
 	public function uninstall()
