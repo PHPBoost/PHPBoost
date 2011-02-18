@@ -20,7 +20,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Terminer le passage du dossier member et de la partie membre dans l'administration.
-- Débugger voir refaire les classes Comments et Note (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
+- Débugger voir refaire la classes Comments (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
 - Créer des contraintes permettant de voir si un login/adresse email existe déjà.
 - Gérer finement les autorisations des langues
 - Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
@@ -72,6 +72,7 @@
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)
 	ex : dans FormButtonButton, param $label => $html_content ou autre... 
 ? [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -96,7 +97,7 @@
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
-- Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
+- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 
 
 [b]Forum[/b]

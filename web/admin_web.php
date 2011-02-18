@@ -221,6 +221,11 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
 	
+	$notation = new Notation();
+	$notation->set_module_name('web');
+	$notation->set_module_id($id);
+	NotationService::delete_notes_module_id($notation);
+	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }		
 else

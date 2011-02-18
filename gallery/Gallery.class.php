@@ -312,6 +312,11 @@ class Gallery
 		//Suppression physique.
 		delete_file('pics/' . $info_pics['path']);
 		delete_file('pics/thumbnails/' . $info_pics['path']);
+		
+		$notation = new Notation();
+		$notation->set_module_name('gallery');
+		$notation->set_module_id(id_pics);
+		NotationService::delete_notes_module_id($notation);
 	}
 	
 	//Renomme une image.

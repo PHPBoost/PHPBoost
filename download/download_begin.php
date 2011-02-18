@@ -42,7 +42,7 @@ $id_cat_for_download = 0;
 if (!empty($file_id))
 {
 	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
-	
+
 	if (empty($download_info['id']))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 

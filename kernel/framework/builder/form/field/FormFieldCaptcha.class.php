@@ -39,10 +39,10 @@ class FormFieldCaptcha extends AbstractFormField
     /**
      * @param Captcha $captcha The captcha to use. If not given, a default captcha will be used.
      */
-    public function __construct(Captcha $captcha = null)
+    public function __construct($name = 'captcha', Captcha $captcha = null)
     {
         global $LANG;
-        parent::__construct('captcha', $LANG['verif_code'], false, array('required' => true));
+        parent::__construct($name, $LANG['verif_code'], false, array('required' => true));
         if ($captcha !== null)
         {
             $this->captcha = $captcha;

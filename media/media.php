@@ -35,6 +35,10 @@ $id_media = retrieve(GET, 'id', 0);
 $id_cat = retrieve(GET, 'cat', 0);
 $level = array('', ' class="modo"', ' class="admin"');
 
+$notation = new Notation();
+$notation->set_module_name('media');
+$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
+
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
 {
@@ -116,7 +120,7 @@ if (empty($id_media) && $id_cat >= 0)
 				$selected_fields['nbr'] = ' selected="selected"';
 				break;
 			case 'note':
-				$sort = 'nbrnote';
+				$sort = 'average_notes';
 				$selected_fields['note'] = ' selected="selected"';
 				break;
 			case 'com':
@@ -164,25 +168,24 @@ if (empty($id_media) && $id_cat >= 0)
 		
 		$Pagination = new DeprecatedPagination();
 
-		//Notes
-		
-		
-
 		$Template->put_all(array(
 			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 		));
 
-		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.note, v.nbrnote, v.nbr_com, v.infos, v.contents, mb.login, mb.level
+		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.nbr_com, v.infos, v.contents, mb.login, mb.level, notes.average_notes
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
+			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.module_id
 			WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 			ORDER BY " . $sort . " " . $mode .
 			$Sql->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
 
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$notation->set_module_id($row['id']);
+			
 			$Template->assign_block_vars('file', array(
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
@@ -191,7 +194,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], '../member/member' . url('.php?id=' . $row['iduser'], '-' . $row['iduser'] . '.php'), $level[$row['level']]) : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
-				'NOTE' => $row['nbrnote'] ? Note::display_img($row['note'], $MEDIA_CONFIG['note_max'], $MEDIA_CONFIG['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => NotationService::display_static_image($notation),
 				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
@@ -238,11 +241,8 @@ elseif ($id_media > 0)
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
-	//Affichage notation.
-	
-	$Note = new Note('media', $id_media, url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'), $MEDIA_CONFIG['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
-	
-	
+	$notation->set_module_id($id_media);
+	$nbr_notes = NotationService::get_former_number_notes($notation);
 	
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
@@ -251,9 +251,9 @@ elseif ($id_media > 0)
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse($media['contents']),
 		'COUNT' => $media['counter'],
-		'KERNEL_NOTATION' => $Note->display_form(),
+		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
-		'NUM_NOTES' => (int)$media['nbrnote'] > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$media['nbrnote']) : sprintf($MEDIA_LANG['num_note'], (int)$media['nbrnote']),
+		'NUM_NOTES' => (int)$nbr_notes > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$nbr_notes) : sprintf($MEDIA_LANG['num_note'], (int)$nbr_notes),
 		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],

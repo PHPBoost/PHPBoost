@@ -33,6 +33,8 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
+		$this->init();
+		
 		$extended_field = new ExtendedField();
 		$extended_field->set_id($request->get_getint('id'));
 		$exist_field = ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
@@ -42,7 +44,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 			
 			$title = $this->lang['extended-field'];
 			$message = $this->lang['extended-fields-sucess-delete'];
-			$controller = new UserErrorController($title, $message, self::SUCCESS);
+			$controller = new UserErrorController($title, $message, UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 		}
 		else
