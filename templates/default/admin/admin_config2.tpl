@@ -86,7 +86,7 @@
 					# ENDIF #
 				</p>					
 				<p style="text-align:center;">
-					<label><input type="radio" name="rewrite_engine" value="1" {CHECKED} /> {L_ACTIV}</label>
+					<label><input type="radio" name="rewrite_engine" value="1" {CHECKED} # IF NOT C_REWRITE_OK # disabled="disabled" # ENDIF #/> {L_ACTIV}</label>
 					&nbsp;&nbsp; 
 					<label><input type="radio" name="rewrite_engine" value="0" {UNCHECKED} /> {L_UNACTIVE}</label>
 				</p>
