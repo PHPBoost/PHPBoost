@@ -31,9 +31,13 @@ require_once('../kernel/header.php');
 
 $tpl = new FileTemplate('web/web.tpl');
 
+$notation = new Notation();
+$notation->set_module_name('web');
+$notation->set_module_id($idweb);
+$notation->set_notation_scale($CONFIG_WEB['note_max']);
+
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {
-
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -72,11 +76,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'EDIT' => $edit,
 		'DEL' => $del
 	));
-		
-	//Affichage notation.
-	 
-	$Note = new Note('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
-
+	
 	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
 		'IDWEB' => $web['id'],		
@@ -89,7 +89,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'COM' => Comments::com_display_link($web['nbr_com'], '../web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
-		'KERNEL_NOTATION' => $Note->display_form(),
+		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
@@ -154,11 +154,11 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$sort = 'compt';
 		break;		
 		case 'note' :
-		$sort = 'note/' . $CONFIG_WEB['note_max'];
+		$sort = 'average_notes';
 		break;		
 		case 'com' :
 		$sort = 'nbr_com';
-		break;	
+		break;
 		default :
 		$sort = 'timestamp';
 	}
@@ -175,13 +175,15 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
-	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
-	FROM " . PREFIX . "web
+	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, w.nbr_com, notes.average_notes
+	FROM " . PREFIX . "web w
+	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.module_id
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
+		$notation->set_module_id($row['id']);
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
@@ -190,7 +192,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+			'NOTE' => NotationService::display_static_image($notation),
 			'COM' => $row['nbr_com'],
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
