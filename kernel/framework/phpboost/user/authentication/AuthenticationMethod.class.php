@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                            AuthenticationMethod.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
+ *   begin                : November 28, 2010
+ *   copyright            : (C) 2010 loic rouchon
+ *   email                : horn@phpboost.com
  *
  ###################################################
  *
@@ -25,16 +24,23 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
+/**
+ * @author Loic Rouchon <horn@phpboost.com>
+ * @desc The AuthenticationMethod interface could be implemented in different ways to enable specifics
+ * authentication mecanisms.
+ * PHPBoost comes with a PHPBoostAuthenticationMethod which will be performed on the internal member
+ * list. But it is possible to implement external authentication mecanism by providing others
+ * implementations of this class to support LDAP authentication, OpenID, Facebook connect and more...
+ *
+ * @package {@package}
+ */
+interface AuthenticationMethod
+{
+	/**
+	 * @desc Tries to authenticate the user and returns true on success, false otherwise.
+	 * @return bool true, if authentication has been performed successfully
+	 */
+	function authenticate();
+}
 
 ?>

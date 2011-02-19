@@ -59,7 +59,7 @@ class SelectQueryResultMapper implements SelectQueryResult
 	{
 		return  $this->query_result->get_parameters();
 	}
-	
+
 	public function set_fetch_mode($fetch_mode)
 	{
 		return  $this->query_result->set_fetch_mode($fetch_mode);
@@ -79,12 +79,12 @@ class SelectQueryResultMapper implements SelectQueryResult
     {
         return $this->query_result->has_next();
     }
-    
+
     public function fetch()
     {
         return $this->model->new_instance($this->query_result->fetch());
     }
-    
+
 	public function rewind()
 	{
 		return $this->query_result->rewind();

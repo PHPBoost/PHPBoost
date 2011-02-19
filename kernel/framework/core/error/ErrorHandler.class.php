@@ -141,17 +141,7 @@ class ErrorHandler
 	{
 		if ($this->fatal)
 		{
-			AppContext::get_response()->clean_output();
-			if (Debug::is_debug_mode_enabled())
-			{
-				Debug::fatal($this->exception);
-			}
-			else
-			{
-				echo self::FATAL_MESSAGE;
-				Environment::destroy();
-				exit;
-			}
+			$this->display_fatal();
 		}
 		elseif (Debug::is_debug_mode_enabled())
 		{
@@ -159,7 +149,8 @@ class ErrorHandler
 		}
 	}
 
-	protected function get_stackstrace_as_string($start_trace_index) {
+	protected function get_stackstrace_as_string($start_trace_index)
+	{
 		$stack = '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		if (count($this->exception->getTrace()) > 2)
 		{
@@ -181,7 +172,17 @@ class ErrorHandler
 
 	protected function display_fatal()
 	{
-		$this->display_debug();
+		AppContext::get_response()->clean_output();
+		if (Debug::is_debug_mode_enabled())
+		{
+			Debug::fatal($this->exception);
+		}
+		else
+		{
+			echo self::FATAL_MESSAGE;
+			Environment::destroy();
+			exit;
+		}
 	}
 
 	private function log()
@@ -220,8 +221,7 @@ class ErrorHandler
 
 	private static function compute_error_log_string($error_msg, $error_stacktrace, $errno = 0)
 	{
-		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
-		$errno . "\n" .
+		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" . $errno . "\n" .
 		self::clean_error_string($error_msg) . "\n" .
 		self::clean_error_string($error_stacktrace) . "\n";
 	}

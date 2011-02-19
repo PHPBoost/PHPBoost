@@ -68,8 +68,8 @@ class InstallEnvironment extends Environment
 
 	private static function init_admin_role()
 	{
+		AppContext::set_session(new AdminSessionData());
 		AppContext::set_user(new AdminUser());
-		AppContext::set_session(new AdminSession());
 	}
 
 	public static function load_distribution_properties($prefered_lang)

@@ -36,6 +36,34 @@ define('USER_TYPE', 3);
  */
 class User
 {
+	public static function from_session()
+	{
+		$user_id = AppContext::get_session()->get_user_id();
+		return self::from_user_id($user_id);
+	}
+
+	public static function from_user_id($user_id)
+	{
+		try
+		{
+			return self::from_db($user_id);
+		}
+		catch (RowNotFoundException $ex)
+		{
+			return new Visitor();
+		}
+	}
+
+	protected static function from_db($user_id)
+	{
+		$columns = array('');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		$user = new User();
+		return $user;
+	}
+
 	private $is_admin = false;
 	private $user_data; //Données du membres, obtenues à partir de la class de session.
 	private $groups_auth; //Tableau contenant le nom des groupes disponibles.
@@ -44,23 +72,24 @@ class User
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
-	public function __construct()
+	private function __construct()
 	{
-		$this->user_data = AppContext::get_session()->get_data();
-		$this->is_admin = ($this->user_data['level'] == 2);
 
-		//Autorisations des groupes disponibles.
-		$groups_auth = array();
-		foreach (GroupsService::get_groups() as $idgroup => $array_info)
-		{
-			$groups_auth[$idgroup] = $array_info['auth'];
-		}
-		$this->groups_auth = $groups_auth;
-
-		//Groupes du membre.
-		$this->user_groups = explode('|', $this->user_data['user_groups']);
-		array_unshift($this->user_groups, 'r' . $this->user_data['level']); //Ajoute le groupe associé au rang du membre.
-		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
+//		$this->user_data = AppContext::get_session()->get_data();
+//		$this->is_admin = ($this->user_data['level'] == 2);
+//
+//		//Autorisations des groupes disponibles.
+//		$groups_auth = array();
+//		foreach (GroupsService::get_groups() as $idgroup => $array_info)
+//		{
+//			$groups_auth[$idgroup] = $array_info['auth'];
+//		}
+//		$this->groups_auth = $groups_auth;
+//
+//		//Groupes du membre.
+//		$this->user_groups = explode('|', $this->user_data['user_groups']);
+//		array_unshift($this->user_groups, 'r' . $this->user_data['level']); //Ajoute le groupe associé au rang du membre.
+//		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 
 	public function is_admin()
@@ -129,9 +158,7 @@ class User
 	 */
 	public function check_level($secure)
 	{
-		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure)
-		return true;
-		return false;
+		return isset($this->user_data['level']) && $this->user_data['level'] >= $secure;
 	}
 
 	/**

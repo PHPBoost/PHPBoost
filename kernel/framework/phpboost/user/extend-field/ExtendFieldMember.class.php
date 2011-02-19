@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           dispatcher.php
+ *                               ExtendFieldMember.class.php
  *                            -------------------
- *   begin                : October 25 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : August 10, 2010
+ *   copyright            : (C) 2010 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,16 +25,31 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('SearchFormController', '`^(?:/search)?/?$`'),
-	new UrlControllerMapper('AdminSearchConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminSearchWeightController', '`^/admin/weight/?$`'),
-	new UrlControllerMapper('AdminSearchClearCacheController', '`^/admin/cache/clear/?$`')
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+class ExtendFieldMember
+{
+	public static function display(Template $Template, $user_id = '')
+	{
+		$extend_fields_cache = ExtendFieldsCache::load()->get_extend_fields();
+		
+		$extend_field_exist = count($extend_fields_cache);
+		if ($extend_field_exist > 0)
+		{
+			$Template->put_all(array(
+				'C_MISCELLANEOUS' => true,
+				'L_MISCELLANEOUS' => LangLoader::get_message('miscellaneous', 'main')
+			));
+			
+			$display_extend_field = new DisplayExtendField();
+			if(!empty($user_id))
+			{
+				$display_extend_field->display_for_member($Template, $user_id);
+			}
+			else
+			{
+				$display_extend_field->display_for_register($Template);
+			}
+		}
+	}
+}
 ?>
