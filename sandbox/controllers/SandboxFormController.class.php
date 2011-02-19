@@ -86,9 +86,9 @@ class SandboxFormController extends ModuleController
 		
 		$notation = new Notation();
 		$notation->set_module_name('article');
-		$notation->set_module_id(1);
-		$notation->set_note(0.25);
-		$notation->set_notation_scale(15);
+		$notation->set_module_id(12);
+		$notation->set_notation_scale(5);
+		$notation->set_user_id(2);
 		NotationService::display_static_image($notation);
 		
 		// SINGLE LINE TEXT
