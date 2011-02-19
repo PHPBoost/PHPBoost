@@ -34,6 +34,11 @@ class SessionData
 	private static $KEY_USER_ID = 'user_id';
 	private static $KEY_SESSION_ID = 'session_id';
 
+	public static function admin_session()
+	{
+		return new SessionData(1, null);
+	}
+
 	/**
 	 * @desc
 	 */
@@ -58,13 +63,58 @@ class SessionData
 	 */
 	public static function create_from_user_id($user_id)
 	{
-		$data = new SessionData($user_id, Random::hexa64uid());
+		$data = self::create_session($user_id);
 		$data->token = Random::hexa64uid(16);
 		$data->expiry = time() + SessionsConfig::load()->get_session_duration();
 		$data->ip = AppContext::get_request()->get_ip_address();
 		self::fill_user_cached_data($data);
 		$data->create();
 		return $data;
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	private static function create_session($user_id)
+	{
+		if (self::session_exists($user_id))
+		{
+			return self::use_existing_session($user_id);
+		}
+		else
+		{
+			return new SessionData($user_id, Random::hexa64uid());
+		}
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	private static function session_exists($user_id)
+	{
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		return PersistenceContext::get_querier()->row_exists(DB_TABLE_SESSIONS, $condition, $parameters);
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	private static function use_existing_session($user_id)
+	{
+		$session_id = $values[self::$KEY_SESSION_ID];
+		$columns = array('token', 'expiry', 'ip', 'data');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		$session_id = $row['session_id'];
+		return self::init_from_row($user_id, $session_id, $row);
 	}
 
 	/**

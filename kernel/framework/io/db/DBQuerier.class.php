@@ -53,6 +53,14 @@ class DBQuerier implements SQLQuerier
 	/**
 	 * {@inheritDoc}
 	 */
+	public function set_connection(DBConnection $connection)
+	{
+		$this->querier->set_connection($connection);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function inject($query, $parameters = array())
 	{
 		return $this->querier->inject($query, $parameters);

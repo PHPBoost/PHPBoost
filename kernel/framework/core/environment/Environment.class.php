@@ -255,7 +255,7 @@ class Environment
 
 	public static function init_session()
 	{
-
+		AppContext::init_session();
 		AppContext::init_user();
 
 		$user_theme = AppContext::get_user()->get_attribute('user_theme');
