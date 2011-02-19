@@ -140,7 +140,7 @@ class NotationService
 
 			$template->put_all(array(
 				'C_VOTES' => self::get_count_notes_by_module_id($notation) > 0 ? true : false,
-				'CURRENT_URL' => GeneralConfig::load()->get_site_url() . $_SERVER['REQUEST_URI'],
+				'CURRENT_URL' => REWRITED_SCRIPT,
 				'MODULE_ID' => $notation->get_module_id(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
