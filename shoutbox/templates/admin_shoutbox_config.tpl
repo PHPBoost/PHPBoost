@@ -58,6 +58,14 @@
 							{AUTH_WRITE}
 						</dd>
 					</dl>
+					<dl>
+						<dt>
+							<label for="shoutbox_auth">{L_AUTH_MODERATION}</label>
+						</dt>
+						<dd>
+							{AUTH_MODERATION}
+						</dd>
+					</dl>
 					<hr><br>
 					<dl>
 						<dt><label for="shoutbox_refresh_delay">* {L_SHOUTBOX_REFRESH_DELAY}</label><br /><span>{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span></dt>
