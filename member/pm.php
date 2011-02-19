@@ -912,7 +912,7 @@ else //Liste des conversation, dans la boite du membre.
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
-		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $author;
+		$participants = ($row['login_dest'] != $User->get_display_name()) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $User->get_id() ? $row['user_id_dest'] : $row['user_id'];
 		$participants = !empty($participants) ? '<a href="' . DispatchManager::get_url('/member', '/profile/'. $user_id_dest)->absolute() . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		

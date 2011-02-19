@@ -71,7 +71,7 @@ function shoutbox_mini($position, $block)
     				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 
-    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_level() . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 
     				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     			}
@@ -88,7 +88,7 @@ function shoutbox_mini($position, $block)
     	//Pseudo du membre connecté.
     	if ($User->get_id() !== -1)
     		$tpl->put_all(array(
-    			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
+    			'SHOUTBOX_PSEUDO' => $User->get_display_name(),
     			'C_HIDDEN_SHOUT' => true
     		));
     	else

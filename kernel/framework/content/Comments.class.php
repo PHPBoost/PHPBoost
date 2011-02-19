@@ -276,7 +276,7 @@ class Comments
 					DispatchManager::redirect($error_controller);
 				}
 
-				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
+				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : retrieve(POST, $this->script . 'login', $LANG['guest']);
 				$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 
 				if (!empty($login) && !empty($contents))
@@ -399,7 +399,7 @@ class Comments
 					{
 						$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 						$login = retrieve(POST, $this->script . 'login', $LANG['guest']);
-						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $login;
+						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : $login;
 
 						if (!empty($contents) && !empty($login))
 						{

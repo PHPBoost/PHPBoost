@@ -38,77 +38,77 @@ class Notation
 	private $login;
 	private $note;
 	private $notation_scale;
-	
+
 	public function set_id($id)
 	{
 		$this->id = $id;
 	}
-	
+
 	public function get_id()
 	{
 		return $this->id;
 	}
-	
+
 	public function set_module_name($module)
 	{
 		$this->module_name = $module;
 	}
-	
+
 	public function get_module_name()
 	{
 		return $this->module_name;
 	}
-	
+
 	public function set_module_id($module_id)
 	{
 		$this->module_id = $module_id;
 	}
-	
+
 	public function get_module_id()
 	{
 		return $this->module_id;
 	}
-	
+
 	public function set_user_id($user_id)
 	{
 		$this->user_id = $user_id;
 	}
-	
+
 	public function get_user_id()
 	{
-		return !empty($this->user_id) ? $this->user_id : AppContext::get_user()->get_attribute('user_id');
+		return !empty($this->user_id) ? $this->user_id : AppContext::get_user()->get_id();
 	}
-	
+
 	public function set_login($login)
 	{
 		$this->login = $login;
 	}
-	
+
 	public function get_login()
 	{
-		return !empty($this->login) ? $this->login : AppContext::get_user()->get_attribute('login');
+		return !empty($this->login) ? $this->login : AppContext::get_user()->get_login();
 	}
-	
+
 	public function set_note($note)
 	{
 		$this->note = $note;
 	}
-	
+
 	public function get_note()
 	{
 		return $this->note;
 	}
-	
+
 	public function set_notation_scale($notation_scale)
 	{
 		$this->notation_scale = $notation_scale;
 	}
-	
+
 	public function get_notation_scale()
 	{
 		return $this->notation_scale;
 	}
-	
+
 }
 
 ?>

@@ -95,6 +95,36 @@ class User
 		return $this->is_admin;
 	}
 
+	public function get_level()
+	{
+		return $this->level;
+	}
+
+	public function get_login()
+	{
+		return $this->login;
+	}
+
+	public function get_display_name()
+	{
+		return $this->display_name;
+	}
+
+	public function get_locale()
+	{
+		return $this->locale;
+	}
+
+	public function get_theme()
+	{
+		return $this->theme;
+	}
+
+	public function get_timezone()
+	{
+		return $this->timezone;
+	}
+
 	/**
 	 * @desc Accessor
 	 * @param string $attribute The attribute name.
@@ -103,16 +133,6 @@ class User
 	public function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
-	}
-
-	public function get_theme()
-	{
-		$theme = $this->get_attribute('user_theme');
-		if (empty($theme))
-		{
-			return 'base';
-		}
-		return $theme;
 	}
 
 	/**
@@ -189,7 +209,7 @@ class User
 	 * @desc Get the maximum value of authorization in all user groups.
 	 * @param int $key_auth
 	 * @param int $max_value_compare Maximal value to compare
-	 * @return unknown_type
+	 * @return int
 	 */
 	public function check_max_value($key_auth, $max_value_compare = 0)
 	{
@@ -228,6 +248,7 @@ class User
 	/**
 	 * @desc Modify the user theme.
 	 * @param string $user_theme The new theme.
+	 * @deprecated
 	 */
 	public function set_user_theme($user_theme)
 	{
@@ -237,6 +258,7 @@ class User
 	/**
 	 * @desc Modify the theme for guest in the database (sessions table).
 	 * @param string $user_theme The new theme
+	 * @deprecated
 	 */
 	public function update_user_theme($user_theme)
 	{
@@ -258,6 +280,7 @@ class User
 	/**
 	 * @desc Modify the user lang.
 	 * @param string $user_lang The new lang
+	 * @deprecated
 	 */
 	public function set_user_lang($user_lang)
 	{
@@ -267,6 +290,7 @@ class User
 	/**
 	 * @desc Modify the lang for guest in the database (sessions table).
 	 * @param string $user_theme The new lang
+	 * @deprecated
 	 */
 	public function update_user_lang($user_lang)
 	{
@@ -319,14 +343,14 @@ class User
 			}
 			elseif (substr($idgroup, 0, 1) == 'r') //Rang
 			{
-				if ($this->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
+				if ($this->level >= (int)str_replace('r', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
 			else //Membre
 			{
-				if ($this->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
+				if ($this->id == (int)str_replace('m', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}

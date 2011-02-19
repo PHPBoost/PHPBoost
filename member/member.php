@@ -99,7 +99,7 @@ if (!empty($id_get)) //Espace membre
 		$Template->put_all(array(
 			'C_USER_UPDATE_PROFIL' => true,
 			'USER_THEME' => $row['user_theme'],
-			'USER_LOGIN' => $User->get_attribute('login'),
+			'USER_LOGIN' => $User->get_display_name(),
 			'MAIL' => $row['user_mail'],
 			'LOCAL' => $row['user_local'],
 			'WEB' => $row['user_web'],
@@ -480,7 +480,7 @@ if (!empty($id_get)) //Espace membre
 			
 			if (!empty($user_mail))
 			{
-				$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);
+				$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_display_name()) . "'", __LINE__, __FILE__);
 				$user_mail = "user_mail = '" . $user_mail . "', ";
 				if ($check_mail >= 1) //Autre utilisateur avec le même mail!
 				{
@@ -529,11 +529,11 @@ if (!empty($id_get)) //Espace membre
 	
 		$Template->put_all(array(
 			'C_USER_INDEX' => true,
-			'C_IS_MODERATOR' => $User->get_attribute('level') >= MODERATOR_LEVEL,
+			'C_IS_MODERATOR' => $User->get_level() >= MODERATOR_LEVEL,
 			'SID' => SID,
 			'LANG' => get_ulang(),
 			'COLSPAN' => $is_auth_files ? 3 : 2,
-			'USER_NAME' => $User->get_attribute('login'),
+			'USER_NAME' => $User->get_display_name(),
 			'PM' => $User->get_attribute('user_pm'),
 			'IMG_PM' => ($User->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,

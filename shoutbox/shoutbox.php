@@ -49,7 +49,7 @@ if ($add && empty($shout_id)) //Insertion
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
 	$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
@@ -72,7 +72,7 @@ if ($add && empty($shout_id)) //Insertion
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_level() . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
@@ -142,7 +142,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		{
 			$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']);
-			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
+			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : $shout_pseudo;
 			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
@@ -175,7 +175,7 @@ else //Affichage.
 	//Pseudo du membre connecté.
 	if ($User->get_id() !== -1)
 		$Template->put_all(array(
-			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
+			'SHOUTBOX_PSEUDO' => $User->get_display_name(),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else

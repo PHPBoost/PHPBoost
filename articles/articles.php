@@ -184,7 +184,7 @@ if (!empty($idart) && isset($cat) )
 		'COM' => Comments::com_display_link($articles['nbr_com'], '../articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0'), $articles['id'], 'articles'),
 		'KERNEL_NOTATION' => $Note->display_form(),
 		'USER_MAIL'=>$User->get_attribute('user_mail'),
-		'SENDER'=>$User->get_attribute('login'),
+		'SENDER'=>$User->get_display_name(),
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],

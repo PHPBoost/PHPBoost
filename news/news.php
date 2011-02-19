@@ -176,7 +176,7 @@ elseif ($user)
 {
 	// Bread crumb.
 	$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
-	$Bread_crumb->add($User->get_attribute('login'), url('news.php?user=1'));
+	$Bread_crumb->add($User->get_display_name(), url('news.php?user=1'));
 
 	// Title of page
 	define('TITLE', $NEWS_LANG['news']);

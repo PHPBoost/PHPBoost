@@ -258,7 +258,7 @@ class Environment
 		AppContext::set_session($session_data);
 		AppContext::init_user();
 
-		$user_theme = AppContext::get_user()->get_attribute('user_theme');
+		$user_theme = AppContext::get_user()->get_theme();
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemesCache::load()->get_theme_properties($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
@@ -270,7 +270,7 @@ class Environment
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
 		AppContext::get_user()->set_user_theme($user_theme);
 
-		$user_lang = AppContext::get_user()->get_attribute('user_lang');
+		$user_lang = AppContext::get_user()->get_locale();
 		//Is that member authorized to use this lang? If not, we assign it the default lang
 		$langs_cache = LangsCache::load();
 		$lang_properties = $langs_cache->get_lang_properties($user_lang);

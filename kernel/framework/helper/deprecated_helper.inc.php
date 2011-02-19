@@ -283,7 +283,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = AppContext::get_user()->get_attribute('user_timezone') - $serveur_hour;
+		$timezone = AppContext::get_user()->get_timezone() - $serveur_hour;
 	}
 
 	if ($timezone != 0)
@@ -341,7 +341,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	$timezone = $User->get_timezone('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
@@ -454,7 +454,7 @@ function get_utheme()
 function get_ulang()
 {
 	$user = AppContext::get_user();
-	return $user->get_attribute('user_lang');
+	return $user->get_locale();
 }
 
 /**
