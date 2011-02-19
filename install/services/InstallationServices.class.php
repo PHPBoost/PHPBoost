@@ -250,7 +250,7 @@ class InstallationServices
 	private function add_extended_fields()
 	{
 		$lang = LangLoader::get('admin-extended-fields-common');
-		
+
 		//Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.sex']);
@@ -261,7 +261,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Date Birth
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.date-birth']);
@@ -272,7 +272,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Lang
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-lang']);
@@ -283,7 +283,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Theme
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-theme']);
@@ -294,7 +294,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Editor
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.default-editor']);
@@ -305,7 +305,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Timezone
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.timezone']);
@@ -316,7 +316,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Location
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.location']);
@@ -327,7 +327,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Website
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.website']);
@@ -339,7 +339,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(5);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Job
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.job']);
@@ -350,7 +350,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Entertainement
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.entertainement']);
@@ -361,7 +361,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Sign
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.signing']);
@@ -372,7 +372,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Biography
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.biography']);
@@ -383,7 +383,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//MSN
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.msn']);
@@ -395,7 +395,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Yahoo
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.yahoo']);
@@ -407,7 +407,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.avatar']);
@@ -419,7 +419,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
-	
+
 	private function generate_cache()
 	{
 		AppContext::get_cache_service()->clear_phpboost_cache();
