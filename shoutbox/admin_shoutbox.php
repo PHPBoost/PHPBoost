@@ -53,7 +53,7 @@ else
 	));
 	
 	$config_shoutbox = ShoutboxConfig::load();
-	print_r($config_shoutbox->get_authorization());
+
 	//Balises interdites => valeur 1.
 	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 1, 'stitle' => 1, 'style' => 1, 'url' => 0, 
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
