@@ -127,13 +127,13 @@ class SessionData
 		$values = @unserialize($cookie_content);
 		if ($values === false || empty($values[self::$KEY_USER_ID]) || empty($values[self::$KEY_SESSION_ID]))
 		{
-			throw UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
+			throw new UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
 		}
 		try
 		{
 			$user_id = $values[self::$KEY_USER_ID];
 			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'expiry', 'ip', 'data');
+			$columns = array('token', 'expiry', 'ip', 'data', 'cached_data');
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);

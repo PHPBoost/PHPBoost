@@ -205,7 +205,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$note_table, $fields, $options);
 	}
-	
+
 	private function create_average_notes_table()
 	{
 		$fields = array(
@@ -556,24 +556,19 @@ class KernelSetup
 	private function create_sessions_table()
 	{
 		$fields = array(
-			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'session_ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
-			'session_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
-			'session_script_get' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => 0),
-			'session_script_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'session_flag' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_theme' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'user_lang' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'modules_parameters' => array('type' => 'text', 'length' => 65000),
-			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1)
+			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
+			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'cached_data' => array('type' => 'text', 'length' => 65000),
+			'data' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('session_id'),
 			'indexes' => array(
-				'user_id' => array('type' => 'key', 'fields' => array('user_id', 'session_time'))
+				'user_id' => array('type' => 'unique', 'fields' => 'user_id'),
+				'expiry' => array('type' => 'key', 'fields' => 'expiry')
 			)
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);

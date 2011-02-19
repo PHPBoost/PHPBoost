@@ -112,9 +112,6 @@ class Environment
 	public static function init_services()
 	{
 		self::init_http_services();
-		Session::gc();
-		$session_data = Session::start();
-		AppContext::set_session($session_data);
 		AppContext::init_extension_provider_service();
 	}
 
@@ -256,7 +253,9 @@ class Environment
 
 	public static function init_session()
 	{
-		AppContext::init_session();
+		Session::gc();
+		$session_data = Session::start();
+		AppContext::set_session($session_data);
 		AppContext::init_user();
 
 		$user_theme = AppContext::get_user()->get_attribute('user_theme');

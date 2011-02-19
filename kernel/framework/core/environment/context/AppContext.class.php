@@ -172,7 +172,7 @@ class AppContext
 	 */
 	public static function init_user()
 	{
-		self::$user = new User();
+		self::$user = User::from_session();
 	}
 
 	/**
