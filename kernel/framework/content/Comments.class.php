@@ -80,7 +80,7 @@ class Comments
 	{
 		global $Sql, $User;
 
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . TextHelper::strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_id() . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . TextHelper::strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . DB_TABLE_COM);
 
 		//Incrémente le nombre de commentaire dans la table du script concerné.
@@ -291,7 +291,7 @@ class Comments
 					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+						$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
 						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{
 							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcule la fin du delai.
@@ -344,7 +344,7 @@ class Comments
 				$row = $Sql->query_array(DB_TABLE_COM, '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 
-				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))) //Modération des commentaires.
+				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))) //Modération des commentaires.
 				{
 					if ($delcom > 0) //Suppression du commentaire.
 					{
@@ -604,7 +604,7 @@ class Comments
 					$is_guest = empty($row['user_id']);
 
 					//Edition/suppression.
-					if ($is_modo || ($row['user_id'] == $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+					if ($is_modo || ($row['user_id'] == $User->get_id() && $User->get_id() !== -1))
 					{
 						list($edit, $del) = array(true, true);
 					}

@@ -105,7 +105,7 @@ if ($file_id > 0) //Contenu
 			$contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_deadlink'], stripslashes($download_info['title'])));
 			$contribution->set_fixing_url('/download/management.php?edit=' . $file_id . '');
 			$contribution->set_description(stripslashes($DOWNLOAD_LANG['contribution_deadlink_explain']));
-			$contribution->set_poster_id($User->get_attribute('user_id'));
+			$contribution->set_poster_id($User->get_id());
 			$contribution->set_module('download');
 			$contribution->set_type('alert');
 			$contribution->set_auth(

@@ -56,7 +56,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-		if ($id_get != $User->get_attribute('user_id'))
+		if ($id_get != $User->get_id())
 		{
 			if (!empty($readonly_contents))
 			{
@@ -208,7 +208,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 		{
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($id_get != $User->get_attribute('user_id'))
+			if ($id_get != $User->get_id())
 			{
 				MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 			}

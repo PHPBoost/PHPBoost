@@ -51,7 +51,7 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$date2 = new Date();
 //		self::assertEquals($contrib->get_status(), Event::EVENT_STATUS_PROCESSED);
 //		self::assertEquals($contrib->get_fixing_date(), $date2);
-//		self::assertEquals($contrib->get_fixer_id(), $User->get_attribute('user_id'));
+//		self::assertEquals($contrib->get_fixer_id(), $User->get_id());
 //	}
 //
 //	function test_accessor_auth()

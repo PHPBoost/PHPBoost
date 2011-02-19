@@ -201,7 +201,7 @@ FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $User->get_id() . "'
 LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'	
 ORDER BY msg.timestamp 
@@ -214,7 +214,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Gestion du niveau d'autorisation.
 	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
-	if ($check_group_edit_auth || ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && !$first_message))
+	if ($check_group_edit_auth || ($User->get_id() == $row['user_id'] && !$is_guest && !$first_message))
 	{
 		list($edit, $del) = array(true, true);
 		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
@@ -223,7 +223,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$moderator = (!$is_guest) ? true : false;
 		}
 	}
-	elseif ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif ($User->get_id() == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = true;
 	
 	//Gestion des sondages => executé une seule fois.
@@ -240,7 +240,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);			
-		if (in_array($User->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $User->get_attribute('user_id') === -1) //Déjà voté.
+		if (in_array($User->get_id(), $array_voter) || !empty($_GET['r']) || $User->get_id() === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
@@ -504,7 +504,7 @@ else
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
-	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
+	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_id() == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->put_all(array(

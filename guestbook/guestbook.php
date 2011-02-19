@@ -49,7 +49,7 @@ if ($del && !empty($id_get)) //Suppression.
 	$row['user_id'] = (int)$row['user_id'];
 	
 	$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) 
-		|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
+		|| ($row['user_id'] === $User->get_id() && $User->get_id() !== -1);
 	if ($has_edit_auth) {
 		$Session->csrf_get_protect(); //Protection csrf
 	
@@ -81,7 +81,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 		$guestbook_contents = FormatingHelper::unparse($row['contents']);
 		
 		$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO)
-			|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
+			|| ($row['user_id'] === $User->get_id() && $User->get_id() !== -1);
 	}
 	
 	$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(MEMBER_LEVEL);
@@ -135,9 +135,9 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 		}
 		//Mod anti-flood
 		$check_time = 0;
-		if ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) 
+		if ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) 
 		{
-			$check_time = $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$check_time = $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 			if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcul la fin du delai.
 			{
 				$controller = PHPBoostErrors::flood();
@@ -189,7 +189,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 				$columns = array(
 					'contents' => $guestbook_contents,
 					'login' => $guestbook_login,
-					'user_id' => $User->get_attribute('user_id'),
+					'user_id' => $User->get_id(),
 					'timestamp' => time()
 				);
 				PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
@@ -249,7 +249,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 
 	//Edition/suppression.
-	if ($User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	if ($User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
 	{
 		$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 		$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

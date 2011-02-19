@@ -58,7 +58,7 @@ if ($add && empty($shout_id)) //Insertion
 		if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
 			if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -72,7 +72,7 @@ if ($add && empty($shout_id)) //Insertion
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
@@ -98,7 +98,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
 	{
 		if ($del_message)
 		{
@@ -173,7 +173,7 @@ else //Affichage.
 	));
 	
 	//Pseudo du membre connecté.
-	if ($User->get_attribute('user_id') !== -1)
+	if ($User->get_id() !== -1)
 		$Template->put_all(array(
 			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
@@ -270,7 +270,7 @@ else //Affichage.
 		}
 		
 		//Edition/suppression.
-		if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+		if ($is_modo || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
 		{
 			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

@@ -286,7 +286,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+			if ($info_mbr['user_id'] != $User->get_id())
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
@@ -453,7 +453,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+				if ($info_mbr['user_id'] != $User->get_id())
 				{
 					if (!empty($warning_contents))
 					{

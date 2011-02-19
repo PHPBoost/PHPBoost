@@ -143,7 +143,7 @@ if (!empty($contents))
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_id() . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if ($is_cat > 0)
 				{

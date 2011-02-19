@@ -40,7 +40,7 @@ $msg_d = retrieve(GET, 'msg_d', '');
 
 if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {
-	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
+	$is_guest = ($User->get_id() !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
 	if (!$is_guest)
 	{
@@ -65,7 +65,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_id() . "'
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
 		ORDER BY t.last_timestamp DESC", __LINE__, __FILE__);
@@ -100,7 +100,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
-		echo "array_unread_topics[1] = '" . '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
+		echo "array_unread_topics[1] = '" . '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . ($User->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
 		echo "array_unread_topics[2] = '" . '<div class="row2" style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module_table" style="margin:2px;width:99%">' . $contents . "</table></div>';";
 	}
 	else
@@ -120,7 +120,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
 			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
@@ -186,7 +186,7 @@ elseif (!empty($msg_d))
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	$topic = $Sql->query_array(PREFIX . "forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
-	if ((!empty($topic['user_id']) && $User->get_attribute('user_id') == $topic['user_id']) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
+	if ((!empty($topic['user_id']) && $User->get_id() == $topic['user_id']) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 		echo ($topic['display_msg']) ? 2 : 1;

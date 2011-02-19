@@ -38,58 +38,56 @@ class User
 {
 	public static function from_session()
 	{
-		$user_id = AppContext::get_session()->get_user_id();
-		return self::from_user_id($user_id);
+		return new User(AppContext::get_session());
 	}
 
-	public static function from_user_id($user_id)
-	{
-		try
-		{
-			return self::from_db($user_id);
-		}
-		catch (RowNotFoundException $ex)
-		{
-			return new Visitor();
-		}
-	}
-
-	protected static function from_db($user_id)
-	{
-		$columns = array('');
-		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
-		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-		$user = new User();
-		return $user;
-	}
-
+	private $id = -1;
+	private $level = -1;
 	private $is_admin = false;
-	private $user_data; //Données du membres, obtenues à partir de la class de session.
-	private $groups_auth; //Tableau contenant le nom des groupes disponibles.
-	private $user_groups; //Groupes du membre.
+	private $groups = array();
+	private $groups_auth;
+
+	private $login;
+	private $display_name;
+
+	private $locale;
+	private $theme;
+	private $timezone;
+
 
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
-	private function __construct()
+	public function __construct(SessionData $session)
 	{
+		$this->id = $session->get_user_id();
+		$this->level = $session->get_cached_data('level', -1);
+		$this->is_admin = ($this->level == 2);
 
-//		$this->user_data = AppContext::get_session()->get_data();
-//		$this->is_admin = ($this->user_data['level'] == 2);
-//
-//		//Autorisations des groupes disponibles.
-//		$groups_auth = array();
-//		foreach (GroupsService::get_groups() as $idgroup => $array_info)
-//		{
-//			$groups_auth[$idgroup] = $array_info['auth'];
-//		}
-//		$this->groups_auth = $groups_auth;
-//
-//		//Groupes du membre.
-//		$this->user_groups = explode('|', $this->user_data['user_groups']);
-//		array_unshift($this->user_groups, 'r' . $this->user_data['level']); //Ajoute le groupe associé au rang du membre.
-//		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
+		$this->login = $session->get_cached_data('login');
+		$this->display_name = $session->get_cached_data('display_name', $this->login);
+
+		$user_accounts_config = UserAccountsConfig::load();
+		$this->locale = $session->get_cached_data('locale', $user_accounts_config->get_default_lang());
+		$this->theme = $session->get_cached_data('theme', $user_accounts_config->get_default_theme());
+		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
+
+		$this->build_groups($session);
+	}
+
+	private function build_groups(SessionData $session)
+	{
+		$groups_auth = array();
+		foreach (GroupsService::get_groups() as $idgroup => $array_info)
+		{
+			$groups_auth[$idgroup] = $array_info['auth'];
+		}
+		$this->groups_auth = $groups_auth;
+
+		//Groupes du membre.
+		$this->groups = explode('|', $session->get_cached_data('groups'));
+		array_unshift($this->user_groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
+		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 
 	public function is_admin()
@@ -123,7 +121,7 @@ class User
 	 */
 	public function get_id()
 	{
-		return (int)$this->get_attribute('user_id');
+		return $this->id;
 	}
 
 	/**

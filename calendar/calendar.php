@@ -429,7 +429,7 @@ elseif ($add) //Ajout d'un évenement
 		{
 			if (!empty($title) && !empty($contents)) //succès
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_id() . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);

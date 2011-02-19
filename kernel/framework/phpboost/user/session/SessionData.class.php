@@ -239,9 +239,13 @@ class SessionData
 		return isset($this->cached_data[$key]);
 	}
 
-	public function get_cached_data($key)
+	public function get_cached_data($key, $default = null)
 	{
-		return $this->cached_data[$key];
+		if (array_key_exist($key, $this->cached_data))
+		{
+			return $this->cached_data[$key];
+		}
+		return $default;
 	}
 
 	public function add_cached_data($key, $value)
@@ -266,9 +270,13 @@ class SessionData
 		return isset($this->data[$key]);
 	}
 
-	public function get_data_value($key)
+	public function get_data($key)
 	{
-		return $this->data[$key];
+		if (array_key_exist($key, $this->cached_data))
+		{
+			return $this->data[$key];
+		}
+		return $default;
 	}
 
 	public function add_data($key, $value)

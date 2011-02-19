@@ -73,9 +73,9 @@ $clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unre
 $result = $Sql->query_while("SELECT c.id as cid, m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_id() . "'
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_id() . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
@@ -138,7 +138,7 @@ $Sql->query_close($result);
 
 $nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_id() . "'
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
 
 //Le membre a déjà lu tous les messages.

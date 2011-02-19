@@ -36,7 +36,7 @@ if (!empty($view_get) || !empty($edit_get))
 {
 	if ($User->check_level(MEMBER_LEVEL))
 	{
-		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_id() . '&amp;view=1', 'member-' . $User->get_id() . '.php?view=1'));
 	}
 	
 	$title_mbr = !empty($edit_get) ? $LANG['profile_edition'] : '';
@@ -62,10 +62,10 @@ if (!empty($id_get)) //Espace membre
 		'member'=> 'member/member.tpl'
 	));
 	
-	if ($edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Edition du profil
+	if ($edit_get && $User->get_id() === $id_get && ($User->check_level(MEMBER_LEVEL))) //Edition du profil
 	{
 		//Update profil
-		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 		
 		$user_born = '';
 		$array_user_born = explode('-', $row['user_born']);
@@ -118,7 +118,7 @@ if (!empty($id_get)) //Espace membre
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;token=' . $Session->get_token(), '-' . $User->get_attribute('user_id') . '.php?token=' . $Session->get_token()),
+			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_id() . '&amp;token=' . $Session->get_token(), '-' . $User->get_id() . '.php?token=' . $Session->get_token()),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
 			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
@@ -310,7 +310,7 @@ if (!empty($id_get)) //Espace membre
 			$Template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));
 		}
 	}
-	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil
+	elseif (!empty($_POST['valid']) && ($User->get_id() === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil
 	{
 		$check_pass = !empty($_POST['pass']) ? true : false;
 		$check_pass_bis = !empty($_POST['pass_bis']) ? true : false;
@@ -323,7 +323,7 @@ if (!empty($id_get)) //Espace membre
 			$password_hash = !empty($password) ? strhash($password) : '';
 			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNCHANGE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
-			$password_old_bdd = $Sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'",  __LINE__, __FILE__);
+			$password_old_bdd = $Sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_id() . "'",  __LINE__, __FILE__);
 			
 			if (!empty($password_old_hash) && !empty($password_hash) && !empty($password_bis_hash))
 			{
@@ -347,9 +347,9 @@ if (!empty($id_get)) //Espace membre
 		
 		if (!empty($_POST['del_member'])) //Suppression du compte
 		{
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 			
-			Uploads::Empty_folder_member($User->get_attribute('user_id')); //Suppression de tout les fichiers et dossiers du membre.
+			Uploads::Empty_folder_member($User->get_id()); //Suppression de tout les fichiers et dossiers du membre.
 
 			//On régénère le cache
 			StatsCache::invalidate();
@@ -386,7 +386,7 @@ if (!empty($id_get)) //Espace membre
 			//Gestion de la suppression de l'avatar.
 			if (!empty($_POST['delete_avatar']))
 			{
-				$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 				if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 				{
 					if (is_file($user_avatar_path) && isset($match[1]))
@@ -395,7 +395,7 @@ if (!empty($id_get)) //Espace membre
 					}
 				}
 				
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 			}
 		
 			//Gestion upload d'avatar.
@@ -451,7 +451,7 @@ if (!empty($id_get)) //Espace membre
 				}
 				if (empty($error))
 				{
-					$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+					$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 					if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 					{
 						if (is_file($user_avatar_path) && isset($match[1]))
@@ -488,7 +488,7 @@ if (!empty($id_get)) //Espace membre
 				}
 				
 				//Suppression des images des stats concernant les membres, si l'info a été modifiée.
-				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . NumberHelper::numeric($User->get_id()) . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
 				{
 					@unlink('../cache/sex.png');
@@ -503,11 +503,11 @@ if (!empty($id_get)) //Espace membre
 				" . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "',
 				user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "',
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
-				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+				user_sign = '" . $user_sign . "' WHERE user_id = '" . NumberHelper::numeric($User->get_id()) . "'", __LINE__, __FILE__);
 				
-				MemberExtendedFieldsService::update_fields($User->get_attribute('user_id'));
+				MemberExtendedFieldsService::update_fields($User->get_id());
 				
-				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
+				AppContext::get_response()->redirect('/member/member' . url('.php?id=' . $User->get_id(), '-' . $User->get_id() . '.php', '&'));
 			}
 			else
 			{
@@ -519,7 +519,7 @@ if (!empty($id_get)) //Espace membre
 			AppContext::get_response()->redirect('/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#message_helper');
 		}
 	}
-	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
+	elseif (!empty($view_get) && $User->get_id() === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
 		//Info membre
 		$msg_mbr = FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message());
@@ -537,8 +537,8 @@ if (!empty($id_get)) //Espace membre
 			'PM' => $User->get_attribute('user_pm'),
 			'IMG_PM' => ($User->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,
-			'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
-			'U_USER_PM' => url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_USER_ID' => url('.php?id=' . $User->get_id() . '&amp;edit=true'),
+			'U_USER_PM' => url('.php?pm=' . $User->get_id(), '-' . $User->get_id() . '.php'),
 			'U_CONTRIBUTION_PANEL' => url('contribution_panel.php'),
 			'U_MODERATION_PANEL' => url('moderation_panel.php'),
 			'L_PROFIL' => $LANG['profile'],
@@ -637,9 +637,9 @@ if (!empty($id_get)) //Espace membre
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->put_all(array(
-			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
+			'C_USER_PROFIL_EDIT' => ($User->get_id() === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_USER_VIEW' => true,
-			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->get_attribute('user_id') == $id_get,
+			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->get_id() == $id_get,
 			'C_AUTH_READ_CONTACT' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->check_level(MEMBER_LEVEL),
 			'SID' => SID,
 			'LANG' => get_ulang(),
@@ -680,7 +680,7 @@ if (!empty($id_get)) //Espace membre
 			'L_CONTACT' => $LANG['contact'],
 			'L_MAIL' => $LANG['mail'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-			'U_USER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
+			'U_USER_SCRIPT' => ($User->get_id() === $id_get) ? ('../member/member' . url('.php?id=' . $User->get_id() . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
 			'U_USER_MSG' => url('.php?id=' . $id_get),
 			'U_USER_PM' => url('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));

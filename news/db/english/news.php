@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 require_once PATH_TO_ROOT . '/news/news_constant.php';
 
-$user_id = (isset($Session) && is_object($Session) && $User->get_attribute('user_id') != '') ? $User->get_attribute('user_id') : 1;
+$user_id = (isset($Session) && is_object($Session) && $User->get_id() != '') ? $User->get_id() : 1;
 $Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET user_id = '" . $user_id . "' WHERE id = 1", __LINE__, __FILE__);
 
 ?>

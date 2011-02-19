@@ -92,7 +92,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
+	if (!$Gallery->auth_upload_pics($User->get_id(), $User->get_attribute('level')))
 		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
 	$dir = 'pics/';
@@ -119,7 +119,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
 
-			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
+			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_id());
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
 
@@ -216,7 +216,7 @@ elseif ($g_add)
 			default:
 			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
-		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
+		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_id());
 
 		$Template->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)

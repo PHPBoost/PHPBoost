@@ -66,7 +66,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
-		if (!empty($msg['idtopic']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $topic['user_id'])) //Autorisé à supprimer?
+		if (!empty($msg['idtopic']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_id() == $topic['user_id'])) //Autorisé à supprimer?
 		{
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		}
@@ -80,7 +80,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	}
 	elseif (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		}
@@ -131,7 +131,7 @@ elseif (!empty($idt_get))
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
 		$check_mbr = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_topics WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
-		if ((!empty($check_mbr) && $User->get_attribute('user_id') == $check_mbr) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
+		if ((!empty($check_mbr) && $User->get_id() == $check_mbr) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
@@ -143,14 +143,14 @@ elseif (!empty($idt_get))
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	elseif ($poll && $User->get_attribute('user_id') !== -1) //Enregistrement vote du sondage
+	elseif ($poll && $User->get_id() !== -1) //Enregistrement vote du sondage
 	{
 		$info_poll = $Sql->query_array(PREFIX . 'forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
-		if (!in_array($User->get_attribute('user_id'), explode('|', $info_poll['voter_id'])))
+		if (!in_array($User->get_id(), explode('|', $info_poll['voter_id'])))
 		{
 			//On concatène avec les votans existants.
-			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $User->get_attribute('user_id') . "'),";
+			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $User->get_id() . "'),";
 			$array_votes = explode('|', $info_poll['votes']);
 
 			if ($info_poll['type'] == 0) //Réponse simple.
@@ -261,13 +261,13 @@ elseif ($read) //Marquer comme lu.
 		AppContext::get_response()->redirect('/member/error.php');
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 	else
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . $User->get_id() . "', '" .  time(). "')", __LINE__, __FILE__);
 
 	AppContext::get_response()->redirect('/forum/index.php' . SID2);
 }

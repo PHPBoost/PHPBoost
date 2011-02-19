@@ -173,7 +173,7 @@ class Contribution extends Event
 				//If the fixer id is not defined, we define it
 				if ($this->fixer_id == 0)
 				{
-					$this->fixer_id = $User->get_attribute('user_id');
+					$this->fixer_id = $User->get_id();
 				}
 			}
 

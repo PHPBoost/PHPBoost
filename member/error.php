@@ -35,7 +35,7 @@ $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_un
 'e_member_flood', 'e_forget_confirm_change');
 if (in_array($id_error, $array_error))
 {
-	if ($User->get_attribute('user_id') === -1)
+	if ($User->get_id() === -1)
 	{
 		$Template->set_filenames(array(
 			'error'=> 'member/error.tpl'
@@ -149,7 +149,7 @@ elseif (!empty($id_error))
 	
 	$Template->pparse('error');
 }
-elseif ($User->get_attribute('user_id') === -1)
+elseif ($User->get_id() === -1)
 {
 	$Template->set_filenames(array(
 		'error'=> 'member/error.tpl'

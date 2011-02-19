@@ -57,7 +57,7 @@ function shoutbox_mini($position, $block)
     			if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
     			{
     				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-    				$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+    				$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
     				if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
     				{
     					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -71,7 +71,7 @@ function shoutbox_mini($position, $block)
     				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
     					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 
-    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_id() . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 
     				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     			}
@@ -86,7 +86,7 @@ function shoutbox_mini($position, $block)
         MenuService::assign_positions_conditions($tpl, $block);
 
     	//Pseudo du membre connecté.
-    	if ($User->get_attribute('user_id') !== -1)
+    	if ($User->get_id() !== -1)
     		$tpl->put_all(array(
     			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
     			'C_HIDDEN_SHOUT' => true
@@ -124,7 +124,7 @@ function shoutbox_mini($position, $block)
     	while ($row = $Sql->fetch_assoc($result))
     	{
     		$row['user_id'] = (int)$row['user_id'];
-    		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+    		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
     			$del_message = '<script type="text/javascript"><!--
     			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\');
     			--></script><ins><noscript><p><a href="' . TPL_PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
