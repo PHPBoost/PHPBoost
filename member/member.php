@@ -530,7 +530,6 @@ if (!empty($id_get)) //Espace membre
 		$Template->put_all(array(
 			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $User->get_level() >= MODERATOR_LEVEL,
-			'SID' => SID,
 			'LANG' => get_ulang(),
 			'COLSPAN' => $is_auth_files ? 3 : 2,
 			'USER_NAME' => $User->get_display_name(),
@@ -641,7 +640,6 @@ if (!empty($id_get)) //Espace membre
 			'C_PROFIL_USER_VIEW' => true,
 			'C_AUTH_READ_MEMBERS' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->get_id() == $id_get,
 			'C_AUTH_READ_CONTACT' => $User->check_auth($user_account_config->get_auth_read_members(), AUTH_READ_MEMBERS) || $User->check_level(MEMBER_LEVEL),
-			'SID' => SID,
 			'LANG' => get_ulang(),
 			'USER_NAME' => $row['login'],
 			'MAIL' => $user_mail,
@@ -753,7 +751,6 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 	}
 		
 	$Template->put_all(array(
-		'SID' => SID,
 		'C_GROUP_LIST' => true,
 		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
 		'GROUP_NAME' => $group['name'],
@@ -843,7 +840,6 @@ else //Show all member!
 
 	$Template->put_all(array(
 		'C_USER_LIST' => true,
-		'SID' => SID,
 		'LANG' => get_ulang(),
 		'LOGIN' => $login,
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],

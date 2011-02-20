@@ -49,7 +49,7 @@ if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] 
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'])
@@ -150,8 +150,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 }
 
 $Template->put_all(array(
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'SID' => SID,		
+	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],		
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
 	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d' . $rewrited_title . '.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),

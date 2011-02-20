@@ -91,7 +91,7 @@ function online_mini($position, $block)
     	$total_member = $count_member + $count_modo + $count_admin;
 
     	$member_online = $LANG['member_s'] . ' ' . strtolower($LANG['online']);
-    	$more = '<br /><a href="../online/online.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />';
+    	$more = '<br /><a href="../online/online.php" title="' . $member_online . '">' . $member_online . '</a><br />';
     	$more = ($total_member > $CONFIG_ONLINE['online_displayed']) ? $more : ''; //Plus de 4 membres connectés.
 
     	$l_guest = ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'];

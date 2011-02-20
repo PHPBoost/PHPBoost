@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($cat_name, '');
 
 if (!empty($id_get) && !empty($CAT_FORUM[$id_get]['name']))
@@ -216,7 +216,6 @@ $Template->put_all(array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SID' => SID,
 	'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'C_TOTAL_POST' => true,
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),

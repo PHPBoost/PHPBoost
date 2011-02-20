@@ -45,7 +45,7 @@ if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
@@ -116,7 +116,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'LANG' => get_ulang(),
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-			'SID' => SID,
 			'KERNEL_EDITOR' => display_editor(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
@@ -273,7 +272,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'THEME' => get_utheme(),
 				'LANG' => get_ulang(),
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
@@ -350,7 +348,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -585,7 +582,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'THEME' => get_utheme(),
 					'LANG' => get_ulang(),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
@@ -708,7 +704,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$Template->put_all(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'TITLE' => $topic['title'],
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
@@ -815,7 +810,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => display_editor(),
@@ -878,7 +872,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$Template->put_all(array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => display_editor(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
@@ -953,7 +946,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,

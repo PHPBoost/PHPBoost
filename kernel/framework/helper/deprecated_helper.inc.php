@@ -156,33 +156,16 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
  * @return string The URL to use.
  */
-function url($url, $mod_rewrite = '', $ampersand = '&amp;')
+function url($url, $mod_rewrite = '')
 {
-	global $Session;
 
-	if (!is_object($Session))
+	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
 	{
-		$session_mod = 0;
+		return $mod_rewrite;
 	}
 	else
 	{
-		$session_mod = $Session->supports_cookies();
-	}
-
-	if ($session_mod == 0)
-	{
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
-		{
-			return $mod_rewrite;
-		}
-		else
-		{
-			return $url;
-		}
-	}
-	elseif ($session_mod == 1)
-	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+		return $url;
 	}
 }
 

@@ -64,8 +64,7 @@ class MemberHomeProfileController extends AbstractController
 
 		$this->tpl->put_all(array(
 			'C_USER_INDEX' => true,
-			'C_IS_MODERATOR' => $user->get_level() >= MODERATOR_LEVEL,
-			'SID' => SID,
+			'C_IS_MODERATOR' => $user->get_level() >= MODERATOR_LEVEL,
 			'LANG' => get_ulang(),
 			'COLSPAN' => $is_auth_files ? 3 : 2,
 			'USER_NAME' => $user->get_display_name(),

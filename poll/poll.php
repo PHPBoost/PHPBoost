@@ -330,7 +330,6 @@ elseif ($archives) //Archives.
 	
 	$Template->put_all(array(
 		'C_POLL_ARCHIVES' => true,
-		'SID' => SID,
 		'THEME' => get_utheme(),		
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),

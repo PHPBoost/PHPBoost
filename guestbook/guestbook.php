@@ -47,18 +47,18 @@ if ($del && !empty($id_get)) //Suppression.
 {
 	$row = $Sql->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
-	
-	$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) 
+
+	$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO)
 		|| ($row['user_id'] === $User->get_id() && $User->get_id() !== -1);
 	if ($has_edit_auth) {
 		$Session->csrf_get_protect(); //Protection csrf
-	
+
 		$Sql->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 		$previous_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
-	
+
 		GuestbookMessagesCache::invalidate();
-	
-		AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
+
+		AppContext::get_response()->redirect(HOST . SCRIPT . '#m' . $previous_id);
 	}
 }
 
@@ -66,7 +66,7 @@ if ($del && !empty($id_get)) //Suppression.
 if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 {
 	$is_edition_mode = !empty($id_get);
-	
+
 	$guestbook_fieldset = $LANG['add_msg'];
 	$guestbook_login = $LANG['guest'];
 	$guestbook_contents = '';
@@ -79,16 +79,16 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 		$guestbook_fieldset = $LANG['update_msg'];
 		$guestbook_login = $row['login'];
 		$guestbook_contents = FormatingHelper::unparse($row['contents']);
-		
+
 		$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO)
 			|| ($row['user_id'] === $User->get_id() && $User->get_id() !== -1);
 	}
-	
+
 	$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(MEMBER_LEVEL);
 
 	$formatter = AppContext::get_content_formatting_service()->create_factory();
 	$formatter->set_forbidden_tags($guestbook_config->get_forbidden_tags());
-		
+
 	//Post form
 	$form = new HTMLForm('guestbookForm');
 	$fieldset = new FormFieldsetHTML('add_msg', $guestbook_fieldset);
@@ -101,14 +101,14 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 	$fieldset->add_field(new FormFieldRichTextEditor('contents',  $LANG['message'], $guestbook_contents, array(
 		'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 	));
-	
+
 	if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de vérification, anti-bots.
 	{
 		$captcha = new Captcha();
 		$captcha->set_difficulty($guestbook_config->get_captcha_difficulty());
 		$fieldset->add_field(new FormFieldCaptcha($captcha));
 	}
-		
+
 	if ($is_edition_mode)
 	{
 		$submit_button = new FormButtonSubmit($LANG['update'], $LANG['update']);
@@ -119,11 +119,11 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 	}
 	$form->add_button($submit_button);
 	$form->add_button(new FormButtonReset());
-		
+
 	$form->add_fieldset($fieldset);
-	   
+
 	$Template->put('GUESTBOOK_FORM', $form->display());
-	
+
 	//Formulaire soumis
 	if ($submit_button->has_been_submited())
 	{
@@ -135,7 +135,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 		}
 		//Mod anti-flood
 		$check_time = 0;
-		if ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) 
+		if ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled())
 		{
 			$check_time = $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
 			if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcul la fin du delai.
@@ -144,45 +144,45 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 				DispatchManager::redirect($controller);
 			}
 		}
-			
+
 		if ($form->validate())
 		{
-			$guestbook_login = '';	
+			$guestbook_login = '';
 			if ($form->has_field('pseudo')) {
 				$guestbook_login = $form->get_value('pseudo');
 			}
-			$guestbook_login = $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : $guestbook_login;	
+			$guestbook_login = $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : $guestbook_login;
 			$guestbook_login = empty($guestbook_login) ? $LANG['guest'] : $guestbook_login;
-			
+
 			$guestbook_contents = $form->get_value('contents');
-			
+
 			//Nombre de liens max dans le message ou dans le login
-			if (!TextHelper::check_nbr_links($guestbook_contents, $guestbook_config->get_maximum_links_message())) 
+			if (!TextHelper::check_nbr_links($guestbook_contents, $guestbook_config->get_maximum_links_message()))
 			{
 				$controller = PHPBoostErrors::link_flood();
 				DispatchManager::redirect($controller);
 			}
-			if (!TextHelper::check_nbr_links($guestbook_login, 0)) 
+			if (!TextHelper::check_nbr_links($guestbook_login, 0))
 			{
 				$controller = PHPBoostErrors::link_login_flood();
 				DispatchManager::redirect($controller);
 			}
-			
-			if ($is_edition_mode && $has_edit_auth) 
+
+			if ($is_edition_mode && $has_edit_auth)
 			{
 				$columns = array(
 					'contents' => $guestbook_contents
 				);
-				
+
 				if ($user_id == -1) {
 					$columns['login'] = $guestbook_login;
 				}
-				
+
 				PersistenceContext::get_querier()->update(PREFIX . "guestbook", $columns, " WHERE id = :id", array('id' => $id_get));
 
 				GuestbookMessagesCache::invalidate();
 
-				AppContext::get_response()->redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
+				AppContext::get_response()->redirect(HOST . SCRIPT. '#m' . $id_get);
 			}
 			else
 			{
@@ -193,12 +193,12 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 					'timestamp' => time()
 				);
 				PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
-				
+
 				$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
-	
+
 				GuestbookMessagesCache::invalidate();
-	
-				AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
+
+				AppContext::get_response()->redirect(HOST . SCRIPT . '#m' . $last_msg_id);
 			}
 		}
 	}
@@ -350,7 +350,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$user_local = $LANG['place'] . ': ' . $row['user_local'];
 		$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';
 	}
-	else 
+	else
 	{
 		$user_local = '';
 	}
@@ -380,7 +380,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'DEL' => $del,
 		'EDIT' => $edit,
 		'U_USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
-		'U_ANCHOR' => 'guestbook.php' . SID . '#m' . $row['id']
+		'U_ANCHOR' => 'guestbook.php#m' . $row['id']
 	));
 	$j++;
 }

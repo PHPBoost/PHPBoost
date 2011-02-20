@@ -6,7 +6,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -44,7 +44,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}

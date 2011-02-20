@@ -85,9 +85,9 @@ class User
 		$this->groups_auth = $groups_auth;
 
 		//Groupes du membre.
-		$this->groups = explode('|', $session->get_cached_data('groups'));
-		array_unshift($this->user_groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
-		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
+		$this->groups = explode('|', $session->get_cached_data('groups', ''));
+		array_unshift($this->groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
+		array_pop($this->groups); //Supprime l'élément vide en fin de tableau.
 	}
 
 	public function is_admin()

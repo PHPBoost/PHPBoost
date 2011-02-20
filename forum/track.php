@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
 require_once('../kernel/header.php');
@@ -41,12 +41,12 @@ if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	AppContext::get_response()->redirect('/member/error.php');
-	
+
 if (!empty($_POST['valid']))
 {
-	
+
 	$Pagination = new DeprecatedPagination();
-	
+
 	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
@@ -64,8 +64,8 @@ if (!empty($_POST['valid']))
 			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
-	
-	AppContext::get_response()->redirect('/forum/track.php' . SID2);
+
+	AppContext::get_response()->redirect('/forum/track.php');
 }
 elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
@@ -79,7 +79,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
-	
+
 	$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 	$module_data_path = $TmpTemplate->get_pictures_data_path();
 
@@ -99,15 +99,15 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
-		
+
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'announce';		
+		$img_announce = 'announce';
 		$new_msg = false;
 		if (!$is_guest) //Non visible aux invités.
 		{
 			$new_msg = false;
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-			{	
+			{
 				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
 				$new_msg = true;
 			}
@@ -115,7 +115,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
-		
+
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
 		if (!empty($row['last_view_id']))
@@ -131,16 +131,16 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
-		
+
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-		
+
 		//Affichage du dernier message posté.
 		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="'. DispatchManager::get_url('/member', '/profile/'.$row['last_user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
-		
+
 		//Ancre ajoutée aux messages non lus.
 		$new_ancre = ($new_msg === true && $User->get_id() !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
-		
+
 		$Template->assign_block_vars('topics', array(
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
 			'ID' => $row['id'],
@@ -166,11 +166,11 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		$nbr_topics_compt++;
 	}
 	$Sql->query_close($result);
-	
+
 	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
 	WHERE tr.user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
-	
+
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
@@ -181,18 +181,17 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 	}
 
 	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
-	
+
 	$Template->put_all(array(
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-		'SID' => SID,
 		'PAGINATION' => $Pagination->display('track' . url('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => get_ulang(),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-		'U_CHANGE_CAT'=> 'track.php' . SID . '&amp;token=' . $Session->get_token(),
+		'U_CHANGE_CAT'=> 'track.php?token=' . $Session->get_token(),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
-		'U_FORUM_CAT' => '<a href="../forum/track.php' . SID . '">' . $LANG['show_topic_track'] . '</a>',
+		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+		'U_FORUM_CAT' => '<a href="../forum/track.php">' . $LANG['show_topic_track'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',
 		'U_TRACK_ACTION' => url('.php?p=' . $page . '&amp;token=' . $Session->get_token()),
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -208,7 +207,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		'L_LAST_MESSAGE' => $LANG['last_message'],
 		'L_SUBMIT' => $LANG['submit']
 	));
-	
+
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/track.php'");
 
@@ -228,11 +227,11 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
-	
+
 	$Template->pparse('forum_track');
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 
 include('../kernel/footer.php');
 

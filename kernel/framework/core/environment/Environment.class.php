@@ -410,7 +410,7 @@ class Environment
 		__LINE__, __FILE__);
 
 		//Deleting all the invalid sessions
-		AppContext::get_session()->garbage_collector();
+		Session::gc();
 	}
 
 	private static function clear_all_temporary_cache_files()

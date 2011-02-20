@@ -224,7 +224,6 @@ elseif ($g_add)
 	}
 
 	$Template->put_all(array(
-		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'CAT_ID' => $g_idcat,
@@ -334,7 +333,6 @@ else
 		'MAX_START' => 0,
 		'START_THUMB' => 0,
 		'END_THUMB' => 0,
-		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'PAGINATION' => $Pagination->display('gallery' . url('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),

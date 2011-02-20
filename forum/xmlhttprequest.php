@@ -100,7 +100,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
-		echo "array_unread_topics[1] = '" . '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . ($User->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
+		echo "array_unread_topics[1] = '" . '<a class="small_link" href="../forum/unread.php" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . ($User->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
 		echo "array_unread_topics[2] = '" . '<div class="row2" style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module_table" style="margin:2px;width:99%">' . $contents . "</table></div>';";
 	}
 	else

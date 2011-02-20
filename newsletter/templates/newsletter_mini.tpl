@@ -18,7 +18,7 @@
 						<input type="submit" value="{L_SUBMIT}" class="submit" />	
 					</p>
 					<p style="margin:0;margin-top:10px;">
-						<a href="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" class="small_link">{L_ARCHIVES}</a>
+						<a href="{PATH_TO_ROOT}/newsletter/newsletter.php" class="small_link">{L_ARCHIVES}</a>
 					</p>
 				</div>
 				<div class="module_mini_bottom">

@@ -34,12 +34,12 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 if ($action == 'alert')
 	$Bread_crumb->add($LANG['alert_management'], url('moderation_forum.php?action=alert'));
 elseif ($action == 'users')
 	$Bread_crumb->add($LANG['warning_management'], url('moderation_forum.php?action=warning'));
-$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php' . SID);
+$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../kernel/header.php');
@@ -70,7 +70,6 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 $Template->put_all(array(
-	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -604,7 +603,6 @@ else //Panneau de modération
 	}
 
 	$Template->put_all(array(
-		'SID' => SID,
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
