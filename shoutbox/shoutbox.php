@@ -43,7 +43,7 @@ if (!$User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ
 if ($add && empty($shout_id)) //Insertion
 {
 	//Membre en lecture seule?
-	if ($User->get_attribute('user_readonly') > time())
+	if ($User->is_readonly() > time())
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);
@@ -85,7 +85,7 @@ if ($add && empty($shout_id)) //Insertion
 elseif (!empty($shout_id)) //Edition + suppression!
 {
 	//Membre en lecture seule?
-	if ($User->get_attribute('user_readonly') > time())
+	if ($User->is_readonly() > time())
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);

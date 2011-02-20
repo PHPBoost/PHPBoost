@@ -168,22 +168,33 @@ class SessionData
 
 	private static function fill_user_cached_data(SessionData $data)
 	{
-			$columns = array('level AS level', 'user_lang AS lang', 'user_theme AS theme');
-			$condition = 'WHERE user_id=:user_id';
-			$parameters = array('user_id' => $data->user_id);
-			try
-			{
-				$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-			}
-			catch (RowNotFoundException $ex)
-			{
-				$config = UserAccountsConfig::load();
-				$data->cached_data = array(
-					'level' => -1,
-					'lang' => $config->get_default_lang(),
-					'theme' => $config->get_default_theme()
-				);
-			}
+		$columns = array('display_name', 'level', 'email', 'locale', 'theme', 'timezone', 'editor',
+			'unread_pm', 'timestamp', 'groups', 'warning_percentage', 'is_banned', 'is_readonly');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $data->user_id);
+		try
+		{
+			$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		}
+		catch (RowNotFoundException $ex)
+		{
+			$config = UserAccountsConfig::load();
+			$data->cached_data = array(
+				'display_name' => LangLoader::get_message('guest', 'main'),
+				'level' => -1,
+				'email' => null,
+				'locale' => $config->get_default_lang(),
+				'theme' => $config->get_default_theme(),
+				'timezone' => GeneralConfig::load()->get_site_timezone(),
+				'editor' => 'bbcode',
+				'unread_pm' => 0,
+				'timestamp' => time(),
+				'groups' => '',
+				'warning_percentage' => 0,
+				'is_banned' => 0,
+				'is_readonly' => 0
+			);
+		}
 	}
 
 	protected $user_id;

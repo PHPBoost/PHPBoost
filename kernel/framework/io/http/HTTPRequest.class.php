@@ -38,6 +38,7 @@ class HTTPRequest
 	const string = 0x03;
 	const t_array = 0x04;
 	const none = 0x05;
+	const VALID_IP_ADDRESS_REGEX = '`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{0,4}:{1,2}){0,7}[0-9abcdef]{1,4})`';
 
 	/**
 	 * @desc Returns the ip address of the user viewing the page.
@@ -47,12 +48,30 @@ class HTTPRequest
 	 */
 	public function get_ip_address()
 	{
-		$ip = getenv('REMOTE_ADDR');
-		if (preg_match('`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{0,4}:{1,2}){0,7}[0-9abcdef]{1,4})`', $ip))
+		foreach (array('HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'REMOTE_ADDR') as $env_varname)
 		{
-			return $ip;
+			$ip = $this->get_env_var($env_varname);
+			if (!empty($ip) && preg_match(self::VALID_IP_ADDRESS_REGEX, $ip))
+			{
+				return $ip;
+			}
 		}
 		return null;
+	}
+
+	/**
+	 * @desc Searches for the environment variable value in array <code>$_SERVER</code> and if not found,
+	 * 	it will try to the <code>getenv()</code> method.
+	 * @param string $name the environment variable name to be search
+	 * @return mixed the environment variable value.
+	 */
+	private function get_env_var($name)
+	{
+		if (isset($_SERVER[$name]))
+		{
+			return $_SERVER[$name];
+		}
+		return getenv($name);
 	}
 
 	public function is_post_method()

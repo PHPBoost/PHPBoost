@@ -71,7 +71,7 @@ class ContactController extends ModuleController
 
 		$fieldset = new FormFieldsetHTML('send_a_mail', $this->lang['contact_mail']);
 		$form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldMailEditor('sender_mail', $this->lang['your_mail_address'], AppContext::get_user()->get_attribute('user_mail'),
+		$fieldset->add_field(new FormFieldMailEditor('sender_mail', $this->lang['your_mail_address'], AppContext::get_user()->get_email(),
 			array('description' => $this->lang['your_mail_address_explain'])));
 
 		$fieldset->add_field(new FormFieldTextEditor('subject', $this->lang['contact_subject'], '', array('description' => $this->lang['contact_subject_explain']), array(new FormFieldConstraintNotEmpty())));

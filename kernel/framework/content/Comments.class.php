@@ -270,7 +270,7 @@ class Comments
 			if (retrieve(POST, 'comForm', false) && !$updatecom)
 			{
 				//Membre en lecture seule?
-				if ($User->get_attribute('user_readonly') > time())
+				if ($User->is_readonly() > time())
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -335,7 +335,7 @@ class Comments
 			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
-				if ($User->get_attribute('user_readonly') > time())
+				if ($User->is_readonly() > time())
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -536,7 +536,7 @@ class Comments
 				$form = new HTMLForm('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
 				$fieldset = new FormFieldsetHTML('add_comment', $LANG['add_comment']);
 				$form->add_fieldset($fieldset);
-				
+
 				if ($is_guest) //Visiteur
 				{
 					$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $LANG['guest'], array(
@@ -544,7 +544,7 @@ class Comments
 						'maxlength' => 25)
 					));
 				}
-				
+
 				$formatter = AppContext::get_content_formatting_service()->create_factory();
 				$formatter->set_forbidden_tags($comments_config->get_forbidden_tags());
 
@@ -561,7 +561,7 @@ class Comments
 				$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				$form->add_button(new FormButtonDefaultSubmit());
 				$form->add_button(new FormButtonReset());
-				
+
 				//On crée une pagination si le nombre de commentaires est trop important.
 				$pagination = new DeprecatedPagination();
 
@@ -575,7 +575,7 @@ class Comments
 					'SCRIPT' => $this->script,
 					'PATH' => SCRIPT,
 					'VAR' => $vars_simple,
-					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
+					'C_BBCODE_TINYMCE_MODE' => $User->get__editor() == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => (!CommentsConfig::load()->get_display_comments_in_popup() || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],

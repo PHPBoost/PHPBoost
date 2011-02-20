@@ -43,7 +43,7 @@ function shoutbox_mini($position, $block)
     	if ($shoutbox)
     	{
     		//Membre en lecture seule?
-    		if ($User->get_attribute('user_readonly') > time())
+    		if ($User->is_readonly() > time())
     		{
     			$error_controller = PHPBoostErrors::user_in_read_only();
                 DispatchManager::redirect($error_controller);

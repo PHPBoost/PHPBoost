@@ -47,12 +47,19 @@ class User
 	private $groups = array();
 	private $groups_auth;
 
-	private $login;
 	private $display_name;
+	private $email;
+	private $unread_pm;
+	private $timestamp;
+
+	private $warning_percentage;
+	private $is_banned;
+	private $is_readonly;
 
 	private $locale;
 	private $theme;
 	private $timezone;
+	private $editor;
 
 
 	/**
@@ -64,13 +71,19 @@ class User
 		$this->level = $session->get_cached_data('level', -1);
 		$this->is_admin = ($this->level == 2);
 
-		$this->login = $session->get_cached_data('login');
-		$this->display_name = $session->get_cached_data('display_name', $this->login);
+		$this->display_name = $session->get_cached_data('display_name', LangLoader::get_message('guest', 'main'));
+		$this->email = $session->get_cached_data('email', null);
+		$this->unread_pm = $session->get_cached_data('unread_pm', 0);
+		$this->timestamp = $session->get_cached_data('timestamp', time());
+		$this->warning_percentage = $session->get_cached_data('warning_percentage', 0);
+		$this->is_banned = $session->get_cached_data('is_banned', 0);
+		$this->is_readonly = $session->get_cached_data('is_readonly', 0);
 
 		$user_accounts_config = UserAccountsConfig::load();
 		$this->locale = $session->get_cached_data('locale', $user_accounts_config->get_default_lang());
 		$this->theme = $session->get_cached_data('theme', $user_accounts_config->get_default_theme());
 		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
+		$this->editor = $session->get_cached_data('editor', 'bbcode');
 
 		$this->build_groups($session);
 	}
@@ -95,19 +108,62 @@ class User
 		return $this->is_admin;
 	}
 
+	/**
+	 * @desc Get the user id
+	 * @return int The user id.
+	 */
+	public function get_id()
+	{
+		return $this->id;
+	}
+
 	public function get_level()
 	{
 		return $this->level;
 	}
 
-	public function get_login()
+	/**
+	 * @desc Get all user groups
+	 * @return string The user groups
+	 */
+	public function get_groups()
 	{
-		return $this->login;
+		return $this->groups;
 	}
 
 	public function get_display_name()
 	{
 		return $this->display_name;
+	}
+
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function get_unread_pm()
+	{
+		return $this->unread_pm;
+	}
+
+	public function get_timestamp()
+	{
+		return $this->timestamp;
+	}
+
+	public function get_warning_percentage()
+	{
+		return $this->warning_percentage;
+	}
+
+	public function is_banned()
+	{
+		return $this->is_banned;
+	}
+
+	public function is_readonly()
+	{
+		return $this->is_readonly;
 	}
 
 	public function get_locale()
@@ -125,23 +181,20 @@ class User
 		return $this->timezone;
 	}
 
+	public function get_editor()
+	{
+		return $this->editor;
+	}
+
 	/**
 	 * @desc Accessor
 	 * @param string $attribute The attribute name.
 	 * @return unknown_type
+	 * @deprecated
 	 */
 	public function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
-	}
-
-	/**
-	 * @desc Get the user id
-	 * @return int The user id.
-	 */
-	public function get_id()
-	{
-		return $this->id;
 	}
 
 	/**
@@ -234,15 +287,6 @@ class User
 		}
 
 		return $max_auth;
-	}
-
-	/**
-	 * @desc Get all user groups
-	 * @return string The user groups
-	 */
-	public function get_groups()
-	{
-		return $this->user_groups;
 	}
 
 	/**

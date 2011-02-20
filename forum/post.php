@@ -38,7 +38,7 @@ if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FOR
     DispatchManager::redirect($controller);
 }
 
-if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
+if ($User->is_readonly() > time()) //Lecture seule.
 {
 	$controller = PHPBoostErrors::user_in_read_only();
     DispatchManager::redirect($controller);
@@ -94,7 +94,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 		if (empty($topic['idcat'])) //Topic inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -392,7 +392,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if (empty($topic['idcat']))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                 $LANG['e_topic_lock_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -450,7 +450,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -837,7 +837,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                     $LANG['e_unexist_topic_forum']);
                 DispatchManager::redirect($controller);
 			}

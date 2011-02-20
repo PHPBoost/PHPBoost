@@ -42,20 +42,5 @@ class AdminSessionData extends SessionData
 		);
 		$this->data = array();
 	}
-
-	public function  get_user_id()
-	{
-		return 1;
-	}
-
-	public function  get_session_id()
-	{
-		return 1;
-	}
-
-	public function get_token()
-	{
-		return 42;
-	}
 }
 ?>

@@ -230,7 +230,7 @@ class Environment
 		define('USE_DEFAULT_IF_EMPTY', 1);
 
 		### User IP address ###
-		define('USER_IP', self::get_user_ip());
+		define('USER_IP', AppContext::get_request()->get_ip_address());
 
 		### Regex options ###
 		define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
@@ -561,49 +561,6 @@ class Environment
 	private static function get_one_week_ago_timestamp()
 	{
 		return time() - 3600 * 24 * 7;
-	}
-
-	private static function get_user_ip()
-	{
-		if ($_SERVER)
-		{
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-			{
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
-			elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-			{
-				$ip = $_SERVER['HTTP_CLIENT_IP'];
-			}
-			else
-			{
-				$ip = $_SERVER['REMOTE_ADDR'];
-			}
-		}
-		else
-		{
-			if (getenv('HTTP_X_FORWARDED_FOR'))
-			{
-				$ip = getenv('HTTP_X_FORWARDED_FOR');
-			}
-			elseif (getenv('HTTP_CLIENT_IP'))
-			{
-				$ip = getenv('HTTP_CLIENT_IP');
-			}
-			else
-			{
-				$ip = getenv('REMOTE_ADDR');
-			}
-		}
-
-		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
-		{
-			return $ip;
-		}
-		else
-		{
-			return '0.0.0.0';
-		}
 	}
 
 	/**

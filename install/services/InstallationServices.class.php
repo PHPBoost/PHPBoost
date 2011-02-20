@@ -486,7 +486,7 @@ class InstallationServices
 		global $Cache;
 		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
@@ -497,21 +497,44 @@ class InstallationServices
 		StatsCache::invalidate();
 	}
 
-	private function update_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
+	private function create_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
 	{
-		$columns = array(
-            'login' => $login,
-            'password' => strhash($password),
-            'level' => 2,
-            'user_mail' => $email,
-            'user_lang' => $locale,
-            'user_theme' => $theme,
-            'user_show_mail' => 1,
-            'timestamp' => time(),
-            'user_aprob' => 1,
-            'user_timezone' => $timezone
+		$querier = PersistenceContext::get_querier();
+		$member_columns = array(
+			'user_id' => 1,
+			'display_name' => $login,
+			'level' => 2,
+			'email' => $email,
+			'locale' => $locale,
+			'theme' => $theme,
+			'timezone' => $timezone,
+			'editor' => 'bbcode',
+			'unread_pm' => 0,
+			'timestamp' => time(),
+			'groups' => '',
+			'autoconnect_key' => null,
+			'warning_percentage' => 0,
+			'is_banned' => 0,
+			'is_readonly' => 0
 		);
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
+		$profile_columns = array(
+			'user_id' => 1,
+            'user_show_mail' => 1
+		);
+		$internal_authentication_columns = array(
+			'user_id' => 1,
+			'login' => $login,
+            'password' => strhash($password),
+			'user_aprob' => 1
+		);
+		$authentication_method_columns = array(
+			'user_id' => 1,
+            'method' => 'internal'
+		);
+		$querier->insert(DB_TABLE_MEMBER, $member_columns);
+		$querier->insert(DB_TABLE_MEMBER_PROFILE, $profile_columns);
+		$querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
+		$querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 	}
 
 	private function generate_admin_unlock_code()

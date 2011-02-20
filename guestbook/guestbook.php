@@ -128,7 +128,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 	if ($submit_button->has_been_submited())
 	{
 		//Membre en lecture seule?
-		if ($User->get_attribute('user_readonly') > time())
+		if ($User->is_readonly() > time())
 		{
 			$controller = PHPBoostErrors::user_in_read_only();
 	        DispatchManager::redirect($controller);
