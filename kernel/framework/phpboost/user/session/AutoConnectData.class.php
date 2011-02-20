@@ -46,7 +46,7 @@ class AutoConnectData
 		$autoconnect = @unserialize($cookie_content);
 		if ($autoconnect === false || empty($autoconnect['user_id']) || empty($autoconnect['key']))
 		{
-			throw UnexpectedValueException('invalid autoconnect cookie content: "' . $cookie_content . '"');
+			throw new UnexpectedValueException('invalid autoconnect cookie content: "' . $cookie_content . '"');
 		}
 		$data = new AutoConnectData($autoconnect['user_id'], $autoconnect['key']);
 		if ($data->is_valid())
@@ -58,23 +58,20 @@ class AutoConnectData
 
 	public static function create_cookie($user_id)
 	{
-		if ($user_id != Session::VISITOR_SESSION_ID)
+		$columns = array('autoconnect_key');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		$data = null;
+		if (!empty($row['autoconnect_key']))
 		{
-			$columns = array('autoconnect_key');
-			$condition = 'WHERE user_id=:user_id';
-			$parameters = array('user_id' => $user_id);
-			$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-			$data = null;
-			if (!empty($row['autoconnect_key']))
-			{
-				$data = new AutoConnectData($autoconnect['user_id'], $row['autoconnect_key']);
-			}
-			else
-			{
-				$data = self::change_key($user_id);
-			}
-			$data->save();
+			$data = new AutoConnectData($autoconnect['user_id'], $row['autoconnect_key']);
 		}
+		else
+		{
+			$data = self::change_key($user_id);
+		}
+		$data->save();
 	}
 
 	public static function change_key($user_id)
@@ -111,7 +108,7 @@ class AutoConnectData
 		$this->create_cookie();
 	}
 
-	public function save_in_db()
+	private function save_in_db()
 	{
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
@@ -119,10 +116,10 @@ class AutoConnectData
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
 
-	public function create_cookie()
+	private function save_in_cookie()
 	{
 		$expiry = time() + SessionsConfig::load()->get_autoconnect_duration();
-		$cookie = new HTTPCookie(self::$AUTOCONNECT_COOKIE_NAME);
+		$cookie = new HTTPCookie(Session::$AUTOCONNECT_COOKIE_NAME);
 		$cookie->set_expiry_date($expiry);
 		$cookie->set_value($this->get_serialized_content());
 		AppContext::get_response()->set_cookie($cookie);

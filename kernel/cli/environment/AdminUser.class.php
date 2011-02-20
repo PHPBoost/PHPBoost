@@ -32,54 +32,17 @@
  */
 class AdminUser extends User
 {
-	private $is_admin = false;
-	private $user_data = array();
-	private $groups_auth = array(); //Tableau contenant le nom des groupes disponibles.
-	private $user_groups = array(); //Groupes du membre.
-
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
 	public function __construct()
 	{
-		$this->is_admin = true;
+		parent::__construct(new AdminSessionData());
 	}
 
-	public function is_admin()
+	protected function build_groups(SessionData $session)
 	{
-		return true;
-	}
-
-	/**
-	 * @desc Get the user id
-	 * @return int The user id.
-	 */
-	public function get_id()
-	{
-		return 1;
-	}
-
-	/**
-	 * @desc Check the authorization level
-	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
-	 * @return boolean True if authorized, false otherwise.
-	 */
-	public function check_level($secure)
-	{
-		return true;
-	}
-
-	/**
-	 * @desc Get the authorizations given by all the user groups. Then check the authorization.
-	 * @param array $array_auth_groups The array passed to check the authorization.
-	 * @param int $authorization_bit Value of position bit to check the authorization.
-	 * This value has to be a multiple of two. You can use this simplified scripture :
-	 * 0x01, 0x02, 0x04, 0x08 to set a new position bit to check.
-	 * @return boolean True if authorized, false otherwise.
-	 */
-	public function check_auth($array_auth_groups, $authorization_bit)
-	{
-		return true;
+		return array('r2');
 	}
 }
 

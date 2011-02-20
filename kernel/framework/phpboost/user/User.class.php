@@ -75,7 +75,7 @@ class User
 		$this->build_groups($session);
 	}
 
-	private function build_groups(SessionData $session)
+	protected function build_groups(SessionData $session)
 	{
 		$groups_auth = array();
 		foreach (GroupsService::get_groups() as $idgroup => $array_info)

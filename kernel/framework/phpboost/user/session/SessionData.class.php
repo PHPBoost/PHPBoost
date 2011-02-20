@@ -79,7 +79,7 @@ class SessionData
 	 */
 	private static function create_session($user_id)
 	{
-		if (self::session_exists($user_id))
+		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
 		{
 			return self::use_existing_session($user_id);
 		}
@@ -108,8 +108,7 @@ class SessionData
 	 */
 	private static function use_existing_session($user_id)
 	{
-		$session_id = $values[self::$KEY_SESSION_ID];
-		$columns = array('token', 'expiry', 'ip', 'data');
+		$columns = array('session_id', 'token', 'expiry', 'ip', 'data', 'cached_data');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -187,16 +186,16 @@ class SessionData
 			}
 	}
 
-	private $user_id;
-	private $session_id;
-	private $token;
-	private $expiry;
-	private $ip;
-	private $cached_data = array();
-	private $data = array();
+	protected $user_id;
+	protected $session_id;
+	protected $token;
+	protected $expiry;
+	protected $ip;
+	protected $cached_data = array();
+	protected $data = array();
 
-	private $cached_data_modified = false;
-	private $data_modified = false;
+	protected $cached_data_modified = false;
+	protected $data_modified = false;
 
 	protected function __construct($user_id, $session_id)
 	{

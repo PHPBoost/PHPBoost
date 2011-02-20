@@ -41,11 +41,6 @@ class Session
 	public static $AUTOCONNECT_COOKIE_NAME;
 
 	/**
-	 * @var SessionData
-	 */
-	private static $data;
-
-	/**
 	 * @var HTTPRequest
 	 */
 	private static $request;
@@ -58,7 +53,7 @@ class Session
 	{
 		$config = SessionsConfig::load();
 		self::$DATA_COOKIE_NAME = $config->get_cookie_name() . '_data';
-		self::$DATA_COOKIE_NAME = $config->get_cookie_name() . '_autoconnect';
+		self::$AUTOCONNECT_COOKIE_NAME = $config->get_cookie_name() . '_autoconnect';
 		self::$request = AppContext::get_request();
 		self::$response = AppContext::get_response();
 	}
@@ -70,81 +65,85 @@ class Session
 
 	public static function start()
 	{
-		self::load();
-		return self::$data;
+		try
+		{
+			if (self::$request->has_cookieparameter(self::$DATA_COOKIE_NAME))
+			{
+				return self::connect();
+			}
+			if (self::$request->has_cookieparameter(self::$AUTOCONNECT_COOKIE_NAME))
+			{
+				return self::autoconnect();
+			}
+			return self::create_visitor();
+		}
+		catch (UnexpectedValueException $ex)
+		{
+			return self::create_visitor();
+		}
 	}
 
 	public static function create($user_id, $autoconnect = false)
 	{
-		self::$data = SessionData::create_from_user_id($user_id);
-		if ($autoconnect)
+		if ($user_id == Session::VISITOR_SESSION_ID)
 		{
-			AutoConnectData::create_cookie($user_id);
+			return self::create_visitor();
 		}
-		return self::$data;
+		else
+		{
+			$data = SessionData::create_from_user_id($user_id);
+			if ($autoconnect)
+			{
+				AutoConnectData::create_cookie($user_id);
+			}
+			return $data;
+		}
 	}
 
 	/**
 	 * @desc Delete the session in database. The current session stays alive for the rest of the
 	 * request and a visitor session will be created at the next request.
 	 */
-	public static function delete()
+	public static function delete(SessionData $session)
 	{
-		self::$data->delete_cookies_and_db();
-	}
-
-	private static function load()
-	{
-		try
-		{
-			if (self::$request->has_cookieparameter(self::$DATA_COOKIE_NAME))
-			{
-				self::connect();
-			}
-			elseif (self::$request->has_cookieparameter(self::$AUTOCONNECT_COOKIE_NAME))
-			{
-				self::autoconnect();
-			}
-			else
-			{
-				SessionData::create_visitor();
-			}
-		}
-		catch (UnexpectedValueException $ex)
-		{
-			SessionData::create_visitor();
-		}
+		$session->delete();
+		self::$response->delete_cookie(self::$AUTOCONNECT_COOKIE_NAME);
 	}
 
 	private static function connect()
 	{
 		try
 		{
-			self::$data = SessionData::from_cookie(self::$request->get_cookie(self::$DATA_COOKIE_NAME));
+			return SessionData::from_cookie(self::$request->get_cookie(self::$DATA_COOKIE_NAME));
 		}
 		catch (SessionNotFoundException $ex)
 		{
-			self::autoconnect();
+			if (self::$request->has_cookieparameter(self::$AUTOCONNECT_COOKIE_NAME))
+			{
+				return self::autoconnect();
+			}
+			return self::create_visitor();
 		}
 	}
 
 	private static function autoconnect()
 	{
-		if (self::$request->has_cookieparameter(self::$AUTOCONNECT_COOKIE_NAME))
+		$cookie = self::$request->get_cookie(self::$AUTOCONNECT_COOKIE_NAME);
+		$user_id = AutoConnectData::get_user_id_from_cookie($cookie);
+		if ($user_id != Session::VISITOR_SESSION_ID)
 		{
-			$user_id = AutoConnectData::from_cookie(self::$request->get_cookie(self::$AUTOCONNECT_COOKIE_NAME));
-			self::$data = SessionData::create_from_user_id($user_id);
+			return SessionData::create_from_user_id($user_id);
 		}
 		else
 		{
-			self::$data = SessionData::create_visitor();
+			self::$response->delete_cookie(self::$AUTOCONNECT_COOKIE_NAME);
+			return self::create_visitor();
 		}
 	}
 
-	private static function delete_cookies_and_db()
+	private static function create_visitor()
 	{
-		self::$data->delete();
-		self::$response->delete_cookie(self::$AUTOCONNECT_COOKIE_NAME);
+		return SessionData::create_visitor();
 	}
 }
 

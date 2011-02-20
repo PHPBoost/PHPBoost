@@ -337,6 +337,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -567,7 +568,7 @@ class KernelSetup
 		$options = array(
 			'primary' => array('session_id'),
 			'indexes' => array(
-				'user_id' => array('type' => 'unique', 'fields' => 'user_id'),
+				'user_id' => array('type' => 'key', 'fields' => 'user_id'),
 				'expiry' => array('type' => 'key', 'fields' => 'expiry')
 			)
 		);

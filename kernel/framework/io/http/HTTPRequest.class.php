@@ -48,7 +48,7 @@ class HTTPRequest
 	public function get_ip_address()
 	{
 		$ip = getenv('REMOTE_ADDR');
-		if (preg_match('`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{1,4}:{1,2}){7}[0-9abcdef]{1,4})`', $ip))
+		if (preg_match('`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{0,4}:{1,2}){0,7}[0-9abcdef]{1,4})`', $ip))
 		{
 			return $ip;
 		}
@@ -322,7 +322,7 @@ class HTTPRequest
 	{
 		if (!is_array($array))
 		{
-			return $default_value;	
+			return $default_value;
 		}
 		foreach ($array as &$item)
 		{
