@@ -44,6 +44,7 @@
 - [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
+[*] Possibilité de cacher/ouvrir dans la liste des modules, la description et les autorisations de lecture pour une meilleure lisibilité
 [*] Amélioration de l'interface de gestion des thèmes.
 
 [b]Divers :[/b]
