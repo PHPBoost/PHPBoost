@@ -52,7 +52,7 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 	public function display_mail($title, $contents)
 	{
 		$contents = stripslashes($contents);
-		return = str_replace('<body', '<body onclick = "window.close()" ', $contents);
+		return str_replace('<body', '<body onclick = "window.close()" ', $contents);
 	}
 	
 	public function parse_contents($contents, $user_id)
