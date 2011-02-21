@@ -34,7 +34,7 @@ function shoutbox_mini($position, $block)
     $config_shoutbox = ShoutboxConfig::load();
 
     //Mini Shoutbox non activée si sur la page archive shoutbox.
-    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ))
+    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ))
     {
     	load_module_lang('shoutbox');
 
@@ -54,7 +54,7 @@ function shoutbox_mini($position, $block)
     		if (!empty($shout_pseudo) && !empty($shout_contents))
     		{
     			//Accès pour poster.
-    			if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
+    			if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_WRITE))
     			{
     				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
     				$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
@@ -123,7 +123,7 @@ function shoutbox_mini($position, $block)
     	while ($row = $Sql->fetch_assoc($result))
     	{
     		$row['user_id'] = (int)$row['user_id'];
-    		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
+    		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
     			$del_message = '<script type="text/javascript"><!--
     			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\');
     			--></script><ins><noscript><p><a href="' . TPL_PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';

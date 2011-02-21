@@ -29,12 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php');
 require_once('../kernel/header.php');
 
-require_once('shoutbox_constants.php');
-
 $shout_id = retrieve(GET, 'id', 0);
 $add = retrieve(GET, 'add', false);
 
-if (!$User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_READ)) //Autorisation de lecture
+if (!$User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ)) //Autorisation de lecture
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -55,7 +53,7 @@ if ($add && empty($shout_id)) //Insertion
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		//Accès pour poster.
-		if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_WRITE))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
@@ -76,11 +74,15 @@ if ($add && empty($shout_id)) //Insertion
 
 			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
-		else //utilisateur non autorisé!
+		else
+		{   //utilisateur non autorisé!
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
+		}
 	}
-	else //Champs incomplet!
+	else
+	{	//Champs incomplet!
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+	}
 }
 elseif (!empty($shout_id)) //Edition + suppression!
 {
@@ -98,7 +100,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 
-	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
+	if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	{
 		if ($del_message)
 		{
@@ -148,23 +150,33 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
 				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
-				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
+				if (!TextHelper::check_nbr_links($shout_pseudo, 0))
+				{	//Nombre de liens max dans le pseudo.
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
-				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
+				}
+				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message()))
+				{	//Nombre de liens max dans le message.
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
+				}
 
 				$Sql->query_inject("UPDATE " . PREFIX . "shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 
 				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
-			else //Champs incomplet!
+			else
+			{	//Champs incomplet!
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+			}
 		}
 		else
+		{
 			AppContext::get_response()->redirect(HOST . SCRIPT);
+			}
 	}
 	else
+	{
 		AppContext::get_response()->redirect(HOST . SCRIPT);
+	}
 }
 else //Affichage.
 {
@@ -260,7 +272,7 @@ else //Affichage.
 		$del_message = '';
 
 		$is_guest = ($row['user_id'] === -1);
-		$is_modo = $User->check_level(MODO_LEVEL);
+		$is_modo = $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION);
 		$warning = '';
 		$readonly = '';
 		if ($is_modo && !$is_guest) //Modération.

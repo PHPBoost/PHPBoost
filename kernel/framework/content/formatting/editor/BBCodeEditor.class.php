@@ -183,9 +183,11 @@ class BBCodeEditor extends ContentEditor
 
             $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'] . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 
-            $template->assign_block_vars('smiley', array(
-				'IMG' => $img,
+            $template->assign_block_vars('smileys', array(
+				'URL' => PATH_TO_ROOT . '/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
+				'HEIGHT' => $height,
+                'WIDTH' => $width,
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 				));
 

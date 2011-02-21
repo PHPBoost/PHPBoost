@@ -116,7 +116,7 @@ class ContentFormattingService
 	 */
 	public function get_default_editor()
 	{
-		return ContentFormattingConfig::load()->get_default_editor();
+		return $this->get_default_factory()->get_editor();
 	}
 
     /**
@@ -131,7 +131,7 @@ class ContentFormattingService
         }
         else
         {
-            return $this->get_default_editor();
+            return ContentFormattingConfig::load()->get_default_editor();
         }
     }
 

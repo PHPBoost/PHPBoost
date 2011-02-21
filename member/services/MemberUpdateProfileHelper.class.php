@@ -43,11 +43,19 @@
 	
 	public static function delete_account($user_id)
 	{
-		PersistenceContext::get_querier()->inject(
-			"DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = :user_id"
-			, array(
-				'user_id' => $user_id,
-		));
+		if (self::verificate_number_admin_user() > 1)
+		{
+			PersistenceContext::get_querier()->inject(
+				"DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = :user_id"
+				, array(
+					'user_id' => $user_id,
+			));
+		}
+	}
+	
+	private static function verificate_number_admin_user()
+	{
+		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
 	}
 	
 	public static function change_password($password, $user_id)

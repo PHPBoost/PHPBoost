@@ -29,7 +29,6 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php');
 require_once('../kernel/header_no_display.php');
-require_once('shoutbox_constants.php');
 
 $add = !empty($_GET['add']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
@@ -50,7 +49,7 @@ if ($add)
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		//Accès pour poster.
-		if ($User->check_auth($config_shoutbox->get_authorization(), AUTH_SHOUTBOX_WRITE))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_WRITE))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
@@ -105,7 +104,7 @@ elseif ($refresh)
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
-		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
@@ -127,7 +126,7 @@ elseif ($del)
 	if (!empty($shout_id))
 	{
 		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
-		if ($User->check_level(MODO_LEVEL) || ($user_id === $User->get_id() && $User->get_id() !== -1))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($user_id === $User->get_id() && $User->get_id() !== -1))
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			echo 1;
