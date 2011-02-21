@@ -346,15 +346,10 @@ class Environment
 	private static function perform_changeday()
 	{
 		self::perform_stats_changeday();
-
 		self::clear_all_temporary_cache_files();
-
 		self::execute_modules_changedays_tasks();
-
-		self::remove_old_unactivated_member_accounts();
-
+		UserService::remove_old_unactivated_member_accounts();
 		self::remove_captcha_entries();
-
 		self::check_updates();
 	}
 
@@ -435,20 +430,6 @@ class Environment
 		foreach ($jobs as $job)
 		{
 			$job->on_changeday($yesterday, $today);
-		}
-	}
-
-	private static function remove_old_unactivated_member_accounts()
-	{
-		$user_account_settings = UserAccountsConfig::load();
-
-		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
-		//If the user configured a delay and member accounts must be activated
-		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
-		{
-			PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
-				" WHERE timestamp < :timestamp AND user_aprob = 0",
-			array('timestamp' => (time() - $delay_unactiv_max)));
 		}
 	}
 
