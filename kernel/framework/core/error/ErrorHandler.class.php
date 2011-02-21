@@ -139,7 +139,7 @@ class ErrorHandler
 
 	private function display()
 	{
-		if ($this->fatal)
+		if ($this->fatal || (Debug::is_debug_mode_enabled() && Debug::is_strict_mode_enabled()))
 		{
 			$this->display_fatal();
 		}

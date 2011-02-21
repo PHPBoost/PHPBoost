@@ -39,10 +39,17 @@ class IntegratedErrorHandler extends ErrorHandler
 
 	protected function display_fatal()
 	{
-		// TODO manage languages here
-		AppContext::get_response()->clean_output();
-		echo ErrorHandler::FATAL_MESSAGE;
-		Environment::destroy();
-		exit;
+		if (Debug::is_debug_mode_enabled())
+		{
+			parent::display_fatal();
+		}
+		else
+		{
+			// TODO manage languages here
+			AppContext::get_response()->clean_output();
+			echo ErrorHandler::FATAL_MESSAGE;
+			Environment::destroy();
+			exit;
+		}
 	}
 }
