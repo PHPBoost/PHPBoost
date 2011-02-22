@@ -30,12 +30,14 @@
  ####################################################
 
 $lang = array(
-    'xml_lang' => 'fr',
-	'require_pseudo' => 'Veuillez entrer un pseudo !',
-	'require_password' => 'Veuillez entrer un mot de passe!',
+    'xml_lang' => 'en',
+	'user.notFound' => 'Invalid credentials',
+    'login.form' => 'Connection',
+	'login.required' => 'Login is required!',
+	'password.required' => 'Password is required!',
 	'connect' => 'Log in',
 	'admin' => 'Administrator',
-	'pseudo' => 'Login',
+	'login' => 'Login',
 	'password' => 'Password',
 	'autoconnect' => 'Autoconnect',
 	'flood_block' => ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!',

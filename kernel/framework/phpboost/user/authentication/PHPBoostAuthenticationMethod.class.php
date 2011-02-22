@@ -50,8 +50,8 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	private $login;
 	private $password;
 
-	private $user_id = -1;
-	private $connection_attemps = 0;
+	private $user_id = null;
+	private $connection_attempts = 0;
 	private $last_connection_date;
 
 	private $success = false;
@@ -59,8 +59,18 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	public function __construct($login, $password)
 	{
 		$this->login = $login;
-		$this->password = $password;
+		$this->password = strhash($password);
 		$this->querier = PersistenceContext::get_querier();
+	}
+
+	public function has_user_been_found()
+	{
+		return $this->user_id != null;
+	}
+
+	public function get_remaining_attemps()
+	{
+		return self::$MAX_AUTHORIZED_ATTEMPTS - $this->connection_attempts;
 	}
 
 	/**
@@ -94,11 +104,11 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	private function find_user_id_by_login()
 	{
 		$columns = array('user_id', 'last_connect', 'test_connect');
-		$condition = 'WHERE login=:login';
+		$condition = 'WHERE login=:login AND user_aprob=1';
 		$parameters = array('login' => $this->login);
-		$row = $this->querier->select_single_row(DB_TABLE_MEMBERS, $columns, $condition, $parameters);
+		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->user_id = $row['user_id'];
-		$this->connection_attemps = $row['test_connect'];
+		$this->connection_attempts = $row['test_connect'];
 		$this->last_connection_date = $row['last_connect'];
 	}
 
@@ -107,13 +117,13 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$delay_since_last_attempt = time() - $this->last_connection_date;
 		if ($delay_since_last_attempt >= self::$MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY)
 		{
-			$this->connection_attemps = self::$MAX_AUTHORIZED_ATTEMPTS_RESET_ATTEMPS;
+			$this->connection_attempts = self::$MAX_AUTHORIZED_ATTEMPTS_RESET_ATTEMPS;
 		}
 		elseif ($delay_since_last_attempt >= self::$MAX_AUTHORIZED_ATTEMPTS_PARTIAL_RESET_DELAY)
 		{
-			$this->connection_attemps = min($this->connection_attemps, self::$MAX_AUTHORIZED_ATTEMPTS_PARTIAL_RESET_ATTEMPS);
+			$this->connection_attempts = min($this->connection_attempts, self::$MAX_AUTHORIZED_ATTEMPTS_PARTIAL_RESET_ATTEMPS);
 		}
-		elseif ($this->connection_attemps > self::$MAX_AUTHORIZED_ATTEMPTS)
+		elseif ($this->connection_attempts > self::$MAX_AUTHORIZED_ATTEMPTS)
 		{
 			AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#errorh');
 		}
@@ -122,15 +132,15 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	private function check_user_password()
 	{
 		$condition = 'WHERE user_id=:user_id and password=:password';
-		$parameters = array('user_id' => $this->user_id, 'password' => strhash($this->password));
-		$match = $this->querier->count(DB_TABLE_MEMBERS, $condition, $parameters, '*') == 1;
+		$parameters = array('user_id' => $this->user_id, 'password' => $this->password);
+		$match = $this->querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*') == 1;
 		if ($match)
 		{
-			$this->connection_attemps = 0;
+			$this->connection_attempts = 0;
 		}
 		else
 		{
-			$this->connection_attemps++;
+			$this->connection_attempts++;
 		}
 		return $match;
 	}
@@ -140,11 +150,12 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$this->last_connection_date = time();
 		$columns = array(
 			'last_connect' => $this->last_connection_date,
-			'test_connect' => $this->connection_attemps,
+			'test_connect' => $this->connection_attempts,
 		);
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $this->user_id);
-		$this->querier->update(DB_TABLE_MEMBERS, $columns, $condition, $parameters);
+		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		$this->querier->update(DB_TABLE_MEMBER, array('timestamp' => time()), $condition, $parameters);
 	}
 }
 

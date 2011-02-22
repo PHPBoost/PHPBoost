@@ -42,7 +42,7 @@ class HTMLForm
 	const NORMAL_CSS_CLASS = 'fieldset_content';
 
 	private static $instance_id = 0;
-	
+
 	/**
 	 * @var FormConstraint[]
 	 */
@@ -100,7 +100,7 @@ class HTMLForm
 		}
 		self::$instance_id++;
 	}
-	
+
 	private function add_csrf_protection()
 	{
 		$csrf_protection_field = new FormFieldCSRFToken();
@@ -156,7 +156,7 @@ class HTMLForm
 		}
 		return $field->get_value();
 	}
-	
+
 	/**
 	 * @desc Returns true if the $field_id is in the form.
 	 * @param string $field_id The HTML id of the field
@@ -170,7 +170,7 @@ class HTMLForm
 		}
 		return true;
 	}
-	
+
 	private function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -203,8 +203,6 @@ class HTMLForm
 	 */
 	public function display()
 	{
-		global $LANG;
-
 		$template = $this->get_template_to_use();
 
 		$template->put_all(array(
@@ -213,14 +211,14 @@ class HTMLForm
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,
-			'L_REQUIRED_FIELDS' => $LANG['require'],
+			'L_REQUIRED_FIELDS' => LangLoader::get_message('require', 'main'),
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
 			'METHOD' => $this->method
 		));
 
 		foreach ($this->validation_error_messages as $error_message)
 		{
-			if (!empty($error_message)) 
+			if (!empty($error_message))
 			{
 				$template->assign_block_vars('validation_error_messages', array(
 					'ERROR_MESSAGE' => $error_message

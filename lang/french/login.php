@@ -30,12 +30,14 @@
  ####################################################
 
 $lang = array(
-    'xml_lang' => 'en',
-	'require_pseudo' => 'Veuillez entrer un pseudo !',
-	'require_password' => 'Veuillez entrer un mot de passe!',
+    'xml_lang' => 'fr',
+    'login.form' => 'Connexion',
+	'user.notFound' => 'Aucun membre avec ce login n\'a été trouvé',
+	'login.required' => 'Veuillez entrer un pseudo !',
+	'password.required' => 'Veuillez entrer un mot de passe!',
 	'connect' => 'Se connecter',
 	'admin' => 'Administrateur',
-	'pseudo' => 'Pseudo',
+	'login' => 'Pseudo',
 	'password' => 'Mot de passe',
 	'autoconnect' => 'Connexion automatique',
 	'flood_block' => 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!',
