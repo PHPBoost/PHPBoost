@@ -45,13 +45,60 @@
 			else
 				alert("{L_REQUIRE_TEXT}");
 		}
+		
+		function insertTinyMceContent(content)
+		{
+			# IF C_BBCODE_TINYMCE_MODE #	
+			tinyMCE.execCommand('mceInsertContent', false, content, {skip_undo : 1});
+			# ENDIF #
+		}
+		
 		-->
 		</script>
 		<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
+	
+	# IF C_BBCODE_TINYMCE_MODE #
+		
+		# IF NOT C_JS_INCLUDED #
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/tinymce/tiny_mce.js"></script>
+		# ENDIF #
+			
+		<script type="text/javascript">
+		<!--
+		tinyMCE.init({
+			mode : "exact",
+			elements : "{FIELD}", 
+			theme : "advanced",
+			language : "fr",
+			content_css : "{PATH_TO_ROOT}/templates/{THEME}/theme/tinymce.css",
+			theme_advanced_buttons1 : "{THEME_ADVANCED_BUTTONS1}", 
+			theme_advanced_buttons2 : "{THEME_ADVANCED_BUTTONS2}", 
+			theme_advanced_buttons3 : "{THEME_ADVANCED_BUTTONS3}",
+			theme_advanced_toolbar_location : "top", 
+			theme_advanced_toolbar_align : "center", 
+			theme_advanced_statusbar_location : "bottom",
+			plugins : "table,searchreplace,inlinepopups,fullscreen,emotions",
+			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
+			theme_advanced_resize_horizontal : false, 
+			theme_advanced_resizing : true
+		});
+		-->
+		</script>
+		
+		# IF C_UPLOAD_MANAGEMENT #
+			<div style="float:right;margin-left:5px;">
+				<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt={EDITOR_NAME}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+			</div>
+		# ENDIF #
+		
+	# ENDIF #
 		
 	# IF C_BBCODE_NORMAL_MODE #
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/editor.js"></script>
+		# IF C_EDITOR_NOT_ALREADY_INCLUDED #
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/editor.js"></script>
+		# ENDIF #
+		
 		<script type="text/javascript">
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
@@ -85,7 +132,6 @@
 				{type:'action_resize', fname:'plus.png', label:${escapejs(L_BB_LARGE)}, height:100 },
 				{type:'action_more', fname:'more.png', label:${escapejs(L_BB_MORE)}}
 			],
-			
 			block2: [
 				{type:'separator'},
 				{type:'balise2', fname:'left.png', label:${escapejs(L_BB_LEFT)}, begintag: 'align=left', endtag: 'align', disabled:${escapejs(DISABLED_ALIGN)}},
@@ -108,16 +154,15 @@
 				{type:'balise2', fname:'math.png', label:${escapejs(L_BB_MATH)}, tag: 'math', disabled:${escapejs(DISABLED_MATH)}},
 				{type:'balise2', fname:'html.png', label:${escapejs(L_BB_HTML)}, tag: 'html', disabled:${escapejs(DISABLED_HTML)}},
 				{type:'separator'},
-				{type:'action_help', fname:'help.png', label:${escapejs(L_BB_HELP)}, disabled:${escapejs(DISABLED_HELP)}}				
+				{type:'action_help', fname:'help.png', label:${escapejs(L_BB_HELP)}, disabled:${escapejs(DISABLED_HELP)}}	,
+				{type:'separator'}				
 			],
-			
 			smileys: [
 			# START smileys #
 			{'url': ${escapejs(smileys.URL)}, height: ${escapejs(smileys.HEIGHT)}, width: ${escapejs(smileys.WIDTH)}, code: "{smileys.CODE}"}, 
 			# END smileys #
 			{}
 			],
-			
 			titles: [
 				{value:'', label:${escapejs(L_TITLE)}},
 				{value:1, label:${escapejs(L_TITLE)}+1},
@@ -125,13 +170,11 @@
 				{value:3, label:${escapejs(L_TITLE)}+3},
 				{value:4, label:${escapejs(L_TITLE)}+4}
 			],
-			
 			subtitles: [
 				{value:'', label:${escapejs(L_CONTAINER)}},
 				{value:'block', label:${escapejs(L_BLOCK)}},
 				{value:'fieldset', label:${escapejs(L_FIELDSET)}}
 			],
-			
 			styles: [
 				{value:'', label:${escapejs(L_STYLE)}},
 				{value:'success', label:${escapejs(L_SUCCESS)}},
@@ -140,7 +183,6 @@
 				{value:'warning', label:${escapejs(L_WARNING)}},
 				{value:'error', label:${escapejs(L_ERROR)}}
 			],
-			
 			sizes: [
 				{value:'', label: ${escapejs(L_SIZE)}},
 				{value:5, label:5},
@@ -153,7 +195,6 @@
 				{value:40, label:40},
 				{value:45, label:45}
 			],
-			
 			colors: [
 				'black', 'maroon', '#333300', '#003300', '#003366', '#000080', '#333399', '#333333',
 				'#800000', 'orange', '#808000', 'green', '#008080', 'blue', '#666699', '#808080',
@@ -161,7 +202,6 @@
 				'pink', '#FFCC00', 'yellow', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
 				'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', 'white'
 			],
-			
 			codes: [
 				{value:'', label:${escapejs(L_CODE)}},
 				{group: ${escapejs(L_TEXT)}, data: [
@@ -198,14 +238,12 @@
 					{value:'asm', label:'Asm'}
 					]}
 			],
-
 			tables: [
 				{type:'text', text: '*' + ${escapejs(L_LINES)}, id:'bb_lines', size:3, maxlength:3, value:2},
 				{type:'text', text: '*' + ${escapejs(L_COLS)}, id:'bb_cols', size:3, maxlength:3, value:2},
 				{type:'checkbox', text: ${escapejs(L_ADD_HEAD)}, id:'bb_head'},
 				{type:'submit', text:${escapejs(L_INSERT_TABLE)}, fname:'table.png', label: ${escapejs(L_BB_TABLE)}, 'classe':'valign_middle', head: ${escapejs(L_TABLE_HEAD)}}
 			],
-			
 			lists: [
 				{type:'text', text: '*' + ${escapejs(L_LINES)}, id:'bb_list', size:3, maxlength:3, value:3},
 				{type:'checkbox', text: ${escapejs(L_ORDERED_LIST)}, id:'bb_ordered_list'},
@@ -214,10 +252,9 @@
 		});
 		
 	</script>
-	# ENDIF #
-	
 	<div id="editorbar{FIELD}"></div>
 	<script type="text/javascript">
 	<!--
 		new BBcodeEditor(${escapejs(FIELD)}, '');
 	</script>
+	# ENDIF #

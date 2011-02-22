@@ -132,6 +132,7 @@ var BBcodeEditor_Core = Class.create(
 		this.element = element;
 		this.options = options;
 		this.textarea = new Textarea_Core();
+		this.open_element = null;
 		
 		$('editorbar' + element).insert({before: this.get_menu(element)});
 		this.display(this.block1, 'bbcode');
@@ -256,10 +257,19 @@ var BBcodeEditor_Core = Class.create(
 		if (elt)
 		{
 			var tmp = elt.getStyle('display');
-			if (tmp != 'none') 
+			if (tmp != 'none') {
 				tmp = 'none'; 
-			else 
+				elt.fade({duration: 0.3});
+			}
+			else {
 				tmp = 'block';
+				elt.appear({duration: 0.5});
+				if (this.open_element != null)
+				{
+					$(this.open_element).fade({duration: 0.3});
+				}
+				this.open_element = name;
+			}
 			elt.setStyle({'display': tmp});
 		}
 	},
@@ -518,7 +528,8 @@ var BBcodeEditor_Core = Class.create(
 			if(menu)
 			{
 				menu.observe('mouseleave', function(e) { 
-					if(this.id) this.style.display = 'none';
+					if(this.id)
+						Element.fade.delay(3, this);
 				});
 			}
 		}.bind(this));
@@ -591,11 +602,11 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'70px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({'marginLeft':'120px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect(index, index);
 		sel.observe('change', fn);
@@ -626,11 +637,11 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'70px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class': 'bbcode_block'});
+		elt.setStyle({'marginLeft':'130px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect2(index);
 		sel.observe('change', fn);
@@ -661,11 +672,11 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'80px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({'marginLeft':'160px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect(index, index);
 		sel.observe('change', fn);
@@ -696,11 +707,11 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'190px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({'marginLeft':'360px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect(index, index);
 		sel.observe('change', fn);
@@ -731,12 +742,11 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'160px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
-
+		elt.setStyle({'marginLeft':'310px'});
 		var xtable = new Element('table');
 		xtable.style.width = '100px';
 		var xtbody = new Element('tbody');
@@ -778,11 +788,11 @@ var BBcodeEditor_Core = Class.create(
 		div.setStyle({
 			'position':'relative',
 			'float':'left',
-			'display':'none',
-			'marginLeft':'170px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
+		elt.setStyle({'marginLeft':'310px'});
 		var sel = new Element('select', {'id': item.id+this.element});
 		var fn = this.callbackChangeSelect(index, item.tag);
 		sel.observe('change', fn);
@@ -823,13 +833,13 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'100px'
+			'display':'none'
 		});
 
 		var elt = new Element('div', {'class':'bbcode_block'});
 		elt.setStyle({
-			'width':'180px'
+			'width':'180px',
+			'marginLeft':'160px'
 		});
 		
 		this.tables.each(function(x)
@@ -891,13 +901,13 @@ var BBcodeEditor_Core = Class.create(
 				'position':'relative',
 				'zIndex':100,
 				'float':'left',
-				'display':'none',
-				'marginLeft':'130px'
+				'display':'none'
 		});
 
 		var elt = new Element('div', {'class':'bbcode_block'});
 		elt.setStyle({
-				'width':'180px'
+				'width':'180px',
+				'marginLeft':'250px'
 		});
 		
 		this.lists.each(function(x)
