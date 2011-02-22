@@ -260,6 +260,7 @@ var BBcodeEditor_Core = Class.create(
 			if (tmp != 'none') {
 				tmp = 'none'; 
 				elt.fade({duration: 0.3});
+				this.open_element = null;
 			}
 			else {
 				tmp = 'block';
@@ -269,6 +270,7 @@ var BBcodeEditor_Core = Class.create(
 					$(this.open_element).fade({duration: 0.3});
 				}
 				this.open_element = name;
+				
 			}
 			elt.setStyle({'display': tmp});
 		}
