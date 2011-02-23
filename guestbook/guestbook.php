@@ -125,7 +125,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 	$Template->put('GUESTBOOK_FORM', $form->display());
 
 	//Formulaire soumis
-	if ($submit_button->has_been_submited())
+	if ($submit_button->has_been_submitted())
 	{
 		//Membre en lecture seule?
 		if ($User->is_readonly() > time())

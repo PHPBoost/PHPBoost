@@ -45,7 +45,7 @@ class ContactController extends ModuleController
 		$tpl = new FileTemplate('contact/ContactController.tpl');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$mail_success = $this->send_mail();
 

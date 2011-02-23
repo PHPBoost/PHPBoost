@@ -49,7 +49,7 @@ class SandboxAddExtendedFieldController extends ModuleController
 				</script># INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submited() && $form->validate())
+		if ($this->submit_button->has_been_submitted() && $form->validate())
 		{
 			$this->save($form);
 		}

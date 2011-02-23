@@ -75,7 +75,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
 		));
 		
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save($id);
 			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-edit'], E_USER_SUCCESS, 4));

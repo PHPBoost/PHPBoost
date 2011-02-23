@@ -47,7 +47,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	 */
 	private $querier;
 
-	private $login;
+	private $username;
 	private $password;
 
 	private $user_id = null;
@@ -56,11 +56,16 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 
 	private $success = false;
 
-	public function __construct($login, $password)
+	public function __construct($username, $password)
 	{
-		$this->login = $login;
+		$this->username = $username;
 		$this->password = strhash($password);
 		$this->querier = PersistenceContext::get_querier();
+	}
+
+	public function get_user_id()
+	{
+		return $this->user_id;
 	}
 
 	public function has_user_been_found()
@@ -94,18 +99,18 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 
 	private function try2authenticate()
 	{
-		$this->find_user_id_by_login();
+		$this->find_user_id_by_username();
 		$this->check_max_authorized_attempts();
 		$match = $this->check_user_password();
 		$this->update_user_info();
 		return $match;
 	}
 
-	private function find_user_id_by_login()
+	private function find_user_id_by_username()
 	{
 		$columns = array('user_id', 'last_connect', 'test_connect');
-		$condition = 'WHERE login=:login AND user_aprob=1';
-		$parameters = array('login' => $this->login);
+		$condition = 'WHERE username=:username AND approved=1';
+		$parameters = array('username' => $this->username);
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->user_id = $row['user_id'];
 		$this->connection_attempts = $row['test_connect'];

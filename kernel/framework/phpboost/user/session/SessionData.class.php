@@ -328,7 +328,7 @@ class SessionData
 		$this->create_cookie();
 	}
 
-	private function delete()
+	public function delete()
 	{
 		$this->delete_in_db();
 		$this->delete_cookie();
@@ -343,7 +343,7 @@ class SessionData
 
 	private function delete_cookie()
 	{
-		$this->response->delete_cookie(self::$DATA_COOKIE_NAME);
+		AppContext::get_response()->delete_cookie(Session::$DATA_COOKIE_NAME);
 	}
 
 	private function create_in_db()

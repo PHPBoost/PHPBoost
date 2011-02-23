@@ -147,10 +147,10 @@ class InstallationServices
 		return true;
 	}
 
-	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
+	public function create_admin($username, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
-		$this->create_first_admin($login, $password, $email, $create_session, $auto_connect);
+		$this->create_first_admin($username, $password, $email, $create_session, $auto_connect);
 		$this->delete_installation_token();
 		return true;
 	}
@@ -481,28 +481,28 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
+	private function create_first_admin($username, $password, $email, $create_session, $auto_connect)
 	{
 		global $Cache;
 		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$this->create_first_admin_account($username, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
-		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
+		$this->send_installation_mail($username, $password, $email, $admin_unlock_code);
 		if ($create_session)
 		{
-			$this->connect_admin($password, $auto_connect);
+			$this->connect_admin($auto_connect);
 		}
 		StatsCache::invalidate();
 	}
 
-	private function create_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
+	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
 	{
 		$querier = PersistenceContext::get_querier();
 		$member_columns = array(
 			'user_id' => 1,
-			'display_name' => $login,
+			'display_name' => $username,
 			'level' => 2,
 			'email' => $email,
 			'locale' => $locale,
@@ -523,9 +523,9 @@ class InstallationServices
 		);
 		$internal_authentication_columns = array(
 			'user_id' => 1,
-			'login' => $login,
+			'username' => $username,
             'password' => strhash($password),
-			'user_aprob' => 1
+			'approved' => 1
 		);
 		$authentication_method_columns = array(
 			'user_id' => 1,
@@ -572,11 +572,10 @@ class InstallationServices
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 
-	private function connect_admin($password, $auto_connect)
+	private function connect_admin($auto_connect)
 	{
-		$Session = new Session();
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
-		$Session->start(1, $password, 2, '/install/install.php', '', $this->messages['page_title'], $auto_connect);
+		$session = Session::create(1, $auto_connect);
+		AppContext::set_session($session);
 	}
 
 	private function generate_installation_token()

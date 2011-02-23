@@ -395,18 +395,18 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'username' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
 			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
 			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			'approved' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
 
 		$options = array(
 			'primary' => array('user_id'),
-			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'login'))
+			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'username'))
 		);
 		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
 	}

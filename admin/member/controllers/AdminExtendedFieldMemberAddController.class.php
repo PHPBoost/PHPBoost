@@ -56,7 +56,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
 			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 4));

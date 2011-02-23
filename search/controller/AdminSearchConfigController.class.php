@@ -78,7 +78,7 @@ class AdminSearchConfigController extends AdminSearchController {
 
 	private function try_save()
 	{
-		if ($this->submit->has_been_submited() && $this->form->validate())
+		if ($this->submit->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
 		}
