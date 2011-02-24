@@ -27,41 +27,37 @@
 
 class NewsletterService
 {
-	private static $db_querier;
 	private static $lang;
 	public static $errors;
 	
 	public static function __static()
 	{
-		self::$db_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('newsletter_common', 'newsletter');
 		self::$errors = '';
 	}
 	
-	
-	public static function subscribe($mail)
+	public static function subscribe($mail, $id_cat)
 	{
-		if (self::verificate_valid_mail($mail))
+		if (NewsletterDAO::verificate_valid_mail($mail))
 		{
-			if (self::get_mail_exist($mail))
+			if (NewsletterDAO::get_mail_exist($mail, $id_cat))
 			{
-				//Il est déjà enregistré
-				self::$errors = self::$lang['newsletter.already-subscribe'];
+				NewsletterDAO::update_mail($mail);
 			}
 			else
 			{
-				self::subscribe_mail($mail);
+				NewsletterDAO::subscribe_mail($mail);
 			}
 		}
 	}
 	
 	public static function unsubscribe($mail)
 	{
-		if (self::verificate_valid_mail($mail))
+		if (NewsletterDAO::verificate_valid_mail($mail))
 		{
-			if (self::get_mail_exist($mail))
+			if (NewsletterDAO::get_mail_exist($mail, $id_cat))
 			{
-				self::unsubscribe_mail($mail);
+				NewsletterDAO::unsubscribe_mail($mail);
 			}
 			else
 			{
@@ -81,34 +77,6 @@ class NewsletterService
 		{
 			return false;
 		}
-	}
-	
-	private static function verificate_valid_mail($mail)
-	{
-		AppContext::get_mail_service()->is_mail_valid($mail);
-	}
-	
-	private static function get_mail_exist($mail)
-	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail_newsletter . "'") > 0 ? true : false;
-	}
-	
-	private static function subscribe_mail($mail)
-	{
-		self::$db_querier->inject(
-			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (mail)
-			VALUES (:mail)", array(
-                'mail' => $mail,
-		));
-	}
-	
-	private static function unsubscribe_mail($mail)
-	{
-		self::$db_querier->inject(
-			"DELETE FROM " . NewsletterSetup::$newsletter_table_archive . "
-			WHERE mail = :mail", array(
-				'mail' => $mail,
-		));
 	}
 }
 
