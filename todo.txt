@@ -24,14 +24,17 @@
 - Créer des contraintes permettant de voir si un login/adresse email existe déjà.
 - Gérer finement les autorisations des langues
 - Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
-- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Newsletter[/b]
-- Refonte du module en MVC
+- Refonte du module en MVC.
 - Gestion des autorisations de lecture, de suppression de la liste des archives.
-- Etudier l'ajouts de notifications de lecture
+- Etudier l'ajouts de notifications de lecture.
+- Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à tout les types de newsletters).
+- Possibilité de créer des newsletter type.
+- Gestion des archives avec tries sur les types de newsletter.
+- Gestion des autorisations d'ajout de newsletter.
 
 #################################################################################
 
@@ -73,6 +76,8 @@
 	ex : dans FormButtonButton, param $label => $html_content ou autre... 
 ? [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
++ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
+
 
 ------------------------------------ MODULES -----------------------------------
 
