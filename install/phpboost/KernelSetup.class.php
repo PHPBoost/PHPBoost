@@ -399,8 +399,8 @@ class KernelSetup
 			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
-			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
 

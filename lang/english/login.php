@@ -41,7 +41,7 @@ $lang = array(
 	'password' => 'Password',
 	'autoconnect' => 'Autoconnect',
 	'flood_block' => ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!',
-    'flood_max' => 'You have failed too many authentication attempts, your account is locked for 5 minutes',
+    'flood_max' => 'You have failed, too many authentication attempts, your account is locked for 5 minutes',
 	'unlock_admin_panel' => 'Unlock administration'
 );
 

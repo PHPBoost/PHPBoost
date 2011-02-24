@@ -108,13 +108,13 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 
 	private function find_user_id_by_username()
 	{
-		$columns = array('user_id', 'last_connect', 'test_connect');
+		$columns = array('user_id', 'last_connection', 'connection_attemps');
 		$condition = 'WHERE username=:username AND approved=1';
 		$parameters = array('username' => $this->username);
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->user_id = $row['user_id'];
-		$this->connection_attempts = $row['test_connect'];
-		$this->last_connection_date = $row['last_connect'];
+		$this->connection_attempts = $row['connection_attemps'];
+		$this->last_connection_date = $row['last_connection'];
 	}
 
 	private function check_max_authorized_attempts()
@@ -128,7 +128,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		{
 			$this->connection_attempts = min($this->connection_attempts, self::$MAX_AUTHORIZED_ATTEMPTS_PARTIAL_RESET_ATTEMPS);
 		}
-		elseif ($this->connection_attempts > self::$MAX_AUTHORIZED_ATTEMPTS)
+		elseif ($this->connection_attempts >= self::$MAX_AUTHORIZED_ATTEMPTS)
 		{
 			AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#errorh');
 		}
@@ -154,8 +154,8 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	{
 		$this->last_connection_date = time();
 		$columns = array(
-			'last_connect' => $this->last_connection_date,
-			'test_connect' => $this->connection_attempts,
+			'last_connection' => $this->last_connection_date,
+			'connection_attemps' => $this->connection_attempts,
 		);
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $this->user_id);
