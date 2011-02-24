@@ -32,7 +32,7 @@
 class Debug
 {
 	const STRICT_MODE = 'strict_mode';
-	
+
 	private static $enabled = true;
 	private static $options = array();
 	private static $html_output = true;
@@ -93,7 +93,7 @@ class Debug
 	        ' ?>');
         $file->close();
     }
-    
+
     /**
      * @desc Tells whether the debug mode is enabled
      * @return bool true if enabled, false otherwise
@@ -102,17 +102,17 @@ class Debug
     {
         return self::$enabled;
     }
-    
+
     /**
      * @desc Returns true if the strict debug mode is enabled.
-     * If true, the page processing will be stopped if any notice, warning or error is encountered. 
+     * If true, the page processing will be stopped if any notice, warning or error is encountered.
      * @return bool true if the strict debug mode is enabled
      */
     public static function is_strict_mode_enabled()
     {
         return self::is_debug_mode_enabled() && self::get_option(self::STRICT_MODE, false);
     }
-    
+
     private static function get_option($key, $default)
     {
         if (array_key_exists($key, self::$options))

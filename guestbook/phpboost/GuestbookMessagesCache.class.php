@@ -35,8 +35,9 @@ class GuestbookMessagesCache implements CacheData
 	public function synchronize()
 	{
 		$this->messages = array();
-		
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
+
+		$result = PersistenceContext::get_querier()->select("
+		SELECT g.id, g.login, g.user_id, g.timestamp, m.display_name as mlogin, g.contents
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		ORDER BY g.timestamp DESC

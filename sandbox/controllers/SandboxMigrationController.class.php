@@ -36,7 +36,7 @@ class SandboxMigrationController extends ModuleController
 		$view = new FileTemplate('sandbox/SandboxMigrationController.tpl');
 		$form = $this->build_form();
 		
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$general_config = GeneralConfig::load();
 			$general_config->set_site_url('http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));

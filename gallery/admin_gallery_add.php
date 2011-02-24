@@ -63,7 +63,7 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#message_helper');
 
 			$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
-			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), $User->get_attribute('user_id'));
+			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), $User->get_id());
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#message_helper');
 
@@ -89,7 +89,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 			if ($del)
 				delete_file('pics/' . $uniq);
 			else
-				$Gallery->Add_pics($cat, $name, $uniq, $User->get_attribute('user_id'));
+				$Gallery->Add_pics($cat, $name, $uniq, $User->get_id());
 		}
 	}
 

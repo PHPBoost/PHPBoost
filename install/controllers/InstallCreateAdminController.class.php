@@ -45,7 +45,7 @@ class InstallCreateAdminController extends InstallController
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
             $installation_services = new InstallationServices();
 			$installation_services->create_admin(

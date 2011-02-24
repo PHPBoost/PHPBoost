@@ -92,6 +92,8 @@ class ExceptionHandler
 		else
 		{
 			echo ErrorHandler::FATAL_MESSAGE;
+			Environment::destroy();
+			exit;
 		}
 	}
 

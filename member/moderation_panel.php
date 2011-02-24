@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id'))->absolute());
+$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
 $Bread_crumb->add($LANG['moderation_panel'], url('moderation_panel.php'));
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
@@ -57,7 +57,6 @@ if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
 $moderation_panel_template = new FileTemplate('member/moderation_panel.tpl');	
 
 $moderation_panel_template->put_all(array(
-	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -80,7 +79,7 @@ switch ($action)
 		$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 		if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
-			if ($id_get != $User->get_attribute('user_id'))
+			if ($id_get != $User->get_id())
 			{
 				if (!empty($readonly_contents))
 				{
@@ -358,7 +357,7 @@ switch ($action)
 				if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 				{
 					//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-					if ($id_get != $User->get_attribute('user_id'))
+					if ($id_get != $User->get_id())
 					{
 						MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 					}

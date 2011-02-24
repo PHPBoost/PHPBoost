@@ -50,7 +50,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		--></script>
 		# INCLUDE form #');
 		$this->create_form();
-		if ($this->has_been_submited())
+		if ($this->has_been_submitted())
 		{
 			$this->handle_submit();
 			$template->put_all(array(
@@ -64,9 +64,9 @@ abstract class AbstractAdminFormPageController extends AdminController
 
 	protected abstract function create_form();
 
-	private function has_been_submited()
+	private function has_been_submitted()
 	{
-		return $this->submit_button->has_been_submited() && $this->form->validate();
+		return $this->submit_button->has_been_submitted() && $this->form->validate();
 	}
 
 	protected abstract function handle_submit();

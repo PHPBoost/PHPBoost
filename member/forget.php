@@ -67,7 +67,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		
-		if ($submit_button->has_been_submited() && $form->validate())
+		if ($submit_button->has_been_submitted() && $form->validate())
 		{
 			//Mise à jour du nouveau password.
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => strhash($form->get_value('new_password')), 'activ_pass' => ''), 
@@ -97,7 +97,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		$buttons_fieldset->add_element($submit_button);
 		$form->add_fieldset($buttons_fieldset);
 		
-		if ($submit_button->has_been_submited() && $form->validate()) 
+		if ($submit_button->has_been_submitted() && $form->validate()) 
 		{
 			//Succés membre trouvé, on envoie la clée pour changer le password par mail au membre
 			try 

@@ -43,7 +43,6 @@ function stats_mini($position, $block)
     $l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
 
     $tpl->put_all(array(
-    	'SID' => SID,
     	'L_STATS' => $LANG['stats'],
     	'L_MORE_STAT' => $LANG['more_stats'],
     	'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),

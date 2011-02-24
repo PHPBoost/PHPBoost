@@ -43,8 +43,9 @@ class AdminLoginService
 
 	private static function is_authentication_form_submitted($request)
 	{
-		return $request->has_postparameter('connect') && $request->has_postparameter('login') &&
-		$request->has_postparameter('password');
+		return $request->has_postparameter('connect') &&
+			$request->has_postparameter('login') &&
+			$request->has_postparameter('password');
 	}
 
 	private static function try_connect($login, $password)
@@ -102,7 +103,7 @@ class AdminLoginService
 	{
 		$error_report = false;
 		$delay_connect = (time() - self::$admin_data['last_connect']);
-		
+
 		if (self::$admin_data['test_connect'] < 5)
 		{
 			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.

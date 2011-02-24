@@ -40,7 +40,7 @@ function newsletter_mini($position, $block)
     $tpl->put_all(array(
     	'SUBSCRIBE' => $LANG['subscribe'],
     	'UNSUBSCRIBE' => $LANG['unsubscribe'],
-    	'USER_MAIL' => ($User->get_attribute('user_mail') != '') ? $User->get_attribute('user_mail') : '',
+    	'USER_MAIL' => ($User->get_email() != '') ? $User->get_email() : '',
     	'L_NEWSLETTER' => $LANG['newsletter'],
     	'L_SUBMIT' => $LANG['submit'],
     	'L_ARCHIVES' => $LANG['archives']

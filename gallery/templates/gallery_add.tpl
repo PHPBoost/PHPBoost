@@ -4,7 +4,7 @@
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<div style="float:left">
-						<a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+						<a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
 					</div>
 					<div style="float:right">
 						{PAGINATION}
@@ -61,7 +61,7 @@
 				<div class="module_bottom_r"></div>
 				<div class="module_bottom">
 					<div style="float:left" class="text_strong">
-						<a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+						<a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
 					</div>
 					<div style="float:right">
 						{PAGINATION}
