@@ -85,6 +85,12 @@ class HTMLForm
 	private $template = null;
 
 	/**
+	 * @desc If true, message "fields with * are required" will not be displayed
+	 * @var boolean
+	 */
+	private $disable_required_fields_message = false;
+
+	/**
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
      * @param string $target The url where the form sends data
@@ -198,6 +204,14 @@ class HTMLForm
 	}
 
 	/**
+	 * @desc message "fields with * are required" will not be displayed
+	 */
+	public function disable_required_fields_message()
+	{
+		$this->disable_required_fields_message = true;
+	}
+
+	/**
 	 * @desc Displays the form
 	 * @return Template The template containing all the form elements which is ready to be displayed.
 	 */
@@ -279,6 +293,10 @@ class HTMLForm
 
 	private function has_required_fields()
 	{
+		if ($this->disable_required_fields_message)
+		{
+			return false;
+		}
 		foreach ($this->fieldsets as $fieldset)
 		{
 			foreach($fieldset->get_fields() as $field)
