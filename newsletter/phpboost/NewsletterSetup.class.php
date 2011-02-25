@@ -28,7 +28,7 @@
 class NewsletterSetup extends DefaultModuleSetup
 {
 	public static $newsletter_table_subscribers;
-	public static $newsletter_table_archive;
+	public static $newsletter_table_archives;
 	public static $newsletter_table_cats;
 
 	public static function __static()
@@ -67,9 +67,9 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
-			'mail' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
+			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
+			'mail' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id')
