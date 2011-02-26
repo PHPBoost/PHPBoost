@@ -52,19 +52,24 @@ class MySQLQuerier extends AbstractSQLQuerier
 	public function inject($query, $parameters = array())
 	{
 		$resource = $this->execute($query, $parameters);
-		return new MySQLInjectQueryResult($query, $parameters, $resource, $this->link);
+		return new MySQLInjectQueryResult($query, $parameters, $resource, $this->connection->get_link());
 	}
 
 	public function escape($value)
 	{
-		return mysql_real_escape_string($value, $this->link);
+		return mysql_real_escape_string($value, $this->connection->get_link());
 	}
 
 	private function execute($query, $parameters)
 	{
+		$link = $this->connection->get_link();
 		$query = $this->prepare($query);
 		$query = $this->query_var_replacator->replace($query, $parameters);
-		$resource = mysql_query($query, $this->link);
+		if (!is_resource($link))
+		{
+			throw new MySQLQuerierException('invalid mysql resource', $link);
+		}
+		$resource = mysql_query($query, $link);
 		if ($resource === false)
 		{
 			throw new MySQLQuerierException('invalid query', $query);

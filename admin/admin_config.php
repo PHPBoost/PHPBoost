@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,30 +46,30 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], TextHelper::HTML_NO_PROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], TextHelper::HTML_NO_PROTECT) : DispatchManager::get_url('/member', '/member')->absolute());
 	$general_config->set_home_page(stripslashes($start_page));
 	GeneralConfig::save();
-	
+
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
 	$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
 	$graphical_environment_config->set_display_theme_author(retrieve(POST, 'theme_author', false));
 	GraphicalEnvironmentConfig::save();
-	
+
 	$user_accounts_config = UserAccountsConfig::load();
 	// TODO change read authorization theme and lang for the guest
 	$user_accounts_config->set_default_lang(stripslashes(retrieve(POST, 'lang', '')));
 	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	UserAccountsConfig::save();
-	
+
 	ThemesCache::load()->update_authorization_for_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	ThemesCache::invalidate();
-	
+
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($check_advanced && empty($_POST['advanced']))
 {
 	$Template->set_filenames(array(
 		'admin_config2'=> 'admin/admin_config2.tpl'
-	));	
-	
+	));
+
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
@@ -80,11 +80,11 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	{
 		$Template->put('message_helper', MessageHelper::display($LANG['unlock_admin_confirm'], E_USER_NOTICE));
 	}
-	
+
 	$general_config = GeneralConfig::load();
 	$server_environment_config = ServerEnvironmentConfig::load();
 	$sessions_config = SessionsConfig::load();
-	
+
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
 	$timezone = $general_config->get_site_timezone();
@@ -94,7 +94,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
-	
+
 	$rewrite_unspecified = false;
 	$check_rewrite = false;
 	try {
@@ -102,7 +102,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	} catch (UnsupportedOperationException $ex) {
 		$rewrite_unspecified = true;
 	}
-	
+
 	$Template->put_all(array(
 		'SERVER_NAME' 		=> $general_config->get_site_url(),
 		'SERVER_PATH' 		=> $general_config->get_site_path(),
@@ -138,7 +138,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
 		'L_MAIL_CONFIG'		=> $LANG['config_mail'],
 		'L_REWRITE' 		=> $LANG['rewrite'],
-		'L_EXPLAIN_REWRITE' => $LANG['explain_rewrite'], 
+		'L_EXPLAIN_REWRITE' => $LANG['explain_rewrite'],
 		'L_REWRITE_SERVER' 	=> $LANG['server_rewrite'],
 		'L_HTACCESS_MANUAL_CONTENT' 		=> $LANG['htaccess_manual_content'],
 		'L_HTACCESS_MANUAL_CONTENT_EXPLAIN' => $LANG['htaccess_manual_content_explain'],
@@ -154,7 +154,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_SESSION_TIME_EXPLAIN' => $LANG['session_time_explain'],
 		'L_SESSION_INVIT' 	=> $LANG['session invit'],
 		'L_SESSION_INVIT_EXPLAIN' => $LANG['session invit_explain'],
-		'L_MISC' 			=> $LANG['miscellaneous'],	
+		'L_MISC' 			=> $LANG['miscellaneous'],
 		'L_ACTIV_GZHANDLER' => $LANG['activ_gzhandler'],
 		'L_ACTIV_GZHANDLER_EXPLAIN' => $LANG['activ_gzhandler_explain'],
 		'L_CONFIRM_UNLOCK_ADMIN' 	=> $LANG['confirm_unlock_admin'],
@@ -165,29 +165,29 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_NO' 			=> $LANG['no'],
 		'L_UNSPECIFIED' 			=> $LANG['unspecified'],
 		'L_UPDATE' 			=> $LANG['update'],
-		'L_RESET' 			=> $LANG['reset']	
+		'L_RESET' 			=> $LANG['reset']
 	));
-	
+
 	$Template->pparse('admin_config2');
 }
 elseif (!empty($_POST['advanced']))
 {
 	$site_url = trim(TextHelper::strprotect(retrieve(POST, 'server_name', GeneralConfig::get_default_site_url(), TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
 	$site_path = trim(TextHelper::strprotect(retrieve(POST, 'server_path', GeneralConfig::get_default_site_path('/admin'), TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE), '/');
-	
+
 	if ($site_path != '')
 	{
 		$site_path = '/' . $site_path;
 	}
-	
+
 	$timezone = retrieve(POST, 'timezone', 0);
 	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
 	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
-	
+
 	$cookie_name = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
-	$session_duration = retrieve(POST, 'site_session', 3600);			
+	$session_duration = retrieve(POST, 'site_session', 3600);
 	$active_session_duration = retrieve(POST, 'site_session_invit', 300);
-	
+
 	if (!empty($site_url) && !empty($cookie_name) && !empty($session_duration) && !empty($active_session_duration))
 	{
 		$general_config = GeneralConfig::load();
@@ -195,7 +195,7 @@ elseif (!empty($_POST['advanced']))
 		$general_config->set_site_path($site_path);
 		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
-		
+
 		$debug = retrieve(POST, 'debug', false);
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
@@ -203,15 +203,15 @@ elseif (!empty($_POST['advanced']))
 		$server_environment_config->set_output_gziping_enabled(retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
 		$server_environment_config->set_debug_mode_enabled($debug);
 		ServerEnvironmentConfig::save();
-		
+
 		HtaccessFileCache::regenerate();
-		
+
 		$sessions_config = SessionsConfig::load();
 		$sessions_config->set_cookie_name($cookie_name);
 		$sessions_config->set_session_duration($session_duration);
 		$sessions_config->set_active_session_duration($active_session_duration);
 		SessionsConfig::save();
-		
+
 		AppContext::get_cache_service()->clear_cache();
 
 		// Activation du mode débug après la suppression du cache
@@ -220,7 +220,7 @@ elseif (!empty($_POST['advanced']))
 		} else {
 			Debug::disable_debug_mode();
 		}
-		
+
 		AppContext::get_response()->redirect($site_url . $site_path . '/admin/admin_config.php?adv=1');
 	}
 	else
@@ -228,21 +228,21 @@ elseif (!empty($_POST['advanced']))
 		AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&error=incomplete#message_helper');
 	}
 }
-else //Sinon on rempli le formulaire	 
-{	
+else //Sinon on rempli le formulaire
+{
 	$Template->set_filenames(array(
 		'admin_config'=> 'admin/admin_config.tpl'
 	));
-	
+
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	}
-	
+
 	$general_config = GeneralConfig::load();
-	
+
 	//Pages de démarrage
 	$select_page = '';
 	$start_page = array();
@@ -250,37 +250,37 @@ else //Sinon on rempli le formulaire
 	foreach (ModulesManager::get_activated_modules_ids_list() as $name)
 	{
 		$module_configuration = ModuleConfigurationManager::get($name);
-		
+
 		if ($module_configuration->get_home_page())
 		{
 			$get_home_page = '/' . $name . '/' . $module_configuration->get_home_page();
 			$selected = $get_home_page == $general_config->get_home_page() ? 'selected="selected"' : '';
 			$start_page[] = $get_home_page;
 			$select_page .= '<option value="' . $get_home_page . '" ' . $selected . '>' . $module_configuration->get_name() . '</option>';
-			
+
 			$i++;
 		}
-		
+
 	}
 	if ($i == 0)
 	{
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 	}
-	
+
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$visit_counter_enabled = $graphical_environment_config->is_visit_counter_enabled();
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
 	$user_accounts_config = UserAccountsConfig::load();
-	
-	$Template->put_all(array(		
+
+	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'THEME_DEFAULT' => $user_accounts_config->get_default_theme(),
 		'SITE_NAME' => $general_config->get_site_name(),
 		'MAIL_CONFIG_URL' => DispatchManager::get_url('/admin/config/index.php', '/mail')->relative(),
 		'SITE_DESCRIPTION' => $general_config->get_site_description(),
-		'SITE_KEYWORD' => $general_config->get_site_keywords(),		
-		'SELECT_PAGE' => $select_page, 
-		'START_PAGE' => $general_config->get_home_page(), 
+		'SITE_KEYWORD' => $general_config->get_site_keywords(),
+		'SELECT_PAGE' => $select_page,
+		'START_PAGE' => $general_config->get_home_page(),
 		'COMPTEUR_ENABLED' => $visit_counter_enabled ? 'checked="checked"' : '',
 		'COMPTEUR_DISABLED' => !$visit_counter_enabled ? 'checked="checked"' : '',
 		'BENCH_ENABLED' => $graphical_environment_config->is_page_bench_enabled() ? 'checked="checked"' : '',
@@ -310,38 +310,38 @@ else //Sinon on rempli le formulaire
 		'L_ACTIV' 			=> $LANG['activ'],
 		'L_UNACTIVE' 		=> $LANG['unactiv'],
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']		
+		'L_RESET' => $LANG['reset']
 	));
 
 	//Gestion langue par défaut.
 	$array_identifier = '';
 	$langs_cache = LangsCache::load();
 	$selected_lang = $user_accounts_config->get_default_lang();
-	foreach ($langs_cache->get_installed_langs() as $lang => $properties) 
+	foreach ($langs_cache->get_installed_langs() as $lang => $properties)
 	{
 		if ($properties['enabled'] == 1)
     	{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
 			$selected = ($lang == $selected_lang) ? ' selected="selected"' : '';
-			
+
     		$Template->assign_block_vars('select_lang', array(
 				'LANG' => '<option value="' . $lang . '" ' . $selected . '>' . $info_lang['name'] . '</option>'
     		));
-			
+
 			$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
-			
+
 			if ($lang == $selected_lang)
 				$lang_identifier = $info_lang['identifier'];
     	}
-	}	
-	
+	}
+
 	$Template->put_all(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => '../images/stats/countries/' . $lang_identifier. '.png'
 	));
-	
+
 	// Thème par defaut.
-	foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties) 
+	foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
 	{
 		if ($theme !== 'default' && $properties['enabled'] == 1)
     	{
@@ -351,8 +351,8 @@ else //Sinon on rempli le formulaire
 				'THEME' => '<option value="' . $theme . '" ' . $selected . '>' . $info_theme['name'] . '</option>'
     		));
     	}
-	}	
-	
+	}
+
 	$Template->pparse('admin_config');
 }
 
@@ -361,12 +361,12 @@ if (!empty($_GET['unlock']))
 {
 	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 	$unlock_admin = strhash($unlock_admin_clean);
-	
+
 	$general_config = GeneralConfig::load();
 	$general_config->set_admin_unlocking_key($unlock_admin);
 	GeneralConfig::save();
-	
-	AppContext::get_mail_service()->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), MailServiceConfig::load()->get_default_mail_sender());	
+
+	AppContext::get_mail_service()->send_from_properties($User->get_email(), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), MailServiceConfig::load()->get_default_mail_sender());
 
 	AppContext::get_response()->redirect('/admin/admin_config.php?adv=1&mail=1');
 }

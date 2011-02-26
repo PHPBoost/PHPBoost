@@ -181,7 +181,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 
-		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
+		$include_tinymce_js = AppContext::get_user()->get_editor() == 'tinymce';
 
 		$header_tpl->put_all(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],

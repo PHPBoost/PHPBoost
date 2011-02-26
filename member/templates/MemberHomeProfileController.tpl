@@ -23,11 +23,11 @@
 						</td>
 						# IF C_USER_AUTH_FILES #
 						<td class="row2" style="text-align:center;">
-							<a href="upload.php{SID}">
+							<a href="upload.php">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
 							<br />
-							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
+							<a href="upload.php">{L_FILES_MANAGEMENT}</a> <br /><br />
 						</td>				
 						# ENDIF #
 						<td class="row2" style="text-align:center;">

@@ -150,7 +150,6 @@ function gallery_mini($position, $block)
     }
 
     $tpl->put_all(array(
-    	'SID' => SID,
     	'ARRAY_PICS' => $array_pics_mini,
     	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],
     	'SUM_HEIGHT' => $sum_height + 10,

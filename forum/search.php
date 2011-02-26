@@ -6,7 +6,7 @@
  *   copyright            : (C) 2006 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,11 +26,11 @@
  *
  ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../kernel/header.php');
@@ -51,17 +51,16 @@ $Template->set_filenames(array(
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'LANG' => get_ulang(),
-	'SID' => SID,
 	'SEARCH' => stripslashes($search),
 	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
 	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
-	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
-	'U_CHANGE_CAT' => 'search.php' . SID,	
-	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),	
-	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
+	'U_FORUM_CAT' => '<a href="search.php">' . $LANG['search'] . '</a>',
+	'U_CHANGE_CAT' => 'search.php',
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
@@ -81,12 +80,12 @@ $Template->put_all(array(
 	'L_COLORATE_RESULT' => $LANG['colorate_result'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-	'L_ON' => $LANG['on']	
+	'L_ON' => $LANG['on']
 ));
 
 $auth_cats = '';
 if (is_array($CAT_FORUM))
-{	
+{
 	foreach ($CAT_FORUM as $id => $key)
 	{
 		if (!$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
@@ -98,18 +97,18 @@ $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, '
 $selected = ($idcat == '-1') ? ' selected="selected"' : '';
 $Template->assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
-));	
+));
 $result = $Sql->query_while("SELECT id, name, level
-FROM " . PREFIX . "forum_cats 
+FROM " . PREFIX . "forum_cats
 WHERE aprob = 1 " . $auth_cats_select . "
 ORDER BY id_left", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
-{	
+{
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
 	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 	$Template->assign_block_vars('cat', array(
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
-	));	
+	));
 }
 $Sql->query_close($result);
 
@@ -119,11 +118,11 @@ if (!empty($valid_search) && !empty($search))
 {
 	if ($idcat == '-1')
 		$idcat = 0;
-	
+
 	if (strlen($search) >= 4)
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-		
+
 		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
@@ -147,7 +146,7 @@ if (!empty($valid_search) && !empty($search))
 		GROUP BY t.id
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
-		
+
 		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
 		FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance2
 		FROM " . PREFIX . "forum_msg msg
@@ -160,7 +159,7 @@ if (!empty($valid_search) && !empty($search))
 		GROUP BY t.id
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
-		
+
 		switch ($where)
 		{
 			case 'title':
@@ -173,21 +172,21 @@ if (!empty($valid_search) && !empty($search))
 			$req = $req_msg;
 		}
 
-		$max_relevance = 4.5;		
+		$max_relevance = 4.5;
 		$check_result = false;
 		$result = $Sql->query_while ($req, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
-		{ 
+		{
 			$title = $row['title'];
 			if (!empty($row['title']))
 				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
-			
+
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-			
+
 			//Pertinance du résultat.
 			$relevance = max($row['relevance'], $row['relevance2']);
-			
+
 			$contents = $row['contents'];
 			if ($colorate_result)
 			{
@@ -198,20 +197,20 @@ if (!empty($valid_search) && !empty($search))
 					$title = preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $title);
 				}
 			}
-			
+
 			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
+				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 				'CONTENTS' => FormatingHelper::second_parse($contents),
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
-				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
+				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'
 			));
-			
+
 			$check_result = true;
-		}	
+		}
 		$Sql->query_close($result);
-		
+
 		if ($check_result !== true)
 			$Template->put('message_helper', MessageHelper::display($LANG['no_result'], E_USER_NOTICE));
 		else
@@ -226,10 +225,10 @@ if (!empty($valid_search) && !empty($search))
 }
 elseif (!empty($valid_search))
 	$Template->put('message_helper', MessageHelper::display($LANG['invalid_req'], E_USER_WARNING));
-	
+
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/search.php'");
-	
+
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
