@@ -94,37 +94,31 @@ class ExtendedFieldsService
 		if ($by == self::BY_ID) 
 		{
 			$data = self::data_field($extended_field, self::SORT_BY_ID);
-			$extended_field->set_field_type($data->get_field_type());
-			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$name_class = MemberExtendedFieldsFactory::name_class($data);
 			$class = new $name_class();
 
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($data))
 			{
-				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
-					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+					ExtendedFieldsDatabaseService::delete_extended_field($data);
+					ExtendedFieldsCache::invalidate();
 				}
-				$extended_field->set_display(false);
-				ExtendedFieldsDatabaseService::update_extended_field_display_by_id($extended_field);
-				ExtendedFieldsCache::invalidate();
 			}
 		}
 		else if ($by == self::BY_FIELD_NAME)
 		{
 			$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
-			$extended_field->set_field_type($data->get_field_type());
-			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$name_class = MemberExtendedFieldsFactory::name_class($data);
 			$class = new $name_class();
 
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($data))
 			{
-				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
-					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+					ExtendedFieldsDatabaseService::delete_extended_field($data);
+					ExtendedFieldsCache::invalidate();
 				}
-				$extended_field->set_display(false);
-				ExtendedFieldsDatabaseService::update_extended_field_display_by_field_name($extended_field);
-				ExtendedFieldsCache::invalidate();
 			}
 		}
 	}
