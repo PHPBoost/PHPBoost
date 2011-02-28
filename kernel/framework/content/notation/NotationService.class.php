@@ -147,7 +147,6 @@ class NotationService
 				'NUMBER_VOTES' => self::get_count_notes_by_module_id($notation),
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_VOTE' => self::get_member_already_notation($notation),
-				'ARRAY_NOTE' => 'array_note[' . $notation->get_module_id() . '] = \'' . $average_notes . '\';',
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_VOTE' => self::$lang['already_vote'],
@@ -210,7 +209,7 @@ class NotationService
 			$row = self::$db_querier->select_single_row(DB_TABLE_AVERAGE_NOTES, array('average_notes'), "WHERE module_name = '" . $notation->get_module_name() . "' AND module_id = '". $notation->get_module_id() ."'");
 			return $row['average_notes'];
 		}
-		return null;
+		return 0;
 	}
 	
 	private static function register_notation(Notation $notation)
