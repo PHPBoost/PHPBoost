@@ -39,7 +39,9 @@ new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/exte
 new UrlControllerMapper('AdminMemberAddController', '`^/member/add/?$`'),
 new UrlControllerMapper('AdminMemberConfigController', '`^/member/config/?$`'),
 new UrlControllerMapper('AdminMemberEditController', '`^/member/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminMemberDeleteController', '`^/member/([0-9]+)/delete/?$`', array('id')),
 new UrlControllerMapper('AdminMemberPunishmentController', '`^/member/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
+new UrlControllerMapper('AdminViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
