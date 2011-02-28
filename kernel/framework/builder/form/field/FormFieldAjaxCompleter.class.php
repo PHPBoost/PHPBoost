@@ -35,10 +35,10 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
     private $maxlength = 255;
 	private $method = 'post';
 	private $file;
-	private $parameter = 'name';
+	private $name_parameter = 'name';
 	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}"
 	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # autocomplete="off" /><div id="${escape(ID)}_completer" class="form_autocompleter"></div>
-	<script type="text/javascript">new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(PARAMETER)}});</script>';	
+	<script type="text/javascript">new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)} : HTMLForms.getField(${escape(ID)})});</script>';	
 
 	
     /**
@@ -83,7 +83,7 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 			'NAME' => $this->get_html_id(),
 			'FILE' =>  $this->file,
 			'METHOD' =>  $this->method,
-			'PARAMETER' =>  $this->parameter,
+			'NAME_PARAMETER' =>  $this->name_parameter,
 			'ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
@@ -122,9 +122,9 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
                     $this->file = $value;
                     unset($field_options['file']);
                     break;
-				case 'parameter' :
-                    $this->parameter = $value;
-                    unset($field_options['parameter']);
+				case 'name_parameter' :
+                    $this->name_parameter = $value;
+                    unset($field_options['name_parameter']);
                     break;
             }
         }
