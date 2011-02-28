@@ -1,6 +1,5 @@
 <script type="text/javascript">
 <!--
-
 var ExtendedFields = Class.create({
 	id : '',
 	initialize : function(id) {
@@ -93,12 +92,11 @@ Event.observe(window, 'load', function() {
 			<div class="menu_link_element" id="list_{list_extended_fields.ID}">
 				<div style="float:left;">
 					<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="drag" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
-					<img src="{PATH_TO_ROOT}/templates/base/images/form/url.png" alt="plus" class="valign_middle" style="cursor:move" />
-					<span style="margin-right:30px;">{L_NAME} : {list_extended_fields.NAME}</span>
-					<span style="margin-right:30px;">{L_REQUIRED} : {list_extended_fields.L_REQUIRED}</span> 
-					<span style="margin-right:30px;">{L_DISPLAY} : {list_extended_fields.L_DISPLAY}</span>
+					<img src="{PATH_TO_ROOT}/templates/base/images/form/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
+					{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
 				</div>
 				<div style="float:right;">
+					{L_REQUIRED} : <span style="margin-right:30px;" class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
 					<a href="{list_extended_fields.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" /></a>
 					# IF NOT list_extended_fields.FREEZE #
 					<img src="{PATH_TO_ROOT}/templates/base/images/french/delete.png" alt="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="valign_middle" />

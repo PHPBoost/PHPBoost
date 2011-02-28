@@ -101,9 +101,9 @@
 		clearTimeout(this.timeout);
 		this.timeout = null;
 	},
-	out_event : function (note) {
+	out_event : function () {
 		if(this.timeout == null)
-			this.timeout = setTimeout('Note.change_picture_status(' + note + '); this.picture = 0;', '50');
+			this.timeout = setTimeout('Note.change_picture_status(' + this.get_default_note() + '); this.picture = 0;', '50');
 	},
 	change_picture_status : function (note) {
 		var picture_star;

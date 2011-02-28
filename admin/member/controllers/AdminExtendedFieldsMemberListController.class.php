@@ -45,14 +45,11 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				'ID' => $row['id'],
 				'NAME' => $row['name'],
 				'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-				'L_DISPLAY' => $row['display'] ? $this->lang['field.yes'] : $this->lang['field.no'],
 				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
 				'DISPLAY' => $row['display'],
 				'FREEZE' => $row['freeze']
 			));
 		}
-		
-		$lang = LangLoader::get('main');
 		
 		$this->view->put_all(array(
 			'L_MANAGEMENT_EXTENDED_FIELDS' => $this->lang['extended-fields-management'],
@@ -63,7 +60,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
 			'L_AUTH_READ_PROFILE' => $this->lang['field.read_authorizations'],
 			'L_AUTH_READ_EDIT_AND_ADD' => $this->lang['field.actions_authorizations'],
-			'L_VALID' => $lang['update']
+			'L_VALID' => LangLoader::get_message('update', 'main')
 		));
 
 		return $this->build_response($this->view);

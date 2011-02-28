@@ -15,7 +15,7 @@
 				});
 				
 				Event.observe($('note_pictures{MODULE_ID}'), 'mouseout', function() {  
-					Note.out_event(Note.get_default_note());
+					Note.out_event();
 				});
 				
 				$('note_value{MODULE_ID}').hide();
