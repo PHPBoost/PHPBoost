@@ -38,7 +38,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('MemberViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('MemberViewAllGroupController', '`^/group(?:/([a-z]+))?/?$`', array('id')),
-	new UrlControllerMapper('MemberHomeController', '`^.*$`')
+	new UrlControllerMapper('MemberViewAllMembersController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 
