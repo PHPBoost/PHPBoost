@@ -44,7 +44,6 @@
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
-- améliorer l'affichage dans l'interface des menus (texte qui se chevauche, boutons ajouter).
 - Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 ------------------------------------ MODULES -----------------------------------
 - [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.

@@ -28,7 +28,7 @@
 /**
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  */
-class HTMLNewsletterMail implement extends AbstractNewsletterMail
+class HTMLNewsletterMail extends AbstractNewsletterMail
 {
 	public static function send_mail(NewsletterMailService $newsletter_mail_config)
 	{
