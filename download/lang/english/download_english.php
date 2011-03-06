@@ -67,6 +67,7 @@ $DOWNLOAD_LANG['download_method'] = 'Download method';
 $DOWNLOAD_LANG['download_method_explain'] = 'You should do a redirection to the file, unless it is displayed in the web browser instead of being downloaded. In that case you have to choose to force download it but the file must be stored on the server.';
 $DOWNLOAD_LANG['force_download'] = 'Force downloads';
 $DOWNLOAD_LANG['redirection_up_to_file'] = 'Redirect to file';
+$DOWNLOAD_LANG['deadlink'] = 'Report a dead link';
 
 //Titre
 $DOWNLOAD_LANG['title_download'] = 'Downloads';
@@ -148,6 +149,10 @@ $DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted: %s';
 $DOWNLOAD_LANG['contribution_confirmation'] = 'Contribution confirmation';
 $DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. Eventually, you will be able to chat with the validators if they are skeptical about your participation.</p><p>Thanks for having participated in the website life!</p>';
 $DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
+
+// Lien mort
+$DOWNLOAD_LANG['contribution_deadlink'] = 'Dead link : %s';
+$DOWNLOAD_LANG['contribution_deadlink_explain'] = 'One member reported this link as dead. Please check the link to download the plug, and change it if necessary.';
 
 //Errors
 $LANG['contribution_entitled'] = 'A file has been suggested.';

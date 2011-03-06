@@ -80,24 +80,16 @@ switch ($action)
 		$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 		if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
-			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-			
-			//Modérateur ne peux avertir l'admin (logique non?).
-			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
+			if ($id_get != $User->get_attribute('user_id'))
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
-				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+				if (!empty($readonly_contents))
 				{
-					if (!empty($readonly_contents) && !empty($readonly))
-					{					
-						
-						
-						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
-					}
+					MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::SEND_MP, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
 				}
+			}
+			else
+			{
+				MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
 			}
 			
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
@@ -239,20 +231,14 @@ switch ($action)
 		if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 		{
 			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-			//Modérateur ne peux avertir l'admin (logique non?).
-			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
+
+			MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
+
+			if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);			
-				
-				//Si avertissement à 100% et débanni, on réduit l'avertissement à 90%.
-				if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
-				if (!empty($user_ban)) //Envoi du mail
-				{
-					AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
-				}			
-			}		
+				MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);			
+			}
+		
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 		}
 		
@@ -359,7 +345,7 @@ switch ($action)
 				));
 			}	
 		}
-			case 'warning': //Gestion des utilisateurs
+	case 'warning': //Gestion des utilisateurs
 		$new_warning_level = retrieve(POST, 'new_info', 0);
 		$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 		if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
@@ -371,28 +357,16 @@ switch ($action)
 			{
 				if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 				{
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-					
 					//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-					if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
-					{					
-						if (!empty($warning_contents))
-						{					
-							
-							
-							//Envoi du message.
-							PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
-						}
+					if ($id_get != $User->get_attribute('user_id'))
+					{
+						MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
+					}
+					else
+					{
+						MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
 					}
 				}
-				elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
-				{
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				
-					//Envoi du mail
-					AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
-				}	
 			}
 			
 			AppContext::get_response()->redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));

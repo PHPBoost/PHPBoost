@@ -59,7 +59,7 @@ function forum_list_user_online($sql_condition)
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 	

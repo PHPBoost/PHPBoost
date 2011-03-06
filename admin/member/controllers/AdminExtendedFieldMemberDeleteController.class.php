@@ -27,36 +27,29 @@
 
 class AdminExtendedFieldMemberDeleteController extends AdminController
 {
-	private $lang;
-	
 	public function execute(HTTPRequest $request)
 	{
-		AppContext::get_session()->csrf_get_protect();
+		AppContext::get_session()->csrf_post_protect();
 		
-		$extended_field = new ExtendedField();
-		$extended_field->set_id($request->get_getint('id'));
-		$exist_field = ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
-		if ($exist_field)
+		$id = $request->get_int('id', null);
+		
+		if ($id !== null)
 		{
-			ExtendedFieldsService::delete($extended_field);
-			
-			$title = $this->lang['extended-field'];
-			$message = $this->lang['extended-fields-sucess-delete'];
-			$controller = new UserErrorController($title, $message, self::SUCCESS);
-			DispatchManager::redirect($controller);
-		}
-		else
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
+			$extended_field = new ExtendedField();
+			$extended_field->set_id($id);
+			$exist_field = ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
+			if ($exist_field)
+			{
+				ExtendedFieldsService::delete($extended_field);
+				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-extended-fields-common');
-	}
-
 }
 
 ?>

@@ -86,10 +86,10 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 		{
 			foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
 			{
-				if (UserAccountsConfig::load()->get_default_theme() == $theme || (AppContext::get_user()->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default'))
-				{				
-					$info_theme = load_ini_file('../templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
-					$choices_list[] = new FormFieldSelectChoiceOption( $info_theme['name'], $theme);
+				if (UserAccountsConfig::load()->get_default_theme() == $theme || (AppContext::get_user()->check_auth($theme_properties['auth'], AUTH_THEME) && $theme !== 'default'))
+				{
+					$info_theme = load_ini_file(PATH_TO_ROOT .'/templates/' . $theme . '/config/', UserAccountsConfig::load()->get_default_lang());
+					$choices_list[] = new FormFieldSelectChoiceOption($info_theme['name'], $theme);
 				}
 			}
 		}

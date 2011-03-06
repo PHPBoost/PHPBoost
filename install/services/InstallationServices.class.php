@@ -553,7 +553,7 @@ class InstallationServices
 	{
 		$Session = new Session();
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
-		$Session->start(1, $password, 2, '/install/install.php', '', $this->messages['page_title'], $auto_connect);
+		$Session->start(1, $password, 2, '/install/index.php', '', $this->messages['installation.title'], $auto_connect);
 	}
 
 	private function generate_installation_token()

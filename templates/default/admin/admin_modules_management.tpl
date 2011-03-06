@@ -1,3 +1,49 @@
+		<script type="text/javascript">
+		<!--
+			var OpenCloseDiv = Class.create({
+				id : '',
+				id_click : '',
+				already_click : false,
+				initialize : function(id, id_click) {
+					this.id = id;
+					this.id_click = id_click;
+					this.hide_div();
+					this.change_picture_more();
+				},
+				open : function () {
+					this.already_click = true;
+					$(this.id).appear({duration: 0.5});
+					this.change_picture_less();
+				},
+				close : function () {
+					this.already_click = false;
+					$(this.id).fade({duration: 0.3});
+					this.change_picture_more();
+				},
+				change_status : function ()	{
+					if (this.already_click == true) {
+						this.close();
+					}
+					else {
+						this.open();
+					}
+				},
+				hide_div : function () {
+					$(this.id).hide();
+				},
+				change_picture_more : function () {
+					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/plus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" />');
+				},
+				change_picture_less : function () {
+					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/minus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" />');
+				},
+				get_already_click : function () {
+					return this.already_click;
+				}
+			});
+			-->
+		</script>
+		
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_MODULES_MANAGEMENT}</li>
@@ -62,30 +108,52 @@
 						# ENDIF #
 
 						# START installed #
-						<tr> 	
-							<td class="row2" style="text-align:center;">					
-								<span id="m{installed.ID}"></span>
-								<img class="valign_middle" src="{PATH_TO_ROOT}/{installed.ICON}/{installed.ICON}.png" alt="" /><br />
-								<strong>{installed.NAME}</strong> <em>({installed.VERSION})</em>
-							</td>
-							<td class="row2">	
-								<strong>{L_AUTHOR}:</strong> {installed.AUTHOR} {installed.AUTHOR_WEBSITE}<br />
-								<strong>{L_DESC}:</strong> {installed.DESC}<br />
-								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}
-								<br /><br />
-								<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
-							</td>
-							<td class="row2">								
-								<label><input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}</label>
-								<label><input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}</label>
-							</td>
-							<td class="row2">							
-								{installed.AUTH_MODULES}			
-							</td>
-							<td class="row2">	
-								<input type="submit" name="{installed.ID}" value="{L_UNINSTALL}" class="submit" />
-							</td>
-						</tr>					
+							<tr> 	
+								<td class="row2" style="text-align:center;">					
+									<span id="m{installed.ID}"></span>
+									<img class="valign_middle" src="{PATH_TO_ROOT}/{installed.ICON}/{installed.ICON}.png" alt="" /><br />
+									<strong>{installed.NAME}</strong> <em>({installed.VERSION})</em>
+								</td>
+								<td class="row2">
+									<div id="desc_explain{installed.ID}">
+										<strong>{L_AUTHOR}:</strong> {installed.AUTHOR} {installed.AUTHOR_WEBSITE}<br />
+										<strong>{L_DESC}:</strong> {installed.DESC}<br />
+										<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
+										<br />
+										<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}
+									</div>
+									<div id="picture_desc{installed.ID}" style="text-align: center;" "></div>
+								</td>
+								<td class="row2">								
+									<label><input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}</label>
+									<label><input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}</label>
+								</td>
+								<td class="row2">
+									<div id="auth_explain{installed.ID}">
+										{installed.AUTH_MODULES}
+									</div>
+									<div id="picture_auth{installed.ID}" style="text-align: center;"></div>
+								</td>
+								<td class="row2">	
+									<input type="submit" name="{installed.ID}" value="{L_UNINSTALL}" class="submit" />
+								</td>
+							</tr>
+							<script type="text/javascript">
+							<!--
+								Event.observe(window, 'load', function() {
+									var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{installed.ID}', 'picture_desc{installed.ID}');
+									var OpenCloseDivAuth = new OpenCloseDiv('auth_explain{installed.ID}', 'picture_auth{installed.ID}');
+									
+									Event.observe($('picture_desc{installed.ID}'), 'click', function() {
+										OpenCloseDivDesc.change_status();
+									});
+									
+									Event.observe($('picture_auth{installed.ID}'), 'click', function() {
+										OpenCloseDivAuth.change_status();
+									});
+								});
+							-->
+							</script>							
 						# END installed #
 					</table>
 					

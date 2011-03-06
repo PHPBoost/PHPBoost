@@ -664,7 +664,7 @@ else
 
 			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.nbr_com, g.aprob, m.login
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
@@ -696,8 +696,13 @@ else
 	
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 				if ($activ_note) //Affichage notation.
-					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
-					
+				{
+					$notation = new Notation();
+					$notation->set_module_name('gallery');
+					$notation->set_module_id($row['idcat']);
+					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+				}
+				
 				$html_protected_name = $row['name'];
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
@@ -708,7 +713,7 @@ else
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . Comments::com_display_link($row['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',
-					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
+					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'CAT' => $cat_list,
 					'RENAME' => $html_protected_name,
 					'RENAME_CUT' => $html_protected_name,

@@ -83,7 +83,7 @@ class ContactController extends ModuleController
 		{
 			$captcha = new Captcha();
 			$captcha->set_difficulty($config->get_captcha_difficulty_level());
-			$fieldset->add_field(new FormFieldCaptcha($captcha));
+			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 		}
 
 		$form->add_button(new FormButtonReset());

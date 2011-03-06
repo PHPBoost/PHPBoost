@@ -153,13 +153,9 @@ class InstallDBConfigController extends InstallController
 	{
 		if (!$service->is_already_installed() || (!$this->overwrite_field->is_disabled() && $this->overwrite_field->is_checked()))
 		{
-			// TODO, à activer quand la suppression du cache fonctionnera correctement
-			/*
-			$cache = new CacheService();
-			$cache->clear_phpboost_cache();
-			*/
 			PersistenceContext::close_db_connection();
 			$service->create_phpboost_tables(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
+			// TODO AppContext::get_cache_service()->clear_phpboost_cache()
 			AppContext::get_response()->redirect(InstallUrlBuilder::website());
 		}
 		else

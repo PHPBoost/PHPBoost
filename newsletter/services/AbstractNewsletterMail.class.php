@@ -30,18 +30,73 @@
  */
 abstract class AbstractNewsletterMail implements NewsletterMailType
 {
+	private $lang;
+	private $querier;
+	
+	public function __construct()
+	{
+		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->querier = PersistenceContext::get_querier();
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail(NewsletterMailService $newsletter_mail_service)
 	{
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function display_mail(NewsletterMailService $newsletter_mail_service)
 	{
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	{
+	
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function display_mail($title, $contents)
+	{
+		return $contents;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function list_members_registered_newsletter()
+	{
+	
+		$result = $this->querier->select("SELECT id, mail 
+		FROM " . NewsletterSetup::$newsletter_table_subscribers . "
+		WHERE user_aprob = 1
+		ORDER BY id");
+		while ($row = $result->fetch())
+		{
+			$member_registered_newsletter[] = array(
+				'id' => $row['id'],
+				'mail' => $row['mail']
+			);
+		}
+		
+		return $member_registered_newsletter;
+	}
+	
+		
+	public function add_unsubscribe_link($contents, $mail)
+	{
+		return str_replace(
+			'[UNSUBSCRIBE_LINK]', 
+			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $mail . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
+			$contents);
 	}
 }
 
