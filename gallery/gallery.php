@@ -3,7 +3,7 @@
  *                               gallery.php
  *                            -------------------
  *   begin                : August 12, 2005
- *   copyright            : (C) 2005 Viarre RÈgis
+ *   copyright            : (C) 2005 Viarre R√©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -40,7 +40,7 @@ $g_notes = retrieve(GET, 'notes', false);
 $g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
-//RÈcupÈration du mode d'ordonnement.
+//R√©cup√©ration du mode d'ordonnement.
 if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
 {
 	$g_type = $array_match[1];
@@ -58,19 +58,19 @@ if (!empty($g_del)) //Suppression d'une image.
 	
 	$Gallery->Del_pics($g_del);
 	
-	//RÈgÈnÈration du cache des photos alÈatoires.
+	//R√©g√©n√©ration du cache des photos al√©atoires.
 	$Cache->Generate_module_file('gallery');
 	
 	redirect(HOST . DIR . '/gallery/gallery' . url('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
 }
-elseif (!empty($g_idpics) && $g_move) //DÈplacement d'une image.
+elseif (!empty($g_idpics) && $g_move) //D√©placement d'une image.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
 	
-	//RÈgÈnÈration du cache des photos alÈatoires.
+	//R√©g√©n√©ration du cache des photos al√©atoires.
 	$Cache->Generate_module_file('gallery');
 	
 	redirect(HOST . DIR . '/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
@@ -85,11 +85,11 @@ elseif (isset($_FILES['gallery'])) //Upload
 	else //Racine.
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 		
-	//Niveau d'autorisation de la catÈgorie, accËs en Ècriture.
+	//Niveau d'autorisation de la cat√©gorie, acc√®s en √©criture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-	//Niveau d'autorisation de la catÈgorie, accËs en Ècriture.
+	//Niveau d'autorisation de la cat√©gorie, acc√®s en √©criture.
 	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
 		redirect(HOST . DIR . '/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
@@ -106,13 +106,13 @@ elseif (isset($_FILES['gallery'])) //Upload
 		if ($_FILES['gallery']['size'] > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
-			if (!empty($Upload->error)) //Erreur, on arrÍte ici
+			if (!empty($Upload->error)) //Erreur, on arr√™te ici
 				redirect(HOST . DIR . '/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
 				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
-				if (!empty($error)) //Erreur, on arrÍte ici
+				if (!empty($error)) //Erreur, on arr√™te ici
 					redirect(HOST . DIR . '/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
 				else
 				{
@@ -125,7 +125,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 					if (!empty($Gallery->error))
 						redirect(HOST . DIR . '/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 					
-					//RÈgÈnÈration du cache des photos alÈatoires.
+					//R√©g√©n√©ration du cache des photos al√©atoires.
 					$Cache->Generate_module_file('gallery');
 				}
 			}
@@ -163,7 +163,7 @@ elseif ($g_add)
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 	}
 	
-	//Niveau d'autorisation de la catÈgorie, accËs en Ècriture.
+	//Niveau d'autorisation de la cat√©gorie, acc√®s en √©criture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
@@ -192,7 +192,7 @@ elseif ($g_add)
 	$module_data_path = $Template->get_module_data_path('gallery');
 	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
 	
-	//Aficchage de la photo uploadÈe.
+	//Aficchage de la photo upload√©e.
 	if (!empty($g_idpics))
 	{
 		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
@@ -204,7 +204,7 @@ elseif ($g_add)
 		));
 	}
 
-	//Affichage du quota d'image uploadÈe.
+	//Affichage du quota d'image upload√©e.
 	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
 	if ($quota)
 	{
@@ -289,7 +289,7 @@ else
 		$CAT_GALLERY[0]['level'] = -1;
 	}
 	
-	//Niveau d'autorisation de la catÈgorie
+	//Niveau d'autorisation de la cat√©gorie
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
@@ -301,11 +301,11 @@ else
 	if ($get_error == 'unexist_cat')
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
-	//On crÈe une pagination si le nombre de catÈgories est trop important.
+	//On cr√©e une pagination si le nombre de cat√©gories est trop important.
 	import('util/pagination');
 	$Pagination = new Pagination();
 
-	//Colonnes des catÈgories.
+	//Colonnes des cat√©gories.
 	$nbr_column_cats = ($total_cat > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $total_cat;
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
@@ -372,7 +372,7 @@ else
 		'U_DESC' => '<a class="small_link" href="gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 	));
 	
-	//CatÈgories non autorisÈes.
+	//Cat√©gories non autoris√©es.
 	$unauth_cats_sql = array();
 	$unauth_cats = array();
 	foreach ($CAT_GALLERY as $idcat => $key)
@@ -391,7 +391,7 @@ else
 	$nbr_unauth_cats = count($unauth_cats_sql);
 	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
-	##### CatÈgorie disponibles #####
+	##### Cat√©gorie disponibles #####
 	if ($total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics))
 	{
 		$Template->assign_vars(array(
@@ -409,9 +409,9 @@ else
 		" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'p'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+			//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 			if (!file_exists('pics/thumbnails/' . $row['path']))
-				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + crÈation miniature
+				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 
 			$Template->assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
@@ -428,7 +428,7 @@ else
 		}
 		$Sql->query_close($result);
 		
-		//CrÈation des cellules du tableau si besoin est.
+		//Cr√©ation des cellules du tableau si besoin est.
 		while (!is_int($j/$nbr_column_cats))
 		{
 			$Template->assign_block_vars('end_table_cats', array(
@@ -483,7 +483,7 @@ else
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 		));
 				
-		//Liste des catÈgories.
+		//Liste des cat√©gories.
 		$array_cat_list = array(0 => '<option value="-1" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name
 		FROM " . PREFIX . "gallery_cats
@@ -501,7 +501,7 @@ else
 		
 		import('content/comments');
 		
-		//Affichage d'une photo demandÈe.
+		//Affichage d'une photo demand√©e.
 		if (!empty($g_idpics))
 		{
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
@@ -516,7 +516,7 @@ else
 				//Affichage miniatures.
 				$id_previous = 0;
 				$id_next = 0;
-				$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque cÙtÈ de la miniature de la photo affichÈe.
+				$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque c√¥t√© de la miniature de la photo affich√©e.
 				$nbr_pics_display_after = ($nbr_column_pics - 1) - floor($nbr_pics_display_before);
 				list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 				$array_pics = array();
@@ -528,9 +528,9 @@ else
 				" . $g_sql_sort, __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+					//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 					if (!file_exists('pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + crÈation miniature
+						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 
 					//Affichage de la liste des miniatures sous l'image.
 					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
@@ -561,7 +561,7 @@ else
 				}
 				$Sql->query_close($result);
 					
-				//Liste des catÈgories.
+				//Liste des cat√©gories.
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
@@ -579,7 +579,7 @@ else
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 				
-				$html_protected_name = strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = $info_pics['name'];
 				
 				//Affichage de l'image et de ses informations.
 				$Template->assign_vars(array(
@@ -587,7 +587,7 @@ else
 					'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 					'ID' => $info_pics['id'],
 					'IMG_MAX' => '<img src="show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
-					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . $info_pics['name'] . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
+					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 					'POSTOR' => '<a class="small_link" href="../member/member' . url('.php?id=' . $info_pics['user_id'], '-' . $info_pics['user_id'] . '.php') . '">' . $info_pics['login'] . '</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
@@ -650,7 +650,7 @@ else
 		}
 		else
 		{
-			//On crÈe une pagination si le nombre de photos est trop important.
+			//On cr√©e une pagination si le nombre de photos est trop important.
 			import('util/pagination');
 			$Pagination = new Pagination();
 			
@@ -674,12 +674,12 @@ else
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-				//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+				//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
-					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + crÈation miniature
+					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 				
 				//Affichage de l'image en grand.
-				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein Ècran.
+				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein √©cran.
 				{
 					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					$display_name = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[2]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
@@ -691,7 +691,7 @@ else
 				else //Ouverture nouvelle page.
 					$display_name = $display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 				
-				//Liste des catÈgories.
+				//Liste des cat√©gories.
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
@@ -700,7 +700,7 @@ else
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
 					
-				$html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+				$html_protected_name = $row['name'];
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
@@ -725,7 +725,7 @@ else
 			}
 			$Sql->query_close($result);
 			
-			//CrÈation des cellules du tableau si besoin est.
+			//Cr√©ation des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$Template->assign_block_vars('end_table', array(
