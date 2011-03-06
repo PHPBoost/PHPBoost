@@ -44,13 +44,13 @@ if ($contribution_id > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')))
+	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_id()))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id'))->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id')->absolute()));
+	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -68,7 +68,7 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 	
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id'))->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id')->absolute()));
+	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
@@ -103,7 +103,7 @@ elseif ($id_to_update > 0)
 		//Changement de statut ? On regarde si la contribution a été réglée
 		if ($status == Event::EVENT_STATUS_PROCESSED && $contribution->get_status() != Event::EVENT_STATUS_PROCESSED)
 		{
-			$contribution->set_fixer_id($User->get_attribute('user_id'));
+			$contribution->set_fixer_id($User->get_id());
 			$contribution->set_fixing_date(new Date());
 		}
 		
@@ -139,7 +139,7 @@ elseif ($id_to_delete > 0)
 }
 else
 {
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id'))->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_attribute('user_id')->absolute()));
+	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
@@ -257,7 +257,7 @@ else
 		$fixing_date = $this_contribution->get_fixing_date();
 		
 		//Affichage des contributions du membre
-		if ($User->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id())
+		if ($User->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || $User->get_id() == $this_contribution->get_poster_id())
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page())
@@ -270,8 +270,8 @@ else
 					'POSTER' => $this_contribution->get_poster_login(),
 					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),
-					'U_POSTER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),
+					'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
+					'U_POSTER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED

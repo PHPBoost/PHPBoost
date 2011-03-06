@@ -6,14 +6,14 @@
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,79 +30,53 @@
  */
 class NewsletterMailService
 {
-	public $mail_subject;
-	public $mail_content;
-	public $mail_sender;
-	public $mail_recipient;
-	public $language_type;
-	
+	private static $db_querier;
 	const TEXT_LANGUAGE = 'text';
 	const BBCODE_LANGUAGE = 'bbcode';
 	const HTML_LANGUAGE = 'html';
 
-	public function set_mail_subject($subject)
+	public static function __static()
 	{
-		$this->mail_subject = $subject;
+		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
-	public function get_mail_subject()
+
+	public static function send_mail($language_type, $sender, $subject, $contents)
 	{
-		return $this->mail_subject;
+		$contents = NewsletterMailFactory::parse_contents($language_type, $contents);
+		NewsletterMailFactory::send_mail($language_type, $sender, $subject, $contents);
+
+		self::register_archive($language_type, $title, $contents);
+
+		//TOTO Gestion des erreurs
 	}
-	
-	public function set_mail_content($content)
+
+	public static function display_mail($title, $contents)
 	{
-		$this->mail_content = $content;
+		$row = $this->querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
+		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
 	}
-	
-	public function get_mail_content()
+
+	private static function register_archive($language_type, $title, $contents)
 	{
-		return $this->mail_content;
+		$number_subscribers = self::number_subscribers();
+		$title = TextHelper::strprotect($title, TextHelper::HTML_NO_PROTECT, TextHelper::ADDSLASHES_FORCE);
+		$contents = TextHelper::strprotect($contents, HTML_NO_PROTECT, ADDSLASHES_FORCE);
+
+		self::$db_querier->inject(
+			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (title, contents, timestamp, type, subscribers)
+			VALUES (:title, :contents, :timestamp, :type, :field_type, :subscribers)", array(
+                'title' => $title,
+                'contents' => $contents,
+				'timestamp' => time(),
+				'type' => $language_type,
+				'subscribers' => $number_subscribers
+		));
 	}
-	
-	public function set_mail_sender($sender)
+
+	private static function number_subscribers(NewsletterMailService $newsletter_mail_service)
 	{
-		$this->mail_content = $sender;
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers);
 	}
-	
-	public function get_mail_sender()
-	{
-		return $this->mail_sender;
-	}
-	
-	public function set_mail_recipient($recipient)
-	{
-		$this->mail_recipient = $recipient;
-	}
-	
-	public function get_mail_recipient()
-	{
-		return $this->mail_recipient;
-	}
-	
-	/* 
-	 * @param use constante TEXT_LANGUAGE, BBCODE_LANGUAGE or HTML_LANGUAGE
-	*/
-	public function set_language_type($language_type)
-	{
-		$this->language_type = $language_type;
-	}
-	
-	public function get_language_type()
-	{
-		return $this->language_type;
-	}
-	
-	public function send_mail(NewsletterMailService $newsletter_mail_config)
-	{
-		NewsletterMailFactory::send_mail($newsletter_mail_config);
-	}
-	
-	public function display_mail(NewsletterMailService $newsletter_mail_config)
-	{
-		NewsletterMailFactory::display_mail($newsletter_mail_config);
-	}
-	
 }
 
 ?>
