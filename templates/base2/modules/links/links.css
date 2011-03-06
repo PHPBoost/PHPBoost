@@ -1,0 +1,14 @@
+/* Menu lien */
+.link_table{
+	width:210px;
+	color:#9CB18F;
+	padding:0px;
+}
+.link_subtitle{
+	width:210px;
+	display:block;
+	background:url(images/mini_module.png) repeat-y;
+	padding-top:3px;
+	text-align:center;
+	padding-left:30px;
+}

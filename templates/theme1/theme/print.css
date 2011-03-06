@@ -1,0 +1,105 @@
+/*Fichier CSS prenant en charge l'impression de contenu rédigé en BBCode*/
+body{
+	width:98%;
+	background-color:white;
+	font-size:12px;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	color:black;
+}
+
+h1{
+	border-bottom:1px solid black;
+}
+
+.blockquote, .code, .hide {
+	overflow:auto;
+	max-height:500px;
+	background:#F8F8F8;
+	border:1px solid #CCCCCC;
+	border-left:5px solid #CCCCCC;
+	border-right:5px solid #CCCCCC;
+	color:#000000;
+	padding:8px;
+	margin:0px 25px;
+}
+span.text_code{
+	font-style:italic;
+	text-decoration: underline;
+}
+
+a{
+	font-weight: bold;
+	color:black;
+}
+
+/** Titres **/
+h3.title1, h3.title2{
+	width:98%;
+	margin:auto;
+	font-size:14px;
+	margin-bottom:-5px;
+	padding:0px 5px;
+	border-bottom:2px solid black;
+}
+/* Titre 1 */
+h3.title1{
+	border-bottom:2px solid black;
+}
+/* Titre 2 */
+h3.title2{
+	background:#FFFFFF;	
+	color:#000000;
+	padding:2px 5px;
+	border:1px solid black;
+	border-left:3px solid black;
+	border-right:3px solid black;
+}
+h4.stitle1, h4.stitle2{
+	display: inline;
+	color:#333333;
+	font-size:14px;
+	font-weight:bold;
+	margin-left:45px;
+	margin-bottom:45px;
+	padding:2px 5px;
+	font-weight:bold;
+	background:#FFFFFF;	
+}
+/* Sous titre 1 */
+h4.stitle1{
+	border:1px solid black;
+	border-left:3px solid black;
+	border-right:3px solid black;
+}
+/* Sous titre 2 */
+h4.stitle2{
+	border:1px solid black;
+	border-top:3px solid black;
+}
+.float_left
+{
+	float:left;
+	margin:5px;
+}
+.float_right
+{
+	float:right;
+	margin:5px;
+}
+
+/* Tableaux */
+.bb_table{
+	border:1px solid #2C5169;
+	border-spacing:0px;
+	border-collapse:collapse;
+	margin:2px;
+}
+.bb_table_col{
+	border:1px solid #2C5169;
+	padding:6px;
+}
+.bb_table_head{
+	border:1px solid #2C5169;
+	background-color:#EEEEEE;
+	padding:6px;
+}
