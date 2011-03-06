@@ -20,15 +20,21 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Terminer le passage du dossier member et de la partie membre dans l'administration.
-- Corriger des soucis lorsqu'un champ est en mode freeze, il peut être supprimé.
-- Débugger voir refaire les classes Comments et Note.
+- Débugger voir refaire la classes Comments (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
 - Créer des contraintes permettant de voir si un login/adresse email existe déjà.
 - Gérer finement les autorisations des langues
+- Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
 
 ------------------------------------ MODULES -----------------------------------
 
-[b]Téléchargement[/b]
-- Possibilité de signaler les liens cassés.
+[b]Newsletter[/b]
+- Refonte du module en MVC.
+- Gestion des autorisations de lecture, de suppression de la liste des archives.
+- Etudier l'ajouts de notifications de lecture.
+- Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à tout les types de newsletters).
+- Possibilité de créer des newsletter type.
+- Gestion des archives avec tries sur les types de newsletter.
+- Gestion des autorisations d'ajout de newsletter.
 
 #################################################################################
 
@@ -43,7 +49,6 @@
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
-- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 ------------------------------------ MODULES -----------------------------------
 - [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
@@ -66,9 +71,11 @@
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
-- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)
-	ex : dans FormButtonButton, param $label => $html_content ou autre... 
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
 ? [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
++ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
+
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -93,7 +100,7 @@
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
-- Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
+- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 
 
 [b]Forum[/b]
@@ -111,9 +118,6 @@
 - [color=red]Nouveauté:[/color] Galerie privée pour les membres.
 - [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
 - Possibilité de définir une limite d'upload en fonction des groupes.
-
-[b]Téléchargement[/b]
-- Possibilité d'afficher la dernière mise à jour du fichier.
 
 [b]Liens web[/b]
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
