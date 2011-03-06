@@ -30,14 +30,45 @@
  */
 class BBCodeNewsletterMail extends AbstractNewsletterMail
 {
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function __construct()
 	{
-
+		parent::__construct();
 	}
 	
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail($sender, $subject, $contents)
 	{
+		$mail = new Mail();
+		$mail->set_sender($sender);
+		$mail->set_is_html(false);
+		$mail->set_subject($subject);
+		
+		$member_registered_newsletter = $this->list_members_registered_newsletter();
+		foreach ($member_registered_newsletter as $member)
+		{
+			$mail->clear_recipients();
+			$mail->add_recipient($member['mail']);
+			
+			$contents = '<html><head><title>' . $subject . '</title></head><body>';
+			$contents .= $this->add_unsubscribe_link($contents, $member['mail']);
+			$contents .= '</body></html>';
+			
+			$mail->set_content($contents);
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
+		}
+	}
 	
+	public function display_mail($title, $contents)
+	{
+		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] .'"><head><title>' . $title . '</title></head><body onclick = "window.close()"><p>' .$contents . '</p></body></html>';
+	}
+	
+	public function parse_contents($contents)
+	{
+		$contents = stripslashes(FormatingHelper::strparse(addslashes($contents)));
+		return ContentSecondParser::export_html_text($contents);
 	}
 }
 

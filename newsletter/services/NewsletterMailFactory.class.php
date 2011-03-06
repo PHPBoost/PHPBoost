@@ -30,25 +30,33 @@
  */
 class NewsletterMailFactory
 {
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public static function send_mail($language_type, $sender, $subject, $contents)
 	{
-		$name_class = self::determine_class($newsletter_mail_config);
+		$name_class = self::determine_class($language_type);
 		
 		$instance_class = new $name_class();
-		return $instance_class->send_mail($newsletter_mail_config);
+		return $instance_class->send_mail($sender, $subject, $contents);
 	}
 	
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public static function display_mail($language_type, $title, $contents)
 	{
-		$name_class = self::determine_class($newsletter_mail_config);
+		$name_class = self::determine_class($language_type);
 		
 		$instance_class = new $name_class();
-		return $instance_class->display_mail($newsletter_mail_config);
+		return $instance_class->display_mail($id);
 	}
 	
-	private static function determine_class(NewsletterMailService $newsletter_mail_config)
+	public static function parse_contents($language_type, $contents)
 	{
-		$language_type = $newsletter_mail_config->get_language_type();
+		$name_class = self::determine_class($language_type);
+		
+		$instance_class = new $name_class();
+		return $instance_class->parse_contents($contents);
+	}
+	
+	private static function determine_class($language_type)
+	{
+		$language_type = $language_type;
 		switch ($language_type) 
 		{
 			case NewsletterMailService::TEXT_LANGUAGE:

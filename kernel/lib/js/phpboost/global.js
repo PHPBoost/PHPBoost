@@ -260,7 +260,7 @@ function show_div(divID, useEffects)
     {
         if (useEffects)
     	{
-        	Effect.Appear(divID, { duration: 0.5 });
+			$(divID).appear({duration: 0.5});
     	}
         else
         {
@@ -284,7 +284,7 @@ function show_inline(divID)
 {
 	if ($(divID))
 	{	
-		Effect.Appear(divID, { duration: 0.5 });
+		$(divID).appear({duration: 0.5});
 		$(divID).style.visibility = 'visible';
 	}
 }
@@ -313,16 +313,10 @@ function display_div_auto(divID, type)
 {
 	if ($(divID))
 	{	
-		if (type == '')
-			type = 'block';
-			
-		if ($(divID).style.display == type)
-		{	
-			Effect.SwitchOff(divID);
-			$(divID).style.display = 'none';
-		}
-		else if ($(divID).style.display == 'none')
-			$(divID).style.display = type;
+		if ($(divID).style.display == 'none')
+			$(divID).appear();
+		else
+			$(divID).fade({duration: 0.5});
 	}
 }
 

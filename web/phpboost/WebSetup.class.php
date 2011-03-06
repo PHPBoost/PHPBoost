@@ -51,6 +51,9 @@ class WebSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$notation = new Notation();
+		$notation->set_module_name('web');
+		NotationService::delete_notes_module($notation);
 	}
 
 	private function drop_tables()
@@ -75,9 +78,7 @@ class WebSetup extends DefaultModuleSetup
 			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 2048),
 			'nbrnote' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0),
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
@@ -126,9 +127,6 @@ class WebSetup extends DefaultModuleSetup
 			'compt' => 0,
 			'aprob' => 1,
 			'timestamp' => time(),
-			'users_note' => '0',
-			'nbrnote' => 0,
-			'note' => 0,
 			'nbr_com' => 0,
 			'lock_com' => 0
 		));

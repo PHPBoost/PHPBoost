@@ -34,6 +34,7 @@ $add = !empty($_GET['add']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 $refresh = !empty($_GET['refresh']) ? true : false;
 
+$config_shoutbox = ShoutboxConfig::load();
 if ($add)
 {
 	//Membre en lecture seule?
@@ -48,7 +49,7 @@ if ($add)
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		//Accès pour poster.		
-		if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_WRITE))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
@@ -62,13 +63,13 @@ if ($add)
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
-			$shout_contents = FormatingHelper::strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
+			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());		
 			if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{	
 				echo -3;
 				exit;
 			}
-			if (!TextHelper::check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
+			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
 			{	
 				echo -4;
 				exit;
@@ -83,7 +84,6 @@ if ($add)
 			else
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 			
-			$test = FormatingHelper::second_parse($test);
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
 			echo "array_shout[1] = '" . addslashes(FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents))))) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
@@ -104,7 +104,7 @@ elseif ($refresh)
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
@@ -126,7 +126,7 @@ elseif ($del)
 	if (!empty($shout_id))
 	{
 		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
-		if ($User->check_level(MODO_LEVEL) || ($user_id === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($user_id === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			echo 1;

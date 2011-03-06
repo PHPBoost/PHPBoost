@@ -179,14 +179,14 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="../member/member' . url('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
-				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'">' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
 				'BACKGROUND_COLOR' => $row['status'] == 1 ? 'background-color:#82c2a7;' : 'background-color:#e59f09;',
 				'ID' => $row['id']
@@ -238,7 +238,7 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="../member/member' . url('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->put_all(array(
 				'ID' => $id_get,
@@ -246,7 +246,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'STATUS' => $status,
-				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute() .'">' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
 				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
@@ -349,7 +349,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$Template->assign_block_vars('user_list', array(
 				'LOGIN' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id']) . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
-				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute(),
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
@@ -402,7 +402,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -530,7 +530,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
-				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'.$row['user_id'])->absolute(),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 
@@ -563,7 +563,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'.$id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
@@ -637,7 +637,7 @@ else //Panneau de modération
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
 			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id_action'], '-' . $row['user_id_action'] . '.php') . '">' . $row['member'] . '</a>' : '-')
+			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. DispatchManager::get_url('/member', '/profile/'.$row['user_id_action'])->absolute() .'">' . $row['member'] . '</a>' : '-')
 		));
 
 		$i++;

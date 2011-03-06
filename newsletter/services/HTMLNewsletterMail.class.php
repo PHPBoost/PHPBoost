@@ -30,14 +30,43 @@
  */
 class HTMLNewsletterMail extends AbstractNewsletterMail
 {
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail($sender, $subject, $contents)
 	{
-
+		$mail = new Mail();
+		$mail->set_sender($sender);
+		$mail->set_is_html(true);
+		$mail->set_subject($subject);
+		
+		$member_registered_newsletter = $this->list_members_registered_newsletter();
+		foreach ($member_registered_newsletter as $member)
+		{
+			$mail->clear_recipients();
+			$mail->add_recipient($member['mail']);
+			$mail->set_content($this->add_unsubscribe_link($contents, $member['mail']));
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
+		}
 	}
 	
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function display_mail($title, $contents)
 	{
+		$contents = stripslashes($contents);
+		return str_replace('<body', '<body onclick = "window.close()" ', $contents);
+	}
 	
+	public function parse_contents($contents, $user_id)
+	{
+		$contents = stripslashes($contents);
+		$contents = $this->clean_html($contents);
+		return ContentSecondParser::export_html_text($contents);
+	}
+	
+	private function clean_html($contents)
+	{
+		$contents = htmlentities($contents, ENT_NOQUOTES);
+		$contents = str_replace(array('&amp;', '&lt;', '&gt;'), array('&', '<', '>'), $contents);
+		return $contents;
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                   AdminNewsletterController.class.php
+ *		                   AdminNewsletterConfigController.class.php
  *                            -------------------
  *   begin                : February 1, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -24,7 +24,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterController extends AdminController
+class AdminNewsletterConfigController extends AdminController
 {
 	private $lang;
 	/**
@@ -105,8 +105,8 @@ class AdminNewsletterController extends AdminController
 	{
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['title_newsletter']);
-		$response->add_link($this->lang['newsletter_admin'], '/newsletter/' . url('index.php?url=/admin', 'admin/'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['newsletter_archive'], '/newsletter/' . url('index.php?url=/archive', 'archive/'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['newsletter_admin'], DispatchManager::get_url('/newsletter/index.php', '/config'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['newsletter_archive'], DispatchManager::get_url('/newsletter/index.php', '/archive'), '/newsletter/newsletter.png');
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['title_newsletter_admin']);
 		return $response;

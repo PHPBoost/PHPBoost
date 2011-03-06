@@ -29,8 +29,14 @@ require_once('../kernel/begin.php');
 require_once('../download/download_begin.php');
 require_once('../kernel/header.php');
 
+$notation = new Notation();
+$notation->set_module_name('download');
+$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+
 if ($file_id > 0) //Contenu
 {
+	$notation->set_module_id($file_id);
+	
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
 	if ($download_info['size'] > 1)
@@ -42,9 +48,6 @@ if ($file_id > 0) //Contenu
 	
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
-	
-	//Affichage notation.
-	$Note = new Note('download', $file_id, url('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
 	$Template->put_all(array(
 		'C_DISPLAY_DOWNLOAD' => true,
@@ -58,9 +61,9 @@ if ($file_id > 0) //Contenu
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => get_utheme(),
-		'KERNEL_NOTATION' => $Note->display_form(),
+		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
-		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
+		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)NotationService::get_former_number_notes($notation)),
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
@@ -76,9 +79,11 @@ if ($file_id > 0) //Contenu
 		'L_EDIT_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['edit_file']),
 		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
+		'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
 		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . $Session->get_token()),
-		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php')
+		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'),
+		'U_DEADLINK' => url('download.php?id=' . $file_id . '&deadlink=1')
 	));
 	
 	//Affichage commentaires.
@@ -87,6 +92,42 @@ if ($file_id > 0) //Contenu
 		$Template->put_all(array(
 			'COMMENTS' => display_comments('download', $file_id, url('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
 		));
+	}
+	
+	// Gestion des liens morts
+	if ($deadlink > 0)
+	{
+		$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "events WHERE id_in_module = '" . $file_id . "' AND module='download' AND current_status = 0", __LINE__, __FILE__);
+		if (empty($nbr_alert)) 
+		{
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($file_id);
+			$contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_deadlink'], stripslashes($download_info['title'])));
+			$contribution->set_fixing_url('/download/management.php?edit=' . $file_id . '');
+			$contribution->set_description(stripslashes($DOWNLOAD_LANG['contribution_deadlink_explain']));
+			$contribution->set_poster_id($User->get_attribute('user_id'));
+			$contribution->set_module('download');
+			$contribution->set_type('alert');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					$DOWNLOAD_CATS[$category_id]['auth'],
+					DOWNLOAD_WRITE_CAT_AUTH_BIT, 
+					DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT
+				)
+			);
+
+			if (!$User->check_level(MEMBER_LEVEL))
+			{
+				AppContext::get_response()->redirect('/member/error.php?e=e_auth&_err_stop=1');
+			}
+
+			ContributionService::save_contribution($contribution);
+			AppContext::get_response()->redirect('/download/contribution.php');
+		}
+		else
+		{
+			AppContext::get_response()->redirect('/download/contribution.php');
+		}
 	}
 	
 	$Template->pparse('download');
@@ -184,7 +225,7 @@ else
 			$selected_fields['hits'] = ' selected="selected"';
 			break;		
 			case 'note' :
-			$sort = 'note';
+			$sort = 'average_notes';
 			$selected_fields['note'] = ' selected="selected"';
 			break;
 			default :
@@ -230,13 +271,16 @@ else
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 		));
 
-		$result = $Sql->query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
-		FROM " . PREFIX . "download
+		$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.nbr_com, d.image, d.short_contents
+		FROM " . PREFIX . "download d
+		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.module_id
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$notation->set_module_id($row['id']);
+			
 			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],
 				'IMG_NAME' => str_replace('"', '\"', $row['title']),
@@ -244,7 +288,7 @@ else
 				'DESCRIPTION' => FormatingHelper::second_parse($row['short_contents']),
 				'DATE' => sprintf($DOWNLOAD_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
-				'NOTE' => $row['nbrnote'] > 0 ? Note::display_img($row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => NotationService::display_static_image($notation),
 				'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],

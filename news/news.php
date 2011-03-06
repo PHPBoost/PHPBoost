@@ -192,7 +192,7 @@ elseif ($user)
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.visible = 1 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

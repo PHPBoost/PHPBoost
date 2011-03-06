@@ -51,6 +51,9 @@ class MediaSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$notation = new Notation();
+		$notation->set_module_name('media');
+		NotationService::delete_notes_module($notation);
 	}
 
 	private function drop_tables()
@@ -79,9 +82,6 @@ class MediaSetup extends DefaultModuleSetup
 			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 2048),
-			'nbrnote' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0),
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
@@ -138,9 +138,6 @@ class MediaSetup extends DefaultModuleSetup
 			'width' => 640,
 			'height' => 438,
 			'counter' => 0,
-			'users_note' => '',
-			'nbrnote' => 0,
-			'note' => 0,
 			'nbr_com' => 0,
 			'lock_com' => 0
 		));
@@ -159,7 +156,7 @@ class MediaSetup extends DefaultModuleSetup
 			'active' => 7914,
 			'description' => $this->messages['media_contents_cat'],
 			'image' => $this->messages['media_icon_cat'],
-			'num_media' => 3
+			'num_media' => 1
 		));
 	}
 }

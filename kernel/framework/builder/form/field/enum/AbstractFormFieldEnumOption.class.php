@@ -35,15 +35,18 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 
 	private $raw_value = '';
 	private $active;
+	private $disable = false;
+	
 	/**
 	 * @var FormField
 	 */
 	private $field;
 
-	public function __construct($label, $raw_value)
+	public function __construct($label, $raw_value, $field_choice_options = array())
 	{
 		$this->set_label($label);
 		$this->set_raw_value($raw_value);
+		$this->compute_options($field_choice_options);
 	}
 
 	/**
@@ -107,6 +110,16 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 			return $this->get_field()->get_value() === $this;
 		}
 	}
+	
+	public function set_disable($value = false)
+	{
+		$this->disable = $value;
+	}
+	
+	protected function is_disable()
+	{
+		return $this->disable;
+	}
 
 	protected function get_field_id()
 	{
@@ -125,6 +138,23 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		else
 		{
 			return null;
+		}
+	}
+	
+	protected function compute_options(array &$field_choice_options)
+	{
+		foreach($field_choice_options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'disable':
+					$this->set_disable($value);
+					unset($field_choice_options['disable']);
+					break;
+				default :
+					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
+			}
 		}
 	}
 }

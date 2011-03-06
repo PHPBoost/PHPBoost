@@ -62,10 +62,35 @@ class MemberUserEditorExtendedField extends AbstractMemberExtendedField
 		));
 	}
 	
+	public function display_field_profile(MemberExtendedField $member_extended_field)
+	{
+		$fieldset = $member_extended_field->get_fieldset();
+		$value = $member_extended_field->get_value();
+		if ($value !== null)
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->get_name_editor($value)));
+		}
+	}
+	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
 		return $form->get_value($field_name)->get_raw_value();
+	}
+	
+	private function get_name_editor($value)
+	{
+		switch ($value) 
+		{
+			case 1:
+				return 'BBCode';
+				break;
+			case 2:
+				return 'TinyMCE';
+				break;		
+			default:
+				return '';
+		}
 	}
 }
 ?>

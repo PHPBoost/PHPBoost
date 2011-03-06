@@ -36,6 +36,8 @@ class KernelSetup
 	 */
 	private static $db_querier;
 	private static $com_table;
+	private static $note_table;
+	private static $average_notes_table;
 	private static $visit_counter_table;
 	private static $configs_table;
 	private static $events_table;
@@ -67,6 +69,8 @@ class KernelSetup
 		self::$db_querier = PersistenceContext::get_querier();
 
 		self::$com_table = PREFIX . 'com';
+		self::$note_table = PREFIX . 'note';
+		self::$average_notes_table = PREFIX . 'average_notes';
 		self::$visit_counter_table = PREFIX . 'visit_counter';
 		self::$configs_table = PREFIX . 'configs';
 		self::$events_table = PREFIX . 'events';
@@ -105,6 +109,8 @@ class KernelSetup
 	{
 		self::$db_utils->drop(array(
 			self::$com_table,
+			self::$note_table,
+			self::$average_notes_table,
 			self::$visit_counter_table,
 			self::$configs_table,
 			self::$events_table,
@@ -135,6 +141,8 @@ class KernelSetup
 	private function create_tables()
 	{
 		$this->create_com_table();
+		$this->create_note_table();
+		$this->create_average_notes_table();
 		$this->create_visit_counter_table();
 		$this->create_configs_table();
 		$this->create_events_table();
@@ -182,6 +190,36 @@ class KernelSetup
 		self::$db_utils->create_table(self::$com_table, $fields, $options);
 	}
 
+	private function create_note_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'module_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'note' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		self::$db_utils->create_table(self::$note_table, $fields, $options);
+	}
+	
+	private function create_average_notes_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'module_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'average_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+			'number_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		self::$db_utils->create_table(self::$average_notes_table, $fields, $options);
+	}
 
 	private function create_visit_counter_table()
 	{
@@ -663,7 +701,6 @@ class KernelSetup
 	{
 		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_menu_configuration_data();
-		$this->insert_configs_data();
 		$this->insert_ranks_data();
 		$this->insert_member_data();
 		$this->insert_smileys_data();
@@ -744,7 +781,7 @@ class KernelSetup
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 13,
-			'code_smiley' => 'top',
+			'code_smiley' => ':top',
 			'url_smiley' => 'top.gif'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
@@ -919,15 +956,6 @@ class KernelSetup
 			'user_sign' => ''
 		));
 
-	}
-
-	private function insert_configs_data()
-	{
-		self::$db_querier->insert(self::$configs_table, array(
-			'id' => 3,
-			'name' => 'uploads',
-			'value' => 'a:4:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";i:1;s:15:"auth_extensions";a:48:{i:0;s:3:"jpg";i:1;s:4:"jpeg";i:2;s:3:"bmp";i:3;s:3:"gif";i:4;s:3:"png";i:5;s:3:"tif";i:6;s:3:"svg";i:7;s:3:"ico";i:8;s:3:"rar";i:9;s:3:"zip";i:10;s:2:"gz";i:11;s:3:"txt";i:12;s:3:"doc";i:13;s:4:"docx";i:14;s:3:"pdf";i:15;s:3:"ppt";i:16;s:3:"xls";i:17;s:3:"odt";i:18;s:3:"odp";i:19;s:3:"ods";i:20;s:3:"odg";i:21;s:3:"odc";i:22;s:3:"odf";i:23;s:3:"odb";i:24;s:3:"xcf";i:25;s:3:"flv";i:26;s:3:"mp3";i:27;s:3:"ogg";i:28;s:3:"mpg";i:29;s:3:"mov";i:30;s:3:"swf";i:31;s:3:"wav";i:32;s:3:"wmv";i:33;s:4:"midi";i:34;s:3:"mng";i:35;s:2:"qt";i:36;s:1:"c";i:37;s:1:"h";i:38;s:3:"cpp";i:39;s:4:"java";i:40;s:2:"py";i:41;s:3:"css";i:42;s:4:"html";i:43;s:3:"xml";i:44;s:3:"ttf";i:45;s:3:"tex";i:46;s:3:"rtf";i:47;s:3:"psd";}s:10:"auth_files";s:32:"a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}";}'
-		));
 	}
 }
 

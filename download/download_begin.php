@@ -36,12 +36,13 @@ require_once('download_auth.php');
 $page = retrieve(GET, 'p', 1);
 $category_id = retrieve(GET, 'cat', 0);
 $file_id = retrieve(GET, 'id', 0);
+$deadlink = retrieve(GET, 'deadlink', 0);
 $id_cat_for_download = 0;
 
 if (!empty($file_id))
 {
 	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
-	
+
 	if (empty($download_info['id']))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 

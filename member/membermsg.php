@@ -100,7 +100,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	$Template->pparse('membermsg');
 }
 else
-	AppContext::get_response()->redirect('/member/member.php');
+	AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member/')->absolute());
 
 require_once('../kernel/footer.php');
 

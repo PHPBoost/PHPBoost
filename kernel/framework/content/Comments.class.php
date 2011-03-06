@@ -533,36 +533,42 @@ class Comments
 
 				//Post form
 
-				$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
+				$form = new HTMLForm('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
 				$fieldset = new FormFieldsetHTML('add_comment', $LANG['add_comment']);
+				$form->add_fieldset($fieldset);
+				
 				if ($is_guest) //Visiteur
 				{
 					$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $LANG['guest'], array(
-						'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true,
-						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
+						'title' => $LANG['pseudo'], 'class' => 'text', 'required' => $LANG['require_pseudo'],
+						'maxlength' => 25)
 					));
 				}
-				$fieldset->add_field(new FormFieldTextEditor($this->script . 'contents', FormatingHelper::unparse($contents), array(
-					'forbiddentags' => $comments_config->get_forbidden_tags(), 'title' => $LANG['message'],
-					'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+				
+				$formatter = AppContext::get_content_formatting_service()->create_factory();
+				$formatter->set_forbidden_tags($comments_config->get_forbidden_tags());
+
+				$fieldset->add_field(new FormFieldRichTextEditor($this->script . 'contents', $LANG['message'], FormatingHelper::unparse($contents), array(
+					'formatter' => $formatter,
+					'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 				));
-				if ($is_guest && $comments_config->get_display_captcha()) //Code de vérification, anti-bots.
+				if ($comments_config->get_display_captcha()) //Code de vérification, anti-bots.
 				{
 					$fieldset->add_field(new FormFieldCaptcha('verif_code', $captcha));
 				}
 				$fieldset->add_field(new FormFieldHidden('idprov', $this->idprov));
 				$fieldset->add_field(new FormFieldHidden('idcom', ''));
 				$fieldset->add_field(new FormFieldHidden('script', $this->script));
-
-				$form->add_fieldset($fieldset);
-
+				$form->add_button(new FormButtonDefaultSubmit());
+				$form->add_button(new FormButtonReset());
+				
 				//On crée une pagination si le nombre de commentaires est trop important.
 				$pagination = new DeprecatedPagination();
 
 				$Template->put_all(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
 					'C_IS_MODERATOR' => $is_modo,
-					'COM_FORM' => $form->display(),
+					'COM_FORM' => $form->display()->render(),
 					'CURRENT_PAGE_COM' => $integrated_in_environment,
 					'POPUP_PAGE_COM' => !$integrated_in_environment,
 					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $comments_config->get_number_comments_per_page(), 3),

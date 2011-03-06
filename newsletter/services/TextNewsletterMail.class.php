@@ -30,14 +30,28 @@
  */
 class TextNewsletterMail extends AbstractNewsletterMail
 {
-	public static function send_mail(NewsletterMailService $newsletter_mail_config)
+	public function send_mail($sender, $subject, $contents)
 	{
-
+		$mail = new Mail();
+		$mail->set_sender($sender);
+		$mail->set_is_html(false);
+		$mail->set_subject($subject);
+		
+		$member_registered_newsletter = $this->list_members_registered_newsletter();
+		foreach ($member_registered_newsletter as $member)
+		{
+			$mail->clear_recipients();
+			$mail->add_recipient($member['mail']);
+			$mail->set_content($this->add_unsubscribe_link($contents, $member['mail']));
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
+		}
 	}
 	
-	public static function display_mail(NewsletterMailService $newsletter_mail_config)
+	public function parse_contents($contents, $user_id)
 	{
-	
+		return stripslashes(FormatingHelper::strparse(addslashes($contents)));
 	}
 }
 

@@ -42,7 +42,7 @@ if (!empty($_POST['valid']))
 
 	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
-		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0')", __LINE__, __FILE__);
 		
 		AppContext::get_response()->redirect('/web/admin_web.php');
 	}

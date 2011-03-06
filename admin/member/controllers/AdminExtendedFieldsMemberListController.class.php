@@ -33,33 +33,22 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 	public function execute(HTTPRequest $request)
 	{
+		$this->update_fields($request);
+		
 		$this->init();
 
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
 
-		$min_cat = PersistenceContext::get_sql()->query("SELECT MIN(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1");
-		$max_cat = PersistenceContext::get_sql()->query("SELECT MAX(position) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1");
-
 		foreach ($extended_field as $id => $row)
 		{
-			if ($row['display'] == 1)
-			{
-				$top_link = $min_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/top/')->absolute() .'" title="">
-					<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-				$bottom_link = $max_cat != $row['position'] ? '<a href="'. DispatchManager::get_url('/admin/member', '/extended-fields/position/'.$row['id'].'/bottom/')->absolute() .'" title="">
-					<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
-			
-				$this->view->assign_block_vars('list_extended_fields', array(
-					'ID' => $row['id'],
-					'NAME' => $row['name'],
-					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-					'L_DISPLAY' => $row['display'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-					'TOP' => $top_link,
-					'BOTTOM' => $bottom_link,
-					'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/delete/?token=' . AppContext::get_session()->get_token())->absolute(),
-					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
-				));
-			}
+			$this->view->assign_block_vars('list_extended_fields', array(
+				'ID' => $row['id'],
+				'NAME' => $row['name'],
+				'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
+				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
+				'DISPLAY' => $row['display'],
+				'FREEZE' => $row['freeze']
+			));
 		}
 		
 		$this->view->put_all(array(
@@ -68,7 +57,10 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'L_POSITION' => $this->lang['field.position'],
 			'L_REQUIRED' => $this->lang['field.required'],
 			'L_DISPLAY' => LangLoader::get_message('display', 'main'),
-			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field']
+			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
+			'L_AUTH_READ_PROFILE' => $this->lang['field.read_authorizations'],
+			'L_AUTH_READ_EDIT_AND_ADD' => $this->lang['field.actions_authorizations'],
+			'L_VALID' => LangLoader::get_message('update', 'main')
 		));
 
 		return $this->build_response($this->view);
@@ -90,6 +82,54 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['extended-fields-management']);
 		return $response;
+	}
+	
+	private function update_fields($request)
+	{
+		if ($request->get_value('submit', false))
+		{
+			$this->update_position($request);
+		}
+		$this->change_display($request);
+	}
+	
+	private function change_display($request)
+	{
+		$id = $request->get_value('id', 0);
+		$display = $request->get_bool('display', true);
+		if ($id !== 0)
+		{
+			PersistenceContext::get_querier()->inject(
+				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+				display = :display
+				WHERE id = :id"
+				, array(
+					'display' => (int)$display,
+					'id' => $id,
+			));
+			ExtendedFieldsCache::invalidate();
+		}
+	}
+	
+	private function update_position($request)
+	{
+		$value = '&' . $request->get_value('position', array());
+		$array = @explode('&lists[]=', $value);
+		foreach($array as $position => $id)
+		{
+			if ($position > 0)
+			{
+				PersistenceContext::get_querier()->inject(
+					"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+					position = :position
+					WHERE id = :id"
+					, array(
+						'position' => $position,
+						'id' => $id,
+				));
+			}
+		}
+		ExtendedFieldsCache::invalidate();
 	}
 }
 

@@ -83,7 +83,7 @@ class MemberUserLangExtendedField extends AbstractMemberExtendedField
 		{
 			if ($properties['auth'] == -1)
 			{
-				$info_lang = load_ini_file('../lang/', $lang);
+				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
 
 				$array[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
 			}

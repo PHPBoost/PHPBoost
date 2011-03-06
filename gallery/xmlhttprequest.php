@@ -55,23 +55,6 @@ if (!empty($_GET['increment_view']))
 	//Mise à jour du nombre de vues.
 	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 }
-elseif (!empty($_GET['note']) ) //Utilisateur connecté.
-{
-	if ($User->check_level(MEMBER_LEVEL))
-	{
-		$id = retrieve(POST, 'id', 0);
-		$note = retrieve(POST, 'note', 0);
-
-		//Initialisation  de la class de gestion des fichiers.
-
-		$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
-
-		if (!empty($note) && !empty($id))
-			echo $Note->add($note); //Ajout de la note.
-	}
-	else
-		echo -2;
-}
 else
 {	
 	$Session->csrf_get_protect(); //Protection csrf

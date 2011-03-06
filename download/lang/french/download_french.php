@@ -66,6 +66,7 @@ $DOWNLOAD_LANG['download_method'] = 'Méthode de téléchargement';
 $DOWNLOAD_LANG['download_method_explain'] = 'Choisissez de faire une redirection vers le fichier sauf si le fichier s\'affiche dans le navigateur au lieu d\'être téléchargé par le téléchargement et que ce fichier est <strong>sur votre serveur</strong>, dans ce cas, choisissez de forcer le téléchargement';
 $DOWNLOAD_LANG['force_download'] = 'Forcer le téléchargement';
 $DOWNLOAD_LANG['redirection_up_to_file'] = 'Rediriger vers le fichier';
+$DOWNLOAD_LANG['deadlink'] = 'Signaler un lien mort';
 
 //Titre
 $DOWNLOAD_LANG['title_download'] = 'Téléchargements';
@@ -147,6 +148,10 @@ $DOWNLOAD_LANG['contribution_entitled'] = 'Un fichier a été proposé : %s';
 $DOWNLOAD_LANG['contribution_confirmation'] = 'Confirmation de contribution';
 $DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
 $DOWNLOAD_LANG['contribution_success'] = 'Votre contribution a bien été enregistrée.';
+
+// Lien mort
+$DOWNLOAD_LANG['contribution_deadlink'] = 'Lient mort : %s';
+$DOWNLOAD_LANG['contribution_deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien de la fiche de téléchargement, et modifiez-le si nécessaire.';
 
 //Erreurs
 $LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';

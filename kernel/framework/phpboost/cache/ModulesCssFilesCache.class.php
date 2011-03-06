@@ -55,9 +55,17 @@ class ModulesCssFilesCache implements CacheData
 					{
 						$files_for_this_theme[] = '/templates/' . $theme . '/modules/' . $name . '/' . $name . '_mini.css';
 					}
+					elseif (file_exists(PATH_TO_ROOT . '/templates/' . $theme . '/modules/' . $name . '/' . $name . '.css'))
+					{
+						$files_for_this_theme[] = '/templates/' . $theme . '/modules/' . $name . '/' . $name . '.css';
+					}
 					elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css'))
 					{
 						$files_for_this_theme[] = '/' . $name . '/templates/' . $name . '_mini.css';
+					}
+					elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '.css'))
+					{
+						$files_for_this_theme[] = '/' . $name . '/templates/' . $name . '.css';
 					}
 				}
 			}
