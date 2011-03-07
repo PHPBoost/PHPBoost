@@ -1,0 +1,101 @@
+#################################################################################
+*								PHPBoost 3.1 Changelog							*
+#################################################################################
+
+===================================== Noyau ======================================
+[b]Framework :[/b]
+[*] [color=red]Nouveauté :[/color] Passage à PHP5 de l'ensemble du framework.
+[*] [color=red]Nouveauté :[/color] Nouveau framework MVC.
+[*] [color=red]Nouveauté :[/color] Réorganisation des packages du framework.
+[*] [color=red]Nouveauté:[/color] Regroupement de toutes les notions du noyau dans une classe Environment de façon à rendre le code considérablement plus maintenable.
+[*] [color=red]Nouveauté :[/color] Création d'un chargeur automatique de classe.
+[*] [color=red]Nouveauté :[/color] Refonte complète de la gestion des requêtes à la bases de données.
+[*] [color=red]Nouveauté :[/color] Refonte du moteur de templates, possibilité de gérer les templates sous forme de chaine de caractères.
+[*] [color=red]Nouveauté:[/color] Refonte complète du gestionnaire de cache, possibilité de stockage directement en mémoire pour des performances grandement améliorées.
+[*] [color=red]Nouveauté:[/color] Création d'un gestionnaire de configuration, stockant de façon autonome les données et s'appuyant sur le gestionnaire de cache pour le rendre plus performant.
+[*] [color=red]Nouveauté:[/color] Création d'un chargeur de langue permettant une gestion plus aisée des langues.
+[*] [color=red]Nouveauté:[/color] Générateur automatique de formulaire avec contrôle client et serveur automatisés.
+[*] [color=red]Nouveauté:[/color] Générateur automatique de tableau avec gestion de la pagination, filtres, tris.
+[*] [color=red]Nouveauté:[/color] Installation possible en ligne de commande.
+[*] Utilitaire en ligne de commande permettant l'installation de PHPBoost.
+[*] Nouveau gestionnaire d'erreur et d'exception.
+[*] Création d'une classe de débug pour les développeurs.
+[*] Refonte du système de communication entres les modules et le noyau.
+[*] Nouvelles classes de gestion des requêtes et réponses HTTP.
+[*] Gestion des cookies à travers les classes HTTP.
+- Amélioration de la génération du formulaire d'autorisation.
+[*] Amélioration de la récupération des erreurs.
+[*] Récupération du chemin complet du fichier dans les logs d'erreurs.
+[*] Ajout de la balise [feed] permettant d'inclure un flux RSS dans une mise en page
+[*] Nouveau système de champs membres permettant également à un développeur de créer son propre champ personnalisé à partir d'un module.
+[*] Nouveau système de changement de mot de passe en cas d'oubli.
++ Refonte de la classe session (Possibilité de joindre les sessions et l'espace membre à des systèmes d'authentification externes).
+[*] Refonte du système de notation.
+- Refonte du système de commentaire.
+
+[b]Menus :[/b]
+[*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
+[*] [color=red]Nouveauté:[/color] Possibilité d'afficher/masquer un menu sur un module ou une page donnée.
+- [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
+- Possibilité de désactiver l'affichage d'un lien dans les menus
+
+[b]Personnalisation graphique :[/b]
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre, logo et couleurs du site.
+- [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
+- [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
+- [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
+[*] Possibilité de cacher/ouvrir dans la liste des modules, la description et les autorisations de lecture pour une meilleure lisibilité
+[*] Amélioration de l'interface de gestion des thèmes.
+[*] Amélioration de l'interface de gestion des champs étendus (Ajout de drag and drop - Effet JavaScript).
+
+[b]Divers :[/b]
+- [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag'n drop).
+[*] [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
+- [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
+[*] Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
+[*] Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
+[*] Meilleur détection des robots d'indexation, ajout de la prise en compte de Bing.
+[*] Ajout d'un défilement vertical dans l'administration pour la visualisation de la liste des utilisateurs connectées.
+[*] Ajout d'un bloc note à l'accueil de l'administration.
+[*] Possibilité de trier les membres par date de dernière connexion dans l'administration.
+[*] Ajout de l'attribut style à la balise image de façon à pouvoir fixer des propriétés comme largeur, hauteur et bordure.
+[*] Nouveau système de champs membres : Les champs peuvent être désactivé, modifier et l'ajout de type de champs supplémentaires ont été ajoutés.
+[*] Possibilité de gérer finement les autorisations des thèmes.
+[*] Possibilité de gérer finement les autorisations d'accès au site quand il est en maintenance.
+
+=================================== Modules =====================================
+[b]BugTracker :[/b]
+- [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
+
+[b]Galerie :[/b]
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de télécharger l'image.
+[*] Tri des images conservé dans la pagination.
+
+[b]News :[/b]
+[*] Refonte complète du module, collaboration des utilisateurs possible.
+
+[b]Articles :[/b]
+[*] Refonte complète du module, collaboration des utilisateurs possible.
+
+[b]ShoutBox :[/b]
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modératin
+
+[b]Livre d'or :[/b]
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+
+[b]Pages :[/b]
+[*] Possibilité de cacher le lien d'impression pour chacune des pages.
+
+[b]Calendrier :[/b]
+[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+
+[b]Téléchargement[/b]
+[*] Possibilité de signaler les liens cassés.
+
+[b]Compatibilité des thèmes 3.0 :[/b]
+[*] Ajout d'une variable js THEME dans header.tpl
+- Modification de la classe xmlhttprequest_preview (border-radius en plus).
+- Ajout d'une image images/form/justify.png dans les thèmes 
+- Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
+
