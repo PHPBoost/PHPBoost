@@ -49,7 +49,6 @@
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
 - [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
-- améliorer l'affichage dans l'interface des menus (texte qui se chevauche, boutons ajouter).
 ------------------------------------ MODULES -----------------------------------
 - [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
@@ -72,8 +71,7 @@
 + [color=red]Nouveauté:[/color] Gestion des ModuleController et AdminController.
 + [color=red]Nouveauté:[/color] Refonte du ModuleDiscoveryService en ExtensionPointProvider.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
-- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...)
-	ex : dans FormButtonButton, param $label => $html_content ou autre... 
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
 ? [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 + Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
