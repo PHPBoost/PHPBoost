@@ -153,14 +153,12 @@ else
     $menu = new FeedMenu('', '', '');
 }
 
-$feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
-
 function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 {
-	$urls = array();
 	global $edit, $feed_url;
-	static $already_selected = false;
-
+	
+	$urls = array();
+	
 	foreach ($elts as $elt)
 	{
 		$url = $elt->get_url($feed_type);
@@ -168,7 +166,6 @@ function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 		if (!$already_selected && $edit && $feed_url == $url)
 		{
 			$selected = true;
-			$already_selected = true;
 		}
 		else
 		{
@@ -188,37 +185,36 @@ function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
 	return $urls;
 }
 
-// Sort by modules names
-$sorted_modules = array();
-foreach ($feeds_modules as $module)
-{
-	$sorted_modules[$module->get_name()] = $module;
-}
-ksort($sorted_modules);
+$feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
+ksort($feeds_modules);
 
-foreach ($sorted_modules as $module)
+foreach ($feeds_modules as $module)
 {
 	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
 	$list = $list->get_feeds_list();
 	$urls = array();
+
 	foreach ($list as $feed_type => $elt)
 	{
-		$urls[] = build_feed_urls(array($elt), $module->get_id(), $feed_type);
+		$urls[] = build_feed_urls($elt, $module->get_id(), $feed_type);
 	}
 
-	$root_feed_url = $urls[0][0]['url'];
-	$tpl->assign_block_vars('modules', array('NAME' => $module->get_name(), 'URL' => $root_feed_url));
+	$tpl->assign_block_vars('modules', array(
+		'NAME' => $module->get_id(), 
+		'URL' => $urls[0][0]['url']
+	));
+	
 	foreach ($urls as $url_type)
 	{
 		foreach ($url_type as $url)
 		{
 			$tpl->assign_block_vars('modules.feeds_urls', array(
-    			'URL' => $url['url'],
-    			'NAME' => $url['name'],
-    			'SPACE' => '--' . str_repeat('------', $url['level']),
-    			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-    			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-    		));
+				'URL' => $url['url'],
+				'NAME' => $url['name'],
+				'SPACE' => '--' . str_repeat('------', $url['level']),
+				'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+				'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+			));
 		}
 	}
 }
@@ -229,10 +225,8 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-
 //Filtres
 MenuAdminService::add_filter_fieldset($menu, $tpl);    
-
 
 $tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();
