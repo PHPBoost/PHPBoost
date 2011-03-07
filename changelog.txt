@@ -1,5 +1,5 @@
 #################################################################################
-*								PHPBoost 3.1 Changelog							*
+#                           PHPBoost 3.1 Changelog                              #
 #################################################################################
 
 ===================================== Noyau ======================================
@@ -35,7 +35,7 @@
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
-[*] [color=red]Nouveauté:[/color] Possibilité d'afficher/masquer un menu sur un module ou une page donnée.
+[*] [color=red]Nouveauté:[/color] Possibilité d'afficher/masquer un menu sur un module ou une page donnée à l'aide de filtres.
 - [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 
@@ -46,7 +46,6 @@
 - [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
 [*] Possibilité de cacher/ouvrir dans la liste des modules, la description et les autorisations de lecture pour une meilleure lisibilité
 [*] Amélioration de l'interface de gestion des thèmes.
-[*] Amélioration de l'interface de gestion des champs étendus (Ajout de drag and drop - Effet JavaScript).
 
 [b]Divers :[/b]
 - [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag'n drop).
