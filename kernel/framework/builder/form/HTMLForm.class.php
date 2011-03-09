@@ -312,19 +312,12 @@ class HTMLForm
 				$validation_error_message = $fieldset->get_validation_error_messages();
 				if (!empty($validation_error_message))
 				{
-					$this->validation_error_messages = array_merge($this->validation_error_messages, $validation_error_message);
+					$this->validation_error_messages = array_merge($this->validation_error_messages, (array)$validation_error_message);
 				}
 				$validation_result = false;
 			}
 		}
-		foreach ($this->constraints as $constraint)
-		{
-			if (!$constraint->validate())
-			{
-				$validation_result = false;
-			}
-		}
-		if (!$validation_result)
+		if (!count($this->validation_error_messages))
 		{
 			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
 		}
