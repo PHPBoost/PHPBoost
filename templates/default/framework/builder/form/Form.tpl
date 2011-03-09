@@ -1,7 +1,7 @@
 # IF C_VALIDATION_ERROR #
-<div class="error">
+<div class="notice">
 # START validation_error_messages #
-	{validation_error_messages.ERROR_MESSAGE}<br />
+	- {validation_error_messages.ERROR_MESSAGE}<br />
 # END validation_error_messages #
 </div>
 # ENDIF #

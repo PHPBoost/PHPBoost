@@ -31,16 +31,18 @@
  */
 class FormFieldConstraintUrl extends FormFieldConstraintRegex
 {
-	public function __construct($js_message = '')
+	public function __construct($error_message = '')
 	{
-		if (empty($js_message))
+		if (empty($error_message))
 		{
-			$js_message = LangLoader::get_message('doesnt_match_url_regex', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('doesnt_match_url_regex', 'builder-form-Validator');
 		}
+		$this->set_validation_error_message($error_message);
+		
 		parent::__construct(
 			'`^(https?|ftp)://[^ ]+$`i', 
 			'`^(https?|ftp)://[^ ]+$`i', 
-			$js_message
+			$error_message
 		);
 	}
 }

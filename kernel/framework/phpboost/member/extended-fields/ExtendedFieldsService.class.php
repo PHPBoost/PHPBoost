@@ -48,7 +48,7 @@ class ExtendedFieldsService
 		$exit_by_type = ExtendedFieldsDatabaseService::check_field_exist_by_type($extended_field);
 		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
 		$class = new $name_class();
-		if ($exit_by_type && $class->get_field_used_once() ||$class->get_field_used_phpboost_config())
+		if ($exit_by_type && $class->get_field_used_once() ||$class->get_field_used_phpboost_configuration())
 		{
 			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-extended-fields-common'));
 		}

@@ -29,9 +29,9 @@
  * @desc 
  * @package {@package}
  */ 
-class FormFieldConstraintIntegerRange implements FormFieldConstraint 
+class FormFieldConstraintIntegerRange extends AbstractFormFieldConstraint 
 {
-	private $js_message;
+	private $error_message;
 	private $upper_bound;
 	private $lower_bound;
 	
@@ -41,14 +41,14 @@ class FormFieldConstraintIntegerRange implements FormFieldConstraint
 		{
 			$js_message = LangLoader::get_message('doesnt_match_integer_intervall', 'builder-form-Validator');
 		}
-		$js_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound, 'upper_bound' => $upper_bound));
-		$this->js_message = TextHelper::to_js_string($js_message);
+		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound, 'upper_bound' => $upper_bound));
+		$this->set_validation_error_message($this->error_message);
 		$this->lower_bound = $lower_bound;
 		$this->upper_bound = $upper_bound;
 	}
 	
 	public function validate(FormField $field)
-	{	
+	{
 		$is_required = $field->is_required();
 		$value = $field->get_value();
 		if (!is_numeric($value))
@@ -66,7 +66,7 @@ class FormFieldConstraintIntegerRange implements FormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'integerIntervalFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ', 
-		' . (int)$this->lower_bound . ', ' . (int)$this->upper_bound . ', ' . $this->js_message . ')';
+		' . (int)$this->lower_bound . ', ' . (int)$this->upper_bound . ', ' . TextHelper::to_js_string($this->error_message) . ')';
 	}
 }
 
