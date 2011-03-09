@@ -48,22 +48,24 @@ class ExtendedFieldsService
 		$exit_by_type = ExtendedFieldsDatabaseService::check_field_exist_by_type($extended_field);
 		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
 		$class = new $name_class();
-		if ($exit_by_type && $class->get_field_used_once())
+		if ($exit_by_type && $class->get_field_used_once() ||$class->get_field_used_phpboost_config())
 		{
 			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-extended-fields-common'));
 		}
-		
-		if (!empty($name) && !empty($type_field))
+		else
 		{
-			if (!ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+			if (!empty($name) && !empty($type_field))
 			{
-				ExtendedFieldsDatabaseService::add_extended_field($extended_field);
-				
-				ExtendedFieldsCache::invalidate();
-			}
-			else
-			{
-				self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
+				if (!ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+				{
+					ExtendedFieldsDatabaseService::add_extended_field($extended_field);
+					
+					ExtendedFieldsCache::invalidate();
+				}
+				else
+				{
+					self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
+				}
 			}
 		}
 	}

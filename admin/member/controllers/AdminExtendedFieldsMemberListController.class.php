@@ -91,6 +91,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			$this->update_position($request);
 		}
 		$this->change_display($request);
+		ExtendedFieldsCache::invalidate();
 	}
 	
 	private function change_display($request)
@@ -107,7 +108,6 @@ class AdminExtendedFieldsMemberListController extends AdminController
 					'display' => (int)$display,
 					'id' => $id,
 			));
-			ExtendedFieldsCache::invalidate();
 		}
 	}
 	
@@ -129,7 +129,6 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				));
 			}
 		}
-		ExtendedFieldsCache::invalidate();
 	}
 }
 
