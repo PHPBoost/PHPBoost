@@ -54,7 +54,7 @@ class FormFieldConstraintNotEmpty implements FormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . TextHelper::to_js_string($this->js_onblur_message . ' : ' . $field->get_label()) . ')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->js_onblur_message, array('name' => strtolower($field->get_label())))) .')';
 	}
 }
 
