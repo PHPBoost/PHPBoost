@@ -35,9 +35,9 @@ class FormFieldConstraintLength extends AbstractFormFieldConstraint
 	private $rboundary;
 	private $lboundary;
 	
-	public function __construct($lboundary, $js_onblur_message = '')
+	public function __construct($lboundary, $error_message = '')
 	{
-		if (empty($js_onblur_message))
+		if (empty($error_message))
 		{
 			$error_message = LangLoader::get_message('doesnt_match_length_intervall', 'builder-form-Validator');
 		}
