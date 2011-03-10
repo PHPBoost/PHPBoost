@@ -270,7 +270,6 @@ var BBcodeEditor_Core = Class.create(
 					$(this.open_element).fade({duration: 0.3});
 				}
 				this.open_element = name;
-				
 			}
 			elt.setStyle({'display': tmp});
 		}
@@ -288,12 +287,16 @@ var BBcodeEditor_Core = Class.create(
 	{
 		return function()
 		{
-			this.toggleElement('bbcode_more'+this.element);
-			var display = $('bbcode_more'+this.element).getStyle('display');
-			if (display != 'none')
+			var elt = $('bbcode_more'+this.element);
+			var display = elt.getStyle('display');
+			if (display != 'none') {
+				elt.fade({duration: 0.3});
 				this.cookieRequest(1);
-			else
+			}
+			else {
+				elt.appear({duration: 0.5});
 				this.cookieRequest(0);
+			}
 		
 		}.bind(this);
 	},
