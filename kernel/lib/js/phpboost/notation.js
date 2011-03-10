@@ -26,7 +26,6 @@
  
  var Note = Class.create({
 	id : 0,
-	picture : 0,
 	timeout : null,
 	notation_scale : 0,
 	default_note : 0,
@@ -96,14 +95,12 @@
 		});
 	},
 	over_event : function () {
-		if(this.picture == 0)
-			this.picture = 1;
 		clearTimeout(this.timeout);
 		this.timeout = null;
 	},
 	out_event : function () {
 		if(this.timeout == null)
-			this.timeout = setTimeout('Note.change_picture_status(' + this.get_default_note() + '); this.picture = 0;', '50');
+			this.timeout = setTimeout('Note.change_picture_status(' + this.get_default_note() + ');', '50');
 	},
 	change_picture_status : function (note) {
 		var picture_star;
