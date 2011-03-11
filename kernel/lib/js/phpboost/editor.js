@@ -265,7 +265,7 @@ var BBcodeEditor_Core = Class.create(
 			else {
 				tmp = 'block';
 				elt.appear({duration: 0.5});
-				if (this.open_element != null)
+				if (this.open_element != null && this.open_element != name)
 				{
 					$(this.open_element).fade({duration: 0.3});
 				}
@@ -291,11 +291,11 @@ var BBcodeEditor_Core = Class.create(
 			var display = elt.getStyle('display');
 			if (display != 'none') {
 				elt.fade({duration: 0.3});
-				this.cookieRequest(1);
+				this.cookieRequest(0);
 			}
 			else {
 				elt.appear({duration: 0.5});
-				this.cookieRequest(0);
+				this.cookieRequest(1);
 			}
 		
 		}.bind(this);
@@ -518,9 +518,14 @@ var BBcodeEditor_Core = Class.create(
 				x.onclick = this.callbackToggleDiv();
 				$(elt).insert(this.balise(x));
 			}
-			else if (x.type == 'action_prompt')
+			else if (x.type == 'action_prompt_url')
 			{
-				x.onclick = this.callbackPrompt(x.prompt);
+				x.onclick = this.callbackPrompt(x.prompt, 'url');
+				$(elt).insert(this.balise(x));
+			}
+			else if (x.type == 'action_prompt_picture')
+			{
+				x.onclick = this.callbackPrompt(x.prompt, 'picture');
 				$(elt).insert(this.balise(x));
 			}
 			else if (x.type == 'action_help')
@@ -540,7 +545,7 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this));
 	},
 	
-	action_prompt: function(question)
+	action_prompt_url: function(question)
 	{
 		var url = prompt(question, '');
 		if( url != null && url != '' )
@@ -548,12 +553,26 @@ var BBcodeEditor_Core = Class.create(
 		else
 			this.textarea.insert('[url]', '[/url]', this.element);
 	},
+	
+	action_prompt_picture: function(question)
+	{
+		var url = prompt(question, '');
+		if( url != null && url != '' )
+			this.textarea.insert('[img]' + url, '[/img]', this.element);
+		else
+			this.textarea.insert('[img]', '[/img]', this.element);
+	},
 
-	callbackPrompt: function(question)
+	callbackPrompt: function(question, type)
 	{
 		return function()
 		{
-			this.action_prompt(question);
+			if (type == 'picture') {
+				this.action_prompt_picture(question);
+			}
+			else if (type == 'url') {
+				this.action_prompt_url(question);
+			}
 		}.bind(this);
 	},
 	
