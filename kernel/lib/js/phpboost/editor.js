@@ -600,7 +600,7 @@ var BBcodeEditor_Core = Class.create(
 					'height': x.height,
 					'width': x.width
 				});
-				img.setStyle({'padding':'1px'});
+				img.setStyle({'padding':'1px', 'cursor':'pointer'});
 				if(x.code)
 				{
 					var fn = this.callbackInsertBBcode(x.code, 'smile');
@@ -790,7 +790,7 @@ var BBcodeEditor_Core = Class.create(
 				var xtd = new Element('td');
 				xtd.setStyle({padding:'2px'});
 				var xspan = new Element('span');
-				xspan.setStyle({'background':this.colors[i], 'padding':'0px 4px', 'border':'1px solid #ACA899'});
+				xspan.setStyle({'background':this.colors[i], 'padding':'0px 4px', 'border':'1px solid #ACA899', 'cursor':'pointer'});
 				xspan.update('&nbsp;');
 				var fn = this.callbackInsertBBcode('[color='+this.colors[i]+']', '[/color]');
 				xspan.observe('click', fn);
@@ -902,7 +902,7 @@ var BBcodeEditor_Core = Class.create(
 			else if (x.type == 'submit')
 			{
 				var para = new Element('p');
-				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center', 'cursor':'pointer'});
 				var img = this.balise(x);
 				para.insert(img);
 				para.insert(x.text);
@@ -970,7 +970,7 @@ var BBcodeEditor_Core = Class.create(
 			else if (x.type == 'submit')
 			{
 				var para = new Element('p');
-				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center', 'cursor':'pointer'});
 				var img = this.balise(x);
 				para.insert(img);
 				para.insert(x.text);
