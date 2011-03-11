@@ -30,7 +30,7 @@
  */
 class TextNewsletterMail extends AbstractNewsletterMail
 {
-	public function send_mail($sender, $subject, $contents)
+	public function send_mail($id_cat, $sender, $subject, $contents)
 	{
 		$mail = new Mail();
 		$mail->set_sender($sender);

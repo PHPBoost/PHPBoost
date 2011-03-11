@@ -27,15 +27,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[b]Newsletter[/b]
-- Refonte du module en MVC.
-- Gestion des autorisations de lecture, de suppression de la liste des archives.
-- Etudier l'ajouts de notifications de lecture.
-- Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à tout les types de newsletters).
-- Possibilité de créer des newsletter type.
-- Gestion des archives avec tries sur les types de newsletter.
-- Gestion des autorisations d'ajout de newsletter.
-
 #################################################################################
 
 
