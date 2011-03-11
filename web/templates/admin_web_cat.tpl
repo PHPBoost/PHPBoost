@@ -140,7 +140,7 @@
 							<label><select name="icon" id="icon" onchange="change_icon('', this.options[this.selectedIndex].value)" onclick="change_icon('', this.options[this.selectedIndex].value)">
 								{IMG_LIST}
 							</select></label>
-							<span id="icon_img">{cat.IMG_ICON}</span>
+							<span id="icon_img">{IMG_ICON}</span>
 							<br />
 							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)" /></label>
 						</dd>
