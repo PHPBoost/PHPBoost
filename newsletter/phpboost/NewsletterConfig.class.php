@@ -34,9 +34,11 @@ class NewsletterConfig extends AbstractConfigData
 	const NEWSLETTER_NAME = 'newsletter_name';
 	const AUTHORIZATION = 'authorizations';
 	
-	const AUTH_READ_ARCHIVE = 1;
-	const AUTH_REGISTER_NEWSLETTER = 2;
-	const AUTH_MODERATION_ARCHIVE = 4;
+	const AUTH_READ_ARCHIVES = 1;
+	const AUTH_READ_SUBSCRIBERS = 2;
+	const AUTH_MODERATION_SUBSCRIBERS = 4;
+	const AUTH_REGISTER_NEWSLETTER = 8;
+	const AUTH_MODERATION_ARCHIVE = 16;
 	
 	public function get_mail_sender()
 	{
@@ -74,9 +76,9 @@ class NewsletterConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::MAIL_SENDER => '',
+			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
-			self::AUTHORIZATION => array('r-1' => 3, 'r0' => 3, 'r1' => 7) 
+			self::AUTHORIZATION => array('r1' => 15, 'r0' => 3, 'r-1' => 1, '1' => 16, '2' => 16) 
 		);
 	}
 

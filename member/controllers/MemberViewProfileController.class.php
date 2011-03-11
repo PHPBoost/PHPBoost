@@ -80,7 +80,7 @@ class MemberViewProfileController extends AbstractController
 
 		if ($user_id == $user->get_attribute('user_id') || $user->check_level(ADMIN_LEVEL))
 		{
-			$link_edit = $user->check_level(ADMIN_LEVEL) && $user->get_attribute('user_id') !== $user_id ? '<a href="'. PATH_TO_ROOT .'/admin/member/index.php?url=/member/1/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>' : '<a href="'. PATH_TO_ROOT .'/member/index.php?url=/profile/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
+			$link_edit = $user->check_level(ADMIN_LEVEL) && $user->get_attribute('user_id') !== $user_id ? '<a href="'. DispatchManager::get_url('/admin/member', '/member/'. $row['user_id'] . '/edit/')->absolute() .'"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>' : '<a href="'. PATH_TO_ROOT .'/member/index.php?url=/profile/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edition', $this->lang['profile_edition'], $link_edit));
 		}
 		
