@@ -1,0 +1,181 @@
+/* --------------------------------------
+		design.css
+Contient les conteneur, fortement dépendant du design.
+--------------------------------------*/
+
+/* Corps du site 
+--------------------------------------*/
+*{
+	margin:0;
+	padding:0;
+	font-size:100%;
+}
+body{
+	font-size:12px;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	color:#333333;
+	width:1000px;
+	margin: auto;
+	background:#1171A3;
+}
+
+/* Conteneurs 
+--------------------------------------*/
+/* ##### Conteneur global du site ###### */
+div#global{
+	width:1021px;
+	margin:auto;
+	background:url(images/bg.png) repeat-y;
+}
+/* ##### Entête de la page ###### */
+div#header, div#header_admin{
+	background:url(images/header.png) no-repeat;
+	height:139px;
+}
+/* #####  Conteneur en dessous de l'entête ###### */
+div#sub_header, div#sub_header_admin{
+	height:94px;
+	padding-top:4px;
+	background:url(images/subheader.png) no-repeat;
+}
+div#sub_header p a{
+	color:#1171A3;
+}
+/* Lien du subheader */
+div#header .dynamic_menu h5.links
+{
+	background:none;
+	border:none;
+	color:#edfff0;
+	width:134px;
+	background:url(images/button.png) no-repeat;
+	padding:5px 0px;
+	font-size:11px;
+	margin-right:1px;
+}
+div#header .dynamic_menu h5.links:hover
+{
+	color:#edfff0;
+	cursor:default;
+	background:url(images/button_click.png) no-repeat;
+}
+div#header .dynamic_menu h5 a
+{
+	color:#FFFFFF;
+	text-decoration:none;
+}
+/* ##### Compteur de visites  ###### */
+div#compteur{
+	color:#1E88D2;
+	position:absolute;
+	top:200px;
+	padding-left:820px;
+}
+/* ##### Menu de gauche ###### */
+div#left_menu{
+	float:left;
+	width:190px;
+	padding:0;
+	margin:0;
+	margin-left:5px;
+	padding-top:10px;
+}
+/* #####  Contenu de la page ###### */
+div#main{
+	background:url(images/right_global.png) no-repeat right top;
+	margin-right:2px;
+}
+div#main2{
+	float:left;
+	width:760px;
+	padding-bottom:15px;
+	margin-left:7px;
+}
+/* ##### Barre de lien rapide ###### */
+div#links{
+	width:96%;
+	text-indent:10px;
+}
+/* ##### Emplacement au dessus de contenu de la page ###### */
+div#top_contents{
+	margin-top:15px;
+	margin-bottom:15px;
+}
+/* ##### Emplacement en dessous de contenu de la page ###### */
+div#bottom_contents{
+	margin-top:25px;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+/* ##### Menu droit ###### */
+div#right_menu{
+}
+/* ##### Bloc au dessus du pied de page ###### */
+div#top_footer{
+	clear:both;
+	padding:0.75em;
+}
+/* ##### Pied de page ###### */
+div#footer{
+	text-align:center;
+	background:url(images/footer.png) no-repeat;
+	height:48px;
+	padding:0.65em;
+	padding-left:50px;
+	border-top:none;
+}
+div#footer span{
+	font-size:10px;
+	color:#FFFFFF;
+}
+div#footer span a{
+	font-size:10px;
+	color:#FFFFFF;
+}
+/* ##### Pied de page Admin ###### */
+div#admin_footer{
+	height:35px;
+	text-align:center;
+	background:#526F8E url(images/footer.png) no-repeat;
+	padding:0.65em;
+}
+div#admin_footer span{
+	font-size:10px;
+	color:#FFFFFF;
+}
+div#admin_footer span a{
+	font-size:10px;
+	color:#FFFFFF;
+}
+
+div#links_vertical {
+	display:block !important;
+	display:none;
+	position:fixed;
+	background:url(images/vertical_menu_repeat.png) repeat-y;
+	top:45%;
+	margin-left:970px;
+	width:27px;
+	text-align:center;
+	padding-left:2px;
+}
+div#links_vertical_top {
+	width:29px;
+	background:url(images/vertical_menu_top.png) no-repeat;
+	text-align:center;
+	margin-left:-2px;
+	padding-top:8px;
+}
+div#links_vertical_central {
+	width:27px;
+	text-align:center;
+	margin-left:-2px;
+	padding:8px 0px;
+}
+div#links_vertical_bottom {
+	width:29px;
+	background:url(images/vertical_menu_bottom.png) no-repeat;
+	text-align:center;
+	height:32px;
+	margin-left:-2px;
+}

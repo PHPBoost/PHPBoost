@@ -1,0 +1,249 @@
+/* --------------------------------------
+		global.css
+ Contient les classes globales au site, peuvent être utilisées partout.
+--------------------------------------*/
+
+/* Classes générales
+--------------------------------------*/
+/* Case générale des tableaux du site*/
+.row1, .block_contents1{
+	background:#F1F4F6;
+	border:1px solid #C4CED6;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents1{
+	padding:20px 6px;
+}
+.row2, .block_contents2{
+	background:#F2F8F8;
+	border:1px solid #C4CED6;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents2{
+	padding:20px 6px;
+	margin-bottom:-1px;
+}
+.row3, .block_contents3{
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents3{
+	padding:20px 6px;
+}
+
+.row_priority_very_high{
+    text-align:center;
+	background:#F3A29B;
+}
+
+.row_priority_high{
+    text-align:center;
+	background:#FFD5D1;
+}
+
+.row_priority_medium{
+    text-align:center;
+	background:#F5D5C6;
+}
+
+.row_priority_low{
+    text-align:center;
+	background:#ECDBB7;
+}
+
+.row_priority_very_low{
+    text-align:center;
+	background:#FFFFFF;
+}
+
+/* Case résultat recherche membre AJAX */
+.xmlhttprequest_result_search{
+	overflow:auto;
+	height:100px;
+	width:100px;	
+	overflow:auto;
+	font-size:11px;
+	background:#EEF2F5;
+	border:1px solid #2C5169;
+	color:#061729;
+	padding:2px;
+}
+/*Affichage du mini calendrier */
+.calendar_block{
+	position:absolute;
+	text-align:center;
+	padding:6px 4px;
+	background:#AFD2E8;
+	border:1px solid #2C5169;
+	bottom:28px; 
+	width:204px;
+	z-index:100;
+}
+/* Déplacement des fichiers*/
+.upload_selected_cat{
+	background:#AFD2E8;
+	border:1px solid #2C5169;
+}
+
+/* Lien du site
+--------------------------------------*/
+a{ 
+	color:#0578CC; 
+	text-decoration:none; 
+	font-weight:bold;
+	font-size:11px;
+}
+a:hover{ 
+	color:#01528D; 
+	text-decoration:underline;
+	font-weight:bold;
+	font-size:11px; 
+}
+/* Liens petite taille */
+a.small_link{ 
+	font-size:10px;
+}
+a.small_link:hover{ 
+	font-size:10px;
+}
+/* Liens grande taille */
+a.big_link{ 
+	font-size:15px;
+}
+a.big_link:hover{ 
+	font-size:15px;
+}
+/* Liens des commentaires. */
+a.com{
+	color:#0578CC; 
+	font-size:10px;
+	font-weight:bold;
+}
+a.com:hover{ 
+	color:#01528D; 
+	font-size:10px;
+	font-weight:bold;
+}
+/* Lien des utilisateurs => ne pas changer le nom de ces classes! */
+a.admin{
+	color:#FFA34F; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.modo{
+	color:#006699; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.membre{
+	color:#000000; 
+	font-size:11px;
+	font-weight:bold;
+}
+
+/* Liens pagination
+--------------------------------------*/
+.pagination {
+    font-size: 11px;
+}
+.pagination_current_page {
+    text-decoration:underline;
+}
+
+/*Menu dynamique des liens
+--------------------------------------*/
+.dynamic_menu{ 
+	position:relative; 
+	z-index:100;
+}
+.dynamic_menu ul{
+	margin:0;
+	padding:0;
+	border:none;
+	font-weight:bold;
+	list-style:none;
+}
+.dynamic_menu li{
+	position:relative;
+	float:left;  
+	display:inline;
+}
+.dynamic_menu li.vertical{
+	display:block;
+	float:none;
+	margin-bottom:15px;
+}
+ /* Lien du menu */
+.dynamic_menu h5{
+	color:#0578CC;
+	text-align:center;
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
+	padding:4px 6px;
+	font-weight:bold;
+	font-size:12px;
+}
+.dynamic_menu h5:hover{
+	color:#01528D;
+	background:#E4F0F9;
+	cursor:default;
+}
+
+/* Séparateur */
+.dynamic_menu ul li.separator { 
+	background:#104069;  
+	height:2px;
+}
+.dynamic_menu ul li.extend{
+	background:url(images/bgmenu_extend.png);
+}
+/* Case du menu */
+.dynamic_menu li ul {
+	visibility:hidden; 
+	position:absolute;
+	border:1px solid #104069;
+}
+.dynamic_menu li.vertical ul {
+	top:0;
+	margin-left:150px; 
+}
+.dynamic_menu li li{
+	clear:both;
+	color:#0578CC;	
+	background:#FFFFFF url(images/bgmenu.png) repeat-y;
+	display:block;
+	width:167px;
+}
+.dynamic_menu li li a{
+	color:#0578CC;	
+	font-size:10px;
+	text-decoration:none;
+	padding-left:32px;
+	width:131px;
+	display:block;
+	white-space:nowrap; 	
+	margin:auto;
+	padding-top:6px;
+	padding-bottom:6px;	
+	background-repeat:no-repeat;
+	background-position:5px;
+}
+.dynamic_menu li li a:hover{	
+	background:#D7EDFA;
+	background-repeat:no-repeat;
+	background-position:5px;
+	border:1px solid #0578CC;
+	padding-top:5px;
+	padding-bottom:5px;
+	cursor:pointer;
+}
+/* Niveau 2 */
+.dynamic_menu li li ul {  
+	visibility:hidden; 
+	top:-2px; 
+	left:100%;
+}
