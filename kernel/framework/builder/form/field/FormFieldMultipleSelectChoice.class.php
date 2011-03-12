@@ -47,20 +47,37 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
     public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $selected_options, $available_options, $field_options, $constraints);
+		$this->set_selected_options($selected_options);
     }
 
-	protected function get_option($raw_value)
+	private function set_selected_options(array $selected_options)
     {
-		$option = array();
-        foreach ($this->get_options() as $option)
-        {
-            $result = $option->get_option($raw_value);
-            if ($result !== null)
-            {
-                $option[] = $result;
-            }
-        }
-        return $option;
+    	$value = array();
+    	foreach ($selected_options as $option)
+    	{
+    		if (is_string($option))
+    		{
+    			$value[] = $this->get_option($option);
+    		}
+    		else if ($option instanceof FormFieldSelectChoiceOption)
+    		{
+    			$value[] = $option;
+    		}
+    		else
+    		{
+    			throw new FormBuilderException('option ' . $option . ' isn\'t recognized');
+    		}
+    	}
+    	$this->set_value($value);
+    }
+	
+	public function retrieve_value()
+    {
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
+		{
+			$this->set_value($request->get_array($this->get_html_id()));
+		}
     }
 	
     /**
@@ -81,7 +98,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 
     private function get_html_code()
     {
-        $tpl_src = '<select multiple name="${escape(NAME)}" id="${escape(ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
+        $tpl_src = '<select multiple name="${escape(NAME)}[]" id="${escape(ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
 			'# START options # # INCLUDE options.OPTION # # END options #' .
 			'</select>';
 
@@ -96,7 +113,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 		
         foreach ($this->get_options() as $option)
         {
-			$select = $this->is_selected($option->get_label());
+			$select = $this->is_selected($option);
 			if ($select)
 			{
 				$option->set_active();
