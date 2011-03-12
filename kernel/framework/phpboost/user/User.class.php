@@ -224,12 +224,12 @@ class User
 
 	/**
 	 * @desc Check the authorization level
-	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @param int $level Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
-	public function check_level($secure)
+	public function check_level($level)
 	{
-		return isset($this->user_data['level']) && $this->user_data['level'] >= $secure;
+		return $this->level >= $level;
 	}
 
 	/**

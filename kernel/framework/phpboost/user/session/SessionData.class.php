@@ -31,6 +31,8 @@
  */
 class SessionData
 {
+	const SEASURF_ATTACK_ERROR_PAGE = '/member/csrf-attack.php';
+
 	private static $KEY_USER_ID = 'user_id';
 	private static $KEY_SESSION_ID = 'session_id';
 
@@ -372,6 +374,99 @@ class SessionData
 	private function get_serialized_content()
 	{
 		return serialize(array(self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id));
+	}
+
+	/**
+	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
+	 * this site. 2 different cases are accepted but the first is safer:
+	 * <ul>
+	 *      <li>The request contains a parameter whose name is token and value is the value of the token of the current session.</li>
+	 *      <li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
+	 * </ul>
+	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
+	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 * @return bool true if no csrf attack by post is detected
+	 */
+	public function csrf_post_protect($redirect = self::SEASURF_ATTACK_ERROR_PAGE)
+	{
+		//The user sent a POST request
+		if (!empty($_POST))
+		{
+			//First verification: does the token exist?
+			$token = $this->get_token();
+			if (!empty($token) && $this->get_request_token() === $token)
+			{
+				return true;
+			}
+			//Second chance: the referer is correct
+			if (self::check_referer())
+			{
+				return true;
+			}
+			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
+			$this->csrf_attack($redirect);
+			return false;
+		}
+		//It's not a POST request, there is no problem.
+		else
+		{
+			return true;
+		}
+	}
+
+	/**
+	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
+	 * this site with a correct token.
+	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 * @return true if no csrf attack by get is detected
+	 */
+	public function csrf_get_protect($redirect = self::SEASURF_ATTACK_ERROR_PAGE)
+	{
+		$token = $this->get_token();
+		if (empty($token) || $this->get_request_token() !== $token)
+		{
+			$this->csrf_attack($redirect);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @desc check that the operation is done from this site
+	 * @return true if the referer is on this site
+	 */
+	private static function check_referer()
+	{
+		if (empty($_SERVER['HTTP_REFERER']))
+		{
+			return false;
+		}
+		$general_config = GeneralConfig::load();
+		return strpos($_SERVER['HTTP_REFERER'], trim($general_config->get_site_url() . $general_config->get_site_path(), '/')) === 0;
+	}
+
+	/**
+	 * @desc Redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 */
+	private function csrf_attack($redirect = self::SEASURF_ATTACK_ERROR_PAGE)
+	{
+		$bad_token = $this->get_printable_token($this->get_request_token());
+		$good_token = $this->get_printable_token($this->get_token());
+
+		if ($redirect !== false && !empty($redirect))
+		{
+			AppContext::get_response()->redirect(Url::to_absolute($redirect));
+		}
+	}
+
+	private function get_request_token()
+	{
+		return AppContext::get_request()->get_value('token');
 	}
 }
 
