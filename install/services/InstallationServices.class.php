@@ -486,55 +486,21 @@ class InstallationServices
 		global $Cache;
 		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->create_first_admin_account($username, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$user_id = $this->create_first_admin_account($username, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($username, $password, $email, $admin_unlock_code);
 		if ($create_session)
 		{
-			$this->connect_admin($auto_connect);
+			$this->connect_admin($user_id, $auto_connect);
 		}
 		StatsCache::invalidate();
 	}
 
 	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
 	{
-		$querier = PersistenceContext::get_querier();
-		$member_columns = array(
-			'user_id' => 1,
-			'display_name' => $username,
-			'level' => 2,
-			'email' => $email,
-			'locale' => $locale,
-			'theme' => $theme,
-			'timezone' => $timezone,
-			'editor' => 'bbcode',
-			'unread_pm' => 0,
-			'timestamp' => time(),
-			'groups' => '',
-			'autoconnect_key' => null,
-			'warning_percentage' => 0,
-			'is_banned' => 0,
-			'is_readonly' => 0
-		);
-		$profile_columns = array(
-			'user_id' => 1,
-            'user_show_mail' => 1
-		);
-		$internal_authentication_columns = array(
-			'user_id' => 1,
-			'username' => $username,
-            'password' => strhash($password),
-			'approved' => 1
-		);
-		$authentication_method_columns = array(
-			'user_id' => 1,
-            'method' => 'internal'
-		);
-		$querier->insert(DB_TABLE_MEMBER, $member_columns);
-		$querier->insert(DB_TABLE_MEMBER_PROFILE, $profile_columns);
-		$querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
-		$querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
+		return UserService::create($username, 2, $email, $locale, $timezone, $theme, 'bbcode', $auth_method);
 	}
 
 	private function generate_admin_unlock_code()
@@ -572,9 +538,9 @@ class InstallationServices
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 
-	private function connect_admin($auto_connect)
+	private function connect_admin($user_id, $auto_connect)
 	{
-		$session = Session::create(1, $auto_connect);
+		$session = Session::create($user_id, $auto_connect);
 		AppContext::set_session($session);
 	}
 

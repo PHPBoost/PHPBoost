@@ -42,7 +42,7 @@ class StatsCache implements CacheData
 
 		$nbr_members = $querier->count(DB_TABLE_MEMBER);
 		$last_member = $querier->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name'),
-			'ORDER BY timestamp DESC LIMIT 1 OFFSET 0');
+			'ORDER BY registration_date DESC LIMIT 1 OFFSET 0');
 
 		$this->stats = 	array(
 			'nbr_members' => $nbr_members,

@@ -44,7 +44,7 @@ class HTTPRequest
 	 * @desc
 	 * @return Url
 	 */
-	public function get_current_url()
+	public static function get_current_url()
 	{
 		$requested_uri = '.';
 		if (!empty($_SERVER['REQUEST_URI']))

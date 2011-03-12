@@ -37,6 +37,13 @@
 interface AuthenticationMethod
 {
 	/**
+	 * @desc associate the current authentication method with the given user_id.
+	 * @param int $user_id
+	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
+	 */
+	function associate($user_id);
+
+	/**
 	 * @desc Tries to authenticate the user and returns true on success, false otherwise.
 	 * @return bool true, if authentication has been performed successfully
 	 */

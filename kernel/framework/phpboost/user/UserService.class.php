@@ -31,12 +31,41 @@
  */
 class UserService
 {
+	private static $querier;
+
+	public static function __static()
+	{
+		self::$querier = PersistenceContext::get_querier();
+	}
+
+	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, AuthenticationMethod $auth_method)
+	{
+
+		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
+			'display_name' => $display_name,
+			'level' => $level,
+			'email' => $email,
+			'locale' => $locale,
+			'timezone' => $timezone,
+			'theme' => $theme,
+			'editor' => $editor,
+			'registration_date' => time()
+		));
+		$user_id = $result->get_last_inserted_id();
+		self::$querier->insert(DB_TABLE_MEMBER_PROFILE, array(
+			'user_id' => $user_id,
+			'user_show_mail' => 1
+		));
+		$auth_method->associate($user_id);
+		return $user_id;
+	}
+
 	public static function delete_by_id($user_id)
 	{
-		$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
-		$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id=:user_id', $user_id);
-		$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
-		$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
 	}
 
 	public static function remove_old_unactivated_member_accounts()
@@ -45,12 +74,15 @@ class UserService
 		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
 		{	// If the user configured a delay and member accounts must be activated
-			$querier = PersistenceContext::get_querier();
-			$users_id_params = array('users_id' => self::get_old_unactivated_member_accounts_ids($delay_unactiv_max));
-			$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id in :users_id', $users_id_params);
-			$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id in :users_id', $users_id_params);
-			$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id in :users_id', $users_id_params);
-			$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id in :users_id', $users_id_params);
+			$ids_to_delete = self::get_old_unactivated_member_accounts_ids($delay_unactiv_max);
+			if (!empty($ids_to_delete))
+			{
+				$users_id_params = array('users_id' => $ids_to_delete);
+				self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id in :users_id', $users_id_params);
+				self::$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id in :users_id', $users_id_params);
+				self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id in :users_id', $users_id_params);
+				self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id in :users_id', $users_id_params);
+			}
 		}
 	}
 

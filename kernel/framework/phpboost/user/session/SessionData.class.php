@@ -169,7 +169,7 @@ class SessionData
 	private static function fill_user_cached_data(SessionData $data)
 	{
 		$columns = array('display_name', 'level', 'email', 'locale', 'theme', 'timezone', 'editor',
-			'unread_pm', 'timestamp', 'groups', 'warning_percentage', 'is_banned', 'is_readonly');
+			'unread_pm', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'is_banned', 'is_readonly');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $data->user_id);
 		try
@@ -188,7 +188,8 @@ class SessionData
 				'timezone' => GeneralConfig::load()->get_site_timezone(),
 				'editor' => 'bbcode',
 				'unread_pm' => 0,
-				'timestamp' => time(),
+				'registration_date' => 0,
+				'last_connection_date' => time(),
 				'groups' => '',
 				'warning_percentage' => 0,
 				'is_banned' => 0,

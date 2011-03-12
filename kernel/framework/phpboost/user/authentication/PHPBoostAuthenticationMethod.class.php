@@ -81,20 +81,43 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	public function associate($user_id)
+	{
+		$internal_authentication_columns = array(
+			'user_id' => 1,
+			'username' => $this->username,
+            'password' => $this->password,
+			'approved' => UserAccountsConfig::load()->get_member_accounts_validation_method()
+		);
+		$authentication_method_columns = array(
+			'user_id' => $user_id,
+            'method' => 'internal'
+		);
+		try {
+            $this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
+            $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+		} catch (SQLQuerierException $ex) {
+			throw new IllegalArgumentException('User Id ' . $user_id .
+				' is already associated with an authentication method [' . $ex->getMessage . ']');
+		}
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function authenticate()
 	{
+        $this->user_id = null;
 		try
 		{
 			return $this->try2authenticate();
 		}
-		catch (RowNotFoundException $ex)
-		{
-			return false;
-		}
-		catch (NotASingleRowFoundException $ex)
-		{
-			return false;
-		}
+		catch (RowNotFoundException $ex) { }
+		catch (NotASingleRowFoundException $ex) { }
+
+        $this->user_id = null;
+		return false;
 	}
 
 	private function try2authenticate()
@@ -160,7 +183,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $this->user_id);
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
-		$this->querier->update(DB_TABLE_MEMBER, array('timestamp' => time()), $condition, $parameters);
+		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 }
 

@@ -101,7 +101,7 @@ function connect_mini($position, $block)
     }
     else
     {
-    	$redirect_url = AppContext::get_request()->get_value('redirect', '/');
+    	$redirect_url = AppContext::get_request()->get_value('redirect', AppContext::get_request()->get_current_url()->absolute());
 		$target = DispatchManager::get_url('/member/index.php', '/login?redirect=' . urlencode($redirect_url));
     	$lang = LangLoader::get('login');
     	$form = new HTMLForm('loginForm', $target);
