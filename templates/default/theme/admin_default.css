@@ -1,0 +1,32 @@
+/* --------------------------------------
+		admin_default.css
+Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
+--------------------------------------*/ /* Titres */ /* Menus */
+.menu_link_list {
+    list-style-type: none;
+    list-style-position: outside;
+    margin-left: 20px;
+    padding: 10px 0;
+}
+
+.menu_link_element {
+    margin-top: 10px;
+}
+
+
+.menu_link_element:hover {
+    border-color: #aaaaaa;
+    cursor: move;
+}
+
+.menu_link_element:hover label {
+    cursor: move;
+}
+
+.menu_link_element:hover img {
+    cursor: pointer;
+}
+
+.menu_link_element:hover label {
+    cursor: pointer;
+}

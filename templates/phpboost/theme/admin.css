@@ -1,0 +1,182 @@
+/* --------------------------------------
+		admin.css
+Contient les classes supplï¿½mentaires pour l'administration.
+--------------------------------------*/
+
+/* Entête de la page */
+div#header_admin{
+}
+/* Menu de lien horizontal */
+div#sub_header_admin{
+}
+/* Lien du subheader */
+div#sub_header_admin .dynamic_menu{
+	margin-top:-31px;
+	margin-left:190px;	
+	float:left;
+}
+div#admin_extend_link{
+	float:right;
+	margin-right:15px;
+	margin-top:-31px;
+	text-align:center;
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
+	padding:4px 6px;
+}
+	
+/* Conteneur principal */
+div#admin_main{
+	padding:0px 6px;
+	border-left:1px solid #1C618C;	
+	border-right:1px solid #1C618C;	
+}
+/* Conteneurs */
+div#admin_contents{
+	height:450px;
+	margin-left:170px;	
+	border-left:1px solid #1C618C;	
+}
+html>body div#admin_contents{
+	height:auto;
+	min-height:450px;
+}
+/* Menu dï¿½roulants verticaux */
+div#admin_quick_menu{
+	width:155px;
+	float:left;
+	text-align:center;
+	padding-top:5px;
+}
+div#admin_quick_menu ul{
+	list-style-type:none;
+	width:169px;
+	margin-top:12px;
+}
+div#admin_quick_menu li{
+    display:block;
+    width:160px;
+    padding:15px 0px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+div#admin_quick_menu li a.quick_link{
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+div#admin_quick_menu li.title_menu{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	background:#3286C6;
+	border:1px solid #18415B;
+	color:#FFFFFF;	
+	padding:3px 0px;
+}
+div#admin_quick_menu li a.quick_link{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	color:#FFFFFF;	
+	background:#56A7E6;
+	border:1px solid #18415B;
+	padding:3px 2px;
+	text-decoration:none;
+	line-height:2.2em;
+}
+
+/* Tableaux de l'administration */
+.module_table, .block_container{
+	width:95%;	
+	padding:3px;
+	margin-top:15px;	
+}
+.error_handler_position{
+	margin-top:15px;
+}
+
+/* Fond des catégories dans l'administration */
+.management_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+
+/* Liens vers les menus étendus */
+a.admin_extend_link{
+	text-decoration:none;
+}
+/* Coloration des moteur de recherche */
+.robot{
+	color:#FF6600; 
+	font-size:12px;
+	font-weight:bold;
+}
+/* Styles */
+.success{
+	text-align:center;
+	width:20%;
+	background:#81c3a6;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:green;
+	font-weight:bold;
+	padding:1px;
+}
+.failure {	
+	text-align:center;
+	width:20%;
+	background:#ee8d8d;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:red;
+	font-weight:bold;
+	padding:1px;
+}
+.unspecified {	
+	text-align:center;
+	width:20%;
+	background:#5189bb;
+	display:block;
+	margin:auto;
+	margin-top:4px;	
+	color:#133554;
+	font-weight:bold;
+	padding:1px;
+}
+
+/* phpinfo */
+h1, h2 {
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 150%;
+}
+h2 {
+	font-size: 125%;
+}
+pre {
+	margin: 0px; font-family: monospace;
+}
+.center {
+	text-align:center;
+}
+.em{color: #666666; background-color: #cccccc;}
+
+/* Menus */
+.menu_link_list {
+	list-style:none;
+	list-style-position:outside;
+	margin-left:20px;
+	padding:10px 0;
+}
+.menu_link_element {
+	margin-top:10px;
+}

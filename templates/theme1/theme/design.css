@@ -1,0 +1,155 @@
+/* --------------------------------------
+		design.css
+Contient les conteneur, fortement dépendant du design.
+--------------------------------------*/
+
+/* Corps du site 
+--------------------------------------*/
+*{
+	margin:0;
+	padding:0;
+	font-size:100%;
+}
+body{
+	background:#274D74;
+	font-size:12px;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	color:#FFFDFD;
+}
+
+/* Conteneurs 
+--------------------------------------*/
+/* ##### Conteneur global du site ###### */
+div#global{
+	background:url(images/global.png) no-repeat 0px 238px;
+	width:1004px;
+	margin:auto;
+}
+div#conteneur{
+	background:url(images/bg.png) repeat-y transparent;
+	width:1004px;
+	margin:auto;
+}
+/* ##### Entête de la page ###### */
+div#header, div#header_admin{
+	background:url(images/header.png) no-repeat;
+	height:172px;
+}
+/* #####  Conteneur en dessous de l'entête ###### */
+div#sub_header, div#sub_header_admin{
+	height:66px;
+	background:url(images/sub_header.png) no-repeat;
+}
+div#sub_header p a{
+	color:#FFFFFF;
+}
+div#sub_header_left{
+	height:46px;
+	padding-top:20px;
+	margin:auto;
+	width:510px;
+}
+/* Rollover des boutons de la speed barre
+--------------------------------------*/
+a.button
+{
+	display:block;
+	float:left;
+	color:#FEFEFE;
+	height:22px;
+	text-decoration:none;
+	background:url("images/sub_header.gif") repeat-x;
+	border-right:1px solid #FFFFFF;	
+	text-align:center;
+	padding:0px 20px;
+	padding-top:9px;
+}
+a:hover.button
+{
+	color:#5387BF;
+}
+/* ##### Compteur de visites  ###### */
+div#compteur{
+	color:#1E88D2;
+	position:absolute;
+	top:55px;
+	margin-left:895px;
+}
+/* ##### Menu de gauche ###### */
+div#left_menu{	
+	float:left;
+	width:180px;
+	padding:0;
+	margin:0;
+	margin-left:47px;
+}
+/* #####  Contenu de la page ###### */
+div#main{
+	float:left;
+	width:725px;
+	margin-left:2px;
+	background:url(images/background.png) repeat;
+}
+/* ##### Barre de lien rapide ###### */
+div#links{
+	background-color:;
+	width:99%;
+	text-indent:10px;
+	margin-bottom:30px;
+}
+/* ##### Emplacement au dessus de contenu de la page ###### */
+div#top_contents{
+	margin-top:15px;
+	margin-bottom:15px;
+}
+/* ##### Emplacement en dessous de contenu de la page ###### */
+div#bottom_contents{
+	margin-top:25px;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+/* ##### Menu droit ###### */
+div#right_menu{
+	float:right;
+	width:180px;
+	padding:0;
+	margin:0;
+	padding-right:50px;
+}
+/* ##### Bloc au dessus du pied de page ###### */
+div#top_footer{
+	clear:both;
+	padding:0.75em;
+}
+/* ##### Pied de page ###### */
+div#footer{
+	height:66px;
+	background:#274D74 url(images/footer.png) no-repeat;
+	text-align:right;
+}
+div#footer span{
+	font-size:10px;
+	color:#FFFFFF;
+}
+div#footer span a{
+	font-size:10px;
+	color:#FFFFFF;
+}
+
+.bglinks{
+	background:url(images/bgmenu_links.jpg) no-repeat bottom right;
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+	padding-bottom:7px;
+	margin-bottom:5px;
+}
+
+div#search{
+	padding:4px;
+	padding-top:10px;
+	padding-left:10px;
+	height:30px;
+	background:url(images/bgsearch.png) repeat-x;
+	margin-bottom:1px;
+}

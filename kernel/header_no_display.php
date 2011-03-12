@@ -1,0 +1,49 @@
+<?php
+/*##################################################
+ *                                header_no_display.php
+ *                            -------------------
+ *   begin                : August 14, 2005
+ *   copyright          : (C) 2005 Viarre Régis
+ *   email                : crowkait@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+if (defined('PHPBOOST') !== true)
+{
+    exit;
+}
+
+if (!defined('TITLE'))
+{
+    define('TITLE', $LANG['unknow']);
+}
+
+$Session->check(TITLE); //Vérification de la session.
+
+//Gestion de la maintenance du site.
+if (($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time()) && !$User->check_level(ADMIN_LEVEL))
+{
+    if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
+    {
+        redirect(HOST . DIR . '/member/maintain.php');
+    }
+}
+
+?>
