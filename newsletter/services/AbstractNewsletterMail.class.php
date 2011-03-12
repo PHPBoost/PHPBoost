@@ -42,21 +42,14 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function send_mail(NewsletterMailService $newsletter_mail_service)
+	public function send_mail($id_cat, $sender, $subject, $contents)
 	{
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function display_mail(NewsletterMailService $newsletter_mail_service)
-	{
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function parse_contents(NewsletterMailService $newsletter_mail_service, $user_id)
+	protected function parse_contents($contents, $user_id)
 	{
 	
 	}

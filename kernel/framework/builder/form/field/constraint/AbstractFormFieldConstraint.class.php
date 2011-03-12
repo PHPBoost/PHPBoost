@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         FormFieldConstraintUrl.class.php
+ *                             AbstractFormFieldConstraint.class.php
  *                            -------------------
- *   begin                : Februar 07, 2010
- *   copyright            : (C) 2010 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : March 09, 2011
+ *   copyright            : (C) 2009 MASSY Kévin
+ *   email                : soldier.weasel@gmail.com
  *
  ###################################################
  *
@@ -25,25 +25,25 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc
+ * @author MASSY Kévin <soldier.weasel@gmail.com>
  * @package {@package}
- */
-class FormFieldConstraintUrl extends FormFieldConstraintRegex
+ */ 
+class AbstractFormFieldConstraint implements FormFieldConstraint
 {
-	public function __construct($error_message = '')
+	private $validation_error_message = '';
+	
+	public function validate(FormField $field) {}
+
+	public function get_js_validation(FormField $field) {}
+	
+	public function get_validation_error_message()
 	{
-		if (empty($error_message))
-		{
-			$error_message = LangLoader::get_message('doesnt_match_url_regex', 'builder-form-Validator');
-		}
-		$this->set_validation_error_message($error_message);
-		
-		parent::__construct(
-			'`^(https?|ftp)://[^ ]+$`i', 
-			'`^(https?|ftp)://[^ ]+$`i', 
-			$error_message
-		);
+		return $this->validation_error_message;
+	}
+	
+	public function set_validation_error_message($error_message)
+	{
+		$this->validation_error_message = $error_message;
 	}
 }
 

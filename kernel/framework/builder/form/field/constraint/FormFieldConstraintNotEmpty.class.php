@@ -29,32 +29,30 @@
  * @desc 
  * @package {@package}
  */ 
-class FormFieldConstraintNotEmpty implements FormFieldConstraint 
+class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 {
-	private $js_onblur_message;
-	private $js_onsubmit_message;
+	private $error_message;
 	
-	public function __construct($js_onblur_message = '', $js_onsubmit_message = '')
+	public function __construct($error_message = '')
 	{
-		if (empty($js_onblur_message))
+		if (empty($error_message))
 		{
-			$js_onblur_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
 		}
-		$this->js_onblur_message = $js_onblur_message;
-		
-		$this->js_onsubmit_message = $js_onsubmit_message;
+		$this->error_message = $error_message;
 	}
 	
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label()))));
         return $value !== null && $value != '';
 	}
 
 	public function get_js_validation(FormField $field)
 	{
 		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . TextHelper::to_js_string($this->js_onblur_message . ' : ' . $field->get_label()) . ')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label())))) .')';
 	}
 }
 

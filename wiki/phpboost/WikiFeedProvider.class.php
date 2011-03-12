@@ -36,8 +36,7 @@ class WikiFeedProvider implements FeedProvider
 
 		$results = $querier->select("SELECT c.id, c.id_parent, a.title
             FROM " . PREFIX . "wiki_cats c, " . PREFIX . "wiki_articles a
-            WHERE c.article_id = a.id", __LINE__, __FILE__
-		);
+            WHERE c.article_id = a.id");
 		$cats = array();
 		foreach ($results as $row)
 		{
@@ -45,7 +44,7 @@ class WikiFeedProvider implements FeedProvider
 		}
 		$results->dispose();
 
-		WikiInterface::_build_wiki_cat_children($cats_tree, $cats);
+		WikiExtensionPointProvider::_build_wiki_cat_children($cats_tree, $cats);
 		$feeds = new FeedsList();
 		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		return $feeds;

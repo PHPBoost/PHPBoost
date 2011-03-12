@@ -29,14 +29,14 @@
  * @desc
  * @package {@package}
  */
-class FormFieldConstraintRegex implements FormFieldConstraint
+class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 {
-	private $js_message;
+	private $error_message;
 	private $php_regex;
 	private $js_regex;
 	private $js_options;
 
-	public function __construct($php_regex, $js_regex = '', $js_message = '')
+	public function __construct($php_regex, $js_regex = '', $error_message = '')
 	{
 		if (empty($js_regex))
 		{
@@ -45,11 +45,12 @@ class FormFieldConstraintRegex implements FormFieldConstraint
 		$this->parse_js_regex($js_regex);
 		$this->php_regex = $php_regex;
 		
-		if (empty($js_message))
+		if (empty($error_message))
 		{
-			$js_message = LangLoader::get_message('doesnt_match_regex', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('doesnt_match_regex', 'builder-form-Validator');
 		}
-		$this->js_message = TextHelper::to_js_string($js_message);
+		$this->set_validation_error_message($error_message);
+		$this->error_message = $error_message;
 
 	}
 	
@@ -78,7 +79,7 @@ class FormFieldConstraintRegex implements FormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'regexFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . $this->js_message . ')';
+			', ' . $this->js_regex . ', ' . $this->js_options . ', ' . TextHelper::to_js_string($this->error_message) . ')';
 	}
 }
 

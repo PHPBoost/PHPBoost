@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       AdminMemberAddController.class.php
+ *                       AdminMemberEditController.class.php
  *                            -------------------
- *   begin                : December 27, 2010
+ *   begin                : February 28, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminMemberAddController extends AdminController
+class AdminMemberEditController extends AdminController
 {
 	private $lang;
 	/**
@@ -39,17 +39,26 @@ class AdminMemberAddController extends AdminController
 
 	public function execute(HTTPRequest $request)
 	{
+		$user_id = $request->get_getint('id');
 		$this->init();
-		$this->build_form();
+		
+		if ($this->user_exist($user_id))
+		{
+			$this->build_form($user_id);
+		}
+		else
+		{
+			$error_controller = PHPBoostErrors::unexisting_member();
+			DispatchManager::redirect($error_controller);
+		}
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.success-member-add'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.success-member-edit'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -62,37 +71,60 @@ class AdminMemberAddController extends AdminController
 		$this->lang = LangLoader::get('members-common');
 	}
 
-	private function build_form()
+	private function build_form($user_id)
 	{
-		$form = new HTMLForm('member-add');
+		$form = new HTMLForm('member-edit');
 		
-		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
+		$fieldset = new FormFieldsetHTML('edit_member', $this->lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
+		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $row['login'], array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $row['user_mail'], array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
+			'class' => 'text', 'maxlength' => 25)
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
+			'class' => 'text', 'maxlength' => 25)
 		));
+
+		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', LangLoader::get_message('hide_mail', 'main'), FormFieldCheckbox::CHECKED));
+
+		// TODO lang
+		$fieldset = new FormFieldsetHTML('member_management', 'Management');
+		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation', 'Approbation', $row['user_aprob'],
 			array(
-				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
+				new FormFieldSelectChoiceOption($this->lang['members.yes'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.no'], '0'),
 			)
 		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], $row['level'],
+			array(
+				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '0'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '2')
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
+		
+		$member_extended_field = new MemberExtendedField();
+		$member_extended_field->set_template($form);
+		$member_extended_field->set_user_id($user_id);
+		$member_extended_field->set_is_admin(true);
+		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -104,22 +136,7 @@ class AdminMemberAddController extends AdminController
 
 	private function save()
 	{
-		$this->register_member();
-	}
-	
-	private function register_member()
-	{
-		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect, new_pass,user_ban,user_aprob)
-			VALUES (:login, :password, :level, '', :user_mail, 0, :timestamp, 0, 0, :last_connect, 0, '', 0, :user_aprob)", array(
-				'login' => $this->form->get_value('login'),
-				'password' => strhash($this->form->get_value('password')),
-				'level' => $this->get_rank_member(),
-				'user_mail' => $this->form->get_value('mail'),
-				'timestamp' => time(),
-				'last_connect' => '',
-				'user_aprob' => '1'
-		));
+
 	}
 	
 	private function get_rank_member()
@@ -143,14 +160,19 @@ class AdminMemberAddController extends AdminController
 	{
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['members.members-management']);
-		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member/index.php', '/member/'), '/templates/' . get_utheme() . '/images/admin/members.png');
+		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member/index.php', '/member/list'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$response->add_link($this->lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/member/add'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$response->add_link($this->lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/member/config'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member/index.php', '/member/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['members.add-member']);
+		$env->set_page_title($this->lang['members.edit-member']);
 		
 		return $response;
+	}
+	
+	private function user_exist($user_id)
+	{
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 }
 

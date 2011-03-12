@@ -75,10 +75,15 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
 		));
 		
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		$error = ExtendedFieldsService::get_error();
+		if (!empty($error))
+		{
+			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+		}
+		elseif ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save($id);
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-edit'], E_USER_SUCCESS, 4));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -231,11 +236,6 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
-		$error = ExtendedFieldsService::get_error();
-		if (!empty($error))
-		{
-			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
-		}
 	}
 
 	private function build_response(View $view)

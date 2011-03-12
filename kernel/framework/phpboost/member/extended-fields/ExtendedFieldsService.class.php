@@ -48,22 +48,24 @@ class ExtendedFieldsService
 		$exit_by_type = ExtendedFieldsDatabaseService::check_field_exist_by_type($extended_field);
 		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
 		$class = new $name_class();
-		if ($exit_by_type && $class->get_field_used_once())
+		if ($exit_by_type && $class->get_field_used_once() || $class->get_field_used_phpboost_configuration() && $extended_field->get_is_not_installer())
 		{
 			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-extended-fields-common'));
 		}
-		
-		if (!empty($name) && !empty($type_field))
+		else
 		{
-			if (!ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+			if (!empty($name) && !empty($type_field))
 			{
-				ExtendedFieldsDatabaseService::add_extended_field($extended_field);
-				
-				ExtendedFieldsCache::invalidate();
-			}
-			else
-			{
-				self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
+				if (!ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+				{
+					ExtendedFieldsDatabaseService::add_extended_field($extended_field);
+					
+					ExtendedFieldsCache::invalidate();
+				}
+				else
+				{
+					self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
+				}
 			}
 		}
 	}
@@ -94,37 +96,31 @@ class ExtendedFieldsService
 		if ($by == self::BY_ID) 
 		{
 			$data = self::data_field($extended_field, self::SORT_BY_ID);
-			$extended_field->set_field_type($data->get_field_type());
-			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$name_class = MemberExtendedFieldsFactory::name_class($data);
 			$class = new $name_class();
 
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($data))
 			{
-				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
-					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+					ExtendedFieldsDatabaseService::delete_extended_field($data);
+					ExtendedFieldsCache::invalidate();
 				}
-				$extended_field->set_display(false);
-				ExtendedFieldsDatabaseService::update_extended_field_display_by_id($extended_field);
-				ExtendedFieldsCache::invalidate();
 			}
 		}
 		else if ($by == self::BY_FIELD_NAME)
 		{
 			$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
-			$extended_field->set_field_type($data->get_field_type());
-			$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
+			$name_class = MemberExtendedFieldsFactory::name_class($data);
 			$class = new $name_class();
 
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($data))
 			{
-				if (!$class->get_field_used_phpboost_configuration() || !$extended_field->get_is_freeze())
+				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
-					ExtendedFieldsDatabaseService::delete_extended_field($extended_field);
+					ExtendedFieldsDatabaseService::delete_extended_field($data);
+					ExtendedFieldsCache::invalidate();
 				}
-				$extended_field->set_display(false);
-				ExtendedFieldsDatabaseService::update_extended_field_display_by_field_name($extended_field);
-				ExtendedFieldsCache::invalidate();
 			}
 		}
 	}
@@ -145,19 +141,22 @@ class ExtendedFieldsService
 		{
 			$data = ExtendedFieldsDatabaseService::select_data_field_by_field_name($extended_field);
 		}
-
-		$extended_field->set_name($data['name']);
-		$extended_field->set_field_name($data['field_name']);
-		$extended_field->set_position($data['position']);
-		$extended_field->set_description($data['description']);
-		$extended_field->set_field_type($data['field_type']);
-		$extended_field->set_possible_values($data['possible_values']);
-		$extended_field->set_default_values($data['default_values']);
-		$extended_field->set_is_required($data['required']);
-		$extended_field->set_display($data['display']);
-		$extended_field->set_regex($data['regex']);
-		$extended_field->set_is_freeze($data['freeze']);
-		$extended_field->set_authorization($data['auth']);
+		
+		if (isset($data))
+		{
+			$extended_field->set_name($data['name']);
+			$extended_field->set_field_name($data['field_name']);
+			$extended_field->set_position($data['position']);
+			$extended_field->set_description($data['description']);
+			$extended_field->set_field_type($data['field_type']);
+			$extended_field->set_possible_values($data['possible_values']);
+			$extended_field->set_default_values($data['default_values']);
+			$extended_field->set_is_required($data['required']);
+			$extended_field->set_display($data['display']);
+			$extended_field->set_regex($data['regex']);
+			$extended_field->set_is_freeze($data['freeze']);
+			$extended_field->set_authorization($data['auth']);
+		}
 		return $extended_field;
 		
 	}

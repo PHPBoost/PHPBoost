@@ -29,19 +29,20 @@
  * @desc 
  * @package {@package}
  */ 
-class FormFieldConstraintLength implements FormFieldConstraint 
+class FormFieldConstraintLength extends AbstractFormFieldConstraint 
 {
-	private $js_onblur_message;
+	private $error_message;
 	private $rboundary;
 	private $lboundary;
 	
-	public function __construct($lboundary, $js_onblur_message = '')
+	public function __construct($lboundary, $error_message = '')
 	{
-		if (empty($js_onblur_message))
+		if (empty($error_message))
 		{
-			$js_onblur_message = LangLoader::get_message('doesnt_match_length_intervall', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('doesnt_match_length_intervall', 'builder-form-Validator');
 		}
-		$this->js_onblur_message = TextHelper::to_js_string($js_onblur_message);
+		$this->set_validation_error_message($error_message);
+		$this->error_message = $error_message;
 		$this->lboundary = $lboundary;
 	}
 	
@@ -58,7 +59,7 @@ class FormFieldConstraintLength implements FormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'lengthFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ', ' . $this->lboundary . ', 100, ' . $this->js_onblur_message . ')';
+		return 'lengthFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ', ' . $this->lboundary . ', 100, ' . TextHelper::to_js_string($this->error_message) . ')';
 	}
 }
 

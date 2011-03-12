@@ -31,6 +31,7 @@ class MemberConfirmRegisterationController extends AbstractController
 	
 	public function execute(HTTPRequest $request)
 	{
+		$this->init();
 		$key = $request->get_value('key', '');
 		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{

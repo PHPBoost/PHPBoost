@@ -80,13 +80,13 @@ class MemberViewProfileController extends AbstractController
 
 		if ($user_id == $user->get_id() || $user->check_level(ADMIN_LEVEL))
 		{
-			$link_edit = $user->check_level(ADMIN_LEVEL) && $user->get_id() !== $user_id ? '<a href="'. PATH_TO_ROOT .'/admin/member/index.php?url=/member/1/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>' : '<a href="'. PATH_TO_ROOT .'/member/index.php?url=/profile/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
+			$link_edit = $user->check_level(ADMIN_LEVEL) && $user->get_id() !== $user_id ? '<a href="'. DispatchManager::get_url('/admin/member', '/member/'. $user_id . '/edit/')->absolute() .'"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>' : '<a href="'. PATH_TO_ROOT .'/member/index.php?url=/profile/edit"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile_edition'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edition', $this->lang['profile_edition'], $link_edit));
 		}
 
 		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $row['login']));
 
-		//Togo Gestion du status avec le nouveau système de champs étendus.
+		//Todo Gestion du status avec le nouveau système de champs étendus.
 		$fieldset->add_field(new FormFieldFree('status', $this->lang['status'], ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $row['level'] : $this->lang['banned']));
 
 		$user_group_list = '';

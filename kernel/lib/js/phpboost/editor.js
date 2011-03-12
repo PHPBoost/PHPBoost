@@ -265,12 +265,11 @@ var BBcodeEditor_Core = Class.create(
 			else {
 				tmp = 'block';
 				elt.appear({duration: 0.5});
-				if (this.open_element != null)
+				if (this.open_element != null && this.open_element != name)
 				{
 					$(this.open_element).fade({duration: 0.3});
 				}
 				this.open_element = name;
-				
 			}
 			elt.setStyle({'display': tmp});
 		}
@@ -288,12 +287,16 @@ var BBcodeEditor_Core = Class.create(
 	{
 		return function()
 		{
-			this.toggleElement('bbcode_more'+this.element);
-			var display = $('bbcode_more'+this.element).getStyle('display');
-			if (display != 'none')
-				this.cookieRequest(1);
-			else
+			var elt = $('bbcode_more'+this.element);
+			var display = elt.getStyle('display');
+			if (display != 'none') {
+				elt.fade({duration: 0.3});
 				this.cookieRequest(0);
+			}
+			else {
+				elt.appear({duration: 0.5});
+				this.cookieRequest(1);
+			}
 		
 		}.bind(this);
 	},
@@ -515,9 +518,14 @@ var BBcodeEditor_Core = Class.create(
 				x.onclick = this.callbackToggleDiv();
 				$(elt).insert(this.balise(x));
 			}
-			else if (x.type == 'action_prompt')
+			else if (x.type == 'action_prompt_url')
 			{
-				x.onclick = this.callbackPrompt(x.prompt);
+				x.onclick = this.callbackPrompt(x.prompt, 'url');
+				$(elt).insert(this.balise(x));
+			}
+			else if (x.type == 'action_prompt_picture')
+			{
+				x.onclick = this.callbackPrompt(x.prompt, 'picture');
 				$(elt).insert(this.balise(x));
 			}
 			else if (x.type == 'action_help')
@@ -537,7 +545,7 @@ var BBcodeEditor_Core = Class.create(
 		}.bind(this));
 	},
 	
-	action_prompt: function(question)
+	action_prompt_url: function(question)
 	{
 		var url = prompt(question, '');
 		if( url != null && url != '' )
@@ -545,12 +553,26 @@ var BBcodeEditor_Core = Class.create(
 		else
 			this.textarea.insert('[url]', '[/url]', this.element);
 	},
+	
+	action_prompt_picture: function(question)
+	{
+		var url = prompt(question, '');
+		if( url != null && url != '' )
+			this.textarea.insert('[img]' + url, '[/img]', this.element);
+		else
+			this.textarea.insert('[img]', '[/img]', this.element);
+	},
 
-	callbackPrompt: function(question)
+	callbackPrompt: function(question, type)
 	{
 		return function()
 		{
-			this.action_prompt(question);
+			if (type == 'picture') {
+				this.action_prompt_picture(question);
+			}
+			else if (type == 'url') {
+				this.action_prompt_url(question);
+			}
 		}.bind(this);
 	},
 	
@@ -578,7 +600,7 @@ var BBcodeEditor_Core = Class.create(
 					'height': x.height,
 					'width': x.width
 				});
-				img.setStyle({'padding':'1px'});
+				img.setStyle({'padding':'1px', 'cursor':'pointer'});
 				if(x.code)
 				{
 					var fn = this.callbackInsertBBcode(x.code, 'smile');
@@ -768,7 +790,7 @@ var BBcodeEditor_Core = Class.create(
 				var xtd = new Element('td');
 				xtd.setStyle({padding:'2px'});
 				var xspan = new Element('span');
-				xspan.setStyle({'background':this.colors[i], 'padding':'0px 4px', 'border':'1px solid #ACA899'});
+				xspan.setStyle({'background':this.colors[i], 'padding':'0px 4px', 'border':'1px solid #ACA899', 'cursor':'pointer'});
 				xspan.update('&nbsp;');
 				var fn = this.callbackInsertBBcode('[color='+this.colors[i]+']', '[/color]');
 				xspan.observe('click', fn);
@@ -880,7 +902,7 @@ var BBcodeEditor_Core = Class.create(
 			else if (x.type == 'submit')
 			{
 				var para = new Element('p');
-				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center', 'cursor':'pointer'});
 				var img = this.balise(x);
 				para.insert(img);
 				para.insert(x.text);
@@ -948,7 +970,7 @@ var BBcodeEditor_Core = Class.create(
 			else if (x.type == 'submit')
 			{
 				var para = new Element('p');
-				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center'});
+				para.setStyle({'fontSize':'10px', 'fontWeight':'normal', 'textAlign':'center', 'cursor':'pointer'});
 				var img = this.balise(x);
 				para.insert(img);
 				para.insert(x.text);

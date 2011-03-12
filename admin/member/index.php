@@ -33,13 +33,15 @@ $url_controller_mappers = array(
 new UrlControllerMapper('AdminExtendedFieldsMemberListController', '`^/extended-fields(?:/list)?/?$`'),
 new UrlControllerMapper('AdminExtendedFieldMemberAddController', '`^/extended-fields/add/?$`'),
 new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-fields/([0-9]+)/edit/?$`', array('id')),
-new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/([0-9]+)/delete/?$`', array('id')),
+new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/delete?/?$`'),
 new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
 
 new UrlControllerMapper('AdminMemberAddController', '`^/member/add/?$`'),
 new UrlControllerMapper('AdminMemberConfigController', '`^/member/config/?$`'),
 new UrlControllerMapper('AdminMemberEditController', '`^/member/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminMemberDeleteController', '`^/member/([0-9]+)/delete/?$`', array('id')),
 new UrlControllerMapper('AdminMemberPunishmentController', '`^/member/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
+new UrlControllerMapper('AdminViewAllMembersController', '`^/member(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 

@@ -240,6 +240,11 @@ abstract class AbstractFormField implements FormField
 		{
 			if (!$constraint->validate($this))
 			{
+				$validation_error_message = $constraint->get_validation_error_message();
+				if (!empty($validation_error_message))
+				{
+					$this->validation_error_message = $validation_error_message;
+				}
 				return false;
 			}
 		}

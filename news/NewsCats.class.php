@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 define('DO_NOT_GENERATE_CACHE', false);
 
 class NewsCats extends CategoriesManager

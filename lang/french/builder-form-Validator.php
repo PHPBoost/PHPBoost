@@ -35,7 +35,7 @@ $lang = array(
 	'doesnt_match_mail_regex' => 'La valeur saisie doit être un mail valide',
     'doesnt_match_length_intervall' => 'La valeur saisie ne respecte par la longueur définie',
     'doesnt_match_integer_intervall' => 'La valeur saisie ne respecte pas l\'intervalle défini (:lower_bound <= valeur <= :upper_bound)',
-    'has_to_be_filled' => 'Ce champ doit être renseigné',
+    'has_to_be_filled' => 'Le champ :name doit être renseigné',
 	'captcha_validation_error' => 'Le champs de vérification visuel n\'a pas été saisi correctement !',
 	'validation_error' => 'Veuillez corriger les erreurs du formulaire',
 	'fields_must_be_equal' => 'Les champs ":field1" et ":field2" doivent être égaux',

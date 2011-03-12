@@ -47,7 +47,7 @@ class AdminNewsletterConfigController extends AdminController
 		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['success_saving_config'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-saving-config'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -65,25 +65,31 @@ class AdminNewsletterConfigController extends AdminController
 		$form = new HTMLForm('newsletter_admin');
 		$newsletter_config = NewsletterConfig::load();
 
-		$fieldset = new FormFieldsetHTML('configuration', $this->lang['newsletter_config']);
-		$form->add_fieldset($fieldset);
+		$fieldset_config = new FormFieldsetHTML('configuration', $this->lang['admin.newsletter-config']);
+		$form->add_fieldset($fieldset_config);
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail_sender', $this->lang['mail_sender'], $newsletter_config->get_mail_sender(), array(
-			'class' => 'text', 'maxlength' => 25)
+		$fieldset_config->add_field(new FormFieldTextEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(), array(
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['admin.mail-sender-explain']),
+			array(new FormFieldConstraintMailAddress())
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['newsletter_name'], $newsletter_config->get_newsletter_name(), array(
-			'class' => 'text', 'maxlength' => 25)
+		$fieldset_config->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['admin.newsletter-name'], $newsletter_config->get_newsletter_name(), array(
+			'class' => 'text', 'description' => $this->lang['admin.newsletter-name-explain'])
 		));
 
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
+		$form->add_fieldset($fieldset_authorizations);
+		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['auth.archive-read'], NewsletterConfig::AUTH_READ_ARCHIVE), 
-			new ActionAuthorization($this->lang['auth.register-newsletter'], NewsletterConfig::AUTH_REGISTER_NEWSLETTER), 
-			new ActionAuthorization($this->lang['auth.moderation-archive'], NewsletterConfig::AUTH_MODERATION_ARCHIVE))
-		);
+			new ActionAuthorization($this->lang['auth.register-newsletter'], NewsletterConfig::AUTH_REGISTER_NEWSLETTER),
+			new ActionAuthorization($this->lang['auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES), 
+			new ActionAuthorization($this->lang['auth.moderation-archive'], NewsletterConfig::AUTH_MODERATION_ARCHIVE)
+		));
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-		$fieldset->add_field($auth_setter);
+		$fieldset_authorizations->add_field($auth_setter);
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -104,11 +110,14 @@ class AdminNewsletterConfigController extends AdminController
 	private function build_response(View $view)
 	{
 		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['title_newsletter']);
-		$response->add_link($this->lang['newsletter_admin'], DispatchManager::get_url('/newsletter/index.php', '/config'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['newsletter_archive'], DispatchManager::get_url('/newsletter/index.php', '/archive'), '/newsletter/newsletter.png');
+		$response->set_title($this->lang['newsletter']);
+		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-categories'], DispatchManager::get_url('/newsletter', '/admin/categories/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
+
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['title_newsletter_admin']);
+		$env->set_page_title($this->lang['admin.newsletter-config']);
 		return $response;
 	}
 }

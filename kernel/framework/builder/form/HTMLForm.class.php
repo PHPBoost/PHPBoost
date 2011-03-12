@@ -227,6 +227,7 @@ class HTMLForm
 			'HTML_ID' => $this->html_id,
 			'L_REQUIRED_FIELDS' => LangLoader::get_message('require', 'main'),
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
+			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('validation_error', 'builder-form-Validator'),
 			'METHOD' => $this->method
 		));
 
@@ -328,7 +329,7 @@ class HTMLForm
 				$validation_error_message = $fieldset->get_validation_error_messages();
 				if (!empty($validation_error_message))
 				{
-					$this->validation_error_messages = array_merge($this->validation_error_messages, $validation_error_message);
+					$this->validation_error_messages = array_merge($this->validation_error_messages, (array)$validation_error_message);
 				}
 				$validation_result = false;
 			}

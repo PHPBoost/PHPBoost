@@ -56,10 +56,15 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		$error = ExtendedFieldsService::get_error();
+		if (!empty($error))
+		{
+			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+		}
+		elseif ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 4));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -191,17 +196,9 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		}
 		$extended_field->set_regex($regex);
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
+		$extended_field->set_is_not_installer(true);
 
 		ExtendedFieldsService::add($extended_field);
-		$error = ExtendedFieldsService::get_error();
-		if (!empty($error))
-		{
-			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
-		}
-		else
-		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
-		}
 	}
 
 	private function build_response(View $view)

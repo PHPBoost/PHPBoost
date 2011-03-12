@@ -131,7 +131,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		return $req;
 	}
 
-	private function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
+	public static function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
 	{
 		$i = 0;
 		$nb_cats = count($cats);
@@ -148,7 +148,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 				$cats = array_merge($cats); // re-index the array
 				$nb_cats = count($cats);
 
-				WikiInterface::_build_wiki_cat_children($feeds_cat, $cats, $id);
+				self::_build_wiki_cat_children($feeds_cat, $cats, $id);
 				$cats_tree->add_child($feeds_cat);
 			}
 			else

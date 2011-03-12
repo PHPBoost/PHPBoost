@@ -33,7 +33,7 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	public static function __static()
 	{
-		self::$newsletter_table_subscribers = PREFIX . 'newsletter';
+		self::$newsletter_table_subscribers = PREFIX . 'newsletter_subscribers';
 		self::$newsletter_table_archives = PREFIX . 'newsletter_archives';
 		self::$newsletter_table_cats = PREFIX . 'newsletter_cats';
 	}
@@ -97,6 +97,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

@@ -31,6 +31,7 @@
  */
 abstract class AbstractFormFieldset implements FormFieldset
 {
+	private $validation_error_messages = array();
 	private $form_id = '';
 	protected $fields = array();
 	protected $elements = array();

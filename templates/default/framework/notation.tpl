@@ -15,7 +15,7 @@
 				});
 				
 				Event.observe($('note_pictures{MODULE_ID}'), 'mouseout', function() {  
-					Note.out_event(Note.get_default_note());
+					Note.out_event();
 				});
 				
 				$('note_value{MODULE_ID}').hide();
@@ -51,7 +51,6 @@
 				# END notation_no_js #
 			</select>
 			<input type="hidden" name="token" value="{TOKEN}" />
-			<input type="hidden" name="valid_note" value="true" /> 
 			<input type="submit" name="valid" id="valid_note{MODULE_ID}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
 		</form>
 		
