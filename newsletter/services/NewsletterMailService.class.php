@@ -40,42 +40,43 @@ class NewsletterMailService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	public static function send_mail($language_type, $sender, $subject, $contents)
+	public static function send_mail($language_type, $id_cat, $sender, $subject, $contents)
 	{
 		$contents = NewsletterMailFactory::parse_contents($language_type, $contents);
 		NewsletterMailFactory::send_mail($language_type, $sender, $subject, $contents);
 
-		self::register_archive($language_type, $title, $contents);
+		self::register_archive($language_type, $title, $contents, $id_cat);
 
 		//TOTO Gestion des erreurs
 	}
 
-	public static function display_mail($title, $contents)
+	public static function display_mail($language_type, $id, $title, $contents)
 	{
 		$row = $this->querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
 		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
 	}
 
-	private static function register_archive($language_type, $title, $contents)
+	private static function register_archive($language_type, $title, $contents, $id_cat)
 	{
-		$number_subscribers = self::number_subscribers();
+		$number_subscribers = self::number_subscribers($id_cat);
 		$title = TextHelper::strprotect($title, TextHelper::HTML_NO_PROTECT, TextHelper::ADDSLASHES_FORCE);
 		$contents = TextHelper::strprotect($contents, HTML_NO_PROTECT, ADDSLASHES_FORCE);
 
 		self::$db_querier->inject(
-			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (title, contents, timestamp, type, subscribers)
-			VALUES (:title, :contents, :timestamp, :type, :field_type, :subscribers)", array(
+			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (id_cat, title, contents, timestamp, type, subscribers)
+			VALUES (:id_cat, :title, :contents, :timestamp, :type, :field_type, :subscribers)", array(
+				'id_cat' => $id_cat,
                 'title' => $title,
                 'contents' => $contents,
 				'timestamp' => time(),
 				'type' => $language_type,
-				'subscribers' => $number_subscribers
+				'subscribers' => 0
 		));
 	}
 
-	private static function number_subscribers(NewsletterMailService $newsletter_mail_service)
+	public static function number_subscribers($id_cat)
 	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers);
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, 'WHERE id = '. $id_cat .'');
 	}
 }
 

@@ -215,6 +215,7 @@ class HTMLForm
 			'HTML_ID' => $this->html_id,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
+			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('validation_error', 'builder-form-Validator'),
 			'METHOD' => $this->method
 		));
 
@@ -316,10 +317,6 @@ class HTMLForm
 				}
 				$validation_result = false;
 			}
-		}
-		if (!count($this->validation_error_messages))
-		{
-			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
 		}
 		return $validation_result;
 	}

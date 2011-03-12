@@ -99,9 +99,8 @@ class NotationService
 		$html_id = $notation->get_module_name() . '_' . $notation->get_module_id();
 		
 		$note_post = AppContext::get_request()->get_int('note', 0);
-		$valid_note = AppContext::get_request()->get_bool('valid_note', false);
 		
-		if ($valid_note && !empty($note_post))
+		if (!empty($note_post))
 		{
 			$notation->set_note($note_post);
 			self::register_notation($notation);
