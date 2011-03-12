@@ -1,5 +1,6 @@
 # IF C_VALIDATION_ERROR #
 <div class="notice">
+<span class="text_strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
 # START validation_error_messages #
 	- {validation_error_messages.ERROR_MESSAGE}<br />
 # END validation_error_messages #
@@ -28,6 +29,7 @@
 		# INCLUDE fieldsets.FIELDSET #
 	# END fieldsets #
 	
+	<input type="hidden" id="token" name="token" value="{TOKEN}" />
 	<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="" />
 	<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="" />
 </form>

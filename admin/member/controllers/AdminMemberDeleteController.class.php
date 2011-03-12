@@ -29,9 +29,9 @@ class AdminMemberDeleteController extends AdminController
 {
 	public function execute(HTTPRequest $request)
 	{
-		$user_id = AppContext::get_user()->get_attribute('id');
+		$user_id = $request->get_int('id', null);
 		
-		if ($this->user_exist($user_id))
+		if ($this->user_exist($user_id) && $user_id !== null)
 		{
 			if (self::verificate_number_admin_user() > 1)
 			{

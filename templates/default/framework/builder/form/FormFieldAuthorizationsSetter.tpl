@@ -1,3 +1,4 @@
+		<div id="${escape(ID)}">
 		# START actions #
 		<dl id="${escape(ID)}_field_{actions.BIT}" # IF C_DISABLED # style="display:none;" # ENDIF #>
 			<dt>
@@ -14,3 +15,4 @@
 			</dd>
 		</dl>
 		# END actions #
+		</div>

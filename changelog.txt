@@ -60,6 +60,8 @@
 [*] Ajout de l'attribut style à la balise image de façon à pouvoir fixer des propriétés comme largeur, hauteur et bordure.
 [*] Nouveau système de champs membres : Les champs peuvent être désactivé, modifier et l'ajout de type de champs supplémentaires ont été ajoutés.
 [*] Possibilité de gérer finement les autorisations des thèmes.
+[*] Possibilité de gérer finement les autorisations des commentaires.
+[*] Possibilité de gérer finement les autorisations de l'interface de fichier.
 [*] Possibilité de gérer finement les autorisations d'accès au site quand il est en maintenance.
 
 =================================== Modules =====================================
@@ -98,3 +100,14 @@
 - Ajout d'une image images/form/justify.png dans les thèmes 
 - Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
 
+[b]Newsletter[/b]
++ Refonte du module en MVC.
++ Gestion des autorisations de création d'une newsletter.
++ Gestion des autorisations de lecture et de modération de la liste des archives.
++ Gestion des autorisations de lecture et de modération des inscrits.
++ Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à toutes les newsletters).
++ Possibilité de gerer les autorisations de lecture et de modération des inscrits, de création d'une newsletteret de modération des archives par newsletter.
++ Gestion des archives avec tries sur les types de newsletter.
++ Inscription aux newsletters dès l'enregistrement/l'édition d'un membre
+- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
+- Etudier l'ajouts de notifications de lecture.
