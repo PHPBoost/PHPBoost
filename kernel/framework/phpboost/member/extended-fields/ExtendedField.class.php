@@ -47,6 +47,7 @@ class ExtendedField
 	private $regex;
 	private $freeze;
 	private $authorization;
+	private $is_not_installer = false;
 	
 	public function set_id($id)
 	{
@@ -188,6 +189,16 @@ class ExtendedField
 	public function get_authorization()
 	{
 		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 2);
+	}
+	
+	public function set_is_not_installer(Bool $is_not_installer)
+	{
+		$this->is_not_installer = $is_not_installer;
+	}
+	
+	public function get_is_not_installer()
+	{
+		return $this->is_not_installer;
 	}
 	
 	public static function rewrite_field_name($field_name)

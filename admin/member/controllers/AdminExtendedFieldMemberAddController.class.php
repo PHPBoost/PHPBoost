@@ -196,6 +196,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		}
 		$extended_field->set_regex($regex);
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
+		$extended_field->set_is_not_installer(true);
 
 		ExtendedFieldsService::add($extended_field);
 	}
