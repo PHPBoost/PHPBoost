@@ -69,8 +69,12 @@ class LoginController extends AbstractController
 		$authentication = new PHPBoostAuthenticationMethod($username, $password);
 		if ($authentication->authenticate($autoconnect))
 		{
-			Session::delete(AppContext::get_session());
-			Session::create($authentication->get_user_id(), $autoconnect);
+			$session = AppContext::get_session();
+			if ($session != null)
+			{
+				Session::delete($session);
+			}
+			AppContext::set_session(Session::create($authentication->get_user_id(), $autoconnect));
 			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
 		}
 		else

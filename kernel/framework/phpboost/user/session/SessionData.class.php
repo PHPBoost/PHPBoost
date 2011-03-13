@@ -65,30 +65,21 @@ class SessionData
 	 */
 	public static function create_from_user_id($user_id)
 	{
-		$data = self::create_session($user_id);
-		$data->token = Random::hexa64uid(16);
-		$data->expiry = time() + SessionsConfig::load()->get_session_duration();
-		$data->ip = AppContext::get_request()->get_ip_address();
-		self::fill_user_cached_data($data);
-		$data->create();
-		return $data;
-	}
-
-	/**
-	 * @desc
-	 * @param int $user_id
-	 * @return SessionData
-	 */
-	private static function create_session($user_id)
-	{
+		$data = null;
 		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
 		{
-			return self::use_existing_session($user_id);
+			$data = self::use_existing_session($user_id);
 		}
 		else
 		{
-			return new SessionData($user_id, Random::hexa64uid());
+			$data = new SessionData($user_id, Random::hexa64uid());
+			$data->token = Random::hexa64uid(16);
+			$data->expiry = time() + SessionsConfig::load()->get_session_duration();
+			$data->ip = AppContext::get_request()->get_ip_address();
+			self::fill_user_cached_data($data);
+			$data->create();
 		}
+		return $data;
 	}
 
 	/**
@@ -110,12 +101,23 @@ class SessionData
 	 */
 	private static function use_existing_session($user_id)
 	{
-		$columns = array('session_id', 'token', 'expiry', 'ip', 'data', 'cached_data');
-		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
+		$condition = 'WHERE user_id=:user_id';
+		self::update_existing_session($condition, $parameters);
+		$columns = array('session_id', 'token', 'expiry', 'ip', 'data', 'cached_data');
 		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-		$session_id = $row['session_id'];
-		return self::init_from_row($user_id, $session_id, $row);
+		$data = self::init_from_row($user_id, $row['session_id'], $row);
+		$data->create_cookie();
+	}
+
+	private static function update_existing_session($condition, $parameters)
+	{
+		$columns = array(
+			'token' => Random::hexa64uid(16),
+			'expiry' => time() + SessionsConfig::load()->get_session_duration(),
+			'ip' => AppContext::get_request()->get_ip_address()
+		);
+		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
 
 	/**
