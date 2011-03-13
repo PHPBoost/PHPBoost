@@ -83,6 +83,52 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 	return '';
 }
 
+function LoginExistValidator(field_id, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		new Ajax.Request(
+			PATH_TO_ROOT + "/member/register_xmlhttprequest.php",
+			{
+				method: 'post',
+				parameters: {value : value, type : 'login'},
+				onSuccess: function(transport) {
+					if (transport.responseText == '1')
+					{
+						return message;
+					}
+				},
+			}
+		);
+	}
+	return '';
+}
+
+function MailExistValidator(field_id, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		new Ajax.Request(
+			PATH_TO_ROOT + "/member/register_xmlhttprequest.php",
+			{
+				method: 'post',
+				parameters: {value : value, type : 'mail'},
+				onSuccess: function(transport) {
+					if (transport.responseText == '1')
+					{
+						return message;
+					}
+				},
+			}
+		);
+	}
+	return '';
+}
+
 /* #### Multiple Field Constraints #### */
 function equalityFormFieldValidator(field_id, field_id2, message)
 {
