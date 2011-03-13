@@ -102,14 +102,17 @@ class AdminNewsletterAddCategorieController extends AdminController
 		)));
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['categories.auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['categories.auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['categories.auth.register-newsletter'], NewsletterConfig::AUTH_REGISTER_NEWSLETTER), 
-			new ActionAuthorization($this->lang['categories.auth.moderation-archive'], NewsletterConfig::AUTH_MODERATION_ARCHIVE))
-		);
-		$default_authorizations = array();
+			new ActionAuthorization($this->lang['categories.auth.read'], NewsletterConfig::CAT_AUTH_READ),
+			new ActionAuthorization($this->lang['categories.auth.subscribe'], NewsletterConfig::CAT_AUTH_SUBSCRIBE),
+			new ActionAuthorization($this->lang['categories.auth.subscribers-read'], NewsletterConfig::CAT_AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['categories.auth.subscribers-moderation'], NewsletterConfig::CAT_AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['categories.auth.create-newsletter'], NewsletterConfig::CAT_AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($this->lang['categories.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
+		));
+		
+		$default_authorizations = NewsletterConfig::load()->get_authorizations();
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($default_authorizations);
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array());
 		$fieldset_authorizations->add_field($auth_setter);
 		
 		$form->add_button(new FormButtonReset());
@@ -137,9 +140,9 @@ class AdminNewsletterAddCategorieController extends AdminController
 	{
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($this->lang['newsletter']);
-		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-categories'], DispatchManager::get_url('/newsletter', '/admin/categories'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-categories'], DispatchManager::get_url('/newsletter', '/admin/categories/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();

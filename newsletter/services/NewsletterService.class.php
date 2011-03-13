@@ -36,34 +36,27 @@ class NewsletterService
 		self::$errors = '';
 	}
 	
-	public static function subscribe($mail, $id_cat)
+	public static function subscribe_member(Array $categories, $user_id)
 	{
-		if (NewsletterDAO::verificate_valid_mail($mail))
+		if (NewsletterDAO::verificate_exist_user_id($user_id))
 		{
-			if (NewsletterDAO::get_mail_exist($mail, $id_cat))
-			{
-				NewsletterDAO::update_mail($mail);
-			}
-			else
-			{
-				NewsletterDAO::subscribe_mail($mail);
-			}
+			NewsletterDAO::update_subscriber_by_user_id($user_id, $categories);
+		}
+		else
+		{
+			NewsletterDAO::insert_subscriber_by_user_id($user_id, $categories);
 		}
 	}
 	
-	public static function unsubscribe($mail)
+	public static function subscribe_visitor(Array $categories, $mail)
 	{
-		if (NewsletterDAO::verificate_valid_mail($mail))
+		if (NewsletterDAO::verificate_exist_mail($mail))
 		{
-			if (NewsletterDAO::get_mail_exist($mail, $id_cat))
-			{
-				NewsletterDAO::unsubscribe_mail($mail);
-			}
-			else
-			{
-				//Il n'est pas enregistré
-				self::$errors = self::$lang['newsletter.not-subscribe'];
-			}
+			NewsletterDAO::update_subscriber_by_mail($mail, $categories);
+		}
+		else
+		{
+			NewsletterDAO::insert_subscriber_by_mail($mail, $categories);
 		}
 	}
 	

@@ -109,12 +109,12 @@ class MemberExtendedFieldsFactory
 	 * @desc This function execute the database request
 	 * @param instance of MemberExtendedField $member_extended_field and instance of MemberExtendedFieldsDAO $member_extended_fields_dao.
 	 */
-	public static function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao)
+	public static function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
 	{
 		$name_class = self::name_class($member_extended_field);
 
 		$instance_class = new $name_class();
-		return $instance_class->register($member_extended_field, $member_extended_fields_dao);
+		return $instance_class->register($member_extended_field, $member_extended_fields_dao, $form);
 	}
 	
 	/**

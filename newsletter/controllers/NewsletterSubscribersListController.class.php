@@ -84,9 +84,8 @@ class NewsletterSubscribersListController extends AbstractController
 		$limit_page = $current_page > 0 ? $current_page : 1;
 		$limit_page = (($limit_page - 1) * $this->nbr_subscribers_per_page);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.id_cat, subscribers.user_id, subscribers.mail, cat.name, member.login, member.user_mail
+		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.id_cats, subscribers.user_id, subscribers.mail, member.login, member.user_mail
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
-		LEFT JOIN " . NewsletterSetup::$newsletter_table_cats . " cat ON subscribers.id_cat = cat.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT ". $this->nbr_subscribers_per_page ." OFFSET :start_limit",
@@ -95,14 +94,14 @@ class NewsletterSubscribersListController extends AbstractController
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())
-		{	
+		{
 			$auth_moderation = $this->user->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS);
 			$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['subscribers.visitor'];
 			$this->view->assign_block_vars('subscribers_list', array(
 				'EDIT_LINK' => $auth_moderation ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
 				'DELETE_LINK' => $auth_moderation ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/')->absolute() : '',
 				'PSEUDO' => $pseudo,
-				'NEWSLETTER_NAME' => $row['name'],
+				'NEWSLETTER_NAME' => $this->get_name_categories(unserialize($row['id_cats'])),
 				'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 			));
 		}
@@ -122,6 +121,17 @@ class NewsletterSubscribersListController extends AbstractController
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['admin.newsletter-subscribers']);
 		return $response;
+	}
+	
+	private function get_name_categories(Array $categories)
+	{
+		$names = array();
+		foreach ($categories as $id_cats)
+		{
+			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_cats, array('name'), "WHERE id = '". $id_cats ."'");
+			$names[] = $row['name'];
+		}
+		return implode('/', $names);
 	}
 }
 

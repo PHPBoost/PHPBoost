@@ -42,7 +42,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
-		// TODO $this->create_field_member();
+		$this->create_field_member();
 	}
 
 	public function uninstall()
@@ -67,7 +67,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
+			'id_cats' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'mail' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''")
 		);
@@ -101,8 +101,7 @@ class NewsletterSetup extends DefaultModuleSetup
 			'title' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'type_editor' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''"),
-			'number_subscribers' => array('type' => 'string', 'length' => 9, 'notnull' => 1, 'default' => 0)
+			'type_editor' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id')
@@ -112,12 +111,12 @@ class NewsletterSetup extends DefaultModuleSetup
 	
 	private function create_field_member()
 	{
-		//$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('newsletter_common', 'newsletter');
 		
 		$extended_field = new ExtendedField();
-		$extended_field->set_name('Abonnement à la newsletter');
+		$extended_field->set_name($lang['extended_fields.newsletter.name']);
 		$extended_field->set_field_name('register_newsletter');
-		$extended_field->set_description('Souhaitez vous vous abonner à la newsletter ?');
+		$extended_field->set_description($lang['extended_fields.newsletter.description']);
 		$extended_field->set_field_type('RegisterNewsletterExtendedField');
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);

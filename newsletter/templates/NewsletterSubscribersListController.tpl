@@ -21,7 +21,7 @@ function Confirm(level) {
 		</td>
 		<td class="row1">
 			<a href="{SORT_NEWSLETTER_NAME_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@newsletter_name}
+			{@newsletters_names}
 			<a href="{SORT_NEWSLETTER_NAME_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 		</td>
 		<td class="row1">

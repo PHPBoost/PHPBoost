@@ -71,7 +71,7 @@ interface MemberExtendedFieldType
 	 * @desc This function execute the database request
 	 * @param instance of MemberExtendedField $member_extended_field and instance of MemberExtendedFieldsDAO $member_extended_fields_dao.
 	 */
-	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao);
+	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form);
 	
 	/**
 	 * @desc Return instanciat constraint depending integer type regex.

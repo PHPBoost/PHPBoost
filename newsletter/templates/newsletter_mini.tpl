@@ -1,5 +1,5 @@
 		# IF C_VERTICAL #
-		<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?token={TOKEN}" method="post">
+		<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 			<div class="module_mini_container">
 				<div class="module_mini_top">
 					<h5 class="sub_title">{L_NEWSLETTER}</h5>
@@ -27,7 +27,7 @@
 		</form>
 		# ELSE #
 		<div style="margin:10px 10px">
-			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?token={TOKEN}" method="post">
+			<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 				<div class="newsletter_form" style="float:right;">
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
 					<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text newsletter_text" value="{USER_MAIL}" />

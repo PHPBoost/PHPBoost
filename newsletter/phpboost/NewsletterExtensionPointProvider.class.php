@@ -25,32 +25,12 @@
  *
  ###################################################*/
 
-
-
 class NewsletterExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function __construct() //Constructeur de la classe ForumInterface
+    function __construct()
     {
-		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('newsletter');
     }
-    
-    //Récupération du cache.
-	function get_cache()
-	{
-		//Configuration de la newsletter
-		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
-		$NEWSLETTER_CONFIG = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'newsletter'", __LINE__, __FILE__));
-		if (is_array($NEWSLETTER_CONFIG))
-		{
-			$mails = MailServiceConfig::load()->get_administrators_mails();
-			$code .= '$_NEWSLETTER_CONFIG[\'sender_mail\'] = ' . var_export(!empty($NEWSLETTER_CONFIG['sender_mail']) ? $NEWSLETTER_CONFIG['sender_mail'] : $mails[0], true) . ';' . "\n";
-			$code .= '$_NEWSLETTER_CONFIG[\'newsletter_name\'] = ' . var_export(!empty($NEWSLETTER_CONFIG['newsletter_name']) ? $NEWSLETTER_CONFIG['newsletter_name'] : GeneralConfig::load()->get_site_name(), true) . ';' . "\n";
-		}
-		
-		return $code;
-	}
 }
 
 ?>

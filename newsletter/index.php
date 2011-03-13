@@ -42,6 +42,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminNewsletterDeleteCategorieController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
+	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/([0-9]+)?$`', array('id')),
+	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscribers/([0-9]+)/edit/?$`', array('id')),
+	
 );
 DispatchManager::dispatch($url_controller_mappers);
 

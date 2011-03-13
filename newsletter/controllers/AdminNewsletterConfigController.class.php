@@ -81,12 +81,14 @@ class AdminNewsletterConfigController extends AdminController
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['auth.register-newsletter'], NewsletterConfig::AUTH_REGISTER_NEWSLETTER),
+			new ActionAuthorization($this->lang['auth.read'], NewsletterConfig::AUTH_READ),
+			new ActionAuthorization($this->lang['auth.subscribe'], NewsletterConfig::AUTH_SUBSCRIBE),
 			new ActionAuthorization($this->lang['auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
 			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES), 
-			new ActionAuthorization($this->lang['auth.moderation-archive'], NewsletterConfig::AUTH_MODERATION_ARCHIVE)
+			new ActionAuthorization($this->lang['auth.create-newsletter'], NewsletterConfig::AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES)
 		));
+		
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset_authorizations->add_field($auth_setter);

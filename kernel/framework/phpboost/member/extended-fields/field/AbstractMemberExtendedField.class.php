@@ -33,6 +33,7 @@
 abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 {
 	protected $lang;
+	protected $form;
 	protected $field_used_once;
 	protected $field_used_phpboost_config;
 	protected $parse_field;
@@ -121,7 +122,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao)
+	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
 	{
 		$member_extended_fields_dao->set_request($member_extended_field);
 	}
@@ -172,6 +173,16 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function get_field_used_phpboost_configuration()
 	{
 		return $this->field_used_phpboost_config;
+	}
+	
+	public function set_form(HTMLForm $form)
+	{
+		$this->form = $form;
+	}
+	
+	public function get_form()
+	{
+		return $this->form;
 	}
 }
 ?>

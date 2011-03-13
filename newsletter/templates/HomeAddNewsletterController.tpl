@@ -9,17 +9,17 @@
 			<td class="row1" style="text-align:center;">
 				<label><input type="radio" id="type" name="type" checked="checked" value="text" />
 				<strong>{@newsletter.types.text}</strong></label>
-				<br />{@newsletter.types.textexplain}
+				<br />${html(@newsletter.types.text_explain)}
 			</td>
 			<td class="row1" style="text-align:center;">
 				<label><input type="radio" id="type" name="type" value="bbcode" />
 				<strong>{@newsletter.types.bbcode}</strong></label>
-				<br />{@newsletter.types.bbcodeexplain}
+				<br />${html(@newsletter.types.bbcode_explain)}
 			</td>
 			<td class="row1" style="text-align:center;">
 				<label><input type="radio" id="type" name="type" value="html" />
 				<strong>{@newsletter.types.html}</strong></label>
-				<br />{@newsletter.types.htmlexplain}
+				<br />${html(@newsletter.types.html_explain)}
 			</td>
 		</tr>
 	</table>

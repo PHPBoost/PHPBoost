@@ -60,13 +60,7 @@ class AdminViewAllMembersController extends AdminController
 		$field = $request->get_value('field', 'timestamp');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
-		
-		if (!AppContext::get_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
+
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		
 		switch ($field)

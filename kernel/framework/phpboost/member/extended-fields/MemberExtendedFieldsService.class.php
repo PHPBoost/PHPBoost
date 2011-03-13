@@ -128,7 +128,7 @@ class MemberExtendedFieldsService
 						
 						if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 						{
-							MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao);
+							MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao, $form);
 						}
 					}
 				}

@@ -78,6 +78,10 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 		{
 			$this->set_value($request->get_array($this->get_html_id()));
 		}
+		else
+		{
+			$this->set_value(array());
+		}
     }
 	
     /**

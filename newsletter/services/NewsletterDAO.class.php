@@ -34,53 +34,71 @@ class NewsletterDAO
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public static function get_mail_exist($mail, $id_cat)
+	public static function get_id_categories_subscribes($id)
 	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail_newsletter . "' AND id_cat = '". $id_cat ."'") > 0 ? true : false;
+		$row = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_subscribers, array('id_cats'), "WHERE id = '". $id ."'");
+		return $row['id_cats'];
 	}
 	
-	public static function subscribe_mail($mail)
+	public static function get_id_categories_subscribes_by_user_id($id)
+	{
+		$row = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_subscribers, array('id_cats'), "WHERE user_id = '". $id ."'");
+		return $row['id_cats'];
+	}
+	
+	public static function verificate_exist_user_id($user_id)
+	{
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+	}
+	
+	public static function verificate_exist_mail($mail)
+	{
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") > 0 ? true : false;
+	}
+	
+	public static function insert_subscriber_by_user_id($user_id, Array $categories)
 	{
 		self::$db_querier->inject(
-			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (mail, user_id)
-			VALUES (:mail, :user_id)", array(
-                'mail' => $mail,
-				'user_id' => AppContext::get_user()->get_attribute('user_id')
+			"INSERT INTO " . NewsletterSetup::$newsletter_table_subscribers . " (id_cats, user_id)
+			VALUES (:id_cats, :user_id)", array(
+                'id_cats' => serialize($categories),
+				'user_id' => $user_id
 		));
 	}
 	
-	public static function update_mail($mail)
+	public static function update_subscriber_by_user_id($user_id, Array $categories)
 	{
 		self::$db_querier->inject(
-			"UPDATE " . NewsletterSetup::$newsletter_table_archive . " SET 
-			mail = :mail
+			"UPDATE " . NewsletterSetup::$newsletter_table_subscribers . " SET 
+			id_cats = :id_cats
 			WHERE user_id = :user_id"
 			, array(
-				'mail' => $mail,
-				'user_id' => AppContext::get_user()->get_attribute('user_id')
+				'id_cats' => serialize($categories),
+				'user_id' => $user_id
 		));
 	}
 	
-	public static function unsubscribe_mail($mail)
+	public static function insert_subscriber_by_mail($mail, Array $categories)
 	{
 		self::$db_querier->inject(
-			"DELETE FROM " . NewsletterSetup::$newsletter_table_archive . "
-			WHERE mail = :mail", array(
-				'mail' => $mail,
+			"INSERT INTO " . NewsletterSetup::$newsletter_table_subscribers . " (id_cats, mail)
+			VALUES (:id_cats, :mail)", array(
+                'id_cats' => serialize($categories),
+				'mail' => $mail
 		));
 	}
 	
-	public static function add_categorie()
+	public static function update_subscriber_by_mail($mail, Array $categories)
 	{
-	
+		self::$db_querier->inject(
+			"UPDATE " . NewsletterSetup::$newsletter_table_subscribers . " SET 
+			id_cats = :id_cats
+			WHERE mail = :mail"
+			, array(
+				'id_cats' => serialize($categories),
+				'mail' => $mail
+		));
 	}
-	
-	public static function edit_categorie()
-	{
-	
-	}
-	
 	
 }
-
 ?>
