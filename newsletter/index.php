@@ -46,6 +46,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/([0-9]+)?$`', array('id')),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscribers/([0-9]+)/edit/?$`', array('id')),
 	
+	new UrlControllerMapper('NewsletterHomeController', '`^.*$`'),
+	new UrlControllerMapper('NewsletterHomeController', '`^/list/?(?:/([a-z]+))?/?$`', array('page'))
 );
 DispatchManager::dispatch($url_controller_mappers);
 
