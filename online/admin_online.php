@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- * 
+ *
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,23 +36,23 @@ if (!empty($_POST['valid']))
 	$config_online = array();
 	$config_online['online_displayed'] = retrieve(POST, 'online_displayed', 4);
 	$config_online['display_order_online'] = retrieve(POST, 'display_order_online', 's.level, s.session_time DESC');
-		
+
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
-	
+
 	###### Régénération du cache des online #######
 	$Cache->Generate_module_file('online');
-	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 //Sinon on rempli le formulaire
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 		'admin_online'=> 'online/admin_online.tpl'
 	));
-	
+
 	$Cache->load('online');
-	
+
 	$Template->put_all(array(
 		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,
 		'L_ONLINE_CONFIG' => $LANG['online_config'],
@@ -61,11 +61,11 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	$array_order_online = array(
-		's.level DESC' => $LANG['ranks'], 
-		's.session_time DESC' => $LANG['last_update'], 
-		's.level DESC, s.session_time DESC' => $LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $LANG['last_update']
+		'u.level DESC' => $LANG['ranks'],
+		's.expiry DESC' => $LANG['last_update'],
+		'u.level DESC, s.expiry DESC' => $LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $LANG['last_update']
 	);
 	foreach ($array_order_online as $key => $value)
 	{
@@ -75,7 +75,7 @@ else
 		));
 	}
 
-	$Template->pparse('admin_online'); // traitement du modele	
+	$Template->pparse('admin_online'); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');
