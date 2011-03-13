@@ -100,5 +100,25 @@ class NewsletterDAO
 		));
 	}
 	
+	public static function unsubscriber_all_by_user_id($user_id)
+	{
+		self::$db_querier->inject(
+			"DELETE	FROM " . NewsletterSetup::$newsletter_table_subscribers . "
+			WHERE user_id = :user_id"
+			, array(
+				'user_id' => $user_id
+		));
+	}
+	
+	public static function unsubscriber_all_by_mail($user_id)
+	{
+		self::$db_querier->inject(
+			"DELETE	FROM " . NewsletterSetup::$newsletter_table_subscribers . "
+			WHERE mail = :mail"
+			, array(
+				'mail' => $mail
+		));
+	}
+	
 }
 ?>

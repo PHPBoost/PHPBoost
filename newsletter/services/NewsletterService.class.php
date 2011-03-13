@@ -60,6 +60,22 @@ class NewsletterService
 		}
 	}
 	
+	public static function unsubscribe_member_all($user_id)
+	{
+		if (NewsletterDAO::verificate_exist_user_id($user_id))
+		{
+			NewsletterDAO::unsubscriber_all_by_user_id($user_id);
+		}
+	}
+	
+	public static function unsubscribe_visitor_all($mail)
+	{
+		if (NewsletterDAO::verificate_exist_mail($mail))
+		{
+			NewsletterDAO::unsubscriber_all_by_mail($mail);
+		}
+	}
+	
 	public static function get_errors()
 	{
 		if (!empty(self::$errors))

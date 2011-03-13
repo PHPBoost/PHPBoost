@@ -118,8 +118,10 @@ class NewsletterSubscribersListController extends AbstractController
 	private function build_response(View $view)
 	{
 		$response = new SiteDisplayResponse($view);
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['admin.newsletter-subscribers']);
+		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
+		$breadcrumb->add($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list/')->absolute());
+		$response->get_graphical_environment()->set_page_title($this->lang['admin.newsletter-subscribers']);
 		return $response;
 	}
 	

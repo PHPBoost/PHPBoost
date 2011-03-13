@@ -31,21 +31,35 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $this->get_categories()), array('required' => (bool)$member_extended_field->get_required()));
+		$categories = $this->get_categories();
+		if (!empty($categories))
+		{
+			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $categories, array('description' => $member_extended_field->get_description())));
+		}
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
-
-		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->unserialise_values($member_extended_field->get_value()), $this->get_categories()), array('required' => (bool)$member_extended_field->get_required()));
+		
+		$categories = $this->get_categories();
+		if (!empty($categories))
+		{
+			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->unserialise_values($member_extended_field->get_value()), $categories, array('description' => $member_extended_field->get_description())));
+		}
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		$value = $form->get_value($field_name);
-		return $this->serialise_value($value);
+		
+		$categories = $this->get_categories();
+		if (!empty($categories))
+		{
+			$value = $form->get_value($field_name);
+			return $this->serialise_value($value);
+		}
+		return '';
 	}
 	
 	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
