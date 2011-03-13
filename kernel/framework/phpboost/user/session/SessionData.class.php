@@ -108,6 +108,7 @@ class SessionData
 		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		$data = self::init_from_row($user_id, $row['session_id'], $row);
 		$data->create_cookie();
+		return $data;
 	}
 
 	private static function update_existing_session($condition, $parameters)
