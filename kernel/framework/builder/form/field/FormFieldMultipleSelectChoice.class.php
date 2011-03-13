@@ -102,17 +102,17 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 
     private function get_html_code()
     {
-        $tpl_src = '<select multiple name="${escape(NAME)}[]" id="${escape(ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
-			'# START options # # INCLUDE options.OPTION # # END options #' .
-			'</select>';
+        $tpl = new FileTemplate('framework/builder/form/FormFieldMultipleSelectChoice.tpl');
 
-        $tpl = new StringTemplate($tpl_src);
-
+		$lang = LangLoader::get('main');
         $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'CSS_CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'L_SELECT_ALL' => $lang['select_all'],
+			'L_UNSELECT_ALL' => $lang['select_none'],
+			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
         ));
 		
         foreach ($this->get_options() as $option)
