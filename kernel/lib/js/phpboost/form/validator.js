@@ -93,11 +93,15 @@ function LoginExistValidator(field_id, message)
 			PATH_TO_ROOT + "/member/register_xmlhttprequest.php",
 			{
 				method: 'post',
-				parameters: {value : value, type : 'login'},
+				parameters: {login : value, token : TOKEN},
 				onSuccess: function(transport) {
 					if (transport.responseText == '1')
 					{
-						return message;
+						field.displayErrorMessage(message);
+					}
+					else
+					{
+						field.displaySuccessMessage();
 					}
 				},
 			}
@@ -116,11 +120,15 @@ function MailExistValidator(field_id, message)
 			PATH_TO_ROOT + "/member/register_xmlhttprequest.php",
 			{
 				method: 'post',
-				parameters: {value : value, type : 'mail'},
+				parameters: {mail : value, token : TOKEN},
 				onSuccess: function(transport) {
 					if (transport.responseText == '1')
 					{
-						return message;
+						field.displayErrorMessage(message);
+					}
+					else
+					{
+						field.displaySuccessMessage();
 					}
 				},
 			}

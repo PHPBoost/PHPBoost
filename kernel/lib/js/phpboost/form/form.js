@@ -279,13 +279,13 @@ var FormField = Class
 					$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
 
 					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-							{
-								duration : 0.5
-							});
+					{
+						duration : 0.5
+					});
 					Effect.Appear('onblurMesssageResponse' + this.getHTMLId(),
-							{
-								duration : 0.5
-							});
+					{
+						duration : 0.5
+					});
 				}
 			},
 			displaySuccessMessage : function() {
@@ -299,9 +299,9 @@ var FormField = Class
 							+ THEME
 							+ '/images/processed_mini.png" alt="" class="valign_middle" />';
 					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-							{
-								duration : 0.2
-							});
+					{
+						duration : 0.2
+					});
 
 					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
 						duration : 0.2
@@ -313,9 +313,9 @@ var FormField = Class
 					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '';
 
 					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-							{
-								duration : 0.2
-							});
+					{
+						duration : 0.2
+					});
 
 					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
 						duration : 0.2
