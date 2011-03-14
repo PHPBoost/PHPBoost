@@ -29,7 +29,7 @@
  * @desc
  * @package {@package}
  */
-class FormFieldConstraintLoginExist implements FormFieldConstraint
+class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
 {
 	private $error_message;
  
@@ -37,7 +37,7 @@ class FormFieldConstraintLoginExist implements FormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('doesnt_match_regex', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('e_pseudo_auth', 'errors');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = TextHelper::to_js_string($error_message);
