@@ -61,7 +61,7 @@ class NewsletterSubscribersListController extends AbstractController
 				$field_bdd = 'login';
 			break;
 			case 'newsletter' :
-				$field_bdd = 'id_cat';
+				$field_bdd = 'id_cats';
 			break;
 			default :
 				$field_bdd = 'login';
@@ -84,7 +84,7 @@ class NewsletterSubscribersListController extends AbstractController
 		$limit_page = $current_page > 0 ? $current_page : 1;
 		$limit_page = (($limit_page - 1) * $this->nbr_subscribers_per_page);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.id_cats, subscribers.user_id, subscribers.mail, member.login, member.user_mail
+		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.login, member.user_mail
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
 		ORDER BY ". $field_bdd ." ". $mode ."
@@ -101,7 +101,7 @@ class NewsletterSubscribersListController extends AbstractController
 				'EDIT_LINK' => $auth_moderation ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
 				'DELETE_LINK' => $auth_moderation ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/')->absolute() : '',
 				'PSEUDO' => $pseudo,
-				'NEWSLETTER_NAME' => $this->get_name_categories(unserialize($row['id_cats'])),
+				'NEWSLETTER_NAME' => is_array(unserialize($row['id_cats'])) ? $this->get_name_categories(unserialize($row['id_cats'])) : $this->lang['streams.no_cats'],
 				'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 			));
 		}
@@ -130,7 +130,7 @@ class NewsletterSubscribersListController extends AbstractController
 		$names = array();
 		foreach ($categories as $id_cats)
 		{
-			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_cats, array('name'), "WHERE id = '". $id_cats ."'");
+			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_streams, array('name'), "WHERE id = '". $id_cats ."'");
 			$names[] = $row['name'];
 		}
 		return implode('/', $names);

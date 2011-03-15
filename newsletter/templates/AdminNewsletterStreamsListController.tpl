@@ -9,21 +9,21 @@
 		</td>
 		<td class="row1">
 			<a href="{SORT_NAME_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@categories.name} 
+			{@streams.name} 
 			<a href="{SORT_NAME_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 		</td>
 		<td class="row1">
-			{@categories.description}
+			{@streams.description}
 		</td>
 		<td class="row1">
 			<a href="{SORT_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@categories.visible}
+			{@streams.visible}
 			<a href="{SORT_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 		</td>
 	</tr>
 	<tr style="text-align:center;">
 		<td colspan="4" class="row1">
-			<a href="{C_ADD_CATEGORIE}">{@categories.add}</a>
+			<a href="{C_ADD_CATEGORIE}">{@streams.add}</a>
 		</td>
 	</tr>
 	# IF C_CATEGORIES_EXIST #

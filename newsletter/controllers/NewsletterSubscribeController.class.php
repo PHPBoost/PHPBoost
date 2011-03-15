@@ -76,7 +76,8 @@ class NewslettersubscribeController extends ModuleController
 			array(new FormFieldConstraintMailAddress())
 		));
 		
-		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
+		$array_cats = is_array(unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id')))) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
+		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? $array_cats : array();
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_categories()));
 		
 		$form->add_button(new FormButtonReset());
@@ -99,29 +100,29 @@ class NewslettersubscribeController extends ModuleController
 	
 	private function get_categories()
 	{
-		$categories = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, visible, auth FROM " . NewsletterSetup::$newsletter_table_cats . "");
-		while ($row = $result->fetch())
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
-			if ($read_auth)
+			$read_auth = is_array($value['authorizations']) ? AppContext::get_user()->check_auth($value['authorizations'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
+			if ($read_auth && $value['visible'] == 1)
 			{
-				$categories[] = new FormFieldSelectChoiceOption($row['name'], $row['id']);
+				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
 			}
 		}
-		return $categories;
+		return $streams;
 	}
 	
 	private function save()
 	{
-		$categories = $this->form->get_value('newsletter_choice');
+		$streams = $this->form->get_value('newsletter_choice');
 		if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
-			NewsletterService::subscribe_member($categories, AppContext::get_user()->get_attribute('user_id'));
+			NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_user()->get_attribute('user_id'));
 		}
 		else
 		{
-			NewsletterService::subscribe_visitor($categories, $this->form->get_value('mail'));
+			NewsletterService::update_subscribtions_visitor($streams, $this->form->get_value('mail'));
 		}
 	}
 }

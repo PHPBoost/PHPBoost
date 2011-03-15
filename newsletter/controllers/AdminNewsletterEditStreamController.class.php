@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                   AdminNewsletterEditCategorieController.class.php
+ *		                   AdminNewsletterEditStreamController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -24,7 +24,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterEditCategorieController extends AdminController
+class AdminNewsletterEditStreamController extends AdminController
 {
 	private $lang;
 	/**
@@ -46,10 +46,8 @@ class AdminNewsletterEditCategorieController extends AdminController
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.categorie-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
-		
-		$row = PersistenceContext::get_sql()->query_array(NewsletterSetup::$newsletter_table_cats, '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
-		$this->build_form($id, $row);
+
+		$this->build_form($id);
 
 		$tpl = new StringTemplate('<script type="text/javascript">
 		<!--
@@ -64,7 +62,7 @@ class AdminNewsletterEditCategorieController extends AdminController
 		# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		$tpl->put('ADVANCED_AUTH', $row['auth'] !== null ? 1 : 0);
+		$tpl->put('ADVANCED_AUTH', NewsletterStreamsCache::load()->get_authorizations_by_stream($id) !== null ? 1 : 0);
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -81,33 +79,35 @@ class AdminNewsletterEditCategorieController extends AdminController
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
 	}
 
-	private function build_form($id, $row)
+	private function build_form($id)
 	{
+		$newsletter_stream_cache = NewsletterStreamsCache::load()->get_stream($id);
+		
 		$form = new HTMLForm('newsletter_admin');
 		
-		$fieldset = new FormFieldsetHTML('edit-categorie', $this->lang['categories.edit']);
+		$fieldset = new FormFieldsetHTML('edit-categorie', $this->lang['streams.edit']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['categories.name'], $row['name'], array(
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['streams.name'], $newsletter_stream_cache['name'], array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['categories.description'], $row['description'],
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['streams.description'], $newsletter_stream_cache['description'],
 		array('rows' => 4, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['categories.picture'], $row['picture'], array(
+		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], $newsletter_stream_cache['picture'], array(
 			'class' => 'text',
 			'events' => array('change' => '$(\'preview_picture\').src = HTMLForms.getField(\'picture\').getValue();')
 		)));
-		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['categories.picture-preview'], '<img id="preview_picture" src="'. $row['picture'] .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. $newsletter_stream_cache['picture'] .'" alt="" style="vertical-align:top" />'));
 		
-		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['categories.visible'], $row['visible']));
+		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['streams.visible'], $newsletter_stream_cache['visible']));
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('active_authorizations', $this->lang['categories.active-advanced-authorizations'], FormFieldCheckbox::UNCHECKED, 
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('active_authorizations', $this->lang['streams.active-advanced-authorizations'], FormFieldCheckbox::UNCHECKED, 
 		array('events' => array('click' => '
 		if (HTMLForms.getField("active_authorizations").getValue()) {
 			$("newsletter_admin_advanced_authorizations").appear(); 
@@ -117,15 +117,16 @@ class AdminNewsletterEditCategorieController extends AdminController
 		)));
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['categories.auth.read'], NewsletterConfig::CAT_AUTH_READ),
-			new ActionAuthorization($this->lang['categories.auth.subscribe'], NewsletterConfig::CAT_AUTH_SUBSCRIBE),
-			new ActionAuthorization($this->lang['categories.auth.subscribers-read'], NewsletterConfig::CAT_AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['categories.auth.subscribers-moderation'], NewsletterConfig::CAT_AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['categories.auth.create-newsletter'], NewsletterConfig::CAT_AUTH_CREATE_NEWSLETTER),
-			new ActionAuthorization($this->lang['categories.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
+			new ActionAuthorization($this->lang['streams.auth.read'], NewsletterConfig::CAT_AUTH_READ),
+			new ActionAuthorization($this->lang['streams.auth.subscribe'], NewsletterConfig::CAT_AUTH_SUBSCRIBE),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-read'], NewsletterConfig::CAT_AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-moderation'], NewsletterConfig::CAT_AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.create-newsletter'], NewsletterConfig::CAT_AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
 		));
 		
-		$default_authorizations = is_array(unserialize($row['auth'])) ? unserialize($row['auth']) : NewsletterConfig::load()->get_authorizations();
+		$auth = NewsletterStreamsCache::load()->get_authorizations_by_stream($id);
+		$default_authorizations = $auth !== null ? $auth : NewsletterConfig::load()->get_authorizations();
 		$auth_settings->build_from_auth_array($default_authorizations);
 		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
 		$fieldset_authorizations->add_field($auth_setter);
@@ -141,7 +142,7 @@ class AdminNewsletterEditCategorieController extends AdminController
 	{
 		$auth = $this->form->get_value('active_authorizations') ? serialize($this->form->get_value('advanced_authorizations')) : null;
 		PersistenceContext::get_querier()->inject(
-			"UPDATE ". NewsletterSetup::$newsletter_table_cats ." SET 
+			"UPDATE ". NewsletterSetup::$newsletter_table_streams ." SET 
 			name = :name, description = :description, picture = :picture, visible = :visible, auth = :auth
 			WHERE id = '". $id ."'", array(
                 'name' => $this->form->get_value('name'),
@@ -150,6 +151,8 @@ class AdminNewsletterEditCategorieController extends AdminController
 				'visible' => (int)$this->form->get_value('visible'),
 				'auth' => $auth
 		));
+		
+		NewsletterStreamsCache::invalidate();
 	}
 
 	private function build_response(View $view)
@@ -158,17 +161,17 @@ class AdminNewsletterEditCategorieController extends AdminController
 		$response->set_title($this->lang['newsletter']);
 		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-categories'], DispatchManager::get_url('/newsletter', '/admin/categories/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['categories.edit']);
+		$env->set_page_title($this->lang['streams.edit']);
 		return $response;
 	}
 	
 	private static function categorie_exist($id)
 	{
-		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_cats, "WHERE id = '". $id ."'");
+		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams, "WHERE id = '". $id ."'");
 	}
 }
 

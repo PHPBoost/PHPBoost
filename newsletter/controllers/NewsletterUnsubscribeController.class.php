@@ -85,8 +85,9 @@ class NewsletterUnSubscribeController extends ModuleController
 		}')
 		)));
 
-		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_categories()));
+		$array_cats = is_array(unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id')))) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
+		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? $array_cats : array();
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_categories()));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -109,7 +110,7 @@ class NewsletterUnSubscribeController extends ModuleController
 	private function get_categories()
 	{
 		$categories = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, visible, auth FROM " . NewsletterSetup::$newsletter_table_cats . "");
+		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, visible, auth FROM " . NewsletterSetup::$newsletter_table_streams . "");
 		while ($row = $result->fetch())
 		{
 			$read_auth = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
@@ -126,6 +127,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		$all_categories = $this->form->get_value('all_categories');
 		if ($all_categories)
 		{
+			// TOTO replace for new fonctions
 			if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 			{
 				NewsletterService::unsubscribe_member_all(AppContext::get_user()->get_attribute('user_id'));
@@ -134,18 +136,17 @@ class NewsletterUnSubscribeController extends ModuleController
 			{
 				NewsletterService::unsubscribe_visitor_all($this->form->get_value('mail'));
 			}
-			
 		}
 		else
 		{
-			$categories = $this->form->get_value('newsletter_choice');
+			$streams = $this->form->get_value('newsletter_choice');
 			if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 			{
-				NewsletterService::subscribe_member($categories, AppContext::get_user()->get_attribute('user_id'));
+				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_user()->get_attribute('user_id'));
 			}
 			else
 			{
-				NewsletterService::subscribe_visitor($categories, $this->form->get_value('mail'));
+				NewsletterService::update_subscribtions_visitor($streams, $this->form->get_value('mail'));
 			}
 		}
 	}
