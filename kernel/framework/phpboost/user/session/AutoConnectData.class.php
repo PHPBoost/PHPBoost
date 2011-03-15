@@ -51,7 +51,7 @@ class AutoConnectData
 		$data = new AutoConnectData($autoconnect['user_id'], $autoconnect['key']);
 		if ($data->is_valid())
 		{
-			return $user_id;
+			return $autoconnect['user_id'];
 		}
 		return Session::VISITOR_SESSION_ID;
 	}
@@ -65,7 +65,7 @@ class AutoConnectData
 		$data = null;
 		if (!empty($row['autoconnect_key']))
 		{
-			$data = new AutoConnectData($autoconnect['user_id'], $row['autoconnect_key']);
+			$data = new AutoConnectData($user_id, $row['autoconnect_key']);
 		}
 		else
 		{
@@ -76,7 +76,7 @@ class AutoConnectData
 
 	public static function change_key($user_id)
 	{
-		$data = new AutoConnectData($autoconnect['user_id'], Random::hexa64uid());
+		$data = new AutoConnectData($user_id, Random::hexa64uid());
 		$data->save_in_db();
 		return $data;
 	}
@@ -95,7 +95,7 @@ class AutoConnectData
 		return $this->user_id;
 	}
 
-	public static function is_valid()
+	public function is_valid()
 	{
 		$condition = 'WHERE user_id=:user_id AND autoconnect_key=:key';
 		$parameters = array('user_id' => $this->user_id, 'key' => $this->key);
@@ -105,14 +105,14 @@ class AutoConnectData
 	public function save()
 	{
 		$this->save_in_db();
-		$this->create_cookie();
+		$this->save_in_cookie();
 	}
 
 	private function save_in_db()
 	{
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
-		$columns = array('autoconnect_key' => $key);
+		$parameters = array('user_id' => $this->user_id);
+		$columns = array('autoconnect_key' => $this->key);
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
 
