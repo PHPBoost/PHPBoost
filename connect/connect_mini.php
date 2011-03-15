@@ -117,9 +117,11 @@ function connect_mini($position, $block)
 			$fieldset = new FormFieldsetHorizontal('loginFieldset');
 		}
 
-		$login = new FormFieldTextEditor('username', $lang['login'], $lang['login'], array('required' => true));
+		$login = new FormFieldTextEditor('username', $lang['login'], $lang['login']);
+		$login->add_constraint(new FormFieldConstraintMinLength(3));
 		$fieldset->add_field($login);
-		$password = new FormFieldPasswordEditor('password', $lang['password'], $lang['password'], array('required' => true));
+		$password = new FormFieldPasswordEditor('password', $lang['password'], $lang['password']);
+		$password->add_constraint(new FormFieldConstraintMinLength(3));
 		$fieldset->add_field($password);
 		$autoconnect = new FormFieldCheckbox('autoconnect', $lang['autoconnect'], false);
 		$fieldset->add_field($autoconnect);
