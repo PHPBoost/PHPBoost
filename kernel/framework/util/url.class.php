@@ -3,7 +3,7 @@
  *                             url.class.php
  *                            -------------------
  *   begin                : January 14, 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright            : (C) 2009 Loï¿½c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -29,7 +29,7 @@ define('URL__CLASS','url');
 define('SERVER_URL', $_SERVER['PHP_SELF']);
 
 /**
- * @author Loïc Rouchon <horn@phpboost.com>
+ * @author Loï¿½c Rouchon <horn@phpboost.com>
  * @desc This class offers a simple way to transform an absolute or relative link
  * to a relative one to the website root.
  * It can also deals with absolute url and will convert only those from this
@@ -72,7 +72,7 @@ class Url
 			{
 				$this->server_url = Url::server_url();
 			}
-			
+
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
@@ -101,7 +101,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url)); 
+			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url));
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -468,8 +468,8 @@ class Url
 		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
 		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
 		static $file_regex = '[a-z0-9-+_,~:\.\%]+';
-		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=,_~:;/\.\?\'\%]+(?:=[a-z0-9-+=_~:;/\.\?\'\%]+)?)*)?';
-        static $anchor_regex = '\#[a-z0-9-_/]*';
+		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=,_~:;/\.\?\'\%]+(?:=[a-z0-9-+=!_~:;/\.\?\'\%+=]+)?)*)?';
+        static $anchor_regex = '\#[a-z0-9-+=!_~:;/\.\?\'\%+=]*';
 
 		if ($forbid_js)
 		{
@@ -491,7 +491,7 @@ class Url
 		}
 		$regex .=  set_subregex_multiplicity($args_regex, $args) .
 		set_subregex_multiplicity($anchor_regex, $anchor);
-		
+
 		return $regex;
 	}
 
