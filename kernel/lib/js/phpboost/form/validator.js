@@ -20,14 +20,55 @@ function lengthIntervalValidator(value, lbound, rbound)
 }
 function nonEmptyFormFieldValidator(field_id, message)
 {
+	var error_message = '';
 	var field = HTMLForms.getField(field_id);
 	if (field)
 	{
-		if (field.getValue() == null || field.getValue() == '')
+		var getInputsElements = $(field.formId).getInputs('', field.getHTMLId());
+		if (getInputsElements.size() > 1)
 		{
-			return message;
+			var number_elements_not_complete = 0;
+			getInputsElements.each(function(element) {
+				if (element.type == 'checkbox' || element.type == 'radio')
+				{
+					number_elements_not_complete = number_elements_not_complete + 1;
+				}
+				else
+				{
+					if (element.value == null || element.value == '')
+					{
+						number_elements_not_complete = number_elements_not_complete + 1;
+					}
+				}
+			});
+			
+			if (getInputsElements.size() <= number_elements_not_complete)
+			{
+				error_message = message;
+			}
 		}
+		else
+		{
+			getInputsElements.each(function(element) {
+				if (element.type == 'checkbox' || element.type == 'radio')
+				{
+					if (!element.checked)
+					{
+						error_message = message;
+					}
+				}
+				else
+				{
+					if (element.value == null || element.value == '')
+					{
+						error_message = message;
+					}
+				}
+			});
+		}
+		return error_message;
 	}
+	
 	return '';
 }
 
