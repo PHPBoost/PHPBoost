@@ -36,10 +36,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AddNewsletterController', '`^/add/([a-z]+)?/?$`', array('type')),
 	new UrlControllerMapper('EditNewsletterController', '`^/edit/([a-z]+)?/?$`', array('type')),
 	
-	new UrlControllerMapper('AdminNewsletterCategoriesListController', '`^/admin/categories/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
-	new UrlControllerMapper('AdminNewsletterAddCategorieController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('AdminNewsletterEditCategorieController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('AdminNewsletterDeleteCategorieController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('AdminNewsletterStreamsListController', '`^/admin/streams/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminNewsletterAddStreamController', '`^/admin/stream/add/?$`'),
+	new UrlControllerMapper('AdminNewsletterEditStreamController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('AdminNewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
