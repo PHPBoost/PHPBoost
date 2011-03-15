@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      AdminNewsletterDeleteCategorieController.class.php
+ *                      AdminNewsletterDeleteStreamController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,19 +25,23 @@
  *
  ###################################################*/
 
-class AdminNewsletterDeleteCategorieController extends AdminController
+class AdminNewsletterDeleteStreamController extends AdminController
 {
 	public function execute(HTTPRequest $request)
 	{
 		$id = $request->get_int('id', 0);
 		
-		if ($this->categorie_exist($id) || $id !== 0)
+		if ($this->stream_exist($id) || $id !== 0)
 		{
 			PersistenceContext::get_querier()->inject(
-				"DELETE FROM " . NewsletterSetup::$newsletter_table_cats . " WHERE id = :id"
+				"DELETE FROM " . NewsletterSetup::$newsletter_table_streams . " WHERE id = :id"
 				, array(
 					'id' => $id,
 			));
+			
+			// TODO MAJ SUBSCRIBERS
+			
+			NewsletterStreamsCache::invalidate();
 			
 			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('admin.success-delete-categorie', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
@@ -49,9 +53,10 @@ class AdminNewsletterDeleteCategorieController extends AdminController
 		}
 	}
 	
-	private static function categorie_exist($id)
+	private static function stream_exist($id)
 	{
-		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_cats, "WHERE id = '". $id ."'");
+		$exist_stream = NewsletterStreamsCache::load()->get_existed_stream($id)
+		return $exist_stream;
 	}
 }
 

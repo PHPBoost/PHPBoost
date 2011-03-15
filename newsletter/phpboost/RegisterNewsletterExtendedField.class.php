@@ -31,10 +31,10 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$categories = $this->get_categories();
-		if (!empty($categories))
+		$streams = $this->get_streams();
+		if (!empty($streams))
 		{
-			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $categories, array('description' => $member_extended_field->get_description())));
+			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
@@ -42,10 +42,10 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$categories = $this->get_categories();
-		if (!empty($categories))
+		$streams = $this->get_streams();
+		if (!empty($streams))
 		{
-			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->unserialise_values($member_extended_field->get_value()), $categories, array('description' => $member_extended_field->get_description())));
+			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->unserialise_values($member_extended_field->get_value()), $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
@@ -53,8 +53,8 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		$field_name = $member_extended_field->get_field_name();
 		
-		$categories = $this->get_categories();
-		if (!empty($categories))
+		$streams = $this->get_streams();
+		if (!empty($streams))
 		{
 			$value = $form->get_value($field_name);
 			return $this->serialise_value($value);
@@ -66,26 +66,26 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		parent::register($member_extended_field, $member_extended_fields_dao, $form);
 		
-		$categories = $form->get_value($member_extended_field->get_field_name());
-		if (is_array($categories))
+		$streams = $form->get_value($member_extended_field->get_field_name());
+		if (is_array($streams))
 		{
-			NewsletterService::subscribe_member($categories, AppContext::get_user()->get_attribute('user_id'));
+			NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_user()->get_attribute('user_id'));
 		}
 	}
 	
-	public function get_categories()
+	public function get_streams()
 	{
-		$categories = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, visible, auth FROM " . NewsletterSetup::$newsletter_table_cats . "");
-		while ($row = $result->fetch())
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
-			if ($read_auth)
+			$read_auth = is_array($value['authorizations']) ? AppContext::get_user()->check_auth($value['authorizations'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
+			if ($read_auth && $value['visible'] == 1)
 			{
-				$categories[] = new FormFieldSelectChoiceOption($row['name'], $row['id']);
+				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
 			}
 		}
-		return $categories;
+		return $streams;
 	}
 	
 	private function unserialise_values($values)

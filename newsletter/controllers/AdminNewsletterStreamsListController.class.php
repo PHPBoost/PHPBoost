@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      AdminNewsletterCategoriesListController.class.php
+ *                      AdminNewsletterStreamsListController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterCategoriesListController extends AbstractController
+class AdminNewsletterStreamsListController extends AbstractController
 {
 	private $lang;
 	private $view;
@@ -67,14 +67,14 @@ class AdminNewsletterCategoriesListController extends AbstractController
 				$field_bdd = 'name';
 		}
 		
-		$nbr_cats = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_cats, __LINE__, __FILE__);
+		$nbr_cats = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
 		$nbr_pages =  ceil($nbr_cats / $this->nbr_categories_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
 		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/subscribers/list/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_CATEGORIES_EXIST' => (float)$nbr_cats,
-			'C_ADD_CATEGORIE' => DispatchManager::get_url('/newsletter', '/admin/categories/add/')->absolute(),
+			'C_ADD_CATEGORIE' => DispatchManager::get_url('/newsletter', '/admin/stream/add/')->absolute(),
 			'SORT_NAME_TOP' => DispatchManager::get_url('/newsletter', '/admin/categories/list/name/top/'. $current_page)->absolute(),
 			'SORT_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/categories/list/name/bottom/'. $current_page)->absolute(),
 			'SORT_STATUS_TOP' => DispatchManager::get_url('/newsletter', '/admin/categories/list/status/top/'. $current_page)->absolute(),
@@ -86,7 +86,7 @@ class AdminNewsletterCategoriesListController extends AbstractController
 		$limit_page = (($limit_page - 1) * $this->nbr_categories_per_page);
 		
 		$result = PersistenceContext::get_querier()->select("SELECT cat.id, cat.name, cat.description, cat.visible
-		FROM " . NewsletterSetup::$newsletter_table_cats . " cat
+		FROM " . NewsletterSetup::$newsletter_table_streams . " cat
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT ". $this->nbr_categories_per_page ." OFFSET :start_limit",
 			array(
@@ -96,11 +96,11 @@ class AdminNewsletterCategoriesListController extends AbstractController
 		while ($row = $result->fetch())
 		{	
 			$this->view->assign_block_vars('categories_list', array(
-				'EDIT_LINK' => DispatchManager::get_url('/newsletter', '/admin/categories/'. $row['id'] .'/edit/')->absolute(),
-				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/admin/categories/'. $row['id'] .'/delete/')->absolute(),
+				'EDIT_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/edit/')->absolute(),
+				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/delete/')->absolute(),
 				'NAME' => $row['name'],
 				'DESCRIPTION' => $row['description'],
-				'STATUS' => !$row['visible'] ? $this->lang['categories.visible-no'] : $this->lang['categories.visible-yes']
+				'STATUS' => !$row['visible'] ? $this->lang['streams.visible-no'] : $this->lang['streams.visible-yes']
 			));
 		}
 	}
@@ -108,7 +108,7 @@ class AdminNewsletterCategoriesListController extends AbstractController
 	private function init()
 	{
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
-		$this->view = new FileTemplate('newsletter/AdminNewsletterCategoriesListController.tpl');
+		$this->view = new FileTemplate('newsletter/AdminNewsletterStreamsListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->user = AppContext::get_user();
 	}
@@ -119,11 +119,11 @@ class AdminNewsletterCategoriesListController extends AbstractController
 		$response->set_title($this->lang['newsletter']);
 		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-categories'], DispatchManager::get_url('/newsletter', '/admin/categories/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter-streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['categories.add']);
+		$env->set_page_title($this->lang['streams.add']);
 		return $response;
 	}
 }
