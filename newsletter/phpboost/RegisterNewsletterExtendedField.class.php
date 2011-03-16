@@ -45,7 +45,8 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->unserialise_values($member_extended_field->get_value()), $streams, array('description' => $member_extended_field->get_description())));
+			$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_user()->get_attribute('user_id')) : array();
+			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
@@ -86,11 +87,6 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 			}
 		}
 		return $streams;
-	}
-	
-	private function unserialise_values($values)
-	{
-		return explode('|', $values);
 	}
 	
 	private function serialise_value(Array $array)

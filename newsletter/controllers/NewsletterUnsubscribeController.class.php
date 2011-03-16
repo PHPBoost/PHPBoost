@@ -42,7 +42,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-subscribe'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['success-unsubscribe'], E_USER_SUCCESS, 4));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -76,18 +76,17 @@ class NewsletterUnSubscribeController extends ModuleController
 			array(new FormFieldConstraintMailAddress())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('all_categories', $this->lang['newsletter.delete_all_cats'], FormFieldCheckbox::UNCHECKED, 
+		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete_all_streams'], FormFieldCheckbox::UNCHECKED, 
 		array('events' => array('click' => '
-		if (HTMLForms.getField("all_categories").getValue()) {
+		if (HTMLForms.getField("delete_all_streams").getValue()) {
 			HTMLForms.getField("newsletter_choice").disable();
 		} else { 
 			HTMLForms.getField("newsletter_choice").enable();
 		}')
 		)));
 
-		$array_cats = is_array(unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id')))) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
-		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? $array_cats : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_categories()));
+		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_user()->get_attribute('user_id')) : array();
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -107,40 +106,39 @@ class NewsletterUnSubscribeController extends ModuleController
 		return $response;
 	}
 	
-	private function get_categories()
+	private function get_streams()
 	{
-		$categories = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, visible, auth FROM " . NewsletterSetup::$newsletter_table_streams . "");
-		while ($row = $result->fetch())
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
-			if ($read_auth)
+			$read_auth = is_array($value['authorizations']) ? AppContext::get_user()->check_auth($value['authorizations'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
+			if ($read_auth && $value['visible'] == 1)
 			{
-				$categories[] = new FormFieldSelectChoiceOption($row['name'], $row['id']);
+				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
 			}
 		}
-		return $categories;
+		return $streams;
 	}
 	
 	private function save()
 	{
-		$all_categories = $this->form->get_value('all_categories');
-		if ($all_categories)
+		$delete_all_streams = $this->form->get_value('delete_all_streams');
+		if ($delete_all_streams)
 		{
-			// TOTO replace for new fonctions
 			if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 			{
-				NewsletterService::unsubscribe_member_all(AppContext::get_user()->get_attribute('user_id'));
+				NewsletterService::unsubscriber_all_streams_member(AppContext::get_user()->get_attribute('user_id'));
 			}
 			else
 			{
-				NewsletterService::unsubscribe_visitor_all($this->form->get_value('mail'));
+				NewsletterService::unsubscriber_all_streams_visitor($this->form->get_value('mail'));
 			}
 		}
 		else
 		{
 			$streams = $this->form->get_value('newsletter_choice');
-			if (AppContext::get_user()->check_level(MEMBER_LEVEL))
+			if (AppContext::get_user()->check_level(MEMBER_LEVEL) &&  $streams !== '')
 			{
 				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_user()->get_attribute('user_id'));
 			}

@@ -29,7 +29,7 @@ class NewsletterHomeController extends AbstractController
 {
 	private $lang;
 	private $view;
-	private $nbr_categories_per_page = 25;
+	private $nbr_streams_per_page = 25;
 
 	public function execute(HTTPRequest $request)
 	{
@@ -42,24 +42,24 @@ class NewsletterHomeController extends AbstractController
 	private function build_form($request)
 	{	
 		$current_page = $request->get_int('page', 1);
-		$nbr_categories = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		$nbr_pages =  ceil($nbr_categories / $this->nbr_categories_per_page);
+		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
+		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
 		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
 		$this->view->put_all(array(
-			'C_CATEGORIES' => (float)$nbr_categories,
+			'C_STREAMS' => (float)$nbr_streams,
 			'LINK_SUBSCRIBE' => DispatchManager::get_url('/newsletter', '/subscribe/')->absolute(),
 			'LINK_UNSUBSCRIBE' => DispatchManager::get_url('/newsletter', '/unsubscribe/')->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
 		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_categories_per_page);
+		$limit_page = (($limit_page - 1) * $this->nbr_streams_per_page);
 		
 		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, picture, visible, auth
 		FROM " . NewsletterSetup::$newsletter_table_streams . "
-		LIMIT ". $this->nbr_categories_per_page ." OFFSET :start_limit",
+		LIMIT ". $this->nbr_streams_per_page ." OFFSET :start_limit",
 			array(
 				'start_limit' => $limit_page
 			), SelectQueryResult::FETCH_ASSOC
@@ -70,7 +70,7 @@ class NewsletterHomeController extends AbstractController
 			$auth_view_archives = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_READ_ARCHIVES);
 			if ($auth && $row['visible'] == 1)
 			{
-				$this->view->assign_block_vars('categories_list', array(
+				$this->view->assign_block_vars('streams_list', array(
 					'PICTURE' => PATH_TO_ROOT . $row['picture'],
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],

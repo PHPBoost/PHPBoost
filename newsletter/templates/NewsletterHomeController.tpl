@@ -1,4 +1,4 @@
-<table  class="module_table">
+<table class="module_table">
 	<tr> 
 		<th colspan="4">
 			{@newsletter.list_newsletters}
@@ -17,14 +17,14 @@
 			{@newsletter.view_archives}
 		</td>
 	</tr>
-	# IF C_CATEGORIES #
+	# IF C_STREAMS #
 		<tr style="text-align:center;">
 			<td colspan="4" class="row3">
 				<a href="{LINK_SUBSCRIBE}" style="margin-right:25px;">{@newsletter.subscribe_newsletters}</a>
 				<a href="{LINK_UNSUBSCRIBE}" style="margin-left:25px;">{@newsletter.unsubscribe_newsletters}</a>
 			</td>
 		</tr>
-		# START categories_list #
+		# START streams_list #
 		<tr style="text-align:center;">
 			<td class="row2"> 
 				<img src="{categories_list.PICTURE}"></img>
@@ -39,9 +39,9 @@
 				{categories_list.VIEW_ARCHIVES}
 			</td>
 		</tr>
-		# END categories_list #
+		# END streams_list #
 	# ENDIF #
-	# IF C_CATEGORIES #
+	# IF C_STREAMS #
 	<tr>
 		<td colspan="4" class="row1">
 			<span style="float:left;">{@newsletter.page} : {PAGINATION}</span>

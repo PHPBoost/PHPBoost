@@ -42,7 +42,7 @@ class NewslettersubscribeController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-subscribe'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -76,9 +76,8 @@ class NewslettersubscribeController extends ModuleController
 			array(new FormFieldConstraintMailAddress())
 		));
 		
-		$array_cats = is_array(unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id')))) ? unserialize(NewsletterDAO::get_id_categories_subscribes_by_user_id(AppContext::get_user()->get_attribute('user_id'))) : array();
-		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? $array_cats : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_categories()));
+		$newsletter_subscribe = AppContext::get_user()->check_level(MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_user()->get_attribute('user_id')) : array();
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -98,7 +97,7 @@ class NewslettersubscribeController extends ModuleController
 		return $response;
 	}
 	
-	private function get_categories()
+	private function get_streams()
 	{
 		$streams = array();
 		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();

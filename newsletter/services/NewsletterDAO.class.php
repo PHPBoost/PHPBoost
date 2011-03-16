@@ -65,8 +65,7 @@ class NewsletterDAO
 	
 	public static function update_subscribtions_member_registered($user_id, Array $streams)
 	{
-		$data = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_subscribers, array('id'), "WHERE user_id = '". $user_id ."'");
-		$subscriber_id = $data['id'];
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'id', "WHERE user_id = '". $user_id ."'");
 		
 		//Delete all entries in subscriber id
 		$condition = "WHERE subscriber_id = :subscriber_id";
@@ -87,14 +86,13 @@ class NewsletterDAO
 		NewsletterStreamsCache::invalidate();
 	}
 	
-	public static function insert_subscribtions_member_visitor($mail, Array $streams)
+	public static function insert_subscribtions_visitor($mail, Array $streams)
 	{
 		//Inject user in subscribers table
-		$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribers . " (mail) VALUES (:mail)";
-		$option = array(
+		$columns = array(
 			'mail' => $mail
 		);
-		self::$db_querier->inject($request, $option);
+		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
 		$subscriber_id = PersistenceContext::get_sql()->query("SELECT MAX(id) FROM " . NewsletterSetup::$newsletter_table_subscribers);
 		
@@ -106,20 +104,18 @@ class NewsletterDAO
 		foreach ($streams as $value)
 		{
 			//Insert user and stream_id in the subscribtions table
-			$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribtions . " (stream_id, subscriber_id)	VALUES (:stream_id, :subscriber_id)";
-			$option = array(
+			$columns = array(
                 'stream_id' => $value,
 				'subscriber_id' => $subscriber_id
 			);
-			self::$db_querier->inject($request, $option);
+			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribtions, $columns);
 		}
 		NewsletterStreamsCache::invalidate();
 	}
 	
-	public static function update_subscribtions_member_visitor($mail, Array $streams)
+	public static function update_subscribtions_visitor($mail, Array $streams)
 	{
-		$data = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_subscribers, array('id'), "WHERE mail = '". $mail ."'");
-		$subscriber_id = $data['id'];
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'id', "WHERE mail = '". $mail ."'");
 		
 		//Delete all entries in subscriber id
 		$condition = "WHERE subscriber_id = :subscriber_id";
@@ -128,51 +124,57 @@ class NewsletterDAO
 		
 		foreach ($streams as $value)
 		{
-			$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribtions . " (stream_id, subscriber_id)	VALUES (:stream_id, :subscriber_id)";
-			
-			$option = array(
+			//Insert user and stream_id in the subscribtions table
+			$columns = array(
                 'stream_id' => $value,
 				'subscriber_id' => $subscriber_id
 			);
-			
-			self::$db_querier->inject($request, $option);
+			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribtions, $columns);
 		}
 		NewsletterStreamsCache::invalidate();
 	}
 
-	//TODO replace for a new fonction
-	public static function verificate_exist_user_id($user_id)
+	public static function user_id_existed($user_id)
 	{
 		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 	
-	//TODO replace for a new fonction
-	public static function verificate_exist_mail($mail)
+	public static function mail_existed($mail)
 	{
 		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") > 0 ? true : false;
 	}
 	
-	//TODO replace for a new fonction
-	public static function unsubscriber_all_by_user_id($user_id)
+	public static function unsubscriber_all_streams_member($user_id)
 	{
-		self::$db_querier->inject(
-			"DELETE	FROM " . NewsletterSetup::$newsletter_table_subscribers . "
-			WHERE user_id = :user_id"
-			, array(
-				'user_id' => $user_id
-		));
-	}
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'id', "WHERE user_id = '". $user_id ."'");
+		$condition = "WHERE subscriber_id = :subscriber_id";
+		$parameters = array(
+			'subscriber_id' => $subscriber_id
+		);
+		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+		
+		$condition = "WHERE user_id = :user_id";
+		$parameters = array(
+			'user_id' => $user_id
+		);
+		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
+	} 
 	
-	//TODO replace for a new fonction
-	public static function unsubscriber_all_by_mail($user_id)
+	public static function unsubscriber_all_streams_visitor($mail)
 	{
-		self::$db_querier->inject(
-			"DELETE	FROM " . NewsletterSetup::$newsletter_table_subscribers . "
-			WHERE mail = :mail"
-			, array(
-				'mail' => $mail
-		));
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'id', "WHERE mail = '". $mail ."'");
+		$condition = "WHERE subscriber_id = :subscriber_id";
+		$parameters = array(
+			'subscriber_id' => $subscriber_id
+		);
+		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+		
+		$condition = "WHERE mail = :mail";
+		$parameters = array(
+			'mail' => $mail
+		);
+		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
+		
 	}
-	
 }
 ?>

@@ -75,6 +75,11 @@ class NewsletterStreamsCache implements CacheData
 		return (count($this->streams) > 0) ? true : false;
 	}
 	
+	public function get_number_streams()
+	{
+		return count($this->streams);
+	}
+	
 	public function get_existed_stream($id_stream)
 	{
 		return array_key_exists($id_stream, $this->streams);

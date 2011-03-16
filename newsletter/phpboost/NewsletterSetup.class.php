@@ -70,7 +70,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'mail' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
