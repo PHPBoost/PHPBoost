@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      AdminNewsletterDeleteStreamController.class.php
+ *                      NewsletterDeleteSubscriberController.class.php
  *                            -------------------
- *   begin                : March 11, 2011
+ *   begin                : March 16, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,39 +25,41 @@
  *
  ###################################################*/
 
-class AdminNewsletterDeleteStreamController extends AdminController
+class NewsletterDeleteSubscriberController extends AdminController
 {
 	public function execute(HTTPRequest $request)
 	{
 		$id = $request->get_int('id', 0);
 		
-		if ($this->stream_exist($id) || $id !== 0)
-		{
+		if ($this->subscriber_exist($id) || $id !== 0)
+		{	
 			$condition = "WHERE id = :id";
-			$parameters = array('id' => $id);
-			self::$db_querier->delete(NewsletterSetup::$newsletter_table_streams, $condition, $parameters);
-
-			//Delete for subscribers
-			$condition = "WHERE stream_id = :stream_id";
-			$parameters = array('stream_id' => $id);
+			$parameters = array(
+				'id' => $id,
+			);
+			self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
+			
+			$condition = "WHERE id = :id";
+			$parameters = array(
+				'id' => $id,
+			);
 			self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('admin.success-delete-categorie', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.categorie-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 	}
 	
-	private static function stream_exist($id)
+	private static function subscriber_exist($id)
 	{
-		$exist_stream = NewsletterStreamsCache::load()->get_existed_stream($id);
-		return $exist_stream;
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
 	}
 }
 

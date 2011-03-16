@@ -28,6 +28,11 @@ function Confirm(level) {
 			{@subscribers.mail}
 		</td>
 	</tr>
+	<tr style="text-align:center;">
+		<td colspan="4" class="row1">
+			<a href="{C_SUBSCRIPTION}">{@newsletter.subscribe_newsletters}</a>
+		</td>
+	</tr>
 	# IF C_SUBSCRIBERS #
 		# START subscribers_list #
 		<tr style="text-align:center;">

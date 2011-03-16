@@ -43,7 +43,7 @@ class AdminNewsletterStreamsListController extends AbstractController
 
 	private function build_form($request)
 	{
-		$field = $request->get_value('field', 'login');
+		$field = $request->get_value('field', 'name');
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
@@ -71,14 +71,14 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$nbr_pages =  ceil($nbr_cats / $this->nbr_categories_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/subscribers/list/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/admin/streams/list/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_CATEGORIES_EXIST' => (float)$nbr_cats,
 			'C_ADD_CATEGORIE' => DispatchManager::get_url('/newsletter', '/admin/stream/add/')->absolute(),
-			'SORT_NAME_TOP' => DispatchManager::get_url('/newsletter', '/admin/categories/list/name/top/'. $current_page)->absolute(),
-			'SORT_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/categories/list/name/bottom/'. $current_page)->absolute(),
-			'SORT_STATUS_TOP' => DispatchManager::get_url('/newsletter', '/admin/categories/list/status/top/'. $current_page)->absolute(),
-			'SORT_STATUS_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/categories/list/status/bottom/'. $current_page)->absolute(),
+			'SORT_NAME_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/top/'. $current_page)->absolute(),
+			'SORT_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/bottom/'. $current_page)->absolute(),
+			'SORT_STATUS_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/status/top/'. $current_page)->absolute(),
+			'SORT_STATUS_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/streams/list/status/bottom/'. $current_page)->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -123,7 +123,7 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['streams.add']);
+		$env->set_page_title($this->lang['admin.newsletter-streams']);
 		return $response;
 	}
 }

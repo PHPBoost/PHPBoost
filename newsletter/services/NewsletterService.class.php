@@ -38,7 +38,7 @@ class NewsletterService
 	
 	public static function update_subscribtions_member_registered(Array $streams, $user_id)
 	{
-		if (NewsletterDAO::verificate_exist_user_id($user_id))
+		if (NewsletterDAO::user_id_existed($user_id))
 		{
 			NewsletterDAO::update_subscribtions_member_registered($user_id, $streams);
 		}
@@ -50,9 +50,9 @@ class NewsletterService
 	
 	public static function update_subscribtions_visitor(Array $streams, $mail)
 	{
-		if (NewsletterDAO::verificate_exist_mail($mail))
+		if (NewsletterDAO::mail_existed($mail))
 		{
-			NewsletterDAO::update_subscribtions_visitor($mail, $streams);
+			NewsletterDAO::update_subscribtions_visitor($mail, $streams);	
 		}
 		else
 		{
@@ -60,22 +60,34 @@ class NewsletterService
 		}
 	}
 	
-	//TODO change for a new fonction
-	public static function unsubscribe_member_all($user_id)
+	public static function unsubscriber_all_streams_member($user_id)
 	{
-		if (NewsletterDAO::verificate_exist_user_id($user_id))
+		if (NewsletterDAO::user_id_existed($user_id))
 		{
-			NewsletterDAO::unsubscriber_all_by_user_id($user_id);
+			NewsletterDAO::unsubscriber_all_streams_member($user_id);
+		}
+	}
+
+	public static function unsubscriber_all_streams_visitor($mail)
+	{
+		if (NewsletterDAO::mail_existed($mail))
+		{
+			NewsletterDAO::unsubscriber_all_streams_visitor($mail);
 		}
 	}
 	
-	//TODO change for a new fonction
-	public static function unsubscribe_visitor_all($mail)
+	public static function get_id_streams_member($user_id)
 	{
-		if (NewsletterDAO::verificate_exist_mail($mail))
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			NewsletterDAO::unsubscriber_all_by_mail($mail);
+			if (array_key_exists($user_id, $value['subscribers']))
+			{
+				$streams[] = (string)$id;
+			}
 		}
+		return $streams;
 	}
 	
 	public static function get_errors()
