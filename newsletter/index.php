@@ -34,7 +34,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('HomeAddNewsletterController', '`^/add/?/?$`'),
 	new UrlControllerMapper('AddNewsletterController', '`^/add/([a-z]+)?/?$`', array('type')),
-	new UrlControllerMapper('EditNewsletterController', '`^/edit/([a-z]+)?/?$`', array('type')),
+	new UrlControllerMapper('EditNewsletterController', '`^/([0-9]+)/edit/?$`', array('id')),
 	
 	new UrlControllerMapper('AdminNewsletterStreamsListController', '`^/admin/streams/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('AdminNewsletterAddStreamController', '`^/admin/stream/add/?$`'),
@@ -43,14 +43,15 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers/list/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
-	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/([0-9]+)?$`', array('id')),
+	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('NewsletterHomeController', '`^.*$`'),
 	new UrlControllerMapper('NewsletterHomeController', '`^/list/?(?:/([a-z]+))?/?$`', array('page')),
 	
-	new UrlControllerMapper('NewsletterArchiveController', '`^/archives/([a-z]+)?/?$`', array('id_stream')),
+	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/?$`'),
+	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([a-z]+)?/?$`', array('id_stream')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
