@@ -40,7 +40,7 @@ class NewsletterHomeController extends AbstractController
 	}
 
 	private function build_form($request)
-	{	
+	{
 		$current_page = $request->get_int('page', 1);
 		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
 		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
