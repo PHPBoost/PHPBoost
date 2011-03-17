@@ -72,7 +72,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$Upload = new Upload($dir);
-		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FilesConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
+		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
 		
 		if ($Upload->get_error() != '') //Erreur, on arrête ici
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
