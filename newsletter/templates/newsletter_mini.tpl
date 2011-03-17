@@ -32,7 +32,7 @@
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
 					<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text newsletter_text" value="{USER_MAIL}" />
 					<input type="image" class="newsletter_img" value="1" src="{PATH_TO_ROOT}/newsletter/templates/images/newsletter_submit.png" />
-					<input type="hidden" name="subscribe" value="subscribe" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</div>
 			</form>
 		</div>

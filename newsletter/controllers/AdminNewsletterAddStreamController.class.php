@@ -124,7 +124,7 @@ class AdminNewsletterAddStreamController extends AdminController
 
 	private function save()
 	{
-		$auth = $this->form->get_value('active_authorizations') ? serialize($this->form->get_value('advanced_authorizations')) : null;
+		$auth = $this->form->get_value('active_authorizations') ? serialize($this->form->get_value('advanced_authorizations')->build_auth_array()) : null;
 		PersistenceContext::get_querier()->inject(
 			"INSERT INTO " . NewsletterSetup::$newsletter_table_streams . " (name, description, picture, visible, auth)
 			VALUES (:name, :description, :picture, :visible, :auth)", array(
@@ -144,7 +144,7 @@ class AdminNewsletterAddStreamController extends AdminController
 		$response->set_title($this->lang['newsletter']);
 		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();

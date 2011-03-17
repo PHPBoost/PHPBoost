@@ -52,7 +52,7 @@ class AdminNewsletterEditStreamController extends AdminController
 		$tpl = new StringTemplate('<script type="text/javascript">
 		<!--
 			Event.observe(window, \'load\', function() {
-				if ({ADVANCED_AUTH} == 0)
+				if ({ADVANCED_AUTH})
 				{
 					$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
 				}
@@ -62,7 +62,7 @@ class AdminNewsletterEditStreamController extends AdminController
 		# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		$tpl->put('ADVANCED_AUTH', NewsletterStreamsCache::load()->get_authorizations_by_stream($id) !== null ? 1 : 0);
+		$tpl->put('ADVANCED_AUTH', is_array(NewsletterStreamsCache::load()->get_authorizations_by_stream($id)) ? false : true);
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -107,7 +107,8 @@ class AdminNewsletterEditStreamController extends AdminController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('active_authorizations', $this->lang['streams.active-advanced-authorizations'], FormFieldCheckbox::UNCHECKED, 
+		$active_authorizations = is_array($newsletter_stream_cache['authorizations']) ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED;
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('active_authorizations', $this->lang['streams.active-advanced-authorizations'], $active_authorizations, 
 		array('events' => array('click' => '
 		if (HTMLForms.getField("active_authorizations").getValue()) {
 			$("newsletter_admin_advanced_authorizations").appear(); 
@@ -125,8 +126,7 @@ class AdminNewsletterEditStreamController extends AdminController
 			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
 		));
 		
-		$auth = NewsletterStreamsCache::load()->get_authorizations_by_stream($id);
-		$default_authorizations = $auth !== null ? $auth : NewsletterConfig::load()->get_authorizations();
+		$default_authorizations = is_array($newsletter_stream_cache['authorizations']) ? $newsletter_stream_cache['authorizations'] : NewsletterConfig::load()->get_authorizations();
 		$auth_settings->build_from_auth_array($default_authorizations);
 		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
 		$fieldset_authorizations->add_field($auth_setter);
@@ -140,7 +140,7 @@ class AdminNewsletterEditStreamController extends AdminController
 
 	private function save($id)
 	{
-		$auth = $this->form->get_value('active_authorizations') ? serialize($this->form->get_value('advanced_authorizations')) : null;
+		$auth = $this->form->get_value('active_authorizations') ? serialize($this->form->get_value('advanced_authorizations')->build_auth_array()) : null;
 		PersistenceContext::get_querier()->inject(
 			"UPDATE ". NewsletterSetup::$newsletter_table_streams ." SET 
 			name = :name, description = :description, picture = :picture, visible = :visible, auth = :auth
@@ -161,7 +161,7 @@ class AdminNewsletterEditStreamController extends AdminController
 		$response->set_title($this->lang['newsletter']);
 		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();

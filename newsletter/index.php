@@ -48,7 +48,9 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('NewsletterHomeController', '`^.*$`'),
-	new UrlControllerMapper('NewsletterHomeController', '`^/list/?(?:/([a-z]+))?/?$`', array('page'))
+	new UrlControllerMapper('NewsletterHomeController', '`^/list/?(?:/([a-z]+))?/?$`', array('page')),
+	
+	new UrlControllerMapper('NewsletterArchiveController', '`^/archives/([a-z]+)?/?$`', array('id_stream')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 

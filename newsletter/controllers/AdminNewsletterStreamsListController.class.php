@@ -73,8 +73,8 @@ class AdminNewsletterStreamsListController extends AbstractController
 		
 		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/admin/streams/list/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
-			'C_CATEGORIES_EXIST' => (float)$nbr_cats,
-			'C_ADD_CATEGORIE' => DispatchManager::get_url('/newsletter', '/admin/stream/add/')->absolute(),
+			'C_STREAMS_EXIST' => (float)$nbr_cats,
+			'C_ADD_STREAM' => DispatchManager::get_url('/newsletter', '/admin/stream/add/')->absolute(),
 			'SORT_NAME_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/top/'. $current_page)->absolute(),
 			'SORT_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/bottom/'. $current_page)->absolute(),
 			'SORT_STATUS_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/status/top/'. $current_page)->absolute(),
@@ -94,8 +94,8 @@ class AdminNewsletterStreamsListController extends AbstractController
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())
-		{	
-			$this->view->assign_block_vars('categories_list', array(
+		{
+			$this->view->assign_block_vars('streams_list', array(
 				'EDIT_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/edit/')->absolute(),
 				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/delete/')->absolute(),
 				'NAME' => $row['name'],
@@ -119,11 +119,11 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$response->set_title($this->lang['newsletter']);
 		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
+		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
 		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
 
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['admin.newsletter-streams']);
+		$env->set_page_title($this->lang['admin.newsletter_streams']);
 		return $response;
 	}
 }
