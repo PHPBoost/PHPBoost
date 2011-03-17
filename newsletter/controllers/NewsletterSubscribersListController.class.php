@@ -60,9 +60,6 @@ class NewsletterSubscribersListController extends AbstractController
 			case 'pseudo' :
 				$field_bdd = 'login';
 			break;
-			case 'newsletter' :
-				$field_bdd = 'id_cats';
-			break;
 			default :
 				$field_bdd = 'login';
 		}
@@ -77,8 +74,6 @@ class NewsletterSubscribersListController extends AbstractController
 			'C_SUBSCRIPTION' => DispatchManager::get_url('/newsletter', '/subscribe/')->absolute(),
 			'SORT_PSEUDO_TOP' => DispatchManager::get_url('/newsletter', '/subscribers/list/pseudo/top/'. $current_page)->absolute(),
 			'SORT_PSEUDO_BOTTOM' => DispatchManager::get_url('/newsletter', '/subscribers/list/pseudo/bottom/'. $current_page)->absolute(),
-			'SORT_NEWSLETTER_NAME_TOP' => DispatchManager::get_url('/newsletter', '/subscribers/list/newsletter/top/'. $current_page)->absolute(),
-			'SORT_NEWSLETTER_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/subscribers/list/newsletter/bottom/'. $current_page)->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -96,12 +91,13 @@ class NewsletterSubscribersListController extends AbstractController
 		);
 		while ($row = $result->fetch())
 		{
+			$streams = NewsletterService::get_name_streams_member($row['user_id']);
 			$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['subscribers.visitor'];
 			$this->view->assign_block_vars('subscribers_list', array(
 				'EDIT_LINK' => empty($row['user_id']) ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
 				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/')->absolute(),
 				'PSEUDO' => $pseudo,
-				'NEWSLETTER_NAME' => is_array(unserialize($row['id_cats'])) ? $this->get_name_categories(unserialize($row['id_cats'])) : $this->lang['streams.no_cats'],
+				'NEWSLETTER_NAME' => !empty($streams) ? implode('/', $streams) : $this->lang['streams.no_cats'],
 				'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 			));
 		}

@@ -1,7 +1,7 @@
 <table  class="module_table">
 	<tr> 
 		<th colspan="4">
-			{@subscribers.list}
+			{@admin.newsletter_streams}
 		</th>
 	</tr>
 	<tr style="text-align:center;">
@@ -23,27 +23,27 @@
 	</tr>
 	<tr style="text-align:center;">
 		<td colspan="4" class="row1">
-			<a href="{C_ADD_CATEGORIE}">{@streams.add}</a>
+			<a href="{C_ADD_STREAM}">{@streams.add}</a>
 		</td>
 	</tr>
-	# IF C_CATEGORIES_EXIST #
-		# START categories_list #
+	# IF C_STREAMS_EXIST #
+		# START streams_list #
 		<tr style="text-align:center;">
 			<td class="row1"> 
-				<a href="{categories_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
-				<a href="{categories_list.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
+				<a href="{streams_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
+				<a href="{streams_list.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
 			</td>
 			<td class="row2">
-				{categories_list.NAME}
+				{streams_list.NAME}
 			</td>
 			<td class="row2">
-				{categories_list.DESCRIPTION}
+				{streams_list.DESCRIPTION}
 			</td>
 			<td class="row2">
-				{categories_list.STATUS}
+				{streams_list.STATUS}
 			</td>
 		</tr>
-		# END categories_list #
+		# END streams_list #
 	# ENDIF #
 	<tr>
 		<td colspan="4" class="row1">

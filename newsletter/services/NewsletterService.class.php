@@ -90,6 +90,20 @@ class NewsletterService
 		return $streams;
 	}
 	
+	public static function get_name_streams_member($user_id)
+	{
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
+		{
+			if (array_key_exists($user_id, $value['subscribers']))
+			{
+				$streams[] = $value['name'];
+			}
+		}
+		return $streams;
+	}
+	
 	public static function get_errors()
 	{
 		if (!empty(self::$errors))

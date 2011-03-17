@@ -35,12 +35,12 @@ class AdminNewsletterDeleteStreamController extends AdminController
 		{
 			$condition = "WHERE id = :id";
 			$parameters = array('id' => $id);
-			self::$db_querier->delete(NewsletterSetup::$newsletter_table_streams, $condition, $parameters);
+			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_streams, $condition, $parameters);
 
 			//Delete for subscribers
 			$condition = "WHERE stream_id = :stream_id";
 			$parameters = array('stream_id' => $id);
-			self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
 			
 			NewsletterStreamsCache::invalidate();
 			

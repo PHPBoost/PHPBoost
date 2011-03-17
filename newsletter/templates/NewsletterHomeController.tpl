@@ -27,16 +27,16 @@
 		# START streams_list #
 		<tr style="text-align:center;">
 			<td class="row2"> 
-				<img src="{categories_list.PICTURE}"></img>
+				<img src="{streams_list.PICTURE}"></img>
 			</td>
 			<td class="row2">
-				{categories_list.NAME}
+				{streams_list.NAME}
 			</td>
 			<td class="row2">
-				{categories_list.DESCRIPTION}
+				{streams_list.DESCRIPTION}
 			</td>
 			<td class="row2">
-				{categories_list.VIEW_ARCHIVES}
+				{streams_list.VIEW_ARCHIVES}
 			</td>
 		</tr>
 		# END streams_list #
