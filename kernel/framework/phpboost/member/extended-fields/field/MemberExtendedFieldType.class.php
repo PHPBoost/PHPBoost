@@ -79,6 +79,13 @@ interface MemberExtendedFieldType
 	 */
 	public function constraint($value);
 	
+	public function set_disable_fields_configuration(array $names);
+	
+	/**
+	 * @return Array
+	 */
+	public function get_disable_fields_configuration();
+	
 	/**
 	 * @desc Return true if the field used once
 	 * @return bool

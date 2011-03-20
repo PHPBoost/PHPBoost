@@ -146,12 +146,12 @@ class HTMLForm
 	public function get_value($field_id, $default_value = null)
 	{
 		$field = $this->get_field_by_id($field_id);
-		if ($field->is_disabled())
+		if ($field->is_disabled() && $default_value !== null)
 		{
-			if ($default_value !== null)
-			{
-				return $field->set_value($default_value);
-			}
+			$field->set_value($default_value);
+		}
+		else if ($field->is_disabled() && $default_value == null)
+		{
 			throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 		}
 		return $field->get_value();

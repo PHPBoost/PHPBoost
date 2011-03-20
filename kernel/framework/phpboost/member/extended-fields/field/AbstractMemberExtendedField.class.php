@@ -38,6 +38,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	protected $field_used_phpboost_config;
 	protected $parse_field;
 	protected $unparse_field;
+	protected $disable_fields_configuration = array();
 	
 	/**
 	 * @var bool
@@ -159,6 +160,51 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		}
 	}	
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_disable_fields_configuration(array $names)
+	{
+		foreach($names as $name)
+		{
+			$name = strtolower($name);
+			switch ($name)
+			{
+				case 'name':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'description':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'field_type':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'regex':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'possible_values':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'default_values':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'authorizations':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				default :
+					throw new Exception('Field name ' . $name . ' not exist');
+			}
+		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_disable_fields_configuration()
+	{
+		return $this->disable_fields_configuration;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

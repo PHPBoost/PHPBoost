@@ -1,4 +1,4 @@
-<div id="${escape(ID)}_field">
+<div id="${escape(ID)}_field" # IF C_DISABLED # style="display:none;" # ENDIF #>
 	<label for="${escape(ID)}">
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}
