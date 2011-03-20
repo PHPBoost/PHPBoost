@@ -105,6 +105,7 @@ class MemberExtendedFieldsFactory
 		$instance_class = new $name_class();
 		return $instance_class->unparse($value);
 	}
+	
 	/**
 	 * @desc This function execute the database request
 	 * @param instance of MemberExtendedField $member_extended_field and instance of MemberExtendedFieldsDAO $member_extended_fields_dao.
@@ -115,6 +116,21 @@ class MemberExtendedFieldsFactory
 
 		$instance_class = new $name_class();
 		return $instance_class->register($member_extended_field, $member_extended_fields_dao, $form);
+	}
+	
+	/**
+	 * @desc This function return Array disable fields in configuration
+	 * @param $field_type Field type.
+	 */
+	public static function get_disable_fields_configuration($field_type)
+	{
+		$member_extended_field = new MemberExtendedField();
+		$member_extended_field->set_field_type($field_type);
+		
+		$name_class = self::name_class($member_extended_field);
+
+		$instance_class = new $name_class();
+		return $instance_class->get_disable_fields_configuration();
 	}
 	
 	/**
@@ -181,6 +197,5 @@ class MemberExtendedFieldsFactory
 			return $field_type;
 		}
 	}
-	
 }
 ?>

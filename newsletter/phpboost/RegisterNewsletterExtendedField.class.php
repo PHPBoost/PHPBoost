@@ -27,6 +27,11 @@
  
 class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 {
+	public function __construct()
+	{
+		$this->set_disable_fields_configuration(array('field_type', 'regex', 'possible_values', 'default_values'));
+	}
+	
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
