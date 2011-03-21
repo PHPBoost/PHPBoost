@@ -100,10 +100,11 @@ class NewsletterSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
-			'title' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
+			'subject' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
+			'nbr_subscribers' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'editor_name' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''")
+			'language_type' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id')

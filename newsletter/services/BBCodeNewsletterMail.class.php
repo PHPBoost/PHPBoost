@@ -35,21 +35,21 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 		parent::__construct();
 	}
 	
-	public function send_mail($id_cat, $sender, $subject, $contents)
+	public function send_mail($subscribers, $sender, $subject, $contents)
 	{
 		$mail = new Mail();
 		$mail->set_sender($sender);
 		$mail->set_is_html(false);
 		$mail->set_subject($subject);
 		
-		$member_registered_newsletter = $this->list_members_registered_newsletter();
-		foreach ($member_registered_newsletter as $member)
+		foreach ($subscribers as $id => $values)
 		{
+			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->clear_recipients();
-			$mail->add_recipient($member['mail']);
+			$mail->add_recipient($mail_subscriber);
 			
 			$contents = '<html><head><title>' . $subject . '</title></head><body>';
-			$contents .= $this->add_unsubscribe_link($contents, $member['mail']);
+			$contents .= $this->add_unsubscribe_link();
 			$contents .= '</body></html>';
 			
 			$mail->set_content($contents);
@@ -59,10 +59,9 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 		}
 	}
 	
-	public function display_mail($title, $contents)
+	public function display_mail($subject, $contents)
 	{
-		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] .'"><head><title>' . $title . '</title></head><body onclick = "window.close()"><p>' .$contents . '</p></body></html>';
+		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'. $contents;
 	}
 	
 	public function parse_contents($contents)

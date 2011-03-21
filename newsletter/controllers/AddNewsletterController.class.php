@@ -70,10 +70,7 @@ class AddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$id_cat = 1;
-		$fieldset->set_description(
-			StringVars::replace_vars($this->lang['newsletter.number-subscribers'], array('number' => NewsletterMailService::number_subscribers($id_cat)))
-		);
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['archives.choice_streams'], array(), $this->get_streams()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
 			'class' => 'text', 'required' => true)
@@ -90,19 +87,37 @@ class AddNewsletterController extends ModuleController
 	
 	private function save($type)
 	{
-		NewsletterMailService::send_mail(
-			$type, 
-			NewsletterConfig::load()->get_mail_sender(), 
+		NewsletterService::add_newsletter(
+			$this->form->get_value('newsletter_choice'), 
 			$this->form->get_value('title'), 
-			$this->form->get_value('contents')
+			$this->form->get_value('contents'),
+			$type
 		);
 	}
 	
 	private function build_response(View $view)
 	{
 		$response = new SiteDisplayResponse($view);
+		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
+		$breadcrumb->add($this->lang['newsletter-add'], DispatchManager::get_url('/newsletter', '/add/')->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
+	}
+	
+	private function get_streams()
+	{
+		$streams = array();
+		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams_cache as $id => $value)
+		{
+			$read_auth = NewsletterAuthorizationsService::id_stream($id)->read();
+			if ($read_auth && $value['visible'] == 1)
+			{
+				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
+			}
+		}
+		return $streams;
 	}
 	
 	public function return_editor($type)

@@ -43,7 +43,7 @@ class AdminNewsletterEditStreamController extends AdminController
 		
 		if (!$this->categorie_exist($id) || $id == 0)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.categorie-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -66,7 +66,7 @@ class AdminNewsletterEditStreamController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-edit-categorie'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-edit-stream'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());

@@ -36,6 +36,28 @@ class NewsletterService
 		self::$errors = '';
 	}
 	
+	public static function add_newsletter(array $streams, $subject, $contents, $language_type)
+	{
+		$streams_cache = NewsletterStreamsCache::load()->get_streams();
+		foreach ($streams_cache as $id => $values)
+		{
+			if (in_array($id, $streams))
+			{
+				//Send mail
+				NewsletterMailFactory::send_mail($values['subscribers'], $id, $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $contents);
+				//Add archive
+				NewsletterDAO::add_archive($id, $subject, $contents, $language_type);
+			}
+		}
+	}
+	
+	public static function display_newsletter($id_archive)
+	{
+		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $id_archive ."'");
+		
+		return NewsletterMailFactory::display_mail($row['language_type'], $row['subject'], $row['contents']);
+	}
+	
 	public static function update_subscribtions_member_registered(Array $streams, $user_id)
 	{
 		if (NewsletterDAO::user_id_existed($user_id))

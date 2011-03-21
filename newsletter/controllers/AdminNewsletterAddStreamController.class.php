@@ -53,7 +53,7 @@ class AdminNewsletterAddStreamController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-add-categorie'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-add-stream'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -70,7 +70,7 @@ class AdminNewsletterAddStreamController extends AdminController
 	{
 		$form = new HTMLForm('newsletter_admin');
 		
-		$fieldset = new FormFieldsetHTML('add-categorie', $this->lang['streams.add']);
+		$fieldset = new FormFieldsetHTML('add-stream', $this->lang['streams.add']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['streams.name'], '', array(
