@@ -93,6 +93,7 @@
 
 [b]Téléchargement[/b]
 [*] Possibilité de signaler les liens cassés.
+[*] Possibilité d'ajouter le lien d'un fichier contenu dans la section upload
 
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
