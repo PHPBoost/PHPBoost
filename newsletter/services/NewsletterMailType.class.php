@@ -35,25 +35,19 @@ interface NewsletterMailType
 	 * @desc This function send mail
 	 * @param instance of NewsletterMailService $newsletter_mail_service.
 	 */
-	public function send_mail(NewsletterMailService $newsletter_mail_service);
+	public function send_mail($subscribers, $sender, $subject, $contents);
 	
 	/**
 	 * @desc This function displayed mail
 	 * @param instance of NewsletterMailService $newsletter_mail_service.
 	 */
-	public function display_mail(NewsletterMailService $newsletter_mail_service);
+	public function display_mail($subject, $contents);
 	
 	/**
 	 * @desc This function parse contents mail
 	 * @param instance of NewsletterMailService $newsletter_mail_service.
 	 */
-	protected function parse_contents(NewsletterMailService $newsletter_mail_service);
-	
-	
-	/**
-	 * @desc This function list the members to registered newsletter
-	 */
-	protected function list_members_registered_newsletter();
+	public function parse_contents($contents);
 }
 
 ?>

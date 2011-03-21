@@ -42,22 +42,17 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function send_mail($id_cat, $sender, $subject, $contents)
-	{
-	}
+	public function send_mail($subscribers, $sender, $subject, $contents){}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function parse_contents($contents, $user_id)
-	{
-	
-	}
+	public function parse_contents($contents){}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function display_mail($title, $contents)
+	public function display_mail($subject, $contents)
 	{
 		return $contents;
 	}
@@ -65,31 +60,9 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function list_members_registered_newsletter()
+	public function add_unsubscribe_link()
 	{
-	
-		$result = $this->querier->select("SELECT id, mail 
-		FROM " . NewsletterSetup::$newsletter_table_subscribers . "
-		WHERE user_aprob = 1
-		ORDER BY id");
-		while ($row = $result->fetch())
-		{
-			$member_registered_newsletter[] = array(
-				'id' => $row['id'],
-				'mail' => $row['mail']
-			);
-		}
-		
-		return $member_registered_newsletter;
-	}
-	
-		
-	public function add_unsubscribe_link($contents, $mail)
-	{
-		return str_replace(
-			'[UNSUBSCRIBE_LINK]', 
-			'<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/' . $mail . '">' . $this->lang['newsletter_unscubscribe_text'] . '</a><br /><br />',
-			$contents);
+		return '<br /><br /><a href="' . PATH_TO_ROOT . '/newsletter/index.php?url=/unsubscribe/">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
 	}
 }
 

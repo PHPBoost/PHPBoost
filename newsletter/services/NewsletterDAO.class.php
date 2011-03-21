@@ -34,6 +34,22 @@ class NewsletterDAO
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
+	public static function add_archive($stream_id, $subject, $contents, $language_type)
+	{
+		$stream_cache = NewsletterStreamsCache::load()->get_stream($stream_id);
+		$columns = array(
+			'stream_id' => $stream_id,
+			'subject' => $subject,
+			'contents' => $contents,
+			'timestamp' => time(),
+			'language_type' => $language_type,
+			'nbr_subscribers' => count($stream_cache['subscribers'])
+		);
+		self::$db_querier->insert(NewsletterSetup::$newsletter_table_archives, $columns);
+		
+		NewsletterStreamsCache::invalidate();
+	}
+	
 	public static function insert_subscribtions_member_registered($user_id, Array $streams)
 	{
 		//Inject user in subscribers table
@@ -175,6 +191,11 @@ class NewsletterDAO
 		);
 		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
 		
+	}
+	
+	public static function get_mail_for_member($user_id)
+	{
+		self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_mail', "WHERE user_id = '". $user_id ."'");
 	}
 }
 ?>

@@ -47,7 +47,7 @@ class NewsletterSubscribersListController extends AbstractController
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
-		if (!$this->user->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_READ_SUBSCRIBERS))
+		if (!NewsletterAuthorizationsService::default_authorizations()->read_subscribers())
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -119,17 +119,6 @@ class NewsletterSubscribersListController extends AbstractController
 		$breadcrumb->add($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list/')->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['admin.newsletter-subscribers']);
 		return $response;
-	}
-	
-	private function get_name_categories(Array $categories)
-	{
-		$names = array();
-		foreach ($categories as $id_cats)
-		{
-			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_streams, array('name'), "WHERE id = '". $id_cats ."'");
-			$names[] = $row['name'];
-		}
-		return implode('/', $names);
 	}
 }
 

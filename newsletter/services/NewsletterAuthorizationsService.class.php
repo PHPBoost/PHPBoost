@@ -53,7 +53,7 @@ class NewsletterAuthorizationsService
 	 * Int $id_stream Stream id
 	 * @return NewsletterAuthorizationsService by id stream
 	 */
-	public static function id_stream($id_stream)
+	public static function id_stream($id_stream = null)
 	{
 		$instance = new NewsletterAuthorizationsService();
 		$instance->id_stream = $id_stream;
@@ -76,7 +76,7 @@ class NewsletterAuthorizationsService
 	public static function default_authorizations()
 	{
 		$instance = new NewsletterAuthorizationsService();
-		return $instance->get_authorizations();
+		return $instance;
 	}
 	
 	public function read()
@@ -153,7 +153,7 @@ class NewsletterAuthorizationsService
 	
 	private function get_authorizations()
 	{
-		if (is_array($this->stream_authorizations) && $this->id_stream !== null)
+		if (is_array($this->stream_authorizations) && $this->id_stream !== null && $this->id_stream !== 0)
 		{
 			return $this->stream_authorizations;
 		}
