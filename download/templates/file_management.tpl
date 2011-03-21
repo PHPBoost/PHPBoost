@@ -99,7 +99,10 @@
 					</dl>
 					<dl>
 						<dt><label for="url">* {L_URL}</label></dt>
-						<dd><input type="text" size="50" id="url" name="url" value="{URL}" class="text" /></dd>
+						<dd>
+							<input type="text" size="50" id="url" name="url" value="{URL}" class="text" />
+							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>

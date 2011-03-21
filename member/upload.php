@@ -30,6 +30,8 @@ define('TITLE', $LANG['files_management']);
 
 $popup = retrieve(GET, 'popup', '');
 $editor = retrieve(GET, 'edt', '');
+$parse = retrieve(GET, 'parse', '');
+
 if (!empty($popup)) //Popup.
 {
 	require_once('../kernel/header_no_display.php');
@@ -490,7 +492,7 @@ else
 		
 		$is_bbcode_editor = ($editor == ContentFormattingService::BBCODE_LANGUAGE);
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = $is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce);
+		$inserted_code = !empty($parse) ? $link : ($is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce));
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
