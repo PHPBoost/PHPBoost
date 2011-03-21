@@ -53,7 +53,7 @@ class NewsletterArchivesController extends AbstractController
 			NewsletterAuthorizationsService::get_errors()->read_archives();
 		}
 		
-		if (NewsletterStreamsCache::load()->get_existed_stream($id_stream))
+		if (!NewsletterStreamsCache::load()->get_existed_stream($id_stream))
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
