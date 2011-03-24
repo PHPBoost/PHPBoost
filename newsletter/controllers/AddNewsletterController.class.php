@@ -37,8 +37,15 @@ class AddNewsletterController extends ModuleController
 	 */
 	private $submit_button;
 	
+	private $send_test_button;
+	
 	public function execute(HTTPRequest $request)
 	{
+		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
+		{
+			NewsletterAuthorizationsService::get_errors()->create_newsletters();
+		}
+		
 		$type = $request->get_value('type', '');
 		
 		$this->init();
@@ -49,8 +56,14 @@ class AddNewsletterController extends ModuleController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save($type);
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-add-newsletter'], E_USER_SUCCESS, 4));
+			$this->send_mail($type);
+			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-add'], E_USER_SUCCESS, 4));
+		}
+		
+		if ($this->send_test_button->has_been_submited() && $this->form->validate())
+		{
+			$this->send_test($type);
+			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], E_USER_SUCCESS, 4));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -70,7 +83,7 @@ class AddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['archives.choice_streams'], array(), $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
 			'class' => 'text', 'required' => true)
@@ -78,20 +91,33 @@ class AddNewsletterController extends ModuleController
 		
 		$fieldset->add_field($this->return_editor($type));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
+		$this->send_test_button = new FormButtonSubmit($this->lang['add.send_test'], 'send_test');
 		$form->add_button($this->submit_button);
-
+		$form->add_button($this->send_test_button);
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 	
-	private function save($type)
+	private function send_mail($type)
 	{
 		NewsletterService::add_newsletter(
 			$this->form->get_value('newsletter_choice'), 
 			$this->form->get_value('title'), 
 			$this->form->get_value('contents'),
 			$type
+		);
+	}
+	
+	private function send_test($type)
+	{
+		NewsletterMailFactory::send_mail(
+			array(NewsletterConfig::load()->get_mail_sender()), 
+			$type, 
+			NewsletterConfig::load()->get_mail_sender(), 
+			$this->form->get_value('title'), 
+			$this->form->get_value('contents')
 		);
 	}
 	
@@ -111,7 +137,7 @@ class AddNewsletterController extends ModuleController
 		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($id)->read();
+			$read_auth = NewsletterAuthorizationsService::id_stream($id)->create_newsletters();
 			if ($read_auth && $value['visible'] == 1)
 			{
 				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);

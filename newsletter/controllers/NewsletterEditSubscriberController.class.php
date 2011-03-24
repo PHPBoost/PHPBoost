@@ -38,6 +38,11 @@ class NewsletterEditSubscriberController extends AdminController
 
 	public function execute(HTTPRequest $request)
 	{
+		if (!NewsletterAuthorizationsService::default_authorizations()->moderation_subscribers())
+		{
+			NewsletterAuthorizationsService::get_errors()->moderation_subscribers();
+		}
+		
 		$id = $request->get_getint('id', 0);
 		$this->init();
 		

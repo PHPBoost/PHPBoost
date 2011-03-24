@@ -103,7 +103,7 @@ class NewslettersubscribeController extends ModuleController
 		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($id)->read();
+			$read_auth = NewsletterAuthorizationsService::id_stream($id)->subscribe();
 			if ($read_auth && $value['visible'] == 1)
 			{
 				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);

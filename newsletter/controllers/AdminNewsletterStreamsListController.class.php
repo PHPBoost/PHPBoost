@@ -38,7 +38,7 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$this->init();
 		$this->build_form($request);
 
-		return $this->build_response($this->view);
+		return new AdminNewsletterDisplayResponse($this->view, $this->lang['streams.add']);
 	}
 
 	private function build_form($request)
@@ -111,20 +111,6 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$this->view = new FileTemplate('newsletter/AdminNewsletterStreamsListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->user = AppContext::get_user();
-	}
-
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['newsletter']);
-		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
-
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['admin.newsletter_streams']);
-		return $response;
 	}
 }
 

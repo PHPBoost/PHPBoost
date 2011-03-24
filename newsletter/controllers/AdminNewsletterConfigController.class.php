@@ -52,7 +52,7 @@ class AdminNewsletterConfigController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
 	}
 
 	private function init()
@@ -65,7 +65,7 @@ class AdminNewsletterConfigController extends AdminController
 		$form = new HTMLForm('newsletter_admin');
 		$newsletter_config = NewsletterConfig::load();
 
-		$fieldset_config = new FormFieldsetHTML('configuration', $this->lang['admin.newsletter-config']);
+		$fieldset_config = new FormFieldsetHTML('configuration', $this->lang['newsletter.config']);
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(), array(
@@ -107,20 +107,6 @@ class AdminNewsletterConfigController extends AdminController
 		$newsletter_config->set_newsletter_name($this->form->get_value('newsletter_name'));
 		$newsletter_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsletterConfig::save();
-	}
-
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['newsletter']);
-		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
-
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['admin.newsletter-config']);
-		return $response;
 	}
 }
 

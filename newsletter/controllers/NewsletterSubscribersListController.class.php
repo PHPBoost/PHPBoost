@@ -30,11 +30,20 @@ class NewsletterSubscribersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $user;
+	private $id_stream;
+	private $stream_cache;
 	
 	private $nbr_subscribers_per_page = 25;
 
 	public function execute(HTTPRequest $request)
 	{
+		$this->id_stream = $request->get_int('id_stream', 0);
+		
+		if ($this->id_stream == 0)
+		{
+			AppContext::get_response()->redirect(DispatchManager::get_url('/newsletter')->absolute());
+		}
+		
 		$this->init();
 		$this->build_form($request);
 
@@ -47,14 +56,12 @@ class NewsletterSubscribersListController extends AbstractController
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
-		if (!NewsletterAuthorizationsService::default_authorizations()->read_subscribers())
+		if (!NewsletterAuthorizationsService::id_stream($this->id_stream)->read_subscribers())
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
+			NewsletterAuthorizationsService::get_errors()->read_subscribers();
 		}
 		
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
-		
 		switch ($field)
 		{
 			case 'pseudo' :
@@ -64,22 +71,23 @@ class NewsletterSubscribersListController extends AbstractController
 				$field_bdd = 'login';
 		}
 		
-		$nbr_subscribers = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_subscribers, __LINE__, __FILE__);
+		$nbr_subscribers = count($this->stream_cache['subscribers']);
 		$nbr_pages =  ceil($nbr_subscribers / $this->nbr_subscribers_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/subscribers/list/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_SUBSCRIBERS' => (float)$nbr_subscribers,
 			'C_SUBSCRIPTION' => DispatchManager::get_url('/newsletter', '/subscribe/')->absolute(),
-			'SORT_PSEUDO_TOP' => DispatchManager::get_url('/newsletter', '/subscribers/list/pseudo/top/'. $current_page)->absolute(),
-			'SORT_PSEUDO_BOTTOM' => DispatchManager::get_url('/newsletter', '/subscribers/list/pseudo/bottom/'. $current_page)->absolute(),
+			'SORT_PSEUDO_TOP' => DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/pseudo/top/'. $current_page)->absolute(),
+			'SORT_PSEUDO_BOTTOM' => DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/pseudo/bottom/'. $current_page)->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
 		$limit_page = $current_page > 0 ? $current_page : 1;
 		$limit_page = (($limit_page - 1) * $this->nbr_subscribers_per_page);
 		
+
 		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.login, member.user_mail
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
@@ -91,20 +99,24 @@ class NewsletterSubscribersListController extends AbstractController
 		);
 		while ($row = $result->fetch())
 		{
-			$streams = NewsletterService::get_name_streams_member($row['user_id']);
-			$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['subscribers.visitor'];
-			$this->view->assign_block_vars('subscribers_list', array(
-				'EDIT_LINK' => empty($row['user_id']) ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
-				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/')->absolute(),
-				'PSEUDO' => $pseudo,
-				'NEWSLETTER_NAME' => !empty($streams) ? implode('/', $streams) : $this->lang['streams.no_cats'],
-				'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
-			));
+			if (array_key_exists($row['id'], $this->stream_cache['subscribers']))
+			{
+				$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_subscribers();
+				$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
+				$this->view->assign_block_vars('subscribers_list', array(
+					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
+					'EDIT_LINK' => empty($row['user_id']) ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
+					'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/'. $this->id_stream)->absolute(),
+					'PSEUDO' => $pseudo,
+					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
+				));
+			}
 		}
 	}
 	
 	private function init()
 	{
+		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/NewsletterSubscribersListController.tpl');
 		$this->view->add_lang($this->lang);
@@ -116,8 +128,9 @@ class NewsletterSubscribersListController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
-		$breadcrumb->add($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list/')->absolute());
-		$response->get_graphical_environment()->set_page_title($this->lang['admin.newsletter-subscribers']);
+		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream_cache['name'];
+		$breadcrumb->add($name_page, DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream)->absolute());
+		$response->get_graphical_environment()->set_page_title($name_page);
 		return $response;
 	}
 }

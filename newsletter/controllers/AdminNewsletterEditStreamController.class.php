@@ -71,7 +71,7 @@ class AdminNewsletterEditStreamController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
 	}
 
 	private function init()
@@ -155,20 +155,6 @@ class AdminNewsletterEditStreamController extends AdminController
 		NewsletterStreamsCache::invalidate();
 	}
 
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['newsletter']);
-		$response->add_link($this->lang['admin.newsletter-subscribers'], DispatchManager::get_url('/newsletter', '/subscribers/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-archives'], DispatchManager::get_url('/newsletter', '/archives'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter_streams'], DispatchManager::get_url('/newsletter', '/admin/streams/list'), '/newsletter/newsletter.png');
-		$response->add_link($this->lang['admin.newsletter-config'], DispatchManager::get_url('/newsletter', '/admin/config'), '/newsletter/newsletter.png');
-
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['streams.edit']);
-		return $response;
-	}
-	
 	private static function categorie_exist($id)
 	{
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams, "WHERE id = '". $id ."'");

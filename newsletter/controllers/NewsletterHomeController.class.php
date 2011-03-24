@@ -49,8 +49,10 @@ class NewsletterHomeController extends AbstractController
 		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
 		$this->view->put_all(array(
 			'C_STREAMS' => (float)$nbr_streams,
-			'LINK_SUBSCRIBE' => DispatchManager::get_url('/newsletter', '/subscribe/')->absolute(),
-			'LINK_UNSUBSCRIBE' => DispatchManager::get_url('/newsletter', '/unsubscribe/')->absolute(),
+			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
+			'LINK_CREATE' => DispatchManager::get_url('/newsletter', '/add')->absolute(),
+			'LINK_SUBSCRIBE' => DispatchManager::get_url('/newsletter', '/subscribe')->absolute(),
+			'LINK_UNSUBSCRIBE' => DispatchManager::get_url('/newsletter', '/unsubscribe')->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -66,15 +68,17 @@ class NewsletterHomeController extends AbstractController
 		);
 		while ($row = $result->fetch())
 		{
-			$auth = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_READ) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_READ);
-			$auth_view_archives = is_array($row['auth']) ? AppContext::get_user()->check_auth($row['auth'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_READ_ARCHIVES);
-			if ($auth && $row['visible'] == 1)
+			$read_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read();
+			if ($read_auth && $row['visible'] == 1)
 			{
+				$read_archives_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_archives();
+				$read_subscribers_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers();
 				$this->view->assign_block_vars('streams_list', array(
 					'PICTURE' => PATH_TO_ROOT . $row['picture'],
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
-					'VIEW_ARCHIVES' => $auth_view_archives ? '<a href="' . DispatchManager::get_url('/newsletter', '/archives/'. $row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level']
+					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . DispatchManager::get_url('/newsletter', '/archives/'. $row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
+					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . DispatchManager::get_url('/newsletter', '/subscribers/'. $row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
 				));
 			}
 		}

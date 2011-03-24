@@ -1,7 +1,7 @@
 <table  class="module_table">
 	<tr> 
 		<th colspan="4">
-			{@admin.newsletter_streams}
+			{@newsletter.streams}
 		</th>
 	</tr>
 	<tr style="text-align:center;">
