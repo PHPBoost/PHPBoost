@@ -39,7 +39,7 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 		
 		foreach ($subscribers as $id => $values)
 		{
-			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id'];
+			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->clear_recipients();
 			$mail->add_recipient($mail_subscriber);
 			$mail->set_content($this->add_unsubscribe_link());

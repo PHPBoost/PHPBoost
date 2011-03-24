@@ -30,12 +30,12 @@
  */
 class NewsletterMailFactory
 {
-	public static function send_mail(array $subscribers, $id_stream, $language_type, $sender, $subject, $contents)
+	public static function send_mail(array $subscribers, $language_type, $sender, $subject, $contents)
 	{
 		$name_class = self::determine_class($language_type);
 		
 		$instance_class = new $name_class();
-		return $instance_class->send_mail($subscribers, $id_stream, $sender, $subject, $contents);
+		return $instance_class->send_mail($subscribers, $sender, $subject, $contents);
 	}
 	
 	public static function display_mail($language_type, $subject, $contents)
