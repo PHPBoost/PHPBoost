@@ -34,7 +34,7 @@ class InstallationServices
 
 	private static $token_file_content = '1';
 	private static $min_php_version = '5.1.2';
-	private static $phpboost_major_version = '3.1';
+	private static $phpboost_major_version = '4.0';
 
 	/**
 	 * @var File
