@@ -1,0 +1,66 @@
+<?php
+/*##################################################
+ *                      NewsletterDeleteSubscriberController.class.php
+ *                            -------------------
+ *   begin                : March 16, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+class NewsletterDeleteSubscriberController extends AdminController
+{
+	public function execute(HTTPRequest $request)
+	{
+		$id = $request->get_int('id', 0);
+		
+		if ($this->subscriber_exist($id) || $id !== 0)
+		{	
+			$condition = "WHERE id = :id";
+			$parameters = array(
+				'id' => $id,
+			);
+			self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
+			
+			$condition = "WHERE id = :id";
+			$parameters = array(
+				'id' => $id,
+			);
+			self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+			
+			NewsletterStreamsCache::invalidate();
+			
+			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'));
+			DispatchManager::redirect($controller);
+		}
+		else
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
+			DispatchManager::redirect($controller);
+		}
+	}
+	
+	private static function subscriber_exist($id)
+	{
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
+	}
+}
+
+?>
