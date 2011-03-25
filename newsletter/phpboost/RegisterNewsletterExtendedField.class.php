@@ -85,7 +85,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			$read_auth = is_array($value['authorizations']) ? AppContext::get_user()->check_auth($value['authorizations'], NewsletterConfig::CAT_AUTH_SUBSCRIBE) : AppContext::get_user()->check_auth(NewsletterConfig::load()->get_authorizations(), NewsletterConfig::AUTH_SUBSCRIBE);
+			$read_auth = NewsletterAuthorizationsService::id_stream($id)->subscribe();
 			if ($read_auth && $value['visible'] == 1)
 			{
 				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);

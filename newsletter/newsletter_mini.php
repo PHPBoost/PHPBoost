@@ -29,21 +29,19 @@ if (defined('PHPBOOST') !== true)	exit;
 
 function newsletter_mini($position, $block)
 {
-    global  $LANG, $User;
-    //Chargement de la langue du module.
-    load_module_lang('newsletter');
-
     $tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
 
     MenuService::assign_positions_conditions($tpl, $block);
 
+	$lang = LangLoader::get('newsletter_common', 'newsletter');
+	
     $tpl->put_all(array(
-    	'SUBSCRIBE' => $LANG['subscribe'],
-    	'UNSUBSCRIBE' => $LANG['unsubscribe'],
-    	'USER_MAIL' => ($User->get_attribute('user_mail') != '') ? $User->get_attribute('user_mail') : '',
-    	'L_NEWSLETTER' => $LANG['newsletter'],
-    	'L_SUBMIT' => $LANG['submit'],
-    	'L_ARCHIVES' => $LANG['archives']
+    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
+    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],
+    	'USER_MAIL' => (AppContext::get_user()->get_attribute('user_mail') != '') ? AppContext::get_user()->get_attribute('user_mail') : '',
+    	'L_NEWSLETTER' => $lang['newsletter'],
+    	'L_SUBMIT' => $lang['newsletter.submit'],
+    	'L_ARCHIVES' => $lang['newsletter.archives']
     ));
 
     return $tpl->render();

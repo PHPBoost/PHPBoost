@@ -31,6 +31,11 @@ class HomeAddNewsletterController extends ModuleController
 	
 	public function execute(HTTPRequest $request)
 	{
+		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
+		{
+			NewsletterAuthorizationsService::get_errors()->create_newsletters();
+		}
+		
 		$type = $request->get_value('type', '');
 		
 		if ($type !== '')

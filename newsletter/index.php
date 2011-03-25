@@ -35,22 +35,22 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('HomeAddNewsletterController', '`^/add/?$`'),
 	new UrlControllerMapper('AddNewsletterController', '`^/add/([a-z]+)?/?$`', array('type')),
 	
-	new UrlControllerMapper('AdminNewsletterStreamsListController', '`^/admin/streams/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminNewsletterStreamsListController', '`^/admin/streams(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('AdminNewsletterAddStreamController', '`^/admin/stream/add/?$`'),
 	new UrlControllerMapper('AdminNewsletterEditStreamController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('AdminNewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
 	
-	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers/?(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
 	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete?/?([0-9]+)/?$`', array('id', 'id_stream')),
 
-	new UrlControllerMapper('NewsletterArchivesController', '`^/archives/?(([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
+	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
 	
 	new UrlControllerMapper('NewsletterHomeController', '`^.*$`'),
-	new UrlControllerMapper('NewsletterHomeController', '`^/list/?(?:/([a-z]+))?/?$`', array('page')),
+	new UrlControllerMapper('NewsletterHomeController', '`^/list(?:/([a-z]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 

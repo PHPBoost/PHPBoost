@@ -21,11 +21,13 @@
 ------------------------------------- NOYAU ------------------------------------
 - Terminer le passage du dossier member et de la partie membre dans l'administration.
 - Débugger voir refaire la classes Comments (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
-- Créer des contraintes permettant de voir si un login/adresse email existe déjà.
 - Gérer finement les autorisations des langues
 - Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
 
 ------------------------------------ MODULES -----------------------------------
+
+[b]Newsletter[/b]
+- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
 
 #################################################################################
 

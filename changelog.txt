@@ -102,13 +102,12 @@
 - Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
 
 [b]Newsletter[/b]
-+ Refonte du module en MVC.
-+ Gestion des autorisations de création d'une newsletter.
-+ Gestion des autorisations de lecture et de modération de la liste des archives.
-+ Gestion des autorisations de lecture et de modération des inscrits.
-+ Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à toutes les newsletters).
-+ Possibilité de gerer les autorisations de lecture et de modération des inscrits, de création d'une newsletteret de modération des archives par newsletter.
-+ Gestion des archives avec tries sur les types de newsletter.
-+ Inscription aux newsletters dès l'enregistrement/l'édition d'un membre
+[*] Refonte du module en MVC.
+[*] Gestion des autorisations de création d'une newsletter.
+[*] Gestion des autorisations de lecture et de modération de la liste des archives.
+[*] Gestion des autorisations de lecture et de modération des inscrits.
+[*] Gestions de plusieurs newsletter (possibilité de s'abonner à certaines ou à toutes les newsletters).
+[*] Possibilité de gérer les autorisations de lecture et de modération des inscrits, de création d'une newsletteret de modération des archives par newsletter.
+[*] Gestion des archives avec tries sur les types de newsletter.
+[*] Inscription aux newsletters dès l'enregistrement/l'édition d'un membre
 - Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
-- Etudier l'ajouts de notifications de lecture.
