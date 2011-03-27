@@ -27,6 +27,13 @@
  
 class MemberDateExtendedField extends AbstractMemberExtendedField
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->set_disable_fields_configuration(array('regex', 'possible_values'));
+		$this->set_name(LangLoader::get_message('type.date','admin-extended-fields-common'));
+	}
+	
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();

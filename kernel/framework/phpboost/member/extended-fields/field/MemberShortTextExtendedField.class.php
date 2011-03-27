@@ -27,6 +27,11 @@
  
 class MemberShortTextExtendedField extends AbstractMemberExtendedField
 {
+	public function __construct()
+	{
+		$this->set_name(LangLoader::get_message('type.short-text','admin-extended-fields-common'));
+	}
+	
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();

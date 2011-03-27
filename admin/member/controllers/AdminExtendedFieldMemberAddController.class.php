@@ -38,6 +38,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
+	
+	private $events_select_type;
 
 	public function execute(HTTPRequest $request)
 	{
@@ -47,8 +49,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->tpl = new StringTemplate('<script type="text/javascript">
 				<!--
 					Event.observe(window, \'load\', function() {
-						HTMLForms.getField("possible_values").disable();
-						HTMLForms.getField("regex").disable();
+						'. $this->get_array_select_type() .'
 					});
 				-->		
 				</script>
@@ -93,31 +94,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], '1',
-			array(
-				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '3'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '7'),
-				new FormFieldSelectChoiceOption($this->lang['type.date'], '8'),
-				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '9'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '10'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-theme-choice'], '11'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-editor'], '12'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-timezone'], '13'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-sex'], '14'),
-					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '15'),
-				))
-			),
-			array('events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 3 || HTMLForms.getField("field_type").getValue() > 7){
-				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
-				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
-				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
-				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
-				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}'))
+			$this->get_array_select_type(),
+			array('events' => array('change' => $this->get_events_select_type()))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], '0',
@@ -210,6 +188,61 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['extended-field-add']);
 		return $response;
+	}
+	
+	private function get_array_select_type()
+	{
+		$select = array();
+		$select_phpboost_config = array();
+		foreach (ExtendedFieldsList::get_files() as $file)
+		{
+			$field_type = new $file();
+			if (!$field_type->get_field_used_phpboost_configuration())
+			{
+				$select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+			}
+			else
+			{
+				$select_phpboost_config[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+			}
+			
+			$disable_fields_configuration = $field_type->get_disable_fields_configuration();
+			if (!empty($disable_fields_configuration))
+			{
+				$this->set_events_select_type($disable_fields_configuration, $file);
+			}
+		}
+		$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $select_phpboost_config);
+		return $select;
+	}
+	
+	private function set_events_select_type(Array $disable_fields_configuration, $file)
+	{
+		$event = 'if (HTMLForms.getField("field_type").getValue() == "'. $file .'") {';
+		foreach ($disable_fields_configuration as $name)
+		{
+			$event .= 'HTMLForms.getField("'. $name .'").disable();';
+			if ($name == 'regex')
+			{
+				$event .= 'HTMLForms.getField("regex_type").disable();';
+			}
+		}
+		$event .= '} else {';
+		foreach ($disable_fields_configuration as $name)
+		{
+			$event .= 'HTMLForms.getField("'. $name .'").enable();';
+			if ($name == 'regex')
+			{
+				$event .= 'HTMLForms.getField("regex_type").disable();';
+			}
+		}
+		$event .= '}';
+		$this->events_select_type .= $event;
+	}
+	
+	private function get_events_select_type()
+	{
+		return $this->events_select_type;
 	}
 }
 
