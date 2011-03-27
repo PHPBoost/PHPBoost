@@ -29,6 +29,8 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 {
 	public function __construct()
 	{
+		parent::__construct();
+		$this->set_name(LangLoader::get_message('type.half-text','admin-extended-fields-common'));
 		$this->parse_field = true;
 		$this->unparse_field = true;
 	}
