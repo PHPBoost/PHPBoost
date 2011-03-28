@@ -39,6 +39,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	protected $parse_field;
 	protected $unparse_field;
 	protected $disable_fields_configuration = array();
+	protected $name;
 	
 	/**
 	 * @var bool
@@ -50,6 +51,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$this->field_used_phpboost_config = false;
 		$this->parse_field = false;
 		$this->unparse_field = false;
+		$this->name = 'ExtendedField';
 	}
 	
 	/**
@@ -211,6 +213,22 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function get_field_used_once()
 	{
 		return $this->field_used_once;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_name()
+	{
+		return $this->name;
 	}
 	
 	/**

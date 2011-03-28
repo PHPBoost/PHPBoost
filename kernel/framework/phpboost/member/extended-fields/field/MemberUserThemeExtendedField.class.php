@@ -30,6 +30,8 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
+		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_values'));
+		$this->set_name(LangLoader::get_message('type.user-theme-choice','admin-extended-fields-common'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
 	}

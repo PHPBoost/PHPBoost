@@ -58,12 +58,9 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		
 		$this->tpl = new StringTemplate('<script type="text/javascript">
-				Event.observe(window, \'load\', function() {if ({FIELD_TYPE} > 3 || {FIELD_TYPE} > 7)
-				{HTMLForms.getField("regex_type").disable();HTMLForms.getField("regex").disable();}
-				if ({FIELD_TYPE} < 4){HTMLForms.getField("regex_type").enable();}
-				if ({FIELD_TYPE} < 4 || {FIELD_TYPE} > 8){HTMLForms.getField("possible_values").disable(); HTMLForms.getField("default_values").disable();} 
-				if ({FIELD_TYPE} > 3 || {FIELD_TYPE} < 8){HTMLForms.getField("possible_values").enable(); HTMLForms.getField("default_values").enable();}
-				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF # });
+				Event.observe(window, \'load\', function() {
+				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF #
+				'.$this->get_events_select_type().'});
 				</script>
 				# INCLUDE MSG #
 				# INCLUDE FORM #');
@@ -104,46 +101,20 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$regex_type = is_numeric($extended_field_cache['regex']) ? $extended_field_cache['regex'] : 0;
 		$regex = is_string($extended_field_cache['regex']) ? $extended_field_cache['regex'] : '';
 		
-		$disable_fields = MemberExtendedFieldsFactory::get_disable_fields_configuration($extended_field_cache['field_type']);
-		
 		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field_cache['name'], array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true, 'disabled' => in_array('name', $disable_fields))
+			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
-		array('rows' => 4, 'cols' => 47, 'disabled' => in_array('description', $disable_fields))
+		array('rows' => 4, 'cols' => 47)
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
-			array(
-				new FormFieldSelectChoiceOption($this->lang['type.short-text'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['type.half-text'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['type.long-text'], '3'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-select'], '4'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-select'], '5'),
-				new FormFieldSelectChoiceOption($this->lang['type.simple-check'], '6'),
-				new FormFieldSelectChoiceOption($this->lang['type.multiple-check'], '7'),
-				new FormFieldSelectChoiceOption($this->lang['type.date'], '8'),
-				new FormFieldSelectChoiceGroupOption($this->lang['default-field'], array(
-					new FormFieldSelectChoiceOption($this->lang['type.user_born'], '9'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-lang-choice'], '10'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-theme-choice'], '11'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-editor'], '12'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-timezone'], '13'),
-					new FormFieldSelectChoiceOption($this->lang['type.user-sex'], '14'),
-					new FormFieldSelectChoiceOption($this->lang['type.avatar'], '15'),
-				))
-			),
-			array('events' => array('change' => 'if (HTMLForms.getField("field_type").getValue() > 3 || HTMLForms.getField("field_type").getValue() > 7){
-				HTMLForms.getField("regex_type").disable(); HTMLForms.getField("regex").disable(); } if (HTMLForms.getField("field_type").getValue() < 4) { HTMLForms.getField("regex_type").enable(); }
-				if (HTMLForms.getField("field_type").getValue() < 4 || HTMLForms.getField("field_type").getValue() > 7)	{HTMLForms.getField("possible_values").disable(); } 
-				if (HTMLForms.getField("field_type").getValue() > 3 && HTMLForms.getField("field_type").getValue() < 8) {HTMLForms.getField("possible_values").enable();}
-				if (HTMLForms.getField("field_type").getValue() > 8){HTMLForms.getField("default_values").disable(); }
-				if (HTMLForms.getField("field_type").getValue() < 9){HTMLForms.getField("default_values").enable();}')
-				, 'disabled' => in_array('field_type', $disable_fields))
+			$this->get_array_select_type(),
+			array('events' => array('change' => $this->get_events_select_type()))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
@@ -161,11 +132,11 @@ class AdminExtendedFieldMemberEditController extends AdminController
 					HTMLForms.getField("regex").enable(); 
 				} else { 
 					HTMLForms.getField("regex").disable(); 
-				}'), 'disabled' => in_array('regex', $disable_fields))
+				}'))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex, array(
-			'class' => 'text', 'maxlength' => 25, 'disabled' => in_array('regex', $disable_fields))
+			'class' => 'text', 'maxlength' => 25)
 		));
 		$required = $extended_field_cache['required'] ? (string)$extended_field_cache['required'] : '0';
 		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], $required,
@@ -176,11 +147,11 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('possible_values', $this->lang['field.possible-values'], $extended_field_cache['possible_values'], array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.possible-values-explain'], 'disabled' => in_array('possible_values', $disable_fields))
+			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.possible-values-explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], $extended_field_cache['default_values'], array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'], 'disabled' => in_array('default_values', $disable_fields))
+			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'])
 		));
 		$display = $extended_field_cache['display'] ? (string)$extended_field_cache['display'] : '0';
 		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), $display,
@@ -194,7 +165,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION), new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)));
 		$auth_settings->build_from_auth_array($auth);
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('disabled' => in_array('authorizations', $disable_fields)));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 
 		$form->add_button(new FormButtonReset());
@@ -247,6 +218,86 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['extended-field-edit']);
 		return $response;
+	}
+	
+	private function get_array_select_type()
+	{
+		$select = array();
+		$select_phpboost_config = array();
+		foreach (ExtendedFieldsList::get_files() as $file)
+		{
+			$field_type = new $file();
+			if (!$field_type->get_field_used_phpboost_configuration())
+			{
+				$select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+			}
+			else
+			{
+				$select_phpboost_config[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+			}
+		}
+		$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $select_phpboost_config);
+		return $select;
+	}
+	
+	private function get_events_select_type()
+	{
+		$event = '';
+		$disable_fields = $this->get_disable_fields();
+		foreach ($disable_fields as $name_field_disable => $field_type)
+		{
+			if (!empty($field_type))
+			{
+				$one_field = array_shift($field_type);
+				$event .= 'if (HTMLForms.getField("field_type").getValue() == "'. $one_field .'"';
+				foreach ($field_type as $name)
+				{
+					$event .= ' || HTMLForms.getField("field_type").getValue() == "'. $name .'"';
+				}
+				$event .= ') { 
+					HTMLForms.getField("' .$name_field_disable. '").disable();';
+					if ($name_field_disable == 'regex')
+					{
+						$event .= 'HTMLForms.getField("regex").disable();
+						HTMLForms.getField("regex_type").disable();';
+					}
+					$event .= '} else {	HTMLForms.getField("' .$name_field_disable. '").enable();';
+					if ($name_field_disable == 'regex')
+					{
+						$event .= 'HTMLForms.getField("regex").disable();
+						HTMLForms.getField("regex_type").enable();';
+					}
+					$event .= '}';
+			}
+		}
+		return $event;
+	}
+
+	private function get_disable_fields()
+	{
+		$disable_field = array(
+			'name' => array(), 
+			'description' => array(), 
+			'possible_values' => array(), 
+			'default_values' => array(), 
+			'regex' => array(), 
+			'authorizations' => array()
+		);
+		
+		foreach (ExtendedFieldsList::get_files() as $file)
+		{
+			$field_type = new $file();
+			$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
+			
+			foreach ($disable_fields_extended_field as $name_disable_field)
+			{
+				if (array_key_exists($name_disable_field, $disable_field))
+				{
+					$disable_field[$name_disable_field][] = $file;
+				}
+			}
+		}
+		return $disable_field;
 	}
 }
 

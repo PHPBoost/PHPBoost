@@ -86,6 +86,13 @@ interface MemberExtendedFieldType
 	 */
 	public function get_disable_fields_configuration();
 	
+	public function set_name($name);
+	
+	/**
+	 * @return String
+	 */
+	public function get_name();
+	
 	/**
 	 * @desc Return true if the field used once
 	 * @return bool
