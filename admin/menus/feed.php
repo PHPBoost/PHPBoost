@@ -153,36 +153,38 @@ else
     $menu = new FeedMenu('', '', '');
 }
 
-function build_feed_urls($elts, $module_id, $feed_type, $level = 0)
+function get_feeds($feed_cat, $module_id, $feed_type, $level = 0)
 {
-	global $edit, $feed_url;
-	
-	$urls = array();
-	
-	foreach ($elts as $elt)
-	{
-		$url = $elt->get_url($feed_type);
-
-		if (!$already_selected && $edit && $feed_url == $url)
-		{
-			$selected = true;
-		}
-		else
-		{
-			$selected = false;
-		}
-
-		$urls[] = array(
-    		'name' => $elt->get_category_name(),
-    		'url' => $url,
-    		'level' => $level,
-    		'feed_name' => $feed_type,
-    		'selected' => $selected
-		);
-
-		$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, $level + 1));
-	}
+	$urls[] = array(
+		'name' => $feed_cat->get_category_name(),
+		'url' => $feed_cat->get_url($feed_type),
+		'level' => $level,
+		'feed_name' => $feed_type,
+		'selected' => false
+	);
+	$urls = array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1));
 	return $urls;
+}
+
+function get_feeds_children(Array $children, $module_id, $feed_type, $level)
+{
+	if (!empty($children))
+	{
+		foreach ($children as $id => $feed_cat)
+		{
+			$urls[] = array(
+				'name' => $feed_cat->get_category_name(),
+				'url' => $feed_cat->get_url($feed_type),
+				'level' => $level,
+				'feed_name' => $feed_type,
+				'selected' => false
+			);
+		}
+		
+		$urls = array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1));
+		return $urls;
+	}
+	return array();
 }
 
 $feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
@@ -192,31 +194,28 @@ foreach ($feeds_modules as $module)
 {
 	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
 	$list = $list->get_feeds_list();
-	$urls = array();
 
-	foreach ($list as $feed_type => $elt)
+	foreach ($list->get_feeds_list() as $feed_type => $object)
 	{
-		$urls[] = build_feed_urls($elt, $module->get_id(), $feed_type);
+		$urls = get_feeds($object, $module->get_id(), $feed_type);
 	}
-
+	Debug::Dump($urls);
 	$tpl->assign_block_vars('modules', array(
 		'NAME' => $module->get_id(), 
-		'URL' => $urls[0][0]['url']
+		'URL' => $urls[0]['url']
 	));
 	
-	foreach ($urls as $url_type)
+	foreach ($urls as $url)
 	{
-		foreach ($url_type as $url)
-		{
-			$tpl->assign_block_vars('modules.feeds_urls', array(
-				'URL' => $url['url'],
-				'NAME' => $url['name'],
-				'SPACE' => '--' . str_repeat('------', $url['level']),
-				'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-				'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-			));
-		}
+		$tpl->assign_block_vars('modules.feeds_urls', array(
+			'URL' => $url['url'],
+			'NAME' => $url['name'],
+			'SPACE' => '--' . str_repeat('--', $url['level']),
+			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+		));
 	}
+
 }
 
 $locations = '';
