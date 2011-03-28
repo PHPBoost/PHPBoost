@@ -91,7 +91,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
+	function add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
 	{
 		global $Sql;
 
