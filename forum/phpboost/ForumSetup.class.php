@@ -279,12 +279,14 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_member_extended_field()
 	{
-		$extended_field = new ExtendedField();
+		// TODO use extended field ? 
+		/*$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_type(0);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
+		*/
 	}
 
 	private function insert_forum_cats_data()

@@ -109,7 +109,7 @@ class ExtendedField
 	}
 	
 	/*
-	 * Containing $field_type integer or personal classe name herite of AbstractMemberExtendedField
+	 * Containing $field_type personal classe name herite of AbstractMemberExtendedField
 	*/
 	public function set_field_type($field_type)
 	{
@@ -118,7 +118,7 @@ class ExtendedField
 	
 	public function get_field_type()
 	{
-		return !empty($this->field_type) ? $this->field_type : 1;
+		return $this->field_type;
 	}	
 	
 	public function set_possible_values($possible_values)

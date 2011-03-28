@@ -29,6 +29,9 @@ class MemberLongTextExtendedField extends AbstractMemberExtendedField
 {
 	public function __construct()
 	{
+		parent::__construct();
+		$this->set_disable_fields_configuration(array('possible_values', 'default_values'));
+		$this->set_name(LangLoader::get_message('type.long-text','admin-extended-fields-common'));
 		$this->parse_field = true;
 		$this->unparse_field = true;
 	}
