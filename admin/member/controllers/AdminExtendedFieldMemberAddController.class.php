@@ -38,8 +38,6 @@ class AdminExtendedFieldMemberAddController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
-	private $events_select_type;
 
 	public function execute(HTTPRequest $request)
 	{
@@ -49,7 +47,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->tpl = new StringTemplate('<script type="text/javascript">
 				<!--
 					Event.observe(window, \'load\', function() {
-						'. $this->get_array_select_type() .'
+						HTMLForms.getField("regex").disable(); 
+						'. $this->get_events_select_type() .'
 					});
 				-->		
 				</script>
@@ -205,44 +204,69 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			{
 				$select_phpboost_config[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
 			}
-			
-			$disable_fields_configuration = $field_type->get_disable_fields_configuration();
-			if (!empty($disable_fields_configuration))
-			{
-				$this->set_events_select_type($disable_fields_configuration, $file);
-			}
 		}
 		$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $select_phpboost_config);
 		return $select;
 	}
 	
-	private function set_events_select_type(Array $disable_fields_configuration, $file)
-	{
-		$event = 'if (HTMLForms.getField("field_type").getValue() == "'. $file .'") {';
-		foreach ($disable_fields_configuration as $name)
-		{
-			$event .= 'HTMLForms.getField("'. $name .'").disable();';
-			if ($name == 'regex')
-			{
-				$event .= 'HTMLForms.getField("regex_type").disable();';
-			}
-		}
-		$event .= '} else {';
-		foreach ($disable_fields_configuration as $name)
-		{
-			$event .= 'HTMLForms.getField("'. $name .'").enable();';
-			if ($name == 'regex')
-			{
-				$event .= 'HTMLForms.getField("regex_type").disable();';
-			}
-		}
-		$event .= '}';
-		$this->events_select_type .= $event;
-	}
-	
 	private function get_events_select_type()
 	{
-		return $this->events_select_type;
+		$event = '';
+		$disable_fields = $this->get_disable_fields();
+		foreach ($disable_fields as $name_field_disable => $field_type)
+		{
+			if (!empty($field_type))
+			{
+				$one_field = array_shift($field_type);
+				$event .= 'if (HTMLForms.getField("field_type").getValue() == "'. $one_field .'"';
+				foreach ($field_type as $name)
+				{
+					$event .= ' || HTMLForms.getField("field_type").getValue() == "'. $name .'"';
+				}
+				$event .= ') { 
+					HTMLForms.getField("' .$name_field_disable. '").disable();';
+					if ($name_field_disable == 'regex')
+					{
+						$event .= 'HTMLForms.getField("regex").disable();
+						HTMLForms.getField("regex_type").disable();';
+					}
+					$event .= '} else {	HTMLForms.getField("' .$name_field_disable. '").enable();';
+					if ($name_field_disable == 'regex')
+					{
+						$event .= 'HTMLForms.getField("regex").disable();
+						HTMLForms.getField("regex_type").enable();';
+					}
+					$event .= '}';
+			}
+		}
+		return $event;
+	}
+
+	private function get_disable_fields()
+	{
+		$disable_field = array(
+			'name' => array(), 
+			'description' => array(), 
+			'possible_values' => array(), 
+			'default_values' => array(), 
+			'regex' => array(), 
+			'authorizations' => array()
+		);
+		
+		foreach (ExtendedFieldsList::get_files() as $file)
+		{
+			$field_type = new $file();
+			$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
+			
+			foreach ($disable_fields_extended_field as $name_disable_field)
+			{
+				if (array_key_exists($name_disable_field, $disable_field))
+				{
+					$disable_field[$name_disable_field][] = $file;
+				}
+			}
+		}
+		return $disable_field;
 	}
 }
 
