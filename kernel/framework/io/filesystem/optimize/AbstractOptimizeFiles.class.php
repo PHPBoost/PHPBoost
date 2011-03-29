@@ -93,7 +93,7 @@ abstract class AbstractOptimizeFiles
 		switch ($intensity) {
 			case self::HIGH_OPTIMIZE:
 					$delete_comments = $this->delete_comments($content);
-					$content = str_replace(array("\r\n\r\n", "\n\n", "\r", "\t", "  "), '', $delete_comments);
+					$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $delete_comments);
 				break;
 			case self::MIDDLE_OPTIMIZE:
 					$delete_comments = $this->delete_comments($content);
@@ -106,6 +106,51 @@ abstract class AbstractOptimizeFiles
 		}
 
 		$this->content_optimized = $content;
+	}
+	
+	/*
+	 * This class export data
+	 */
+	public function export()
+	{
+		return $this->content_optimized;
+	}
+	
+	/*
+	 * This class export data to file. Required location file cached
+	 */
+	public function export_to_file($location)
+	{
+		if ($this->content_optimized !== '')
+		{
+			$file = new File($location);
+			$file->delete();
+			$file->lock();
+			$file->write($this->content_optimized);
+			$file->unlock();
+			$file->close();
+			$file->change_chmod(0666);
+		}
+		else
+		{
+			throw new Exception('Contents are empty !');
+		}
+	}
+	
+	/*
+	 * This class return Array files
+	 */
+	public function get_files()
+	{
+		return $this->files;
+	}
+	
+	/*
+	 * This class return Array scripts
+	 */
+	public function get_scripts()
+	{
+		return $this->scripts;
 	}
 	
 	private function delete_comments($value)
@@ -128,29 +173,6 @@ abstract class AbstractOptimizeFiles
 			$content .= $script;
 		}
 		return $content;
-	}
-	
-	public function export()
-	{
-		return $this->content_optimized;
-	}
-	
-	public function export_to_file($location)
-	{
-		if ($this->content_optimized !== '')
-		{
-			$file = new File($location);
-			$file->delete();
-			$file->lock();
-			$file->write($this->content_optimized);
-			$file->unlock();
-			$file->close();
-			$file->change_chmod(0666);
-		}
-		else
-		{
-			throw new Exception('Contents are empty !');
-		}
 	}
 }
 ?>
