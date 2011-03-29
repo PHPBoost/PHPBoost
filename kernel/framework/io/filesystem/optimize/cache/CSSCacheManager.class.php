@@ -34,13 +34,11 @@ class CSSCacheManager
 	private $css_optimizer;
 	private $files = array();
 	private $location_file_cache = '';
-	const IS_MODULES_CACHE = 'modules';
-	const IS_KERNEL_CACHE = 'kernel';
 
 	public function __construct()
 	{
 		$this->css_optimizer = new CSSOptimizeFiles();
-		$this->optimize_file_intensity = CSSOptimizeFiles::HIGH_OPTIMIZE;
+		$this->optimize_file_intensity = CSSOptimizeFiles::LOW_OPTIMIZE;
 	}
 	
 	public function set_files(Array $files)
@@ -52,11 +50,12 @@ class CSSCacheManager
 		$this->files = $files;
 	}
 	
-	public function generate_cache($type = self::IS_MODULES_CACHE, $location = '')
+	public function generate_cache($location = '')
 	{
+		ModulesCssFilesCache::invalide();
 		if (empty($location))
 		{
-			$location = PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/cache-' . $this->get_type($type) . '.css';
+			$location = PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/cache.css';
 		}
 		if (!file_exists($location))
 		{
@@ -82,29 +81,16 @@ class CSSCacheManager
 		return $this->location_file_cache;
 	}
 	
-	public function force_regenerate_cache($type = self::IS_MODULES_CACHE, $theme = '')
+	public function force_regenerate_cache($theme = '')
 	{
 		if (empty($theme))
 		{
 			$theme = get_utheme();
 		}
-		$location = PATH_TO_ROOT . '/templates/' . $theme . '/theme/cache-' . $this->get_type($type) . '.css';
+		ModulesCssFilesCache::invalide();
+		$location = PATH_TO_ROOT . '/templates/' . $theme . '/theme/cache.css';
 		$this->css_optimizer->optimize($this->optimize_file_intensity);
 		$this->generate_file($location, $this->css_optimizer->export());
-	}
-	
-	private function get_type($type)
-	{
-		switch ($type) {
-			case self::IS_MODULES_CACHE:
-					return $type;
-				break;
-			case self::IS_KERNEL_CACHE:
-					return $type;
-				break;
-			default:
-				throw new Exception('Type "'. $type .'" not compatible');
-		}
 	}
 	
 	private function generate_file($location, $content)
