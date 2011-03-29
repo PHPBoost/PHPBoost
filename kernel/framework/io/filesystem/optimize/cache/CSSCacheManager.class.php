@@ -52,7 +52,7 @@ class CSSCacheManager
 	
 	public function generate_cache($location = '')
 	{
-		ModulesCssFilesCache::invalide();
+		ModulesCssFilesCache::invalidate();
 		if (empty($location))
 		{
 			$location = PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/cache.css';
@@ -87,7 +87,7 @@ class CSSCacheManager
 		{
 			$theme = get_utheme();
 		}
-		ModulesCssFilesCache::invalide();
+		ModulesCssFilesCache::invalidate();
 		$location = PATH_TO_ROOT . '/templates/' . $theme . '/theme/cache.css';
 		$this->css_optimizer->optimize($this->optimize_file_intensity);
 		$this->generate_file($location, $this->css_optimizer->export());
