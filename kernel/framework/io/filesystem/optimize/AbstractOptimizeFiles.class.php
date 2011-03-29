@@ -1,0 +1,156 @@
+<?php
+/*##################################################
+ *                               AbstractOptimizeFiles.class.php
+ *                            -------------------
+ *   begin                : March 29, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+/**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @package {@package}
+*/
+abstract class AbstractOptimizeFiles
+{
+	protected $files = array();
+	protected $scripts = array();
+	protected $content_optimized = '';
+	protected $extension_required = '';
+
+	/*
+	 * Const Delete comments, tabulations, spaces and newline
+	*/
+	const HIGH_OPTIMIZE = 'high';
+	
+	/*
+	 * Const Delete comments, tabulations and space
+	*/
+	const MIDDLE_OPTIMIZE = 'middle';
+	
+	/*
+	 * Const Delete comments and spaces
+	*/
+	const LOW_OPTIMIZE = 'low';
+	
+	/*
+	 * This class allows you to add file to optimize. Required path file
+	 */
+	public function add_file($path_file)
+	{
+		if (!file_exists($path_file))
+		{
+			throw new Exception('File not '. $path_file .' exist !');
+		}
+		
+		$extension = substr($path_file, -4);
+		if (strpos($extension, $this->extension_required) !== false)
+		{
+			$this->files[] = $path_file;
+		}
+		else
+		{
+			throw new Exception('File extension "'. $extension .'" not compatible for script !');
+		}
+	}
+	
+	/*
+	 * This class allows you to add script to optimize. Required script value
+	 */
+	public function add_script($script)
+	{
+		if (!empty($script))
+		{
+			$this->scripts[] = $script;
+		}
+	}
+	
+	/*
+	 * This class optimize your code. Parameter $intensity serves to configuration highlest
+	 */
+	public function optimize($intensity = self::MIDDLE_OPTIMIZE)
+	{
+		$content = $this->assemble_files();
+		
+		switch ($intensity) {
+			case self::HIGH_OPTIMIZE:
+					$delete_comments = $this->delete_comments($content);
+					$content = str_replace(array("\r\n\r\n", "\n\n", "\r", "\t", "  "), '', $delete_comments);
+				break;
+			case self::MIDDLE_OPTIMIZE:
+					$delete_comments = $this->delete_comments($content);
+					$content = str_replace(array("\r\n\r\n", "\n\n", "\r\r", "\t", "  "), '', $delete_comments);
+				break;
+			case self::LOW_OPTIMIZE:
+					$delete_comments = $this->delete_comments($content);
+					$content = str_replace(array("\r\n\r\n", "\n\n", "\t", "  "), '', $delete_comments);
+				break;
+		}
+
+		$this->content_optimized = $content;
+	}
+	
+	private function delete_comments($value)
+	{
+		$value = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $value);
+		$value = preg_replace('#//.*$#m', '', $value);
+		return $value;
+	}
+	
+	private function assemble_files()
+	{
+		$content = '';
+		foreach ($this->files as $file)
+		{
+			$content .= file_get_contents($file);
+		}
+		
+		foreach ($this->scripts as $script)
+		{
+			$content .= $script;
+		}
+		return $content;
+	}
+	
+	public function export()
+	{
+		return $this->content_optimized;
+	}
+	
+	public function export_to_file($location)
+	{
+		if ($this->content_optimized !== '')
+		{
+			$file = new File($location);
+			$file->delete();
+			$file->lock();
+			$file->write($this->content_optimized);
+			$file->unlock();
+			$file->close();
+			$file->change_chmod(0666);
+		}
+		else
+		{
+			throw new Exception('Contents are empty !');
+		}
+	}
+}
+?>
