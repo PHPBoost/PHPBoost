@@ -46,7 +46,7 @@ class ModulesCssFilesCache implements CacheData
 		foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
 		{
 			$files_for_this_theme = array();
-			foreach (ModulesManager::get_installed_modules_map() as $name => $module)
+			foreach (ModulesManager::get_activated_modules_map() as $name => $module)
 			{
 				//If the module is enabled, we add it to the list
 				if ($module->is_activated())

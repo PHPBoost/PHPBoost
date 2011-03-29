@@ -93,7 +93,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function add_menus_css_files()
 	{
-
 		$css_files_cache = ModulesCssFilesCache::load();
 		try
 		{

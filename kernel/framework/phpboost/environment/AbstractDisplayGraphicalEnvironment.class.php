@@ -43,12 +43,11 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	
 	protected function get_css_files_html_code()
 	{
-		$html_code = '';
-		foreach ($this->css_files as $file)
-		{
-			$html_code .= '<link rel="stylesheet" href="' . TPL_PATH_TO_ROOT . $file . 
+		$css_cache = new CSSCacheManager();
+		$css_cache->set_files($this->css_files);
+		$css_cache->generate_cache();
+		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_location_file_cache() . 
 				'" type="text/css" media="screen, print, handheld" />' . "\n";
-		}
 		return $html_code;
 	}
 	
