@@ -72,7 +72,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
-			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
+			'CSS' => $this->get_css_files_html_code(),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
 			'L_TODAY' => LangLoader::get_message('today', 'main'),
