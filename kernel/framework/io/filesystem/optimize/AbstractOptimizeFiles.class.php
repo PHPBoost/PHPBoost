@@ -33,9 +33,10 @@ abstract class AbstractOptimizeFiles
 {
 	protected $files = array();
 	protected $scripts = array();
-	protected $content_optimized = '';
+	protected $content = '';
 	protected $extension_required = '';
-
+	protected $regex_search_files_path = '';
+	protected $replace_value_files_path = '';
 	/*
 	 * Const Delete comments, tabulations, spaces and newline
 	*/
@@ -44,7 +45,7 @@ abstract class AbstractOptimizeFiles
 	/*
 	 * Const Delete comments, tabulations and space
 	*/
-	const MIDDLE_OPTIMIZE = 'middle';
+	const MEDIUM_OPTIMIZE = 'medium';
 	
 	/*
 	 * Const Delete comments and spaces
@@ -84,36 +85,45 @@ abstract class AbstractOptimizeFiles
 	}
 	
 	/*
+	 * This class change path files in script and files added
+	 */
+	public function change_path_files($regex_search, $replace_value)
+	{
+		$this->regex_search_files_path = $regex_search;
+		$this->replace_value_files_path = $replace_value;
+	}
+	
+	/*
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
-	public function optimize($intensity = self::MIDDLE_OPTIMIZE)
+	public function optimize($intensity = self::MEDIUM_OPTIMIZE)
 	{
-		$content = $this->assemble_files();
-		
+		$this->assemble_files();
+
 		switch ($intensity) {
 			case self::HIGH_OPTIMIZE:
-					$delete_comments = $this->delete_comments($content);
+					$delete_comments = $this->delete_comments($this->content);
 					$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $delete_comments);
 				break;
-			case self::MIDDLE_OPTIMIZE:
-					$delete_comments = $this->delete_comments($content);
+			case self::MEDIUM_OPTIMIZE:
+					$delete_comments = $this->delete_comments($this->content);
 					$content = str_replace(array("\r\n\r\n", "\n\n", "\r\r", "\t", "  "), '', $delete_comments);
 				break;
 			case self::LOW_OPTIMIZE:
-					$delete_comments = $this->delete_comments($content);
+					$delete_comments = $this->delete_comments($this->content);
 					$content = str_replace(array("\r\n\r\n", "\n\n", "\t", "  "), '', $delete_comments);
 				break;
 		}
 
-		$this->content_optimized = $content;
+		$this->content = trim($content);
 	}
-	
+
 	/*
 	 * This class export data
 	 */
 	public function export()
 	{
-		return $this->content_optimized;
+		return $this->content;
 	}
 	
 	/*
@@ -121,12 +131,12 @@ abstract class AbstractOptimizeFiles
 	 */
 	public function export_to_file($location)
 	{
-		if ($this->content_optimized !== '')
+		if (!empty($this->content) && !empty($this->files))
 		{
 			$file = new File($location);
 			$file->delete();
 			$file->lock();
-			$file->write($this->content_optimized);
+			$file->write($this->content);
 			$file->unlock();
 			$file->close();
 			$file->change_chmod(0666);
@@ -159,20 +169,30 @@ abstract class AbstractOptimizeFiles
 		$value = preg_replace('#//.*$#m', '', $value);
 		return $value;
 	}
-	
+
 	private function assemble_files()
 	{
 		$content = '';
 		foreach ($this->files as $file)
 		{
-			$content .= file_get_contents($file);
+			$content_file = file_get_contents($file);
+			if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
+			{
+				$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
+				$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
+			}
+			else
+			{
+				$content .= $content_file;
+			}
 		}
 		
 		foreach ($this->scripts as $script)
 		{
 			$content .= $script;
 		}
-		return $content;
+		
+		$this->content = $content;
 	}
 }
 ?>

@@ -33,12 +33,12 @@ class CSSCacheManager
 {
 	private $css_optimizer;
 	private $files = array();
-	private $location_file_cache = '';
+	private $cache_file_location = '';
 
 	public function __construct()
 	{
 		$this->css_optimizer = new CSSOptimizeFiles();
-		$this->optimize_file_intensity = CSSOptimizeFiles::LOW_OPTIMIZE;
+		$this->optimize_file_intensity = CSSOptimizeFiles::MEDIUM_OPTIMIZE;
 	}
 	
 	public function set_files(Array $files)
@@ -50,9 +50,8 @@ class CSSCacheManager
 		$this->files = $files;
 	}
 	
-	public function generate_cache($location = '')
+	public function execute($location = '')
 	{
-		ModulesCssFilesCache::invalidate();
 		if (empty($location))
 		{
 			$location = PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/cache.css';
@@ -60,7 +59,7 @@ class CSSCacheManager
 		if (!file_exists($location))
 		{
 			$this->css_optimizer->optimize($this->optimize_file_intensity);
-			$this->generate_file($location, $this->css_optimizer->export());
+			$this->css_optimizer->export_to_file($location);
 		}
 		else
 		{
@@ -69,16 +68,16 @@ class CSSCacheManager
 				if(filemtime($file) > filemtime($location))
 				{
 					$this->css_optimizer->optimize($this->optimize_file_intensity);
-					$this->generate_file($location, $this->css_optimizer->export());
+					$this->css_optimizer->export_to_file($location);
 				}
 			}
 		}
-		$this->location_file_cache = $location;
+		$this->cache_file_location = $location;
 	}
 	
-	public function get_location_file_cache()
+	public function get_cache_file_location()
 	{
-		return $this->location_file_cache;
+		return $this->cache_file_location;
 	}
 	
 	public function force_regenerate_cache($theme = '')
@@ -87,22 +86,9 @@ class CSSCacheManager
 		{
 			$theme = get_utheme();
 		}
-		ModulesCssFilesCache::invalidate();
 		$location = PATH_TO_ROOT . '/templates/' . $theme . '/theme/cache.css';
 		$this->css_optimizer->optimize($this->optimize_file_intensity);
-		$this->generate_file($location, $this->css_optimizer->export());
-	}
-	
-	private function generate_file($location, $content)
-	{
-		$file = new File($location);
-		$file->delete();
-		$file->lock();
-		$file->write($content);
-		$file->unlock();
-		$file->close();
-		$file->change_chmod(0666);
-	}
-	
+		$this->css_optimizer->export_to_file($location);
+	}	
 }
 ?>
