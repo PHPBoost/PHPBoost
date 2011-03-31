@@ -34,8 +34,8 @@ class CSSOptimizeFiles extends AbstractOptimizeFiles
 	public function __construct()
 	{
 		$this->extension_required = '.css';
-		$this->regex_search_files_path = '`url\(\'(.*)\'\)`';
-		$this->replace_value_files_path = "url(':path/$1')";
+		$this->regex_search_files_path = '`url\(\'?([a-z0-9._/-]+)\'?\)`';
+		$this->replace_value_files_path = 'url(\':path/'. str_replace('\'', '', '$1') .'\')';
 	}
 }
 ?>

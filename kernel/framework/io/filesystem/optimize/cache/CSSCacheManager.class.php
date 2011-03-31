@@ -38,7 +38,7 @@ class CSSCacheManager
 	public function __construct()
 	{
 		$this->css_optimizer = new CSSOptimizeFiles();
-		$this->optimize_file_intensity = CSSOptimizeFiles::MEDIUM_OPTIMIZE;
+		$this->optimize_file_intensity = CSSOptimizeFiles::HIGH_OPTIMIZE;
 	}
 	
 	public function set_files(Array $files)
@@ -50,29 +50,29 @@ class CSSCacheManager
 		$this->files = $files;
 	}
 	
-	public function execute($location = '')
+	public function set_cache_file_location($location)
 	{
-		if (empty($location))
-		{
-			$location = PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/cache.css';
-		}
-		if (!file_exists($location))
+		$this->cache_file_location = $location;
+	}
+	
+	public function execute()
+	{
+		if (!file_exists($this->cache_file_location))
 		{
 			$this->css_optimizer->optimize($this->optimize_file_intensity);
-			$this->css_optimizer->export_to_file($location);
+			$this->css_optimizer->export_to_file($this->cache_file_location);
 		}
 		else
 		{
 			foreach ($this->css_optimizer->get_files() as $file)
 			{
-				if(filemtime($file) > filemtime($location))
+				if(filemtime($file) > filemtime($this->cache_file_location))
 				{
 					$this->css_optimizer->optimize($this->optimize_file_intensity);
-					$this->css_optimizer->export_to_file($location);
+					$this->css_optimizer->export_to_file($this->cache_file_location);
 				}
 			}
 		}
-		$this->cache_file_location = $location;
 	}
 	
 	public function get_cache_file_location()
@@ -80,15 +80,10 @@ class CSSCacheManager
 		return $this->cache_file_location;
 	}
 	
-	public function force_regenerate_cache($theme = '')
+	public function force_regenerate_cache()
 	{
-		if (empty($theme))
-		{
-			$theme = get_utheme();
-		}
-		$location = PATH_TO_ROOT . '/templates/' . $theme . '/theme/cache.css';
 		$this->css_optimizer->optimize($this->optimize_file_intensity);
-		$this->css_optimizer->export_to_file($location);
+		$this->css_optimizer->export_to_file($this->cache_file_location);
 	}	
 }
 ?>
