@@ -197,7 +197,6 @@ class KernelSetup
 			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'module_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(

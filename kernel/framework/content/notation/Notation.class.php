@@ -35,7 +35,6 @@ class Notation
 	private $module_name;
 	private $module_id;
 	private $user_id;
-	private $login;
 	private $note;
 	private $notation_scale;
 	
@@ -77,16 +76,6 @@ class Notation
 	public function get_user_id()
 	{
 		return !empty($this->user_id) ? $this->user_id : AppContext::get_user()->get_attribute('user_id');
-	}
-	
-	public function set_login($login)
-	{
-		$this->login = $login;
-	}
-	
-	public function get_login()
-	{
-		return !empty($this->login) ? $this->login : AppContext::get_user()->get_attribute('login');
 	}
 	
 	public function set_note($note)
