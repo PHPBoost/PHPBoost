@@ -43,12 +43,7 @@ abstract class AbstractOptimizeFiles
 	const HIGH_OPTIMIZE = 'high';
 	
 	/*
-	 * Const Delete comments, tabulations and space
-	*/
-	const MEDIUM_OPTIMIZE = 'medium';
-	
-	/*
-	 * Const Delete comments and spaces
+	 * Const Delete comments, tabulations and spaces
 	*/
 	const LOW_OPTIMIZE = 'low';
 	
@@ -105,13 +100,9 @@ abstract class AbstractOptimizeFiles
 					$delete_comments = $this->delete_comments($this->content);
 					$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $delete_comments);
 				break;
-			case self::MEDIUM_OPTIMIZE:
-					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\r\n\r\n", "\n\n", "\r\r", "\t", "  "), '', $delete_comments);
-				break;
 			case self::LOW_OPTIMIZE:
 					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\r\n\r\n", "\n\n", "\t", "  "), '', $delete_comments);
+					$content = str_replace(array("\t", "  "), '', $delete_comments);
 				break;
 		}
 
@@ -165,8 +156,8 @@ abstract class AbstractOptimizeFiles
 	
 	private function delete_comments($value)
 	{
-		$value = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $value);
-		$value = preg_replace('#//.*$#m', '', $value);
+		$value = preg_replace('<!\-\- [\/\ a-zA-Z]* \-\->', '', $value);
+		$value = preg_replace('#/\*.*?\*/#s', '', $value);
 		return $value;
 	}
 
@@ -175,7 +166,7 @@ abstract class AbstractOptimizeFiles
 		$content = '';
 		foreach ($this->files as $file)
 		{
-			$content_file = file_get_contents($file);
+			$content_file = php_strip_whitespace($file);
 			if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
 			{
 				$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
