@@ -92,7 +92,7 @@ class NotationService
 	}
 	
 	/*
-	 * This function required object Notation containing the module_name, module_id, user_id, login, note and notation_scale.
+	 * This function required object Notation containing the module_name, module_id, user_id, note and notation_scale.
 	 */
 	public static function display_active_image(Notation $notation)
 	{
@@ -245,12 +245,11 @@ class NotationService
 	private static function insert_note(Notation $notation)
 	{
 		self::$db_querier->inject(
-			"INSERT INTO " . DB_TABLE_NOTE . " (module_name, module_id, user_id, login, note)
-			VALUES (:module_name, :module_id, :user_id, :login, :note)", array(
+			"INSERT INTO " . DB_TABLE_NOTE . " (module_name, module_id, user_id, note)
+			VALUES (:module_name, :module_id, :user_id, :note)", array(
                 'module_name' => $notation->get_module_name(),
 				'module_id' => $notation->get_module_id(),
 				'user_id' => $notation->get_user_id(),
-				'login' => $notation->get_login(),
 				'note' => $notation->get_note(),				
 		));
 	}
