@@ -45,6 +45,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	{
 		$css_cache = new CSSCacheManager();
 		$css_cache->set_files($this->css_files);
+		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-' .get_utheme().'.css');
 		$css_cache->execute();
 		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
 				'" type="text/css" media="screen, print, handheld" />' . "\n";

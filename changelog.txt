@@ -17,6 +17,7 @@
 [*] [color=red]Nouveauté:[/color] Générateur automatique de formulaire avec contrôle client et serveur automatisés.
 [*] [color=red]Nouveauté:[/color] Générateur automatique de tableau avec gestion de la pagination, filtres, tris.
 [*] [color=red]Nouveauté:[/color] Installation possible en ligne de commande.
+[*] [color=red]Nouveauté:[/color] Système de cache CSS.
 [*] Utilitaire en ligne de commande permettant l'installation de PHPBoost.
 [*] Nouveau gestionnaire d'erreur et d'exception.
 [*] Création d'une classe de débug pour les développeurs.
