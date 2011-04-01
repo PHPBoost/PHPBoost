@@ -74,7 +74,7 @@ class ModulesCssFilesCache implements CacheData
 			$relative_path = Path::get_path_from_root($folder->get_path());
 			foreach ($folder->get_files('`.css$`') as $file)
 			{
-				if (strpos($file->get_name(), 'cache.css') === false && strpos($file->get_name(), 'tinymce.css') === false && strpos($file->get_name(), 'print.css') === false)
+				if (strpos($file->get_name(), 'css-cache') === false && strpos($file->get_name(), 'tinymce.css') === false && strpos($file->get_name(), 'print.css') === false)
 				{
 					$files_for_this_theme[] = $relative_path . '/' . $file->get_name();
 				}
