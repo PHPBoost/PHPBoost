@@ -39,8 +39,8 @@ class NewsletterDAO
 		$stream_cache = NewsletterStreamsCache::load()->get_stream($stream_id);
 		$columns = array(
 			'stream_id' => $stream_id,
-			'subject' => $subject,
-			'contents' => $contents,
+			'subject' => htmlspecialchars($subject),
+			'contents' => htmlspecialchars($contents),
 			'timestamp' => time(),
 			'language_type' => $language_type,
 			'nbr_subscribers' => count($stream_cache['subscribers'])
@@ -53,11 +53,10 @@ class NewsletterDAO
 	public static function insert_subscribtions_member_registered($user_id, Array $streams)
 	{
 		//Inject user in subscribers table
-		$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribers . " (user_id) VALUES (:user_id)";
-		$option = array(
+		$columns = array(
 			'user_id' => $user_id
 		);
-		self::$db_querier->inject($request, $option);
+		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
 		$subscriber_id = PersistenceContext::get_sql()->query("SELECT MAX(id) FROM " . NewsletterSetup::$newsletter_table_subscribers);
 		
@@ -69,12 +68,11 @@ class NewsletterDAO
 		foreach ($streams as $value)
 		{
 			//Insert user and stream_id in the subscribtions table
-			$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribtions . " (stream_id, subscriber_id)	VALUES (:stream_id, :subscriber_id)";
-			$option = array(
-                'stream_id' => $value,
+			$columns = array(
+				'stream_id' => $value,
 				'subscriber_id' => $subscriber_id
 			);
-			self::$db_querier->inject($request, $option);
+			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribtions, $columns);
 		}
 		NewsletterStreamsCache::invalidate();
 	}
@@ -90,14 +88,11 @@ class NewsletterDAO
 		
 		foreach ($streams as $value)
 		{
-			$request = "INSERT INTO " . NewsletterSetup::$newsletter_table_subscribtions . " (stream_id, subscriber_id)	VALUES (:stream_id, :subscriber_id)";
-			
-			$option = array(
-                'stream_id' => $value,
+			$columns = array(
+				'stream_id' => $value,
 				'subscriber_id' => $subscriber_id
 			);
-			
-			self::$db_querier->inject($request, $option);
+			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribtions, $columns);
 		}
 		NewsletterStreamsCache::invalidate();
 	}
