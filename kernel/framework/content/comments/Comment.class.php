@@ -31,17 +31,26 @@
  */
 class Comment
 {
+	private $id = 0;
 	private $user_id = 0;
 	private $name_visitor = '';
 	private $ip_visitor = '';
 	private $note = 0;
 	private $is_locked = false;
+	private $visibility = true;
 	private $message = '';
 	private $module_name;
 	private $module_id;
-	private $read_authorizations;
-	private $post_authorizations;
-	private $moderation_authorizations;
+	
+	public function set_id($id)
+	{
+		$this->id = $id;
+	}
+	
+	public function get_id()
+	{
+		return $this->id;
+	}
 	
 	public function set_user_id($user_id)
 	{
@@ -91,6 +100,16 @@ class Comment
 	public function get_is_locked()
 	{
 		return $this->is_locked;
+	}
+	
+	public function set_visibility($visibility)
+	{
+		$this->visibility = $visibility;
+	}
+	
+	public function get_visibility()
+	{
+		return $this->visibility;
 	}
 	
 	public function set_message($message)
