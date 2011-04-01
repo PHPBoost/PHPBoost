@@ -31,21 +31,11 @@
  */
 class Comments
 {
-	private $default_authorizations;
 	private $module_name;
 	private $module_id;
-	private $read_authorizations;
-	private $post_authorizations;
-	private $moderation_authorizations;
-	const READ_AUTHORIZATIONS = 1;
-	const POST_AUTHORIZATIONS = 2;
-	const MODERATION_AUTHORIZATIONS = 3;
-	
-	public function __construct()
-	{
-		$this->default_authorizations = CommentsConfig::load()->get_authorizations();
-	}
-	
+	private $is_locked = false;
+	private $authorizations;
+
 	public function set_module_name($module)
 	{
 		$this->module_name = $module;
@@ -66,34 +56,24 @@ class Comments
 		return $this->module_id;
 	}
 	
-	public function set_read_authorizations(Array $authorizations, $bit = self::READ_AUTHORIZATIONS)
+	public function set_is_locked($is_locked)
 	{
-		$this->read_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::READ_AUTHORIZATIONS);
+		$this->is_locked = $is_locked;
 	}
 	
-	public function get_read_authorizations()
+	public function get_is_locked()
 	{
-		return !empty($this->read_authorizations) ? $this->read_authorizations : $this->default_authorizations;
+		return $this->is_locked;
 	}
 	
-	public function set_post_authorizations(Array $authorizations, $bit = self::POST_AUTHORIZATIONS)
+	public function set_authorizations(CommentsAuthorizations $authorizations)
 	{
-		$this->post_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::POST_AUTHORIZATIONS);
+		$this->authorizations = $authorizations;
 	}
 	
-	public function get_post_authorizations()
+	public function get_authorizations()
 	{
-		return !empty($this->post_authorizations) ? $this->post_authorizations : $this->default_authorizations;
-	}
-	
-	public function set_moderation_authorizations(Array $authorizations, $bit = self::MODERATION_AUTHORIZATIONS)
-	{
-		$this->moderation_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::MODERATION_AUTHORIZATIONS);
-	}
-	
-	public function get_moderation_authorizations()
-	{
-		return !empty($this->moderation_authorizations) ? $this->moderation_authorizations : $this->default_authorizations;
+		return !empty($this->authorizations) ? $this->authorizations : $this->default_authorizations;
 	}
 }
 ?>
