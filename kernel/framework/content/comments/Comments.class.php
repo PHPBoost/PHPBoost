@@ -31,11 +31,20 @@
  */
 class Comments
 {
+	private $default_authorizations;
 	private $module_name;
 	private $module_id;
 	private $read_authorizations;
 	private $post_authorizations;
 	private $moderation_authorizations;
+	const READ_AUTHORIZATIONS = 1;
+	const POST_AUTHORIZATIONS = 2;
+	const MODERATION_AUTHORIZATIONS = 3;
+	
+	public function __construct()
+	{
+		$this->default_authorizations = CommentsConfig::load()->get_authorizations();
+	}
 	
 	public function set_module_name($module)
 	{
@@ -57,34 +66,34 @@ class Comments
 		return $this->module_id;
 	}
 	
-	public function set_read_authorizations(Array $read_authorizations)
+	public function set_read_authorizations(Array $authorizations, $bit = self::READ_AUTHORIZATIONS)
 	{
-		$this->read_authorizations = $read_authorizations;
+		$this->read_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::READ_AUTHORIZATIONS);
 	}
 	
 	public function get_read_authorizations()
 	{
-		return !empty($this->read_authorizations) ? $this->read_authorizations : array();
+		return !empty($this->read_authorizations) ? $this->read_authorizations : $this->default_authorizations;
 	}
 	
-	public function set_post_authorizations(Array $post_authorizations)
+	public function set_post_authorizations(Array $authorizations, $bit = self::POST_AUTHORIZATIONS)
 	{
-		$this->post_authorizations = $post_authorizations;
+		$this->post_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::POST_AUTHORIZATIONS);
 	}
 	
 	public function get_post_authorizations()
 	{
-		return !empty($this->post_authorizations) ? $this->post_authorizations : array();
+		return !empty($this->post_authorizations) ? $this->post_authorizations : $this->default_authorizations;
 	}
 	
-	public function set_moderation_authorizations(Array $moderation_authorizations)
+	public function set_moderation_authorizations(Array $authorizations, $bit = self::MODERATION_AUTHORIZATIONS)
 	{
-		$this->moderation_authorizations = $moderation_authorizations;
+		$this->moderation_authorizations = Authorizations::capture_and_shift_bit_auth($authorizations, $bit, self::MODERATION_AUTHORIZATIONS);
 	}
 	
 	public function get_moderation_authorizations()
 	{
-		return !empty($this->moderation_authorizations) ? $this->moderation_authorizations : array();
+		return !empty($this->moderation_authorizations) ? $this->moderation_authorizations : $this->default_authorizations;
 	}
 }
 ?>

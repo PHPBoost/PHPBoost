@@ -30,14 +30,7 @@
  * @package {@package}
  */
 class CommentsService
-{
-	/*
-	 * DataBase Fields :
-	 * Comments => id, module_name, module_id, number_comments, is_locked
-	 * Comment_posted => id, user_id, name_visitor, ip_visitor, note
-	 *
-	*/
-	
+{	
 	private static $user;
 	private static $lang;
 	private static $comments_configuration;
@@ -51,11 +44,31 @@ class CommentsService
 	
 	public static function display(Comments $comments)
 	{
-		$template = new FileTemplate('framework/content/com.tpl');
+		$template = new FileTemplate('framework/content/comments.tpl');
 		
-		
-		
-		return $template->render();
+		$edit_comment = AppContext::get_request()->get_int('edit_comment', 0);
+		if (self::$user->check_auth($comments->get_read_authorizations(), Comments::READ_AUTHORIZATIONS))
+		{
+			if (self::$user->check_auth($comments->get_post_authorizations(), Comments::POST_AUTHORIZATIONS))
+			{
+				$template->put_all(array(
+					'C_DISPLAY_FORM' => true,
+					'COMMENT_FORM' => $edit_comment == 0 ? self::add_comment_form($comments, $template) : self::update_comment_form($comments, $id_comment, $template)
+				));
+			}
+			else
+			{
+				$template->put_all(array(
+					'C_DISPLAY_FORM' => false
+				));
+			}
+		}
+		else
+		{
+			throw new Exception('Vous n\'êtes pas autorisé à lire les commentaires !');
+		}
+	
+		return $template->display();
 	}
 	
 	public static function delete_all_comments_by_module_name($name)
@@ -63,9 +76,9 @@ class CommentsService
 		CommentsDAO::delete_all_comments_by_module_name($name);
 	}
 	
-	private static function add_comment_form()
+	private static function add_comment_form(Comments $comments, $template)
 	{
-		$is_visitor = !$User->check_level(MEMBER_LEVEL);
+		$is_visitor = !self::$user->check_level(MEMBER_LEVEL);
 		$form = new HTMLForm('comments');
 		$fieldset = new FormFieldsetHTML('add_comment', self::$lang['add_comment']);
 		$form->add_fieldset($fieldset);
@@ -78,7 +91,7 @@ class CommentsService
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', self::$lang['message'], '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', self::$lang['message'], '', array(
 			'formatter' => self::get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => self::$lang['require_text'])
 		));
@@ -92,12 +105,26 @@ class CommentsService
 		
 		if ($submit_button->has_been_submited() && $form->validate())
 		{
-			CommentsDAO::add_comment();
-			$tpl->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
+			$comment = new Comment();
+			if (!$is_visitor)
+			{
+				$comment->set_user_id(self::$user->get_attribute('user_id'));
+			}
+			else
+			{
+				$comment->set_name_visitor($form->get_value('name'));
+				$comment->set_message($form->get_value('message'));
+				$comment->set_ip_visitor(USER_IP);
+			}			
+
+			CommentsDAO::add_comment($comment);
+			$template->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
 		}
+		
+		return $form->display()->render();
 	}
 	
-	private static function update_comment_form()
+	private static function update_comment_form(Comments $comments, $id_comment, $template)
 	{
 		
 	}
