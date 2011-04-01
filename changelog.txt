@@ -1,5 +1,5 @@
 #################################################################################
-#                           PHPBoost 3.1 Changelog                              #
+#                           PHPBoost 4.0 Changelog                              #
 #################################################################################
 
 ===================================== Noyau ======================================
@@ -32,7 +32,7 @@
 [*] Nouveau système de changement de mot de passe en cas d'oubli.
 + Refonte de la classe session (Possibilité de joindre les sessions et l'espace membre à des systèmes d'authentification externes).
 [*] Refonte du système de notation.
-- Refonte du système de commentaire.
++ Refonte du système de commentaire.
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
@@ -49,7 +49,6 @@
 [*] Amélioration de l'interface de gestion des thèmes.
 
 [b]Divers :[/b]
-- [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag'n drop).
 [*] [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 [*] Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
@@ -91,6 +90,9 @@
 
 [b]Calendrier :[/b]
 [*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+
+[b]Forum[/b]
+[*] Suppression d'un sondage impossible
 
 [b]Téléchargement[/b]
 [*] Possibilité de signaler les liens cassés.

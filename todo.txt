@@ -51,8 +51,7 @@
 - Possibilité de télécharger l'image.
 
 [b]Forum[/b]
-- Suppression d'un sondage impossible
-- Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà des messages/sujets.
+? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà des messages/sujets.
 
 
 
@@ -78,6 +77,7 @@
 ###################################### PHPBoost 4.1 ##################################
 
 [b]Structure et fonctionnement:[/b]
+- [color=red]Nouveauté:[/color] Refonte des catégories avec support du Drag'n Drop.
 - [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
@@ -120,6 +120,9 @@
 [b]Calendrier:[/b]
 - [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
 - Possibilité d'afficher les évenements sur une période donnée. 
+
+[b]Newsletter:[/b]
+- Refonte des catégories avec le nouveau système. 
 
 [b]Contact:[/b]
 - Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
