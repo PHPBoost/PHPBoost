@@ -33,19 +33,82 @@ class CommentsDAO
 {
 	private static $db_querier;
 	
+	/*
+	 * DataBase Fields :
+	 * DB_TABLE_COMMENTS => id, module_name, id_module, number_comments, is_locked
+	 * DB_TABLE_POSTED_COMMENTS => id, user_id, name_visitor, ip_visitor, note, message
+	 *
+	*/
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public static function add_comment()
+	public static function add_comment(Comment $comment)
 	{
-	
+		$columns = array(
+			'user_id' => $comment->get_user_id(),
+			'name_visitor' => $comment->get_name_visitor(),
+			'ip_visitor' => $comment->get_ip_visitor(),
+			'message' => $comment->get_message()
+		);
+		self::$db_querier->insert(DB_TABLE_POSTED_COMMENTS, $columns);
+		
+		$number_comments = self::get_number_comments_by_module($comment);
+		if ($number_comments > 0)
+		{
+			$columns = array(
+				'number_comments' => $number_comments + 1
+			);
+			$condition = "WHERE id_module = :id_module AND module_name = :module_name";
+			$parameters = array(
+				'id_module' => $comment->get_id_module(),
+				'module_name' => $comment->get_module_name()
+			);
+			self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
+		}
+		else
+		{
+			$columns = array(
+				'module_name' => $comment->get_module_name(),
+				'id_module' => $comment->get_id_module(),
+				'number_comments' => 0,
+				'is_locked' => 0
+			);
+			self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
+		}
 	}
 	
-	public static function edit_comment()
+	public static function edit_comment(Comment $comment)
 	{
+		$columns = array(
+			'message' => $comment->get_message()
+		);
+		$condition = "WHERE id_module = :id_module AND module_name = :module_name";
+		$parameters = array(
+			'id_module' => $comment->get_id_module(),
+			'module_name' => $comment->get_module_name()
+		);
+		self::$db_querier->update(DB_TABLE_POSTED_COMMENTS, $columns, $condition, $parameters);
+		
+		$columns = array(
+			'number_comments' => $number_comments + 1
+		);
+		$condition = "WHERE id_module = :id_module AND module_name = :module_name";
+		$parameters = array(
+			'id_module' => $comment->get_id_module(),
+			'module_name' => $comment->get_module_name()
+		);
+		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
+	}
 	
+	private static function get_number_comments_by_module(Comment $comment)
+	{
+		$parameters = array(
+			'id_module' => $comment->get_id_module(),
+			'module_name' => $comment->get_module_name()
+		);
+		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE id_module = :id_module AND module_name = :module_name", $parameters);
 	}
 }
 ?>
