@@ -40,7 +40,7 @@ class Comment
 	private $visibility = true;
 	private $message = '';
 	private $module_name;
-	private $module_id;
+	private $id_module;
 	
 	public function set_id($id)
 	{
@@ -132,14 +132,14 @@ class Comment
 		return $this->module_name;
 	}
 	
-	public function set_module_id($module_id)
+	public function set_id_module($id_module)
 	{
-		$this->module_id = $module_id;
+		$this->id_module = $id_module;
 	}
 	
-	public function get_module_id()
+	public function get_id_module()
 	{
-		return $this->module_id;
+		return $this->id_module;
 	}
 }
 ?>

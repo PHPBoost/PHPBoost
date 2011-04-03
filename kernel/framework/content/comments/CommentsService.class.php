@@ -34,31 +34,31 @@ class CommentsService
 	private static $user;
 	private static $lang;
 	private static $comments_configuration;
+	private static $template;
 	
 	public static function __static()
 	{
 		self::$user = AppContext::get_user();
 		self::$lang = LangLoader::get('main');
 		self::$comments_configuration = CommentsConfig::load();
+		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 	}
 	
 	public static function display(Comments $comments)
 	{
-		$template = new FileTemplate('framework/content/comments.tpl');
-		
 		$edit_comment = AppContext::get_request()->get_int('edit_comment', 0);
 		$delete_comment = AppContext::get_request()->get_int('delete_comment', 0);
 		if ($comments->get_authorizations()->is_authorized_read())
 		{
-			if (!$comments->get_is_locked() || self::$user->get_attribute('user_readonly') <= time())
+			if ($comments->get_is_locked() || self::$user->get_attribute('user_readonly') <= time())
 			{
 				if ($edit_comment == 0)
 				{
 					if ($comments->get_authorizations()->is_authorized_post())
 					{
-						$template->put_all(array(
+						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
-							'COMMENT_FORM' => self::add_comment_form($template)
+							'COMMENT_FORM' => self::add_comment_form($comments)
 						));
 					}
 					else
@@ -72,12 +72,18 @@ class CommentsService
 					$comment = new Comment();
 					$comment->set_id($edit_comment);
 					
+					if (!CommentsDAO::comment_exist($comment))
+					{
+						$error_controller = PHPBoostErrors::unexisting_page();
+						DispatchManager::redirect($error_controller);
+					}
+					
 					$user_id_posted_comment = CommentsDAO::get_user_id_posted_comment($comment);
 					if ($comments->get_authorizations()->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id'))
 					{
-						$template->put_all(array(
+						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
-							'COMMENT_FORM' => self::update_comment_form($comment, $template)
+							'COMMENT_FORM' => self::update_comment_form($comments, $comment)
 						));
 					}
 					else
@@ -87,11 +93,16 @@ class CommentsService
 					}
 				}
 			}
+			elseif (self::$user->get_attribute('user_readonly') <= time())
+			{
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', E_USER_SUCCESS, 4));
+			}
 			else
 			{
-				//TODO
-				throw new Exception('Commentaires bloqués!');
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], E_USER_SUCCESS, 4));
 			}
+			
+			self::$template->put('COMMENTS_LIST', self::display_comments_list($comments));
 		}
 		else
 		{
@@ -99,7 +110,7 @@ class CommentsService
 			throw new Exception('Vous n\'êtes pas autorisé à lire les commentaires !');
 		}
 	
-		return $template->display();
+		return self::$template;
 	}
 	
 	/*
@@ -118,7 +129,15 @@ class CommentsService
 		CommentsDAO::delete_all_comments_by_module_name($comments);
 	}
 	
-	private static function add_comment_form($template)
+	/*
+	 * Required Instance Comments class and setter function module name, and module id.
+	*/
+	public static function get_number_comments(Comments $comments)
+	{
+		CommentsDAO::number_comments($comments);
+	}
+	
+	private static function add_comment_form(Comments $comments)
 	{
 		$is_visitor = !self::$user->check_level(MEMBER_LEVEL);
 		$form = new HTMLForm('comments');
@@ -157,33 +176,38 @@ class CommentsService
 				$comment->set_ip_visitor(USER_IP);
 			}
 			
+			/*
 			$last_comment = CommentsDAO::get_last_comment_user($comment);
-			if ($last_comment >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
+			if ($last_comment !== null && $last_comment >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
 			{
-				$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['e_flood']), E_USER_NOTICE, 4));
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['e_flood']), E_USER_NOTICE, 4);
 			}
-			else if (!TextHelper::check_nbr_links($form->get_value('message'), self::$comments_configuration->get_max_links_comment()))
+			else 
+			*/
+			if (!TextHelper::check_nbr_links($form->get_value('message'), self::$comments_configuration->get_max_links_comment()))
 			{
-				$template->put('KEEP_MESSAGE', MessageHelper::display(sprintf(self::$lang['e_l_flood'], self::$comments_configuration->get_max_links_comment()), E_USER_NOTICE, 4));
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(sprintf(self::$lang['e_l_flood'], self::$comments_configuration->get_max_links_comment()), E_USER_NOTICE, 4));
 			}
 			else
 			{
 				$comment->set_name_visitor($form->get_value('name', ''));
 				$comment->set_message($form->get_value('message'));
+				$comment->set_module_name($comments->get_module_name());
+				$comment->set_id_module($comments->get_id_module());
 				CommentsDAO::add_comment($comment);
 				
 				//TODO
-				$template->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
 			}
 		}
 		
-		return $form->display()->render();
+		return $form->display();
 	}
 	
-	private static function update_comment_form(Comment $comment, $template)
+	private static function update_comment_form(Comments $comments, Comment $comment)
 	{
 		$data = CommentsDAO::get_data_comment($comment);
-		
+
 		$form = new HTMLForm('comments');
 		$fieldset = new FormFieldsetHTML('edit_comment', self::$lang['edit_comment']);
 		$form->add_fieldset($fieldset);
@@ -200,19 +224,26 @@ class CommentsService
 		{
 			if (TextHelper::check_nbr_links($form->get_value('message'), self::$comments_configuration->get_max_links_comment()))
 			{
-				$comment = new Comment();
 				$comment->set_message($form->get_value('message'));
 				CommentsDAO::edit_comment($comment);
 				
 				//TODO
-				$template->put('KEEP_MESSAGE', MessageHelper::display('Edit successfully', E_USER_SUCCESS, 4));
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Edit successfully', E_USER_SUCCESS, 4));
 			}
 			else
 			{
-				$template->put('KEEP_MESSAGE', MessageHelper::display(sprintf(self::$lang['e_l_flood'], self::$comments_configuration->get_max_links_comment()), E_USER_NOTICE, 4));
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(sprintf(self::$lang['e_l_flood'], self::$comments_configuration->get_max_links_comment()), E_USER_NOTICE, 4));
 			}
 		}
-		return $form->display()->render();
+		return $form->display();
+	}
+	
+	private static function display_comments_list(Comments $comments)
+	{
+		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
+	
+	
+		return $template;
 	}
 	
 	private static function get_formatter()

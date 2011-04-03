@@ -32,7 +32,7 @@
 class Comments
 {
 	private $module_name;
-	private $module_id;
+	private $id_module;
 	private $is_locked = false;
 	private $authorizations;
 
@@ -46,14 +46,14 @@ class Comments
 		return $this->module_name;
 	}
 	
-	public function set_module_id($module_id)
+	public function set_id_module($id_module)
 	{
-		$this->module_id = $module_id;
+		$this->id_module = $id_module;
 	}
 	
-	public function get_module_id()
+	public function get_id_module()
 	{
-		return $this->module_id;
+		return $this->id_module;
 	}
 	
 	public function set_is_locked($is_locked)
@@ -73,7 +73,7 @@ class Comments
 	
 	public function get_authorizations()
 	{
-		return !empty($this->authorizations) ? $this->authorizations : $this->default_authorizations;
+		return !empty($this->authorizations) ? $this->authorizations : new CommentsAuthorizations();
 	}
 }
 ?>
