@@ -33,12 +33,6 @@ class CommentsDAO
 {
 	private static $db_querier;
 	
-	/*
-	 * DataBase Fields :
-	 * DB_TABLE_COMMENTS_TOPIC => id, module_name, id_module, number_comments, is_locked, visibility, authorizations
-	 * DB_TABLE_COMMENTS => id, id_topic, user_id, name_visitor, ip_visitor, note, message
-	 *
-	*/
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
@@ -60,7 +54,7 @@ class CommentsDAO
 	public static function change_visibility(Comments $comments)
 	{
 		$columns = array(
-			'visibility' => $comments->get_visibility();
+			'visibility' => $comments->get_visibility()
 		);
 		$condition = "WHERE id_module = :id_module AND module_name = :module_name";
 		$parameters = array(
@@ -77,19 +71,39 @@ class CommentsDAO
 	
 	public static function get_data_comment(Comment $comment)
 	{
-		return self::$db_querier->select_rows(DB_TABLE_COMMENTS, array('*'), "WHERE id = :id", array('id' => $comment->get_id());
+		return self::$db_querier->select_single_row(DB_TABLE_COMMENTS, array('*'), "WHERE id = :id", array('id' => $comment->get_id()));
 	}
 	
 	public static function get_last_comment_user(Comment $comment)
 	{
 		if ($comment->get_user_id() > 0)
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE user_id = :user_id", array('user_id' => $comment->get_user_id()));
+			$user_id_existed = self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE user_id = :user_id", array('user_id' => $comment->get_user_id()));
+			if ($user_id_existed > 0)
+			{
+				return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE user_id = :user_id", array('user_id' => $comment->get_user_id()));
+			}
+			return null;
 		}
 		else
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE ip_visitor = :ip_visitor", array('ip_visitor' => $comment->get_ip_visitor()));
+			$ip_visitor_existed = self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE ip_visitor = :ip_visitor", array('ip_visitor' => $comment->get_ip_visitor()));
+			if ($ip_visitor_existed > 0)
+			{
+				return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE ip_visitor = :ip_visitor", array('ip_visitor' => $comment->get_ip_visitor()));
+			}
+			return null;
 		}
+	}
+	
+	public static function number_comments(Comments $comments)
+	{
+		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE module_name = :module_name AND module_id = :module_id", array('module_name' => $comments->get_module_name(), 'module_id' => $comments->get_module_id()));
+	}
+	
+	public static function comment_exist(Comment $comment)
+	{
+		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE id = :id", array('id' => $comment->get_id()));
 	}
 	
 	public static function add_comment(Comment $comment)
@@ -112,7 +126,8 @@ class CommentsDAO
 			$columns = array(
 				'module_name' => $comment->get_module_name(),
 				'id_module' => $comment->get_id_module(),
-				'number_comments' => 0,
+				'number_comments' => 1,
+				'visibility' => 1,
 				'is_locked' => 0
 			);
 			self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
@@ -123,10 +138,10 @@ class CommentsDAO
 		$columns = array(
 			'id_topic' => $id_comments_topic,
 			'user_id' => $comment->get_user_id(),
-			'name_visitor' => $comment->get_name_visitor(),
-			'ip_visitor' => $comment->get_ip_visitor(),
+			'name_visitor' => htmlspecialchars($comment->get_name_visitor()),
+			'ip_visitor' => htmlspecialchars($comment->get_ip_visitor()),
 			'timestamp' => time(),
-			'message' => $comment->get_message()
+			'message' => htmlspecialchars($comment->get_message())
 		);
 		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 	}
@@ -141,17 +156,6 @@ class CommentsDAO
 			'id' => $comment->get_id()
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
-		
-		$id_topic = self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'id_topic', $condition, $parameters);
-		
-		$columns = array(
-			'number_comments' => self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE id_topic = :id_topic", array('id_topic' => $id_topic))
-		);
-		$condition = "WHERE id_topic = :id_topic";
-		$parameters = array(
-			'id_topic' => $id_topic
-		);
-		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
 	}
 
 	public static function get_number_comments_by_module(Comment $comment)
