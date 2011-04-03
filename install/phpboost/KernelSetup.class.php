@@ -36,6 +36,8 @@ class KernelSetup
 	 */
 	private static $db_querier;
 	private static $com_table;
+	private static $comments_table;
+	private static $comments_topic_table;
 	private static $note_table;
 	private static $average_notes_table;
 	private static $visit_counter_table;
@@ -69,6 +71,8 @@ class KernelSetup
 		self::$db_querier = PersistenceContext::get_querier();
 
 		self::$com_table = PREFIX . 'com';
+		self::$comments_table = PREFIX . 'comments';
+		self::$comments_topic_table = PREFIX . 'comments_topic';
 		self::$note_table = PREFIX . 'note';
 		self::$average_notes_table = PREFIX . 'average_notes';
 		self::$visit_counter_table = PREFIX . 'visit_counter';
@@ -109,6 +113,8 @@ class KernelSetup
 	{
 		self::$db_utils->drop(array(
 			self::$com_table,
+			self::$comments_table,
+			self::$comments_topic_table,
 			self::$note_table,
 			self::$average_notes_table,
 			self::$visit_counter_table,
@@ -142,6 +148,8 @@ class KernelSetup
 	{
 		$this->create_com_table();
 		$this->create_note_table();
+		$this->create_comments_table();
+		$this->create_comments_topic_table();
 		$this->create_average_notes_table();
 		$this->create_visit_counter_table();
 		$this->create_configs_table();
@@ -188,6 +196,41 @@ class KernelSetup
 				'idprov' => array('type' => 'key', 'fields' => array('idprov', 'script'))
 		));
 		self::$db_utils->create_table(self::$com_table, $fields, $options);
+	}
+	
+	private function create_comments_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'message' => array('type' => 'text', 'length' => 65000),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'ip_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		self::$db_utils->create_table(self::$comments_table, $fields, $options);
+	}
+	
+	private function create_comments_topic_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'id_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'visibility' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'authorizations' => array('type' => 'text', 'length' => 65000)
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		self::$db_utils->create_table(self::$comments_topic_table, $fields, $options);
 	}
 
 	private function create_note_table()

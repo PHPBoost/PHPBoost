@@ -6,6 +6,8 @@
 * Constant definition
 */
 define('DB_TABLE_COM', PREFIX . 'com');
+define('DB_TABLE_COMMENTS', PREFIX . 'comments');
+define('DB_TABLE_COMMENTS_TOPIC', PREFIX . 'comments_topic');
 define('DB_TABLE_NOTE', PREFIX . 'note');
 define('DB_TABLE_AVERAGE_NOTES', PREFIX . 'average_notes');
 define('DB_TABLE_VISIT_COUNTER', PREFIX . 'visit_counter');
