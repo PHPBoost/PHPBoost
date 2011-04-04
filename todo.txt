@@ -18,7 +18,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Balises Youtube, Dailymotion
-+ [color=red]Nouveauté:[/color] Possibilité de gérer les catégories par drag'n drop.
 + Terminer le passage du dossier member et de la partie membre dans l'administration (ajout du fichier de lang pour l'administration)
 - Champs étendus : Ajout d'une fonction pour définir une valeur par défaut dans ***ExtendedField
 - Débugger voir refaire la classes Comments (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)

@@ -2,8 +2,8 @@
 /*##################################################
  *                              CommentsService.class.php
  *                            -------------------
- *   begin                : March 31, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   begin                : March 31, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -50,8 +50,23 @@ class CommentsService
 		$delete_comment = AppContext::get_request()->get_int('delete_comment', 0);
 		if ($comments->get_authorizations()->is_authorized_read())
 		{
-			if ($comments->get_is_locked() || self::$user->get_attribute('user_readonly') <= time())
+			if ($comments->get_is_locked())
 			{
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], E_USER_SUCCESS, 4));
+			}
+			/*
+			else if (self::$user->get_attribute('user_readonly') <= time())
+			{
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', E_USER_SUCCESS, 4));
+			}
+			*/
+			else
+			{
+				if (CommentsDAO::get_existed_comments_topic($comments) == 0)
+				{
+					CommentsDAO::create_comments_topic($comments);
+				}
+				
 				if ($edit_comment == 0)
 				{
 					if ($comments->get_authorizations()->is_authorized_post())
@@ -92,17 +107,18 @@ class CommentsService
 						throw new Exception('Vous n\'êtes pas autorisé d\'éditer ce commentaire !');
 					}
 				}
+				/*
+				self::$template->put('DATA', json_encode(array_merge($_GET, array(
+					'token' => AppContext::get_session()->get_token(), 
+					'module_name' => $comments->get_module_name(),
+					'id_module' => $comments->get_id_module(),
+					'is_locked' => $comments->get_is_locked(),
+					'number_comments_pagination' => $comments->get_number_comments_pagination()
+				))));
+				*/
+				
+				self::$template->put('COMMENTS_LIST', self::display_comments_list($comments));
 			}
-			elseif (self::$user->get_attribute('user_readonly') <= time())
-			{
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', E_USER_SUCCESS, 4));
-			}
-			else
-			{
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], E_USER_SUCCESS, 4));
-			}
-			
-			self::$template->put('COMMENTS_LIST', self::display_comments_list($comments));
 		}
 		else
 		{
@@ -238,11 +254,47 @@ class CommentsService
 		return $form->display();
 	}
 	
-	private static function display_comments_list(Comments $comments)
+	public static function display_comments_list(Comments $comments)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
-	
-	
+		
+		$page = AppContext::get_request()->get_int('page', 1);
+		$nbr_comments = PersistenceContext::get_querier()->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_module = :id_module", 
+		array('module_name' =>  $comments->get_module_name(), 'id_module' => $comments->get_id_module()));
+		$nbr_pages =  ceil($nbr_comments /  $comments->get_number_comments_pagination());
+		$limite_page = $page > 0 ? $page : 1;
+		$limite_page = (($limite_page - 1) *  $comments->get_number_comments_pagination());
+
+		$pagination = new Pagination($nbr_pages, $page);
+		
+		// TODO
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('', '/%d')->absolute());
+		
+		$result = PersistenceContext::get_querier()->select("
+			SELECT comments.*, topic.*
+			FROM " . DB_TABLE_COMMENTS . " comments, " . DB_TABLE_COMMENTS_TOPIC . " topic
+			WHERE topic.module_name = :module_name AND topic.id_module = :id_module
+			LIMIT ".  $comments->get_number_comments_pagination() ." OFFSET :start_limit
+			",
+				array(
+					'start_limit' => $limite_page,
+					'module_name' =>  $comments->get_module_name(),
+					'id_module' =>  $comments->get_id_module()
+				), SelectQueryResult::FETCH_ASSOC
+		);
+		
+		while ($row = $result->fetch())
+		{
+			$template->assign_block_vars('comments_list', array(
+				'MESSAGE' => $row['message']
+			));
+		}
+		
+		$template->put_all(array(
+			'PAGINATION' => '&nbsp;<strong>' . self::$lang['page'] . ' :</strong> ' . $pagination->export()->render(),
+			'C_IS_MODERATOR' => $comments->get_authorizations()->is_authorized_moderation()
+		));
+
 		return $template;
 	}
 	

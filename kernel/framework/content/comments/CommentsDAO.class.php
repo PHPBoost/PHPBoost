@@ -2,8 +2,8 @@
 /*##################################################
  *                              CommentsDAO.class.php
  *                            -------------------
- *   begin                : March 31, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   begin                : March 31, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -98,7 +98,7 @@ class CommentsDAO
 	
 	public static function number_comments(Comments $comments)
 	{
-		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE module_name = :module_name AND module_id = :module_id", array('module_name' => $comments->get_module_name(), 'module_id' => $comments->get_module_id()));
+		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE module_name = :module_name AND id_module = :id_module", array('module_name' => $comments->get_module_name(), 'id_module' => $comments->get_id_module()));
 	}
 	
 	public static function comment_exist(Comment $comment)
@@ -108,30 +108,17 @@ class CommentsDAO
 	
 	public static function add_comment(Comment $comment)
 	{
-		$number_comments = self::get_number_comments_by_module($comment);
-		if ($number_comments > 0)
-		{
-			$columns = array(
-				'number_comments' => $number_comments + 1
-			);
-			$condition = "WHERE id_module = :id_module AND module_name = :module_name";
-			$parameters = array(
-				'id_module' => $comment->get_id_module(),
-				'module_name' => $comment->get_module_name()
-			);
-			self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
-		}
-		else
-		{
-			$columns = array(
-				'module_name' => $comment->get_module_name(),
-				'id_module' => $comment->get_id_module(),
-				'number_comments' => 1,
-				'visibility' => 1,
-				'is_locked' => 0
-			);
-			self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
-		}
+		$number_comments = self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_module = :id_module", 
+		array('module_name' => $comment->get_module_name(), 'id_module' => $comment->get_id_module()));
+		$columns = array(
+			'number_comments' => $number_comments + 1
+		);
+		$condition = "WHERE id_module = :id_module AND module_name = :module_name";
+		$parameters = array(
+			'id_module' => $comment->get_id_module(),
+			'module_name' => $comment->get_module_name()
+		);
+		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
 		
 		$id_comments_topic = self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id', "WHERE module_name = :module_name AND id_module = :id_module", 
 		array('module_name' => $comment->get_module_name(), 'id_module' => $comment->get_id_module()));
@@ -146,6 +133,18 @@ class CommentsDAO
 		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 	}
 	
+	public static function create_comments_topic(Comments $comments)
+	{
+		$columns = array(
+			'module_name' => $comments->get_module_name(),
+			'id_module' => $comments->get_id_module(),
+			'number_comments' => 0,
+			'visibility' => (string)$comments->get_visibility(),
+			'is_locked' => (string)$comments->get_is_locked()
+		);
+		self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
+	}
+	
 	public static function edit_comment(Comment $comment)
 	{
 		$columns = array(
@@ -156,6 +155,15 @@ class CommentsDAO
 			'id' => $comment->get_id()
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
+	}
+	
+	public static function get_existed_comments_topic(Comments $comments)
+	{
+		$parameters = array(
+			'id_module' => $comments->get_id_module(),
+			'module_name' => $comments->get_module_name()
+		);
+		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE id_module = :id_module AND module_name = :module_name", $parameters);
 	}
 
 	public static function get_number_comments_by_module(Comment $comment)
