@@ -2,8 +2,8 @@
 /*##################################################
  *                              Comments.class.php
  *                            -------------------
- *   begin                : March 31, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   begin                : March 31, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -33,8 +33,10 @@ class Comments
 {
 	private $module_name;
 	private $id_module;
+	private $visibility = true;
 	private $is_locked = false;
 	private $authorizations;
+	private $number_comments_pagination = 10;
 
 	public function set_module_name($module)
 	{
@@ -66,6 +68,16 @@ class Comments
 		return $this->is_locked;
 	}
 	
+	public function set_visibility($visibility)
+	{
+		$this->visibility = $visibility;
+	}
+	
+	public function get_visibility()
+	{
+		return $this->visibility;
+	}
+	
 	public function set_authorizations(CommentsAuthorizations $authorizations)
 	{
 		$this->authorizations = $authorizations;
@@ -74,6 +86,16 @@ class Comments
 	public function get_authorizations()
 	{
 		return !empty($this->authorizations) ? $this->authorizations : new CommentsAuthorizations();
+	}
+	
+	public function set_number_comments_pagination($number)
+	{
+		$this->number_comments_pagination = $number;
+	}
+	
+	public function get_number_comments_pagination()
+	{
+		return $this->number_comments_pagination;
 	}
 }
 ?>
