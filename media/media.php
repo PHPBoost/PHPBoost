@@ -39,6 +39,9 @@ $notation = new Notation();
 $notation->set_module_name('media');
 $notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
+$comments = new Comments();
+$comments->set_module_name('media');
+
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
 {
@@ -174,17 +177,18 @@ if (empty($id_media) && $id_cat >= 0)
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 		));
 
-		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.nbr_com, v.infos, v.contents, mb.login, mb.level, notes.average_notes
+		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.level, notes.average_notes
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
-			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.module_id
+			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module
 			WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 			ORDER BY " . $sort . " " . $mode .
 			$Sql->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
 
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$notation->set_module_id($row['id']);
+			$notation->set_id_in_module($row['id']);
+			$comments->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('file', array(
 				'NAME' => $row['name'],
@@ -199,7 +203,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>'
 			));
 		}
 
@@ -241,9 +245,11 @@ elseif ($id_media > 0)
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
-	$notation->set_module_id($id_media);
+	$notation->set_id_in_module($id_media);
 	$nbr_notes = NotationService::get_former_number_notes($notation);
 	
+	$comments->set_id_in_module($id_media);
+
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
@@ -254,7 +260,7 @@ elseif ($id_media > 0)
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$nbr_notes > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$nbr_notes) : sprintf($MEDIA_LANG['num_note'], (int)$nbr_notes),
-		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
@@ -285,9 +291,11 @@ elseif ($id_media > 0)
 	$Template->set_filenames(array('media_format' => (empty($mime_type_tpl[$media['mime_type']]) ? 'media/format/media_other.tpl' : 'media/' . $mime_type_tpl[$media['mime_type']])));
 
 	//Affichage commentaires.
-	if (isset($_GET['com']) && ($MEDIA_CATS[$media['idcat']]['active'] & (MEDIA_DV_COM + MEDIA_DL_COM)) !== 0)
+	if (isset($_GET['com']))
 	{
-		$Template->put_all(array('COMMENTS' => display_comments('media', $id_media, url('media.php?id=' . $id_media . '&amp;com=%s', 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=%s'))));
+		$Template->put_all(array(
+			'COMMENTS' => CommentsService::display($comments)->render()
+		));
 	}
 }
 

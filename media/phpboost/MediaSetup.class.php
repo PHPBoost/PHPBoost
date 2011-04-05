@@ -51,9 +51,14 @@ class MediaSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		
 		$notation = new Notation();
 		$notation->set_module_name('media');
 		NotationService::delete_notes_module($notation);
+		
+		$comments = new Comments();
+		$comments->set_module_name('media');
+		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_tables()
@@ -82,8 +87,6 @@ class MediaSetup extends DefaultModuleSetup
 			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -138,8 +141,6 @@ class MediaSetup extends DefaultModuleSetup
 			'width' => 640,
 			'height' => 438,
 			'counter' => 0,
-			'nbr_com' => 0,
-			'lock_com' => 0
 		));
 	}
 

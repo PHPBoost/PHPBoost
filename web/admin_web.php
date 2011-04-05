@@ -206,6 +206,12 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
+		$comments = new Comments();
+		$comments->set_module_name('web');
+		$comments->set_id_in_module($id_post);
+		$comments->set_visibility($aprob);
+		CommentsService::change_visibility($comments);
+	
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
@@ -223,8 +229,13 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	
 	$notation = new Notation();
 	$notation->set_module_name('web');
-	$notation->set_module_id($id);
-	NotationService::delete_notes_module_id($notation);
+	$notation->set_id_in_module($id);
+	NotationService::delete_notes_id_in_module($notation);
+	
+	$comments = new Comments();
+	$comments->set_module_name('web');
+	$comments->set_id_in_module($id);
+	CommentsService::delete_comments_id_in_module($comments);
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }		

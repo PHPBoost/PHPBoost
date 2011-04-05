@@ -33,9 +33,13 @@ $notation = new Notation();
 $notation->set_module_name('download');
 $notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
+$comments = new Comments();
+$comments->set_module_name('download');
+
 if ($file_id > 0) //Contenu
 {
-	$notation->set_module_id($file_id);
+	$notation->set_id_in_module($file_id);
+	$comments->set_id_in_module($file_id);
 	
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
@@ -67,7 +71,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => Comments::com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -90,7 +94,7 @@ if ($file_id > 0) //Contenu
 	if (isset($_GET['com']))
 	{
 		$Template->put_all(array(
-			'COMMENTS' => display_comments('download', $file_id, url('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
+			'COMMENTS' => CommentsService::display($comments)->render()
 		));
 	}
 	
@@ -279,7 +283,8 @@ else
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$notation->set_module_id($row['id']);
+			$notation->set_id_in_module($row['id']);
+			$comments->set_id_in_modulee($row['id']);
 			
 			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],
@@ -295,7 +300,7 @@ else
 				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>'
 			));
 		}
 		$Sql->query_close($result);

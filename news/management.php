@@ -47,14 +47,10 @@ if ($delete > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
-		if ($news['nbr_com'] > 0)
-		{
-			
-			$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
-			$Comments->delete_all($delete);
-		}
-
-		// Feeds Regeneration
+		$comments = new Comments();
+		$comments->set_module_name('news');
+		$comments->set_id_in_module($news['id']);
+		CommentsService::delete_comments_id_in_module($comments);
 	    
 	    Feed::clear_cache('news');
 
@@ -163,6 +159,12 @@ elseif (!empty($_POST['submit']))
 				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "', sources = '" . $news['sources'] . "'
 				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
 				
+				$comments = new Comments();
+				$comments->set_module_name('news');
+				$comments->set_id_in_module($news['id']);
+				$comments->set_visibility($news['visible']);
+				CommentsService::change_visibility($comments);
+				
 				if ($news['visible'])
 				{
 					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);
@@ -180,8 +182,8 @@ elseif (!empty($_POST['submit']))
 			{
 				$auth_contrib = !$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE);
 
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com, sources)
-				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '0', '" . $news['sources'] . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, sources)
+				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '" . $news['sources'] . "')", __LINE__, __FILE__);
 
 				$news['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_NEWS);
 

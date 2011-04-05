@@ -315,8 +315,8 @@ class Gallery
 		
 		$notation = new Notation();
 		$notation->set_module_name('gallery');
-		$notation->set_module_id(id_pics);
-		NotationService::delete_notes_module_id($notation);
+		$notation->set_id_in_module($id_pics);
+		NotationService::delete_notes_id_in_module($notation);
 	}
 	
 	//Renomme une image.

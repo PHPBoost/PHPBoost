@@ -43,6 +43,10 @@ class CalendarSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_table();
+		
+		$comments = new Comments();
+		$comments->set_module_name('calendar');
+		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_table()
@@ -57,9 +61,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'unsigned' => 1),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array('primary' => array('id'));
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_table, $fields, $options);

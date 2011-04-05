@@ -47,16 +47,16 @@ class ExtendedFieldsDatabaseService
 		self::$db_querier->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
 			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :freeze, :auth)", array(
-                'name' => $extended_field->get_name(),
+                'name' => htmlspecialchars($extended_field->get_name()),
                 'position' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
-				'description' => $extended_field->get_description(),
+				'description' => htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => $extended_field->get_possible_values(),
-				'default_values' => $extended_field->get_default_values(),
+				'possible_values' => htmlspecialchars($extended_field->get_possible_values()),
+				'default_values' => htmlspecialchars($extended_field->get_default_values()),
 				'required' => (string)$extended_field->get_required(),
 				'display' => (string)$extended_field->get_display(),
-				'regex' => $extended_field->get_regex(),
+				'regex' => htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (string)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 		));
@@ -75,15 +75,15 @@ class ExtendedFieldsDatabaseService
 			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
 			, array(
-                'name' => $extended_field->get_name(),
+                'name' => htmlspecialchars($extended_field->get_name()),
 				'field_name' => $extended_field->get_field_name(),
-				'description' => $extended_field->get_description(),
+				'description' => htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => $extended_field->get_possible_values(),
-				'default_values' => $extended_field->get_default_values(),
+				'possible_values' => htmlspecialchars($extended_field->get_possible_values()),
+				'default_values' => htmlspecialchars($extended_field->get_default_values()),
 				'required' => (string)$extended_field->get_required(),
 				'display' => (string)$extended_field->get_display(),
-				'regex' => $extended_field->get_regex(),
+				'regex' => htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (string)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),

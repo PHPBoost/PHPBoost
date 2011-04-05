@@ -32,7 +32,7 @@
 class Comments
 {
 	private $module_name;
-	private $id_module;
+	private $id_in_module;
 	private $visibility = true;
 	private $is_locked = false;
 	private $authorizations;
@@ -48,14 +48,14 @@ class Comments
 		return $this->module_name;
 	}
 	
-	public function set_id_module($id_module)
+	public function set_id_in_module($id_in_module)
 	{
-		$this->id_module = $id_module;
+		$this->id_in_module = $id_in_module;
 	}
 	
-	public function get_id_module()
+	public function get_id_in_module()
 	{
-		return $this->id_module;
+		return $this->id_in_module;
 	}
 	
 	public function set_is_locked($is_locked)

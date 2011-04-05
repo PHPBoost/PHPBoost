@@ -55,7 +55,11 @@ if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
-		
+
+
+$comments = new Comments();
+$comments->set_module_name('calendar');
+
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
 {
@@ -219,7 +223,7 @@ if ($checkdate === true && empty($id) && !$add)
 	if (!empty($day))
 	{
 		$java = '';
-		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
+		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, m.login
 		FROM " . PREFIX . "calendar cl
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id=cl.user_id
 		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year) . "' AND '" . mktime(23, 59, 59, $month, $day, $year) . "'
@@ -245,14 +249,15 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 			
-			
+			$comments->set_id_module($row['id']);
 			
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
-				'COM' => Comments::com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
+				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
+					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 				'EDIT' => $edit,
 				'DEL' => $del,
 				'L_ON' => $LANG['on']
@@ -282,7 +287,7 @@ if ($checkdate === true && empty($id) && !$add)
 	if (isset($_GET['com']))
 	{
 		$Template->put_all(array(
-			'COMMENTS' => display_comments('calendar', $get_event, url('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
+			'COMMENTS' => CommentsService::display($comments)->render()
 		));
 	}
 
@@ -294,25 +299,25 @@ elseif (!empty($id))
 	if ($delete) //Suppression simple.
 	{
 		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
-	{
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
-}
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
-		//Suppression des commentaires associés.
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
+		$comments->set_id_module($id);
+		CommentsService::delete_comments_module($comments);
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}
 	elseif ($edit)
 	{
 		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
-	{
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
-}
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		if (!empty($_POST['valid']))
 		{
@@ -429,7 +434,7 @@ elseif ($add) //Ajout d'un évenement
 		{
 			if (!empty($title) && !empty($contents)) //succès
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);
