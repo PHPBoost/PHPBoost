@@ -52,8 +52,6 @@
 [b]Forum[/b]
 ? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà des messages/sujets.
 
-
-
 #################################################################################
 ##                                    LOIC                                    ##
 #################################################################################

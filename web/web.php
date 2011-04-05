@@ -33,8 +33,12 @@ $tpl = new FileTemplate('web/web.tpl');
 
 $notation = new Notation();
 $notation->set_module_name('web');
-$notation->set_module_id($idweb);
+$notation->set_id_in_module($idweb);
 $notation->set_notation_scale($CONFIG_WEB['note_max']);
+
+$comments = new Comments();
+$comments->set_module_name('web');
+$comments->set_id_in_module($idweb);
 
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {
@@ -77,6 +81,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'DEL' => $del
 	));
 	
+	
 	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
 		'IDWEB' => $web['id'],		
@@ -88,7 +93,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'COMPT' => $web['compt'],
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'COM' => Comments::com_display_link($web['nbr_com'], '../web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
+		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
@@ -102,7 +107,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	if (isset($_GET['com']))
 	{
 		$tpl->put_all(array(
-			'COMMENTS' => display_comments('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'))
+			'COMMENTS' => CommentsService::display($comments)->render()
 		));
 	}	
 }
@@ -175,15 +180,17 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
-	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, w.nbr_com, notes.average_notes
+	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes
 	FROM " . PREFIX . "web w
-	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.module_id
+	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.id_in_module
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$notation->set_module_id($row['id']);
+		$notation->set_id_in_module($row['id']);
+		$comments->set_id_in_module($row['id']);
+		
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
@@ -193,7 +200,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
 			'NOTE' => NotationService::display_static_image($notation),
-			'COM' => $row['nbr_com'],
+			'COM' => CommentsService::get_number_comments($comments),
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}

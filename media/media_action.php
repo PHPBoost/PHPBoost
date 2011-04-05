@@ -92,18 +92,15 @@ elseif ($delete > 0)
 
 	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
-	//Deleting comments if the file has
-	if ($media['nbr_com'] > 0)
-	{
-		
-		$Comments = new Comments('media', $delete, url('media.php?id=' . $delete . '&amp;com=%s', 'media-' . $delete . '.php?com=%s'));
-		$Comments->delete_all($delete);
-	}
-
 	$notation = new Notation();
 	$notation->set_module_name('media');
-	$notation->set_module_id($delete);
-	NotationService::delete_notes_module_id($notation);
+	$notation->set_id_in_module($delete);
+	NotationService::delete_notes_id_in_module($notation);
+	
+	$comments = new Comments();
+	$comments->set_module_name('media');
+	$comments->set_id_in_module($delete);
+	CommentsService::delete_comments_id_in_module($comments);
 	
 	// Feeds Regeneration
 	Feed::clear_cache('media');

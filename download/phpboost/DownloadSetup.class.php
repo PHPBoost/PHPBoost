@@ -51,9 +51,14 @@ class DownloadSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		
 		$notation = new Notation();
 		$notation->set_module_name('download');
 		NotationService::delete_notes_module($notation);
+		
+		$comments = new Comments();
+		$comments->set_module_name('download');
+		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_tables()
@@ -86,8 +91,6 @@ class DownloadSetup extends DefaultModuleSetup
 			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'force_download' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -147,8 +150,6 @@ class DownloadSetup extends DefaultModuleSetup
 			'start' => 0,
 			'end' => 0,
 			'user_id' => 1,
-			'nbr_com' => 0,
-			'lock_com' => 0,
 			'force_download' => 1
 		));
 	}

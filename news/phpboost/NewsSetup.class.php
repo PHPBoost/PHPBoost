@@ -50,6 +50,10 @@ class NewsSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		
+		$comments = new Comments();
+		$comments->set_module_name('news');
+		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_tables()
@@ -83,9 +87,7 @@ class NewsSetup extends DefaultModuleSetup
 			'alt' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'answer' => array('type' => 'text', 'length' => 65000),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'archive' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);

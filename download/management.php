@@ -92,8 +92,8 @@ if ($delete_file > 0)
 		
 		$notation = new Notation();
 		$notation->set_module_name('download');
-		$notation->set_module_id($delete_file);
-		NotationService::delete_notes_module_id($notation);
+		$notation->set_id_in_module($delete_file);
+		NotationService::delete_notes_id_in_module($notation);
 	
 		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
         

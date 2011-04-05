@@ -73,7 +73,7 @@ class MemberExtendedFieldsDAO
 	public function set_request_insert(MemberExtendedField $member_extended_field)
 	{
 		$this->set_request_field($member_extended_field);
-		$this->request_insert .= '\'' . trim($member_extended_field->get_value(), '|') . '\', ';
+		$this->request_insert .= '\'' . htmlspecialchars(trim($member_extended_field->get_value(), '|')) . '\', ';
 	}
 	
 	private function get_request_insert($user_id)
@@ -86,12 +86,12 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request_field(MemberExtendedField $member_extended_field)
 	{
-		$this->request_field .= $member_extended_field->get_field_name() . ', ';
+		$this->request_field .= htmlspecialchars($member_extended_field->get_field_name()) . ', ';
 	}
 	
 	public function set_request_update(MemberExtendedField $member_extended_field)
 	{
-		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . trim($member_extended_field->get_value(), '|') . '\', ';
+		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . htmlspecialchars(trim($member_extended_field->get_value(), '|')) . '\', ';
 	}
 	
 	private function get_request_update($user_id)

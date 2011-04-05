@@ -51,9 +51,14 @@ class WebSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		
 		$notation = new Notation();
 		$notation->set_module_name('web');
 		NotationService::delete_notes_module($notation);
+		
+		$comments = new Comments();
+		$comments->set_module_name('web');
+		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_tables()

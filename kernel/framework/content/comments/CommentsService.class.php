@@ -111,7 +111,7 @@ class CommentsService
 				self::$template->put('DATA', json_encode(array_merge($_GET, array(
 					'token' => AppContext::get_session()->get_token(), 
 					'module_name' => $comments->get_module_name(),
-					'id_module' => $comments->get_id_module(),
+					'id_in_module' => $comments->get_id_in_module(),
 					'is_locked' => $comments->get_is_locked(),
 					'number_comments_pagination' => $comments->get_number_comments_pagination()
 				))));
@@ -129,6 +129,14 @@ class CommentsService
 		return self::$template;
 	}
 	
+	public static function get_number_and_lang_comments(Comments $comments)
+	{
+		$number_comments = self::get_number_comments($comments);
+		$lang = $number_comments > 1 ? self::$lang['com_s'] : self::$lang['com'];
+		
+		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
+	}
+	
 	/*
 	 * Required Instance Comments class and setters functions module name, module id and visibility.
 	*/
@@ -140,9 +148,17 @@ class CommentsService
 	/*
 	 * Required Instance Comments class and setter function module name.
 	*/
-	public static function delete_all_comments_by_module_name(Comments $comments)
+	public static function delete_comments_module(Comments $comments)
 	{
 		CommentsDAO::delete_all_comments_by_module_name($comments);
+	}
+	
+	/*
+	 * Required Instance Comments class and setter function module name and id in module.
+	*/
+	public static function delete_comments_id_in_module(Comments $comments)
+	{
+		CommentsDAO::delete_comments_id_in_module($comments);
 	}
 	
 	/*
@@ -150,7 +166,7 @@ class CommentsService
 	*/
 	public static function get_number_comments(Comments $comments)
 	{
-		CommentsDAO::number_comments($comments);
+		return CommentsDAO::number_comments($comments);
 	}
 	
 	private static function add_comment_form(Comments $comments)
@@ -189,6 +205,7 @@ class CommentsService
 			}
 			else
 			{
+				$comment->set_name_visitor($form->get_value('name'));
 				$comment->set_ip_visitor(USER_IP);
 			}
 			
@@ -206,10 +223,9 @@ class CommentsService
 			}
 			else
 			{
-				$comment->set_name_visitor($form->get_value('name', ''));
 				$comment->set_message($form->get_value('message'));
 				$comment->set_module_name($comments->get_module_name());
-				$comment->set_id_module($comments->get_id_module());
+				$comment->set_id_in_module($comments->get_id_in_module());
 				CommentsDAO::add_comment($comment);
 				
 				//TODO
@@ -259,8 +275,8 @@ class CommentsService
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 		
 		$page = AppContext::get_request()->get_int('page', 1);
-		$nbr_comments = PersistenceContext::get_querier()->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_module = :id_module", 
-		array('module_name' =>  $comments->get_module_name(), 'id_module' => $comments->get_id_module()));
+		$nbr_comments = PersistenceContext::get_querier()->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_in_module = :id_in_module", 
+		array('module_name' =>  $comments->get_module_name(), 'id_in_module' => $comments->get_id_in_module()));
 		$nbr_pages =  ceil($nbr_comments /  $comments->get_number_comments_pagination());
 		$limite_page = $page > 0 ? $page : 1;
 		$limite_page = (($limite_page - 1) *  $comments->get_number_comments_pagination());
@@ -273,13 +289,13 @@ class CommentsService
 		$result = PersistenceContext::get_querier()->select("
 			SELECT comments.*, topic.*
 			FROM " . DB_TABLE_COMMENTS . " comments, " . DB_TABLE_COMMENTS_TOPIC . " topic
-			WHERE topic.module_name = :module_name AND topic.id_module = :id_module
+			WHERE topic.module_name = :module_name AND topic.id_in_module = :id_in_module
 			LIMIT ".  $comments->get_number_comments_pagination() ." OFFSET :start_limit
 			",
 				array(
 					'start_limit' => $limite_page,
 					'module_name' =>  $comments->get_module_name(),
-					'id_module' =>  $comments->get_id_module()
+					'id_in_module' =>  $comments->get_id_in_module()
 				), SelectQueryResult::FETCH_ASSOC
 		);
 		
