@@ -103,7 +103,7 @@ class TinyMCEParser extends ContentParser
 		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
 			
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 			$this->array_tags['code'] = array_map(array('TinyMCEParser', '_clear_html_and_code_tag'), $this->array_tags['code']);
