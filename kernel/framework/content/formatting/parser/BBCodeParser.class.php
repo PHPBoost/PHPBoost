@@ -101,7 +101,7 @@ class BBCodeParser extends ContentFormattingParser
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
 			$this->reimplant_tag('code');
 		}
 	}
