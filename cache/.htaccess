@@ -1,1 +1,4 @@
+<FilesMatch "\.(css)$">
+Allow from all
+</FilesMatch> 
 Deny from all
