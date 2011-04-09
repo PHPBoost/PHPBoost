@@ -139,6 +139,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	{
 		
 		$Upload = new Upload($dir);
+		$Upload->disableContentCheck();
 		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 		{
 			$error = $Upload->get_error();

@@ -61,6 +61,7 @@ $lang['e_cache_modules'] = 'Cache -> Cache module generation has failed !';
 $lang['e_upload_max_dimension'] = 'Max file dimensions exceeded';
 $lang['e_upload_max_weight'] = 'Maximum file size exceeded';
 $lang['e_upload_invalid_format'] = 'Invalid file format';
+$lang['e_upload_php_code'] = 'Invalid file content, php code is forbidden';
 $lang['e_upload_error'] = 'Error while uploading file';
 $lang['e_unlink_disabled'] = 'File suppression function not supported by your server';
 $lang['e_upload_failed_unwritable'] = 'Impossible to upload because writing in this directory is not allowed';

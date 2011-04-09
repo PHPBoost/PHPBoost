@@ -53,5 +53,27 @@
 					</p>
 				</dd>
 			</dl>
+			<dl>
+				<dt><label>{@exclusion_filters}</label></dt>
+				<dd>
+					# START exclusion_filters #
+					<p id="exclusion_filter{exclusion_filters.ID}">
+						{PATH_TO_ROOT} / 
+						<select name="exclusion_filter_module{exclusion_filters.ID}" id="exclusion_filter_module{exclusion_filters.ID}">
+							# START exclusion_filters.modules #
+							<option value="{exclusion_filters.modules.ID}"{exclusion_filters.modules.SELECTED}>{exclusion_filters.modules.ID}</option>
+							# END exclusion_filters.modules #
+						</select>
+						/ <input type="text" name="f{exclusion_filters.ID}" id="f{exclusion_filters.ID}" value="{exclusion_filters.FILTER}" size="25" />
+						&nbsp;<a href="javascript:delete_filter({exclusion_filters.ID});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>
+					</p>
+					# END exclusion_filters #
+					
+					<span id="add_filter{NBR_EXCLUSION_FILTER}"></span>
+					<p style="text-align:center;margin-top:10px;">
+						<a href="javascript:add_filter({NBR_EXCLUSION_FILTER})" title="{@add_filter}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
+					</p>
+				</dd>
+			</dl>
 	    </fieldset>
 	    

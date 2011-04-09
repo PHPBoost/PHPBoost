@@ -80,6 +80,7 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 		{
 			
 			$Upload = new Upload($dir);
+			$Upload->disableContentCheck();
 			if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
 				$archive_path = '../templates/' . $Upload->get_filename();
@@ -148,7 +149,7 @@ else
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_theme_already_exist', 'e_unlink_disabled');
+	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_theme_already_exist', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 		

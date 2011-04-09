@@ -38,6 +38,7 @@ class Upload
 	private $filename = '';
 	private $original_filename = '';
 	private $size = 0;
+	private $contentCheck = true;
 	
 	const UNIQ_NAME = true;
 	const NO_UNIQ_NAME = false;
@@ -76,18 +77,35 @@ class Upload
 			if (($this->size/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$this->generate_file_info($uniq_name);
-				if ($this->check_file($regexp))
+				$this->generate_file_info($uniq_name);				
+				if ($this->check_file_path($regexp))
 				{					
 					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
 					{
 						$this->error = self::error_manager($file['error']);
 						if (empty($this->error))
 						{
-							if (empty($this->filename) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename))
+							if (!empty($this->filename) && !empty($file['tmp_name'])) 
+							{
+								if ($this->contentCheck && !$this->check_file_content($file['tmp_name'])) 
+								{
+									$this->error = 'e_upload_php_code';
+									return false;
+								} 
+									
+								if (!move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename)) 
+								{
+									$this->error = 'e_upload_error';
+								} 
+								else 
+								{
+									return true;
+								}
+							}
+							else 
+							{
 								$this->error = 'e_upload_error';
-							else
-								return true;
+							}
 						}
 					}
 					else
@@ -137,6 +155,24 @@ class Upload
 		return $error;
 	}
 	
+	/**
+	 * Check the file content for php tags to avoid illegal uploads
+	 * @param tmp file path
+	 */
+	private function check_file_content($file) {
+		$file_content = file_get_contents_emulate($file);
+		
+		if (strpos($file_content, "<?php") === false) {
+			return true;
+		}
+		if (strpos($file_content, "<?") === false) {
+			return true;
+		}
+
+		//Fail to validate, remove tmp file
+		@unlink($file);
+		return false;
+	}
 	
 	/**
 	 * @desc Checks the validity of a file with regular expression.
@@ -144,12 +180,15 @@ class Upload
 	 * @param string $regexp Regular expression
 	 * @return boolean The result of the regular expression test.
 	 */
-	private function check_file($regexp)
+	private function check_file_path($regexp)
 	{
 		if (!empty($regexp))
 		{
-			if (preg_match($regexp, $this->original_filename) && strpos($this->original_filename, '.php') === false) //Valide, sinon supprimé
+			//Valide, sinon supprimé
+			if (preg_match($regexp, $this->original_filename) && strpos($this->original_filename, '.php') === false
+				 && strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
 				return true;
+			}
 			return false;
 		}
 		return true;
@@ -244,6 +283,10 @@ class Upload
 	public function get_human_readable_size($round = 1) 
 	{ 
 		return (float)NumberHelper::round($this->size/1024, $round); 
+	}
+	
+	public function disableContentCheck() {
+		$this->contentCheck = false;
 	}
 	
 	public function get_error() { return $this->error; }

@@ -66,6 +66,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	{
 		
 		$Upload = new Upload($dir);
+		$Upload->disableContentCheck();
 		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->get_error();
 	}
@@ -81,7 +82,7 @@ else //Sinon on rempli le formulaire
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')

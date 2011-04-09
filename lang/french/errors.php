@@ -60,6 +60,7 @@ $lang['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modul
 $lang['e_upload_max_dimension'] = 'Dimensions maximales du fichier dépassées';
 $lang['e_upload_max_weight'] = 'Poids maximum du fichier dépassé';
 $lang['e_upload_invalid_format'] = 'Format du fichier invalide';
+$lang['e_upload_php_code'] = 'Contenu du fichier invalide, le code php est interdit';
 $lang['e_upload_error'] = 'Erreur lors de l\'upload du fichier';
 $lang['e_unlink_disabled'] = 'Fonction de suppression des fichiers désactivée sur votre serveur';
 $lang['e_upload_failed_unwritable'] = 'Upload impossible, interdiction d\'écriture dans ce dossier';
