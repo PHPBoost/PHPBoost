@@ -568,8 +568,10 @@ else
 				if ($activ_note)
 				{
 					//Affichage notation.
-
-					$Note = new Note('gallery', $info_pics['id'], url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
+					$notation = new Notation();
+					$notation->set_module_name('gallery');
+					$notation->set_id_in_module($row['idcat']);
+					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 				}
 
 				if ($thumbnails_before < $nbr_pics_display_before)
@@ -592,7 +594,7 @@ else
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 					'COM' => Comments::com_display_link($info_pics['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
-					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
+					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 					'CAT' => $cat_list,
 					'RENAME' => $html_protected_name,
@@ -699,7 +701,7 @@ else
 				{
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
-					$notation->set_module_id($row['idcat']);
+					$notation->set_id_in_module($row['idcat']);
 					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 				}
 				
