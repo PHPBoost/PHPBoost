@@ -180,7 +180,7 @@ elseif ($g_add)
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	elseif ($get_error == 'unexist_cat')
@@ -567,10 +567,9 @@ else
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(MEMBER_LEVEL) );
 				if ($activ_note)
 				{
-					$notation = new Notation();
-					$notation->set_module_name('gallery');
-					$notation->set_id_in_module($row['idcat']);
-					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+					//Affichage notation.
+
+					$Note = new Note('gallery', $info_pics['id'], url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 				}
 
 				if ($thumbnails_before < $nbr_pics_display_before)
@@ -593,7 +592,7 @@ else
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 					'COM' => Comments::com_display_link($info_pics['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
-					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
+					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 					'CAT' => $cat_list,
 					'RENAME' => $html_protected_name,
@@ -700,7 +699,7 @@ else
 				{
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
-					$notation->set_id_in_module($row['idcat']);
+					$notation->set_module_id($row['idcat']);
 					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 				}
 				

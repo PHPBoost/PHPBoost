@@ -376,7 +376,7 @@ else
 	));
 
 	//Gestion des erreurs.
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
 	if (in_array($get_error, $array_error))
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')

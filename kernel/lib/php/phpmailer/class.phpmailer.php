@@ -1239,7 +1239,7 @@ class PHPMailer {
         if (@openssl_pkcs7_sign($file, $signed, "file://".$this->sign_cert_file, array("file://".$this->sign_key_file, $this->sign_key_pass), NULL)) {
           @unlink($file);
           @unlink($signed);
-          $body = file_get_contents($signed);
+          $body = file_get_contents_emulate($signed);
         } else {
           @unlink($file);
           @unlink($signed);
@@ -1470,7 +1470,7 @@ class PHPMailer {
         $magic_quotes = get_magic_quotes_runtime();
         set_magic_quotes_runtime(0);
       }
-      $file_buffer  = file_get_contents($path);
+      $file_buffer  = file_get_contents_emulate($path);
       $file_buffer  = $this->EncodeString($file_buffer, $encoding);
       if (PHP_VERSION < 6) { set_magic_quotes_runtime($magic_quotes); }
       return $file_buffer;
@@ -2212,7 +2212,7 @@ class PHPMailer {
    * @param string $s Header
    */
   public function DKIM_Sign($s) {
-    $privKeyStr = file_get_contents($this->DKIM_private);
+    $privKeyStr = file_get_contents_emulate($this->DKIM_private);
     if ($this->DKIM_passphrase!='') {
       $privKey = openssl_pkey_get_private($privKeyStr,$this->DKIM_passphrase);
     } else {

@@ -423,7 +423,6 @@ if (!empty($id_get)) //Espace membre
 				else
 				{
 					$Upload = new Upload($dir);
-					
 					if ($Upload->get_size() > 0)
 					{
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_account_config->get_max_avatar_weight() * 1024);

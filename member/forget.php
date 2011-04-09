@@ -38,14 +38,6 @@ if (!$User->check_level(MEMBER_LEVEL))
 {
 	if (!empty($activ_get) && !empty($user_get))
 	{
-		try 
-		{
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
-				"WHERE user_id = :user_id AND activ_pass = :activ_pass", array('user_id' => $user_get, 'activ_pass' => $activ_get));
-		} catch (RowNotFoundException $ex) {
-			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_echec_change'], E_USER_NOTICE));
-		}
-		
 		$form = new HTMLForm('changePasswordForm', '?activ=' . $activ_get . '&amp;u=' . $user_get);
 		$fieldset = new FormFieldsetHTML('fieldset', $LANG['change_password']);
 		
@@ -69,12 +61,20 @@ if (!$User->check_level(MEMBER_LEVEL))
 		
 		if ($submit_button->has_been_submited() && $form->validate())
 		{
-			//Mise à jour du nouveau password.
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => strhash($form->get_value('new_password')), 'activ_pass' => ''), 
-				"WHERE user_id = :user_id", array('user_id' => $member['user_id']));
-			
-			//Affichage de la confirmation.
-			$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_confirm_change'], E_USER_SUCCESS));
+			try 
+			{
+				$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
+					"WHERE user_id = :user_id AND activ_pass = :activ_pass", array('user_id' => $user_get, 'activ_pass' => $activ_get));
+				
+				//Mise à jour du nouveau password.
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => strhash($form->get_value('new_password')), 'activ_pass' => ''), 
+					"WHERE user_id = :user_id", array('user_id' => $member['user_id']));
+				
+				//Affichage de la confirmation.
+				$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_confirm_change'], E_USER_SUCCESS));
+			} catch (RowNotFoundException $ex) {
+				$tpl->put('message_helper', MessageHelper::display($LANG['e_forget_echec_change'], E_USER_NOTICE));
+			}
 		} else {
 			$tpl->put('forget_password_form', $form->display());
 		}

@@ -76,7 +76,7 @@ else
 		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
 		$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
 		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'), 
-		$LANG['files_prog'] => array('c', 'h', 'cpp', 'java', 'py', 'css', 'html', 'xml'),
+		$LANG['files_prog'] => array('c', 'h', 'cpp', 'java', 'py', 'css', 'html'),
 		$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd')
 	);
 

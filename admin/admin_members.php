@@ -144,6 +144,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$dir = '../images/avatars/';
 			
 			$Upload = new Upload($dir);
+			$Upload->disableContentCheck();
 			$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 			if ($Upload->get_size() > 0)
 			{
