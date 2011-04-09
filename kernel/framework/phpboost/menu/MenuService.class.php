@@ -294,16 +294,16 @@ class MenuService
 				{
 					if ($menu->is_enabled())
 					{
-						$filters = '';
+						$cache_filter = '';
 						$has_filter = false;
 						foreach ($menu->get_filters() as $filter) 
 						{
-							$has_filter = ($filter != '/') ? true : false;
-							$filters .= 'strpos(REWRITED_SCRIPT, "' . $filter . '") !== false || ';
+							$has_filter = ($filter->get_pattern() != '/') ? true : false;
+							$cache_filter .= $filter->get_raw_matcher('REWRITED_SCRIPT') .  ' || ';
 						}
-						$filters = trim($filters, '|| ');
+						$cache_filter = trim($cache_filter, '|| ');
 						
-						$cache_str .= ($has_filter) ? 'if (' . $filters . ') {' . "\n" : '';
+						$cache_str .= ($has_filter) ? 'if(' . $cache_filter . '){' . "\n" : '';
 						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
 						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
 						$cache_str .= ($has_filter) ? '}' . "\n" : '';

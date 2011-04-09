@@ -125,7 +125,9 @@ if ($edit)
 	$menu = MenuService::load($id);
 	
     if (!($menu instanceof ContentMenu))
+    {
         AppContext::get_response()->redirect('menus.php');
+    }
     
 	$block = $menu->get_block();
 	$content = $menu->get_content();
@@ -151,8 +153,10 @@ else
 }
 
 $locations = '';
-foreach ($array_location as $key => $name)
+foreach ($array_location as $key => $name) 
+{
     $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+}
 
 
 //Filtres

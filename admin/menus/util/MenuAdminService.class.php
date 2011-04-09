@@ -33,21 +33,24 @@ class MenuAdminService
 		$request = AppContext::get_request();
 	    $filters = array();
 	    $i = 0;
-	    while (true) {
-	    	if (!$request->has_postparameter('filter_module' . $i)) {
+	    while (true) 
+	    {
+	    	if (!$request->has_postparameter('filter_module' . $i)) 
+	    	{
 	    		break;
 	    	}
 	    	
 	    	$filter_module = $request->get_poststring('filter_module' . $i);
 	    	$filter_regex = trim($request->get_poststring('f' . $i), '/');
-	    	if ($filter_regex != '_deleted') {
-	    		$filters[] = $filter_module . '/' . $filter_regex;
+	    	if ($filter_regex != '_deleted') 
+	    	{
+	    		$filters[] = new MenuStringFilter($filter_module . '/' . $filter_regex);
 	    	}
 	    	
 	    	$i++;
 	    }
 	    if (empty($filters)) {
-	    	$filters = array('/');
+	    	$filters[] = new MenuStringFilter('/');
 	    }
 	    $menu->set_filters($filters);
 	}
@@ -69,15 +72,19 @@ class MenuAdminService
 		}
 		
 		//Ajout du menu
-		if ($menu->get_id() == ''){
-			$menu->set_filters(array('/'));
+		if ($menu->get_id() == '')
+		{
+			$menu->set_filters(array(new MenuStringFilter('/')));
 		}
 		
 		// Installed modules
-		foreach ($menu->get_filters() as $key => $filter) {
-			$filter_infos = explode('/', $filter);
+		foreach ($menu->get_filters() as $key => $filter) 
+		{
+			$filter_pattern = $filter->get_pattern();
+			
+			$filter_infos = explode('/', $filter_pattern);
 			$module_name = $filter_infos[0];
-			$regex = substr(strstr($filter, '/'), 1);
+			$regex = substr(strstr($filter_pattern, '/'), 1);
 		
 			$tpl_filter->assign_block_vars('filters', array(
 				'ID' => $key,
@@ -86,7 +93,7 @@ class MenuAdminService
 				
 			$tpl_filter->assign_block_vars('filters.modules', array(
 				'ID' => '',
-				'SELECTED' => $filter == '/' ? ' selected="selected"' : ''
+				'SELECTED' => $filter_pattern == '/' ? ' selected="selected"' : ''
 			));
 			foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 			{

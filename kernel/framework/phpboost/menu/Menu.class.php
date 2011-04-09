@@ -83,9 +83,9 @@ abstract class Menu
     protected $position = -1;
     /**
 	 * @access protected
-	 * @var int The Menu filters
+	 * @var Array<Filter> The filter list
 	 */
-    protected $filters = array('/');
+    protected $filters = array();
     
     
     /**
@@ -96,6 +96,7 @@ abstract class Menu
     public function __construct($title)
     {
        $this->title = TextHelper::strprotect($title, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+       $this->filters[] = new MenuStringFilter('/');
     }
     
     /**
@@ -230,7 +231,7 @@ abstract class Menu
     /**
 	* Sets the filters of the menu
 	*
-	* @param string $filters Filters of the menu
+	* @param Array<Filter> $filters Filters of the menu
 	*/
     public function set_filters($filters) { $this->filters = $filters; }
     
