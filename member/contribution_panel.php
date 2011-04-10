@@ -154,9 +154,10 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	 
-	$comments = new Comments('events', $contribution_id, url('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
-	
+	$comments = new Comments();
+	$comments->set_module_name('events');
+	$comments->set_id_in_module($contribution_id);
+
 	//For PHP 4 :(
 	$contribution_creation_date = $contribution->get_creation_date();
 	$contribution_fixing_date = $contribution->get_fixing_date();
@@ -168,7 +169,7 @@ if ($contribution_id > 0)
 		'DESCRIPTION' => FormatingHelper::second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
 		'CONTRIBUTER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
-		'COMMENTS' => $comments->display(),
+		'COMMENTS' => CommentsService::display($comments)->render(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),

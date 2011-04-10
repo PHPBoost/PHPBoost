@@ -142,6 +142,7 @@ class CommentsService
 	*/
 	public static function change_visibility(Comments $comments)
 	{
+		// TODO verificate existed module in comments database
 		CommentsDAO::change_visibility($comments);
 	}
 	
@@ -150,6 +151,7 @@ class CommentsService
 	*/
 	public static function delete_comments_module(Comments $comments)
 	{
+		// TODO verificate existed module in comments database
 		CommentsDAO::delete_all_comments_by_module_name($comments);
 	}
 	
@@ -158,6 +160,7 @@ class CommentsService
 	*/
 	public static function delete_comments_id_in_module(Comments $comments)
 	{
+		// TODO verificate existed module and id in module in comments database
 		CommentsDAO::delete_comments_id_in_module($comments);
 	}
 	
