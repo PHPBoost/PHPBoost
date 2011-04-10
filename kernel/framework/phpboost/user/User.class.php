@@ -36,20 +36,60 @@ define('USER_TYPE', 3);
  */
 class User
 {
+	public static function from_session()
+	{
+		return new User(AppContext::get_session());
+	}
+
+	private $id = -1;
+	private $level = -1;
 	private $is_admin = false;
-	private $user_data; //Données du membres, obtenues à partir de la class de session.
-	private $groups_auth; //Tableau contenant le nom des groupes disponibles.
-	private $user_groups; //Groupes du membre.
+	private $groups = array();
+	private $groups_auth;
+
+	private $display_name;
+	private $email;
+	private $unread_pm;
+	private $timestamp;
+
+	private $warning_percentage;
+	private $is_banned;
+	private $is_readonly;
+
+	private $locale;
+	private $theme;
+	private $timezone;
+	private $editor;
+
 
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
-	public function __construct()
+	public function __construct(SessionData $session)
 	{
-		$this->user_data = AppContext::get_session()->get_data();
-		$this->is_admin = ($this->user_data['level'] == 2);
+		$this->id = $session->get_user_id();
+		$this->level = $session->get_cached_data('level', -1);
+		$this->is_admin = ($this->level == 2);
 
-		//Autorisations des groupes disponibles.
+		$this->display_name = $session->get_cached_data('display_name', LangLoader::get_message('guest', 'main'));
+		$this->email = $session->get_cached_data('email', null);
+		$this->unread_pm = $session->get_cached_data('unread_pm', 0);
+		$this->timestamp = $session->get_cached_data('timestamp', time());
+		$this->warning_percentage = $session->get_cached_data('warning_percentage', 0);
+		$this->is_banned = $session->get_cached_data('is_banned', 0);
+		$this->is_readonly = $session->get_cached_data('is_readonly', 0);
+
+		$user_accounts_config = UserAccountsConfig::load();
+		$this->locale = $session->get_cached_data('locale', $user_accounts_config->get_default_lang());
+		$this->theme = $session->get_cached_data('theme', $user_accounts_config->get_default_theme());
+		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
+		$this->editor = $session->get_cached_data('editor', 'bbcode');
+
+		$this->build_groups($session);
+	}
+
+	protected function build_groups(SessionData $session)
+	{
 		$groups_auth = array();
 		foreach (GroupsService::get_groups() as $idgroup => $array_info)
 		{
@@ -58,9 +98,9 @@ class User
 		$this->groups_auth = $groups_auth;
 
 		//Groupes du membre.
-		$this->user_groups = explode('|', $this->user_data['user_groups']);
-		array_unshift($this->user_groups, 'r' . $this->user_data['level']); //Ajoute le groupe associé au rang du membre.
-		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
+		$this->groups = explode('|', $session->get_cached_data('groups', ''));
+		array_unshift($this->groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
+		array_pop($this->groups); //Supprime l'élément vide en fin de tableau.
 	}
 
 	public function is_admin()
@@ -69,32 +109,92 @@ class User
 	}
 
 	/**
-	 * @desc Accessor
-	 * @param string $attribute The attribute name.
-	 * @return unknown_type
-	 */
-	public function get_attribute($attribute)
-	{
-		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
-	}
-
-	public function get_theme()
-	{
-		$theme = $this->get_attribute('user_theme');
-		if (empty($theme))
-		{
-			return 'base';
-		}
-		return $theme;
-	}
-
-	/**
 	 * @desc Get the user id
 	 * @return int The user id.
 	 */
 	public function get_id()
 	{
-		return (int)$this->get_attribute('user_id');
+		return $this->id;
+	}
+
+	public function get_level()
+	{
+		return $this->level;
+	}
+
+	/**
+	 * @desc Get all user groups
+	 * @return string The user groups
+	 */
+	public function get_groups()
+	{
+		return $this->groups;
+	}
+
+	public function get_display_name()
+	{
+		return $this->display_name;
+	}
+
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function get_unread_pm()
+	{
+		return $this->unread_pm;
+	}
+
+	public function get_timestamp()
+	{
+		return $this->timestamp;
+	}
+
+	public function get_warning_percentage()
+	{
+		return $this->warning_percentage;
+	}
+
+	public function is_banned()
+	{
+		return $this->is_banned;
+	}
+
+	public function is_readonly()
+	{
+		return $this->is_readonly;
+	}
+
+	public function get_locale()
+	{
+		return $this->locale;
+	}
+
+	public function get_theme()
+	{
+		return $this->theme;
+	}
+
+	public function get_timezone()
+	{
+		return $this->timezone;
+	}
+
+	public function get_editor()
+	{
+		return $this->editor;
+	}
+
+	/**
+	 * @desc Accessor
+	 * @param string $attribute The attribute name.
+	 * @return unknown_type
+	 * @deprecated
+	 */
+	public function get_attribute($attribute)
+	{
+		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 
 	/**
@@ -124,14 +224,12 @@ class User
 
 	/**
 	 * @desc Check the authorization level
-	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @param int $level Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
-	public function check_level($secure)
+	public function check_level($level)
 	{
-		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure)
-		return true;
-		return false;
+		return $this->level >= $level;
 	}
 
 	/**
@@ -164,7 +262,7 @@ class User
 	 * @desc Get the maximum value of authorization in all user groups.
 	 * @param int $key_auth
 	 * @param int $max_value_compare Maximal value to compare
-	 * @return unknown_type
+	 * @return int
 	 */
 	public function check_max_value($key_auth, $max_value_compare = 0)
 	{
@@ -192,17 +290,9 @@ class User
 	}
 
 	/**
-	 * @desc Get all user groups
-	 * @return string The user groups
-	 */
-	public function get_groups()
-	{
-		return $this->user_groups;
-	}
-
-	/**
 	 * @desc Modify the user theme.
 	 * @param string $user_theme The new theme.
+	 * @deprecated
 	 */
 	public function set_user_theme($user_theme)
 	{
@@ -212,6 +302,7 @@ class User
 	/**
 	 * @desc Modify the theme for guest in the database (sessions table).
 	 * @param string $user_theme The new theme
+	 * @deprecated
 	 */
 	public function update_user_theme($user_theme)
 	{
@@ -233,6 +324,7 @@ class User
 	/**
 	 * @desc Modify the user lang.
 	 * @param string $user_lang The new lang
+	 * @deprecated
 	 */
 	public function set_user_lang($user_lang)
 	{
@@ -242,6 +334,7 @@ class User
 	/**
 	 * @desc Modify the lang for guest in the database (sessions table).
 	 * @param string $user_theme The new lang
+	 * @deprecated
 	 */
 	public function update_user_lang($user_lang)
 	{
@@ -294,14 +387,14 @@ class User
 			}
 			elseif (substr($idgroup, 0, 1) == 'r') //Rang
 			{
-				if ($this->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
+				if ($this->level >= (int)str_replace('r', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
 			else //Membre
 			{
-				if ($this->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
+				if ($this->id == (int)str_replace('m', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}

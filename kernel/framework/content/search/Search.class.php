@@ -64,7 +64,7 @@ class Search
         $this->id_search = array();
         $this->cache = array();
 
-        $this->id_user = $User->get_attribute('user_id');
+        $this->id_user = $User->get_id();
         $this->modules_conditions = $this->get_modules_conditions($this->modules);
 
 

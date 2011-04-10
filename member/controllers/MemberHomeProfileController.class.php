@@ -35,7 +35,7 @@ class MemberHomeProfileController extends AbstractController
 	{
 		$this->init();
 
-		$user_id = AppContext::get_user()->get_attribute('user_id');
+		$user_id = AppContext::get_user()->get_id();
 		if ($this->user_exist($user_id))
 		{
 			$this->build_form($user_id);
@@ -54,23 +54,22 @@ class MemberHomeProfileController extends AbstractController
 		$this->lang = LangLoader::get('main');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form($user_id)
 	{
 		$msg_mbr = FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message());
 
 		$user = AppContext::get_user();$user = AppContext::get_user();
 		$is_auth_files = $user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
-	
+
 		$this->tpl->put_all(array(
 			'C_USER_INDEX' => true,
-			'C_IS_MODERATOR' => $user->get_attribute('level') >= MODERATOR_LEVEL,
-			'SID' => SID,
+			'C_IS_MODERATOR' => $user->get_level() >= MODERATOR_LEVEL,
 			'LANG' => get_ulang(),
 			'COLSPAN' => $is_auth_files ? 3 : 2,
-			'USER_NAME' => $user->get_attribute('login'),
-			'PM' => $user->get_attribute('user_pm'),
-			'IMG_PM' => ($user->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
+			'USER_NAME' => $user->get_display_name(),
+			'PM' => $user->get_unread_pm(),
+			'IMG_PM' => ($user->get_unread_pm() > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,
 			'U_USER_ID' => url('.php?id=' . $user_id . '&amp;edit=true'),
 			'U_USER_PM' => url('.php?pm=' . $user_id, '-' . $user_id . '.php'),
@@ -84,7 +83,7 @@ class MemberHomeProfileController extends AbstractController
 			'L_CONTRIBUTION_PANEL' => $this->lang['contribution_panel'],
 			'L_MODERATION_PANEL' => $this->lang['moderation_panel']
 		));
-		
+
 		//Affichage du lien vers l'interface des fichiers.
 		if ($is_auth_files)
 		{
@@ -101,7 +100,7 @@ class MemberHomeProfileController extends AbstractController
 		$env->set_page_title($this->lang['profile']);
 		return $response;
 	}
-	
+
 	private function user_exist($user_id)
 	{
 		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;

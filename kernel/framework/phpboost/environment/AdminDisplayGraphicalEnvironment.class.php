@@ -181,7 +181,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 
-		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
+		$include_tinymce_js = AppContext::get_user()->get_editor() == 'tinymce';
 
 		$header_tpl->put_all(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
@@ -210,7 +210,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_SITE' => $LANG['site'],
 			'L_INDEX_SITE' => $LANG['site'],
 			'L_INDEX_ADMIN' => $LANG['administration'],
-			'L_DISCONNECT' => $LANG['disconnect'],
+			'L_DISCONNECT' => LangLoader::get_message('disconnect', 'main'),
 			'L_TOOLS' => $LANG['tools'],
 			'L_CONFIGURATION' => $LANG['configuration'],
 			'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
@@ -226,12 +226,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_SITE_MENU' => $LANG['menu_management'],
 			'L_MODERATION' => $LANG['moderation'],
 			'L_MAINTAIN' => $LANG['maintain'],
-			'L_USER' => $LANG['member_s'],
+			'L_USER' => LangLoader::get_message('member_s', 'main'),
 			'L_EXTEND_FIELD' => $LANG['extend_field'],
 			'L_RANKS' => $LANG['ranks'],
 			'L_TERMS' => $LANG['terms'],
 			'L_GROUP' => $LANG['group'],
-			'L_CONTENTS' => $LANG['content'],
+			'L_CONTENTS' => LangLoader::get_message('content', 'main'),
 			'L_PAGES' => $LANG['pages'],
 			'L_FILES' => $LANG['files'],
 			'L_THEME' => $LANG['themes'],
@@ -249,7 +249,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_MODULES' => $LANG['modules'],
 			'L_THEMES' => $LANG['themes'],
 			'L_CACHE' => $LANG['cache'],
-			'L_SYNDICATION' => $LANG['syndication'],
+			'L_SYNDICATION' => LangLoader::get_message('syndication', 'main'),
 			'L_CACHE_CONFIG' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
 			'L_CONTENT_CONFIG' => $LANG['content_config'],
 			'U_INDEX_SITE' => Environment::get_home_page(),
@@ -361,10 +361,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => $LANG['powered_by'],
-			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
+			'L_PHPBOOST_RIGHT' => LangLoader::get_message('phpboost_right', 'main'),
 			'L_THEME' => $LANG['theme'],
 			'L_THEME_NAME' => $theme['name'],
-			'L_BY' => strtolower($LANG['by']),
+			'L_BY' => strtolower(LangLoader::get_message('by', 'main')),
 			'L_THEME_AUTHOR' => $theme['author'],
 			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
@@ -378,9 +378,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
-				'L_REQ' => $LANG['sql_req'],
-				'L_ACHIEVED' => $LANG['achieved'],
-				'L_UNIT_SECOND' => $LANG['unit_seconds_short']
+				'L_REQ' => LangLoader::get_message('sql_req', 'main'),
+				'L_ACHIEVED' => LangLoader::get_message('achieved', 'main'),
+				'L_UNIT_SECOND' => LangLoader::get_message('unit_seconds_short', 'main')
 			));
 		}
 

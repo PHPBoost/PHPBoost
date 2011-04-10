@@ -108,7 +108,7 @@
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
-                                <a href="search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
+                                <a href="search.php" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000" />
                                 <input type="hidden" name="where" value="contents" />
@@ -121,7 +121,7 @@
 			</div>
 			<div class="forum_links" style="border-top:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
+					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
 				</div>
 				<div style="float:right;">
 					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;

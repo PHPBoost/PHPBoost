@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         FormFieldConstraintLength.class.php
+ *                     FormFieldConstraintMinLength.class.php
  *                            -------------------
  *   begin                : December 19, 2009
  *   copyright            : (C) 2009 Régis Viarre
@@ -26,15 +26,15 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc 
+ * @desc
  * @package {@package}
- */ 
-class FormFieldConstraintLength extends AbstractFormFieldConstraint 
+ */
+class FormFieldConstraintMinLength extends AbstractFormFieldConstraint
 {
 	private $error_message;
 	private $rboundary;
 	private $lboundary;
-	
+
 	public function __construct($lboundary, $error_message = '')
 	{
 		if (empty($error_message))
@@ -45,7 +45,7 @@ class FormFieldConstraintLength extends AbstractFormFieldConstraint
 		$this->error_message = $error_message;
 		$this->lboundary = $lboundary;
 	}
-	
+
 	public function validate(FormField $field)
 	{
 		$value = strlen($field->get_value());

@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($cat_name, '');
 
 if (!empty($id_get) && !empty($CAT_FORUM[$id_get]['name']))
@@ -70,7 +70,7 @@ if (is_array($AUTH_READ_FORUM))
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 $max_time_msg = forum_limit_time_msg();
 
-$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
+$is_guest = ($User->get_id() !== -1) ? false : true;
 $total_topic = 0;
 $total_msg = 0;
 $i = 0;
@@ -82,7 +82,7 @@ $result = $Sql->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.u
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id
 FROM " . PREFIX . "forum_cats c
 LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_id() . "' AND v.idtopic = t.id
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
@@ -216,7 +216,6 @@ $Template->put_all(array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SID' => SID,
 	'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'C_TOTAL_POST' => true,
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),

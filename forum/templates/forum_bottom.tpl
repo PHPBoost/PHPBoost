@@ -1,7 +1,7 @@
 		<div class="module_position" style="margin-top:15px;">
 			<div class="forum_links" style="border-bottom:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
+					&bull; <a href="index.php">{L_FORUM_INDEX}</a> 
 				</div>
 				<div style="float:right;">
 					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
@@ -78,7 +78,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+						<a href="stats.php">{L_STATS}</a> <a href="stats.php"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
 					</span>
 					<div class="spacer"></div>
 				</div>

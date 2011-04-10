@@ -145,7 +145,7 @@ elseif(retrieve(POST,'submit',false))
 		'extend_field'=>addslashes(serialize($extend_field_articles)),
 	);
 
-	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
+	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_id()))
 	{
 		// Errors.
 		if (empty($articles['title']))
@@ -248,7 +248,7 @@ elseif(retrieve(POST,'submit',false))
 				$auth = $articles['auth'];
 					
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field,id_models)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."','".$articles['models']."')", __LINE__, __FILE__);
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_id() . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."','".$articles['models']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -281,7 +281,7 @@ elseif(retrieve(POST,'submit',false))
 					//The URL where a validator can treat the contribution (in the file edition panel)
 					$articles_contribution->set_fixing_url('/articles/management.php?edit=' . $articles['id']);
 					//Who is the contributor?
-					$articles_contribution->set_poster_id($User->get_attribute('user_id'));
+					$articles_contribution->set_poster_id($User->get_id());
 					//The module
 					$articles_contribution->set_module('articles');
 					//Assignation des autorisations d'écriture / Writing authorization assignation
@@ -350,7 +350,7 @@ else
 	{
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 
-		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
+		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_id()))
 		{
 			$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->remove_last();
@@ -510,7 +510,7 @@ else
 				'IMG' => '',
 				'ALT' => '',
 				'IDARTICLES' => '0',
-				'USER_ID' => $User->get_attribute('user_id'),
+				'USER_ID' => $User->get_id(),
 				'IMG_PATH' => '',
 				'IMG_ICON' => '',	
 				'IMG_LIST' => $image_list,

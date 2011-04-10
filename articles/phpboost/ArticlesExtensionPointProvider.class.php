@@ -100,7 +100,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	function get_home_page()
 	{
 		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
-		require_once('../articles/articles_begin.php'); 
+		require_once('../articles/articles_begin.php');
 
 		if ($idartcat > 0)
 		{
@@ -192,7 +192,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
 
-		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
+		$group_color = User::get_group_color($User->get_groups(), $User->get_level());
 		$array_class = array('member', 'modo', 'admin');
 
 		$tpl->put_all(array(

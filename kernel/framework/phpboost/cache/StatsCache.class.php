@@ -38,14 +38,15 @@ class StatsCache implements CacheData
 	public function synchronize()
 	{
 		$this->stats = array();
-		$db_connection = PersistenceContext::get_sql();
-			
-		$nbr_members = $db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = $db_connection->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $db_connection->limit(0, 1), __LINE__, __FILE__);
+		$querier = PersistenceContext::get_querier();
+
+		$nbr_members = $querier->count(DB_TABLE_MEMBER);
+		$last_member = $querier->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name'),
+			'ORDER BY registration_date DESC LIMIT 1 OFFSET 0');
 
 		$this->stats = 	array(
 			'nbr_members' => $nbr_members,
-			'last_member_login' => $last_member['login'],
+			'last_member_login' => $last_member['display_name'],
 			'last_member_id' => $last_member['user_id']
 		);
 	}
@@ -54,7 +55,7 @@ class StatsCache implements CacheData
 	{
 		return $this->stats;
 	}
-	
+
 	public function get_stats_properties($identifier)
 	{
 		if (isset($this->stats[$identifier]))
@@ -63,7 +64,7 @@ class StatsCache implements CacheData
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Loads and returns the stats cached data.
 	 * @return StatsCache The cached data
@@ -72,7 +73,7 @@ class StatsCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'kernel', 'stats');
 	}
-	
+
 	/**
 	 * Invalidates the current stats cached data.
 	 */

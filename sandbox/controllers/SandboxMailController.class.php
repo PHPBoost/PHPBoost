@@ -43,7 +43,7 @@ class SandboxMailController extends ModuleController
 			<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
 
 		$this->build_form();
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$result = $this->send_mail();
 			$view->put_all(array(

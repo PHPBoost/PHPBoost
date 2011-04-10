@@ -210,8 +210,8 @@ else
 {
 	$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
 	LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
-	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
+	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_level() . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_level() . "'", __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de catégories est trop important.
 	 
@@ -237,7 +237,7 @@ else
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 	FROM " . PREFIX . "web_cat aw
 	LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
-	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
+	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_level() . "'
 	GROUP BY aw.id
 	ORDER BY aw.class
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);

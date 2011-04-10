@@ -56,10 +56,10 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 		$maintenance_config = MaintenanceConfig::load();
 		return $maintenance_config->is_under_maintenance();
 	}
-	
+
 	protected static function set_page_localization($page_title)
 	{
-		AppContext::get_session()->check($page_title);
+		// TODO retrieve the location with the new session system
 	}
 }
 

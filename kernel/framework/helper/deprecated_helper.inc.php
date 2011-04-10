@@ -156,33 +156,16 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
  * @return string The URL to use.
  */
-function url($url, $mod_rewrite = '', $ampersand = '&amp;')
+function url($url, $mod_rewrite = '')
 {
-	global $Session;
 
-	if (!is_object($Session))
+	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
 	{
-		$session_mod = 0;
+		return $mod_rewrite;
 	}
 	else
 	{
-		$session_mod = $Session->supports_cookies();
-	}
-
-	if ($session_mod == 0)
-	{
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
-		{
-			return $mod_rewrite;
-		}
-		else
-		{
-			return $url;
-		}
-	}
-	elseif ($session_mod == 1)
-	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+		return $url;
 	}
 }
 
@@ -283,7 +266,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = AppContext::get_user()->get_attribute('user_timezone') - $serveur_hour;
+		$timezone = AppContext::get_user()->get_timezone() - $serveur_hour;
 	}
 
 	if ($timezone != 0)
@@ -341,7 +324,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	$timezone = $User->get_timezone('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
@@ -454,7 +437,7 @@ function get_utheme()
 function get_ulang()
 {
 	$user = AppContext::get_user();
-	return $user->get_attribute('user_lang');
+	return $user->get_locale();
 }
 
 /**

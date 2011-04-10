@@ -49,7 +49,7 @@ $edit = retrieve(GET, 'edit', false);
 
 if ($delete)
     $Session->csrf_get_protect();
-	
+
 if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ)) //Autorisation de poster?
 	{
 	$error_controller = PHPBoostErrors::unexisting_page();
@@ -71,7 +71,7 @@ if ($checkdate === true && empty($id) && !$add)
 		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year) . "'
 		ORDER BY timestamp
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
-		
+
 		if (!empty($event_up))
 		{
 			$time = gmdate_format('Y-m-d', $event_up);
@@ -79,7 +79,7 @@ if ($checkdate === true && empty($id) && !$add)
 			$year = $array_time[0];
 			$month = $array_time[1];
 			$day = $array_time[2];
-			
+
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
@@ -92,7 +92,7 @@ if ($checkdate === true && empty($id) && !$add)
 		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year) . "'
 		ORDER BY timestamp DESC
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
-			
+
 		if (!empty($event_down))
 		{
 			$time = gmdate_format('Y-m-d', $event_down);
@@ -100,13 +100,13 @@ if ($checkdate === true && empty($id) && !$add)
 			$year = $array_time[0];
 			$month = $array_time[1];
 			$day = $array_time[2];
-			
+
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
 			AppContext::get_response()->redirect('/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
-	
+
 	$Template = new FileTemplate('calendar/calendar.tpl');
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -123,12 +123,12 @@ if ($checkdate === true && empty($id) && !$add)
 	}
 	if (!empty($errstr))
 		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
-		
+
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
-		
+
 	$Template->put_all(array(
 		'C_CALENDAR_DISPLAY' => true,
 		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
@@ -143,7 +143,7 @@ if ($checkdate === true && empty($id) && !$add)
 		'L_EVENTS' => $LANG['events'],
 		'L_SUBMIT' => $LANG['submit']
 	));
-	
+
 	//Génération des select.
 	for ($i = 1; $i <= 12; $i++)
 	{
@@ -159,7 +159,7 @@ if ($checkdate === true && empty($id) && !$add)
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}
-	
+
 	//Récupération des actions du mois en cours.
 	$result = $Sql->query_while("SELECT timestamp
 	FROM " . PREFIX . "calendar
@@ -172,7 +172,7 @@ if ($checkdate === true && empty($id) && !$add)
 		$array_action[$day_action] = true;
 	}
 	$Sql->query_close($result);
-	
+
 	//Génération des jours du calendrier.
 	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'],
 	$LANG['sunday']);
@@ -182,12 +182,12 @@ if ($checkdate === true && empty($id) && !$add)
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
 		));
 	}
-	
+
 	//Premier jour du mois.
-	$first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year)); 
+	$first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year));
 	if ($first_day == 0)
 		$first_day = 7;
-		
+
 	//Génération du calendrier.
 	$j = 1;
 	$last_day = ($month_day + $first_day);
@@ -205,7 +205,7 @@ if ($checkdate === true && empty($id) && !$add)
 				$class = 'calendar_today';
 			else
 				$class = 'calendar_other';
-			
+
 			$contents = '<td class="' . $class . '">' . $action . '</td>';
 			$j++;
 		}
@@ -217,8 +217,8 @@ if ($checkdate === true && empty($id) && !$add)
 			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
 		));
 	}
-	
-	
+
+
 	//Affichage de l'action pour la période du jour donné.
 	if (!empty($day))
 	{
@@ -248,9 +248,9 @@ if ($checkdate === true && empty($id) && !$add)
 				$del = '';
 				$java = '';
 			}
-			
+
 			$comments->set_id_module($row['id']);
-			
+
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
@@ -262,11 +262,11 @@ if ($checkdate === true && empty($id) && !$add)
 				'DEL' => $del,
 				'L_ON' => $LANG['on']
 			));
-			
+
 			$check_action = true;
 		}
 		$Sql->query_close($result);
-			
+
 		if (!isset($check_action))
 		{
 			$Template->assign_block_vars('action', array(
@@ -276,13 +276,13 @@ if ($checkdate === true && empty($id) && !$add)
 				'CONTENTS' => '<p style="text-align:center;">' . $LANG['no_current_action'] . '</p>'
 			));
 		}
-		
+
 		$Template->put_all(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']
 		));
 	}
-	
+
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
@@ -295,7 +295,7 @@ if ($checkdate === true && empty($id) && !$add)
 }
 elseif (!empty($id))
 {
-	
+
 	if ($delete) //Suppression simple.
 	{
 		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
@@ -303,13 +303,13 @@ elseif (!empty($id))
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
+
 		$comments->set_id_module($id);
 		CommentsService::delete_comments_module($comments);
-		
-		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	elseif ($edit)
 	{
@@ -318,33 +318,33 @@ elseif (!empty($id))
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (!empty($_POST['valid']))
 		{
 			$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 			$title = retrieve(POST, 'title', '');
-			
+
 			//Cacul du timestamp à partir de la date envoyé.
 			$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
 			$hour = retrieve(POST, 'hour', 0);
 			$min = retrieve(POST, 'min', 0);
-			
+
 			$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 			if ($timestamp > 0)
 				$timestamp += ($hour*3600) + ($min*60);
 			else
 				$timestamp = 0;
-				
+
 			if ($timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59)) //Validité de la date entrée.
 			{
 				if (!empty($title) && !empty($contents)) //succès
 				{
 					$Sql->query_inject("UPDATE " . PREFIX . "calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
-					
+
 					$day = gmdate_format('d', $timestamp);
 					$month = gmdate_format('m', $timestamp);
 					$year = gmdate_format('Y', $timestamp);
-					
+
 					AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
@@ -356,10 +356,10 @@ elseif (!empty($id))
 		else //Formulaire d'édition
 		{
 			$Template = new FileTemplate('calendar/calendar.tpl');
-			
+
 			//Récupération des infos
 			$row = $Sql->query_array(PREFIX . 'calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			
+
 			$Template->put_all(array(
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
@@ -383,7 +383,7 @@ elseif (!empty($id))
 				'L_SUBMIT' => $LANG['update'],
 				'L_RESET' => $LANG['reset']
 			));
-		
+
 			//Gestion erreur.
 			$get_error = retrieve(GET, 'error', '');
 			switch ($get_error)
@@ -399,12 +399,12 @@ elseif (!empty($id))
 			}
 			if (!empty($errstr))
 				$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
-			
+
 			$Template->display();
 		}
 	}
 	else
-		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($add) //Ajout d'un évenement
 {
@@ -418,28 +418,28 @@ elseif ($add) //Ajout d'un évenement
 	{
 		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 		$title = retrieve(POST, 'title', '');
-		
+
 		//Cacul du timestamp à partir de la date envoyé.
 		$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
 		$hour = retrieve(POST, 'hour', 0);
 		$min = retrieve(POST, 'min', 0);
-		
+
 		$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 		if ($timestamp > 0)
 			$timestamp += ($hour*3600) + ($min*60);
 		else
 			$timestamp = 0;
-			
+
 		if ($timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59)) //Validité de la date entrée.
 		{
 			if (!empty($title) && !empty($contents)) //succès
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
-				
+				$Sql->query_inject("INSERT INTO " . PREFIX . "calendar (timestamp,title,contents,user_id) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_id() . "')", __LINE__, __FILE__);
+
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);
 				$year = gmdate_format('Y', $timestamp);
-				
+
 				AppContext::get_response()->redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
 			else //Champs incomplet!
@@ -461,7 +461,7 @@ elseif ($add) //Ajout d'un évenement
 
 		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
-		
+
 		$Template->put_all(array(
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
@@ -485,7 +485,7 @@ elseif ($add) //Ajout d'un évenement
 			'L_SUBMIT' => $LANG['submit'],
 			'L_RESET' => $LANG['reset']
 		));
-		
+
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
 		switch ($get_error)

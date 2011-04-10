@@ -80,7 +80,7 @@
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
-				<div class="module_bottom"><a href="poll.php{SID}">{L_BACK_POLL}</a></div>
+				<div class="module_bottom"><a href="poll.php">{L_BACK_POLL}</a></div>
 			</div>
 		</form>
 	# ENDIF #
@@ -130,7 +130,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left;"><a href="poll.php{SID}">{L_BACK_POLL}</a></span>
+				<span style="float:left;"><a href="poll.php">{L_BACK_POLL}</a></span>
 				&nbsp;<span style="float:right;">{PAGINATION}</span>
 			</div>
 		</div>

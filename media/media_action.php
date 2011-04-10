@@ -387,7 +387,7 @@ elseif (!empty($_POST['submit']))
 			$media_contribution->set_description(stripslashes($media['counterpart']));
 			$media_contribution->set_entitled(sprintf($MEDIA_LANG['contribution_entitled'], $media['name']));
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
-			$media_contribution->set_poster_id($User->get_attribute('user_id'));
+			$media_contribution->set_poster_id($User->get_id());
 			$media_contribution->set_module('media');
 			$media_contribution->set_auth(Authorizations::capture_and_shift_bit_auth(Authorizations::merge_auth($MEDIA_CATS[0]['auth'], $media_categories->compute_heritated_auth($media['idcat'], MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Contribution::CONTRIBUTION_AUTH_BIT));
 

@@ -112,7 +112,6 @@ class Environment
 	public static function init_services()
 	{
 		self::init_http_services();
-		AppContext::init_session();
 		AppContext::init_extension_provider_service();
 	}
 
@@ -231,7 +230,7 @@ class Environment
 		define('USE_DEFAULT_IF_EMPTY', 1);
 
 		### User IP address ###
-		define('USER_IP', self::get_user_ip());
+		define('USER_IP', AppContext::get_request()->get_ip_address());
 
 		### Regex options ###
 		define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
@@ -254,26 +253,12 @@ class Environment
 
 	public static function init_session()
 	{
-		AppContext::get_session()->load();
-		AppContext::get_session()->act();
-
+		Session::gc();
+		$session_data = Session::start();
+		AppContext::set_session($session_data);
 		AppContext::init_user();
 
-		// TODO do we need to keep that feature? It's not supported every where
-		if (AppContext::get_session()->supports_cookies())
-		{
-			define('SID', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
-				'&amp;suid=' . AppContext::get_user()->get_attribute('user_id'));
-			define('SID2', 'sid=' . AppContext::get_user()->get_attribute('session_id') .
-				'&suid=' . AppContext::get_user()->get_attribute('user_id'));
-		}
-		else
-		{
-			define('SID', '');
-			define('SID2', '');
-		}
-
-		$user_theme = AppContext::get_user()->get_attribute('user_theme');
+		$user_theme = AppContext::get_user()->get_theme();
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemesCache::load()->get_theme_properties($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
@@ -285,7 +270,7 @@ class Environment
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
 		AppContext::get_user()->set_user_theme($user_theme);
 
-		$user_lang = AppContext::get_user()->get_attribute('user_lang');
+		$user_lang = AppContext::get_user()->get_locale();
 		//Is that member authorized to use this lang? If not, we assign it the default lang
 		$langs_cache = LangsCache::load();
 		$lang_properties = $langs_cache->get_lang_properties($user_lang);
@@ -361,15 +346,10 @@ class Environment
 	private static function perform_changeday()
 	{
 		self::perform_stats_changeday();
-
 		self::clear_all_temporary_cache_files();
-
 		self::execute_modules_changedays_tasks();
-
-		self::remove_old_unactivated_member_accounts();
-
+		UserService::remove_old_unactivated_member_accounts();
 		self::remove_captcha_entries();
-
 		self::check_updates();
 	}
 
@@ -425,7 +405,7 @@ class Environment
 		__LINE__, __FILE__);
 
 		//Deleting all the invalid sessions
-		AppContext::get_session()->garbage_collector();
+		Session::gc();
 	}
 
 	private static function clear_all_temporary_cache_files()
@@ -450,20 +430,6 @@ class Environment
 		foreach ($jobs as $job)
 		{
 			$job->on_changeday($yesterday, $today);
-		}
-	}
-
-	private static function remove_old_unactivated_member_accounts()
-	{
-		$user_account_settings = UserAccountsConfig::load();
-
-		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
-		//If the user configured a delay and member accounts must be activated
-		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
-		{
-			PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
-				" WHERE timestamp < :timestamp AND user_aprob = 0",
-			array('timestamp' => (time() - $delay_unactiv_max)));
 		}
 	}
 
@@ -576,49 +542,6 @@ class Environment
 	private static function get_one_week_ago_timestamp()
 	{
 		return time() - 3600 * 24 * 7;
-	}
-
-	private static function get_user_ip()
-	{
-		if ($_SERVER)
-		{
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-			{
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
-			elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-			{
-				$ip = $_SERVER['HTTP_CLIENT_IP'];
-			}
-			else
-			{
-				$ip = $_SERVER['REMOTE_ADDR'];
-			}
-		}
-		else
-		{
-			if (getenv('HTTP_X_FORWARDED_FOR'))
-			{
-				$ip = getenv('HTTP_X_FORWARDED_FOR');
-			}
-			elseif (getenv('HTTP_CLIENT_IP'))
-			{
-				$ip = getenv('HTTP_CLIENT_IP');
-			}
-			else
-			{
-				$ip = getenv('REMOTE_ADDR');
-			}
-		}
-
-		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
-		{
-			return $ip;
-		}
-		else
-		{
-			return '0.0.0.0';
-		}
 	}
 
 	/**

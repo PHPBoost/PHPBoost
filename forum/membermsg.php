@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
@@ -60,7 +60,6 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
 	$Template->put_all(array(
-		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],

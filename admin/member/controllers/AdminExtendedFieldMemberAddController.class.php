@@ -61,7 +61,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		{
 			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
 		}
-		elseif ($this->submit_button->has_been_submited() && $this->form->validate())
+		elseif ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
 			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));

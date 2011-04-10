@@ -398,7 +398,7 @@ class Date
 	{
 		return date('Y-m-d', $this->timestamp);
 	}
-	
+
 	/**
 	 * Tells whether this date is anterior to the given one
 	 * @param Date $date The date to compare with
@@ -408,7 +408,7 @@ class Date
 	{
 		return $this->timestamp < $date->timestamp;
 	}
-	
+
 	/**
 	 * Tells whether this date is posterior to the given one
 	 * @param Date $date The date to compare with
@@ -448,7 +448,7 @@ class Date
 	{
 		// Number of hours separating GMT and server's timezone
 		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
-			
+
 		switch ($referencial_timezone)
 		{
 			// Référentiel : heure du site
@@ -462,21 +462,21 @@ class Date
 				break;
 
 			case TIMEZONE_USER:
-				$timezone = AppContext::get_user()->get_attribute('user_timezone')
+				$timezone = AppContext::get_user()->get_timezone()
 					 - $server_hour;
 				break;
-					
+
 			default:
 				$timezone = 0;
 		}
 		return $timezone;
 	}
-	
+
 	private static function get_server_timezone()
 	{
 		return intval(date('Z') / 3600);
 	}
-	
+
 	private static function get_offset_due_to_daylight_saving_time()
 	{
 		return intval(date('I'));
@@ -486,12 +486,12 @@ class Date
 	{
 		$this->timestamp = mktime($hours, $minutes, $seconds, $month, $day, $year);
 	}
-	
+
 	private function get_adjusted_timestamp($timezone)
 	{
 		return $this->timestamp + self::compute_server_user_difference($timezone) * 3600;
 	}
-	
+
 	public static function set_default_timezone()
 	{
 		$default = @date_default_timezone_get();

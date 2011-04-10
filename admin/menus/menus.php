@@ -139,7 +139,7 @@ if ($action == 'save') //Save menus positions.
 	    	$reverse_menu_tree[$container][] = $matches[2][$key];
 	    }
     }
-    
+
     //Update all menus.
     $menu_list = array();
     foreach ($menus_blocks as $block_id => $menus)
@@ -170,13 +170,13 @@ if ($action == 'save') //Save menus positions.
        		}
 	    }
 	}
-	
+
 	//Sort the menus according to their new positions
 	$current_block_in_tree = '';
 	foreach ($reverse_menu_tree as $block_in_tree => $menus) //Retrieve position's menu in the sorted tree.
 	{
 		$block_position = 0;
-		foreach ($menus as $menu_id) 
+		foreach ($menus as $menu_id)
 		{
 			MenuService::set_position($menu_list[$menu_id], $block_position);
 			$block_position++;
@@ -199,8 +199,8 @@ $tpl = new FileTemplate('admin/menus/menus.tpl');
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
 $menu_template->put_all(array(
-    'L_ENABLED' => $LANG['enabled'],
-    'L_DISABLED' => $LANG['disabled'],
+    'L_ENABLED' => LangLoader::get_message('enabled', 'main'),
+    'L_DISABLED' => LangLoader::get_message('disabled', 'main'),
     'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
     'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
     'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,
@@ -241,8 +241,8 @@ foreach ($menus_blocks as $block_id => $menus)
             'C_DEL' => !empty($del_link),
 			'C_UP' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
             'C_DOWN' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-			'L_DEL' => $LANG['delete'],
-			'L_EDIT' => $LANG['edit'],
+			'L_DEL' => LangLoader::get_message('delete', 'main'),
+			'L_EDIT' => LangLoader::get_message('edit', 'main'),
 			'U_EDIT' => menu_admin_link($menu, 'edit'),
             'U_DELETE' => menu_admin_link($menu, 'delete'),
             'U_UP' => menu_admin_link($menu, 'up'),
@@ -288,10 +288,10 @@ $tpl->put_all(array(
     'C_LEFT_COLUMN' => $left_column,
     'C_RIGHT_COLUMN' => $right_column,
     'START_PAGE' => Environment::get_home_page(),
-	'L_INDEX' => $LANG['home'],
+	'L_INDEX' => LangLoader::get_message('home', 'main'),
     'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
     'L_ACTIVATION' => $LANG['activation'],
-    'L_MOVETO' => $LANG['moveto'],
+    'L_MOVETO' => LangLoader::get_message('moveto', 'main'),
     'L_GUEST' => $LANG['guest'],
     'L_USER' => $LANG['member'],
     'L_MODO' => $LANG['modo'],
@@ -320,8 +320,8 @@ $tpl->put_all(array(
     'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
     'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
     'L_INSTALL' => $LANG['install'],
-    'L_SUBMIT' => $LANG['submit'],
-    'L_RESET' => $LANG['reset'],
+    'L_SUBMIT' => LangLoader::get_message('submit', 'main'),
+    'L_RESET' => LangLoader::get_message('reset', 'main'),
 	'U_TOKEN' => $Session->get_token()
 ));
 $tpl->display();

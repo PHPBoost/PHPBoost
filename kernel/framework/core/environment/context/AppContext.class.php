@@ -53,7 +53,7 @@ class AppContext
 	 */
 	private static $bench;
 	/**
-	 * @var Session
+	 * @var SessionData
 	 */
 	private static $session;
 	/**
@@ -151,24 +151,16 @@ class AppContext
 	}
 
 	/**
-	 * Inits the session
+	 * @desc Sets the session
 	 */
-	public static function init_session()
-	{
-		self::set_session(new Session());
-	}
-
-	/**
-	 * Sets the session
-	 */
-	public static function set_session(Session $session)
+	public static function set_session(SessionData $session)
 	{
 		self::$session = $session;
 	}
 
 	/**
 	 * Returns the current user's session
-	 * @return Session
+	 * @return SessionData
 	 */
 	public static function get_session()
 	{
@@ -180,7 +172,7 @@ class AppContext
 	 */
 	public static function init_user()
 	{
-		self::$user = new User();
+		self::$user = User::from_session();
 	}
 
 	/**

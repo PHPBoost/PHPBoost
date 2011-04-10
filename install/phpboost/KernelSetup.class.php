@@ -47,6 +47,9 @@ class KernelSetup
 	private static $group_table;
 	private static $lang_table;
 	private static $member_table;
+	private static $member_profile_table;
+	private static $internal_authentication_table;
+	private static $authentication_method_table;
 	private static $member_extended_fields_table;
 	private static $member_extended_fields_list;
 	private static $menus_table;
@@ -82,6 +85,9 @@ class KernelSetup
 		self::$group_table = PREFIX . 'group';
 		self::$lang_table = PREFIX . 'lang';
 		self::$member_table = PREFIX . 'member';
+		self::$member_profile_table = PREFIX . 'member_profile';
+		self::$internal_authentication_table = PREFIX . 'internal_authentication';
+		self::$authentication_method_table = PREFIX . 'authentication_method';
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
 		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
 		self::$menus_table = PREFIX . 'menus';
@@ -99,7 +105,6 @@ class KernelSetup
 		self::$upload_table = PREFIX . 'upload';
 		self::$upload_cat_table = PREFIX . 'upload_cat';
 		self::$verif_code_table = PREFIX . 'verif_code';
-
 	}
 
 	public function install()
@@ -124,6 +129,9 @@ class KernelSetup
 			self::$group_table,
 			self::$lang_table,
 			self::$member_table,
+			self::$member_profile_table,
+			self::$internal_authentication_table,
+			self::$authentication_method_table,
 			self::$member_extended_fields_table,
 			self::$member_extended_fields_list,
 			self::$menus_table,
@@ -158,6 +166,9 @@ class KernelSetup
 		$this->create_group_table();
 		$this->create_lang_table();
 		$this->create_member_table();
+		$this->create_member_profile_table();
+		$this->create_internal_authentication_table();
+		$this->create_authentication_method_table();
 		$this->create_member_extended_fields_table();
 		$this->create_member_extended_fields_list_table();
 		$this->create_menus_table();
@@ -247,7 +258,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$note_table, $fields, $options);
 	}
-	
+
 	private function create_average_notes_table()
 	{
 		$fields = array(
@@ -379,17 +390,32 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'display_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_groups' => array('type' => 'text', 'length' => 65000),
-			'user_lang' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-			'user_theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_mail' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'email' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'locale' => array('type' => 'string', 'length' => 25, 'default' => "''"),
+			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
+			'editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
+			'unread_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
+			'registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'last_connection_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'groups' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
+			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'warning_percentage' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
+			'is_banned' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'is_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+
+		$options = array('primary' => array('user_id'));
+		self::$db_utils->create_table(self::$member_table, $fields, $options);
+	}
+
+	private function create_member_profile_table()
+	{
+		$fields = array(
+			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'user_show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
-			'user_editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
-			'user_timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'user_local' => array('type' => 'string', 'length' => 50, 'default' => "''"),
@@ -401,26 +427,48 @@ class KernelSetup
 			'user_desc' => array('type' => 'text', 'length' => 65000),
 			'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
-			'user_sign' => array('type' => 'text', 'length' => 65000),
-			'user_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
-			'user_warning' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
-			'user_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+			'user_sign' => array('type' => 'text', 'length' => 65000)
+		);
+
+		$options = array('primary' => array('user_id'));
+		self::$db_utils->create_table(self::$member_profile_table, $fields, $options);
+	}
+
+	private function create_internal_authentication_table()
+	{
+		$fields = array(
+			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'username' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-			'user_ban' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'approved' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+		);
 
+		$options = array(
+			'primary' => array('user_id'),
+			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'username'))
+		);
+		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
+	}
+
+	private function create_authentication_method_table()
+	{
+		$fields = array(
+			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'method' => array('type' => 'string', 'length' => 32, 'default' => "''"),
+			'identifier' => array('type' => 'string', 'length' => 128, 'default' => "''"),
+			'data' => array('type' => 'text', 'length' => 65000)
 		);
 
 		$options = array(
 			'primary' => array('user_id'),
 			'indexes' => array(
-				'login' => array('type' => 'unique', 'fields' => 'login'),
-				'user_id' => array('type' => 'key', 'fields' => array('login','password','level','user_id'))
+				'method' => array('type' => 'unique', 'fields' => array('method', 'identifier'))
 		));
-		self::$db_utils->create_table(self::$member_table, $fields, $options);
+		self::$db_utils->create_table(self::$authentication_method_table, $fields, $options);
 	}
 
 	private function create_member_extended_fields_table()
@@ -598,24 +646,19 @@ class KernelSetup
 	private function create_sessions_table()
 	{
 		$fields = array(
-			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'session_ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
-			'session_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'session_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1,'default' => 0),
-			'session_script_get' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => 0),
-			'session_script_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'session_flag' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_theme' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'user_lang' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'modules_parameters' => array('type' => 'text', 'length' => 65000),
-			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1)
+			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
+			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'cached_data' => array('type' => 'text', 'length' => 65000),
+			'data' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('session_id'),
 			'indexes' => array(
-				'user_id' => array('type' => 'key', 'fields' => array('user_id', 'session_time'))
+				'user_id' => array('type' => 'key', 'fields' => 'user_id'),
+				'expiry' => array('type' => 'key', 'fields' => 'expiry')
 			)
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);
@@ -744,7 +787,6 @@ class KernelSetup
 		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_menu_configuration_data();
 		$this->insert_ranks_data();
-		$this->insert_member_data();
 		$this->insert_smileys_data();
 	}
 
@@ -986,18 +1028,13 @@ class KernelSetup
 
 	}
 
-	private function insert_member_data()
+	private function insert_configs_data()
 	{
-		self::$db_querier->insert(self::$member_table, array(
-
-			'login' => 'login',
-			'level' => 2,
-			'user_aprob' => 1,
-			'user_groups' => '',
-			'user_desc' => '',
-			'user_sign' => ''
+		self::$db_querier->insert(self::$configs_table, array(
+			'id' => 3,
+			'name' => 'uploads',
+			'value' => 'a:4:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";i:1;s:15:"auth_extensions";a:48:{i:0;s:3:"jpg";i:1;s:4:"jpeg";i:2;s:3:"bmp";i:3;s:3:"gif";i:4;s:3:"png";i:5;s:3:"tif";i:6;s:3:"svg";i:7;s:3:"ico";i:8;s:3:"rar";i:9;s:3:"zip";i:10;s:2:"gz";i:11;s:3:"txt";i:12;s:3:"doc";i:13;s:4:"docx";i:14;s:3:"pdf";i:15;s:3:"ppt";i:16;s:3:"xls";i:17;s:3:"odt";i:18;s:3:"odp";i:19;s:3:"ods";i:20;s:3:"odg";i:21;s:3:"odc";i:22;s:3:"odf";i:23;s:3:"odb";i:24;s:3:"xcf";i:25;s:3:"flv";i:26;s:3:"mp3";i:27;s:3:"ogg";i:28;s:3:"mpg";i:29;s:3:"mov";i:30;s:3:"swf";i:31;s:3:"wav";i:32;s:3:"wmv";i:33;s:4:"midi";i:34;s:3:"mng";i:35;s:2:"qt";i:36;s:1:"c";i:37;s:1:"h";i:38;s:3:"cpp";i:39;s:4:"java";i:40;s:2:"py";i:41;s:3:"css";i:42;s:4:"html";i:43;s:3:"xml";i:44;s:3:"ttf";i:45;s:3:"tex";i:46;s:3:"rtf";i:47;s:3:"psd";}s:10:"auth_files";s:32:"a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}";}'
 		));
-
 	}
 }
 

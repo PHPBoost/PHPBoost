@@ -53,7 +53,7 @@ class InstallServerConfigController extends InstallController
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit->has_been_submited())
+		if ($this->submit->has_been_submitted())
 		{
 			$this->handle_form();
 		}

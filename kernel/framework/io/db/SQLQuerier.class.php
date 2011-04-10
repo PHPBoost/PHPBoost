@@ -36,6 +36,8 @@ interface SQLQuerier
 	const ORDER_BY_ASC = 'ASC';
 	const ORDER_BY_DESC = 'DESC';
 
+	function set_connection(DBConnection $connection);
+
 	/**
 	 * @desc executes the <code>$query</code> sql request and returns the query result.
 	 * <p>Query will first be converted into the specific sgbd dialect.</p>

@@ -32,7 +32,7 @@ function connect_mini($position, $block)
 {
     global $LANG;
 
-    $tpl = new FileTemplate('connect/connect_mini.tpl');
+    $tpl = new FileTemplate('connect/LoginFormMenu.tpl');
     $user = AppContext::get_user();
 
     MenuService::assign_positions_conditions($tpl, $block);
@@ -86,11 +86,11 @@ function connect_mini($position, $block)
     		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
     		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
     		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-    		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-    		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $user->get_attribute('user_id'), '-' . $user->get_attribute('user_id') . '.php'),
-    		'U_USER_ID' => url('.php?id=' . $user->get_attribute('user_id') . '&amp;view=1', '-' . $user->get_attribute('user_id') . '.php?view=1'),
+    		'IMG_PM' => $user->get_unread_pm() > 0 ? 'new_pm.gif' : 'pm_mini.png',
+    		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $user->get_id(), '-' . $user->get_id() . '.php'),
+    		'U_USER_ID' => url('.php?id=' . $user->get_id() . '&amp;view=1', '-' . $user->get_id() . '.php?view=1'),
     		'U_DISCONNECT' => PATH_TO_ROOT . '/index.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token(),
-    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+    		'L_NBR_PM' => ($user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
     		'L_PROFIL' => $LANG['profile'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],
     		'L_MODO_PANEL' => $LANG['modo_panel'],
@@ -101,19 +101,37 @@ function connect_mini($position, $block)
     }
     else
     {
-    	$tpl->put_all(array(
-    		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
-    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-			'L_REQUIRE_PASSWORD' => $LANG['require_password'],
-			'L_CONNECT' => $LANG['connect'],
-    		'L_PSEUDO' => $LANG['pseudo'],
-    		'L_PASSWORD' => $LANG['password'],
-    		'L_AUTOCONNECT' => $LANG['autoconnect'],
-    		'L_FORGOT_PASS' => $LANG['forget_pass'],
-    		'L_REGISTER' => $LANG['register'],
-    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
-    		'U_REGISTER' => DispatchManager::get_url('/member', '/register')->absolute()
-    	));
+    	$redirect_url = AppContext::get_request()->get_value('redirect', AppContext::get_request()->get_current_url()->absolute());
+		$target = DispatchManager::get_url('/member/index.php', '/login?redirect=' . urlencode($redirect_url));
+    	$lang = LangLoader::get('login');
+    	$form = new HTMLForm('loginForm', $target);
+		$form->set_css_class('fieldset_content');
+
+		$fieldset = null;
+		if ($block == Menu::BLOCK_POSITION__LEFT || $block == Menu::BLOCK_POSITION__RIGHT)
+		{
+			$fieldset = new FormFieldsetVertical('loginFieldset');
+		}
+		else
+		{
+			$fieldset = new FormFieldsetHorizontal('loginFieldset');
+		}
+
+		$login = new FormFieldTextEditor('username', $lang['login'], $lang['login']);
+		$login->add_constraint(new FormFieldConstraintMinLength(3));
+		$fieldset->add_field($login);
+		$password = new FormFieldPasswordEditor('password', $lang['password'], $lang['password']);
+		$password->add_constraint(new FormFieldConstraintMinLength(3));
+		$fieldset->add_field($password);
+		$autoconnect = new FormFieldCheckbox('autoconnect', $lang['autoconnect'], false);
+		$fieldset->add_field($autoconnect);
+
+		$form->add_fieldset($fieldset);
+
+		$submit_button = new FormButtonSubmit($lang['connect'], 'authenticate');
+		$form->add_button($submit_button);
+
+    	$tpl->put('AUTHENTICATION_FORM', $form->display());
     }
 
     return $tpl->render();

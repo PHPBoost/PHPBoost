@@ -38,6 +38,65 @@ class HTTPRequest
 	const string = 0x03;
 	const t_array = 0x04;
 	const none = 0x05;
+	const VALID_IP_ADDRESS_REGEX = '`(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(?:(?:[0-9abcdef]{0,4}:{1,2}){0,7}[0-9abcdef]{1,4})`';
+
+	/**
+	 * @desc
+	 * @return Url
+	 */
+	public static function get_current_url()
+	{
+		$requested_uri = '.';
+		if (!empty($_SERVER['REQUEST_URI']))
+		{
+			$requested_uri = $_SERVER['REQUEST_URI'];
+		}
+		else
+		{
+			$env_requested_uri = getenv('REQUEST_URI');
+			if (!empty($env_requested_uri))
+			{
+				$requested_uri = $env_requested_uri;
+			}
+		}
+		$site_path = GeneralConfig::load()->get_site_path();
+		$requested_uri = preg_replace('`^' . $site_path . '`', '', $requested_uri);
+		return new Url($requested_uri);
+	}
+
+	/**
+	 * @desc Returns the ip address of the user viewing the page.
+	 * The address returned could be an ipv6 or an ipv4 address. If the given address does not match
+	 * an ipv4 or an ipv6 format, null is returned.
+	 * @return string the user ip address
+	 */
+	public function get_ip_address()
+	{
+		foreach (array('HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'REMOTE_ADDR') as $env_varname)
+		{
+			$ip = $this->get_env_var($env_varname);
+			if (!empty($ip) && preg_match(self::VALID_IP_ADDRESS_REGEX, $ip))
+			{
+				return $ip;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @desc Searches for the environment variable value in array <code>$_SERVER</code> and if not found,
+	 * 	it will try to the <code>getenv()</code> method.
+	 * @param string $name the environment variable name to be search
+	 * @return mixed the environment variable value.
+	 */
+	private function get_env_var($name)
+	{
+		if (isset($_SERVER[$name]))
+		{
+			return $_SERVER[$name];
+		}
+		return getenv($name);
+	}
 
 	public function is_post_method()
 	{
@@ -306,7 +365,7 @@ class HTTPRequest
 	{
 		if (!is_array($array))
 		{
-			return $default_value;	
+			return $default_value;
 		}
 		foreach ($array as &$item)
 		{

@@ -68,7 +68,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template->put_all(array(
 			'SITE_NAME' => $general_config->get_site_name(),
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_editor() == 'tinymce',
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),

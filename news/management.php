@@ -42,7 +42,7 @@ if ($delete > 0)
 	$Session->csrf_get_protect();
 	$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
-	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
+	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()))
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
@@ -183,7 +183,7 @@ elseif (!empty($_POST['submit']))
 				$auth_contrib = !$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE);
 
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, sources)
-				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '" . $news['sources'] . "')", __LINE__, __FILE__);
+				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_id() . "', '" . $img->relative() . "', '" . $news['alt'] . "', '" . $news['sources'] . "')", __LINE__, __FILE__);
 
 				$news['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_NEWS);
 
@@ -202,7 +202,7 @@ elseif (!empty($_POST['submit']))
 					//The URL where a validator can treat the contribution (in the file edition panel)
 					$news_contribution->set_fixing_url('/news/management.php?edit=' . $news['id']);
 					//Who is the contributor?
-					$news_contribution->set_poster_id($User->get_attribute('user_id'));
+					$news_contribution->set_poster_id($User->get_id());
 					//The module
 					$news_contribution->set_module('news');
 					//Assignation des autorisations d'écriture / Writing authorization assignation
@@ -259,7 +259,7 @@ else
 	{
 		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 		
-		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id') : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id() : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id();
 		
 		if (!empty($news['id']) && $auth_edit)
 		{
@@ -385,7 +385,7 @@ else
 				'IMG' => '',
 				'ALT' => '',
 				'IDNEWS' => '0',
-				'USER_ID' => $User->get_attribute('user_id')
+				'USER_ID' => $User->get_id()
 			));
 
 			$tpl->assign_block_vars('sources', array(

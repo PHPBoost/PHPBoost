@@ -40,7 +40,7 @@ class SandboxFormController extends ModuleController
 	{
 		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$form = $this->build_form();
-		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
+		if ($this->submit_button->has_been_submitted() || $this->preview_button->has_been_submitted())
 		{
 			if ($form->validate())
 			{
@@ -60,7 +60,7 @@ class SandboxFormController extends ModuleController
 					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
 					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT),
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
-					'C_PREVIEW' => $this->preview_button->has_been_submited()                
+					'C_PREVIEW' => $this->preview_button->has_been_submitted()		 
 				));
 
 				$file = $form->get_value('file');

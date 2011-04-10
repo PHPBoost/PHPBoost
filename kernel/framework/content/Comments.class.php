@@ -80,7 +80,7 @@ class Comments
 	{
 		global $Sql, $User;
 
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . TextHelper::strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_id() . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '" .PATH_TO_ROOT . TextHelper::strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . DB_TABLE_COM);
 
 		//Incrémente le nombre de commentaire dans la table du script concerné.
@@ -270,13 +270,13 @@ class Comments
 			if (retrieve(POST, 'comForm', false) && !$updatecom)
 			{
 				//Membre en lecture seule?
-				if ($User->get_attribute('user_readonly') > time())
+				if ($User->is_readonly() > time())
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
 
-				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
+				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : retrieve(POST, $this->script . 'login', $LANG['guest']);
 				$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 
 				if (!empty($login) && !empty($contents))
@@ -291,7 +291,7 @@ class Comments
 					if ($User->check_auth($comments_config->get_auth_post_comments(), self::POST_COMMENT_AUTH))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+						$check_time = ($User->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COM . " WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : '';
 						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{
 							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration())) //On calcule la fin du delai.
@@ -335,7 +335,7 @@ class Comments
 			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
-				if ($User->get_attribute('user_readonly') > time())
+				if ($User->is_readonly() > time())
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -344,7 +344,7 @@ class Comments
 				$row = $Sql->query_array(DB_TABLE_COM, '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 
-				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))) //Modération des commentaires.
+				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_id() && $User->get_id() !== -1))) //Modération des commentaires.
 				{
 					if ($delcom > 0) //Suppression du commentaire.
 					{
@@ -399,7 +399,7 @@ class Comments
 					{
 						$contents = retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE);
 						$login = retrieve(POST, $this->script . 'login', $LANG['guest']);
-						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $login;
+						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_display_name() : $login;
 
 						if (!empty($contents) && !empty($login))
 						{
@@ -536,7 +536,7 @@ class Comments
 				$form = new HTMLForm('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
 				$fieldset = new FormFieldsetHTML('add_comment', $LANG['add_comment']);
 				$form->add_fieldset($fieldset);
-				
+
 				if ($is_guest) //Visiteur
 				{
 					$fieldset->add_field(new FormFieldTextEditor($this->script . 'login', $LANG['guest'], array(
@@ -544,7 +544,7 @@ class Comments
 						'maxlength' => 25)
 					));
 				}
-				
+
 				$formatter = AppContext::get_content_formatting_service()->create_factory();
 				$formatter->set_forbidden_tags($comments_config->get_forbidden_tags());
 
@@ -561,7 +561,7 @@ class Comments
 				$fieldset->add_field(new FormFieldHidden('script', $this->script));
 				$form->add_button(new FormButtonDefaultSubmit());
 				$form->add_button(new FormButtonReset());
-				
+
 				//On crée une pagination si le nombre de commentaires est trop important.
 				$pagination = new DeprecatedPagination();
 
@@ -575,7 +575,7 @@ class Comments
 					'SCRIPT' => $this->script,
 					'PATH' => SCRIPT,
 					'VAR' => $vars_simple,
-					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
+					'C_BBCODE_TINYMCE_MODE' => $User->get__editor() == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => (!CommentsConfig::load()->get_display_comments_in_popup() || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -604,7 +604,7 @@ class Comments
 					$is_guest = empty($row['user_id']);
 
 					//Edition/suppression.
-					if ($is_modo || ($row['user_id'] == $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+					if ($is_modo || ($row['user_id'] == $User->get_id() && $User->get_id() !== -1))
 					{
 						list($edit, $del) = array(true, true);
 					}

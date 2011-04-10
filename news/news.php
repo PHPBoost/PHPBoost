@@ -55,7 +55,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 	if (!empty($news['id']) && !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ)
 		&& ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())
-		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
+		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()))
 	{	
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET compt = compt + 1 WHERE id = '" . $idnews . "'", __LINE__, __LINE__); //MAJ du compteur.
@@ -119,8 +119,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			$i++;
 		}	
 		
-		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')
-		: $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()
+		: $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id();
 		
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
@@ -180,7 +180,7 @@ elseif ($user)
 {
 	// Bread crumb.
 	$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
-	$Bread_crumb->add($User->get_attribute('login'), url('news.php?user=1'));
+	$Bread_crumb->add($User->get_display_name(), url('news.php?user=1'));
 
 	// Title of page
 	define('TITLE', $NEWS_LANG['news']);
@@ -196,7 +196,7 @@ elseif ($user)
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_id() . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

@@ -43,7 +43,7 @@ class ContentFormattingService
 	private $default_factory;
 
 	/**
-	 * @desc Returns the content formatting factory corresponding to the default configuration 
+	 * @desc Returns the content formatting factory corresponding to the default configuration
 	 * @return ContentFormattingFactory
 	 */
 	public function get_default_factory()
@@ -79,7 +79,7 @@ class ContentFormattingService
 	 */
 	public function get_user_editor()
 	{
-		return AppContext::get_user()->get_attribute('user_editor');
+		return AppContext::get_user()->get_editor();
 	}
 
 	/**
@@ -134,7 +134,7 @@ class ContentFormattingService
             return ContentFormattingConfig::load()->get_default_editor();
         }
     }
-    
+
     /**
      * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
      * The keys of the map are the tags identifiers and the values the tags names.
@@ -161,7 +161,7 @@ class ContentFormattingService
         	'size' => $LANG['format_size'],
         	'align' => $LANG['format_align'],
         	'float' => $LANG['format_float'],
-        	'sup' => $LANG['format_sup'], 
+        	'sup' => $LANG['format_sup'],
 			'sub' => $LANG['format_sub'],
         	'indent' => $LANG['format_indent'],
         	'pre' => $LANG['format_pre'],

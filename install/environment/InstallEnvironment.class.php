@@ -56,7 +56,6 @@ class InstallEnvironment extends Environment
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		define('FILE', $server_path);
 		define('DIR', str_replace('/install/install.php', '', $server_path));
-		define('SID', '');
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
 
@@ -68,8 +67,8 @@ class InstallEnvironment extends Environment
 
 	private static function init_admin_role()
 	{
+		AppContext::set_session(new AdminSessionData());
 		AppContext::set_user(new AdminUser());
-		AppContext::set_session(new AdminSession());
 	}
 
 	public static function load_distribution_properties($prefered_lang)

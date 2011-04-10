@@ -34,9 +34,9 @@
 abstract class AbstractSQLQuerier implements SQLQuerier
 {
 	/**
-	 * @var mixed
+	 * @var DBConnection
 	 */
-	protected $link;
+	protected $connection;
 
 	/**
 	 * @var SQLQueryTranslator
@@ -55,17 +55,21 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 
 	public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
 	{
-		$this->link = $connection->get_link();
+		$this->set_connection($connection);
 		$this->translator = $translator;
 	}
 
+	public function set_connection(DBConnection $connection)
+	{
+		$this->connection = $connection;
+	}
 
-	function enable_query_translator()
+	public function enable_query_translator()
 	{
 		$this->translator_enabled = true;
 	}
 
-	function disable_query_translator()
+	public function disable_query_translator()
 	{
 		$this->translator_enabled = false;
 	}
