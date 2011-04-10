@@ -262,12 +262,13 @@ class ModulesManager
 			//Suppression du fichier cache
 			$Cache->delete_file($module_id);
 
-			//Suppression des commentaires associés.
-			if (!empty($info_module['com']))
-			{
-				PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_COM." 
-					WHERE script = :script", array('script' => $info_module['com']));
-			}
+			$notation = new Notation();
+			$notation->set_module_name($module_id);
+			NotationService::delete_notes_module($notation);
+			
+			$comments = new Comments();
+			$comments->set_module_name($module_id);
+			CommentsService::delete_comments_module($comments);
 
 			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
 					WHERE name = :name", array('name' => $module_id));

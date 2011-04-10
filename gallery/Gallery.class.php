@@ -317,6 +317,11 @@ class Gallery
 		$notation->set_module_name('gallery');
 		$notation->set_id_in_module($id_pics);
 		NotationService::delete_notes_id_in_module($notation);
+		
+		$comments = new Comments();
+		$comments->set_module_name('gallery');
+		$comments->set_id_in_module($id_pics);
+		CommentsService::delete_comments_id_in_module($comments);
 	}
 	
 	//Renomme une image.
