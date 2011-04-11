@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               CSSOptimizeFiles.class.php
+ *                               CSSFileOptimizer.class.php
  *                            -------------------
  *   begin                : March 29, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -29,7 +29,7 @@
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
 */
-class CSSOptimizeFiles extends AbstractOptimizeFiles
+class CSSFileOptimizer extends AbstractCodeFileOptimizer
 {
 	public function __construct()
 	{
