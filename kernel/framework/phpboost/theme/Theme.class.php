@@ -36,9 +36,9 @@ class Theme
     private $activated;
 	private $columns_disabled;
     private $authorizations;
-	public static const ACCES_THEME = 1;
+	const ACCES_THEME = 1;
 	
-	public function __construct($theme_id, $activated = false, array $authorizations = array())
+	public function __construct($theme_id, array $authorizations = array(), $activated = false)
 	{
         $this->theme_id = $theme_id;
         $this->activated = $activated;
@@ -64,6 +64,16 @@ class Theme
     {
         $this->activated = $activated;
     }
+	
+	public function set_columns_disabled(ColumnsDisabled $columns_disabled)
+	{
+		$this->columns_disabled = $columns_disabled;
+	}
+	
+	public function get_columns_disabled()
+	{
+		return $this->columns_disabled;
+	}
 
     public function set_authorizations($authorizations)
     {

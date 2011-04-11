@@ -40,8 +40,8 @@ class ThemeConfigurationManager
 		$cache_manager = self::get_cache_manager();
 		if (!$cache_manager->contains($theme_id))
 		{
-			$module_configuration = self::get_module_configuration($theme_id);
-			$cache_manager->store($theme_id, $module_configuration);
+			$theme_configuration = self::get_theme_configuration($theme_id);
+			$cache_manager->store($theme_id, $theme_configuration);
 		}
 		return $cache_manager->get($theme_id);
 	}
@@ -55,15 +55,15 @@ class ThemeConfigurationManager
 		return self::$cache_manager;
 	}
 
-	private static function get_module_configuration($theme_id)
+	private static function get_theme_configuration($theme_id)
 	{
 		$config_ini_file = self::find_config_ini_file($theme_id);
-		return new ModuleConfiguration($config_ini_file);
+		return new ThemeConfiguration($config_ini_file);
 	}
 
 	private static function find_config_ini_file($theme_id)
 	{
-		$config_ini_folder = PATH_TO_ROOT . '/' . $theme_id . '/lang/';
+		$config_ini_folder = PATH_TO_ROOT . '/templates/' . $theme_id . '/config/';
 
 		$config_ini_file = $config_ini_folder . get_ulang() . '/config.ini';
 		if (file_exists($config_ini_file))

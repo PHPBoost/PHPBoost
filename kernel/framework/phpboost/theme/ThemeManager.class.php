@@ -35,16 +35,59 @@ class ThemeManager
 {
 	private static $errors = null;
 	
-	public static function install($module_id, $enable_module true, )
+	public static function install($theme_id, $authorizations = array(), $enable_theme = true)
 	{
+		if (!empty($theme_id))
+		{
+			$theme = new Theme($theme_id, $authorizations, $enable_theme);
+			$configuration = $theme->get_configuration();
+			$theme->set_columns_disabled($configuration->get_columns_disabled());
+			
+			
+			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), 'lt'))
+			{
+				ThemesConfig::load()->add_theme($theme);
+				ThemesConfig::save();
+			}
+			
+			self::regenerate_cache();
+		}
+	}
+	
+	public static function uninstall($theme_id, $drop_files = false)
+	{
+		ThemesConfig::load()->remove_theme_by_id($theme_id);
+		ThemesConfig::save();
 		
+		if ($drop_files)
+		{
+			$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
+			$folder->delete();
+		}
+
 		self::regenerate_cache();
 	}
 	
-	public static function unistall()
+	public static function change_visibility($theme_id, $visibility)
 	{
+		$theme = ThemesConfig::load()->get_theme($theme_id);
+		$theme->set_activated($visibility);
+		ThemesConfig::save($theme);
+	}
 	
-		self::regenerate_cache();
+	public static function change_authorizations($theme_id, Array $authorizations)
+	{
+		$theme = ThemesConfig::load()->get_theme($theme_id);
+		$theme->set_authorizations($authorizations);
+		ThemesConfig::save($theme);
+	}
+	
+	public static function change_columns_disabled($theme_id, ColumnsDisabled $columns_disabled)
+	{
+		$theme = ThemesConfig::load()->get_theme($theme_id);
+		$theme->set_columns_disabled($columns_disabled);
+		ThemesConfig::save($theme);
 	}
 	
 	public static function get_errors()
@@ -54,8 +97,6 @@ class ThemeManager
 	
 	private static function regenerate_cache()
 	{
-		ThemesCache::invalidate();
-		
     	ModulesCssFilesCache::invalidate();
 	}
 }
