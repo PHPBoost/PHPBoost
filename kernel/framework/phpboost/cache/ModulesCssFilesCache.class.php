@@ -43,7 +43,7 @@ class ModulesCssFilesCache implements CacheData
 	public function synchronize()
 	{
 		//We browse all the enabled modules
-		foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
+		foreach (ThemeManager::get_activated_themes_map() as $theme => $properties)
 		{
 			$files_for_this_theme = array();
 			foreach (ModulesManager::get_activated_modules_map() as $name => $module)

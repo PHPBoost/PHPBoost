@@ -99,18 +99,10 @@ if (!empty($members))
 	));
 
 	$stats_array = array();
-	$result = $Sql->query_while ("SELECT at.theme, COUNT( m.user_theme) AS compt
-	FROM " . DB_TABLE_THEMES . " at
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_theme = at.theme
-	GROUP BY at.theme
-	ORDER BY compt DESC", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	foreach (ThemeManager::get_activated_themes_map() as $id)
 	{
-		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
-		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
-		$stats_array[$name] = $row['compt'];
+		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
 	}
-	$Sql->query_close($result);
 
 	$Stats = new ImagesStats();
 

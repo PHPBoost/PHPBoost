@@ -219,15 +219,7 @@ class InstallationServices
 
 	private function configure_theme($theme, $locale)
 	{
-		$info_theme = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $locale);
-		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column)
-			VALUES (:theme, 1, :auth, :left_column, :right_column)", array(
-                'theme' => $theme,
-                'auth' => serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1)),
-				'left_column' => $info_theme['left_column'],
-				'right_column' => $info_theme['right_column']
-		));
+		ThemeManager::install($theme);
 	}
 
 	private function install_modules(array $modules_to_install)

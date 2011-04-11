@@ -35,17 +35,48 @@ class ThemeManager
 {
 	private static $errors = null;
 	
+	public static function get_installed_themes_map()
+	{
+		return ThemesConfig::load()->get_themes();
+	}
+	
+	public static function get_activated_themes_map()
+	{
+		$activated_themes = array();
+		foreach (ThemesConfig::load()->get_themes() as $theme) {
+			if ($theme->is_activated()) {
+				$activated_themes[$theme->get_id()] = $theme;
+			}
+		}
+		return $activated_themes;
+	}
+	
+	public static function get_theme($theme_id)
+	{
+		return ThemesConfig::load()->get_theme($theme_id);
+	}
+	
+	public static function get_theme_existed($theme_id)
+	{
+		if (ThemesConfig::load()->get_theme($theme_id) !== null)
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public static function install($theme_id, $authorizations = array(), $enable_theme = true)
 	{
 		if (!empty($theme_id))
 		{
+			// TODO Verificate exited
 			$theme = new Theme($theme_id, $authorizations, $enable_theme);
 			$configuration = $theme->get_configuration();
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), 'lt'))
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
 			{
 				ThemesConfig::load()->add_theme($theme);
 				ThemesConfig::save();
@@ -57,6 +88,7 @@ class ThemeManager
 	
 	public static function uninstall($theme_id, $drop_files = false)
 	{
+		// TODO Verificate exited
 		ThemesConfig::load()->remove_theme_by_id($theme_id);
 		ThemesConfig::save();
 		
@@ -66,6 +98,18 @@ class ThemeManager
 			$folder->delete();
 		}
 
+		/*
+		$previous_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
+		if ($previous_theme != UserAccountsConfig::load()->get_default_theme() && !empty($idtheme))
+		{
+			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . UserAccountsConfig::load()->get_default_theme() . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
+				
+			//On supprime le theme de la bdd.
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
+		}
+		*/
+		
 		self::regenerate_cache();
 	}
 	
@@ -73,21 +117,25 @@ class ThemeManager
 	{
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_activated($visibility);
-		ThemesConfig::save($theme);
+		ThemesConfig::load()->update($theme);
+		
+		self::regenerate_cache();
 	}
 	
 	public static function change_authorizations($theme_id, Array $authorizations)
 	{
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_authorizations($authorizations);
-		ThemesConfig::save($theme);
+		ThemesConfig::load()->update($theme);
 	}
 	
 	public static function change_columns_disabled($theme_id, ColumnsDisabled $columns_disabled)
 	{
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_columns_disabled($columns_disabled);
-		ThemesConfig::save($theme);
+		ThemesConfig::load()->update($theme);
+		
+		self::regenerate_cache();
 	}
 	
 	public static function get_errors()

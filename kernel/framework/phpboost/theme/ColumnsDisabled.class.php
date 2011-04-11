@@ -82,43 +82,83 @@ class ColumnsDisabled
 		return $this->disable_right_columns;
 	}
 	
+	public function set_disable_header($disable)
+	{
+		$this->disable_header = $disable;
+	}
+
+	public function set_disable_sub_header($disable)
+	{
+		$this->disable_sub_header = $disable;
+	}
+
+	public function set_disable_top_central($disable)
+	{
+		$this->disable_top_central = $disable;
+	}
+
+	public function set_disable_bottom_central($disable)
+	{
+		$this->disable_bottom_central = $disable;
+	}
+
+	public function set_disable_top_footer($disable)
+	{
+		$this->disable_top_footer = $disable;
+	}
+
+	public function set_disable_footer($disable)
+	{
+		$this->disable_footer = $disable;
+	}
+
+	public function set_disable_left_columns($disable)
+	{
+		$this->disable_left_columns = $disable;
+	}
+
+	public function set_disable_right_columns($disable)
+	{
+		$this->disable_right_columns = $disable;
+	}
+	
 	public function set_columns_disabled(Array $disable_columns)
 	{
-		foreach($disable_columns as $columns => $value)
+		foreach($disable_columns as $columns)
 		{
 			$attribute = trim(strtolower($columns));
 			switch ($columns)
 			{
 				case 'header':
-					$this->disable_header = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_header = true;
 					unset($disable_columns['header']);
 					break;
 				case 'sub_header':
-					$this->disable_sub_header = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_sub_header = true;
 					unset($disable_columns['sub_header']);
 					break;
 				case 'top_central':
-					$this->disable_top_central = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_top_central = true;
 					unset($disable_columns['top_central']);
 					break;
 				case 'bottom_central':
-					$this->disable_bottom_central = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_bottom_central = true;
 					unset($disable_columns['bottom_central']);
 					break;
 				case 'top_footer':
-					$this->disable_top_footer = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_top_footer = true;
 					unset($disable_columns['top_footer']);
 					break;
 				case 'footer':
-					$this->disable_footer = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_footer = true;
 					unset($disable_columns['footer']);
 					break;
 				case 'left':
-					$this->disable_left_columns = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_left_columns = true;
 					unset($disable_columns['left']);
 					break;
 				case 'right':
-					$this->disable_right_columns = !empty($value) && is_bool($value) ? $value : true;
+					$this->disable_right_columns = true;
 					unset($disable_columns['right']);
 					break;	
 				

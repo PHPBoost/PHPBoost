@@ -43,20 +43,9 @@ if ($install)
 		if ($value == $LANG['install'])
 			$theme = $key;
 			
-	$secure = Authorizations::build_auth_array_from_form(AUTH_THEME);
-	$activ = retrieve(POST, $theme . 'activ', 0);
-		
-	$check_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE theme = '" . TextHelper::strprotect($theme) . "'", __LINE__, __FILE__);	
-	if (empty($check_theme) && !empty($theme))
+	if (!empty($theme))
 	{
-		//On récupère la configuration du thème.
-		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
-
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . TextHelper::strprotect($theme) . "', '" . $activ . "', '" .  addslashes(serialize($secure)) . "', '" . (int)$info_theme['left_column'] . "', '" . (int)$info_theme['right_column'] . "')", __LINE__, __FILE__);
-		
-		ThemesCache::invalidate();
-		
-    	ModulesCssFilesCache::invalidate();
+		ThemeManager::install($theme, Authorizations::build_auth_array_from_form(AUTH_THEME), retrieve(POST, $theme . 'activ', 0));
 
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 
 	}
@@ -75,7 +64,7 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$check_theme = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_THEMES . " WHERE theme = '" . TextHelper::strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
+		$check_theme = ThemeManager::get_theme_existed(TextHelper::strprotect($_FILES['upload_theme']['name']));
 		if (empty($check_theme) && !is_dir('../templates/' . $_FILES['upload_theme']['name']))
 		{
 			
@@ -166,16 +155,12 @@ else
 	if (isset($key))
 		unset($tpl_array[$key]);
 	
-	$result = $Sql->query_while("SELECT theme 
-	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 	{
-		//On recherche les clées correspondante à celles trouvée dans la bdd.
-		$key = array_search($row['theme'], $tpl_array);
+		$key = array_search($id, $tpl_array);
 		if ($key !== false)
-			unset($tpl_array[$key]); //On supprime ces clées du tableau.
+			unset($tpl_array[$key]);
 	}
-	$Sql->query_close($result);
 	
 	//Tri du tableau.
 	sort($tpl_array);

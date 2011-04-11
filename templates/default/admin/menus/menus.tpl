@@ -115,21 +115,19 @@ function createSortableMenu()
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);"
-onmouseout="menu_hide_block('addmenu1', 0);">
-								    <p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-								    <p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-								    <p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
+								    <p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+								    <p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+								    <p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_MENUS}</a>
+									</p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'header')" type="checkbox" name="{L_HEADER}" checked="checked" /> {L_HEADER}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMM} /> {L_HEADER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -137,8 +135,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_ME
 					</div>
 					<div id="mod_header">
 						# START mod_header #
-						{mod_header.MENU}
+							{mod_header.MENU}
 						# END mod_header #
+						
+						# IF C_HEADER_COLUMM #
+							<script type="text/javascript">
+							<!--
+							$('mod_header').style.display = 'none';
+							-->
+							</script>
+						# ENDIF #
 						<div id="menu_spacer1" class="menu_spacer"></div>
 					</div>
 				</td>
@@ -148,21 +154,19 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small_link">{L_ADD_FEED_ME
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);"
-onmouseout="menu_hide_block('addmenu2', 0);">
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_MENUS}</a>
+									</p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'subheader')" type="checkbox" name="{L_SUB_HEADER}" checked="checked" /> {L_SUB_HEADER}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMM} /> {L_SUB_HEADER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu2');" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -170,8 +174,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_ME
 					</div>
 					<div id="mod_subheader">
 						# START mod_subheader #
-						{mod_subheader.MENU}
+							{mod_subheader.MENU}
 						# END mod_subheader #
+						
+						# IF C_SUB_HEADER_COLUMM #
+							<script type="text/javascript">
+							<!--
+							$('mod_subheader').style.display = 'none';
+							-->
+							</script>
+						# ENDIF #
 						<div id="menu_spacer2" class="menu_spacer"></div>
 					</div>
 				</td>
@@ -181,18 +193,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small_link">{L_ADD_FEED_ME
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);"
-onmouseout="menu_hide_block('addmenu3', 0);">
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_MENUS}</a>
+									</p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMM} /> {L_LEFT_MENU}</label></p>
@@ -202,15 +212,17 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_ME
 						</div>
 					</div>
 					<div id="mod_left">
-						# START mod_left #
-						{mod_left.MENU}
-						# END mod_left #
-					
-						# IF NOT C_RIGHT_COLUMN #
 						<hr style="margin:10px 0px" />
-						# START mod_right #
-						{mod_right.MENU}
-						# END mod_right #
+						# START mod_left #
+							{mod_left.MENU}
+						# END mod_left #
+						
+						# IF C_LEFT_COLUMN #
+							<script type="text/javascript">
+							<!--
+							$('mod_left').style.display = 'none';
+							-->
+							</script>
 						# ENDIF #
 						<div id="menu_spacer3" class="menu_spacer"></div>
 					</div>
@@ -222,21 +234,19 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small_link">{L_ADD_FEED_ME
 								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
-											<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);"
-onmouseout="menu_hide_block('addmenu4', 0);">
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a>
+												</p>
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+												</p>
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_MENUS}</a>
+												</p>
 											</div>
 										</div>
-										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topcentral')" type="checkbox" name="{L_TOP_CENTRAL_MENU}" checked="checked" /> {L_TOP_CENTRAL_MENU}</label></p>
+										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMM} /> {L_TOP_CENTRAL_MENU}</label></p>
 										<p class="menus_block_add" onclick="menu_display_block('addmenu4');" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
 											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 										</p>
@@ -244,8 +254,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_ME
 								</div>
 								<div id="mod_topcentral">
 									# START mod_topcentral #
-									{mod_topcentral.MENU}
+										{mod_topcentral.MENU}
 									# END mod_topcentral #
+										
+									# IF C_TOP_CENTRAL_COLUMN #
+										<script type="text/javascript">
+										<!--
+										$('mod_topcentral').style.display = 'none';
+										-->
+										</script>
+									# ENDIF #
 									<div id="menu_spacer4" class="menu_spacer"></div>
 								</div>
 							</td>
@@ -261,7 +279,7 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_ME
 								
 								<div id="mod_central">
 									# START mod_main #
-									{mod_main.MENU}
+										{mod_main.MENU}
 									# END mod_main #
 									<div class="spacer"></div>
 									<div id="menu_spacer5" class="menu_spacer"></div>
@@ -274,21 +292,19 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small_link">{L_ADD_FEED_ME
 								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;">
 										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
-											<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);"
-onmouseout="menu_hide_block('addmenu5', 0);">
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-												<p
-class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a>
+												</p>
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+												</p>
+												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+													<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_MENUS}</a>
+												</p>
 											</div>
 										</div>
-										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="{L_BOTTOM_CENTRAL_MENU}" checked="checked" /> {L_BOTTOM_CENTRAL_MENU}</label></p>
+										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMM} /> {L_BOTTOM_CENTRAL_MENU}</label></p>
 										<p class="menus_block_add" onclick="menu_display_block('addmenu5');" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
 											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 										</p>
@@ -296,8 +312,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_ME
 								</div>
 								<div id="mod_bottomcentral">
 									# START mod_bottomcentral #
-									{mod_bottomcentral.MENU}
+										{mod_bottomcentral.MENU}
 									# END mod_bottomcentral #
+									
+									# IF C_BOTTOM_CENTRAL_COLUMN #
+										<script type="text/javascript">
+										<!--
+										$('mod_bottomcentral').style.display = 'none';
+										-->
+										</script>
+									# ENDIF #
 									<div id="menu_spacer6" class="menu_spacer"></div>
 								</div>
 							</td>
@@ -308,18 +332,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small_link">{L_ADD_FEED_ME
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);"
-onmouseout="menu_hide_block('addmenu6', 0);">
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_MENUS}</a>
+									</p>
 								</div>
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMM} /> {L_RIGHT_MENU}</label></p>
@@ -329,15 +351,17 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_ME
 						</div>
 					</div>
 					<div id="mod_right">
-						# START mod_right #
-						{mod_right.MENU}
-						# END mod_right #
-					
-						# IF NOT C_LEFT_COLUMN #
 						<hr style="margin:10px 0px" />
-						# START mod_left #
-						{mod_left.MENU}
-						# END mod_left #
+						# START mod_right #
+							{mod_right.MENU}
+						# END mod_right #
+						
+						# IF C_RIGHT_COLUMN #
+							<script type="text/javascript">
+							<!--
+							$('mod_right').style.display = 'none';
+							-->
+							</script>
 						# ENDIF #
 						<div id="menu_spacer7" class="menu_spacer"></div>
 					</div>
@@ -348,21 +372,19 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small_link">{L_ADD_FEED_ME
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);"
-onmouseout="menu_hide_block('addmenu7', 0);">
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_MENUS}</a><
+									/p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topfooter')" type="checkbox" name="{L_TOP_FOOTER}" checked="checked" /> {L_TOP_FOOTER}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMM} /> {L_TOP_FOOTER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu7');" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -370,8 +392,16 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_ME
 					</div>
 					<div id="mod_topfooter">
 						# START mod_topfooter #
-						{mod_topfooter.MENU}
+							{mod_topfooter.MENU}
 						# END mod_topfooter #
+						
+						# IF C_TOP_FOOTER_COLUMN #
+							<script type="text/javascript">
+							<!--
+							$('mod_topfooter').style.display = 'none';
+							-->
+							</script>
+						# ENDIF #
 						<div id="menu_spacer8" class="menu_spacer"></div>
 					</div>
 				</td>
@@ -381,21 +411,19 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small_link">{L_ADD_FEED_ME
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
-								<div
-style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);"
-onmouseout="menu_hide_block('addmenu8', 0);">
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small_link">{L_ADD_CONTENT_MENUS}</a></p>
-									<p class="menus_block_add
-menus_block_add_links" style="margin:0px;margin-top:-1px;"><a
-href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small_link">{L_ADD_FEED_MENUS}</a></p>
+								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small_link">{L_ADD_CONTENT_MENUS}</a>
+									</p>
+									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small_link">{L_ADD_FEED_MENUS}</a>
+									</p>
 								</div>
 							</div>
-							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'footer')" type="checkbox" name="{L_FOOTER}" checked="checked" /> {L_FOOTER}</label></p>
+							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMM} /> {L_FOOTER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu8');" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
@@ -403,8 +431,15 @@ href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small_link">{L_ADD_FEED_ME
 					</div>
 					<div id="mod_footer">
 						# START mod_footer #
-						{mod_footer.MENU}
+							{mod_footer.MENU}
 						# END mod_footer #
+						# IF C_FOOTER_COLUMN #
+							<script type="text/javascript">
+							<!--
+							$('mod_footer').style.display = 'none';
+							-->
+							</script>
+						# ENDIF #
 						<div id="menu_spacer9" class="menu_spacer"></div>
 					</div>
 				</td>

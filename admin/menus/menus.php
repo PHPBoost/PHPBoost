@@ -105,12 +105,6 @@ MenuService::update_mini_modules_list(false);
 // The same with the mini menus
 MenuService::update_mini_menus_list();
 
-// Compute the column number
-$themes_cache = ThemesCache::load();
-$theme_properties = $themes_cache->get_theme_properties(get_utheme());
-$right_column = $theme_properties['right_column'];
-$left_column = $theme_properties['left_column'];
-
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
 $blocks = array(
@@ -183,14 +177,19 @@ if ($action == 'save') //Save menus positions.
 		}
 	}
 
-    MenuService::generate_cache();
-    ModulesCssFilesCache::invalidate();
-
-	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0;
-	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0;
-	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE theme = '" . $theme_post . "'", __LINE__, __FILE__);
-	ThemesCache::invalidate();
-
+	$columns_disabled = new ColumnsDisabled();
+	$columns_disabled->set_disable_header((bool)$_POST['header_enabled']);
+	$columns_disabled->set_disable_sub_header((bool)$_POST['sub_header_enabled']);
+	$columns_disabled->set_disable_top_central((bool)$_POST['top_central_enabled']);
+	$columns_disabled->set_disable_bottom_central((bool)$_POST['bottom_central_enabled']);
+	$columns_disabled->set_disable_top_footer((bool)$_POST['top_footer_enabled']);
+	$columns_disabled->set_disable_footer((bool)$_POST['footer_enabled']);
+	$columns_disabled->set_disable_left_columns((bool)$_POST['left_column_enabled']);
+	$columns_disabled->set_disable_right_columns((bool)$_POST['right_column_enabled']);
+	ThemeManager::change_columns_disabled($theme_post, $columns_disabled);
+	
+	MenuService::generate_cache();
+	
 	AppContext::get_response()->redirect('menus.php');
 }
 
@@ -265,28 +264,38 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 }
 
-	foreach($themes_cache->get_installed_themes() as $theme => $properties)
-    {
-    	if ($theme != 'default' && $properties['enabled'] == 1)
-    	{
-			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
-			$selected = (empty($switchtheme) ? get_utheme() == $theme : $switchtheme == $theme) ? ' selected="selected"' : '';
-    		$tpl->assign_block_vars('themes', array(
-    			'NAME' => $info_theme['name'],
-    			'IDNAME' => $theme,
-    			'SELECTED' => $selected
-    		));
-    	}
-    }
-
+foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
+{
+	$configuration = $properties->get_configuration();
+	$selected = (empty($switchtheme) ? get_utheme() == $theme : $switchtheme == $theme) ? ' selected="selected"' : '';
+	$tpl->assign_block_vars('themes', array(
+		'NAME' => $configuration->get_name(),
+		'IDNAME' => $theme,
+		'SELECTED' => $selected
+	));
+}
+	
+$columns_disable = ThemeManager::get_theme(get_utheme())->get_configuration()->get_columns_disabled();
 
 $tpl->put_all(array(
 	'NAME_THEME' => $name_theme,
-	'CHECKED_RIGHT_COLUMM' => $theme_properties['right_column'] ? 'checked="checked"' : '',
-	'CHECKED_LEFT_COLUMM' => $theme_properties['left_column'] ? 'checked="checked"' : '',
-    'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-    'C_LEFT_COLUMN' => $left_column,
-    'C_RIGHT_COLUMN' => $right_column,
+	'CHECKED_RIGHT_COLUMM' => !$columns_disable->right_columns_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_LEFT_COLUMM' => !$columns_disable->left_columns_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_FOOTER_COLUMM' => !$columns_disable->footer_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_TOP_FOOTER_COLUMM' => !$columns_disable->top_footer_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_BOTTOM_CENTRAL_COLUMM' => !$columns_disable->bottom_central_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_TOP_CENTRAL_COLUMM' => !$columns_disable->top_central_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_SUB_HEADER_COLUMM' => !$columns_disable->sub_header_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_HEADER_COLUMM' => !$columns_disable->header_is_disabled() ? 'checked="checked"' : '',
+    'C_RIGHT_COLUMN' => $columns_disable->right_columns_is_disabled(),
+    'C_LEFT_COLUMN' => $columns_disable->left_columns_is_disabled(),
+	'C_FOOTER_COLUMM' => $columns_disable->footer_is_disabled(),
+	'C_TOP_FOOTER_COLUMM' => $columns_disable->top_footer_is_disabled(),
+	'C_BOTTOM_CENTRAL_COLUMM' => $columns_disable->bottom_central_is_disabled(),
+	'C_TOP_CENTRAL_COLUMM' => $columns_disable->top_central_is_disabled(),
+	'C_SUB_HEADER_COLUMM' => $columns_disable->sub_header_is_disabled(),
+	'C_HEADER_COLUMM' => $columns_disable->header_is_disabled(),
+	'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'START_PAGE' => Environment::get_home_page(),
 	'L_INDEX' => $LANG['home'],
     'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],

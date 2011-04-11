@@ -140,7 +140,7 @@ class ThemeConfiguration
 		$this->require_copyright = (bool)$config['require_copyright'];
 		$this->html_version = $config['html_version'];
 		$this->css_version = $config['css_version'];
-		$this->columns_disabled = $this->parse_columns_disabled_array($config['columns_disabled']);
+		$this->columns_disabled = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
 		$this->main_color = $config['main_color'];
 		$this->variable_width = (bool)$config['variable_width'];
 		$this->width = $config['width'];
@@ -149,16 +149,8 @@ class ThemeConfiguration
 	private function parse_columns_disabled_array($columns_disabled)
 	{
 		$columns_disabled_array = explode(',', $columns_disabled);
-		$columns_disabled = array();
-		if (is_array($columns_disabled_array))
-		{
-			foreach($columns_disabled_array as $columns_name)
-			{
-				$columns_disabled[$columns_name] = false;
-			}
-		}
 		$columns_disabled_class = new ColumnsDisabled();
-		$columns_disabled_class->set_columns_disabled($columns_disabled);
+		$columns_disabled_class->set_columns_disabled($columns_disabled_array);
 		
 		return $columns_disabled_class;
 	}
