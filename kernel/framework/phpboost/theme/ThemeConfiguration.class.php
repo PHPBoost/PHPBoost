@@ -84,6 +84,11 @@ class ThemeConfiguration
 		return $this->description;
 	}
 	
+	public function get_compatibility()
+	{
+		return $this->compatibility;
+	}
+	
 	public function get_require_copyright()
 	{
 		return $this->require_copyright;
