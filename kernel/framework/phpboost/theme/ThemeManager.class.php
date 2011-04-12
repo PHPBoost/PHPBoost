@@ -73,12 +73,15 @@ class ThemeManager
 			$configuration = $theme->get_configuration();
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
-			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
 			{
 				ThemesConfig::load()->add_theme($theme);
 				ThemesConfig::save();
+			}
+			else
+			{
+				self::$errors = 'Not compatible !';
 			}
 			
 			self::regenerate_cache();

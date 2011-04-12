@@ -92,7 +92,7 @@ abstract class AbstractCodeFileOptimizer
 	/**
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
-	public function optimize($intensity = self::MEDIUM_OPTIMIZE)
+	public function optimize($intensity = self::HIGH_OPTIMIZATION)
 	{
 		$this->assemble_files();
 
