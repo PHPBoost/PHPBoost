@@ -88,7 +88,7 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 		{
 			foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
 			{
-				if (UserAccountsConfig::load()->get_default_theme() == $id || (AppContext::get_user()->check_auth($value->get_authorizations(), AUTH_THEME))
+				if (UserAccountsConfig::load()->get_default_theme() == $id || (AppContext::get_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
 				{
 					$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 				}

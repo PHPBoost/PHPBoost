@@ -48,6 +48,7 @@ class ThemeConfiguration
 	private $main_color = '';
 	private $variable_width;
 	private $width;
+	private $repository;
 	
 	public function __construct($config_ini_file)
 	{
@@ -124,6 +125,11 @@ class ThemeConfiguration
 		return $this->width;
 	}
 	
+	public function get_repository()
+	{
+		return $this->repository;
+	}
+	
 	private function load_configuration($config_ini_file)
 	{
 		$config = parse_ini_file($config_ini_file);
@@ -144,6 +150,7 @@ class ThemeConfiguration
 		$this->main_color = $config['main_color'];
 		$this->variable_width = (bool)$config['variable_width'];
 		$this->width = $config['width'];
+		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 	}
 
 	private function parse_columns_disabled_array($columns_disabled)

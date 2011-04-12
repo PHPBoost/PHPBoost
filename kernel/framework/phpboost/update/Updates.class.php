@@ -81,15 +81,12 @@ class Updates
             if ($checks & CHECK_THEMES)
             {
                 // Add Themes
-                foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
+                foreach (ThemeManager::get_activated_themes_map() as $id => $value)
                 {
-                    if ($theme != 'default')
+					$repository = $value->get_configuration()->get_repository();
+					if (!empty($repository))
 					{
-						$infos = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
-						if (!empty($infos['repository']))
-						{
-							$this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);
-						}
+						$this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $value->get_configuration()->get_version(), $repository);
 					}
                 }
             }
