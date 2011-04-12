@@ -178,14 +178,14 @@ if ($action == 'save') //Save menus positions.
 	}
 
 	$columns_disabled = new ColumnsDisabled();
-	$columns_disabled->set_disable_header((bool)$_POST['header_enabled']);
-	$columns_disabled->set_disable_sub_header((bool)$_POST['sub_header_enabled']);
-	$columns_disabled->set_disable_top_central((bool)$_POST['top_central_enabled']);
-	$columns_disabled->set_disable_bottom_central((bool)$_POST['bottom_central_enabled']);
-	$columns_disabled->set_disable_top_footer((bool)$_POST['top_footer_enabled']);
-	$columns_disabled->set_disable_footer((bool)$_POST['footer_enabled']);
-	$columns_disabled->set_disable_left_columns((bool)$_POST['left_column_enabled']);
-	$columns_disabled->set_disable_right_columns((bool)$_POST['right_column_enabled']);
+	$columns_disabled->set_disable_header(!(bool)$_POST['header_enabled']);
+	$columns_disabled->set_disable_sub_header(!(bool)$_POST['sub_header_enabled']);
+	$columns_disabled->set_disable_top_central(!(bool)$_POST['top_central_enabled']);
+	$columns_disabled->set_disable_bottom_central(!(bool)$_POST['bottom_central_enabled']);
+	$columns_disabled->set_disable_top_footer(!(bool)$_POST['top_footer_enabled']);
+	$columns_disabled->set_disable_footer(!(bool)$_POST['footer_enabled']);
+	$columns_disabled->set_disable_left_columns(!(bool)$_POST['left_column_enabled']);
+	$columns_disabled->set_disable_right_columns(!(bool)$_POST['right_column_enabled']);
 	ThemeManager::change_columns_disabled($theme_post, $columns_disabled);
 	
 	MenuService::generate_cache();
@@ -275,7 +275,7 @@ foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
 	));
 }
 	
-$columns_disable = ThemeManager::get_theme(get_utheme())->get_configuration()->get_columns_disabled();
+$columns_disable = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
 
 $tpl->put_all(array(
 	'NAME_THEME' => $name_theme,

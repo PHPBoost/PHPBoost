@@ -146,7 +146,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 		}
 
-		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_configuration()->get_columns_disabled();
+		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
 		
 		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
 		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
