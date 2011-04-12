@@ -96,30 +96,28 @@ abstract class AbstractCodeFileOptimizer
 	{
 		$this->assemble_files();
 
-		switch ($intensity) {
-			case self::HIGH_OPTIMIZATION:
-					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $delete_comments);
-				break;
-			case self::LOW_OPTIMIZATION:
-					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\t", "  "), '', $delete_comments);
-				break;
+		$content = '';
+		if ($intensity == self::LOW_OPTIMIZATION)
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\t", "  "), '', $cleared_file_content);
+		}
+		else
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $cleared_file_content);	
 		}
 
 		$this->content = trim($content);
 	}
 
-	/**
-	 * This class export data
-	 */
 	public function export()
 	{
 		return $this->content;
 	}
 	
 	/**
-	 * This class export data to file. Required location file cached
+	 * Exports optimized content to a file.
 	 */
 	public function export_to_file($location)
 	{
