@@ -84,6 +84,7 @@ class ThemesConfig extends AbstractConfigData
 	{
 		$themes = $this->get_property(self::$themes_property);
         $themes[$theme->get_id()] = $theme;
+
         $this->set_property(self::$themes_property, $themes);
 	}
 

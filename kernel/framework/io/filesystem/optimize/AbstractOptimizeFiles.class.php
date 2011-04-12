@@ -122,8 +122,7 @@ abstract class AbstractOptimizeFiles
 	 */
 	public function export_to_file($location)
 	{
-		if (!empty($this->content) && !empty($this->files))
-		{
+		
 			$file = new File($location);
 			$file->delete();
 			$file->lock();
@@ -131,11 +130,7 @@ abstract class AbstractOptimizeFiles
 			$file->unlock();
 			$file->close();
 			$file->change_chmod(0666);
-		}
-		else
-		{
-			throw new Exception('Contents are empty !');
-		}
+		
 	}
 	
 	/*

@@ -45,7 +45,7 @@ if ($install)
 			
 	if (!empty($theme))
 	{
-		ThemeManager::install($theme, Authorizations::build_auth_array_from_form(AUTH_THEME), retrieve(POST, $theme . 'activ', 0));
+		ThemeManager::install($theme, Authorizations::build_auth_array_from_form(AUTH_THEME), true);
 
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 
 	}

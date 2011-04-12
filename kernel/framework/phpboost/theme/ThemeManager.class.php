@@ -67,9 +67,8 @@ class ThemeManager
 	
 	public static function install($theme_id, $authorizations = array(), $enable_theme = true)
 	{
-		if (!empty($theme_id))
+		if (!empty($theme_id) && !self::get_theme_existed($theme_id))
 		{
-			// TODO Verificate exited
 			$theme = new Theme($theme_id, $authorizations, $enable_theme);
 			$configuration = $theme->get_configuration();
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
@@ -84,33 +83,30 @@ class ThemeManager
 			
 			self::regenerate_cache();
 		}
+		self::$errors = 'e_theme_already_exist';
 	}
 	
 	public static function uninstall($theme_id, $drop_files = false)
 	{
-		// TODO Verificate exited
-		ThemesConfig::load()->remove_theme_by_id($theme_id);
-		ThemesConfig::save();
-		
-		if ($drop_files)
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
-			$folder->delete();
-		}
-
-		/*
-		$previous_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
-		if ($previous_theme != UserAccountsConfig::load()->get_default_theme() && !empty($idtheme))
-		{
-			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . UserAccountsConfig::load()->get_default_theme() . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
+			if (self::get_theme($theme_id)->get_id() !== UserAccountsConfig::load()->get_default_theme())
+			{
+				// TODO change user theme in Database
 				
-			//On supprime le theme de la bdd.
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
+				ThemesConfig::load()->remove_theme_by_id($theme_id);
+				ThemesConfig::save();
+				
+				if ($drop_files)
+				{
+					$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
+					$folder->delete();
+				}
+				self::regenerate_cache();
+			}
+			self::$errors = 'e_incomplete';
 		}
-		*/
-		
-		self::regenerate_cache();
+		self::$errors = 'e_theme_already_exist';
 	}
 	
 	public static function change_visibility($theme_id, $visibility)
@@ -118,6 +114,7 @@ class ThemeManager
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_activated($visibility);
 		ThemesConfig::load()->update($theme);
+		ThemesConfig::save();
 		
 		self::regenerate_cache();
 	}
@@ -127,6 +124,28 @@ class ThemeManager
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_authorizations($authorizations);
 		ThemesConfig::load()->update($theme);
+		ThemesConfig::save();
+	}
+	
+	public static function change_informations($theme_id, $visibility, Array $authorizations = array(), $columns_disabled = null)
+	{
+		$theme = ThemesConfig::load()->get_theme($theme_id);
+		$theme->set_activated($visibility);
+		
+		if (!empty($authorizations))
+		{
+			$theme->set_authorizations($authorizations);
+		}
+		
+		if ($columns_disabled !== null)
+		{
+			$theme->set_columns_disabled($columns_disabled);
+		}
+		
+		ThemesConfig::load()->update($theme);
+		ThemesConfig::save();
+		
+		self::regenerate_cache();
 	}
 	
 	public static function change_columns_disabled($theme_id, ColumnsDisabled $columns_disabled)
@@ -134,6 +153,7 @@ class ThemeManager
 		$theme = ThemesConfig::load()->get_theme($theme_id);
 		$theme->set_columns_disabled($columns_disabled);
 		ThemesConfig::load()->update($theme);
+		ThemesConfig::save();
 		
 		self::regenerate_cache();
 	}

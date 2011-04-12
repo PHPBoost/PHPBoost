@@ -31,7 +31,7 @@ require_once '../admin/admin_header.php';
 	
 $uninstall = retrieve(GET, 'uninstall', false, TBOOL);
 $edit = retrieve(GET, 'edit', false, TBOOL);
-$id = retrieve(GET, 'id', 0);
+$id = retrieve(GET, 'id', TSTRING);
 $name = retrieve(GET, 'name', '');
 
 $template = new FileTemplate('admin/admin_themes_management.tpl');
@@ -47,21 +47,15 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
 {	
 
-	// TODO
-	/*
-	$result = $Sql->query_while("SELECT id, name, activ, secure
-	FROM " . DB_TABLE_THEMES . "
-	WHERE activ = 1 AND theme != '" . UserAccountsConfig::load()->get_default_theme() . "'", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
+	foreach (ThemeManager::get_installed_themes_map() as $id => $theme)
 	{
-		$activ = retrieve(POST, $row['id'] . 'activ', 0);
-		if ($row['activ'] != $activ || $row['secure'] != $secure)
+		$activ = retrieve(POST, $id . 'activ', 0);
+		
+		if ($theme->is_activated() !== $activ)
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			ThemeManager::change_informations($activ);
 		}
 	}
-	ThemesCache::invalidate();
-	*/
 		
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
@@ -73,37 +67,24 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 	}
 	if (isset($_POST['valid_edit'])) //Modication de la configuration du thème.
 	{
-		// TODO
-		/*
-		$left_column = retrieve(POST, 'left_column', false, TBOOL);
-		$right_column = retrieve(POST, 'right_column', false, TBOOL);
-
-		$theme = $Sql->query_array(DB_TABLE_THEMES, "theme", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		// TODO update columns
+		
 		$secure = $theme['theme'] == UserAccountsConfig::load()->get_default_theme() ? array('r-1' => 1, 'r0' => 1, 'r1' => 1) : Authorizations::build_auth_array_from_form(AUTH_THEME);
-		
-		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . (int)$left_column . "', right_column = '" . (int)$right_column . "', secure = '". addslashes(serialize($secure)) ."' WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
-		ThemesCache::invalidate();
-		*/
+		ThemeManager::change_informations($id, true, $secure);
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 	}
 	else
 	{		
-		//Récupération des configuration dans la base de données.
-		$theme = $Sql->query_array(DB_TABLE_THEMES, "theme", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
-		$config_theme = ThemesCache::load()->get_theme_properties($theme['theme']);
-		//On récupère la configuration du thème.
-		$info_theme = load_ini_file('../templates/' . $theme['theme'] . '/config/', get_ulang());
+		$theme = ThemeManager::get_theme($id);
 
 		$template->put_all(array(
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
-			'THEME_NAME' => $info_theme['name'],
-			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="checked"' : '',
-			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="checked"' : '',
-			'AUTH_THEME' => $theme['theme'] !== UserAccountsConfig::load()->get_default_theme() ? Authorizations::generate_select(AUTH_THEME, $config_theme['auth']) : $LANG['guest'],
+			'THEME_NAME' => $theme->get_configuration()->get_name(),
+			'LEFT_COLUMN_ENABLED' => !$theme->get_configuration()->get_columns_disabled()->left_columns_is_disabled() ? 'checked="checked"' : '',
+			'RIGHT_COLUMN_ENABLED' => !$theme->get_configuration()->get_columns_disabled()->right_columns_is_disabled() ? 'checked="checked"' : '',
+			'AUTH_THEME' => $id !== UserAccountsConfig::load()->get_default_theme() ? Authorizations::generate_select(AUTH_THEME, $theme->get_authorizations()) : $LANG['guest'],
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 			'L_THEME' => $LANG['theme'],
@@ -193,7 +174,7 @@ else
 	
 	$z = 0;
 	//On listes les thèmes.
-	foreach (ThemeManager::get_activated_themes_map() as $id => $value)
+	foreach (ThemeManager::get_installed_themes_map() as $id => $value)
 	{
 		$default_theme = ($id == UserAccountsConfig::load()->get_default_theme());
 		
