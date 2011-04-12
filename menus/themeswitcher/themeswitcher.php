@@ -57,16 +57,14 @@ function menu_themeswitcher_themeswitcher($position, $block)
 
     MenuService::assign_positions_conditions($tpl, $block);
 
-    $utheme = get_utheme();
-    foreach(ThemesCache::load()->get_installed_themes() as $theme => $theme_properties)
-    {
-    	if ($User->check_auth($theme_properties['auth'], AUTH_THEME) && $theme != 'default' && $theme_properties['enabled'] == 1)
+    foreach (ThemeManager::get_activated_themes_map() as $id => $value)
+	{
+    	if ($User->check_auth($value->get_authorizations(), AUTH_THEME))
     	{
-			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
-    		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
+			$selected = (get_utheme() == $id) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('themes', array(
-    			'NAME' => $info_theme['name'],
-    			'IDNAME' => $theme,
+    			'NAME' => $value->get_configuration()->get_name(),
+    			'IDNAME' => $id,
     			'SELECTED' => $selected
     		));
     	}
