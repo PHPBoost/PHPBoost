@@ -1,0 +1,138 @@
+#################################################################################
+##                                   BENOIT                                    ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
+- Changer de format de stockage des fuseaux horaires
+
+------------------------------------ MODULES -----------------------------------
+- [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
+
+#################################################################################
+
+
+#################################################################################
+##                                   KEVIN                                     ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- Balises Youtube, Dailymotion
++ Terminer le passage du dossier member et de la partie membre dans l'administration (ajout du fichier de lang pour l'administration)
+- Champs étendus : Ajout d'une fonction pour définir une valeur par défaut dans ***ExtendedField
++ Refaire la classes Comments (gestion des autorisations spécifique concernant l'id d'un module dans la BDD, gestion des id module en approbation ou non, possibilité de noter des commentaires positivement ou négativement).
+- Joindre tous les champs étendus dans la session utilisateur et enregistrer les data des champs étendus dans la table member.
++ [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
+
+------------------------------------ MODULES -----------------------------------
+
+[b]Newsletter[/b]
+- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
+
+#################################################################################
+
+
+#################################################################################
+##                                   REGIS                                    ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
+- [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
+
+------------------------------------ MODULES -----------------------------------
+
+##################################################################################
+[b]Galerie:[/b]
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de télécharger l'image.
+
+[b]Forum[/b]
+? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà des messages/sujets.
+
+#################################################################################
+##                                    LOIC                                    ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
++ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
+
+
+------------------------------------ MODULES -----------------------------------
+
+#################################################################################
+
+
+######################################DOSSIERS##################################
+
+
+###################################### PHPBoost 4.1 ##################################
+
+[b]Structure et fonctionnement:[/b]
+- [color=red]Nouveauté:[/color] Refonte des catégories avec support du Drag'n Drop.
+- [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
+- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
+- [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
+- [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
+- [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
+- [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
+- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
+- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+- Outils avancés de visualisation et gestion du cache.
+- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
+- Gérer finement les autorisations des langues
+
+
+[b]Forum[/b]
+- [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
+- [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
+- [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
+
+
+[b]Galerie:[/b]
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
+- [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
+- [color=red]Nouveauté:[/color] Galerie privée pour les membres.
+- [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
+- Possibilité de définir une limite d'upload en fonction des groupes.
+
+[b]Liens web[/b]
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
+- Possibilité de signaler les liens cassés.
+
+[b]Wiki:[/b]
+- [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
+
+[b]Calendrier:[/b]
+- [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
+- Possibilité d'afficher les évenements sur une période donnée. 
+
+[b]Newsletter:[/b]
+- Refonte des catégories avec le nouveau système. 
+
+[b]Contact:[/b]
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module blogs, proposez à tous vos membres un système de gestion de blog complet.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module bannière, Bannières aléatoire à afficher sur le site. Possibilité de créer des campagnes d'affichage:
+choix du nombre d'affichage de la bannière, du nombre de clics sur la bannière, etc..
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module tchat, permet de discuter facilement dans une interface prévue à cet effet.
