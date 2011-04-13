@@ -86,7 +86,7 @@ class Updates
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))
 					{
-						$this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $value->get_configuration()->get_version(), $repository);
+						$this->apps[] = new Application($id, get_ulang(), APPLICATION_TYPE__TEMPLATE, $value->get_configuration()->get_version(), $repository);
 					}
                 }
             }
