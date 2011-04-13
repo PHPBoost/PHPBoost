@@ -20,9 +20,9 @@
 - Balises Youtube, Dailymotion
 + Terminer le passage du dossier member et de la partie membre dans l'administration (ajout du fichier de lang pour l'administration)
 - Champs étendus : Ajout d'une fonction pour définir une valeur par défaut dans ***ExtendedField
-- Débugger voir refaire la classes Comments (gérer l'affichage d'un commentaire dans le cas où un article, par exemple, est désactivé)
-- Gérer finement les autorisations des langues
-- Supprimer les champs non utilisés dans la table membre et joindre tous les champs étendus dans la session utilisateur.
++ Refaire la classes Comments (gestion des autorisations spécifique concernant l'id d'un module dans la BDD, gestion des id module en approbation ou non, possibilité de noter des commentaires positivement ou négativement).
+- Joindre tous les champs étendus dans la session utilisateur et enregistrer les data des champs étendus dans la table member.
++ [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -40,7 +40,6 @@
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
-- [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -88,6 +87,7 @@
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
+- Gérer finement les autorisations des langues
 
 
 [b]Forum[/b]
