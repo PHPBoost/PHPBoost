@@ -267,7 +267,7 @@ foreach ($menus_blocks as $block_id => $menus)
 foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
 {
 	$configuration = $properties->get_configuration();
-	$selected = (empty($switchtheme) ? get_utheme() == $theme : $switchtheme == $theme) ? ' selected="selected"' : '';
+	$selected = (empty($name_theme) ? get_utheme() == $theme : $name_theme == $theme) ? ' selected="selected"' : '';
 	$tpl->assign_block_vars('themes', array(
 		'NAME' => $configuration->get_name(),
 		'IDNAME' => $theme,
@@ -275,7 +275,7 @@ foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
 	));
 }
 	
-$columns_disable = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
+$columns_disable = ThemeManager::get_theme($name_theme)->get_columns_disabled();
 
 $tpl->put_all(array(
 	'NAME_THEME' => $name_theme,
