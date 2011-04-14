@@ -554,5 +554,10 @@ class Url
         }
         return $url->absolute();
     }
+	
+	public static function is_current_url($url)
+	{
+		return strpos(REWRITED_SCRIPT, $url) !== false;
+	}
 }
 ?>
