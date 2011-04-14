@@ -40,6 +40,8 @@
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
+- Remplacement des icônes de bases par le pack famfamfam
+- Filtres d'exclusion pour les menus
 
 ------------------------------------ MODULES -----------------------------------
 
