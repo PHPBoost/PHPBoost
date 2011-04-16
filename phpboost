@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/cli/CLIEnvironment.class.php';
 CLIEnvironment::load_imports();
 CLIEnvironment::init();
 
-$launcher = new CLILauncher($argv);
+$launcher = new CLILauncher($_SERVER['argv']);
 $launcher->launch();
 
 ?>
