@@ -1,7 +1,7 @@
 # IF C_GOT_ERROR #
-<div class="warning">{@generation_failed}</div>
+<div class="warning">${i18nraw('generation_failed')}</div>
 # ELSE #
-<div class="success">{@generation_succeeded}</div>
+<div class="success">${i18nraw('generation_succeeded')}</div>
 # ENDIF #
 <br />
 <div style="text-align:center;">
