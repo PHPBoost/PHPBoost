@@ -8,7 +8,13 @@ syntax: regexp
 ^kernel/db/config\.php$
 
 syntax: regexp
-^.*$
+^\.*$
+
+syntax: regexp
+\.swp$
+
+syntax: regexp
+\.orig$
 
 syntax: regexp
 ^images/avatars/*
