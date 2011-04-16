@@ -59,8 +59,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
 	UserAccountsConfig::save();
 
-	ThemesCache::load()->update_authorization_for_default_theme(stripslashes(retrieve(POST, 'theme', '')));
-	ThemesCache::invalidate();
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
@@ -341,16 +339,12 @@ else //Sinon on rempli le formulaire
 	));
 
 	// Thème par defaut.
-	foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
+	foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
 	{
-		if ($theme !== 'default' && $properties['enabled'] == 1)
-    	{
-			$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
-			$selected = ($theme == $user_accounts_config->get_default_theme()) ? ' selected="selected"' : '';
-    		$Template->assign_block_vars('select', array(
-				'THEME' => '<option value="' . $theme . '" ' . $selected . '>' . $info_theme['name'] . '</option>'
-    		));
-    	}
+		$selected = ($id == $user_accounts_config->get_default_theme()) ? ' selected="selected"' : '';
+		$Template->assign_block_vars('select', array(
+			'THEME' => '<option value="' . $id . '" ' . $selected . '>' . $value->get_configuration()->get_name() . '</option>'
+		));
 	}
 
 	$Template->pparse('admin_config');

@@ -275,17 +275,11 @@ elseif ($get_theme)
     define('TITLE', '');
     include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-    $array_stats = array();
-    $result = $Sql->query_while ("SELECT at.theme, COUNT(m.user_theme) AS compt
-	FROM " . DB_TABLE_THEMES . " at
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_theme = at.theme
-	GROUP BY at.theme", __LINE__, __FILE__);
-    while ($row = $Sql->fetch_assoc($result))
-    {
-        $name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
-        $array_stats[$name] = $row['compt'];
-    }
-    $Sql->query_close($result);
+    $stats_array = array();
+	foreach (ThemeManager::get_activated_themes_map() as $id)
+	{
+		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
+	}
 
     $Stats->load_data($array_stats, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');

@@ -260,9 +260,9 @@ class Environment
 
 		$user_theme = AppContext::get_user()->get_theme();
 		//Is that theme authorized for this member? If not, we assign it the default theme
-		$user_theme_properties = ThemesCache::load()->get_theme_properties($user_theme);
+		$user_theme_properties = ThemeManager::get_theme($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_user()->check_auth($user_theme_properties['auth'], AUTH_THEME))
+		|| !AppContext::get_user()->check_auth($user_theme_properties->get_authorizations(), AUTH_THEME))
 		{
 			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}

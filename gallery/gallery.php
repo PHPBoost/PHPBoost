@@ -51,6 +51,9 @@ else
 
 $Gallery = new Gallery();
 
+$comments = new Comments();
+$comments->set_module_name('gallery');
+
 if (!empty($g_del)) //Suppression d'une image.
 {
 	$Session->csrf_get_protect(); //Protection csrf
@@ -579,6 +582,8 @@ else
 
 				$html_protected_name = $info_pics['name'];
 
+				$comments->set_id_in_module($info_pics['id']);
+					
 				//Affichage de l'image et de ses informations.
 				$Template->put_all(array(
 					'C_GALLERY_PICS_MAX' => true,
@@ -591,7 +596,7 @@ else
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-					'COM' => Comments::com_display_link($info_pics['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
+					'COM' => '<a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort) .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 					'CAT' => $cat_list,
@@ -641,7 +646,7 @@ else
 				if (isset($_GET['com']))
 				{
 					$Template->put_all(array(
-						'COMMENTS' => display_comments('gallery', $g_idpics, url('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;com=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?com=%s'))
+						'COMMENTS' => CommentsService::display($comments)->render()
 					));
 				}
 			}
@@ -699,9 +704,11 @@ else
 				{
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
-					$notation->set_id_in_module($row['idcat']);
+					$notation->set_id_in_module($row['id']);
 					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 				}
+				
+				$comments->set_id_in_module($row['id']);
 				
 				$html_protected_name = $row['name'];
 				$Template->assign_block_vars('pics_list', array(
@@ -712,7 +719,7 @@ else
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
-					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . Comments::com_display_link($row['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',
+					'COM' => $CONFIG_GALLERY['activ_com'] == 1) ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
 					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'CAT' => $cat_list,
 					'RENAME' => $html_protected_name,

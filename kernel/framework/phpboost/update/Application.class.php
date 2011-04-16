@@ -220,12 +220,11 @@ class Application
 				}
 				break;
 			case APPLICATION_TYPE__TEMPLATE:
-				foreach (ThemesCache::load()->get_installed_themes() as $theme => $properties)
+				foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 				{
-					if ($theme == $this->name)
+					if ($id == $this->name)
 					{
-						$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
-						$current_version = $infos['version'];
+						$current_version = $value->get_configuration()->get_version();
 						break;
 					}
 				}

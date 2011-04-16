@@ -63,7 +63,6 @@ class KernelSetup
 	private static $smileys_table;
 	private static $stats_table;
 	private static $stats_referer_table;
-	private static $themes_table;
 	private static $upload_table;
 	private static $upload_cat_table;
 	private static $verif_code_table;
@@ -101,7 +100,6 @@ class KernelSetup
 		self::$smileys_table = PREFIX . 'smileys';
 		self::$stats_table = PREFIX . 'stats';
 		self::$stats_referer_table = PREFIX . 'stats_referer';
-		self::$themes_table = PREFIX . 'themes';
 		self::$upload_table = PREFIX . 'upload';
 		self::$upload_cat_table = PREFIX . 'upload_cat';
 		self::$verif_code_table = PREFIX . 'verif_code';
@@ -145,7 +143,6 @@ class KernelSetup
 			self::$smileys_table,
 			self::$stats_table,
 			self::$stats_referer_table,
-			self::$themes_table,
 			self::$upload_table,
 			self::$upload_cat_table,
 			self::$verif_code_table
@@ -182,7 +179,6 @@ class KernelSetup
 		$this->create_smileys_table();
 		$this->create_stats_table();
 		$this->create_stats_referer_table();
-		$this->create_themes_table();
 		$this->create_upload_table();
 		$this->create_upload_cat_table();
 		$this->create_verif_code_table();
@@ -717,22 +713,6 @@ class KernelSetup
 			)
 		);
 		self::$db_utils->create_table(self::$stats_referer_table, $fields, $options);
-	}
-
-	private function create_themes_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'secure' => array('type' => 'text', 'length' => 65000),
-			'left_column' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'right_column' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
-		self::$db_utils->create_table(self::$themes_table, $fields, $options);
 	}
 
 	private function create_upload_table()

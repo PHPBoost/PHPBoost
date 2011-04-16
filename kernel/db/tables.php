@@ -32,7 +32,6 @@ define('DB_TABLE_SESSIONS', PREFIX . 'sessions');
 define('DB_TABLE_SMILEYS', PREFIX . 'smileys');
 define('DB_TABLE_STATS', PREFIX . 'stats');
 define('DB_TABLE_STATS_REFERER', PREFIX . 'stats_referer');
-define('DB_TABLE_THEMES', PREFIX . 'themes');
 define('DB_TABLE_UPLOAD', PREFIX . 'upload');
 define('DB_TABLE_UPLOAD_CAT', PREFIX . 'upload_cat');
 define('DB_TABLE_VERIF_CODE', PREFIX . 'verif_code');

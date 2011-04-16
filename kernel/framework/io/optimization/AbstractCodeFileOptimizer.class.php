@@ -29,7 +29,7 @@
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
 */
-abstract class AbstractOptimizeFiles
+abstract class AbstractCodeFileOptimizer
 {
 	protected $files = array();
 	protected $scripts = array();
@@ -37,24 +37,25 @@ abstract class AbstractOptimizeFiles
 	protected $extension_required = '';
 	protected $regex_search_files_path = '';
 	protected $replace_value_files_path = '';
-	/*
+	
+	/**
 	 * Const Delete comments, tabulations, spaces and newline
 	*/
-	const HIGH_OPTIMIZE = 'high';
+	const HIGH_OPTIMIZATION = 'high';
 	
-	/*
+	/**
 	 * Const Delete comments, tabulations and spaces
 	*/
-	const LOW_OPTIMIZE = 'low';
+	const LOW_OPTIMIZATION = 'low';
 	
-	/*
+	/**
 	 * This class allows you to add file to optimize. Required path file
 	 */
 	public function add_file($path_file)
 	{
 		if (!file_exists($path_file))
 		{
-			throw new Exception('File not '. $path_file .' exist !');
+			throw new Exception('File '. $path_file .' doesn\'t exist !');
 		}
 		
 		$extension = substr($path_file, -4);
@@ -64,11 +65,11 @@ abstract class AbstractOptimizeFiles
 		}
 		else
 		{
-			throw new Exception('File extension "'. $extension .'" not compatible for script !');
+			throw new Exception('File extension "'. $extension .'" not supported.');
 		}
 	}
 	
-	/*
+	/**
 	 * This class allows you to add script to optimize. Required script value
 	 */
 	public function add_script($script)
@@ -79,7 +80,7 @@ abstract class AbstractOptimizeFiles
 		}
 	}
 	
-	/*
+	/**
 	 * This class change path files in script and files added
 	 */
 	public function change_path_files($regex_search, $replace_value)
@@ -88,57 +89,48 @@ abstract class AbstractOptimizeFiles
 		$this->replace_value_files_path = $replace_value;
 	}
 	
-	/*
+	/**
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
-	public function optimize($intensity = self::MEDIUM_OPTIMIZE)
+	public function optimize($intensity = self::HIGH_OPTIMIZATION)
 	{
 		$this->assemble_files();
 
-		switch ($intensity) {
-			case self::HIGH_OPTIMIZE:
-					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $delete_comments);
-				break;
-			case self::LOW_OPTIMIZE:
-					$delete_comments = $this->delete_comments($this->content);
-					$content = str_replace(array("\t", "  "), '', $delete_comments);
-				break;
+		$content = '';
+		if ($intensity == self::LOW_OPTIMIZATION)
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\t", "  "), '', $cleared_file_content);
+		}
+		else
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $cleared_file_content);	
 		}
 
 		$this->content = trim($content);
 	}
 
-	/*
-	 * This class export data
-	 */
 	public function export()
 	{
 		return $this->content;
 	}
 	
-	/*
-	 * This class export data to file. Required location file cached
+	/**
+	 * Exports optimized content to a file.
 	 */
 	public function export_to_file($location)
 	{
-		if (!empty($this->content) && !empty($this->files))
-		{
-			$file = new File($location);
-			$file->delete();
-			$file->lock();
-			$file->write($this->content);
-			$file->unlock();
-			$file->close();
-			$file->change_chmod(0666);
-		}
-		else
-		{
-			throw new Exception('Contents are empty !');
-		}
+		$file = new File($location);
+		$file->delete();
+		$file->lock();
+		$file->write($this->content);
+		$file->unlock();
+		$file->close();
+		$file->change_chmod(0666);
 	}
 	
-	/*
+	/**
 	 * This class return Array files
 	 */
 	public function get_files()
@@ -146,7 +138,7 @@ abstract class AbstractOptimizeFiles
 		return $this->files;
 	}
 	
-	/*
+	/**
 	 * This class return Array scripts
 	 */
 	public function get_scripts()

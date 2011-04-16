@@ -51,14 +51,6 @@ class MediaSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		
-		$notation = new Notation();
-		$notation->set_module_name('media');
-		NotationService::delete_notes_module($notation);
-		
-		$comments = new Comments();
-		$comments->set_module_name('media');
-		CommentsService::delete_comments_module($comments);
 	}
 
 	private function drop_tables()
