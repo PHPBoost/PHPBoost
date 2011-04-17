@@ -385,7 +385,7 @@ class InstallationServices
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex('MemberSimpleSelectExtendedField');
+		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
 		
 		//Yahoo
@@ -397,7 +397,7 @@ class InstallationServices
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex('MemberSimpleSelectExtendedField');
+		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
 		
 		//Avatar
