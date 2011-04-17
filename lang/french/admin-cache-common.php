@@ -46,7 +46,7 @@ $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des f
 $lang['cache_configuration'] = 'Configuration du cache';
 $lang['php_cache'] = 'Accélérateur PHP';
 $lang['explain_php_cache'] = '<p>Il existe des modules complémentaires à PHP permettant d\'améliorer nettement la vitesse d\'exécution des applications PHP.
-A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</acronym> qui est le système de cache aditionnel qui s\'impose comme le standard en la matière.</p>
+A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</acronym> qui est le système de cache aditionnel qui s\'impose comme la référence en la matière.</p>
 <p>Par défaut le cache est enregistré dans le système de fichier (arborescence de fichiers du serveur) dans le dossier /cache. Un système tel que APC permet de stocker ces données directement en mémoire centrale (RAM) qui propose des temps d\'accès incomparablement plus faibles.</p>';
 $lang['enable_apc'] = 'Activer le cache d\'APC';
 $lang['apc_available'] = 'Disponibilité de l\'extension APC';
