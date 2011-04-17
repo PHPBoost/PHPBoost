@@ -132,15 +132,12 @@ class NewsletterSetup extends DefaultModuleSetup
 		$extended_field->set_description($lang['extended_fields.newsletter.description']);
 		$extended_field->set_field_type('RegisterNewsletterExtendedField');
 		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
 	
 	private function delete_field_member()
 	{
-		$extended_field = new ExtendedField();
-		$extended_field->set_field_name('register_newsletter');
-		ExtendedFieldsService::delete($extended_field, ExtendedFieldsService::BY_FIELD_NAME);
+		ExtendedFieldsService::delete_by_field_name('register_newsletter');
 	}
 }
 
