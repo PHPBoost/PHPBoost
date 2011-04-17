@@ -26,11 +26,9 @@
  ###################################################*/
 
 
-define('FAQ_DO_NOT_GENERATE_CACHE', false);
-
 class FaqCats extends CategoriesManager
 {
-	function __construct()
+	public function __construct()
 	{
 		global $Cache, $FAQ_CATS;
 		if (!isset($FAQ_CATS))
@@ -116,7 +114,7 @@ class FaqCats extends CategoriesManager
 				else
 				{
 					$Cache->load('faq', RELOAD_CACHE);
-					$this->recount_subquestions(FAQ_DO_NOT_GENERATE_CACHE);
+					$this->recount_subquestions(false);
 				}
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
