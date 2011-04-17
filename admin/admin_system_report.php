@@ -110,7 +110,7 @@ SERVER CONFIGURATION-----------------------------------------------------------
 php version              : " . ServerConfiguration::get_phpversion() . "
 dbms version             : " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
 gd library               : " . (int)$server_configuration->has_gd_library() . "
-url rewriting            : " . $url_rewriting_known ? (int) $url_rewriting_available : 'N/A' . "
+url rewriting            : " . ($url_rewriting_known ? (int) $url_rewriting_available : 'N/A') . "
 register globals         : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
 server url               : " . $server_name . "
 site path                : " . $server_path  . "
