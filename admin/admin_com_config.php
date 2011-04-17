@@ -37,7 +37,7 @@ if (!empty($_POST['valid']) )
 	
 	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(Comments::POST_COMMENT_AUTH));
 	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
-	$comments_config->set_display_captcha($server_configuration->has_gd_libray() ? $_POST['verif_code'] : false);
+	$comments_config->set_display_captcha($server_configuration->has_gd_library() ? $_POST['verif_code'] : false);
 	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
 	$comments_config->set_number_comments_per_page(retrieve(POST, 'com_max', 10));
 	if (!empty($_POST['forbidden_tags'])) {
