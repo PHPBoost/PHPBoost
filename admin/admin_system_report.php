@@ -97,7 +97,7 @@ SERVER CONFIGURATION-----------------------------------------------------------
 
 php version              : " . ServerConfiguration::get_phpversion() . "
 dbms version             : " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
-gd library               : " . (int)$server_configuration->has_gd_libray() . "
+gd library               : " . (int)$server_configuration->has_gd_library() . "
 url rewriting            : " . (int)$server_configuration->has_url_rewriting() . "
 register globals         : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
 server url               : " . $server_name . "
@@ -125,7 +125,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 $template->put_all(array(
 	'PHP_VERSION' => ServerConfiguration::get_phpversion(),
 	'DBMS_VERSION' => PersistenceContext::get_dbms_utils()->get_dbms_version(),
-	'C_SERVER_GD_LIBRARY' => $server_configuration->has_gd_libray(),
+	'C_SERVER_GD_LIBRARY' => $server_configuration->has_gd_library(),
 	'C_URL_REWRITING_KNOWN' => function_exists('apache_get_modules'),
 	'C_SERVER_URL_REWRITING' => $server_configuration->has_url_rewriting(),
 	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
