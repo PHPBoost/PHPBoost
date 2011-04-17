@@ -42,6 +42,7 @@
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
 - Remplacement des icônes de bases par le pack famfamfam
 - Filtres d'exclusion pour les menus
++ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -58,7 +59,6 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 + Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
