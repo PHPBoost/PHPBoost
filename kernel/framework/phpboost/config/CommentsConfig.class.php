@@ -115,7 +115,7 @@ class CommentsConfig extends AbstractConfigData
 		return array(
 			self::AUTH_POST_COMMENTS => array('r-1' => 1, 'r0' => 1, 'r1' => 1),
 			self::DISPLAY_COMMENTS_IN_POPUP => false,
-			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_libray() ? true : false,
+			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_library() ? true : false,
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::NUMBER_COMMENTS_PER_PAGE => 10,
 			self::FORBIDDEN_TAGS => array(),

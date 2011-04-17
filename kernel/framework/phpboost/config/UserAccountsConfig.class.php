@@ -547,7 +547,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::FORCE_USERS_THEME_PROPERTY => false,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => true,
-			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_libray() ? true : false,
+			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? true : false,
 			self::DEFAULT_AVATAR_ENABLED_PROPERTY => true,
 			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
