@@ -186,7 +186,7 @@ class CommentsDAO
 			'id_in_module' => $comments->get_id_in_module(),
 			'module_name' => $comments->get_module_name()
 		);
-		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE id_in_module = :id_in_module AND module_name = :module_name", $parameters);
+		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE id_in_module = :id_in_module AND module_name = :module_name", $parameters) > 0 ? true : false;
 	}
 
 	public static function get_number_comments_by_module(Comment $comment)
