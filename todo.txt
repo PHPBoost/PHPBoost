@@ -19,9 +19,7 @@
 ------------------------------------- NOYAU ------------------------------------
 - Balises Youtube, Dailymotion
 + Terminer le passage du dossier member et de la partie membre dans l'administration (ajout du fichier de lang pour l'administration)
-- Champs étendus : Ajout d'une fonction pour définir une valeur par défaut dans ***ExtendedField
 + Refaire la classes Comments (gestion des autorisations spécifique concernant l'id d'un module dans la BDD, gestion des id module en approbation ou non, possibilité de noter des commentaires positivement ou négativement).
-- Joindre tous les champs étendus dans la session utilisateur et enregistrer les data des champs étendus dans la table member.
 + [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 
 ------------------------------------ MODULES -----------------------------------
@@ -62,7 +60,7 @@
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 + Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
-
+- Joindre tous les champs étendus dans la session utilisateur et enregistrer les data des champs étendus dans la table member.
 
 ------------------------------------ MODULES -----------------------------------
 
