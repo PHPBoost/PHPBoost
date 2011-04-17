@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              newsletterExtensionPointProvider.class.php
+ *                              NewsletterExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -31,6 +31,11 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
     {
         parent::__construct('newsletter');
     }
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
+	}
 }
 
 ?>
