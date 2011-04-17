@@ -88,8 +88,7 @@ class InstallServerConfigController extends InstallController
 		$this->view->put_all(array(
             'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
             'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
-            'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_libray(),
-            'URL_REWRITING_AVAILABLE' => $this->server_conf->has_url_rewriting()
+            'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library()
 		));
 		if (!PHPBoostFoldersPermissions::validate())
 		{
