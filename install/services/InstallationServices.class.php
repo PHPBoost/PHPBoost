@@ -265,50 +265,6 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 
-		//Lang
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-lang']);
-		$extended_field->set_field_name('user_lang');
-		$extended_field->set_description($lang['field-install.default-lang-explain']);
-		$extended_field->set_field_type('MemberUserLangExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-
-		//Theme
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-theme']);
-		$extended_field->set_field_name('user_theme');
-		$extended_field->set_description($lang['field-install.default-theme-explain']);
-		$extended_field->set_field_type('MemberUserThemeExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-
-		//Editor
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-editor']);
-		$extended_field->set_field_name('user_editor');
-		$extended_field->set_description($lang['field-install.default-editor-explain']);
-		$extended_field->set_field_type('MemberUserEditorExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-
-		//Timezone
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.timezone']);
-		$extended_field->set_field_name('user_timezone');
-		$extended_field->set_description($lang['field-install.timezone-explain']);
-		$extended_field->set_field_type('MemberUserTimezoneExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-
 		//Location
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.location']);
