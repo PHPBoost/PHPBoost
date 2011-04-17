@@ -67,7 +67,7 @@ class Authorizations
 		}
 		//On balaye les tableaux passés en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
-			self::_get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
+			self::get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
 
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
@@ -88,7 +88,7 @@ class Authorizations
 		$sum_auth = 0;
 
 		//Récupération du tableau des autorisation.
-		self::_get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
+		self::get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
 
 		//Admin tous les droits dans n'importe quel cas.
 		if ($admin_auth_default)
@@ -292,7 +292,7 @@ class Authorizations
 		//Parcours des différents types d'utilisateur
 		$merged = array();
 
-		if (empty($child))
+		if (!is_array($child))
 		{
 			return $parent;
 		}
@@ -377,7 +377,6 @@ class Authorizations
 		return $result;
 	}
 
-	##  Private methods ##
 	//Récupération du tableau des autorisations.
 	/**
 	 * @desc Get authorization array from the form.
@@ -387,7 +386,7 @@ class Authorizations
 	 * @param array $sum_auth Sum up all authorizations for the authorization array.
 	 * @static
 	 */
-	private static function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	private static function get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 
