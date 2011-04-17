@@ -33,10 +33,6 @@ class ExtendedFieldsList
 {
 	private static $original_path = '/kernel/framework/phpboost/member/extended-fields/field/';
 	private static $pattern = '`ExtendedField\.class\.php$`';
-	private static $exclude_paths = array(
-		'/cache', '/images', '/lang', '/upload', '/templates',
-		'/kernel', '/admin', '/doc', '/install', '/sandbox', '/menus'
-	);
 	private static $exclude_files = array('AbstractMemberExtendedField');
 	private static $files = array();
 	
@@ -55,18 +51,14 @@ class ExtendedFieldsList
 	private static function get_modules_files()
 	{
 		$files = array();
-		$folder = new Folder(PATH_TO_ROOT . '/');
-		foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $folder)
+		foreach (ModulesManager::get_activated_modules_map() as $module)
 		{
-			if (!in_array($folder->get_path_from_root(), self::$exclude_paths))
+			$files_module = self::search_phpboost_folder_module(PATH_TO_ROOT . '/' . $module->get_id());
+			if (!empty($files_module))
 			{
-				$files_module = self::search_phpboost_folder_module($folder->get_path());
-				if (!empty($files_module))
+				foreach ($files_module as $file)
 				{
-					foreach ($files_module as $file)
-					{
-						$files[] = $file;
-					}
+					$files[] = $file;
 				}
 			}
 		}
