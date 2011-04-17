@@ -32,7 +32,7 @@ abstract class PHPBoostFoldersPermissions
 	public static function __static()
 	{
 		self::$folders_path = array('/', '/cache', '/cache/backup', '/cache/syndication',
-			'/cache/tpl', '/images/avatars', '/images/group', '/images/maths', '/images/smileys',
+			'/cache/tpl', '/cache/css', '/images/avatars', '/images/group', '/images/maths', '/images/smileys',
 			'/kernel/db', '/lang', '/menus', '/templates', '/upload');
 	}
 
