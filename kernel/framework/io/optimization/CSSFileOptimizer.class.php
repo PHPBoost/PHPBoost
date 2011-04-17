@@ -29,13 +29,161 @@
  * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
 */
-class CSSFileOptimizer extends AbstractCodeFileOptimizer
+class CSSFileOptimizer
 {
+	protected $files = array();
+	protected $scripts = array();
+	protected $content = '';
+	protected $extension_required = '';
+	protected $regex_search_files_path = '';
+	protected $replace_value_files_path = '';
+
+	/**
+	 * Const Delete comments, tabulations, spaces and newline
+	*/
+	const HIGH_OPTIMIZATION = 'high';
+
+	/**
+	 * Const Delete comments, tabulations and spaces
+	*/
+	const LOW_OPTIMIZATION = 'low';
+
 	public function __construct()
 	{
 		$this->extension_required = '.css';
 		$this->regex_search_files_path = '`url\(\'?([a-z0-9._/-]+)\'?\)`';
 		$this->replace_value_files_path = 'url(\':path/'. str_replace('\'', '', '$1') .'\')';
+	}
+
+	/**
+	 * This class allows you to add file to optimize. Required path file
+	 */
+	public function add_file($path_file)
+	{
+		if (!file_exists($path_file))
+		{
+			throw new Exception('File '. $path_file .' doesn\'t exist !');
+		}
+
+		$extension = substr($path_file, -4);
+		if (strpos($extension, $this->extension_required) !== false)
+		{
+			$this->files[] = $path_file;
+		}
+		else
+		{
+			throw new Exception('File extension "'. $extension .'" not supported.');
+		}
+	}
+
+	/**
+	 * This class allows you to add script to optimize. Required script value
+	 */
+	public function add_script($script)
+	{
+		if (!empty($script))
+		{
+			$this->scripts[] = $script;
+		}
+	}
+
+	/**
+	 * This class change path files in script and files added
+	 */
+	public function change_path_files($regex_search, $replace_value)
+	{
+		$this->regex_search_files_path = $regex_search;
+		$this->replace_value_files_path = $replace_value;
+	}
+
+	/**
+	 * This class optimize your code. Parameter $intensity serves to configuration highlest
+	 */
+	public function optimize($intensity = self::HIGH_OPTIMIZATION)
+	{
+		$this->assemble_files();
+
+		$content = '';
+		if ($intensity == self::LOW_OPTIMIZATION)
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\t", "  "), '', $cleared_file_content);
+		}
+		else
+		{
+			$cleared_file_content = $this->delete_comments($this->content);
+			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $cleared_file_content);
+			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`', '`\s*:\s*`', '`\s*;\s*`'), array('{', '}', ':', ';'), $content);
+		}
+
+		$this->content = trim($content);
+	}
+
+	public function export()
+	{
+		return $this->content;
+	}
+
+	/**
+	 * Exports optimized content to a file.
+	 */
+	public function export_to_file($location)
+	{
+		$file = new File($location);
+		$file->delete();
+		$file->lock();
+		$file->write($this->content);
+		$file->unlock();
+		$file->close();
+		$file->change_chmod(0666);
+	}
+
+	/**
+	 * This class return Array files
+	 */
+	public function get_files()
+	{
+		return $this->files;
+	}
+
+	/**
+	 * This class return Array scripts
+	 */
+	public function get_scripts()
+	{
+		return $this->scripts;
+	}
+
+	private function delete_comments($value)
+	{
+		$value = preg_replace('<!\-\- [\/\ a-zA-Z]* \-\->', '', $value);
+		$value = preg_replace('#/\*.*?\*/#s', '', $value);
+		return $value;
+	}
+
+	private function assemble_files()
+	{
+		$content = '';
+		foreach ($this->files as $file)
+		{
+			$content_file = php_strip_whitespace($file);
+			if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
+			{
+				$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
+				$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
+			}
+			else
+			{
+				$content .= $content_file;
+			}
+		}
+
+		foreach ($this->scripts as $script)
+		{
+			$content .= $script;
+		}
+
+		$this->content = $content;
 	}
 }
 ?>
