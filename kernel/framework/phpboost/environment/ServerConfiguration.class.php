@@ -52,7 +52,7 @@ class ServerConfiguration
 	/**
 	 * @return true if GD libray is available, else false.
 	 */
-	public function has_gd_libray()
+	public function has_gd_library()
 	{
 		return @extension_loaded('gd');
 	}
