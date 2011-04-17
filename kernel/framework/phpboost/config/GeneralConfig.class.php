@@ -64,7 +64,7 @@ class GeneralConfig extends AbstractConfigData
 	 */
 	public function set_site_path($path)
 	{
-		$this->set_property(self::SITE_PATH, $path);
+		$this->set_property(self::SITE_PATH, $path == '/' ? '' : $path);
 	}
 
 	public function get_phpboost_major_version()
