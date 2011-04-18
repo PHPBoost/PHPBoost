@@ -49,17 +49,17 @@ class AdminMemberAddController extends AdminController
 		{
 			$this->save();
 
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.success-member-add'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.member-add.success'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return new AdminMembersDisplayResponse($tpl, $this->lang['members.add-member']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('members-common');
+		$this->lang = LangLoader::get('admin-members-common');
 	}
 
 	private function build_form()
@@ -69,28 +69,28 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.member-add.pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.member-add.mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.member-add.password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.member-add.confirm-password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.member-add.rank'], '1',
 			array(
-				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
+				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.member'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.modo'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.admin'], '3')
 			)
 		));
 		
@@ -112,10 +112,10 @@ class AdminMemberAddController extends AdminController
 		PersistenceContext::get_querier()->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect, new_pass,user_ban,user_aprob)
 			VALUES (:login, :password, :level, '', :user_mail, 0, :timestamp, 0, 0, :last_connect, 0, '', 0, :user_aprob)", array(
-				'login' => $this->form->get_value('login'),
-				'password' => strhash($this->form->get_value('password')),
+				'login' => htmlspecialchars($this->form->get_value('login')),
+				'password' => htmlspecialchars(strhash($this->form->get_value('password'))),
 				'level' => $this->get_rank_member(),
-				'user_mail' => $this->form->get_value('mail'),
+				'user_mail' => htmlspecialchars($this->form->get_value('mail')),
 				'timestamp' => time(),
 				'last_connect' => '',
 				'user_aprob' => '1'
@@ -137,20 +137,6 @@ class AdminMemberAddController extends AdminController
 		{
 			return '0';
 		}
-	}
-
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['members.members-management']);
-		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member/index.php', '/member/'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/member/add'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/member/config'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member/index.php', '/member/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['members.add-member']);
-		
-		return $response;
 	}
 }
 
