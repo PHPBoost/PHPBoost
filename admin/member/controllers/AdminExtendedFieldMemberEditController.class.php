@@ -85,7 +85,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 
 		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl);
+		return new AdminExtendedFieldsDisplayResponse($this->tpl, $this->lang['extended-field-edit']);
 	}
 
 	private function init()
@@ -211,17 +211,6 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		ExtendedFieldsService::update($extended_field);
 	}
 
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['extended-field']);
-		$response->add_link($this->lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$response->add_link($this->lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['extended-field-edit']);
-		return $response;
-	}
-	
 	private function get_array_select_type()
 	{
 		$select = array();
