@@ -46,6 +46,17 @@ class ModulesCssFilesCache implements CacheData
 		foreach (ThemeManager::get_activated_themes_map() as $theme => $properties)
 		{
 			$files_for_this_theme = array();
+			
+			$folder = new Folder(PATH_TO_ROOT . '/templates/'. $theme .'/theme/');
+			$relative_path = Path::get_path_from_root($folder->get_path());
+			foreach ($folder->get_files('`.css$`') as $file)
+			{
+				if (strpos($file->get_name(), 'tinymce.css') === false && strpos($file->get_name(), 'print.css') === false)
+				{
+					$files_for_this_theme[] = $relative_path . '/' . $file->get_name();
+				}
+			}
+			
 			foreach (ModulesManager::get_activated_modules_map() as $name => $module)
 			{
 				//If the module is enabled, we add it to the list
@@ -67,16 +78,6 @@ class ModulesCssFilesCache implements CacheData
 					{
 						$files_for_this_theme[] = '/' . $name . '/templates/' . $name . '.css';
 					}
-				}
-			}
-			
-			$folder = new Folder(PATH_TO_ROOT . '/templates/'. $theme .'/theme/');
-			$relative_path = Path::get_path_from_root($folder->get_path());
-			foreach ($folder->get_files('`.css$`') as $file)
-			{
-				if (strpos($file->get_name(), 'css-cache') === false && strpos($file->get_name(), 'tinymce.css') === false && strpos($file->get_name(), 'print.css') === false)
-				{
-					$files_for_this_theme[] = $relative_path . '/' . $file->get_name();
 				}
 			}
 			$this->themes_files[$theme] = $files_for_this_theme;

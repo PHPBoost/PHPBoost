@@ -88,15 +88,6 @@ class CSSFileOptimizer
 	}
 
 	/**
-	 * This class change path files in script and files added
-	 */
-	public function change_path_files($regex_search, $replace_value)
-	{
-		$this->regex_search_files_path = $regex_search;
-		$this->replace_value_files_path = $replace_value;
-	}
-
-	/**
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
 	public function optimize($intensity = self::HIGH_OPTIMIZATION)
