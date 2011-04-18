@@ -235,7 +235,7 @@ class InstallationServices
 		MenuService::enable_all(true);
 		$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
 		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
-		MenuService::set_position($modules_menu, $modules_menu->get_block_position());
+		MenuService::set_position($modules_menu, -$modules_menu->get_block_position());
 		MenuService::generate_cache();
 	}
 
