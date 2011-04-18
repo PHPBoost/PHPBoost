@@ -34,15 +34,16 @@ class TextNewsletterMail extends AbstractNewsletterMail
 	{
 		$mail = new Mail();
 		$mail->set_sender($sender);
-		$mail->set_is_html(false);
+		$mail->set_is_html(true);
 		$mail->set_subject($subject);
+		$contents = $this->parse_contents($contents) . $this->add_unsubscribe_link();
 		
 		foreach ($subscribers as $id => $values)
 		{
 			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->clear_recipients();
 			$mail->add_recipient($mail_subscriber);
-			$mail->set_content($this->add_unsubscribe_link());
+			$mail->set_content($contents);
 			
 			//TODO gestion des erreurs
 			AppContext::get_mail_service()->try_to_send($mail);
