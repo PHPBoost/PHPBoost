@@ -33,17 +33,15 @@ $lang = array();
 
 //Messages 
 $lang['members.config.success-saving'] = 'La configuration a été enregistrée avec succès';
-$lang['members.member-add.success'] = 'Le membre a été ajouté avec succès';
+$lang['members.success'] = 'Le membre a été ajouté avec succès';
+$lang['members.member-edit.success'] = 'Le membre a bien été modifié';
 
 // Title 
 $lang['members.config-members'] = 'Configuration des membres';
 $lang['members.members-management'] = 'Gestion des membres';
 $lang['members.add-member'] = 'Ajouter un membre';
 $lang['members.members-punishment'] = 'Gestion des sanctions';
-
-//Other fieldset title
-$lang['members.config.avatars-management'] = 'Gestion des avatars';
-$lang['members.config.authorization'] = 'Autorisations';
+$lang['members.edit-member'] = 'Edition d\'un membre';
 
 //Configuration
 $lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
@@ -70,20 +68,26 @@ $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
 $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le panel du membre';
 
-//Add member
-$lang['members.member-add.pseudo'] = 'Pseudo';
-$lang['members.member-add.mail'] = 'Adresse email';
-$lang['members.member-add.password'] = 'Mot de passe';
-$lang['members.member-add.confirm-password'] = 'Confirmer le mot de passe';
-$lang['members.member-add.rank'] = 'Rang';
-$lang['members.member-add.rank.member'] = 'Membre';
-$lang['members.member-add.rank.modo'] = 'Modérateur';
-$lang['members.member-add.rank.admin'] = 'Administrateur';
+//Other fieldset configuration title
+$lang['members.config.avatars-management'] = 'Gestion des avatars';
+$lang['members.config.authorization'] = 'Autorisations';
 
-//
-$lang[''] = '';
-$lang[''] = '';
+//Add and edit member
+$lang['members.pseudo'] = 'Pseudo';
+$lang['members.mail'] = 'Adresse email';
+$lang['members.hide-mail'] = 'Cacher l\'email';
+$lang['members.password'] = 'Mot de passe';
+$lang['members.confirm-password'] = 'Confirmer le mot de passe';
+$lang['members.rank'] = 'Rang';
+$lang['members.rank.member'] = 'Membre';
+$lang['members.rank.modo'] = 'Modérateur';
+$lang['members.rank.admin'] = 'Administrateur';
+$lang['members.approbation'] = 'Approbation';
+$lang['members.groups'] = 'Groupes';
 
+//Other fieldset add and edit title
+$lang['members.member-management'] = 'Gestion du membre';
+$lang['members.punishment-management'] = 'Gestion des sanctions';
 
 //Activation type
 $lang['members.config.type-activation.auto'] = 'Automatique';
@@ -91,7 +95,5 @@ $lang['members.config.type-activation.mail'] = 'Mail';
 $lang['members.config.type-activation.admin'] = 'Administrateur';
 
 //Other
-$lang['members.valid'] = '';
-
-$lang[''] = '';
+$lang['members.valid'] = 'Valide';
 ?>

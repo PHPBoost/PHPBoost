@@ -49,7 +49,7 @@ class AdminMemberAddController extends AdminController
 		{
 			$this->save();
 
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.member-add.success'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.success'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -69,28 +69,28 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.member-add.pseudo'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.member-add.mail'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.member-add.password'], '', array(
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.member-add.confirm-password'], '', array(
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.member-add.rank'], '1',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
 			array(
-				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.member'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.modo'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.member-add.rank.admin'], '3')
+				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
 			)
 		));
 		
