@@ -178,14 +178,14 @@ if ($action == 'save') //Save menus positions.
 	}
 
 	$columns_disabled = new ColumnsDisabled();
-	$columns_disabled->set_disable_header(!AppContext::get_request()->get_bool('header_enabled', true));
-	$columns_disabled->set_disable_sub_header(!AppContext::get_request()->get_bool('sub_header_enabled', true));
-	$columns_disabled->set_disable_top_central(!AppContext::get_request()->get_bool('top_central_enabled', true));
-	$columns_disabled->set_disable_bottom_central(!AppContext::get_request()->get_bool('bottom_central_enabled', true));
-	$columns_disabled->set_disable_top_footer(!AppContext::get_request()->get_bool('top_footer_enabled', true));
-	$columns_disabled->set_disable_footer(!AppContext::get_request()->get_bool('footer_enabled', true));
-	$columns_disabled->set_disable_left_columns(!AppContext::get_request()->get_bool('left_column_enabled', true));
-	$columns_disabled->set_disable_right_columns(!AppContext::get_request()->get_bool('right_column_enabled', true));
+	$columns_disabled->set_disable_header(AppContext::get_request()->get_bool('header_enabled', true));
+	$columns_disabled->set_disable_sub_header(AppContext::get_request()->get_bool('sub_header_enabled', true));
+	$columns_disabled->set_disable_top_central(AppContext::get_request()->get_bool('top_central_enabled', true));
+	$columns_disabled->set_disable_bottom_central(AppContext::get_request()->get_bool('bottom_central_enabled', true));
+	$columns_disabled->set_disable_top_footer(AppContext::get_request()->get_bool('top_footer_enabled', true));
+	$columns_disabled->set_disable_footer(AppContext::get_request()->get_bool('footer_enabled', true));
+	$columns_disabled->set_disable_left_columns(AppContext::get_request()->get_bool('left_column_enabled', true));
+	$columns_disabled->set_disable_right_columns(AppContext::get_request()->get_bool('right_column_enabled', true));
 	ThemeManager::change_columns_disabled($theme_post, $columns_disabled);
 	
 	MenuService::generate_cache();
