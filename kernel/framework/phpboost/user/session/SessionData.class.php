@@ -114,7 +114,6 @@ class SessionData
 	private static function update_existing_session($condition, $parameters)
 	{
 		$columns = array(
-			'token' => Random::hexa64uid(16),
 			'expiry' => time() + SessionsConfig::load()->get_session_duration(),
 			'ip' => AppContext::get_request()->get_ip_address()
 		);

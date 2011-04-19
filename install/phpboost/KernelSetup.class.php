@@ -200,7 +200,7 @@ class KernelSetup
 		));
 		self::$db_utils->create_table(self::$com_table, $fields, $options);
 	}
-	
+
 	private function create_comments_table()
 	{
 		$fields = array(
@@ -218,7 +218,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$comments_table, $fields, $options);
 	}
-	
+
 	private function create_comments_topic_table()
 	{
 		$fields = array(

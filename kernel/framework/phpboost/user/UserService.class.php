@@ -52,6 +52,7 @@ class UserService
 			'registration_date' => time()
 		));
 		
+		$user_id = $result->get_last_inserted_id();
 		$auth_method->associate($user_id);
 		return $user_id;
 	}
