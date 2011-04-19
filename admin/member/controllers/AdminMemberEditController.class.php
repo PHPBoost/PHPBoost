@@ -80,7 +80,7 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('edit_member', $this->lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_aprob = 1 AND user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $row['login'], array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
@@ -194,7 +194,7 @@ class AdminMemberEditController extends AdminController
 	
 	private function user_exist()
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $this->user_id . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $this->user_id . "'") > 0 ? true : false;
 	}
 }
 
