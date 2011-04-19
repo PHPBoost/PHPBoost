@@ -33,7 +33,7 @@ $lang = array();
 
 //Messages 
 $lang['members.config.success-saving'] = 'La configuration a été enregistrée avec succès';
-$lang['members.success'] = 'Le membre a été ajouté avec succès';
+$lang['members.add-member.success'] = 'Le membre a été ajouté avec succès';
 $lang['members.member-edit.success'] = 'Le membre a bien été modifié';
 
 // Title 

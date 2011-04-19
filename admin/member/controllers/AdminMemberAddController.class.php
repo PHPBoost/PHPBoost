@@ -49,7 +49,7 @@ class AdminMemberAddController extends AdminController
 		{
 			$this->save();
 
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.success'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['members.add-member.success'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
