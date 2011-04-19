@@ -120,13 +120,16 @@ class CSSFileOptimizer
 	 */
 	public function export_to_file($location)
 	{
-		$file = new File($location);
-		$file->delete();
-		$file->lock();
-		$file->write($this->content);
-		$file->unlock();
-		$file->close();
-		$file->change_chmod(0666);
+		if (!empty($this->files) || !empty($this->scripts))
+		{
+			$file = new File($location);
+			$file->delete();
+			$file->lock();
+			$file->write($this->content);
+			$file->unlock();
+			$file->close();
+			$file->change_chmod(0666);
+		}
 	}
 
 	/**
