@@ -385,7 +385,7 @@ class KernelSetup
 			'display_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'email' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
+			'show_email' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
 			'locale' => array('type' => 'string', 'length' => 25, 'default' => "''"),
 			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),

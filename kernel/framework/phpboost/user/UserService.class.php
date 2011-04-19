@@ -38,20 +38,20 @@ class UserService
 		self::$querier = PersistenceContext::get_querier();
 	}
 
-	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, $show_mail, AuthenticationMethod $auth_method)
+	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, $show_email, AuthenticationMethod $auth_method)
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'display_name' => $display_name,
 			'level' => $level,
 			'email' => $email,
-			'show_mail' => $show_mail,
+			'show_email' => (int) $show_email,
 			'locale' => $locale,
 			'timezone' => $timezone,
 			'theme' => $theme,
 			'editor' => $editor,
 			'registration_date' => time()
 		));
-		
+
 		$user_id = $result->get_last_inserted_id();
 		$auth_method->associate($user_id);
 		return $user_id;
