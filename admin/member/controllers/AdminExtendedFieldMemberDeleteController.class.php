@@ -40,7 +40,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 			$exist_field = ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
 			if ($exist_field)
 			{
-				ExtendedFieldsService::delete($extended_field);
+				ExtendedFieldsService::delete_by_id($id);
 				
 				return true;
 			}

@@ -119,7 +119,7 @@ class ExtendedField
 	public function get_field_type()
 	{
 		return $this->field_type;
-	}	
+	}       
 	
 	public function set_possible_values($possible_values)
 	{
@@ -191,7 +191,7 @@ class ExtendedField
 		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 2);
 	}
 	
-	public function set_is_not_installer(Bool $is_not_installer)
+	public function set_is_not_installer($is_not_installer)
 	{
 		$this->is_not_installer = $is_not_installer;
 	}

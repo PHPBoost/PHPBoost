@@ -275,7 +275,7 @@ else
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 		));
 
-		$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.nbr_com, d.image, d.short_contents
+		$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents
 		FROM " . PREFIX . "download d
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.module_id
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'

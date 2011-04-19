@@ -32,8 +32,6 @@
 class ExtendedFieldsService
 {
 	private static $error;
-	const BY_ID = 1;
-	const BY_FIELD_NAME = 2;
 	const SORT_BY_ID = 1;
 	const SORT_BY_FIELD_NAME = 2;
 	
@@ -88,19 +86,19 @@ class ExtendedFieldsService
 		}
 	}
 	
-	/*
-	 * This function required object ExtendedField containing the id or field_name
-	 */
-	public static function delete(ExtendedField $extended_field, $by = self::BY_ID)
+	public static function delete_by_id($id)
 	{
-		if ($by == self::BY_ID) 
+		if (!empty($id))
 		{
-			$data = self::data_field($extended_field, self::SORT_BY_ID);
-			$name_class = MemberExtendedFieldsFactory::name_class($data);
-			$class = new $name_class();
-
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($data))
+			$extended_field = new ExtendedField();
+			$extended_field->set_id($id);
+		
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
 			{
+				$data = self::data_field($extended_field, self::SORT_BY_ID);
+				$name_class = MemberExtendedFieldsFactory::name_class($data);
+				$class = new $name_class();
+				
 				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
 					ExtendedFieldsDatabaseService::delete_extended_field($data);
@@ -108,14 +106,21 @@ class ExtendedFieldsService
 				}
 			}
 		}
-		else if ($by == self::BY_FIELD_NAME)
+	}
+	
+	public static function delete_by_field_name($field_name)
+	{
+		if (!empty($field_name))
 		{
-			$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
-			$name_class = MemberExtendedFieldsFactory::name_class($data);
-			$class = new $name_class();
-
-			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($data))
+			$extended_field = new ExtendedField();
+			$extended_field->set_field_name($field_name);
+		
+			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
 			{
+				$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
+				$name_class = MemberExtendedFieldsFactory::name_class($data);
+				$class = new $name_class();
+
 				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
 					ExtendedFieldsDatabaseService::delete_extended_field($data);

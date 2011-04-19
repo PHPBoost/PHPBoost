@@ -65,7 +65,7 @@ class InstallWebsiteConfigController extends InstallController
 		$host->add_constraint(new FormFieldConstraintUrl());
 		$fieldset->add_field($host);
 		$path = new FormFieldTextEditor('path', $this->lang['website.path'], $this->current_server_path(),
-		array('description' => $this->lang['website.path.explanation'], 'required' => true));
+		array('description' => $this->lang['website.path.explanation']));
 		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['website.path.warning']));
 		$fieldset->add_field($path);
 		$name = new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => $this->lang['website.name.required']));

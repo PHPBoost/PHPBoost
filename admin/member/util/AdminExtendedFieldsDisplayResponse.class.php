@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               JavaScriptFileOptimizer.class.php
+ *                           AdminExtendedFieldsDisplayResponse.class.php
  *                            -------------------
- *   begin                : March 29, 2011
+ *   begin                : April 18, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,15 +25,20 @@
  *
  ###################################################*/
 
-/**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
- * @package {@package}
-*/
-class JavaScriptFileOptimizer extends AbstractCodeFileOptimizer
+class AdminExtendedFieldsDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct()
+	public function __construct($view, $title_page)
 	{
-		$this->extension_required = '.js';
+        parent::__construct($view);
+
+		$lang = LangLoader::get('admin-extended-fields-common');
+		$picture = '/templates/' . get_utheme() . '/images/admin/extendfield.png';
+		$this->set_title($lang['extended-field']);
+		$this->add_link($lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), $picture);
+		$this->add_link($lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>

@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                        TextNewsletterMail.class.php
+ *                           AdminMembersDisplayResponse.class.php
  *                            -------------------
- *   begin                : February 1, 2011
+ *   begin                : April 18, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,35 +25,22 @@
  *
  ###################################################*/
 
-/**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
- */
-class TextNewsletterMail extends AbstractNewsletterMail
+class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function send_mail($subscribers, $sender, $subject, $contents)
+	public function __construct($view, $title_page)
 	{
-		$mail = new Mail();
-		$mail->set_sender($sender);
-		$mail->set_is_html(true);
-		$mail->set_subject($subject);
-		$contents = $this->parse_contents($contents) . $this->add_unsubscribe_link();
+        parent::__construct($view);
+
+		$lang = LangLoader::get('admin-members-common');
+		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
+		$this->set_title($lang['members.members-management']);
+		$this->add_link($lang['members.members-management'], PATH_TO_ROOT . '/admin/admin_members.php', $picture);
+		$this->add_link($lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/members/add'), $picture);
+		$this->add_link($lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/members/config'), $picture);
+		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/admin/admin_members_punishment.php', $picture);
 		
-		foreach ($subscribers as $id => $values)
-		{
-			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
-			$mail->clear_recipients();
-			$mail->add_recipient($mail_subscriber);
-			$mail->set_content($contents);
-			
-			//TODO gestion des erreurs
-			AppContext::get_mail_service()->try_to_send($mail);
-		}
-	}
-	
-	public function parse_contents($contents)
-	{
-		return stripslashes(FormatingHelper::strparse(addslashes($contents)));
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
-
 ?>

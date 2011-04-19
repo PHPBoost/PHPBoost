@@ -64,12 +64,12 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		elseif ($this->submit_button->has_been_submitted() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], MessageHelper::::SUCCESS, 6));
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl);
+		return new AdminExtendedFieldsDisplayResponse($this->tpl, $this->lang['extended-field-add']);
 	}
 
 	private function init()
@@ -167,10 +167,12 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;
-		if ($field_type <= 2)
+		
+		if (!$this->form->field_is_disabled('regex_type'))
 		{
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
 		}
+		
 		$extended_field->set_regex($regex);
 		$extended_field->set_authorization($this->form->get_value('authorizations')->build_auth_array());
 		$extended_field->set_is_not_installer(true);
@@ -178,17 +180,6 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		ExtendedFieldsService::add($extended_field);
 	}
 
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['extended-field']);
-		$response->add_link($this->lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$response->add_link($this->lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['extended-field-add']);
-		return $response;
-	}
-	
 	private function get_array_select_type()
 	{
 		$select = array();

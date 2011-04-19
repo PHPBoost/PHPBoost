@@ -78,15 +78,18 @@ class ThemeManager
 			{
 				ThemesConfig::load()->add_theme($theme);
 				ThemesConfig::save();
+				
+				self::regenerate_cache();
 			}
 			else
 			{
 				self::$errors = 'Not compatible !';
 			}
-			
-			self::regenerate_cache();
 		}
-		self::$errors = 'e_theme_already_exist';
+		else
+		{
+			self::$errors = 'e_theme_already_exist';
+		}
 	}
 	
 	public static function uninstall($theme_id, $drop_files = false)
@@ -109,56 +112,71 @@ class ThemeManager
 			}
 			self::$errors = 'e_incomplete';
 		}
-		self::$errors = 'e_theme_already_exist';
+		else
+		{
+			self::$errors = 'e_theme_already_exist';
+		}
 	}
 	
 	public static function change_visibility($theme_id, $visibility)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_activated($visibility);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_activated($visibility);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
 	}
 	
 	public static function change_authorizations($theme_id, Array $authorizations)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_authorizations($authorizations);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_authorizations($authorizations);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+		}
 	}
 	
 	public static function change_informations($theme_id, $visibility, Array $authorizations = array(), $columns_disabled = null)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_activated($visibility);
-		
-		if (!empty($authorizations))
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			$theme->set_authorizations($authorizations);
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_activated($visibility);
+			
+			if (!empty($authorizations))
+			{
+				$theme->set_authorizations($authorizations);
+			}
+			
+			if ($columns_disabled !== null)
+			{
+				$theme->set_columns_disabled($columns_disabled);
+			}
+			
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
 		}
-		
-		if ($columns_disabled !== null)
-		{
-			$theme->set_columns_disabled($columns_disabled);
-		}
-		
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
 	}
 	
 	public static function change_columns_disabled($theme_id, ColumnsDisabled $columns_disabled)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_columns_disabled($columns_disabled);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_columns_disabled($columns_disabled);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
 	}
 	
 	public static function get_errors()
