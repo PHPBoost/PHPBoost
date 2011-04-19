@@ -16,7 +16,6 @@ define('DB_TABLE_EVENTS', PREFIX . 'events');
 define('DB_TABLE_GROUP', PREFIX . 'group');
 define('DB_TABLE_LANG', PREFIX . 'lang');
 define('DB_TABLE_MEMBER', PREFIX . 'member');
-define('DB_TABLE_MEMBER_PROFILE', PREFIX . 'member_profile');
 define('DB_TABLE_INTERNAL_AUTHENTICATION', PREFIX . 'internal_authentication');
 define('DB_TABLE_AUTHENTICATION_METHOD', PREFIX . 'authentication_method');
 define('DB_TABLE_MEMBER_EXTENDED_FIELDS', PREFIX . 'member_extended_fields');

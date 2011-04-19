@@ -47,7 +47,6 @@ class KernelSetup
 	private static $group_table;
 	private static $lang_table;
 	private static $member_table;
-	private static $member_profile_table;
 	private static $internal_authentication_table;
 	private static $authentication_method_table;
 	private static $member_extended_fields_table;
@@ -84,7 +83,6 @@ class KernelSetup
 		self::$group_table = PREFIX . 'group';
 		self::$lang_table = PREFIX . 'lang';
 		self::$member_table = PREFIX . 'member';
-		self::$member_profile_table = PREFIX . 'member_profile';
 		self::$internal_authentication_table = PREFIX . 'internal_authentication';
 		self::$authentication_method_table = PREFIX . 'authentication_method';
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
@@ -127,7 +125,6 @@ class KernelSetup
 			self::$group_table,
 			self::$lang_table,
 			self::$member_table,
-			self::$member_profile_table,
 			self::$internal_authentication_table,
 			self::$authentication_method_table,
 			self::$member_extended_fields_table,
@@ -163,7 +160,6 @@ class KernelSetup
 		$this->create_group_table();
 		$this->create_lang_table();
 		$this->create_member_table();
-		$this->create_member_profile_table();
 		$this->create_internal_authentication_table();
 		$this->create_authentication_method_table();
 		$this->create_member_extended_fields_table();
@@ -389,6 +385,7 @@ class KernelSetup
 			'display_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'email' => array('type' => 'string', 'length' => 50, 'default' => "''"),
+			'show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
 			'locale' => array('type' => 'string', 'length' => 25, 'default' => "''"),
 			'theme' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
@@ -405,29 +402,6 @@ class KernelSetup
 
 		$options = array('primary' => array('user_id'));
 		self::$db_utils->create_table(self::$member_table, $fields, $options);
-	}
-
-	private function create_member_profile_table()
-	{
-		$fields = array(
-			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'user_show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
-			'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'user_local' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_msn' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_yahoo' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_web' => array('type' => 'string', 'length' => 70, 'default' => "''"),
-			'user_occupation' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_hobbies' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'user_desc' => array('type' => 'text', 'length' => 65000),
-			'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
-			'user_sign' => array('type' => 'text', 'length' => 65000)
-		);
-
-		$options = array('primary' => array('user_id'));
-		self::$db_utils->create_table(self::$member_profile_table, $fields, $options);
 	}
 
 	private function create_internal_authentication_table()

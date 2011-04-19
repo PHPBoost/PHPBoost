@@ -38,24 +38,20 @@ class UserService
 		self::$querier = PersistenceContext::get_querier();
 	}
 
-	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, AuthenticationMethod $auth_method)
+	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, $show_mail, AuthenticationMethod $auth_method)
 	{
-
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'display_name' => $display_name,
 			'level' => $level,
 			'email' => $email,
+			'show_mail' => $show_mail,
 			'locale' => $locale,
 			'timezone' => $timezone,
 			'theme' => $theme,
 			'editor' => $editor,
 			'registration_date' => time()
 		));
-		$user_id = $result->get_last_inserted_id();
-		self::$querier->insert(DB_TABLE_MEMBER_PROFILE, array(
-			'user_id' => $user_id,
-			'user_show_mail' => 1
-		));
+		
 		$auth_method->associate($user_id);
 		return $user_id;
 	}
@@ -63,7 +59,6 @@ class UserService
 	public static function delete_by_id($user_id)
 	{
 		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
-		self::$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
 	}
@@ -79,7 +74,6 @@ class UserService
 			{
 				$users_id_params = array('users_id' => $ids_to_delete);
 				self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id in :users_id', $users_id_params);
-				self::$querier->delete(DB_TABLE_MEMBER_PROFILE, 'WHERE user_id in :users_id', $users_id_params);
 				self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id in :users_id', $users_id_params);
 				self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id in :users_id', $users_id_params);
 			}
