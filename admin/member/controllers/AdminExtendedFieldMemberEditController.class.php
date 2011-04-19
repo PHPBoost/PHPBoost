@@ -85,7 +85,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 
 		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl);
+		return new AdminExtendedFieldsDisplayResponse($this->tpl, $this->lang['extended-field-edit']);
 	}
 
 	private function init()
@@ -199,27 +199,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;
-		if ($extended_field->get_field_type() <= 2 && $this->form->get_value('regex_type', '') !== '')
+		
+		if (!$this->form->field_is_disabled('regex_type'))
 		{
 			$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
 		}
+		
 		$extended_field->set_regex($regex);
 		$extended_field->set_authorization($this->form->get_value('authorizations', $extended_field->get_authorization())->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
 	}
 
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['extended-field']);
-		$response->add_link($this->lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$response->add_link($this->lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['extended-field-edit']);
-		return $response;
-	}
-	
 	private function get_array_select_type()
 	{
 		$select = array();

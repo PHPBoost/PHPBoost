@@ -1,4 +1,4 @@
-<script type="text/javascript">
+		<script type="text/javascript">
 		<!--
 		var displayed = new Array();
 		displayed[${escapejs(FIELD)}] = false;
@@ -100,6 +100,7 @@
 		# ENDIF #
 		
 		<script type="text/javascript">
+		<!--
 		var BBcodeEditor = Class.create(BBcodeEditor_Core,
 		{
 			root: '{PATH_TO_ROOT}',
@@ -250,11 +251,12 @@
 				{type:'submit', text: ${escapejs(L_INSERT_LIST)}, fname:'list.png', label: ${escapejs(L_BB_LIST)}, 'classe':'valign_middle' }
 			]
 		});
-		
-	</script>
+		-->
+		</script>
 	<div id="editorbar{FIELD}"></div>
 	<script type="text/javascript">
 	<!--
 		new BBcodeEditor(${escapejs(FIELD)}, '');
+	-->
 	</script>
 	# ENDIF #

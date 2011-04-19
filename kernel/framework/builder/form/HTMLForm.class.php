@@ -171,6 +171,25 @@ class HTMLForm
 	}
 
 	/**
+	 * @desc Returns true if field is disabled
+	 * @param string $field_id The HTML id of the field and string $default_value The default value
+	 * @return Boolean true if field is disabled
+	 */
+	public function field_is_disabled($field_id)
+	{
+		$field = $this->get_field_by_id($field_id);
+		if ($field == null)
+		{
+			return true;
+		}
+		elseif ($field->is_disabled())
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * @desc Returns true if the $field_id is in the form.
 	 * @param string $field_id The HTML id of the field
 	 * @return mixed true if the $field_id is in the form, false otherwise
