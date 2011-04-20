@@ -173,7 +173,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	/**
 	 * {@inheritdoc}
 	 */
-	function display_header()
+	public function display_header()
 	{
 		global $LANG;
 
@@ -188,7 +188,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
+			'THEME_CSS' => $this->get_theme_css_files_html_code(),
+			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
 			'L_EXTEND_MENU' => $LANG['extend_menu'],
 		));
@@ -349,7 +350,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	/**
 	 * {@inheritdoc}
 	 */
-	function display_footer()
+	public function display_footer()
 	{
 		global $LANG;
 
