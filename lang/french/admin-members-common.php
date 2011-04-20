@@ -35,6 +35,7 @@ $lang = array();
 $lang['members.config.success-saving'] = 'La configuration a été enregistrée avec succès';
 $lang['members.add-member.success'] = 'Le membre a été ajouté avec succès';
 $lang['members.member-edit.success'] = 'Le membre a bien été modifié';
+$lang['members.rules.success-saving'] = 'Le réglement a bien été mise à jour';
 
 // Title 
 $lang['members.config-members'] = 'Configuration des membres';
@@ -42,6 +43,7 @@ $lang['members.members-management'] = 'Gestion des membres';
 $lang['members.add-member'] = 'Ajouter un membre';
 $lang['members.members-punishment'] = 'Gestion des sanctions';
 $lang['members.edit-member'] = 'Edition d\'un membre';
+$lang['members.rules'] = 'Réglement';
 
 //Configuration
 $lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
@@ -93,6 +95,10 @@ $lang['members.punishment-management'] = 'Gestion des sanctions';
 $lang['members.config.type-activation.auto'] = 'Automatique';
 $lang['members.config.type-activation.mail'] = 'Mail';
 $lang['members.config.type-activation.admin'] = 'Administrateur';
+
+//Rules
+$lang['members.rules.registration-agreement-description'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
+$lang['members.rules.registration-agreement'] = 'Contenu du réglement';
 
 //Other
 $lang['members.valid'] = 'Valide';
