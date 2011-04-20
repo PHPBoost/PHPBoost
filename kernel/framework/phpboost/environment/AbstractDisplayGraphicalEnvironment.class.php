@@ -41,24 +41,28 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		$this->css_files[] = $file_path;
 	}
 	
-	protected function get_css_files_html_code()
+	protected function get_theme_css_files_html_code()
+	{
+		$css_cache = new CSSCacheManager();
+		$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme(get_utheme()));
+		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-theme-' . get_utheme() .'.css');
+		$css_cache->execute();
+		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
+				'" type="text/css" media="screen, print, handheld" />';
+		return $html_code;
+	}
+	
+	protected function get_modules_css_files_html_code()
 	{
 		$css_cache = new CSSCacheManager();
 		$css_cache->set_files($this->css_files);
 		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . get_utheme() .'.css');
 		$css_cache->execute();
 		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />' . "\n";
-				
-		$css_cache = new CSSCacheManager();
-		$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme(get_utheme()));
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-themes-' . get_utheme() .'.css');
-		$css_cache->execute();
-		$html_code .= '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />' . "\n";
+				'" type="text/css" media="screen, print, handheld" />';
 		return $html_code;
 	}
-	
+
 	public function get_page_title()
 	{
 		return $this->page_title;

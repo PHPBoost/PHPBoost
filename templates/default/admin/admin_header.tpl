@@ -8,8 +8,8 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
 
-		<!-- CSS -->
-		{CSS}
+		<!-- Theme CSS -->
+		{THEME_CSS}
 		
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 		
