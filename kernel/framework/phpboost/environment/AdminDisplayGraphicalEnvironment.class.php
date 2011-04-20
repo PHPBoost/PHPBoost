@@ -188,7 +188,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'CSS' => $this->get_css_files_html_code(),
+			'THEME_CSS' => $this->get_theme_css_files_html_code(),
+			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
 			'L_EXTEND_MENU' => $LANG['extend_menu'],
 		));
@@ -385,17 +386,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 
 		$tpl->display();
-	}
-	
-	protected function get_css_files_html_code()
-	{
-		$css_cache = new CSSCacheManager();
-		$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme(get_utheme()));
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-themes-' . get_utheme() .'.css');
-		$css_cache->execute();
-		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />' . "\n";
-		return $html_code;
 	}
 }
 
