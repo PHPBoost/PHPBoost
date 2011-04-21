@@ -46,7 +46,7 @@ class AdminThemeDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_theme($drop_files);
 
-				$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.delete.success'], E_USER_SUCCESS, 4));
+				$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.delete.success'], MessageHelper::SUCCESS, 4));
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());

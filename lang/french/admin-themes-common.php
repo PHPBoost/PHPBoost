@@ -61,11 +61,22 @@ $lang['themes.bot_informed'] = 'Non renseigné';
 $lang['themes.view_real_preview'] = 'Voir en taille réelle';
 $lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
 
+//Others
 $lang['themes.yes'] = 'Oui';
 $lang['themes.no'] = 'Non';
 $lang['themes.visitor'] = 'Visiteur';
 
+//Add thème
 $lang['themes.add_theme'] = 'Ajouter le thème';
+$lang['themes.add.not_theme'] = 'Aucun thème à installer';
+
+//Upload
+$lang['themes.upload'] = 'uploader un thème';
+$lang['themes.upload.description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+
+//Errors
+$lang['themes.already_exist'] = 'Le thème existe déjà';
+$lang['themes.upload.invalid_format'] = 'le format de l\'archive n\'est pas valide';
 
 //Delete theme
 $lang['themes.delete.drop_files'] = 'Supprimer tous les fichiers du thème';

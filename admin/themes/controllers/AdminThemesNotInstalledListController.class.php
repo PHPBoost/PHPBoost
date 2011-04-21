@@ -29,12 +29,23 @@ class AdminThemesNotInstalledListController extends AdminController
 {
 	private $lang;
 	private $view;
+	private $form;
+	private $submit_button;
 	
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
+		
+		$this->upload_form();
+		$this->view->put('UPLOAD_FORM', $this->form->display());
+		
 		$this->build_view();
 		$this->save($request);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->upload_theme();
+		}
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add']);
 	}
@@ -79,6 +90,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			}
 		}
 		$this->view->put_all(array(
+			'C_THEME_INSTALL' => count($not_installed_themes) > 0 ? true : false,
 			'L_ADD' => $this->lang['themes.add_theme']
 		));
 	}
@@ -107,7 +119,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		return $themes_not_installed;
 	}
 	
-	public function save(HTTPRequest $request)
+	private function save(HTTPRequest $request)
 	{
 		if ($request->get_bool('add', false))
 		{
@@ -119,6 +131,67 @@ class AdminThemesNotInstalledListController extends AdminController
 				ThemeManager::install($id_theme, $authorizations, $activated);
 				$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], E_USER_SUCCESS, 4));
 			}
+		}
+	}
+	
+	private function upload_form()
+	{
+		$form = new HTMLForm('upload_theme');
+		
+		$fieldset = new FormFieldsetHTML('upload_theme', $this->lang['themes.upload']);
+		$form->add_fieldset($fieldset);
+	
+		$fieldset->add_field(new FormFieldFilePicker('upload_theme', $this->lang['themes.upload.description']));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+
+		$this->form = $form;
+	}
+	
+	private function upload_theme()
+	{
+		$folder_phpboost_themes = PATH_TO_ROOT . '/templates/';
+
+        if (!is_writable($$folder_phpboost_themes))
+		{
+			$is_writable = @chmod($dir, 0777);
+		}
+         
+		if ($is_writable)
+		{	
+			$file = $form->get_value('upload_theme');
+			if (!ThemeManager::get_theme_existed($file->get_name()))
+			{
+                $upload = new Upload($folder_phpboost_themes);
+				if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+                {
+					$archive = $folder_phpboost_themes . $upload->filename['upload_theme'];
+					
+					if ($upload->extension['upload_theme'] == 'gzip')
+					{
+						import('lib/pcl/pcltar', LIB_IMPORT);
+						PclTarExtract($upload->filename['upload_theme'], $folder_phpboost_themes);
+						
+						$file = new File($archive);
+						$file->delete();
+					}
+					else if ($upload->extension['upload_theme'] == 'zip')
+					{
+						import('lib/pcl/pclzip', LIB_IMPORT);
+						$zip = new PclZip($archive);
+						$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+						
+						$file = new File($archive);
+						$file->delete();
+					}
+					else
+					{
+						$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+					}
+				}
+			}
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
 		}
 	}
 }
