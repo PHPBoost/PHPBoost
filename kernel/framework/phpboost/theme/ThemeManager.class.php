@@ -79,17 +79,15 @@ class ThemeManager
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
-			{
-				ThemesConfig::load()->add_theme($theme);
-				ThemesConfig::save();
-				
-				self::regenerate_cache();
-			}
-			else
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '<'))
 			{
 				self::$errors = 'Not compatible !';
 			}
+			
+			ThemesConfig::load()->add_theme($theme);
+			ThemesConfig::save();
+				
+			self::regenerate_cache();
 		}
 		else
 		{

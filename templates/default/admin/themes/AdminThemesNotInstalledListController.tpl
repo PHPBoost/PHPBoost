@@ -1,4 +1,5 @@
 <script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
+# INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table class="module_table" style="width:99%;margin-bottom:30px;">
 		<tr> 
@@ -11,6 +12,7 @@
 				# INCLUDE MSG #	
 			</td>
 		</tr>
+		# IF C_THEME_INSTALL #
 		<tr>
 			<td class="row2" style="width:100px;text-align:center;">
 				{@themes.name}
@@ -25,6 +27,13 @@
 				{@themes.activated}
 			</td>
 		</tr>
+		# ELSE #
+		<tr>
+			<td class="row2" colspan="4" style="text-align:center;">
+				<strong>{@themes.add.not_theme}</strong>
+			</td>
+		</tr>
+		# ENDIF #
 		# START themes_not_installed #
 			<tr> 	
 				<td class="row2" style="text-align:center;">					
