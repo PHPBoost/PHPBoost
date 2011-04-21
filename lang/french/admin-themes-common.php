@@ -33,14 +33,15 @@ $lang = array();
 
 //Messages 
 $lang['themes.add.success'] = 'Le thème a bien été ajouté';
-$lang['themes.edit.success'] = 'La configuration du thème a bien été mise à jour';
+$lang['themes.edit.success'] = 'Les thèmes ont bien été mise à jour';
 $lang['themes.delete.success'] = 'Le thème a bien été supprimé';
 
 // Title 
 $lang['themes.management'] = 'Gestion des thèmes';
 $lang['themes.installed'] = 'Thèmes installés';
 $lang['themes.add'] = 'Ajouter un thème';
-$lang['themes.not-installed'] = 'Thèmes non installés';
+$lang['themes.not_installed'] = 'Thèmes non installés';
+$lang['themes.delete'] = 'Suppression du thème';
 
 //Installed thèmes
 $lang['themes.name'] = 'Nom';
@@ -51,11 +52,22 @@ $lang['themes.activated'] = 'Activé';
 //Theme
 $lang['themes.author'] = 'Auteur';
 $lang['themes.compatibility'] = 'Compatibilité';
-$lang['themes.html-version'] = 'Version HTML';
-$lang['themes.css-version'] = 'Version CSS';
-$lang['themes.main-color'] = 'Couleurs dominante';
+$lang['themes.html_version'] = 'Version HTML';
+$lang['themes.css_version'] = 'Version CSS';
+$lang['themes.main_color'] = 'Couleurs dominante';
 $lang['themes.variable-width'] = 'Extensible';
 $lang['themes.width'] = 'Largeur';
-$lang['themes.bot-informed'] = 'Non renseigné';
+$lang['themes.bot_informed'] = 'Non renseigné';
+$lang['themes.view_real_preview'] = 'Voir en taille réelle';
+$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
+
+$lang['themes.yes'] = 'Oui';
+$lang['themes.no'] = 'Non';
+$lang['themes.visitor'] = 'Visiteur';
+
+$lang['themes.add_theme'] = 'Ajouter le thème';
+
+//Delete theme
+$lang['themes.delete.drop_files'] = 'Supprimer tous les fichiers du thème';
 
 ?>
