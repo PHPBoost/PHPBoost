@@ -34,6 +34,7 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$this->init();
 		$this->build_view();
+		$this->save($request);
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add']);
 	}
@@ -43,13 +44,43 @@ class AdminThemesNotInstalledListController extends AdminController
 		$not_installed_themes = $this->get_not_installed_themes();
 		foreach($not_installed_themes as $name)
 		{
-			$theme_configuration = ThemeConfigurationManager::get($name);
+			$configuration = ThemeConfigurationManager::get($name);
+			$pictures = $configuration->get_pictures();
+			$id_theme = $name;
 			
 			$this->view->assign_block_vars('themes_not_installed', array(
-				
+				'C_WEBSITE' => $configuration->get_author_link() !== '',
+				'C_PICTURES' => is_array($pictures),
+				'ID' => $id_theme,
+				'NAME' => $configuration->get_name(),
+				'VERSION' => $configuration->get_version(),
+				'MAIN_PICTURE' => is_array($pictures) ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
+				'AUTHOR_NAME' => $configuration->get_author_name(),
+				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
+				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+				'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
+				'COMPATIBILITY' => $configuration->get_compatibility(),
+				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id_theme),
+				'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
+				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
+				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
+				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
 			));
+			
+			if (is_array($pictures))
+			{
+				unset($pictures[0]);
+				foreach ($pictures as $picture)
+				{
+					$this->view->assign_block_vars('themes_not_installed.pictures', array(
+						'URL' => PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture
+					));
+				}
+			}
 		}
-		
+		$this->view->put_all(array(
+			'L_ADD' => $this->lang['themes.add_theme']
+		));
 	}
 	
 	private function init()
@@ -74,6 +105,21 @@ class AdminThemesNotInstalledListController extends AdminController
 		}
 		sort($themes_not_installed);
 		return $themes_not_installed;
+	}
+	
+	public function save(HTTPRequest $request)
+	{
+		if ($request->get_bool('add', false))
+		{
+			foreach ($this->get_not_installed_themes() as $id_theme)
+			{
+				$request = AppContext::get_request();
+				$activated = $request->get_bool('activated-' . $id_theme, false);
+				$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
+				ThemeManager::install($id_theme, $authorizations, $activated);
+				$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], E_USER_SUCCESS, 4));
+			}
+		}
 	}
 }
 ?>

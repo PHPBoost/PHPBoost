@@ -51,6 +51,11 @@ class ThemeManager
 		return $activated_themes;
 	}
 	
+	public static function get_default_theme()
+	{
+		return UserAccountsConfig::load()->get_default_theme();
+	}
+	
 	public static function get_theme($theme_id)
 	{
 		return ThemesConfig::load()->get_theme($theme_id);
@@ -110,11 +115,6 @@ class ThemeManager
 				}
 				self::regenerate_cache();
 			}
-			self::$errors = 'e_incomplete';
-		}
-		else
-		{
-			self::$errors = 'e_theme_already_exist';
 		}
 	}
 	
