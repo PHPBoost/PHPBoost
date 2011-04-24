@@ -97,7 +97,7 @@ class GeneralConfig extends AbstractConfigData
 
 	public function set_site_timezone($timezone)
 	{
-		$this->set_property(self::SITE_TIMEZONE, (int)$timezone);
+		$this->set_property(self::SITE_TIMEZONE, $timezone);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class GeneralConfig extends AbstractConfigData
 		self::HOME_PAGE => '/member/member.php',
 		self::PHPBOOST_VERSION => '3.1',
 		self::SITE_INSTALL_DATE => new Date(),
-		self::SITE_TIMEZONE => (int)date('I'),
+		self::SITE_TIMEZONE => 'Europe/Paris',
 		self::ADMIN_UNLOCKING_KEY => ''
 		);
 	}

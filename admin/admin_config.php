@@ -87,12 +87,12 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
-	$timezone = $general_config->get_site_timezone();
-	for ($i = -12; $i <= 14; $i++)
+	$site_timezone = $general_config->get_site_timezone();
+	$supported_timezones = Timezone::get_supported_timezones();
+	foreach ($supported_timezones as $timezone)
 	{
-		$selected = ($i == $timezone) ? 'selected="selected"' : '';
-		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
-		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
+		$selected = ($timezone == $site_timezone) ? 'selected="selected"' : '';
+		$select_timezone .= '<option value="' . $timezone . '" ' . $selected . '>' . $timezone . '</option>';
 	}
 	
 	$rewrite_unspecified = false;

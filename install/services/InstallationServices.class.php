@@ -181,7 +181,7 @@ class InstallationServices
 		$general_config->set_home_page($this->distribution_config['start_page']);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
-		$general_config->set_site_timezone((int)$site_timezone);
+		$general_config->set_site_timezone($site_timezone);
 		GeneralConfig::save();
 	}
 

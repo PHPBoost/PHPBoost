@@ -46,15 +46,14 @@ class FormFieldTimezone extends FormFieldSimpleSelectChoice
 
     private function generate_options()
 	{
+		$supported_timezones = Timezone::get_supported_timezones();
 		$options = array();
-		for ($i = -12; $i <= 14; $i++)
+		foreach($supported_timezones as $timezone)
 		{
-			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : ' ' . $i);
-			$options[] = new FormFieldSelectChoiceOption('UTC' . ($i >= 1 ? ' +' : ' ') . $i, $i);
+			$options[] = new FormFieldSelectChoiceOption($timezone, $timezone);
 		}
 		return $options;
 	}
 	
 }
-
 ?>
