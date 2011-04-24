@@ -107,6 +107,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" value="{L_SUBMIT}" class="submit" />
+        <input type="hidden" name="token" value="{TOKEN}" />
 			</fieldset>
 		</form>
 		# END rename #
@@ -133,6 +134,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" value="{L_SUBMIT}" class="submit" />
+        <input type="hidden" name="token" value="{TOKEN}" />
 			</fieldset>
 		</form>
 		# END new #
