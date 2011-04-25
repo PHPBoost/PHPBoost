@@ -34,7 +34,7 @@ class MemberExtendedFieldsFactory
 {	
 	/**
 	 * @desc This function displayed field for create form
-	 * @param instance of MemberExtendedField $member_extended_field.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function display_field_create(MemberExtendedField $member_extended_field)
 	{
@@ -47,7 +47,7 @@ class MemberExtendedFieldsFactory
 
 	/**
 	 * @desc This function displayed field for update form
-	 * @param instance of MemberExtendedField $member_extended_field.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function display_field_update(MemberExtendedField $member_extended_field)
 	{
@@ -60,7 +60,7 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function displayed field for profile
-	 * @param instance of MemberExtendedField $member_extended_field.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function display_field_profile(MemberExtendedField $member_extended_field)
 	{
@@ -72,7 +72,8 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function returned value form fields
-	 * @param instance of HTMLForm $form and instance of MemberExtendedField $member_extended_field.
+	 * @param object $form HTMLForm
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
@@ -84,7 +85,8 @@ class MemberExtendedFieldsFactory
 
 	/**
 	 * @desc This function parse value
-	 * @param instance of MemberExtendedField $member_extended_field and string $value.
+	 * @param object $member_extended_field MemberExtendedField
+	 * @param string $value string to parse
 	 */
 	public static function parse(MemberExtendedField $member_extended_field, $value)
 	{
@@ -96,7 +98,8 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function unparse value
-	 * @param instance of MemberExtendedField $member_extended_field and string $value.
+	 * @param object $member_extended_field MemberExtendedField
+	 * @param string $value string to unparse
 	 */
 	public static function unparse(MemberExtendedField $member_extended_field, $value)
 	{
@@ -108,7 +111,8 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function execute the database request
-	 * @param instance of MemberExtendedField $member_extended_field and instance of MemberExtendedFieldsDAO $member_extended_fields_dao.
+	 * @param object $member_extended_field MemberExtendedField
+	 * @param object $member_extended_fields_dao MemberExtendedFieldsDAO
 	 */
 	public static function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
 	{
@@ -120,7 +124,7 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function return Array disable fields in configuration
-	 * @param $field_type Field type.
+	 * @param string $field_type field type.
 	 */
 	public static function get_disable_fields_configuration($field_type)
 	{
@@ -135,7 +139,7 @@ class MemberExtendedFieldsFactory
 	
 	/**
 	 * @desc This function determines the class depending on the type of field
-	 * @param instance of MemberExtendedField or ExtendedField $member_extended_field.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function name_class($member_extended_field)
 	{

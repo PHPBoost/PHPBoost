@@ -64,12 +64,12 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		elseif ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], MessageHelper::SUCCESS, 6));
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl);
+		return new AdminExtendedFieldsDisplayResponse($this->tpl, $this->lang['extended-field-add']);
 	}
 
 	private function init()
@@ -180,17 +180,6 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		ExtendedFieldsService::add($extended_field);
 	}
 
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['extended-field']);
-		$response->add_link($this->lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$response->add_link($this->lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['extended-field-add']);
-		return $response;
-	}
-	
 	private function get_array_select_type()
 	{
 		$select = array();

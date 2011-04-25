@@ -88,15 +88,6 @@ class CSSFileOptimizer
 	}
 
 	/**
-	 * This class change path files in script and files added
-	 */
-	public function change_path_files($regex_search, $replace_value)
-	{
-		$this->regex_search_files_path = $regex_search;
-		$this->replace_value_files_path = $replace_value;
-	}
-
-	/**
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
 	public function optimize($intensity = self::HIGH_OPTIMIZATION)
@@ -129,13 +120,16 @@ class CSSFileOptimizer
 	 */
 	public function export_to_file($location)
 	{
-		$file = new File($location);
-		$file->delete();
-		$file->lock();
-		$file->write($this->content);
-		$file->unlock();
-		$file->close();
-		$file->change_chmod(0666);
+		if (!empty($this->files) || !empty($this->scripts))
+		{
+			$file = new File($location);
+			$file->delete();
+			$file->lock();
+			$file->write($this->content);
+			$file->unlock();
+			$file->close();
+			$file->change_chmod(0666);
+		}
 	}
 
 	/**

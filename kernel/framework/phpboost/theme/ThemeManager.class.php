@@ -51,6 +51,11 @@ class ThemeManager
 		return $activated_themes;
 	}
 	
+	public static function get_default_theme()
+	{
+		return UserAccountsConfig::load()->get_default_theme();
+	}
+	
 	public static function get_theme($theme_id)
 	{
 		return ThemesConfig::load()->get_theme($theme_id);
@@ -74,19 +79,20 @@ class ThemeManager
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
-			{
-				ThemesConfig::load()->add_theme($theme);
-				ThemesConfig::save();
-			}
-			else
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '<'))
 			{
 				self::$errors = 'Not compatible !';
 			}
 			
+			ThemesConfig::load()->add_theme($theme);
+			ThemesConfig::save();
+				
 			self::regenerate_cache();
 		}
-		self::$errors = 'e_theme_already_exist';
+		else
+		{
+			self::$errors = 'e_theme_already_exist';
+		}
 	}
 	
 	public static function uninstall($theme_id, $drop_files = false)
@@ -107,58 +113,68 @@ class ThemeManager
 				}
 				self::regenerate_cache();
 			}
-			self::$errors = 'e_incomplete';
 		}
-		self::$errors = 'e_theme_already_exist';
 	}
 	
 	public static function change_visibility($theme_id, $visibility)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_activated($visibility);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_activated($visibility);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
 	}
 	
 	public static function change_authorizations($theme_id, Array $authorizations)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_authorizations($authorizations);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_authorizations($authorizations);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+		}
 	}
 	
 	public static function change_informations($theme_id, $visibility, Array $authorizations = array(), $columns_disabled = null)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_activated($visibility);
-		
-		if (!empty($authorizations))
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			$theme->set_authorizations($authorizations);
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_activated($visibility);
+			
+			if (!empty($authorizations))
+			{
+				$theme->set_authorizations($authorizations);
+			}
+			
+			if ($columns_disabled !== null)
+			{
+				$theme->set_columns_disabled($columns_disabled);
+			}
+			
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
 		}
-		
-		if ($columns_disabled !== null)
-		{
-			$theme->set_columns_disabled($columns_disabled);
-		}
-		
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
 	}
 	
 	public static function change_columns_disabled($theme_id, ColumnsDisabled $columns_disabled)
 	{
-		$theme = ThemesConfig::load()->get_theme($theme_id);
-		$theme->set_columns_disabled($columns_disabled);
-		ThemesConfig::load()->update($theme);
-		ThemesConfig::save();
-		
-		self::regenerate_cache();
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_columns_disabled($columns_disabled);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
 	}
 	
 	public static function get_errors()
@@ -169,6 +185,7 @@ class ThemeManager
 	private static function regenerate_cache()
 	{
     	ModulesCssFilesCache::invalidate();
+		ThemesCssFilesCache::invalidate();
 	}
 }
 ?>

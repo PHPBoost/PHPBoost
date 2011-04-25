@@ -63,7 +63,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'L_VALID' => LangLoader::get_message('update', 'main')
 		));
 
-		return $this->build_response($this->view);
+		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['extended-fields-management']);
 	}
 
 	private function init()
@@ -71,17 +71,6 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		$this->lang = LangLoader::get('admin-extended-fields-common');
 		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
 		$this->view->add_lang($this->lang);
-	}
-
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['extended-field']);
-		$response->add_link($this->lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$response->add_link($this->lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), '/templates/' . get_utheme() . '/images/admin/extendfield.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['extended-fields-management']);
-		return $response;
 	}
 	
 	private function update_fields($request)

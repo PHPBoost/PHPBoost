@@ -538,17 +538,17 @@ class UserAccountsConfig extends AbstractConfigData
 		$server_configuration = new ServerConfiguration();
 		
 		return array(
-			self::REGISTRATION_ENABLED_PROPERTY => true,
+			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => 1,
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
 			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
-			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => true,
+			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 1,
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
-			self::FORCE_USERS_THEME_PROPERTY => false,
-			self::ENABLE_AVATAR_UPLOAD_PROPERTY => true,
-			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? true : false,
-			self::DEFAULT_AVATAR_ENABLED_PROPERTY => true,
+			self::FORCE_USERS_THEME_PROPERTY => FormFieldCheckbox::UNCHECKED,
+			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,
+			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+			self::DEFAULT_AVATAR_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,

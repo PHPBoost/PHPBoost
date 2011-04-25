@@ -20,7 +20,7 @@
 - Balises Youtube, Dailymotion
 + Terminer le passage du dossier member et de la partie membre dans l'administration (ajout du fichier de lang pour l'administration)
 + Refaire la classes Comments (gestion des autorisations spécifique concernant l'id d'un module dans la BDD, gestion des id module en approbation ou non, possibilité de noter des commentaires positivement ou négativement).
-+ [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
+- Créer des champs spécifique aux sanctions.
 
 ------------------------------------ MODULES -----------------------------------
 

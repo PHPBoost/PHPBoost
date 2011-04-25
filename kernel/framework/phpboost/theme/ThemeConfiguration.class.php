@@ -48,6 +48,7 @@ class ThemeConfiguration
 	private $main_color = '';
 	private $variable_width;
 	private $width;
+	private $pictures;
 	private $repository;
 	
 	public function __construct($config_ini_file)
@@ -125,6 +126,11 @@ class ThemeConfiguration
 		return $this->width;
 	}
 	
+	public function get_pictures()
+	{
+		return $this->pictures;
+	}
+	
 	public function get_repository()
 	{
 		return $this->repository;
@@ -132,7 +138,7 @@ class ThemeConfiguration
 	
 	private function load_configuration($config_ini_file)
 	{
-		$config = parse_ini_file($config_ini_file);
+		$config = @parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
 		
 		$this->name = $config['name'];
@@ -140,19 +146,26 @@ class ThemeConfiguration
 		$this->author_mail = $config['author_mail'];
 		$this->author_link = $config['author_link'];
 		$this->version = $config['version'];
-		$this->description = $config['info'];
-		$this->date = $config['date'];
+		$this->description = isset($config['info']) ? $config['info'] : '';
+		$this->date = isset($config['date']) ? $config['date'] : '';
 		$this->compatibility = $config['compatibility'];
 		$this->require_copyright = (bool)$config['require_copyright'];
-		$this->html_version = $config['html_version'];
-		$this->css_version = $config['css_version'];
+		$this->html_version = isset($config['html_version']) ? $config['html_version'] : '';
+		$this->css_version = isset($config['css_version']) ? $config['css_version'] : '';
 		$this->columns_disabled = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
-		$this->main_color = $config['main_color'];
+		$this->main_color = isset($config['main_color']) ? $config['main_color'] : '';
 		$this->variable_width = (bool)$config['variable_width'];
-		$this->width = $config['width'];
+		$this->width = isset($config['width']) ? $config['width'] : '';
+		$this->pictures = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : '';
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 	}
 
+	private function parse_pictures_array($pictures)
+	{
+		$pictures = explode(',', $pictures);
+		return $pictures;
+	}
+	
 	private function parse_columns_disabled_array($columns_disabled)
 	{
 		$columns_disabled_array = explode(',', $columns_disabled);

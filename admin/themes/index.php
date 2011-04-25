@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              NewsletterExtensionPointProvider.class.php
+ *                           index.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : April 20, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,17 +25,14 @@
  *
  ###################################################*/
 
-class NewsletterExtensionPointProvider extends ExtensionPointProvider
-{
-    function __construct()
-    {
-        parent::__construct('newsletter');
-    }
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
-	}
-}
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
+require_once PATH_TO_ROOT . '/kernel/begin.php';
+
+$url_controller_mappers = array(
+	new UrlControllerMapper('AdminThemesInstalledListController', '`^(?:/installed)?/?$`'),
+	new UrlControllerMapper('AdminThemesNotInstalledListController', '`^/add/?$`'),
+	new UrlControllerMapper('AdminThemeDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
+);
+DispatchManager::dispatch($url_controller_mappers);
 ?>
