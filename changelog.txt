@@ -33,6 +33,7 @@
 + Refonte de la classe session (Possibilité de joindre les sessions et l'espace membre à des systèmes d'authentification externes).
 [*] Refonte du système de notation.
 + Refonte du système de commentaire.
+[*] Refonte de la gestion des thèmes.
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
@@ -47,6 +48,7 @@
 - [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
 [*] Possibilité de cacher/ouvrir dans la liste des modules, la description et les autorisations de lecture pour une meilleure lisibilité
 [*] Amélioration de l'interface de gestion des thèmes.
+[*] Possibilité de mettre plusieurs images de visualisation des thèmes avec effet LightBox.
 
 [b]Divers :[/b]
 [*] [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.

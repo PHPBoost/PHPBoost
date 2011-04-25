@@ -51,6 +51,11 @@ class ThemeManager
 		return $activated_themes;
 	}
 	
+	public static function get_default_theme()
+	{
+		return UserAccountsConfig::load()->get_default_theme();
+	}
+	
 	public static function get_theme($theme_id)
 	{
 		return ThemesConfig::load()->get_theme($theme_id);
@@ -74,17 +79,15 @@ class ThemeManager
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
-			{
-				ThemesConfig::load()->add_theme($theme);
-				ThemesConfig::save();
-				
-				self::regenerate_cache();
-			}
-			else
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '<'))
 			{
 				self::$errors = 'Not compatible !';
 			}
+			
+			ThemesConfig::load()->add_theme($theme);
+			ThemesConfig::save();
+				
+			self::regenerate_cache();
 		}
 		else
 		{
@@ -110,11 +113,6 @@ class ThemeManager
 				}
 				self::regenerate_cache();
 			}
-			self::$errors = 'e_incomplete';
-		}
-		else
-		{
-			self::$errors = 'e_theme_already_exist';
 		}
 	}
 	

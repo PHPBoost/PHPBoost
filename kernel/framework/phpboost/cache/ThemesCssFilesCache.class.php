@@ -60,7 +60,6 @@ class ThemesCssFilesCache implements CacheData
 	 * Returns the list of the files to load for a given theme.
 	 * @param $theme The theme for which you want the files to load
 	 * @return string[] List of the paths of the files to load.
-	 * @throws PropertyNonFoundException If the configuration for this theme is unknown
 	 */
 	public function get_files_for_theme($theme)
 	{
@@ -70,7 +69,7 @@ class ThemesCssFilesCache implements CacheData
 		}
 		else
 		{
-			throw new PropertyNotFoundException($theme);
+			return null;
 		}
 	}
 

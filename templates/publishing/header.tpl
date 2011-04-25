@@ -10,8 +10,11 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
         <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 
-		<!-- CSS -->
-		{CSS}
+		<!-- Theme CSS -->
+		{THEME_CSS}
+		
+		<!-- Modules CSS -->
+		{MODULES_CSS}
 
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
