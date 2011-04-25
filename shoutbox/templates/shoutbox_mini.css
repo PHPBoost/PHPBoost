@@ -1,8 +1,0 @@
-/* Conteneur des messages de la shoutbox.*/
-div#shout_container{
-	width:142px;
-	height:150px;
-	overflow:auto;
-	text-align:left;
-	margin:auto;
-}

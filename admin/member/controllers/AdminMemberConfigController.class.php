@@ -69,7 +69,7 @@ class AdminMemberConfigController extends AdminController
 		$unactivated_accounts_timeout = (string)$user_account_config->get_unactivated_accounts_timeout();
 		$captcha_activation = $user_account_config->is_registration_captcha_enabled();
 		$captcha_difficulty = (string)$user_account_config->get_registration_captcha_difficulty();
-		$theme_forced = $user_account_config->is_users_theme_forced();
+		$theme_forced = !$user_account_config->is_users_theme_forced();
 		$upload_avatar_server = $user_account_config->is_avatar_upload_enabled();
 		$activation_resize_avatar = $user_account_config->is_avatar_auto_resizing_enabled();
 		$maximal_width_avatar = $user_account_config->get_max_avatar_width();
@@ -177,7 +177,7 @@ class AdminMemberConfigController extends AdminController
 		$user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
 		$user_account_config->set_registration_captcha_enabled($this->form->get_value('captcha_activation'));
 		$user_account_config->set_registration_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
-		$user_account_config->set_force_theme_enabled($this->form->get_value('theme_choice_permission'));
+		$user_account_config->set_force_theme_enabled(!$this->form->get_value('theme_choice_permission'));
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
 		$user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));

@@ -2,9 +2,9 @@
 /*##################################################
  *                             ArticlesSetup.class.php
  *                            -------------------
- *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : April 25, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -28,14 +28,12 @@
 class ArticlesSetup extends DefaultModuleSetup
 {
 	private static $articles_table;
-	private static $articles_cat_table;
-	private static $articles_model_table;
+	private static $articles_categories;
 
 	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
-		self::$articles_cat_table = PREFIX . 'articles_cats';
-		self::$articles_model_table = PREFIX . 'articles_models';
+		self::$articles_categories = PREFIX . 'articles_categories';
 	}
 
 	public function install()
@@ -52,92 +50,62 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cat_table, self::$articles_model_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_categories));
 	}
 
 	private function create_tables()
 	{
 		$this->create_articles_table();
-		$this->create_articles_cats_table();
-		$this->create_articles_models_table();
+		$this->create_articles_categories_table();
 	}
 
 	private function create_articles_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
+			'id_categorie' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'sources' => array('type' => 'text', 'length' => 65000),
-			'icon' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'source' => array('type' => 'text', 'length' => 65000),
+			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'writer_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'writer_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'visibility' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'start_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'end_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'authorizations' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'start' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'end' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'views' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 65000),
-			'nbrnote' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'extend_field' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
+				'id_categorie' => array('type' => 'key', 'fields' => 'id_categorie'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
-		)
+			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
 	}
 
-	private function create_articles_cats_table()
+	private function create_articles_categories_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
+			'authorizations' => array('type' => 'text', 'default' => "''"),,
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'nbr_articles_visible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_articles_unvisible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'image' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'default' => "''"),
-			'tpl_cat' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'articles_cat.tpl'")
+			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'visibility' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array('class' => array('type' => 'key', 'fields' => 'c_order'))
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_cat_table, $fields, $options);
-	}
-
-	private function create_articles_models_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
-			'model_default' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'pagination_tab' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'extend_field' => array('type' => 'text', 'length' => 65000),
-			'options' => array('type' => 'text', 'length' => 65000),
-			'tpl_articles' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "'articles.tpl'")
-		);
-		$options = array(
-			'primary' => array('id'),
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_model_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$articles_categories, $fields, $options);
 	}
 
 	private function insert_data()

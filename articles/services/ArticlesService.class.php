@@ -1,10 +1,11 @@
 <?php
 /*##################################################
- *                            Timezone.class.php
+ *                        ArticlesService.class.php
  *                            -------------------
- *   begin                : October 30, 2010
- *   copyright            : (C) 2010 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
+ *   begin                : April 25, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
+ *
  *
  ###################################################
  *
@@ -24,37 +25,16 @@
  *
  ###################################################*/
 
-class Timezone
+class ArticlesService
 {
-	private static $server_timezone;
-	private static $site_timezone;
-	private static $user_timezone;
-	
-	public static function __static()
+    public function add(Article $article)
 	{
-		self::$server_timezone = new DateTimeZone('Europe/Paris');
-		self::$site_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
-		self::$user_timezone = new DateTimeZone('Europe/Paris');
+	
 	}
 	
-	public static function get_supported_timezones()
+	public function edit(Article $article)
 	{
-		return DateTimeZone::listIdentifiers();
-	}
 	
-	public static function get_server_timezone()
-	{
-		return self::$server_timezone;
-	}
-	
-	public static function get_site_timezone()
-	{
-		return self::$site_timezone;
-	}
-	
-	public static function get_user_timezone()
-	{
-		return self::$user_timezone;
 	}
 }
 ?>
