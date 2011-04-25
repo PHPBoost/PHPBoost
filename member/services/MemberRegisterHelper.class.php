@@ -31,7 +31,6 @@
 	{
 		$activation_key = self::generate_activation_key();
 
-		// Write to DataBase
 		self::register_member_request($form, $activation_key);
 		
 		self::regenerate_cache();
@@ -42,6 +41,11 @@
 	private static function register_member_request($form, $activation_key)
 	{
 		$user_aprobation = UserAccountsConfig::load()->get_member_accounts_validation_method() == 0 ? 1 : 0;
+		
+		if (UserAccountsConfig::load()->get_member_accounts_validation_method() !== 1)
+		{
+			$activation_key = '';
+		}
 		
 		PersistenceContext::get_querier()->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
@@ -70,11 +74,12 @@
 		{
 			// Administrator alert
 			self::add_administrator_alert();
-			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), DispatchManager::get_url('/member', '/confirm/'.$activation_key.'')->absolute());
+			
+			$valid = LangLoader::get_message('register_valid_admin', 'main');
 		}
 		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 1)
 		{
-			$valid = LangLoader::get_message('register_valid_admin', 'main');
+			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), DispatchManager::get_url('/member', '/confirm/'.$activation_key.'')->absolute());
 		}
 		else
 		{
@@ -114,10 +119,6 @@
 	private static function regenerate_cache()
 	{
 		StatsCache::invalidate();
-		
-		// TODO depreciate, use PHPBoost function
-		@unlink('../cache/sex.png');
-		@unlink('../cache/theme.png');
 	}
 	
 	private static function last_user_id_registered()
@@ -129,7 +130,7 @@
 	{
 		$alert = new AdministratorAlert();
 		$alert->set_entitled(LangLoader::get_message('member_registered_to_approbate', 'main'));
-		$alert->set_fixing_url('admin/admin_members.php?id=' . self::last_user_id_registered());
+		$alert->set_fixing_url(DispatchManager::get_url('/admin/member', '/members/' . self::last_user_id_registered() . '/edit/')->absolute());
 		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$alert->set_id_in_module(self::last_user_id_registered());
 		$alert->set_type('member_account_to_approbate');

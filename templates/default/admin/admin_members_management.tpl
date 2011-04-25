@@ -53,14 +53,14 @@
 					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/add/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php?add=1" class="quick_link">{L_USERS_ADD}</a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/add/" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/config/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_config.php" class="quick_link">{L_USERS_CONFIG}</a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/config/" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
@@ -146,8 +146,8 @@
 				# START member #
 				<tr style="text-align:center;"> 
 					<td class="row1"> 
-						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}&amp;token={TOKEN}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/{member.IDMBR}/edit/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/{member.IDMBR}/delete/" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					<td class="row2">
 						<a href="{PATH_TO_ROOT}/member/index.php?url=/profil/{member.IDMBR}">{member.NAME}</a>				
