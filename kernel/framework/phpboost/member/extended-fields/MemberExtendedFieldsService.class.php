@@ -36,7 +36,7 @@ class MemberExtendedFieldsService
 	
 	/**
 	 * @desc This function displayed fields form
-	 * @param required object DisplayMemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
+	 * @param object $member_extended_field MemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
 	 */
 	public static function display_form_fields(MemberExtendedField $member_extended_field)
 	{
@@ -62,7 +62,7 @@ class MemberExtendedFieldsService
 
 	/**
 	 * @desc This function displayed fields profile
-	 * @param required object DisplayMemberExtendedField containing user_id, Template and field_type.
+	 * @param object $member_extended_field MemberExtendedField containing user_id, Template and field_type.
 	 */
 	public static function display_profile_fields(MemberExtendedField $member_extended_field)
 	{
@@ -102,7 +102,7 @@ class MemberExtendedFieldsService
 
 	/**
 	 * @desc This function register fields
-	 * @param required instance of HTMLForm and user id.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	public static function register_fields(HTMLForm $form, $user_id)
 	{
@@ -139,7 +139,7 @@ class MemberExtendedFieldsService
 	
 	/**
 	 * @desc This private function display form create
-	 * @param required instance of MemberExtendedField.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	private static function display_create_form(MemberExtendedField $member_extended_field)
 	{
@@ -167,7 +167,7 @@ class MemberExtendedFieldsService
 	
 	/**
 	 * @desc This private function display form update
-	 * @param required instance of MemberExtendedField.
+	 * @param object $member_extended_field MemberExtendedField
 	 */
 	private static function display_update_form(MemberExtendedField $member_extended_field)
 	{
@@ -201,7 +201,7 @@ class MemberExtendedFieldsService
 	
 	/**
 	 * @desc This public function return the data sent by the user depending field_name
-	 * @param required instance of MemberExtendedField containing user_id and field_name.
+	 * @param object $member_extended_field MemberExtendedField containing user_id and field_name.
 	 */
 	public static function return_field_member(MemberExtendedField $member_extended_field, $rewrite = false)
 	{

@@ -78,9 +78,9 @@ if ($members)
 	));
 	
 	$stats_array = array();
-	foreach (ThemeManager::get_activated_themes_map() as $id)
+	foreach (ThemeManager::get_activated_themes_map() as $theme)
 	{
-		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
+		$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $theme->get_id() . "'");
 	}
 		
 	$Stats = new ImagesStats();

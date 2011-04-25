@@ -38,7 +38,8 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/members/add'), $picture);
 		$this->add_link($lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/members/config'), $picture);
 		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/admin/admin_members_punishment.php', $picture);
-		
+		$this->add_link($lang['members.rules'], DispatchManager::get_url('/admin/member/index.php', '/members/rules'), '/templates/' . get_utheme() . '/images/admin/terms.png');
+
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}
