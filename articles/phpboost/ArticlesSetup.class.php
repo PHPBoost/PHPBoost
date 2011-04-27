@@ -95,7 +95,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'authorizations' => array('type' => 'text', 'default' => "''"),,
+			'authorizations' => array('type' => 'text', 'default' => "''"),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),

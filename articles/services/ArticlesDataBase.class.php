@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                        ArticlesService.class.php
+ *                             ArticlesDataBase.class.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   begin                : April 27, 2011
+ *   copyright            : (C) 2011 KÃ©vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,24 +25,9 @@
  *
  ###################################################*/
 
-class ArticlesService
+class ArticlesDataBase
 {
-	public $articles_table = PREFIX .'articles';
-	public $articles_categories_table = PREFIX .'articles_categories';
-	
-    	public function add(Article $article)
-	{
-	
-	}
-	
-	public function edit(Article $article)
-	{
-	
-	}
-	
-	public function delete(Article $article)
-	{
-	
-	}
+
 }
+
 ?>

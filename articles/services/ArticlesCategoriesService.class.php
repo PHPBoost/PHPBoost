@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        ArticlesService.class.php
+ *                        ArticlesCategoriesService.class.php
  *                            -------------------
- *   begin                : April 25, 2011
+ *   begin                : April 26, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,22 +25,29 @@
  *
  ###################################################*/
 
-class ArticlesService
+class ArticlesCategoriesService
 {
-	public $articles_table = PREFIX .'articles';
-	public $articles_categories_table = PREFIX .'articles_categories';
-	
-    	public function add(Article $article)
+    	public function add(ArticleCategorie $categorie)
 	{
 	
 	}
 	
-	public function edit(Article $article)
+	public function edit(ArticleCategorie $categorie)
+	{
+	
+	}
+
+	public function delete(ArticleCategorie $categorie)
 	{
 	
 	}
 	
-	public function delete(Article $article)
+	public function change_position(ArticleCategorie $categorie)
+	{
+	
+	}
+	
+	public function change_visibility(ArticleCategorie $categorie)
 	{
 	
 	}
