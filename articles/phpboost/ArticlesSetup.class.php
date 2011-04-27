@@ -63,7 +63,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_categorie' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
@@ -76,12 +76,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'start_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'end_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'authorizations' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'timestamp_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'timestamp_last_modified' => array('type' => 'integer', 'length' => 11, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'id_categorie' => array('type' => 'key', 'fields' => 'id_categorie'),
+				'id_categorie' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 			)
@@ -95,11 +96,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'authorizations' => array('type' => 'text', 'default' => "''"),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'visibility' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'notation_disabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'comments_disabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'authorizations' => array('type' => 'text', 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id'),

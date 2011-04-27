@@ -1,0 +1,11 @@
+- Refonte MVC
+- Ajout de la contribution
+- Ajout d'autorisations sur les catégories
+- Ajout d'autorisations sur un aurticle
+- Ajout de source
+- Possibilité de suggérer l'article par mail
+- Possibilité de gérer les pages par onglets
+- Gestion des articles non approuvé (par membre)
+- Ajout d'un champ de description
+- Possibilité de désactiver l'affichage des notes et des commentaires sur une catégorie
+- Affichier la date de dernière modification de l'article

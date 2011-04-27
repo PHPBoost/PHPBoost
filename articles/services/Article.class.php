@@ -40,7 +40,8 @@ class Article
     private $start_visibility;
     private $end_visibility;
     private $authorizations;
-    private $timestamp;
+    private $timestamp_created;
+	private $timestamp_last_modified;
 	
 	public function set_id($id)
 	{
@@ -182,14 +183,24 @@ class Article
 		return $this->authorizations;
 	}
 	
-	public function set_timestamp($timestamp)
+	public function set_timestamp_created($timestamp_created)
 	{
-		$this->timestamp = $timestamp;
+		$this->timestamp_created = $timestamp_created;
 	}
 	
-	public function get_timestamp()
+	public function get_timestamp_created()
 	{
-		return $this->timestamp;
+		return $this->timestamp_created;
+	}
+	
+	public function set_timestamp_last_modified($timestamp_last_modified)
+	{
+		$this->timestamp_last_modified = $timestamp_last_modified;
+	}
+	
+	public function get_timestamp_last_modified()
+	{
+		return $this->timestamp_last_modified;
 	}
 }
 ?>
