@@ -86,7 +86,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 		
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
@@ -164,7 +164,7 @@ elseif ($g_add)
 	}
 	
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
