@@ -77,7 +77,7 @@
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
 							<a href="{files.U_FILE}">{files.NAME}</a>
 							<a href="{files.U_EDIT}">
-								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 							</a>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
@@ -127,7 +127,7 @@
 		# IF C_ADMIN #
 		<div style="text-align:center; margin:20px 20px;" class="row1">
 			<a href="moderation_media.php?recount=1">
-				<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_MEDIA}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_MEDIA}" />
 			</a>
 			<br />
 			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>

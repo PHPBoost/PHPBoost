@@ -66,7 +66,7 @@
 				# START web #
 				<tr style="text-align:center;"> 
 					<td class="row2"> 
-						<a href="../web/web.php?cat={web.IDCAT}&amp;id={web.IDWEB}">{web.NAME}</a>
+						<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}&amp;id={web.IDWEB}">{web.NAME}</a>
 					</td>
 					<td class="row2"> 
 						{web.CAT}
@@ -81,10 +81,10 @@
 						{web.APROBATION}
 					</td>
 					<td class="row2"> 
-						<a href="admin_web.php?id={web.IDWEB}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_web.php?id={web.IDWEB}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="Supprimer" title="Supprimer" /></a>
+						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="Supprimer" title="Supprimer" /></a>
 					</td>
 				</tr>
 				# END web #

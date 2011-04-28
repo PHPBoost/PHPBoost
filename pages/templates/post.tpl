@@ -38,7 +38,7 @@
 	
 		# IF C_ERROR_HANDLER #
 			<div class="{ERRORH_CLASS}">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />
 			</div>
 			<br />

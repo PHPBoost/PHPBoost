@@ -3,10 +3,10 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="{PATH_TO_ROOT}/syndication.php?m=download&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
+				<a href="{PATH_TO_ROOT}/syndication.php?m=download&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 				</a>
 				# END IF #
 			</div>
@@ -14,7 +14,7 @@
 				# IF C_ADD_FILE #
 					<div style="text-align:center;">
 						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="../templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
 						</a>
 					</div>
 					<hr style="margin-top:25px; margin-bottom:25px;" />
@@ -36,7 +36,7 @@
 								
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
 								<div class="text_small">
@@ -89,10 +89,10 @@
 									<a href="{file.U_DOWNLOAD_LINK}" class="big_link">{file.NAME}</a>
 									# IF C_ADMIN #
 										<a href="{file.U_ADMIN_EDIT_FILE}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 										</a>
 										<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 										</a>
 									# ENDIF #
 								</p>
@@ -142,10 +142,10 @@
 					{U_COM}
 					# IF C_EDIT_AUTH #
 						<a href="{U_EDIT_FILE}">
-							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
 						</a>
 						<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-							<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
 						</a>
 					# ENDIF #
 				</div>

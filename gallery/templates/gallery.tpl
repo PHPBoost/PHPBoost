@@ -52,7 +52,7 @@
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
@@ -67,7 +67,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -78,7 +78,7 @@
 		}
 		function pics_aprob(id_file, aprob)
 		{
-			document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 			data = 'id_file=' + id_file;
 			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
@@ -94,7 +94,7 @@
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
-						document.getElementById('img_aprob' + id_file).src = '../templates/{THEME}/images/{LANG}/' + img_aprob;
+						document.getElementById('img_aprob' + id_file).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/' + img_aprob;
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
 					document.getElementById('img' + id_file).innerHTML = '';
@@ -149,8 +149,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="../templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="../templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -163,8 +163,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="../templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="../templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -240,14 +240,14 @@
 					<div class="dynamic_menu" style="float:right;margin-right:55px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="../wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
 								<ul id="smenu1">
 									<li>{U_BEST_VIEWS}</li>
 									<li>{U_BEST_NOTES}</li>
 								</ul>
 							</li>
 							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
 								<ul id="smenu2">
 									# START order #
 									<li>{order.ORDER_BY}</li>
@@ -255,7 +255,7 @@
 								</ul>
 							</li>
 							<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
+								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
 								<ul id="smenu3">
 									<li>{U_ASC}</li>
 									<li>{U_DESC}</li>	
@@ -349,8 +349,8 @@
 								# IF C_GALLERY_PICS_MODO #
 								<tr>										
 									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
+										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
+										<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
 										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
@@ -360,10 +360,10 @@
 												<br /><br />
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
 										
-										<a href="javascript:pics_aprob({ID});" title="{L_APROB_IMG}"><img id="img_aprob{ID}" src="../templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+										<a href="javascript:pics_aprob({ID});" title="{L_APROB_IMG}"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
 										&nbsp;<span id="img{ID}"></span>
 									</td>
 								</tr>
@@ -406,8 +406,8 @@
 										
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
-										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
+										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
+										<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
@@ -419,9 +419,9 @@
 												</div>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 											
-										<a href="javascript:pics_aprob({pics_list.ID});" title="{pics_list.L_APROB_IMG}"><img id="img_aprob{pics_list.ID}" src="../templates/{THEME}/images/{pics_list.IMG_APROB}" alt="{pics_list.L_APROB_IMG}" title="{pics_list.L_APROB_IMG}" class="valign_middle" /></a>
+										<a href="javascript:pics_aprob({pics_list.ID});" title="{pics_list.L_APROB_IMG}"><img id="img_aprob{pics_list.ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{pics_list.IMG_APROB}" alt="{pics_list.L_APROB_IMG}" title="{pics_list.L_APROB_IMG}" class="valign_middle" /></a>
 										# ENDIF #											
 										<span id="img{pics_list.ID}"></span>										
 									</div>

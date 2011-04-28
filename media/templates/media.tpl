@@ -3,16 +3,16 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="../syndication.php?m=media" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
+				<a href="{PATH_TO_ROOT}/syndication.php?m=media" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
 				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 				</a>
 				# END IF #
 				# IF C_MODO #
 				<a href="moderation_media.php">
-					<img class="valign_middle" src="../templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
 				</a>
 				# END IF #
 			</div>
@@ -20,7 +20,7 @@
 				# IF C_ADD_FILE #
 					<div style="text-align:center;">
 						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="../templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
 						</a>
 					</div>
 					<hr style="margin-top:25px; margin-bottom:25px;" />
@@ -41,7 +41,7 @@
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 								</a>
 								# ENDIF #
 								# IF row.list_cats.NUM_MEDIA #
@@ -88,13 +88,13 @@
 									# IF C_MODO #
 									<div style="float:right;">
 										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/visible.png" alt="">
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="">
 										</a>
 										<a href="{file.U_ADMIN_EDIT_MEDIA}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 										</a>
 										<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="">
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="">
 										</a>
 									</div>
 									# ENDIF #
@@ -162,7 +162,7 @@
 					{NAME}
 					# IF C_MODO #
 					<a href="moderation_media.php">
-						<img class="valign_middle" src="../templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
 					</a>
 					# END IF #
 				</div>
@@ -170,13 +170,13 @@
 					# IF A_COM #{U_COM}# ENDIF #
 					# IF C_MODO #
 						<a href="{U_UNVISIBLE_MEDIA}">
-							<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/visible.png" alt="">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="">
 						</a>
 						<a href="{U_EDIT_MEDIA}">
-							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
 						</a>
 						<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-							<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
 						</a>
 					# ENDIF #
 				</div>

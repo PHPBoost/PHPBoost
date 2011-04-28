@@ -6,7 +6,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -16,7 +16,7 @@
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;">
 					{cat_list.U_IMG_CAT}
-					<a href="../web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
+					<a href="{PATH_TO_ROOT}/web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
 					<span class="text_small">{cat_list.CONTENTS}</span>
 					<br /><br /><br />
 				</div>	
@@ -44,7 +44,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -54,29 +54,29 @@
 				<table class="module_table">
 					<tr>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_ALPHA_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_LINK}
-							<a href="web{U_WEB_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_ALPHA_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DATE}					
-							<a href="web{U_WEB_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_VIEW_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_VIEW}					
-							<a href="web{U_WEB_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_VIEW_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_NOTE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_NOTE}					
-							<a href="web{U_WEB_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_NOTE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_COM_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_COM}
-							<a href="web{U_WEB_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="web{U_WEB_COM_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 					</tr>
 					# START web #
@@ -134,7 +134,7 @@
 					<br /><br />
 					<strong>{L_CAT}:</strong> 
 					
-					<a href="../web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
+					<a href="{PATH_TO_ROOT}/web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
 					
 					<strong>{L_DATE}:</strong> {DATE}<br />						
 					<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
