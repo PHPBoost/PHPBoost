@@ -129,7 +129,15 @@ class AdminThemesNotInstalledListController extends AdminController
 				$activated = $request->get_bool('activated-' . $id_theme, false);
 				$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 				ThemeManager::install($id_theme, $authorizations, $activated);
-				$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], E_USER_SUCCESS, 4));
+				$error = ThemeManager::get_error();
+				if ($error !== null)
+				{
+					$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+				}
+				else
+				{
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], MessageHelper::SUCCESS, 4));
+				}
 			}
 		}
 	}
@@ -153,45 +161,63 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$folder_phpboost_themes = PATH_TO_ROOT . '/templates/';
 
-        if (!is_writable($$folder_phpboost_themes))
+        if (!is_writable($folder_phpboost_themes))
 		{
 			$is_writable = @chmod($dir, 0777);
 		}
-         
+		else
+		{
+			$is_writable = true;
+		}
+        
 		if ($is_writable)
-		{	
-			$file = $form->get_value('upload_theme');
-			if (!ThemeManager::get_theme_existed($file->get_name()))
+		{
+			$file = $this->form->get_value('upload_theme');
+			if ($file !== null)
 			{
-                $upload = new Upload($folder_phpboost_themes);
-				if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
-                {
-					$archive = $folder_phpboost_themes . $upload->filename['upload_theme'];
-					
-					if ($upload->extension['upload_theme'] == 'gzip')
+				if (!ThemeManager::get_theme_existed($file->get_name()))
+				{
+					$upload = new Upload($folder_phpboost_themes);
+					if ($upload->file('upload_theme_upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
-						import('lib/pcl/pcltar', LIB_IMPORT);
-						PclTarExtract($upload->filename['upload_theme'], $folder_phpboost_themes);
+						$archive = $folder_phpboost_themes . $upload->filename['upload_theme_upload_theme'];
 						
-						$file = new File($archive);
-						$file->delete();
-					}
-					else if ($upload->extension['upload_theme'] == 'zip')
-					{
-						import('lib/pcl/pclzip', LIB_IMPORT);
-						$zip = new PclZip($archive);
-						$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
-						
-						$file = new File($archive);
-						$file->delete();
-					}
-					else
-					{
-						$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+						if ($upload->extension['upload_theme_upload_theme'] == 'gzip')
+						{
+							import('lib/pcl/pcltar', LIB_IMPORT);
+							PclTarExtract($upload->filename['upload_theme_upload_theme'], $folder_phpboost_themes);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
+						}
+						else if ($upload->extension['upload_theme_upload_theme'] == 'zip')
+						{
+							import('lib/pcl/pclzip', LIB_IMPORT);
+							$zip = new PclZip($archive);
+							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+						}
 					}
 				}
+				else
+				{
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
+				}
 			}
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
+			else
+			{
+				$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.error'], MessageHelper::ERROR, 4));
+			}
 		}
 	}
 }

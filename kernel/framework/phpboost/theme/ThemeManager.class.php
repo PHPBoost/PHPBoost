@@ -33,7 +33,7 @@
  */
 class ThemeManager
 {
-	private static $errors = null;
+	private static $error = null;
 	
 	public static function get_installed_themes_map()
 	{
@@ -79,9 +79,9 @@ class ThemeManager
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), '<'))
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				self::$errors = 'Not compatible !';
+				self::$error = LangLoader::get_message('themes.not_compatible', 'admin-themes-common');
 			}
 			
 			ThemesConfig::load()->add_theme($theme);
@@ -91,7 +91,7 @@ class ThemeManager
 		}
 		else
 		{
-			self::$errors = 'e_theme_already_exist';
+			self::$error = LangLoader::get_message('themes.already_exist', 'admin-themes-common');
 		}
 	}
 	
@@ -177,9 +177,9 @@ class ThemeManager
 		}
 	}
 	
-	public static function get_errors()
+	public static function get_error()
 	{
-		return self::$errors;
+		return self::$error;
 	}
 	
 	private static function regenerate_cache()
