@@ -3,7 +3,7 @@
  *                      AdminThemesInstalledListController.class.php
  *                            -------------------
  *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
