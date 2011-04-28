@@ -58,7 +58,7 @@ $template->put_all(array(
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
-	'U_INDEX_SITE' => ((substr($home_page, 0, 1) == '/') ? '..' . $home_page : $home_page) ,
+	'U_INDEX_SITE' => ((substr($home_page, 0, 1) == '/') ? PATH_TO_ROOT . $home_page : $home_page) ,
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 
@@ -75,10 +75,10 @@ foreach ($modules as $module)
 	{
 		$template->assign_block_vars('modules_extend', array(
 		'NAME' => $name,
-		'IMG' => '../' . $module->get_id() . '/' . $module->get_id() . '.png',
+		'IMG' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $module->get_id() . '.png',
 		'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
 		'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-		'U_ADMIN_MODULE' => '../' . $module->get_id() . '/' . $admin_home_page . '.php'
+		'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page . '.php'
 		));
 		$i++;
 	}

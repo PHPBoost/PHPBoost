@@ -334,7 +334,7 @@ else //Sinon on rempli le formulaire
 	
 	$Template->put_all(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
-		'IMG_LANG_IDENTIFIER' => '../images/stats/countries/' . $lang_identifier. '.png'
+		'IMG_LANG_IDENTIFIER' => PATH_TO_ROOT .'/images/stats/countries/' . $lang_identifier. '.png'
 	));
 	
 	// Thème par defaut.

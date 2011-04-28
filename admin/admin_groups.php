@@ -127,7 +127,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../images/group/';
+	$dir = PATH_TO_ROOT .'/images/group/';
 	if (!is_writable($dir))
 	{
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
@@ -327,7 +327,7 @@ else //Liste des groupes.
 			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
-			'IMAGE' => !empty($row['img']) ? '<img src="../images/group/' . $row['img'] . '" alt="" />' : ''
+			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
 		));
 	}
 	$Sql->query_close($result);

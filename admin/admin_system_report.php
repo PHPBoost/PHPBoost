@@ -70,8 +70,8 @@ if (!$server_path)
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
-$lang_ini_file = load_ini_file('../lang/', get_ulang());
-$template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', get_ulang());
+$lang_ini_file = load_ini_file(PATH_TO_ROOT .'/lang/', get_ulang());
+$template_ini_file = load_ini_file(PATH_TO_ROOT .'/templates/' . get_utheme() . '/config/', get_ulang());
 
 $directories_summerization = '';
 foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $folder)

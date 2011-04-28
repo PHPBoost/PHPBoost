@@ -59,7 +59,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../images/smileys/';
+	$dir = PATH_TO_ROOT .'/images/smileys/';
 	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
@@ -93,7 +93,7 @@ else
 	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 	
 	$smileys_array = array();
-	$smileys_folder_path = new Folder('../images/smileys');
+	$smileys_folder_path = new Folder(PATH_TO_ROOT .'/images/smileys');
 	foreach ($smileys_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $smileys)
 		$smileys_array[] = $smileys->get_name();
 	

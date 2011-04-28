@@ -78,7 +78,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
-				$archive_path = '../lang/' . $Upload->get_filename();
+				$archive_path = PATH_TO_ROOT .'/lang/' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
 				{
@@ -144,7 +144,7 @@ else
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$dir_array = array();
-	$lang_folder_path = new Folder('../lang/');
+	$lang_folder_path = new Folder(PATH_TO_ROOT .'/lang/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
 		$dir_array[] = $lang->get_name();
 	
@@ -170,13 +170,13 @@ else
 			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
 		
-		$info_lang = load_ini_file('../lang/', $value_array);
+		$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $value_array);
 		$template->assign_block_vars('list', array(
 			'IDLANG' =>  $value_array,		
 			'LANG' =>  $info_lang['name'],	
 			'IDENTIFIER' =>  $info_lang['identifier'],
 			'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-			'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 			'COMPAT' => $info_lang['compatibility'],
 			'OPTIONS' => $options
 		));

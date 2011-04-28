@@ -161,7 +161,7 @@ else
 				'ICON' => $module->get_id(),
 				'VERSION' => $configuration->get_version(),
 				'AUTHOR' => ($configuration->get_author_email() ? '<a href="mailto:' . $configuration->get_author_email() . '">' . $configuration->get_author() . '</a>' : $configuration->get_author()),
-				'AUTHOR_WEBSITE' => ($configuration->get_author_website() ? '<a href="' . $configuration->get_author_website() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => ($configuration->get_author_website() ? '<a href="' . $configuration->get_author_website() . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 				'DESC' => $configuration->get_description(),
 				'COMPAT' => $configuration->get_compatibility(),
 				'ADMIN' => ($configuration->get_admin_main_page() ? $LANG['yes'] : $LANG['no']),

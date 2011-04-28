@@ -65,7 +65,7 @@
 							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 								# START com_list #	
 								<div style="margin-bottom:10px;">
-									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
+									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
 									<p class="text_small">{com_list.CONTENTS}</p>
 								</div>	
 								# END com_list #

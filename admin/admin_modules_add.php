@@ -79,14 +79,14 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-		if (empty($ckeck_module) && !is_dir('../' . $module_id))
+		if (empty($ckeck_module) && !is_dir(PATH_TO_ROOT .'/' . $module_id))
 		{
 
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{
-				$archive_path = '../' . $Upload->get_filename();
+				$archive_path = PATH_TO_ROOT .'/' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
 				{

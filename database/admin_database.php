@@ -32,11 +32,11 @@ $read_file = retrieve(GET, 'read_file', '', TSTRING_UNCHANGE);
 if (!empty($read_file) && substr($read_file, -4) == '.sql')
 {
 	//Si le fichier existe on le lit
-	if (is_file('../cache/backup/' . $read_file))
+	if (is_file(PATH_TO_ROOT .'/cache/backup/' . $read_file))
 	{
 		header('Content-Type: text/sql');
 		header('Content-Disposition: attachment; filename="' . $read_file . '"');
-		readfile('../cache/backup/' . $read_file) or die("File not found.");
+		readfile(PATH_TO_ROOT .'/cache/backup/' . $read_file) or die("File not found.");
 	}
 	exit;
 }
@@ -148,7 +148,7 @@ elseif ($action == 'restore')
 		$Session->csrf_get_protect(); //Protection csrf
 		
 		$file = TextHelper::strprotect($_GET['del']);
-		$file_path = '../cache/backup/' . $file;
+		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		//Si le fichier existe
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
@@ -168,7 +168,7 @@ elseif ($action == 'restore')
 		$Session->csrf_get_protect(); //Protection csrf
 		
 		$file = TextHelper::strprotect($_GET['file']);
-		$file_path = '../cache/backup/' . $file;
+		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
 			Environment::try_to_increase_max_execution_time();
@@ -188,7 +188,7 @@ elseif ($action == 'restore')
 	{
 		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']))
 		{
-			$file_path = '../cache/backup/' . $post_file['name'];
+			$file_path = PATH_TO_ROOT .'/cache/backup/' . $post_file['name'];
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
 				Environment::try_to_increase_max_execution_time();
@@ -256,7 +256,7 @@ elseif ($action == 'restore')
 		}
 	}
 		
-	$dir = '../cache/backup';
+	$dir = PATH_TO_ROOT .'/cache/backup';
 	$i = 0;
 	if (is_dir($dir))
 	{

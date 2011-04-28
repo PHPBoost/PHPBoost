@@ -112,7 +112,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 			
@@ -261,7 +261,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
@@ -371,7 +371,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 			

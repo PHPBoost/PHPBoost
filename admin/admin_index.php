@@ -76,7 +76,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 		'USER_PSEUDO' => $com_pseudo,			
 		'U_PROV' => $row['path'],
-		'U_USER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
+		'U_USER_PM' => '<a href="'. PATH_TO_ROOT .'/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
 		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
 	));

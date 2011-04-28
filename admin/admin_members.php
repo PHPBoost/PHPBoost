@@ -129,9 +129,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
 				if (!empty($user_avatar_path))
 				{
-					$user_avatar_path = str_replace('../images/avatars/', '', $user_avatar_path);
+					$user_avatar_path = str_replace(PATH_TO_ROOT .'/images/avatars/', '', $user_avatar_path);
 					$user_avatar_path = str_replace('/', '', $user_avatar_path);
-					@unlink('../images/avatars/' . $user_avatar_path);
+					@unlink(PATH_TO_ROOT .'/images/avatars/' . $user_avatar_path);
 				}
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -141,7 +141,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 
 			//Gestion upload d'avatar.					
 			$user_avatar = '';
-			$dir = '../images/avatars/';
+			$dir = PATH_TO_ROOT .'/images/avatars/';
 			
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
@@ -163,7 +163,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 						{
 							if (is_file($user_avatar_path) && isset($match[1]))
-								@unlink('../images/avatars/' . $match[1]);
+								@unlink(PATH_TO_ROOT .'/images/avatars/' . $match[1]);
 						}						
 						$user_avatar = $path; //Avatar uploadé et validé.
 					}
@@ -186,9 +186,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
-					@unlink('../cache/sex.png');
+					@unlink(PATH_TO_ROOT .'/cache/sex.png');
 				if ($info_mbr['user_theme'] != $user_theme)
-					@unlink('../cache/theme.png');
+					@unlink(PATH_TO_ROOT .'/cache/theme.png');
 				
                 //Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
                 $member_infos = $Sql->query_array(DB_TABLE_MEMBER, "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -492,16 +492,16 @@ elseif (!empty($id))
 	
 	//Gestion LANG par défaut.
 	$array_identifier = '';
-	$lang_identifier = '../images/stats/other.png';
+	$lang_identifier = PATH_TO_ROOT .'/images/stats/other.png';
 	$langs_cache = LangsCache::load();
 	foreach (array_keys($langs_cache->get_installed_langs()) as $lang)
 	{
-		$info_lang = load_ini_file('../lang/', $lang);
+		$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
 		$selected = '';
 		if (UserAccountsConfig::load()->get_default_lang() == $lang)
 		{
 			$selected = ' selected="selected"';
-			$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
+			$lang_identifier = PATH_TO_ROOT .'/images/stats/countries/' . $info_lang['identifier'] . '.png';
 		}
 		$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
 		$template->assign_block_vars('select_lang', array(
@@ -517,7 +517,7 @@ elseif (!empty($id))
 		if ($theme != 'default')
 		{
 			$selected = (UserAccountsConfig::load()->get_default_theme() == $theme) ? ' selected="selected"' : '';
-			$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
+			$info_theme = load_ini_file(PATH_TO_ROOT .'/templates/' . $theme . '/config/', get_ulang());
 			$template->assign_block_vars('select_theme', array(
 				'NAME' => $info_theme['name'],
 				'IDNAME' => $theme,
@@ -693,7 +693,7 @@ else
 			while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 			{ 
 				$template->assign_block_vars('search', array(
-					'RESULT' => '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
+					'RESULT' => '<a href="'. PATH_TO_ROOT .'/admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
 				));
 				$template->put_all(array(
 					'C_DISPLAY_SEARCH_RESULT' => true
@@ -801,7 +801,7 @@ else
 			default: 0;
 		} 
 		
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
+		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
 		$template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],

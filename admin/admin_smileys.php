@@ -93,7 +93,7 @@ elseif (!empty($id) && $edit) //Edition.
 		'IDSMILEY' => $info_smiley['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $info_smiley['code_smiley'],
-		'IMG_SMILEY' => !empty($info_smiley['url_smiley']) ? '<img src="../images/smileys/' . $info_smiley['url_smiley'] . '" alt="" />' : '',
+		'IMG_SMILEY' => !empty($info_smiley['url_smiley']) ? '<img src="'. PATH_TO_ROOT .'/images/smileys/' . $info_smiley['url_smiley'] . '" alt="" />' : '',
 		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],

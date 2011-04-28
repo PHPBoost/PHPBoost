@@ -48,14 +48,14 @@ if ($update) //Mise à jour du module
 	if (!empty($ckeck_module))
 	{
 		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
+		$info_module = load_ini_file(PATH_TO_ROOT .'/' . $module_name . '/lang/', get_ulang());
 		
 		//Récupération de l'ancienne version du module
 		$previous_version = $Sql->query("SELECT version FROM " . DB_TABLE_MODULES . " WHERE name = '" . TextHelper::strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = get_ulang();
-		$dir = '../' . $module_name . '/db';
+		$dir = PATH_TO_ROOT .'/' . $module_name . '/db';
 		
 		
 		$folder_path = new Folder($dir . '/' . $dir_db_module);
@@ -67,7 +67,7 @@ if ($update) //Mise à jour du module
 
 		//Récupération des fichiers de mises à jour des différentes versions.
 		$filesupdate = array();
-		$dir_db = '../' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
+		$dir_db = PATH_TO_ROOT .'/' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
 		$folder_path = new Folder($dir_db);
 		foreach ($folder_path->get_files('`.*\.(php|sql)$`i') as $files)
 		{	
@@ -122,7 +122,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../';
+	$dir = PATH_TO_ROOT .'/';
 	if (!is_writable($dir))
 		@chmod($dir, 0755);
 	if (!is_writable($dir . $module_name))
@@ -132,25 +132,25 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	$error = '';
 	if (is_writable($dir) && is_writable($dir . $module_name)) //Dossier en écriture, upload possible
 	{
-		if (!is_dir('../' . $_FILES['upload_module']['name']))
+		if (!is_dir(PATH_TO_ROOT .'/' . $_FILES['upload_module']['name']))
 		{
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
-				$archive_path = '../' . $Upload->get_filename();
+				$archive_path = PATH_TO_ROOT .'/' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
 				{
 					import('/kernel/lib/php/pcl/pcltar', LIB_IMPORT);
-					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../'))
+					if (!$zip_files = PclTarExtract($Upload->get_filename(), PATH_TO_ROOT .'/'))
 						$error = $Upload->get_error();
 				}
 				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('/kernel/lib/php/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
-					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
+					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, PATH_TO_ROOT .'/', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->get_error();
 				}
 				else

@@ -94,7 +94,7 @@ elseif ($uninstall) //Désinstallation.
 		if ($drop_files && !empty($previous_lang))
 		{
 			
-			$folder = new Folder('../lang/' . $previous_lang);
+			$folder = new Folder(PATH_TO_ROOT .'/lang/' . $previous_lang);
 			if (!$folder->delete())
 				$error = 'files_del_failed';
 		}
@@ -164,7 +164,7 @@ else
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On selectionne le lang suivant les valeurs du tableau. 
-		$info_lang = load_ini_file('../lang/', $row['lang']);
+		$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $row['lang']);
 		
 		$options = '';
 		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
