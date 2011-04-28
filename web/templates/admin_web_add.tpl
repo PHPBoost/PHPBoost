@@ -73,7 +73,7 @@
 											<br /><br />
 											
 											<strong>&nbsp;{web.L_CAT}:</strong> 
-											<a href="../web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
+											<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
 											
 											<strong>&nbsp;{web.L_DATE}:</strong> {web.DATE}<br />
 											

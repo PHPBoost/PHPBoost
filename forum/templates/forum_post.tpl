@@ -55,9 +55,9 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
+				document.getElementById('forum_change_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -93,8 +93,8 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
-								<div style="float:right;"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
+								<div style="float:left;">&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
+								<div style="float:right;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">
@@ -109,7 +109,7 @@
 						<div class="msg_sign">		
 							<hr />
 							<span style="float:left;">
-								<img src="../templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;
@@ -195,7 +195,7 @@
 										
 										<p style="text-align:center;width:165px;" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a>
+											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
 											# ENDIF #
 										</p>
 									</dd>

@@ -12,7 +12,7 @@
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
@@ -78,9 +78,9 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
 					# IF C_POST_NEW_SUBJECT #
-						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
+						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
 					# ENDIF #
 				</span>
 				<span style="float:right;">
@@ -168,9 +168,9 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<span style="float:left;">
-					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
 					# IF C_POST_NEW_SUBJECT #
-						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
+						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
 					# ENDIF #
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;

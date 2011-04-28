@@ -66,7 +66,7 @@
 										<strong>{web.L_DESC}:</strong> {web.CONTENTS}									
 											<br /><br />									
 											<strong>{web.L_CATEGORY}:</strong> 
-											<a href="../web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
+											<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
 											
 											<strong>{web.L_DATE}:</strong> {web.DATE}<br />									
 											<strong>{web.L_VIEWS}:</strong> {COMPT}

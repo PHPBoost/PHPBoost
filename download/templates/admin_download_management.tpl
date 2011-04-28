@@ -48,10 +48,10 @@
 						<span class="text_small">{list.VISIBLE}</span>
 					</td>
 					<td class="row2"> 
-						<a href="{list.U_EDIT_FILE}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="{list.U_EDIT_FILE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="{list.U_DEL_FILE}" onclick="return confirm('{L_CONFIRM_DELETE}');"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="{list.U_DEL_FILE}" onclick="return confirm('{L_CONFIRM_DELETE}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END list #

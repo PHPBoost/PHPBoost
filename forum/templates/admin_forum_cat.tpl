@@ -11,7 +11,7 @@
 			
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
-			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('l' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
 			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
@@ -254,19 +254,19 @@
 											<span id="l{list.ID}"></span> 
 											<script type="text/javascript">
 											<!--
-											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'up\');"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>');
+											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'up\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>');
 											-->
 											</script>
-											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=up&amp;token={TOKEN}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a></noscript>
+											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=up&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a></noscript>
 											
 											<script type="text/javascript">
 											<!--
-											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'down\');"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>');
+											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'down\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>');
 											-->
 											</script>										
-											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
+											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_forum.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_forum.php?id={list.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

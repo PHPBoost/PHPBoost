@@ -35,7 +35,7 @@
 				<fieldset>
 					<legend>{pics.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{pics.L_EXPLAIN_CAT}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{pics.L_EXPLAIN_CAT}
 						<br />	
 					</div>
 					<br />	
@@ -54,7 +54,7 @@
 				<fieldset>
 					<legend>{subgalleries.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{subgalleries.L_EXPLAIN_CAT}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{subgalleries.L_EXPLAIN_CAT}
 						<br />	
 					</div>
 					<br />	

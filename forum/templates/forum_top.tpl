@@ -8,15 +8,15 @@
 		function XMLHttpRequest_unread_topics(divID)
 		{
 			if( document.getElementById('refresh_unread' + divID) )
-				document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
 				
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{	
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 					
 					var array_unread_topics = new Array('', '');
 					eval(xhr_object.responseText);
@@ -33,7 +33,7 @@
 				{	
 					alert("{L_AUTH_ERROR}");
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 				}
 			}
 			xmlhttprequest_sender(xhr_object, null);
@@ -90,23 +90,23 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/index.php?url=/register"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								<a class="small_link" href="{PATH_TO_ROOT}/member/error.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="{PATH_TO_ROOT}/member/index.php?url=/register"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
-									<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
+									<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
 								# ENDIF # 						
 							# ENDIF #
 							
 							# IF C_MODERATION_PANEL #
 								# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-								<a class="small_link" href="./moderation_forum.php"><img src="../templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
+								<a class="small_link" href="./moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
 							# ENDIF #
 						</div>
 					</div>
 					<div style="float:right;text-align:right">
 						<form action="search.php?token={TOKEN}" method="post">
                             <div>
-                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
+                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}{PATH_TO_ROOT}." class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}{PATH_TO_ROOT}.')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}{PATH_TO_ROOT}.';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
                                 <a href="search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
                                 
@@ -132,10 +132,10 @@
 						<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
 						</div>
 					</div>
-					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="../templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread" class="valign_middle" /></a>
+					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread" class="valign_middle" /></a>
 
 					&bull;					
-					<img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
 				</div>
 				<div class="spacer"></div>
 			</div>

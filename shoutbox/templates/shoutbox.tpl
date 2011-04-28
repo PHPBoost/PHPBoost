@@ -24,7 +24,7 @@
 					<div class="msg_pseudo_mbr">
 						{shoutbox_list.USER_ONLINE} {shoutbox_list.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{shoutbox_list.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{shoutbox_list.ID}" /></a> {shoutbox_list.DATE}</div>
+					<div style="float:left;">&nbsp;&nbsp;<a href="{shoutbox_list.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{shoutbox_list.ID}" /></a> {shoutbox_list.DATE}</div>
 					<div style="float:right;">{shoutbox_list.EDIT}{shoutbox_list.DEL}&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">

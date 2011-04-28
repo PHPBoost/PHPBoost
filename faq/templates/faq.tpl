@@ -25,7 +25,7 @@
 				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 				</a>
 				# END IF #
 			</div>
@@ -48,7 +48,7 @@
 								
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
 								<div class="text_small">
@@ -88,15 +88,15 @@
 								<span class="row2" style="float:right;">
 									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
 									# IF C_ADMIN_TOOLS #
-										<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+										<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 										# START questions.faq.up #
 											<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
 										# END questions.faq.up #
 										# START questions.faq.down #
 											<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 										# END questions.faq.down #
-										<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-										<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+										<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+										<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 									# ENDIF #
 								</span>
 								<div style="clear:both"></div>
@@ -137,15 +137,15 @@
 							<span class="row2" style="float:right;">
 								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
 								# IF C_ADMIN_TOOLS #
-									<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+									<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 									# START questions_block.contents.up #
 										<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
 									# END questions_block.contents.up #
 									# START questions_block.contents.down #
 										<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 									# END questions_block.contents.down #
-									<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-									<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+									<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+									<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 								# ENDIF #
 							</span>
 							<div style="clear:both"></div>

@@ -21,7 +21,7 @@
 			
 			<div style="text-align:center; margin:30px 20px;" class="row1">
 				<a href="{U_RECOUNT_SUBFILES}">
-					<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_QUESTIONS}" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_QUESTIONS}" />
 				</a>
 				<br />
 				<a href="{U_RECOUNT_SUBFILES}">{L_RECOUNT_SUBFILES}</a>

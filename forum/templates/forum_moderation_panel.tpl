@@ -8,13 +8,13 @@
 				<table class="module_table">
 					<tr>							
 						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
+							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
 						</td>
 						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="../templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
+							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
 						</td>
 						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><img src="../templates/{THEME}/images/important.png" alt="{L_ALERT_MANAGEMENT}" /><br />{L_ALERT_MANAGEMENT}</a>
+							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="{L_ALERT_MANAGEMENT}" /><br />{L_ALERT_MANAGEMENT}</a>
 						</td>
 					</tr>
 				</table>				
@@ -56,7 +56,7 @@
 						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
-								<a href="../member/member{action_list.U_USER_ID}">{action_list.LOGIN}</a>
+								<a href="{PATH_TO_ROOT}/member/member{action_list.U_USER_ID}">{action_list.LOGIN}</a>
 							</td>
 							<td class="row2">
 								{action_list.U_ACTION}
@@ -259,7 +259,7 @@
 						if( login != '' )
 						{
 							if( document.getElementById('search_img') )
-								document.getElementById('search_img').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+								document.getElementById('search_img').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
@@ -324,7 +324,7 @@
 					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/{user_list.U_PROFILE}">{user_list.LOGIN}</a>
+							<a href="{PATH_TO_ROOT}/member/{user_list.U_PROFILE}">{user_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
 							{user_list.INFO}
@@ -333,7 +333,7 @@
 							{user_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/pm{user_list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="{PATH_TO_ROOT}/member/pm{user_list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 						</td>
 					</tr>
 					# END user_list #
@@ -380,7 +380,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>

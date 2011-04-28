@@ -12,7 +12,7 @@
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
 		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
@@ -37,7 +37,7 @@
 					<div class="msg_pseudo_mbr">
 						{guestbook.USER_ONLINE} {guestbook.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{guestbook.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{guestbook.ID}" /></a> {guestbook.DATE}</div>
+					<div style="float:left;">&nbsp;&nbsp;<a href="{guestbook.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{guestbook.ID}" /></a> {guestbook.DATE}</div>
 					<div style="float:right;">{guestbook.EDIT}{guestbook.DEL}&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">
