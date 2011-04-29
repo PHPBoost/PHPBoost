@@ -37,8 +37,8 @@ class Timezone
 	public static function __static()
 	{
 		self::$server_timezone = date_default_timezone_get();
-		self::$site_timezone = new DateTimeZone('Europe/Paris');
-		self::$user_timezone = new DateTimeZone('Europe/Paris');
+		self::$site_timezone = 'Europe/Paris';
+		self::$user_timezone = 'Europe/Paris';
 	}
 	
 	public static function get_supported_timezones()
@@ -49,7 +49,7 @@ class Timezone
 	/**
 	 * @desc Returns the PHP timezone corresponding to the timezone code
 	 * @param int $timezone SYSTEM_TIMEZONE, SITE_TIMEZONE or USER_TIMEZONE
-	 * @return DateTimeZone The PHP timezone
+	 * @return string The PHP timezone
 	 */
 	public static function get_timezone($timezone_code)
 	{
