@@ -78,7 +78,7 @@ class CommentsDAO
 		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);	
 	}
 	
-	public static function get_user_id_posted_comment(Comment $comment)
+	public static function user_id_posted_comment(Comment $comment)
 	{
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'user_id', "WHERE id = :id", array('id' => $comment->get_id()));
 	}
@@ -180,7 +180,7 @@ class CommentsDAO
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 	}
 	
-	public static function get_existed_comments_topic(Comments $comments)
+	public static function comments_topic_exist(Comments $comments)
 	{
 		$parameters = array(
 			'id_in_module' => $comments->get_id_in_module(),

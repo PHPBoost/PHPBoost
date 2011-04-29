@@ -277,14 +277,14 @@ else
 
 		$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents
 		FROM " . PREFIX . "download d
-		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.module_id
+		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$notation->set_id_in_module($row['id']);
-			$comments->set_id_in_modulee($row['id']);
+			$comments->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],

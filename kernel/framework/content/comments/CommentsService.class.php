@@ -50,19 +50,18 @@ class CommentsService
 		$delete_comment = AppContext::get_request()->get_int('delete_comment', 0);
 		if ($comments->get_authorizations()->is_authorized_read())
 		{
+			$user_read_only = self::$user->get_attribute('user_readonly');
 			if ($comments->get_is_locked())
 			{
 				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], E_USER_SUCCESS, 4));
 			}
-			/*
-			else if (self::$user->get_attribute('user_readonly') <= time())
+			else if (!empty($user_read_only) && $user_read_only > time())
 			{
 				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', E_USER_SUCCESS, 4));
 			}
-			*/
 			else
 			{
-				if (CommentsDAO::get_existed_comments_topic($comments))
+				if (!CommentsDAO::comments_topic_exist($comments))
 				{
 					CommentsDAO::create_comments_topic($comments);
 				}
@@ -78,7 +77,7 @@ class CommentsService
 					}
 					else
 					{
-						//TODO
+						//TODO change lang
 						throw new Exception('Vous n\'êtes pas autorisé à poster des commentaires !');
 					}
 				}
@@ -93,7 +92,7 @@ class CommentsService
 						DispatchManager::redirect($error_controller);
 					}
 					
-					$user_id_posted_comment = CommentsDAO::get_user_id_posted_comment($comment);
+					$user_id_posted_comment = CommentsDAO::user_id_posted_comment($comment);
 					if ($comments->get_authorizations()->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id'))
 					{
 						self::$template->put_all(array(
@@ -103,26 +102,17 @@ class CommentsService
 					}
 					else
 					{
-						//TODO
+						//TODO change lang
 						throw new Exception('Vous n\'êtes pas autorisé d\'éditer ce commentaire !');
 					}
 				}
-				/*
-				self::$template->put('DATA', json_encode(array_merge($_GET, array(
-					'token' => AppContext::get_session()->get_token(), 
-					'module_name' => $comments->get_module_name(),
-					'id_in_module' => $comments->get_id_in_module(),
-					'is_locked' => $comments->get_is_locked(),
-					'number_comments_pagination' => $comments->get_number_comments_pagination()
-				))));
-				*/
-				
+
 				self::$template->put('COMMENTS_LIST', self::display_comments_list($comments));
 			}
 		}
 		else
 		{
-			//TODO
+			//TODO change lang
 			throw new Exception('Vous n\'êtes pas autorisé à lire les commentaires !');
 		}
 	
@@ -142,7 +132,7 @@ class CommentsService
 	*/
 	public static function change_visibility(Comments $comments)
 	{
-		if (CommentsDAO::get_existed_comments_topic($comments))
+		if (CommentsDAO::comments_topic_exist($comments))
 		{
 			CommentsDAO::change_visibility($comments);
 		}
@@ -153,7 +143,7 @@ class CommentsService
 	*/
 	public static function delete_comments_module(Comments $comments)
 	{
-		if (CommentsDAO::get_existed_comments_topic($comments))
+		if (CommentsDAO::comments_topic_exist($comments))
 		{
 			CommentsDAO::delete_all_comments_by_module_name($comments);
 		}
@@ -164,7 +154,7 @@ class CommentsService
 	*/
 	public static function delete_comments_id_in_module(Comments $comments)
 	{
-		if (CommentsDAO::get_existed_comments_topic($comments))
+		if (CommentsDAO::comments_topic_exist($comments))
 		{
 			CommentsDAO::delete_comments_id_in_module($comments);
 		}
@@ -237,7 +227,7 @@ class CommentsService
 				$comment->set_id_in_module($comments->get_id_in_module());
 				CommentsDAO::add_comment($comment);
 				
-				//TODO
+				//TODO change lang
 				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
 			}
 		}
@@ -268,7 +258,7 @@ class CommentsService
 				$comment->set_message($form->get_value('message'));
 				CommentsDAO::edit_comment($comment);
 				
-				//TODO
+				//TODO change lang
 				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Edit successfully', E_USER_SUCCESS, 4));
 			}
 			else
@@ -297,7 +287,8 @@ class CommentsService
 		
 		$result = PersistenceContext::get_querier()->select("
 			SELECT comments.*, topic.*
-			FROM " . DB_TABLE_COMMENTS . " comments, " . DB_TABLE_COMMENTS_TOPIC . " topic
+			FROM " . DB_TABLE_COMMENTS . " comments
+			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id
 			WHERE topic.module_name = :module_name AND topic.id_in_module = :id_in_module
 			LIMIT ".  $comments->get_number_comments_pagination() ." OFFSET :start_limit
 			",

@@ -46,7 +46,7 @@ class Captcha
 	private $width = 160; //Image width
 	private $height = 50; //Image height
 	private $code = ''; //Captcha code
-	private $font = PATH_TO_ROOT .'/kernel/data/fonts/impact.ttf'; //Font
+	private $font = '../../../kernel/data/fonts/impact.ttf'; //Font
 	private $difficulty = self::CAPTCHA_NORMAL; //Difficulty to guess the image
 	private $html_id = '';
 	private $user_id; //User identifier in database
