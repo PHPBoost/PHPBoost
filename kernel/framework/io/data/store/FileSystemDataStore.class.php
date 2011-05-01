@@ -83,7 +83,12 @@ class FileSystemDataStore implements DataStore
 		$file = $this->get_file($id);
 		$data_to_write = serialize($data);
 		$file->write($data_to_write);
+		$file->delete();
+		$file->lock();
+		$file->write($data_to_write);
+		$file->unlock();
 		$file->close();
+		$file->change_chmod(0666);
 	}
 
 	/**
