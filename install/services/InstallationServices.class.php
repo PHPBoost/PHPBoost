@@ -448,7 +448,7 @@ class InstallationServices
 	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
 	{
 		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
-		return UserService::create($username, 2, $email, $locale, $timezone, $theme, 'bbcode', $auth_method);
+		return UserService::create($username, 2, $email, $locale, $timezone, $theme, 'bbcode', false, $auth_method);
 	}
 
 	private function generate_admin_unlock_code()

@@ -112,7 +112,6 @@ class SessionData
 	private static function update_existing_session($condition, $parameters)
 	{
 		$columns = array(
-			'token' => Random::hexa64uid(16),
 			'expiry' => time() + SessionsConfig::load()->get_session_duration(),
 			'ip' => AppContext::get_request()->get_ip_address()
 		);
@@ -171,7 +170,7 @@ class SessionData
 
 	private static function fill_user_cached_data(SessionData $data)
 	{
-		$columns = array('display_name', 'level', 'email', 'show_mail', 'locale', 'theme', 'timezone', 'editor',
+		$columns = array('display_name', 'level', 'email', 'show_email', 'locale', 'theme', 'timezone', 'editor',
 			'unread_pm', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'is_banned', 'is_readonly');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $data->user_id);
