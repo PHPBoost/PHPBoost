@@ -124,7 +124,7 @@ abstract class FileSystemElement
 	{
 		if (!empty($this->path))
 		{
-			return @chmod($this->path, $chmod);
+			return chmod($this->path, $chmod);
 		}
 		return false;
 	}
