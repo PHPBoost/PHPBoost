@@ -160,7 +160,7 @@ class Feed
 	{
 		if ($this->is_in_cache())
 		{
-			$include = @include($this->get_cache_file_name());
+			$include = include($this->get_cache_file_name());
 			if ($include)
 			{
 				$this->data = $__feed_object;
@@ -265,7 +265,7 @@ class Feed
 
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
-		$result = @include($feed_data_cache_file);
+		$result = include($feed_data_cache_file);
 		if ($result === false)
 		{
 
@@ -283,7 +283,7 @@ class Feed
 		}
 		if (!Debug::is_debug_mode_enabled())
 		{
-			$result = @include($feed_data_cache_file);
+			$result = include($feed_data_cache_file);
 		}
 		else
 		{
