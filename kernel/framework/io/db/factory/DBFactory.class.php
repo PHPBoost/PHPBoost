@@ -125,7 +125,7 @@ class DBFactory
 
 	private static function load_config()
 	{
-		@include PATH_TO_ROOT . '/kernel/db/config.php';
+		include PATH_TO_ROOT . '/kernel/db/config.php';
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
 			throw new PHPBoostNotInstalledException();
