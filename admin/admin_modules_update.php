@@ -87,7 +87,7 @@ if ($update) //Mise à jour du module
 		foreach ($filesupdate as $key => $module_update_name)
 		{	
 			if (strpos($file, '.php') !== false) //Parsage fichier php.
-				@include_once($dir_db . $module_update_name);
+				include_once($dir_db . $module_update_name);
 			else //Requêtes sql de mise à jour.		
 				$Sql->parse($dir_db . $module_update_name, PREFIX);
 		}

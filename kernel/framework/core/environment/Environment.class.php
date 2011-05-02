@@ -52,7 +52,6 @@ class Environment
 
 		import('core/ClassLoader');
 		ClassLoader::init_autoload();
-
 		AppContext::init_bench();
 	}
 
@@ -240,7 +239,7 @@ class Environment
 		define('REGEX_MULTIPLICITY_AT_LEAST_ONE', 0x04);
 		define('REGEX_MULTIPLICITY_ALL', 0x05);
 
-		@include PATH_TO_ROOT . '/kernel/db/config.php';
+		include PATH_TO_ROOT . '/kernel/db/config.php';
 	}
 
 	public static function load_dynamic_constants()

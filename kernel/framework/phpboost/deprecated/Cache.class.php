@@ -72,30 +72,16 @@ class Cache
 		$include = false;
 		if ($reload_cache)
 		{
-			if (!Debug::is_debug_mode_enabled())
+			if (file_exists($cache_file))
 			{
-				$include = @include($cache_file);
-			}
-			else
-			{
-				if (file_exists($cache_file))
-				{
-					$include = include($cache_file);
-				}
+				$include = include($cache_file);
 			}
 		}
 		else
 		{
-			if (!Debug::is_debug_mode_enabled())
+			if (file_exists($cache_file))
 			{
-				$include = @include_once($cache_file);
-			}
-			else
-			{
-				if (file_exists($cache_file))
-				{
-					$include = include_once($cache_file);
-				}
+				$include = include_once($cache_file);
 			}
 		}
 		if (!$include)
@@ -105,14 +91,7 @@ class Cache
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois
-				if (!Debug::is_debug_mode_enabled())
-				{
-					$include2 = @include($cache_file);
-				}
-				else
-				{
-					$include2 = include($cache_file);
-				}
+				$include2 = include($cache_file);
 				if (!$include2)
 				{
 					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
@@ -125,14 +104,7 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if (!Debug::is_debug_mode_enabled())
-				{
-					$include3 = @include($cache_file);
-				}
-				else
-				{
-					$include3 = include($cache_file);
-				}
+				$include3 = include($cache_file);
 				if (!$include3)
 				{
 					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
