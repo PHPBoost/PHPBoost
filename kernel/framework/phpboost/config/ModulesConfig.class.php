@@ -97,6 +97,14 @@ class ModulesConfig extends AbstractConfigData
         unset($modules[$module_id]);
         $this->set_property(self::$modules_property, $modules);
     }
+	
+	public function update(Module $module)
+	{
+		$modules = $this->get_property(self::$modules_property);
+        $modules[$module->get_id()] = $module;
+
+        $this->set_property(self::$modules_property, $modules);
+	}
 
 	/**
 	 * @desc Loads and returns the modules cached data.

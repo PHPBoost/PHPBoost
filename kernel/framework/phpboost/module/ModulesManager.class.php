@@ -249,7 +249,7 @@ class ModulesManager
 	 */
 	public static function uninstall_module($module_id, $drop_files)
 	{
-		global $Cache, $MODULES;
+		global $Cache;
 
 		if (!empty($module_id))
 		{
@@ -332,12 +332,62 @@ class ModulesManager
 		self::update_class_list();
 	}
 
+	public static function upgrade_module($module_identifier)
+	{
+		global $Cache;
+		
+		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
+		{
+			if (self::is_module_installed($module_identifier))
+			{
+				$module = self::get_module($module_identifier);
+				
+				$version_upgrading = self::execute_module_upgrade($module_identifier, $module->get_installed_version());
+				
+				if ($version_upgrading !== null)
+				{
+					$module->set_installed_version($version_upgrading);
+					ModulesConfig::load()->update($module);
+					ModulesConfig::save();
+					
+					$Cache->Generate_file('modules');
+					$Cache->Generate_file('menus');
+					
+					Feed::clear_cache($module_identifier);
+					ModulesCssFilesCache::invalidate();
+					
+					try {
+						$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
+						if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
+						{
+							HtaccessFileCache::regenerate();
+						}
+					} catch (IOException $ex) {
+					}
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				return NOT_INSTALLED_MODULE;
+			}
+		}
+		else
+		{
+			return UNEXISTING_MODULE;
+		}
+	}
+	
 	public static function update_module_authorizations($module_id, $activated, array $authorizations)
 	{
-		$module = ModulesConfig::load()->get_module($module_id);
+		$module = self::get_module($module_id);
 		$module->set_activated($activated);
 		$module->set_authorizations($authorizations);
-		ModulesConfig::save($module);
+		ModulesConfig::load()->update($module);
+		ModulesConfig::save();
 	}
 
 	private static function execute_module_installation($module_id)
@@ -358,6 +408,12 @@ class ModulesManager
 	{
 		$module_setup = self::get_module_setup($module_id);
 		$module_setup->uninstall();
+	}
+	
+	private static function execute_module_upgrade($module_id, $installed_version)
+	{
+		$module_setup = self::get_module_setup($module_id);
+		return $module_setup->upgrade($installed_version);
 	}
 
 	/**
