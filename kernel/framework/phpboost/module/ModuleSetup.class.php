@@ -44,5 +44,11 @@ interface ModuleSetup
 	 * @desc Uninstall the module
 	 */
 	function uninstall();
+	
+	/**
+	 * @desc Upgrade the module
+	 * @return version upgrading
+	 */
+	function upgrade($installed_version);
 }
 ?>

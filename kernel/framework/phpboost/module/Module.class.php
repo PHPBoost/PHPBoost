@@ -31,10 +31,12 @@ class Module
     private $module_id;
     private $activated;
     private $authorizations;
+	private $installed_version;
 	
 	public function __construct($module_id, $activated = false, array $authorizations = array())
 	{
         $this->module_id = $module_id;
+		$this->installed_version = $this->get_configuration()->get_version();
         $this->activated = $activated;
         $this->authorizations = $authorizations;
 	}
@@ -53,6 +55,11 @@ class Module
     {
         return $this->authorizations;
     }
+	
+	public function get_installed_version()
+	{
+		return $this->installed_version;
+	}
 
     public function set_activated($activated)
     {
@@ -62,6 +69,11 @@ class Module
     public function set_authorizations($authorizations)
     {
         $this->authorizations = $authorizations;
+    }
+	
+	public function set_installed_version($installed_version)
+    {
+        $this->installed_version = $installed_version;
     }
 
     /**
