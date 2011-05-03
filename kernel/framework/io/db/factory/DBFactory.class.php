@@ -125,12 +125,16 @@ class DBFactory
 
 	private static function load_config()
 	{
-		include PATH_TO_ROOT . '/kernel/db/config.php';
-		if (!defined('PHPBOOST_INSTALLED'))
-		{
-			throw new PHPBoostNotInstalledException();
+    $config_file = PATH_TO_ROOT . '/kernel/db/config.php';
+    if (file_exist($config_file))
+    {
+      include $config_file;
+      if (defined('PHPBOOST_INSTALLED'))
+      {
+        return $db_connection_data;
+      }
 		}
-		return $db_connection_data;
+    throw new PHPBoostNotInstalledException();
 	}
 
 	/**
