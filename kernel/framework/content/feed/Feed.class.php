@@ -260,15 +260,19 @@ class Feed
 		{
 			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
-			$template->put_all($tpl);
+			{
+				$template->put_all($tpl);
+			}
 		}
 
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
-		$result = include($feed_data_cache_file);
-		if ($result === false)
+		if (file_exists($feed_data_cache_file))
 		{
-
+			$result = include $feed_data_cache_file;
+		}
+		else
+		{
 			$extension_provider_service = AppContext::get_extension_provider_service();
 			$provider = $extension_provider_service->get_provider($module_id);
 
@@ -281,21 +285,7 @@ class Feed
 			$data = $feed_provider->get_feed_data_struct($idcat);
 			self::update_cache($module_id, $name, $data, $idcat);
 		}
-		if (!Debug::is_debug_mode_enabled())
-		{
-			$result = include($feed_data_cache_file);
-		}
-		else
-		{
-			if (file_exists($feed_data_cache_file))
-			{
-				$result = include($feed_data_cache_file);
-			}
-			else
-			{
-				$result = FALSE;
-			}
-		}
+		$result = include $feed_data_cache_file;
 		if ( $result === false)
 		{
 			user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
