@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
@@ -32,35 +32,35 @@ require_once('../admin/admin_header.php');
 $update = !empty($_GET['update']) ? true : false;
 
 if ($update) //Mise à jour du module
-{	
+{
 	//Récupération de l'identifiant du module
 	$module_name = '';
 	foreach ($_POST as $key => $value)
 		if ($value == $LANG['update_module'])
 			$module_name = $key;
-	
+
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
-	
+
 	//Vérification de l'existance du module
 	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . TextHelper::strprotect($module_name) . "'", __LINE__, __FILE__);
-	
+
 	//Mise à jour du module
 	if (!empty($ckeck_module))
 	{
 		//Récupération des infos de config.
 		$info_module = load_ini_file(PATH_TO_ROOT .'/' . $module_name . '/lang/', get_ulang());
-		
+
 		//Récupération de l'ancienne version du module
 		$previous_version = $Sql->query("SELECT version FROM " . DB_TABLE_MODULES . " WHERE name = '" . TextHelper::strprotect($module_name) . "'", __LINE__, __FILE__);
-	
+
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = get_ulang();
 		$dir = PATH_TO_ROOT .'/' . $module_name . '/db';
-		
-		
+
+
 		$folder_path = new Folder($dir . '/' . $dir_db_module);
 		foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
-		{	
+		{
 			$dir_db_module = $dir->get_name();
 			break;
 		}
@@ -70,56 +70,63 @@ if ($update) //Mise à jour du module
 		$dir_db = PATH_TO_ROOT .'/' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
 		$folder_path = new Folder($dir_db);
 		foreach ($folder_path->get_files('`.*\.(php|sql)$`i') as $files)
-		{	
+		{
 			$file = $files->get_name();
 			if (strpos($file, DBTYPE) !== false)
 			{
 				$array_info = explode('_', $file);
 				if (isset($array_info[1]) && version_compare($info_module['version'], $array_info[1], '>=') && version_compare($previous_version, $array_info[1], '<'))
-					$filesupdate[$array_info[1]] = $file;		
+					$filesupdate[$array_info[1]] = $file;
 			}
 		}
-		
+
 		//Tri du tableau par odre des mises à jour.
 		uksort($filesupdate, 'version_compare');
-		
-		//Execution des fichiers de mise à jour.	
+
+		//Execution des fichiers de mise à jour.
 		foreach ($filesupdate as $key => $module_update_name)
-		{	
-			if (strpos($file, '.php') !== false) //Parsage fichier php.
-				include_once($dir_db . $module_update_name);
-			else //Requêtes sql de mise à jour.		
+		{
+			if (strpos($file, '.php') !== false)
+			{	//Parsage fichier php.
+				if (file_exists($dir_db . $module_update_name))
+				{
+					include_once($dir_db . $module_update_name);
+				}
+			}
+			else
+			{	 //Requêtes sql de mise à jour.
 				$Sql->parse($dir_db . $module_update_name, PREFIX);
+			}
 		}
-		
+
 		//Régénération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
 
 		//Insertion du modules dans la bdd => module mis à jour.
 		$Sql->query_inject("UPDATE " . DB_TABLE_MODULES . " SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
-		
+
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
-		
+
     	ModulesCssFilesCache::invalidate();
-		
+
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if (!empty($info_module['url_rewrite']) && ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			HtaccessFileCache::regenerate();
-		}	
-		
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+		}
+
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#message_helper');
-}			
+}
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
 	$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
-	
+
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/';
@@ -137,7 +144,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
-			{					
+			{
 				$archive_path = PATH_TO_ROOT .'/' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
@@ -155,7 +162,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				}
 				else
 					$error = 'e_upload_invalid_format';
-				
+
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
 					$error = 'e_unlink_disabled';
@@ -168,25 +175,25 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
-	
+
 	$error = !empty($error) ? '?error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 }
 else
-{			
+{
 	$template = new FileTemplate('admin/admin_modules_update.tpl');
 
     // Intégration du système d'updates des modules avec celui du site
-	
+
 	$updates_availables = 0;
 
 	if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
 	{
 		// Retrieves all the update alerts from the database
-		
-		
+
+
 		$update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
-		
+
 		$updates = array();
 		$update_type = 'module';
 		foreach ($update_alerts as $update_alert)
@@ -214,12 +221,12 @@ else
 					$priority = 'priority_low';
 					break;
 			}
-			
+
 			$short_description = $update->get_description();
 			$maxlength = 300;
 			$length = strlen($short_description) > $maxlength ?  $maxlength + strpos(substr($short_description, $maxlength), ' ') : 0;
 			$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
-			
+
 			$template->assign_block_vars('apps', array(
 				'type' => $update->get_type(),
 				'name' => $update->get_name(),
@@ -232,7 +239,7 @@ else
 				'update_url' => $update->get_update_url()
 			));
 		}
-		
+
 		if ($updates_availables = (count($updates) > 0))
 		{
 			$template->put_all(array(
@@ -252,7 +259,7 @@ else
 				'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
 				'C_ALL' => $update_type == ''
 			));
-			
+
 		}
 		else
 		{
@@ -282,7 +289,7 @@ else
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
-		
+
 	$template->put_all(array(
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
@@ -291,8 +298,8 @@ else
 		'L_EXPLAIN_ARCHIVE_UPLOAD' => $LANG['explain_archive_upload'],
 		'L_UPLOAD' => $LANG['upload'],
 	));
-		
-	$template->display(); 
+
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');
