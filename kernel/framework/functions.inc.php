@@ -116,7 +116,7 @@ function import($path, $import_type = CLASS_IMPORT)
 function req($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
-	if (!file_exists($file))
+	if (!file_exists(PATH_TO_ROOT . $file))
 	{
 		throw new IOException('File to include does\'nt exist: ' . $file);
 	}
@@ -140,7 +140,7 @@ function req($file, $once = true)
 function inc($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
-	if (!file_exists($file))
+	if (!file_exists(PATH_TO_ROOT . $file))
 	{
 		return false;
 	}
