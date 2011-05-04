@@ -37,7 +37,7 @@ class DBFactory
 	const PDO_MYSQL = 0x11;
 	const PDO_SQLITE = 0x12;
 	const PDO_POSTGRESQL = 0x13;
-
+	
 	/**
 	 * @var DBConnection
 	 */
@@ -48,10 +48,21 @@ class DBFactory
 	 */
 	private static $factory;
 
+    private static $config_file;
+
+	public static function __static()
+	{
+		self::$config_file = PATH_TO_ROOT . '/kernel/db/config.php';
+	}
+    
+    public static function load_prefix()
+    {
+        inc(self::$config_file);
+    }
 
 	public static function init_factory($dbms)
 	{
-        require_once PATH_TO_ROOT . '/kernel/db/tables.php';
+		require_once PATH_TO_ROOT . '/kernel/db/tables.php';
 		switch ($dbms)
 		{
 			case self::PDO_MYSQL:
@@ -82,12 +93,12 @@ class DBFactory
 	}
 
 	public static function close_db_connection()
-    {
-    	if (self::$db_connection != null)
-        {
-        	self::$db_connection->disconnect();
-        }
-    }
+	{
+		if (self::$db_connection != null)
+		{
+			self::$db_connection->disconnect();
+		}
+	}
 
 	public static function reset_db_connection()
 	{
@@ -125,16 +136,11 @@ class DBFactory
 
 	private static function load_config()
 	{
-    $config_file = PATH_TO_ROOT . '/kernel/db/config.php';
-    if (file_exist($config_file))
-    {
-      include $config_file;
-      if (defined('PHPBOOST_INSTALLED'))
-      {
-        return $db_connection_data;
-      }
+		if (inc(self::$config_file, false) && defined('PHPBOOST_INSTALLED'))
+		{
+			return $db_connection_data;
 		}
-    throw new PHPBoostNotInstalledException();
+		throw new PHPBoostNotInstalledException();
 	}
 
 	/**
