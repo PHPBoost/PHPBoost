@@ -46,5 +46,10 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/admin/member/index.php')
 		));
 	}
+	
+	public function extended_field()
+	{
+		return new KernelExtendedField();
+	}
 }
 ?>
