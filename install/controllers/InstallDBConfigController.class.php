@@ -155,7 +155,7 @@ class InstallDBConfigController extends InstallController
 		{
 			PersistenceContext::close_db_connection();
 			$service->create_phpboost_tables(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
-			AppContext::get_cache_service()->clear_phpboost_cache();
+			//AppContext::get_cache_service()->clear_phpboost_cache();
 			AppContext::get_response()->redirect(InstallUrlBuilder::website());
 		}
 		else

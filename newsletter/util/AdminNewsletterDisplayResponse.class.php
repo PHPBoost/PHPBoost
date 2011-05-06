@@ -29,7 +29,7 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('newsletter_common', 'newsletter');
 		$picture = '/newsletter/newsletter.png';
