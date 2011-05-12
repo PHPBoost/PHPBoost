@@ -53,11 +53,11 @@ class AdminThemesInstalledListController extends AdminController
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == $default_theme,
 				'C_IS_ACTIVATED' => $theme->is_activated(),
 				'C_WEBSITE' => $configuration->get_author_link() !== '',
-				'C_PICTURES' => is_array($pictures),
+				'C_PICTURES' => count($pictures) > 0,
 				'ID' => $theme->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => is_array($pictures) ? PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . current($pictures) : '',
+				'MAIN_PICTURE' => count($pictures) > 0 ? PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . current($pictures) : '',
 				'AUTHOR_NAME' => $configuration->get_author_name(),
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
@@ -70,7 +70,7 @@ class AdminThemesInstalledListController extends AdminController
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
 			));
 			
-			if (is_array($pictures))
+			if (count($pictures) > 0)
 			{
 				unset($pictures[0]);
 				foreach ($pictures as $picture)

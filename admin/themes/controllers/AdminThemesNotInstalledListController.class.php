@@ -61,11 +61,11 @@ class AdminThemesNotInstalledListController extends AdminController
 			
 			$this->view->assign_block_vars('themes_not_installed', array(
 				'C_WEBSITE' => $configuration->get_author_link() !== '',
-				'C_PICTURES' => is_array($pictures),
+				'C_PICTURES' => count($pictures) > 0,
 				'ID' => $id_theme,
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => is_array($pictures) ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
+				'MAIN_PICTURE' => count($pictures) > 0 ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
 				'AUTHOR_NAME' => $configuration->get_author_name(),
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
@@ -78,7 +78,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
 			));
 			
-			if (is_array($pictures))
+			if (count($pictures) > 0)
 			{
 				unset($pictures[0]);
 				foreach ($pictures as $picture)
