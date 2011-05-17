@@ -38,13 +38,8 @@ class MemberViewGroupController extends AbstractController
 		
 		$this->init();
 		
-		if ($this->group_id_selected < 1)
-		{
-			AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member/')->absolute());
-		}
-		
 		$groups = $group_cache->get_groups();
-		if (!array_key_exists($this->group_id_selected, $groups))
+		if ($this->group_id_selected < 1 || !array_key_exists($this->group_id_selected, $groups))
 		{
 			AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member/')->absolute());
 		}
@@ -72,13 +67,14 @@ class MemberViewGroupController extends AbstractController
 				
 				$user_account_config = UserAccountsConfig::load();
 				$this->view->assign_block_vars('members_list', array(
+					'PROFILE_LINK' => DispatchManager::get_url('/member', '/profile/'. $id)->absolute(),
 					'PSEUDO' => $row['login'],
 					'AVATAR' => empty($row['user_avatar']) && $user_account_config->is_default_avatar_enabled() ? '<img class="valign_middle" src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $user_account_config->get_default_avatar_name() . '" alt="" />' : '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>',
 					'STATUS' => $status
 				));
 			}
 		}
-			
+
 		$group = $group_cache->get_group($this->group_id_selected);
 		$group_name = $group['name'];
 		

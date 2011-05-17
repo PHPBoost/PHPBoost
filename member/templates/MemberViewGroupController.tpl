@@ -15,7 +15,7 @@
 		</th>
 	</tr>
 	<tr>
-		<td class="row3" style="font-weight: bold;width: 120px;">
+		<td class="row3" style="font-weight: bold;width: auto;">
 			{@avatar}
 		</td>
 		<td class="row3" style="font-weight: bold;">
@@ -32,7 +32,9 @@
 			{members_list.AVATAR}
 		</td>
 		<td class="row1">
-			{members_list.PSEUDO}
+			<a href="{members_list.PROFILE_LINK}">
+				{members_list.PSEUDO}
+			</a>
 		</td>
 		<td class="row1">
 			{members_list.STATUS}
