@@ -47,7 +47,6 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->tpl = new StringTemplate('<script type="text/javascript">
 				<!--
 					Event.observe(window, \'load\', function() {
-						HTMLForms.getField("regex").disable(); 
 						'. $this->get_events_select_type() .'
 					});
 				-->		
