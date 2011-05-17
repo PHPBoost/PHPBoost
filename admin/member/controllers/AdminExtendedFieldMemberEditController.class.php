@@ -59,7 +59,6 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		$this->tpl = new StringTemplate('<script type="text/javascript">
 				Event.observe(window, \'load\', function() {
-				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF #
 				'.$this->get_events_select_type().'});
 				</script>
 				# INCLUDE MSG #
@@ -68,8 +67,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$this->tpl->add_lang($this->lang);
 		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
 		$this->tpl->put_all(array(
-			'FIELD_TYPE' => $extended_field_cache['field_type'],
-			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
+			'FIELD_TYPE' => $extended_field_cache['field_type']
 		));
 		
 		$error = ExtendedFieldsService::get_error();
