@@ -44,8 +44,8 @@ class GroupsCache implements CacheData
 		$this->groups = array();
 		$db_connection = PersistenceContext::get_sql();
 		
-		$result = $db_connection->query_while("SELECT id, name, img, color, auth
-			FROM " . PREFIX . "group
+		$result = $db_connection->query_while("SELECT id, name, img, color, auth, members
+			FROM " . DB_TABLE_GROUP . "
 			ORDER BY id", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
@@ -54,7 +54,8 @@ class GroupsCache implements CacheData
 				'name' => $row['name'],
 				'img' => $row['img'],
 				'color' => $row['color'],
-				'auth' => unserialize($row['auth'])
+				'auth' => unserialize($row['auth']),
+				'members' => $row['members']
 			);
 		}
 		
