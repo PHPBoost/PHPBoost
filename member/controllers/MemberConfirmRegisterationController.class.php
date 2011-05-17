@@ -54,6 +54,9 @@ class MemberConfirmRegisterationController extends AbstractController
 		if ((bool)$check_mbr && !empty($key))
 		{
 			$this->update_aprobation($key);
+			
+			StatsCache::invalidate();
+			
 			$controller = new UserErrorController($this->lang['profile'], $this->lang['activ_mbr_mail_success'], UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 

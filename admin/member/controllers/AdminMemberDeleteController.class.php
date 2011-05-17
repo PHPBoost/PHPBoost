@@ -36,6 +36,9 @@ class AdminMemberDeleteController extends AdminController
 			if (self::verificate_number_admin_user() > 1)
 			{
 				$this->delete_account($user_id);
+				
+				StatsCache::invalidate();
+				
 				// TODO replace for new delete user function
 				throw new Exception('Ok !');
 			}

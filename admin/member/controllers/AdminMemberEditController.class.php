@@ -163,6 +163,8 @@ class AdminMemberEditController extends AdminController
 			$parameters = array('user_id' => $this->user_id);
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 		}
+		
+		StatsCache::invalidate();
 	}
 	
 	private function get_rank_member()
