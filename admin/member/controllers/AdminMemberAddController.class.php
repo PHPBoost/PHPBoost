@@ -105,6 +105,8 @@ class AdminMemberAddController extends AdminController
 	private function save()
 	{
 		$this->register_member();
+		
+		StatsCache::invalidate();
 	}
 	
 	private function register_member()
