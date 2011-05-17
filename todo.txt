@@ -20,15 +20,17 @@
 ------------------------------------- NOYAU ------------------------------------
 - Balises Youtube, Dailymotion
 - Utilisation des futurs classes de Loic pour gérer l'inscription d'un membre.
-- Création d'un controlleur pour l'oubli du mot de passe, pour la liste des membres et des groupes (suppression de member.php).
+- Création d'un controlleur pour l'oubli du mot de passe.
 - Création de contrainte pour vérifier si un pseudo ou un email est déjà utilisé.
 + Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires.
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups)
 - Créer des champs spécifique aux sanctions à ajouter dans l'édit d'un membre dans l'administration.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Newsletter[/b]
 - Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
+- Intégration d'un système AJAX permettant l'envoi de mail par paquet
 
 #################################################################################
 
