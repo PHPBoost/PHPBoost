@@ -54,7 +54,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 
 	$login = !empty($_POST['name']) ?  TextHelper::strprotect(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
-	if (check_mail($user_mail))
+	if (AppContext::get_mail_service()->is_mail_valid($user_mail))
 	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
@@ -245,7 +245,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 	$level = retrieve(POST, 'level2', 0);
 	$mail = strtolower(retrieve(POST, 'mail2', ''));
 	
-	if (check_mail($mail))
+	if (AppContext::get_mail_service()->is_mail_valid($mail))
 	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
