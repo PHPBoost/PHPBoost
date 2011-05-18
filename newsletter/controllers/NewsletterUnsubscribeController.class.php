@@ -57,13 +57,14 @@ class NewsletterUnSubscribeController extends ModuleController
 	
 	private function build_form()
 	{
-		if (AppContext::get_user()->check_level(MEMBER_LEVEL))
+		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
+		if (AppContext::get_user()->check_level(MEMBER_LEVEL) && empty($mail_request))
 		{
 			$email = AppContext::get_user()->get_attribute('user_mail');
 		}
 		else
 		{
-			$email = AppContext::get_request()->get_string('mail_newsletter', '');
+			$email = $mail_request;
 		}
 		
 		$form = new HTMLForm('newsletter');
