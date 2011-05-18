@@ -86,9 +86,9 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 	
 	function test_check_mail()
 	{
-		$ret = check_mail('toto@test.fr');
+		$ret = AppContext::get_mail_service()->is_mail_valid('toto@test.fr');
 		self::assertTrue($ret);
-		$ret = check_mail('toto_bidon');
+		$ret = AppContext::get_mail_service()->is_mail_valid('toto_bidon');
 		self::assertFalse($ret);
 	}
 	
