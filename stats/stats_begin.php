@@ -31,17 +31,17 @@ if (defined('PHPBOOST') !== true)
 load_module_lang('stats'); //Chargement de la langue du module.
 include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
-$visit = retrieve(GET, 'visit', false);
-$visit_year = retrieve(GET, 'year', 0);
-$pages = retrieve(GET, 'pages', false);
-$pages_year = retrieve(GET, 'pages_year', 0);
-$referer = retrieve(GET, 'referer', false);
-$keyword = retrieve(GET, 'keyword', false);
-$members = retrieve(GET, 'members', false);
-$browser = retrieve(GET, 'browser', false);
-$os = retrieve(GET, 'os', false);
-$all = retrieve(GET, 'all', false);
-$user_lang = retrieve(GET, 'lang', false);
+$visit = AppContext::get_request()->get_getbool('visit', false);
+$visit_year = AppContext::get_request()->get_getint('year', 0);
+$pages = AppContext::get_request()->get_getbool('pages', false);
+$pages_year = AppContext::get_request()->get_getint('pages_year', 0);
+$referer = AppContext::get_request()->get_getbool('referer', false);
+$keyword = AppContext::get_request()->get_getbool('keyword', false);
+$members = AppContext::get_request()->get_getbool('members', false);
+$browser = AppContext::get_request()->get_getbool('browser', false);
+$os = AppContext::get_request()->get_getbool('os', false);
+$all = AppContext::get_request()->get_getbool('all', false);
+$user_lang = AppContext::get_request()->get_getbool('lang', false);
 
 $l_title = $LANG['site'];
 $l_title = ($visit || $visit_year) ? $LANG['guest_s'] : $l_title;

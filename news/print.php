@@ -33,7 +33,7 @@ require_once('news_begin.php');
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //Id de la news à afficher en version imprimable
-$id = retrieve(GET, 'id', 0, TINTEGER);
+$id = AppContext::get_request()->get_getint('id', 0);
 
 if ($id > 0) //Si on connait son titre
 {

@@ -36,8 +36,8 @@ define('NUM_ALERTS_PER_PAGE', 20);
 $pagination = new DeprecatedPagination();
 
 //Gestion des critères de tri
-$criteria = retrieve(GET, 'criteria', 'current_status');
-$order = retrieve(GET, 'order', 'asc');
+$criteria = AppContext::get_request()->get_getstring('criteria', 'current_status');
+$order = AppContext::get_request()->get_getstring('order', 'asc');
 
 if (!in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')))
 	$criteria = 'current_status';

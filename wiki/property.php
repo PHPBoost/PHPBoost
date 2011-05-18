@@ -32,15 +32,15 @@ define('ALTERNATIVE_CSS', 'wiki');
 
 require_once('../wiki/wiki_auth.php');
 
-$random = retrieve(GET, 'random', false);
-$id_auth = retrieve(GET, 'auth', 0);
-$wiki_status = retrieve(GET, 'status', 0);
-$move = retrieve(GET, 'move', 0);
-$rename = retrieve(GET, 'rename', 0);
-$redirect = retrieve(GET, 'redirect', 0);
-$create_redirection = retrieve(GET, 'create_redirection', 0);
-$idcom = retrieve(GET, 'idcom', 0);
-$del_article = retrieve(GET, 'del', 0);
+$random = AppContext::get_request()->get_getbool('random', false);
+$id_auth = AppContext::get_request()->get_getint('auth', 0);
+$wiki_status = AppContext::get_request()->get_getint('status', 0);
+$move = AppContext::get_request()->get_getint('move', 0);
+$rename = AppContext::get_request()->get_getint('rename', 0);
+$redirect = AppContext::get_request()->get_getint('redirect', 0);
+$create_redirection = AppContext::get_request()->get_getint('create_redirection', 0);
+$idcom = AppContext::get_request()->get_getint('idcom', 0);
+$del_article = AppContext::get_request()->get_getint('del', 0);
 
 if ($id_auth > 0) //Autorisations de l'article
 {
@@ -243,7 +243,7 @@ elseif ($move > 0) //On déplace l'article
 	));	
 	
 	//Gestion des erreurs
-	$error = retrieve(GET, 'error', '');
+	$error = AppContext::get_request()->get_getstring('error', '');
 	if ($error == 'e_cat_contains_cat')
 		$errstr = $LANG['wiki_cat_contains_cat'];
 	else
@@ -262,7 +262,7 @@ elseif ($rename > 0)//On renomme un article
 	));
 	
 	//Gestion des erreurs
-	$error = retrieve(GET, 'error', '');
+	$error = AppContext::get_request()->get_getstring('error', '');
 	if ($error == 'title_already_exists')
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
@@ -314,7 +314,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 	));
 	
 	//Gestion des erreurs
-	$error = retrieve(GET, 'error', '');
+	$error = AppContext::get_request()->get_getstring('error', '');
 	if ($error == 'title_already_exists')
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
@@ -369,7 +369,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		));	
 		
 		//Gestion des erreurs
-		$error = retrieve(GET, 'error', '');
+		$error = AppContext::get_request()->get_getstring('error', '');
 		if ($error == 'e_cat_contains_cat')
 			$errstr = $LANG['wiki_cat_contains_cat'];
 		elseif ($error == 'e_not_a_cat')

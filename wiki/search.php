@@ -41,10 +41,10 @@ if (!$User->check_level(MEMBER_LEVEL))
 	DispatchManager::redirect($error_controller);
 }
 
-$search_string = retrieve(GET, 'search', '');
-$where_search = retrieve(GET, 'where', '');
+$search_string = AppContext::get_request()->get_getstring('search', '');
+$where_search = AppContext::get_request()->get_getstring('where', '');
 $where_search = !(empty($where_search) || ($where_search == 'contents')) ? 'contents' : 'title';
-$page = retrieve(GET, 'page', 1);
+$page = AppContext::get_request()->get_getint('page', 1);
 $page = $page <= 0 ? 1 : $page;
 
 $Template->set_filenames(array('wiki_search'=> 'wiki/search.tpl'));

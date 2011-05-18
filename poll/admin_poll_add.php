@@ -34,15 +34,15 @@ if (!empty($_POST['valid']))
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$question = retrieve(POST, 'question', '');
-	$type = retrieve(POST, 'type', 1);
-	$archive = retrieve(POST, 'archive', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
-	$get_visible = retrieve(POST, 'visible', 0);
+	$question = AppContext::get_request()->get_poststring('question', '');
+	$type = AppContext::get_request()->get_postint('type', 1);
+	$archive = AppContext::get_request()->get_postint('archive', 0);
+	$current_date = trim(AppContext::get_request()->get_poststring('current_date', ''));
+	$start = trim(AppContext::get_request()->get_poststring('start', ''));
+	$end = trim(AppContext::get_request()->get_poststring('end', ''));
+	$hour = trim(AppContext::get_request()->get_poststring('hour', ''));
+	$min = trim(AppContext::get_request()->get_poststring('min', ''));	
+	$get_visible = AppContext::get_request()->get_postint('visible', 0);
 	
 	//On verifie les conditions!
 	if (!empty($question))
@@ -136,7 +136,7 @@ else
 	));					 
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], E_USER_NOTICE));
 		

@@ -40,23 +40,23 @@ $server_configuration = new ServerConfiguration();
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
 	$general_config = GeneralConfig::load();
-	$general_config->set_site_name(stripslashes(retrieve(POST, 'site_name', '')));
-	$general_config->set_site_description(stripslashes(retrieve(POST, 'site_desc', '')));
-	$general_config->set_site_keywords(stripslashes(retrieve(POST, 'site_keyword', '')));
+	$general_config->set_site_name(stripslashes(AppContext::get_request()->get_poststring('site_name', '')));
+	$general_config->set_site_description(stripslashes(AppContext::get_request()->get_poststring('site_desc', '')));
+	$general_config->set_site_keywords(stripslashes(AppContext::get_request()->get_poststring('site_keyword', '')));
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], TextHelper::HTML_NO_PROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], TextHelper::HTML_NO_PROTECT) : DispatchManager::get_url('/member', '/member')->absolute());
 	$general_config->set_home_page(stripslashes($start_page));
 	GeneralConfig::save();
 	
 	$graphical_environment_config = GraphicalEnvironmentConfig::load();
-	$graphical_environment_config->set_visit_counter_enabled(retrieve(POST, 'compteur', false));
-	$graphical_environment_config->set_page_bench_enabled(retrieve(POST, 'bench', false));
-	$graphical_environment_config->set_display_theme_author(retrieve(POST, 'theme_author', false));
+	$graphical_environment_config->set_visit_counter_enabled(AppContext::get_request()->get_postbool('compteur', false));
+	$graphical_environment_config->set_page_bench_enabled(AppContext::get_request()->get_postbool('bench', false));
+	$graphical_environment_config->set_display_theme_author(AppContext::get_request()->get_postbool('theme_author', false));
 	GraphicalEnvironmentConfig::save();
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	// TODO change read authorization theme and lang for the guest
-	$user_accounts_config->set_default_lang(stripslashes(retrieve(POST, 'lang', '')));
-	$user_accounts_config->set_default_theme(stripslashes(retrieve(POST, 'theme', '')));
+	$user_accounts_config->set_default_lang(stripslashes(AppContext::get_request()->get_poststring('lang', '')));
+	$user_accounts_config->set_default_theme(stripslashes(AppContext::get_request()->get_poststring('theme', '')));
 	UserAccountsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
@@ -68,7 +68,7 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	));	
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 	{
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
@@ -177,13 +177,13 @@ elseif (!empty($_POST['advanced']))
 		$site_path = '/' . $site_path;
 	}
 	
-	$timezone = retrieve(POST, 'timezone', 0);
-	$url_rewriting = retrieve(POST, 'rewrite_engine', false);
-	$htaccess_manual_content = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
+	$timezone = AppContext::get_request()->get_postint('timezone', 0);
+	$url_rewriting = AppContext::get_request()->get_postbool('rewrite_engine', false);
+	$htaccess_manual_content = trim(AppContext::get_request()->get_poststring('htaccess_manual_content', ''));
 	
-	$cookie_name = TextHelper::strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
-	$session_duration = retrieve(POST, 'site_session', 3600);			
-	$active_session_duration = retrieve(POST, 'site_session_invit', 300);
+	$cookie_name = TextHelper::strprotect(trim(AppContext::get_request()->get_poststring('site_cookie', 'session')), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+	$session_duration = AppContext::get_request()->get_postint('site_session', 3600);			
+	$active_session_duration = AppContext::get_request()->get_postint('site_session_invit', 300);
 	
 	if (!empty($site_url) && !empty($cookie_name) && !empty($session_duration) && !empty($active_session_duration))
 	{
@@ -193,11 +193,11 @@ elseif (!empty($_POST['advanced']))
 		$general_config->set_site_timezone($timezone);
 		GeneralConfig::save();
 		
-		$debug = retrieve(POST, 'debug', false);
+		$debug = AppContext::get_request()->get_postbool('debug', false);
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_url_rewriting_enabled($url_rewriting);
 		$server_environment_config->set_htaccess_manual_content($htaccess_manual_content);
-		$server_environment_config->set_output_gziping_enabled(retrieve(POST, 'ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
+		$server_environment_config->set_output_gziping_enabled(AppContext::get_request()->get_postbool('ob_gzhandler', false) && function_exists('ob_gzhandler') && @extension_loaded('zlib'));
 		$server_environment_config->set_debug_mode_enabled($debug);
 		ServerEnvironmentConfig::save();
 		
@@ -232,7 +232,7 @@ else //Sinon on rempli le formulaire
 	));
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 	{
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));

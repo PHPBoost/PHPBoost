@@ -73,7 +73,7 @@ $tpl->put_all(array(
 $tpl->assign_block_vars('list', array(
 ));
 
-$get_sort = retrieve(GET, 'sort', '');
+$get_sort = AppContext::get_request()->get_getstring('sort', '');
 switch ($get_sort)
 {
 	case 'alpha' :
@@ -95,7 +95,7 @@ switch ($get_sort)
 		$sort = 'timestamp';
 }
 
-$get_mode = retrieve(GET, 'mode', '');
+$get_mode = AppContext::get_request()->get_getstring('mode', '');
 $mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 
 $result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login

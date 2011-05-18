@@ -31,9 +31,9 @@ load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id = retrieve(GET, 'id', '');
-$top = retrieve(GET, 'top', '');
-$bottom = retrieve(GET, 'bot', '');
+$id = AppContext::get_request()->get_getstring('id', '');
+$top = AppContext::get_request()->get_getstring('top', '');
+$bottom = AppContext::get_request()->get_getstring('bot', '');
 $del = isset($_GET['del']) ?  true : false;
 
 //Si c'est confirmé on met à jour!
@@ -112,12 +112,12 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 //On ajoute la nouvelle catégorie
 elseif (!empty($_POST['add'])) //Ajout du lien.
 {
-	$cat = retrieve(POST, 'cat', '');
-	$contents = retrieve(POST, 'contents', '');
-	$icon = retrieve(POST, 'icon', ''); 
-	$icon_path = retrieve(POST, 'icon_path', ''); 
-	$aprob = retrieve(POST, 'aprob', 0);
-	$secure = retrieve(POST, 'secure', -1);
+	$cat = AppContext::get_request()->get_poststring('cat', '');
+	$contents = AppContext::get_request()->get_poststring('contents', '');
+	$icon = AppContext::get_request()->get_poststring('icon', ''); 
+	$icon_path = AppContext::get_request()->get_poststring('icon_path', ''); 
+	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$secure = AppContext::get_request()->get_postint('secure', -1);
 		
 	if (!empty($icon_path))
 		$icon = $icon_path;
@@ -193,7 +193,7 @@ else
 	));	
 		
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	

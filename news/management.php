@@ -32,10 +32,10 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 $news_categories = new NewsCats();
 
-$new = retrieve(GET, 'new', 0);
-$cat = retrieve(GET, 'cat', 0);
-$edit = retrieve(GET, 'edit', 0);
-$delete = retrieve(GET, 'del', 0);
+$new = AppContext::get_request()->get_getint('new', 0);
+$cat = AppContext::get_request()->get_getint('cat', 0);
+$edit = AppContext::get_request()->get_getint('edit', 0);
+$delete = AppContext::get_request()->get_getint('del', 0);
 
 if ($delete > 0)
 {
@@ -85,25 +85,25 @@ elseif (!empty($_POST['submit']))
 	}
 	
 	$news = array(
-		'id' => retrieve(POST, 'id', 0, TINTEGER),
-		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
-		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
-		'title' => retrieve(POST, 'title', '', TSTRING),
-		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
-		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
-		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
-		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
+		'id' => AppContext::get_request()->get_postint('id', 0),
+		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
+		'user_id' => AppContext::get_request()->get_postint('user_id', 0),
+		'title' => TextHelper::strprotect(AppContext::get_request()->get_poststring('title', '')),
+		'desc' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', '')),
+		'extend_desc' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('extend_contents', '')),
+		'counterpart' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('counterpart', '')),
+		'visible' => AppContext::get_request()->get_postint('visible', 0),
 		'start' => $start->get_timestamp(),
-		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
-		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
+		'start_hour' => AppContext::get_request()->get_postint('start_hour', 0),
+		'start_min' => AppContext::get_request()->get_postint('start_min', 0),
 		'end' => $end->get_timestamp(),
-		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
-		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
+		'end_hour' => AppContext::get_request()->get_postint('end_hour', 0),
+		'end_min' => AppContext::get_request()->get_postint('end_min', 0),
 		'release' => $release->get_timestamp(),
-		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
-		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
-		'img' => retrieve(POST, 'img', '', TSTRING),
-		'alt' => retrieve(POST, 'alt', '', TSTRING),
+		'release_hour' => AppContext::get_request()->get_postint('release_hour', 0),
+		'release_min' => AppContext::get_request()->get_postint('release_min', 0),
+		'img' => TextHelper::strprotect(AppContext::get_request()->get_poststring('img', '')),
+		'alt' => TextHelper::strprotect(AppContext::get_request()->get_poststring('alt', '')),
 		'sources' => addslashes(serialize($sources))
 	);
 

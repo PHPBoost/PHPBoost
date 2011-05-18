@@ -35,7 +35,7 @@ define('READ_CAT_GALLERY', 0x01);
 define('WRITE_CAT_GALLERY', 0x02);
 define('EDIT_CAT_GALLERY', 0x04);
 
-$g_idcat = retrieve(GET, 'cat', 0);
+$g_idcat = AppContext::get_request()->get_getint('cat', 0);
 if (!empty($g_idcat))
 {
 	//Création de l'arborescence des catégories.

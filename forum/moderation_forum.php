@@ -29,10 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$action = retrieve(GET, 'action', '');
-$id_get = retrieve(GET, 'id', 0);
-$new_status = retrieve(GET, 'new_status', '');
-$get_del = retrieve(GET, 'del', '');
+$action = AppContext::get_request()->get_getstring('action', '');
+$id_get = AppContext::get_request()->get_getint('id', 0);
+$new_status = AppContext::get_request()->get_getstring('new_status', '');
+$get_del = AppContext::get_request()->get_getstring('del', '');
 
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 if ($action == 'alert')
@@ -82,7 +82,7 @@ $Template->put_all(array(
 ));
 
 //Redirection changement de catégorie.
-$id_topic_get = retrieve(POST, 'change_cat', '');
+$id_topic_get = AppContext::get_request()->get_poststring('change_cat', '');
 if (!empty($id_topic_get))
 {
 	//On va chercher les infos sur le topic
@@ -273,10 +273,10 @@ if ($action == 'alert') //Gestion des alertes
 }
 elseif ($action == 'punish') //Gestion des utilisateurs
 {
-	$readonly = retrieve(POST, 'new_info', 0);
+	$readonly = AppContext::get_request()->get_postint('new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	$readonly_contents = trim(AppContext::get_request()->get_poststring('action_contents', ''));
+	if (!empty($id_get) && AppContext::get_request()->get_postbool('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
@@ -317,9 +317,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (retrieve(POST, 'search_member', false))
+		if (AppContext::get_request()->get_postbool('search_member', false))
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = AppContext::get_request()->get_poststring('login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
@@ -439,9 +439,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
-	$new_warning_level = retrieve(POST, 'new_info', 0);
-	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	$new_warning_level = AppContext::get_request()->get_postint('new_info', 0);
+	$warning_contents = trim(AppContext::get_request()->get_poststring('action_contents', ''));
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && AppContext::get_request()->get_postbool('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
@@ -498,9 +498,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (retrieve(POST, 'search_member', false))
+		if (AppContext::get_request()->get_postbool('search_member', false))
 		{
-			$login = retrieve(POST, 'login_member', '');
+			$login = AppContext::get_request()->get_poststring('login_member', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
@@ -579,7 +579,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 	}
 }
-elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Suppression de l'historique.
+elseif (AppContext::get_request()->get_getbool('del_h', false) && $User->check_level(ADMIN_LEVEL)) //Suppression de l'historique.
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
 
@@ -587,7 +587,7 @@ elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Supp
 }
 else //Panneau de modération
 {
-	$get_more = retrieve(GET, 'more', 0);
+	$get_more = AppContext::get_request()->get_getint('more', 0);
 
 	$Template->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,

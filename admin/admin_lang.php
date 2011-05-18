@@ -29,9 +29,9 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 	
-$uninstall = retrieve(GET, 'uninstall', false);	
-$id = retrieve(GET, 'id', 0);
-$error = retrieve(GET, 'error', ''); 
+$uninstall = AppContext::get_request()->get_getbool('uninstall', false);	
+$id = AppContext::get_request()->get_getint('id', 0);
+$error = AppContext::get_request()->get_getstring('error', ''); 
 
 $template = new FileTemplate('admin/admin_lang_management.tpl');
 		
@@ -75,7 +75,7 @@ elseif ($uninstall) //Désinstallation.
 {
 	if (!empty($_POST['valid_del']))
 	{
-		$idlang = retrieve(POST, 'idlang', 0); 
+		$idlang = AppContext::get_request()->get_postint('idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
@@ -150,7 +150,7 @@ else
 	));
 		
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	elseif (!empty($get_error) && isset($LANG[$get_error]))

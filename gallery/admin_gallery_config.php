@@ -44,7 +44,7 @@ if (!empty($_POST['valid']))
 	$config_gallery['weight_max'] = isset($_POST['weight_max']) ? NumberHelper::numeric($_POST['weight_max']) : '1024';
 	$config_gallery['quality'] = isset($_POST['quality']) ? NumberHelper::numeric($_POST['quality']) : '80';
 	$config_gallery['trans'] = isset($_POST['trans']) ? NumberHelper::numeric($_POST['trans']) : '40';
-	$config_gallery['logo'] = TextHelper::strprotect(retrieve(POST, 'logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+	$config_gallery['logo'] = TextHelper::strprotect(AppContext::get_request()->get_poststring('logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 	$config_gallery['activ_logo'] = isset($_POST['activ_logo']) ? NumberHelper::numeric($_POST['activ_logo']) : '0';
 	$config_gallery['d_width'] = isset($_POST['d_width']) ? NumberHelper::numeric($_POST['d_width']) : '5';
 	$config_gallery['d_height'] = isset($_POST['d_height']) ? NumberHelper::numeric($_POST['d_height']) : '5';
@@ -62,7 +62,7 @@ if (!empty($_POST['valid']))
 	$config_gallery['display_pics'] = !empty($_POST['display_pics']) ? NumberHelper::numeric($_POST['display_pics']) : '0';
 	$config_gallery['scroll_type'] = !empty($_POST['scroll_type']) ? NumberHelper::numeric($_POST['scroll_type']) : 0;
 	$config_gallery['nbr_pics_mini'] = !empty($_POST['nbr_pics_mini']) ? NumberHelper::numeric($_POST['nbr_pics_mini']) : 8;
-	$config_gallery['speed_mini_pics'] = retrieve(POST, 'speed_mini_pics', 6);
+	$config_gallery['speed_mini_pics'] = AppContext::get_request()->get_postint('speed_mini_pics', 6);
 	$config_gallery['auth_root'] = !empty($CONFIG_GALLERY['auth_root']) ? stripslashes(serialize($CONFIG_GALLERY['auth_root'])) : serialize(array());
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);

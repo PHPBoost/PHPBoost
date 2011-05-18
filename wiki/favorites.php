@@ -41,8 +41,8 @@ if (!$User->check_level(MEMBER_LEVEL))
 	DispatchManager::redirect($error_controller);
 } 
 
-$add_favorite = retrieve(GET, 'add', 0);
-$remove_favorite = retrieve(GET, 'del', 0);
+$add_favorite = AppContext::get_request()->get_getint('add', 0);
+$remove_favorite = AppContext::get_request()->get_getint('del', 0);
 
 if ($add_favorite > 0)//Ajout d'un favori
 {

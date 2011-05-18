@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-$idweb = retrieve(GET, 'id', 0);
+$idweb = AppContext::get_request()->get_getint('id', 0);
 if (!empty($idweb))
 	$Sql->query_inject("UPDATE " . PREFIX . "web SET compt = compt + 1 WHERE id = '" . $idweb . "'", __LINE__, __LINE__); //MAJ du compteur.
 

@@ -33,10 +33,10 @@ $Cache->load('download');
 
 require_once('download_auth.php');
 
-$page = retrieve(GET, 'p', 1);
-$category_id = retrieve(GET, 'cat', 0);
-$file_id = retrieve(GET, 'id', 0);
-$deadlink = retrieve(GET, 'deadlink', 0);
+$page = AppContext::get_request()->get_getint('p', 1);
+$category_id = AppContext::get_request()->get_getint('cat', 0);
+$file_id = AppContext::get_request()->get_getint('id', 0);
+$deadlink = AppContext::get_request()->get_getint('deadlink', 0);
 $id_cat_for_download = 0;
 
 if (!empty($file_id))

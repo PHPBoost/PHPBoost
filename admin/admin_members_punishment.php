@@ -46,13 +46,13 @@ $template->put_all(array(
 	'L_JOKER' => $LANG['joker']
 ));
 	
-$action = retrieve(GET, 'action', '');
-$id_get = retrieve(GET, 'id', 0);
+$action = AppContext::get_request()->get_getstring('action', '');
+$id_get = AppContext::get_request()->get_getint('id', 0);
 if ($action == 'punish') //Gestion des utilisateurs
 {
-	$readonly = retrieve(POST, 'new_info', 0);
+	$readonly = AppContext::get_request()->get_postint('new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$readonly_contents = trim(AppContext::get_request()->get_poststring('action_contents', ''));
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
@@ -82,7 +82,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = AppContext::get_request()->get_poststring('login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
@@ -201,8 +201,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
-	$new_warning_level = retrieve(POST, 'new_info', 0);
-	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$new_warning_level = AppContext::get_request()->get_postint('new_info', 0);
+	$warning_contents = trim(AppContext::get_request()->get_poststring('action_contents', ''));
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
@@ -232,7 +232,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = AppContext::get_request()->get_poststring('login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
@@ -314,7 +314,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 }
 elseif ($action == 'ban') //Gestion des utilisateurs
 {
-	$user_ban = retrieve(POST, 'user_ban', 0);
+	$user_ban = AppContext::get_request()->get_postint('user_ban', 0);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 	{	
@@ -341,7 +341,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = AppContext::get_request()->get_poststring('login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban&id=' . $user_id);

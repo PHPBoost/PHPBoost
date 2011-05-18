@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$g_idpics = retrieve(GET, 'id', 0);
-$g_idcat = retrieve(GET, 'cat', 0);
+$g_idpics = AppContext::get_request()->get_getint('id', 0);
+$g_idcat = AppContext::get_request()->get_getint('cat', 0);
 
 if (!empty($g_idpics))
 {

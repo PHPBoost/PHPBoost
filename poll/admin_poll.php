@@ -31,8 +31,8 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //On recupère les variables.
-$id = retrieve(GET, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
+$id = AppContext::get_request()->get_getint('id', 0);
+$id_post = AppContext::get_request()->get_postint('id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if ($del && !empty($id)) //Suppresion poll
@@ -59,15 +59,15 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	
 	$Cache->load('poll');
 	
-	$question = retrieve(POST, 'question', '');
-	$type = retrieve(POST, 'type', 0);
-	$archive = retrieve(POST, 'archive', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
-	$get_visible = retrieve(POST, 'visible', 0);
+	$question = AppContext::get_request()->get_poststring('question', '');
+	$type = AppContext::get_request()->get_postint('type', 0);
+	$archive = AppContext::get_request()->get_postint('archive', 0);
+	$current_date = trim(AppContext::get_request()->get_poststring('current_date', ''));
+	$start = trim(AppContext::get_request()->get_poststring('start', ''));
+	$end = trim(AppContext::get_request()->get_poststring('end', ''));
+	$hour = trim(AppContext::get_request()->get_poststring('hour', ''));
+	$min = trim(AppContext::get_request()->get_poststring('min', ''));	
+	$get_visible = AppContext::get_request()->get_postint('visible', 0);
 	
 	//On verifie les conditions!
 	if (!empty($question) && !empty($id_post))
@@ -203,7 +203,7 @@ elseif (!empty($id))
 	));
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], E_USER_NOTICE));
 	

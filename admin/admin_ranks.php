@@ -30,7 +30,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$get_id = retrieve(GET, 'id', 0);	
+$get_id = AppContext::get_request()->get_getint('id', 0);	
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))

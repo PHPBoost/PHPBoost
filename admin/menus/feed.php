@@ -31,19 +31,19 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = retrieve(REQUEST, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
+$id = AppContext::get_request()->get_int('id', 0);
+$id_post = AppContext::get_request()->get_postint('id', 0);
 
-$action = retrieve(REQUEST, 'action', '');
-$action_post = retrieve(POST, 'action', '');
+$action = AppContext::get_request()->get_string('action', '');
+$action_post = AppContext::get_request()->get_poststring('action', '');
 
 if ($action_post == 'save')
 {
 	// Save a Menu (New / Edit)
 	$menu = null;
 
-	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
-	$menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
+	$menu_name = trim(AppContext::get_request()->get_poststring('name', ''));
+	$menu_url = trim(AppContext::get_request()->get_poststring('feed_url', ''));
 	$matches = array();
 	preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
 
@@ -63,10 +63,10 @@ if ($action_post == 'save')
 	if (!($menu instanceof FeedMenu))
 	AppContext::get_response()->redirect('menus.php');
 
-	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
+	$menu->enabled(AppContext::get_request()->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
 	if ($menu->is_enabled())
 	{
-		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+		$menu->set_block(AppContext::get_request()->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
 	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
 	

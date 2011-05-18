@@ -32,10 +32,10 @@ $media_categories = new MediaCats();
 
 $Template->set_filenames(array('media_action' => 'media/media_action.tpl'));
 
-$unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
-$add = retrieve(GET, 'add', 0, TINTEGER);
-$edit = retrieve(GET, 'edit', 0, TINTEGER);
-$delete = retrieve(GET, 'del', 0, TINTEGER);
+$unvisible = AppContext::get_request()->get_getint('unvisible', 0);
+$add = AppContext::get_request()->get_getint('add', 0);
+$edit = AppContext::get_request()->get_getint('edit', 0);
+$delete = AppContext::get_request()->get_getint('del', 0);
 
 // Modification du statut du fichier.
 if ($unvisible > 0)
@@ -228,16 +228,16 @@ elseif (!empty($_POST['submit']))
 	$Session->csrf_get_protect();
 
 	$media = array(
-		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
-		'name' => retrieve(POST, 'name', '', TSTRING),
-		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'idedit' => AppContext::get_request()->get_postint('idedit', 0),
+		'name' => TextHelper::strprotect(AppContext::get_request()->get_poststring('name', '')),
+		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
 		'width' => min(retrieve(POST, 'width', $MEDIA_CONFIG['width'], TINTEGER), $MEDIA_CONFIG['width']),
 		'height' => min(retrieve(POST, 'height', $MEDIA_CONFIG['height'], TINTEGER), $MEDIA_CONFIG['height']),
-		'url' => retrieve(POST, 'u_media', '', TSTRING),
-		'contents' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
+		'url' => TextHelper::strprotect(AppContext::get_request()->get_poststring('u_media', '')),
+		'contents' => trim(AppContext::get_request()->get_poststring('contents', '')),
 		'approved' => retrieve(POST, 'approved', 0, TBOOL),
 		'contrib' => retrieve(POST, 'contrib', 0, TBOOL),
-		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
+		'counterpart' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('counterpart', ''))
 	);
 
 	$auth_cat = !empty($MEDIA_CATS[$media['idcat']]['auth']) ? $MEDIA_CATS[$media['idcat']]['auth'] : $MEDIA_CATS[0]['auth'];

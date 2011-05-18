@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$page = retrieve(GET, 'pt', 1);
-$id_get = retrieve(GET, 'id', 0);
-$quote_get = retrieve(GET, 'quote', 0);	
+$page = AppContext::get_request()->get_getint('pt', 1);
+$id_get = AppContext::get_request()->get_getint('id', 0);
+$quote_get = AppContext::get_request()->get_getint('quote', 0);	
 
 //On va chercher les infos sur le topic	
 $topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
@@ -115,7 +115,7 @@ else
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 	
 //Gestion de la page si redirection vers le dernier message lu.
-$idm = retrieve(GET, 'idm', 0);
+$idm = AppContext::get_request()->get_getint('idm', 0);
 if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
@@ -192,7 +192,7 @@ $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG[
 
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
 $ranks_cache = RanksCache::load()->get_ranks(); //Récupère les rangs en cache.
-$page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
+$page = AppContext::get_request()->get_getint('pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	

@@ -33,9 +33,9 @@ define('TITLE', $LANG['administration']);
 require_once('../forum/forum_begin.php');
 require_once('../admin/admin_header.php');
 
-$class = retrieve(GET, 'id', 0);
-$top = retrieve(GET, 'top', '');
-$bottom = retrieve(GET, 'bot', '');
+$class = AppContext::get_request()->get_getint('id', 0);
+$top = AppContext::get_request()->get_getstring('top', '');
+$bottom = AppContext::get_request()->get_getstring('bot', '');
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))

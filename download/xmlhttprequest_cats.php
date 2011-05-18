@@ -33,11 +33,11 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 {	
 	$download_categories = new DownloadCats();
 	
-	$id_up = retrieve(GET, 'id_up', 0);
-	$id_down = retrieve(GET, 'id_down', 0);
-	$id_show = retrieve(GET, 'show', 0);
-	$id_hide = retrieve(GET, 'hide', 0);
-	$cat_to_del = retrieve(GET, 'del', 0);
+	$id_up = AppContext::get_request()->get_getint('id_up', 0);
+	$id_down = AppContext::get_request()->get_getint('id_down', 0);
+	$id_show = AppContext::get_request()->get_getint('show', 0);
+	$id_hide = AppContext::get_request()->get_getint('hide', 0);
+	$cat_to_del = AppContext::get_request()->get_getint('del', 0);
 	
 	$result = false;
 	

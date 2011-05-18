@@ -36,9 +36,9 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 	$Cache->load('forum');
 
 	$move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
-	$id = retrieve(GET, 'id', 0);
-	$get_parent_up = retrieve(GET, 'g_up', 0);
-	$get_parent_down = retrieve(GET, 'g_down', 0);
+	$id = AppContext::get_request()->get_getint('id', 0);
+	$get_parent_up = AppContext::get_request()->get_getint('g_up', 0);
+	$get_parent_down = AppContext::get_request()->get_getint('g_down', 0);
 
 	//Récupération de la catégorie d'échange.
 	if (!empty($get_parent_up))

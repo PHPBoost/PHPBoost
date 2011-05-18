@@ -29,24 +29,24 @@ include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 
-$faq_del_id = retrieve(GET, 'del', 0);
-$down = retrieve(GET, 'down', 0);
-$up = retrieve(GET, 'up', 0);
-$id_question = retrieve(POST, 'id_question', 0);
-$entitled = retrieve(POST, 'entitled', '');
-$answer = retrieve(POST, 'answer', '', TSTRING_PARSE);
-$new_id_cat = retrieve(POST, 'id_cat', 0);
-$id_after = retrieve(POST, 'after', 0);
+$faq_del_id = AppContext::get_request()->get_getint('del', 0);
+$down = AppContext::get_request()->get_getint('down', 0);
+$up = AppContext::get_request()->get_getint('up', 0);
+$id_question = AppContext::get_request()->get_postint('id_question', 0);
+$entitled = AppContext::get_request()->get_poststring('entitled', '');
+$answer = FormatingHelper::strparse(AppContext::get_request()->get_poststring('answer', ''));
+$new_id_cat = AppContext::get_request()->get_postint('id_cat', 0);
+$id_after = AppContext::get_request()->get_postint('after', 0);
 //Properties of the category
-$cat_properties = retrieve(GET, 'cat_properties', 0);
-$id_cat = retrieve(POST, 'id_faq', 0);
-$display_mode = retrieve(POST, 'display_mode', 0);
+$cat_properties = AppContext::get_request()->get_getint('cat_properties', 0);
+$id_cat = AppContext::get_request()->get_postint('id_faq', 0);
+$display_mode = AppContext::get_request()->get_postint('display_mode', 0);
 $global_auth = retrieve(POST, 'global_auth', array());
-$cat_name = retrieve(POST, 'cat_name', '');
-$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+$cat_name = AppContext::get_request()->get_poststring('cat_name', '');
+$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
 
-$target = retrieve(POST, 'target', 0);
-$move_question = retrieve(POST, 'move_question', false);
+$target = AppContext::get_request()->get_postint('target', 0);
+$move_question = AppContext::get_request()->get_postbool('move_question', false);
 
 if ($faq_del_id > 0)
 {    

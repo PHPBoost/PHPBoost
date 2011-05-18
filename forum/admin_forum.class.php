@@ -199,11 +199,11 @@ class Admin_forum
 		else //Déplacement.
 		{
 			//Déplacement de sous forums.
-			$f_to = retrieve(POST, 'f_to', 0);
+			$f_to = AppContext::get_request()->get_postint('f_to', 0);
 			$f_to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//Déplacement de topics.
-			$t_to = retrieve(POST, 't_to', 0);
+			$t_to = AppContext::get_request()->get_postint('t_to', 0);
 			$t_to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
 			
 			//Déplacement des topics dans la catégorie sélectionnée.

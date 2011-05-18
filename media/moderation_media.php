@@ -135,9 +135,9 @@ else
 
 	if (!empty($_POST['filter']))
 	{
-		$state = retrieve(POST, 'state', 'all', TSTRING);
-		$cat = retrieve(POST, 'idcat', 0, TINTEGER);
-		$sub_cats = retrieve(POST, 'sub_cats', false, TBOOL);
+		$state = TextHelper::strprotect(AppContext::get_request()->get_poststring('state', 'all'));
+		$cat = AppContext::get_request()->get_postint('idcat', 0);
+		$sub_cats = AppContext::get_request()->get_postbool('sub_cats', false);
 		
 		if ($state == "visible")
 		{

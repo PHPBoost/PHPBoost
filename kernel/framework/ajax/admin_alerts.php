@@ -47,8 +47,8 @@ if (!$User->check_level(ADMIN_LEVEL))
 
 
 
-$change_status = retrieve(GET, 'change_status', 0);
-$id_to_delete = retrieve(GET, 'delete', 0);
+$change_status = AppContext::get_request()->get_getint('change_status', 0);
+$id_to_delete = AppContext::get_request()->get_getint('delete', 0);
 
 if ($change_status > 0)
 {

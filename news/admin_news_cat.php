@@ -34,15 +34,15 @@ load_module_lang('news'); //Chargement de la langue du module.
 
 $news_categories = new NewsCats();
 
-$id_up = retrieve(GET, 'id_up', 0);
-$id_down = retrieve(GET, 'id_down', 0);
-$id_show = retrieve(GET, 'show', 0);
-$id_hide = retrieve(GET, 'hide', 0);
-$cat_to_del = retrieve(GET, 'del', 0);
-$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
-$id_edit = retrieve(GET, 'edit', 0);
-$new_cat = retrieve(GET, 'new', false);
-$error = retrieve(GET, 'error', '');
+$id_up = AppContext::get_request()->get_getint('id_up', 0);
+$id_down = AppContext::get_request()->get_getint('id_down', 0);
+$id_show = AppContext::get_request()->get_getint('show', 0);
+$id_hide = AppContext::get_request()->get_getint('hide', 0);
+$cat_to_del = AppContext::get_request()->get_getint('del', 0);
+$cat_to_del_post = AppContext::get_request()->get_postint('cat_to_del', 0);
+$id_edit = AppContext::get_request()->get_getint('edit', 0);
+$new_cat = AppContext::get_request()->get_getbool('new', false);
+$error = AppContext::get_request()->get_getstring('error', '');
 
 $tpl = new FileTemplate('news/admin_news_cat.tpl');
 
@@ -118,7 +118,7 @@ elseif (!empty($_POST['submit']))
 	if (!empty($cat_to_del_post))
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
-		$id_parent = retrieve(POST, 'id_parent', 0);
+		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
 
 		if ($delete_content)
 		{
@@ -131,11 +131,11 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$id_cat = retrieve(POST, 'idcat', 0);
-		$id_parent = retrieve(POST, 'id_parent', 0);
-		$name = retrieve(POST, 'name', '');
-		$image = retrieve(POST, 'image', '');
-		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
+		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
+		$name = AppContext::get_request()->get_poststring('name', '');
+		$image = AppContext::get_request()->get_poststring('image', '');
+		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE))) : '';
 
 		if (empty($name))

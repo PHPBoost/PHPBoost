@@ -33,11 +33,11 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 header('Content-type: image/jpeg'); //Envoi du header.
 
-$instance = retrieve(GET, 'instance', 1);
-$width = retrieve(GET, 'width', 160);
-$height = retrieve(GET, 'height', 50);
+$instance = AppContext::get_request()->get_getint('instance', 1);
+$width = AppContext::get_request()->get_getint('width', 160);
+$height = AppContext::get_request()->get_getint('height', 50);
 $font = retrieve(GET, 'font', PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf');
-$difficulty = retrieve(GET, 'difficulty', 4);
+$difficulty = AppContext::get_request()->get_getint('difficulty', 4);
 
 
 $Captcha = new Captcha();

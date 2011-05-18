@@ -35,19 +35,19 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 if (!empty($_POST['submit']) )
 {
 	$content_formatting_config = ContentFormattingConfig::load();
-	$editor = retrieve(POST, 'formatting_language', '');
+	$editor = AppContext::get_request()->get_poststring('formatting_language', '');
 	$content_formatting_config->set_default_editor(($editor == 'tinymce') ? 'tinymce' : 'bbcode');
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
 	ContentFormattingConfig::save();
 	
 	$content_management_config = ContentManagementConfig::load();
-	$content_management_config->set_anti_flood_enabled((boolean)retrieve(POST, 'anti_flood', 0));
-	$content_management_config->set_anti_flood_duration(retrieve(POST, 'delay_flood', 0));
+	$content_management_config->set_anti_flood_enabled((boolean)AppContext::get_request()->get_postint('anti_flood', 0));
+	$content_management_config->set_anti_flood_duration(AppContext::get_request()->get_postint('delay_flood', 0));
 	ContentManagementConfig::save();
 	
 	$user_accounts_config = UserAccountsConfig::load();
-	$user_accounts_config->set_max_private_messages_number(retrieve(POST, 'pm_max', 25));
+	$user_accounts_config->set_max_private_messages_number(AppContext::get_request()->get_postint('pm_max', 25));
 	UserAccountsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	

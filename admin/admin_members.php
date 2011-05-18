@@ -29,12 +29,12 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id = retrieve(GET, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
+$id = AppContext::get_request()->get_getint('id', 0);
+$id_post = AppContext::get_request()->get_postint('id', 0);
 $delete = !empty($_GET['delete']) ? true : false ;
 $add = !empty($_GET['add']) ? true : false;
-$get_error = retrieve(GET, 'error', '');
-$get_l_error = retrieve(GET, 'erroru', '');
+$get_error = AppContext::get_request()->get_getstring('error', '');
+$get_l_error = AppContext::get_request()->get_getstring('erroru', '');
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']) && !empty($id_post))
@@ -66,9 +66,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		else
 		{
 			//Vérification des password.
-			$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
+			$password = trim(AppContext::get_request()->get_poststring('pass', ''));
 			$password_hash = !empty($password) ? strhash($password) : '';
-			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNCHANGE);
+			$password_bis = trim(AppContext::get_request()->get_poststring('confirm_pass', ''));
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
             
 			if (!empty($password_hash) && !empty($password_bis_hash))
@@ -86,32 +86,32 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#message_helper');
 			}
 			
-			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
-			$user_aprob = retrieve(POST, 'user_aprob', 0);  
+			$MEMBER_LEVEL = AppContext::get_request()->get_postint('level', -1);  
+			$user_aprob = AppContext::get_request()->get_postint('user_aprob', 0);  
 			
 			//Informations.
 			$user_show_mail = !empty($_POST['user_show_mail']) ? 0 : 1;
-			$user_lang = retrieve(POST, 'user_lang', '');
-			$user_theme = retrieve(POST, 'user_theme', '');
-			$user_editor = retrieve(POST, 'user_editor', '');
-			$user_timezone = retrieve(POST, 'user_timezone', 0);
+			$user_lang = AppContext::get_request()->get_poststring('user_lang', '');
+			$user_theme = AppContext::get_request()->get_poststring('user_theme', '');
+			$user_editor = AppContext::get_request()->get_poststring('user_editor', '');
+			$user_timezone = AppContext::get_request()->get_postint('user_timezone', 0);
 			
-			$user_local = retrieve(POST, 'user_local', '');
-			$user_occupation = retrieve(POST, 'user_occupation', '');
-			$user_hobbies = retrieve(POST, 'user_hobbies', '');
-			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
-			$user_sex = retrieve(POST, 'user_sex', 0);
-			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);			
-			$user_msn = retrieve(POST, 'user_msn', '');
-			$user_yahoo= retrieve(POST, 'user_yahoo', '');
+			$user_local = AppContext::get_request()->get_poststring('user_local', '');
+			$user_occupation = AppContext::get_request()->get_poststring('user_occupation', '');
+			$user_hobbies = AppContext::get_request()->get_poststring('user_hobbies', '');
+			$user_desc = FormatingHelper::strparse(AppContext::get_request()->get_poststring('user_desc', ''));
+			$user_sex = AppContext::get_request()->get_postint('user_sex', 0);
+			$user_sign = FormatingHelper::strparse(AppContext::get_request()->get_poststring('user_sign', ''));			
+			$user_msn = AppContext::get_request()->get_poststring('user_msn', '');
+			$user_yahoo= AppContext::get_request()->get_poststring('user_yahoo', '');
 			
-			$user_warning = retrieve(POST, 'user_warning', 0);
-			$user_readonly = retrieve(POST, 'user_readonly', 0);
+			$user_warning = AppContext::get_request()->get_postint('user_warning', 0);
+			$user_readonly = AppContext::get_request()->get_postint('user_readonly', 0);
 			$user_readonly = ($user_readonly > 0) ? (time() + $user_readonly) : 0; //Lecture seule!
-			$user_ban = retrieve(POST, 'user_ban', 0);
+			$user_ban = AppContext::get_request()->get_postint('user_ban', 0);
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
 			
-			$user_web = retrieve(POST, 'user_web', '');
+			$user_web = AppContext::get_request()->get_poststring('user_web', '');
 			if (!empty($user_web) && substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
 				$user_web = 'http://' . $user_web;
 			
@@ -239,11 +239,11 @@ if (!empty($_POST['valid']) && !empty($id_post))
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
 	$login = !empty($_POST['login2']) ? TextHelper::strprotect(substr($_POST['login2'], 0, 25)) : '';
-	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
-	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
+	$password = trim(AppContext::get_request()->get_poststring('password2', ''));
+	$password_bis = trim(AppContext::get_request()->get_poststring('password2_bis', ''));
 	$password_hash = !empty($password) ? strhash($password) : '';
-	$level = retrieve(POST, 'level2', 0);
-	$mail = strtolower(retrieve(POST, 'mail2', ''));
+	$level = AppContext::get_request()->get_postint('level2', 0);
+	$mail = strtolower(AppContext::get_request()->get_poststring('mail2', ''));
 	
 	if (AppContext::get_mail_service()->is_mail_valid($mail))
 	{	
@@ -556,7 +556,7 @@ elseif (!empty($id))
 	}
 	
 	//Champs supplémentaires.
-	ExtendFieldMember::display($Template, retrieve(GET, 'id', 0));
+	ExtendFieldMember::display($Template, AppContext::get_request()->get_getint('id', 0));
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	
@@ -680,7 +680,7 @@ else
 		'C_DISPLAY_SEARCH_RESULT' => false
 	));
 	
-	$search = retrieve(POST, 'login_mbr', ''); 
+	$search = AppContext::get_request()->get_poststring('login_mbr', ''); 
 	if (!empty($search)) //Moteur de recherche des members
 	{
 		$search = str_replace('*', '%', $search);
@@ -717,7 +717,7 @@ else
 	 
 	$Pagination = new DeprecatedPagination();
 	 
-	$get_sort = retrieve(GET, 'sort', '');	
+	$get_sort = AppContext::get_request()->get_getstring('sort', '');	
 	switch ($get_sort)
 	{
 		case 'time' : 
@@ -739,7 +739,7 @@ else
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = retrieve(GET, 'mode', '');	
+	$get_mode = AppContext::get_request()->get_getstring('mode', '');	
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 

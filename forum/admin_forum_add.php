@@ -33,8 +33,8 @@ require_once('../admin/admin_header.php');
 
 require_once('../forum/forum_begin.php');
 
-$idcat = retrieve(GET, 'idcat', 0);
-$class = retrieve(GET, 'id', 0);
+$idcat = AppContext::get_request()->get_getint('idcat', 0);
+$class = AppContext::get_request()->get_getint('id', 0);
 
 
 //Si c'est confirmé on execute
@@ -42,14 +42,14 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 {
 	$Cache->load('forum');
 	
-	$parent_category = retrieve(POST, 'category', 0);
-	$name = retrieve(POST, 'name', '');
-	$url = retrieve(POST, 'url', '');
-	$type = retrieve(POST, 'type', '');
-	$aprob = retrieve(POST, 'aprob', 0);
-	$status = retrieve(POST, 'status', 0);
+	$parent_category = AppContext::get_request()->get_postint('category', 0);
+	$name = AppContext::get_request()->get_poststring('name', '');
+	$url = AppContext::get_request()->get_poststring('url', '');
+	$type = AppContext::get_request()->get_poststring('type', '');
+	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$status = AppContext::get_request()->get_postint('status', 0);
 
-	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+	$subname = trim(AppContext::get_request()->get_poststring('desc', ''));
 	$subname = FormatingHelper::strparse($subname, array(
 	    4 => 'title',
 	    5 => 'style',
@@ -153,7 +153,7 @@ else
 	$Sql->query_close($result);
 	
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	

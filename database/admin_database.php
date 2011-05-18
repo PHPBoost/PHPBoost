@@ -47,8 +47,8 @@ require_once('../admin/admin_header.php');
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
 $tables_backup = !empty($_POST['backup']) ? true : false;
-$table = retrieve(GET, 'table', '');
-$action = retrieve(GET, 'action', '');
+$table = AppContext::get_request()->get_getstring('table', '');
+$action = AppContext::get_request()->get_getstring('action', '');
 
 if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table unique.
 {	
@@ -78,7 +78,7 @@ $Template->put_all(array(
 if (!empty($_GET['query']))
 {
 	
-	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
+	$query = trim(AppContext::get_request()->get_poststring('query', ''));
 
 	$Template->put_all(array(
 		'C_DATABASE_QUERY' => true

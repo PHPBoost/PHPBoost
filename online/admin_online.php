@@ -34,7 +34,7 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid']))
 {
 	$config_online = array();
-	$config_online['online_displayed'] = retrieve(POST, 'online_displayed', 4);
+	$config_online['online_displayed'] = AppContext::get_request()->get_postint('online_displayed', 4);
 	$config_online['display_order_online'] = retrieve(POST, 'display_order_online', 's.level, s.session_time DESC');
 		
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);

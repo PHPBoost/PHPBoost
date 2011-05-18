@@ -37,15 +37,15 @@ function no_available_feeds()
 	AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
 }
 
-$module_id = retrieve(GET, 'm', '');
+$module_id = AppContext::get_request()->get_getstring('m', '');
 if (!empty($module_id))
 {
-	$feed_name = retrieve(GET, 'name', Feed::DEFAULT_FEED_NAME);
-	$category_id = retrieve(GET, 'cat', 0);
+	$feed_name = AppContext::get_request()->get_getvalue('name', Feed::DEFAULT_FEED_NAME);
+	$category_id = AppContext::get_request()->get_getint('cat', 0);
 
 	$feed = null;
 
-	switch (retrieve(GET, 'feed', 'rss'))
+	switch (AppContext::get_request()->get_getstring('feed', 'rss'))
 	{
 		case 'atom':    // ATOM
 			$feed= new ATOM($module_id, $feed_name, $category_id);

@@ -30,7 +30,7 @@ require_once('../poll/poll_begin.php');
 require_once('../kernel/header.php'); 
 
 $poll = array();
-$poll_id = retrieve(GET, 'id', 0);
+$poll_id = AppContext::get_request()->get_getint('id', 0);
 if (!empty($poll_id))
 {
 	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
@@ -44,8 +44,8 @@ if (!empty($poll_id))
 	}
 }	
 	
-$archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = retrieve(GET, 'r', false); //Affichage des résulats.
+$archives = AppContext::get_request()->get_getbool('archives', false); //On vérifie si on est sur les archives
+$show_result = AppContext::get_request()->get_getbool('r', false); //Affichage des résulats.
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
@@ -107,7 +107,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		$array_votes = explode('|', $poll['votes']);
 		if ($poll['type'] == '1') //Réponse unique.
 		{	
-			$id_answer = retrieve(POST, 'radio', -1);		
+			$id_answer = AppContext::get_request()->get_postint('radio', -1);		
 			if (isset($array_votes[$id_answer]))
 			{
 				$array_votes[$id_answer]++;
@@ -168,7 +168,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	}
 	
 	//Gestion des erreurs
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	switch ($get_error)
 	{
 		case 'e_already_vote':

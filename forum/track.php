@@ -34,7 +34,7 @@ $Bread_crumb->add($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
 require_once('../kernel/header.php');
 
-$page = retrieve(GET, 'p', 1);
+$page = AppContext::get_request()->get_getint('p', 1);
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))

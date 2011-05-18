@@ -34,11 +34,11 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid']))
 {
 	$maintenance_config = MaintenanceConfig::load();
-	$maintain_check = retrieve(POST, 'maintain_check', 0);
+	$maintain_check = AppContext::get_request()->get_postint('maintain_check', 0);
 	switch ($maintain_check) 
 	{
 		case 1:
-			$maintain = retrieve(POST, 'maintain', 0); //Désactivé par défaut.
+			$maintain = AppContext::get_request()->get_postint('maintain', 0); //Désactivé par défaut.
 			if ($maintain == -1)
 			{
 				$maintenance_config->enable_maintenance();
@@ -57,7 +57,7 @@ if (!empty($_POST['valid']))
 			}
 		break;
 		case 2:
-			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+			$maintain = trim(AppContext::get_request()->get_poststring('end', ''));
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
 			$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $maintain);
 			$maintenance_config->enable_maintenance();
@@ -69,9 +69,9 @@ if (!empty($_POST['valid']))
 	}
 	
 	$maintenance_config->set_auth(Authorizations::build_auth_array_from_form(1));
-	$maintenance_config->set_message(stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE)));
-	$maintenance_config->set_display_duration((boolean)retrieve(POST, 'display_delay', 0));
-	$maintenance_config->set_display_duration_for_admin((boolean)retrieve(POST, 'maintain_display_admin', 0));
+	$maintenance_config->set_message(stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''))));
+	$maintenance_config->set_display_duration((boolean)AppContext::get_request()->get_postint('display_delay', 0));
+	$maintenance_config->set_display_duration_for_admin((boolean)AppContext::get_request()->get_postint('maintain_display_admin', 0));
 	
 	MaintenanceConfig::save();
 	

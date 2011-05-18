@@ -40,15 +40,15 @@ if (!$User->check_level(MEMBER_LEVEL))
 
 
 
-$pm_get = retrieve(GET, 'pm', 0);
-$pm_id_get = retrieve(GET, 'id', 0);
-$pm_del_convers = retrieve(GET, 'del_convers', false);
-$quote_get = retrieve(GET, 'quote', 0);
-$page = retrieve(GET, 'p', 0);
-$post = retrieve(GET, 'post', false);
-$pm_edit = retrieve(GET, 'edit', 0);
-$pm_del = retrieve(GET, 'del', 0);
-$read = retrieve(GET, 'read', false);
+$pm_get = AppContext::get_request()->get_getint('pm', 0);
+$pm_id_get = AppContext::get_request()->get_getint('id', 0);
+$pm_del_convers = AppContext::get_request()->get_getbool('del_convers', false);
+$quote_get = AppContext::get_request()->get_getint('quote', 0);
+$page = AppContext::get_request()->get_getint('p', 0);
+$post = AppContext::get_request()->get_getbool('post', false);
+$pm_edit = AppContext::get_request()->get_getint('edit', 0);
+$pm_del = AppContext::get_request()->get_getint('del', 0);
+$read = AppContext::get_request()->get_getbool('read', false);
 
 //Marque les messages privés comme lus
 if ($read)
@@ -83,12 +83,12 @@ if ($read)
 	AppContext::get_response()->redirect(HOST . DIR . url('/member/pm.php', '', '&'));
 }
 
-$convers = retrieve(POST, 'convers', false);
+$convers = AppContext::get_request()->get_postbool('convers', false);
 if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 {
-	$title = retrieve(POST, 'title', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$login = retrieve(POST, 'login', '');
+	$title = AppContext::get_request()->get_poststring('title', '');
+	$contents = trim(AppContext::get_request()->get_poststring('contents', ''));
+	$login = AppContext::get_request()->get_poststring('login', '');
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
@@ -153,7 +153,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	else
 	{
 		//Gestion des erreurs
-		$get_error = retrieve(GET, 'error', '');
+		$get_error = AppContext::get_request()->get_getstring('error', '');
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
@@ -260,7 +260,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 }
 elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //Envoi de messages.
 {
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents = trim(AppContext::get_request()->get_poststring('contents', ''));
 	if (!empty($contents))
 	{
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
@@ -432,8 +432,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 			$id_first = $Sql->query("SELECT MIN(id) as id FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
 			if (!empty($_POST['convers']) XOR !empty($_POST['edit_pm']))
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-				$title = retrieve(POST, 'title', '');
+				$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
+				$title = AppContext::get_request()->get_poststring('title', '');
 				
 				if (!empty($_POST['edit_pm']) && !empty($contents))
 				{
@@ -488,8 +488,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					'L_RESET' => $LANG['reset']
 				));
 				
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+				$contents = trim(AppContext::get_request()->get_poststring('contents', ''));
+				$title = trim(AppContext::get_request()->get_poststring('title', ''));
 				
 				$Template->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
@@ -596,7 +596,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$is_guest_in_convers = false;
 	//Gestion des rangs.
 	$ranks_cache = RanksCache::load()->get_ranks();
-	$page = retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
+	$page = AppContext::get_request()->get_getint('p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;
@@ -756,7 +756,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		));
 		
 		//Gestion des erreurs
-		$get_error = retrieve(GET, 'error', '');
+		$get_error = AppContext::get_request()->get_getstring('error', '');
 		switch ($get_error)
 		{
 			case 'e_incomplete':

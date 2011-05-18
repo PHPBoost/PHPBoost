@@ -28,8 +28,8 @@
 require_once('../kernel/begin.php');
 require_once('../guestbook/guestbook_begin.php');
 require_once('../kernel/header.php');
-$id_get = retrieve(GET, 'id', 0);
-$guestbook = retrieve(POST, 'guestbookForm', false);
+$id_get = AppContext::get_request()->get_getint('id', 0);
+$guestbook = AppContext::get_request()->get_postbool('guestbookForm', false);
 
 $guestbook_config = GuestbookConfig::load();
 $authorizations = $guestbook_config->get_authorizations();
@@ -42,7 +42,7 @@ if (!$User->check_auth($authorizations, GuestbookConfig::AUTH_READ)) //Autorisat
 
 $Template = new FileTemplate('guestbook/guestbook.tpl');
 
-$del = retrieve(GET, 'del', false);
+$del = AppContext::get_request()->get_getbool('del', false);
 if ($del && !empty($id_get)) //Suppression.
 {
 	$row = $Sql->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);

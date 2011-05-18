@@ -498,7 +498,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		$year = $pages_year;
 		$clause = '';
 	}
-	elseif (retrieve(GET, 'd', false))
+	elseif (AppContext::get_request()->get_getbool('d', false))
 	{
 		$clause = " AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
 		$year = retrieve(GET, 'y', (int)$current_year);
@@ -672,7 +672,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			}
 		}
 	}
-	elseif (retrieve(GET, 'd', false))
+	elseif (AppContext::get_request()->get_getbool('d', false))
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;

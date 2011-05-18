@@ -28,9 +28,9 @@
 require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
-$id_article = retrieve(GET, 'id', 0);
-$field = retrieve(GET, 'field', '');
-$order = retrieve(GET, 'order', '');
+$id_article = AppContext::get_request()->get_getint('id', 0);
+$field = AppContext::get_request()->get_getstring('field', '');
+$order = AppContext::get_request()->get_getstring('order', '');
 
 define('TITLE' , $LANG['wiki_history']);
 

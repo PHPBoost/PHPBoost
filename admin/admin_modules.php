@@ -29,9 +29,9 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$uninstall = retrieve(GET, 'uninstall', false);
-$id = retrieve(GET, 'id', 0);
-$error = retrieve(GET, 'error', '');
+$uninstall = AppContext::get_request()->get_getbool('uninstall', false);
+$id = AppContext::get_request()->get_getint('id', 0);
+$error = AppContext::get_request()->get_getstring('error', '');
 
 $template = new FileTemplate('admin/admin_modules_management.tpl');
 
@@ -54,7 +54,7 @@ elseif ($uninstall) //Désinstallation du module
 	if (!empty($_POST['valid_del']))
 	{
 		$idmodule = AppContext::get_request()->get_string('idmodule', '');
-		$drop_files = retrieve(POST, 'drop_files', false);
+		$drop_files = AppContext::get_request()->get_postbool('drop_files', false);
 
 		switch (ModulesManager::uninstall_module($idmodule, $drop_files))
 		{
@@ -134,7 +134,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = AppContext::get_request()->get_getstring('error', '');
 	if ($get_error == 'incomplete')
 	{
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));

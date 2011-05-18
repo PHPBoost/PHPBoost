@@ -37,11 +37,11 @@ $Template->set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$search = retrieve(REQUEST, 'q', '');
-$unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
-$search_in = retrieve(POST, 'search_in', 'all');
+$search = AppContext::get_request()->get_string('q', '');
+$unsecure_search = stripslashes(AppContext::get_request()->get_string('q', ''));
+$search_in = AppContext::get_request()->get_poststring('search_in', 'all');
 $selected_modules = retrieve(POST, 'searched_modules', array());
-$query_mode = retrieve(POST, 'query_mode', true);
+$query_mode = AppContext::get_request()->get_postbool('query_mode', true);
 //--------------------------------------------------------------------- Header
 
 define('TITLE', $LANG['title_search']);

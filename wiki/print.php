@@ -31,7 +31,7 @@ load_module_lang('wiki');
 include('../wiki/wiki_functions.php');
 
 //Id de l'article à afficher en version imprimable
-$article_id = retrieve(GET, 'id', 0);
+$article_id = AppContext::get_request()->get_getint('id', 0);
 
 //Requêtes préliminaires utiles par la suite
 if ($article_id > 0) //Si on connait son titre

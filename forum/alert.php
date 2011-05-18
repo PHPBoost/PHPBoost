@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$alert = retrieve(GET, 'id', 0);
-$alert_post = retrieve(POST, 'id', 0);
+$alert = AppContext::get_request()->get_getint('id', 0);
+$alert_post = AppContext::get_request()->get_postint('id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
 $topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
@@ -109,8 +109,8 @@ if (!empty($alert_post))
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
-		$alert_title = retrieve(POST, 'title', '');
-		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$alert_title = AppContext::get_request()->get_poststring('title', '');
+		$alert_contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
 
 		//Instanciation de la class du forum.
 		$Forumfct = new Forum;

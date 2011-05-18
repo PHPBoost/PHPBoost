@@ -32,7 +32,7 @@ define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php');
 
 $memberId = retrieve(GET, 'id', 0, TUNSIGNED_INT);
-$script = retrieve(GET, 'script', '');
+$script = AppContext::get_request()->get_getstring('script', '');
 
 if (!empty($memberId)) //Affichage de tous les messages du membre
 {

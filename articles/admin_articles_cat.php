@@ -34,9 +34,9 @@ require_once('articles_constants.php');
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
-$new_cat = retrieve(GET, 'new', false);
+$new_cat = AppContext::get_request()->get_getbool('new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
-$error = retrieve(GET, 'error', '');
+$error = AppContext::get_request()->get_getstring('error', '');
 
 $articles_categories = new ArticlesCats();
 
@@ -245,9 +245,9 @@ elseif (retrieve(POST,'submit',false))
 	{
 		$id_cat = retrieve(POST, 'idcat', 0,TINTEGER);
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
-		$name = retrieve(POST, 'name', '');
-		$icon=retrieve(POST, 'icon', '', TSTRING);
-		$models=retrieve(POST, 'models', 1, TINTEGER);	
+		$name = AppContext::get_request()->get_poststring('name', '');
+		$icon=TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
+		$models=AppContext::get_request()->get_postint('models', 1);	
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
 		$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
 	
@@ -255,7 +255,7 @@ elseif (retrieve(POST,'submit',false))
 		if(retrieve(POST,'icon_path',false))
 			$icon=retrieve(POST,'icon_path','');
 			
-		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))

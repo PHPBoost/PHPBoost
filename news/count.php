@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('news_constant.php');
 
-$id = retrieve(GET, 'id', 0);
+$id = AppContext::get_request()->get_getint('id', 0);
 if (!empty($id))
 	$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET compt = compt + 1 WHERE id = '" . $id . "'", __LINE__, __LINE__); //MAJ du compteur.
 

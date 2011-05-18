@@ -35,11 +35,11 @@ if (!empty($_POST['valid']) )
 {
 	$config_shoutbox = ShoutboxConfig::load();
 	
-	$config_shoutbox->set_max_messages_number(retrieve(POST, 'shoutbox_max_msg', 10));
+	$config_shoutbox->set_max_messages_number(AppContext::get_request()->get_postint('shoutbox_max_msg', 10));
 	$config_shoutbox->set_authorization(Authorizations::build_auth_array_from_form(ShoutboxConfig::AUTHORIZATION_READ, ShoutboxConfig::AUTHORIZATION_WRITE, ShoutboxConfig::AUTHORIZATION_MODERATION));
 	$config_shoutbox->set_forbidden_formatting_tags($_POST['shoutbox_forbidden_tags']);
-	$config_shoutbox->set_max_links_number_per_message(retrieve(POST, 'shoutbox_max_link', -1));
-	$config_shoutbox->set_refresh_delay(NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float'));
+	$config_shoutbox->set_max_links_number_per_message(AppContext::get_request()->get_postint('shoutbox_max_link', -1));
+	$config_shoutbox->set_refresh_delay(NumberHelper::numeric(AppContext::get_request()->get_postint('shoutbox_refresh_delay', 0)* 60000, 'float'));
 
 	ShoutboxConfig::save();
 	

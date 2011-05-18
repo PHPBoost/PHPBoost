@@ -31,21 +31,21 @@ include_once('pages_functions.php');
 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_redirections']);
 
-$id_redirection = retrieve(GET, 'id', 0);
-$id_rename = retrieve(GET, 'rename', 0);
-$id_rename_post = retrieve(POST, 'id_rename', 0);
-$id_new = retrieve(GET, 'new', 0);
-$id_new_post = retrieve(POST, 'id_new', 0);
-$del_redirection = retrieve(GET, 'del', 0);
+$id_redirection = AppContext::get_request()->get_getint('id', 0);
+$id_rename = AppContext::get_request()->get_getint('rename', 0);
+$id_rename_post = AppContext::get_request()->get_postint('id_rename', 0);
+$id_new = AppContext::get_request()->get_getint('new', 0);
+$id_new_post = AppContext::get_request()->get_postint('id_new', 0);
+$del_redirection = AppContext::get_request()->get_getint('del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
-$new_title = retrieve(POST, 'new_title', '');
-$redirection_name = retrieve(POST, 'redirection_name', '');
-$error = retrieve(GET, 'error', '');
-$del_cat = retrieve(GET, 'del_cat', 0);
+$new_title = AppContext::get_request()->get_poststring('new_title', '');
+$redirection_name = AppContext::get_request()->get_poststring('redirection_name', '');
+$error = AppContext::get_request()->get_getstring('error', '');
+$del_cat = AppContext::get_request()->get_getint('del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
-$del_cat_post = retrieve(GET, 'del_cat', 0);
-$report_cat = retrieve(GET, 'report_cat', 0);
-$remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
+$del_cat_post = AppContext::get_request()->get_getint('del_cat', 0);
+$report_cat = AppContext::get_request()->get_getint('report_cat', 0);
+$remove_action = AppContext::get_request()->get_poststring('action', ''); //Action à faire lors de la suppression
 
 if (!empty($new_title) && $id_rename_post > 0)
 {
@@ -281,7 +281,7 @@ if ($del_cat > 0)
 	));
 	
 	//Gestion des erreurs
-	$error = retrieve(GET, 'error', '');
+	$error = AppContext::get_request()->get_getstring('error', '');
 	if ($error == 'e_cat_contains_cat')
 		$errstr = $LANG['pages_cat_contains_cat'];
 	elseif ($error == 'e_not_a_cat')

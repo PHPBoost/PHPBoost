@@ -36,10 +36,10 @@ include_once('download_auth.php');
 
 if (!empty($_POST['valid']))
 {
-	$config_download['nbr_file_max'] = retrieve(POST, 'nbr_file_max', 10);
-	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
-	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
-	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
+	$config_download['nbr_file_max'] = AppContext::get_request()->get_postint('nbr_file_max', 10);
+	$config_download['nbr_column'] = AppContext::get_request()->get_postint('nbr_column', 4);
+	$config_download['note_max'] = max(1, AppContext::get_request()->get_postint('note_max', 5));
+	$config_download['root_contents'] = stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('root_contents', '')));
 	$config_download['global_auth'] = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
