@@ -33,6 +33,8 @@
  */
 class Backup
 {
+	private $sql_querier;
+	
 	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
 	/**
 	 * @var string[] List of the tables used by PHPBoost.
@@ -52,6 +54,7 @@ class Backup
 		//On modifie le temps d'exécution maximal si le serveur le permet
 		//parce que les opérations sont longues
 		@set_time_limit(600);
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 
 	/**
@@ -92,20 +95,18 @@ class Backup
 	 */
 	public function generate_create_table_query($table_list = array())
 	{
-		global $Sql;
-
 		$all_tables = count($table_list) == 0 ? true : false;
 
 		foreach ($this->tables as $id => $properties)
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $Sql->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
-				while ($row = $Sql->fetch_row($result))
+				$result = $this->sql_querier->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				while ($row = $this->sql_querier->fetch_row($result))
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
 				}
-				$Sql->query_close($result);
+				$this->sql_querier->query_close($result);
 			}
 		}
 	}
@@ -118,8 +119,6 @@ class Backup
 	 */
 	public function generate_insert_values_query($tables = array())
 	{
-		global $Sql;
-
 		$all_tables = count($tables) == 0 ? true : false;
 
 		foreach ($this->tables as $id => $table_info)
@@ -130,13 +129,13 @@ class Backup
 				if ($rows_number > 0)
 				{
 					$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (`";
-					$this->backup_script .= implode('`, `', $Sql->list_fields($table_info['name']));
+					$this->backup_script .= implode('`, `', $this->sql_querier->list_fields($table_info['name']));
 					$this->backup_script .= "`) VALUES ";
 
 					$i = 1;
-					$list_fields = $Sql->list_fields($table_info['name']);
-					$result = $Sql->query_while ('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);
-					while ($row = $Sql->fetch_row($result))
+					$list_fields = $this->sql_querier->list_fields($table_info['name']);
+					$result = $this->sql_querier->query_while ('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);
+					while ($row = $this->sql_querier->fetch_row($result))
 					{
 						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête
 						{
@@ -154,7 +153,7 @@ class Backup
 						$i++;
 					}
 					$this->backup_script .= ";\n";
-					$Sql->query_close($result);
+					$this->sql_querier->query_close($result);
 				}
 			}
 		}

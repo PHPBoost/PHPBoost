@@ -125,6 +125,8 @@ class CategoriesManager
 	 */
 	protected $cache_var = array();
 	
+	private $sql_querier;
+	
 	
 	/**
      * @desc Builds a CategoriesManager object
@@ -138,6 +140,7 @@ class CategoriesManager
 		$this->cache_file_name = $cache_file_name;
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 
 	/**
@@ -151,27 +154,27 @@ class CategoriesManager
 	 */
 	public function add($id_parent, $name, $visible = CAT_VISIBLE, $order = 0)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//We cast this variable to integer
 		if (!is_int($visible))
 			$visible = (int)$visible;
 
-		$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
+		$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
 		$max_order = NumberHelper::numeric($max_order);
 
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			//Whe add it at the end of the parent category
 			if ($order <= 0 || $order > $max_order)
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			else
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			}
-			return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
+			return $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}
 		else
 		{
@@ -195,11 +198,11 @@ class CategoriesManager
 	 */
 	public function move($id, $way)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 		if (in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)))
 		{
-			$cat_info = $Sql->query_array(PREFIX . $this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$cat_info = $this->sql_querier->query_array(PREFIX . $this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 			//Checking that category exists
 			if (empty($cat_info['c_order']))
@@ -211,14 +214,14 @@ class CategoriesManager
 			if ($way == MOVE_CATEGORY_DOWN)
 			{
 				//Query which allows us to check if we don't want to move down the downest category
-				$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
+				$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
 				if ($cat_info['c_order'] < $max_order)
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
 					$Cache->Generate_module_file($this->cache_file_name);
 
@@ -236,9 +239,9 @@ class CategoriesManager
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
 					$Cache->Generate_module_file($this->cache_file_name);
 					return true;
@@ -272,7 +275,7 @@ class CategoriesManager
 	 */
 	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//Checking that both current category and new category exist and importing necessary information
@@ -283,24 +286,24 @@ class CategoriesManager
 			$this->build_children_id_list($id, $subcats_list);
 			if (!in_array($new_id_cat, $subcats_list))
 			{
-				$max_new_cat_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);
+				$max_new_cat_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);
 				//Default : inserting at the end of the list
 				if ($position <= 0 || $position > $max_new_cat_order)
 				{
 					//Moving the category $id
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Updating ex parent category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
 				}
 				//Inserting at a precise position
 				else
 				{
 					//Preparing the new parent category to receive a category at this position
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'", __LINE__, __FILE__);
 					//Moving the category $id
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Updating ex category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
 				}
 
 				//Regeneration of the cache file of the module
@@ -332,7 +335,7 @@ class CategoriesManager
 	 */
 	public function delete($id)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//Checking that category exists
@@ -345,10 +348,10 @@ class CategoriesManager
 		$cat_infos = $this->cache_var[$id];
 
 		//Deleting the category
-		$Sql->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Decrementing all following categories
-		$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
 
 		//Regeneration of the cache file
 		$Cache->Generate_module_file($this->cache_file_name);
@@ -369,7 +372,7 @@ class CategoriesManager
 	 */
 	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 
 		//Default value
 		if (!in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)))
@@ -380,7 +383,7 @@ class CategoriesManager
 
 		if ($category_id > 0 && array_key_exists($category_id, $this->cache_var))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
+			$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
 
 			//Regeneration of the cache file
 			if ($generate_cache)

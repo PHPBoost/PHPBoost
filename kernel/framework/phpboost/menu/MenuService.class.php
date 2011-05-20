@@ -504,8 +504,6 @@ class MenuService
 	 */
 	public static function update_mini_modules_list($update_cache = true)
 	{
-		global $Sql;
-
 		// Retrieves the mini modules already installed
 		$installed_minimodules = array();
 		$modules = array();

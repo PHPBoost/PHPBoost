@@ -34,58 +34,58 @@ class Uploads
 {
 	const EMPTY_FOLDER = true;
 	const ADMIN_NO_CHECK = true;
+	private static $sql_querier;
 	
+	public function __static()
+	{
+		self::$sql_querier = PersistenceContext::get_sql();
+	}
+
 	//Ajout d'un dossier virtuel
 	public static function Add_folder($id_parent, $user_id, $name)
 	{
-		global $Sql;
-		
-		$check_folder = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE name = '" . $name . "' AND id_parent = '" . $id_parent . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$check_folder = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE name = '" . $name . "' AND id_parent = '" . $id_parent . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if (!empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return 0;
 			
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD_CAT . " (id_parent, user_id, name) VALUES ('" . $id_parent . "', '" . $user_id . "', '" . $name . "')", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_UPLOAD_CAT . " (id_parent, user_id, name) VALUES ('" . $id_parent . "', '" . $user_id . "', '" . $name . "')", __LINE__, __FILE__);
 	
-		return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "upload_cat");
+		return self::$sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "upload_cat");
 	}	
 	
 	//Suppression recursive des dossiers et fichiers du membre.
 	public static function Empty_folder_member($user_id)
 	{
-		global $Sql;
-		
 		//Suppression des fichiers.
-		$result = $Sql->Query_while("SELECT path
+		$result = self::$sql_querier->Query_while("SELECT path
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while( $row = self::$sql_querier->fetch_assoc($result) )
 			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
-		$Sql->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
-		$Sql->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
+		self::$sql_querier->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
+		self::$sql_querier->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
 	}
 	
 	//Suppression recursive du dossier et de son contenu.
 	public static function Del_folder($id_folder)
 	{
-		global $Sql;
-		
 		//Suppression des fichiers.
-		$result = $Sql->query_while("SELECT path
+		$result = self::$sql_querier->query_while("SELECT path
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql_querier->fetch_assoc($result))
 			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 			
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);			
-		$result = $Sql->query_while("SELECT id 
+		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);			
+		$result = self::$sql_querier->query_while("SELECT id 
 		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = '" . $id_folder . "'", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql_querier->fetch_assoc($result))
 		{
 			if (!empty($row['id']))
 				$this->del_folder($row['id'], false);
@@ -95,23 +95,21 @@ class Uploads
 	//Suppression d'un fichier
 	public static function Del_file($id_file, $user_id, $admin = false)
 	{	
-		global $Sql;
-		
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			$name = $Sql->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+			$name = self::$sql_querier->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			delete_file(PATH_TO_ROOT . '/upload/' . $name);
 			return '';
 		}		
 		else
 		{
-			$check_id_auth = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+			$check_id_auth = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			//Suppression d'un fichier.
 			if ($check_id_auth == $user_id)
 			{
-				$name = $Sql->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+				$name = self::$sql_querier->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				delete_file(PATH_TO_ROOT . '/upload/' . $name);
 				return '';
 			}
@@ -122,24 +120,22 @@ class Uploads
 	//Renomme un dossier virtuel
 	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
 	{
-		global $Sql;
-		
 		//Vérification de l'unicité du nom du dossier.
-		$info_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-		$check_folder = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $info_folder['id_parent'] . "' AND name = '" . $name . "' AND id <> '" . $id_folder . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$info_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+		$check_folder = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $info_folder['id_parent'] . "' AND name = '" . $name . "' AND id <> '" . $id_folder . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '';
 		
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_folder['user_id'])
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
@@ -149,24 +145,22 @@ class Uploads
 	//Renomme un fichier virtuel
 	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
 	{
-		global $Sql;
-		
 		//Vérification de l'unicité du nom du fichier.
-		$info_cat = $Sql->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-		$check_file = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $info_cat['idcat'] . "' AND name = '" . $name . "' AND id <> '" . $id_file . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$info_cat = self::$sql_querier->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+		$check_file = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $info_cat['idcat'] . "' AND name = '" . $name . "' AND id <> '" . $id_file . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '/';
 			
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_cat['user_id'])
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
@@ -176,33 +170,31 @@ class Uploads
 	//Déplacement dun dossier.
 	public static function Move_folder($move, $to, $user_id, $admin = false)
 	{		
-		global $Sql;
-		
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
-			$change_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
+			$change_user_id = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 			if (empty($change_user_id))
 				$change_user_id = -1;
 			if ($to != $move)
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			return '';
 		}
 		else
 		{
 			if ($to == 0) //Déplacement dossier racine du membre.
 			{	
-				$get_mbr_folder = $Sql->query("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$get_mbr_folder = self::$sql_querier->query("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
 			}
 			
 			//Vérification de l'appartenance du dossier de destination.
-			$check_user_id_move = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move . "'", __LINE__, __FILE__);
-			$check_user_id_to = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
+			$check_user_id_move = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move . "'", __LINE__, __FILE__);
+			$check_user_id_to = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
 			}
 			else
@@ -212,33 +204,31 @@ class Uploads
 	
 	//Déplacement dun fichier.
 	public static function Move_file($move, $to, $user_id, $admin = false)
-	{
-		global $Sql;
-		
+	{		
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
-			$change_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);	
+			$change_user_id = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);	
 			if (empty($change_user_id))
 				$change_user_id = -1;
-			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			return '';
 		}
 		else
 		{
 			if ($to == 0) //Déplacement dossier racine du membre.
 			{	
-				$get_mbr_folder = $Sql->query("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "' AND id_parent = 0", __LINE__, __FILE__);	
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$get_mbr_folder = self::$sql_querier->query("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "' AND id_parent = 0", __LINE__, __FILE__);	
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
 			}	
 
 			//Vérification de l'appartenance du dossier de destination.
-			$check_user_id_move = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $move . "'", __LINE__, __FILE__);
-			$check_user_id_to = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
+			$check_user_id_move = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $move . "'", __LINE__, __FILE__);
+			$check_user_id_to = self::$sql_querier->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
 			}
 			else
@@ -264,9 +254,7 @@ class Uploads
 	//Récupération du répertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{		
-		global $Sql;
-		
-		$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= $this->get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
@@ -279,9 +267,7 @@ class Uploads
 	//Récupération du répertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
 	{		
-		global $Sql;
-		
-		$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
+		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= $this->get_url($parent_folder['id_parent'], $pwd, $popup);	
@@ -294,9 +280,7 @@ class Uploads
 	//Récupération de la taille totale utilisée par un membre.
 	public static function Member_memory_used($user_id)
 	{
-		global $Sql;
-		
-		return $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		return self::$sql_querier->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	}
 
 	//Conversion mimetype -> image.
