@@ -38,7 +38,7 @@ class ContributionService
 	const CONTRIBUTION_TYPE = 0;
 	private static $sql_querier;
 	
-	public function __static()
+	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}
