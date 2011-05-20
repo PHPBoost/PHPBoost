@@ -673,7 +673,7 @@ class CategoriesManager
 	 */
 	private function create_row_interface($id_cat, $level, $ajax_mode, $reference_template)
 	{
-		global $LANG, $Session;
+		global $LANG;
 
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
@@ -696,6 +696,8 @@ class CategoriesManager
 			//If this category is in the category $id_cat
 			if ($id != 0 && $values['id_parent'] == $id_cat)
 			{
+				$session = AppContext::get_session();
+				
 				$template->assign_block_vars('categories', array(
 					'ID' => $id,
 					'MARGIN_LEFT' => $level * 50,
@@ -715,15 +717,15 @@ class CategoriesManager
 					'NAME' => $values['name'],
 					//If it's not the first of the category we can have it go downer
 					'C_NOT_FIRST_CAT' => $values['order'] > 1,
-					'ACTION_GO_UP' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_up=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
+					'ACTION_GO_UP' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_up=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
 					//If it's not the last we can have it go upper
 					'C_NOT_LAST_CAT' => $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat,
-					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
+					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
 					'C_VISIBLE' => $values['visible'],
-					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
-					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
-					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id . '&amp;token=' . $Session->get_token()),
-					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '&amp;token=' . $Session->get_token()),
+					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
+					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
+					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id . '&amp;token=' . $session->get_token()),
+					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '&amp;token=' . $session->get_token()),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
 					'NEXT_CATEGORY' => $this->create_row_interface($id, $level + 1, $ajax_mode, $reference_template)
