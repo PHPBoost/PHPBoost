@@ -3,7 +3,7 @@
  *                                xmlhttprequest.php
  *                            -------------------
  *   begin                : December 20, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright          : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -47,10 +47,10 @@ if ($add)
 	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode($_POST['contents'])) : '';
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
-		//Accès pour poster.		
+		//AccÃ¨s pour poster.		
 		if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
 		{
-			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
+			//Mod anti-flood, autorisÃ© aux membres qui bÃ©nificie de l'autorisation de flooder.
 			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 			{
@@ -61,7 +61,7 @@ if ($add)
 				}
 			}
 			
-			//Vérifie que le message ne contient pas du flood de lien.
+			//VÃ©rifie que le message ne contient pas du flood de lien.
 			$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 			if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{	
@@ -88,7 +88,7 @@ if ($add)
 			echo "array_shout[1] = '" . addslashes(second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents))))) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
-		else //utilisateur non autorisé!
+		else //utilisateur non autorisÃ©!
 			echo -1;
 	}
 	else
@@ -114,7 +114,7 @@ elseif ($refresh)
 		else
 			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
-		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(second_parse($row['contents']))) . '</span></p>' . "\n";
+		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small"> : ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(second_parse($row['contents']))) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }
