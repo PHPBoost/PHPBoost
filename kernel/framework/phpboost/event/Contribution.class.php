@@ -164,8 +164,6 @@ class Contribution extends Event
 	 */
 	public function set_status($new_current_status)
 	{
-		global $User;
-
 		if (in_array($new_current_status, array(Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED), TRUE))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
@@ -175,7 +173,7 @@ class Contribution extends Event
 				//If the fixer id is not defined, we define it
 				if ($this->fixer_id == 0)
 				{
-					$this->fixer_id = $User->get_attribute('user_id');
+					$this->fixer_id = AppContext::get_user()->get_attribute('user_id');
 				}
 			}
 
