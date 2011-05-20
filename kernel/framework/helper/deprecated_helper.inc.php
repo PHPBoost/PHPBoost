@@ -158,15 +158,14 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-	global $Session;
-
-	if (!is_object($Session))
+	$session = AppContext::get_session();
+	if (!is_object($session))
 	{
 		$session_mod = 0;
 	}
 	else
 	{
-		$session_mod = $Session->supports_cookies();
+		$session_mod = $session->supports_cookies();
 	}
 
 	if ($session_mod == 0)
@@ -182,7 +181,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 	}
 	elseif ($session_mod == 1)
 	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $session->data['session_id'] . $ampersand . 'suid=' . $session->data['user_id'];
 	}
 }
 
