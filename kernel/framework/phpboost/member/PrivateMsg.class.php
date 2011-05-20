@@ -39,7 +39,7 @@ class PrivateMsg
 	const UPDATE_MBR_PM = false;  //Met à jour le nombre de mp du membre.
 	private static $sql_querier;
 
-	public function __static()
+	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}

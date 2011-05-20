@@ -36,7 +36,7 @@ class Uploads
 	const ADMIN_NO_CHECK = true;
 	private static $sql_querier;
 	
-	public function __static()
+	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}
