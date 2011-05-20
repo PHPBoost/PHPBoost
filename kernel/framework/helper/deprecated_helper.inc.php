@@ -478,23 +478,6 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 
 /**
  * @deprecated
- * @desc Returns the HTML code of the comments manager.
- * @param string $script
- * @param int $idprov The data base id of the item for which you want to display the commenting interface.
- * @param string $vars The URL of the curent page (the comments API will always redirect the user to the current page). You just have to add a 'com' HTTP parameter
- * for which the value must be %s (it will be used by the comments API).
- * @param string $module_folder The identifier of your module (the name of its folder).
- * @return The HTML code of the commenting interface that you can directly display in a template.
- */
-function display_comments($script, $idprov, $vars, $module_folder = '')
-{
-	$comments = new Comments($script, $idprov, $vars, $module_folder);
-
-	return $comments->display();
-}
-
-/**
- * @deprecated
  * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
  * @param string $module_name The identifier of the module for which you want to load the lang file.

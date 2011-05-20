@@ -113,7 +113,7 @@ class Authorizations
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
-        global $Sql, $LANG, $array_ranks;
+        global $LANG, $array_ranks;
 
         //Récupération du tableau des rangs.
 		$array_ranks = is_array($array_ranks) ?
@@ -226,17 +226,18 @@ class Authorizations
 		//Listing des membres autorisés.
 		if ($advanced_auth)
 		{
-			$result = $Sql->query_while("SELECT user_id, login
+			$sql_querier = PersistenceContext::get_sql();
+			$result = $sql_querier->query_while("SELECT user_id, login
 			FROM " . PREFIX . "member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
+			while ($row = $sql_querier->fetch_assoc($result))
 			{
 				 $tpl->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
 					'LOGIN' => $row['login']
 				));
 			}
-			$Sql->query_close($result);
+			$sql_querier->query_close($result);
 		}
 
         return $tpl->render();

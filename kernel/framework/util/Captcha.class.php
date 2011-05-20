@@ -42,7 +42,6 @@ class Captcha
 	const CAPTCHA_VERY_HARD = 4;
 
 	private $instance = 0; //Instance identifier
-	private $gd_loaded = false; //Is Gd library is loaded
 	private $width = 160; //Image width
 	private $height = 50; //Image height
 	private $code = ''; //Captcha code
@@ -50,6 +49,7 @@ class Captcha
 	private $difficulty = self::CAPTCHA_NORMAL; //Difficulty to guess the image
 	private $html_id = '';
 	private $user_id; //User identifier in database
+	private $sql_querier;
 
 	private static $instance_number = 0;
 
@@ -58,11 +58,8 @@ class Captcha
 	 */
 	public function __construct()
 	{
+		$this->sql_querier = PersistenceContext::get_sql();
 		$this->update_instance(); //Mise à jour de l'instance.
-		if (@extension_loaded('gd')) //TODO à remplacer par les fonctions verifs du kernel
-		{
-			$this->gd_loaded = true;
-		}
 		$this->html_id = 'verif_code' . $this->instance;
 		$this->user_id = $this->get_user_id();
 	}
@@ -73,7 +70,8 @@ class Captcha
 	 */
 	public function is_available()
 	{
-		if ($this->gd_loaded)
+		$server_configuration = new ServerConfiguration();
+		if ($server_configuration->has_gd_library())
 		{
 			return true;
 		}
@@ -86,18 +84,16 @@ class Captcha
 	 */
 	public function is_valid()
 	{
-		global $Sql, $User;
-
-		if (!$this->is_available() || $User->check_level(MEMBER_LEVEL)) //Non activé, retourne vrai.
+		if (!$this->is_available() || AppContext::get_user()->check_level(MEMBER_LEVEL)) //Non activé, retourne vrai.
 		{
 			return true;
 		}
 
 		$get_code = retrieve(POST, $this->html_id, '', TSTRING_UNCHANGE);
-		$captcha = $Sql->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$captcha = $this->sql_querier->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 
 		//Suppression pour éviter une réutilisation du code frauduleuse.
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 
 		if (!empty($captcha['code']) && $captcha['code'] == $get_code && $captcha['difficulty'] == $this->difficulty)
 		{
@@ -291,19 +287,17 @@ class Captcha
 	 */
 	public function save_user()
 	{
-		global $Sql;
-
 		$this->generate_code(); //Mise à jour du code.
 
 		$code = substr(md5(uniqid(mt_rand(), true)), 0, 20);
-		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$check_user_id = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		if ($check_user_id == 1)
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+			$this->sql_querier->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		}
 		else
 		{
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
+			$this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 
@@ -348,16 +342,14 @@ class Captcha
 	 */
 	private function update_code()
 	{
-		global $Sql;
-
-		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$check_user_id = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		if ($check_user_id == 1)
 		{
-		  $Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $this->code . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		  $this->sql_querier->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $this->code . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		}
 		else
 		{
-		  $Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '4', '" . time() . "')", __LINE__, __FILE__);
+		  $this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '4', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 

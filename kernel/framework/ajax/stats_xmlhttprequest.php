@@ -35,16 +35,18 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
+$sql_querier = PersistenceContext::get_sql();
+
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
     $idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-    $url = $Sql->query("SELECT url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+    $url = $sql_querier->query("SELECT url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
-    $result = $Sql->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+    $result = $sql_querier->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE url = '" . addslashes($url) . "' AND type = 0
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-    while ($row = $Sql->fetch_assoc($result))
+    while ($row = $sql_querier->fetch_assoc($result))
     {
         $average = ($row['total_visit'] / $row['nbr_day']);
         if ($row['yesterday_visit'] > $average)
@@ -86,18 +88,18 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 			</tr>
 		</table>';
     }
-    $Sql->query_close($result);
+    $sql_querier->query_close($result);
 }
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
     $idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-    $keyword = $Sql->query("SELECT relative_url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
+    $keyword = $sql_querier->query("SELECT relative_url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
 
-    $result = $Sql->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+    $result = $sql_querier->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-    while ($row = $Sql->fetch_assoc($result))
+    while ($row = $sql_querier->fetch_assoc($result))
     {
         $average = ($row['total_visit'] / $row['nbr_day']);
         if ($row['yesterday_visit'] > $average)
@@ -139,7 +141,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 			</tr>
 		</table>';
     }
-    $Sql->query_close($result);
+    $sql_querier->query_close($result);
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
