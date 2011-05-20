@@ -126,6 +126,7 @@ class CategoriesManager
 	protected $cache_var = array();
 	
 	private $sql_querier;
+	private $user;
 	
 	
 	/**
@@ -141,6 +142,7 @@ class CategoriesManager
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
 		$this->sql_querier = PersistenceContext::get_sql();
+		$this->user = AppContext::get_user();
 	}
 
 	/**
@@ -517,7 +519,7 @@ class CategoriesManager
 	 */
 	public function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
-		global $LANG, $User;
+		global $LANG;
 
 		$general_auth = false;
 
@@ -525,7 +527,7 @@ class CategoriesManager
 			$template = new FileTemplate('framework/content/categories_select_form.tpl');
 
 		if ($num_auth != 0)
-			$general_auth = $User->check_auth($array_auth, $num_auth);
+			$general_auth = $this->user->check_auth($array_auth, $num_auth);
 
 		$template->put_all(array(
 			'FORM_ID' =>  $form_id,
@@ -550,11 +552,10 @@ class CategoriesManager
 	 */
 	public function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
-		global $User;
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 
-		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
+		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $this->user->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
 			$list[] = $category_id;
 
 		$id_categories = array_keys($this->cache_var);
@@ -566,7 +567,7 @@ class CategoriesManager
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
 			if ($id != 0 && $value['id_parent'] == $category_id &&
-				(empty($this->cache_var[$id]['auth']) || $num_auth == 0 || ($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth))))
+				(empty($this->cache_var[$id]['auth']) || $num_auth == 0 || ($num_auth > 0 && $this->user->check_auth($this->cache_var[$id]['auth'], $num_auth))))
 			{
 				$list[] = $id;
 				if ($recursive_exploration)
@@ -749,7 +750,6 @@ class CategoriesManager
 	 */
 	private function create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template)
 	{
-		global $User;
 		//Boolean variable which is true when we can stop the loop
 		$end_of_category = false;
 
@@ -771,7 +771,7 @@ class CategoriesManager
 				//Exploration which reading behaviour : if we can't se a folder, we can't see its children
 				if ($recursion_mode != IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
 				{
-					if ($num_auth == 0 || $general_auth || $User->check_auth($value['auth'], $num_auth))
+					if ($num_auth == 0 || $general_auth || $this->user->check_auth($value['auth'], $num_auth))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -798,7 +798,7 @@ class CategoriesManager
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 					//If we must check authorizations and it's good
-					elseif ((empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $User->check_auth($value['auth'], $num_auth)))
+					elseif ((empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $this->user->check_auth($value['auth'], $num_auth)))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -810,7 +810,7 @@ class CategoriesManager
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true, $template);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
-					elseif ((empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$User->check_auth($value['auth'], $num_auth)))
+					elseif ((empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$this->user->check_auth($value['auth'], $num_auth)))
 					{
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false, $template);
 					}

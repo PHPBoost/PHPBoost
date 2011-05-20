@@ -57,8 +57,6 @@ class Search
      */
     public function __construct($search = '', $modules = array())
     {
-        global $User;
-
         $this->sql_querier = PersistenceContext::get_sql();
         $this->errors = 0;
         $this->search = md5($search); // Generating a search id;
@@ -66,7 +64,7 @@ class Search
         $this->id_search = array();
         $this->cache = array();
 
-        $this->id_user = $User->get_attribute('user_id');
+        $this->id_user = AppContext::get_user()->get_attribute('user_id');
         $this->modules_conditions = $this->get_modules_conditions($this->modules);
 
 

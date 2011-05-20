@@ -243,7 +243,7 @@ function check_mail($mail)
  */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-	global $User, $LANG;
+	global $LANG;
 
 	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
@@ -309,8 +309,6 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
  */
 function strtotimestamp($str, $date_format)
 {
-	global $User;
-
 	list($month, $day, $year) = array(0, 0, 0);
 	$array_timestamp = explode('/', $str);
 	$array_date = explode('/', $date_format);
@@ -341,7 +339,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	$timezone = AppContext::get_user()->get_attribute('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
