@@ -61,7 +61,7 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 	{
 		return DataStoreFactory::is_apc_available();
 	}
-	
+
 	private function is_apc_enabled()
 	{
 		return DataStoreFactory::is_apc_enabled();

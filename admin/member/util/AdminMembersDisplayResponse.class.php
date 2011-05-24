@@ -29,7 +29,7 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-members-common');
 		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';

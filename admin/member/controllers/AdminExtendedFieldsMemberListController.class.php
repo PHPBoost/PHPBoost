@@ -28,13 +28,13 @@
 class AdminExtendedFieldsMemberListController extends AdminController
 {
 	private $lang;
-	
+
 	private $view;
 
 	public function execute(HTTPRequest $request)
 	{
 		$this->update_fields($request);
-		
+
 		$this->init();
 
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
@@ -50,7 +50,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				'FREEZE' => $row['freeze']
 			));
 		}
-		
+
 		$this->view->put_all(array(
 			'L_MANAGEMENT_EXTENDED_FIELDS' => $this->lang['extended-fields-management'],
 			'L_NAME' => $this->lang['field.name'],
@@ -72,7 +72,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function update_fields($request)
 	{
 		if ($request->get_value('submit', false))
@@ -82,7 +82,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		$this->change_display($request);
 		ExtendedFieldsCache::invalidate();
 	}
-	
+
 	private function change_display($request)
 	{
 		$id = $request->get_value('id', 0);
@@ -96,10 +96,10 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				, array(
 					'display' => (int)$display,
 					'id' => $id,
-			));
+				));
 		}
 	}
-	
+
 	private function update_position($request)
 	{
 		$value = '&' . $request->get_value('position', array());
@@ -115,7 +115,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 					, array(
 						'position' => $position,
 						'id' => $id,
-				));
+					));
 			}
 		}
 	}

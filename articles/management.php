@@ -48,9 +48,9 @@ if ($delete > 0)
 
 	if (empty($articles['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_articles']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		$LANG['e_unexist_articles']);
+		DispatchManager::redirect($controller);
 	}
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
 	{
@@ -62,7 +62,7 @@ if ($delete > 0)
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 	$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-	
+
 	if($articles['visible'] == 1)
 	{
 		$nb=$articles_cat_info['nbr_articles_visible'] - 1;
@@ -75,13 +75,13 @@ if ($delete > 0)
 	}
 	if ($articles['nbr_com'] > 0)
 	{
-		
+
 		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 
 	// Feeds Regeneration
-	
+
 	Feed::clear_cache('articles');
 
 	AppContext::get_response()->redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . Url::encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
@@ -98,14 +98,14 @@ elseif(retrieve(POST,'submit',false))
 
 	$sources = array();
 	for ($i = 0;$i < 100; $i++)
-	{	
+	{
 		if (retrieve(POST,'a'.$i,false,TSTRING))
-		{				
+		{
 			$sources[$i]['sources'] = retrieve(POST, 'a'.$i, '',TSTRING);
 			$sources[$i]['url'] = preg_replace('`\?.*`', '', retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE));
 		}
 	}
-	
+
 	// models
 	$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . retrieve(POST,'models',1,TINTEGER) . "'", __LINE__, __FILE__);
 	$extend_field_tab=unserialize($models['extend_field']);
@@ -114,12 +114,12 @@ elseif(retrieve(POST,'submit',false))
 	if($extend_field)
 	{
 		foreach ($extend_field_tab as $field)
-		{	
+		{
 			$extend_field_articles[$field['name']]['name']=$field['name'];
 			$extend_field_articles[$field['name']]['contents']=retrieve(POST, 'field_'.addslashes($field['name']), '', TSTRING);
-		}	
+		}
 	}
-	
+
 	$articles = array(
 		'id' => AppContext::get_request()->get_postint('id', 0),
 		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
@@ -151,16 +151,16 @@ elseif(retrieve(POST,'submit',false))
 		if (empty($articles['title']))
 		{
 			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_title']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+			$LANG['e_require_title']);
+			DispatchManager::redirect($controller);
 		}
 		elseif (empty($articles['desc']))
 		{
 			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_desc']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+			$LANG['e_require_desc']);
+			DispatchManager::redirect($controller);
 		}
 		else
 		{
@@ -179,12 +179,12 @@ elseif(retrieve(POST,'submit',false))
 				$articles['visible'] = 1;
 			}
 			else
-				$articles['start'] = $articles['end'] = 0;
+			$articles['start'] = $articles['end'] = 0;
 
 			// Release.
 			$articles['release'] += ($articles['release_hour'] * 60 + $articles['release_min']) * 60;
 			if ($articles['release'] == 0)
-				$articles['release'] = $now->get_timestamp();
+			$articles['release'] = $now->get_timestamp();
 
 			// Image.
 			$img = $articles['icon'];
@@ -215,16 +215,16 @@ elseif(retrieve(POST,'submit',false))
 						list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
-			
+					
 				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',extend_field = '".$articles['extend_field']."',id_models='".$articles['models']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 				if ($file_approved && !$articles_properties['visible'])
 				{
-					
-					
 						
+						
+
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
@@ -244,7 +244,7 @@ elseif(retrieve(POST,'submit',false))
 			else
 			{
 				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE);
-			
+					
 				$auth = $articles['auth'];
 					
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field,id_models)
@@ -268,8 +268,8 @@ elseif(retrieve(POST,'submit',false))
 				if ($auth_contrib)
 				{
 					//Importing the contribution classes
-					
-					
+						
+						
 					$articles_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
@@ -310,7 +310,7 @@ elseif(retrieve(POST,'submit',false))
 			}
 
 			// Feeds Regeneration
-			
+				
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
@@ -333,8 +333,8 @@ else
 	$result = $Sql->query_while("SELECT id, name,description
 	FROM " . DB_TABLE_ARTICLES_MODEL 
 	, __LINE__, __FILE__);
-	
-	$select_models = '--';		
+
+	$select_models = '--';
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if($row['id'] == $articles['id_models'])
@@ -343,7 +343,7 @@ else
 			$model_desc=$row['description'];
 		}
 		else
-			$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+		$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 	}
 
 	if ($edit > 0)
@@ -374,7 +374,7 @@ else
 
 			$img_direct_path = (strpos($articles['icon'], '/') !== false);
 			$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-			
+				
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
@@ -382,28 +382,28 @@ else
 				$image = $images->get_name();
 				$selected = $image == $articles['icon'] ? ' selected="selected"' : '';
 				$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
-			}			
-			
+			}
+				
 			// sources
 			$array_sources = unserialize($articles['sources']);
 			$i = 0;
 			foreach ($array_sources as $sources)
-			{	
+			{
 				$tpl->assign_block_vars('sources', array(
 					'I' => $i,
 					'SOURCE' => stripslashes($sources['sources']),
 					'URL' => $sources['url'],
 				));
 				$i++;
-			}	
-			
+			}
+				
 			if($i==0)
 			{
 				$tpl->assign_block_vars('sources', array(
 						'I' => 0,
 						'SOURCE' => '',
 						'URL' => '',
-					));
+				));
 			}
 
 			$tpl->put_all(array(
@@ -457,12 +457,12 @@ else
 		}
 		else
 		{
-			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);			
+			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
-			
+				
 			//Images disponibles
 			$image_list = '<option value="" selected="selected">--</option>';
-			
+				
 			$image_list = '<option value="">--</option>';
 			$image_folder_path = new Folder('./');
 			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
@@ -521,13 +521,13 @@ else
 				'SPECIAL_CHECKED' => '',
 				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $ARTICLES_CAT[$cat]['auth']),
 			));
-				
+
 			$tpl->assign_block_vars('sources', array(
 				'I'=>0,
 				'SOURCE'=>'',
 				'URL'=>'',
 			));
-			
+				
 			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
 			$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
@@ -581,7 +581,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	if ($get_error == 'incomplete')
 	{
 		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));

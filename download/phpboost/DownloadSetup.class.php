@@ -118,7 +118,7 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-        $this->messages = LangLoader::get('install', 'download');
+		$this->messages = LangLoader::get('install', 'download');
 		$this->insert_download_data();
 		$this->insert_download_cats_data();
 	}

@@ -6,14 +6,14 @@
  *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
- *   
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,11 +32,11 @@ class FaqCats extends CategoriesManager
 	{
 		global $Cache, $FAQ_CATS;
 		if (!isset($FAQ_CATS))
-			$Cache->load('faq');
-		
+		$Cache->load('faq');
+
 		parent::__construct('faq_cats', 'faq', $FAQ_CATS);
 	}
-	
+
 	/**
 	 * Method which removes all subcategories and their content
 	 */
@@ -48,41 +48,41 @@ class FaqCats extends CategoriesManager
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
 			if ($id_cat != 0 && $properties['id_parent'] == $id)
-				$this->Delete_category_recursively($id_cat);
+			$this->Delete_category_recursively($id_cat);
 		}
-		
+
 		$this->recount_subquestions();
 	}
-	
+
 	/**
 	 * Method which deletes a category and move its content in another category
 	 */
 	public function delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
 		global $Sql;
-		
+
 		if (!array_key_exists($id_category, $this->cache_var))
 		{
 			parent::_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
-		
+
 		parent::delete($id_category);
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
 			if ($id_cat != 0 && $properties['id_parent'] == $id_category)
-				parent::move_into_another($id_cat, $new_id_cat_content);			
+			parent::move_into_another($id_cat, $new_id_cat_content);
 		}
-		
+
 		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
 		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
 		$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
-		
+
 		$this->recount_subquestions();
-		
+
 		return true;
 	}
-	
+
 	public function add_category($id_parent, $name, $description, $image)
 	{
 		global $Sql;
@@ -94,9 +94,9 @@ class FaqCats extends CategoriesManager
 			return 'e_success';
 		}
 		else
-			return 'e_unexisting_cat';
+		return 'e_unexisting_cat';
 	}
-	
+
 	public function update_category($id_cat, $id_parent, $name, $description, $image)
 	{
 		global $Sql, $Cache;
@@ -104,12 +104,12 @@ class FaqCats extends CategoriesManager
 		{
 			if ($id_parent != $this->cache_var[$id_cat]['id_parent'])
 			{
-				if (!parent::move_into_another($id_cat, $id_parent))			
+				if (!parent::move_into_another($id_cat, $id_parent))
 				{
 					if ($this->check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST))
-						return 'e_new_cat_does_not_exist';
+					return 'e_new_cat_does_not_exist';
 					if ($this->check_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS))
-						return 'e_infinite_loop';
+					return 'e_infinite_loop';
 				}
 				else
 				{
@@ -119,30 +119,30 @@ class FaqCats extends CategoriesManager
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('faq');
-			
+				
 			return 'e_success';
 		}
 		else
-			return 'e_unexisting_category';
+		return 'e_unexisting_category';
 	}
-	
+
 	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 		if ($result)
-			$this->recount_subquestions();
+		$this->recount_subquestions();
 		return $result;
 	}
-	
+
 	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, DO_NOT_LOAD_CACHE);
 		$this->recount_subquestions($generate_cache);
 		return $result;
 	}
-	
+
 	/**
-	 * Determines if a category is writable by the current user 
+	 * Determines if a category is writable by the current user
 	 */
 	public function check_auth($id)
 	{
@@ -157,12 +157,12 @@ class FaqCats extends CategoriesManager
 			{
 				$auth_read  = $auth_read && $User->check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
 			}
-			
+				
 			$id_cat = (int)$FAQ_CATS[$id_cat]['id_parent'];
 		}
 		return $auth_read;
 	}
-	
+
 	/**
 	 * recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
 	 */
@@ -172,7 +172,7 @@ class FaqCats extends CategoriesManager
 		$this->recount_cat_subquestions($FAQ_CATS, 0);
 
 		if ($generate_cache)
-			$Cache->Generate_module_file('faq');
+		$Cache->Generate_module_file('faq');
 		return;
 	}
 
@@ -182,7 +182,7 @@ class FaqCats extends CategoriesManager
 	private function delete_category_with_content($id)
 	{
 		global $Sql;
-		
+
 		//If the category is successfully deleted
 		if ($test = parent::delete($id))
 		{
@@ -191,32 +191,32 @@ class FaqCats extends CategoriesManager
 			return true;
 		}
 		else
-			return false;
+		return false;
 	}
-	
+
 	/**
 	 * Counts recursively for each category
 	 */
 	private function recount_cat_subquestions($FAQ_CATS, $cat_id)
 	{
 		global $Sql;
-		
+
 		$num_subquestions = 0;
-		
+
 		foreach ($FAQ_CATS as $id => $value)
 		{
 			if ($id != 0 && $value['id_parent'] == $cat_id)
-				$num_subquestions += $this->recount_cat_subquestions($FAQ_CATS, $id);
+			$num_subquestions += $this->recount_cat_subquestions($FAQ_CATS, $id);
 		}
-		
+
 		//If its not the root we save it into the database
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
 			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
-			
+				
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'", __LINE__, __FILE__);
-			
+				
 			return $num_subquestions;
 		}
 		return ;

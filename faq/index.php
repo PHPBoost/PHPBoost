@@ -1,4 +1,4 @@
 <?php
-	header('location:faq.php');
-	exit;
+header('location:faq.php');
+exit;
 ?>

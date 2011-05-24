@@ -31,24 +31,24 @@
 class CalendarConfig extends AbstractConfigData
 {
 	const AUTHORIZATION = 'authorization';
-	
+
 	public function get_authorization()
 	{
 		return $this->get_property(self::AUTHORIZATION);
 	}
-	
+
 	public function set_authorization(Array $array)
 	{
 		$this->set_property(self::AUTHORIZATION, $array);
 	}
-	
+
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
+		self::AUTHORIZATION => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
 		);
 	}
-	
+
 	/**
 	 * Returns the configuration.
 	 * @return CalendarConfig

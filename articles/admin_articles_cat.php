@@ -36,7 +36,7 @@ $cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
 $new_cat = AppContext::get_request()->get_getbool('new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 $articles_categories = new ArticlesCats();
 
@@ -54,8 +54,8 @@ if ($cat_to_del > 0)
 	if (empty($array_cat) && $nbr_cat === 0)
 	{
 		$articles_categories->delete($cat_to_del);
-		
-		// Feeds Regeneration		
+
+		// Feeds Regeneration
 		Feed::clear_cache('articles');
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_success#message_helper'), '', '&');
 	}
@@ -73,7 +73,7 @@ if ($cat_to_del > 0)
 		$tpl->assign_block_vars('removing_interface', array(
 			'IDCAT' => $cat_to_del,
 		));
-		
+
 		$articles_categories->build_select_form(0, 'idcat', 'idcat', $cat_to_del, 0, array(), RECURSIVE_EXPLORATION, $tpl);
 	}
 }
@@ -114,7 +114,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		// category icon
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		
+
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -122,7 +122,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
-		
+
 		// category templates
 		$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
@@ -140,11 +140,11 @@ elseif ($new_cat XOR $id_edit > 0)
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if($row['id'] == $ARTICLES_CAT[$id_edit]['models'])
-				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
+			$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
 			else
-				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+			$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 		}
-		
+
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => FormatingHelper::unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -170,7 +170,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		$img_default = '../articles/articles.png';
 		$img_default_name = 'articles.png';
 		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default_name.'</option>';
-		
+
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
@@ -193,14 +193,14 @@ elseif ($new_cat XOR $id_edit > 0)
 		$result = $Sql->query_while("SELECT id, name,description,model_default
 		FROM " . DB_TABLE_ARTICLES_MODEL 
 		, __LINE__, __FILE__);
-		
+
 		$models='';
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if($row['model_default'] == 1)
-				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
+			$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
 			else
-				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+			$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
 		}
 			
 		$tpl->assign_block_vars('edition_interface', array(
@@ -233,13 +233,13 @@ elseif (retrieve(POST,'submit',false))
 	{
 		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'idcat', 0,TINTEGER);
-		
+
 		$Session->csrf_get_protect();
-		
+
 		if ($delete_content)
-			$articles_categories->delete_category_recursively($cat_to_del_post);
+		$articles_categories->delete_category_recursively($cat_to_del_post);
 		else
-			$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
+		$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
 	}
 	else
 	{
@@ -247,28 +247,28 @@ elseif (retrieve(POST,'submit',false))
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = AppContext::get_request()->get_poststring('name', '');
 		$icon=TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
-		$models=AppContext::get_request()->get_postint('models', 1);	
+		$models=AppContext::get_request()->get_postint('models', 1);
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
 		$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
-	
-		
+
+
 		if(retrieve(POST,'icon_path',false))
-			$icon=retrieve(POST,'icon_path','');
+		$icon=retrieve(POST,'icon_path','');
 			
 		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
-	
+		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
+
 		if ($id_cat > 0)
-			$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+		$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
 		else
-			$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+		$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
 	}
 
 	// Feeds Regeneration
-	
+
 	Feed::clear_cache('articles');
 
 	$Cache->Generate_module_file('articles');

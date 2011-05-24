@@ -30,15 +30,15 @@ class AdminMemberDeleteController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$user_id = $request->get_int('id', null);
-		
+
 		if ($this->user_exist($user_id) && $user_id !== null)
 		{
 			if (self::verificate_number_admin_user() > 1)
 			{
 				$this->delete_account($user_id);
-				
+
 				StatsCache::invalidate();
-				
+
 				// TODO replace for new delete user function
 				throw new Exception('Ok !');
 			}
@@ -62,15 +62,15 @@ class AdminMemberDeleteController extends AdminController
 				"DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = :user_id"
 				, array(
 					'user_id' => $user_id,
-			));
+				));
 		}
 	}
-	
+
 	private static function verificate_number_admin_user()
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
 	}
-	
+
 	private function user_exist($user_id)
 	{
 		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;

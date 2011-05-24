@@ -26,9 +26,9 @@
  ###################################################*/
 
 
- ####################################################
+####################################################
 #                                                          French                                                                        #
- ####################################################
+####################################################
 
 //Erreurs
 $LANG['e_unexist_articles'] = 'L\'article que vous avez demandé n\'existe pas';
@@ -107,7 +107,7 @@ $ARTICLES_LANG = array(
 	'or_direct_path' => 'Ou chemin direct',
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
-	
+
 	'article_description'=>"Description de l'article",
 	'no_articles_waiting'=>'Aucun articles en attente disponible pour le moment',
 	'publicate_articles'=>'Articles publiés',
@@ -153,7 +153,7 @@ $ARTICLES_LANG = array(
 	'successful_send_mail'=>'Votre mail a été envoyé avec succès',
 	'error_send_mail'=>'Une erreur est survenue veuillez réessayer plutard',
 	'text_link_mail' =>'Ceci est un e-mail de (%s) envoyé par %s (%s). Ce lien pourrait vous intéresser: %s %s',
-	
+
 	'models_management'=>'Gestion des modèles',
 	'model_info'=>'Informations sur le modèle',
 	'model_info_display'=>'les informations du modèle',

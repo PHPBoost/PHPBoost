@@ -33,15 +33,15 @@ class AdminMenusDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view)
 	{
-        global $LANG;
+		global $LANG;
 
-        parent::__construct($view);
+		parent::__construct($view);
 
-        $view->add_lang($LANG);
-        $this->set_title($LANG['menus_management']);
-        $img = '/templates/' . get_utheme() . '/images/admin/menus.png';
-        $this->add_link($LANG['menu_configurations'], MenuUrlBuilder::menu_configuration_list()->relative(), $img);
-        $this->add_link($LANG['menus'], MenuUrlBuilder::menu_list()->relative(), $img);
+		$view->add_lang($LANG);
+		$this->set_title($LANG['menus_management']);
+		$img = '/templates/' . get_utheme() . '/images/admin/menus.png';
+		$this->add_link($LANG['menu_configurations'], MenuUrlBuilder::menu_configuration_list()->relative(), $img);
+		$this->add_link($LANG['menus'], MenuUrlBuilder::menu_list()->relative(), $img);
 	}
 }
 ?>

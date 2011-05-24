@@ -33,7 +33,7 @@ define('ALTERNATIVE_CSS', 'wiki');
 include('../wiki/wiki_functions.php');
 
 //Titre de l'article
-$encoded_title = AppContext::get_request()->get_getstring('title', '');
+$encoded_title = TextHelper::strprotect(AppContext::get_request()->get_getstring('title', ''));
 //numéro de l'article (utile pour les archives)
 $id_contents = AppContext::get_request()->get_getint('id_contents', 0);
 

@@ -43,12 +43,12 @@ if (retrieve(POST,'valid',false))
 	$mini['nbr_articles']=retrieve(POST, 'nbr_articles_mini', 5,TINTEGER);
 	$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
 	$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
-	
-	
+
+
 	switch (retrieve(POST, 'mini_type', 'date',TSTRING))
 	{
 		case 'note' :
-			$mini['type'] = 'note';		
+			$mini['type'] = 'note';
 			break;
 		case 'com' :
 			$mini['type'] = 'com';
@@ -62,7 +62,7 @@ if (retrieve(POST,'valid',false))
 			$mini['type'] = 'date';
 			break;
 	}
-	
+
 	$config_articles = array(
 		'nbr_articles_max' => AppContext::get_request()->get_postint('nbr_articles_max', 10),
 		'nbr_cat_max' => AppContext::get_request()->get_postint('nbr_cat_max', 10),
@@ -72,11 +72,11 @@ if (retrieve(POST,'valid',false))
 		'mini'=>serialize($mini),
 		'tpl_cat'=>$tpl_cat,
 	);
-	
+
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
-		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
@@ -93,7 +93,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 
 	$info_cat = array();
 	while ($row = $Sql->fetch_assoc($result))
-		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
+	$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
 
 	$Sql->query_close($result);
 
@@ -103,7 +103,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 	GROUP BY idcat", __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
-		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
+	$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
 
 	$Sql->query_close($result);
 
@@ -135,16 +135,16 @@ else
 	$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 	$Cache->load('articles');
-		
+
 	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-		
+
 	$array_ranks =
-		array(
+	array(
 			'-1' => $LANG['guest'],
 			'0' => $LANG['member'],
 			'1' => $LANG['modo'],
 			'2' => $LANG['admin']
-		);
+	);
 
 	// category templates
 	$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
@@ -155,7 +155,7 @@ else
 		$selected = ($tpl_cat == $CONFIG_ARTICLES['tpl_cat'] || './models/'.$tpl_cat == $CONFIG_ARTICLES['tpl_cat']) ? ' selected="selected"' : '';
 		$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
 	}
-	
+
 	$tpl->put_all(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
@@ -193,20 +193,20 @@ else
 		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],
 		'L_CAT_TPL_DEFAULT'=>$ARTICLES_LANG['cat_tpl_default'],		
 	));
-	
+
 	$array_ranks =
 	array(
 		'0' => $LANG['member'],
 		'1' => $LANG['modo'],
 		'2' => $LANG['admin']
 	);
-			
+		
 	$tpl->put_all(array(
 			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$CONFIG_ARTICLES['global_auth']),
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$CONFIG_ARTICLES['global_auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$CONFIG_ARTICLES['global_auth']),
-		));
-		
+	));
+
 	$tpl->display();
 }
 

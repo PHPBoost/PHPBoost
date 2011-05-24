@@ -102,7 +102,7 @@ class AdminLoginService
 	{
 		$error_report = false;
 		$delay_connect = (time() - self::$admin_data['last_connect']);
-		
+
 		if (self::$admin_data['test_connect'] < 5)
 		{
 			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.

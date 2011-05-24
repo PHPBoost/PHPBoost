@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,64 +38,64 @@ if (!empty($idurl))
 
 	//Vérification de l'autorisation sur le fichier
 	$Cache->load('download');
-	
-    $auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
-    $id_cat_for_download = (int)$info_file['idcat'];
-    
-    //Bread_crumb : we read categories list recursively
-    while ($id_cat_for_download > 0)
-    {
-    	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
-    	if (is_array($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
-    	{
-    		//If we can't read a category, we can't read sub elements.
-    		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
-    	}
-    	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
-    }
-    
-    //Pas l'autorisation de le lire
-    if (!$auth_read)
-    {
-    	$error_controller = PHPBoostErrors::unexisting_page();
-    	DispatchManager::redirect($error_controller);
-    }
-    
+
+	$auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+	$id_cat_for_download = (int)$info_file['idcat'];
+
+	//Bread_crumb : we read categories list recursively
+	while ($id_cat_for_download > 0)
+	{
+		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+		if (is_array($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
+		{
+			//If we can't read a category, we can't read sub elements.
+			$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+		}
+		$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
+	}
+
+	//Pas l'autorisation de le lire
+	if (!$auth_read)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
 	if (empty($info_file['url']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		$LANG['e_unexist_file_download']);
+		DispatchManager::redirect($controller);
 	}
-    
+
 	//Si le téléchargement est forcé et que le fichier est local au serveur
-	if ($info_file['force_download'] == DOWNLOAD_FORCE_DL && strpos($info_file['url'], '://') === false)	
+	if ($info_file['force_download'] == DOWNLOAD_FORCE_DL && strpos($info_file['url'], '://') === false)
 	{
 		$info_file['url'] = FormatingHelper::second_parse_url($info_file['url']);
-		
+
 		//Redirection vers le fichier demandé
-    	$filesize = @filesize($info_file['url']);
-    	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? NumberHelper::round($info_file['size'] * 1048576, 0) : false);
-    	if ($filesize !== false)
-    		header('Content-Length: ' . $filesize);
-    	header('content-type:application/force-download');
-    	header('Content-Disposition:attachment;filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
-    	header('Expires:0');
-    	header('Cache-Control:must-revalidate');
-    	header('Pragma:public');
-    	if (@readfile($info_file['url']) === false)
-    		AppContext::get_response()->redirect($info_file['url']);
+		$filesize = @filesize($info_file['url']);
+		$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? NumberHelper::round($info_file['size'] * 1048576, 0) : false);
+		if ($filesize !== false)
+		header('Content-Length: ' . $filesize);
+		header('content-type:application/force-download');
+		header('Content-Disposition:attachment;filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
+		header('Expires:0');
+		header('Cache-Control:must-revalidate');
+		header('Pragma:public');
+		if (@readfile($info_file['url']) === false)
+		AppContext::get_response()->redirect($info_file['url']);
 	}
 	//Si c'est une adresse absolue, ce n'est pas la peine d'aller chercher les informations du fichier
 	else
 	{
-	    AppContext::get_response()->redirect($info_file['url']);
+		AppContext::get_response()->redirect($info_file['url']);
 	}
 }
 else
 {
-    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-    DispatchManager::redirect($controller);
+	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+	$LANG['e_unexist_file_download']);
+	DispatchManager::redirect($controller);
 }
 ?>

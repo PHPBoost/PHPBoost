@@ -34,12 +34,12 @@
  * @desc
  */
 class MenuInstance extends BusinessObject
-{    
-    private $id;
-    private $menu_id;
-    private $menu_configuration_id;
-    private $block;
-    private $position;
+{
+	private $id;
+	private $menu_id;
+	private $menu_configuration_id;
+	private $block;
+	private $position;
 
 	public function get_id()
 	{

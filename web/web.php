@@ -146,7 +146,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'U_WEB_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=com&amp;mode=asc')
 	));		
 	
-	$get_sort = AppContext::get_request()->get_getstring('sort', '');	
+	$get_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));	
 	switch ($get_sort)
 	{
 		case 'alpha' : 
@@ -168,7 +168,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = AppContext::get_request()->get_getstring('mode', '');	
+	$get_mode = TextHelper::strprotect(AppContext::get_request()->get_getstring('mode', ''));	
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 

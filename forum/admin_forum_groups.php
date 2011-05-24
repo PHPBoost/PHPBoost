@@ -34,8 +34,8 @@ require_once('../forum/forum_begin.php');
 require_once('../admin/admin_header.php');
 
 $class = AppContext::get_request()->get_getint('id', 0);
-$top = AppContext::get_request()->get_getstring('top', '');
-$bottom = AppContext::get_request()->get_getstring('bot', '');
+$top = TextHelper::strprotect(AppContext::get_request()->get_getstring('top', ''));
+$bottom = TextHelper::strprotect(AppContext::get_request()->get_getstring('bot', ''));
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))

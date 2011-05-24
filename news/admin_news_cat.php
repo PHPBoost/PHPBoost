@@ -42,7 +42,7 @@ $cat_to_del = AppContext::get_request()->get_getint('del', 0);
 $cat_to_del_post = AppContext::get_request()->get_postint('cat_to_del', 0);
 $id_edit = AppContext::get_request()->get_getint('edit', 0);
 $new_cat = AppContext::get_request()->get_getbool('new', false);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 $tpl = new FileTemplate('news/admin_news_cat.tpl');
 

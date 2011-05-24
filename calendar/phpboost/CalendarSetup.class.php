@@ -43,7 +43,7 @@ class CalendarSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_table();
-		
+
 		$comments = new Comments();
 		$comments->set_module_name('calendar');
 		CommentsService::delete_comments_module($comments);

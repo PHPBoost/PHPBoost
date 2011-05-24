@@ -37,11 +37,11 @@ if ($install) //Installation du module
 	$module_id = '';
 	foreach ($_POST as $key => $value)
 	{
-	if ($value == $LANG['install'])
+		if ($value == $LANG['install'])
 		{
 			$module_id = str_replace('module_', '', $key);
 		}
-}
+	}
 
 	$enable_module = AppContext::get_request()->get_bool($module_id . 'activ', false);
 	switch (ModulesManager::install_module($module_id, $enable_module, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
@@ -70,9 +70,9 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	@clearstatcache();
 	$dir = '../';
 	if (!is_writable($dir))
-		@chmod($dir, 0755);
+	@chmod($dir, 0755);
 	if (!is_writable($dir . $module_name))
-		@chmod($dir . $module_name, 0755);
+	@chmod($dir . $module_name, 0755);
 
 	@clearstatcache();
 	$error = '';
@@ -92,30 +92,30 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				{
 					import('/kernel/lib/php/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../'))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('/kernel/lib/php/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				else
-					$error = 'e_upload_invalid_format';
+				$error = 'e_upload_invalid_format';
 
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
-					$error = 'unlink_disabled';
+				$error = 'unlink_disabled';
 			}
 			else
-				$error = 'e_upload_error';
+			$error = 'e_upload_error';
 		}
 		else
-			$error = 'e_upload_already_exist';
+		$error = 'e_upload_already_exist';
 	}
 	else
-		$error = 'e_upload_failed_unwritable';
+	$error = 'e_upload_failed_unwritable';
 
 	$error = !empty($error) ? '?error=' . $error : '';
 	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
@@ -152,7 +152,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict', 'e_php_version_conflict');
 	if (in_array($get_error, $array_error))
 	{
@@ -188,7 +188,7 @@ else
 			}
 		}
 	}
-//	ksort($uninstalled_modules);
+	//	ksort($uninstalled_modules);
 
 	if (empty($uninstalled_modules))
 	{
@@ -224,7 +224,7 @@ else
 		}
 	}
 
-	$template->display(); 
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

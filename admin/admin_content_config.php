@@ -6,7 +6,7 @@
  *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *  
+ *
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,29 +40,29 @@ if (!empty($_POST['submit']) )
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
 	ContentFormattingConfig::save();
-	
+
 	$content_management_config = ContentManagementConfig::load();
 	$content_management_config->set_anti_flood_enabled((boolean)AppContext::get_request()->get_postint('anti_flood', 0));
 	$content_management_config->set_anti_flood_duration(AppContext::get_request()->get_postint('delay_flood', 0));
 	ContentManagementConfig::save();
-	
+
 	$user_accounts_config = UserAccountsConfig::load();
 	$user_accounts_config->set_max_private_messages_number(AppContext::get_request()->get_postint('pm_max', 25));
 	UserAccountsConfig::save();
-	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 //Sinon on rempli le formulaire
-else	
-{		
+else
+{
 	$template = new FileTemplate('admin/admin_content_config.tpl');
-	
+
 	$content_formatting_config = ContentFormattingConfig::load();
 	$content_management_config = ContentManagementConfig::load();
-	
+
 	$j = 0;
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $code => $name)
-	{	
+	{
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
 			'CODE' => $code,
@@ -70,7 +70,7 @@ else
 			'C_ENABLED' => in_array($code, $content_formatting_config->get_forbidden_tags())
 		));
 	}
-	
+
 	$template->put_all(array(
 		'BBCODE_SELECTED' => ($content_formatting_config->get_default_editor() == 'bbcode') ? 'selected="selected"' : '',
 		'TINYMCE_SELECTED' => ($content_formatting_config->get_default_editor() == 'tinymce') ? 'selected="selected"' : '',
@@ -80,7 +80,7 @@ else
 		'DELAY_FLOOD' => $content_management_config->get_anti_flood_duration(),
 		'FLOOD_ENABLED' => $content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
 		'FLOOD_DISABLED' => !$content_management_config->is_anti_flood_enabled() ? 'checked="checked"' : '',
-		
+
 		'L_POST_MANAGEMENT' => $LANG['post_management'],
 		'L_PM_MAX' => $LANG['pm_max'],
 		'L_SECONDS' => $LANG['unit_seconds'],
@@ -91,7 +91,7 @@ else
 		'L_INT_FLOOD_EXPLAIN' => $LANG['int_flood_explain'],
 		'L_ACTIV' => $LANG['activ'],
 		'L_UNACTIVE' => $LANG['unactiv'],
-		
+
 		'L_CONTENT_CONFIG' => $LANG['content_config_extend'],
 		'L_DEFAULT_LANGUAGE' => $LANG['default_formatting_language'],
 		'L_LANGUAGE_CONFIG' => $LANG['content_language_config'],
@@ -104,8 +104,8 @@ else
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
 	));
-	
-	$template->display(); // traitement du modele	
+
+	$template->display(); // traitement du modele
 }
 
 require_once(PATH_TO_ROOT.'/admin/admin_footer.php');

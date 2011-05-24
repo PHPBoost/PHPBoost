@@ -64,15 +64,15 @@ class AdminMemberRulesController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm('members-rules');
-		
+
 		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
 		$fieldset->set_description($this->lang['members.rules.registration-agreement-description']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], FormatingHelper::unparse(UserAccountsConfig::load()->get_registration_agreement()), array(
 			'class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
-		
+
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

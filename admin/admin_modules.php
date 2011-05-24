@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 
 $uninstall = AppContext::get_request()->get_getbool('uninstall', false);
 $id = AppContext::get_request()->get_getint('id', 0);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 $template = new FileTemplate('admin/admin_modules_management.tpl');
 
@@ -134,7 +134,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	if ($get_error == 'incomplete')
 	{
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
@@ -179,7 +179,7 @@ else
 				'ACTIV_DISABLED' => (!$module->is_activated() ? 'checked="checked"' : '')
 			));
 		}
-		
+
 		$i++;
 	}
 

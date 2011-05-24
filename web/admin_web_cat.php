@@ -31,9 +31,9 @@ load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id = AppContext::get_request()->get_getstring('id', '');
-$top = AppContext::get_request()->get_getstring('top', '');
-$bottom = AppContext::get_request()->get_getstring('bot', '');
+$id = TextHelper::strprotect(AppContext::get_request()->get_getstring('id', ''));
+$top = TextHelper::strprotect(AppContext::get_request()->get_getstring('top', ''));
+$bottom = TextHelper::strprotect(AppContext::get_request()->get_getstring('bot', ''));
 $del = isset($_GET['del']) ?  true : false;
 
 //Si c'est confirmé on met à jour!
@@ -193,7 +193,7 @@ else
 	));	
 		
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	

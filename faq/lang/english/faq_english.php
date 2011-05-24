@@ -7,14 +7,14 @@
  *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is a free software. You can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,9 +27,9 @@
  ###################################################*/
 
 
- ####################################################
+####################################################
 #                                                           English                                                                             #
- ####################################################
+####################################################
 
 global $FAQ_LANG;
 $FAQ_LANG = array();

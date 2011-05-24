@@ -32,9 +32,9 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct('articles');
 	}
 
@@ -100,7 +100,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	function get_home_page()
 	{
 		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
-		require_once('../articles/articles_begin.php'); 
+		require_once('../articles/articles_begin.php');
 
 		if ($idartcat > 0)
 		{
@@ -137,8 +137,8 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
-		$get_sort = AppContext::get_request()->get_getstring('sort', '');
-		$get_mode = AppContext::get_request()->get_getstring('mode', '');
+		$get_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+		$get_mode = TextHelper::strprotect(AppContext::get_request()->get_getstring('mode', ''));
 		$selected_fields = array(
 			'alpha' => '',
 			'view' => '',
@@ -148,7 +148,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			'author'=>'',
 			'asc' => '',
 			'desc' => '',
-			);
+		);
 
 		switch ($get_sort)
 		{
@@ -335,22 +335,22 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 					'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
 					'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : '',
 					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : ''
-				));
+					));
 
 
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+					$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
 				ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+					$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
-				while ($row = $this->sql_querier->fetch_assoc($result))
-				{
-					//On reccourci le lien si il est trop long.
-					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+					while ($row = $this->sql_querier->fetch_assoc($result))
+					{
+						//On reccourci le lien si il est trop long.
+						$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
-					$tpl->assign_block_vars('articles_invisible', array(
+						$tpl->assign_block_vars('articles_invisible', array(
 						'NAME' => $row['title'],
 						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
@@ -363,8 +363,8 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					));
-				}
+						));
+					}
 			}
 			$this->sql_querier->query_close($result);
 		}

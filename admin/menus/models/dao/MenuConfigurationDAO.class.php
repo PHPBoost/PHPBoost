@@ -34,7 +34,7 @@
 class MenuConfigurationDAO extends SQLDAO
 {
 	private static $instance;
-	
+
 	/**
 	 * @return MenuConfigurationDAO
 	 */
