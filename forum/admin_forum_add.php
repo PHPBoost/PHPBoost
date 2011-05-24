@@ -43,9 +43,9 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 	$Cache->load('forum');
 	
 	$parent_category = AppContext::get_request()->get_postint('category', 0);
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$url = AppContext::get_request()->get_poststring('url', '');
-	$type = AppContext::get_request()->get_poststring('type', '');
+	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', ''));
+	$type = TextHelper::strprotect(AppContext::get_request()->get_poststring('type', ''));
 	$aprob = AppContext::get_request()->get_postint('aprob', 0);
 	$status = AppContext::get_request()->get_postint('status', 0);
 

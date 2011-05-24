@@ -59,7 +59,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	
 	$Cache->load('poll');
 	
-	$question = AppContext::get_request()->get_poststring('question', '');
+	$question = TextHelper::strprotect(AppContext::get_request()->get_poststring('question', ''));
 	$type = AppContext::get_request()->get_postint('type', 0);
 	$archive = AppContext::get_request()->get_postint('archive', 0);
 	$current_date = trim(AppContext::get_request()->get_poststring('current_date', ''));

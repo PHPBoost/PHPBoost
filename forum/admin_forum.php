@@ -43,9 +43,9 @@ if (!empty($_POST['valid']) && !empty($id))
 	$Cache->load('forum');
 
 	$to = AppContext::get_request()->get_postint('category', 0);
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$url = AppContext::get_request()->get_poststring('url', '');
-	$type = AppContext::get_request()->get_poststring('type', '');
+	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', ''));
+	$type = TextHelper::strprotect(AppContext::get_request()->get_poststring('type', ''));
 	$subname = trim(AppContext::get_request()->get_poststring('desc', ''));
 	$status = AppContext::get_request()->get_postint('status', 1);
 	$aprob = AppContext::get_request()->get_postint('aprob', 0);

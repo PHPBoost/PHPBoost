@@ -133,9 +133,9 @@ elseif (!empty($_POST['submit']))
 	{
 		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = AppContext::get_request()->get_poststring('name', '');
-		$image = AppContext::get_request()->get_poststring('image', '');
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+		$image = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
+		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE))) : '';
 
 		if (empty($name))

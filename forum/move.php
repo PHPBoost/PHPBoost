@@ -38,8 +38,8 @@ $id_post = AppContext::get_request()->get_postint('id', 0); //Id du topic à dépl
 $id_get_msg = AppContext::get_request()->get_getint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
 $id_post_msg = AppContext::get_request()->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
 $error_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', '')); //Gestion des erreurs.
-$post_topic = AppContext::get_request()->get_poststring('post_topic', ''); //Création du topic scindé.
-$preview_topic = AppContext::get_request()->get_poststring('prw_t', ''); //Prévisualisation du topic scindé.
+$post_topic = TextHelper::strprotect(AppContext::get_request()->get_poststring('post_topic', '')); //Création du topic scindé.
+$preview_topic = TextHelper::strprotect(AppContext::get_request()->get_poststring('prw_t', '')); //Prévisualisation du topic scindé.
 
 if (!empty($id_get)) //Déplacement du sujet.
 {
@@ -373,9 +373,9 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if (!empty($to) && $level > 0)
 	{
-		$title = AppContext::get_request()->get_poststring('title', '');
-		$subtitle = AppContext::get_request()->get_poststring('desc', '');
-		$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
+		$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
+		$subtitle = TextHelper::strprotect(AppContext::get_request()->get_poststring('desc', ''));
+		$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
 		$type = AppContext::get_request()->get_postint('type', 0);
 
 		//Requête de "scindage" du topic.
@@ -387,7 +387,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
-			$question = AppContext::get_request()->get_poststring('question', '');
+			$question = TextHelper::strprotect(AppContext::get_request()->get_poststring('question', ''));
 			if (!empty($question))
 			{
 				$poll_type = AppContext::get_request()->get_postint('poll_type', 0);

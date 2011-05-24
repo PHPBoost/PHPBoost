@@ -112,9 +112,9 @@ elseif (!empty($_POST['submit']))
 	{
 		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = AppContext::get_request()->get_poststring('name', '');
-		$image = AppContext::get_request()->get_poststring('image', '');
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+		$image = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
+		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 
 		if (empty($name))
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');

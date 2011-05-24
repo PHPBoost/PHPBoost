@@ -49,7 +49,7 @@ $untrack_mail = TextHelper::strprotect(AppContext::get_request()->get_getstring(
 
 //Variable $_POST
 $poll = AppContext::get_request()->get_postbool('valid_forum_poll', false); //Sondage forum.
-$massive_action_type = AppContext::get_request()->get_poststring('action_type', ''); //Opération de masse.
+$massive_action_type = TextHelper::strprotect(AppContext::get_request()->get_poststring('action_type', '')); //Opération de masse.
 
 $Forumfct = new Forum();
 

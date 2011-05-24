@@ -34,8 +34,8 @@ require_once('../admin/admin_header.php');
 //Si c'est confirmé on execute
 if (!empty($_POST['add']))
 {
-	$code_smiley = AppContext::get_request()->get_poststring('code_smiley', '');
-	$url_smiley = AppContext::get_request()->get_poststring('url_smiley', '');
+	$code_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('code_smiley', ''));
+	$url_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('url_smiley', ''));
 
 	if (!empty($code_smiley) && !empty($url_smiley))
 	{

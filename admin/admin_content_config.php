@@ -35,7 +35,7 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 if (!empty($_POST['submit']) )
 {
 	$content_formatting_config = ContentFormattingConfig::load();
-	$editor = AppContext::get_request()->get_poststring('formatting_language', '');
+	$editor = TextHelper::strprotect(AppContext::get_request()->get_poststring('formatting_language', ''));
 	$content_formatting_config->set_default_editor(($editor == 'tinymce') ? 'tinymce' : 'bbcode');
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());

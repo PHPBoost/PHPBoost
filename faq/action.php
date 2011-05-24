@@ -33,8 +33,8 @@ $faq_del_id = AppContext::get_request()->get_getint('del', 0);
 $down = AppContext::get_request()->get_getint('down', 0);
 $up = AppContext::get_request()->get_getint('up', 0);
 $id_question = AppContext::get_request()->get_postint('id_question', 0);
-$entitled = AppContext::get_request()->get_poststring('entitled', '');
-$answer = FormatingHelper::strparse(AppContext::get_request()->get_poststring('answer', ''));
+$entitled = TextHelper::strprotect(AppContext::get_request()->get_poststring('entitled', ''));
+$answer = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('answer', '')));
 $new_id_cat = AppContext::get_request()->get_postint('id_cat', 0);
 $id_after = AppContext::get_request()->get_postint('after', 0);
 //Properties of the category
@@ -42,8 +42,8 @@ $cat_properties = AppContext::get_request()->get_getint('cat_properties', 0);
 $id_cat = AppContext::get_request()->get_postint('id_faq', 0);
 $display_mode = AppContext::get_request()->get_postint('display_mode', 0);
 $global_auth = retrieve(POST, 'global_auth', array());
-$cat_name = AppContext::get_request()->get_poststring('cat_name', '');
-$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+$cat_name = TextHelper::strprotect(AppContext::get_request()->get_poststring('cat_name', ''));
+$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 
 $target = AppContext::get_request()->get_postint('target', 0);
 $move_question = AppContext::get_request()->get_postbool('move_question', false);

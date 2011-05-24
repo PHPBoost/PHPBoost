@@ -423,8 +423,8 @@ elseif (retrieve(POST,'submit',false))
 	else
 	{
 		$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
-		$name = AppContext::get_request()->get_poststring('name', '');
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_articles = (empty($tpl_articles)) ? 'articles.tpl' : $tpl_articles;
 		$tpl_articles = $tpl_articles != 'articles.tpl' ? "./models/".$tpl_articles : $tpl_articles;

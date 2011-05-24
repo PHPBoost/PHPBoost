@@ -33,7 +33,7 @@ require_once('../admin/admin_header.php');
 
 
 //Enregistrement du bloc note
-$writingpad = AppContext::get_request()->get_poststring('writingpad', '');
+$writingpad = TextHelper::strprotect(AppContext::get_request()->get_poststring('writingpad', ''));
 if (!empty($writingpad))
 {
 	$content = trim(AppContext::get_request()->get_poststring('writing_pad_content', ''));

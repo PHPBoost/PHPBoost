@@ -245,7 +245,7 @@ elseif (retrieve(POST,'submit',false))
 	{
 		$id_cat = retrieve(POST, 'idcat', 0,TINTEGER);
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
-		$name = AppContext::get_request()->get_poststring('name', '');
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
 		$icon=TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
 		$models=AppContext::get_request()->get_postint('models', 1);
 		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
@@ -255,7 +255,7 @@ elseif (retrieve(POST,'submit',false))
 		if(retrieve(POST,'icon_path',false))
 		$icon=retrieve(POST,'icon_path','');
 			
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))

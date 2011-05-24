@@ -82,7 +82,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = AppContext::get_request()->get_poststring('login_mbr', '');
+			$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 			AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
@@ -232,7 +232,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = AppContext::get_request()->get_poststring('login_mbr', '');
+			$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 			AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
@@ -341,7 +341,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 	{
 		if (!empty($_POST['search_member']))
 		{
-			$login = AppContext::get_request()->get_poststring('login_mbr', '');
+			$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 			AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban&id=' . $user_id);

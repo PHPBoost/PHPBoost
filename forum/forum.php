@@ -65,7 +65,7 @@ require_once('../kernel/header.php');
 $rewrited_title = (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
 
 //Redirection changement de catégorie.
-$change_cat = AppContext::get_request()->get_poststring('change_cat', '');
+$change_cat = TextHelper::strprotect(AppContext::get_request()->get_poststring('change_cat', ''));
 if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 	

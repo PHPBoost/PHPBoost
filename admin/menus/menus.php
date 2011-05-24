@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $id = AppContext::get_request()->get_getint('id', 0);
 $switchtheme = TextHelper::strprotect(AppContext::get_request()->get_getstring('theme', ''));
 $name_theme = !empty($switchtheme) ? $switchtheme : get_utheme();
-$theme_post = AppContext::get_request()->get_poststring('theme', '');
+$theme_post = TextHelper::strprotect(AppContext::get_request()->get_poststring('theme', ''));
 
 $action = TextHelper::strprotect(AppContext::get_request()->get_getstring('action', ''));
 $move = TextHelper::strprotect(AppContext::get_request()->get_getstring('move', ''));

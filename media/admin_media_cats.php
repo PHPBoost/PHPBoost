@@ -42,7 +42,7 @@ $cat_to_del = AppContext::get_request()->get_getint('del', 0);
 $cat_to_del_post = AppContext::get_request()->get_postint('cat_to_del', 0);
 $id_edit = AppContext::get_request()->get_getint('edit', 0);
 $new_cat = AppContext::get_request()->get_getbool('new', false);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 if ($id_up > 0)
 {
@@ -101,9 +101,9 @@ elseif (!empty($_POST['submit']))
 	{
 		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = AppContext::get_request()->get_poststring('name', '');
-		$image = AppContext::get_request()->get_poststring('image', '');
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+		$image = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
+		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
 		$mime_type = AppContext::get_request()->get_postint('mime_type', 0);
 		$activ_array = retrieve(POST, 'activ', 0, TARRAY);
 		$activ = is_array($activ_array) ? array_sum($activ_array) : 0;
